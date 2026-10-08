@@ -1,0 +1,109 @@
+--- a/apps/player/src/session/localCampaignRepository.ts
++++ b/apps/player/src/session/localCampaignRepository.ts
+@@ -8,6 +8,8 @@
+   LocalCampaignStatus,
+   LocalPrototypeProfile,
+ } from "./prototypeStorage";
++import { normalizeTutorialGuidanceRecords, type CampaignTutorialGuidance } from "./tutorialGuidance";
++import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
+ 
+ export const LOCAL_CAMPAIGN_DATABASE_NAME = "gamify-surgery.local.v1";
+ 
+@@ -55,7 +57,10 @@
+   activeCampaignId: string | null;
+   nextCampaignNumber: number;
+   tutorialsEnabled: boolean;
++  tutorialGuidanceByCampaign?: Record<string, CampaignTutorialGuidance>;
+   tutorialIntroDismissedCampaignIds: string[];
++  tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
++  tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
+   campaigns: CampaignSummary[];
+ }
+ 
+@@ -322,6 +327,10 @@
+   }
+ 
+   const dismissedCampaignIds = value.tutorialIntroDismissedCampaignIds as string[];
++  const tipAcknowledgments = isRecord(value.tutorialDailyRoutineTipAcknowledgments)
++    ? Object.fromEntries(Object.entries(value.tutorialDailyRoutineTipAcknowledgments).filter(([, tips]) => Array.isArray(tips)).map(([id, tips]) => [id, (tips as unknown[]).filter((tip): tip is string => typeof tip === "string")]))
++    : {};
++  const pauseByCampaign = normalizeRetiredTutorialPauses(value.tutorialDailyRoutinePauseByCampaign);
+   if (new Set(dismissedCampaignIds).size !== dismissedCampaignIds.length) {
+     throw namedError("MetadataValidationError", "Stored tutorial metadata contains duplicate campaigns.");
+   }
+@@ -344,7 +353,10 @@
+     activeCampaignId: value.activeCampaignId as string | null,
+     nextCampaignNumber: value.nextCampaignNumber as number,
+     tutorialsEnabled: value.tutorialsEnabled,
++    tutorialGuidanceByCampaign: value.tutorialGuidanceByCampaign as Record<string, CampaignTutorialGuidance> | undefined,
+     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds],
++    tutorialDailyRoutineTipAcknowledgments: tipAcknowledgments,
++    tutorialDailyRoutinePauseByCampaign: pauseByCampaign,
+     campaigns,
+   };
+ }
+@@ -487,6 +499,22 @@
+     ...(storedProfile?.tutorialIntroDismissedCampaignIds ?? []),
+     ...callerProfile.tutorialIntroDismissedCampaignIds,
+   ]);
++  const tipAcknowledgments = {
++    ...(storedProfile?.tutorialDailyRoutineTipAcknowledgments ?? {}),
++  };
++  const pauseByCampaign = {
++    ...(storedProfile?.tutorialDailyRoutinePauseByCampaign ?? {}),
++  };
++  const callerTips = callerProfile.tutorialDailyRoutineTipAcknowledgments[targetCampaign.campaignId];
++  const callerPause = callerProfile.tutorialDailyRoutinePauseByCampaign[targetCampaign.campaignId];
++  const guidanceByCampaign = { ...(storedProfile?.tutorialGuidanceByCampaign ?? {}) };
++  guidanceByCampaign[targetCampaign.campaignId] = normalizeTutorialGuidanceRecords(
++    callerProfile.tutorialGuidanceByCampaign, [targetCampaign], callerProfile.tutorialsEnabled,
++    callerProfile.tutorialDailyRoutineTipAcknowledgments)[targetCampaign.campaignId]!;
++  if (callerTips) tipAcknowledgments[targetCampaign.campaignId] = [...callerTips];
++  else delete tipAcknowledgments[targetCampaign.campaignId];
++  if (callerPause !== undefined) pauseByCampaign[targetCampaign.campaignId] = callerPause;
++  else delete pauseByCampaign[targetCampaign.campaignId];
+ 
+   return {
+     key: PROFILE_KEY,
+@@ -497,9 +525,12 @@
+       callerProfile.nextCampaignNumber,
+     ),
+     tutorialsEnabled: callerProfile.tutorialsEnabled,
++    tutorialGuidanceByCampaign: Object.fromEntries(Object.entries(guidanceByCampaign).filter(([id]) => resultingIds.has(id))),
+     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds].filter((campaignId) =>
+       resultingIds.has(campaignId),
+     ),
++    tutorialDailyRoutineTipAcknowledgments: Object.fromEntries(Object.entries(tipAcknowledgments).filter(([campaignId]) => resultingIds.has(campaignId))),
++    tutorialDailyRoutinePauseByCampaign: Object.fromEntries(Object.entries(pauseByCampaign).filter(([campaignId]) => resultingIds.has(campaignId))),
+     campaigns,
+   };
+ }
+@@ -521,6 +552,14 @@
+     storedProfile.nextCampaignNumber >= sourceProfile.nextCampaignNumber &&
+     storedProfile.tutorialsEnabled === sourceProfile.tutorialsEnabled &&
+     (!sourceDismissed || storedDismissed)
++      && JSON.stringify(storedProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []) === JSON.stringify(sourceProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? [])
++      && storedProfile.tutorialDailyRoutinePauseByCampaign[campaignId] === sourceProfile.tutorialDailyRoutinePauseByCampaign[campaignId]
++      && JSON.stringify(normalizeTutorialGuidanceRecords(storedProfile.tutorialGuidanceByCampaign,
++        sourceProfile.campaigns.filter((campaign) => campaign.campaignId === campaignId), storedProfile.tutorialsEnabled,
++        storedProfile.tutorialDailyRoutineTipAcknowledgments)[campaignId]) ===
++        JSON.stringify(normalizeTutorialGuidanceRecords(sourceProfile.tutorialGuidanceByCampaign,
++          sourceProfile.campaigns.filter((campaign) => campaign.campaignId === campaignId), sourceProfile.tutorialsEnabled,
++          sourceProfile.tutorialDailyRoutineTipAcknowledgments)[campaignId])
+   );
+ }
+ 
+@@ -1214,9 +1253,13 @@
+           activeCampaignId: profile.activeCampaignId,
+           nextCampaignNumber: profile.nextCampaignNumber,
+           tutorialsEnabled: profile.tutorialsEnabled,
++          tutorialGuidanceByCampaign: normalizeTutorialGuidanceRecords(profile.tutorialGuidanceByCampaign,
++            campaigns, profile.tutorialsEnabled, profile.tutorialDailyRoutineTipAcknowledgments),
+           tutorialIntroDismissedCampaignIds: [
+             ...profile.tutorialIntroDismissedCampaignIds,
+           ],
++          tutorialDailyRoutineTipAcknowledgments: profile.tutorialDailyRoutineTipAcknowledgments,
++          tutorialDailyRoutinePauseByCampaign: profile.tutorialDailyRoutinePauseByCampaign,
+           campaigns,
+         },
+       };

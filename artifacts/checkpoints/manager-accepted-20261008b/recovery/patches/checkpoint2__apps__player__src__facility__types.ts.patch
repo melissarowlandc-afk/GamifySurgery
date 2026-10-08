@@ -1,0 +1,30 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -2,6 +2,7 @@
+   CardinalDirection,
+   GridPoint,
+   PixelAppearanceDescriptor,
++  ProcedureCompanionState,
+   RoomOrientation,
+   RoomUpgradeLevel,
+ } from "@gamify-surgery/game-domain";
+@@ -28,7 +29,10 @@
+   | "ct-operator"
+   | "phlebotomy-patient"
+   | "phlebotomy-clinician"
++  | "endoscopy-provider"
++  | "endoscopy-nurse"
+   | "periop-bed-patient"
++  | "periop-companion-seat"
+   | "glp1-np-station-1"
+   | "glp1-np-station-2"
+   | "ambulatory-or-surgeon"
+@@ -220,6 +224,8 @@
+   moving?: boolean;
+   direction?: "front" | "side" | "back";
+   rightFacing?: boolean;
++  /** Only phase and the reserved chair/standing endpoint are needed by the renderer. */
++  procedureCompanion?: Pick<ProcedureCompanionState, "phase" | "periopRoomInstanceId" | "waitingReservation">;
+ }
+ 
+ export interface FacilityLitterView {

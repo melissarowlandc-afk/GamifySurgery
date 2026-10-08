@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "nativeFrameMultiplier": 2,
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "minimumClearancePixels": 4,
+  "packingMarginPixels": 6,
+  "alphaCleanupThreshold": 8,
+  "opaqueThreshold": 160,
+  "assets": {
+    "wound-recliner": {
+      "assetId": "design:wo:recliner",
+      "recordIds": [
+        "recliner"
+      ],
+      "canvas": [
+        624,
+        470
+      ],
+      "widthTiles": 1.3,
+      "heightTiles": 0.9791666666666666,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          0.9,
+          1.95
+        ]
+      ],
+      "sourcePoints": {
+        "seat": [
+          510,
+          534
+        ]
+      },
+      "packing": {
+        "kind": "preserve_reviewed_chair_scale",
+        "scale": 0.4396551724137931,
+        "leftPixels": 6,
+        "baselineMetadata": "../proof/revisions/20261008-before-leg-rest-removal/assets/processed/metadata.json",
+        "baselineMetadataSha256": "A0FB90C31CC594E2D28E71E3F20B71156DEC071CE677A9DA46282C13EFB79C36",
+        "baselineNativeSha256": "7BAFA5AFF047F312430AF231522451E2358E7CD00F31C018C4FAFB3E3ACFF1CB",
+        "basis": "Keep reviewed 624x470 canvas, exact uniform downsample scale and left placement. Compact chair does not expand into the old leg-rest space. Bottom remains registered to its actual opaque base."
+      }
+    },
+    "exam-lamp": {
+      "assetId": "design:wo:exam-lamp",
+      "recordIds": [
+        "lamp"
+      ],
+      "canvas": [
+        172,
+        652
+      ],
+      "widthTiles": 0.36,
+      "heightTiles": 1.3646511627906976,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          1.62,
+          1.2
+        ]
+      ]
+    },
+    "ostomy-shelf": {
+      "assetId": "design:wo:ostomy-shelf",
+      "recordIds": [
+        "ostomyShelf"
+      ],
+      "canvas": [
+        442,
+        596
+      ],
+      "widthTiles": 0.92,
+      "heightTiles": 1.2405429864253394,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          2.01,
+          0.32
+        ]
+      ]
+    },
+    "dressing-cart": {
+      "assetId": "design:wo:dressing-cart",
+      "recordIds": [
+        "dressingCart"
+      ],
+      "canvas": [
+        268,
+        412
+      ],
+      "widthTiles": 0.56,
+      "heightTiles": 0.8608955223880598,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          2.62,
+          2.88
+        ]
+      ]
+    },
+    "hygiene-sign": {
+      "assetId": "design:wo:hygiene-sign",
+      "recordIds": [
+        "hygieneSign"
+      ],
+      "canvas": [
+        144,
+        172
+      ],
+      "widthTiles": 0.3,
+      "heightTiles": 0.35833333333333334,
+      "anchorKind": "wall",
+      "top": [
+        2.74,
+        -0.64
+      ]
+    }
+  },
+  "notes": [
+    "Stand-in canvas dimensions doubled; source aspect preserved without stretching or upscaling. Exact source-world placements and footprints frozen.",
+    "Floor anchors use actual final opaque alpha; wall anchors use actual alpha top. No semantic painting in preparation."
+  ]
+}

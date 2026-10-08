@@ -1,0 +1,144 @@
+diff --git "a/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\history\\v6-west-tech-seated-patient\\lab.js" "b/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\lab.js"
+index 0d0d4e2d..4f064bee 100644
+--- "a/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\history\\v6-west-tech-seated-patient\\lab.js"
++++ "b/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\lab.js"
+@@ -296,7 +296,7 @@ function actorPlacements(P) {
+     const anchorY = pose === "sit" && asset.anchors.seatContactY ? asset.anchors.seatContactY : asset.anchors.floorY;
+     const x = P.ox + seat.x * T - w * (asset.anchors.bodyAxisX / 160);
+     const y = P.oy + seat.y * T - h * (anchorY / 320);
+-    const py = s.pose === "standing" ? s.ground.y : Math.max(s.ground.y, s.fixtureGround?.y ?? s.ground.y);
++    const py = s.painterDepth ?? (s.pose === "standing" ? s.ground.y : Math.max(s.ground.y, s.fixtureGround?.y ?? s.ground.y));
+     out.push({ kind: "actor", id: s.id, url: ART_ROOT + asset.url, x, y, w, h, py: py + 0.0001, shadow: { x: P.ox + s.ground.x * T, y: P.oy + s.ground.y * T, r: w * .28 } });
+   }
+   return out;
+@@ -308,6 +308,10 @@ async function drawImageRec(g, d) {
+   g.save();
+   if (d.alpha) g.globalAlpha = d.alpha;
+   if (d.clipTop !== undefined) { g.beginPath(); g.rect(d.x - 2, d.clipTop, d.w + 4, d.y + d.h - d.clipTop + 2); g.clip(); }
++  if (d.rec?.clipRightWorld !== undefined) {
++    const right=d.x+(d.rec.clipRightWorld-d.rec.destinationTopLeftTiles[0])*T;
++    g.beginPath(); g.rect(d.x-2,d.y-2,Math.max(0,right-d.x+2),d.h+4); g.clip();
++  }
+   if (d.kind === "actor") g.imageSmoothingEnabled = false;
+   if (d.flip) { g.translate(d.x + d.w, d.y); g.scale(-1, 1); }
+   const src = d.src ?? [0, 0, img.naturalWidth, img.naturalHeight];
+@@ -779,7 +783,7 @@ function paintCandidateDiagnostics(g, P, proposed) {
+   }
+ }
+ function contactText() {
+-  const c = CHAR['gs026-employee-004'], south = c.poses.stand.south, asset = c.poses.sit.east;
++  const c = CHAR['gs026-employee-004'], south = c.poses.stand.south, asset = c.poses.sit.north;
+   const sc = Math.min(1, data.characterMetrics.visibleHeightCap / (south.anchors.floorY - south.visibleBounds.y));
+   const actorRise = T * data.characterMetrics.widthInTiles * sc * (asset.anchors.floorY - asset.anchors.seatContactY) / 160;
+   const supportRise = state.seatMode === 'brief' ? 45 : 39.6;
+@@ -791,7 +795,7 @@ function contactText() {
+   const desk = PREPARED_METADATA.assets.console;
+   if (desk) for (const [key, label] of [['worktopRear', 'Console rear tabletop'], ['worktopFront', 'Console projected front lip']]) {
+     const point = desk.calibratedPoints[key];
+-    if (point) lines.push(`${label}: ${((desk.canvasAnchor[1] - point[1]) * desk.proofScale).toFixed(2)} px above feet${key === 'worktopRear' ? '; target 80 px' : ''}.`);
++    if (point) lines.push(`${label}: ${((desk.canvasAnchor[1] - point[1]) * desk.proofScale).toFixed(2)} px above feet${key === 'worktopRear' ? '; enlarged target ' + desk.expectedRiseNativePixels / 2 + ' px' : ''}.`);
+   }
+   const p = CHAR['patient.adult.001'], ps = p.poses.stand.south, pw = p.poses.sit.west;
+   const patientScale = Math.min(1, data.characterMetrics.visibleHeightCap / (ps.anchors.floorY - ps.visibleBounds.y));
+@@ -805,7 +809,7 @@ function refreshCandidateControls() {
+   document.getElementById('seatMode').value = state.seatMode;
+   const firstNote = document.getElementById('notes').firstElementChild;
+   if (firstNote?.textContent.includes('stand-in art')) firstNote.textContent = 'Owner-revised private MRI candidate. Design approval and runtime integration remain separate.';
+-  document.getElementById('artStatus').textContent = PREPARED_METADATA.complete ? 'All nine source assets are packed. The current patient sits west on the unchanged empty table. Revised design and geometry remain subject to owner review.' : `Incomplete artwork: ${Object.keys(PREPARED_METADATA.assets).length}/9. Sources missing: ${(PREPARED_METADATA.missing || []).join(', ')}.`;
++  document.getElementById('artStatus').textContent = PREPARED_METADATA.complete ? 'Tech faces north south of the larger desk. Patient sits west at the bed end and draws in front of the bed and MRI. Bed enters the center of the opening.' : `Incomplete artwork: ${Object.keys(PREPARED_METADATA.assets).length}/9. Sources missing: ${(PREPARED_METADATA.missing || []).join(', ')}.`;
+   document.getElementById('artStatus').classList.toggle('bad', !PREPARED_METADATA.complete);
+   document.getElementById('contactStatus').textContent = contactText();
+ }
+diff --git "a/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\history\\v6-west-tech-seated-patient\\asset-contract.json" "b/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\asset-contract.json"
+index fff954ba..b4327315 100644
+--- "a/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\history\\v6-west-tech-seated-patient\\asset-contract.json"
++++ "b/C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-4\\mri\\proof\\asset-contract.json"
+@@ -29,7 +29,7 @@
+       },
+       "measurement": "Actual upper edge of central cushion at column900, excluding raised head pad. Blue run starts135; visually picked outline134, uncertainty about3sourcepixels; generated target153 is not used.",
+       "uniformScaleFactor": 0.9687931124810085,
+-      "packingNote": "Whole-source uniform contact fit retained on the exact native canvas; padding beyond the brief 4–8px target is an explicit candidate exception. Source bytes/aspect ratio and couch ground (2.30,2.42) stay unchanged. Private supports are owner-revised for the existing seated patient; actor sources/scales are unchanged."
++      "packingNote": "Original empty couch source and uniform shape are retained; private ground moves east to put the outer cushion under the west-facing patient. Visible forepart draws to the bore center."
+     },
+     "console": {
+       "sourceFile": "originals/console-06.png",
+@@ -48,20 +48,20 @@
+         ]
+       },
+       "measurement": "Visually inspected console06 rear plane at(500,536): dark lower monitor edge through535, pale desktop starts537; front lip at(700,729): pale highlight begins729 and vertical fascia starts738–739. These are separate projected plane probes with about3rawsourcepixels of visual uncertainty. Foot edge is last opaque source row1465 (alpha>=160), independently remeasured after Canvas packing.",
+-      "scale": 0.1718249733191035,
+-      "packingNote": "Parent accepted172x264 private frame adaptation: uniformly fit the complete source to80px rear worktop with at least4px alpha clearance. Front lip is measured separately and is not a second80px requirement. No stretching, repaint, character source or scale change."
++      "scale": 0.20618996798292422,
++      "packingNote": "Owner requests visibly larger desk: whole source enlarged uniformly by20%; rear worktop96px, projected front lip measured separately. North-facing tech sits south of desk."
+     },
+     "operator-chair": {
+-      "sourceFile": "originals/operator-chair-02.png",
++      "sourceFile": "originals/operator-chair-03.png",
+       "points": {
+         "seat": [
+-          550,
+-          663
++          800,
++          700
+         ]
+       },
+-      "measurement": "Actual upper cushion outline at column550: blue starts665 below outline663. Visual uncertainty about3sourcepixels; generated target764 is not used.",
+-      "uniformScaleFactor": 0.883394058841072,
+-      "packingNote": "Whole-source uniform contact fit retains the measured45px seat on the exact native frame. Padding beyond the brief 4–8px target is an explicit candidate exception. Chair privately relocates to (0.90,1.95) under owner direction; source bytes/aspect ratio and actor sources/scales stay unchanged."
++      "uniformScaleFactor": 0.9370525059665872,
++      "measurement": "Rear-view blue seat upper edge at raw (800,700), visually inspected; opaque wheel edge is measured by Canvas. Initial maximum fit48.023px; uniformly reduce to45px.",
++      "packingNote": "New back-facing swivel chair matches the unchanged sit.north tech; uniform fit only."
+     }
+   },
+   "baseBandNativePixels": 28,
+@@ -87,7 +87,7 @@
+       ],
+       "widthTiles": 1.05,
+       "ground": [
+-        2.3,
++        2.49,
+         2.42
+       ],
+       "record": "tableEmpty",
+@@ -95,16 +95,16 @@
+     },
+     "console": {
+       "canvas": [
+-        172,
+-        264
++        206,
++        317
+       ],
+-      "widthTiles": 0.7166666666666667,
++      "widthTiles": 0.8583333333333333,
+       "ground": [
+-        1.25,
+-        2.02
++        1.12,
++        2.14
+       ],
+       "record": "console",
+-      "expectedWorktopRiseNativePixels": 160
++      "expectedWorktopRiseNativePixels": 192
+     },
+     "operator-chair": {
+       "canvas": [
+@@ -113,8 +113,8 @@
+       ],
+       "widthTiles": 0.4,
+       "ground": [
+-        0.9,
+-        1.95
++        1.12,
++        2.54
+       ],
+       "record": "operatorChair",
+       "expectedSeatRiseNativePixels": 90
+@@ -180,6 +180,6 @@
+       "record": "openShelves"
+     }
+   },
+-  "revision": "2026-10-07-owner-seated-patient-larger-fixtures",
++  "revision": "owner-north-tech-bore-center-foreground-patient",
+   "ownerDirection": "../OWNER_REVISIONS_2026-10-07.md"
+ }

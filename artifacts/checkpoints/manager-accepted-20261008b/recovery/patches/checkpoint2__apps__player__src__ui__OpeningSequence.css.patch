@@ -1,0 +1,17 @@
+--- a/apps/player/src/ui/OpeningSequence.css
++++ b/apps/player/src/ui/OpeningSequence.css
+@@ -26,6 +26,14 @@
+   font-size: clamp(1.35rem, 4vw, 2rem);
+   text-align: center;
+ }
++
++.opening-overhead-copy,
++.opening-starting-cash { margin: 0; text-align: center; }
++.opening-starting-cash { font-weight: 800; }
++.opening-guidance-preference { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; justify-self: start; }
++.opening-guidance-preference input { width: 1.1rem; height: 1.1rem; accent-color: #171715; }
++.opening-guidance-preference input:focus-visible { outline: 3px double #171715; outline-offset: 3px; }
++.founder-creator-screen .founder-creator { gap: 0.8rem; }
+ 
+ .founder-preview-avatar,
+ .happy-founder-avatar {

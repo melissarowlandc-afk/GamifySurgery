@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "step0": "PASS built-in image_gen callable",
+  "scope": "Wound/Ostomy painted mockup only",
+  "styleReferencesInspected": [
+    "tools/room-design/level-4/pediatric-exam/assets/processed/peds-table.png",
+    "tools/room-design/level-4/pediatric-exam/assets/processed/scale-counter.png",
+    "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp"
+  ],
+  "referencePolicy": "Five new-object calls had no input image paths; lamp-02 and chair-02 edits each supplied the retained original for that piece. No other generation inputs.",
+  "records": [
+    {
+      "id": "wound-recliner",
+      "generationId": "wound-recliner-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-0381870f-770d-4db0-81b9-c38408bca8a6.png",
+      "file": "originals/wound-recliner-01.png",
+      "prompt": "prompts/wound-recliner-01.prompt.txt",
+      "sentPrompt": "Use case: stylized-concept\nAsset type: one transparent game furniture sprite for GamifySurgery.\nPrimary request: a calm clinical power treatment recliner in STRICT LEFT-SIDE PROFILE. The tall padded backrest is on the LEFT/west, the seat is near the left third, and a broad EXTENDED LEG REST projects to the RIGHT/east, slightly angled upward, with one clean white paper pad. Empty chair; no person.\nStyle/medium: approved GS-015/Level 3 room furniture: softly painted pixel-art game sprite, crisp dark olive outlines, restrained textured highlights, simplified readable forms. Elevated-front orthographic camera, viewing the near side and a small amount of the top, no isometric diagonal floor, no perspective convergence.\nComposition/framing: a single isolated complete object, generous clear transparent margins on every side. Overall visible object proportion about 1.30 wide by 0.98 tall. Backrest on left; seat surface at about 43 percent down from the top and about 28 percent across from the left. Keep an OPEN near-side seat edge with NO armrest across the seating area so an existing east-facing seated character can draw over the cushion naturally. Leg rest remains visibly extended right, not folded down. Full metal pedestal base and floor contacts visible.\nColor palette/materials: blue-grey upholstered backrest, seat and leg rest; muted steel power base, simple tiny foot pedal; off-white paper pad only on the leg rest. Light from upper left, faint contact shadow only.\nScene/backdrop: genuine transparent alpha background. No room, walls or floor.\nConstraints: one object, no collage, no patient, no staff, no wounds, no blood, no body detail, no exposed medical supplies, no logos, no readable text, no symbols or writing, no labels, no watermark. Preserve all edges. Do not create a front-facing armchair or a three-quarter chair; the backrest must remain on the left and the extended leg rest on the right.",
+      "inputReferences": [],
+      "inspection": "Accepted: strict side profile, left backrest, open seat edge, extended right leg rest with paper pad, full power pedestal and intact edges.",
+      "selected": false,
+      "selectionReason": "Superseded by the owner-requested leg-rest removal on 2026-10-08; original inspection and bytes retained."
+    },
+    {
+      "id": "exam-lamp",
+      "generationId": "exam-lamp-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-7a99b92a-aaa3-4433-aed8-d5d2c15f4720.png",
+      "file": "originals/exam-lamp-01.png",
+      "prompt": "prompts/exam-lamp-01.prompt.txt",
+      "sentPrompt": "Use case: stylized-concept\nAsset type: one transparent game furniture sprite for GamifySurgery.\nPrimary request: a narrow floor-standing clinical examination lamp, one complete object with a small weighted round base, a slender vertical metal pole, a compact articulated upper arm bending toward the LEFT, and a small round lamp head casting a soft warm glow.\nStyle/medium: GS-015/Level 3 softly painted pixel-art game furniture, crisp dark olive outlines, restrained textured highlights, simplified readable forms; elevated-front orthographic view with a little visible top surface, no isometric floor and no converging perspective.\nComposition/framing: tall and narrow, overall visible proportion 0.36 wide by 1.36 high; the articulated arm and round head stay within that narrow silhouette. Entire lamp including pole, weighted base, and faint contact shadow must fit with generous transparent margins. The head is directed down and slightly left.\nColor palette/materials: muted warm off-white shade, dark sage fittings, grey steel pole and base, small amber light inside the head. Light from upper left; faint contact shadow only.\nScene/backdrop: genuine transparent alpha, no room or floor.\nConstraints: one isolated lamp, no characters, no wounds, no blood or body detail, no instruments, no logos, no readable text, no labels or watermark. No large emitted light cone, no wide boom, no clipped frame.",
+      "inputReferences": [],
+      "inspection": "Rejected after native fit: wide arm reduces visible lamp height to 439/652 native pixels, too short for the brief.",
+      "selected": false
+    },
+    {
+      "id": "ostomy-shelf",
+      "generationId": "ostomy-shelf-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-b5364b0f-ece5-4008-aff0-883c6de9b227.png",
+      "file": "originals/ostomy-shelf-01.png",
+      "prompt": "prompts/ostomy-shelf-01.prompt.txt",
+      "sentPrompt": "Use case: stylized-concept\nAsset type: one transparent game furniture sprite for GamifySurgery.\nPrimary request: a floor-standing open wooden clinic supply shelving unit with three tidy shelves holding only plain closed packaged supply boxes. White, pale blue and beige boxes have simple coloured bands, with absolutely no writing or symbols.\nStyle/medium: approved GS-015/Level 3 softly painted pixel-art furniture, crisp dark olive outlines, restrained wood grain and highlights, simple readable shapes. Elevated FRONT orthographic view with a little visible top, near-square frontal sides, no isometric diagonal view or perspective convergence.\nComposition/framing: one complete shelf including top, both uprights and floor feet; visible silhouette proportion 0.92 wide by 1.24 tall. Simple warm wood frame, no doors. Each shelf has a few neatly arranged plain boxes of comparable simple shapes, all packages closed. Generous transparent clear space on every side; keep the shelf tall.\nColor palette/materials: muted honey-brown wood, quiet cream, beige and pale blue packages with sage or blue bands. Upper-left lighting, faint contact shadow only.\nScene/backdrop: genuine transparent alpha; no wall, floor or surrounding scene.\nConstraints: no loose clinical items or devices, no exposed supplies, no illustrations, no anatomy or body detail, no wounds or blood, no persons, no ostomy equipment visible, no logos, no readable text, no labels, no numbers, no watermark. One single object.",
+      "inputReferences": [],
+      "inspection": "Accepted: front elevated orthographic three-level warm wooden shelving; all supplies are plain closed packages with coloured bands; full feet.",
+      "selected": true
+    },
+    {
+      "id": "dressing-cart",
+      "generationId": "dressing-cart-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-039703b2-09ba-4ad6-8f3d-7cc15462fed7.png",
+      "file": "originals/dressing-cart-01.png",
+      "prompt": "prompts/dressing-cart-01.prompt.txt",
+      "sentPrompt": "Use case: stylized-concept\nAsset type: one transparent game furniture sprite for GamifySurgery.\nPrimary request: a compact four-drawer clinic supply cart on small casters. Exactly FOUR vertically stacked drawers with small coloured pull tabs, and only a few plain closed packaged boxes on its flat top. No exposed supplies.\nStyle/medium: approved GS-015/Level 3 softly painted pixel-art furniture, crisp dark olive outlines, restrained highlights and simple readable forms. Elevated FRONT orthographic camera with a little visible top surface, no isometric diagonal floor, no perspective convergence.\nComposition/framing: one complete compact tall cart, silhouette proportion about 0.56 wide by 0.86 tall; all four drawers, both side edges, caster wheels and faint contact shadow intact. Generous clear transparent margins. Top boxes are simple cream and pale-blue rectangles with solid plain coloured bands only.\nColor palette/materials: warm off-white cabinet, muted grey frame and small casters, quiet sage, blue, beige and muted peach drawer tabs. Upper-left lighting, faint contact shadow only.\nScene/backdrop: genuine transparent alpha; no room, wall or floor.\nConstraints: no characters, no loose tools, no gauze, no fluid containers, no exposed clinical supplies, no wounds, blood or body detail, no readable text, no numbers, no logos or labels, no watermark, no collage. Exactly four drawers.",
+      "inputReferences": [],
+      "inspection": "Accepted: exactly four drawers, coloured tabs, only plain packaged boxes on top, casters intact; correct frontal elevated view.",
+      "selected": true
+    },
+    {
+      "id": "hygiene-sign",
+      "generationId": "hygiene-sign-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-f8006349-ada3-46b6-bdc2-f4f471cd51e5.png",
+      "file": "originals/hygiene-sign-01.png",
+      "prompt": "prompts/hygiene-sign-01.prompt.txt",
+      "sentPrompt": "Use case: stylized-concept\nAsset type: one transparent wall-decor game sprite for GamifySurgery.\nPrimary request: a small calm hand-hygiene wall poster, a simple warm cream rectangular panel with a solid green header strip and a single large blue water drop above a pair of simplified hand pictograms.\nStyle/medium: approved GS-015/Level 3 painted game furniture; crisp dark olive outer outline, softly textured cream paper, clean simple pictograms; FRONT orthographic flat wall-mounted view, no isometric tilt.\nComposition/framing: one isolated complete rectangle, visible proportion 0.30 wide by 0.36 tall, broad readable green header with NO text, centered blue drop and simple sage hand icons beneath; generous genuine transparent margins around all edges. No frame text, no additional badge.\nLighting/mood: soft upper-left lighting; no floor shadow.\nScene/backdrop: genuine transparent alpha, no wall or room.\nConstraints: absolutely NO writing, letters, numbers, logos, captions or readable text anywhere. No body illustration beyond abstract hand pictograms, no clinical detail, no wounds or blood, no characters, no brands, no watermark, no collage. One poster only.",
+      "inputReferences": [],
+      "inspection": "Accepted: cream poster with blank green header, blue water drop and abstract hand icons; no writing; flat frontal wall view.",
+      "selected": true
+    },
+    {
+      "id": "exam-lamp",
+      "generationId": "exam-lamp-02",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-4319f549-fa68-41a9-a419-ebd857225b67.png",
+      "file": "originals/exam-lamp-02.png",
+      "prompt": "prompts/exam-lamp-02.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit\nEdit target: the attached transparent clinical exam-lamp sprite.\nChange ONLY its proportions to fit a tall, narrow native game sprite with visible width-to-height ratio about 0.25 (0.36 wide by 1.36 high). The current left-reaching articulated arm is too wide: bring the left lamp head much closer to the vertical pole, shorten the diagonal arm substantially, and reduce the lamp head and weighted base diameter slightly. Keep the pole tall, straight, and continuous. Keep an articulated upper joint and a small round head pointed down-left with the same warm light.\nPreserve the exact softly painted GS-015 game style, upper-left light, muted cream/olive/steel materials, dark outlines, full weighted base, intact edges, and genuine transparent alpha background. One complete isolated object with clear transparent margins. No room, floor, characters, writing, logos, labels or watermark. No visible clinical supplies or body detail. Do not merely put the old wide lamp on a tall canvas; the object silhouette itself must be about four times taller than wide.",
+      "inputReferences": [
+        "tools/room-design/level-4/wound-ostomy/assets/originals/exam-lamp-01.png"
+      ],
+      "inspection": "Accepted: compact articulated arm and head give tall narrow silhouette. Initial apparent halo checked: all surrounding halo alpha is below 8/255 and normal documented fringe cleanup removes it; opaque object unchanged, full base and edges.",
+      "selected": true
+    },
+    {
+      "id": "wound-recliner",
+      "generationId": "wound-recliner-02",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "toolMethod": "image_gen.imagegen",
+      "transparentBackground": true,
+      "builtInSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11c30-af0f-7290-8ee0-3e3aeea9c81a\\exec-4794c470-496f-4445-ad05-6104aecf66a5.png",
+      "file": "originals/wound-recliner-02.png",
+      "prompt": "prompts/wound-recliner-02.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit\nAsset type: transparent GamifySurgery treatment-chair furniture sprite.\nInput image: wound-recliner-01.png is the EDIT TARGET, not a loose style reference.\nPrimary request: remove the entire extended leg rest projecting to the RIGHT, including its white paper pad, right-hand hinge and support linkage. The resulting object is a compact upright treatment chair in strict side profile: backrest on the LEFT, a normal blue-grey seat ending cleanly at its front edge on the RIGHT, with completely open transparent space beneath and in front of the seat so the existing seated patient's legs hang straight down.\nPreserve the existing chair's backrest, head cushion, seat cushion, metal pedestal base, feet and small foot pedal as closely as possible. Preserve their relative dimensions, positions, upper-left lighting, softly painted GS-015/Level 3 game-art finish, dark outlines and elevated-front orthographic side-view camera. Keep the open near-side seat edge; do not add an armrest.\nKeep the original wide transparent canvas framing if possible, with unused transparent space to the right where the leg rest was. Show the entire base and backrest with clear margins. Do not enlarge the compact chair to fill the former full recliner width.\nScene/backdrop: genuine transparent alpha background. One empty chair only; no room, walls or floor.\nConstraints: NO leg rest, NO footrest, NO calf support, NO extended padded section or right-hand linkage, NO white paper pad. No characters, no anatomy, no clinical procedures or visible clinical detail. No logos, readable text, labels or watermark.",
+      "inputReferences": [
+        "tools/room-design/level-4/wound-ostomy/assets/originals/wound-recliner-01.png"
+      ],
+      "inspection": "Accepted after original, native sprite and five actual-renderer views: side-view blue-grey treatment chair with clean front seat edge and no leg rest, paper pad or right-hand linkage; retained pedestal/feet/pedal and transparent margins. Existing east-facing patient sits naturally with legs down; source seat [510,534], reviewed scale preserved; 0.311 proof-pixel refit. Other art and clinician unchanged.",
+      "selected": true,
+      "sourcePoints": {
+        "seat": [
+          510,
+          534
+        ]
+      },
+      "packing": {
+        "kind": "preserve_reviewed_chair_scale",
+        "scale": 0.4396551724137931,
+        "leftPixels": 6,
+        "baselineMetadata": "../proof/revisions/20261008-before-leg-rest-removal/assets/processed/metadata.json",
+        "baselineMetadataSha256": "A0FB90C31CC594E2D28E71E3F20B71156DEC071CE677A9DA46282C13EFB79C36",
+        "baselineNativeSha256": "7BAFA5AFF047F312430AF231522451E2358E7CD00F31C018C4FAFB3E3ACFF1CB",
+        "basis": "Keep reviewed 624x470 canvas, exact uniform downsample scale and left placement. Compact chair does not expand into the old leg-rest space. Bottom remains registered to its actual opaque base."
+      }
+    }
+  ]
+}

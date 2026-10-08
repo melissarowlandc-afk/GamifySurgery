@@ -1,0 +1,46 @@
+{
+  "founderChair": {
+    "file": "founder-chair.webp",
+    "canvas": [
+      412,
+      465
+    ],
+    "source": "tools/room-design/level-4/radiology-reading/proof/processed-assets/chair-northwest.webp",
+    "anchor": [
+      200,
+      463
+    ],
+    "seat": [
+      200,
+      296
+    ],
+    "scale": 0.2694610778443114,
+    "approval": "tools/room-design/level-4/radiology-reading/approval-2026-10-07.md",
+    "sha256": "4e6dcfc16cb6375cd21ada868ad47e6b02207bc183cec0c2b47db0cafcb3f89e"
+  },
+  "founderFront": {
+    "file": "founder-chair-front.png",
+    "cutoffY": 296,
+    "contract": "tools/room-design/level-4/radiology-reading/proof/asset-contract.json#chairFrontMasks.northwest",
+    "method": "Copy approved prepared pixels at y>=296; no repaint.",
+    "sha256": "49117da122a5d268087809d35ae2797ff9ef4f1fc532a2fc1a675e651b36e089"
+  },
+  "visitorChair": {
+    "file": "visitor-chair.png",
+    "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+    "sourceRect": [
+      8,
+      748,
+      315,
+      369
+    ],
+    "approval": "Approved Waiting Room revision 2, reused by approved Pediatric Exam.",
+    "sha256": "a4f560a793a5089d7a30423038d22b0a6933d6775905fcf74fb27fb87bc6f6d8"
+  },
+  "visitorFront": {
+    "file": "visitor-chair-front.png",
+    "source": "tools/room-design/level-4/pediatric-waiting/assets/derived/armchair-west-front.png",
+    "approval": "tools/room-design/level-4/pediatric-waiting/approval-2026-10-08.md",
+    "sha256": "4c39536cec6fc7d17a2d078c2db42b9f18528ca062836dbd19daeffe123e31e8"
+  }
+}

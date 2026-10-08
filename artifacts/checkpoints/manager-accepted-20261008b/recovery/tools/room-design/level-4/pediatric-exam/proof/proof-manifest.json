@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "status": "owner_approved_stool_revision_pending_manager_validation",
+  "designApproval": true,
+  "ownerApproval": {
+    "date": "2026-10-08",
+    "quote": "Remove the 'backs' on rolling stools and just have the clinician layer on top of the stool. Then we don't have to worry about the back funniness. Otherwise this is approved.",
+    "ownerDesign": "approved_with_requested_revision",
+    "revisionImplemented": true,
+    "managerBrowserValidation": "pending"
+  },
+  "runtimeIntegration": false,
+  "completeArtwork": true,
+  "reviewURL": "http://127.0.0.1:4191/tools/room-design/level-4/pediatric-exam/proof/index.html",
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "ownerPlaytestOrigin": "http://127.0.0.1:4173",
+  "layoutBaselineSha256": "228DD8D3C66CAD9DB38533E9127828E65F2365CCD6AA6790EC6373DC2DB554E9",
+  "actorBaselineSha256": "606B1BF7E830F411DDCAA7851C582AA619F87E390F2827564857C5A93643B22E",
+  "presentationContractSha256": "4136EA828B2AC4E223D36588A58DC081A753AF5A2C5A6C9D343CFB072F568D74",
+  "preparedMetadataSha256": "3C11D918D1D33921006F399FA7C21C9E1DCC4734438A01F59F989160C55566C6",
+  "stoolDerivationManifestSha256": "E8AA64819C0A01A6C9CA575654ADD4520CFBFCB3C6E40593AF01B197B45E0D01",
+  "stoolDerivation": {
+    "schemaVersion": 1,
+    "date": "2026-10-08",
+    "reason": "Owner 2026-10-08: remove rolling-stool backs and draw the clinician entirely above the stool; otherwise the room is approved.",
+    "ownerQuote": "Remove the 'backs' on rolling stools and just have the clinician layer on top of the stool. Then we don't have to worry about the back funniness. Otherwise this is approved.",
+    "source": {
+      "path": "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+      "sha256": "0532E455112D364B21B1AE6D1FD482593C76357D1A3E73D966C9BD18291C9722",
+      "sourceRect": [
+        8,
+        2448,
+        266,
+        427
+      ],
+      "approved": true,
+      "modified": false
+    },
+    "output": {
+      "file": "stool-backless.png",
+      "canvas": [
+        266,
+        427
+      ],
+      "sourceRect": [
+        0,
+        0,
+        266,
+        427
+      ],
+      "sha256": "94624408D870AF708837547537D5FCC8ECE96B49CC15B52B5048BF5D0260C399",
+      "opaqueBounds": {
+        "left": 3,
+        "top": 104,
+        "right": 261,
+        "bottom": 423,
+        "width": 259,
+        "height": 320,
+        "pixels": 38160,
+        "edgeAlphaMax": 2
+      }
+    },
+    "derivation": {
+      "method": "Native RGBA mask plus same-row linear interpolation from approved cushion-edge pixels; no new generation or rescaling.",
+      "clearRows": [
+        0,
+        104
+      ],
+      "repair": {
+        "left": 110,
+        "rightExclusive": 150,
+        "top": 104,
+        "bottomExclusive": 207,
+        "leftSourceX": 109,
+        "rightSourceX": 150
+      },
+      "removedBackPixels": 17838,
+      "repairedPixels": 4120,
+      "retainedPixels": 81798,
+      "maxRetainedChannelDelta": 0,
+      "nativeAlphaEncoding": {
+        "maxRepairChannelDelta": 1,
+        "repairChangedChannels": 78,
+        "alphaChanged": false,
+        "basis": "Native Canvas premultiplied-alpha PNG round trip; at most one RGB value on the repaired strip, zero change to retained approved pixels."
+      },
+      "retained": "Every pixel outside the upper-back mask and narrow cushion repair is unchanged, including the seat flanks, entire column/neck, lever and wheel base. Canvas/registration unchanged."
+    },
+    "renderer": {
+      "singleStoolLayer": true,
+      "clinicianAboveEntireStool": true,
+      "stoolForegroundLayers": 0
+    },
+    "approval": {
+      "ownerDesign": "approved_with_requested_revision",
+      "revisionImplemented": true,
+      "managerBrowserValidation": "pending"
+    }
+  },
+  "dataSha256": "517D554C48C7CEBFCCAE1AEA0AC06ED501B5B0779C3EFFE87805C7C900AA5C65",
+  "rendererSha256": "617AAFAA142662587B4D44930E162663E70B637A3BF2FF32C8D99821BBF31F97",
+  "geometrySha256": "B089634B2D7A993806A0DF2D76733EA676151B94914BC61701ADB502A6275443",
+  "preparedHashes": {
+    "peds-table": "BCB0D9FEA19ECF4B469EB579AE772C334DDD92ACAB4B5148F6C6C2F52D8C9337",
+    "scale-counter": "56019BD9D51AE0803516E2491830503C9D81FFF64443F2E15AFDB025B2206ABB",
+    "growth-chart": "BDA4F96A37941663E942A06A78B71061EC2A036AD80E7E8CDBE339F423594074",
+    "animal-print": "4EC70A711F18DE0AD04DB2ED7650764569270291846C9CA9783547CA15EC30C1",
+    "toy-bin": "645F17FA2474FE9A85EF851F3DF4753F9F21D11D4D55ED365F1A30A35EE709B3"
+  },
+  "reusedApproved": {
+    "design:reuse:stool": {
+      "src": "../assets/derived/stool-backless.png",
+      "sourceRect": [
+        0,
+        0,
+        266,
+        427
+      ],
+      "size": [
+        266,
+        427
+      ],
+      "reusedApproved": true,
+      "sha256": "94624408D870AF708837547537D5FCC8ECE96B49CC15B52B5048BF5D0260C399",
+      "derivedForOwnerRevision": true,
+      "approvedSource": {
+        "path": "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+        "sha256": "0532E455112D364B21B1AE6D1FD482593C76357D1A3E73D966C9BD18291C9722",
+        "sourceRect": [
+          8,
+          2448,
+          266,
+          427
+        ],
+        "approved": true,
+        "modified": false
+      },
+      "derivationManifest": "../assets/derived/stool-backless-manifest.json"
+    },
+    "design:reuse:chair-west": {
+      "src": "../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceRect": [
+        8,
+        748,
+        315,
+        369
+      ],
+      "size": [
+        315,
+        369
+      ],
+      "reusedApproved": true,
+      "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+    },
+    "design:reuse:chair-west-front": {
+      "src": "../../pediatric-waiting/assets/derived/armchair-west-front.png",
+      "size": [
+        315,
+        369
+      ],
+      "sourceRect": [
+        0,
+        0,
+        315,
+        369
+      ],
+      "reusedApproved": true,
+      "derivedApproved": true,
+      "sha256": "4C39536CEC6FC7D17A2D078C2DB42B9F18528CA062836DBD19DAEFFE123E31E8"
+    }
+  },
+  "actorHashes": {
+    "level3-roster-v2.021/stand/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-south.png",
+      "sha256": "A629DAF60B2133A0C99E1E55CAAE70AFDD50A78C2595C60E1D521A8977B5DA4A"
+    },
+    "level3-roster-v2.021/stand/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-east.png",
+      "sha256": "768D10B90EFE69F350FF1F57F9A5D93509097BBA5EDBB17CDF416810689A94CE"
+    },
+    "level3-roster-v2.021/stand/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-west.png",
+      "sha256": "92511E2D856166961566BC80E90976A6F6AE92E231F7D794DA617BC7AAEFCF40"
+    },
+    "level3-roster-v2.021/stand/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-north.png",
+      "sha256": "5DD7CB4319B51D252C1136356599EBDFED41A483B03EE308F158514199D51A66"
+    },
+    "level3-roster-v2.021/sit/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-south.png",
+      "sha256": "2F298CFCAD3262299331BE0FA9FFB7522BDD23C7F8F6BEFD2E69BDF5C73A70D1"
+    },
+    "level3-roster-v2.021/sit/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-east.png",
+      "sha256": "A3F399442A5E2331964CF004B71692CA26BC9CB673DC7F1EA316E8DA0DD9DA76"
+    },
+    "level3-roster-v2.021/sit/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-west.png",
+      "sha256": "D44D9AA7EFAC5B7B54CFAE7F09292A97DAC9E08D66CA404C249F261B27896625"
+    },
+    "level3-roster-v2.021/sit/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-north.png",
+      "sha256": "CFC94A31B2F84E655A961E4085617677462EB859383E06EDF71F8758BA083E63"
+    },
+    "gs026-employee-001/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-south.png",
+      "sha256": "7979907BAC4842D359FA0674E538DCEF2630C8EDC6D5D5F53158811A5042A037"
+    },
+    "gs026-employee-001/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-east.png",
+      "sha256": "90D36B5A86BFFF12C7C9453EDE76197132C8F063CABE92172EB536668590F19B"
+    },
+    "gs026-employee-001/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-west.png",
+      "sha256": "597A21C19D7AE801E8F9D2E247D2E83F4784407BB2DF76B698B91D9034D7B59C"
+    },
+    "gs026-employee-001/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-north.png",
+      "sha256": "26C482846362FC7158FBF9F95A142F9077F98DCE11BAEECC208F9A9F388198E6"
+    },
+    "gs026-employee-001/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-south.png",
+      "sha256": "6C078939A735480A6F7A0DDE562B7DC91ACE912223FABB88839FE11C7D48471F"
+    },
+    "gs026-employee-001/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-east.png",
+      "sha256": "FA8F098658FED04A49FEA3799F9FA9F0FC4B94283A0C162CB629A981F6E2E156"
+    },
+    "gs026-employee-001/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-west.png",
+      "sha256": "494F42DFD26A48A357A1AC2343E84EA96B2475A9A3449E38FFCA72C6546A5188"
+    },
+    "gs026-employee-001/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-north.png",
+      "sha256": "7A4FCD7721B203774857497F3CD643561B39FF0F6D8C09FAE19209B32FC9981A"
+    },
+    "patient.adult.007/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-south.png",
+      "sha256": "646A8B470BEF5EA9630E0BDE54947E2C2032D5CEA3BFEBEC6BAAA74918510C4B"
+    },
+    "patient.adult.007/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "sha256": "21AC85D4A732C4408394C83A0478643A38460DCBBEB97791DD600CEE04F73F43"
+    },
+    "patient.adult.007/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-west.png",
+      "sha256": "A3301F718670AD11AE0A2AB6896E267A237400A84707363D4431FFF43B4F0390"
+    },
+    "patient.adult.007/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "sha256": "30AE01B8CD712B9F72606AAB169A276CD7254E6CAAA964CF81B6580DA06D5CD2"
+    },
+    "patient.adult.007/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-south.png",
+      "sha256": "CB8BB105B7568383F39AB33D25E4D1BB2758325F673E48F4B61ECFFBFB0C174E"
+    },
+    "patient.adult.007/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "sha256": "9FDE93F4ADE40A7E9A0EA91896ECE26FA0D45218998FDB3E94171C2861B75BF6"
+    },
+    "patient.adult.007/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "sha256": "0E8E9ACB6D3BDAABDC693EC4AF19F2D2B727E27D56FD72F6E0F8F7D4D808F324"
+    },
+    "patient.adult.007/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-north.png",
+      "sha256": "146257E99058DC5AFF36FF2933AC50D5E0079D3DAD5634D55E5F57868A1987DE"
+    }
+  },
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "privateRouteModel": {
+    "basis": "Walking routes use real source footprints plus actual prepared base alpha; static seating transitions are separate from radius-clear walking.",
+    "step": 0.025,
+    "actorRadius": 0.18,
+    "preservesSharedNavigation": true,
+    "staticSeatingSeparate": true
+  },
+  "seatRegistrations": [
+    {
+      "supportId": "table:patient",
+      "recordId": "pedsTable",
+      "characterId": "level3-roster-v2.021",
+      "category": "future-pediatric-presentation",
+      "group": "children",
+      "direction": "east",
+      "seat": [
+        0.66,
+        1.25
+      ],
+      "ground": [
+        0.66,
+        1.6
+      ],
+      "painterGround": 2.06,
+      "seatContactSource": [
+        65,
+        251
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "level3-roster-v2.021",
+        "contact": [
+          65,
+          251
+        ],
+        "method": "Inspected posterior column, final alpha >=160 edge in bounded hip region.",
+        "region": [
+          220,
+          265
+        ]
+      },
+      "basis": "Authored child seat and painter ground retained; measured real pediatric hip."
+    },
+    {
+      "supportId": "stool:clinician",
+      "recordId": "stool",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "direction": "west",
+      "seat": [
+        1.45,
+        1.2669924812030076
+      ],
+      "ground": [
+        1.45,
+        1.75
+      ],
+      "painterGround": 1.7501,
+      "seatContactSource": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "gs026-employee-001",
+        "contact": [
+          90,
+          239
+        ],
+        "method": "Inspected posterior column, final alpha >=160 edge in bounded hip region.",
+        "region": [
+          210,
+          260
+        ]
+      },
+      "fixtureSeatSource": [
+        133,
+        135
+      ],
+      "basis": "Actual cushion center retained. Owner requested a derived backless stool and the clinician entirely above its single complete layer."
+    },
+    {
+      "supportId": "parentChair",
+      "recordId": "parentChair",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "parents",
+      "direction": "west",
+      "seat": [
+        2.6533333333333333,
+        2.509206349206349
+      ],
+      "ground": [
+        2.52,
+        2.88
+      ],
+      "painterGround": 2.8801,
+      "seatContactSource": [
+        105,
+        222
+      ],
+      "sourceScale": 0.6865478271728273,
+      "fixtureSeatSource": [
+        210,
+        223
+      ],
+      "basis": "Approved waiting-room revision2 posterior/cushion contacts reused; parent behind copied front wood."
+    }
+  ],
+  "sourceGeometryUnchanged": true,
+  "sharedFilesChanged": false,
+  "browserValidation": "pending_manager"
+}

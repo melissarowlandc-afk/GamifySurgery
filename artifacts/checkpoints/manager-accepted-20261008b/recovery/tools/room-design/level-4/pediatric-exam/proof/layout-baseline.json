@@ -1,0 +1,976 @@
+{
+  "sourceSha256": "FFD029E54F481AC0C352B4B799A18A7B6C109B2DAB295EFB17ECF231F2916096",
+  "room": {
+    "proofId": "pediatric-exam",
+    "definitionId": "room.pediatric_examination",
+    "design": true,
+    "footprint": [
+      3,
+      3
+    ],
+    "shell": {
+      "tilePixels": 120,
+      "rearWallHeightPixels": 90,
+      "lowNorthHeightPixels": 29,
+      "sideCapWidthPixels": 14,
+      "southHeightPixels": 29,
+      "floorAlgorithm": "design",
+      "floorBase": "#e8f0ec",
+      "floorPalette": [
+        "#e8f0ec"
+      ],
+      "background": "#f3ead3",
+      "rearWall": "#9fd3c7",
+      "baseTrim": "#58735a",
+      "edgeTrim": "#294632",
+      "doorJamb": "#744a29",
+      "doorInsetPixels": 12
+    },
+    "records": [
+      {
+        "id": "pedsTable",
+        "assetId": "design:pe:table",
+        "sourceRect": [
+          0,
+          0,
+          187,
+          413
+        ],
+        "renderSizeTiles": [
+          0.78,
+          1.7226737967914438
+        ],
+        "destinationTopLeftTiles": [
+          0.09999999999999998,
+          0.327326203208556
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.49,
+          2.05
+        ],
+        "depthKey": 2.05,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "stool",
+        "assetId": "design:reuse:stool",
+        "sourceRect": [
+          8,
+          2448,
+          266,
+          427
+        ],
+        "renderSizeTiles": [
+          0.44,
+          0.7063157894736842
+        ],
+        "destinationTopLeftTiles": [
+          1.23,
+          1.0436842105263158
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          1.45,
+          1.75
+        ],
+        "depthKey": 1.75,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "scaleCounter",
+        "assetId": "design:pe:scale-counter",
+        "sourceRect": [
+          0,
+          0,
+          221,
+          245
+        ],
+        "renderSizeTiles": [
+          0.92,
+          1.0199095022624434
+        ],
+        "destinationTopLeftTiles": [
+          2.0100000000000002,
+          -0.7199095022624433
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          2.47,
+          0.3
+        ],
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N3",
+          "EA"
+        ],
+        "backedOwners": [
+          "N3"
+        ],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.06,
+          "top": 0.18,
+          "width": 0.82,
+          "height": 0.12
+        }
+      },
+      {
+        "id": "parentChair",
+        "assetId": "design:reuse:chair-west",
+        "sourceRect": [
+          8,
+          748,
+          315,
+          369
+        ],
+        "renderSizeTiles": [
+          0.8,
+          0.937142857142857
+        ],
+        "destinationTopLeftTiles": [
+          2.12,
+          1.9428571428571428
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          2.52,
+          2.88
+        ],
+        "depthKey": 2.88,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "toyBin",
+        "assetId": "design:pe:toy-bin",
+        "sourceRect": [
+          0,
+          0,
+          106,
+          101
+        ],
+        "renderSizeTiles": [
+          0.44,
+          0.4192452830188679
+        ],
+        "destinationTopLeftTiles": [
+          0.12000000000000002,
+          2.440754716981132
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.34,
+          2.86
+        ],
+        "depthKey": 2.86,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [
+          "S1",
+          "WC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.21,
+          "top": 2.74,
+          "width": 0.26,
+          "height": 0.1
+        }
+      },
+      {
+        "id": "growthChart",
+        "assetId": "design:pe:growth-chart",
+        "sourceRect": [
+          0,
+          0,
+          86,
+          187
+        ],
+        "renderSizeTiles": [
+          0.36,
+          0.7827906976744186
+        ],
+        "destinationTopLeftTiles": [
+          1.27,
+          -0.8
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N2"
+        ],
+        "backedOwners": [
+          "N2"
+        ],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "animalPrint",
+        "assetId": "design:pe:animal-print",
+        "sourceRect": [
+          0,
+          0,
+          82,
+          86
+        ],
+        "renderSizeTiles": [
+          0.34,
+          0.3565853658536586
+        ],
+        "destinationTopLeftTiles": [
+          0.38,
+          -0.66
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N1"
+        ],
+        "backedOwners": [
+          "N1"
+        ],
+        "touchupKeepWhenBacked": false
+      }
+    ],
+    "solids": [
+      {
+        "id": "pedsTable",
+        "footprint": {
+          "left": 0.12,
+          "top": 0.5,
+          "width": 0.74,
+          "height": 1.5
+        },
+        "endpoint": true
+      },
+      {
+        "id": "parentChair",
+        "footprint": {
+          "left": 2.24,
+          "top": 2.38,
+          "width": 0.56,
+          "height": 0.5
+        },
+        "endpoint": true
+      }
+    ],
+    "procedural": [],
+    "supports": [
+      {
+        "id": "table:patient",
+        "role": "examination-patient",
+        "pose": "exam-table",
+        "facing": "east",
+        "seat": {
+          "x": 0.66,
+          "y": 1.25
+        },
+        "ground": {
+          "x": 0.66,
+          "y": 1.6
+        },
+        "fixtureGround": {
+          "x": 0.49,
+          "y": 2.06
+        },
+        "character": "level3-roster-v2.021"
+      },
+      {
+        "id": "stool:clinician",
+        "role": "examination-clinician",
+        "pose": "seated",
+        "facing": "west",
+        "seat": {
+          "x": 1.45,
+          "y": 1.39
+        },
+        "ground": {
+          "x": 1.45,
+          "y": 1.75
+        },
+        "fixtureGround": {
+          "x": 1.45,
+          "y": 1.75
+        }
+      },
+      {
+        "id": "parentChair",
+        "role": "waiting-seat",
+        "pose": "seated",
+        "facing": "west",
+        "seat": {
+          "x": 2.52,
+          "y": 2.65
+        },
+        "ground": {
+          "x": 2.52,
+          "y": 2.88
+        },
+        "fixtureGround": {
+          "x": 2.52,
+          "y": 2.88
+        }
+      }
+    ],
+    "floor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 360,
+        "color": "#e8f0ec"
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "line",
+        "x": 30,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 60,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 90,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 150,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 180,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 210,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 270,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 300,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 330,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 30,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 60,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 90,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 150,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 180,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 210,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 270,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 300,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 330,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      }
+    ],
+    "notes": [
+      "Design only (stand-in art for new pieces; stool and parent chair reuse approved furniture).",
+      "Different from the adult Exam Room: the table runs north-south along the west wall, so the child sits facing east toward the doctor's stool.",
+      "Infant-scale counter with sink (north-east), giraffe growth chart and an animal print on the wall, parent chair facing the table, toy bin in the corner."
+    ]
+  },
+  "navigation": {
+    "roomDefinitionId": "room.pediatric_examination",
+    "width": 3,
+    "height": 3,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "pedsTable",
+        "footprint": {
+          "left": 0.12,
+          "top": 0.5,
+          "width": 0.74,
+          "height": 1.5
+        },
+        "blockedTiles": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "endpointOnlyContacts": [
+          {
+            "x": 0,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "parentChair",
+        "footprint": {
+          "left": 2.24,
+          "top": 2.38,
+          "width": 0.56,
+          "height": 0.5
+        },
+        "blockedTiles": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "endpointOnlyContacts": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "doorThresholdExceptions": [
+      {
+        "side": "north",
+        "offset": 0
+      },
+      {
+        "side": "west",
+        "offset": 0
+      },
+      {
+        "side": "west",
+        "offset": 1
+      },
+      {
+        "side": "south",
+        "offset": 2
+      },
+      {
+        "side": "east",
+        "offset": 2
+      }
+    ],
+    "primaryAnchor": {
+      "x": 0,
+      "y": 1
+    },
+    "waitingAnchors": [
+      {
+        "x": 2,
+        "y": 2
+      }
+    ],
+    "staffAnchor": {
+      "x": 1,
+      "y": 1
+    },
+    "patientCareAnchor": {
+      "x": 0,
+      "y": 1
+    },
+    "clinicianCareAnchor": {
+      "x": 1,
+      "y": 1
+    }
+  },
+  "assets": {
+    "design:pe:table": {
+      "src": "../../level-4/pediatric-exam/stand-in/peds-table.png",
+      "size": [
+        187,
+        413
+      ]
+    },
+    "design:reuse:stool": {
+      "src": "../../../../apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+      "sourceRect": [
+        8,
+        2448,
+        266,
+        427
+      ],
+      "size": [
+        266,
+        427
+      ]
+    },
+    "design:pe:scale-counter": {
+      "src": "../../level-4/pediatric-exam/stand-in/scale-counter.png",
+      "size": [
+        221,
+        245
+      ]
+    },
+    "design:reuse:chair-west": {
+      "src": "../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceRect": [
+        8,
+        748,
+        315,
+        369
+      ],
+      "size": [
+        315,
+        369
+      ]
+    },
+    "design:pe:toy-bin": {
+      "src": "../../level-4/pediatric-exam/stand-in/toy-bin.png",
+      "size": [
+        106,
+        101
+      ]
+    },
+    "design:pe:growth-chart": {
+      "src": "../../level-4/pediatric-exam/stand-in/growth-chart.png",
+      "size": [
+        86,
+        187
+      ]
+    },
+    "design:pe:animal-print": {
+      "src": "../../level-4/pediatric-exam/stand-in/animal-print.png",
+      "size": [
+        82,
+        86
+      ]
+    }
+  }
+}

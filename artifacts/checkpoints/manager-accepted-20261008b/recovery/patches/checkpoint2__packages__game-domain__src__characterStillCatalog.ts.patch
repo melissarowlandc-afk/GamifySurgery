@@ -1,0 +1,20 @@
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -133,6 +133,17 @@
+   eligibleStaffRoleDefinitionIds: [role] as readonly string[],
+ }));
+ 
++// Owner-requested hiring order: Mark, Helly, Irving, then Dylan. Saved staff
++// retain their looks; other roles and exhausted preferences use seeded selection.
++export const PREFERRED_STAFF_STILL_IDS_BY_ROLE: Readonly<Partial<Record<string, readonly CharacterStillId[]>>> = {
++  "staff.radiologist": [
++    id("level3-roster-v2.001"),
++    id("level3-roster-v2.002"),
++    id("level3-roster-v2.003"),
++    id("level3-roster-v2.004"),
++  ],
++};
++
+ const LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS = [
+   ...[
+     ["021", 6], ["022", 5], ["023", 7], ["024", 6], ["025", 9], ["026", 10],

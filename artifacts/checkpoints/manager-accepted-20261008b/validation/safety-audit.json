@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-08T21:43:24.309542+00:00",
+  "scannedArchiveFilesAtAudit": 1018,
+  "logicalSourcePathsChecked": 860,
+  "credentialsOrSecretsDetected": 0,
+  "privateKeyOrTokenPatternMatches": [],
+  "gitCheckIgnore": {
+    "command": "git check-ignore --no-index --stdin -z",
+    "exitCode": 1,
+    "pathsChecked": 1878,
+    "ignoredPaths": []
+  },
+  "utf8BomFiles": [],
+  "invalidUtf8TextFiles": [],
+  "ownerSaveDataOrBrowserStorageIncluded": false,
+  "ownerSaveDataOrBrowserStorageRead": false,
+  "campaignShapedJsonPayloadsDetected": [],
+  "personalClinicalIdentifiersDetected": [],
+  "emailContactsDetected": [],
+  "personalClinicalDataIncluded": false,
+  "gameActorNamesAndSyntheticFixtureSourceOnly": true,
+  "syntheticFixtureBoundary": "Owner-report regression source tests reconstruct game actor facts using ordinary factories/reducers; no owner serialized campaign, browser database or storage export is copied.",
+  "proprietarySourceFilesIncluded": false,
+  "fullArticlesOrSourceExcerptsIncluded": false,
+  "sourceBoundary": "Existing original software/design/provenance and generated artwork only. No clinical corpus/PDF or new clinical web retrieval. No clinical source payload is newly included.",
+  "clinicalReview": {
+    "status": "PASS",
+    "totals": {
+      "AUTHORING_CONCEPTS": 182,
+      "CASE_REVIEWS": 620,
+      "CLAIMS": 364,
+      "QUESTIONS": 728,
+      "SOURCES": 186
+    },
+    "publicReleaseAuthorized": false,
+    "clinicalApprovalClaimed": false
+  },
+  "clinicalApprovalClaimed": false,
+  "rawIgnoredLogsOrPrivateInputsArchived": false,
+  "ignoredEvidenceUse": "Only named source-hash receipts and small historical suite-output transcripts copied from ignored worker scratch; original/output hashes bind each. UTF-16 logs are decoded to UTF-8 without BOM, preserving text exactly. No raw scratch tree, owner save, activity export or large profile is included.",
+  "knownActiveWorkerExclusions": [
+    "docs/design/room-economy-audit-20261008.md",
+    "tools/economy-audit/"
+  ],
+  "technicalPathMetadata": "Existing provenance retains repository/machine paths, thread IDs and disposable QA origins; no account credentials or browser session content."
+}

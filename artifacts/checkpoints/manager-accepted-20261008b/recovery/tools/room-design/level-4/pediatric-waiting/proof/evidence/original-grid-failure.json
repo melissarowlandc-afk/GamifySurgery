@@ -1,0 +1,940 @@
+{
+  "status": "FAIL",
+  "kind": "Node-only validation",
+  "error": "All door/backing/route/actual-base cases: [{\"mask\":0,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":0,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":1,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":1,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":2,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":2,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":3,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":3,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":4,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":4,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":5,\"doors\":[\"N4\"],\"routes\":6,\"unreachable\":[\"N4->(0,2)\",\"N4->(1,0)\",\"N4->(1,2)\",\"N4->(2,2)\"],\"conflicts\":[],\"doorZone\":[]},{\"mask\":5,\"doors\":[\"EA\"],\"routes\":6,\"unreachable\":[\"EA->(0,2)\",\"EA->(1,0)\",\"EA->(1,2)\",\"EA->(2,2)\"],\"conflicts\":[],\"doorZone\":[]}]",
+  "details": [
+    {
+      "name": "Isolated 4x4 pediatric room",
+      "pass": true
+    },
+    {
+      "name": "Candidate remains unapproved and outside runtime",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout footprint",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout shell",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout solids",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout supports",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout floor",
+      "pass": true
+    },
+    {
+      "name": "Frozen layout procedural",
+      "pass": true
+    },
+    {
+      "name": "Frozen navigation",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners bench",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners aquarium",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners armchair",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners toyChest",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners bookBin",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Frozen record geometry/owners clock",
+      "pass": true
+    },
+    {
+      "name": "Renderer metadata matches prepared receipt",
+      "pass": true
+    },
+    {
+      "name": "Preparation input hashes",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions aquarium",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile aquarium",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash aquarium",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha aquarium",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds aquarium",
+      "pass": true,
+      "details": [
+        6,
+        8,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit aquarium",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop aquarium",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor aquarium",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit aquarium",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor aquarium",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions kids-table",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile kids-table",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash kids-table",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha kids-table",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds kids-table",
+      "pass": true,
+      "details": [
+        7,
+        6,
+        7,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit kids-table",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop kids-table",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor kids-table",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds kid-stool",
+      "pass": true,
+      "details": [
+        6,
+        22,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit kid-stool",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds toy-chest",
+      "pass": true,
+      "details": [
+        6,
+        16,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit toy-chest",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit toyChest",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor toyChest",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions book-bin",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile book-bin",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash book-bin",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha book-bin",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds book-bin",
+      "pass": true,
+      "details": [
+        6,
+        13,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit book-bin",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop book-bin",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor book-bin",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit bookBin",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor bookBin",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds animal-prints",
+      "pass": true,
+      "details": [
+        6,
+        19,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit animal-prints",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds wall-clock-kids",
+      "pass": true,
+      "details": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit clock",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor clock",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/aquarium-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/aquarium-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/aquarium-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kids-table-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kids-table-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kids-table-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/toy-chest-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/toy-chest-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/toy-chest-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/wall-clock-kids-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/wall-clock-kids-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/wall-clock-kids-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kids-table-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kids-table-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kids-table-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/toy-chest-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/toy-chest-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/toy-chest-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-02.png",
+      "pass": true
+    },
+    {
+      "name": "Actor sources, scale and anchors frozen",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.021/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Approved reused furniture hash ../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "pass": true
+    },
+    {
+      "name": "Approved reused furniture hash ../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "pass": true
+    },
+    {
+      "name": "Read-only MRI/Reading Room/Level 3/GS015/stand-in/lab preservation",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Renderer and geometry build hashes",
+      "pass": true
+    },
+    {
+      "name": "All 16 wall segments are doors",
+      "pass": true
+    },
+    {
+      "name": "All door/backing/route/actual-base cases",
+      "pass": false,
+      "details": [
+        {
+          "mask": 0,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 0,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 1,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 1,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 2,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 2,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 3,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 3,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 4,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 4,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 5,
+          "doors": [
+            "N4"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "N4->(0,2)",
+            "N4->(1,0)",
+            "N4->(1,2)",
+            "N4->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        },
+        {
+          "mask": 5,
+          "doors": [
+            "EA"
+          ],
+          "routes": 6,
+          "unreachable": [
+            "EA->(0,2)",
+            "EA->(1,0)",
+            "EA->(1,2)",
+            "EA->(2,2)"
+          ],
+          "conflicts": [],
+          "doorZone": []
+        }
+      ]
+    }
+  ]
+}

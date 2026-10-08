@@ -1,0 +1,106 @@
+--- a/packages/game-domain/src/guidance-tips.ts
++++ b/packages/game-domain/src/guidance-tips.ts
+@@ -25,8 +25,10 @@
+ import { progressionMetricGuidance, progressionRemedyHasLiveCondition } from "./guidance-progression";
+ import type { DomainContext, GameState, EmployeeState, DiagnosticResourceRequirement, DiagnosticOrderPhase, PlacedRoom } from "./types";
+ import type { GuidanceTipAction, GuidanceTipCandidate, GuidanceTipsState } from "./guidance-tip-types";
+-
+-const money = (value: number) => `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
++import { guidanceTopicsForTip, recordGuidanceTopicExposure } from "./guidance-topics";
++
++const moneyFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
++const money = (value: number) => `$${moneyFormatter.format(value)}`;
+ const ongoing = (status: string) => !["completed", "cancelled", "abandoned"].includes(status);
+ const keyPoint = (point: { x: number; y: number }) => `${point.x},${point.y}`;
+ 
+@@ -38,7 +40,8 @@
+ }
+ 
+ export function guidanceIntroductoryEncountersComplete(state: GameState): boolean {
+-  return [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].every((id) => state.encounters[id]?.resolutionReason === "completed");
++  return state.facilityLevel >= 1 || [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].every((id) =>
++    state.encounters[id]?.lifecycle === "resolved" && state.encounters[id]?.resolutionReason === "completed");
+ }
+ 
+ /** Care-aware Founder availability, also repeated by the normal command. */
+@@ -176,9 +179,37 @@
+   const work = demand(state);
+   const serviceIsFor = (operation: GameState["serviceOperations"][number], roomId: string) =>
+     (operation.frozenOperationPhases ?? getServiceIncomeLine(operation.incomeLineId)?.operation?.phases ?? []).some((phase) => phase.roomDefinitionId === roomId);
+-  const installed = (id: string) => state.employees.filter((employee) => employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id, context));
+-  const built = (id: string) => state.rooms.filter((room) => room.roomDefinitionId === id);
+-  const R = (id: string) => built(id).filter((room) => isRoomOperationalForFacilityWork(state, room.id, context));
++  // Predicates share one unchanged snapshot. Reuse eligibility within this
++  // evaluation only; edits, movement and timers are rechecked on the next call.
++  const installedByRole = new Map<string, EmployeeState[]>();
++  const builtByDefinition = new Map<string, PlacedRoom[]>();
++  const operationalByDefinition = new Map<string, PlacedRoom[]>();
++  const installed = (id: string) => {
++    let matches = installedByRole.get(id);
++    if (!matches) {
++      matches = state.employees.filter((employee) => employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id, context));
++      installedByRole.set(id, matches);
++    }
++    return matches;
++  };
++  const built = (id: string) => {
++    let matches = builtByDefinition.get(id);
++    if (!matches) {
++      matches = state.rooms.filter((room) => room.roomDefinitionId === id);
++      builtByDefinition.set(id, matches);
++    }
++    return matches;
++  };
++  const R = (id: string) => {
++    let matches = operationalByDefinition.get(id);
++    if (!matches) {
++      matches = built(id).filter((room) => isRoomOperationalForFacilityWork(state, room.id, context));
++      operationalByDefinition.set(id, matches);
++    }
++    return matches;
++  };
++  let cachedProgression: ReturnType<typeof getFacilityProgressionStatus> | undefined;
++  const progressionStatus = () => cachedProgression ??= getFacilityProgressionStatus(state, context);
+   const dirty = state.rooms.filter((room) => room.roomDefinitionId !== "room.hallway" && (room.cleanliness ?? 100) < context.balanceRelease.environment.evsRoomCleanlinessThreshold && isRoomOperationalForFacilityWork(state, room.id, context));
+   const liveRoleWork = (roleId: string) => work.services.some(({ phase, operation, queued }) =>
+     (queued || operation.status === "in_service") && (phase.staffRoleDefinitionIds.includes(roleId) || phase.providerRoleDefinitionIds?.includes(roleId))) ||
+@@ -369,7 +400,7 @@
+ 
+   // T26–T31: staffed care chains, measured capacity and maintained equipment.
+   const careChain = (roomId: string, nurse: string) => [requirement("room.periop_recovery", ["staff.periop_nurse"]), requirement(roomId, [nurse], true)];
+-  const unmetGoal = (id: string) => getFacilityProgressionStatus(state, context).requirements.some((goal) => goal.id === id && !goal.met);
++  const unmetGoal = (id: string) => progressionStatus().requirements.some((goal) => goal.id === id && !goal.met);
+   for (const [tip, roomId, nurse, goal] of [
+     ["tip.endoscopy.setup", "room.endoscopy", "staff.endoscopy_nurse", "progression.endoscopy_completion"],
+     ["tip.surgery.setup", "room.ambulatory_or", "staff.or_nurse", "progression.ambulatory_operation_completion"],
+@@ -442,7 +473,7 @@
+   if (state.cash < context.balanceRelease.emergencyGlp1.lowCashAlertThreshold && !installed("staff.glp1_np").length && emergency.eligible)
+     add("tip.cash.manual-consult", "cash", simple({ kind: "emergency_consult" }, `Emergency consult · +${money(emergency.payment)}`, "finance"),
+       { speaker: "Finance", values: { payment: money(emergency.payment) }, lastFixTick: state.emergencyGlp1.lastUsedAtFacilityTick });
+-  const progression = getFacilityProgressionStatus(state, context);
++  const progression = progressionStatus();
+   if (progression.eligible) add("tip.progression.next-step", `advance:${state.facilityLevel}`, simple({ kind: "level_up" }, "Advance level", "progression"),
+     { priority: 2, speaker: "Goals", values: { guidance: `Advance the clinic to Level ${progression.nextFacilityLevel}.` } });
+   else if (guidanceIntroductoryEncountersComplete(state)) {
+@@ -600,11 +631,12 @@
+   }
+   tips.rollingEmissionTicks = tips.rollingEmissionTicks.filter((emitted) => tick - emitted < GUIDANCE_TIP_POLICY.rollingWindowMinutes);
+   if (context.guidanceTipsDeliveryBlocked || guidanceHasLiveDireProblem(state, context)) { tips.lastDireAtTick = tick; return false; }
+-  if (state.openChartEncounterId || state.openEmployeeDiscussionId || state.environment.pendingFounderConsult ||
++  if (context.guidanceAttentionBlocked || state.openChartEncounterId || state.openEmployeeDiscussionId || state.environment.pendingFounderConsult ||
+     tips.lastDireAtTick !== null && tick - tips.lastDireAtTick < GUIDANCE_TIP_POLICY.resolvedCardQuietMinutes ||
+     tips.introductoryCompletedAtTick === null || tick - tips.introductoryCompletedAtTick < GUIDANCE_TIP_POLICY.introductoryQuietMinutes ||
+     tips.lastEmittedAtTick !== null && tick - tips.lastEmittedAtTick < GUIDANCE_TIP_POLICY.intervalMinutes || tips.rollingEmissionTicks.length >= GUIDANCE_TIP_POLICY.rollingLimit) return false;
+   const eligible = candidates.filter((candidate) => {
++    if (guidanceTopicsForTip(state, candidate.id, candidate.action).some((id) => context.guidanceBlockedTopicIds?.includes(id))) return false;
+     const definition = GUIDANCE_TIP_CATALOG.find((entry) => entry.id === candidate.id)!;
+     const age = tips.eligibleSince[candidateKey(candidate)];
+     const lastId = tips.lastEmittedById[candidate.id];
+@@ -627,6 +659,7 @@
+   tips.history.push({ id: `tip.occurrence.${tips.sequence++}`, tipId: candidate.id, targetKey: candidate.targetKey, rootKey: candidate.rootKey,
+     emittedAtTick: tick, variant, message, speaker: candidate.speaker });
+   tips.history = tips.history.slice(-GUIDANCE_TIP_POLICY.historyLimit);
++  recordGuidanceTopicExposure(state, guidanceTopicsForTip(state, candidate.id, candidate.action));
+   tips.lastEmittedAtTick = tick;
+   tips.lastEmittedById[candidate.id] = tick;
+   tips.lastEmittedByFamily[definition.family] = tick;

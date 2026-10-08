@@ -1,0 +1,193 @@
+--- a/apps/player/src/facility/exteriorLandscape.test.ts
++++ b/apps/player/src/facility/exteriorLandscape.test.ts
+@@ -1,19 +1,175 @@
+-import { describe, expect, it } from "vitest";
++import { describe, expect, it, vi } from "vitest";
++import siteLayout from "./data/exterior-landscape-v2.json";
++import { getExteriorLawnPatches } from "./exteriorFrontage";
+ 
+ import {
+   exteriorCandidateEnvelope,
+   getExteriorLandscapeCandidates,
++  getExteriorLandscapeDisplay,
++  getExteriorLandscapeSource,
++  getExteriorConstructionEnvelope,
+   getVisibleExteriorLandscape,
+ } from "./exteriorLandscape";
+ 
++/** Independent density audit: only the audit bins points, never the renderer. */
++function axisDensityCorrelations(points: readonly { x: number; y: number }[], columns: number, rows: number) {
++  const width = columns * 2, height = rows * 2;
++  const bins = Array.from({ length: height }, () => new Float64Array(width));
++  for (const point of points) {
++    const x = Math.floor(point.x * 2), y = Math.floor(point.y * 2);
++    if (x >= 0 && x < width && y >= 0 && y < height) bins[y]![x]! += 1;
++  }
++  const correlations: number[] = [];
++  for (const axis of ["x", "y"]) for (let shift = 6; shift <= 32; shift += 1) {
++    const dx = axis === "x" ? shift : 0, dy = axis === "y" ? shift : 0;
++    let sumA = 0, sumB = 0, sumAA = 0, sumBB = 0, sumAB = 0, count = 0;
++    for (let y = 0; y < height - dy; y += 1) for (let x = 0; x < width - dx; x += 1) {
++      const a = bins[y]![x]!, b = bins[y + dy]![x + dx]!;
++      sumA += a; sumB += b; sumAA += a * a; sumBB += b * b; sumAB += a * b; count += 1;
++    }
++    const denominator = Math.sqrt((sumAA - sumA * sumA / count) * (sumBB - sumB * sumB / count));
++    correlations.push(denominator ? (sumAB - sumA * sumB / count) / denominator : 0);
++  }
++  return correlations;
++}
++
+ describe("exterior landscaping", () => {
+-  it("generates a stable, irregular full-site field with stable keys", () => {
+-    const first = getExteriorLandscapeCandidates(16, 10);
+-    const second = getExteriorLandscapeCandidates(16, 10);
+-    expect(first).toEqual(second);
+-    expect(first.length).toBeGreaterThanOrEqual(44);
+-    expect(new Set(first.map((candidate) => candidate.key)).size).toBe(first.length);
+-    expect(new Set(first.map((candidate) => candidate.x)).size).toBeGreaterThan(12);
++  it("uses the frozen authored contacts and all existing plant silhouettes with unequal tree sizes", () => {
++    expect(siteLayout.schemaVersion).toBe(2);
++    expect(siteLayout.generator.runtimeGeneration).toBe(false);
++    const candidates = getExteriorLandscapeCandidates(96,64);
++    expect(candidates).toHaveLength(siteLayout.plants.length);
++    for (const [index,candidate] of candidates.entries()) {
++      expect(candidate).toMatchObject(siteLayout.plants[index]!);
++      expect(Object.isFrozen(candidate)).toBe(true);
++      expect(Number.isFinite(candidate.height)).toBe(true);
++    }
++    const frames = new Set(candidates.map(candidate => candidate.frameId));
++    expect(frames.size).toBe(13);
++    expect(frames.has("landscape:bench")).toBe(false);
++    expect(frames.has("landscape:entrance-planter")).toBe(false);
++    const trees = candidates.filter(candidate => candidate.frameId.startsWith("landscape:tree-"));
++    expect(new Set(trees.map(candidate => candidate.frameId)).size).toBe(4);
++    expect(Math.min(...trees.map(candidate => candidate.width))).toBeLessThan(0.9);
++    expect(Math.max(...trees.map(candidate => candidate.width))).toBeGreaterThan(2.5);
++  });
++
++  it("covers the active, legacy and expanded sites with varied density rather than one repeated motif", () => {
++    for (const [columns,rows] of [[72,32],[64,40],[96,64]] as const) {
++      const candidates = getExteriorLandscapeCandidates(columns,rows);
++      const density = candidates.length / (columns * rows);
++      expect(density).toBeGreaterThan(0.17);
++      expect(density).toBeLessThan(0.26);
++      const sectorCounts: number[] = [];
++      for (let y = 0; y < rows; y += 8) for (let x = 0; x < columns; x += 8) {
++        const count = candidates.filter(p => p.x >= x && p.x < x + 8 && p.y >= y && p.y < y + 8).length;
++        sectorCounts.push(count);
++        expect(count).toBeGreaterThanOrEqual(4);
++        expect(count).toBeLessThan(45);
++      }
++      const mean = sectorCounts.reduce((sum,count) => sum + count,0) / sectorCounts.length;
++      const variation = Math.sqrt(sectorCounts.reduce((sum,count) => sum + (count - mean) ** 2,0) / sectorCounts.length) / mean;
++      expect(variation).toBeGreaterThan(0.27);
++      expect(variation).toBeLessThan(0.6);
++    }
++    const groups = new Map<string,number>();
++    for (const plant of getExteriorLandscapeCandidates(72,32)) groups.set(plant.groupKey,(groups.get(plant.groupKey) ?? 0) + 1);
++    const groves = Array.from(groups).filter(([key]) => key.startsWith("site-grove-"));
++    expect(groves.length).toBeGreaterThanOrEqual(5);
++    expect(new Set(groves.map(([,count]) => count)).size).toBeGreaterThan(4);
++    expect(Array.from(groups.keys()).some(key => !key.startsWith("site-grove-"))).toBe(true);
++  });
++
++  it("has no garden or lawn lattice peaks in placement-density autocorrelation", () => {
++    for (const [columns,rows] of [[72,32],[96,64]] as const) {
++      const plants = getExteriorLandscapeCandidates(columns,rows);
++      const patches = getExteriorLawnPatches(columns,rows);
++      expect(Math.max(...axisDensityCorrelations(plants,columns,rows))).toBeLessThan(0.09);
++      expect(Math.max(...axisDensityCorrelations(patches,columns,rows))).toBeLessThan(0.09);
++    }
++    // Sensitivity control: the audit must reject a repeating 5.2 x 4.4 grid.
++    const repeating: { x: number; y: number }[] = [];
++    for (let y = 2; y < 32; y += 4.4) for (let x = 3; x < 72; x += 5.2) repeating.push({ x,y });
++    expect(Math.max(...axisDensityCorrelations(repeating,72,32))).toBeGreaterThan(0.25);
++  });
++
++  it("crops the same field on site expansion without moving existing identities or partial edge sprites", () => {
++    const small = getExteriorLandscapeCandidates(16,10);
++    const expanded = getExteriorLandscapeCandidates(96,64);
++    expect(small.length).toBeGreaterThan(12);
++    for (const candidate of small) expect(expanded.find(item => item.key===candidate.key)).toEqual(candidate);
++    for (const candidate of small) {
++      const bounds = exteriorCandidateEnvelope(candidate);
++      expect(bounds.x).toBeGreaterThanOrEqual(0);
++      expect(bounds.y).toBeGreaterThanOrEqual(0);
++      expect(bounds.x + bounds.width).toBeLessThanOrEqual(16);
++      expect(bounds.y + bounds.height).toBeLessThanOrEqual(10);
++    }
++    expect(getExteriorLandscapeCandidates(0,0)).toEqual([]);
++  });
++
++  it("keeps identical unique keys through redraw and a module reload without consulting runtime randomness", async () => {
++    const first = getExteriorLandscapeCandidates(72,32);
++    const random = vi.spyOn(Math,"random");
++    try {
++      expect(getExteriorLandscapeCandidates(72,32)).toEqual(first);
++      getExteriorLawnPatches(72,32);
++      expect(random).not.toHaveBeenCalled();
++    } finally { random.mockRestore(); }
++    expect(new Set(first.map(candidate => candidate.key)).size).toBe(first.length);
++    vi.resetModules();
++    const reloaded = await import("./exteriorLandscape");
++    expect(reloaded.getExteriorLandscapeCandidates(72,32)).toEqual(first);
++  });
++
++  it("uses exact source ratios and uniform subpixel sizes at all zoom tile sizes", () => {
++    const candidates = getExteriorLandscapeCandidates(72,32);
++    for (const tileSize of [1,7,15,20,24,27,28,37,41,100]) {
++      for (const candidate of candidates) {
++        const source = getExteriorLandscapeSource(candidate.frameId);
++        const display = getExteriorLandscapeDisplay(candidate,tileSize,53,-37);
++        expect(display.width/display.height).toBeCloseTo(source.nativeWidth/source.nativeHeight,12);
++        expect(display.width/tileSize).toBeCloseTo(candidate.width,12);
++        expect(display.height/tileSize).toBeCloseTo(candidate.height,12);
++        const envelope = exteriorCandidateEnvelope(candidate,0,tileSize);
++        expect(display.bounds.x).toBeGreaterThanOrEqual(53+envelope.x*tileSize);
++        expect(display.bounds.y).toBeGreaterThanOrEqual(-37+envelope.y*tileSize);
++        expect(display.bounds.x+display.width).toBeLessThanOrEqual(53+(envelope.x+envelope.width)*tileSize);
++        expect(display.bounds.y+display.height).toBeLessThanOrEqual(-37+(envelope.y+envelope.height)*tileSize);
++      }
++    }
++    const grass = candidates.find(candidate => candidate.frameId.startsWith("frontage:grass-"))!;
++    const minimum = getExteriorLandscapeDisplay(grass,7);
++    expect(minimum.width).toBeLessThan(22);
++    expect(minimum.height).toBeLessThan(14);
++  });
++
++  it("removes full low-zoom plant/shadow envelopes from rooms, hallways, sidewalk and entrance", () => {
++    const candidates = getExteriorLandscapeCandidates(72,32);
++    const exclusions = [getExteriorConstructionEnvelope({ x: 33, y: 28, width: 5, height: 4 }),
++      getExteriorConstructionEnvelope({ x: 9, y: 7, width: 3, height: 1 },true),
++      { x: -4, y: 32, width: 80, height: 4 }, { x: 34.78, y: 31.65, width: 1.44, height: 0.98 }];
++    for (const tileSize of [1,7,15,20,24,27,28,37,41]) {
++      const visible = getVisibleExteriorLandscape(candidates,exclusions,0.12,tileSize);
++      expect(visible.length).toBeGreaterThan(400);
++      for (const candidate of visible) {
++        const envelope = exteriorCandidateEnvelope(candidate,0,tileSize);
++        for (const exclusion of exclusions) expect(envelope.x+envelope.width<=exclusion.x || envelope.x>=exclusion.x+exclusion.width ||
++          envelope.y+envelope.height<=exclusion.y || envelope.y>=exclusion.y+exclusion.height).toBe(true);
++      }
++      expect(visible.map(candidate => candidate.y)).toEqual(visible.map(candidate => candidate.y).sort((a,b)=>a-b));
++      // Independently compare rendered pixels + contact/shadow/raster allowance
++      // to the exclusions. Only that exact intersecting set may disappear.
++      const expected = candidates.filter(candidate => {
++        const bounds = getExteriorLandscapeDisplay(candidate,tileSize).bounds;
++        const pad = 0.12 * tileSize + 0.5;
++        return !exclusions.some(exclusion => bounds.x - pad < (exclusion.x + exclusion.width) * tileSize &&
++          bounds.x + bounds.width + pad > exclusion.x * tileSize &&
++          bounds.y - pad < (exclusion.y + exclusion.height) * tileSize &&
++          bounds.y + bounds.height + pad > exclusion.y * tileSize);
++      });
++      expect(visible.map(candidate => candidate.key).sort()).toEqual(expected.map(candidate => candidate.key).sort());
++    }
+   });
+ 
+   it("removes a whole plant envelope when construction intersects it", () => {
+@@ -29,5 +185,6 @@
+     const hidden = getVisibleExteriorLandscape(candidates, [exteriorCandidateEnvelope(first)]);
+     expect(hidden.find((candidate) => candidate.key === first.key)).toBeUndefined();
+     expect(hidden.find((candidate) => candidate.key === second.key)).toEqual(second);
++    expect(getVisibleExteriorLandscape(candidates,[])).toEqual([...candidates].sort((a,b) => a.y-b.y || a.x-b.x || a.key.localeCompare(b.key)));
+   });
+ });

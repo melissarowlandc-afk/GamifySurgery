@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "patchEdgeCases": 9,
+  "roundTrips": 9,
+  "pathEscapeCasesRejected": 5,
+  "cases": [
+    "Empty insert/delete",
+    "Missing final newline",
+    "CRLF and mixed final newline",
+    "Header-like removed lines",
+    "Multiple hunks",
+    "Newline-only change",
+    "Start/end insertions"
+  ],
+  "gitMutations": 0
+}

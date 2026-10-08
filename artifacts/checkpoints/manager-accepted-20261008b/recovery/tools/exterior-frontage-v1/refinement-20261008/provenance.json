@@ -1,0 +1,165 @@
+{
+  "date": "2026-10-08",
+  "revision": "bed-v3-fuller-planting",
+  "generator": "built-in image_gen.imagegen; two precise-object edits; no API/CLI or purchases",
+  "request": "Manager review: fuller/taller mounded foliage and visible white/pink clusters inside the existing bed envelope and rear sidewalk band",
+  "conceptDirection": {
+    "path": "docs/design/exterior-frontage/concept-05-b-stone-with-inset.png",
+    "sha256": "94d3e1227b697c0b5f1aae08a516e350e971ffcc0866752f232c6e16bee495ec",
+    "role": "viewed for direction only; no pixels extracted or passed as edit input"
+  },
+  "assets": [
+    {
+      "id": "frontage:bed-west-v3",
+      "original": "tools/exterior-frontage-v1/refinement-20261008/originals/bed-west-v3.png",
+      "originalSize": [
+        2172,
+        724
+      ],
+      "originalSha256": "4efadb0f81199a42f0658da743129a69b61f478a4449ae862e98cc3dd4e9be4a",
+      "prompt": "tools/exterior-frontage-v1/refinement-20261008/prompts/bed-west-v3.txt",
+      "promptSha256": "c4172ba60b0ef1fc322924d670fac4dd294099f89f7681f441ee8be0aa9b929b",
+      "export": "apps/player/public/art/environment/frontage-v2/bed-west-v3.png",
+      "exportSha256": "267e48d8aac78439033bf885c277521d58cfd3386124b0f4cbb402b8e4a82bef",
+      "nativeSize": [
+        512,
+        160
+      ],
+      "anchor": [
+        256,
+        160
+      ],
+      "kind": "prop",
+      "crop": [
+        9,
+        6,
+        2163,
+        694
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        12,
+        2,
+        500,
+        158
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "reference": {
+        "role": "edit target",
+        "path": "apps/player/public/art/environment/frontage-v2/bed-west-v2.png",
+        "sha256": "4c83cc6fabd97ebf52661cf8f42b46a5d21d22ea34a965fb75a745a062bb793a"
+      },
+      "displayTiles": {
+        "width": 1.55,
+        "height": 0.484375,
+        "contactOffsetY": 0.5
+      }
+    },
+    {
+      "id": "frontage:bed-east-v3",
+      "original": "tools/exterior-frontage-v1/refinement-20261008/originals/bed-east-v3.png",
+      "originalSize": [
+        2171,
+        724
+      ],
+      "originalSha256": "802beac97b2a6d82ed08275e1bbb129dba81a482ed81fb0fefe26e81f1fc7997",
+      "prompt": "tools/exterior-frontage-v1/refinement-20261008/prompts/bed-east-v3.txt",
+      "promptSha256": "0aa5526052c4cab87ad27e79d07e8675360ce31a71e0855aaf6dc7b142c40761",
+      "export": "apps/player/public/art/environment/frontage-v2/bed-east-v3.png",
+      "exportSha256": "e8e3700503c9b53c817db8c026b42635571edb090ce4fa344cd9e46940c5de28",
+      "nativeSize": [
+        512,
+        160
+      ],
+      "anchor": [
+        256,
+        160
+      ],
+      "kind": "prop",
+      "crop": [
+        8,
+        33,
+        2164,
+        679
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        6,
+        510,
+        158
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "reference": {
+        "role": "edit target",
+        "path": "apps/player/public/art/environment/frontage-v2/bed-east-v2.png",
+        "sha256": "eda86f1fd138aba6360ab425a00a3c49cff0e65e052e1f7306bb533426ed5f78"
+      },
+      "displayTiles": {
+        "width": 1.55,
+        "height": 0.484375,
+        "contactOffsetY": 0.5
+      }
+    }
+  ],
+  "bedComparisonProof": {
+    "canvas": [
+      920,
+      325
+    ],
+    "syntheticSite": [
+      64,
+      40
+    ],
+    "samples": [
+      {
+        "label": "24px pilot",
+        "tileSize": 24
+      },
+      {
+        "label": "140%",
+        "tileSize": 52
+      },
+      {
+        "label": "110%",
+        "tileSize": 41
+      },
+      {
+        "label": "100%",
+        "tileSize": 37
+      },
+      {
+        "label": "70%",
+        "tileSize": 27
+      },
+      {
+        "label": "50%",
+        "tileSize": 20
+      },
+      {
+        "label": "minimum 10%",
+        "tileSize": 7
+      }
+    ],
+    "browserQA": "not implied by offline proof"
+  },
+  "unchangedKit": {
+    "apps/player/public/art/environment/frontage-v2/bed-west-v2.png": "4c83cc6fabd97ebf52661cf8f42b46a5d21d22ea34a965fb75a745a062bb793a",
+    "apps/player/public/art/environment/frontage-v2/bed-east-v2.png": "eda86f1fd138aba6360ab425a00a3c49cff0e65e052e1f7306bb533426ed5f78",
+    "apps/player/public/art/environment/frontage-v2/lawn-sage-v2.png": "735ea91012f97af2bcf8ed8f823dd89025d2af5e64584a61271c429cb941289b",
+    "apps/player/public/art/environment/frontage-v2/lawn-olive-v2.png": "6e9bdcfa263d479a19657d9688188c8158a29ed0e3b0356b7be6cc789dfba447",
+    "apps/player/public/art/environment/frontage-v2/grass-low-v2.png": "2a1e2b5b1e9e3a968784e6f4f93da441018a9fa34d607401acb8e80a04d43dd1",
+    "apps/player/public/art/environment/frontage-v2/grass-clover-v2.png": "5c55857105327206074a6feaee0843156ad18703523228411b74f694d79d4471",
+    "apps/player/public/art/environment/frontage-v2/grass-upright-v2.png": "5df14b105b13b966c6507db344436b075074d6398113846bdeac6493cfb7df5c",
+    "apps/player/public/art/environment/frontage-v2/paving-v2.png": "5f77c31ef8a8c4ffdbbb02b32f9107f25d5954590fcfa2d121fd8824520b79e0",
+    "apps/player/public/art/environment/frontage-v2/curb-a-v2.png": "862d678795b3cf6c005d5e19336188dd8ba4aaf39bc6cc40e63e51227378fdc4",
+    "apps/player/public/art/environment/frontage-v2/curb-b-v2.png": "56fc4b9fd4450b765b9abc08a028c774fee139dc7ade0a30e99fc43bd05129e7",
+    "apps/player/public/art/environment/frontage-v2/entry-inset-v2.png": "483cadc515e29211ec6ae8b86a9b31b6804ae21baf4245933e84faba3390248e"
+  }
+}

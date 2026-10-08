@@ -1,0 +1,160 @@
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/employee-training-benefits.test.ts (30 tests | 1 failed) 9874ms
+     × retains paused room.reading processing through nominal due and reload, then waits for the actual return/completion witness 2160ms
+ ❯ tests/diagnostic-service-operations.test.ts (18 tests | 2 failed) 1013ms
+     × runs four reading desks concurrently and serializes a fifth study on its frozen desk 96ms
+     × a legacy whole-room read blocks every new desk without a processing timeout 68ms
+ ❯ tests/radiologist-read-income.test.ts (31 tests | 3 failed) 1023ms
+     × keeps an already-accepted legacy read nonbillable 32ms
+     × respects a legacy whole-room reservation instead of starting outside work on another desk 33ms
+     × round-trips a linked paid read, retains its frozen fee, and rejects mismatched bundle/read witnesses 42ms
+npm.cmd : 
+At line:2 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=th ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/diagnostic-service-operations.test.ts > frozen diagnostic operation execution > runs four reading desks 
+concurrently and serializes a fifth study on its frozen desk
+AssertionError: expected 145 to be 120 // Object.is equality
+
+- Expected
++ Received
+
+- 120
++ 145
+
+ ❯ tests/diagnostic-service-operations.test.ts:212:32
+    210|     advance(fixture, 10);
+    211|     expect(fifth.status).toBe("completed");
+    212|     expect(fixture.state.cash).toBe(cash + 25);
+       |                                ^
+    213|     expect(fixture.state.clinicalXp).toBe(xp);
+    214|     expect(fixture.state.levelThreeMaintenanceAppliedUseKeys).toEqual(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/diagnostic-service-operations.test.ts > frozen diagnostic operation execution > a legacy whole-room read 
+blocks every new desk without a processing timeout
+AssertionError: expected [ 40, 5 ] to deeply equal [ 40 ]
+
+- Expected
++ Received
+
+  [
+    40,
++   5,
+  ]
+
+ ❯ tests/diagnostic-service-operations.test.ts:240:87
+    238|     expect(queued).toMatchObject({ status: "in_service", phaseStartedA…
+    239|     advance(fixture, 105);
+    240|     expect(fixture.state.serviceIncomeReceipts.map((receipt) => receip…
+       |                                                                                       ^
+    241|   });
+    242|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/employee-training-benefits.test.ts > training-aware local diagnostic queues > retains paused room.reading 
+processing through nominal due and reload, then waits for the actual return/completion witness
+AssertionError: expected [ { …(12) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/employee-training-benefits.test.ts:537:43
+    535|       expect(state.serviceOperations.find((entry) => entry.id === jobI…
+    536|       expect(state.employees.find((entry) => entry.id === employee.id)…
+    537|       expect(state.serviceIncomeReceipts).toHaveLength(kind === "inter…
+       |                                           ^
+    538|       expect(state.cash).toBe(cash + (kind === "interpretation" ? 5 : …
+    539|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/radiologist-read-income.test.ts > radiologist read income > keeps an already-accepted legacy read 
+nonbillable
+AssertionError: expected { inHouseReads: +0, …(3) } to match object { inHouseReads: 1, …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "inHouseIncomeCents": 0,
+-   "inHouseReads": 1,
++   "inHouseReads": 0,
+  }
+
+ ❯ tests/radiologist-read-income.test.ts:122:71
+    120|     expect(job.status).toBe("completed");
+    121|     expect(centerReceipts(f.state)).toHaveLength(0);
+    122|     expect(getRadiologistReadIncomeSummary(f.state, f.context).today).…
+       |                                                                       ^
+    123|   });
+    124|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/radiologist-read-income.test.ts > radiologist read income > respects a legacy whole-room reservation 
+instead of starting outside work on another desk
+AssertionError: expected [ { …(12) }, { …(12) }, { …(12) } ] to have a length of +0 but got 3
+
+- Expected
++ Received
+
+- 0
++ 3
+
+ ❯ tests/radiologist-read-income.test.ts:167:49
+    165|     job.frozenOperationPhases![0]!.durationMinutes = 100;
+    166|     advanceServiceOperations(f.state, f.context); advance(f, 20);
+    167|     expect(f.state.outsideRadiologyReads ?? []).toHaveLength(0);
+       |                                                 ^
+    168|     expect(outsideReceipts(f.state)).toHaveLength(0);
+    169|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/radiologist-read-income.test.ts > radiologist read income > round-trips a linked paid read, retains its 
+frozen fee, and rejects mismatched bundle/read witnesses
+Error: The saved Reading phase and operation disagree.
+ ❯ migrateVersionTwo src/persistence.ts:3100:17
+    3098|         const work = operation.diagnosticPhaseWork;
+    3099|         if (!work?.readingUpgradeWork || work.orderId !== plan.orderId…
+    3100|           JSON.stringify(work.readingUpgradeWork) !== JSON.stringify(r…
+       |                 ^
+    3101|           work.remainingMinutes !== phase.remainingMinutes || JSON.str…
+    3102|           operation.status === "completed" && operation.completedAtFac…
+ ❯ validateVersionNine src/persistence.ts:4440:17
+ ❯ deserializeGameState src/persistence.ts:4514:48
+ ❯ tests/radiologist-read-income.test.ts:289:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  3 failed | 103 passed (106)
+      Tests  6 failed | 3346 passed (3352)
+   Start at  09:30:54
+   Duration  436.23s (transform 3.87s, setup 0ms, import 41.32s, tests 386.32s, environment 6ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1

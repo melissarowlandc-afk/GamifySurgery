@@ -1,0 +1,9 @@
+PASS assets: 5 transparent native PNGs; uniform fit, minimum 240 px/tile, intact alpha margins and registered floor/wall anchors
+PASS integrity: 7 exact original/prompt pairs; 16 real character poses; 863 references unchanged; 61 concurrent exam-worker changes attributed
+PASS reused stool: native backless-v1, 266x427; 81009 untouched source pixels; 4995 covered body pixels restored; no source-atlas edit
+PASS doors/routes: 12 one-tile sections; 112 door/backing states; 576 routes; 93928 radius-clear walking samples; 66 monotonic door pairs
+PASS seats/layers: existing patient east and clinician west; 1405 recliner/patient overlap pixels; 274 clinician pixels verified above backless stool; full-height low-wall shelf
+PASS chair revision: no leg rest; reviewed 624x470 frame/scale; patient refit 0.311 px; clinician unchanged; 576 identical walking paths; 499228 unchanged pixels outside chair/patient
+PASS provenance/presentation: frozen 3x3 geometry; plain packaged supplies; exact prompts/hashes; UTF-8 without BOM; no campaign storage
+PENDING manager: browser validator and captures for revised manifest; owner conditional design approval recorded
+VALIDATION PASS 4680 Node checks; revised browser validation pending

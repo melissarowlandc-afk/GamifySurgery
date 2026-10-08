@@ -1,0 +1,158 @@
+{
+  "actors": [
+    {
+      "kind": "actor",
+      "id": "table:patient",
+      "characterId": "level3-roster-v2.021",
+      "category": "future-pediatric-presentation",
+      "group": "children",
+      "pose": "sit",
+      "direction": "east",
+      "url": "art/characters/level3-roster-v2/level3-roster-v2.021/sit-east.png",
+      "x": 34.57439123376623,
+      "y": -22.32350462037965,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 2.06,
+      "seat": {
+        "x": 0.66,
+        "y": 1.25
+      },
+      "ground": {
+        "x": 0.66,
+        "y": 1.6
+      },
+      "renderSeatContact": [
+        65,
+        251
+      ],
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ]
+    },
+    {
+      "kind": "actor",
+      "id": "stool:clinician",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "pose": "sit",
+      "direction": "west",
+      "url": "art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-west.png",
+      "x": 112.21069555444555,
+      "y": -12.04583294994481,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 1.7501,
+      "seat": {
+        "x": 1.45,
+        "y": 1.2669924812030076
+      },
+      "ground": {
+        "x": 1.45,
+        "y": 1.75
+      },
+      "renderSeatContact": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ]
+    },
+    {
+      "kind": "actor",
+      "id": "parentChair",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "parents",
+      "pose": "sit",
+      "direction": "west",
+      "url": "art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "x": 246.3124781468531,
+      "y": 148.6911442723942,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 2.8801,
+      "seat": {
+        "x": 2.6533333333333333,
+        "y": 2.509206349206349
+      },
+      "ground": {
+        "x": 2.52,
+        "y": 2.88
+      },
+      "renderSeatContact": [
+        105,
+        222
+      ],
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ]
+    }
+  ],
+  "armrestOverlap": 766,
+  "clinicianOverStoolPixels": 274,
+  "readableStool": {
+    "seat": 389,
+    "column": 334,
+    "base": 461
+  },
+  "clinicianLayerSamples": 5164,
+  "maxClinicianCompositeChannelDelta": 1,
+  "stoolForegroundLayers": 0,
+  "approvedFrontPixels": 18685,
+  "order": [
+    {
+      "id": "stool",
+      "kind": "fixture",
+      "py": 1.75
+    },
+    {
+      "id": "stool:clinician",
+      "kind": "actor",
+      "py": 1.7501
+    },
+    {
+      "id": "pedsTable",
+      "kind": "fixture",
+      "py": 2.05
+    },
+    {
+      "id": "table:patient",
+      "kind": "actor",
+      "py": 2.06
+    },
+    {
+      "id": "toyBin",
+      "kind": "fixture",
+      "py": 2.86
+    },
+    {
+      "id": "parentChair",
+      "kind": "fixture",
+      "py": 2.88
+    },
+    {
+      "id": "parentChair",
+      "kind": "actor",
+      "py": 2.8801
+    },
+    {
+      "id": "parentChair:front",
+      "kind": "fixture",
+      "py": 2.8802
+    }
+  ],
+  "tablePadContact": [
+    269,
+    431
+  ],
+  "counterFullHeight": true
+}

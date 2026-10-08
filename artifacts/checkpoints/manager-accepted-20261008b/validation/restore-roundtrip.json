@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "dryRun": {
+    "status": "PASS",
+    "dryRun": true,
+    "recoveredFiles": 860,
+    "recoveredBytes": 112528082,
+    "gitMutations": 0,
+    "requiresFirstArchiveAndCompatibleEarlierDependencies": true
+  },
+  "actualRestore": {
+    "status": "PASS",
+    "dryRun": false,
+    "recoveredFiles": 860,
+    "recoveredBytes": 112528082,
+    "gitMutations": 0,
+    "requiresFirstArchiveAndCompatibleEarlierDependencies": true
+  },
+  "restoredFilesCompared": 860,
+  "allRestoredBytesMatchSelectedAcceptedSource": true,
+  "unlistedFiles": [],
+  "missingFiles": [],
+  "destination": ".local-dev/manager-accepted-20261008b/restore-check",
+  "workingTreeImplementationWrites": 0,
+  "gitMutations": 0,
+  "commands": [
+    "python artifacts/checkpoints/manager-accepted-20261008b/restore_recovery.py --dry-run",
+    "python artifacts/checkpoints/manager-accepted-20261008b/restore_recovery.py --destination .local-dev/manager-accepted-20261008b/restore-check"
+  ],
+  "scope": "Restored into new empty ignored worker scratch, never over live source or owner storage."
+}

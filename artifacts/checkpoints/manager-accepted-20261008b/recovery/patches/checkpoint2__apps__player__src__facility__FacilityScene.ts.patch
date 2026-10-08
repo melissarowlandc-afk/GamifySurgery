@@ -1,0 +1,633 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -119,6 +119,7 @@
+ import {
+   ENVIRONMENT_ATLAS_V1,
+   ENVIRONMENT_ATLAS_V1_FRAMES,
++  FRONTAGE_V2_ASSETS,
+   FRONT_DESK_V2_ART_FRAMES,
+   FRONT_DESK_V2_FIXTURE_OVERRIDES,
+   FRONT_DESK_V3_ARCHITECTURE_FRAMES,
+@@ -135,6 +136,7 @@
+   getRoomBitmapFixtureFrame,
+   getEnvironmentAtlasFrameKey,
+   type EnvironmentAtlasFrameId,
++  type FrontageAssetId,
+   type FrontDeskV2ArtId,
+   type FrontDeskV3ArchitectureId,
+   type FrontDeskV4ArchitectureId,
+@@ -168,9 +170,17 @@
+   getApprovedSideChairForegroundDepth,
+   getApprovedSideChairMaskForDraw,
+   partitionApprovedSideChairPixels,
++  type ApprovedSideChairLayerBinding,
+   type ApprovedSideChairMaskDefinition,
+ } from "./approvedSideChairLayers";
++import {
++  BACKLESS_ROLLING_STOOL_VERSION,
++  deriveBacklessRollingStoolPixels,
++  getApprovedRollingStoolSource,
++  type ApprovedRollingStoolSource,
++} from "./backlessRollingStools";
+ import { resolveStaffIdleSupports } from "./staffIdleSupports";
++import { getPeriopCompanionChairForActor, resolvePeriopCompanionChairs } from "./periopCompanionPresentation";
+ import { advanceSeatSettle, type SeatSettleState } from "./characterSeatSettle";
+ import {
+   getPhaserTextureKey,
+@@ -197,6 +207,7 @@
+   FACILITY_DEPTH_LOCATOR,
+   FACILITY_DEPTH_UI,
+   FACILITY_DEPTH_WORLD,
++  getExteriorLandscapeDepth,
+   getFacilitySceneDepth,
+ } from "./renderDepth";
+ import {
+@@ -248,10 +259,16 @@
+ } from "./surgeryCenterArchitecture";
+ import { getFixturePresentationSize } from "./fixturePresentation";
+ import { getEnvironmentTileLogicalPhase } from "./environmentTilePhase";
++import {
++  getExteriorLawnPatches, getExteriorPavingJoints,
++  getFrontageCurbRuns, getFrontageEntryInset, getFrontageTileBuffer,
++} from "./exteriorFrontage";
+ import { getProceduralSurfaceRow } from "./proceduralSurfacePhase";
+ import { snapPresentationOrigin } from "./presentationOrigin";
+ import {
+   getExteriorLandscapeCandidates,
++  getExteriorLandscapeDisplay,
++  getExteriorConstructionEnvelope,
+   getVisibleExteriorLandscape,
+   type ExteriorRectangle,
+ } from "./exteriorLandscape";
+@@ -853,7 +870,8 @@
+    */
+   private ensureEnvironmentAtlas(): void {
+     const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
+-    if (this.textures.exists(textureKey)) {
++    if (this.textures.exists(textureKey) && Object.values(FRONTAGE_V2_ASSETS)
++      .every(asset => this.textures.exists(getPhaserTextureKey(asset)))) {
+       this.registerEnvironmentAtlasFrames();
+       this.registerLandscapingAtlasFrames();
+       this.environmentAtlasReady = true;
+@@ -871,10 +889,11 @@
+     preloadBitmapAssets(this.load, [
+       ENVIRONMENT_ATLAS_V1,
+       LANDSCAPING_ATLAS_V1,
++      ...Object.values(FRONTAGE_V2_ASSETS),
+       ...ROOM_FIXTURE_ATLASES,
+       ...APPROVED_GS015_ROOM_ATLASES,
+       ...ROOM_TOUCHUP_DECOR_ASSETS,
+-    ]);
++    ].filter(asset => !this.textures.exists(getPhaserTextureKey(asset))));
+     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+       this.environmentAtlasLoadRequested = false;
+       if (!this.textures.exists(textureKey)) {
+@@ -1069,6 +1088,26 @@
+     return frameId;
+   }
+ 
++  /** Cached, same-size derivative; the approved atlas and seat/ground contacts stay intact. */
++  private ensureBacklessRollingStoolTexture(stool: ApprovedRollingStoolSource): string | undefined {
++    if (!stool.derivation) return undefined;
++    const key = `approved-stool:${BACKLESS_ROLLING_STOOL_VERSION}:${stool.id}`;
++    if (this.textures.exists(key)) return key;
++    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === stool.assetId);
++    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
++    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
++    if (!source) return undefined;
++    const [x, y, width, height] = stool.sourceRect;
++    const texture = this.textures.createCanvas(key, width, height);
++    if (!texture) return undefined;
++    texture.context.drawImage(source as CanvasImageSource, x, y, width, height, 0, 0, width, height);
++    const pixels = texture.getData(0, 0, width, height);
++    pixels.data.set(deriveBacklessRollingStoolPixels(pixels.data, width, height, stool.derivation));
++    texture.putData(pixels, 0, 0);
++    texture.refresh();
++    return key;
++  }
++
+   private ensureApprovedSideChairTextures(
+     mask: ApprovedSideChairMaskDefinition,
+   ): Readonly<{ rear: string; foreground: string }> | undefined {
+@@ -1109,6 +1148,7 @@
+       width,
+       height,
+       mask.southArmPolygon,
++      mask.additionalForegroundPolygons,
+     );
+     rearTexture.putData(rearPixels, 0, 0);
+     foregroundTexture.putData(foregroundPixels, 0, 0);
+@@ -1134,16 +1174,18 @@
+       const roomInstanceId = rendered.getData("actor-support-room-instance-id") as string | null | undefined;
+       const supportId = rendered.getData("actor-support-id") as string | null | undefined;
+       if (!roomInstanceId || !supportId) continue;
+-      const bindingKey = `${roomInstanceId}:${supportId}`;
++      const maskId = rendered.getData("actor-seat-mask-id") as string | null | undefined;
++      const bindingKey = `${roomInstanceId}:${maskId ? `mask:${maskId}` : supportId}`;
+       const depths = actorDepths.get(bindingKey) ?? [];
+       depths.push(rendered.depth);
+       actorDepths.set(bindingKey, depths);
+     }
+ 
+     for (const runtime of this.approvedSideChairRuntimes.values()) {
+-      const depths = runtime.supportIds.flatMap((supportId) =>
+-        actorDepths.get(`${runtime.roomInstanceId}:${supportId}`) ?? [],
+-      );
++      const depths = [
++        ...(actorDepths.get(`${runtime.roomInstanceId}:mask:${runtime.mask.id}`) ?? []),
++        ...runtime.supportIds.flatMap((supportId) => actorDepths.get(`${runtime.roomInstanceId}:${supportId}`) ?? []),
++      ];
+       const foregroundDepth = getApprovedSideChairForegroundDepth(depths);
+       const occupied = foregroundDepth !== undefined;
+       runtime.baseImage
+@@ -1458,24 +1500,15 @@
+     const height = exterior.sidewalkTop - top;
+     graphics.fillStyle(0x9ba187, 1);
+     graphics.fillRect(left, top, width, height);
+-    const firstRow = Math.floor(top / 7);
+-    const lastRow = Math.ceil((top + height) / 7);
+-    const firstColumn = Math.floor(left / 9);
+-    const lastColumn = Math.ceil((left + width) / 9);
+-    for (let row = firstRow; row < lastRow; row += 1) {
+-      for (let column = firstColumn; column < lastColumn; column += 1) {
+-        // A tiny stable integer hash provides varied grass flecks without
+-        // per-frame RNG, visible checker cells, or persisted decoration.
+-        const hash = ((column * 1103515245) ^ (row * 12345)) >>> 0;
+-        const x = column * 9 + ((hash >>> 4) % 6);
+-        const y = row * 7 + ((hash >>> 10) % 5);
+-        if (x < left || x >= left + width || y < top || y >= top + height) continue;
+-        graphics.fillStyle((hash & 1) === 0 ? 0xb5baa0 : 0x74805f, 0.34);
+-        graphics.fillRect(x, y, 1 + ((hash >>> 16) % 2), 1);
+-        if ((hash & 31) === 0) {
+-          graphics.fillRect(x + 2, y - 1, 1, 2);
+-        }
+-      }
++    for (const patch of getExteriorLawnPatches(
++      positiveGridSize(this.bridge.viewModel.gridColumns, 16),
++      positiveGridSize(this.bridge.viewModel.gridRows, 10),
++    )) {
++      this.drawFrontageImage(patch.key, patch.assetId,
++        left + patch.x * this.layout.tileSize, top + patch.y * this.layout.tileSize,
++        patch.width * this.layout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
++      this.landscapingBitmapImages.get(patch.key)
++        ?.setRotation(patch.rotation).setFlip(patch.flipX, patch.flipY);
+     }
+   }
+ 
+@@ -2353,12 +2386,12 @@
+         landscapingTextureKey,
+         getEnvironmentAtlasFrameKey(frame),
+       )
+-      .setPosition(Math.round(centerX), Math.round(baseY))
++      .setPosition(centerX, baseY)
+       .setOrigin(
+         frame.anchor.x / Math.max(1, frame.nativeWidth),
+         frame.anchor.y / Math.max(1, frame.nativeHeight),
+       )
+-      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
++      .setScale(Math.min(width / frame.nativeWidth, height / frame.nativeHeight))
+       .setDepth(depth)
+       .setAlpha(alpha)
+       .setVisible(true);
+@@ -2446,21 +2479,67 @@
+   }
+ 
+   private drawAuthoredEnvironmentSurface(): void {
+-    if (!this.canRenderAuthoredEnvironment()) return;
+     // The ground below is deliberately a single continuous procedural turf
+     // field. The source grass swatch is useful as a material reference, but
+     // tiling its dark edge pixels at live scale looked like a construction
+     // grid. Logical build cells are overlaid separately only in Build Mode.
+-    this.drawEnvironmentTile(
++    this.drawFrontageTile(
+       "environment:sidewalk",
+-      "environment:sidewalk",
++      "frontage:paving-v2",
+       this.layout.originX,
+       this.layout.sidewalkTop,
+       this.layout.width,
+       this.layout.sidewalkHeight,
+       FACILITY_DEPTH_WORLD + 5,
+-      Math.max(0.04, this.layout.tileSize / 145),
+-    );
++      this.layout.tileSize / 128,
++    );
++  }
++
++  /** Uniform independent frontage props/decals, sharing exterior cleanup. */
++  private drawFrontageImage(
++    key: string, id: FrontageAssetId, x: number, y: number,
++    width: number, depth: number, alpha = 1,
++  ): boolean {
++    const asset = FRONTAGE_V2_ASSETS[id];
++    const textureKey = getPhaserTextureKey(asset);
++    if (!this.textures.exists(textureKey)) return false;
++    let image = this.landscapingBitmapImages.get(key);
++    if (!image) {
++      image = this.add.image(x, y, textureKey);
++      this.landscapingBitmapImages.set(key, image);
++    }
++    image.setTexture(textureKey).setPosition(x, y)
++      .setOrigin(asset.anchor.x / asset.nativeWidth, asset.anchor.y / asset.nativeHeight)
++      .setScale(width / asset.nativeWidth).setDepth(depth).setAlpha(alpha).setVisible(true);
++    this.activeLandscapingBitmapImages.add(key);
++    return true;
++  }
++
++  private drawFrontageTile(
++    key: string, id: FrontageAssetId, x: number, y: number,
++    width: number, height: number, depth: number, tileScale: number,
++  ): boolean {
++    const textureKey = getPhaserTextureKey(FRONTAGE_V2_ASSETS[id]);
++    if (!this.textures.exists(textureKey)) return false;
++    const buffer = getFrontageTileBuffer(width,height,tileScale);
++    let sprite = this.environmentSprites.get(key);
++    if (!sprite) {
++      sprite = this.add.tileSprite(x, y, buffer.bufferWidth, buffer.bufferHeight, textureKey).setOrigin(0, 0);
++      this.environmentSprites.set(key, sprite);
++    }
++    // A <1px curb still uses a 1px offscreen buffer, then scales back to its
++    // exact world band. Compensated material scales retain the PNG proportions.
++    sprite.setTexture(textureKey).setPosition(x, y).setSize(buffer.bufferWidth, buffer.bufferHeight)
++      .setDisplaySize(width,height).setTileScale(buffer.tileScaleX,buffer.tileScaleY)
++      .setDepth(depth).setVisible(true);
++    // The curb's cap starts at its own world band, not a wrapped turf Y phase.
++    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.layout.originY;
++    const phase = getEnvironmentTileLogicalPhase(x, y,
++      this.layout.originX, materialOriginY, tileScale, 0.000001);
++    sprite.tilePositionX = phase.x;
++    sprite.tilePositionY = phase.y;
++    this.activeEnvironmentSprites.add(key);
++    return true;
+   }
+ 
+   private roomEnvironmentFloorFrame(
+@@ -2504,11 +2583,11 @@
+     const columns = positiveGridSize(model.gridColumns, 16);
+     const rows = positiveGridSize(model.gridRows, 10);
+     const alpha = model.buildMode || model.placement ? 0.38 : 1;
+-    const exclusions: ExteriorRectangle[] = model.rooms.map((room) => ({
++    const exclusions: ExteriorRectangle[] = model.rooms.map((room) => getExteriorConstructionEnvelope({
+       x: room.tileX,
+       y: room.tileY,
+       ...orientedSize(room),
+-    }));
++    }, room.definitionId === "room.hallway"));
+     const founder = this.getFounderRoom();
+     if (founder) {
+       const size = orientedSize(founder);
+@@ -2523,35 +2602,42 @@
+     }
+     // Candidates are contact-anchored above the slab sidewalk. This catches
+     // tall crowns and their shadows rather than relying on room occlusion.
+-    exclusions.push({ x: -4, y: rows + 0.84, width: columns + 8, height: 4 });
++    exclusions.push({ x: -4, y: rows, width: columns + 8, height: 4 });
+     const visible = getVisibleExteriorLandscape(
+       getExteriorLandscapeCandidates(columns, rows),
+       exclusions,
+       0.12,
++      this.layout.tileSize,
+     );
+     for (const candidate of visible) {
+       const isTree = candidate.frameId.startsWith("landscape:tree");
+-      const width = Math.max(22, candidate.width * this.layout.tileSize);
+-      const height = Math.max(14, candidate.height * this.layout.tileSize);
+-      const x = this.layout.originX + candidate.x * this.layout.tileSize;
+-      const y = this.layout.originY + candidate.y * this.layout.tileSize;
+-      if (!this.drawAuthoredLandscaping(
++      const display = getExteriorLandscapeDisplay(candidate, this.layout.tileSize,
++        this.layout.originX, this.layout.originY);
++      const { x, y, width, height } = display;
++      const depth = getExteriorLandscapeDepth(candidate.y);
++      const painted = candidate.frameId.startsWith("frontage:")
++        ? this.drawFrontageImage(`landscape:${candidate.key}`,
++          candidate.frameId as FrontageAssetId, x, y, width, depth, alpha)
++        : this.drawAuthoredLandscaping(
+         `landscape:${candidate.key}`,
+-        candidate.frameId,
++        candidate.frameId as LandscapingAtlasFrameId,
+         x,
+         y,
+         width,
+         height,
+         alpha,
+-        FACILITY_DEPTH_WORLD - 5,
+-      )) {
++        depth,
++      );
++      if (!painted) {
++        const fallback = this.getSortableGraphics(this.fixtureGraphics,
++          this.activeFixtureGraphics, `landscape-fallback:${candidate.key}`).setDepth(depth);
+         this.drawFixture(
+-          graphics,
++          fallback,
+           isTree ? "shadeTree" : "bushCluster",
+           x,
+           y,
+           width,
+-          Math.max(12, height * (isTree ? 0.42 : 0.56)),
++          height * (isTree ? 0.42 : 0.56),
+           alpha,
+         );
+       }
+@@ -3105,8 +3191,15 @@
+       room.definitionId,
+       orientation,
+       this.getApprovedBaseWidth(room),
+-      resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room)),
+-    );
++      [
++        ...resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room)),
++        ...this.getPeriopCompanionChairs(room).map((chair) => chair.draw),
++      ],
++    );
++  }
++
++  private getPeriopCompanionChairs(room: FacilityRoomView) {
++    return resolvePeriopCompanionChairs(room, this.bridge.viewModel.doors ?? [], this.bridge.viewModel.rooms);
+   }
+ 
+   /** Paints touch-up primitives authored at 120 px per tile. */
+@@ -4405,32 +4498,41 @@
+   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
+     const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.layout;
+     const sidewalkBottom = sidewalkTop + sidewalkHeight;
+-    if (!this.canRenderAuthoredEnvironment()) {
+-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
++    if (!this.textures.exists(getPhaserTextureKey(FRONTAGE_V2_ASSETS["frontage:paving-v2"]))) {
++      graphics.fillStyle(0xc9c6bb, 1);
+       graphics.fillRect(originX, sidewalkTop, width, sidewalkHeight);
+-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.38);
+-      for (let y = sidewalkTop + 5; y < sidewalkBottom; y += 9) {
+-        graphics.fillRect(originX, y, width, 1);
+-      }
+-    }
+-    // Broad paving slabs, joints, and curb are all site/world-coordinate art.
+-    graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 0.85);
++    }
++    const columns = positiveGridSize(this.bridge.viewModel.gridColumns, 16);
++    const curbHeight = tileSize * WORLD_EXTERIOR_BANDS.curbTiles;
++    // This is the only slab-joint system; the material has no baked seams.
++    graphics.lineStyle(Math.max(0.35, tileSize * 0.018), 0x8f9086, 0.45);
+     graphics.lineBetween(originX, sidewalkTop, originX + width, sidewalkTop);
+-    graphics.lineBetween(originX, sidewalkBottom, originX + width, sidewalkBottom);
+-    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.warmGray, 0.4);
+-    const slabWidth = Math.max(32, Math.round(tileSize * 1.25));
+-    // Sidewalk joints are relative to the semantic site edge, never the
+-    // screen's current coordinate system, so they move with the pavement.
+-    const firstSlab = originX;
+-    for (let x = firstSlab; x <= originX + width; x += slabWidth) {
+-      graphics.lineBetween(x, sidewalkTop + 2, x, sidewalkBottom - 2);
+-    }
+-    graphics.lineStyle(Math.max(1, Math.floor(tileSize * 0.06)), PIXEL_PALETTE_NUMBER.charcoal, 0.55);
+-    graphics.lineBetween(originX, sidewalkBottom - Math.max(2, tileSize * 0.12), originX + width, sidewalkBottom - Math.max(2, tileSize * 0.12));
++    for (const joint of getExteriorPavingJoints(columns)) {
++      graphics.lineBetween(originX + joint.x1 * tileSize, sidewalkTop + joint.y1 * tileSize,
++        originX + joint.x2 * tileSize, sidewalkTop + joint.y2 * tileSize);
++    }
++    for (const run of getFrontageCurbRuns(columns)) {
++      if (!this.drawFrontageTile(run.key, run.assetId, originX + run.x * tileSize,
++        sidewalkBottom-curbHeight, run.width * tileSize, curbHeight,
++        FACILITY_DEPTH_WORLD + 6, curbHeight / 16)) {
++        graphics.fillStyle(0x9e9e94, 1);
++        graphics.fillRect(originX + run.x * tileSize, sidewalkBottom-curbHeight, run.width*tileSize, curbHeight);
++        graphics.fillStyle(0xc8c7bb, 1);
++        graphics.fillRect(originX + run.x * tileSize, sidewalkBottom-curbHeight, run.width*tileSize, curbHeight*0.3);
++      }
++    }
+ 
+     const founder = this.getFounderRoom();
+     if (!founder) return;
+     const founderPixels = this.toPixels({ tileX: founder.tileX, tileY: founder.tileY, ...orientedSize(founder) });
++    const entryInset = getFrontageEntryInset(founder.tileX, positiveGridSize(this.bridge.viewModel.gridRows, 10));
++    // Above ground joints, far below sortable actors; outside the existing
++    // threshold and interior mat. It has no vertical face or crossing shadow.
++    if (!this.drawFrontageImage("frontage:entry-inset", "frontage:entry-inset-v2",
++      originX + entryInset.x * tileSize, sidewalkTop, tileSize, FACILITY_DEPTH_WORLD + 31)) {
++      graphics.fillStyle(0xddcfaf, 1);
++      graphics.fillRect(originX + entryInset.x * tileSize, sidewalkTop, tileSize, tileSize*entryInset.height);
++    }
+     // The Front Desk's south shell already omits its protected exterior door
+     // tile. Do not paint a threshold, shadow, or jamb here: the room floor
+     // must meet the sidewalk directly at the opening.
+@@ -4441,34 +4543,17 @@
+     for (const [planterIndex, planter] of FRONT_DESK_PRESENTATION.entrancePlanters.entries()) {
+       const planterBaseY =
+         sidewalkTop + planter.baseYInSidewalk * tileSize;
+-      this.drawAuthoredLandscaping(
++      this.drawFrontageImage(
+         `landscape:front-desk-entrance-bed:${planter.side}`,
+-        "landscape:entrance-planter",
++        planter.assetId,
+         founderPixels.x + planter.centerXInTiles * tileSize,
+         planterBaseY,
+         planter.widthInTiles * tileSize,
+-        planter.heightInTiles * tileSize,
+-        1,
+         // Their rear-side contact is outside the south wall, while actors in
+         // the lower sidewalk lane have later baselines and pass in front.
+         getFacilitySceneDepth(planterBaseY, "fixture", planterIndex),
+-      );
+-      planter.bloomAccents.forEach((accent, accentIndex) => {
+-        this.drawAuthoredLandscaping(
+-          `landscape:front-desk-entrance-bloom:${planterIndex}:${accentIndex}`,
+-          accent.id,
+-          founderPixels.x + accent.centerXInTiles * tileSize,
+-          sidewalkTop + accent.baseYInSidewalk * tileSize,
+-          accent.widthInTiles * tileSize,
+-          accent.heightInTiles * tileSize,
+-          accent.alpha,
+-          getFacilitySceneDepth(
+-            sidewalkTop + accent.baseYInSidewalk * tileSize,
+-            "fixture",
+-            planterIndex * 4 + accentIndex + 2,
+-          ),
+-        );
+-      });
++        this.bridge.viewModel.buildMode || this.bridge.viewModel.placement ? 0.38 : 1,
++      );
+     }
+   }
+ 
+@@ -5196,6 +5281,7 @@
+     if (!presentation) return false;
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     const records = this.getTouchupDrawRecords(room);
++    const companionChairs = this.getPeriopCompanionChairs(room);
+     const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
+     const lighting = this.getTouchupRoomLighting(room, presentation.shell, openDoorSegments, backedNorthSegments);
+     const tintTopY = (centerXTiles: number) => lighting
+@@ -5207,6 +5293,11 @@
+       const frame = this.registerApprovedRoomFrame(record);
+       const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+       if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
++      const stool = getApprovedRollingStoolSource(record);
++      const backlessTexture = stool?.derivation ? this.ensureBacklessRollingStoolTexture(stool) : undefined;
++      if (stool?.derivation && !backlessTexture) continue;
++      const textureKey = backlessTexture ?? getPhaserTextureKey(atlas);
++      const renderFrame = backlessTexture ? undefined : frame;
+       const [leftTiles, topTiles] = record.destinationTopLeftTiles;
+       const [widthTiles, heightTiles] = record.renderSizeTiles;
+       const left = rectangle.x + leftTiles * this.layout.tileSize;
+@@ -5217,7 +5308,7 @@
+       const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
+       let image = this.fixtureBitmapImages.get(key);
+       if (!image) {
+-        image = this.add.image(left, top, getPhaserTextureKey(atlas), frame);
++        image = this.add.image(left, top, textureKey, renderFrame);
+         this.fixtureBitmapImages.set(key, image);
+       }
+       // North-wall floor furniture kept on a low wall sorts by its own floor
+@@ -5227,19 +5318,21 @@
+         : record.depthPolicy === "wall"
+           ? FACILITY_DEPTH_WORLD + 19
+           : getFacilitySceneDepth(contactY, "fixture", order % 64);
+-      image.setTexture(getPhaserTextureKey(atlas), frame)
++      image.setTexture(textureKey, renderFrame)
+         .setOrigin(0, 0)
+         .setPosition(Math.round(left), Math.round(top))
+         .setDisplaySize(Math.round(width), Math.round(height))
+         .setDepth(recordDepth)
+         .setVisible(true)
+-        .setData("approved-draw-id", record.id);
++        .setData("approved-draw-id", record.id)
++        .setData("approved-backless-stool-source", stool?.id ?? null);
+       this.activeFixtureBitmapImages.add(key);
+       if (lighting) {
+-        this.drawTouchupTintedTop(`${key}:tint`, getPhaserTextureKey(atlas), frame, left, top, width, height,
++        this.drawTouchupTintedTop(`${key}:tint`, textureKey, renderFrame, left, top, width, height,
+           tintTopY(leftTiles + widthTiles / 2)!, lighting.color, recordDepth);
+       }
+-      const chairMask = getApprovedSideChairMaskForDraw(room.definitionId, orientation, record);
++      const chairMask = stool ? undefined : getApprovedSideChairMaskForDraw(room.definitionId, orientation, record) ??
++        companionChairs.find((chair) => chair.draw.id === record.id)?.mask;
+       if (chairMask) {
+         const textures = this.ensureApprovedSideChairTextures(chairMask);
+         if (textures) {
+@@ -5465,6 +5558,12 @@
+       textureKey = getPhaserTextureKey(atlas);
+       sourceWidth = record.sourceRect[2];
+       sourceHeight = record.sourceRect[3];
++      const stool = getApprovedRollingStoolSource(record);
++      if (stool?.derivation) {
++        textureKey = this.ensureBacklessRollingStoolTexture(stool);
++        if (!textureKey) return undefined;
++        frame = undefined;
++      }
+     }
+     const width = widthTiles * this.layout.tileSize;
+     const height = width * sourceHeight / sourceWidth;
+@@ -5982,7 +6081,7 @@
+     location: GridPoint | undefined,
+     moving: boolean,
+     anchor: "staff" | "public",
+-  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; pose?: CharacterPose; direction?: CharacterDirection; rightFacing?: boolean }> | undefined {
++  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose?: CharacterPose; direction?: CharacterDirection; rightFacing?: boolean }> | undefined {
+     const approvedRoom = this.bridge.viewModel.rooms.find((candidate) => candidate.definitionId === "room.front_desk");
+     const approvedBounds = approvedRoom ? orientedSize(approvedRoom) : undefined;
+     const insideApprovedRoom = Boolean(location && approvedRoom && approvedBounds && !moving &&
+@@ -6004,6 +6103,8 @@
+           seatTarget: true,
+           supportRole: support.role,
+           supportId: support.id,
++          supportRoomInstanceId: approvedRoom.instanceId,
++          sideChairLayer: support.sideChairLayer,
+           pose: support.pose === "standing" ? "idle" : support.pose,
+           ...facing,
+         };
+@@ -6040,7 +6141,7 @@
+     supportRole: FacilityActorSupportRole | undefined,
+     supportId?: string,
+     supportRoomInstanceId?: string,
+-  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
++  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
+     if (!location || moving || !supportRole) return undefined;
+     const room = this.bridge.viewModel.rooms.find((candidate) => {
+       if (!getApprovedRoomPresentation(candidate.definitionId) || candidate.definitionId === "room.front_desk") return false;
+@@ -6054,7 +6155,9 @@
+     const support = getNearestApprovedActorSupport(
+       supportRole === "staff-idle"
+         ? resolveStaffIdleSupports(room.definitionId, orientation)
+-        : resolveApprovedRoomActorSupports(room.definitionId, orientation),
++        : supportRole === "periop-companion-seat"
++          ? this.getPeriopCompanionChairs(room).map((chair) => chair.support)
++          : resolveApprovedRoomActorSupports(room.definitionId, orientation),
+       { x: location.x - room.tileX, y: location.y - room.tileY },
+       supportRole,
+       supportId,
+@@ -6072,6 +6175,7 @@
+       supportRole: support.role,
+       supportId: support.id,
+       supportRoomInstanceId: room.instanceId,
++      sideChairLayer: support.sideChairLayer,
+       pose: support.pose === "standing" ? "idle" : support.pose,
+       ...facing,
+     };
+@@ -6080,7 +6184,7 @@
+   private setCharacterSupportPresentation(
+     key: string,
+     graphics: Phaser.GameObjects.Graphics,
+-    support: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string }> | undefined,
++    support: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding }> | undefined,
+     order: number,
+   ): void {
+     const depthY = support?.depthBaseY;
+@@ -6093,6 +6197,7 @@
+       target?.setData("actor-support-role", support?.supportRole ?? null);
+       target?.setData("actor-support-id", support?.supportId ?? null);
+       target?.setData("actor-support-room-instance-id", support?.supportRoomInstanceId ?? null);
++      target?.setData("actor-seat-mask-id", support?.sideChairLayer?.maskId ?? null);
+     }
+   }
+ 
+@@ -6954,19 +7059,44 @@
+   private drawRetailExternalActor(actor: FacilityRetailExternalActorView, index: number): void {
+     const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
+     const frozen = this.characterPresentationFrozen() ? this.characterMotionSnapshots.get(key) : undefined;
+-    if (!actor.location && !frozen) { this.characterMotionSnapshots.delete(key); return; }
++    if (!actor.location && (!frozen || frozen.alignSeatContact)) {
++      this.characterMotionSnapshots.delete(key);
++      this.characterSeatSettles.delete(key);
++      const previous = this.characterGraphics.get(key);
++      if (previous) this.setCharacterSupportPresentation(key, previous, undefined, index + 40);
++      previous?.setVisible(false);
++      this.characterBitmapContainers.get(key)?.setVisible(false);
++      return;
++    }
+     const location = actor.location ?? { x: 0, y: 0 };
+     const moving = Boolean(actor.moving);
+     const direction = actor.direction ?? "front";
+     const graphics = this.getCharacterGraphics(key);
++    const room = this.bridge.viewModel.rooms.find((candidate) =>
++      candidate.instanceId === actor.procedureCompanion?.waitingReservation?.roomInstanceId);
++    const chair = room ? getPeriopCompanionChairForActor(actor, this.getPeriopCompanionChairs(room)) : undefined;
++    const supportDisplay = chair ? this.getApprovedActorSupportDisplayPosition(
++      location, moving, chair.support.role, chair.support.id, chair.roomInstanceId,
++    ) : undefined;
++    // A paused/build redraw must not replay an attachment to a removed chair or
++    // a different reservation. Ordinary frozen floor actors retain their snapshot.
++    if (frozen && (
++      (graphics.getData("actor-support-id") ?? null) !== (supportDisplay?.supportId ?? null) ||
++      (graphics.getData("actor-support-room-instance-id") ?? null) !== (supportDisplay?.supportRoomInstanceId ?? null)
++    )) {
++      this.characterMotionSnapshots.delete(key);
++      this.characterSeatSettles.delete(key);
++    }
+     const baseY = this.drawCharacterPresentation(graphics, key, {
+-      centerX: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+-      baseY: this.actorBaseY(location.y), appearance: actor.appearance,
+-      direction: stationaryFloorDirection(moving, direction, false),
+-      pose: this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
+-      rightFacing: actor.rightFacing ?? false, displayScale: 1,
++      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
++      baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y), appearance: actor.appearance,
++      direction: supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false),
++      pose: supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
++      rightFacing: supportDisplay?.rightFacing ?? actor.rightFacing ?? false, displayScale: 1,
++      alignSeatContact: supportDisplay?.seatTarget ?? false,
+     }, this.characterGaitOffset(key, 400 + index));
+     graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 40) % 64));
++    this.setCharacterSupportPresentation(key, graphics, supportDisplay, index + 40);
+   }
+ 
+   private drawPatientLocator(

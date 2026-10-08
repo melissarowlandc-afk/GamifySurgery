@@ -1,0 +1,117 @@
+{
+  "status": "prepaint_geometry_only",
+  "pixelsPerTile": 480,
+  "pieces": [
+    {
+      "id": "desk",
+      "asset": "founder-desk",
+      "canvas": [
+        720,
+        432
+      ],
+      "size": [
+        1.5,
+        0.9
+      ],
+      "ground": [
+        1.45,
+        2.02
+      ],
+      "footprint": {
+        "left": 0.75,
+        "top": 1.6,
+        "width": 1.4,
+        "height": 0.42
+      },
+      "owners": [],
+      "color": "#bb9462"
+    },
+    {
+      "id": "bookcase",
+      "asset": "office-bookcase",
+      "canvas": [
+        384,
+        600
+      ],
+      "size": [
+        0.8,
+        1.25
+      ],
+      "ground": [
+        0.52,
+        0.35
+      ],
+      "footprint": {
+        "left": 0.2,
+        "top": 0.16,
+        "width": 0.64,
+        "height": 0.19
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ],
+      "color": "#ae8b5c"
+    },
+    {
+      "id": "plant",
+      "asset": "office-plant",
+      "canvas": [
+        312,
+        456
+      ],
+      "size": [
+        0.65,
+        0.95
+      ],
+      "ground": [
+        3.45,
+        0.35
+      ],
+      "footprint": {
+        "left": 3.25,
+        "top": 0.17,
+        "width": 0.4,
+        "height": 0.18
+      },
+      "owners": [
+        "N4",
+        "EA"
+      ],
+      "color": "#748967"
+    },
+    {
+      "id": "print",
+      "asset": "office-print",
+      "canvas": [
+        312,
+        202
+      ],
+      "size": [
+        0.65,
+        0.42083333333333334
+      ],
+      "top": [
+        1.5,
+        -0.68
+      ],
+      "owners": [
+        "N2"
+      ],
+      "backed": [
+        "N2"
+      ],
+      "color": "#81a397"
+    }
+  ],
+  "roomFootprint": [
+    4,
+    4
+  ],
+  "doors": {
+    "count": 16,
+    "perWall": 4,
+    "spanTiles": 1,
+    "kind": "game-one-tile"
+  }
+}

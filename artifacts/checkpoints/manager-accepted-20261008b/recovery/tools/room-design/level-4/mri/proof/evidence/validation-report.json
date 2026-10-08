@@ -1,0 +1,683 @@
+{
+  "status": "revision_controls_contacts_and_integrity_pass_owner_review_pending",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-4/mri/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "checks": [
+    "Nine complete active prepared art assets",
+    "Exactly nine active PNGs; retired painted patient art stays in history",
+    "Owner-authorized private layout replaces old fixed-geometry assertions",
+    "Original MRI proof actor source/scale/anchor contract stays frozen",
+    "gantry-side original SHA preserved",
+    "gantry-side prepared SHA",
+    "gantry-side proof snapshot matches current prepared PNG",
+    "table-empty original SHA preserved",
+    "table-empty prepared SHA",
+    "table-empty proof snapshot matches current prepared PNG",
+    "console original SHA preserved",
+    "console prepared SHA",
+    "console proof snapshot matches current prepared PNG",
+    "operator-chair original SHA preserved",
+    "operator-chair prepared SHA",
+    "operator-chair proof snapshot matches current prepared PNG",
+    "coil-cabinet original SHA preserved",
+    "coil-cabinet prepared SHA",
+    "coil-cabinet proof snapshot matches current prepared PNG",
+    "zone-sign original SHA preserved",
+    "zone-sign prepared SHA",
+    "zone-sign proof snapshot matches current prepared PNG",
+    "scan-light original SHA preserved",
+    "scan-light prepared SHA",
+    "scan-light proof snapshot matches current prepared PNG",
+    "comfort-cart original SHA preserved",
+    "comfort-cart prepared SHA",
+    "comfort-cart proof snapshot matches current prepared PNG",
+    "open-shelves original SHA preserved",
+    "open-shelves prepared SHA",
+    "open-shelves proof snapshot matches current prepared PNG",
+    "patient.adult.001/stand/south current actor unchanged",
+    "patient.adult.001/stand/east current actor unchanged",
+    "patient.adult.001/stand/west current actor unchanged",
+    "patient.adult.001/stand/north current actor unchanged",
+    "patient.adult.001/sit/south current actor unchanged",
+    "patient.adult.001/sit/east current actor unchanged",
+    "patient.adult.001/sit/west current actor unchanged",
+    "patient.adult.001/sit/north current actor unchanged",
+    "gs026-employee-004/stand/south current actor unchanged",
+    "gs026-employee-004/stand/east current actor unchanged",
+    "gs026-employee-004/stand/west current actor unchanged",
+    "gs026-employee-004/stand/north current actor unchanged",
+    "gs026-employee-004/sit/south current actor unchanged",
+    "gs026-employee-004/sit/east current actor unchanged",
+    "gs026-employee-004/sit/west current actor unchanged",
+    "gs026-employee-004/sit/north current actor unchanged",
+    "Reload defaults to one current seated-west patient and tech",
+    "All 16 doors/simultaneous doors × all16 north masks: 272 states/2048 coarse routes",
+    "Exact optional decor hide ownership",
+    "Cabinet retained full height and floor-sorted at .32 on north backing",
+    "EB/EC magnet pass-through exceptions preserved",
+    "North backing lowers only its own segment and restores exact shell",
+    "Door/backing round-trip restores identical candidate pixels",
+    "MRI imagery/procedural floor and glass never dim",
+    "Actual lower opaque-base bands clear 22304 interpolated route samples (radius .18 tile)",
+    "Every candidate actual foot edge meets its revised declared world ground",
+    "Actual lower-base bands and declared solids clear 164 standing-approach samples before seating",
+    "gantry-side exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "table-empty exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "console exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "operator-chair exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "coil-cabinet exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "zone-sign exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "scan-light exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "comfort-cart exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "open-shelves exact native canvas/genuine alpha/4px clearance/uniform pack/true ground/current browser snapshot",
+    "Exactly one sit-west patient uses existing source and unchanged cap scale",
+    "Patient source hip anchor exactly meets empty cushion surface",
+    "Actual source cushion exists beneath patient hip",
+    "Patient draws in front of both couch and scanner at actual source overlap",
+    "Existing sit-north tech sits south of larger desk on its center axis",
+    "Visible bed entrance reaches exact donut center",
+    "Patient sits at outer west cushion with feet beyond bed end",
+    "Actual patient and console alpha silhouettes clear procedural glass",
+    "Active build has empty furniture only; patient toggle changes pose without duplicates",
+    "gantry-side actual physical rise meets revised target ±1.5px",
+    "table-empty actual physical rise meets revised target ±1.5px",
+    "console actual physical rise meets revised target ±1.5px",
+    "operator-chair actual physical rise meets revised target ±1.5px",
+    "Enlarged bore exactly aligns with measured couch surface",
+    "All16 actual door controls open/close and redraw",
+    "Open-all control",
+    "Close-all control",
+    "Back-all control",
+    "Clear-backing control",
+    "Door button keyboard Enter",
+    "Door button keyboard Space/restoration",
+    "Independent backing keyboard control",
+    "Patient keyboard toggle to standing",
+    "Patient keyboard toggle restores exactly one seated patient",
+    "tgRoutes actual control",
+    "tgGrid actual control",
+    "320px layout without horizontal overflow",
+    "No browser errors/missing resources"
+  ],
+  "failures": [],
+  "geometryAcceptance": "needs_owner_review",
+  "geometry": [
+    "Magnet silhouette is taller than long within prescribed portrait canvas; owner reconciliation required.",
+    "Measured room couch surface 0.000px below bore centre. Source-contact picks have about3native-source-pixel uncertainty; table right end is depth-covered by magnet.",
+    "Current actor feet/contact discrepancy: baseline 0.489px above floor; brief support 5.889px above floor. Actor source and scale remain the frozen current lab export.",
+    "Standing approaches stop south of the chair and couch before seating. Seated hip/body axes are not standing-circle endpoints; their base clearances are reported separately. Walking-route radius checks remain enforced.",
+    "Patient feet 8.746px above couch floor. Simplified sit-west/dangling-foot presentation is owner-directed; seat/climb animation is not implemented.",
+    "All-alpha padding exceeds the original4–8px target on calibrated/tall frames; explicit candidate exception, minimum4px retained. Lower alpha bands are projected2D silhouettes and do not prove physical floor depth."
+  ],
+  "core": {
+    "doorStates": 272,
+    "routes": 2048,
+    "routePoints": 22304,
+    "routeProblems": [],
+    "visibilityProblems": [],
+    "baseConflicts": [],
+    "native": [
+      {
+        "id": "gantry-side",
+        "size": [
+          384,
+          519
+        ],
+        "expectedSize": [
+          384,
+          519
+        ],
+        "transparent": 60087,
+        "opaque": 137529,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 514,
+        "alphaClearancePixels": [
+          15,
+          105,
+          15,
+          4
+        ],
+        "canvasAnchor": [
+          192,
+          515
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "B8E8B3373B07E2EB5BA89687058B88DEDF52D147F552709ECFA0AB6554B22F56",
+        "uniformPacking": true
+      },
+      {
+        "id": "table-empty",
+        "size": [
+          252,
+          149
+        ],
+        "expectedSize": [
+          252,
+          149
+        ],
+        "transparent": 24351,
+        "opaque": 12226,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 141,
+        "alphaClearancePixels": [
+          8,
+          26,
+          8,
+          4
+        ],
+        "canvasAnchor": [
+          126,
+          142
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "6479AFB89B324B919E26534387F61E2FFDE78BEAAB49B2255C63D9A6A6420DB5",
+        "uniformPacking": true
+      },
+      {
+        "id": "console",
+        "size": [
+          206,
+          317
+        ],
+        "expectedSize": [
+          206,
+          317
+        ],
+        "transparent": 33749,
+        "opaque": 30162,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 311,
+        "alphaClearancePixels": [
+          5,
+          64,
+          5,
+          4
+        ],
+        "canvasAnchor": [
+          103,
+          312
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "6157154FFB36859A77DE16E15F75B5AC6DE7E94363267A76574C933393EF8724",
+        "uniformPacking": true
+      },
+      {
+        "id": "operator-chair",
+        "size": [
+          96,
+          168
+        ],
+        "expectedSize": [
+          96,
+          168
+        ],
+        "transparent": 9047,
+        "opaque": 6410,
+        "alphaMin": 0,
+        "alphaMax": 253,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 163,
+        "alphaClearancePixels": [
+          7,
+          14,
+          7,
+          4
+        ],
+        "canvasAnchor": [
+          48,
+          164
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "6EA0B9B51AD3D26473DABAD55998BC09103E629FBBD0ED3DC3DCF5243CC3F50E",
+        "uniformPacking": true
+      },
+      {
+        "id": "coil-cabinet",
+        "size": [
+          154,
+          312
+        ],
+        "expectedSize": [
+          154,
+          312
+        ],
+        "transparent": 6705,
+        "opaque": 39904,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 306,
+        "alphaClearancePixels": [
+          8,
+          4,
+          8,
+          4
+        ],
+        "canvasAnchor": [
+          77,
+          307
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677",
+        "uniformPacking": true
+      },
+      {
+        "id": "zone-sign",
+        "size": [
+          110,
+          96
+        ],
+        "expectedSize": [
+          110,
+          96
+        ],
+        "transparent": 2215,
+        "opaque": 8299,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 91,
+        "alphaClearancePixels": [
+          4,
+          10,
+          4,
+          4
+        ],
+        "canvasAnchor": [
+          55,
+          0
+        ],
+        "isFloorSprite": false,
+        "preparedSha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851",
+        "uniformPacking": true
+      },
+      {
+        "id": "scan-light",
+        "size": [
+          96,
+          53
+        ],
+        "expectedSize": [
+          96,
+          53
+        ],
+        "transparent": 1720,
+        "opaque": 3324,
+        "alphaMin": 0,
+        "alphaMax": 253,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 48,
+        "alphaClearancePixels": [
+          4,
+          10,
+          4,
+          4
+        ],
+        "canvasAnchor": [
+          48,
+          0
+        ],
+        "isFloorSprite": false,
+        "preparedSha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315",
+        "uniformPacking": true
+      },
+      {
+        "id": "comfort-cart",
+        "size": [
+          180,
+          216
+        ],
+        "expectedSize": [
+          180,
+          216
+        ],
+        "transparent": 17005,
+        "opaque": 19791,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 210,
+        "alphaClearancePixels": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "canvasAnchor": [
+          90,
+          211
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "A57241873742BE14CF981F4016F042A0ED26D13EFD182E8B2D30258E2D9A2742",
+        "uniformPacking": true
+      },
+      {
+        "id": "open-shelves",
+        "size": [
+          180,
+          300
+        ],
+        "expectedSize": [
+          180,
+          300
+        ],
+        "transparent": 12122,
+        "opaque": 36891,
+        "alphaMin": 0,
+        "alphaMax": 254,
+        "edgeAlphaMax": 0,
+        "opaqueBottom": 294,
+        "alphaClearancePixels": [
+          5,
+          4,
+          5,
+          4
+        ],
+        "canvasAnchor": [
+          90,
+          295
+        ],
+        "isFloorSprite": true,
+        "preparedSha256": "52303B83B50465137F318FEF3B723D8510BD28CAC858187F52A3472B24FB06A0",
+        "uniformPacking": true
+      }
+    ],
+    "groundingProblems": [],
+    "backingProblems": [],
+    "passThrough": [
+      {
+        "door": "EB",
+        "fixture": "gantry",
+        "alreadyAllowed": true
+      },
+      {
+        "door": "EC",
+        "fixture": "gantry",
+        "alreadyAllowed": true
+      }
+    ],
+    "initialScan": true,
+    "cabinetMeasurement": {
+      "painterY": 0.32,
+      "height": 155.5948051948052,
+      "expectedHeight": 155.5948051948052,
+      "alpha": 1,
+      "clipTop": null
+    },
+    "fullHeightCabinet": true,
+    "backingRestores": true,
+    "baseBounds": [
+      {
+        "id": "coilCabinet",
+        "boundsPixels": [
+          391.8389610389611,
+          24.68571428571431,
+          460.16103896103897,
+          38.15064935064939
+        ],
+        "opaqueSamples": 3085,
+        "footGround": [
+          3.55,
+          0.32
+        ]
+      },
+      {
+        "id": "gantry",
+        "boundsPixels": [
+          299.75,
+          342.69681033127847,
+          463.75,
+          356.19681033127847
+        ],
+        "opaqueSamples": 6912,
+        "footGround": [
+          3.2,
+          2.970390086093987
+        ]
+      },
+      {
+        "id": "tableEmpty",
+        "boundsPixels": [
+          279.05,
+          276.65,
+          303.55,
+          290.15
+        ],
+        "opaqueSamples": 1167,
+        "footGround": [
+          2.49,
+          2.42
+        ]
+      },
+      {
+        "id": "console",
+        "boundsPixels": [
+          88.65,
+          243.05,
+          180.65,
+          256.55
+        ],
+        "opaqueSamples": 1369,
+        "footGround": [
+          1.12,
+          2.14
+        ]
+      },
+      {
+        "id": "operatorChair",
+        "boundsPixels": [
+          114.15,
+          291.05,
+          154.65,
+          304.55
+        ],
+        "opaqueSamples": 1167,
+        "footGround": [
+          1.12,
+          2.54
+        ]
+      },
+      {
+        "id": "comfortCart",
+        "boundsPixels": [
+          375.85,
+          451.84999999999997,
+          459.35,
+          465.34999999999997
+        ],
+        "opaqueSamples": 1112,
+        "footGround": [
+          3.48,
+          3.88
+        ]
+      },
+      {
+        "id": "openShelves",
+        "boundsPixels": [
+          12.75,
+          451.84999999999997,
+          95.25,
+          465.34999999999997
+        ],
+        "opaqueSamples": 2091,
+        "footGround": [
+          0.45,
+          3.88
+        ]
+      }
+    ],
+    "supportApproachProblems": [],
+    "supportApproachSamples": 164,
+    "supportSolidProblems": [],
+    "supportPaths": [
+      {
+        "id": "operator south-side standing approach",
+        "a": [
+          0.5,
+          2.5
+        ],
+        "b": [
+          1.12,
+          2.9
+        ],
+        "endpoint": "operatorChair"
+      },
+      {
+        "id": "patient standing approach",
+        "a": [
+          2.5,
+          3.5
+        ],
+        "b": [
+          2.45,
+          3.3
+        ],
+        "endpoint": null
+      },
+      {
+        "id": "patient westward approach around scanner",
+        "a": [
+          2.45,
+          3.3
+        ],
+        "b": [
+          2.18,
+          3.3
+        ],
+        "endpoint": null
+      },
+      {
+        "id": "patient south-side approach before seating",
+        "a": [
+          2.18,
+          3.3
+        ],
+        "b": [
+          2.18,
+          2.8
+        ],
+        "endpoint": null
+      }
+    ],
+    "seatedEndpointClearance": [
+      {
+        "id": "coilCabinet",
+        "distancePixels": 373.4333659244042
+      },
+      {
+        "id": "gantry",
+        "distancePixels": 169.63723274471587
+      },
+      {
+        "id": "tableEmpty",
+        "distancePixels": 145.91211395905415
+      },
+      {
+        "id": "console",
+        "distancePixels": 59.292706128157114
+      },
+      {
+        "id": "operatorChair",
+        "distancePixels": 0.7905694150420949
+      },
+      {
+        "id": "comfortCart",
+        "distancePixels": 286.1283016410645
+      },
+      {
+        "id": "openShelves",
+        "distancePixels": 152.17235294231335
+      }
+    ],
+    "patientContact": {
+      "identity": "patient.adult.001",
+      "facing": "west",
+      "sourceHipY": 221.153,
+      "sourceFloorY": 287,
+      "sourceBodyX": 80,
+      "capScale": 0.8601398601398601,
+      "renderedWidthPixels": 109.84765234765236,
+      "expectedWidthPixels": 109.84765234765236,
+      "renderedHeightPixels": 219.6953046953047,
+      "hipPixels": [
+        261.6,
+        236.44681033127847
+      ],
+      "supportSeat": {
+        "x": 2.18,
+        "y": 1.9703900860939874
+      },
+      "couchSurfacePixels": 236.44681033127847,
+      "boreCentrePixels": 236.44681033127847,
+      "feetPixels": 281.65392510712763,
+      "tableGroundPixels": 290.4,
+      "sourceUrlPreserved": true,
+      "patientCount": 1
+    },
+    "patientSilhouette": {
+      "leftPixels": 207.7059955669331,
+      "rightPixels": 307.25543050699304,
+      "glassRightPixels": 206.40000000000003,
+      "clearancePixels": 1.3059955669330634,
+      "glassOverlapSourcePixels": 0,
+      "gantryOverlapSourcePixels": 46
+    },
+    "seatedPainter": {
+      "table": 2.980390086093987,
+      "patient": 2.9904900860939874,
+      "gantry": 2.970390086093987,
+      "patientInFrontOfBoth": true
+    },
+    "northTech": {
+      "facing": "north",
+      "sourcePreserved": true,
+      "southOfDesk": true,
+      "sameDeskAxis": true
+    },
+    "bedEntry": {
+      "clipWorldX": 2.5299418604651165,
+      "boreWorldX": 2.5299418604651165,
+      "bedLeft": 239.8,
+      "patientHipX": 261.6,
+      "patientFrontFootX": 218.0042129745255
+    },
+    "consoleGlassClearancePixels": 8.849999999999994,
+    "patientCushionSample": {
+      "native": [
+        51,
+        37
+      ],
+      "rgba": [
+        107,
+        173,
+        209,
+        253
+      ]
+    },
+    "activeArtOnly": true,
+    "emptyToggle": {
+      "oneStanding": true,
+      "noSeated": true,
+      "emptyCouch": true
+    },
+    "contactText": "Current actor seat-to-feet: 39.111 px. Baseline support: 39.6 px; actor feet 0.489 px above floor anchor.\nChair seat: 45.00 px above actual foot/base contact; target 45 px.\nCouch top: 53.95 px above actual foot/base contact; target 54 px.\nBore centre: 120.00 px above actual foot/base contact; target 120 px.\nConsole rear tabletop: 96.10 px above feet; enlarged target 96 px.\nConsole projected front lip: 76.20 px above feet.\nPatient sit west: unchanged source width 109.848 px; source hipY 221.153; seat (2.18, 1.970390) on the empty cushion.",
+    "actorContactMetrics": {
+      "identity": "gs026-employee-004",
+      "renderedWidthPixels": 127.7090592334495,
+      "seatToFeetRisePixels": 39.11089939024391,
+      "baselineSupportRisePixels": 39.6,
+      "briefSupportRisePixels": 45,
+      "baselineFeetAboveFloorPixels": 0.48910060975609326,
+      "briefFeetAboveFloorPixels": 5.889100609756092
+    },
+    "lightNeverDims": true,
+    "exactRestore": true
+  },
+  "errors": []
+}

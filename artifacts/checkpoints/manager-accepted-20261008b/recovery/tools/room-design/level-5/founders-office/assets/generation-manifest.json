@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "status": "generated_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "assets": [
+    {
+      "id": "founder-desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/founder-desk-02.png",
+      "prompt": "assets/prompts/founder-desk-02.prompt.txt",
+      "tool": "image_gen.imagegen",
+      "model": "built-in tool selected model; no API call",
+      "transparentBackground": true,
+      "originalSha256": "ccf635307f9348e010d5a1227ea8136a796bbdbae38bca0862f87074b4cc84a4",
+      "promptSha256": "bc43bac2ee2e8df01ab6ffaf829636ec197421b5b69c77511844f734dd657d4e",
+      "sourcePoints": {
+        "worktop": [
+          750,
+          294
+        ]
+      },
+      "rejectedVersions": [
+        {
+          "original": "assets/originals/founder-desk-01.png",
+          "prompt": "assets/prompts/founder-desk-01.prompt.txt",
+          "originalSha256": "910d72a34cca22a8ff48b2bb511c55ad3a12d1e199d945cb1a04533b299f3ff0",
+          "promptSha256": "bce026a0e9ef745cf803a2d7bc3abe41d935aa5a0ec2f89c0360cbdf972122c4",
+          "reason": "Desk too low/wide relative to approved 45px chair seat in first native assembly."
+        }
+      ],
+      "editTarget": "assets/originals/founder-desk-01.png"
+    },
+    {
+      "id": "office-bookcase",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/office-bookcase-01.png",
+      "prompt": "assets/prompts/office-bookcase-01.prompt.txt",
+      "tool": "image_gen.imagegen",
+      "model": "built-in tool selected model; no API call",
+      "transparentBackground": true,
+      "originalSha256": "bc1ed5f10762cac41e171ee091e842c39ae05e056afb3786086745de4ac349e0",
+      "promptSha256": "90d66927cd6a3e4825a14de080a0a264ccc74f787cdbb878bf5070e4dd62ab46"
+    },
+    {
+      "id": "office-plant",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/office-plant-01.png",
+      "prompt": "assets/prompts/office-plant-01.prompt.txt",
+      "tool": "image_gen.imagegen",
+      "model": "built-in tool selected model; no API call",
+      "transparentBackground": true,
+      "originalSha256": "f0ea237e650ee0ecee5a542531fc49ad0bbf590be222879986c94087c07d5523",
+      "promptSha256": "b8907dbac2737f11a82cbacb67b101c04eb84873cc51e2466eacd53c5fad093f"
+    },
+    {
+      "id": "office-print",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/office-print-01.png",
+      "prompt": "assets/prompts/office-print-01.prompt.txt",
+      "tool": "image_gen.imagegen",
+      "model": "built-in tool selected model; no API call",
+      "transparentBackground": true,
+      "originalSha256": "ae3ab345b73859e37dcb501dbb16312fa7b7e63aa7a30939d91172422faa2830",
+      "promptSha256": "1049cc6df7bae17c2c50913e00a7b42ff9b48895fb666869bc4aafc7beecd771"
+    }
+  ]
+}

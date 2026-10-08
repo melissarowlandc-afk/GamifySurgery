@@ -1,0 +1,253 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1,4 +1,5 @@
+ import {
++  getProcedureStaffSupportId,
+   PROTOTYPE_DOMAIN_CONTEXT,
+   TUTORIAL_ENCOUNTER_ID,
+   getFounderBreakSeatClaim,
+@@ -38,6 +39,9 @@
+   getRoomStandingWaitingAnchors,
+   getRoomWaitingAnchors,
+   getRoomCareAnchor,
++  getCurrentPeriopNurseAttention,
++  getPeriopNurseAttentionQueue,
++  periopNurseAttentionStatus,
+   getGlp1NursePractitionerStation,
+   getRoomResaleValue,
+   getRoomSalePreview,
+@@ -45,6 +49,9 @@
+   getRemoteWorkQueueAvailability,
+   getLevelThreeSupportStatus,
+   getServiceIncomeTotalsCents,
++  getRadiologistReadIncomeSummary,
++  getActiveOutsideRadiologyReads,
++  outsideReadEndsAtTick,
+   getStaffRoleDefinition,
+   getWorkloadSnapshot,
+   validateDoorPlacement,
+@@ -56,7 +63,7 @@
+   type RoomOrientation,
+   type ServiceOperationState,
+ } from "@gamify-surgery/game-domain";
+-import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG, getCurrentRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
++import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG, RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID, RADIOLOGIST_OUTSIDE_INCOME_LINE_ID, RADIOLOGIST_READ_INCOME, getCurrentRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type { FacilityActorSupportRole } from "../facility/types";
+ import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
+ import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
+@@ -153,8 +160,13 @@
+     : "The patient will return when the result is ready.";
+ }
+ 
++const currencyFormatter = new Intl.NumberFormat(undefined, {
++  minimumFractionDigits: 2,
++  maximumFractionDigits: 2,
++});
++
+ function currency(value: number): string {
+-  return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
++  return `$${currencyFormatter.format(value)}`;
+ }
+ 
+ function getProcedureSetupRequirements(
+@@ -320,7 +332,7 @@
+       candidate.status !== "completed" &&
+       candidate.status !== "cancelled",
+   );
+-  return operation ? periopPreparationStatusLabel(operation) : null;
++  return operation ? periopNurseAttentionStatus(operation, state.facilityTick) ?? periopPreparationStatusLabel(operation) : null;
+ }
+ 
+ function pendingLocalServiceIsInProgress(
+@@ -519,6 +531,7 @@
+   if (definitionId === "room.minor_procedure") return "minor-procedure-clinician";
+   if (definitionId === "room.ct") return "ct-operator";
+   if (definitionId === "room.phlebotomy") return "phlebotomy-clinician";
++  if (definitionId === "room.endoscopy") return "endoscopy-provider";
+   if (definitionId === "room.ambulatory_or") return "ambulatory-or-surgeon";
+   if (definitionId === "room.laboratory") return "laboratory-technician";
+   return undefined;
+@@ -763,10 +776,13 @@
+     presentation: discussion.frozenCase.presentation,
+     reviewStatus: "Educational draft · needs clinician review",
+     question: node.stem,
++    exhibit: node.exhibit,
++    teachingPoint: answer ? node.teachingPoint : undefined,
+     // The key is revealed only after an answer exists, as on patient charts.
+     choices: node.answerChoices.map((choice) => ({
+       id: choice.id, label: choice.label, selected: choice.id === answer?.answerChoiceId, disabled: !answerable,
+       ...(answer ? {revealedCorrect: choice.isCorrect} : {}),
++      ...(answer && choice.rationale ? { rationale: choice.rationale } : {}),
+     })),
+     // Selected/correct choices are tagged on the answer rows, so the body is the teaching text alone.
+     feedbackTitle: answer ? (answer.correct ? "Correct" : "Incorrect") : undefined,
+@@ -1057,6 +1073,8 @@
+         questionPrompt: questionIsVisible
+           ? decisionText.question
+           : undefined,
++        exhibit: questionIsVisible ? node.exhibit : undefined,
++        teachingPoint: answer ? node.teachingPoint : undefined,
+         answerChoices: questionIsVisible ? node.answerChoices.map((choice) => {
+           const preview =
+             isCurrent && answer === null
+@@ -1077,6 +1095,7 @@
+               readOnly,
+             ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
+             ...(answer !== null && choice.isCorrect ? { revealedCorrect: true } : {}),
++            ...(answer && choice.rationale ? { rationale: choice.rationale } : {}),
+           };
+         }) : [],
+         resultHeading:
+@@ -1231,7 +1250,7 @@
+           },
+         ]
+       : undefined,
+-    statusLabel: encounter.lifecycle === "active_pending_result" && diagnosticPresentation
++    statusLabel: periopStatus === "Waiting for peri-op nurse" ? periopStatus : encounter.lifecycle === "active_pending_result" && diagnosticPresentation
+       ? diagnosticPresentation.statusLabel : periopStatus ?? encounterStatus(encounter),
+     presentation: normalizeFrozenClinicalText({
+       clinicalCaseId: encounter.frozenCase.id,
+@@ -1317,6 +1336,7 @@
+             terminalFeedbackNeedsAcknowledgment ||
+             readOnly,
+           ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
++          ...(answerForQuestion && choice.rationale ? { rationale: choice.rationale } : {}),
+         };
+       }) ?? [],
+     feedbackTitle,
+@@ -1494,7 +1514,7 @@
+   };
+   const serviceIncomeTotals = getServiceIncomeTotalsCents(state);
+   const receiptActorLabel = (actorKind: string, actorId: string): string => {
+-    if (actorKind === "remote") return "Remote service";
++    if (actorKind === "remote") return state.employees.find((employee) => employee.id === actorId)?.displayName ?? "Remote service";
+     if (actorKind === "founder") return state.founder.displayName;
+     if (actorKind === "employee") return state.employees.find((employee) => employee.id === actorId)?.displayName ?? "Employee";
+     if (actorKind === "retail_visitor" || actorKind === "companion") return state.retailExternalActors.find((actor) => actor.id === actorId)?.displayName ?? (actorKind === "companion" ? "Companion" : "Retail visitor");
+@@ -1553,6 +1573,7 @@
+   ))];
+   const serviceIncome: ServiceIncomeView = {
+     appointmentsEnabled: state.serviceAppointmentsEnabled,
++    periopNurseQueueLength: getPeriopNurseAttentionQueue(state).length,
+     catalogLines: SERVICE_INCOME_CATALOG.filter((line) => line.showInCatalog !== false).map((line) => {
+       const missingCapabilities = line.requiredCapabilityIds.filter(
+         (capabilityId) => !currentCapabilities.has(capabilityId),
+@@ -1614,7 +1635,11 @@
+           missingRoomDefinitionIds: [...missingRooms, ...retailMissingRooms.filter((id) => !state.rooms.some((room) => room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id)))],
+           missingStaffRoleIds: [...missingStaff, ...retailMissingStaff.filter((id) => !state.employees.some((employee) => employee.staffRoleDefinitionId === id && isEmployeeOperational(state, employee.id)))],
+         }),
+-        arrivalLabel: serviceArrivalLabel(line, retailOutletLabel),
++        arrivalLabel: line.id === RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID
++          ? "Additional fee when each study is read"
++          : line.id === RADIOLOGIST_OUTSIDE_INCOME_LINE_ID
++            ? `Automatic when idle · ${RADIOLOGIST_READ_INCOME.outsideDurationMinutes} min base per read`
++            : serviceArrivalLabel(line, retailOutletLabel),
+         scheduled: line.operation?.visitorMode === "scheduled",
+         id: line.id,
+         displayName: line.displayName,
+@@ -1641,10 +1666,16 @@
+       .filter((operation) => operation.status !== "completed" && operation.status !== "cancelled")
+       .map((operation) => ({
+         id: operation.id,
+-        displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+-        actorLabel: operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
+-        statusLabel: operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
+-        quoteFeeLabel: currency(operation.quoteFee),
++        displayName: operation.diagnosticPhaseWork?.kind === "interpretation" ? "In-house study read" : SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
++        actorLabel: operation.diagnosticPhaseWork?.kind === "interpretation" ? state.encounters[operation.diagnosticPhaseWork.encounterId]?.patientDisplayName ?? "This center" : operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
++        statusLabel: periopNurseAttentionStatus(operation, state.facilityTick) ?? operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
++        quoteFeeLabel: currency(operation.diagnosticPhaseWork?.readIncomeFee ?? (operation.quoteFee - (operation.diagnosticPhysicalWork?.readIncomeFee ?? 0))),
++      })),
++      ...getActiveOutsideRadiologyReads(state).map((read) => ({
++        id: `outside-read.${read.sequence}`, displayName: "Outside study read",
++        actorLabel: state.employees.find((employee) => employee.id === read.employeeId)?.displayName ?? "Radiologist",
++        statusLabel: `Reading · ${Math.max(0, Math.ceil(outsideReadEndsAtTick(read) - state.facilityTick))} min remaining`,
++        quoteFeeLabel: currency(read.fee),
+       })),
+       ...state.retailOperations
+         .filter((operation) => !["completed", "abandoned", "cancelled"].includes(operation.status))
+@@ -1675,6 +1706,12 @@
+     grossTotalLabel: currency(serviceIncomeTotals.grossCents / 100),
+     stockCostTotalLabel: currency(serviceIncomeTotals.stockCostCents / 100),
+     netTotalLabel: currency(serviceIncomeTotals.netCashDeltaCents / 100),
++    ...(state.facilityLevel >= 3 ? { radiologistReads: Object.fromEntries(
++      Object.entries(getRadiologistReadIncomeSummary(state)).map(([period, totals]) => [period, {
++        inHouseReads: totals.inHouseReads, outsideReads: totals.outsideReads,
++        inHouseIncomeLabel: currency(totals.inHouseIncomeCents / 100), outsideIncomeLabel: currency(totals.outsideIncomeCents / 100),
++      }]),
++    ) as NonNullable<ServiceIncomeView["radiologistReads"]> } : {}),
+     ...(state.facilityLevel >= 3 ? { laboratoryWorkQueue: {
+       enabled: laboratoryQueue.canStart,
+       statusLabel: laboratoryQueueStatus,
+@@ -1930,8 +1967,14 @@
+         ...(() => {
+           const supportRole = getFounderSupportRole(state);
+           const breakSeat = supportRole === "staff-break-seat" ? getFounderBreakSeatClaim(state) : null;
++          const procedureRoom = state.environment.founderActivity?.kind === "perform_service"
++            ? getServiceTargetRoom(state, state.environment.founderActivity.targetId, "founder") : undefined;
++          const procedureDefinition = procedureRoom ? getRoomDefinition(procedureRoom.roomDefinitionId) : null;
++          const procedureSupportId = procedureRoom && procedureDefinition
++            ? getProcedureStaffSupportId(procedureRoom, procedureDefinition, state.environment.founderLocation, "provider") : undefined;
+           return supportRole
+-            ? { supportRole, ...(breakSeat ? { supportId: breakSeat.seatId, supportRoomInstanceId: breakSeat.roomId } : {}) }
++            ? { supportRole, ...(breakSeat ? { supportId: breakSeat.seatId, supportRoomInstanceId: breakSeat.roomId } : {}),
++                ...(procedureSupportId ? { supportId: procedureSupportId, supportRoomInstanceId: procedureRoom!.id } : {}) }
+             : {};
+         })(),
+       },
+@@ -2151,6 +2194,7 @@
+           const retailTrip = retailTripPresentation(actor.kind, actor.id);
+           return {
+             instanceId: actor.id, actorKind: actor.kind, displayName: actor.displayName, appearance: actor.appearance,
++            ...(actor.procedureCompanion ? { procedureCompanion: actor.procedureCompanion } : {}),
+             ...(retailTrip ?? movementPresentation(actor.path, actor.pathIndex)),
+             ...(retailTrip?.location ? { location: retailTrip.location } : actor.location ? { location: actor.location } : {}),
+           };
+@@ -2221,7 +2265,11 @@
+         const serviceRoom = taskAtEndpoint && employee.facilityTask?.targetId
+           ? getServiceTargetRoom(state, employee.facilityTask.targetId, employee.id)
+           : undefined;
+-        const serviceSupportRole = serviceRoom?.roomDefinitionId === "room.ambulatory_or"
++        const serviceSupportRole = serviceRoom?.roomDefinitionId === "room.endoscopy"
++          ? employee.staffRoleDefinitionId === "staff.endoscopy_nurse"
++            ? "endoscopy-nurse"
++            : employee.staffRoleDefinitionId === "staff.endoscopist" ? "endoscopy-provider" : undefined
++          : serviceRoom?.roomDefinitionId === "room.ambulatory_or"
+           ? employee.staffRoleDefinitionId === "staff.or_nurse"
+             ? "ambulatory-or-nurse"
+             : employee.staffRoleDefinitionId === "staff.surgeon"
+@@ -2278,7 +2326,9 @@
+         const serviceSupport = serviceSupportRole === "ct-operator" && employee.staffRoleDefinitionId !== "staff.imaging_technician"
+           ? undefined
+           : serviceSupportRole && serviceRoom
+-            ? { supportRole: serviceSupportRole, supportRoomInstanceId: serviceRoom.id }
++            ? { supportRole: serviceSupportRole, supportRoomInstanceId: serviceRoom.id,
++                supportId: getProcedureStaffSupportId(serviceRoom, getRoomDefinition(serviceRoom.roomDefinitionId)!, employee.location,
++                  employee.staffRoleDefinitionId === "staff.endoscopy_nurse" || employee.staffRoleDefinitionId === "staff.or_nurse" ? "nurse" : "provider") }
+             : undefined;
+         const trainingSupport = !departing && employee.training?.stage === "training" &&
+           employee.training.roomInstanceId && employee.training.placeId &&
+@@ -2302,6 +2352,15 @@
+           ? { supportRole: "staff-idle" as const, supportId: idleSpot.id, supportRoomInstanceId: homeRoom.id }
+           : undefined;
+         const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
++        const nurseOperation = employee.facilityTask?.kind === "periop_attention"
++          ? state.serviceOperations.find((operation) => operation.id === employee.facilityTask?.targetId) : undefined;
++        const attention = nurseOperation && getCurrentPeriopNurseAttention(nurseOperation);
++        const nurseFacing = attention?.standingPoint && nurseOperation?.periopBedReservation &&
++          samePoint(employee.location, attention.standingPoint) && employee.pathIndex >= employee.path.length - 1
++          ? (() => {
++              const patient = nurseOperation.periopBedReservation!.endpoint;
++              return patient.x !== employee.location.x ? "side" as const : patient.y < employee.location.y ? "back" as const : "front" as const;
++            })() : undefined;
+         return {
+           instanceId: employee.id,
+           discussionActionRequired: Object.values(state.employeeDiscussions ?? {}).some((discussion) =>
+@@ -2322,6 +2381,7 @@
+           ...(retailTripPresentation("employee", employee.id) ?? {
+             location: employee.location, path: employee.path, pathIndex: employee.pathIndex,
+             ...movementPresentation(employee.path, employee.pathIndex),
++            ...(nurseFacing ? { direction: nurseFacing } : {}),
+           }),
+         };
+       }),

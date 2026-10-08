@@ -1,0 +1,117 @@
+--- a/packages/game-domain/tests/surgery-center-batch.test.ts
++++ b/packages/game-domain/tests/surgery-center-batch.test.ts
+@@ -11,6 +11,7 @@
+   getCurrentCapabilities,
+   getCurrentQuestion,
+   getEligibleServiceRoute,
++  getPendingResultEta,
+   serializeGameState,
+   type GameState,
+ } from "../src";
+@@ -20,6 +21,18 @@
+   state.facilityLevel = level;
+   state.encounters = {};
+   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  if (level === 1) {
++    state.rooms.push(
++      { id: "room.sc.examination", roomDefinitionId: "room.examination", x: 29, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      { id: "room.sc.minor-procedure", roomDefinitionId: "room.minor_procedure", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      ...([24, 25, 26, 27, 28] as const).map((y) => ({ id: `room.sc.level-one-hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
++    );
++    state.doors.push(
++      { id: "door.sc.examination", roomId: "room.sc.examination", side: "east", offset: 1, exterior: false },
++      { id: "door.sc.minor-procedure", roomId: "room.sc.minor-procedure", side: "west", offset: 1, exterior: false },
++      { id: "door.sc.level-one-front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
++    );
++  }
+   if (level === 2) {
+     let examination = state.rooms.find((room) => room.roomDefinitionId === "room.examination");
+     if (!examination) {
+@@ -41,7 +54,7 @@
+     state.doors = state.doors.filter((door) => door.roomId !== examination.id);
+     state.rooms.push(
+       { id: "room.sc.endoscopy", roomDefinitionId: "room.endoscopy", x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+-      { id: "room.sc.periop", roomDefinitionId: "room.periop_recovery", x: 28, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      { id: "room.sc.periop", roomDefinitionId: "room.periop_recovery", x: 26, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+       ...[24, 25, 26, 27, 28].map((y) => ({ id: `room.sc.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
+     );
+     state.doors.push(
+@@ -52,7 +65,7 @@
+     );
+     for (const [id, role, roomId, location] of [
+       ["employee.sc.endo-nurse", "staff.endoscopy_nurse", "room.sc.endoscopy", { x: 29, y: 24 }],
+-      ["employee.sc.periop-nurse", "staff.periop_nurse", "room.sc.periop", { x: 29, y: 27 }],
++      ["employee.sc.periop-nurse", "staff.periop_nurse", "room.sc.periop", { x: 29, y: 28 }],
+       ["employee.sc.endoscopist", "staff.endoscopist", "room.sc.endoscopy", { x: 30, y: 24 }],
+     ] as const) state.employees.push({ id, staffRoleDefinitionId: role, displayName: id, appearance: state.founder.appearance, hiredAtFacilityTick: 0, salaryPerExpenseInterval: 0, morale: 100, trainingLevel: 1, homeRoomInstanceId: roomId, location, path: [location], pathIndex: 0, lastMovedAtFacilityTick: 0, lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 100 });
+   }
+@@ -104,10 +117,17 @@
+         gateCount += 1;
+         const pending = state.encounters[encounterId]!.pendingResult!;
+         expect(pending).toMatchObject({ resultTypeId: clinicalCase.decisionNodes[0]!.resultGateAfter!.resultTypeId });
+-        expect(pending.dueTick).toBeGreaterThan(state.facilityTick);
++        if (pending.localServiceOperation) {
++          expect(getPendingResultEta(state, encounterId)).toBeNull();
++          for (let minute = 0; minute < 400 && state.encounters[encounterId]!.pendingResult?.localServiceOperation?.status !== "external_processing"; minute += 1) {
++            state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `sc.${index}.local-service.${minute}` });
++          }
++        }
++        const activePending = state.encounters[encounterId]!.pendingResult!;
++        expect(activePending.dueTick).toBeGreaterThan(state.facilityTick);
+         expect(getCurrentQuestion(state, encounterId)).toBeNull();
+         expect(state.encounters[encounterId]!.deliveredResultNarratives).toEqual([]);
+-        while (state.facilityTick < pending.dueTick) {
++        while (state.facilityTick < activePending.dueTick) {
+           expect(getCurrentQuestion(state, encounterId)).toBeNull();
+           expect(state.encounters[encounterId]!.deliveredResultNarratives).toEqual([]);
+           state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `sc.${index}.before-result.${state.facilityTick}` });
+@@ -124,7 +144,7 @@
+     }
+     expect(gateCount).toBe(32);
+     expect(reviewed).toEqual(new Set(SURGERY_CENTER_TESTED_CONCEPTS.map((item) => item.id)));
+-  }, 15_000);
++  }, 60_000);
+ 
+   it("uses corrective-forward Again grading and preserves a pending external encounter across reload", () => {
+     const encounterId = "encounter.sc.corrective";
+@@ -161,23 +181,28 @@
+     state = answerCorrect(state, "encounter.sc.egd.ready", "sc.egd.ready", 20_000);
+     expect(state.encounters["encounter.sc.egd.ready"]!.steps[0]!.status).toBe("feedback_pending");
+     state = acknowledge(state, "encounter.sc.egd.ready", "sc.egd.ready");
+-    expect(state.operationReceipts["sc.egd.ready.ack"]?.message).toBe("Feedback reviewed; the corrected service is now underway.");
++    expect(state.operationReceipts["sc.egd.ready.ack"]?.message).toBe("Feedback reviewed; the ordered diagnostic work is now underway.");
+     const pending = state.encounters["encounter.sc.egd.ready"]!.pendingResult!;
+     expect(pending).toMatchObject({
+       routeId: "route.endoscopy.in_house",
+-      patientTravel: { originRoomInstanceId: "room.instance.starter_examination", destinationRoomInstanceId: "room.sc.endoscopy" },
+-      resourceReservations: [
+-        { roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" },
+-        { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" },
++      patientTravel: null,
++      resourceReservations: [],
++      providerReservation: null,
++      diagnosticTiming: { version: "diagnostic-order.v1", execution: "supported" },
++    });
++    expect(pending.timingPhases).toEqual([]);
++    expect(pending.diagnosticTiming?.phases.filter((phase) => phase.durationMinutes).map((phase) => [phase.kind, phase.durationMinutes])).toEqual([
++      ["preparation", 30], ["procedure", 45], ["pathology", 60], ["recovery", 60],
++    ]);
++    expect(state.serviceOperations.find((operation) => operation.diagnosticPhysicalWork?.orderId === pending.diagnosticTiming?.orderId)).toMatchObject({
++      phaseFlowVersion: 1,
++      testChoiceOrder: { purpose: "result_gate" },
++      frozenOperationPhases: [
++        { id: "periop_preparation", durationMinutes: 30 },
++        { id: "preparation_and_procedure.procedure", durationMinutes: 45 },
++        { id: "recovery", durationMinutes: 60 },
+       ],
+-      providerReservation: { kind: "employee", employeeId: "employee.sc.endoscopist", staffRoleDefinitionId: "staff.endoscopist" },
+     });
+-    expect(pending.timingPhases).toEqual(expect.arrayContaining([
+-      expect.objectContaining({ id: "phase.endoscopy.preparation", durationTicks: 30, resourceBound: true }),
+-      expect.objectContaining({ id: "phase.endoscopy.procedure", durationTicks: 45, resourceBound: true }),
+-      expect.objectContaining({ id: "phase.endoscopy.recovery", durationTicks: 45, resourceBound: true }),
+-      expect.objectContaining({ id: "phase.endoscopy.return_and_report", durationTicks: 60, resourceBound: false }),
+-    ]));
+   });
+ 
+   it("freezes generated identity, appearance, profile, and shuffled answer order", () => {

@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 1,
+  "status": "owner_design_approved",
+  "complete": true,
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "generationManifestSha256": "C6B17462E0BD78CBC980CF0267E3B8EE0412DE411BC8DE89768B841E90BFFD5B",
+  "contractSha256": "D1CD1C20323BF36BB36D65A386CBBEAA4ABB08E7503BDEB2390593C80BF35392",
+  "assets": {
+    "wound-recliner": {
+      "id": "wound-recliner",
+      "file": "wound-recliner.png",
+      "status": "owner_design_approved",
+      "canvas": [
+        624,
+        470
+      ],
+      "widthTiles": 1.3,
+      "heightTiles": 0.9791666666666666,
+      "proofScale": 0.25,
+      "source": "originals/wound-recliner-02.png",
+      "sourceSha256": "B1F52B3131B81C6183BA0E1106559008D1C8216E2833031BF01199F816FE30AF",
+      "prompt": "prompts/wound-recliner-02.prompt.txt",
+      "promptSha256": "C72DD40A4F5C828ED03A47E8B74887B452947FDD731166F4B26543EF7845FC82",
+      "sourceSize": [
+        1448,
+        1086
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 109,
+        "top": 50,
+        "right": 1365,
+        "bottom": 1041,
+        "width": 1257,
+        "height": 992,
+        "pixels": 375200,
+        "edgeAlphaMax": 0
+      },
+      "sourceVisibleBounds": {
+        "left": 111,
+        "top": 55,
+        "right": 901,
+        "bottom": 1038,
+        "width": 791,
+        "height": 984,
+        "pixels": 366307,
+        "edgeAlphaMax": 0
+      },
+      "sourceOpaqueBounds": {
+        "left": 113,
+        "top": 56,
+        "right": 900,
+        "bottom": 1037,
+        "width": 788,
+        "height": 982,
+        "pixels": 362299,
+        "edgeAlphaMax": 0
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 8893,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        110,
+        54,
+        793,
+        986
+      ],
+      "scale": 0.4396551724137931,
+      "destination": [
+        6,
+        30.5,
+        348.6465517241379,
+        433.5
+      ],
+      "packingRegistration": {
+        "kind": "preserve_reviewed_chair_scale",
+        "scale": 0.4396551724137931,
+        "leftPixels": 6,
+        "baselineMetadata": "../proof/revisions/20261008-before-leg-rest-removal/assets/processed/metadata.json",
+        "baselineMetadataSha256": "A0FB90C31CC594E2D28E71E3F20B71156DEC071CE677A9DA46282C13EFB79C36",
+        "baselineNativeSha256": "7BAFA5AFF047F312430AF231522451E2358E7CD00F31C018C4FAFB3E3ACFF1CB",
+        "basis": "Keep reviewed 624x470 canvas, exact uniform downsample scale and left placement. Compact chair does not expand into the old leg-rest space. Bottom remains registered to its actual opaque base."
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "8B9275DB15C012BDCED3A0D2E25C689860326A09BAB59D0838688EC95BF26FBB",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 31,
+        "right": 353,
+        "bottom": 463,
+        "width": 348,
+        "height": 433,
+        "pixels": 71220,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "top": 31,
+        "right": 353,
+        "bottom": 462,
+        "width": 347,
+        "height": 432,
+        "pixels": 70030,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 31,
+        "right": 270,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 222060,
+        "opaque": 70030,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        312,
+        463
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          0.9,
+          1.95
+        ]
+      ],
+      "sourcePoints": {
+        "seat": [
+          510,
+          534
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          181.86206896551724,
+          241.5344827586207
+        ]
+      },
+      "measuredSeatRiseProofPixels": 55.366379310344826,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "exam-lamp": {
+      "id": "exam-lamp",
+      "file": "exam-lamp.png",
+      "status": "owner_design_approved",
+      "canvas": [
+        172,
+        652
+      ],
+      "widthTiles": 0.36,
+      "heightTiles": 1.3646511627906976,
+      "proofScale": 0.2511627906976744,
+      "source": "originals/exam-lamp-02.png",
+      "sourceSha256": "77154A2B907E1F2D7E4C8649EEAE4948A8EC5A19BFF406B36C16B030BE5A2090",
+      "prompt": "prompts/exam-lamp-02.prompt.txt",
+      "promptSha256": "403C93ABF473758580DF2CD3DFF866035D61F79685F9611310D1F67F2759DBE6",
+      "sourceSize": [
+        768,
+        2048
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 129,
+        "top": 127,
+        "right": 739,
+        "bottom": 1935,
+        "width": 611,
+        "height": 1809,
+        "pixels": 135248,
+        "edgeAlphaMax": 0
+      },
+      "sourceVisibleBounds": {
+        "left": 229,
+        "top": 188,
+        "right": 578,
+        "bottom": 1932,
+        "width": 350,
+        "height": 1745,
+        "pixels": 121940,
+        "edgeAlphaMax": 0
+      },
+      "sourceOpaqueBounds": {
+        "left": 230,
+        "top": 189,
+        "right": 577,
+        "bottom": 1930,
+        "width": 348,
+        "height": 1742,
+        "pixels": 117087,
+        "edgeAlphaMax": 0
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 13308,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        228,
+        187,
+        352,
+        1747
+      ],
+      "scale": 0.3663423010875787,
+      "destination": [
+        21.52375500858615,
+        6,
+        128.9524899828277,
+        640
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "465AC4A0D251A7FE6BB14118182B04DC7646F2BAACFC968E991DAB40D7192E2B",
+      "outputAllAlphaBounds": {
+        "left": 22,
+        "top": 6,
+        "right": 149,
+        "bottom": 645,
+        "width": 128,
+        "height": 640,
+        "pixels": 17101,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 22,
+        "top": 7,
+        "right": 149,
+        "bottom": 644,
+        "width": 128,
+        "height": 638,
+        "pixels": 15699,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 22,
+        "top": 6,
+        "right": 22,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 95043,
+        "opaque": 15699,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        86,
+        645
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          1.62,
+          1.2
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "ostomy-shelf": {
+      "id": "ostomy-shelf",
+      "file": "ostomy-shelf.png",
+      "status": "owner_design_approved",
+      "canvas": [
+        442,
+        596
+      ],
+      "widthTiles": 0.92,
+      "heightTiles": 1.2405429864253394,
+      "proofScale": 0.2497737556561086,
+      "source": "originals/ostomy-shelf-01.png",
+      "sourceSha256": "234A9A7C0B2A40AFB04B33F399E650C52B3E131B312FECAA6F4C432C3A776D3F",
+      "prompt": "prompts/ostomy-shelf-01.prompt.txt",
+      "promptSha256": "45117C3A01D5D0DDF664A2EB9AFCBB7204D2623115EFCB54540E44E28B493387",
+      "sourceSize": [
+        1081,
+        1455
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 112,
+        "top": 57,
+        "right": 1052,
+        "bottom": 1432,
+        "width": 941,
+        "height": 1376,
+        "pixels": 997937,
+        "edgeAlphaMax": 0
+      },
+      "sourceVisibleBounds": {
+        "left": 120,
+        "top": 62,
+        "right": 957,
+        "bottom": 1389,
+        "width": 838,
+        "height": 1328,
+        "pixels": 987898,
+        "edgeAlphaMax": 0
+      },
+      "sourceOpaqueBounds": {
+        "left": 146,
+        "top": 64,
+        "right": 935,
+        "bottom": 1382,
+        "width": 790,
+        "height": 1319,
+        "pixels": 979710,
+        "edgeAlphaMax": 0
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 10039,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        119,
+        61,
+        840,
+        1330
+      ],
+      "scale": 0.43909774436090226,
+      "destination": [
+        36.57894736842104,
+        6,
+        368.8421052631579,
+        584
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "A4265763867F0C93DD85C095E66950C7C0CC51A67F831EB4DDEB057B8BE431B4",
+      "outputAllAlphaBounds": {
+        "left": 37,
+        "top": 6,
+        "right": 404,
+        "bottom": 589,
+        "width": 368,
+        "height": 584,
+        "pixels": 190876,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 48,
+        "top": 7,
+        "right": 394,
+        "bottom": 586,
+        "width": 347,
+        "height": 580,
+        "pixels": 189101,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 37,
+        "top": 6,
+        "right": 37,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 72556,
+        "opaque": 189101,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        221,
+        587
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          2.01,
+          0.32
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "dressing-cart": {
+      "id": "dressing-cart",
+      "file": "dressing-cart.png",
+      "status": "owner_design_approved",
+      "canvas": [
+        268,
+        412
+      ],
+      "widthTiles": 0.56,
+      "heightTiles": 0.8608955223880598,
+      "proofScale": 0.25074626865671645,
+      "source": "originals/dressing-cart-01.png",
+      "sourceSha256": "673A314D37955706F0C3B06AB59E08A5FF9EF09A6CD31E8F82E67E8D34415664",
+      "prompt": "prompts/dressing-cart-01.prompt.txt",
+      "promptSha256": "16D72AE150CDC5BEBF0713DA82C1CB1357F971177944568EBB14DE4917C8C911",
+      "sourceSize": [
+        1012,
+        1554
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 9,
+        "right": 993,
+        "bottom": 1545,
+        "width": 994,
+        "height": 1537,
+        "pixels": 894250,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 110,
+        "top": 107,
+        "right": 909,
+        "bottom": 1461,
+        "width": 800,
+        "height": 1355,
+        "pixels": 878715,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 132,
+        "top": 108,
+        "right": 875,
+        "bottom": 1453,
+        "width": 744,
+        "height": 1346,
+        "pixels": 861141,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 15535,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        109,
+        106,
+        802,
+        1357
+      ],
+      "scale": 0.2947678703021371,
+      "destination": [
+        15.798084008843034,
+        6,
+        236.40383198231393,
+        400
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "C03D3B68D1493B7F32F057EAD56695BC462EA091DF8706B1CFDBEB0330A4771D",
+      "outputAllAlphaBounds": {
+        "left": 16,
+        "top": 6,
+        "right": 251,
+        "bottom": 405,
+        "width": 236,
+        "height": 400,
+        "pixels": 76539,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 23,
+        "top": 7,
+        "right": 241,
+        "bottom": 402,
+        "width": 219,
+        "height": 396,
+        "pixels": 74977,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 16,
+        "top": 6,
+        "right": 16,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 33877,
+        "opaque": 74977,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        134,
+        403
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          2.62,
+          2.88
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "hygiene-sign": {
+      "id": "hygiene-sign",
+      "file": "hygiene-sign.png",
+      "status": "owner_design_approved",
+      "canvas": [
+        144,
+        172
+      ],
+      "widthTiles": 0.3,
+      "heightTiles": 0.35833333333333334,
+      "proofScale": 0.25,
+      "source": "originals/hygiene-sign-01.png",
+      "sourceSha256": "623EDFBCFDB2B28086DFAF33C59AEC30E78136BE9D14173764E45BCAF81B4A92",
+      "prompt": "prompts/hygiene-sign-01.prompt.txt",
+      "promptSha256": "F332DDC118EE0747D5A18CF9152F6CD558F2C19199F0FAC4FD99CE7B2AB442B6",
+      "sourceSize": [
+        1145,
+        1374
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 0,
+        "right": 1135,
+        "bottom": 1373,
+        "width": 1136,
+        "height": 1374,
+        "pixels": 776256,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 186,
+        "top": 201,
+        "right": 960,
+        "bottom": 1177,
+        "width": 775,
+        "height": 977,
+        "pixels": 752523,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 189,
+        "top": 202,
+        "right": 957,
+        "bottom": 1176,
+        "width": 769,
+        "height": 975,
+        "pixels": 748794,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 23733,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        185,
+        200,
+        777,
+        979
+      ],
+      "scale": 0.1634320735444331,
+      "destination": [
+        8.506639427987743,
+        6,
+        126.98672114402451,
+        160
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "F3B057AA9B1E2BD64B095EFC637037DD68A20064881A56C25FE19FACF9665F9B",
+      "outputAllAlphaBounds": {
+        "left": 9,
+        "top": 6,
+        "right": 134,
+        "bottom": 165,
+        "width": 126,
+        "height": 160,
+        "pixels": 20148,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 9,
+        "top": 6,
+        "right": 134,
+        "bottom": 165,
+        "width": 126,
+        "height": 160,
+        "pixels": 20145,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 9,
+        "top": 6,
+        "right": 9,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 4620,
+        "opaque": 20145,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        72,
+        6
+      ],
+      "anchorKind": "wall",
+      "anchorBasis": "Top edge of actual alpha at wall top",
+      "worldAnchors": [
+        [
+          2.74,
+          -0.64
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": null
+    }
+  },
+  "notes": [
+    "Minimum true-alpha clearance 4 native pixels. Extra one-axis padding preserves source proportions; all actual margins are recorded.",
+    "Chair revision retains reviewed uniform scale and left placement within the original transparent native frame; no expansion after leg-rest removal.",
+    "No browser, web retrieval, AI call, generated replacement art, character edit or shared-source edit during preparation."
+  ]
+}

@@ -1,0 +1,679 @@
+{
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegration": false,
+  "privateRevision": "owner-north-tech-bore-center-foreground-patient",
+  "ownerDirection": "../OWNER_REVISIONS_2026-10-07.md",
+  "records": [
+    {
+      "id": "gantry",
+      "assetId": "design:mri:gantry-side",
+      "sourceRect": [
+        0,
+        0,
+        384,
+        519
+      ],
+      "renderSizeTiles": [
+        1.6,
+        2.1625
+      ],
+      "destinationTopLeftTiles": [
+        2.4,
+        0.8245567527606537
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.2,
+        2.970390086093987
+      ],
+      "depthKey": 2.970390086093987,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false
+    },
+    {
+      "id": "tableEmpty",
+      "assetId": "design:mri:table-empty",
+      "sourceRect": [
+        0,
+        0,
+        252,
+        149
+      ],
+      "renderSizeTiles": [
+        1.05,
+        0.6208333333333333
+      ],
+      "destinationTopLeftTiles": [
+        1.9650000000000003,
+        1.8283333333333331
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.49,
+        2.42
+      ],
+      "depthKey": 2.980390086093987,
+      "depthPolicy": "authored-layer",
+      "doorOwners": [],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false,
+      "clipRightWorld": 2.5299418604651165,
+      "boreEntry": {
+        "x": 2.5299418604651165,
+        "y": 1.9703900860939874
+      }
+    },
+    {
+      "id": "console",
+      "assetId": "design:mri:console",
+      "sourceRect": [
+        0,
+        0,
+        206,
+        317
+      ],
+      "renderSizeTiles": [
+        0.8583333333333333,
+        1.3208333333333333
+      ],
+      "destinationTopLeftTiles": [
+        0.6908333333333334,
+        0.8400000000000003
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.12,
+        2.14
+      ],
+      "depthKey": 2.14,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false
+    },
+    {
+      "id": "operatorChair",
+      "assetId": "design:mri:operator-chair",
+      "sourceRect": [
+        0,
+        0,
+        96,
+        168
+      ],
+      "renderSizeTiles": [
+        0.4,
+        0.7000000000000001
+      ],
+      "destinationTopLeftTiles": [
+        0.92,
+        1.8566666666666667
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.12,
+        2.54
+      ],
+      "depthKey": 2.55,
+      "depthPolicy": "authored-layer",
+      "doorOwners": [],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false
+    },
+    {
+      "id": "coilCabinet",
+      "assetId": "design:mri:coil-cabinet",
+      "sourceRect": [
+        0,
+        0,
+        154,
+        312
+      ],
+      "renderSizeTiles": [
+        0.64,
+        1.2966233766233766
+      ],
+      "destinationTopLeftTiles": [
+        3.23,
+        -0.9558441558441557
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.55,
+        0.32
+      ],
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N4",
+        "EA"
+      ],
+      "backedOwners": [
+        "N4"
+      ],
+      "touchupKeepWhenBacked": true,
+      "footprint": {
+        "left": 3.3,
+        "top": 0.18,
+        "width": 0.5,
+        "height": 0.14
+      }
+    },
+    {
+      "id": "zoneSign",
+      "assetId": "design:mri:zone-sign",
+      "sourceRect": [
+        0,
+        0,
+        110,
+        96
+      ],
+      "renderSizeTiles": [
+        0.46,
+        0.4014545454545455
+      ],
+      "destinationTopLeftTiles": [
+        2.32,
+        -0.7
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N3"
+      ],
+      "backedOwners": [
+        "N3"
+      ],
+      "touchupKeepWhenBacked": false
+    },
+    {
+      "id": "scanLight",
+      "assetId": "design:mri:scan-light",
+      "sourceRect": [
+        0,
+        0,
+        96,
+        53
+      ],
+      "renderSizeTiles": [
+        0.4,
+        0.22083333333333335
+      ],
+      "destinationTopLeftTiles": [
+        0.6000000000000001,
+        -0.62
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N1"
+      ],
+      "backedOwners": [
+        "N1"
+      ],
+      "touchupKeepWhenBacked": false
+    },
+    {
+      "id": "comfortCart",
+      "assetId": "design:mri:comfort-cart",
+      "sourceRect": [
+        0,
+        0,
+        180,
+        216
+      ],
+      "renderSizeTiles": [
+        0.75,
+        0.9
+      ],
+      "destinationTopLeftTiles": [
+        3.105,
+        3.0008333333333335
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.48,
+        3.88
+      ],
+      "depthKey": 3.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S4",
+        "ED"
+      ],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false,
+      "footprint": {
+        "left": 3.17,
+        "top": 3.74,
+        "width": 0.62,
+        "height": 0.14
+      }
+    },
+    {
+      "id": "openShelves",
+      "assetId": "design:mri:open-shelves",
+      "sourceRect": [
+        0,
+        0,
+        180,
+        300
+      ],
+      "renderSizeTiles": [
+        0.75,
+        1.25
+      ],
+      "destinationTopLeftTiles": [
+        0.07500000000000001,
+        2.650833333333333
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.45,
+        3.88
+      ],
+      "depthKey": 3.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S1",
+        "WD"
+      ],
+      "backedOwners": [],
+      "touchupKeepWhenBacked": false,
+      "footprint": {
+        "left": 0.14,
+        "top": 3.74,
+        "width": 0.62,
+        "height": 0.14
+      }
+    }
+  ],
+  "solids": [
+    {
+      "id": "gantry",
+      "footprint": {
+        "left": 2.42,
+        "top": 1.3,
+        "width": 1.54,
+        "height": 1.670390086093987
+      }
+    },
+    {
+      "id": "table",
+      "footprint": {
+        "left": 1.8,
+        "top": 1.95,
+        "width": 0.95,
+        "height": 0.45
+      }
+    },
+    {
+      "id": "glass",
+      "footprint": {
+        "left": 1.6,
+        "top": 0.72,
+        "width": 0.12,
+        "height": 2.46
+      }
+    },
+    {
+      "id": "console",
+      "footprint": {
+        "left": 0.7600000000000001,
+        "top": 1.79,
+        "width": 0.72,
+        "height": 0.35
+      }
+    },
+    {
+      "id": "operator-chair",
+      "footprint": {
+        "left": 0.9500000000000001,
+        "top": 2.34,
+        "width": 0.34,
+        "height": 0.2
+      },
+      "endpoint": true
+    }
+  ],
+  "procedural": [
+    {
+      "id": "glass",
+      "rect": {
+        "left": 1.6,
+        "top": 0.72,
+        "width": 0.12,
+        "height": 2.46
+      },
+      "doorOwners": [],
+      "backedOwners": [],
+      "style": {
+        "kind": "design-glass"
+      },
+      "drawPhase": "depth-sorted",
+      "depthKey": 3.18,
+      "screenRect": {
+        "left": 192,
+        "top": 86.39999999999999,
+        "width": 14.399999999999999,
+        "height": 295.2
+      }
+    }
+  ],
+  "supports": [
+    {
+      "id": "operator",
+      "role": "mri-operator",
+      "pose": "seated",
+      "facing": "north",
+      "seat": {
+        "x": 1.12,
+        "y": 2.21
+      },
+      "ground": {
+        "x": 1.12,
+        "y": 2.54
+      },
+      "fixtureGround": {
+        "x": 1.12,
+        "y": 2.54
+      }
+    },
+    {
+      "id": "patient-standing",
+      "role": "patient",
+      "character": "patient.adult.001",
+      "pose": "standing",
+      "facing": "north",
+      "seat": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "ground": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "fixtureGround": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "occupancy": "standing"
+    },
+    {
+      "id": "patient-seated",
+      "role": "patient",
+      "character": "patient.adult.001",
+      "pose": "seated",
+      "facing": "west",
+      "seat": {
+        "x": 2.18,
+        "y": 1.9703900860939874
+      },
+      "ground": {
+        "x": 2.18,
+        "y": 2.347116042559397
+      },
+      "fixtureGround": {
+        "x": 2.49,
+        "y": 2.42
+      },
+      "painterDepth": 2.990390086093987,
+      "occupancy": "seated",
+      "supportRecord": "tableEmpty",
+      "sourceSeatAnchor": 221.153
+    }
+  ],
+  "actorSourceHashes": {
+    "patient.adult.001/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-south.png",
+      "sha256": "AACED24D89DF062B0772C2A0ECEF4569EBF22B2C318826E54657638D309048C0"
+    },
+    "patient.adult.001/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-east.png",
+      "sha256": "E595A6E0F1CE357046446A9CC5CF7A7CE5C373D9E23CEED1A64CEDA8CD7E95FD"
+    },
+    "patient.adult.001/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-west.png",
+      "sha256": "1B881897D6CF3E6E9974567023B7A80CF321DA8D53597EED63F176CC74ED0D10"
+    },
+    "patient.adult.001/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493F37BD75152DB23E3D7D1F2394EBABD6737BF95B40F6D2AF0CC302ADEB6590"
+    },
+    "patient.adult.001/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-south.png",
+      "sha256": "DD5B793F968EBAAA77A2866451D362B416277B5C921D4C8197F66A4F917A8D53"
+    },
+    "patient.adult.001/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "sha256": "448463C5FF3A10B8605F9ABF69284C6E958966CE4DFC20ED118D38E4FD11C059"
+    },
+    "patient.adult.001/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-west.png",
+      "sha256": "98B690E285106EF403774A0FDEAA7B369B6E3737E462F305BD3DDD1ADA7D11F0"
+    },
+    "patient.adult.001/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-north.png",
+      "sha256": "26D43FB98DBD1894E16F56C21D9DE35D1A3AAB424E82787D97A4EFFF04FCD119"
+    },
+    "gs026-employee-004/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-south.png",
+      "sha256": "19C084834587C3BEEF25DA0FA20A130F70D56CE9BF20415C2624FDC27D3495B1"
+    },
+    "gs026-employee-004/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-east.png",
+      "sha256": "E61D63C4020235F8A04C87B7587EE827356D728E39894D38A7DF173636D20E36"
+    },
+    "gs026-employee-004/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-west.png",
+      "sha256": "8D7FAA05BEC8FF6952CA66FB90EFFD57DFCE103ECB0143C1CA5B451DD5F962EF"
+    },
+    "gs026-employee-004/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-north.png",
+      "sha256": "7BD398C752FEC8D27EA9C9FA9F7707DC3904C9281BF4A0250A4FB45AC5E49469"
+    },
+    "gs026-employee-004/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-south.png",
+      "sha256": "453829C61944DDBD6B5B97A3AA1EC9F71B440D1536C890E91E043D9FECA58A84"
+    },
+    "gs026-employee-004/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-east.png",
+      "sha256": "A2A0856C7C8FF0BA698586710B7C16CF4107F3C61C0E7E4BFAD2A3357E943471"
+    },
+    "gs026-employee-004/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-west.png",
+      "sha256": "7EF01316988BE52BDA1C16B5A33B94651821FEB14DE4BFDE510655EF85736033"
+    },
+    "gs026-employee-004/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-north.png",
+      "sha256": "A3E879680D12FD2E25DCDD74CAD4EF040E9E6FABAC4039EF19C59D3A203CD7DA"
+    }
+  },
+  "patientRegistration": {
+    "identity": "patient.adult.001",
+    "facing": "west",
+    "sourceHipY": 221.153,
+    "sourceFloorY": 287,
+    "sourceBodyX": 80,
+    "capScale": 0.8601398601398601,
+    "renderedWidthPixels": 109.84765234765236,
+    "expectedWidthPixels": 109.84765234765236,
+    "renderedHeightPixels": 219.6953046953047,
+    "hipPixels": [
+      261.6,
+      236.44681033127847
+    ],
+    "supportSeat": {
+      "x": 2.18,
+      "y": 1.9703900860939874
+    },
+    "couchSurfacePixels": 236.44681033127847,
+    "boreCentrePixels": 236.44681033127847,
+    "feetPixels": 281.65392510712763,
+    "tableGroundPixels": 290.4,
+    "sourceUrlPreserved": true,
+    "patientCount": 1
+  },
+  "patientSilhouette": {
+    "leftPixels": 207.7059955669331,
+    "rightPixels": 307.25543050699304,
+    "glassRightPixels": 206.40000000000003,
+    "clearancePixels": 1.3059955669330634,
+    "glassOverlapSourcePixels": 0,
+    "gantryOverlapSourcePixels": 46
+  },
+  "seatedPainter": {
+    "table": 2.980390086093987,
+    "patient": 2.9904900860939874,
+    "gantry": 2.970390086093987,
+    "patientInFrontOfBoth": true
+  },
+  "northTech": {
+    "facing": "north",
+    "sourcePreserved": true,
+    "southOfDesk": true,
+    "sameDeskAxis": true
+  },
+  "bedEntry": {
+    "clipWorldX": 2.5299418604651165,
+    "boreWorldX": 2.5299418604651165,
+    "bedLeft": 239.8,
+    "patientHipX": 261.6,
+    "patientFrontFootX": 218.0042129745255
+  },
+  "standingApproaches": [
+    {
+      "id": "operator south-side standing approach",
+      "a": [
+        0.5,
+        2.5
+      ],
+      "b": [
+        1.12,
+        2.9
+      ],
+      "endpoint": "operatorChair"
+    },
+    {
+      "id": "patient standing approach",
+      "a": [
+        2.5,
+        3.5
+      ],
+      "b": [
+        2.45,
+        3.3
+      ],
+      "endpoint": null
+    },
+    {
+      "id": "patient westward approach around scanner",
+      "a": [
+        2.45,
+        3.3
+      ],
+      "b": [
+        2.18,
+        3.3
+      ],
+      "endpoint": null
+    },
+    {
+      "id": "patient south-side approach before seating",
+      "a": [
+        2.18,
+        3.3
+      ],
+      "b": [
+        2.18,
+        2.8
+      ],
+      "endpoint": null
+    }
+  ],
+  "validationStatus": "revision_controls_contacts_and_integrity_pass_owner_review_pending",
+  "pendingGeometry": [
+    "Magnet silhouette is taller than long within prescribed portrait canvas; owner reconciliation required.",
+    "Measured room couch surface 0.000px below bore centre. Source-contact picks have about3native-source-pixel uncertainty; table right end is depth-covered by magnet.",
+    "Current actor feet/contact discrepancy: baseline 0.489px above floor; brief support 5.889px above floor. Actor source and scale remain the frozen current lab export.",
+    "Standing approaches stop south of the chair and couch before seating. Seated hip/body axes are not standing-circle endpoints; their base clearances are reported separately. Walking-route radius checks remain enforced.",
+    "Patient feet 8.746px above couch floor. Simplified sit-west/dangling-foot presentation is owner-directed; seat/climb animation is not implemented.",
+    "All-alpha padding exceeds the original4–8px target on calibrated/tall frames; explicit candidate exception, minimum4px retained. Lower alpha bands are projected2D silhouettes and do not prove physical floor depth."
+  ]
+}

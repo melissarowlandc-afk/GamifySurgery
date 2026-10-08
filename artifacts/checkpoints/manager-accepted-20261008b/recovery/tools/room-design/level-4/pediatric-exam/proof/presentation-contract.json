@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "status": "owner_approved_with_requested_stool_revision",
+  "sourceScale": 0.6865478271728273,
+  "sourceScaleBasis": "Approved waiting-room uniform pediatric source-pixel scale retained.",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "actors": [
+    {
+      "supportId": "table:patient",
+      "recordId": "pedsTable",
+      "characterId": "level3-roster-v2.021",
+      "category": "future-pediatric-presentation",
+      "group": "children",
+      "direction": "east",
+      "seat": [
+        0.66,
+        1.25
+      ],
+      "ground": [
+        0.66,
+        1.6
+      ],
+      "painterGround": 2.06,
+      "seatContactSource": [
+        65,
+        251
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "level3-roster-v2.021",
+        "contact": [
+          65,
+          251
+        ],
+        "method": "Inspected posterior column, final alpha >=160 edge in bounded hip region.",
+        "region": [
+          220,
+          265
+        ]
+      },
+      "basis": "Authored child seat and painter ground retained; measured real pediatric hip."
+    },
+    {
+      "supportId": "stool:clinician",
+      "recordId": "stool",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "direction": "west",
+      "seat": [
+        1.45,
+        1.2669924812030076
+      ],
+      "ground": [
+        1.45,
+        1.75
+      ],
+      "painterGround": 1.7501,
+      "seatContactSource": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "gs026-employee-001",
+        "contact": [
+          90,
+          239
+        ],
+        "method": "Inspected posterior column, final alpha >=160 edge in bounded hip region.",
+        "region": [
+          210,
+          260
+        ]
+      },
+      "fixtureSeatSource": [
+        133,
+        135
+      ],
+      "basis": "Actual cushion center retained. Owner requested a derived backless stool and the clinician entirely above its single complete layer."
+    },
+    {
+      "supportId": "parentChair",
+      "recordId": "parentChair",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "parents",
+      "direction": "west",
+      "seat": [
+        2.6533333333333333,
+        2.509206349206349
+      ],
+      "ground": [
+        2.52,
+        2.88
+      ],
+      "painterGround": 2.8801,
+      "seatContactSource": [
+        105,
+        222
+      ],
+      "sourceScale": 0.6865478271728273,
+      "fixtureSeatSource": [
+        210,
+        223
+      ],
+      "basis": "Approved waiting-room revision2 posterior/cushion contacts reused; parent behind copied front wood."
+    }
+  ],
+  "approaches": {
+    "table:patient": [
+      1.1,
+      1.15
+    ],
+    "stool:clinician": [
+      1.95,
+      1.8
+    ],
+    "parentChair": [
+      1.95,
+      2.5
+    ]
+  },
+  "notes": [
+    "The child is a real pediatric still and the parent always has a designated same-room place.",
+    "Sprite/seat contact registration is private presentation only; all source supports, footprints, placement and navigation remain preserved in layout-baseline.json.",
+    "Owner 2026-10-08 approved the room with the requested backless-stool revision: derived stool below the whole clinician, no stool foreground layer.",
+    "Original fixed table and parent chair retain the source layout's door threshold pass-through exceptions. New wall/corner art hides on its own one-tile sections.",
+    "Walking routes use real source footprints plus actual prepared base alpha; static seating transitions are separate from radius-clear walking."
+  ]
+}

@@ -1,0 +1,21 @@
+--- a/packages/game-domain/src/guidance-tip-persistence.ts
++++ b/packages/game-domain/src/guidance-tip-persistence.ts
+@@ -1,5 +1,6 @@
+ import { GUIDANCE_TIP_CATALOG, GUIDANCE_TIP_POLICY, type GuidanceTipId, type GuidanceTipFamily } from "@gamify-surgery/balance-config";
+ import type { GuidanceTipsState, GuidanceTipReceipt } from "./guidance-tip-types";
++import { isGuidanceTopicId } from "./guidance-topics";
+ 
+ const record = (value: unknown): value is Record<string, unknown> => Boolean(value && typeof value === "object" && !Array.isArray(value));
+ const ids = new Set<string>(GUIDANCE_TIP_CATALOG.map((tip) => tip.id));
+@@ -29,5 +30,10 @@
+     emissionCounts: counts, rollingEmissionTicks: (Array.isArray(raw.rollingEmissionTicks) ? raw.rollingEmissionTicks : []).filter(validTick).filter((time) => tick - time < GUIDANCE_TIP_POLICY.rollingWindowMinutes),
+     lastEmittedAtTick: tickOrNull(raw.lastEmittedAtTick), lastDireAtTick: tickOrNull(raw.lastDireAtTick), observations, rootLocks,
+     taughtServiceSetups: Array.isArray(raw.taughtServiceSetups) ? [...new Set(raw.taughtServiceSetups.filter((entry): entry is string => typeof entry === "string"))] : [],
+-    sequence: Math.max(typeof raw.sequence === "number" && Number.isSafeInteger(raw.sequence) && raw.sequence >= 0 ? raw.sequence : 0, ...history.map((entry) => Number(entry.id.split(".").at(-1)) + 1)), history };
++    sequence: Math.max(typeof raw.sequence === "number" && Number.isSafeInteger(raw.sequence) && raw.sequence >= 0 ? raw.sequence : 0, ...history.map((entry) => Number(entry.id.split(".").at(-1)) + 1)), history,
++    ...(record(raw.topicActivity) ? { topicActivity: Object.fromEntries(Object.entries(raw.topicActivity).flatMap(([id, value]) =>
++      isGuidanceTopicId(id) && record(value) ? [[id, {
++        ...(validTick(value.exposedAtTick) ? {exposedAtTick: value.exposedAtTick} : {}),
++        ...(validTick(value.usedAtTick) ? {usedAtTick: value.usedAtTick} : {}),
++      }]] : [])) } : {}) };
+ }

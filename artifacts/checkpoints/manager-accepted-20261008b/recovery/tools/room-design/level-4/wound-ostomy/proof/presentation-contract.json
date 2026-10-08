@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "status": "owner_design_approved",
+  "sourceScale": 0.6865478271728273,
+  "sourceScaleBasis": "Approved Pediatric Waiting/Exam source-pixel scale retained for both existing adult stills.",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "actors": [
+    {
+      "supportId": "recliner:patient",
+      "recordId": "recliner",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "patients",
+      "direction": "east",
+      "seat": [
+        0.6288793103448275,
+        1.4886135057471264
+      ],
+      "ground": [
+        0.9,
+        1.95
+      ],
+      "painterGround": 1.9501,
+      "seatContactSource": [
+        50,
+        224
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "patient.adult.007",
+        "contact": [
+          50,
+          224
+        ],
+        "region": [
+          195,
+          235
+        ],
+        "method": "Inspected posterior column and actual final alpha >=160 edge, inside bounded hip region."
+      },
+      "fixtureSeatSource": [
+        510,
+        534
+      ],
+      "fixtureSeatNative": [
+        181.86206896551724,
+        241.5344827586207
+      ],
+      "basis": "Actual revised chair cushion surface near authored X0.62; existing patient legs hang down, registered at the reviewed scale without stretching."
+    },
+    {
+      "supportId": "stool:clinician",
+      "recordId": "stool",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "direction": "west",
+      "seat": [
+        2.15,
+        1.4169924812030075
+      ],
+      "ground": [
+        2.15,
+        1.9
+      ],
+      "painterGround": 1.9001,
+      "seatContactSource": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "gs026-employee-001",
+        "contact": [
+          90,
+          239
+        ],
+        "region": [
+          210,
+          260
+        ],
+        "method": "Inspected posterior column and actual final alpha >=160 edge, inside bounded hip region."
+      },
+      "fixtureSeatSource": [
+        133,
+        135
+      ],
+      "basis": "Actual native backless cushion center; entire clinician draws above stool with no foreground stool mask."
+    }
+  ],
+  "careApproach": [
+    1.8,
+    2.3
+  ],
+  "approaches": {
+    "recliner:patient": [
+      0.95,
+      2.3
+    ],
+    "stool:clinician": [
+      2.65,
+      1.75
+    ]
+  },
+  "notes": [
+    "Five painted pieces, four reused fixtures and two real existing seated character stills; no patient or staff artwork generated.",
+    "All source placements, sizes, footprints, shell and navigation are frozen in layout-baseline.json. Measured seat contacts are private presentation registration.",
+    "The backless stool consumes the concurrent native backless-v1 contract from approved unchanged atlas pixels; no new stool painting or shared edit.",
+    "The frozen recliner WB threshold exception remains explicit. Door-owned corner fixtures and wall decor hide only on their source one-tile sections; shelf stays full height when backed.",
+    "Walking uses frozen footprints plus actual opaque base pixels. Dotted seating links are separate static contacts, not walking through furniture."
+  ]
+}

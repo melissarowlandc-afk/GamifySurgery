@@ -1,0 +1,51 @@
+--- a/apps/player/src/ui/EventMessageBoard.test.tsx
++++ b/apps/player/src/ui/EventMessageBoard.test.tsx
+@@ -100,7 +100,30 @@
+     );
+     expect(markup).toContain('title="Open Taylor"');
+     expect(markup).toContain("Open Taylor&#x27;s chart.");
++    expect(markup).toContain(
++      'class="message-board-compact-action-label">Open Taylor</span>',
++    );
++    expect(markup).toContain('data-message-id="focus-patient"');
++    expect(markup).toContain('data-new-message="false"');
+     expect(markup).not.toContain(">Action needed<");
++  });
++
++  it("treats server-rendered or remounted history as existing history", () => {
++    const markup = renderToStaticMarkup(
++      <EventMessageBoard
++        items={Array.from({ length: 35 }, (_, index) => ({
++          id: `history-${index}`,
++          message: `History ${index}`,
++          sortKey: index,
++        }))}
++        mode="ticker"
++        maximumVisibleItems={30}
++      />,
++    );
++
++    expect(markup).not.toContain("is-new-message");
++    expect(markup).not.toContain("message-board-new-token");
++    expect(markup).not.toContain('class="message-board-new-indicator"');
+   });
+ 
+   it("lets newer flavor move ahead of older actionable rows", () => {
+@@ -252,4 +275,17 @@
+     expect(markup).not.toContain("<details");
+     expect(markup).not.toContain("Recent events");
+   });
++
++  it("renders routine updates as an ordinary feed row", () => {
++    const markup = renderItem({
++      id: "expense.30",
++      category: "success",
++      priority: "informational",
++      timeLabel: "Day 1 8:30 AM",
++      message: "Operating costs -$1.50.",
++    });
++
++    expect(markup).not.toContain("<details");
++    expect(markup).toContain("Operating costs -$1.50.");
++  });
+ });

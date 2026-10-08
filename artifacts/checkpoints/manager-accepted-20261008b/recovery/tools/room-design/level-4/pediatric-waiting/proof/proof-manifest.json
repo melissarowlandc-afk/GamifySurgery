@@ -1,0 +1,734 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate_needs_owner_review",
+  "designApproval": false,
+  "runtimeIntegration": false,
+  "completeArtwork": true,
+  "sourceSnapshots": {
+    "tools/room-design/touchup-2026-10/lab/design-rooms.js": "FFD029E54F481AC0C352B4B799A18A7B6C109B2DAB295EFB17ECF231F2916096",
+    "tools/room-design/touchup-2026-10/lab/lab.js": "CD06A5AA90780DAB88E1CAA386209CBDB371D710D753E34D5F84A15D9DF258D9",
+    "tools/room-design/touchup-2026-10/build/lab-data.json": "FE39B79D411FE671A4958E0C2AD1D1D8D37C67D7EC29DF6D1D8D84F0FD7E687A",
+    "tools/room-design/touchup-2026-10/build/room-touchups.mjs": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+  },
+  "layoutBaselineSha256": "D9AAE654D9F65BFCE67E937C751DEC8DD39B7758BD622772C0F7C9C954BB6876",
+  "actorBaselineSha256": "C3FE84A6FC4B4B3B1EF63B5951360B945EF6BAEF1B14C77411AB483F4B672C89",
+  "actorHashes": {
+    "patient.adult.001/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-south.png",
+      "sha256": "AACED24D89DF062B0772C2A0ECEF4569EBF22B2C318826E54657638D309048C0"
+    },
+    "patient.adult.001/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-east.png",
+      "sha256": "E595A6E0F1CE357046446A9CC5CF7A7CE5C373D9E23CEED1A64CEDA8CD7E95FD"
+    },
+    "patient.adult.001/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-west.png",
+      "sha256": "1B881897D6CF3E6E9974567023B7A80CF321DA8D53597EED63F176CC74ED0D10"
+    },
+    "patient.adult.001/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493F37BD75152DB23E3D7D1F2394EBABD6737BF95B40F6D2AF0CC302ADEB6590"
+    },
+    "patient.adult.001/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-south.png",
+      "sha256": "DD5B793F968EBAAA77A2866451D362B416277B5C921D4C8197F66A4F917A8D53"
+    },
+    "patient.adult.001/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "sha256": "448463C5FF3A10B8605F9ABF69284C6E958966CE4DFC20ED118D38E4FD11C059"
+    },
+    "patient.adult.001/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-west.png",
+      "sha256": "98B690E285106EF403774A0FDEAA7B369B6E3737E462F305BD3DDD1ADA7D11F0"
+    },
+    "patient.adult.001/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-north.png",
+      "sha256": "26D43FB98DBD1894E16F56C21D9DE35D1A3AAB424E82787D97A4EFFF04FCD119"
+    },
+    "patient.adult.007/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-south.png",
+      "sha256": "646A8B470BEF5EA9630E0BDE54947E2C2032D5CEA3BFEBEC6BAAA74918510C4B"
+    },
+    "patient.adult.007/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "sha256": "21AC85D4A732C4408394C83A0478643A38460DCBBEB97791DD600CEE04F73F43"
+    },
+    "patient.adult.007/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-west.png",
+      "sha256": "A3301F718670AD11AE0A2AB6896E267A237400A84707363D4431FFF43B4F0390"
+    },
+    "patient.adult.007/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "sha256": "30AE01B8CD712B9F72606AAB169A276CD7254E6CAAA964CF81B6580DA06D5CD2"
+    },
+    "patient.adult.007/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-south.png",
+      "sha256": "CB8BB105B7568383F39AB33D25E4D1BB2758325F673E48F4B61ECFFBFB0C174E"
+    },
+    "patient.adult.007/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "sha256": "9FDE93F4ADE40A7E9A0EA91896ECE26FA0D45218998FDB3E94171C2861B75BF6"
+    },
+    "patient.adult.007/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "sha256": "0E8E9ACB6D3BDAABDC693EC4AF19F2D2B727E27D56FD72F6E0F8F7D4D808F324"
+    },
+    "patient.adult.007/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-north.png",
+      "sha256": "146257E99058DC5AFF36FF2933AC50D5E0079D3DAD5634D55E5F57868A1987DE"
+    },
+    "level3-roster-v2.022/stand/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-south.png",
+      "sha256": "7138ACB6244D94ECBACFF4209440570388787540DCD11071886C3CC22B8F26B0"
+    },
+    "level3-roster-v2.022/stand/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-east.png",
+      "sha256": "7858D0F700E628D6932CE2603FA7A85E8A9C743E064F1BFF08089C501DB79A1B"
+    },
+    "level3-roster-v2.022/stand/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-west.png",
+      "sha256": "19C4CD023EF0574FEC9FA2D8F96C33EA19EE3AE2072AACBD9AFB132DE2C544A0"
+    },
+    "level3-roster-v2.022/stand/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-north.png",
+      "sha256": "8CB13AE73E063FD293A2EC337710A83BB32BCDEBD6407B9492B1FBDF4DD368BF"
+    },
+    "level3-roster-v2.022/sit/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-south.png",
+      "sha256": "57587971E5569AEAE43057EF020DC733B6E70CF497DACE56812DD75EE465ECF4"
+    },
+    "level3-roster-v2.022/sit/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-east.png",
+      "sha256": "CA4B887112EDEF46ABD55D76F510D2022E5FF67E7DA16781EEF211A4C4F43A96"
+    },
+    "level3-roster-v2.022/sit/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-west.png",
+      "sha256": "246019236E6B58956F221D6D8AFA4B9E80F33EE3173FEC907F162237955A5CA4"
+    },
+    "level3-roster-v2.022/sit/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-north.png",
+      "sha256": "BBB9242D95A01BB79B280F2189A610E0844348166D015D04455E859D7522C0C2"
+    },
+    "level3-roster-v2.025/stand/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-south.png",
+      "sha256": "F052B4DBE39919E1AEE034592F2500C8670D9C98E3A80F3823EC5CA99C0F067A"
+    },
+    "level3-roster-v2.025/stand/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-east.png",
+      "sha256": "285085A788EE8A44856A684576B92EA2A08AFBC86AE32FF6A253AE2E92DAB57A"
+    },
+    "level3-roster-v2.025/stand/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-west.png",
+      "sha256": "05C23619063E174C99FAD3B9B3851CD55EFE91491475120A87142CD54F5B4228"
+    },
+    "level3-roster-v2.025/stand/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-north.png",
+      "sha256": "215A2E6704137829C947C6D0EB66DF97F2D85B743CEF7A52E91AC5E02678FAC2"
+    },
+    "level3-roster-v2.025/sit/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-south.png",
+      "sha256": "5A7D31F979C6ABF4DB8CFB9EC469179B06BD89134FD59956EB943E64505CF544"
+    },
+    "level3-roster-v2.025/sit/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-east.png",
+      "sha256": "E961CA793A3008816ECC03F2C02F259C71B7D4D25C6A6BDAAE627AC9C2E5AE4B"
+    },
+    "level3-roster-v2.025/sit/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-west.png",
+      "sha256": "6F5405DA6A7665DBA5FB8991E5ECD0D820D4493993AC706FC95C7E9212BF7A3D"
+    },
+    "level3-roster-v2.025/sit/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-north.png",
+      "sha256": "20D91187498EBB8533ACBBD01EEEF5D4832634955E2A2DA5F6F10A25620E1108"
+    },
+    "level3-roster-v2.029/stand/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-south.png",
+      "sha256": "106814AD0C87A0A76A16EF0078ECEBD07EFA50FE9FCEE4386959B3DCC3D6B3B0"
+    },
+    "level3-roster-v2.029/stand/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-east.png",
+      "sha256": "861A42AD0504948B221DEAC4C51F55A2C4CADCADB21060842359E9D9F109F736"
+    },
+    "level3-roster-v2.029/stand/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-west.png",
+      "sha256": "B536598341B31B35476484EB47D36A2F9350CFACFCCB73C2C499D1C70F686ED4"
+    },
+    "level3-roster-v2.029/stand/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-north.png",
+      "sha256": "7371B9E199BB21943455EE6938D3889411EB8A414A956D1D082822DD1E57F1F7"
+    },
+    "level3-roster-v2.029/sit/south": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-south.png",
+      "sha256": "29A7DD34836DF7978E1FEE035023AF048A4E8F99164AE5BCA5C585E613FCB64E"
+    },
+    "level3-roster-v2.029/sit/east": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-east.png",
+      "sha256": "A48B56A6381CFDC292F6CF1F49C9A5468245CFA4762BBAC7ECD447CADBA6C600"
+    },
+    "level3-roster-v2.029/sit/west": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-west.png",
+      "sha256": "D2556F32AADEC694E8F5152380FD92E67F5C09529ADC25B97B2502379C883C7F"
+    },
+    "level3-roster-v2.029/sit/north": {
+      "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-north.png",
+      "sha256": "9B7CB38319B3777AF1CCA1B0A8A7EF141673A1D1342F8D7947B73E350F62061F"
+    }
+  },
+  "dataSha256": "984797B031FE0E2C0A3630E63844D9DCE5BD19E646D32F448E5CAC7CC37E2575",
+  "preparedMetadataSha256": "0A8BCAE4C056EDA95DDEC4921F8B1C3595096BC74415B2356AA73D654FD90BB7",
+  "artworkSources": {
+    "aquarium": "1D4B87D83267604C93C0D18E5E5ECA4F57400AC2D17ED22DBD79206CB8E2022E",
+    "kids-table": "131279C586DC102D63195484FA57791BF3444FE1332D578366E268BE188A7498",
+    "kid-stool": "EA68D6F67E259AA503CC733826E392319B085EBB9E08D9295F726332E8316BCE",
+    "toy-chest": "063583DD8688057E5532A50CDFF389D78D62DAF047CBA7573217D3D0EB1E5474",
+    "book-bin": "EC5BD60AFB62A88D8FF9D6D91F47546AD47C9452900C5F15BA675A283436A68C",
+    "animal-prints": "0E5A27166896033E0206D39240CF14D7CA7C617CC0B79B13ADFA32558F6F5F66",
+    "wall-clock-kids": "9495974EC0D64378A58E7C9534258B6F4AEAAD0CDEE1C30F94D5B0EA46B90CBF"
+  },
+  "preparedHashes": {
+    "aquarium": "3C5958B0B873ACA093E93F712615714A05C8853ED85739D8048E79B8E54C973A",
+    "kids-table": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632",
+    "kid-stool": "42B14F4E2F844F847950E97779DD98E1BF75AF41952D1401068FEEEBF864EEC5",
+    "toy-chest": "C8EBD2BBFC44E94766CCBB21046D368A470F4E91BD88EF9F5F6023E7A24E9736",
+    "book-bin": "219185B31CBA3AD4DE5E9F216D56B7FB1B33482D9853EC6229BEBB21D26168FF",
+    "animal-prints": "D112727649A36570055E3AEC8A74AEEC8BD89857DCA4482BC754C13F3756D331",
+    "wall-clock-kids": "E9039FB01E1E4D1EC6490E4103EEFD9BE294FD91DE5DF49A0AFF5224B2ED11E2"
+  },
+  "reusedApproved": {
+    "design:reuse:bench": {
+      "src": "../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceRect": [
+        8,
+        8,
+        545,
+        356
+      ],
+      "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+    },
+    "design:reuse:chair-west": {
+      "src": "../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceRect": [
+        8,
+        748,
+        315,
+        369
+      ],
+      "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+    },
+    "design:reuse:chair-east": {
+      "src": "../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceRect": [
+        8,
+        372,
+        315,
+        368
+      ],
+      "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+    }
+  },
+  "rendererSha256": "59C5239F3389C190CECF3C433F7ECE4F4F260C6E15D95439B0B823AC1DDD7A50",
+  "geometrySha256": "9DECD22CD202DCE76D84C625DAC8BD61799B2D8A5D25DE98CB675FC2C75AF2CF",
+  "presentationRevision": {
+    "revision": 2,
+    "contract": "revision-contract.json",
+    "sha256": "E417607E85180F43A57AFB8A00208FEB8D19BB0E9AD324349F518BDD697C8B73",
+    "authorizedBy": "2026-10-08 owner review, owner-requests-20261008.md item 4",
+    "sharedFilesChanged": false,
+    "children": [
+      {
+        "supportId": "kidWest",
+        "characterId": "level3-roster-v2.022",
+        "direction": "east",
+        "standingHeightSourcePixels": 184,
+        "seatContactSource": [
+          70,
+          255
+        ],
+        "registrySeatY": 253,
+        "handSource": [
+          108,
+          230
+        ],
+        "ground": [
+          1.49,
+          2.66
+        ],
+        "seat": [
+          1.49,
+          2.4368719561688312
+        ],
+        "contactMeasurement": {
+          "region": [
+            60,
+            240,
+            21,
+            25
+          ],
+          "posteriorOpaqueBottom": 254,
+          "method": "Inspected enlarged posterior region; at source X70 the last alpha>=160 row is254, so the seat-contact edge is Y255. Nearby contour antialias varies by one row."
+        },
+        "intendedVisualAge": 5,
+        "seatType": "kid-stool",
+        "recordId": "kidStoolWest"
+      },
+      {
+        "supportId": "kidEast",
+        "characterId": "level3-roster-v2.025",
+        "direction": "west",
+        "standingHeightSourcePixels": 211,
+        "seatContactSource": [
+          90,
+          252
+        ],
+        "registrySeatY": 246,
+        "handSource": [
+          51,
+          225
+        ],
+        "ground": [
+          2.51,
+          2.66
+        ],
+        "seat": [
+          2.51,
+          2.4368719561688312
+        ],
+        "contactMeasurement": {
+          "region": [
+            80,
+            230,
+            21,
+            30
+          ],
+          "posteriorOpaqueBottom": 251,
+          "method": "Inspected posterior column X90, last alpha>=160 row251; edge252."
+        },
+        "intendedVisualAge": 9,
+        "seatType": "kid-stool",
+        "recordId": "kidStoolEast"
+      },
+      {
+        "supportId": "olderChildChair",
+        "recordId": "adultChairEastNorth",
+        "characterId": "level3-roster-v2.029",
+        "intendedVisualAge": 14,
+        "seatType": "ordinary-chair",
+        "direction": "east",
+        "standingHeightSourcePixels": 234,
+        "seatContactSource": [
+          70,
+          243
+        ],
+        "registrySeatY": 244,
+        "ground": [
+          0.65,
+          1.95
+        ],
+        "seat": [
+          0.5293650793650794,
+          1.5817460317460317
+        ],
+        "chairSeatSource": [
+          110,
+          223
+        ],
+        "contactMeasurement": {
+          "region": [
+            60,
+            220,
+            21,
+            35
+          ],
+          "posteriorOpaqueBottom": 242,
+          "method": "Inspected posterior column X70, last alpha>=160 row242; edge243."
+        }
+      }
+    ],
+    "sourceScale": 0.6865478271728273,
+    "stool": {
+      "renderSizeTiles": [
+        0.22149172787464808,
+        0.2953223038328641
+      ],
+      "seatRiseProofPixels": 26.775365259740262,
+      "scaleVsStandIn": 0.7383057595821603,
+      "groundY": 2.66
+    },
+    "table": {
+      "renderSizeTiles": [
+        0.7,
+        0.4583333333333333
+      ],
+      "ground": [
+        2,
+        2.635
+      ],
+      "frontTabletopRiseProofPixels": 36.34825870646766,
+      "blockRectsNative": [
+        [
+          85,
+          6,
+          37,
+          32
+        ],
+        [
+          151,
+          8,
+          35,
+          32
+        ],
+        [
+          213,
+          6,
+          36,
+          33
+        ]
+      ]
+    },
+    "wall": {
+      "animalPrints": {
+        "centerX": 2.58,
+        "topY": -0.68,
+        "doorOwners": [
+          "N3"
+        ],
+        "backedOwners": [
+          "N3"
+        ]
+      },
+      "clock": {
+        "centerX": 3.5,
+        "topY": -0.66,
+        "doorOwners": [
+          "N4"
+        ],
+        "backedOwners": [
+          "N4"
+        ]
+      }
+    },
+    "props": {
+      "toyChest": {
+        "direction": "east",
+        "ground": [
+          0.52,
+          3.86
+        ],
+        "renderSizeTiles": [
+          0.96,
+          0.5676521739130435
+        ],
+        "footprint": {
+          "left": 0.05,
+          "top": 3.6,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "doorOwners": [
+          "WD",
+          "S1"
+        ]
+      },
+      "bookBin": {
+        "direction": "west",
+        "ground": [
+          3.6,
+          3.86
+        ],
+        "renderSizeTiles": [
+          0.72,
+          0.8198843930635838
+        ],
+        "footprint": {
+          "left": 3.28,
+          "top": 3.54,
+          "width": 0.64,
+          "height": 0.32
+        },
+        "doorOwners": [
+          "ED",
+          "S4"
+        ]
+      }
+    },
+    "seatingRule": {
+      "kidStoolMaximumAgeExclusive": 10,
+      "olderChildrenUse": "ordinary-chair",
+      "parentSpots": [
+        "bench:seat-1",
+        "armchair"
+      ],
+      "ordinarySeatCount": 5,
+      "kidStoolCount": 4
+    }
+  },
+  "occluders": {
+    "schemaVersion": 1,
+    "revision": 2,
+    "derived": true,
+    "generator": "deterministic extraction of approved pixels",
+    "entries": {
+      "west": {
+        "file": "armchair-west-front.png",
+        "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+        "sourceSha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8",
+        "sourceRect": [
+          8,
+          748,
+          315,
+          369
+        ],
+        "canvas": [
+          315,
+          369
+        ],
+        "polygons": [
+          [
+            [
+              38,
+              200
+            ],
+            [
+              38,
+              177
+            ],
+            [
+              51,
+              167
+            ],
+            [
+              277,
+              166
+            ],
+            [
+              291,
+              172
+            ],
+            [
+              290,
+              195
+            ],
+            [
+              263,
+              196
+            ],
+            [
+              77,
+              193
+            ],
+            [
+              63,
+              211
+            ]
+          ],
+          [
+            [
+              31,
+              197
+            ],
+            [
+              65,
+              198
+            ],
+            [
+              57,
+              285
+            ],
+            [
+              51,
+              362
+            ],
+            [
+              29,
+              362
+            ]
+          ],
+          [
+            [
+              264,
+              191
+            ],
+            [
+              289,
+              183
+            ],
+            [
+              300,
+              362
+            ],
+            [
+              278,
+              362
+            ],
+            [
+              265,
+              208
+            ]
+          ],
+          [
+            [
+              55,
+              282
+            ],
+            [
+              271,
+              282
+            ],
+            [
+              276,
+              302
+            ],
+            [
+              52,
+              302
+            ]
+          ]
+        ],
+        "woodSelection": "Inside polygons: original R > G+2 and G >= B+2; excludes cool blue cushion slivers. Selected RGBA copied unchanged.",
+        "keptPixels": 18685,
+        "sha256": "4C39536CEC6FC7D17A2D078C2DB42B9F18528CA062836DBD19DAEFFE123E31E8",
+        "method": "Pixel-preserving extraction of front wooden armrest, two posts and seat rail; no resampling, painting or source mutation."
+      },
+      "east": {
+        "file": "armchair-east-front.png",
+        "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+        "sourceSha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8",
+        "sourceRect": [
+          8,
+          372,
+          315,
+          368
+        ],
+        "canvas": [
+          315,
+          368
+        ],
+        "polygons": [
+          [
+            [
+              277,
+              200
+            ],
+            [
+              277,
+              177
+            ],
+            [
+              264,
+              167
+            ],
+            [
+              38,
+              166
+            ],
+            [
+              24,
+              172
+            ],
+            [
+              25,
+              195
+            ],
+            [
+              52,
+              196
+            ],
+            [
+              238,
+              193
+            ],
+            [
+              252,
+              211
+            ]
+          ],
+          [
+            [
+              284,
+              197
+            ],
+            [
+              250,
+              198
+            ],
+            [
+              258,
+              285
+            ],
+            [
+              264,
+              362
+            ],
+            [
+              286,
+              362
+            ]
+          ],
+          [
+            [
+              51,
+              191
+            ],
+            [
+              26,
+              183
+            ],
+            [
+              15,
+              362
+            ],
+            [
+              37,
+              362
+            ],
+            [
+              50,
+              208
+            ]
+          ],
+          [
+            [
+              260,
+              282
+            ],
+            [
+              44,
+              282
+            ],
+            [
+              39,
+              302
+            ],
+            [
+              263,
+              302
+            ]
+          ]
+        ],
+        "woodSelection": "Inside polygons: original R > G+2 and G >= B+2; excludes cool blue cushion slivers. Selected RGBA copied unchanged.",
+        "keptPixels": 17760,
+        "sha256": "EF279064D528B8FCBD46623EC5CE0FE087259C4C820340BE964BF4C62DF7B6A8",
+        "method": "Pixel-preserving extraction of front wooden armrest, two posts and seat rail; no resampling, painting or source mutation."
+      }
+    }
+  },
+  "registryObservedSha256": "79447038D5E416AB2B9E3E115A5983A181CC028E5274EC008FF0E8A7ED415C16",
+  "routingException": {
+    "privateProofOnly": true,
+    "sharedGeometryChanged": false,
+    "baselineFailureEvidence": "evidence/original-grid-failure.json",
+    "method": "Owner-authorized extra furniture uses real private footprints and measured bases; original shared navigation is preserved as reference only. Radius-clear walking ends at explicit standing approaches; seating is a separate static contact.",
+    "actorRadius": 0.18,
+    "step": 0.05
+  },
+  "reviewURL": "http://127.0.0.1:4191/tools/room-design/level-4/pediatric-waiting/proof/index.html",
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "ownerPlaytestOrigin": "http://127.0.0.1:4173",
+  "notes": [
+    "Owner revision2: four stools, five ordinary seats, ages5/9/14. West parent uses a measured cushion contact and approved front wood overlay.",
+    "Chest east and bin west use new builtin outputs and larger native frames; other selected sources and table footprint are unchanged.",
+    "All expanded-layout walking routes use private real footprint clearances, measured prepared bases and distinct static seated contacts. Shared navigation is unmodified. Original fixed bench/armchair doorway pass-through exceptions remain explicit.",
+    "Full generated registry changed concurrently in unrelated entries. Selected pediatric metadata and all40 actor pose hashes remain guarded.",
+    "No campaign storage, network content, runtime integration or source-art edits. Browser validation/captures require manager rerun."
+  ]
+}

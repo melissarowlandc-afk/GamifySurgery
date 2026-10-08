@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "status": "owner_design_approved",
+  "designApproval": true,
+  "ownerRevision": {
+    "schemaVersion": 1,
+    "date": "2026-10-08",
+    "revision": "remove-chair-leg-rest",
+    "ownerInstruction": "Just remove the leg rest from the patient chair in the wound/ostomy clinic room because the patient sprite has their legs just straight down. Everything else is good and after that fix, this is approved.",
+    "status": "implemented",
+    "conditionalOwnerDesignApproval": true,
+    "approvalScope": "Visual mockup only; no game/runtime integration or clinical content approval.",
+    "baseline": "revisions/20261008-before-leg-rest-removal/baseline.json",
+    "baselineManifestSha256": "09ABFFAA1DEE149077B0B553439E6B39A3473527F054CFF82D9EA3C62276279B",
+    "selectedGeneration": "wound-recliner-02",
+    "chairHasLegRest": false,
+    "patientStillRepainted": false,
+    "clinicianPlacementUnchanged": true,
+    "walkingRoutesUnchangedRequired": true,
+    "browserValidation": "pending_manager_rerun",
+    "priorBrowserEvidence": "revisions/20261008-before-leg-rest-removal/proof/evidence/",
+    "completedChecks": [
+      "Built-in chair edit and native registration visually inspected",
+      "Existing patient refitted by 0.311 proof pixels with legs down",
+      "Clinician registration and all other selected art unchanged",
+      "576 reviewed walking paths identical; 499228 pixels outside chair/patient unchanged",
+      "Node validators passed before approval metadata completion"
+    ],
+    "ownerDesignApproval": true,
+    "ownerDesignApprovalBasis": "Owner explicitly approved the mockup after removal of the chair leg rest; requested fix is implemented. Manager reruns revised browser validation and captures."
+  },
+  "ownerRevisionSha256": "89EE0526DB18F9D3DBF18EB6CA1ABC7FDA98943E372D1D85500BB058FF883ECB",
+  "runtimeIntegration": false,
+  "completeArtwork": true,
+  "reviewURL": "http://127.0.0.1:4191/tools/room-design/level-4/wound-ostomy/proof/index.html",
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "ownerPlaytestOrigin": "http://127.0.0.1:4173",
+  "layoutBaselineSha256": "9E8D5276BF33CB4240221D3B7A0C023E960FC467829C225C768A39952888726F",
+  "actorBaselineSha256": "451609EF02F4FE8A4982C6AEB6A0ED151859A7B0EB639EFB8DA3E79DCD00E7EB",
+  "presentationContractSha256": "47F28DCBACBB284F84D449A626D6CD02A79B800912D4261F48584EC6D850666F",
+  "preparedMetadataSha256": "60454BB5A45CA51B0E76FDE8B4ECF5FC82DA132EE75977E28D91940E77E7470F",
+  "dataSha256": "0EEEB09B66412925766119685485AC9CD46016C2B53CAA2F70C3BA064B35CCEC",
+  "rendererSha256": "D0122D4D6C909DE72CBF4679ACD1CE99954651100A8C3AB5A541117B98F09929",
+  "geometrySha256": "0E71A4E4477045DA5791B6369F730305459AB62CA6AE93447B08AA6A8463A492",
+  "preparedHashes": {
+    "wound-recliner": "8B9275DB15C012BDCED3A0D2E25C689860326A09BAB59D0838688EC95BF26FBB",
+    "exam-lamp": "465AC4A0D251A7FE6BB14118182B04DC7646F2BAACFC968E991DAB40D7192E2B",
+    "ostomy-shelf": "A4265763867F0C93DD85C095E66950C7C0CC51A67F831EB4DDEB057B8BE431B4",
+    "dressing-cart": "C03D3B68D1493B7F32F057EAD56695BC462EA091DF8706B1CFDBEB0330A4771D",
+    "hygiene-sign": "F3B057AA9B1E2BD64B095EFC637037DD68A20064881A56C25FE19FACF9665F9B"
+  },
+  "reusedApproved": {
+    "design:reuse:stool": {
+      "src": "../assets/reused/rolling-stool-backless.png",
+      "sourceRect": [
+        0,
+        0,
+        266,
+        427
+      ],
+      "size": [
+        266,
+        427
+      ],
+      "reusedApproved": true,
+      "sha256": "A0B7FA6AF9CE63FF02A7685AFBD959EE02C35737830075113E9D8052D49FBD47",
+      "backless": true,
+      "derivationContract": "../assets/reused/stool-contract.json"
+    },
+    "design:reuse:sink": {
+      "src": "../../../../../apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+      "sourceRect": [
+        8,
+        1569,
+        265,
+        386
+      ],
+      "size": [
+        265,
+        386
+      ],
+      "reusedApproved": true,
+      "sha256": "0532E455112D364B21B1AE6D1FD482593C76357D1A3E73D966C9BD18291C9722"
+    },
+    "design:reuse:curtain": {
+      "src": "../../../../../apps/player/public/art/rooms/touchup-v1/curtain-bunch.png",
+      "size": [
+        62,
+        211
+      ],
+      "reusedApproved": true,
+      "sha256": "53E59D9AABF0A3104F86384A5CBC3999CC6C148AC9FE8229EE7A68AC55CFA874"
+    },
+    "design:reuse:biohazard-bin": {
+      "src": "../../../../../apps/player/public/art/rooms/touchup-v1/biohazard-bin.png",
+      "size": [
+        77,
+        92
+      ],
+      "reusedApproved": true,
+      "sha256": "17D499D8C12CB65685DD8B5E80E3F344AE3ABE7CD208DB642507039A6B6C0563"
+    }
+  },
+  "actorHashes": {
+    "gs026-employee-001/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-south.png",
+      "sha256": "7979907BAC4842D359FA0674E538DCEF2630C8EDC6D5D5F53158811A5042A037"
+    },
+    "gs026-employee-001/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-east.png",
+      "sha256": "90D36B5A86BFFF12C7C9453EDE76197132C8F063CABE92172EB536668590F19B"
+    },
+    "gs026-employee-001/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-west.png",
+      "sha256": "597A21C19D7AE801E8F9D2E247D2E83F4784407BB2DF76B698B91D9034D7B59C"
+    },
+    "gs026-employee-001/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-north.png",
+      "sha256": "26C482846362FC7158FBF9F95A142F9077F98DCE11BAEECC208F9A9F388198E6"
+    },
+    "gs026-employee-001/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-south.png",
+      "sha256": "6C078939A735480A6F7A0DDE562B7DC91ACE912223FABB88839FE11C7D48471F"
+    },
+    "gs026-employee-001/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-east.png",
+      "sha256": "FA8F098658FED04A49FEA3799F9FA9F0FC4B94283A0C162CB629A981F6E2E156"
+    },
+    "gs026-employee-001/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-west.png",
+      "sha256": "494F42DFD26A48A357A1AC2343E84EA96B2475A9A3449E38FFCA72C6546A5188"
+    },
+    "gs026-employee-001/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-north.png",
+      "sha256": "7A4FCD7721B203774857497F3CD643561B39FF0F6D8C09FAE19209B32FC9981A"
+    },
+    "patient.adult.007/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-south.png",
+      "sha256": "646A8B470BEF5EA9630E0BDE54947E2C2032D5CEA3BFEBEC6BAAA74918510C4B"
+    },
+    "patient.adult.007/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "sha256": "21AC85D4A732C4408394C83A0478643A38460DCBBEB97791DD600CEE04F73F43"
+    },
+    "patient.adult.007/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-west.png",
+      "sha256": "A3301F718670AD11AE0A2AB6896E267A237400A84707363D4431FFF43B4F0390"
+    },
+    "patient.adult.007/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "sha256": "30AE01B8CD712B9F72606AAB169A276CD7254E6CAAA964CF81B6580DA06D5CD2"
+    },
+    "patient.adult.007/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-south.png",
+      "sha256": "CB8BB105B7568383F39AB33D25E4D1BB2758325F673E48F4B61ECFFBFB0C174E"
+    },
+    "patient.adult.007/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "sha256": "9FDE93F4ADE40A7E9A0EA91896ECE26FA0D45218998FDB3E94171C2861B75BF6"
+    },
+    "patient.adult.007/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "sha256": "0E8E9ACB6D3BDAABDC693EC4AF19F2D2B727E27D56FD72F6E0F8F7D4D808F324"
+    },
+    "patient.adult.007/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-north.png",
+      "sha256": "146257E99058DC5AFF36FF2933AC50D5E0079D3DAD5634D55E5F57868A1987DE"
+    }
+  },
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "privateRouteModel": {
+    "basis": "Walking uses frozen footprints plus actual opaque base pixels. Dotted seating links are separate static contacts, not walking through furniture.",
+    "step": 0.025,
+    "actorRadius": 0.18,
+    "preservesSharedNavigation": true,
+    "staticSeatingSeparate": true
+  },
+  "seatRegistrations": [
+    {
+      "supportId": "recliner:patient",
+      "recordId": "recliner",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "patients",
+      "direction": "east",
+      "seat": [
+        0.6288793103448275,
+        1.4886135057471264
+      ],
+      "ground": [
+        0.9,
+        1.95
+      ],
+      "painterGround": 1.9501,
+      "seatContactSource": [
+        50,
+        224
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "patient.adult.007",
+        "contact": [
+          50,
+          224
+        ],
+        "region": [
+          195,
+          235
+        ],
+        "method": "Inspected posterior column and actual final alpha >=160 edge, inside bounded hip region."
+      },
+      "fixtureSeatSource": [
+        510,
+        534
+      ],
+      "fixtureSeatNative": [
+        181.86206896551724,
+        241.5344827586207
+      ],
+      "basis": "Actual revised chair cushion surface near authored X0.62; existing patient legs hang down, registered at the reviewed scale without stretching."
+    },
+    {
+      "supportId": "stool:clinician",
+      "recordId": "stool",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "direction": "west",
+      "seat": [
+        2.15,
+        1.4169924812030075
+      ],
+      "ground": [
+        2.15,
+        1.9
+      ],
+      "painterGround": 1.9001,
+      "seatContactSource": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "measurement": {
+        "id": "gs026-employee-001",
+        "contact": [
+          90,
+          239
+        ],
+        "region": [
+          210,
+          260
+        ],
+        "method": "Inspected posterior column and actual final alpha >=160 edge, inside bounded hip region."
+      },
+      "fixtureSeatSource": [
+        133,
+        135
+      ],
+      "basis": "Actual native backless cushion center; entire clinician draws above stool with no foreground stool mask."
+    }
+  ],
+  "sourceGeometryUnchanged": true,
+  "sharedFilesChanged": false,
+  "browserValidation": "pending_manager_rerun"
+}

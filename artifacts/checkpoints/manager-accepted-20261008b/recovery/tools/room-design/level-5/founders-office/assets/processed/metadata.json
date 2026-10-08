@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "mode": "painted",
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "assets": {
+    "founder-desk": {
+      "id": "founder-desk",
+      "file": "../assets/processed/founder-desk.png",
+      "canvas": [
+        720,
+        432
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        360,
+        426
+      ],
+      "outputOpaqueBounds": {
+        "left": 89,
+        "right": 630,
+        "top": 7,
+        "bottom": 425,
+        "width": 542,
+        "height": 419,
+        "pixels": 122510,
+        "edgeAlphaMax": 0
+      },
+      "outputAllAlphaBounds": {
+        "left": 89,
+        "right": 630,
+        "top": 6,
+        "bottom": 425,
+        "width": 542,
+        "height": 420,
+        "pixels": 124862,
+        "edgeAlphaMax": 0
+      },
+      "source": "assets/originals/founder-desk-02.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceSha256": "ccf635307f9348e010d5a1227ea8136a796bbdbae38bca0862f87074b4cc84a4",
+      "sourceCrop": [
+        239,
+        98,
+        1056,
+        818
+      ],
+      "transform": {
+        "scale": 0.5134474327628362,
+        "dx": 88.8997555012225,
+        "dy": 6,
+        "dw": 542.200488997555,
+        "dh": 420
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 15030
+      },
+      "outputSha256": "68bc45eb77842516b88aa423c0c8d8df1f6b5331656a3dbbe4f5ad4a7bcdf68c",
+      "prompt": "assets/prompts/founder-desk-02.prompt.txt",
+      "promptSha256": "bc43bac2ee2e8df01ab6ffaf829636ec197421b5b69c77511844f734dd657d4e",
+      "sourcePoints": {
+        "worktop": [
+          750,
+          294
+        ]
+      },
+      "calibratedPoints": {
+        "worktop": [
+          351.2713936430318,
+          106.6356968215159
+        ]
+      },
+      "measuredWorktopRisePixels": 79.84107579462102
+    },
+    "office-bookcase": {
+      "id": "office-bookcase",
+      "file": "../assets/processed/office-bookcase.png",
+      "canvas": [
+        384,
+        600
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        192,
+        592
+      ],
+      "outputOpaqueBounds": {
+        "left": 47,
+        "right": 334,
+        "top": 7,
+        "bottom": 591,
+        "width": 288,
+        "height": 585,
+        "pixels": 158284,
+        "edgeAlphaMax": 0
+      },
+      "outputAllAlphaBounds": {
+        "left": 46,
+        "right": 337,
+        "top": 6,
+        "bottom": 593,
+        "width": 292,
+        "height": 588,
+        "pixels": 165549,
+        "edgeAlphaMax": 0
+      },
+      "source": "assets/originals/office-bookcase-01.png",
+      "sourceSize": [
+        1003,
+        1568
+      ],
+      "sourceSha256": "bc1ed5f10762cac41e171ee091e842c39ae05e056afb3786086745de4ac349e0",
+      "sourceCrop": [
+        194,
+        153,
+        620,
+        1250
+      ],
+      "transform": {
+        "scale": 0.4704,
+        "dx": 46.176000000000016,
+        "dy": 6,
+        "dw": 291.64799999999997,
+        "dh": 588
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 13589
+      },
+      "outputSha256": "f615bfa2df0a4f230db99ea033858b3144806099a4e5167db32666cf93e9247c",
+      "prompt": "assets/prompts/office-bookcase-01.prompt.txt",
+      "promptSha256": "90d66927cd6a3e4825a14de080a0a264ccc74f787cdbb878bf5070e4dd62ab46"
+    },
+    "office-plant": {
+      "id": "office-plant",
+      "file": "../assets/processed/office-plant.png",
+      "canvas": [
+        312,
+        456
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        156,
+        446
+      ],
+      "outputOpaqueBounds": {
+        "left": 13,
+        "right": 297,
+        "top": 6,
+        "bottom": 445,
+        "width": 285,
+        "height": 440,
+        "pixels": 60516,
+        "edgeAlphaMax": 0
+      },
+      "outputAllAlphaBounds": {
+        "left": 13,
+        "right": 298,
+        "top": 6,
+        "bottom": 449,
+        "width": 286,
+        "height": 444,
+        "pixels": 63040,
+        "edgeAlphaMax": 0
+      },
+      "source": "assets/originals/office-plant-01.png",
+      "sourceSize": [
+        1035,
+        1520
+      ],
+      "sourceSha256": "f0ea237e650ee0ecee5a542531fc49ad0bbf590be222879986c94087c07d5523",
+      "sourceCrop": [
+        82,
+        41,
+        900,
+        1397
+      ],
+      "transform": {
+        "scale": 0.3178239083750895,
+        "dx": 12.979241231209727,
+        "dy": 5.999999999999943,
+        "dw": 286.04151753758055,
+        "dh": 444.00000000000006
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 49393
+      },
+      "outputSha256": "2bf394b221bba77df7b52b629e9d030d1e260d5030c3f8dbd1f8c38a2f0db8f0",
+      "prompt": "assets/prompts/office-plant-01.prompt.txt",
+      "promptSha256": "b8907dbac2737f11a82cbacb67b101c04eb84873cc51e2466eacd53c5fad093f"
+    },
+    "office-print": {
+      "id": "office-print",
+      "file": "../assets/processed/office-print.png",
+      "canvas": [
+        312,
+        202
+      ],
+      "anchorKind": "wall",
+      "canvasAnchor": [
+        156,
+        60
+      ],
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 304,
+        "top": 61,
+        "bottom": 193,
+        "width": 299,
+        "height": 133,
+        "pixels": 39755,
+        "edgeAlphaMax": 0
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 305,
+        "top": 60,
+        "bottom": 195,
+        "width": 300,
+        "height": 136,
+        "pixels": 40486,
+        "edgeAlphaMax": 0
+      },
+      "source": "assets/originals/office-print-01.png",
+      "sourceSize": [
+        1562,
+        1007
+      ],
+      "sourceSha256": "ae3ab345b73859e37dcb501dbb16312fa7b7e63aa7a30939d91172422faa2830",
+      "sourceCrop": [
+        134,
+        207,
+        1295,
+        585
+      ],
+      "transform": {
+        "scale": 0.23166023166023167,
+        "dx": 6,
+        "dy": 60.478764478764475,
+        "dw": 300,
+        "dh": 135.52123552123552
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 14140
+      },
+      "outputSha256": "56dc8f33c34ea1f82b2bfd7f3cf98d285d22c6d133221c0dbd30ad7c1ef59ebb",
+      "prompt": "assets/prompts/office-print-01.prompt.txt",
+      "promptSha256": "1049cc6df7bae17c2c50913e00a7b42ff9b48895fb666869bc4aafc7beecd771"
+    },
+    "reuse:founder-chair": {
+      "canvas": [
+        412,
+        465
+      ],
+      "canvasAnchor": [
+        200,
+        463
+      ],
+      "anchorKind": "floor",
+      "outputOpaqueBounds": {
+        "left": 1,
+        "right": 410,
+        "top": 1,
+        "bottom": 463,
+        "width": 410,
+        "height": 463,
+        "pixels": 121258,
+        "edgeAlphaMax": 139
+      },
+      "outputAllAlphaBounds": {
+        "left": 0,
+        "right": 411,
+        "top": 0,
+        "bottom": 464,
+        "width": 412,
+        "height": 465,
+        "pixels": 123840,
+        "edgeAlphaMax": 139
+      },
+      "outputSha256": "4e6dcfc16cb6375cd21ada868ad47e6b02207bc183cec0c2b47db0cafcb3f89e"
+    },
+    "reuse:founder-chair-front": {
+      "canvas": [
+        412,
+        465
+      ],
+      "canvasAnchor": [
+        200,
+        463
+      ],
+      "anchorKind": "floor",
+      "outputOpaqueBounds": {
+        "left": 46,
+        "right": 362,
+        "top": 296,
+        "bottom": 463,
+        "width": 317,
+        "height": 168,
+        "pixels": 25621,
+        "edgeAlphaMax": 24
+      },
+      "outputAllAlphaBounds": {
+        "left": 45,
+        "right": 363,
+        "top": 296,
+        "bottom": 464,
+        "width": 319,
+        "height": 169,
+        "pixels": 27004,
+        "edgeAlphaMax": 24
+      },
+      "outputSha256": "49117da122a5d268087809d35ae2797ff9ef4f1fc532a2fc1a675e651b36e089"
+    }
+  }
+}

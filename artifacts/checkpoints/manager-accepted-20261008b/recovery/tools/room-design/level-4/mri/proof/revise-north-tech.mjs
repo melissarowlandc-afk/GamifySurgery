@@ -1,0 +1,26 @@
+// One bounded owner revision. Source images and shared runtime remain untouched.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url)),assets=path.resolve(here,'../assets');
+const read=file=>JSON.parse(fs.readFileSync(file,'utf8'));
+const write=(file,value)=>fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n');
+const manifestPath=path.join(assets,'generation-manifest.json'),manifest=read(manifestPath);
+const chair=manifest.assets.find(a=>a.id==='operator-chair');
+if(chair.file!=='originals/operator-chair-03.png')manifest.sourceHistory.push({...chair,status:'superseded-source'});
+Object.assign(chair,{file:'originals/operator-chair-03.png',sha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(assets,'originals/operator-chair-03.png'))).digest('hex').toUpperCase(),prompt:'prompts/operator-chair-03.prompt.txt',editTarget:'originals/operator-chair-02.png',generatedSource:'C:/Users/rowla/.codex/generated_images/01a11877-6649-7f40-9c2d-3c389eb52568/exec-6c2702c7-8946-4d2d-9c7e-946e72ce22c5.png',status:'candidate-source'});
+manifest.assets.find(a=>a.id==='console').nativeSize=[206,317];
+manifest.revision='owner-north-tech-bore-center-foreground-patient';
+write(manifestPath,manifest);
+const contractPath=path.join(here,'asset-contract.json'),c=read(contractPath);
+c.revision=manifest.revision;
+Object.assign(c.assets.console,{canvas:[206,317],widthTiles:206/240,ground:[1.12,2.14],expectedWorktopRiseNativePixels:192});
+c.sourceCalibration.console.scale=.1718249733191035*1.2;
+c.sourceCalibration.console.packingNote='Owner requests visibly larger desk: whole source enlarged uniformly by20%; rear worktop96px, projected front lip measured separately. North-facing tech sits south of desk.';
+c.assets['operator-chair'].ground=[1.12,2.54];
+c.sourceCalibration['operator-chair']={sourceFile:'originals/operator-chair-03.png',points:{seat:[800,700]},uniformScaleFactor:45/48.02292263610315,measurement:'Rear-view blue seat upper edge at raw (800,700), visually inspected; opaque wheel edge is measured by Canvas. Initial maximum fit48.023px; uniformly reduce to45px.',packingNote:'New back-facing swivel chair matches the unchanged sit.north tech; uniform fit only.'};
+c.assets['table-empty'].ground=[2.49,2.42];
+c.sourceCalibration['table-empty'].packingNote='Original empty couch source and uniform shape are retained; private ground moves east to put the outer cushion under the west-facing patient. Visible forepart draws to the bore center.';
+write(contractPath,c);
+console.log('UPDATED owner north-tech/bore-center/foreground-patient contract');

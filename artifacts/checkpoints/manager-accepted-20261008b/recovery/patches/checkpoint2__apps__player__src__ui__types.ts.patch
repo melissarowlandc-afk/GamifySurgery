@@ -1,0 +1,71 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -1,4 +1,5 @@
+ import type { PixelAppearanceVariant } from "@gamify-surgery/game-domain";
++import type { CaseExhibit } from "@gamify-surgery/clinical-content";
+ 
+ export type PatientFolder = "waiting" | "active" | "resolved";
+ 
+@@ -101,6 +102,8 @@
+   topicLabel?:string;
+   presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[];
+   feedbackTitle?:"Correct"|"Incorrect"; feedback?:string; correctAnswerText?:string;
++  exhibit?: CaseExhibit;
++  teachingPoint?: string;
+   /** True when acknowledging this step's feedback completes the discussion. */
+   finalStep:boolean;
+ }
+@@ -115,6 +118,8 @@
+   detailLabel?: string;
+   /** Set only after the decision is answered, so the key is never revealed early. */
+   revealedCorrect?: boolean;
++  /** Teaching feedback, supplied only after this decision has been answered. */
++  rationale?: string;
+ }
+ 
+ /** One stage of pending diagnostic work, shown as a list in the chart. */
+@@ -144,6 +149,8 @@
+   etaLabel?: string;
+   feedbackTitle?: string;
+   feedbackBody?: string;
++  teachingPoint?: string;
++  exhibit?: CaseExhibit;
+   rewardLabel?: string;
+   nextActionLabel?: string;
+   collapsedResultLabel?: string;
+@@ -226,6 +233,8 @@
+   answerChoices: AnswerChoiceView[];
+   feedbackTitle?: string;
+   feedbackBody?: string;
++  teachingPoint?: string;
++  exhibit?: CaseExhibit;
+   terminalOutcomeTitle?: string;
+   terminalOutcomeBody?: string;
+   terminalOutcomeSeverity?: "minor" | "major";
+@@ -339,6 +348,7 @@
+ }
+ 
+ export interface ServiceIncomeView {
++  periopNurseQueueLength?: number;
+   appointmentsEnabled: boolean;
+   catalogLines: ServiceIncomeCatalogLineView[];
+   activeOperations: ServiceIncomeOperationView[];
+@@ -346,6 +356,10 @@
+   grossTotalLabel: string;
+   stockCostTotalLabel: string;
+   netTotalLabel: string;
++  radiologistReads?: {
++    today: { inHouseReads: number; outsideReads: number; inHouseIncomeLabel: string; outsideIncomeLabel: string };
++    thisLevel: { inHouseReads: number; outsideReads: number; inHouseIncomeLabel: string; outsideIncomeLabel: string };
++  };
+   laboratoryWorkQueue?: {
+     enabled: boolean;
+     statusLabel: string;
+@@ -684,6 +698,7 @@
+   targetId?: string;
+   /** M3 can add tip rows without changing the board or gameplay history. */
+   rowKind?: "event" | "humor" | "milestone" | "resolved" | "day_summary" | "tip";
++  guidanceTopicIds?: readonly string[];
+   speaker?: string;
+   action?: ClinicAlertAction;
+   daySummary?: {

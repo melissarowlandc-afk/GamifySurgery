@@ -1,0 +1,646 @@
+{
+  "status": "PASS",
+  "ownerPlanSections": [
+    {
+      "heading": "Owner requests batch — 2026-10-08",
+      "selectedTargetPaths": [],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "No source paths in this heading"
+    },
+    {
+      "heading": "Decisions and requests",
+      "selectedTargetPaths": [],
+      "earlierUnchangedTargetPaths": [
+        "docs/design/tutorial-revamp-proposal.md"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Workers and lanes",
+      "selectedTargetPaths": [
+        "apps/player/src/ui/chartSheet.css"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Progress",
+      "selectedTargetPaths": [],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "No source paths in this heading"
+    },
+    {
+      "heading": "Radiologist read income",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.test.ts",
+        "apps/player/src/session/characterActivityPresentation.ts",
+        "apps/player/src/session/periopNurseAttentionPresentation.test.tsx",
+        "apps/player/src/session/radiologistReadIncomeViewModels.test.tsx",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "apps/player/src/ui/ServiceIncomePanel.test.tsx",
+        "apps/player/src/ui/ServiceIncomePanel.tsx",
+        "apps/player/src/ui/types.ts",
+        "packages/balance-config/src/diagnostic-timing.ts",
+        "packages/balance-config/src/index.ts",
+        "packages/balance-config/src/radiologist-read-income.test.ts",
+        "packages/balance-config/src/service-income-catalog.ts",
+        "packages/game-domain/src/diagnostic-timing.ts",
+        "packages/game-domain/src/index.ts",
+        "packages/game-domain/src/persistence.ts",
+        "packages/game-domain/src/radiologist-read-income.ts",
+        "packages/game-domain/src/room-upgrade-reading.ts",
+        "packages/game-domain/src/service-operations.ts",
+        "packages/game-domain/src/types.ts",
+        "packages/game-domain/tests/diagnostic-orders.test.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/employee-training.test.ts",
+        "packages/game-domain/tests/level-two-endoscopy.test.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts",
+        "packages/game-domain/tests/room-upgrade-reading.test.ts",
+        "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts",
+        "packages/game-domain/tests/service-procedure-operations.test.ts",
+        "packages/game-domain/tests/surgery-center-batch.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Radiologist read income: additive",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.test.ts",
+        "apps/player/src/session/radiologistReadIncomeViewModels.test.tsx",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "apps/player/src/ui/ServiceIncomePanel.test.tsx",
+        "packages/balance-config/src/radiologist-read-income.test.ts",
+        "packages/game-domain/tests/diagnostic-timing-persistence.test.ts",
+        "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "chart-goals Sol worker handoff - 2026-10-08",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/approvedRoomPresentation.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.test.ts",
+        "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+        "apps/player/src/session/chartStructuredFields.test.tsx",
+        "apps/player/src/session/employeeDiscussionView.test.tsx",
+        "apps/player/src/session/level3ControlsViewModels.test.ts",
+        "apps/player/src/session/level3GoalsViewModels.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/tutorialViewModels.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "apps/player/src/ui/ChartPanel.test.tsx",
+        "apps/player/src/ui/ChartPanel.tsx",
+        "apps/player/src/ui/EmployeeDiscussionPanel.test.tsx",
+        "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+        "apps/player/src/ui/GoalsPanel.test.tsx",
+        "apps/player/src/ui/GoalsPanel.tsx",
+        "apps/player/src/ui/chartPlacement.test.ts",
+        "apps/player/src/ui/chartSheet.css",
+        "apps/player/src/ui/chartStructuredFeedback.test.tsx",
+        "apps/player/src/ui/goalsPanel.css",
+        "apps/player/src/ui/types.ts",
+        "apps/player/src/ui/visualComponents.test.tsx",
+        "packages/game-domain/src/level-three-support.ts",
+        "tests/e2e/helpers.ts",
+        "tests/e2e/level-three-goals.spec.ts",
+        "tests/e2e/patient-chart-density.spec.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/vite.config.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Worker handoff - training (Item 8, Sol, 2026-10-08)",
+      "selectedTargetPaths": [
+        "docs/execplans/owner-requests-20261008.md",
+        "packages/game-domain/src/employee-training.ts",
+        "packages/game-domain/src/procedure-companions.ts",
+        "packages/game-domain/tests/companions.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/employee-training-np-queue.test.ts",
+        "packages/game-domain/tests/employee-training-persistence.test.ts",
+        "packages/game-domain/tests/employee-training-reachability.test.ts",
+        "packages/game-domain/tests/employee-training.test.ts",
+        "packages/game-domain/tests/owner-passable-door-slots.test.ts",
+        "packages/game-domain/tests/room-upgrade-support.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Severance radiologists first",
+      "selectedTargetPaths": [
+        "apps/player/src/session/radiologistHiringOrder.test.tsx",
+        "packages/game-domain/src/appearance.ts",
+        "packages/game-domain/src/characterStillCatalog.ts",
+        "packages/game-domain/tests/radiologist-hiring-order.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Layering worker handoff - item 1 (2026-10-08)",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/FacilityScene.ts",
+        "apps/player/src/facility/approvedRoomPresentation.test.ts",
+        "apps/player/src/facility/approvedRoomPresentation.ts",
+        "apps/player/src/facility/approvedRoomRenderer.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.ts",
+        "apps/player/src/facility/characterPauseArrival.test.ts",
+        "apps/player/src/facility/furnitureSeatLayering.before.fixture.json",
+        "apps/player/src/facility/furnitureSeatLayering.test.ts",
+        "apps/player/src/facility/roomTouchups.test.ts",
+        "apps/player/src/facility/roomTouchups.ts",
+        "apps/player/src/facility/staffIdleSupports.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "packages/game-domain/tests/tutorial-guidance-integration.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Remember map camera",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/FacilityCanvas.tsx",
+        "apps/player/src/facility/defaultCamera.ts",
+        "apps/player/src/facility/facilityCameraBounds.test.ts",
+        "apps/player/src/facility/facilityCameraBounds.ts",
+        "apps/player/src/session/facilityCameraPreference.test.ts",
+        "apps/player/src/session/facilityCameraPreference.ts",
+        "apps/player/src/session/localCampaignRepository.test.ts",
+        "apps/player/src/session/prototypeStorage.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/usePrototypeSession.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/src/facility/defaultCamera.test.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Companions worker handoff — item 9 (2026-10-08)",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/types.ts",
+        "apps/player/src/session/viewModels.ts",
+        "docs/execplans/owner-requests-20261008.md",
+        "packages/balance-config/src/approved-room-layouts.test.ts",
+        "packages/balance-config/src/approved-room-layouts.ts",
+        "packages/balance-config/src/schema.ts",
+        "packages/game-domain/src/persistence.ts",
+        "packages/game-domain/src/procedure-companions.ts",
+        "packages/game-domain/src/reducer.ts",
+        "packages/game-domain/src/retail-operations.ts",
+        "packages/game-domain/src/retired-service-history.ts",
+        "packages/game-domain/src/spatial.ts",
+        "packages/game-domain/src/types.ts",
+        "packages/game-domain/tests/approved-room-geometry-migration.test.ts",
+        "packages/game-domain/tests/companions.test.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/founder-seats-and-reseating.test.ts",
+        "packages/game-domain/tests/level-two-endoscopy.test.ts",
+        "packages/game-domain/tests/owner-passable-door-slots.test.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts",
+        "packages/game-domain/tests/retail-operations.test.ts",
+        "packages/game-domain/tests/retired-service-history.test.ts",
+        "packages/game-domain/tests/waiting-destination-routing.test.ts",
+        "tests/e2e/helpers.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Tutorial worker handoff - Item 6 (2026-10-08)",
+      "selectedTargetPaths": [
+        "apps/player/src/App.tsx",
+        "apps/player/src/session/alertViewModels.test.ts",
+        "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+        "apps/player/src/session/dailyRoutineTutorialPause.test.ts",
+        "apps/player/src/session/localCampaignRepository.test.ts",
+        "apps/player/src/session/prototypeStorage.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/tutorialGuidance.test.ts",
+        "apps/player/src/session/tutorialTipsIntegration.test.ts",
+        "apps/player/src/session/tutorialViewModels.test.ts",
+        "apps/player/src/session/tutorialViewModels.ts",
+        "apps/player/src/styles/global.css",
+        "apps/player/src/ui/HelpDialog.test.tsx",
+        "apps/player/src/ui/OpeningSequence.test.tsx",
+        "apps/player/src/ui/TutorialCoach.tsx",
+        "apps/player/src/ui/visualComponents.test.tsx",
+        "packages/balance-config/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/guidance-topics.ts",
+        "packages/game-domain/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/service-operations.ts",
+        "packages/game-domain/tests/alert-cadence.test.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/guidance-tip-predicates.test.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts",
+        "packages/game-domain/tests/tutorial-guidance-integration.test.ts",
+        "tests/e2e/fresh-campaign-examination-room.spec.ts",
+        "tests/e2e/front-desk-visual.spec.ts",
+        "tests/e2e/helpers.ts",
+        "tests/e2e/hud-sidebar-tutorial.spec.ts",
+        "tests/e2e/playthrough-batch.spec.ts",
+        "tests/e2e/prototype.spec.ts",
+        "tests/e2e/question-review-flags.spec.ts",
+        "tests/e2e/tutorial-completion.spec.ts",
+        "tests/e2e/tutorial-daily-routines.spec.ts",
+        "tests/e2e/tutorial-graduation.spec.ts",
+        "tests/e2e/tutorial-positioning.spec.ts",
+        "tests/e2e/ui-density.spec.ts",
+        "tests/e2e/visual-ui.spec.ts",
+        "tests/e2e/workspace-splitter.spec.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/src/session/alertsEventsViewModel.test.ts",
+        "apps/player/src/ui/tutorialPositioning.test.ts",
+        "packages/game-domain/tests/alert-humor.test.ts",
+        "packages/game-domain/tests/facility-alert-conditions.test.ts",
+        "packages/game-domain/tests/guidance-tips.test.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Peri-op companion chair rendering",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/FacilityScene.ts",
+        "apps/player/src/facility/approvedRoomPresentation.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.ts",
+        "apps/player/src/facility/characterPauseArrival.test.ts",
+        "apps/player/src/facility/furnitureSeatLayering.test.ts",
+        "apps/player/src/facility/periopCompanionPresentation.test.ts",
+        "apps/player/src/facility/periopCompanionPresentation.ts",
+        "apps/player/src/facility/types.ts",
+        "apps/player/src/session/economyViewModels.test.ts",
+        "apps/player/src/session/periopNurseAttentionPresentation.test.tsx",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "packages/game-domain/tests/companions.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Peri-op nurse attention queue",
+      "selectedTargetPaths": [
+        "apps/player/src/session/periopNurseAttentionPresentation.test.tsx",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "apps/player/src/ui/types.ts",
+        "packages/balance-config/src/index.ts",
+        "packages/balance-config/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/service-operations.ts",
+        "packages/game-domain/tests/companions.test.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/employee-training.test.ts",
+        "packages/game-domain/tests/periop-nurse-attention.test.ts",
+        "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Peri-op nurse queue: owner feedback fix",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.ts",
+        "apps/player/src/session/periopNurseAttentionPresentation.test.tsx",
+        "apps/player/src/session/periopNurseOwnerFeedback.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "packages/game-domain/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/staff.ts",
+        "packages/game-domain/src/types.ts",
+        "packages/game-domain/tests/periop-nurse-attention.test.ts",
+        "packages/game-domain/tests/periop-nurse-flow-fixture.ts",
+        "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Intermittent domain test failures",
+      "selectedTargetPaths": [
+        "docs/execplans/exterior-frontage-b-20261008.md",
+        "packages/game-domain/tests/periop-nurse-flow-fixture.ts",
+        "packages/game-domain/vitest.config.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Compact Goals and Alerts",
+      "selectedTargetPaths": [
+        "apps/player/src/session/level3GoalsViewModels.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/styles/clinicPresentation.test.ts",
+        "apps/player/src/styles/global.css",
+        "apps/player/src/ui/EventMessageBoard.test.tsx",
+        "apps/player/src/ui/GoalsPanel.test.tsx",
+        "apps/player/src/ui/ManagementPanel.test.tsx",
+        "apps/player/src/ui/NeedsYouTray.test.tsx",
+        "apps/player/src/ui/goalsPanel.css"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/src/facility/ClinicMapPins.test.tsx",
+        "apps/player/src/session/clinicFeedPresentation.test.ts",
+        "apps/player/src/session/guidanceTipsView.test.tsx"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Second radiologist idle: fix",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.test.ts",
+        "apps/player/src/session/radiologistReadIncomeViewModels.test.tsx",
+        "apps/player/src/session/readingRoomRadiologists.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/ui/ServiceIncomePanel.test.tsx",
+        "packages/game-domain/src/diagnostic-timing.ts",
+        "packages/game-domain/src/level-three-support.ts",
+        "packages/game-domain/src/radiologist-read-income.ts",
+        "packages/game-domain/src/staff.ts",
+        "packages/game-domain/tests/diagnostic-timing-persistence.test.ts",
+        "packages/game-domain/tests/diagnostic-timing.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/level-three-support.test.ts",
+        "packages/game-domain/tests/periop-nurse-real-visit.test.ts",
+        "packages/game-domain/tests/radiologist-read-income.test.ts",
+        "packages/game-domain/tests/reading-radiologist-gameplay.test.ts",
+        "packages/game-domain/tests/room-upgrade-reading.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "packages/game-domain/tests/reading-stations.test.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Backless rolling stools",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/FacilityScene.ts",
+        "apps/player/src/facility/approvedRoomPresentation.test.ts",
+        "apps/player/src/facility/approvedRoomPresentation.ts",
+        "apps/player/src/facility/approvedRoomRenderer.test.ts",
+        "apps/player/src/facility/approvedSideChairLayers.test.ts",
+        "apps/player/src/facility/backlessRollingStools.test.ts",
+        "apps/player/src/facility/backlessRollingStools.ts",
+        "apps/player/src/facility/characterPauseArrival.test.ts",
+        "apps/player/src/facility/furnitureSeatLayering.test.ts",
+        "apps/player/src/facility/periopCompanionPresentation.test.ts",
+        "apps/player/src/facility/roomTouchups.test.ts",
+        "apps/player/src/facility/staffIdleSupports.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Peri-op nurse queue: second fix",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.test.ts",
+        "apps/player/src/session/characterActivityPresentation.ts",
+        "apps/player/src/session/periopNurseAttentionPresentation.test.tsx",
+        "apps/player/src/session/periopNurseOwnerFeedback.test.ts",
+        "apps/player/src/session/periopNurseRealVisit.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "packages/game-domain/src/staff.ts",
+        "packages/game-domain/tests/periop-nurse-attention.test.ts",
+        "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts",
+        "packages/game-domain/tests/periop-nurse-real-visit-fixture.ts",
+        "packages/game-domain/tests/periop-nurse-real-visit.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+      "selectedTargetPaths": [
+        "apps/player/src/facility/approvedRoomPresentation.test.ts",
+        "apps/player/src/facility/approvedRoomPresentation.ts",
+        "apps/player/src/facility/approvedRoomRenderer.test.ts",
+        "apps/player/src/facility/types.ts",
+        "apps/player/src/session/level3ControlsViewModels.test.ts",
+        "apps/player/src/session/proceduralStaffingPresentation.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "packages/balance-config/src/approved-room-layouts.ts",
+        "packages/balance-config/src/index.ts",
+        "packages/balance-config/src/procedural-staffing.test.ts",
+        "packages/balance-config/src/procedural-staffing.ts",
+        "packages/game-domain/src/diagnostic-timing.ts",
+        "packages/game-domain/src/index.ts",
+        "packages/game-domain/src/procedural-staffing.ts",
+        "packages/game-domain/src/selectors.ts",
+        "packages/game-domain/src/service-operations.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/diagnostic-timing.test.ts",
+        "packages/game-domain/tests/level-two-endoscopy.test.ts",
+        "packages/game-domain/tests/procedural-staffing-fixture.ts",
+        "packages/game-domain/tests/procedural-staffing.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts",
+        "packages/game-domain/tests/service-procedure-operations.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Campaign performance investigation and safe hotspot fixes - Sol worker handoff (2026-10-08)",
+      "selectedTargetPaths": [
+        "apps/player/src/session/buildViewModels.test.ts",
+        "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+        "apps/player/src/session/employeeTrainingViewModels.test.ts",
+        "apps/player/src/session/managementViewModels.test.ts",
+        "apps/player/src/session/newestServiceIncomeReceipts.test.ts",
+        "apps/player/src/session/numberFormattingCompatibility.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "apps/player/src/session/viewModels.ts",
+        "docs/execplans/performance-20261008.md",
+        "packages/game-domain/src/diagnostic-timing.ts",
+        "packages/game-domain/src/guidance-tips.ts",
+        "packages/game-domain/tests/diagnostic-projection-isolation.test.ts",
+        "packages/game-domain/tests/diagnostic-timing.test.ts",
+        "packages/game-domain/tests/guidance-evaluation-isolation.test.ts",
+        "packages/game-domain/tests/room-upgrade-reading.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/src/session/alertsEventsViewModel.test.ts",
+        "packages/game-domain/tests/guidance-tips.test.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Staff dispatch fairness across roles",
+      "selectedTargetPaths": [
+        "apps/player/src/session/economyViewModels.test.ts",
+        "apps/player/src/session/patientMovementViewModels.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "packages/game-domain/src/staff-dispatch.ts",
+        "packages/game-domain/tests/diagnostic-orders.test.ts",
+        "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+        "packages/game-domain/tests/diagnostic-timing.test.ts",
+        "packages/game-domain/tests/procedural-staffing.test.ts",
+        "packages/game-domain/tests/reading-radiologist-gameplay.test.ts",
+        "packages/game-domain/tests/retail-operations.test.ts",
+        "packages/game-domain/tests/room-capacity-sales.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts",
+        "packages/game-domain/tests/staff-dispatch-fairness.test.ts",
+        "packages/game-domain/tests/ultrasound-first-imaging.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [
+        "apps/player/src/ui/StaffPanel.test.tsx",
+        "packages/game-domain/tests/facility-automation.test.ts",
+        "packages/game-domain/tests/receptionist-water-refill.test.ts"
+      ],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    },
+    {
+      "heading": "Peri-op nurse queue: legacy coverage release (owner save)",
+      "selectedTargetPaths": [
+        "apps/player/src/session/characterActivityPresentation.ts",
+        "apps/player/src/session/periopNurseOwnerSave.test.ts",
+        "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "packages/game-domain/src/legacy-periop-coverage.ts",
+        "packages/game-domain/src/periop-nurse-attention.ts",
+        "packages/game-domain/src/persistence.ts",
+        "packages/game-domain/src/procedure-companions.ts",
+        "packages/game-domain/src/reducer.ts",
+        "packages/game-domain/src/service-operations.ts",
+        "packages/game-domain/tests/companions.test.ts",
+        "packages/game-domain/tests/employee-training-benefits.test.ts",
+        "packages/game-domain/tests/employee-training.test.ts",
+        "packages/game-domain/tests/level-two-endoscopy.test.ts",
+        "packages/game-domain/tests/periop-nurse-attention.test.ts",
+        "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts",
+        "packages/game-domain/tests/periop-nurse-owner-save-fixture.ts",
+        "packages/game-domain/tests/periop-nurse-owner-save.test.ts",
+        "packages/game-domain/tests/periop-nurse-real-visit.test.ts",
+        "packages/game-domain/tests/periop-stuck-owner-save-fixture.ts",
+        "packages/game-domain/tests/periop-stuck-owner-save.test.ts",
+        "packages/game-domain/tests/retail-operations.test.ts",
+        "packages/game-domain/tests/service-operations.test.ts"
+      ],
+      "earlierUnchangedTargetPaths": [],
+      "handoffRecordRecovered": "docs/execplans/owner-requests-20261008.md",
+      "interpretation": "Named source targets recovered or already preserved"
+    }
+  ],
+  "requiredRuntimeTargets": {
+    "first Canvas gap / Alerts and camera": [
+      "apps/player/src/facility/FacilityCanvas.tsx"
+    ],
+    "seated layering": [
+      "apps/player/src/facility/approvedSideChairLayers.ts",
+      "apps/player/src/facility/FacilityScene.ts"
+    ],
+    "chart / goals chip": [
+      "apps/player/src/ui/ChartPanel.tsx",
+      "apps/player/src/ui/GoalsPanel.tsx",
+      "apps/player/src/ui/goalsPanel.css"
+    ],
+    "tutorial": [
+      "apps/player/src/session/tutorialViewModels.ts",
+      "apps/player/src/ui/TutorialCoach.tsx",
+      "packages/game-domain/src/guidance-topics.ts"
+    ],
+    "training": [
+      "packages/game-domain/src/employee-training.ts",
+      "packages/game-domain/tests/employee-training-reachability.test.ts"
+    ],
+    "companions / chairs": [
+      "packages/game-domain/src/procedure-companions.ts",
+      "apps/player/src/facility/periopCompanionPresentation.ts"
+    ],
+    "nurse queue / legacy fixes": [
+      "packages/game-domain/src/periop-nurse-attention.ts",
+      "packages/game-domain/src/legacy-periop-coverage.ts"
+    ],
+    "radiologist income / second reader": [
+      "packages/game-domain/src/radiologist-read-income.ts",
+      "packages/game-domain/src/diagnostic-timing.ts"
+    ],
+    "Severance preference": [
+      "packages/game-domain/src/appearance.ts",
+      "packages/game-domain/src/characterStillCatalog.ts"
+    ],
+    "camera": [
+      "apps/player/src/session/facilityCameraPreference.ts",
+      "apps/player/src/facility/facilityCameraBounds.ts"
+    ],
+    "compact panels": [
+      "apps/player/src/ui/goalsPanel.css",
+      "apps/player/src/styles/global.css"
+    ],
+    "backless stools": [
+      "apps/player/src/facility/backlessRollingStools.ts"
+    ],
+    "procedural staffing": [
+      "packages/game-domain/src/procedural-staffing.ts",
+      "packages/balance-config/src/procedural-staffing.ts"
+    ],
+    "dispatch fairness": [
+      "packages/game-domain/src/staff-dispatch.ts",
+      "packages/game-domain/tests/staff-dispatch-fairness.test.ts"
+    ],
+    "stuck-flow watchdog": [
+      "packages/game-domain/src/service-operations.ts",
+      "packages/game-domain/tests/periop-stuck-owner-save.test.ts"
+    ],
+    "performance": [
+      "packages/game-domain/src/guidance-tips.ts",
+      "packages/game-domain/tests/diagnostic-projection-isolation.test.ts",
+      "apps/player/src/session/numberFormattingCompatibility.test.ts"
+    ],
+    "domain Vitest": [
+      "packages/game-domain/vitest.config.ts"
+    ],
+    "frozen landscape": [
+      "apps/player/src/facility/data/exterior-landscape-v2.json"
+    ]
+  },
+  "roomAndExteriorTrees": "Source-tree selection is enumerated per file with approval/status labels in selection.json.",
+  "unchangedAlertsAndFontRecordsAlreadyPreserved": [
+    "docs/execplans/alerts-events-revamp-20261007.md",
+    "docs/execplans/ui-font-system-20261007.md"
+  ],
+  "clinicalRecordsRemainDraft": "clinical-review-audit.json",
+  "activeEconomyAuditExcluded": true
+}

@@ -1,0 +1,73 @@
+{
+  "checked": "2026-10-07",
+  "revision": "owner-north-tech-bore-center-foreground-patient",
+  "status": "revised_candidate_complete_owner_review_pending",
+  "implementedDirectly": true,
+  "worker": null,
+  "ownedRecordCount": 339,
+  "ownedRecordMismatchCount": 0,
+  "originalAndPromptCount": 21,
+  "originalAndPromptMismatchCount": 0,
+  "finalReferences": [
+    {
+      "path": "proof/index.html",
+      "sha256": "129CE8AD53AA051AEFB0241508DD5BC45CD2F734A9AB2A061D038CD56162774A"
+    },
+    {
+      "path": "proof/proof-manifest.json",
+      "sha256": "F8DDE3C7761C81E93304F6EC1248C7264252ADCBAF04C749591862DCE47444F3"
+    },
+    {
+      "path": "assets/prepared/metadata.json",
+      "sha256": "37DA44C9B0DB86E26E8FF5FD1BB2BF4BEE3963A61ADA290BB5122BB831846F0C"
+    },
+    {
+      "path": "proof/evidence/mri-scan-seated-west.png",
+      "sha256": "469A00334839B40F70C55175442598DADE32F0BD65190329337C309F66C5E8FA"
+    },
+    {
+      "path": "proof/evidence/validation-report.json",
+      "sha256": "F1B9AFACCC36AA2D528C5E9EC1609884544946FAD77EA4876CD6EC1DDD1BC796"
+    }
+  ],
+  "validation": {
+    "command": "node tools/room-design/level-4/mri/proof/validate.cjs",
+    "exitCode": 0,
+    "checks": 95,
+    "doorBackingStates": 272,
+    "routes": 2048,
+    "walkingBaseSamples": 22304,
+    "standingApproachSamples": 164,
+    "browserErrors": 0
+  },
+  "capturesInspected": [
+    "mri-scan-seated-west.png",
+    "mri-closed-backed.png",
+    "mri-320.png"
+  ],
+  "northTech": {
+    "facing": "north",
+    "sourcePreserved": true,
+    "southOfDesk": true,
+    "sameDeskAxis": true
+  },
+  "bedEntry": {
+    "clipWorldX": 2.5299418604651165,
+    "boreWorldX": 2.5299418604651165,
+    "bedLeft": 239.8,
+    "patientHipX": 261.6,
+    "patientFrontFootX": 218.0042129745255
+  },
+  "seatedPainter": {
+    "table": 2.980390086093987,
+    "patient": 2.9904900860939874,
+    "gantry": 2.970390086093987,
+    "patientInFrontOfBoth": true
+  },
+  "reproducibleFiles": 11,
+  "readingRoomSha256": "D574AA0FC11292D8A2F8A92A3BA082C8755B00067A99066FDAD3BA30C72EB1BB",
+  "runtimeIntegrated": false,
+  "githubBackup": false,
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "ownerGameOrigin": "http://127.0.0.1:4173"
+}

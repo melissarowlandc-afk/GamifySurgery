@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "nativeFrameMultiplier": 2,
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "minimumClearancePixels": 4,
+  "packingMarginPixels": 6,
+  "alphaCleanupThreshold": 8,
+  "opaqueThreshold": 160,
+  "assets": {
+    "peds-table": {
+      "assetId": "design:pe:table",
+      "recordIds": [
+        "pedsTable"
+      ],
+      "canvas": [
+        374,
+        826
+      ],
+      "widthTiles": 0.78,
+      "heightTiles": 1.7226737967914438,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          0.49,
+          2.05
+        ]
+      ]
+    },
+    "scale-counter": {
+      "assetId": "design:pe:scale-counter",
+      "recordIds": [
+        "scaleCounter"
+      ],
+      "canvas": [
+        442,
+        490
+      ],
+      "widthTiles": 0.92,
+      "heightTiles": 1.0199095022624434,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          2.47,
+          0.3
+        ]
+      ]
+    },
+    "growth-chart": {
+      "assetId": "design:pe:growth-chart",
+      "recordIds": [
+        "growthChart"
+      ],
+      "canvas": [
+        172,
+        374
+      ],
+      "widthTiles": 0.36,
+      "heightTiles": 0.7827906976744186,
+      "anchorKind": "wall",
+      "top": [
+        1.45,
+        -0.8
+      ]
+    },
+    "animal-print": {
+      "assetId": "design:pe:animal-print",
+      "recordIds": [
+        "animalPrint"
+      ],
+      "canvas": [
+        164,
+        172
+      ],
+      "widthTiles": 0.34,
+      "heightTiles": 0.3565853658536586,
+      "anchorKind": "wall",
+      "top": [
+        0.55,
+        -0.66
+      ]
+    },
+    "toy-bin": {
+      "assetId": "design:pe:toy-bin",
+      "recordIds": [
+        "toyBin"
+      ],
+      "canvas": [
+        212,
+        202
+      ],
+      "widthTiles": 0.44,
+      "heightTiles": 0.4192452830188679,
+      "anchorKind": "floor",
+      "ground": [
+        [
+          0.34,
+          2.86
+        ]
+      ]
+    }
+  },
+  "notes": [
+    "Stand-in canvas dimensions doubled; source aspect preserved without stretching or upscaling. Exact source-world placements and footprints frozen.",
+    "Floor anchors use actual final opaque alpha; wall anchors use actual alpha top. No semantic painting in preparation."
+  ]
+}

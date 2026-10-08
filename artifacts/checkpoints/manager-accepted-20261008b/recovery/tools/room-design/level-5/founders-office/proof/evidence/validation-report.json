@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    4,
+    4
+  ],
+  "states": 288,
+  "routes": 1536,
+  "radiusClearSamples": 910752,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 16,
+  "backingSections": 4,
+  "arbitraryDoorCombinationProof": "Each single-door route is safe with every other optional object present; additional doors only remove obstacles. Backing changes no floor obstacle.",
+  "monotonicChecks": 256,
+  "assets": 4,
+  "assetChecks": [
+    {
+      "id": "founder-desk",
+      "canvas": [
+        720,
+        432
+      ],
+      "sha256": "68bc45eb77842516b88aa423c0c8d8df1f6b5331656a3dbbe4f5ad4a7bcdf68c",
+      "alphaEdge": 0,
+      "transparentPixels": 186178,
+      "anchor": [
+        360,
+        426
+      ]
+    },
+    {
+      "id": "office-bookcase",
+      "canvas": [
+        384,
+        600
+      ],
+      "sha256": "f615bfa2df0a4f230db99ea033858b3144806099a4e5167db32666cf93e9247c",
+      "alphaEdge": 0,
+      "transparentPixels": 64851,
+      "anchor": [
+        192,
+        592
+      ]
+    },
+    {
+      "id": "office-plant",
+      "canvas": [
+        312,
+        456
+      ],
+      "sha256": "2bf394b221bba77df7b52b629e9d030d1e260d5030c3f8dbd1f8c38a2f0db8f0",
+      "alphaEdge": 0,
+      "transparentPixels": 79232,
+      "anchor": [
+        156,
+        446
+      ]
+    },
+    {
+      "id": "office-print",
+      "canvas": [
+        312,
+        202
+      ],
+      "sha256": "56dc8f33c34ea1f82b2bfd7f3cf98d285d22c6d133221c0dbd30ad7c1ef59ebb",
+      "alphaEdge": 0,
+      "transparentPixels": 22538,
+      "anchor": [
+        156,
+        60
+      ]
+    }
+  ],
+  "worktopRisePixels": 79.84107579462102,
+  "reusedLayers": 4,
+  "layers": [
+    {
+      "id": "founderChair",
+      "opaqueForegroundOverlap": 629,
+      "order": "chair → real adult → front mask"
+    },
+    {
+      "id": "visitorChair",
+      "opaqueForegroundOverlap": 695,
+      "order": "chair → real adult → front mask"
+    }
+  ],
+  "realIdentities": [
+    "founder.01",
+    "patient.adult.007"
+  ],
+  "sourceHashes": 25,
+  "concurrentReferenceChanges": [
+    {
+      "path": "tools/room-design/level-4/wound-ostomy/proof/lab.js",
+      "intakeSha256": "c22c9e83a612181309f5b5519fc9e9ea817539af780ba319014645751026b827",
+      "currentSha256": "d0122d4d6c909de72cbf4679acd1ce99954651100a8c3ab5a541117b98f09929"
+    }
+  ],
+  "textFiles": 54,
+  "warnings": [],
+  "browserQA": "pending manager",
+  "sourceManifestSha256": "733b5d03be84b6906f5d53746f94f9043ede75a24007ae4ad44e89280cbd35a0"
+}

@@ -1,0 +1,640 @@
+{
+  "status": "PASS",
+  "kind": "Node decoded-pixel presentation and actual bulk-handler regression",
+  "checks": [
+    {
+      "pass": true,
+      "name": "Original table width/height retained"
+    },
+    {
+      "pass": true,
+      "name": "Pediatric scale matches parent source-pixel scale"
+    },
+    {
+      "pass": true,
+      "name": "Actual pediatric source size/category kidWest",
+      "details": {
+        "id": "level3-roster-v2.022",
+        "height": 184,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Age-appropriate seat kidWest",
+      "details": {
+        "age": 5,
+        "type": "kid-stool"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Uniform common pediatric scale kidWest"
+    },
+    {
+      "pass": true,
+      "name": "Contact column inside inspected posterior region kidWest"
+    },
+    {
+      "pass": true,
+      "name": "Measured posterior alpha edge at contact column kidWest",
+      "details": {
+        "posteriorBottom": 254,
+        "contact": [
+          70,
+          255
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual hip/furniture surface contact kidWest",
+      "details": {
+        "hip": [
+          178.8,
+          292.42463474025976
+        ],
+        "seatSurface": [
+          178.8,
+          292.42463474025976
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Natural child foot clearance kidWest",
+      "details": {
+        "footGapPixels": 4.805834790209815
+      }
+    },
+    {
+      "pass": true,
+      "name": "Hand rests within table surface kidWest",
+      "details": {
+        "hand": [
+          204.88881743256744,
+          275.26093906093905
+        ],
+        "tableFrontY": 279.8517412935323,
+        "frontToHand": 4.590802232593262
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual pediatric source size/category kidEast",
+      "details": {
+        "id": "level3-roster-v2.025",
+        "height": 211,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Age-appropriate seat kidEast",
+      "details": {
+        "age": 9,
+        "type": "kid-stool"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Uniform common pediatric scale kidEast"
+    },
+    {
+      "pass": true,
+      "name": "Contact column inside inspected posterior region kidEast"
+    },
+    {
+      "pass": true,
+      "name": "Measured posterior alpha edge at contact column kidEast",
+      "details": {
+        "posteriorBottom": 251,
+        "contact": [
+          90,
+          252
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual hip/furniture surface contact kidEast",
+      "details": {
+        "hip": [
+          301.2,
+          292.42463474025976
+        ],
+        "seatSurface": [
+          301.2,
+          292.42463474025976
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Natural child foot clearance kidEast",
+      "details": {
+        "footGapPixels": 3.4327391358641535
+      }
+    },
+    {
+      "pass": true,
+      "name": "Hand rests within table surface kidEast",
+      "details": {
+        "hand": [
+          274.4246347402597,
+          273.88784340659345
+        ],
+        "tableFrontY": 279.8517412935323,
+        "frontToHand": 5.963897886938867
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual pediatric source size/category olderChildChair",
+      "details": {
+        "id": "level3-roster-v2.029",
+        "height": 234,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Age-appropriate seat olderChildChair",
+      "details": {
+        "age": 14,
+        "type": "ordinary-chair"
+      }
+    },
+    {
+      "pass": true,
+      "name": "Uniform common pediatric scale olderChildChair"
+    },
+    {
+      "pass": true,
+      "name": "Contact column inside inspected posterior region olderChildChair"
+    },
+    {
+      "pass": true,
+      "name": "Measured posterior alpha edge at contact column olderChildChair",
+      "details": {
+        "posteriorBottom": 242,
+        "contact": [
+          70,
+          243
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual hip/furniture surface contact olderChildChair",
+      "details": {
+        "hip": [
+          63.523809523809526,
+          189.8095238095238
+        ],
+        "seatSurface": [
+          63.523809523809526,
+          189.8095238095238
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Natural child foot clearance olderChildChair",
+      "details": {
+        "footGapPixels": 13.982371794871824
+      }
+    },
+    {
+      "pass": true,
+      "name": "Toy block 1 fully readable between children",
+      "details": {
+        "pixels": 1077,
+        "occluded": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Toy block 2 fully readable between children",
+      "details": {
+        "pixels": 1057,
+        "occluded": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Toy block 3 fully readable between children",
+      "details": {
+        "pixels": 1113,
+        "occluded": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Entire wall item visible with seated parents animalPrints",
+      "details": {
+        "pixels": 49119,
+        "occluded": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Wall item owns actual segment animalPrints"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/N1"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/N2"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/N3"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/N4"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/S1"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/S2"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/S3"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/S4"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/WA"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/WB"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/WC"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/WD"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/EA"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/EB"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/EC"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility animalPrints/ED"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility animalPrints/N1"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility animalPrints/N2"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility animalPrints/N3"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility animalPrints/N4"
+    },
+    {
+      "pass": true,
+      "name": "Entire wall item visible with seated parents clock",
+      "details": {
+        "pixels": 9787,
+        "occluded": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Wall item owns actual segment clock"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/N1"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/N2"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/N3"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/N4"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/S1"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/S2"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/S3"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/S4"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/WA"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/WB"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/WC"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/WD"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/EA"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/EB"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/EC"
+    },
+    {
+      "pass": true,
+      "name": "Door visibility clock/ED"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility clock/N1"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility clock/N2"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility clock/N3"
+    },
+    {
+      "pass": true,
+      "name": "Backing visibility clock/N4"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists allDoors"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control allDoors produces 16 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists allDoors"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control allDoors produces 16 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists closeDoors"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control closeDoors produces 0 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists closeDoors"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control closeDoors produces 0 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists allBacked"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control allBacked produces 4 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists allBacked"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control allBacked produces 4 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists clearBacked"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control clearBacked produces 0 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk handler exists clearBacked"
+    },
+    {
+      "pass": true,
+      "name": "Bulk control clearBacked produces 0 segments"
+    },
+    {
+      "pass": true,
+      "name": "Bulk controls refresh chips and redraw"
+    }
+  ],
+  "contacts": [
+    {
+      "support": "kidWest",
+      "character": "level3-roster-v2.022",
+      "age": 5,
+      "seatType": "kid-stool",
+      "direction": "east",
+      "standingSourceHeight": 184,
+      "sourceScale": 0.6865478271728273,
+      "registrySeatContactY": 253,
+      "measuredSeatContactSource": [
+        70,
+        255
+      ],
+      "measuredSourceFloorEdge": 287,
+      "hipWorld": [
+        1.49,
+        2.4368719561688312
+      ],
+      "floorAnchorWorldY": 2.619951376748252,
+      "footGapProofPixels": 4.805834790209815,
+      "seatSurfaceWorld": [
+        1.49,
+        2.4368719561688312
+      ],
+      "handWorld": [
+        1.7074068119380619,
+        2.293841158841159
+      ],
+      "tableFrontToHandProofPixels": 4.590802232593262
+    },
+    {
+      "support": "kidEast",
+      "character": "level3-roster-v2.025",
+      "age": 9,
+      "seatType": "kid-stool",
+      "direction": "west",
+      "standingSourceHeight": 211,
+      "sourceScale": 0.6865478271728273,
+      "registrySeatContactY": 246,
+      "measuredSeatContactSource": [
+        90,
+        252
+      ],
+      "measuredSourceFloorEdge": 286,
+      "hipWorld": [
+        2.51,
+        2.4368719561688312
+      ],
+      "floorAnchorWorldY": 2.6313938405344657,
+      "footGapProofPixels": 3.4327391358641535,
+      "seatSurfaceWorld": [
+        2.51,
+        2.4368719561688312
+      ],
+      "handWorld": [
+        2.286871956168831,
+        2.2823986950549453
+      ],
+      "tableFrontToHandProofPixels": 5.963897886938867
+    },
+    {
+      "support": "olderChildChair",
+      "character": "level3-roster-v2.029",
+      "age": 14,
+      "seatType": "ordinary-chair",
+      "direction": "east",
+      "standingSourceHeight": 234,
+      "sourceScale": 0.6865478271728273,
+      "registrySeatContactY": 244,
+      "measuredSeatContactSource": [
+        70,
+        243
+      ],
+      "measuredSourceFloorEdge": 287,
+      "hipWorld": [
+        0.5293650793650794,
+        1.5817460317460317
+      ],
+      "floorAnchorWorldY": 1.8334802350427348,
+      "footGapProofPixels": 13.982371794871824,
+      "seatSurfaceWorld": [
+        0.5293650793650794,
+        1.5817460317460317
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "block": 1,
+      "pixels": 1077,
+      "occluded": 0
+    },
+    {
+      "block": 2,
+      "pixels": 1057,
+      "occluded": 0
+    },
+    {
+      "block": 3,
+      "pixels": 1113,
+      "occluded": 0
+    }
+  ],
+  "wall": [
+    {
+      "id": "animalPrints",
+      "segment": "N3",
+      "opaquePixels": 49119,
+      "occludedByParentPixels": 0
+    },
+    {
+      "id": "clock",
+      "segment": "N4",
+      "opaquePixels": 9787,
+      "occludedByParentPixels": 0
+    }
+  ],
+  "controls": [
+    {
+      "id": "allDoors",
+      "count": 16
+    },
+    {
+      "id": "allDoors",
+      "count": 16
+    },
+    {
+      "id": "closeDoors",
+      "count": 0
+    },
+    {
+      "id": "closeDoors",
+      "count": 0
+    },
+    {
+      "id": "allBacked",
+      "count": 4
+    },
+    {
+      "id": "allBacked",
+      "count": 4
+    },
+    {
+      "id": "clearBacked",
+      "count": 0
+    },
+    {
+      "id": "clearBacked",
+      "count": 0
+    }
+  ],
+  "draws": 8,
+  "refreshes": 9,
+  "browserValidation": "pending_manager_rerun"
+}

@@ -1,0 +1,164 @@
+--- a/apps/player/src/ui/chartSheet.css
++++ b/apps/player/src/ui/chartSheet.css
+@@ -1,7 +1,7 @@
+ /*
+  * Patient chart sheet (owner-approved redesign, 2026-10-07).
+  * The chart floats over the play area at its content height: ChartPanel's
+- * placement hook sets left/width/bottom/max-height from the desk. Every rule is
++ * placement hook sets left/width/top-or-bottom/max-height from the desk. Every rule is
+  * scoped to .chart-sheet so the legacy chart rules in global.css (still used by
+  * the employee discussion panel) never reach it.
+  */
+@@ -178,6 +178,7 @@
+   position: sticky;
+   top: 0;
+   display: flex;
++  min-width: 0;
+   align-self: start;
+   flex-direction: column;
+   gap: 12px;
+@@ -222,6 +223,87 @@
+   font: 700 11px/1.3 var(--cs-mono);
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
++}
++
++.chart-sheet .cs-exhibit {
++  display: flex;
++  min-width: 0;
++  margin: 0;
++  padding: 10px 12px;
++  flex-direction: column;
++  gap: 8px;
++  border: 2px solid var(--shade-3);
++  background: var(--cream);
++  font: 15px/1.5 var(--cs-read);
++  overflow-wrap: anywhere;
++}
++
++.chart-sheet .cs-exhibit figcaption {
++  display: flex;
++  flex-wrap: wrap;
++  align-items: baseline;
++  gap: 4px 8px;
++}
++
++.chart-sheet .cs-exhibit-step {
++  color: var(--ink-soft);
++  font: 12px/1.3 var(--cs-mono);
++}
++
++.chart-sheet .cs-exhibit h4,
++.chart-sheet .cs-exhibit caption {
++  margin: 0;
++  font: 700 15px/1.4 var(--cs-read);
++  text-align: left;
++}
++
++.chart-sheet .cs-exhibit-table {
++  max-width: 100%;
++  overflow-x: auto;
++}
++
++.chart-sheet .cs-exhibit-table:focus-visible {
++  outline: 3px solid var(--focus);
++  outline-offset: 2px;
++}
++
++.chart-sheet .cs-exhibit table {
++  width: 100%;
++  min-width: 18rem;
++  border-collapse: collapse;
++  font-variant-numeric: tabular-nums;
++}
++
++.chart-sheet .cs-exhibit caption {
++  padding-bottom: 6px;
++}
++
++.chart-sheet .cs-exhibit th,
++.chart-sheet .cs-exhibit td {
++  padding: 5px 7px;
++  border: 1px solid var(--shade-3);
++  text-align: left;
++}
++
++.chart-sheet .cs-exhibit th {
++  background: var(--panel);
++}
++
++.chart-sheet .cs-exhibit dl,
++.chart-sheet .cs-exhibit dd {
++  margin: 0;
++}
++
++.chart-sheet .cs-exhibit dl > div {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
++  gap: 6px 12px;
++  padding: 5px 0;
++  border-bottom: 1px dotted var(--shade-3);
++}
++
++.chart-sheet .cs-exhibit dt {
++  font-weight: 700;
+ }
+ 
+ .chart-sheet .cs-decisions {
+@@ -383,7 +465,7 @@
+ 
+ .chart-sheet .cs-answer-row {
+   display: flex;
+-  align-items: center;
++  flex-direction: column;
+   gap: 10px;
+   padding: 8px 12px;
+   border: 2px solid var(--shade-3);
+@@ -391,6 +473,22 @@
+   font: 15px/1.35 var(--cs-read);
+ }
+ 
++.chart-sheet .cs-answer-row-heading {
++  display: flex;
++  align-items: center;
++  gap: 10px;
++}
++
++.chart-sheet .cs-choice-rationale summary {
++  cursor: pointer;
++  font: 12px/1.4 var(--cs-mono);
++}
++
++.chart-sheet .cs-choice-rationale p {
++  margin-top: 6px;
++  font: 15px/1.5 var(--cs-read);
++}
++
+ .chart-sheet .cs-answer-row.is-picked.is-correct {
+   border-color: var(--cs-good);
+   background: var(--cs-good-bg);
+@@ -411,7 +509,7 @@
+ }
+ 
+ .chart-sheet .cs-answer-row.is-other {
+-  opacity: 0.6;
++  border-style: dotted;
+ }
+ 
+ .chart-sheet .cs-tag {
+@@ -509,6 +607,15 @@
+ .chart-sheet .cs-feedback p.cs-next {
+   color: var(--ink-soft);
+   font-size: 14.5px;
++}
++
++.chart-sheet .cs-picked-rationale {
++  padding-top: 8px;
++  border-top: 1px dotted currentColor;
++}
++
++.chart-sheet .cs-picked-rationale p {
++  margin-top: 4px;
+ }
+ 
+ .chart-sheet .cs-phases {

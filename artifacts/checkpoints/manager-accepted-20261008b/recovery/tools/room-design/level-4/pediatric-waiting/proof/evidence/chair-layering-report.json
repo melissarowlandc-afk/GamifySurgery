@@ -1,0 +1,394 @@
+{
+  "status": "PASS",
+  "kind": "Actual native renderer armrest composition and approved-pixel provenance",
+  "checks": [
+    {
+      "pass": true,
+      "name": "Five ordinary seats and four kid stools",
+      "details": {
+        "ordinary": [
+          "bench:seat-1",
+          "bench:seat-2",
+          "armchair",
+          "olderChildChair",
+          "spareAdultChair"
+        ],
+        "stools": [
+          "kidWest",
+          "kidEast",
+          "kidNorth",
+          "kidSouth"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Occluder/source hashes west"
+    },
+    {
+      "pass": true,
+      "name": "Front wood preserves approved pixels west",
+      "details": {
+        "pixels": 18685,
+        "opaque": 17633,
+        "bad": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Transparent full-frame occluder west"
+    },
+    {
+      "pass": true,
+      "name": "Occluder/source hashes east"
+    },
+    {
+      "pass": true,
+      "name": "Front wood preserves approved pixels east",
+      "details": {
+        "pixels": 17760,
+        "opaque": 16312,
+        "bad": 0
+      }
+    },
+    {
+      "pass": true,
+      "name": "Transparent full-frame occluder east"
+    },
+    {
+      "pass": true,
+      "name": "Actual renderer chair/occupant/front order armchair",
+      "details": {
+        "indexes": [
+          2,
+          4,
+          6
+        ],
+        "depths": [
+          1.95,
+          1.9501,
+          1.9502
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Overlay aligns exactly with approved chair armchair"
+    },
+    {
+      "pass": true,
+      "name": "Measured hip on cushion armchair",
+      "details": {
+        "seat": [
+          412,
+          189.5047619047619
+        ],
+        "hip": {
+          "x": 3.433333333333333,
+          "y": 1.5792063492063493
+        }
+      }
+    },
+    {
+      "pass": true,
+      "name": "Seat contact is actual blue cushion armchair",
+      "details": {
+        "rgba": [
+          70,
+          106,
+          108,
+          253
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Front armrest occludes actual occupant; head/body stay visible armchair",
+      "details": {
+        "overlap": 789,
+        "correctComposites": 789,
+        "visibleActor": 6721
+      }
+    },
+    {
+      "pass": true,
+      "name": "Actual renderer chair/occupant/front order adultChairEastNorth",
+      "details": {
+        "indexes": [
+          3,
+          5,
+          7
+        ],
+        "depths": [
+          1.95,
+          1.9501,
+          1.9502
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Overlay aligns exactly with approved chair adultChairEastNorth"
+    },
+    {
+      "pass": true,
+      "name": "Measured hip on cushion adultChairEastNorth",
+      "details": {
+        "seat": [
+          63.523809523809526,
+          189.8095238095238
+        ],
+        "hip": {
+          "x": 0.5293650793650794,
+          "y": 1.5817460317460317
+        }
+      }
+    },
+    {
+      "pass": true,
+      "name": "Seat contact is actual blue cushion adultChairEastNorth",
+      "details": {
+        "rgba": [
+          68,
+          104,
+          105,
+          253
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "name": "Front armrest occludes actual occupant; head/body stay visible adultChairEastNorth",
+      "details": {
+        "overlap": 511,
+        "correctComposites": 511,
+        "visibleActor": 3993
+      }
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N1"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility N1"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N1"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N2"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility N2"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N2"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N3"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility N3"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N3"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N4"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility N4"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N4"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S1"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility S1"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S1"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S2"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility S2"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S2"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S3"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility S3"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S3"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S4"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility S4"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S4"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WA"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility WA"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WA"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WB"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility WB"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WB"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WC"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility WC"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WC"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WD"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility WD"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WD"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EA"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility EA"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EA"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EB"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility EB"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EB"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EC"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility EC"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EC"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/ED"
+    },
+    {
+      "pass": true,
+      "name": "Older occupant follows own chair visibility ED"
+    },
+    {
+      "pass": true,
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/ED"
+    },
+    {
+      "pass": true,
+      "name": "West parent actual posterior contact measured at X105"
+    },
+    {
+      "pass": true,
+      "name": "Refitted west parent feet near approved chair floor",
+      "details": {
+        "footResidual": 2.629404761904766
+      }
+    },
+    {
+      "pass": true,
+      "name": "Native renderer loaded chair overlays without warnings",
+      "details": []
+    }
+  ],
+  "overlaps": [
+    {
+      "chairId": "armchair",
+      "supportId": "armchair",
+      "overlap": 789,
+      "correctComposites": 789,
+      "visibleActor": 6721
+    },
+    {
+      "chairId": "adultChairEastNorth",
+      "supportId": "olderChildChair",
+      "overlap": 511,
+      "correctComposites": 511,
+      "visibleActor": 3993
+    }
+  ],
+  "parentFootResidualProofPixels": 2.629404761904766
+}

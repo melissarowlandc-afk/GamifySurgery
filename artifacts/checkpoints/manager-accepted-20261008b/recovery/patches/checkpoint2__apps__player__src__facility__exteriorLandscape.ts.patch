@@ -1,0 +1,225 @@
+--- a/apps/player/src/facility/exteriorLandscape.ts
++++ b/apps/player/src/facility/exteriorLandscape.ts
+@@ -1,14 +1,20 @@
+-import type { LandscapingAtlasFrameId } from "../art/bitmapAssetManifest";
++import {
++  FRONTAGE_V2_ASSETS, LANDSCAPING_ATLAS_V1_FRAMES,
++  type FrontageAssetId, type LandscapingAtlasFrameId,
++} from "../art/bitmapAssetManifest";
++import { SURGERY_CENTER_WALL_GEOMETRY } from "./surgeryCenterArchitecture";
++import siteLayout from "./data/exterior-landscape-v2.json";
+ 
+-/**
+- * Exterior planting is presentation-only, but lives in stable logical-site
+- * coordinates.  This keeps its placement independent from simulation RNG,
+- * redraw frequency, viewport size, and the current clinic footprint.
+- */
++export type ExteriorGrassFrameId = Extract<FrontageAssetId,
++  "frontage:grass-low-v2" | "frontage:grass-clover-v2" | "frontage:grass-upright-v2">;
++export type ExteriorLandscapeFrameId = LandscapingAtlasFrameId | ExteriorGrassFrameId;
++
++/** Presentation-only contacts from the single frozen site-wide layout. */
+ export interface ExteriorLandscapeCandidate {
+   readonly key: string;
+-  readonly frameId: LandscapingAtlasFrameId;
+-  /** Floor-contact point in logical construction-grid coordinates. */
++  readonly groupKey: string;
++  readonly frameId: ExteriorLandscapeFrameId;
++  /** Authored floor contact, including its measured source anchor. */
+   readonly x: number;
+   readonly y: number;
+   readonly width: number;
+@@ -16,124 +22,86 @@
+ }
+ 
+ export interface ExteriorRectangle {
+-  readonly x: number;
+-  readonly y: number;
+-  readonly width: number;
+-  readonly height: number;
++  readonly x: number; readonly y: number;
++  readonly width: number; readonly height: number;
+ }
+ 
+-const LANDSCAPE_FRAMES: readonly LandscapingAtlasFrameId[] = [
+-  "landscape:tree-round",
+-  "landscape:tree-open",
+-  "landscape:tree-column",
+-  "landscape:tree-crown",
+-  "landscape:shrub-cluster",
+-  "landscape:shrub-round",
+-  "landscape:shrub-small",
+-  "landscape:flowers-white",
+-  "landscape:flowers-yellow",
+-  "landscape:flowers-pink",
+-];
++const SITE_CANDIDATES: readonly ExteriorLandscapeCandidate[] = Object.freeze(
++  siteLayout.plants.map(plant => {
++    const frameId = plant.frameId as ExteriorLandscapeFrameId;
++    const source = getExteriorLandscapeSource(frameId);
++    return Object.freeze({ ...plant, frameId,
++      height: plant.width * source.nativeHeight / source.nativeWidth });
++  }),
++);
+ 
+-const TREE_FRAMES = new Set<LandscapingAtlasFrameId>([
+-  "landscape:tree-round",
+-  "landscape:tree-open",
+-  "landscape:tree-column",
+-  "landscape:tree-crown",
+-]);
+-
+-/** Small stable integer hash; deliberately unrelated to game/simulation RNG. */
+-function siteHash(value: number): number {
+-  let hash = value | 0;
+-  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+-  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+-  return (hash ^ (hash >>> 16)) >>> 0;
+-}
+-
+-function unit(seed: number): number {
+-  return siteHash(seed) / 0x1_0000_0000;
+-}
+-
+-function envelope(candidate: ExteriorLandscapeCandidate, margin: number): ExteriorRectangle {
+-  return {
+-    x: candidate.x - candidate.width / 2 - margin,
+-    y: candidate.y - candidate.height - margin,
+-    width: candidate.width + margin * 2,
+-    // The small lower allowance includes the atlas contact-shadow pixels.
+-    height: candidate.height + margin * 2 + 0.12,
+-  };
++export function getExteriorLandscapeSource(frameId: ExteriorLandscapeFrameId) {
++  return frameId.startsWith("frontage:")
++    ? FRONTAGE_V2_ASSETS[frameId as ExteriorGrassFrameId]
++    : LANDSCAPING_ATLAS_V1_FRAMES[frameId as LandscapingAtlasFrameId];
+ }
+ 
+ function intersects(left: ExteriorRectangle, right: ExteriorRectangle): boolean {
+-  return (
+-    left.x < right.x + right.width &&
+-    left.x + left.width > right.x &&
+-    left.y < right.y + right.height &&
+-    left.y + left.height > right.y
+-  );
++  return left.x < right.x+right.width && left.x+left.width > right.x &&
++    left.y < right.y+right.height && left.y+left.height > right.y;
++}
++
++/** Full source/shadow rectangle, including grass pixels below its contact. */
++export function exteriorCandidateEnvelope(
++  candidate: ExteriorLandscapeCandidate, margin = 0.12, tileSize?: number,
++): ExteriorRectangle {
++  const source = getExteriorLandscapeSource(candidate.frameId);
++  const scale = candidate.width/source.nativeWidth;
++  // Canvas roundPixels may move an edge by half a rendered pixel. Account for
++  // that in logical space; never enlarge the sprite to a fixed screen size.
++  const pad = margin + (tileSize === undefined ? 0 : 0.5/Math.max(1,tileSize));
++  return { x: candidate.x-source.anchor.x*scale-pad,
++    y: candidate.y-source.anchor.y*scale-pad,
++    width: source.nativeWidth*scale+pad*2, height: source.nativeHeight*scale+pad*2 };
++}
++
++export function getExteriorLandscapeDisplay(
++  candidate: ExteriorLandscapeCandidate, tileSize: number, originX = 0, originY = 0,
++) {
++  const source = getExteriorLandscapeSource(candidate.frameId);
++  const scale = candidate.width*tileSize/source.nativeWidth;
++  const x = originX+candidate.x*tileSize;
++  const y = originY+candidate.y*tileSize;
++  return { x, y, scale, width: source.nativeWidth*scale, height: source.nativeHeight*scale,
++    bounds: { x: x-source.anchor.x*scale, y: y-source.anchor.y*scale,
++      width: source.nativeWidth*scale, height: source.nativeHeight*scale } };
++}
++
++/** Ordinary cutaway rooms include their projected wall/shadow envelope. */
++export function getExteriorConstructionEnvelope(rectangle: ExteriorRectangle, hallway = false): ExteriorRectangle {
++  if (hallway) return rectangle;
++  const side = SURGERY_CENTER_WALL_GEOMETRY.sideThicknessTiles + SURGERY_CENTER_WALL_GEOMETRY.shadowOffsetTiles.x;
++  const north = SURGERY_CENTER_WALL_GEOMETRY.northEnvelopeTiles;
++  const south = SURGERY_CENTER_WALL_GEOMETRY.foregroundOutsetTiles + SURGERY_CENTER_WALL_GEOMETRY.shadowOffsetTiles.y;
++  return { x: rectangle.x-side, y: rectangle.y-north,
++    width: rectangle.width+side*2, height: rectangle.height+north+south };
+ }
+ 
+ /**
+- * Produces an intentionally irregular full-site candidate field. Candidates
+- * are filtered by the caller against constructed rooms and circulation; they
+- * are never derived from current room bounds, so unaffected plant keys do not
+- * move when the clinic grows.
++ * One offline-authored 96x64 field, cropped by full visual bounds. Campaigns,
++ * construction and camera changes never generate or reposition its plants.
++ * Smaller/legacy sites use the same coordinates; expansion reveals more of
++ * the frozen field without moving any previously visible plant.
+  */
+-export function getExteriorLandscapeCandidates(
+-  columns: number,
+-  rows: number,
+-): readonly ExteriorLandscapeCandidate[] {
+-  const siteColumns = Math.max(1, Math.floor(columns));
+-  const siteRows = Math.max(1, Math.floor(rows));
+-  // The reference reads as a planted site rather than a handful of perimeter
+-  // props. A denser field is intentional; foliage may visually overlap, but
+-  // contact points still keep it from becoming a synthetic hedge.
+-  const desired = Math.max(44, Math.min(900, Math.round(siteColumns * siteRows * 0.24)));
+-  const candidates: ExteriorLandscapeCandidate[] = [];
+-
+-  for (let index = 0; candidates.length < desired && index < desired * 8; index += 1) {
+-    const typeRoll = unit(index * 29 + 7);
+-    const frameId = LANDSCAPE_FRAMES[
+-      Math.min(LANDSCAPE_FRAMES.length - 1, Math.floor(typeRoll * LANDSCAPE_FRAMES.length))
+-    ]!;
+-    const isTree = TREE_FRAMES.has(frameId);
+-    const scale = 0.78 + unit(index * 47 + 11) * (isTree ? 0.28 : 0.34);
+-    const candidate: ExteriorLandscapeCandidate = {
+-      key: `site-plant-${index}-${frameId}`,
+-      frameId,
+-      // Extending a little beyond each map edge gives a natural continuous
+-      // field at the default view instead of a hedge exactly on the grid.
+-      x: -0.72 + unit(index * 73 + 3) * (siteColumns + 1.44),
+-      y: -0.68 + unit(index * 89 + 5) * (siteRows + 0.5),
+-      width: (isTree ? 1.32 : 0.72) * scale,
+-      height: (isTree ? 2.12 : 0.62) * scale,
+-    };
+-    // Preserve irregular, walkable-looking ground contact without prohibiting
+-    // natural canopy/flower overlap. Full envelopes are reserved for room and
+-    // path culling below, where complete removal is required.
+-    if (candidates.some((existing) => Math.hypot(candidate.x - existing.x, candidate.y - existing.y) < 0.46)) {
+-      continue;
+-    }
+-    candidates.push(candidate);
+-  }
+-  return candidates;
+-}
+-
+-/** Filters complete visual envelopes, not just sprite contact points. */
+-export function getVisibleExteriorLandscape(
+-  candidates: readonly ExteriorLandscapeCandidate[],
+-  exclusions: readonly ExteriorRectangle[],
+-  margin = 0.12,
+-): readonly ExteriorLandscapeCandidate[] {
+-  return candidates.filter((candidate) => {
+-    const candidateEnvelope = envelope(candidate, margin);
+-    return !exclusions.some((exclusion) => intersects(candidateEnvelope, exclusion));
++export function getExteriorLandscapeCandidates(columns: number, rows: number): readonly ExteriorLandscapeCandidate[] {
++  return SITE_CANDIDATES.filter(candidate => {
++    const bounds = exteriorCandidateEnvelope(candidate);
++    return bounds.x >= 0 && bounds.y >= 0 &&
++      bounds.x + bounds.width <= columns && bounds.y + bounds.height <= rows;
+   });
+ }
+ 
+-export function exteriorCandidateEnvelope(
+-  candidate: ExteriorLandscapeCandidate,
+-  margin = 0.12,
+-): ExteriorRectangle {
+-  return envelope(candidate, margin);
++/** Culls complete rendered envelopes, then orders overlap by floor contact. */
++export function getVisibleExteriorLandscape(
++  candidates: readonly ExteriorLandscapeCandidate[], exclusions: readonly ExteriorRectangle[],
++  margin = 0.12, tileSize?: number,
++): readonly ExteriorLandscapeCandidate[] {
++  return candidates.filter(candidate => !exclusions.some(exclusion =>
++    intersects(exteriorCandidateEnvelope(candidate,margin,tileSize),exclusion)))
++    .sort((left,right) => left.y-right.y || left.x-right.x || left.key.localeCompare(right.key));
+ }

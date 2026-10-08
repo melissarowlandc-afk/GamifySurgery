@@ -1,0 +1,38 @@
+{
+  "kind": "Manager browser capture",
+  "origin": "http://127.0.0.1:4191",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "state": {
+    "scene": "room",
+    "view": "proposed",
+    "roomId": "pediatric-exam",
+    "parents": true,
+    "children": true,
+    "clinicians": true,
+    "contacts": false,
+    "bases": false,
+    "doors": [],
+    "backed": [],
+    "actors": false,
+    "routes": false,
+    "grid": false,
+    "imaging": true,
+    "occupied": false
+  },
+  "status": "Pediatric Exam (Level 4 design) · doors: none · no room to the north\nEvery wall segment can still take a door (new items clear for their doorway)",
+  "contacts": "Real pediatric still .021 sits east on the table; clinician sits west entirely above the derived backless rolling stool.\nThe parent has a designated chair in this room, behind the approved front armrest.\nSolid route lines show radius-clear walking; dotted teal lines show separate static seat contacts.\nTwelve one-tile wall sections use the game model for this 3x3 room. Source-layout fixed furniture pass-through exceptions are shown explicitly.",
+  "check": {
+    "routes": 0,
+    "unreachable": [],
+    "conflicts": [],
+    "doorZone": [],
+    "passThrough": []
+  },
+  "proofManifestSha256": "7C99DB2D333F4F7D081690A6DBF4B2A80FEDDFAE46C91C8B90109D981AD9A5FD"
+}

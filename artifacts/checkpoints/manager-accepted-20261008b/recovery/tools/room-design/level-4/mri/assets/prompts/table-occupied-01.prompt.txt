@@ -1,0 +1,8 @@
+Use case: precise-object-edit.
+Asset type: transparent occupied MRI couch game sprite, registered variant of the supplied empty couch.
+Input image 1 is the EDIT TARGET and exact master furniture/canvas.
+Primary request: Add exactly one generic adult patient lying supine on this exact couch, with their HEAD AT THE LEFT wearing MRI headphones, body extending horizontally right under a pale cream blanket. Face seen from the elevated-front camera, relaxed and anonymous. Blanket covers chest, arms, legs and feet; no injury, no blood, no identifiable person. No body beyond the couch.
+Invariants: preserve the original canvas dimensions, transparent background, couch position, scale, orientation, blue mattress, pillow, white cradle, pedestal, base, all exposed furniture pixels and faint contact shadow pixel-for-pixel. Do not repaint or redesign any furniture. Change ONLY pixels needed for the added patient and blanket on top of the existing mattress; do not redraw or move the table. The right end remains horizontal and clean to pass under the separate magnet.
+Style: same polished painted game finish, clean dark outlines, restrained soft cel shading, clinical whites and pale blue-grey, calm blue accents, upper-left light, elevated-front orthographic camera, no perspective convergence or diagonal furniture.
+Composition: patient low enough to remain a lying figure; pillow at the LEFT supports their head; headphones have two soft cups connected by a small band. No additional props, people, magnets, floor, wall, labels, logos or text.
+Output: genuine alpha PNG, same canvas and identical couch registration. This source will be packed to the same252x149 native canvas as empty couch.

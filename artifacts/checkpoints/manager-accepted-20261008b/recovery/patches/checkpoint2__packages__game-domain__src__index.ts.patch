@@ -1,0 +1,17 @@
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -32,6 +32,7 @@
+ export * from "./patientDemographics";
+ export * from "./randomness";
+ export * from "./reading-stations";
++export * from "./radiologist-read-income";
+ export * from "./reducer";
+ export * from "./retail-operations";
+ export * from "./retired-encounters";
+@@ -47,3 +48,6 @@
+ export * from "./test-choice-orders";
+ export * from "./types";
+ export * from "./founder-seats";
++export * from "./guidance-topics";
++export * from "./periop-nurse-attention";
++export * from "./procedural-staffing";

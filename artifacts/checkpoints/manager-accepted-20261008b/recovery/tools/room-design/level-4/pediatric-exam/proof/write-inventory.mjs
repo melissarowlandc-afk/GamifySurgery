@@ -1,0 +1,6 @@
+// Exact created-file inventory, excluding the frozen brief/stand-ins and itself.
+import fs from'node:fs';import path from'node:path';import{fileURLToPath}from'node:url';import{sha}from'../assets/image-utils.mjs';
+const here=path.dirname(fileURLToPath(import.meta.url)),lane=path.resolve(here,'..'),repo=path.resolve(here,'../../../../..'),entries=[];
+function collect(dir){for(const name of fs.readdirSync(dir).sort()){const file=path.join(dir,name),rel=path.relative(lane,file).replaceAll('\\','/');if(rel==='stand-in'||rel==='ART_BRIEF.md'||rel==='proof/evidence/owned-files.json')continue;if(fs.statSync(file).isDirectory())collect(file);else entries.push({path:rel,bytes:fs.statSync(file).size,sha256:sha(file)});}}
+collect(lane);const plan='docs/execplans/level4-pediatric-exam-mockup-20261008.md';
+fs.writeFileSync(path.join(here,'evidence/owned-files.json'),JSON.stringify({schemaVersion:1,lane:'tools/room-design/level-4/pediatric-exam/**',files:entries,authorizedOutsideLane:[{path:plan,sha256:sha(path.join(repo,plan))}],outsideLaneImplementationEdits:false},null,2)+'\n');console.log('INVENTORY '+entries.length+' lane files plus authorized plan; originals/stand-ins and all reused art preserved');

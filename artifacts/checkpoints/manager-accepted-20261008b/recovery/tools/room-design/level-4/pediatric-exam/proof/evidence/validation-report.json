@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "checks": 4258,
+  "counts": {
+    "protectedFiles": 1243,
+    "actorPoses": 24,
+    "reviewedImmutableFiles": 23,
+    "removedBackPixels": 17838,
+    "repairedCushionPixels": 4120,
+    "retainedStoolPixels": 81798,
+    "states": 112,
+    "routes": 768,
+    "walkingSamples": 115040,
+    "staticSeatTransitions": 576,
+    "doorPairs": 66,
+    "armrestOverlap": 766,
+    "clinicianOverStoolPixels": 274,
+    "readableStool": {
+      "seat": 389,
+      "column": 334,
+      "base": 461
+    },
+    "clinicianLayerSamples": 5164,
+    "maxClinicianCompositeChannelDelta": 1,
+    "approvedFrontPixels": 18685,
+    "textFiles": 117
+  },
+  "browserValidation": "pending_manager",
+  "ownerApproval": {
+    "date": "2026-10-08",
+    "quote": "Remove the 'backs' on rolling stools and just have the clinician layer on top of the stool. Then we don't have to worry about the back funniness. Otherwise this is approved.",
+    "ownerDesign": "approved_with_requested_revision",
+    "revisionImplemented": true,
+    "managerBrowserValidation": "pending"
+  },
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "stoolDerivationSha256": "E8AA64819C0A01A6C9CA575654ADD4520CFBFCB3C6E40593AF01B197B45E0D01"
+}

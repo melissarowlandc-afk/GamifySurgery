@@ -1,0 +1,256 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -51,13 +51,18 @@
+ import { reconcileEmployeeRoomSeats } from "./room-capacity";
+ import { isEmployeeAwayForTraining, normalizeEmployeeTraining, reconcileEmployeeTrainingReservations } from "./employee-training";
+ import { normalizeServiceOperationTraining } from "./employee-training-effects";
++import { normalizePeriopNurseAttention, reconcilePeriopNurseAttentionReservations } from "./periop-nurse-attention";
++import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+ import { normalizeRoomUpgradeRevenueQuote } from "./room-upgrades";
+ import { normalizeRoomUpgradeExperience, normalizeRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
+ import { getUnboundRoomUpgradeSupportMinutes, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeBreakBenefit, normalizeRoomUpgradeSupportWork } from "./room-upgrade-support";
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
++import { normalizeProcedureCompanionState, reconcileProcedureCompanions } from "./procedure-companions";
++import { reconcileServiceOperationFlow } from "./service-operations";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+ import { isReadingWorkMinute, readingMinutesEqual } from "./room-upgrade-reading";
++import { normalizeOutsideRadiologyReads, normalizeRadiologistReadIncome } from "./radiologist-read-income";
+ import { getDefaultDoorOffset } from "./doors";
+ import { findDeterministicFacilityPath, getRoomCareStations, getRoomNavigationAnchor } from "./spatial";
+ import type {
+@@ -806,6 +811,9 @@
+       raw.actorId !== diagnosticPhysicalWork.encounterId || diagnosticPhysicalWork.billing === "none" && raw.quoteFee !== 0)) {
+       throw new Error("The saved diagnostic physical work marker is invalid.");
+     }
++    if (diagnosticPhysicalWork?.readIncomeFee !== undefined && (!isRecord(raw) || typeof raw.quoteFee !== "number" || diagnosticPhysicalWork.readIncomeFee > raw.quoteFee)) {
++      throw new Error("The saved diagnostic read fee exceeds its imaging bundle.");
++    }
+     if (isRecord(raw) && raw.diagnosticPhaseWork !== undefined && (!diagnosticPhaseWork ||
+       raw.actorKind !== "remote" || raw.actorId !== diagnosticPhaseWork.encounterId || raw.quoteFee !== 0 ||
+       raw.incomeLineId !== (diagnosticPhaseWork.kind === "interpretation" ? "income.image_read" : "income.laboratory_processing"))) {
+@@ -976,6 +984,7 @@
+       throw new Error("The saved diagnostic physical phase witness is invalid.");
+     }
+     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
++    const periopNurseAttention = normalizePeriopNurseAttention(raw.periopNurseAttention, frozenOperationPhases);
+     const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee,
+       frozenOperationPhases.map((phase) => phase.roomDefinitionId));
+     const roomUpgradeRecovery = normalizeRoomUpgradeRecoveryQuote(raw.roomUpgradeRecovery, frozenOperationPhases);
+@@ -991,20 +1000,23 @@
+       throw new Error("Nonbillable diagnostic work must not carry an upgraded payment.");
+     }
+     if (trainingTiming && (diagnosticPhaseWork || diagnosticPhysicalWork)) throw new Error("Diagnostic work must use its accepted effective timing.");
+-    const phaseFlowVersion = raw.phaseFlowVersion === 1 &&
+-      (diagnosticPhysicalWork || frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
+-      (frozenOperationPhases[0]?.durationMinutes === 30 || trainingTiming?.phases[0]?.baselineMinutes === 30) &&
+-      frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery"))
++    const periopPhases = frozenOperationPhases[0]?.roomDefinitionId === "room.periop_recovery" &&
++      frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
++      frozenOperationPhases.some((phase) => phase.roomDefinitionId === "room.periop_recovery" && phase.roomStationId === "periop_recovery");
++    const legacyPeriopWait = !periopNurseAttention && raw.status === "waiting_for_next_phase" && periopPhases && isRecord(raw.periopBedReservation);
++    const phaseFlowVersion = (raw.phaseFlowVersion === 1 || legacyPeriopWait) &&
++      (diagnosticPhysicalWork || periopPhases)
+         ? 1 as const
+         : undefined;
+-    const periopBedFlowVersion = raw.periopBedFlowVersion === 1 &&
++    const periopBedFlowVersion = (raw.periopBedFlowVersion === 1 || legacyPeriopWait) &&
+       phaseFlowVersion === 1 &&
+       frozenOperationPhases.some((phase) =>
+-        phase.roomStationId === "periop_recovery" && phase.durationMinutes === 60,
++        phase.roomStationId === "periop_recovery" && phase.roomDefinitionId === "room.periop_recovery",
+       )
+         ? 1 as const
+         : undefined;
+     const validPeriopBedIds = new Set(["N3", "N4", "S3", "S4", "WC", "WD", "EC", "ED"]);
++    if (periopNurseAttention && !periopBedFlowVersion) throw new Error("The saved nurse attention requires a Periop bed flow.");
+     const periopBedReservation = isRecord(raw.periopBedReservation) &&
+       raw.periopBedReservation.version === "periop-bed-reservation.v1" &&
+       typeof raw.periopBedReservation.roomInstanceId === "string" &&
+@@ -1092,6 +1104,7 @@
+       phaseFlowVersion,
+       ...(trainingTiming ? { trainingTiming } : {}),
+       periopBedFlowVersion,
++      ...(periopNurseAttention ? { periopNurseAttention } : {}),
+       ...(isRecord(raw.saleTransfer) &&
+         raw.saleTransfer.version === "room-sale-transfer.v1" &&
+         typeof raw.saleTransfer.interruptedAtFacilityTick === "number" &&
+@@ -1175,10 +1188,13 @@
+       (raw.lifecycle !== "arriving" && raw.lifecycle !== "onsite" && raw.lifecycle !== "departing" && raw.lifecycle !== "departed") || !Array.isArray(raw.path) ||
+       typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) || typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)) return [];
+     const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
++    const procedureCompanion = raw.kind === "companion" ? normalizeProcedureCompanionState(raw.procedureCompanion) : undefined;
+     return [{ id: raw.id, kind: raw.kind, displayName: raw.displayName, appearance: raw.appearance, linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null,
+       linkedEncounterId: typeof raw.linkedEncounterId === "string" ? raw.linkedEncounterId : null, lifecycle: raw.lifecycle, location: isGridPoint(raw.location) ? { ...raw.location } : null,
+       path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+-      activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null } satisfies RetailExternalActorState];
++      activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null,
++      ...(typeof raw.movementWaitReason === "string" ? { movementWaitReason: raw.movementWaitReason } : {}),
++      ...(procedureCompanion ? { procedureCompanion } : {}) } satisfies RetailExternalActorState];
+   });
+ }
+ 
+@@ -2920,6 +2936,8 @@
+     cashCents: parsedCashCents,
+     cash: parsedCashCents / 100,
+     serviceIncomeReceipts,
++    radiologistReadIncome: normalizeRadiologistReadIncome(parsed.radiologistReadIncome),
++    outsideRadiologyReads: normalizeOutsideRadiologyReads(parsed.outsideRadiologyReads, parsedFacilityTick),
+     serviceAppointmentsEnabled:
+       typeof parsed.serviceAppointmentsEnabled === "boolean"
+         ? parsed.serviceAppointmentsEnabled
+@@ -3028,21 +3046,27 @@
+     next.patientAmenityTripSequence ?? 0,
+   );
+   next.doors = normalizeDoors(parsed, next.rooms, context);
+-  next.serviceOperations = next.serviceOperations.filter((operation) => {
++  for (const operation of next.serviceOperations) {
+     const reservation = operation.periopBedReservation;
+-    if (!reservation) return true;
++    if (!reservation) continue;
+     const room = next.rooms.find((candidate) => candidate.id === reservation.roomInstanceId);
+     const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+-    if (!room || !definition) return false;
+-    const station = getRoomCareStations(
++    const station = room && definition ? getRoomCareStations(
+       room,
+       definition,
+       next.doors,
+       next.rooms,
+       (id) => getRoomDefinition(id, context),
+-    ).find((candidate) => candidate.id === reservation.bedId);
+-    return Boolean(station && station.patientAnchor.x === reservation.endpoint.x && station.patientAnchor.y === reservation.endpoint.y);
+-  });
++    ).find((candidate) => candidate.kind === "periop_bed" && candidate.id === reservation.bedId) : null;
++    // Geometry can outlive a saved endpoint. Keep the accepted visit and repair
++    // its physical reservation instead of silently dropping the whole operation.
++    if (station) reservation.endpoint = { ...station.patientAnchor };
++    else {
++      operation.periopBedReservation = undefined;
++      operation.reservedRoomInstanceIds = operation.reservedRoomInstanceIds.filter((id) => id !== reservation.roomInstanceId);
++      operation.resourceWaitReason = "Waiting for a connected peri-op bed.";
++    }
++  }
+ 
+   const rawEncounters = parsed.encounters as Record<string, unknown>;
+   next.encounters = Object.fromEntries(
+@@ -3064,6 +3088,14 @@
+       encounter.stagedResultOrder?.remainder, ...(encounter.stagedResultOrder?.components ?? []), ...encounter.steps.map((step) => step.result)];
+     for (const carrier of carriers) {
+       const plan = carrier?.diagnosticTiming;
++      if (plan) for (const phase of plan.phases) {
++        const operation = next.serviceOperations.find((entry) => entry.id === phase.serviceOperationId);
++        const source = plan.sources.find((entry) => entry.componentId === phase.componentId);
++        if (operation?.diagnosticPhaseWork?.kind === "interpretation" && operation.diagnosticPhaseWork.readIncomeFee !== source?.readIncomeFee ||
++          operation?.diagnosticPhysicalWork && operation.diagnosticPhysicalWork.readIncomeFee !== (operation.diagnosticPhysicalWork.billing === "existing_service" && source?.readIncomeBilling !== "additive" ? source?.readIncomeFee : undefined)) {
++          throw new Error("The saved diagnostic read fee and imaging bundle disagree.");
++        }
++      }
+       if (!plan?.phases.some((phase) => phase.readingUpgradeWork)) continue;
+       const feedbackPending = encounter.steps.some((step) => step.status === "feedback_pending" && step.result?.diagnosticTiming?.orderId === plan.orderId) ||
+         encounter.testOnlyContinuation?.diagnosticTiming?.orderId === plan.orderId && encounter.testOnlyContinuation.status === "feedback_pending" ||
+@@ -3093,6 +3125,9 @@
+     if (reading.executionEnabledAtTick! > next.facilityTick || reading.readyAtTick! > next.facilityTick ||
+       operation.startedAtFacilityTick !== null && operation.startedAtFacilityTick > next.facilityTick ||
+       operation.completedAtFacilityTick !== null && operation.completedAtFacilityTick > next.facilityTick) throw new Error("The saved Reading work clock is invalid.");
++  }
++  if (next.outsideRadiologyReads?.some((read) => !next.radiologistReadIncome || read.sequence >= next.radiologistReadIncome.nextOutsideReadSequence)) {
++    throw new Error("The saved outside radiology read sequence is invalid.");
+   }
+   next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
+     const operation = next.serviceOperations.find((candidate) =>
+@@ -3236,6 +3271,9 @@
+         (typeof rawFacilityTask.cleanlinessRestore !== "number" || !Number.isFinite(rawFacilityTask.cleanlinessRestore) || rawFacilityTask.cleanlinessRestore < 0)))) {
+       throw new Error("The saved room upgrade support task is invalid.");
+     }
++    const legacyRoomCoverage = rawFacilityTask?.kind === "perform_service" && candidate.staffRoleDefinitionId === "staff.periop_nurse" &&
++      next.rooms.some((room) => room.id === rawFacilityTask.targetId && room.roomDefinitionId === "room.periop_recovery") &&
++      (typeof rawFacilityTask.workMinutesRemaining !== "number" || !Number.isFinite(rawFacilityTask.workMinutesRemaining));
+     const facilityTask =
+       (rawFacilityTask?.kind === "refill_water" ||
+         rawFacilityTask?.kind === "collect_litter" ||
+@@ -3243,6 +3281,7 @@
+         rawFacilityTask?.kind === "perform_imaging" ||
+         rawFacilityTask?.kind === "perform_service" ||
+         rawFacilityTask?.kind === "cover_periop" ||
++        rawFacilityTask?.kind === "periop_attention" ||
+         rawFacilityTask?.kind === "participate_qi_discussion" ||
+         rawFacilityTask?.kind === "take_break" ||
+         rawFacilityTask?.kind === "repair_room" ||
+@@ -3250,15 +3289,16 @@
+       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
+       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
+       rawFacilityTask.startedAtFacilityTick >= 0 &&
+-      typeof rawFacilityTask.workMinutesRemaining === "number" &&
+-      (roomUpgradeWork ? isRoomUpgradeSupportRemaining(roomUpgradeWork, rawFacilityTask.workMinutesRemaining) : Number.isSafeInteger(rawFacilityTask.workMinutesRemaining)) &&
+-      rawFacilityTask.workMinutesRemaining > 0
++      (rawFacilityTask.kind === "cover_periop" || legacyRoomCoverage ||
++        typeof rawFacilityTask.workMinutesRemaining === "number" &&
++        (roomUpgradeWork ? isRoomUpgradeSupportRemaining(roomUpgradeWork, rawFacilityTask.workMinutesRemaining) : Number.isSafeInteger(rawFacilityTask.workMinutesRemaining)) &&
++        rawFacilityTask.workMinutesRemaining > 0)
+         ? {
+             kind: rawFacilityTask.kind as NonNullable<EmployeeState["facilityTask"]>["kind"],
+             startedAtFacilityTick:
+               rawFacilityTask.startedAtFacilityTick,
+             workMinutesRemaining:
+-              rawFacilityTask.workMinutesRemaining,
++              legacyRoomCoverage ? Number.MAX_SAFE_INTEGER : typeof rawFacilityTask.workMinutesRemaining === "number" ? rawFacilityTask.workMinutesRemaining : 0,
+             ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
+             ...(roomUpgradeBreakBenefit ? { roomUpgradeBreakBenefit } : {}),
+             ...(rawFacilityTask.kind === "clean_room" && typeof rawFacilityTask.cleanlinessRestore === "number" &&
+@@ -3323,6 +3363,10 @@
+         Number.isSafeInteger(candidate.lastBreakAtFacilityTick)
+           ? candidate.lastBreakAtFacilityTick
+           : null,
++      ...(typeof candidate.lastPeriopAttentionAssignedAtFacilityTick === "number" &&
++        Number.isSafeInteger(candidate.lastPeriopAttentionAssignedAtFacilityTick) &&
++        candidate.lastPeriopAttentionAssignedAtFacilityTick >= 0 && candidate.lastPeriopAttentionAssignedAtFacilityTick <= next.facilityTick
++        ? { lastPeriopAttentionAssignedAtFacilityTick: candidate.lastPeriopAttentionAssignedAtFacilityTick } : {}),
+       nextIdleActionAtFacilityTick:
+         typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+         Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+@@ -3569,6 +3613,7 @@
+     }
+   }
+   reconcileEmployeeRoomSeats(next);
++  releaseLegacyPeriopCoverage(next);
+   const activeIdentifiedImagingResults = Object.values(next.encounters)
+     .flatMap((encounter) => {
+       const pending = encounter.pendingResult;
+@@ -3681,26 +3726,7 @@
+       pending.phlebotomistId = null;
+     }
+   }
+-  const activePeriopCoverageRooms = new Set(next.serviceOperations.flatMap((operation) =>
+-    operation.status !== "completed" && operation.status !== "cancelled" && operation.periopBedReservation
+-      ? [operation.periopBedReservation.roomInstanceId]
+-      : [],
+-  ));
+-  const retainedPeriopCoverageRooms = new Set<string>();
+-  for (const employee of next.employees) {
+-    if (employee.facilityTask?.kind !== "cover_periop") continue;
+-    const roomId = employee.facilityTask.targetId;
+-    if (
+-      employee.staffRoleDefinitionId !== "staff.periop_nurse" ||
+-      !roomId ||
+-      !activePeriopCoverageRooms.has(roomId) ||
+-      retainedPeriopCoverageRooms.has(roomId)
+-    ) {
+-      employee.facilityTask = null;
+-      continue;
+-    }
+-    retainedPeriopCoverageRooms.add(roomId);
+-  }
++  reconcilePeriopNurseAttentionReservations(next, context);
+   next.emergencyGlp1 = normalizeEmergencyGlp1State(
+     parsed.emergencyGlp1,
+     next,
+@@ -4211,6 +4237,8 @@
+       next.openChartEncounterId
+     ]!.feedAttentionStartedAtTick = null;
+   }
++  reconcileServiceOperationFlow(next, context);
++  reconcileProcedureCompanions(next);
+   return next;
+ }
+ 

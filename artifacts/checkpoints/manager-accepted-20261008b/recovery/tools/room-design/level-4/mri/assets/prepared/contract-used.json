@@ -1,0 +1,185 @@
+{
+  "status": "candidate_needs_owner_review",
+  "nativePixelsPerTile": 240,
+  "proofPixelsPerTile": 120,
+  "marginPixels": 4,
+  "alphaBoundsThreshold": 13,
+  "opaqueThreshold": 160,
+  "registration": "actual opaque foot-edge centre at privately revised world ground; signs top-centre; unchanged character anchors and scale",
+  "sourceCalibration": {
+    "gantry-side": {
+      "sourceFile": "originals/gantry-side-02.png",
+      "points": {
+        "bore": [
+          85,
+          634
+        ]
+      },
+      "measurement": "Actual west-bore centre: opaque dark column85 spans414–854, midpoint634. Source uncertainty about3pixels; generated target670 is not used.",
+      "packingNote": "Owner-authorized uniform4/3 enlargement of the previously calibrated whole source, on revised384x519 canvas. Actual ground is recomputed to match the unchanged empty couch surface.",
+      "scale": 0.3488372093023256
+    },
+    "table-empty": {
+      "sourceFile": "originals/table-empty-03.png",
+      "points": {
+        "couchTop": [
+          900,
+          134
+        ]
+      },
+      "measurement": "Actual upper edge of central cushion at column900, excluding raised head pad. Blue run starts135; visually picked outline134, uncertainty about3sourcepixels; generated target153 is not used.",
+      "uniformScaleFactor": 0.9687931124810085,
+      "packingNote": "Original empty couch source and uniform shape are retained; private ground moves east to put the outer cushion under the west-facing patient. Visible forepart draws to the bore center."
+    },
+    "console": {
+      "sourceFile": "originals/console-06.png",
+      "points": {
+        "worktop": [
+          500,
+          536
+        ],
+        "worktopRear": [
+          500,
+          536
+        ],
+        "worktopFront": [
+          700,
+          729
+        ]
+      },
+      "measurement": "Visually inspected console06 rear plane at(500,536): dark lower monitor edge through535, pale desktop starts537; front lip at(700,729): pale highlight begins729 and vertical fascia starts738–739. These are separate projected plane probes with about3rawsourcepixels of visual uncertainty. Foot edge is last opaque source row1465 (alpha>=160), independently remeasured after Canvas packing.",
+      "scale": 0.20618996798292422,
+      "packingNote": "Owner requests visibly larger desk: whole source enlarged uniformly by20%; rear worktop96px, projected front lip measured separately. North-facing tech sits south of desk."
+    },
+    "operator-chair": {
+      "sourceFile": "originals/operator-chair-03.png",
+      "points": {
+        "seat": [
+          800,
+          700
+        ]
+      },
+      "uniformScaleFactor": 0.9370525059665872,
+      "measurement": "Rear-view blue seat upper edge at raw (800,700), visually inspected; opaque wheel edge is measured by Canvas. Initial maximum fit48.023px; uniformly reduce to45px.",
+      "packingNote": "New back-facing swivel chair matches the unchanged sit.north tech; uniform fit only."
+    }
+  },
+  "baseBandNativePixels": 28,
+  "assets": {
+    "gantry-side": {
+      "canvas": [
+        384,
+        519
+      ],
+      "widthTiles": 1.6,
+      "ground": [
+        3.2,
+        2.97
+      ],
+      "record": "gantry",
+      "expectedBoreRiseNativePixels": 240,
+      "groundRule": "align-bore-to-empty-couch"
+    },
+    "table-empty": {
+      "canvas": [
+        252,
+        149
+      ],
+      "widthTiles": 1.05,
+      "ground": [
+        2.49,
+        2.42
+      ],
+      "record": "tableEmpty",
+      "expectedCouchRiseNativePixels": 108
+    },
+    "console": {
+      "canvas": [
+        206,
+        317
+      ],
+      "widthTiles": 0.8583333333333333,
+      "ground": [
+        1.12,
+        2.14
+      ],
+      "record": "console",
+      "expectedWorktopRiseNativePixels": 192
+    },
+    "operator-chair": {
+      "canvas": [
+        96,
+        168
+      ],
+      "widthTiles": 0.4,
+      "ground": [
+        1.12,
+        2.54
+      ],
+      "record": "operatorChair",
+      "expectedSeatRiseNativePixels": 90
+    },
+    "coil-cabinet": {
+      "canvas": [
+        154,
+        312
+      ],
+      "widthTiles": 0.64,
+      "ground": [
+        3.55,
+        0.32
+      ],
+      "record": "coilCabinet"
+    },
+    "zone-sign": {
+      "canvas": [
+        110,
+        96
+      ],
+      "widthTiles": 0.46,
+      "top": [
+        2.55,
+        -0.7
+      ],
+      "record": "zoneSign"
+    },
+    "scan-light": {
+      "canvas": [
+        96,
+        53
+      ],
+      "widthTiles": 0.4,
+      "top": [
+        0.8,
+        -0.62
+      ],
+      "record": "scanLight"
+    },
+    "comfort-cart": {
+      "canvas": [
+        180,
+        216
+      ],
+      "widthTiles": 0.75,
+      "ground": [
+        3.48,
+        3.88
+      ],
+      "record": "comfortCart"
+    },
+    "open-shelves": {
+      "canvas": [
+        180,
+        300
+      ],
+      "widthTiles": 0.75,
+      "ground": [
+        0.45,
+        3.88
+      ],
+      "record": "openShelves"
+    }
+  },
+  "revision": "owner-north-tech-bore-center-foreground-patient",
+  "ownerDirection": "../OWNER_REVISIONS_2026-10-07.md"
+}

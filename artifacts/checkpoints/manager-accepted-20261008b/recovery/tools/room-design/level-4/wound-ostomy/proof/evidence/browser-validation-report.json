@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-4/wound-ostomy/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "70AB4DB0DB326AB59969F90AE57827EF824CC6E65DC3D31FC3EF44479DE09184",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "checks": [
+    "real existing opposing patient and clinician, twelve game door sections",
+    "112 states, 576 routes, five native alpha/anchor assets, leg-rest-free chair, current seat fit, actual clinician-over-stool blend and full-height shelf",
+    "all twelve individual doors, correct art hiding and restoration",
+    "four bulk controls, idempotence and exact restoration",
+    "independent backing retains floor shelf/sink and hides wall poster",
+    "patient, clinician and total occupancy toggles",
+    "routes, grid, contacts and base toggles",
+    "keyboard toggles, reset and native Space/Enter button activation",
+    "320px visible canvas, no horizontal overflow"
+  ],
+  "technical": {
+    "states": 112,
+    "routes": 576,
+    "assets": 5,
+    "clinicianAboveStoolOverlap": 251,
+    "failures": [],
+    "doorModel": {
+      "count": 12,
+      "perWall": 3,
+      "spanTiles": 1,
+      "kind": "game-one-tile",
+      "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "viewport": [
+    320,
+    900
+  ],
+  "designApproval": true,
+  "ownerRevision": "remove-chair-leg-rest"
+}

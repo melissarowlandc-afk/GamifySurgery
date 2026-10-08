@@ -1,0 +1,357 @@
+--- a/apps/player/src/session/buildViewModels.test.ts
++++ b/apps/player/src/session/buildViewModels.test.ts
+@@ -1,13 +1,231 @@
+ import { describe, expect, it } from "vitest";
+ import {
++  SECOND_TUTORIAL_ENCOUNTER_ID,
++  TUTORIAL_ENCOUNTER_ID,
+   createInitialGameState,
++  getWorkloadSnapshot,
++  type RoomUpgradeLevel,
+   gameReducer,
+ } from "@gamify-surgery/game-domain";
+ import { createPrototypePlayerView } from "./viewModels";
+ 
+ describe("Build Mode view models", () => {
++  it("uses a static Level 2 endoscopy goal with actionable setup cost guidance", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    const view = createPrototypePlayerView(state, null, false, null);
++
++    expect(view.progression.goals.map((goal) => goal.id)).toContain(
++      "progression.endoscopy_completion",
++    );
++    expect(view.progression.goals.find((goal) => goal.id === "progression.endoscopy_completion")).toMatchObject({
++      label: "Complete your first endoscopy",
++      progressLabel: "0/1",
++    });
++    expect(view.progression.goals.map((goal) => goal.id)).not.toContain(
++      "progression.room.room.endoscopy",
++    );
++    expect(view.progression.endoscopySetupRequirements).toEqual(expect.arrayContaining([
++      expect.objectContaining({ label: "Endoscopy Room", met: false, action: { label: "Build", target: "room", id: "room.endoscopy" } }),
++      expect.objectContaining({ label: "Endoscopy Nurse", met: false, action: { label: "Hire", target: "staff", id: "staff.endoscopy_nurse" } }),
++      expect.objectContaining({ label: "Endoscopist or founder", met: true, detail: expect.stringContaining("Hire an endoscopist to keep yourself available for clinic patients.") }),
++    ]));
++  });
++
++  it("keeps busy reachable staff ready and gives existing inaccessible setup a repair hint instead of another purchase", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.rooms.push({
++      id: "room.test.unreachable-endoscopy", roomDefinitionId: "room.endoscopy",
++      x: 2, y: 2, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100,
++    });
++    const busyNurse = (id: string, role: "staff.endoscopy_nurse" | "staff.periop_nurse") => ({
++      id, staffRoleDefinitionId: role, displayName: id, appearance: state.founder.appearance,
++      hiredAtFacilityTick: 0, salaryPerExpenseInterval: 0, morale: 100, trainingLevel: 1 as const,
++      homeRoomInstanceId: "room.instance.founder_desk", location: { ...state.environment.founderLocation },
++      path: [{ ...state.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: 0,
++      lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 1,
++      facilityTask: {
++        kind: "perform_service" as const,
++        targetId: `operation.${id}`,
++        startedAtFacilityTick: 0,
++        workMinutesRemaining: 10,
++      },
++    });
++    state.employees.push(
++      busyNurse("employee.busy-endo", "staff.endoscopy_nurse"),
++      busyNurse("employee.busy-periop", "staff.periop_nurse"),
++    );
++
++    const requirements = createPrototypePlayerView(state, null, false, null)
++      .progression.endoscopySetupRequirements!;
++    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.endoscopy_nurse")).toMatchObject({ met: true });
++    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.periop_nurse")).toMatchObject({ met: true });
++    const inaccessibleEndoscopy = requirements.find(
++      (requirement) => requirement.id === "endoscopy.setup.room.endoscopy",
++    )!;
++    expect(inaccessibleEndoscopy).toMatchObject({
++      met: false,
++      detail: expect.stringContaining("reachable valid layout"),
++    });
++    expect(inaccessibleEndoscopy).not.toHaveProperty("action");
++  });
++
++  it("grows shared imaging-technician hiring capacity with each imaging room", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.cash = 10_000;
++    state.rooms.push({
++      id: "room.test.imaging-capacity", roomDefinitionId: "room.ultrasound",
++      x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1,
++      cleanliness: 100,
++    });
++    const technician = (id: string) => ({
++      id, staffRoleDefinitionId: "staff.imaging_technician", displayName: id,
++      appearance: state.founder.appearance, hiredAtFacilityTick: 0,
++      salaryPerExpenseInterval: 26, morale: 75, trainingLevel: 1 as const,
++      homeRoomInstanceId: "room.test.imaging-capacity", location: { x: 29, y: 24 },
++      path: [{ x: 29, y: 24 }], pathIndex: 0, lastMovedAtFacilityTick: 0,
++      lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 10,
++      facilityTask: null,
++    });
++    const imaging = () => createPrototypePlayerView(state, null, false, null)
++      .staffRoles.find((role) => role.id === "staff.imaging_technician")!;
++    state.employees.push(technician("employee.imaging.one"));
++    expect(imaging()).toMatchObject({ currentCount: 1, maximumCount: 1, canHire: false });
++    state.rooms.push({
++      id: "room.test.xray-capacity", roomDefinitionId: "room.xray",
++      x: 36, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1,
++      cleanliness: 100,
++    });
++    state.employees.push(technician("employee.imaging.two"));
++    expect(imaging()).toMatchObject({ currentCount: 2, maximumCount: 2, canHire: false });
++    state.rooms.push({
++      id: "room.test.ct-capacity", roomDefinitionId: "room.ct",
++      x: 44, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1,
++      cleanliness: 100,
++    });
++    state.employees.push(technician("employee.imaging.three"));
++    expect(imaging()).toMatchObject({
++      currentCount: 3, maximumCount: 3, canHire: false,
++      blockedReason: "Maximum 3 hired for the rooms you have built.",
++    });
++  });
++
++  it("explains GLP-1 two-NP staffing capacity and blocks hiring without a reachable slot", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.cash = 10_000;
++    state.rooms.push({
++      id: "room.test.glp-capacity", roomDefinitionId: "room.glp1_telehealth_suite",
++      x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1,
++      cleanliness: 100,
++    });
++    const nursePractitioner = (id: string) => ({
++      id, staffRoleDefinitionId: "staff.glp1_np", displayName: id,
++      appearance: state.founder.appearance, hiredAtFacilityTick: 0,
++      salaryPerExpenseInterval: 40, morale: 75, trainingLevel: 1 as const,
++      homeRoomInstanceId: "room.test.glp-capacity", location: { x: 29, y: 24 },
++      path: [{ x: 29, y: 24 }], pathIndex: 0, lastMovedAtFacilityTick: 0,
++      lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 10,
++      facilityTask: null,
++    });
++    for (let index = 1; index <= 2; index += 1) {
++      state.employees.push(nursePractitioner(`employee.glp.${index}`));
++    }
++    const glp = () => createPrototypePlayerView(state, null, false, null)
++      .staffRoles.find((role) => role.id === "staff.glp1_np")!;
++    expect(glp()).toMatchObject({
++      currentCount: 2,
++      maximumCount: 2,
++      canHire: false,
++      blockedReason: "Maximum 2 hired for the rooms you have built.",
++      staffingGuidance: "Each GLP-1 Telehealth Suite has two NP positions. Each staffed NP earns $50 per facility hour.",
++    });
++    expect(createPrototypePlayerView(state, null, false, null)
++      .staffOptions.find((role) => role.id === "staff.glp1_np")).toMatchObject({
++      enabled: false,
++      blockedReason: "Maximum 2 hired for the rooms you have built.",
++    });
++    for (let index = 2; index <= 5; index += 1) {
++      state.rooms.push({
++        id: `room.test.glp-capacity.${index}`,
++        roomDefinitionId: "room.glp1_telehealth_suite",
++        x: 28 + index * 8,
++        y: 23,
++        orientation: 0,
++        doorSide: null,
++        upgradeLevel: 1,
++        cleanliness: 100,
++      });
++    }
++    for (let index = 3; index <= 10; index += 1) {
++      state.employees.push(nursePractitioner(`employee.glp.${index}`));
++    }
++    expect(glp()).toMatchObject({
++      currentCount: 10,
++      maximumCount: 10,
++      canHire: false,
++      blockedReason: "Maximum 10 hired for the rooms you have built.",
++    });
++  });
++
++  it("shows tutorial completion instead of blocked XP and satisfaction goals for the Level 0 graduation exception", () => {
++    const state = createInitialGameState();
++    state.clinicalXp = 6;
++    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
++    first.resolutionReason = "completed";
++    first.resolvedAtFacilityTick = 1;
++    first.finalPatientSatisfaction = 20;
++    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
++      ...JSON.parse(JSON.stringify(first)),
++      id: SECOND_TUTORIAL_ENCOUNTER_ID,
++      resolvedAtFacilityTick: 2,
++      finalPatientSatisfaction: 20,
++    };
++    state.rooms.push({
++      id: "room.tutorial.exception.exam",
++      roomDefinitionId: "room.examination",
++      x: 34,
++      y: 26,
++      orientation: 0,
++      doorSide: "south",
++      upgradeLevel: 1,
++      cleanliness: 100,
++    });
++    state.doors.push({
++      id: "door.tutorial.exception.exam",
++      roomId: "room.tutorial.exception.exam",
++      side: "south",
++      offset: 1,
++      exterior: false,
++    });
++
++    const view = createPrototypePlayerView(
++      state,
++      null,
++      false,
++      null,
++    );
++
++    expect(view.progression.canLevelUp).toBe(true);
++    expect(view.progression.goals.map((goal) => goal.id)).toEqual([
++      "progression.tutorial_completion",
++      "progression.room.room.examination",
++    ]);
++    expect(view.resourceBar.xpProgressLabel).toBe("6/10 XP");
++    expect(view.resourceBar.xpProgressPercent).toBe(60);
++  });
++
+   it("describes upgrade effects and projects valid walls for map interaction", () => {
+     const initial = createInitialGameState();
++    // This view-model fixture owns the only Examination Room it selects.
++    initial.rooms = initial.rooms.filter(
++      (room) => room.id !== "room.instance.starter_examination",
++    );
++    initial.doors = initial.doors.filter(
++      (door) => door.roomId !== "room.instance.starter_examination",
++    );
+     initial.cash = 1_000;
+     initial.cashCents = 100_000;
+     const state = gameReducer(initial, {
+@@ -40,11 +258,13 @@
+     });
+     expect(view.selectedRoomBuild?.upgradeImprovements).toEqual(
+       expect.arrayContaining([
+-        "Room finish and fixed fixtures advance to Level 2.",
+-        "Routine workload capacity +1.",
+-        "Room service time 5% faster.",
++        "+2 satisfaction points after examination",
+         "Hourly upkeep +$1.",
+       ]),
++    );
++    expect(view.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/finish|capacity|clinic|capped/);
++    expect(view.selectedRoomBuild?.upgradeImprovements).not.toContain(
++      "Room service time 5% faster.",
+     );
+     expect(view.facility.buildDoorSlots?.length).toBeGreaterThan(0);
+     expect(view.facility.buildDoorSlots).toEqual(
+@@ -68,3 +288,105 @@
+     ).toBe(true);
+   });
+ });
++
++describe("approved room upgrade ladders in player views", () => {
++  // Owner-approved table, checked through the actual player projection.
++  const rows: ReadonlyArray<readonly [string, string, string[], number[]]> = [
++    ["room.examination", "+2 satisfaction points after examination", ["+2 points", "+4 points", "+6 points", "+8 points"], [90, 140, 210, 300]],
++    ["room.waiting", "+2 satisfaction points for waiting patients", ["+2 points", "+4 points", "+6 points", "+8 points"], [110, 170, 250, 360]],
++    ["room.bathroom", "10% slower cleanliness loss", ["10% slower loss", "20% slower loss", "30% slower loss", "40% slower loss"], [70, 110, 170, 250]],
++    ["room.minor_procedure", "+6% procedure revenue", ["+6%", "+12%", "+18%", "+24%"], [220, 330, 480, 680]],
++    ["room.ultrasound", "+6% ultrasound service revenue", ["+6%", "+12%", "+18%", "+24%"], [240, 360, 525, 715]],
++    ["room.xray", "+6% X-ray service revenue", ["+6%", "+12%", "+18%", "+24%"], [190, 280, 400, 560]],
++    ["room.ct", "+6% CT/CTA revenue", ["+6%", "+12%", "+18%", "+24%"], [400, 600, 880, 1200]],
++    ["room.phlebotomy", "+6% specimen-collection revenue", ["+6%", "+12%", "+18%", "+24%"], [140, 210, 305, 415]],
++    ["room.evs_closet", "Cleaning takes 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [120, 180, 260, 360]],
++    ["room.endoscopy", "+6% endoscopy revenue", ["+6%", "+12%", "+18%", "+24%"], [365, 545, 800, 1090]],
++    ["room.periop_recovery", "+2 satisfaction points after recovery", ["+2 points", "+4 points", "+6 points", "+8 points"], [225, 340, 495, 675]],
++    ["room.training", "Training sessions take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [165, 245, 360, 490]],
++    ["room.coffee_kiosk", "+1 staff morale point from daily coffee", ["+1 point", "+2 points", "+3 points", "+4 points"], [125, 190, 275, 375]],
++    ["room.glp1_telehealth_suite", "+6% telehealth revenue", ["+6%", "+12%", "+18%", "+24%"], [300, 450, 660, 900]],
++    ["room.ambulatory_or", "+6% operation revenue", ["+6%", "+12%", "+18%", "+24%"], [600, 900, 1320, 1800]],
++    ["room.laboratory", "+6% paid laboratory-processing revenue", ["+6%", "+12%", "+18%", "+24%"], [450, 675, 990, 1350]],
++    ["room.pharmacy", "+6% pharmacy sales revenue", ["+6%", "+12%", "+18%", "+24%"], [300, 450, 660, 900]],
++    ["room.maintenance_workshop", "Repairs take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [200, 300, 440, 600]],
++    ["room.staff_break", "+2 staff morale points per break", ["+2 points", "+4 points", "+6 points", "+8 points"], [225, 340, 495, 675]],
++    ["room.surgeon_office", "Quality reviews take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [175, 265, 385, 525]],
++    ["room.vending", "+6% vending revenue", ["+6%", "+12%", "+18%", "+24%"], [115, 170, 250, 340]],
++    ["room.reading", "Scan reading takes 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [450, 675, 990, 1350]],
++  ];
++
++  it.each(rows)("shows the complete playable ladder for %s", (roomDefinitionId, perUpgradeLabel, totals, prices) => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.cash = 100_000; state.cashCents = 10_000_000;
++    state.encounters = {};
++    const room = { id: "room.upgrade.view", roomDefinitionId, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as RoomUpgradeLevel, cleanliness: 100 };
++    state.rooms.push(room);
++    for (const level of [1, 2, 3, 4, 5] as const) {
++      room.upgradeLevel = level;
++      const view = createPrototypePlayerView(state, null, false, null, true, room.id);
++      const selected = view.selectedRoomBuild!;
++      const owned = view.ownedRooms.find((candidate) => candidate.id === room.id)!;
++      const expected = { perUpgradeLabel, currentLabel: level === 1 ? "Baseline" : totals[level - 2] };
++      expect(selected.benefit).toMatchObject(expected);
++      expect(owned.benefit).toEqual(selected.benefit);
++      expect(owned.benefitSummary).toBe(perUpgradeLabel);
++      expect(selected.maxUpgradeLevel).toBe(5);
++      expect(view.facility.rooms.find((candidate) => candidate.instanceId === room.id)?.upgradeMaxLevel).toBe(5);
++      if (level < 5) {
++        expect(selected.benefit?.nextLabel).toBe(totals[level - 1]);
++        const price = `$${prices[level - 1]!.toLocaleString()}`;
++        expect(selected.upgradeCostLabel).toBe(price);
++        expect(owned.nextUpgradeCostLabel).toBe(price);
++        expect(selected.nextUpgradeLevel).toBe(level + 1);
++        expect(selected.canUpgrade).toBe(true);
++        expect(selected.upgradeImprovements).toContain(perUpgradeLabel);
++      } else {
++        expect(selected.benefit?.nextLabel).toBeUndefined();
++        expect(selected.upgradeCostLabel).toBeUndefined();
++        expect(owned.nextUpgradeCostLabel).toBeUndefined();
++        expect(selected.canUpgrade).toBe(false);
++        expect(selected.upgradeImprovements).toEqual([]);
++      }
++      expect(JSON.stringify(selected.benefit)).not.toMatch(/Clinic total|shared|capped|capacity|fixture|finish/);
++    }
++  });
++
++  it("shows each room copy's totals and retains Examination capacity and admitted patients", () => {
++    let state = createInitialGameState(); state.facilityLevel = 3; state.cash = 10_000; state.cashCents = 1_000_000;
++    const front = state.rooms.find((room) => room.roomDefinitionId === "room.front_desk")!;
++    const caseId = state.encounters[TUTORIAL_ENCOUNTER_ID]!.frozenCase.id;
++    const placed = { id: "room.upgrade.exam", roomDefinitionId: "room.examination", x: front.x, y: front.y - 2,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as RoomUpgradeLevel, cleanliness: 100 };
++    state.rooms.push(placed);
++    state.doors.push({ id: "door.upgrade.exam", roomId: placed.id, side: "south", offset: 1, exterior: false });
++    state.encounters = {};
++    state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: "upgrade-view.admit",
++      encounterId: "encounter.upgrade-view.admitted", caseId, patientDisplayName: "Upgrade Test Patient", arrivalClass: "routine" });
++    expect(state.operationReceipts["upgrade-view.admit"]).toMatchObject({ status: "applied" });
++    expect(Object.keys(state.encounters)).toEqual(["encounter.upgrade-view.admitted"]);
++    const exam = state.rooms.find((room) => room.id === placed.id)!;
++    const beforeCapacity = getWorkloadSnapshot(state).routineLimit;
++    const beforeEncounters = structuredClone(state.encounters);
++    state.rooms.push({ ...exam, id: "room.upgrade.exam-copy", x: 25, y: 12, upgradeLevel: 1 });
++    exam.upgradeLevel = 5;
++    const view = createPrototypePlayerView(state, null, false, null, true, exam.id);
++    expect(view.ownedRooms.find((room) => room.id === exam.id)?.benefit?.currentLabel).toBe("+8 points");
++    expect(view.ownedRooms.find((room) => room.id === "room.upgrade.exam-copy")?.benefit).toMatchObject({ currentLabel: "Baseline", nextLabel: "+2 points" });
++    state.rooms.pop();
++    expect(getWorkloadSnapshot(state).routineLimit).toBe(beforeCapacity);
++    expect(state.encounters).toEqual(beforeEncounters);
++  });
++
++  it.each(["room.front_desk", "room.hallway", "room.imaging_control"])("shows no purchase or stars for %s", (roomDefinitionId) => {
++    const state = createInitialGameState();
++    const room = { id: "room.upgrade.non-purchase", roomDefinitionId, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 3 as const, cleanliness: 100 };
++    state.rooms.push(room);
++    const view = createPrototypePlayerView(state, null, false, null, true, room.id);
++    expect(view.selectedRoomBuild).toMatchObject({ upgradeable: false, maxUpgradeLevel: 1, canUpgrade: false });
++    expect(view.selectedRoomBuild?.benefit).toBeUndefined();
++    expect(view.selectedRoomBuild?.upgradeCostLabel).toBeUndefined();
++    expect(view.facility.rooms.find((candidate) => candidate.instanceId === room.id)?.upgradeMaxLevel ?? 1).toBe(1);
++  });
++});

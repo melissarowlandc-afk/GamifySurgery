@@ -1,0 +1,71 @@
+{
+  "checked": "2026-10-07",
+  "task": "GS-039",
+  "revision": "owner-seated-patient-larger-fixtures-2026-10-07",
+  "status": "revised_candidate_complete_owner_review_pending",
+  "worker": {
+    "name": "mri_asset_proof",
+    "milestone": "Nine-asset preparation, revised private geometry, existing sit-west patient, controls/captures/validation",
+    "role": "sol_worker",
+    "stoppedWriting": true
+  },
+  "ownedRecordCount": 288,
+  "ownedRecordMismatchCount": 0,
+  "originalAndPromptCount": 20,
+  "originalAndPromptMismatchCount": 0,
+  "finalReferences": [
+    {
+      "path": "tools/room-design/level-4/mri/proof/index.html",
+      "sha256": "22DF814E2F05970BA68B601ED882B4121227EB9348CC47F4C885FEB9C86F3F4A"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/proof-manifest.json",
+      "sha256": "D5BCB9125B0BE7BBEC24B556C893627DC018E0DB81A37438495C4C0DBFCDEABD"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/assets/prepared/metadata.json",
+      "sha256": "2760011A87BDC937255D98D8CE560FF2D9D291A9C550C93B74E7B0370C7443C0"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/evidence/mri-scan-seated-west.png",
+      "sha256": "A05F7A4C9634F9A93018B75896FA39EC071D0B32404D10DB019FA7150E1B7B5B"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/evidence/validation-report.json",
+      "sha256": "F26C53D0F34787441835AADA40BB3E8DA09CA724BCAF225AD8AE9A9EDEA3CFCA"
+    }
+  ],
+  "parentReview": {
+    "capturesInspected": [
+      "mri-scan-seated-west.png",
+      "mri-closed-backed.png",
+      "mri-all-doors.png",
+      "mri-contacts.png",
+      "mri-320.png"
+    ],
+    "doorBackingStates": 272,
+    "standingApproachSamples": 164,
+    "sourceDiff": "proof/evidence/owned-source.diff",
+    "browserErrors": 0,
+    "exitCode": 0,
+    "codeReviewed": [
+      "assets/prepare-assets.mjs",
+      "proof/build.mjs",
+      "proof/layout-revision.mjs",
+      "proof/extension.js",
+      "proof/validate.cjs",
+      "proof/README.md"
+    ],
+    "independentCommand": "node tools/room-design/level-4/mri/proof/validate.cjs",
+    "walkingBaseSamples": 22304,
+    "revisionDiff": "proof/evidence/owned-revision-changes.json",
+    "checks": 92,
+    "routes": 2048
+  },
+  "readingRoomSha256": "D574AA0FC11292D8A2F8A92A3BA082C8755B00067A99066FDAD3BA30C72EB1BB",
+  "runtimeIntegrated": false,
+  "githubBackup": false,
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "ownerGameOrigin": "http://127.0.0.1:4173",
+  "nextAction": "Owner reviews revised candidate; record approval against exact bytes before separate runtime integration."
+}

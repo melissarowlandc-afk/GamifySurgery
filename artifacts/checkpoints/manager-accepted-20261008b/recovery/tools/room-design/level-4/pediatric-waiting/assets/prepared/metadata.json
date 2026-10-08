@@ -1,0 +1,901 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate_needs_owner_review",
+  "complete": true,
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "generationManifestSha256": "0A5E1C53628CCBC80A1C7CFC2FD02D35D14BDB7E7661A8E83C5EE923BC90BAC6",
+  "contractSha256": "C64402486DCE8A5C055A03BF87EBDCBBF13C7BA5C5693F19950D0CED62483F42",
+  "assets": {
+    "aquarium": {
+      "id": "aquarium",
+      "file": "aquarium.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        460,
+        566
+      ],
+      "widthTiles": 0.96,
+      "heightTiles": 1.18,
+      "proofScale": 0.2504347826086956,
+      "source": "originals/aquarium-01.png",
+      "sourceSha256": "1D4B87D83267604C93C0D18E5E5ECA4F57400AC2D17ED22DBD79206CB8E2022E",
+      "prompt": "prompts/aquarium-01.prompt.txt",
+      "promptSha256": "71A4DCF3B0A22FD7173C9A0153949ED9520058EFD46E400E6A4EB25C1313450A",
+      "sourceSize": [
+        1168,
+        1347
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 0,
+        "right": 1166,
+        "bottom": 1346,
+        "width": 1167,
+        "height": 1347,
+        "pixels": 1146166,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 100,
+        "top": 80,
+        "right": 1068,
+        "bottom": 1274,
+        "width": 969,
+        "height": 1195,
+        "pixels": 1120790,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 102,
+        "top": 82,
+        "right": 1066,
+        "bottom": 1273,
+        "width": 965,
+        "height": 1192,
+        "pixels": 1115754,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 25376,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        99,
+        79,
+        971,
+        1197
+      ],
+      "scale": 0.46138002059732236,
+      "destination": [
+        6,
+        7.728115345005108,
+        448,
+        552.2718846549949
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "3C5958B0B873ACA093E93F712615714A05C8853ED85739D8048E79B8E54C973A",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 8,
+        "right": 453,
+        "bottom": 559,
+        "width": 448,
+        "height": 552,
+        "pixels": 239160,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "top": 9,
+        "right": 452,
+        "bottom": 558,
+        "width": 446,
+        "height": 550,
+        "pixels": 237465,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 8,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 21200,
+        "opaque": 237465,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        230,
+        559
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          0.54,
+          0.32
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "kids-table": {
+      "id": "kids-table",
+      "file": "kids-table.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        336,
+        220
+      ],
+      "widthTiles": 0.7,
+      "heightTiles": 0.46,
+      "proofScale": 0.25,
+      "source": "originals/kids-table-02.png",
+      "sourceSha256": "131279C586DC102D63195484FA57791BF3444FE1332D578366E268BE188A7498",
+      "prompt": "prompts/kids-table-02.prompt.txt",
+      "promptSha256": "14ACE25EE0EF212E22AAA72B334BBCDAA8D9D4067C0A56C7CA1C7C64F61B6891",
+      "sourceSize": [
+        1530,
+        1028
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 29,
+        "top": 23,
+        "right": 1515,
+        "bottom": 1007,
+        "width": 1487,
+        "height": 985,
+        "pixels": 457149,
+        "edgeAlphaMax": 0
+      },
+      "sourceVisibleBounds": {
+        "left": 143,
+        "top": 136,
+        "right": 1384,
+        "bottom": 937,
+        "width": 1242,
+        "height": 802,
+        "pixels": 439131,
+        "edgeAlphaMax": 0
+      },
+      "sourceOpaqueBounds": {
+        "left": 144,
+        "top": 137,
+        "right": 1383,
+        "bottom": 937,
+        "width": 1240,
+        "height": 801,
+        "pixels": 433302,
+        "edgeAlphaMax": 0
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 18018,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        142,
+        135,
+        1244,
+        804
+      ],
+      "scale": 0.25870646766169153,
+      "destination": [
+        7.084577114427873,
+        6,
+        321.83084577114425,
+        208
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632",
+      "outputAllAlphaBounds": {
+        "left": 7,
+        "top": 6,
+        "right": 328,
+        "bottom": 213,
+        "width": 322,
+        "height": 208,
+        "pixels": 29777,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 8,
+        "top": 7,
+        "right": 327,
+        "bottom": 213,
+        "width": 320,
+        "height": 207,
+        "pixels": 28950,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 7,
+        "top": 6,
+        "right": 7,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 44143,
+        "opaque": 28950,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        168,
+        214
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          2,
+          2.635
+        ]
+      ],
+      "sourcePoints": {
+        "frontTabletop": [
+          765,
+          377
+        ]
+      },
+      "calibratedPoints": {
+        "frontTabletop": [
+          168.2587064676617,
+          68.60696517412936
+        ]
+      },
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": 36.34825870646766,
+      "physicalFloorGapProofPixels": 0
+    },
+    "kid-stool": {
+      "id": "kid-stool",
+      "file": "kid-stool.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        144,
+        192
+      ],
+      "widthTiles": 0.3,
+      "heightTiles": 0.4,
+      "proofScale": 0.25,
+      "source": "originals/kid-stool-03.png",
+      "sourceSha256": "EA68D6F67E259AA503CC733826E392319B085EBB9E08D9295F726332E8316BCE",
+      "prompt": "prompts/kid-stool-03.prompt.txt",
+      "promptSha256": "EFCB96BDFE27440E404867C83A29C53B601627F54AF05FD11FFD96E2AF7190A5",
+      "sourceSize": [
+        1086,
+        1448
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 44,
+        "right": 1072,
+        "bottom": 1447,
+        "width": 1073,
+        "height": 1404,
+        "pixels": 635295,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 27,
+        "top": 45,
+        "right": 1058,
+        "bottom": 1327,
+        "width": 1032,
+        "height": 1283,
+        "pixels": 612972,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 51,
+        "top": 47,
+        "right": 1032,
+        "bottom": 1315,
+        "width": 982,
+        "height": 1269,
+        "pixels": 592613,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 22323,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        26,
+        44,
+        1034,
+        1285
+      ],
+      "scale": 0.1276595744680851,
+      "destination": [
+        6,
+        21.95744680851064,
+        132,
+        164.04255319148936
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "42B14F4E2F844F847950E97779DD98E1BF75AF41952D1401068FEEEBF864EEC5",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 22,
+        "right": 137,
+        "bottom": 185,
+        "width": 132,
+        "height": 164,
+        "pixels": 10080,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 9,
+        "top": 22,
+        "right": 133,
+        "bottom": 183,
+        "width": 125,
+        "height": 162,
+        "pixels": 9660,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 22,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 17568,
+        "opaque": 9660,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        72,
+        184
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          1.49,
+          2.66
+        ],
+        [
+          2.51,
+          2.66
+        ],
+        [
+          2,
+          2.16
+        ],
+        [
+          2,
+          2.98
+        ]
+      ],
+      "sourcePoints": {
+        "seat": [
+          543,
+          177
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          72,
+          38.93617021276596
+        ]
+      },
+      "measuredSeatRiseProofPixels": 36.265957446808514,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "toy-chest": {
+      "id": "toy-chest",
+      "file": "toy-chest.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        460,
+        272
+      ],
+      "widthTiles": 0.96,
+      "heightTiles": 0.5676521739130435,
+      "proofScale": 0.2504347826086956,
+      "source": "originals/toy-chest-03.png",
+      "sourceSha256": "063583DD8688057E5532A50CDFF389D78D62DAF047CBA7573217D3D0EB1E5474",
+      "prompt": "prompts/toy-chest-03.prompt.txt",
+      "promptSha256": "11FB1EC4C51612585705D66BDB69F50F504FAC6D9B90F237857FA8FA03E7FB14",
+      "sourceSize": [
+        1484,
+        1060
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 23,
+        "right": 1475,
+        "bottom": 1059,
+        "width": 1476,
+        "height": 1037,
+        "pixels": 841771,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 80,
+        "top": 161,
+        "right": 1411,
+        "bottom": 902,
+        "width": 1332,
+        "height": 742,
+        "pixels": 835059,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 81,
+        "top": 162,
+        "right": 1410,
+        "bottom": 901,
+        "width": 1330,
+        "height": 740,
+        "pixels": 830590,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 6712,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        79,
+        160,
+        1334,
+        744
+      ],
+      "scale": 0.335832083958021,
+      "destination": [
+        6,
+        16.140929535232374,
+        448,
+        249.85907046476763
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "C8EBD2BBFC44E94766CCBB21046D368A470F4E91BD88EF9F5F6023E7A24E9736",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 16,
+        "right": 453,
+        "bottom": 265,
+        "width": 448,
+        "height": 250,
+        "pixels": 94598,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "top": 17,
+        "right": 452,
+        "bottom": 264,
+        "width": 446,
+        "height": 248,
+        "pixels": 93513,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 16,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 30522,
+        "opaque": 93513,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        230,
+        265
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          0.52,
+          3.86
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "book-bin": {
+      "id": "book-bin",
+      "file": "book-bin.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        346,
+        394
+      ],
+      "widthTiles": 0.72,
+      "heightTiles": 0.8198843930635838,
+      "proofScale": 0.24971098265895952,
+      "source": "originals/book-bin-04.png",
+      "sourceSha256": "EC5BD60AFB62A88D8FF9D6D91F47546AD47C9452900C5F15BA675A283436A68C",
+      "prompt": "prompts/book-bin-04.prompt.txt",
+      "promptSha256": "F64801E6846FF2CCEEDD32DFA13DC6FBB863E75801CD74890C0AF9C82C35361D",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 72,
+        "right": 1237,
+        "bottom": 1235,
+        "width": 1238,
+        "height": 1164,
+        "pixels": 895365,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 129,
+        "top": 75,
+        "right": 1168,
+        "bottom": 1186,
+        "width": 1040,
+        "height": 1112,
+        "pixels": 885546,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 131,
+        "top": 76,
+        "right": 1167,
+        "bottom": 1183,
+        "width": 1037,
+        "height": 1108,
+        "pixels": 881357,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 9819,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        128,
+        74,
+        1042,
+        1114
+      ],
+      "scale": 0.32053742802303264,
+      "destination": [
+        6,
+        30.921305182341655,
+        334,
+        357.07869481765835
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "219185B31CBA3AD4DE5E9F216D56B7FB1B33482D9853EC6229BEBB21D26168FF",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 31,
+        "right": 339,
+        "bottom": 387,
+        "width": 334,
+        "height": 357,
+        "pixels": 91379,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "top": 31,
+        "right": 338,
+        "bottom": 386,
+        "width": 332,
+        "height": 356,
+        "pixels": 90605,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 31,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 44945,
+        "opaque": 90605,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        173,
+        387
+      ],
+      "anchorKind": "floor",
+      "anchorBasis": "Edge immediately below final opaque floor/base row, alpha >= 160",
+      "worldAnchors": [
+        [
+          3.6,
+          3.86
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": 0
+    },
+    "animal-prints": {
+      "id": "animal-prints",
+      "file": "animal-prints.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        336,
+        182
+      ],
+      "widthTiles": 0.7,
+      "heightTiles": 0.38,
+      "proofScale": 0.25,
+      "source": "originals/animal-prints-03.png",
+      "sourceSha256": "0E5A27166896033E0206D39240CF14D7CA7C617CC0B79B13ADFA32558F6F5F66",
+      "prompt": "prompts/animal-prints-03.prompt.txt",
+      "promptSha256": "0AD93419F80C24053948322C5852230A3B96C96F6E8674BD368C22939CD7D686",
+      "sourceSize": [
+        1701,
+        924
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 63,
+        "top": 30,
+        "right": 1637,
+        "bottom": 923,
+        "width": 1575,
+        "height": 894,
+        "pixels": 1184721,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 65,
+        "top": 92,
+        "right": 1635,
+        "bottom": 852,
+        "width": 1571,
+        "height": 761,
+        "pixels": 1173430,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 66,
+        "top": 95,
+        "right": 1634,
+        "bottom": 851,
+        "width": 1569,
+        "height": 757,
+        "pixels": 1164031,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 11291,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        64,
+        91,
+        1573,
+        763
+      ],
+      "scale": 0.20597584233947872,
+      "destination": [
+        6,
+        18.840432294977745,
+        324,
+        157.15956770502225
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "D112727649A36570055E3AEC8A74AEEC8BD89857DCA4482BC754C13F3756D331",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 19,
+        "right": 329,
+        "bottom": 175,
+        "width": 324,
+        "height": 157,
+        "pixels": 50157,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "top": 20,
+        "right": 329,
+        "bottom": 175,
+        "width": 324,
+        "height": 156,
+        "pixels": 49119,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 19,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 10995,
+        "opaque": 49119,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        168,
+        19
+      ],
+      "anchorKind": "wall",
+      "anchorBasis": "Top edge of actual alpha at wall top",
+      "worldAnchors": [
+        [
+          2.58,
+          -0.68
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": null
+    },
+    "wall-clock-kids": {
+      "id": "wall-clock-kids",
+      "file": "wall-clock-kids.png",
+      "status": "candidate_needs_owner_review",
+      "canvas": [
+        124,
+        124
+      ],
+      "widthTiles": 0.26,
+      "heightTiles": 0.26,
+      "proofScale": 0.2516129032258065,
+      "source": "originals/wall-clock-kids-01.png",
+      "sourceSha256": "9495974EC0D64378A58E7C9534258B6F4AEAAD0CDEE1C30F94D5B0EA46B90CBF",
+      "prompt": "prompts/wall-clock-kids-01.prompt.txt",
+      "promptSha256": "D556592C20A6C7C22312E8036911ADCBBCDAB74AB10271F336E365681285F7D9",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAllAlphaBounds": {
+        "left": 0,
+        "top": 39,
+        "right": 1221,
+        "bottom": 1253,
+        "width": 1222,
+        "height": 1215,
+        "pixels": 885398,
+        "edgeAlphaMax": 1
+      },
+      "sourceVisibleBounds": {
+        "left": 98,
+        "top": 87,
+        "right": 1155,
+        "bottom": 1144,
+        "width": 1058,
+        "height": 1058,
+        "pixels": 879521,
+        "edgeAlphaMax": 1
+      },
+      "sourceOpaqueBounds": {
+        "left": 99,
+        "top": 88,
+        "right": 1154,
+        "bottom": 1143,
+        "width": 1056,
+        "height": 1056,
+        "pixels": 876159,
+        "edgeAlphaMax": 1
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "fringePixelsRemoved": 5877,
+        "maxRemovedAlpha": 7,
+        "meaningfulPixelsRemoved": 0
+      },
+      "crop": [
+        97,
+        86,
+        1060,
+        1060
+      ],
+      "scale": 0.10566037735849057,
+      "destination": [
+        6,
+        6,
+        112,
+        112
+      ],
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "E9039FB01E1E4D1EC6490E4103EEFD9BE294FD91DE5DF49A0AFF5224B2ED11E2",
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 6,
+        "right": 117,
+        "bottom": 117,
+        "width": 112,
+        "height": 112,
+        "pixels": 9845,
+        "edgeAlphaMax": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "top": 6,
+        "right": 117,
+        "bottom": 117,
+        "width": 112,
+        "height": 112,
+        "pixels": 9787,
+        "edgeAlphaMax": 0
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 6,
+        "right": 6,
+        "bottom": 6
+      },
+      "alpha": {
+        "transparent": 5531,
+        "opaque": 9787,
+        "min": 0,
+        "max": 255,
+        "edgeAlphaMax": 0
+      },
+      "canvasAnchor": [
+        62,
+        6
+      ],
+      "anchorKind": "wall",
+      "anchorBasis": "Top edge of actual alpha at wall top",
+      "worldAnchors": [
+        [
+          3.5,
+          -0.66
+        ]
+      ],
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "measuredSeatRiseProofPixels": null,
+      "measuredTabletopRiseProofPixels": null,
+      "physicalFloorGapProofPixels": null
+    }
+  },
+  "notes": [
+    "Minimum true-alpha clearance 4 native pixels. Extra one-axis padding preserves source proportions; all actual margins are recorded.",
+    "No browser, web retrieval, AI call, generated replacement art, character edit or shared-source edit during preparation."
+  ]
+}

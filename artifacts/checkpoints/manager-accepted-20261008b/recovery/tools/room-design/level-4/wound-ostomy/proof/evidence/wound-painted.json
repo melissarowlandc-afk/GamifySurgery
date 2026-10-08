@@ -1,0 +1,37 @@
+{
+  "kind": "Manager browser capture",
+  "origin": "http://127.0.0.1:4191",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "state": {
+    "scene": "room",
+    "view": "proposed",
+    "roomId": "wound-ostomy",
+    "patients": true,
+    "clinicians": true,
+    "contacts": false,
+    "bases": false,
+    "doors": [],
+    "backed": [],
+    "actors": true,
+    "routes": false,
+    "grid": false,
+    "imaging": true,
+    "occupied": false
+  },
+  "status": "Wound/Ostomy Clinic (Level 4 design) · doors: none · no room to the north\nEvery wall segment can still take a door (new items clear for their doorway)",
+  "contacts": "Real existing patient sits east on the side-view treatment chair with no leg rest; legs hang down.\nThe clinician sits west at the patient side, entirely above the native backless rolling stool.\nSolid lines show radius-clear walking; dotted teal links are static seat contacts.\nTwelve one-tile wall sections use the game model. The frozen west-middle recliner doorway exception is recorded.",
+  "check": {
+    "routes": 0,
+    "unreachable": [],
+    "conflicts": [],
+    "doorZone": [],
+    "passThrough": []
+  },
+  "proofManifestSha256": "70AB4DB0DB326AB59969F90AE57827EF824CC6E65DC3D31FC3EF44479DE09184"
+}

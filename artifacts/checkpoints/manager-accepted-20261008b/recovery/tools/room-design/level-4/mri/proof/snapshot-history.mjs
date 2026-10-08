@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const revision = process.argv[2];
+if (!revision || !/^[a-z0-9-]+$/.test(revision)) throw new Error('Supply a simple immutable history name');
+const destination = path.join(here, 'history', revision);
+if (fs.existsSync(destination)) throw new Error(`History ${revision} already exists; never overwrite it`);
+fs.mkdirSync(destination, { recursive: true });
+for (const file of ['index.html', 'lab.js', 'design-rooms.js', 'data.json', 'room-touchups.mjs', 'proof-manifest.json', 'asset-contract.json', 'README.md', 'registration-contract.json', 'actor-baseline.json']) if (fs.existsSync(path.join(here,file))) fs.copyFileSync(path.join(here, file), path.join(destination, file));
+fs.copyFileSync(path.resolve(here,'../assets/prepare-assets.mjs'),path.join(destination,'prepare-assets.mjs'));
+fs.cpSync(path.join(here, 'evidence'), path.join(destination, 'evidence'), { recursive: true });
+fs.cpSync(path.resolve(here, '../assets/prepared'), path.join(destination, 'prepared'), { recursive: true });
+console.log(`HISTORY ${revision} saved without changing sources or prior snapshots.`);

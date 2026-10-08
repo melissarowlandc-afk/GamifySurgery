@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "revision": "remove-chair-leg-rest",
+  "ownerInstruction": "Just remove the leg rest from the patient chair in the wound/ostomy clinic room because the patient sprite has their legs just straight down. Everything else is good and after that fix, this is approved.",
+  "status": "implemented",
+  "conditionalOwnerDesignApproval": true,
+  "approvalScope": "Visual mockup only; no game/runtime integration or clinical content approval.",
+  "baseline": "revisions/20261008-before-leg-rest-removal/baseline.json",
+  "baselineManifestSha256": "09ABFFAA1DEE149077B0B553439E6B39A3473527F054CFF82D9EA3C62276279B",
+  "selectedGeneration": "wound-recliner-02",
+  "chairHasLegRest": false,
+  "patientStillRepainted": false,
+  "clinicianPlacementUnchanged": true,
+  "walkingRoutesUnchangedRequired": true,
+  "browserValidation": "pending_manager_rerun",
+  "priorBrowserEvidence": "revisions/20261008-before-leg-rest-removal/proof/evidence/",
+  "completedChecks": [
+    "Built-in chair edit and native registration visually inspected",
+    "Existing patient refitted by 0.311 proof pixels with legs down",
+    "Clinician registration and all other selected art unchanged",
+    "576 reviewed walking paths identical; 499228 pixels outside chair/patient unchanged",
+    "Node validators passed before approval metadata completion"
+  ],
+  "ownerDesignApproval": true,
+  "ownerDesignApprovalBasis": "Owner explicitly approved the mockup after removal of the chair leg rest; requested fix is implemented. Manager reruns revised browser validation and captures."
+}

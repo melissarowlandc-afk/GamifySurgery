@@ -1,0 +1,314 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -23,6 +23,7 @@
+   validateDomainContext,
+ } from "./context";
+ import { selectRoutineClinicalCase } from "./clinical-selection";
++import { isGuidanceTopicId, recordGuidanceTopicExposure, recordGuidanceTopicUsage } from "./guidance-topics";
+ import {
+   EMPLOYEE_DISCUSSION_FIRST_DELAY_MINUTES,
+   EMPLOYEE_DISCUSSION_INTERVAL_MINUTES,
+@@ -142,6 +143,7 @@
+   interruptServiceOperationsForEmployeeDismissal,
+   interruptServiceOperationsForRoomSale,
+ } from "./service-operations";
++import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+ import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
+ import { advanceDiagnosticOrders, createDiagnosticPendingResult, encounterHasActiveDiagnosticWalk, encounterHasDiagnosticCareWork } from "./diagnostic-orders";
+@@ -1059,7 +1061,7 @@
+   const entrance = getPublicEntrance(state, context);
+   return state.rooms.some((room) => {
+     const definition = getRoomDefinition(room.roomDefinitionId, context);
+-    if (!definition) return false;
++    if (!definition || !isRoomOperationalForFacilityWork(state, room.id, context)) return false;
+     if (room.roomDefinitionId === "room.waiting") {
+       const doorKeys = new Set(state.doors.filter((door) => door.roomId === room.id).flatMap((door) => {
+         const cells = getDoorCells(door, room, definition);
+@@ -1093,10 +1095,17 @@
+     return { roomId: null, path: [], reservation: null };
+   }
+ 
++  const waitingPathTo = (target: GridPoint): GridPoint[] => {
++    const path = pathFromLocationToFacilityPoint(state, context, start, target, new Set());
++    // The street prefix alone is nonempty even when no public indoor route
++    // exists. Never reserve a chair unless the route reaches that exact spot.
++    return path.length > 0 && samePoint(path.at(-1)!, target) ? path : [];
++  };
+   const occupiedPoints = waitingOccupiedPointKeys(state, encounter.id);
+ 
+   const waitingRooms = state.rooms
+-    .filter((room) => room.roomDefinitionId === "room.waiting")
++    .filter((room) => room.roomDefinitionId === "room.waiting" &&
++      isRoomOperationalForFacilityWork(state, room.id, context))
+     .sort((left, right) => left.id.localeCompare(right.id))
+     .flatMap((room) => {
+       const definition = getRoomDefinition(
+@@ -1116,7 +1125,7 @@
+               : [];
+           }),
+       );
+-        return [{ room, definition, doorTileKeys }];
++      return [{ room, definition, doorTileKeys }];
+     });
+ 
+   // Every authored Waiting Room anchor corresponds to a chair that is visible
+@@ -1138,13 +1147,7 @@
+       ) {
+         continue;
+       }
+-      const path = pathFromLocationToFacilityPoint(
+-        state,
+-        context,
+-        start,
+-        anchor,
+-        new Set(),
+-      );
++      const path = waitingPathTo(anchor);
+       if (path.length > 0) {
+         return {
+           roomId: waitingRoom.id,
+@@ -1164,13 +1167,7 @@
+       if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) {
+         continue;
+       }
+-      const path = pathFromLocationToFacilityPoint(
+-        state,
+-        context,
+-        start,
+-        anchor,
+-        new Set(),
+-      );
++      const path = waitingPathTo(anchor);
+       if (path.length > 0) {
+         return {
+           roomId: entrance.room.id,
+@@ -1196,7 +1193,7 @@
+   ) => {
+     for (const room of rooms) {
+       const definition = getRoomDefinition(room.roomDefinitionId, context);
+-      if (!definition) continue;
++      if (!definition || !isRoomOperationalForFacilityWork(state, room.id, context)) continue;
+       const doorKeys = doorKeysFor(room, definition);
+       const excluded = new Set([
+         ...doorKeys,
+@@ -1212,7 +1209,7 @@
+       for (const point of getRoomNavigableTiles(room, definition, state.doors).sort((a, b) => a.y - b.y || a.x - b.x)) {
+         const key = `${point.x},${point.y}`;
+         if (occupiedPoints.has(key) || excluded.has(key)) continue;
+-        const path = pathFromLocationToFacilityPoint(state, context, start, point, new Set());
++        const path = waitingPathTo(point);
+         if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: point, kind } };
+       }
+     }
+@@ -1222,7 +1219,8 @@
+     .filter((room) =>
+       room.roomDefinitionId !== "room.waiting" &&
+       room.id !== entrance.room.id &&
+-      !isProtectedCareRoom(room),
++      !isProtectedCareRoom(room) &&
++      isRoomOperationalForFacilityWork(state, room.id, context),
+     )
+     .sort((a, b) => a.id.localeCompare(b.id));
+   for (const room of otherChairRooms) {
+@@ -1230,7 +1228,7 @@
+     if (!definition) continue;
+     for (const anchor of getRoomWaitingAnchors(room, definition)) {
+       if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) continue;
+-      const path = pathFromLocationToFacilityPoint(state, context, start, anchor, new Set());
++      const path = waitingPathTo(anchor);
+       if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: anchor, kind: "chair" } };
+     }
+   }
+@@ -1959,7 +1957,7 @@
+     humor.alertsTutorialAcknowledgedAtTick === null ||
+     humor.nextAmbientAlertTick === null ||
+     state.facilityTick < humor.nextAmbientAlertTick ||
+-    !bothTutorialEncountersResolved(state)
++    state.facilityLevel < 1 && !bothTutorialEncountersResolved(state)
+   ) {
+     return;
+   }
+@@ -2052,7 +2050,7 @@
+ ): GameState {
+   const secondTutorial =
+     state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+-  if (secondTutorial?.resolutionReason === null || !secondTutorial) {
++  if (state.facilityLevel < 1 && (secondTutorial?.resolutionReason === null || !secondTutorial)) {
+     return rejectCommand(
+       state,
+       command,
+@@ -6567,7 +6565,9 @@
+     return;
+   }
+   if (hasFrontDeskPatientPriority(state)) return;
+-  const receptionist = state.employees
++  const approach = getWaterCoolerApproachLocation(state, context);
++  if (!approach) return;
++  const plan = state.employees
+     .filter(
+       (employee) =>
+         employee.staffRoleDefinitionId === "staff.receptionist" &&
+@@ -6579,21 +6579,12 @@
+         ) &&
+         isEmployeeAssignedToOperationalRoom(state, employee.id, context),
+     )
+-    .sort(
+-      (left, right) =>
+-        left.hiredAtFacilityTick - right.hiredAtFacilityTick ||
+-        left.id.localeCompare(right.id),
+-    )[0];
+-  if (!receptionist) {
+-    return;
+-  }
+-
+-  const approach = getWaterCoolerApproachLocation(state, context);
+-  if (!approach) return;
+-  const path = findCareAwareFacilityPath(state, context, receptionist.location, approach);
+-  if (path.length === 0) {
+-    return;
+-  }
++    .map(employee => ({ employee, path: findCareAwareFacilityPath(state, context, employee.location, approach) }))
++    .filter(candidate => candidate.path.length > 0)
++    .sort((left, right) => left.path.length - right.path.length || left.employee.hiredAtFacilityTick - right.employee.hiredAtFacilityTick ||
++      left.employee.id.localeCompare(right.employee.id))[0];
++  if (!plan) return;
++  const { employee: receptionist, path } = plan;
+ 
+   receptionist.path = path;
+   receptionist.pathIndex = 0;
+@@ -6660,7 +6651,7 @@
+       continue;
+     }
+     // Level-three support owns these work clocks and their completion effects.
+-    if (task.kind === "take_break" || task.kind === "repair_room" || task.kind === "review_ambulatory_qi") continue;
++    if (task.kind === "take_break" || task.kind === "repair_room" || task.kind === "review_ambulatory_qi" || task.kind === "periop_attention") continue;
+     if (
+       (mode === "non_refill" && task.kind === "refill_water") ||
+       (mode === "refill_only" && task.kind !== "refill_water")
+@@ -6824,7 +6815,7 @@
+         left.id.localeCompare(right.id),
+     );
+   const config = context.balanceRelease.environment;
+-  for (const worker of workers) {
++  for (let assignment = 0; assignment < workers.length; assignment++) {
+     const roomCandidates =
+       state.environment.lastEvsRoomCleanupAtTick !== null &&
+       state.facilityTick - state.environment.lastEvsRoomCleanupAtTick <
+@@ -6844,7 +6835,7 @@
+             );
+     const candidates = [...litter, ...roomCandidates];
+     const selected = candidates
+-      .map((target) => {
++      .flatMap((target, priority) => {
+         const location =
+           "spawnedAtFacilityTick" in target
+             ? target.location
+@@ -6852,8 +6843,10 @@
+                 target,
+                 getRoomDefinition(target.roomDefinitionId, context)!,
+               );
+-        return {
++        return workers.filter(worker => !worker.facilityTask).map(worker => ({
+           target,
++          worker,
++          priority,
+           path: findCareAwareFacilityPath(
+             state,
+             context,
+@@ -6863,10 +6856,12 @@
+               "spawnedAtFacilityTick" in target ? target.roomId : target.id,
+             ]),
+           ),
+-        };
++        }));
+       })
+-      .find(({ path }) => path.length > 0);
++      .filter(({ path }) => path.length > 0)
++      .sort((left, right) => left.priority - right.priority || left.path.length - right.path.length || left.worker.id.localeCompare(right.worker.id))[0];
+     if (!selected) continue;
++    const worker = selected.worker;
+     worker.path = selected.path;
+     worker.pathIndex = 0;
+     worker.lastMovedAtFacilityTick = state.facilityTick;
+@@ -7958,7 +7953,8 @@
+  * Owner rule (2026-10-07): a waiting patient does not stand while a waiting
+  * chair is free. Standing and hallway patients, including ones walking back
+  * from the bathroom or a shop, move to a free chair; the closest one wins.
+- * Patients with a pending result keep their frozen test travel untouched.
++ * Onsite external-result waiters may also move; frozen test travel and local
++ * resource-bound care retain movement ownership.
+  */
+ function reseatStandingWaitingPatients(
+   state: GameState,
+@@ -7967,15 +7963,28 @@
+   const gridHeight = context.balanceRelease.facility.gridHeight;
+   const candidates = Object.values(state.encounters).filter((encounter) => {
+     const reservation = encounter.waitingDestination;
++    const pending = encounter.pendingResult;
++    const activeOperations = state.serviceOperations.filter((operation) => operation.actorKind === "encounter" &&
++      operation.actorId === encounter.id && operation.status !== "completed" && operation.status !== "cancelled");
++    const resourceQueueWaiter = activeOperations.length > 0 && activeOperations.every((operation) =>
++      operation.status === "waiting_for_resources" && operation.reservedRoomInstanceIds.length === 0 &&
++      !operation.periopBedReservation);
++    const stationaryResultWaiter = encounter.lifecycle === "active_pending_result" &&
++      pending?.patientRemainsOnsite === true && pending.patientTravel === null &&
++      pending.offsiteTravel === null &&
++      (!pending.localServiceOperation || pending.localServiceOperation.status === "external_processing") &&
++      (pending.externalProcessingOnly === true || pending.localServiceOperation?.status === "external_processing" ||
++        Boolean(pending.timingPhases?.length && !pending.timingPhases.some((phase) =>
++          phase.resourceBound && state.facilityTick < phase.endsAtTick)));
+     if (
+       (reservation?.kind !== "standing" && reservation?.kind !== "public_wander") ||
+       (encounter.lifecycle !== "waiting_unopened" &&
+-        encounter.lifecycle !== "active_action_required") ||
++        encounter.lifecycle !== "active_action_required" && !stationaryResultWaiter && !resourceQueueWaiter) ||
+       encounter.patientMovement !== null ||
+       encounter.patientLocation === null ||
+       encounter.patientLocation.y >= gridHeight ||
+       state.openChartEncounterId === encounter.id ||
+-      encounterHasActiveServiceOperation(state, encounter.id)
++      (activeOperations.length > 0 && !resourceQueueWaiter)
+     ) {
+       return false;
+     }
+@@ -8842,6 +8851,7 @@
+   maybeEmitEmployeeDepartureRiskWarnings(next, context);
+   prioritizeReceptionistPatients(next, context);
+   maybeAssignReceptionistWaterRefill(next, context);
++  releaseLegacyPeriopCoverage(next);
+   advanceLevelThreeSupport(next, context);
+     advanceEmployeeMovement(next, context);
+     advanceDepartingEmployees(next, context);
+@@ -10957,6 +10967,14 @@
+       );
+     case "ACKNOWLEDGE_ALERTS_TUTORIAL":
+       return reduceAcknowledgeAlertsTutorial(state, command);
++    case "RECORD_GUIDANCE_TOPIC_EXPOSURE": {
++      if (!Array.isArray(command.topicIds) || command.topicIds.some((id) => typeof id !== "string" || !isGuidanceTopicId(id)))
++        return rejectCommand(state, command, "Unknown guidance topic.");
++      const next = clonePlain(state);
++      next.alertHumor.guidanceTips ??= createGuidanceTipsState(next.facilityTick);
++      recordGuidanceTopicExposure(next, command.topicIds);
++      return recordReceipt(next, command, "applied", "Guidance exposure saved.");
++    }
+     case "SET_PAUSED": {
+       const next = clonePlain(state);
+       next.paused = command.paused;
+@@ -11125,6 +11143,16 @@
+   if (next === state) {
+     return next;
+   }
++  recordGuidanceTopicUsage(next, command);
++  // Compatibility acknowledgement is automatic after filing both visits or
++  // advancing. Retain every existing deadline/cooldown instead of a new burst.
++  if (next.operationReceipts[command.operationId]?.status === "applied" &&
++    next.alertHumor.alertsTutorialAcknowledgedAtTick === null &&
++    (next.facilityLevel >= 1 || [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID]
++      .every((id) => next.encounters[id]?.lifecycle === "resolved"))) {
++    next.alertHumor.alertsTutorialAcknowledgedAtTick = next.facilityTick;
++    next.alertHumor.nextAmbientAlertTick ??= next.facilityTick + getAmbientDelay(next, "first");
++  }
+   // An unpaused tick already synchronized both condition histories as its
+   // final simulation step. A second whole-facility evaluation of the same state
+   // only adds per-minute main-thread work.

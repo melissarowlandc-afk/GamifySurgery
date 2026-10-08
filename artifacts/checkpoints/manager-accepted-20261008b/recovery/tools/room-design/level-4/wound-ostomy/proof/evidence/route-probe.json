@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "states": 112,
+  "routes": 576,
+  "samples": 93928,
+  "seatingTransitions": 384,
+  "monotonicDoorPairs": 66,
+  "actorRadius": 0.18,
+  "step": 0.025,
+  "limitations": "Closed, every single door and all-door states across 8 backing masks; monotonic pairs. Not exhaustive 4096 door subsets. Frozen WB recliner threshold pass-through exception is explicit; static seating is not a walking-circle route.",
+  "failures": []
+}

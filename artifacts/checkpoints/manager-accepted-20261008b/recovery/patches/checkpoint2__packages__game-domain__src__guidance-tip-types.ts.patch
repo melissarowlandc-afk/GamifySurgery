@@ -1,0 +1,9 @@
+--- a/packages/game-domain/src/guidance-tip-types.ts
++++ b/packages/game-domain/src/guidance-tip-types.ts
+@@ -62,4 +62,6 @@
+   taughtServiceSetups: string[];
+   sequence: number;
+   history: GuidanceTipReceipt[];
++  /** Additive mechanical topic ledger; old cadence/history is left intact. */
++  topicActivity?: Record<string, { exposedAtTick?: number; usedAtTick?: number }>;
+ }

@@ -1,0 +1,56 @@
+{
+  "kind": "Manager browser capture",
+  "origin": "http://127.0.0.1:4191",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "state": {
+    "scene": "room",
+    "view": "proposed",
+    "roomId": "pediatric-exam",
+    "parents": true,
+    "children": true,
+    "clinicians": true,
+    "contacts": true,
+    "bases": true,
+    "doors": [
+      "N2",
+      "S2",
+      "WA",
+      "EC"
+    ],
+    "backed": [],
+    "actors": true,
+    "routes": true,
+    "grid": true,
+    "imaging": true,
+    "occupied": false
+  },
+  "status": "Pediatric Exam (Level 4 design) · doors: N2, S2, WA, EC · no room to the north\nDoor WA uses the frozen layout pass-through rule for pedsTable.\nDoor EC uses the frozen layout pass-through rule for parentChair.\nEvery wall segment can still take a door (new items clear for their doorway)\n16/16 door→anchor routes reachable\nNo new decor sits on a live route",
+  "contacts": "Real pediatric still .021 sits east on the table; clinician sits west entirely above the derived backless rolling stool.\nThe parent has a designated chair in this room, behind the approved front armrest.\nSolid route lines show radius-clear walking; dotted teal lines show separate static seat contacts.\nTwelve one-tile wall sections use the game model for this 3x3 room. Source-layout fixed furniture pass-through exceptions are shown explicitly.",
+  "check": {
+    "routes": 16,
+    "unreachable": [],
+    "conflicts": [],
+    "doorZone": [],
+    "passThrough": [
+      {
+        "door": "WA",
+        "fixture": "pedsTable",
+        "alreadyAllowed": true,
+        "basis": "Frozen source layout doorThresholdExceptions on the original one-tile wall section."
+      },
+      {
+        "door": "EC",
+        "fixture": "parentChair",
+        "alreadyAllowed": true,
+        "basis": "Frozen source layout doorThresholdExceptions on the original one-tile wall section."
+      }
+    ]
+  },
+  "proofManifestSha256": "7C99DB2D333F4F7D081690A6DBF4B2A80FEDDFAE46C91C8B90109D981AD9A5FD"
+}

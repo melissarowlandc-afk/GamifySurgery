@@ -1,0 +1,2295 @@
+{
+  "schemaVersion": 1,
+  "method": "Dependency-free exact in-memory unified patch forward/reverse/reapply; no Git writes",
+  "contracts": [
+    {
+      "id": "checkpoint2__apps__player__src__App.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/App.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/App.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__App.tsx.patch",
+      "baseSha256": "49ba3f6ab0404d5dd1a5bd93f0d713cac62288fbf3771875b0f7c5a627c2fb68",
+      "acceptedSha256": "5b33055a7dbc9c45a48f5c701442b5406866c13ad0532f26c28baac61727367f",
+      "acceptedBytes": 12317,
+      "patchSha256": "22b2eabf64cb6493922e30f0c72525eb717d7c512be7d9ec83125a28ed85645d",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__App.tsx",
+        "sha256": "49ba3f6ab0404d5dd1a5bd93f0d713cac62288fbf3771875b0f7c5a627c2fb68"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "5b33055a7dbc9c45a48f5c701442b5406866c13ad0532f26c28baac61727367f"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__AppShell.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/AppShell.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__AppShell.tsx.patch",
+      "baseSha256": "e419e9a057d7c2055bb0fdd2d5ee6fb18054a00a6f47146f20e7d2fc847f5d93",
+      "acceptedSha256": "e0820aac817f48de77b0e79828c75f8cd4ec6a70931fd07128965f1074dc0824",
+      "acceptedBytes": 40728,
+      "patchSha256": "ab6ccd4dc953f6acb2c187099e68c96c9d29751bed36eefc402d665a5ff203f2",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__AppShell.tsx",
+        "sha256": "e419e9a057d7c2055bb0fdd2d5ee6fb18054a00a6f47146f20e7d2fc847f5d93"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "e0820aac817f48de77b0e79828c75f8cd4ec6a70931fd07128965f1074dc0824"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__art__bitmapAssetManifest.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/art/bitmapAssetManifest.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/art/bitmapAssetManifest.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__art__bitmapAssetManifest.test.ts.patch",
+      "baseSha256": "02b5ec9cb5a36b8f7fab13702ffe18cb4a9a3e11837a8c153f961084333e29a5",
+      "acceptedSha256": "ca8d2a8eaa1557cefa2d3b0512e801f74d9c7e218850270e3de1710c99a30e71",
+      "acceptedBytes": 14371,
+      "patchSha256": "d8e7b6366513653ad1a773bbcc73564df605789ad9e7b583bb77056466539ba0",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/art/bitmapAssetManifest.test.ts",
+        "sha256": "02b5ec9cb5a36b8f7fab13702ffe18cb4a9a3e11837a8c153f961084333e29a5"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "ca8d2a8eaa1557cefa2d3b0512e801f74d9c7e218850270e3de1710c99a30e71"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__art__bitmapAssetManifest.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/art/bitmapAssetManifest.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__art__bitmapAssetManifest.ts.patch",
+      "baseSha256": "45b723d919bb01f5cb451efe182b4e4c16059049eb28315279eea7a436792285",
+      "acceptedSha256": "023ab0d4e56eeb89e5573ff2e46dfa4a82930c337c3a4b6043fd2687437fd353",
+      "acceptedBytes": 58834,
+      "patchSha256": "8c8c624de346ed279e50018fd3cdc264007af463dc340bed53149a3790e5a0c2",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/art/bitmapAssetManifest.ts",
+        "sha256": "45b723d919bb01f5cb451efe182b4e4c16059049eb28315279eea7a436792285"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "023ab0d4e56eeb89e5573ff2e46dfa4a82930c337c3a4b6043fd2687437fd353"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__FacilityCanvas.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/FacilityCanvas.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__FacilityCanvas.tsx.patch",
+      "baseSha256": "c5290bdf5e8b8859c1d4ac95db97dfccc2d627d0376e129f74622196bba19b3a",
+      "acceptedSha256": "53d2acf9319319da0695af7120b9a59bc480f73767a909fb9e5fc3da37236f5f",
+      "acceptedBytes": 9660,
+      "patchSha256": "9c57aca3140b3c186d474a89a6f61298b334883d2a56c9f6ddc0c0b406ab9802",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/facility/FacilityCanvas.tsx",
+        "sha256": "c5290bdf5e8b8859c1d4ac95db97dfccc2d627d0376e129f74622196bba19b3a"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Remember map camera",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "53d2acf9319319da0695af7120b9a59bc480f73767a909fb9e5fc3da37236f5f"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__FacilityScene.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__FacilityScene.ts.patch",
+      "baseSha256": "8b3ab41cbd06059b2e2327d7e5faf84931ca7dd5c61c347039ce2f50cec678d1",
+      "acceptedSha256": "e24e163f6ea8612e7e5ddd6ee82b87b9b2b65cfaf72342f2f35501d797d70a36",
+      "acceptedBytes": 336352,
+      "patchSha256": "9da5709251d02da4d642505a4a620d530cd1f3e100dfd6ac47833d393c52836f",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__facility__FacilityScene.ts",
+        "sha256": "8b3ab41cbd06059b2e2327d7e5faf84931ca7dd5c61c347039ce2f50cec678d1"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Backless rolling stools",
+          "Layering worker handoff - item 1 (2026-10-08)",
+          "Peri-op companion chair rendering",
+          "changed first-archive accepted runtime target",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "e24e163f6ea8612e7e5ddd6ee82b87b9b2b65cfaf72342f2f35501d797d70a36"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__defaultCamera.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/defaultCamera.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/defaultCamera.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__defaultCamera.ts.patch",
+      "baseSha256": "ea22ffee1a9b718824a416e843da50e44636783342c42cfbf34caac013e94ef8",
+      "acceptedSha256": "2c9be6c44591e6122eed5b74d57440fe94404da2b66c39a174b94ff12d0d8f32",
+      "acceptedBytes": 851,
+      "patchSha256": "f16602808dac197ddeea9aa640dea69f3da07014f44e18df856cf8c40184c389",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/facility/defaultCamera.ts",
+        "sha256": "ea22ffee1a9b718824a416e843da50e44636783342c42cfbf34caac013e94ef8"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Remember map camera",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "2c9be6c44591e6122eed5b74d57440fe94404da2b66c39a174b94ff12d0d8f32"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__exteriorLandscape.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/exteriorLandscape.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/exteriorLandscape.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__exteriorLandscape.test.ts.patch",
+      "baseSha256": "1cfe77d6e4eca8852aff6f5590a6780214ad66571b7e0f2103ba816e4e8c94d4",
+      "acceptedSha256": "d1c6402fa557b7a88c8b512a0f68d04ceabd857bc26db87ac59d00da64c4c9f9",
+      "acceptedBytes": 10938,
+      "patchSha256": "e708f5a7f859477cdcf0fb9d9b523a8cdee946c39085fe66f41126cf2a8f5e49",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/facility/exteriorLandscape.test.ts",
+        "sha256": "1cfe77d6e4eca8852aff6f5590a6780214ad66571b7e0f2103ba816e4e8c94d4"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "d1c6402fa557b7a88c8b512a0f68d04ceabd857bc26db87ac59d00da64c4c9f9"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__exteriorLandscape.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/exteriorLandscape.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/exteriorLandscape.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__exteriorLandscape.ts.patch",
+      "baseSha256": "23d19773e39787b57b197f69d770b2cba7ee656098103d2d5f2bebd370d83996",
+      "acceptedSha256": "29f127a6997e15eccb1cf803d2a8ca619b34843143fb20491a4322e14713a1aa",
+      "acceptedBytes": 5096,
+      "patchSha256": "7e911d0ed4c5ea29d106b7e54c7285c79980ac6e42a09c34efeb94e2bd728927",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/facility/exteriorLandscape.ts",
+        "sha256": "23d19773e39787b57b197f69d770b2cba7ee656098103d2d5f2bebd370d83996"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "29f127a6997e15eccb1cf803d2a8ca619b34843143fb20491a4322e14713a1aa"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__facility__types.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/facility/types.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__facility__types.ts.patch",
+      "baseSha256": "4895c8eadf868d26a2f6cae6559308b0b3029b3be1f4683f24bdafee69a1157c",
+      "acceptedSha256": "6fe527838714ecc4d5794efb726e5fef85d12b46d26770b94f375fcfb4e6946a",
+      "acceptedBytes": 12528,
+      "patchSha256": "df7a3b3f7beed1ea012877ee5456429a7cc3ee2bc7aceae0e2f47c1389bf9279",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__facility__types.ts",
+        "sha256": "4895c8eadf868d26a2f6cae6559308b0b3029b3be1f4683f24bdafee69a1157c"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08) (resolved shortened path)",
+          "Peri-op companion chair rendering",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/procedural-staffing/source-audit.json"
+        ],
+        "currentAcceptedCaptureSha256": "6fe527838714ecc4d5794efb726e5fef85d12b46d26770b94f375fcfb4e6946a"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__alertViewModels.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/alertViewModels.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/alertViewModels.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__alertViewModels.test.ts.patch",
+      "baseSha256": "7a6bc9358fb65e5f37bc93c5de44e50a2f9be20ef9537739785412447dae2cdc",
+      "acceptedSha256": "169dcc3713c71d101a99ad5f031971829c92496b38b8cb80753ed6ce705dc1fe",
+      "acceptedBytes": 57714,
+      "patchSha256": "e59aa050a7e02eaa23b803bfaaba5c3b3711970dbc628a5646222af9605fb163",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/alertViewModels.test.ts",
+        "sha256": "7a6bc9358fb65e5f37bc93c5de44e50a2f9be20ef9537739785412447dae2cdc"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "169dcc3713c71d101a99ad5f031971829c92496b38b8cb80753ed6ce705dc1fe"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__alertViewModels.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/alertViewModels.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/alertViewModels.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__alertViewModels.ts.patch",
+      "baseSha256": "b3b1c73024cba37b9809c968b2ea1e964a2ad43fe4caf8830bfacf3b1146a486",
+      "acceptedSha256": "48ea3c63e29b7137a790cb8d1dd1f5337690ca763f9f8a14a68ca7bc1022c804",
+      "acceptedBytes": 56188,
+      "patchSha256": "8b79b955bd6a954744e414c11c8d3456101463bf74c693dcb30daad0ca659291",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__session__alertViewModels.ts",
+        "sha256": "b3b1c73024cba37b9809c968b2ea1e964a2ad43fe4caf8830bfacf3b1146a486"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "48ea3c63e29b7137a790cb8d1dd1f5337690ca763f9f8a14a68ca7bc1022c804"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__alertsEventsViewModel.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/alertsEventsViewModel.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/alertsEventsViewModel.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__alertsEventsViewModel.ts.patch",
+      "baseSha256": "dfb4143b43c55226781ae3151fd41c1c8d89af8acc6f863514e44d6ee366d833",
+      "acceptedSha256": "58b9c1044c9dc238f39a6b55a0bd82bed356eb86d8192d9cfbf3dabdd2bec6a3",
+      "acceptedBytes": 27490,
+      "patchSha256": "6804001da8f93f87578bad0acd84ae6c134d5938ee1f857668af33643a4a903e",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/apps/player/src/session/alertsEventsViewModel.ts",
+        "sha256": "dfb4143b43c55226781ae3151fd41c1c8d89af8acc6f863514e44d6ee366d833"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "58b9c1044c9dc238f39a6b55a0bd82bed356eb86d8192d9cfbf3dabdd2bec6a3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__buildViewModels.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/buildViewModels.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/buildViewModels.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__buildViewModels.test.ts.patch",
+      "baseSha256": "91cfcb0f1950cd4c3ef0b619a8bd72ae43de999587c0a95f13eeecd6bb8dbaeb",
+      "acceptedSha256": "ad86067c88b4b71583a6168801eae8d3909d9d6af8ee9382e269ef083db853d8",
+      "acceptedBytes": 19701,
+      "patchSha256": "e8151e8956dda8bf0da1207e0219107813206431e376bc60eafca2d51d91e6f4",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/buildViewModels.test.ts",
+        "sha256": "91cfcb0f1950cd4c3ef0b619a8bd72ae43de999587c0a95f13eeecd6bb8dbaeb"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Campaign performance investigation and safe hotspot fixes - Sol worker handoff (2026-10-08) (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "ad86067c88b4b71583a6168801eae8d3909d9d6af8ee9382e269ef083db853d8"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__chartFeedbackPresentation.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__chartFeedbackPresentation.test.tsx.patch",
+      "baseSha256": "c8baa97052a534e8c39ef4b7d444fe470aba15e2cc311bf83518045d15b4faf6",
+      "acceptedSha256": "65b128f0414b3cb7e7cd4ccd6c6274520127dd58d4430e098dd3102f55b5c779",
+      "acceptedBytes": 10471,
+      "patchSha256": "46e3597c5d2a3bae32386bf0a4e3d9763df3c951a9ef3130e13acf94f41ef5ae",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/chartFeedbackPresentation.test.tsx",
+        "sha256": "c8baa97052a534e8c39ef4b7d444fe470aba15e2cc311bf83518045d15b4faf6"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "65b128f0414b3cb7e7cd4ccd6c6274520127dd58d4430e098dd3102f55b5c779"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__economyViewModels.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/economyViewModels.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/economyViewModels.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__economyViewModels.test.ts.patch",
+      "baseSha256": "ec5f57dc89509b4a2db228ac414343dd75cffcb87cf084ce05de1cef1a934235",
+      "acceptedSha256": "23a50803ee97e646a5979bf996d5df0ff881b5977eefa95f62546ab82926f346",
+      "acceptedBytes": 7897,
+      "patchSha256": "188e13f64a95b6a8efd83e2a5785d6bc388206cce718068f7f4c8b2876551b69",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/economyViewModels.test.ts",
+        "sha256": "ec5f57dc89509b4a2db228ac414343dd75cffcb87cf084ce05de1cef1a934235"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Peri-op companion chair rendering (resolved shortened path)",
+          "Staff dispatch fairness across roles (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "23a50803ee97e646a5979bf996d5df0ff881b5977eefa95f62546ab82926f346"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__localCampaignRepository.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/localCampaignRepository.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/localCampaignRepository.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__localCampaignRepository.test.ts.patch",
+      "baseSha256": "f2e6bc4232a3045fa38d952a263d6934733c595450bc19375061d6e4d9d8f009",
+      "acceptedSha256": "ca623012d256956e355be7552134581ed4a226e085312ec18c4cdc3a2a8d4758",
+      "acceptedBytes": 43560,
+      "patchSha256": "6f857a50cc4305f8324fe9c8bb16bf2be1205d10ae48e78358eea48b282673eb",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/localCampaignRepository.test.ts",
+        "sha256": "f2e6bc4232a3045fa38d952a263d6934733c595450bc19375061d6e4d9d8f009"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Remember map camera (resolved shortened path)",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "ca623012d256956e355be7552134581ed4a226e085312ec18c4cdc3a2a8d4758"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__localCampaignRepository.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/localCampaignRepository.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/localCampaignRepository.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__localCampaignRepository.ts.patch",
+      "baseSha256": "492cc33469a84c64b594801b2cc73deeff7f3ed3e2329e662fcc34cd3889ec13",
+      "acceptedSha256": "3e1af49b899a6e2a2da22c44eb2c1312f3b3e820782fa77927fbf8c54ad433eb",
+      "acceptedBytes": 47795,
+      "patchSha256": "54b55dde113c94ad751a474270b98e932033725d6206af997342da7b992a339a",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/localCampaignRepository.ts",
+        "sha256": "492cc33469a84c64b594801b2cc73deeff7f3ed3e2329e662fcc34cd3889ec13"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "3e1af49b899a6e2a2da22c44eb2c1312f3b3e820782fa77927fbf8c54ad433eb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__patientMovementViewModels.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/patientMovementViewModels.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/patientMovementViewModels.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__patientMovementViewModels.test.ts.patch",
+      "baseSha256": "4869a41908a77ca0d93b5dc0571b7accd0020c57b33056e4ed7f70102fb04f55",
+      "acceptedSha256": "3d82efa302d52b8ed88549af74478e4d991146756aeb85f4870e24f752a1c1cd",
+      "acceptedBytes": 26890,
+      "patchSha256": "964a1437d950f9b077c85da06bfacd22cfaf58c2bc4ff1011bbc14d49bbc63d0",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/patientMovementViewModels.test.ts",
+        "sha256": "4869a41908a77ca0d93b5dc0571b7accd0020c57b33056e4ed7f70102fb04f55"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Staff dispatch fairness across roles (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "3d82efa302d52b8ed88549af74478e4d991146756aeb85f4870e24f752a1c1cd"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__prototypeStorage.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/prototypeStorage.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/prototypeStorage.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__prototypeStorage.test.ts.patch",
+      "baseSha256": "7197e1f4f7c5210432f81723dd8980ab3220b1e78b9688de01bc2331be183252",
+      "acceptedSha256": "9a35c44c10f1896e804499e8d3e1d08e77f6a5ec25f55f5df9406bf034cd312c",
+      "acceptedBytes": 16980,
+      "patchSha256": "57e5e6c1a2f9a52e0aa0ccd462330798bb7b23c3ac07b2b25e90d7ed1161af1c",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/prototypeStorage.test.ts",
+        "sha256": "7197e1f4f7c5210432f81723dd8980ab3220b1e78b9688de01bc2331be183252"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Remember map camera (resolved shortened path)",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "9a35c44c10f1896e804499e8d3e1d08e77f6a5ec25f55f5df9406bf034cd312c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__prototypeStorage.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/prototypeStorage.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/prototypeStorage.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__prototypeStorage.ts.patch",
+      "baseSha256": "08330afaf1fe24bb4a9f73ffaca8075059c2d8a2dcd1e236e4b59150fc6dad58",
+      "acceptedSha256": "79f4621f075ad79cb7fba4c223b3a339da04b72ae137b8f879f6c64fec28b0eb",
+      "acceptedBytes": 22385,
+      "patchSha256": "b58e02d356d92c59e6464d4cd37a1be54e882977566c2bd5eb303af9dd5c70a2",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/prototypeStorage.ts",
+        "sha256": "08330afaf1fe24bb4a9f73ffaca8075059c2d8a2dcd1e236e4b59150fc6dad58"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "79f4621f075ad79cb7fba4c223b3a339da04b72ae137b8f879f6c64fec28b0eb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts.patch",
+      "baseSha256": "a988847411da1eed954bc7e1c0876befc03e0f089ab67aa8ce4d311ec7dbe5df",
+      "acceptedSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "acceptedBytes": 36741,
+      "patchSha256": "60d05da1fa576a95e0c22ad1ee06c0fd227bdeaa85d6b58eabc2ceaa9c3606fd",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "sha256": "a988847411da1eed954bc7e1c0876befc03e0f089ab67aa8ce4d311ec7dbe5df"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Backless rolling stools (resolved shortened path)",
+          "Campaign performance investigation and safe hotspot fixes - Sol worker handoff (2026-10-08) (resolved shortened path)",
+          "Compact Goals and Alerts (resolved shortened path)",
+          "Layering worker handoff - item 1 (2026-10-08) (resolved shortened path)",
+          "Peri-op companion chair rendering (resolved shortened path)",
+          "Peri-op nurse attention queue (resolved shortened path)",
+          "Peri-op nurse queue: legacy coverage release (owner save) (resolved shortened path)",
+          "Peri-op nurse queue: owner feedback fix (resolved shortened path)",
+          "Peri-op nurse queue: second fix (resolved shortened path)",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback) (resolved shortened path)",
+          "Radiologist read income (resolved shortened path)",
+          "Radiologist read income: additive (resolved shortened path)",
+          "Remember map camera",
+          "Second radiologist idle: fix (resolved shortened path)",
+          "Staff dispatch fairness across roles",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__tutorialViewModels.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/tutorialViewModels.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/tutorialViewModels.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__tutorialViewModels.test.ts.patch",
+      "baseSha256": "2b24c70438ddf56a1dbf561d5bc4cecf8caf5f9e7d97779c6d3dfa4f0a97a47f",
+      "acceptedSha256": "1dcc794c53e4c7ff30ce75bfca8079a7a03ba7cd7d870bf5160e17be61956aeb",
+      "acceptedBytes": 17849,
+      "patchSha256": "dba074786ac98a24d6ca797227e99415115ca2b7b30b3ec61378ca7beaec6f43",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/tutorialViewModels.test.ts",
+        "sha256": "2b24c70438ddf56a1dbf561d5bc4cecf8caf5f9e7d97779c6d3dfa4f0a97a47f"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "1dcc794c53e4c7ff30ce75bfca8079a7a03ba7cd7d870bf5160e17be61956aeb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__tutorialViewModels.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/tutorialViewModels.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__tutorialViewModels.ts.patch",
+      "baseSha256": "c70c3d6cab14523e64b4ec7983920ea2b4689e419e5435fac79a674460baad9b",
+      "acceptedSha256": "acbec9475fc5c360f98470b8907e8c0666e79af54997df9deb2c5ef1d59c27d7",
+      "acceptedBytes": 17191,
+      "patchSha256": "ccd76db49313c42a1e3c47402b9a4b28f4e6e4aadfe6efba0726b2a04320fc94",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/session/tutorialViewModels.ts",
+        "sha256": "c70c3d6cab14523e64b4ec7983920ea2b4689e419e5435fac79a674460baad9b"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "acbec9475fc5c360f98470b8907e8c0666e79af54997df9deb2c5ef1d59c27d7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__usePrototypeSession.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__usePrototypeSession.ts.patch",
+      "baseSha256": "61ae295e2552126ea9de944241e1e4f1bafc968131c59442733b7a0b3efad15e",
+      "acceptedSha256": "9df8de1ecdddf3c6c70971bbf02953a89544619013b8ce9025dd66dc62974d4b",
+      "acceptedBytes": 74446,
+      "patchSha256": "e3151a2349a0233884d86f84a18bc95ead72e356f62ccdddd73393afbedbf088",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__session__usePrototypeSession.ts",
+        "sha256": "61ae295e2552126ea9de944241e1e4f1bafc968131c59442733b7a0b3efad15e"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Remember map camera",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "9df8de1ecdddf3c6c70971bbf02953a89544619013b8ce9025dd66dc62974d4b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__session__viewModels.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/session/viewModels.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__session__viewModels.ts.patch",
+      "baseSha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5",
+      "acceptedSha256": "b36bc1652926946b2f835a2ad235044c2da0f6a3652aab31a2f5a8d44b6c34c9",
+      "acceptedBytes": 128113,
+      "patchSha256": "a080d798ab87e0d59f8ebd16ba30ad2d836c3cf19aad69f61fe650e95027ef13",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__session__viewModels.ts",
+        "sha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Campaign performance investigation and safe hotspot fixes - Sol worker handoff (2026-10-08)",
+          "Companions worker handoff — item 9 (2026-10-08) (resolved shortened path)",
+          "Peri-op companion chair rendering",
+          "Peri-op nurse attention queue",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+          "Radiologist read income (resolved shortened path)",
+          "Radiologist read income: additive (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)",
+          "worker hash receipt: .local-dev/performance-20261008/source-audit.json",
+          "worker hash receipt: .local-dev/procedural-staffing/source-audit.json"
+        ],
+        "currentAcceptedCaptureSha256": "b36bc1652926946b2f835a2ad235044c2da0f6a3652aab31a2f5a8d44b6c34c9"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__styles__clinicPresentation.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/styles/clinicPresentation.test.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/styles/clinicPresentation.test.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__styles__clinicPresentation.test.ts.patch",
+      "baseSha256": "431c32b0b7372ed68eb2529cfa188015feb8a5a74f3a74342ff972fde98513eb",
+      "acceptedSha256": "7374d252de21110c49e90f69212c552a62d76535120cbe240f7a07111c9af792",
+      "acceptedBytes": 7023,
+      "patchSha256": "d05c01274ad1056102d53c7db601806b4ea86aed4bdfcd3d5f2cf58493333d1d",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/apps/player/src/styles/clinicPresentation.test.ts",
+        "sha256": "431c32b0b7372ed68eb2529cfa188015feb8a5a74f3a74342ff972fde98513eb"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Compact Goals and Alerts (resolved shortened path)",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "7374d252de21110c49e90f69212c552a62d76535120cbe240f7a07111c9af792"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__styles__global.css",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/styles/global.css",
+      "base": "recovery/bases/checkpoint2/apps/player/src/styles/global.css",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__styles__global.css.patch",
+      "baseSha256": "8b5b9acc474e2b0f45a88046c7aa60a8313c0fc80c41f342aa01483c002a2fcc",
+      "acceptedSha256": "2053fefb6d57cc36dcd6b72491305967dcc635568486f21d010a62aff9ec4227",
+      "acceptedBytes": 176449,
+      "patchSha256": "ed319991c94cfa07febc7a1840e62e3b93a4fad43de5e2bb4a165e79e814e413",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__styles__global.css",
+        "sha256": "8b5b9acc474e2b0f45a88046c7aa60a8313c0fc80c41f342aa01483c002a2fcc"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Compact Goals and Alerts",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "2053fefb6d57cc36dcd6b72491305967dcc635568486f21d010a62aff9ec4227"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__ChartPanel.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/ChartPanel.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/ChartPanel.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__ChartPanel.test.tsx.patch",
+      "baseSha256": "532a55db01efb8114797b5062f7ea705a92a67f2a0bc43dcd677945b651a1a93",
+      "acceptedSha256": "51c901f2bd256590b03a141d49462dae908a923df7621eaaa6b9e6e2cc82bac0",
+      "acceptedBytes": 5516,
+      "patchSha256": "17e6dc4a20dbf88c888df2271458a61bfbf7d04006f71481fb73cb47996df904",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/ChartPanel.test.tsx",
+        "sha256": "532a55db01efb8114797b5062f7ea705a92a67f2a0bc43dcd677945b651a1a93"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "51c901f2bd256590b03a141d49462dae908a923df7621eaaa6b9e6e2cc82bac0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__ChartPanel.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/ChartPanel.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__ChartPanel.tsx.patch",
+      "baseSha256": "0613aa8ffc24d767f5734b4f241eb667160ed0c855039b412359d821317c5ec9",
+      "acceptedSha256": "8d67a925d3c015be84877a4f2abd101f590f7ecfd0e18a3af19915be2bd3f4d1",
+      "acceptedBytes": 36752,
+      "patchSha256": "f476585602fc6245bc37bb92271829bb0a85076dfbf50db5decf79be6e3f8acc",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "ui-font__apps__player__src__ui__ChartPanel.tsx",
+        "sha256": "0613aa8ffc24d767f5734b4f241eb667160ed0c855039b412359d821317c5ec9"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "8d67a925d3c015be84877a4f2abd101f590f7ecfd0e18a3af19915be2bd3f4d1"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__EventMessageBoard.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/EventMessageBoard.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/EventMessageBoard.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__EventMessageBoard.test.tsx.patch",
+      "baseSha256": "c72d4dcb7b180ea9b1c89a123160bcab8a293e6efbcb47456a32d0b83337c9e0",
+      "acceptedSha256": "ebf51ef6851870e2592a172430dd3d231b2386165bc0b04ea4bc67f1b78e18e8",
+      "acceptedBytes": 8734,
+      "patchSha256": "f86321ff4e328328958a1d8367cba779e0311892778be987b6d1b8213406b11a",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/EventMessageBoard.test.tsx",
+        "sha256": "c72d4dcb7b180ea9b1c89a123160bcab8a293e6efbcb47456a32d0b83337c9e0"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Compact Goals and Alerts (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "ebf51ef6851870e2592a172430dd3d231b2386165bc0b04ea4bc67f1b78e18e8"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__GoalsPanel.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/GoalsPanel.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/GoalsPanel.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__GoalsPanel.tsx.patch",
+      "baseSha256": "71e6026981c427dab46f081b1735deea558a3f4ed80ebc6807a38fdd62fb4368",
+      "acceptedSha256": "2c3804df3e3d671fa2a66fc401c4a51d1092fdf70ba40357f2ce8782542d95b2",
+      "acceptedBytes": 5059,
+      "patchSha256": "10eb164cfa3c3a13e6462983410f61491c52cc94589d6c0cab87edb906a81cd5",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/GoalsPanel.tsx",
+        "sha256": "71e6026981c427dab46f081b1735deea558a3f4ed80ebc6807a38fdd62fb4368"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "2c3804df3e3d671fa2a66fc401c4a51d1092fdf70ba40357f2ce8782542d95b2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__HelpDialog.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/HelpDialog.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__HelpDialog.tsx.patch",
+      "baseSha256": "c8e35d3a7e6493da5337f32b435d1058dcb5a78a16de052b650609c2554affc4",
+      "acceptedSha256": "68ad7a502e56b4335a0d9ee9f96cee08bda18f8e83e9b1a49236ea38b6f65a0f",
+      "acceptedBytes": 6215,
+      "patchSha256": "ad4869a1e2c5803cbf59c523a5856bdfc0e98eaeac87339651e0afb849d20e6e",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/HelpDialog.tsx",
+        "sha256": "c8e35d3a7e6493da5337f32b435d1058dcb5a78a16de052b650609c2554affc4"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "68ad7a502e56b4335a0d9ee9f96cee08bda18f8e83e9b1a49236ea38b6f65a0f"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__ManagementPanel.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/ManagementPanel.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/ManagementPanel.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__ManagementPanel.test.tsx.patch",
+      "baseSha256": "74489cd069efa2eeafb61191ee64c56133c0efbbf3f8e323f1e0ce49fc4004b1",
+      "acceptedSha256": "89cd68fd5a2ab1810350b4d9a3b6557f4b77b15215058a6c2286de2a8235d6b9",
+      "acceptedBytes": 3486,
+      "patchSha256": "e3f8fe5367b20c1f290971460e2136c54c9f55d94173157ab0d9f788a086efbd",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/ManagementPanel.test.tsx",
+        "sha256": "74489cd069efa2eeafb61191ee64c56133c0efbbf3f8e323f1e0ce49fc4004b1"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Compact Goals and Alerts (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "89cd68fd5a2ab1810350b4d9a3b6557f4b77b15215058a6c2286de2a8235d6b9"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__NeedsYouTray.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/NeedsYouTray.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/NeedsYouTray.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__NeedsYouTray.test.tsx.patch",
+      "baseSha256": "d7d201fa942e6df04e479b01302f3bd4e1ed7a0c9726f88549f941b38edddc4e",
+      "acceptedSha256": "bec557c691b59d463ea0b8e82f4e620d67addeeb6a720ba313baba5621f85c7b",
+      "acceptedBytes": 7816,
+      "patchSha256": "165d39c308b04779bb14ab19ebb7cefa1bfaa179aca16f50d06d2486deba3d43",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/apps/player/src/ui/NeedsYouTray.test.tsx",
+        "sha256": "d7d201fa942e6df04e479b01302f3bd4e1ed7a0c9726f88549f941b38edddc4e"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Compact Goals and Alerts (resolved shortened path)",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "bec557c691b59d463ea0b8e82f4e620d67addeeb6a720ba313baba5621f85c7b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__NeedsYouTray.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/NeedsYouTray.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/NeedsYouTray.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__NeedsYouTray.tsx.patch",
+      "baseSha256": "93603e0ace44bf6037f6b05cea6643933ede0e232618414a09e578f01bc48d01",
+      "acceptedSha256": "db5fca94b82636e8b5f40b9c5818cfa75e35614bdc6d50abb8ba47fb1e89deb0",
+      "acceptedBytes": 1819,
+      "patchSha256": "bc262252ab131a6d0cdbbb00ac21d8e6d210e9351612376512b977b386bc9133",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/apps/player/src/ui/NeedsYouTray.tsx",
+        "sha256": "93603e0ace44bf6037f6b05cea6643933ede0e232618414a09e578f01bc48d01"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "db5fca94b82636e8b5f40b9c5818cfa75e35614bdc6d50abb8ba47fb1e89deb0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__OpeningSequence.css",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/OpeningSequence.css",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/OpeningSequence.css",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__OpeningSequence.css.patch",
+      "baseSha256": "3c3738e5b39f3bb836d1d1f2491799b329bd3409829795d38678a52ecf557d59",
+      "acceptedSha256": "f620036896e99ce788ce66873851ac6c22a0719e210cd4b003c9ed89b97538bc",
+      "acceptedBytes": 7019,
+      "patchSha256": "ab435422ecea584579c38d99b0010eb4368b030ac88cf3f9aaa78e043a99c3b7",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "ui-font__apps__player__src__ui__OpeningSequence.css",
+        "sha256": "3c3738e5b39f3bb836d1d1f2491799b329bd3409829795d38678a52ecf557d59"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "f620036896e99ce788ce66873851ac6c22a0719e210cd4b003c9ed89b97538bc"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__OpeningSequence.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/OpeningSequence.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/OpeningSequence.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__OpeningSequence.tsx.patch",
+      "baseSha256": "7ee8d1c43cacb90b5c4f2b41dc10ae794e3fdf7865774ebac562ff6694fbaa84",
+      "acceptedSha256": "84c55922428b977ace9e4e004fadb2916c26826836aacffd91259bf7d4e2e7ea",
+      "acceptedBytes": 10587,
+      "patchSha256": "ba0fcbb145cdf978dde0f55dd1c2121a8ab471942a0168ca5ef8901f0ff28cbf",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/OpeningSequence.tsx",
+        "sha256": "7ee8d1c43cacb90b5c4f2b41dc10ae794e3fdf7865774ebac562ff6694fbaa84"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "84c55922428b977ace9e4e004fadb2916c26826836aacffd91259bf7d4e2e7ea"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__TutorialCoach.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/TutorialCoach.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/TutorialCoach.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__TutorialCoach.tsx.patch",
+      "baseSha256": "d3f35c9a89a0bc79489d80cd65d28f3b7799e129cb3aaacf0a55dc2f31f65e82",
+      "acceptedSha256": "807a0d392750bab37a25e56959f00700bef9942149545fa727318a4d61ebfb89",
+      "acceptedBytes": 24030,
+      "patchSha256": "0e573368c8337ac016c3faf7f570f21f0988396e682e8266fb3f7989dc256414",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/TutorialCoach.tsx",
+        "sha256": "d3f35c9a89a0bc79489d80cd65d28f3b7799e129cb3aaacf0a55dc2f31f65e82"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "807a0d392750bab37a25e56959f00700bef9942149545fa727318a4d61ebfb89"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__chartSheet.css",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/chartSheet.css",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/chartSheet.css",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__chartSheet.css.patch",
+      "baseSha256": "505c4ee7b9e1828444b0848cbc70ff63b8420e0dc2a78206a7b7fdc632e3641f",
+      "acceptedSha256": "2b174eb6eb81ae7eeb1380432d7353c7acb0a112a2411be9124f60d3aa8807cd",
+      "acceptedBytes": 17632,
+      "patchSha256": "38d1e43adca424d60052f0592cc07f5fda30de0d71b6943146a86c16a5d985a7",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "ui-font__apps__player__src__ui__chartSheet.css",
+        "sha256": "505c4ee7b9e1828444b0848cbc70ff63b8420e0dc2a78206a7b7fdc632e3641f"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Workers and lanes (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)",
+          "explicit manager backup brief / handoff ownership"
+        ],
+        "currentAcceptedCaptureSha256": "2b174eb6eb81ae7eeb1380432d7353c7acb0a112a2411be9124f60d3aa8807cd"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__types.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/types.ts",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__types.ts.patch",
+      "baseSha256": "1f9fc78db0048eef1d720bf70f1878fa43aa4e7e14b35d09f3817cf90cf1b6e6",
+      "acceptedSha256": "a28c25ca77843a979f7d985ea6ad5fb7b8135003ee8b89b714a9ce3ec3d759a3",
+      "acceptedBytes": 20027,
+      "patchSha256": "93491958f2bc4bc5331b7ce120974ae528d16495cd629c00c814b57ec314eac0",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__apps__player__src__ui__types.ts",
+        "sha256": "1f9fc78db0048eef1d720bf70f1878fa43aa4e7e14b35d09f3817cf90cf1b6e6"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Peri-op nurse attention queue",
+          "Radiologist read income (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "a28c25ca77843a979f7d985ea6ad5fb7b8135003ee8b89b714a9ce3ec3d759a3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__apps__player__src__ui__visualComponents.test.tsx",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "apps/player/src/ui/visualComponents.test.tsx",
+      "base": "recovery/bases/checkpoint2/apps/player/src/ui/visualComponents.test.tsx",
+      "patch": "recovery/patches/checkpoint2__apps__player__src__ui__visualComponents.test.tsx.patch",
+      "baseSha256": "2e19d3661753b32f945ea9e5f5c964f313e09d2cb1634af9875dd36ee8327079",
+      "acceptedSha256": "87a72e55b86094eba2e94e78b1489a785cc8516fd25b962428839acd20d20c55",
+      "acceptedBytes": 17464,
+      "patchSha256": "b6bd911f48d2d8e516c2cad947b4a4751dda36a9dca9069348035ec88b79bb44",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:apps/player/src/ui/visualComponents.test.tsx",
+        "sha256": "2e19d3661753b32f945ea9e5f5c964f313e09d2cb1634af9875dd36ee8327079"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "chart-goals Sol worker handoff - 2026-10-08 (resolved shortened path)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "87a72e55b86094eba2e94e78b1489a785cc8516fd25b962428839acd20d20c55"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__docs__execplans__level-four-room-design.md",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "docs/execplans/level-four-room-design.md",
+      "base": "recovery/bases/checkpoint2/docs/execplans/level-four-room-design.md",
+      "patch": "recovery/patches/checkpoint2__docs__execplans__level-four-room-design.md.patch",
+      "baseSha256": "91130dd8ff7dfd63cb03737f0247a0485b072ec78df3eeb0fe9630d85ec51606",
+      "acceptedSha256": "ffbbc79e70bbc52a9ed692e0e7e56e07a14a22992da438058f8b6bd55a002bf5",
+      "acceptedBytes": 12325,
+      "patchSha256": "19c17bf70c93525229acdde6925cbde14a7564e8ac18e640bfb328cbdc3ae104",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:docs/execplans/level-four-room-design.md",
+        "sha256": "91130dd8ff7dfd63cb03737f0247a0485b072ec78df3eeb0fe9630d85ec51606"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "explicit manager backup brief: updated/new execplan"
+        ],
+        "currentAcceptedCaptureSha256": "ffbbc79e70bbc52a9ed692e0e7e56e07a14a22992da438058f8b6bd55a002bf5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__docs__execplans__owner-requests-20261008.md",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "base": "recovery/bases/checkpoint2/docs/execplans/owner-requests-20261008.md",
+      "patch": "recovery/patches/checkpoint2__docs__execplans__owner-requests-20261008.md.patch",
+      "baseSha256": "7e59661d30d424260b75bc38fa7c3ce2a39b704b22df0c6d291e728c76a48216",
+      "acceptedSha256": "b2f4ef4f8a00be544a58ad3440043396f098b0a968d1278eeb56194953fb801a",
+      "acceptedBytes": 314688,
+      "patchSha256": "245e63e85bd7561c98867f4267caa28b743a87770799f46245d7ad80a5d68535",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/docs/execplans/owner-requests-20261008.md",
+        "sha256": "7e59661d30d424260b75bc38fa7c3ce2a39b704b22df0c6d291e728c76a48216"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "Worker handoff - training (Item 8, Sol, 2026-10-08)",
+          "explicit manager backup brief: updated/new execplan"
+        ],
+        "currentAcceptedCaptureSha256": "b2f4ef4f8a00be544a58ad3440043396f098b0a968d1278eeb56194953fb801a"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__balance-config__src__index.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/balance-config/src/index.ts",
+      "base": "recovery/bases/checkpoint2/packages/balance-config/src/index.ts",
+      "patch": "recovery/patches/checkpoint2__packages__balance-config__src__index.ts.patch",
+      "baseSha256": "0c8c64f82e2f303117c663a0c83849b7483716631a2796da09a1d7d82bdd1fa6",
+      "acceptedSha256": "86036f51615f98184ecff4516b0b12eb533bc1a6058e91ec2a7453a68179d5c6",
+      "acceptedBytes": 403,
+      "patchSha256": "c1182245642a1ff0d90e398892e17247054e9e8d38af8ef335744d83f382373d",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__balance-config__src__index.ts",
+        "sha256": "0c8c64f82e2f303117c663a0c83849b7483716631a2796da09a1d7d82bdd1fa6"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Peri-op nurse attention queue",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+          "Radiologist read income (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/procedural-staffing/source-audit.json"
+        ],
+        "currentAcceptedCaptureSha256": "86036f51615f98184ecff4516b0b12eb533bc1a6058e91ec2a7453a68179d5c6"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__balance-config__src__schema.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/balance-config/src/schema.ts",
+      "base": "recovery/bases/checkpoint2/packages/balance-config/src/schema.ts",
+      "patch": "recovery/patches/checkpoint2__packages__balance-config__src__schema.ts.patch",
+      "baseSha256": "2b69d24defbd54abc9b3cb461903669c8f964c0423ae17fbcbeacf12716b7f35",
+      "acceptedSha256": "d81ead060020e77925f1be196731fac1b73429501ccf05a9773a637f88dab7ab",
+      "acceptedBytes": 46652,
+      "patchSha256": "778cbaf4657b5a7093a8a64329262abc10429612ef5b10b0d40796dad30dce25",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__balance-config__src__schema.ts",
+        "sha256": "2b69d24defbd54abc9b3cb461903669c8f964c0423ae17fbcbeacf12716b7f35"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "d81ead060020e77925f1be196731fac1b73429501ccf05a9773a637f88dab7ab"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__appearance.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/appearance.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/appearance.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__appearance.ts.patch",
+      "baseSha256": "f1e824be1fbe5929b367271c80ac1b8f14f8a9ecddcd6b7735f397a6ea3e7974",
+      "acceptedSha256": "e2938db2bdd47176f9c67634f7f90c8d2a65cdb0cf7f6f3880ed3871fae63bfc",
+      "acceptedBytes": 27250,
+      "patchSha256": "1b6f0f7923c123f2cd1701ff1e56928af20a56e01132023f57007195178d3280",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/src/appearance.ts",
+        "sha256": "f1e824be1fbe5929b367271c80ac1b8f14f8a9ecddcd6b7735f397a6ea3e7974"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Severance radiologists first"
+        ],
+        "currentAcceptedCaptureSha256": "e2938db2bdd47176f9c67634f7f90c8d2a65cdb0cf7f6f3880ed3871fae63bfc"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__characterStillCatalog.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/characterStillCatalog.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__characterStillCatalog.ts.patch",
+      "baseSha256": "cadb49a4969b14f7a0b04df2bf76e2e8148fc5423014d90d408417727b02de0b",
+      "acceptedSha256": "a174d9c9b2fff096174a21533cc08ef9b065f31a0cab3e89a9c0a19c6a3d9beb",
+      "acceptedBytes": 20963,
+      "patchSha256": "4446e5e07e551638b9d271c8b59e70388304e68715809d750e920b9c775dbd92",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "characters-225-to-318__packages__game-domain__src__characterStillCatalog.ts",
+        "sha256": "cadb49a4969b14f7a0b04df2bf76e2e8148fc5423014d90d408417727b02de0b"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Severance radiologists first",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "a174d9c9b2fff096174a21533cc08ef9b065f31a0cab3e89a9c0a19c6a3d9beb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__guidance-tip-persistence.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/guidance-tip-persistence.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/guidance-tip-persistence.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__guidance-tip-persistence.ts.patch",
+      "baseSha256": "54bedad347af57e06d327add9f003b51084a4d98bd70a740e6ad39b3d4d4c255",
+      "acceptedSha256": "8b181f21e981e6de35a73e1dd37997a99f91702ac6bcc7f221e59fe831036c11",
+      "acceptedBytes": 4525,
+      "patchSha256": "0451b2e65acc5d33cdb0e935823d2415be88434cc22c7a3ebe4361a9650d7ade",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/packages/game-domain/src/guidance-tip-persistence.ts",
+        "sha256": "54bedad347af57e06d327add9f003b51084a4d98bd70a740e6ad39b3d4d4c255"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "8b181f21e981e6de35a73e1dd37997a99f91702ac6bcc7f221e59fe831036c11"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__guidance-tip-suppression.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/guidance-tip-suppression.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/guidance-tip-suppression.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__guidance-tip-suppression.ts.patch",
+      "baseSha256": "4706dc3b9bcd21149a972f6c6527b128f83b693e94aa1b36441485da94dc4862",
+      "acceptedSha256": "93267a920804afb0891d49aa6dd864e5b51c007fc6bd2b795f46d78650573cc4",
+      "acceptedBytes": 1611,
+      "patchSha256": "c8a411eeb67d88f53514b3ba33f10a4aac1165a024416d8d3dc7cdaa13623fb8",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/packages/game-domain/src/guidance-tip-suppression.ts",
+        "sha256": "4706dc3b9bcd21149a972f6c6527b128f83b693e94aa1b36441485da94dc4862"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "93267a920804afb0891d49aa6dd864e5b51c007fc6bd2b795f46d78650573cc4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__guidance-tip-types.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/guidance-tip-types.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/guidance-tip-types.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__guidance-tip-types.ts.patch",
+      "baseSha256": "ff697c6267d903331d1f2ed09c070f8fc55b15efcfeefe42546060d27be18649",
+      "acceptedSha256": "708ebd968529d1d98c538b788940fc2391cd2cca70a0bf79f7e005576a66d9d0",
+      "acceptedBytes": 2666,
+      "patchSha256": "fd92b3cc35e2b79907249b820ac62239425c6efc1bd5a5bdb2d647fbb03a49f0",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/packages/game-domain/src/guidance-tip-types.ts",
+        "sha256": "ff697c6267d903331d1f2ed09c070f8fc55b15efcfeefe42546060d27be18649"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "708ebd968529d1d98c538b788940fc2391cd2cca70a0bf79f7e005576a66d9d0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__guidance-tips.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/guidance-tips.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/guidance-tips.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__guidance-tips.ts.patch",
+      "baseSha256": "3350f9a44ea6639d817f27716217e7de02ef6d95aa60db73d5032913d07422d7",
+      "acceptedSha256": "d8b2852d045bab9669b84d5f44108d396862b1dcaec8aaded81402da4b576e3d",
+      "acceptedBytes": 66561,
+      "patchSha256": "3b30273193750069d93b149b082c66e5b075283ca8c822bdd35bdadbae2885a0",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/packages/game-domain/src/guidance-tips.ts",
+        "sha256": "3350f9a44ea6639d817f27716217e7de02ef6d95aa60db73d5032913d07422d7"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Campaign performance investigation and safe hotspot fixes - Sol worker handoff (2026-10-08)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/performance-20261008/source-audit.json",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "d8b2852d045bab9669b84d5f44108d396862b1dcaec8aaded81402da4b576e3d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__index.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/index.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/index.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__index.ts.patch",
+      "baseSha256": "3c87454a4504089f209dc5028ff4a750b7529ee2f1e79a781ff057857aeda1b6",
+      "acceptedSha256": "272dececa0759f1d9847c875c1bc61ed8c76768058beb33808063ed631244f69",
+      "acceptedBytes": 1947,
+      "patchSha256": "634b71af983a2ac9e6bbdfb8e84aae9c37a7f93c4fe5ec37e199269e53e7dc28",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__game-domain__src__index.ts",
+        "sha256": "3c87454a4504089f209dc5028ff4a750b7529ee2f1e79a781ff057857aeda1b6"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+          "Radiologist read income (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/procedural-staffing/source-audit.json",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "272dececa0759f1d9847c875c1bc61ed8c76768058beb33808063ed631244f69"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__persistence.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/persistence.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/persistence.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__persistence.ts.patch",
+      "baseSha256": "067182effe4c06e51296b21b83b7efc0e406252c1e7078b9e439cc2b46cdafcb",
+      "acceptedSha256": "74eeae5d0e1e74f3ed4a5237e58531872936399775e38e8ac52a3bfabcf30562",
+      "acceptedBytes": 212280,
+      "patchSha256": "9d5309ac216bae06ebbac7bf8c1b60c3f463bd7e6ab8fe6d649b6a21634d4442",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__game-domain__src__persistence.ts",
+        "sha256": "067182effe4c06e51296b21b83b7efc0e406252c1e7078b9e439cc2b46cdafcb"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "Peri-op nurse queue: legacy coverage release (owner save)",
+          "Radiologist read income (resolved shortened path)",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "74eeae5d0e1e74f3ed4a5237e58531872936399775e38e8ac52a3bfabcf30562"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__reducer.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/reducer.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/reducer.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__reducer.ts.patch",
+      "baseSha256": "b86da31764ece41134b7ddd5317424fd39310b14c9e771d8baced14e1f50fc81",
+      "acceptedSha256": "6d590a12188c3fe430a7701ab2028b78714c283706f0a567ac93300bbf8a2bc7",
+      "acceptedBytes": 404351,
+      "patchSha256": "9a02f04ea7801b9122ea7a5dc2757e97561680fc4991e444cd6666ea2183c24f",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__game-domain__src__reducer.ts",
+        "sha256": "b86da31764ece41134b7ddd5317424fd39310b14c9e771d8baced14e1f50fc81"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "Peri-op nurse queue: legacy coverage release (owner save)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/staff-dispatch-20261008/review.json",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "6d590a12188c3fe430a7701ab2028b78714c283706f0a567ac93300bbf8a2bc7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__selectors.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/selectors.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/selectors.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__selectors.ts.patch",
+      "baseSha256": "db6d7745f024518d6ab7840b535971192af0f1c3465176ad2d40b2df97fb9b07",
+      "acceptedSha256": "f944afac4bf40ed4bf6cdd9454511424c6dc9dc23f59345bd23a0ecf1397bdbe",
+      "acceptedBytes": 78417,
+      "patchSha256": "c0a4d86a483e48a2e6c9cf92a0462a1ff7a656494499406c3f7d25192a652222",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/src/selectors.ts",
+        "sha256": "db6d7745f024518d6ab7840b535971192af0f1c3465176ad2d40b2df97fb9b07"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback)",
+          "worker hash receipt: .local-dev/procedural-staffing/source-audit.json",
+          "worker hash receipt: .local-dev/staff-dispatch-20261008/review.json"
+        ],
+        "currentAcceptedCaptureSha256": "f944afac4bf40ed4bf6cdd9454511424c6dc9dc23f59345bd23a0ecf1397bdbe"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__spatial.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/spatial.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/spatial.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__spatial.ts.patch",
+      "baseSha256": "36a7637247aee8c2478a88c4c99cecc7e9df3dd664b0117893264605e1c502e1",
+      "acceptedSha256": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+      "acceptedBytes": 41096,
+      "patchSha256": "209dbceaedd452f004af624411f85f46bd00186487c4e40432ea90c6e6095330",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/src/spatial.ts",
+        "sha256": "36a7637247aee8c2478a88c4c99cecc7e9df3dd664b0117893264605e1c502e1"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)"
+        ],
+        "currentAcceptedCaptureSha256": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__staff.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/staff.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/staff.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__staff.ts.patch",
+      "baseSha256": "6d0511071afb6c2925710a1949c1ebf2c3fdd9d65a8524813cf64eff45a14307",
+      "acceptedSha256": "d722c63ebdb6c159ab5539798e3ce08a7c12b38990d5988143e963ddc7b4221c",
+      "acceptedBytes": 28953,
+      "patchSha256": "24139181f1372b628839fa26dedfa06eaf0a4f5ac1e81202afa8fa7d7a6c3e6a",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/src/staff.ts",
+        "sha256": "6d0511071afb6c2925710a1949c1ebf2c3fdd9d65a8524813cf64eff45a14307"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Peri-op nurse queue: owner feedback fix",
+          "Peri-op nurse queue: second fix",
+          "Second radiologist idle: fix",
+          "worker hash receipt: .local-dev/staff-dispatch-20261008/review.json"
+        ],
+        "currentAcceptedCaptureSha256": "d722c63ebdb6c159ab5539798e3ce08a7c12b38990d5988143e963ddc7b4221c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__src__types.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/src/types.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/src/types.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__src__types.ts.patch",
+      "baseSha256": "82b1f16a81be82842721fbb57aafbbff60b7173634fda8559739450304352079",
+      "acceptedSha256": "935b8cad2969c9c2fa26447aa9250e85f9177db3e7303a3362d159068646ed5b",
+      "acceptedBytes": 64680,
+      "patchSha256": "4fbd3a992e5e61bf97c16abf6cc1491916632994d9c0d23f3bfb17c3478ec159",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__game-domain__src__types.ts",
+        "sha256": "82b1f16a81be82842721fbb57aafbbff60b7173634fda8559739450304352079"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "Peri-op nurse queue: owner feedback fix",
+          "Radiologist read income (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "935b8cad2969c9c2fa26447aa9250e85f9177db3e7303a3362d159068646ed5b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts.patch",
+      "baseSha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403",
+      "acceptedSha256": "daeb7605ba87f0c05d47bffacf7f8ad3f959041de82874126df65e1971551912",
+      "acceptedBytes": 45800,
+      "patchSha256": "166463407380fe86fd158dad6c08fcbc38e04caa6fd5cf837183edfd45bfccdf",
+      "baselineKind": "first_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "first_archive_latest_accepted_patch_result",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts",
+        "sha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "changed first-archive accepted runtime target"
+        ],
+        "currentAcceptedCaptureSha256": "daeb7605ba87f0c05d47bffacf7f8ad3f959041de82874126df65e1971551912"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__tests__guidance-tip-predicates.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/tests/guidance-tip-predicates.test.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/tests/guidance-tip-predicates.test.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__tests__guidance-tip-predicates.test.ts.patch",
+      "baseSha256": "79f305b9015fa4b5a3884a424b9a3e4afdd2818c05a495db8cca83fe0a6ebcc6",
+      "acceptedSha256": "702de32d5d70c5a5707a5d25cd88bf666c4f48af6ff806bed2b4a0bf8b3d4922",
+      "acceptedBytes": 16225,
+      "patchSha256": "dd2a70de7e77ff4e3907a01247487dc0d0283f1cde9e67b6297339cb9ddcc13a",
+      "baselineKind": "first_archive_whole_owned_file",
+      "baseProvenance": {
+        "kind": "first_archive_whole_owned_file",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "archivePath": "artifacts/checkpoints/manager-accepted-20261008/recovery/packages/game-domain/tests/guidance-tip-predicates.test.ts",
+        "sha256": "79f305b9015fa4b5a3884a424b9a3e4afdd2818c05a495db8cca83fe0a6ebcc6"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08) (resolved shortened path)",
+          "changed first-archive accepted runtime target",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "702de32d5d70c5a5707a5d25cd88bf666c4f48af6ff806bed2b4a0bf8b3d4922"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__tests__level-two-endoscopy.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__tests__level-two-endoscopy.test.ts.patch",
+      "baseSha256": "e114326ff952a8c62db1c920878be19c6a44d8380787f6ade91e4a062569fc71",
+      "acceptedSha256": "b31c4ecf1272a3f7dd504a4675ecd7325c0771afb744df2bc7c54ab941f06afa",
+      "acceptedBytes": 32672,
+      "patchSha256": "6e2d3e66ff04df7a2486719f02d729fbd8934a085345be4e03eacf2f872da308",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/tests/level-two-endoscopy.test.ts",
+        "sha256": "e114326ff952a8c62db1c920878be19c6a44d8380787f6ade91e4a062569fc71"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08) (resolved shortened path)",
+          "Peri-op nurse queue: legacy coverage release (owner save)",
+          "Peri-op nurse queue: legacy coverage release (owner save) (resolved shortened path)",
+          "Procedural specialist priority and opposite-side nurse staffing (Sol handback) (resolved shortened path)",
+          "Radiologist read income (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "b31c4ecf1272a3f7dd504a4675ecd7325c0771afb744df2bc7c54ab941f06afa"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__packages__game-domain__tests__surgery-center-batch.test.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "base": "recovery/bases/checkpoint2/packages/game-domain/tests/surgery-center-batch.test.ts",
+      "patch": "recovery/patches/checkpoint2__packages__game-domain__tests__surgery-center-batch.test.ts.patch",
+      "baseSha256": "b2aaccbac77763bd743e72b0f1249ad508373c734ba388046f12a7a20a3433d7",
+      "acceptedSha256": "a2f992919893bee5ba5b84cfc1d059020e51e075139f93e97eb1590034375bfe",
+      "acceptedBytes": 15432,
+      "patchSha256": "9e9920f43a9d2b12108f28c9817c7b5a9f1ee2c04c3ae39e37ae2f2c02efe0ec",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:packages/game-domain/tests/surgery-center-batch.test.ts",
+        "sha256": "b2aaccbac77763bd743e72b0f1249ad508373c734ba388046f12a7a20a3433d7"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Radiologist read income (resolved shortened path)"
+        ],
+        "currentAcceptedCaptureSha256": "a2f992919893bee5ba5b84cfc1d059020e51e075139f93e97eb1590034375bfe"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__front-desk-visual.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/front-desk-visual.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/front-desk-visual.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__front-desk-visual.spec.ts.patch",
+      "baseSha256": "49848b9cf31d374fd1f9bf9a23c8ec7a8af625ee5ab24769340a495437d9ec6b",
+      "acceptedSha256": "8529b14b83323a41efa53c8ec5f7de57c7f7a3bbdd85707c0df64eec24f75593",
+      "acceptedBytes": 12680,
+      "patchSha256": "bfe79c80f5fb41d17ff3aee17f661f478f705cab47d766eb19fa8136b1384388",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/front-desk-visual.spec.ts",
+        "sha256": "49848b9cf31d374fd1f9bf9a23c8ec7a8af625ee5ab24769340a495437d9ec6b"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "8529b14b83323a41efa53c8ec5f7de57c7f7a3bbdd85707c0df64eec24f75593"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__helpers.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/helpers.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/helpers.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__helpers.ts.patch",
+      "baseSha256": "29e141164da616a144f370436c4fbcff879cbf7707c86c80fe82e9841e6ae4ed",
+      "acceptedSha256": "8d79ee82af58d86c386746388b2c2ec3f9884d64d656e7798e25945fbfe4e4b4",
+      "acceptedBytes": 20412,
+      "patchSha256": "9f9dd12010040f98d02179176d6ecd99db502517d8dd70d904a2487f0e4df6a6",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/helpers.ts",
+        "sha256": "29e141164da616a144f370436c4fbcff879cbf7707c86c80fe82e9841e6ae4ed"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Companions worker handoff — item 9 (2026-10-08)",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "chart-goals Sol worker handoff - 2026-10-08",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "8d79ee82af58d86c386746388b2c2ec3f9884d64d656e7798e25945fbfe4e4b4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__hud-sidebar-tutorial.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/hud-sidebar-tutorial.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/hud-sidebar-tutorial.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__hud-sidebar-tutorial.spec.ts.patch",
+      "baseSha256": "3cd7d40e6583bf608a1df62849e1f876d3c315829f6fcd9e1e170e54213924df",
+      "acceptedSha256": "d66f3bef004d65c549b285f21850468f8022dafdf0490804d0944ba940121b2b",
+      "acceptedBytes": 5998,
+      "patchSha256": "7c4e0984e2b0cd48ecb5f1906d38c213a53435c99e72ab16a0a54fda41f03f1b",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/hud-sidebar-tutorial.spec.ts",
+        "sha256": "3cd7d40e6583bf608a1df62849e1f876d3c315829f6fcd9e1e170e54213924df"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "d66f3bef004d65c549b285f21850468f8022dafdf0490804d0944ba940121b2b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__patient-chart-density.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/patient-chart-density.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/patient-chart-density.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__patient-chart-density.spec.ts.patch",
+      "baseSha256": "4c0550ce8f815f5ba6456c1a7bfee23bd2c0454a34b700e48176ef8805e21030",
+      "acceptedSha256": "2064a7a4ceb6e0902c94da9abad7ea53b79d50ff3cdf9fc9b64668c68c4f7267",
+      "acceptedBytes": 7531,
+      "patchSha256": "320344193d7a59d80d54d06375e1088181bfba693e2bfdf6eb693fab9771d771",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/patient-chart-density.spec.ts",
+        "sha256": "4c0550ce8f815f5ba6456c1a7bfee23bd2c0454a34b700e48176ef8805e21030"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "chart-goals Sol worker handoff - 2026-10-08"
+        ],
+        "currentAcceptedCaptureSha256": "2064a7a4ceb6e0902c94da9abad7ea53b79d50ff3cdf9fc9b64668c68c4f7267"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__prototype.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/prototype.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/prototype.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__prototype.spec.ts.patch",
+      "baseSha256": "1320b0dd895b90bad7b4927f1e2dce39beb984ea191819d20ef0f822ee8ec272",
+      "acceptedSha256": "98b0439d939ddffca56e91f4c8b94243d94337e5a2f4c186634897110ae21b45",
+      "acceptedBytes": 13493,
+      "patchSha256": "931320996bb499586caaeee0c399214e3ad3f07f324646fef33e45428bc4c85a",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/prototype.spec.ts",
+        "sha256": "1320b0dd895b90bad7b4927f1e2dce39beb984ea191819d20ef0f822ee8ec272"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "98b0439d939ddffca56e91f4c8b94243d94337e5a2f4c186634897110ae21b45"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__question-review-flags.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/question-review-flags.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/question-review-flags.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__question-review-flags.spec.ts.patch",
+      "baseSha256": "5dbc199e7b6c5495a89d12d0968e71ebb867f2ab9dee430387a0c20b4a478b34",
+      "acceptedSha256": "cd213c1d7f4a617255e7d23e6d6156bb0572bb070bda201a22db7ca5dc782809",
+      "acceptedBytes": 2137,
+      "patchSha256": "b8bdeb4aa083c06eb90ddf0015465a53806265e9f0a993ac31dee0328c954386",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/question-review-flags.spec.ts",
+        "sha256": "5dbc199e7b6c5495a89d12d0968e71ebb867f2ab9dee430387a0c20b4a478b34"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "cd213c1d7f4a617255e7d23e6d6156bb0572bb070bda201a22db7ca5dc782809"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__tutorial-completion.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/tutorial-completion.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/tutorial-completion.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__tutorial-completion.spec.ts.patch",
+      "baseSha256": "1cfe1290cadff65cf8c7d0e95b40aac1ff8c0d90b26abd742651545b27ed3404",
+      "acceptedSha256": "cc1639b60b246413e4f714b00bff448e4278de0ee6ee041785d1043796fed824",
+      "acceptedBytes": 4027,
+      "patchSha256": "b62e0947af96f683b3e09246af71be340fefd50e89174a17c4164b96d6f8687c",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/tutorial-completion.spec.ts",
+        "sha256": "1cfe1290cadff65cf8c7d0e95b40aac1ff8c0d90b26abd742651545b27ed3404"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "cc1639b60b246413e4f714b00bff448e4278de0ee6ee041785d1043796fed824"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__tutorial-positioning.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/tutorial-positioning.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/tutorial-positioning.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__tutorial-positioning.spec.ts.patch",
+      "baseSha256": "47c7a419b8432ce4ed75b648ee629ca12ff47a231cea034314519cb95913d9ae",
+      "acceptedSha256": "dd803ea90f45e34b73b6bfa2e4d868b6a382ae1667ec1753f6eae652b1fbd362",
+      "acceptedBytes": 8933,
+      "patchSha256": "b7cb2484c02a4f4f34bb385e0abbfe167e66a602acd64e023cc24e48e220ca72",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/tutorial-positioning.spec.ts",
+        "sha256": "47c7a419b8432ce4ed75b648ee629ca12ff47a231cea034314519cb95913d9ae"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "dd803ea90f45e34b73b6bfa2e4d868b6a382ae1667ec1753f6eae652b1fbd362"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__ui-density.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/ui-density.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/ui-density.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__ui-density.spec.ts.patch",
+      "baseSha256": "3af9c7aa7f961836dfb9fa6b8c9fe0fb00abb943c32c592562e19126524f8f63",
+      "acceptedSha256": "ff2d71402f4dcdf6032c68b3fa9b9fdf653b3ced402ab2f4ceb5b25eda20afc4",
+      "acceptedBytes": 14635,
+      "patchSha256": "d8280fb9620c038a8c877cd23428316934757d7fcb9fd3af0bce7d8fca20eaf1",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/ui-density.spec.ts",
+        "sha256": "3af9c7aa7f961836dfb9fa6b8c9fe0fb00abb943c32c592562e19126524f8f63"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "ff2d71402f4dcdf6032c68b3fa9b9fdf653b3ced402ab2f4ceb5b25eda20afc4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__visual-ui.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/visual-ui.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/visual-ui.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__visual-ui.spec.ts.patch",
+      "baseSha256": "3146603e4237647f84c2810c4b459f8b95594b709a48afb02526bcb509c1b964",
+      "acceptedSha256": "b0bfc7cfa980cf5474f3844e41f58e4f697be2f8e4d4072dc0f0dcd3c0969f24",
+      "acceptedBytes": 6295,
+      "patchSha256": "20eecd4fc970264cf43bbe2a3bdfdd47bf2b3243e31b41c7be53fe4e0c442a39",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/visual-ui.spec.ts",
+        "sha256": "3146603e4237647f84c2810c4b459f8b95594b709a48afb02526bcb509c1b964"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "b0bfc7cfa980cf5474f3844e41f58e4f697be2f8e4d4072dc0f0dcd3c0969f24"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint2__tests__e2e__workspace-splitter.spec.ts",
+      "scope": "manager-accepted current aggregate since first checkpoint",
+      "path": "tests/e2e/workspace-splitter.spec.ts",
+      "base": "recovery/bases/checkpoint2/tests/e2e/workspace-splitter.spec.ts",
+      "patch": "recovery/patches/checkpoint2__tests__e2e__workspace-splitter.spec.ts.patch",
+      "baseSha256": "4b4cebd87d1a8755f33a29ddef0a9e39dc8d80baeefce95013eb2d60ed0e7377",
+      "acceptedSha256": "fee5c762acdf3a7cb576e311d586966b2262111e8c8b3a6369aa809e660fb247",
+      "acceptedBytes": 4874,
+      "patchSha256": "073da40e93bb4eac57491e3437a81e3108cd940baedd9d8f64a3ba8a70d5def3",
+      "baselineKind": "HEAD_at_first_checkpoint",
+      "baseProvenance": {
+        "kind": "HEAD_at_first_checkpoint",
+        "commit": "76f0fdb8451f05465a04b5422deec3f5961478ee",
+        "gitObject": "76f0fdb8451f05465a04b5422deec3f5961478ee:tests/e2e/workspace-splitter.spec.ts",
+        "sha256": "4b4cebd87d1a8755f33a29ddef0a9e39dc8d80baeefce95013eb2d60ed0e7377"
+      },
+      "proof": {
+        "acceptance": [
+          "docs/execplans/owner-requests-20261008.md",
+          "Tutorial worker handoff - Item 6 (2026-10-08)",
+          "worker hash receipt: .local-dev/tutorial-validation/reviewed-scope.json"
+        ],
+        "currentAcceptedCaptureSha256": "fee5c762acdf3a7cb576e311d586966b2262111e8c8b3a6369aa809e660fb247"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    }
+  ],
+  "liveComparisonCheckedAtUtc": "2026-10-08T21:39:36.099959+00:00"
+}

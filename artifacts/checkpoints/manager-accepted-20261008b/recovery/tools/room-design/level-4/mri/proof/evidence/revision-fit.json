@@ -1,0 +1,137 @@
+{
+  "contacts": "Current actor seat-to-feet: 39.111 px. Baseline support: 39.6 px; actor feet 0.489 px above floor anchor.\nChair seat: 44.94 px above actual foot/base contact; target 45 px.\nCouch top: 53.95 px above actual foot/base contact; target 54 px.\nBore centre: 120.00 px above actual foot/base contact; target 120 px.\nConsole rear tabletop: 80.00 px above feet; target 80 px.\nConsole projected front lip: 63.42 px above feet.\nPatient sit west: unchanged source width 109.848 px; source hipY 221.153; seat (2.28, 1.970390) on the empty cushion.",
+  "actors": [
+    {
+      "kind": "actor",
+      "id": "operator",
+      "url": "<unchanged source>",
+      "x": 44.14547038327525,
+      "y": 4.43277439024385,
+      "w": 127.7090592334495,
+      "h": 255.418118466899,
+      "py": 1.9501,
+      "shadow": {
+        "x": 108,
+        "y": 234,
+        "r": 35.75853658536586
+      }
+    },
+    {
+      "kind": "actor",
+      "id": "patient-seated",
+      "url": "<unchanged source>",
+      "x": 218.6761738261738,
+      "y": 84.61469870852622,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 2.4201,
+      "shadow": {
+        "x": 273.59999999999997,
+        "y": 281.65392510712763,
+        "r": 30.75734265734266
+      }
+    }
+  ],
+  "baseMinimumDistances": [
+    {
+      "id": "coil-cabinet",
+      "distancePixels": 347.7520817953268,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "gantry-side",
+      "distancePixels": 220.415650706101,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "table-empty",
+      "distancePixels": 156.18509852095366,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "console",
+      "distancePixels": 5.008492787256464,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "operator-chair",
+      "distancePixels": 0.3535533905932738,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "comfort-cart",
+      "distancePixels": 348.36912176597974,
+      "operatorRadiusPixels": 21.6
+    },
+    {
+      "id": "open-shelves",
+      "distancePixels": 218.22278753604078,
+      "operatorRadiusPixels": 21.6
+    }
+  ],
+  "footExtents": [
+    {
+      "id": "coil-cabinet",
+      "boundsPixels": [
+        391.8389610389611,
+        24.68571428571431,
+        460.16103896103897,
+        38.15064935064939
+      ]
+    },
+    {
+      "id": "gantry-side",
+      "boundsPixels": [
+        299.75,
+        342.69681033127847,
+        463.75,
+        356.19681033127847
+      ]
+    },
+    {
+      "id": "table-empty",
+      "boundsPixels": [
+        256.25,
+        276.65,
+        293.75,
+        290.15
+      ]
+    },
+    {
+      "id": "console",
+      "boundsPixels": [
+        111.75,
+        228.65,
+        188.25,
+        242.15
+      ]
+    },
+    {
+      "id": "operator-chair",
+      "boundsPixels": [
+        90.25,
+        220.25,
+        126.75,
+        233.75
+      ]
+    },
+    {
+      "id": "comfort-cart",
+      "boundsPixels": [
+        375.85,
+        451.84999999999997,
+        459.35,
+        465.34999999999997
+      ]
+    },
+    {
+      "id": "open-shelves",
+      "boundsPixels": [
+        12.75,
+        451.84999999999997,
+        95.25,
+        465.34999999999997
+      ]
+    }
+  ]
+}

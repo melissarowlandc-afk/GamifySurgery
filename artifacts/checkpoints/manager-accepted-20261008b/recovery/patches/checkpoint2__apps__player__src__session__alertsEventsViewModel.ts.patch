@@ -1,0 +1,23 @@
+--- a/apps/player/src/session/alertsEventsViewModel.ts
++++ b/apps/player/src/session/alertsEventsViewModel.ts
+@@ -5,6 +5,7 @@
+   getAvailableEmployeeHomeRoom,
+   getDiagnosticOrderPlans,
+   getEmergencyGlp1Status,
++  guidanceTopicsForTip,
+   getNextRoomUpgradeCost,
+   getRoomDefinition,
+   getRoomStaffCapacity,
+@@ -342,9 +343,12 @@
+     const candidate = latestTipIds.get(`${receipt.tipId}|${receipt.targetKey}`) === receipt.id ? tipCandidates.find((tip) => tip.id === receipt.tipId && tip.targetKey === receipt.targetKey) : undefined;
+     feed.push({ id: receipt.id, rowKind: "tip", category: "guidance", priority: "informational", speaker: receipt.speaker,
+       message: receipt.message, sortKey: receipt.emittedAtTick, timeLabel: facilityTimeLabel(state, receipt.emittedAtTick),
++      guidanceTopicIds: guidanceTopicsForTip(state, receipt.tipId, candidate?.action),
+       showAttentionMarker: false, ...(candidate?.action ? { action: { ...candidate.action, tip: { id: receipt.tipId, targetKey: receipt.targetKey } }, actionLabel: candidate.actionLabel } : {}) });
+   }
+   return feed.map((item) => ({ ...item, speaker: item.rowKind === "resolved" ? "Handled" : item.speaker,
++    guidanceTopicIds: item.guidanceTopicIds ?? (item.action?.kind === "place_room" && item.action.definitionId === "room.examination" ? ["exam-placement"]
++      : item.action?.kind === "restore_access" && state.rooms.some((room) => room.id === (item.action as {roomId: string}).roomId && room.roomDefinitionId === "room.examination") ? ["exam-access"] : undefined),
+     message: item.action && item.rowKind !== "tip" ? problemOnlyActionCopy(item.message) : item.message,
+   })).sort((left, right) => (left.sortKey ?? 0) - (right.sortKey ?? 0)).slice(-80);
+ }

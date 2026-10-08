@@ -1,0 +1,142 @@
+--- a/apps/player/src/facility/FacilityCanvas.tsx
++++ b/apps/player/src/facility/FacilityCanvas.tsx
+@@ -1,24 +1,32 @@
+ import {
+   useEffect,
+   useRef,
++  useState,
+   type CSSProperties,
+   type ReactElement,
+ } from "react";
++import { ClinicMapPins } from "./ClinicMapPins";
++import type { FacilityAlertPinPosition } from "./types";
+ import Phaser from "phaser";
++import { clampFacilityCamera, isValidFacilityCamera } from "./facilityCameraBounds";
+ 
+ import {
+   FacilityScene,
+   type FacilitySceneBridge,
++  type FacilityScreenRect,
+ } from "./FacilityScene";
+ import type {
+   FacilityCameraChangeRequest,
+   CollectLitterRequest,
++  DescribeCharacterRequest,
+   FacilityViewModel,
+   MoveFounderRequest,
+   PlaceDoorRequest,
+   PlaceRoomRequest,
+   PraiseEmployeeRequest,
+   RefillWaterCoolerRequest,
++  SeatFounderAtFrontDeskRequest,
++  SeatFounderInChairRequest,
+   RemoveDoorRequest,
+   RequestRoomUpgrade,
+   SelectRoomRequest,
+@@ -33,9 +41,14 @@
+   onRequestRoomUpgrade?: RequestRoomUpgrade;
+   onCollectLitter?: CollectLitterRequest;
+   onRefillWaterCooler?: RefillWaterCoolerRequest;
++  onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
++  onSeatFounderInChair?: SeatFounderInChairRequest;
++  onDescribeCharacter?: DescribeCharacterRequest;
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
++  onSelectedRoomRectChange?: (rect: FacilityScreenRect | null) => void;
++  onAlertPinAction?: (id: string) => void;
+   className?: string;
+   style?: CSSProperties;
+   ariaLabel?: string;
+@@ -66,14 +79,20 @@
+   onRequestRoomUpgrade,
+   onCollectLitter,
+   onRefillWaterCooler,
++  onSeatFounderAtFrontDesk,
++  onSeatFounderInChair,
++  onDescribeCharacter,
+   onPraiseEmployee,
+   onMoveFounder,
+   onCameraChange,
++  onSelectedRoomRectChange,
++  onAlertPinAction,
+   className,
+   style,
+   ariaLabel,
+ }: FacilityCanvasProps): ReactElement {
+   const hostRef = useRef<HTMLDivElement>(null);
++  const [alertPinPositions, setAlertPinPositions] = useState<FacilityAlertPinPosition[]>([]);
+   const gameRef = useRef<Phaser.Game | null>(null);
+   const bridgeRef = useRef<FacilitySceneBridge>({
+     viewModel,
+@@ -90,9 +109,14 @@
+   bridgeRef.current.onRequestRoomUpgrade = onRequestRoomUpgrade;
+   bridgeRef.current.onCollectLitter = onCollectLitter;
+   bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
++  bridgeRef.current.onSeatFounderAtFrontDesk = onSeatFounderAtFrontDesk;
++  bridgeRef.current.onSeatFounderInChair = onSeatFounderInChair;
++  bridgeRef.current.onDescribeCharacter = onDescribeCharacter;
+   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
+   bridgeRef.current.onMoveFounder = onMoveFounder;
+   bridgeRef.current.onCameraChange = onCameraChange;
++  bridgeRef.current.onSelectedRoomRectChange = onSelectedRoomRectChange;
++  bridgeRef.current.onAlertPinPositionsChange = setAlertPinPositions;
+ 
+   useEffect(() => {
+     const host = hostRef.current;
+@@ -139,6 +163,31 @@
+     });
+     const ownedCanvas = game.canvas;
+     gameRef.current = game;
++    let lastCameraLayoutSignature = "";
++    const reconcileCamera = () => {
++      // Phaser may still be loading assets. Reconcile only after create/update
++      // has run, using the current canvas size rather than a saved viewport.
++      if (gameRef.current !== game || !scene.sys.isActive() ||
++        host.clientWidth <= 0 || host.clientHeight <= 0) return;
++      const model = bridgeRef.current.viewModel;
++      if (!isValidFacilityCamera(model.camera)) return;
++      const founderRoom = model.rooms.find((room) => room.isFounderRoom);
++      const signature = JSON.stringify([
++        model.campaignId, model.gridColumns, model.gridRows,
++        game.scale.width, game.scale.height,
++        founderRoom?.tileX, founderRoom?.width,
++        model.camera.zoom, model.camera.panX, model.camera.panY,
++      ]);
++      if (signature === lastCameraLayoutSignature) return;
++      lastCameraLayoutSignature = signature;
++      const camera = clampFacilityCamera(model.camera, model, game.scale);
++      if (camera.zoom !== model.camera.zoom || camera.panX !== model.camera.panX ||
++        camera.panY !== model.camera.panY) {
++        bridgeRef.current.viewModel = { ...model, camera };
++        bridgeRef.current.onCameraChange?.(camera);
++      }
++    };
++    game.events.on(Phaser.Core.Events.POST_STEP, reconcileCamera);
+     // The map-mounted gait proof is deliberately opt-in and development-only.
+     // It lets Playwright observe the *rendered Phaser actor* metadata without
+     // adding a visible debug panel or making gameplay state inspectable.
+@@ -191,6 +240,7 @@
+     resizeObserver.observe(host);
+ 
+     return () => {
++      game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
+       resizeObserver.disconnect();
+       if (resizeFrame !== null) {
+         window.cancelAnimationFrame(resizeFrame);
+@@ -213,12 +263,12 @@
+     <div
+       ref={hostRef}
+       className={className}
+-      style={{ ...DEFAULT_STYLE, ...style }}
+-      role="img"
++      style={{ ...DEFAULT_STYLE, position: "relative", ...style }}
++      role="group"
+       aria-label={
+         ariaLabel ?? `Top-down ${viewModel.facilityTitle} facility view`
+       }
+       data-testid="facility-canvas"
+-    />
++    ><ClinicMapPins pins={viewModel.alertPins ?? []} positions={alertPinPositions} onAction={onAlertPinAction} /></div>
+   );
+ }

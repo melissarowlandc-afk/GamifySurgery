@@ -1,0 +1,362 @@
+{
+  "status": "frozen_first_MRI_proof_actor_contract",
+  "initialProof": "history/v1-preliminary",
+  "privateDataSha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D",
+  "initialSharedDataSha256": "FE39B79D411FE671A4958E0C2AD1D1D8D37C67D7EC29DF6D1D8D84F0FD7E687A",
+  "actorHashes": {
+    "patient.adult.001/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-south.png",
+      "sha256": "AACED24D89DF062B0772C2A0ECEF4569EBF22B2C318826E54657638D309048C0"
+    },
+    "patient.adult.001/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-east.png",
+      "sha256": "E595A6E0F1CE357046446A9CC5CF7A7CE5C373D9E23CEED1A64CEDA8CD7E95FD"
+    },
+    "patient.adult.001/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-west.png",
+      "sha256": "1B881897D6CF3E6E9974567023B7A80CF321DA8D53597EED63F176CC74ED0D10"
+    },
+    "patient.adult.001/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493F37BD75152DB23E3D7D1F2394EBABD6737BF95B40F6D2AF0CC302ADEB6590"
+    },
+    "patient.adult.001/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-south.png",
+      "sha256": "DD5B793F968EBAAA77A2866451D362B416277B5C921D4C8197F66A4F917A8D53"
+    },
+    "patient.adult.001/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "sha256": "448463C5FF3A10B8605F9ABF69284C6E958966CE4DFC20ED118D38E4FD11C059"
+    },
+    "patient.adult.001/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-west.png",
+      "sha256": "98B690E285106EF403774A0FDEAA7B369B6E3737E462F305BD3DDD1ADA7D11F0"
+    },
+    "patient.adult.001/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-north.png",
+      "sha256": "26D43FB98DBD1894E16F56C21D9DE35D1A3AAB424E82787D97A4EFFF04FCD119"
+    },
+    "gs026-employee-004/stand/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-south.png",
+      "sha256": "19C084834587C3BEEF25DA0FA20A130F70D56CE9BF20415C2624FDC27D3495B1"
+    },
+    "gs026-employee-004/stand/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-east.png",
+      "sha256": "E61D63C4020235F8A04C87B7587EE827356D728E39894D38A7DF173636D20E36"
+    },
+    "gs026-employee-004/stand/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-west.png",
+      "sha256": "8D7FAA05BEC8FF6952CA66FB90EFFD57DFCE103ECB0143C1CA5B451DD5F962EF"
+    },
+    "gs026-employee-004/stand/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-north.png",
+      "sha256": "7BD398C752FEC8D27EA9C9FA9F7707DC3904C9281BF4A0250A4FB45AC5E49469"
+    },
+    "gs026-employee-004/sit/south": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-south.png",
+      "sha256": "453829C61944DDBD6B5B97A3AA1EC9F71B440D1536C890E91E043D9FECA58A84"
+    },
+    "gs026-employee-004/sit/east": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-east.png",
+      "sha256": "A2A0856C7C8FF0BA698586710B7C16CF4107F3C61C0E7E4BFAD2A3357E943471"
+    },
+    "gs026-employee-004/sit/west": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-west.png",
+      "sha256": "7EF01316988BE52BDA1C16B5A33B94651821FEB14DE4BFDE510655EF85736033"
+    },
+    "gs026-employee-004/sit/north": {
+      "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-north.png",
+      "sha256": "A3E879680D12FD2E25DCDD74CAD4EF040E9E6FABAC4039EF19C59D3A203CD7DA"
+    }
+  },
+  "actorContract": {
+    "characterMetrics": {
+      "widthInTiles": 1.0642421602787457,
+      "visibleHeightCap": 246
+    },
+    "characters": [
+      {
+        "id": "patient.adult.001",
+        "cohort": "gs018",
+        "category": "patient",
+        "poses": {
+          "stand": {
+            "south": {
+              "sha256": "aaced24d89df062b0772c2a0ecef4569ebf22b2c318826e54657638d309048c0",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 30,
+                "y": 1,
+                "width": 101,
+                "height": 287
+              }
+            },
+            "east": {
+              "sha256": "e595a6e0f1ce357046446a9cc5cf7a7ce5c373d9e23ceed1a64ceda8cd7e95fd",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 36,
+                "y": 2,
+                "width": 89,
+                "height": 286
+              }
+            },
+            "west": {
+              "sha256": "1b881897d6cf3e6e9974567023b7a80cf321da8d53597eed63f176cc74ed0d10",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 35,
+                "y": 1,
+                "width": 91,
+                "height": 287
+              }
+            },
+            "north": {
+              "sha256": "493f37bd75152db23e3d7d1f2394ebabd6737bf95b40f6d2af0cc302adeb6590",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 29,
+                "y": 3,
+                "width": 102,
+                "height": 285
+              }
+            }
+          },
+          "sit": {
+            "south": {
+              "sha256": "dd5b793f968ebaaa77a2866451d362b416277b5c921d4c8197f66a4f917a8d53",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 221.15300000000002
+              },
+              "visibleBounds": {
+                "x": 29,
+                "y": 24,
+                "width": 120,
+                "height": 264
+              }
+            },
+            "east": {
+              "sha256": "448463c5ff3a10b8605f9abf69284c6e958966ce4dfc20ed118d38e4fd11c059",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 221.153
+              },
+              "visibleBounds": {
+                "x": 14,
+                "y": 25,
+                "width": 134,
+                "height": 264
+              }
+            },
+            "west": {
+              "sha256": "98b690e285106ef403774a0fdeaa7b369b6e3737e462f305bd3ddd1ada7d11f0",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 221.153
+              },
+              "visibleBounds": {
+                "x": 1,
+                "y": 25,
+                "width": 146,
+                "height": 265
+              }
+            },
+            "north": {
+              "sha256": "26d43fb98dbd1894e16f56c21d9de35d1a3aab424e82787d97a4efff04fcd119",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 221.153
+              },
+              "visibleBounds": {
+                "x": 28,
+                "y": 24,
+                "width": 103,
+                "height": 265
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "gs026-employee-004",
+        "cohort": "employeeCoverage",
+        "category": "employee",
+        "role": "staff.endoscopy_nurse",
+        "poses": {
+          "stand": {
+            "south": {
+              "sha256": "19c084834587c3beef25da0fa20a130f70d56ce9bf20415c2624fdc27d3495b1",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 20,
+                "y": 41,
+                "width": 120,
+                "height": 246
+              }
+            },
+            "east": {
+              "sha256": "e61d63c4020235f8a04c87b7587ee827356d728e39894d38a7df173636d20e36",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 47,
+                "y": 44,
+                "width": 66,
+                "height": 243
+              }
+            },
+            "west": {
+              "sha256": "8d7faa05bec8ff6952ca66fb90effd57dfce103ecb0143c1ca5b451dd5f962ef",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 47,
+                "y": 44,
+                "width": 66,
+                "height": 243
+              }
+            },
+            "north": {
+              "sha256": "7bd398c752fec8d27ea9c9fa9f7707dc3904c9281bf4a0250a4fb45ac5e49469",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287
+              },
+              "visibleBounds": {
+                "x": 20,
+                "y": 42,
+                "width": 120,
+                "height": 245
+              }
+            }
+          },
+          "sit": {
+            "south": {
+              "sha256": "453829c61944ddbd6b5b97a3aa1ec9f71b440d1536c890e91e043d9feca58a84",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 238
+              },
+              "visibleBounds": {
+                "x": 31,
+                "y": 91,
+                "width": 98,
+                "height": 196
+              }
+            },
+            "east": {
+              "sha256": "a2a0856c7c8ff0ba698586710b7c16cf4107f3c61c0e7e4bfad2a3357e943471",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 238
+              },
+              "visibleBounds": {
+                "x": 24,
+                "y": 91,
+                "width": 112,
+                "height": 196
+              }
+            },
+            "west": {
+              "sha256": "7ef01316988be52bda1c16b5a33b94651821feb14de4bfde510655ef85736033",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 238
+              },
+              "visibleBounds": {
+                "x": 25,
+                "y": 91,
+                "width": 111,
+                "height": 196
+              }
+            },
+            "north": {
+              "sha256": "a3e879680d12fd2e25dcdd74cad4ef040e9e6fabac4039ef19c59d3a203cd7da",
+              "width": 160,
+              "height": 320,
+              "anchors": {
+                "bodyAxisX": 80,
+                "floorY": 287,
+                "seatContactY": 238
+              },
+              "visibleBounds": {
+                "x": 31,
+                "y": 94,
+                "width": 98,
+                "height": 193
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "actorContractSha256": "AB12C899705B0FE22EC758308B815F003C5B841AF6ADE8DC289467B4192594AC",
+  "displayedOperator": {
+    "widthPixels": 127.7090592334495,
+    "displayScale": 1,
+    "seatToFeetRisePixels": 39.11089939024391
+  },
+  "earlierReportCorrection": {
+    "earlierStandaloneWidthPixels": 127.787456,
+    "earlierStandaloneRisePixels": 39.1349084,
+    "explanation": "Earlier standalone calculation overestimated the displayed actor width. First and all later captured proofs use the same127.7090592334495px width, unchanged sources and exported scale. No export drift or actor edit occurred."
+  }
+}

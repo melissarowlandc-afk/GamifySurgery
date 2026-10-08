@@ -1,0 +1,294 @@
+--- a/apps/player/src/ui/ChartPanel.tsx
++++ b/apps/player/src/ui/ChartPanel.tsx
+@@ -50,7 +50,8 @@
+   if (
+     !chart.questionPrompt &&
+     !chart.pendingLabel &&
+-    !chart.feedbackBody
++    !chart.feedbackBody &&
++    !chart.teachingPoint
+   ) {
+     return [];
+   }
+@@ -67,6 +68,8 @@
+       etaLabel: chart.etaLabel,
+       feedbackTitle: chart.feedbackTitle,
+       feedbackBody: chart.feedbackBody,
++      teachingPoint: chart.teachingPoint,
++      exhibit: chart.exhibit,
+       current: true,
+       complete:
+         chart.questionPrompt === undefined && chart.pendingLabel === undefined,
+@@ -74,12 +77,37 @@
+   ];
+ }
+ 
+-/**
+- * Floats the chart over the play area at its content height. It is centered
+- * on the desk when the desk is wide enough, otherwise it starts at the desk's
+- * left edge (keeping the patient list visible) and extends right, then left.
+- * Height grows upward from the desk bottom over the map only when needed.
+- */
++/** Short charts sit at the desk's top center; taller charts retain their bottom pin. */
++export function getChartPlacement({
++  desk,
++  area,
++  viewportHeight,
++  contentHeight,
++}: {
++  desk: Pick<DOMRect, "left" | "top" | "bottom" | "width" | "height">;
++  area: Pick<DOMRect, "left" | "top" | "right">;
++  viewportHeight: number;
++  contentHeight: number;
++}): CSSProperties {
++  const minLeft = area.left + CHART_EDGE_GAP;
++  const maxRight = area.right - CHART_EDGE_GAP;
++  const width = Math.min(CHART_PREFERRED_WIDTH, maxRight - minLeft);
++  const fitsDesk = contentHeight < desk.height;
++  const preferredLeft =
++    fitsDesk || desk.width >= width
++      ? desk.left + (desk.width - width) / 2
++      : desk.left;
++  const left = Math.max(minLeft, Math.min(preferredLeft, maxRight - width));
++  return {
++    left: Math.round(left),
++    width: Math.round(width),
++    top: fitsDesk ? Math.round(desk.top) : "auto",
++    bottom: fitsDesk ? "auto" : Math.round(Math.max(0, viewportHeight - desk.bottom)),
++    maxHeight: Math.round(Math.max(160, desk.bottom - area.top - CHART_EDGE_GAP)),
++  };
++}
++
++/** Floats at the content height, observing content as well as the play area. */
+ function useChartPlacement(
+   sheetRef: RefObject<HTMLElement | null>,
+   active: boolean,
+@@ -104,26 +132,21 @@
+       }
+       const deskRect = desk.getBoundingClientRect();
+       const areaRect = area.getBoundingClientRect();
+-      const minLeft = areaRect.left + CHART_EDGE_GAP;
+-      const maxRight = areaRect.right - CHART_EDGE_GAP;
+-      const width = Math.min(CHART_PREFERRED_WIDTH, maxRight - minLeft);
+-      const preferredLeft =
+-        deskRect.width >= width
+-          ? deskRect.left + (deskRect.width - width) / 2
+-          : deskRect.left;
+-      const left = Math.max(minLeft, Math.min(preferredLeft, maxRight - width));
+-      const next = {
+-        left: Math.round(left),
+-        width: Math.round(width),
+-        bottom: Math.round(Math.max(0, window.innerHeight - deskRect.bottom)),
+-        maxHeight: Math.round(
+-          Math.max(160, deskRect.bottom - areaRect.top - CHART_EDGE_GAP),
+-        ),
+-      };
++      const header = sheet.querySelector<HTMLElement>(".cs-head");
++      const scroll = sheet.querySelector<HTMLElement>(".cs-scroll");
++      // A max-height can clip the sheet: use the full scroll content, not its viewport.
++      const contentHeight =
++        (header?.getBoundingClientRect().height ?? 0) +
++        (scroll?.scrollHeight ?? 0) + sheet.offsetHeight - sheet.clientHeight;
++      const next = getChartPlacement({
++        desk: deskRect, area: areaRect,
++        viewportHeight: window.innerHeight, contentHeight,
++      });
+       setPlacement((current) =>
+         current &&
+         current.left === next.left &&
+         current.width === next.width &&
++        current.top === next.top &&
+         current.bottom === next.bottom &&
+         current.maxHeight === next.maxHeight
+           ? current
+@@ -137,9 +160,29 @@
+     observer?.observe(desk);
+     observer?.observe(area);
+     observer?.observe(document.documentElement);
++    observer?.observe(sheet);
++    const header = sheet.querySelector<HTMLElement>(".cs-head");
++    if (header) observer?.observe(header);
++    let content: Element | null = null;
++    const observeContent = () => {
++      const nextContent = sheet.querySelector(".cs-scroll")?.firstElementChild ?? null;
++      if (content !== nextContent) {
++        if (content) observer?.unobserve(content);
++        content = nextContent;
++        if (content) observer?.observe(content);
++      }
++    };
++    observeContent();
++    // Front/back swaps replace the scroll content; native <details> reveals resize it.
++    const mutations = typeof MutationObserver === "undefined" ? null : new MutationObserver(() => {
++      observeContent();
++      place();
++    });
++    mutations?.observe(sheet, { childList: true, subtree: true, characterData: true });
+     window.addEventListener("resize", place);
+     return () => {
+       observer?.disconnect();
++      mutations?.disconnect();
+       window.removeEventListener("resize", place);
+     };
+   }, [active, sheetRef]);
+@@ -192,6 +235,55 @@
+       <path d="M3 1v12" stroke="currentColor" strokeWidth="2" />
+       <path d="M4 2h8l-2 3 2 3H4z" fill="currentColor" />
+     </svg>
++  );
++}
++
++function ExhibitCard({
++  exhibit,
++  heading,
++}: {
++  exhibit: NonNullable<ChartDecisionStepView["exhibit"]>;
++  heading?: string;
++}) {
++  return (
++    <figure className="cs-exhibit">
++      <figcaption>
++        <span className="cs-eyebrow">Teaching dataset</span>
++        {heading ? <span className="cs-exhibit-step">{heading}</span> : null}
++      </figcaption>
++      {exhibit.kind === "table" ? (
++        <div className="cs-exhibit-table" tabIndex={0} role="region" aria-label={exhibit.caption}>
++          <table>
++            <caption>{exhibit.caption}</caption>
++            <thead>
++              <tr>
++                <td aria-hidden="true" />
++                {exhibit.columnHeaders.map((label, index) => <th scope="col" key={index}>{label}</th>)}
++              </tr>
++            </thead>
++            <tbody>
++              {exhibit.cells.map((cells, rowIndex) => (
++                <tr key={rowIndex}>
++                  <th scope="row">{exhibit.rowHeaders[rowIndex]}</th>
++                  {cells.map((cell, columnIndex) => <td key={columnIndex}>{cell}</td>)}
++                </tr>
++              ))}
++            </tbody>
++          </table>
++        </div>
++      ) : exhibit.kind === "keyValue" ? (
++        <>
++          {exhibit.caption ? <h4>{exhibit.caption}</h4> : null}
++          <dl>
++            {exhibit.items.map((item, index) => (
++              <div key={index}><dt>{item.label}</dt><dd>{item.value}</dd></div>
++            ))}
++          </dl>
++        </>
++      ) : (
++        <><h4>{exhibit.title}</h4><p>{exhibit.body}</p></>
++      )}
++    </figure>
+   );
+ }
+ 
+@@ -453,7 +545,7 @@
+   );
+ }
+ 
+-function AnsweredChoices({
++export function AnsweredChoices({
+   choices,
+   feedbackTitle,
+   showAll,
+@@ -495,8 +587,16 @@
+               : undefined;
+           return (
+             <div className={`cs-answer-row ${state}`} key={choice.id}>
+-              <span>{choice.label}</span>
+-              {tag ? <span className="cs-tag">{tag}</span> : null}
++              <div className="cs-answer-row-heading">
++                <span>{choice.label}</span>
++                {tag ? <span className="cs-tag">{tag}</span> : null}
++              </div>
++              {showAll && choice.rationale ? (
++                <details className="cs-choice-rationale">
++                  <summary>Why this choice</summary>
++                  <p>{choice.rationale}</p>
++                </details>
++              ) : null}
+             </div>
+           );
+         })}
+@@ -517,6 +617,7 @@
+   step: ChartDecisionStepView;
+   children?: ReactNode;
+ }) {
++  const chosen = step.answerChoices.find((choice) => choice.selected);
+   return (
+     <div
+       className={`cs-feedback ${outcomeClass(step.feedbackTitle)}`}
+@@ -529,7 +630,17 @@
+           <span className="cs-chip">{step.rewardLabel}</span>
+         ) : null}
+       </div>
+-      <p>{step.feedbackBody}</p>
++      <p className={step.teachingPoint ? "cs-teaching-point" : undefined}>
++        {step.teachingPoint ?? step.feedbackBody}
++      </p>
++      {chosen?.rationale ? (
++        <div className="cs-picked-rationale">
++          <strong className="cs-eyebrow">
++            {step.feedbackTitle === "Incorrect" ? "Why not your pick" : "Why this answer"}
++          </strong>
++          <p>{chosen.rationale}</p>
++        </div>
++      ) : null}
+       {step.nextActionLabel ? (
+         <p className="cs-next">{step.nextActionLabel}</p>
+       ) : null}
+@@ -582,7 +693,7 @@
+             onToggleShowAll={onToggleShowAll}
+           />
+         ) : null}
+-        {step.feedbackBody ? <FeedbackCard step={step} /> : null}
++        {step.feedbackBody || step.teachingPoint ? <FeedbackCard step={step} /> : null}
+       </div>
+     </details>
+   );
+@@ -683,7 +794,7 @@
+         </>
+       ) : null}
+ 
+-      {step.feedbackBody ? (
++      {step.feedbackBody || step.teachingPoint ? (
+         <FeedbackCard step={step}>{footer}</FeedbackCard>
+       ) : (
+         footer
+@@ -968,6 +1079,13 @@
+                   <p>{currentUpdate}</p>
+                 </div>
+               ) : null}
++              {steps.map((step) => step.exhibit ? (
++                <ExhibitCard
++                  key={step.id}
++                  exhibit={step.exhibit}
++                  heading={steps.length > 1 ? step.heading : undefined}
++                />
++              ) : null)}
+             </section>
+ 
+             <section className="cs-decisions" aria-label="Encounter decisions and results">
+@@ -987,7 +1105,7 @@
+                       onToggleShowAll={() => toggleChoices(step.id)}
+                       onSubmitAnswer={onSubmitAnswer}
+                       onFlagQuestion={onFlagQuestion}
+-                      footer={step.feedbackBody ? stepFooter : undefined}
++                      footer={step.feedbackBody || step.teachingPoint ? stepFooter : undefined}
+                     />
+                   ) : (
+                     <PastDecision
+@@ -1006,7 +1124,7 @@
+                 )
+               )}
+               {waitingCard}
+-              {currentStep?.feedbackBody ? null : stepFooter}
++              {currentStep?.feedbackBody || currentStep?.teachingPoint ? null : stepFooter}
+             </section>
+           </div>
+         )}

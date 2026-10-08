@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checks": 4680,
+  "counts": {
+    "unchangedReferences": 863,
+    "concurrentReferences": 61,
+    "actorPoses": 16,
+    "backlessVisiblePixels": 34208,
+    "states": 112,
+    "routes": 576,
+    "walkingSamples": 93928,
+    "staticSeatTransitions": 384,
+    "doorPairs": 66,
+    "clinicianAboveStoolOverlap": 274,
+    "patientReclinerOverlap": 1405,
+    "archivedReviewFiles": 74,
+    "identicalReviewedWalkingRoutes": 576,
+    "unchangedOutsideChairPixels": 499228,
+    "patientRefitProofPixels": 0.31088315379753856,
+    "textFiles": 139
+  },
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "browserValidation": "pending_manager_rerun",
+  "ownerApproval": true
+}

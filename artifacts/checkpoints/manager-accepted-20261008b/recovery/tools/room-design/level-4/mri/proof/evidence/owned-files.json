@@ -1,0 +1,1708 @@
+{
+  "revision": "owner-north-tech-bore-center-foreground-patient",
+  "ownership": [
+    "assets/prepared/**",
+    "assets/prepare-assets.mjs",
+    "proof/**"
+  ],
+  "implementedDirectly": true,
+  "fileCount": 339,
+  "bytes": 31230119,
+  "files": [
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepare-assets.mjs",
+      "bytes": 12636,
+      "sha256": "AE9922105ECB1A1C2026DBA1E5F3AD37B0DC29EF54B43A6E8F4472E12CE19A55"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/comfort-cart.png",
+      "bytes": 55583,
+      "sha256": "A57241873742BE14CF981F4016F042A0ED26D13EFD182E8B2D30258E2D9A2742"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/console.png",
+      "bytes": 68602,
+      "sha256": "6157154FFB36859A77DE16E15F75B5AC6DE7E94363267A76574C933393EF8724"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/contract-used.json",
+      "bytes": 5100,
+      "sha256": "8B105EA288E3F560F5C15D507EB2D457E699796D326FA442734ECEC1C28EFA84"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/gantry-side.png",
+      "bytes": 209907,
+      "sha256": "B8E8B3373B07E2EB5BA89687058B88DEDF52D147F552709ECFA0AB6554B22F56"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/metadata.json",
+      "bytes": 25070,
+      "sha256": "37DA44C9B0DB86E26E8FF5FD1BB2BF4BEE3963A61ADA290BB5122BB831846F0C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/open-shelves.png",
+      "bytes": 94810,
+      "sha256": "52303B83B50465137F318FEF3B723D8510BD28CAC858187F52A3472B24FB06A0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/operator-chair.png",
+      "bytes": 19049,
+      "sha256": "6EA0B9B51AD3D26473DABAD55998BC09103E629FBBD0ED3DC3DCF5243CC3F50E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/table-empty.png",
+      "bytes": 31201,
+      "sha256": "6479AFB89B324B919E26534387F61E2FFDE78BEAAB49B2255C63D9A6A6420DB5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/assets/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/actor-baseline.json",
+      "bytes": 12828,
+      "sha256": "ABB2E71510F808A398C86483F594EAD1E42C7DAD907FC1C48DC48158D991CA63"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/asset-contract.json",
+      "bytes": 5100,
+      "sha256": "8B105EA288E3F560F5C15D507EB2D457E699796D326FA442734ECEC1C28EFA84"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/build.mjs",
+      "bytes": 10770,
+      "sha256": "505F0250412F03A279090D7F961E0551400A1FFA036497AB8B56234F079821FF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/capture.cjs",
+      "bytes": 3469,
+      "sha256": "A21A42C63114FFB6EAF08BEAF34BD162C3BEE3B42E462E6540F5CF4B262A0D23"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/design-rooms.js",
+      "bytes": 1629573,
+      "sha256": "9F1978DDFCC286447F06675A305341DF9EA51A59D1353CDCA494A68DC05F0910"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/baseline-preservation.json",
+      "bytes": 526,
+      "sha256": "B8D86C58DA8228C2DBE5DD1A1FD4E6E8CC950FD50D84417AAFB2B851751BEDC5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/baseline-validation.log",
+      "bytes": 2130,
+      "sha256": "AC05ECA8CC71FDD70BA96669A434416648C05D7BB90CFFBF078B93B904A3CF2F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/capture-report.json",
+      "bytes": 424,
+      "sha256": "C7F1DBD0279CB76E95754346FFEDD418FAA5F3EFBD16022F86E5CA14B28E79EA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-320.png",
+      "bytes": 136933,
+      "sha256": "4A46B64BD1896F49D85E33E0A2FE0BF88AFECE61FBA807A2BC4B5D4A326BC4F3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-all-backed.json",
+      "bytes": 1790,
+      "sha256": "8E58B75FAC0357687F4055638BC5C0110154B981DAFA7EB2985E9F107DBC2D94"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-all-backed.png",
+      "bytes": 144058,
+      "sha256": "FA9C707F6FEAD26CDE983059F0DFBBC0026303FD697B136DD141545200F8C503"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-all-doors.json",
+      "bytes": 1678,
+      "sha256": "29F0028399B033A819D1BDD0FF58B11CA1AF5291AA4F21DFE7E29E0DB70A6542"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-all-doors.png",
+      "bytes": 144255,
+      "sha256": "82FF35A26D632672107BBF6EED4A58D8097C830A6C7AEA41AB4138CDD0BFE147"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-closed-backed.json",
+      "bytes": 1220,
+      "sha256": "4C7044B8BD8E9D361B93EFC2F098E48D64DED4DBD74CDA7944DD8B1E8935E30C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-closed-backed.png",
+      "bytes": 211785,
+      "sha256": "8D5820E0725C4145362E3236CEA3197D865776CB0A3621121DBAE8D2F3DE2831"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-contacts.json",
+      "bytes": 1301,
+      "sha256": "F097EB3DB1A09E53B53EE45AB7B00A0B775D66893BA909C3F7B0274A4768403B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-contacts.png",
+      "bytes": 235553,
+      "sha256": "5B37CBD73F75E83A7622C58F10E24FD4668A840304561F96EF7E7F01D274C15D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-desktop.png",
+      "bytes": 270676,
+      "sha256": "22E96E1A892F291E509EECB8D8595CF08A14C970F8B2F7FE4E4888B46319374B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-empty.json",
+      "bytes": 1124,
+      "sha256": "2259D77CBAB580DC6A706003F748781FFB7436633E1E77CBF5154D3FE541820B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-empty.png",
+      "bytes": 186534,
+      "sha256": "A0D4D36C437AB90764A8CDDA3853BA631BB7AE405F51788861FBE1DC394A6ECA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-operator-brief.json",
+      "bytes": 1091,
+      "sha256": "5DB7D2E62CB65FE2C9E285691E63C9A756FAB4B3E5831B5890A7D0265AE23497"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-operator-brief.png",
+      "bytes": 216019,
+      "sha256": "D6954B0DEAFD37108110E2C0D9651620B3E58EACDCB8D4DEA89016489EB73D1E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-operator-current.json",
+      "bytes": 1172,
+      "sha256": "3B7E6BE5A536ACA32CDA37BE5DB8B1AF848D46FD7E6F188C7A4972A5A28879F8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-operator-current.png",
+      "bytes": 216407,
+      "sha256": "557D9EC4554A857F495DFD3FAC0C3F4FF0FF718509AE15C5DA435C2C23F8A0F5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-routes.json",
+      "bytes": 1318,
+      "sha256": "DF4EFCBFC7E4FB1D8479EAA6B833C56850B3AF58D87EE6ACE7EB43D06A36195A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-routes.png",
+      "bytes": 207465,
+      "sha256": "F05CD0C7DDB14D421F2A2D3FFCE1AE93BAFAB9C514989A3A5688A2780A90FEBE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-scan-seated-west.json",
+      "bytes": 1128,
+      "sha256": "EEF6B02A531F875F535450C20953E9037915BD4A23B83E6E95A1DB7DFE7DB8E1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/mri-scan-seated-west.png",
+      "bytes": 219457,
+      "sha256": "469A00334839B40F70C55175442598DADE32F0BD65190329337C309F66C5E8FA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/owned-source.diff",
+      "bytes": 9466,
+      "sha256": "4F56D58E9EC1863E59676916192955574672AED0796265F63FC0A2776BA102F5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/reproducibility-report.json",
+      "bytes": 2731,
+      "sha256": "445FFBC0E4CD1C81E2DDD95FBB31185E92C3A4A61E6C7321A46D671FFF1D6C67"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/revision-fit.json",
+      "bytes": 3217,
+      "sha256": "48F8FFA117D7E257960AABBC9848AA25F2AF01B2963E04FB240B525149AB703F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/source-landmarks.json",
+      "bytes": 8831,
+      "sha256": "116C696E2DC00F053199F0B0B24D72AAA827108A5E9586E5F093AD2F8053F03D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/validation-report.json",
+      "bytes": 20172,
+      "sha256": "F1B9AFACCC36AA2D528C5E9EC1609884544946FAD77EA4876CD6EC1DDD1BC796"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/evidence/validation.log",
+      "bytes": 1193,
+      "sha256": "250A39F9A2DF2AE596F2635D94B6497FA758B084B6ACEA645D1B225142FC5A9B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/extension.js",
+      "bytes": 6673,
+      "sha256": "7911C1DE3C82DF2009A25B4797FF7EB7CCC6171F99E2CFB250AC2C9291BF8B0E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/finalize-owner-revision.mjs",
+      "bytes": 6084,
+      "sha256": "E15029363A50249792BDB8369EA4C5F9F518D9AB313E3E4B9802D48D9933B1AB"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/asset-contract.json",
+      "bytes": 3033,
+      "sha256": "62DD18103F85407F56E9FC1046CEBD51C63A52044833F3E4578D44430294085B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/design-rooms.js",
+      "bytes": 748731,
+      "sha256": "472BAEB15ABBC63126C414199CC7A6407F0D386EDB086CF8CD89D93C2B41C107"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/capture-report.json",
+      "bytes": 509,
+      "sha256": "078B463532DEA26DD7744488F9C33F351CAD460E5DE4741585D45490F4E2424F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-320.png",
+      "bytes": 110195,
+      "sha256": "2E9029C2960375D08C16394F6E6F2F02B2AB2DE7DD29E2357D2B4F0DED40592E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-all-backed.json",
+      "bytes": 938,
+      "sha256": "5981BBFE2AEC00BF366C6D22618163B773057C620994E2535B60B7430ED857F9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-all-backed.png",
+      "bytes": 100182,
+      "sha256": "59D84FFC1B9583CB466FB1153BCB42961C1997623B4B171FC08DF64DEB3B4208"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-all-doors.json",
+      "bytes": 878,
+      "sha256": "AFAE3CB611BD846CABD1178FA2348EC33E7E021704A8229C100B483BBFBEBCC5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-all-doors.png",
+      "bytes": 100399,
+      "sha256": "BDE5E73D1EF88DE65941491FA29BC7B48221358270907BFFED4F1913F46BC831"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-closed-backed.json",
+      "bytes": 564,
+      "sha256": "9E2F3F58323DE356CD4696A262E481AF0ABF7B5A65096F2DDB7471C1DE84D3DF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-closed-backed.png",
+      "bytes": 142957,
+      "sha256": "5854716A7BA2C99629DF46F10530BAAAB5FDC0AD94EACCF4A0C0C654F21F7D2C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-contacts.json",
+      "bytes": 697,
+      "sha256": "B563362EB7371EAC6BCF124153B1B0C47682724D360A812D5FD88D5D00416917"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-contacts.png",
+      "bytes": 187556,
+      "sha256": "24C2C6F61D980C30175DB6EAB2B65D0F3D38211BC059BF3225DCAFEBC2EC4723"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-desktop.png",
+      "bytes": 204556,
+      "sha256": "573D8A856FA34AE072BDE5B58164B9C13EB40CD08553872644E1B686A023176E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-empty.json",
+      "bytes": 513,
+      "sha256": "CE3BB45C1CAECF681B7155A575FDC6859EA252FC97013D5CAA1608D2C3EF5C14"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-empty.png",
+      "bytes": 132582,
+      "sha256": "6DBA598716937968E4F0104DA9E15462B4D46698E9F08F1EB938A4818EBCB369"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-occupied.json",
+      "bytes": 519,
+      "sha256": "2D50A5DC2B868C6DFE2F684147B68ABCA64D1C5A52340E7FD9B48B10EF7E058B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-occupied.png",
+      "bytes": 150566,
+      "sha256": "312FC2371D41DBA0A8AFACDEF8E3049A59D0C20E5E97D1B15259F46BB6D2A611"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-operator-brief.json",
+      "bytes": 489,
+      "sha256": "D5685464F6466C131828BA12F65E885D8A4BA35EB1C6E6154311C40F51912D9F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-operator-brief.png",
+      "bytes": 176961,
+      "sha256": "2F0CE404081E5D1168EC80C390059540F9F96B3181B1C3EA6CE639C50B1A58D9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-operator-current.json",
+      "bytes": 562,
+      "sha256": "272F48C1441BC3F7A0A47C4613120F01ED1CD6BD3CDE33873A1F19796D9D08F1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-operator-current.png",
+      "bytes": 176284,
+      "sha256": "C403F360E00D982893DB3F213E46DD80593CAA03E1A00AC67E21A55DD2D5E1E4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-routes.json",
+      "bytes": 664,
+      "sha256": "0BC82FB398F5656E5E40DD10B4E1C8DE9EA0ED8ED57EC12F75486D4C523B8D9C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/evidence/mri-routes.png",
+      "bytes": 174483,
+      "sha256": "95C15ED28D077A918D27C00330518C4A4B1433F4F60E699537C126BE12DB0CDE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/index.html",
+      "bytes": 4992,
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/lab.js",
+      "bytes": 50167,
+      "sha256": "5873C79664DAE698C30D0D810B7ACDB5A21A9FB39C47A0CAEB4FD3038A2D2DCD"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/comfort-cart.png",
+      "bytes": 25381,
+      "sha256": "11D1F13BCA7028A2B3327F867EE9B1BD7CC1C1C141C95C15A991CD0BAEB1EC69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/console.png",
+      "bytes": 16983,
+      "sha256": "06F053E9181BBDFF385884C4D0FCFE48E986931441A84B0E23AD26036F5E2AFE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/gantry-side.png",
+      "bytes": 146552,
+      "sha256": "67514B6042B1F80B38AF8193CB0CE8A577E097C509BBECEE2A9BFB69724ACA95"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/lockers.png",
+      "bytes": 39438,
+      "sha256": "5567F0E67A0ECA896124FB8CAA90D42DB0786EFDFBE92D1261DB8C6E2C7CDFE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/metadata.json",
+      "bytes": 19930,
+      "sha256": "69B706D4C6BCF177D192C58978A249094C30D0912563746A08A14F2D37EBB991"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/operator-chair.png",
+      "bytes": 18857,
+      "sha256": "96D1375A4F61BD0F78BEF6424C3CF25EB1D8AD22E95F3CA08C26EA3F963B23D7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/table-empty.png",
+      "bytes": 30519,
+      "sha256": "ED6B467B227D168A78475DAC3D1FF518AD9AB38B8702AB14ADE2BD5C0CA17FD8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/table-occupied.png",
+      "bytes": 37099,
+      "sha256": "33CBDB7F4407D7E3B6E3F8481DA1586C9047795C5F4986B9A7C37A9238B27427"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/proof-manifest.json",
+      "bytes": 80606,
+      "sha256": "8D23CBCE5D2D43AA86FD71389627A24264B3C2A72F332C2825329DB42BC0FB50"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v1-preliminary/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/asset-contract.json",
+      "bytes": 3468,
+      "sha256": "A9C6EBFA38BA38020EACE64B5210737CED86220874317927C315CF7E00BCC2E1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/design-rooms.js",
+      "bytes": 758995,
+      "sha256": "2C614759EC5FF9C53993269552693940DC50005A06027E192BEADF5D79FD4EDA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/capture-report.json",
+      "bytes": 416,
+      "sha256": "CBD0DDF1752D9589025C469448AD522D4DB71FBF940F35328B3B7CE9DD0759A1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-320.png",
+      "bytes": 113900,
+      "sha256": "6C798D51F6D4407082FCA0FE0EA5A8E26DDB5FE90C2E29EB439DB7B7797BC483"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-all-backed.json",
+      "bytes": 1026,
+      "sha256": "2F9788BF4E7A0672FFB3C42BC72BEED0D93208ACD9B8E8065D5FA9361DA2466A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-all-backed.png",
+      "bytes": 100545,
+      "sha256": "9E40FE0F1938BCF58B2F3C690B966459BC57DC604038EE2FE6AF838021F0BDD1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-all-doors.json",
+      "bytes": 966,
+      "sha256": "3FFDD422B5233BFD88ADE667A49674C27501309AC678437D1D9788BE3B361197"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-all-doors.png",
+      "bytes": 100691,
+      "sha256": "4848333408EDE18C40315789340A7E2F44B4056D880B2FDF31F58A23BFF0E0A2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-closed-backed.json",
+      "bytes": 652,
+      "sha256": "024585BD03D4DDAA4E16EE66CA86626FD4A5D1727BAEEB4CD1C69F97DD047FD2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-closed-backed.png",
+      "bytes": 143267,
+      "sha256": "80ECC61246D2B33819904426703FAD2970ECB36F9A890FA4ABF6305BFFF04F59"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-contacts.json",
+      "bytes": 785,
+      "sha256": "6F2EE4CA89E7C469EF67CE99393901965DAA0C19D9E508342E3EDB0534A7576F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-contacts.png",
+      "bytes": 190368,
+      "sha256": "AD363E617D6143FA3484D7D78F87B069F17AF10E2D61D20A07B9A27C93735CE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-desktop.png",
+      "bytes": 208907,
+      "sha256": "0DA326A19256A235DC5CA19FC9037CD36CBEF559E53142DE2FBCF8B271DE027F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-empty.json",
+      "bytes": 601,
+      "sha256": "E1E29B7DE3B2C5AEAF7CF639AE2E47B067281744E5790A67D65F6409C52D5037"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-empty.png",
+      "bytes": 133244,
+      "sha256": "54DC1F00BC634424B269CAA8886E28E2DACACF013304774C5DCDD022EB54A414"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-occupied.json",
+      "bytes": 607,
+      "sha256": "0A9D431BA80923265E1E73EDAD1B164C15924EB620E48EBBFDB9CCD0EACDF706"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-occupied.png",
+      "bytes": 150799,
+      "sha256": "BFEF40597CA1905801CA751C4EA3DA012F7CDE18C1A11BC7E06A91E66946AB6D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-operator-brief.json",
+      "bytes": 577,
+      "sha256": "5DDA59A51EA82F26DFDF3EE226EE67ABF11EDA823FC9AA40D85AAD215AF039F4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-operator-brief.png",
+      "bytes": 177044,
+      "sha256": "37C5588629A2CF42677B59EAFD27856E4C47DCDFFE29D18BE80B33036342C516"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-operator-current.json",
+      "bytes": 650,
+      "sha256": "D307FC46501D258AF5FD44EF834E8382A30E7E9E03A1269B26FA8B473DAF5A05"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-operator-current.png",
+      "bytes": 176183,
+      "sha256": "D3062F9F1B10E7C359EDDA9D314D3235D1B52D8DB384C141252B2CCB13E866A6"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-routes.json",
+      "bytes": 752,
+      "sha256": "2C3D3460801D13267675F50CD8DBB2BE999D90196F2A27832765D66CD4A79070"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/mri-routes.png",
+      "bytes": 174417,
+      "sha256": "0C926B716F18809FB713FE18C44D9C59D1C3DE03D1802268B36A4D908917B872"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/validation-report.json",
+      "bytes": 8558,
+      "sha256": "77C816EDE0E217CE441F87B8543305FE5D74FAA0F4113FF4BC30594899B901D4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/evidence/validation.log",
+      "bytes": 763,
+      "sha256": "4FA780A35EDA6A7A9A655F6DFA1F2B1524496C3F8A12E6275451FF90ED912403"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/index.html",
+      "bytes": 4992,
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/lab.js",
+      "bytes": 50465,
+      "sha256": "C10A71B3ACE81682D31B0F3522CA9E5A742D1559CF5B3E972ABBA8D813D5FB72"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/comfort-cart.png",
+      "bytes": 25381,
+      "sha256": "11D1F13BCA7028A2B3327F867EE9B1BD7CC1C1C141C95C15A991CD0BAEB1EC69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/console.png",
+      "bytes": 17707,
+      "sha256": "D299A8529582007BA150B90C66C7913865D07EE6739CEE4E23DF67C781DA1CBF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/contract-used.json",
+      "bytes": 3468,
+      "sha256": "A9C6EBFA38BA38020EACE64B5210737CED86220874317927C315CF7E00BCC2E1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/gantry-side.png",
+      "bytes": 146552,
+      "sha256": "67514B6042B1F80B38AF8193CB0CE8A577E097C509BBECEE2A9BFB69724ACA95"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/lockers.png",
+      "bytes": 39438,
+      "sha256": "5567F0E67A0ECA896124FB8CAA90D42DB0786EFDFBE92D1261DB8C6E2C7CDFE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/metadata.json",
+      "bytes": 27144,
+      "sha256": "256A062F8D2275BCEA0089D3C385D812731F387EB7477BD5C16A5DD297C58AE2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/operator-chair.png",
+      "bytes": 18857,
+      "sha256": "96D1375A4F61BD0F78BEF6424C3CF25EB1D8AD22E95F3CA08C26EA3F963B23D7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/table-empty.png",
+      "bytes": 31993,
+      "sha256": "5A106226272BE14DD8965A5DC292097EAFF4E19FC70AA013202776DA14AB678F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/table-occupied.png",
+      "bytes": 38589,
+      "sha256": "6097F12CE75B3D75F59AA52C397A251F5BE9A98E5764F5B83448A9FFE72B38BE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/table-patient-mask.png",
+      "bytes": 2608,
+      "sha256": "A1F8F7428692AEC9F1CA8D72D593629C6D56F64E9C5D97192C17BF866CDAC1D8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/table-patient-only.png",
+      "bytes": 14572,
+      "sha256": "E3FB6FF600E6766057D9C7CE2126315D90993B1ECD9C63823667AEB27F85BB12"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/proof-manifest.json",
+      "bytes": 80606,
+      "sha256": "407E5B14DD1A9585D23BEA68F89E9D9B01E973603DEBCED5A187D0ACFB323934"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v2-canvas-bottom-registration/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/asset-contract.json",
+      "bytes": 3540,
+      "sha256": "BDFCDEF922CF19B39D4F632EFC055A7A627E795F473E981972B5804B5206234F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/design-rooms.js",
+      "bytes": 760367,
+      "sha256": "B39FA5BA240A92A6CE8A66ADEDCB2DB027AB1A523225461D48F864B5955F4723"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/capture-report.json",
+      "bytes": 416,
+      "sha256": "CBD0DDF1752D9589025C469448AD522D4DB71FBF940F35328B3B7CE9DD0759A1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-320.png",
+      "bytes": 114324,
+      "sha256": "A0D80C693EA36F82D2D7E034A55E44FCABB79CEF86F5EB26E9A1EA65A82EE6AC"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-all-backed.json",
+      "bytes": 1046,
+      "sha256": "18CC73F7E1B757311A08299337E814C1584B058ED4F0B23178EDE871ACC6E6BC"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-all-backed.png",
+      "bytes": 100389,
+      "sha256": "ADA77BE4252FF1235527D3CE32664D17B684C3BB09C2322F3BC96C3C45AC60E2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-all-doors.json",
+      "bytes": 986,
+      "sha256": "CE2745431DCCCC40DE90C881C4192EC26F661A01813EC3929E86469FDF0FA82F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-all-doors.png",
+      "bytes": 100638,
+      "sha256": "D78BF748BAFD0CC19E7EF75903BB80494786B5A0EF9C0EE7A81EC9AF26F0B792"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-closed-backed.json",
+      "bytes": 672,
+      "sha256": "4E82E5449D01A2638D33C0204893AFE866BCA735D72DFC4BE54EF9BAFC4B3E9E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-closed-backed.png",
+      "bytes": 143777,
+      "sha256": "5E9A4649C0EE50C8167DEBAF31E2D127619BE016B1AB0DBAE678C80CAFAF8CAB"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-contacts.json",
+      "bytes": 805,
+      "sha256": "E9D9ECFD1DECB32952CB3DE1615853604C8942B250ACAB6F2B47F583A68385DE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-contacts.png",
+      "bytes": 190783,
+      "sha256": "B881A96BFF3EE536D941A9F29CEF413EE2D8D9BD3DCBCCCBF2425CC3D58BD8F1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-desktop.png",
+      "bytes": 209443,
+      "sha256": "F333708CD7E3BE77D32A42216A65BFAFBFEACAA411FB81C04D89B73E37356607"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-empty.json",
+      "bytes": 621,
+      "sha256": "2068294E8C4A32B3F521B9343BF7539790E1B0AC3FD6E799A381E281DBD13F6D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-empty.png",
+      "bytes": 133444,
+      "sha256": "1B01D0D0AEB7430F81816448E5B1F65D1010CB737AAA7A336D53D149857783E0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-occupied.json",
+      "bytes": 627,
+      "sha256": "7ED17031D7E20DC93304F97CA7A9CF3F15D031AFF311288CC085E2B0A7E40BA9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-occupied.png",
+      "bytes": 151310,
+      "sha256": "F106B326DEB706B57069664C3B3098FF2CE96B8D104E471BD108DEF93899E11E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-operator-brief.json",
+      "bytes": 597,
+      "sha256": "D4F9CF5FA671244329CAE081C23C194F10076B1B8916CBF8C46440E65EDC3FD1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-operator-brief.png",
+      "bytes": 177420,
+      "sha256": "1F74359DDA4EF95312635CC16A75BCDD6742C4B00C97B5DDEE16636540430833"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-operator-current.json",
+      "bytes": 670,
+      "sha256": "7F43DEABAD7B6242A10AF055053BEEB9D8B669EF9761C5793AA830774CE353EB"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-operator-current.png",
+      "bytes": 176681,
+      "sha256": "59BE7725D2BF186500115BFA60C4352A8815850581003A4DCCD3B72743C925BA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-routes.json",
+      "bytes": 772,
+      "sha256": "EFCDE0DF8B6B642C0C11DF3C772679BE5363DF8D9283FBF4C64E4C24CE0E691E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/mri-routes.png",
+      "bytes": 175018,
+      "sha256": "A4D9F606518DCD523529D1481D1263D64859521CAD8FCD11B74C07CF99BFCA6F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/validation-report.json",
+      "bytes": 8585,
+      "sha256": "D6460E0397909CEF6CC4EBC5B2C35AD641707C2FD610EAF353062F5194C4A873"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/evidence/validation.log",
+      "bytes": 1001,
+      "sha256": "C32A4F15ADCBDB3925A0FDFDB279FB068D012AAD35BDBA010A0924D25A7CFD30"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/index.html",
+      "bytes": 4992,
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/lab.js",
+      "bytes": 51117,
+      "sha256": "147CACEF7B99A749E30E7BB1997D68E24028CA9A1E52DB44583CA35AB5B6CB1C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/comfort-cart.png",
+      "bytes": 25381,
+      "sha256": "11D1F13BCA7028A2B3327F867EE9B1BD7CC1C1C141C95C15A991CD0BAEB1EC69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/console.png",
+      "bytes": 17707,
+      "sha256": "D299A8529582007BA150B90C66C7913865D07EE6739CEE4E23DF67C781DA1CBF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/contract-used.json",
+      "bytes": 3540,
+      "sha256": "BDFCDEF922CF19B39D4F632EFC055A7A627E795F473E981972B5804B5206234F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/gantry-side.png",
+      "bytes": 146552,
+      "sha256": "67514B6042B1F80B38AF8193CB0CE8A577E097C509BBECEE2A9BFB69724ACA95"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/lockers.png",
+      "bytes": 39438,
+      "sha256": "5567F0E67A0ECA896124FB8CAA90D42DB0786EFDFBE92D1261DB8C6E2C7CDFE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/metadata.json",
+      "bytes": 28854,
+      "sha256": "D39088B872EBABE30DF4ACAA58BBA2E3777FB93A589BCA453D28E8666FB1D138"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/operator-chair.png",
+      "bytes": 18857,
+      "sha256": "96D1375A4F61BD0F78BEF6424C3CF25EB1D8AD22E95F3CA08C26EA3F963B23D7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/table-empty.png",
+      "bytes": 31993,
+      "sha256": "5A106226272BE14DD8965A5DC292097EAFF4E19FC70AA013202776DA14AB678F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/table-occupied.png",
+      "bytes": 38589,
+      "sha256": "6097F12CE75B3D75F59AA52C397A251F5BE9A98E5764F5B83448A9FFE72B38BE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/table-patient-mask.png",
+      "bytes": 2608,
+      "sha256": "A1F8F7428692AEC9F1CA8D72D593629C6D56F64E9C5D97192C17BF866CDAC1D8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/table-patient-only.png",
+      "bytes": 14572,
+      "sha256": "E3FB6FF600E6766057D9C7CE2126315D90993B1ECD9C63823667AEB27F85BB12"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/proof-manifest.json",
+      "bytes": 80719,
+      "sha256": "DF19ACDAB44B0217C6C1466564FA29243AFB9334D300DB166CE4A178D917E2F2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v3-ground-registration-prior-sources/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/asset-contract.json",
+      "bytes": 3881,
+      "sha256": "6EFA7D3C21F701B52E17F0D3B1FBC7B446A45C2042A70183AC7B0A89550A77CD"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/design-rooms.js",
+      "bytes": 756391,
+      "sha256": "4996801815C447D55E4A6A07D7C7DE9FCB28F28CC39C6DC1D7D29D110C4E4C1E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/baseline-validation.log",
+      "bytes": 2130,
+      "sha256": "AC05ECA8CC71FDD70BA96669A434416648C05D7BB90CFFBF078B93B904A3CF2F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/capture-report.json",
+      "bytes": 416,
+      "sha256": "CBD0DDF1752D9589025C469448AD522D4DB71FBF940F35328B3B7CE9DD0759A1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-320.png",
+      "bytes": 114128,
+      "sha256": "7273A2DAC33C38454634C34CFE7C50857FE1223FA75302B2186D69E40AD04411"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-all-backed.json",
+      "bytes": 1046,
+      "sha256": "98D920642BF6262806A14D25C50AA40B1333D9549D4C27927C07D3FFD951C8C8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-all-backed.png",
+      "bytes": 99564,
+      "sha256": "6A6797A24945C8FEB61649AA5665D5B2672D7776BE6EFF4064827FDF310938EC"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-all-doors.json",
+      "bytes": 986,
+      "sha256": "36A7E2BCCD6999D07A1081F0E9ECB94BDBDF30650D538C12C6E655BFB4DB1AD7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-all-doors.png",
+      "bytes": 99791,
+      "sha256": "51E992B207515F81361245970AFC896A92E918E688C0BCDEA2EB36CFF72240F9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-closed-backed.json",
+      "bytes": 672,
+      "sha256": "EF0D00F2BC18D25863DA57EBE21BD862A01F71151C773A131C953A249BD8D49A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-closed-backed.png",
+      "bytes": 142835,
+      "sha256": "3F875565CF5409E664A519499B7FA43FC368A73C883E07726D62CA42CF415FC9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-contacts.json",
+      "bytes": 805,
+      "sha256": "A5FFA7AE354F5FB810CC884ED2D6A9AABAF7A8A242119A1BA81179C0CB9D3A69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-contacts.png",
+      "bytes": 189650,
+      "sha256": "8475FEAFFA143AE4D58C331734A332D7BE1A286D86BC41AF38FA7E146C09DC40"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-desktop.png",
+      "bytes": 207996,
+      "sha256": "12FD4C74018B14D8EA5DE0FDCCAEB346AE217857E7799C70F17C3E7F22513EF2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-empty.json",
+      "bytes": 621,
+      "sha256": "92D1322921AD51620A0B33C2488C758A4B9AE420EFA2EFF4975012086277B2A5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-empty.png",
+      "bytes": 133058,
+      "sha256": "B9CAE2195E6ACEDA4FA96D4EC307F27FE70D4548A922D6164BFDCA74A15EB82D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-occupied.json",
+      "bytes": 627,
+      "sha256": "C9FA54049093D26525D540B7FD97C7E52E79989315AEC88DF74AD5048E4A01FE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-occupied.png",
+      "bytes": 150399,
+      "sha256": "8A3545F327BA9E517547FA733E4B8B3A617F060717F2D1879931E446680DF743"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-operator-brief.json",
+      "bytes": 597,
+      "sha256": "530CFC1FEDE7FFF95274B74BA4B6745A0C301148B2732276A65ED38267E688B7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-operator-brief.png",
+      "bytes": 176400,
+      "sha256": "FF6D88989FA44D6F1C799C5116BCD2F6CB770AEB2A3034B020676CC28FC8935D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-operator-current.json",
+      "bytes": 670,
+      "sha256": "2CC8929029A817BB401A5DED26AF1A69E5E0476332CA9275A2ACD90D41368AD7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-operator-current.png",
+      "bytes": 175760,
+      "sha256": "E0C3B4393F1C1F4A77B1B31EE0C617AC5C580BE67001BB6E6FBE7415DB8C5B6F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-routes.json",
+      "bytes": 772,
+      "sha256": "C90168D0D56EC56E92C1F41D50FD7241C403A3BFFD7AE57F5486856DDFF426A4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/mri-routes.png",
+      "bytes": 173587,
+      "sha256": "9E8BFEFD0B9D01C77B143858DEB6EBA5B9F2616C5DF170A424DF8EFDACBEB891"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/source-landmarks.json",
+      "bytes": 1198,
+      "sha256": "BA885677323933CC9138418C47DEA90378AAEE3EFC35DA194AE2B1270D40DD5E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/validation-report.json",
+      "bytes": 13277,
+      "sha256": "9EEA034DE628A9DC0083D82874B27A4A4A87AD547E26AC8E1B23452E08B8B13B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/evidence/validation.log",
+      "bytes": 967,
+      "sha256": "F26C2985F0C4E55FE7CF018E225FFB03304E01E855F3D46B2E5A6162DD4ED370"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/index.html",
+      "bytes": 4992,
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/lab.js",
+      "bytes": 51417,
+      "sha256": "AF23EDDE5A69CC1C3673416D756FECDB76AB15CC60BAC897802EA5376544DAF1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/comfort-cart.png",
+      "bytes": 25381,
+      "sha256": "11D1F13BCA7028A2B3327F867EE9B1BD7CC1C1C141C95C15A991CD0BAEB1EC69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/console.png",
+      "bytes": 17901,
+      "sha256": "322D45FB88EF85B6A3CB31266C5C23950E75065C96D5AFB1322886B8823E40B8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/contract-used.json",
+      "bytes": 3881,
+      "sha256": "6EFA7D3C21F701B52E17F0D3B1FBC7B446A45C2042A70183AC7B0A89550A77CD"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/gantry-side.png",
+      "bytes": 141668,
+      "sha256": "41B4C334E392440EE2438FFD9BD5663688BDB99E463169686939B1DD0F16349C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/lockers.png",
+      "bytes": 39438,
+      "sha256": "5567F0E67A0ECA896124FB8CAA90D42DB0786EFDFBE92D1261DB8C6E2C7CDFE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/metadata.json",
+      "bytes": 28865,
+      "sha256": "C133E42C0D2D8FB5C1754C6971B2DAADF2E4CEEA87B0D93229B856EEAD2EA5D4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/operator-chair.png",
+      "bytes": 18779,
+      "sha256": "B0033E2A4646EC6CD65497EE2688AEE3460DD7D14CADA864163F400DB811741A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/table-empty.png",
+      "bytes": 32919,
+      "sha256": "E918153DA9FCAD8CB1D0DE5A359CE23CAF5C7DCB49ABCDC5C8C3A603B1B447E8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/table-occupied.png",
+      "bytes": 39177,
+      "sha256": "C59B74D8C788640EDCFE2F13AFA7008BCA718E8A2E03A5F1AEB9CF8BBABDFF27"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/table-patient-mask.png",
+      "bytes": 2655,
+      "sha256": "92DBED7FBC94B40E0F25D6F16C15C3D428362984200ED4AF242620972A041696"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/table-patient-only.png",
+      "bytes": 14605,
+      "sha256": "0783D41E4D555B3417733E24983886B902BBADD35E6185DBCC2BAFFE09FA4DD1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/proof-manifest.json",
+      "bytes": 80719,
+      "sha256": "E9997FC339F12F67DF0224AEA183BB9A12F5291A030CDCD7B482CEA5DFC29F1B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v4-revised-sources-before-uniform-fit/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/actor-baseline.json",
+      "bytes": 12828,
+      "sha256": "ABB2E71510F808A398C86483F594EAD1E42C7DAD907FC1C48DC48158D991CA63"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/asset-contract.json",
+      "bytes": 7387,
+      "sha256": "398819D59439E2CE5BEA6FE6B99E23AC1FA506E468701D8DF3FF0A6DD0297E8C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/design-rooms.js",
+      "bytes": 735882,
+      "sha256": "9AAA056C5858B206B76B96ABEF079BD7C037BDA6E35BBF3A763A63735D1DB121"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/baseline-preservation.json",
+      "bytes": 470,
+      "sha256": "1819B4B85396643E155994AAFB61C5FA87C55E3CB5884C4E69F6F9CE8A2ADFAF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/baseline-validation.log",
+      "bytes": 2130,
+      "sha256": "AC05ECA8CC71FDD70BA96669A434416648C05D7BB90CFFBF078B93B904A3CF2F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/capture-report.json",
+      "bytes": 416,
+      "sha256": "CBD0DDF1752D9589025C469448AD522D4DB71FBF940F35328B3B7CE9DD0759A1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-320.png",
+      "bytes": 113475,
+      "sha256": "64DC4762724E7A44509AF33442EC4CEF0ABB765EE2B49AFC9F2B0E6974474016"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-all-backed.json",
+      "bytes": 1618,
+      "sha256": "7487D4957F8D00D8429BC0D6E7945B99CBD68E42C3CA95D452DB29D9E3288DB2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-all-backed.png",
+      "bytes": 95697,
+      "sha256": "384C5D8B85BEB2A6FD5CC724004AF70B96D95B1274A7B5D984030180346F068B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-all-doors.json",
+      "bytes": 1506,
+      "sha256": "DB8EC65DC75C74D1B91D8EA1804C5E6E6CF31FEE48DBE73D80928C0490577F5E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-all-doors.png",
+      "bytes": 95865,
+      "sha256": "AB441A137C16E510DB4641ED59B87BFA8B115ED934D4799A125F29CCA84FFF64"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-closed-backed.json",
+      "bytes": 1048,
+      "sha256": "B7FE94CA769C11E03369298A85D768D00E6A92D173E7E0C838D9485B8FBCB95D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-closed-backed.png",
+      "bytes": 139126,
+      "sha256": "0FB4B703C0EF12EACCB2218A294D7629707DAEB21A8B9BDCFBBAC5DD3F2D2C55"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-contacts.json",
+      "bytes": 1126,
+      "sha256": "DD8EA5102E1EB18996B06EF2F3542AE994B4D8EA306005901626B0BCB742B9AC"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-contacts.png",
+      "bytes": 186709,
+      "sha256": "9C5060D1948D9E45D5C1328F6C0172ADCABF354F54DB8D2B7FC0BC02C3E554FB"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-desktop.png",
+      "bytes": 205793,
+      "sha256": "C8A2500ADB69C3C2C3ADC6D914DA5780C18BA9B98C487F23E0CE77C4E054B071"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-empty.json",
+      "bytes": 947,
+      "sha256": "CFB2A4FF9567F6828A67945C842BB4F6A186A2F8E4CABE55AE852DF17BF10FDD"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-empty.png",
+      "bytes": 128543,
+      "sha256": "0514B861B2903EC2C7BAC7F44DDBF5F30324D76C22B21252310CA2FE185F12D3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-occupied.json",
+      "bytes": 951,
+      "sha256": "150847EF9EADE178DB60287B8C332C0595426A4437E11920E836B18C8E5FD396"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-occupied.png",
+      "bytes": 146698,
+      "sha256": "0EF812C4932F1F2CA1214AA14827882FD5D65B601E04F7DC12E0FB5E3E433925"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-operator-brief.json",
+      "bytes": 919,
+      "sha256": "3BDE62E158C0B30D5B0FAF5E5B2BFACC6EC38DCE67A0A44928E28D71FF0311F2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-operator-brief.png",
+      "bytes": 172932,
+      "sha256": "54654C2C9B7E464BA087A84987554D1ACE4248B3F6145E04486199ACF7F3F3CE"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-operator-current.json",
+      "bytes": 995,
+      "sha256": "8D4E1A2557550126DBD1746B9A0CA36D6CDF29114DD13A2950E68F10EA2F64E3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-operator-current.png",
+      "bytes": 172203,
+      "sha256": "B3473966FFE98ECE8431364C43EDFEA93CB9D0CB7CD96BB3CB1F7C96FBA44F8A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-routes.json",
+      "bytes": 1147,
+      "sha256": "24956C790A7483E05D66C5A659032C384EF12F4C2E795A62EA37388B06D80FC5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/mri-routes.png",
+      "bytes": 170523,
+      "sha256": "A3B048A3F865A546D68C01EB9D9F51DD7C08229D78A9F64ADF5474C975E2E766"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/owned-source.diff",
+      "bytes": 117867,
+      "sha256": "3DC45AD67E273C2756E918F56AA6A3E0DFE3B6D8789A871F5E1BCA12884932DA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/reproducibility-report.json",
+      "bytes": 2121,
+      "sha256": "3677238192E29D1047E0112E059464EC4B8FBCE317896F4CC8B9F1E8A8F6F649"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/source-landmarks.json",
+      "bytes": 1198,
+      "sha256": "BA885677323933CC9138418C47DEA90378AAEE3EFC35DA194AE2B1270D40DD5E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/validation-report.json",
+      "bytes": 14135,
+      "sha256": "ECF79FC217DC4BADA4340D79D2E810D815FB2A9A806F7CE3FB37D689CFB3B4C4"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/evidence/validation.log",
+      "bytes": 808,
+      "sha256": "D675459B65C4C6131840ACBED6732577B7B38082CDD6BA680CCE416043237DF6"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/index.html",
+      "bytes": 4992,
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/lab.js",
+      "bytes": 51417,
+      "sha256": "AF23EDDE5A69CC1C3673416D756FECDB76AB15CC60BAC897802EA5376544DAF1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepare-assets.mjs",
+      "bytes": 19012,
+      "sha256": "05B9E467E74538FF85AFEEE030164B0832EE3ABD26FC743B0424D9930ED37703"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/comfort-cart.png",
+      "bytes": 25381,
+      "sha256": "11D1F13BCA7028A2B3327F867EE9B1BD7CC1C1C141C95C15A991CD0BAEB1EC69"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/console.png",
+      "bytes": 17901,
+      "sha256": "322D45FB88EF85B6A3CB31266C5C23950E75065C96D5AFB1322886B8823E40B8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/contract-used.json",
+      "bytes": 7387,
+      "sha256": "398819D59439E2CE5BEA6FE6B99E23AC1FA506E468701D8DF3FF0A6DD0297E8C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/gantry-side.png",
+      "bytes": 130053,
+      "sha256": "B56A67B4AA6D020B04823676F779A4B43F1431125599773D97C6628257BD4803"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/lockers.png",
+      "bytes": 39438,
+      "sha256": "5567F0E67A0ECA896124FB8CAA90D42DB0786EFDFBE92D1261DB8C6E2C7CDFE0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/metadata.json",
+      "bytes": 33797,
+      "sha256": "343F9AA585816DFBD8AEB9C8C46E03BB0E882F39852DE1A944FAFC2E129EE077"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/operator-chair.png",
+      "bytes": 15440,
+      "sha256": "9709EFAF4EB26DF1560F99896907F2867C3D7C7BD633DCE6E88A170EA4DD95F5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/table-empty.png",
+      "bytes": 31201,
+      "sha256": "6479AFB89B324B919E26534387F61E2FFDE78BEAAB49B2255C63D9A6A6420DB5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/table-occupied.png",
+      "bytes": 37153,
+      "sha256": "022E0B9CA0A6C7BAD6D5EFDE7A965BD0CE084D737242936B9C50F9686674284C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/table-patient-mask.png",
+      "bytes": 2898,
+      "sha256": "1C9CC3317718A381C55CFE12AB15AAF32177EDCCF7E48D81276DA121913FB354"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/table-patient-only.png",
+      "bytes": 13930,
+      "sha256": "F505E8765B536DAAB17EF0E940B46E5F7A6D5D2E3858A632CE3C8406E97950A8"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/proof-manifest.json",
+      "bytes": 81002,
+      "sha256": "74EC7D395710ED0FBDB8EF34DF780109FF4C0434F2043E74189FEEA9C02AC835"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/README.md",
+      "bytes": 13543,
+      "sha256": "64AA3555C6A0C8EEDA255D6EE975DCC0092CBF60384E9F4D07D6D5E2327D0220"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/registration-contract.json",
+      "bytes": 22884,
+      "sha256": "4ECC24594E582C60B3A4906A232E5CDF06AA3FA37C988812E648560E9DF4BE2E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v5-last-ten-asset-candidate/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/actor-baseline.json",
+      "bytes": 12828,
+      "sha256": "ABB2E71510F808A398C86483F594EAD1E42C7DAD907FC1C48DC48158D991CA63"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/asset-contract.json",
+      "bytes": 5521,
+      "sha256": "0D2B472F8C7CD9C982BE0360709D99830849EF628B424AB13EBCE50C07F8A230"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/data.json",
+      "bytes": 869918,
+      "sha256": "6D0E51993CBD6E4F79F1B98E138A8D9E1973083D6EB11132AEC3A3B2F744639D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/design-rooms.js",
+      "bytes": 1582886,
+      "sha256": "37DD21EBC16D3E12B1FD073811DDD7C2BD30601960F168B525FB7A2ED18624D0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/baseline-preservation.json",
+      "bytes": 943,
+      "sha256": "E9FCFC00BB06543636A649EFC000AB5905A96F98C8E4C6789D68F739BDD220C7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/baseline-validation.log",
+      "bytes": 2130,
+      "sha256": "AC05ECA8CC71FDD70BA96669A434416648C05D7BB90CFFBF078B93B904A3CF2F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/capture-report.json",
+      "bytes": 424,
+      "sha256": "C7F1DBD0279CB76E95754346FFEDD418FAA5F3EFBD16022F86E5CA14B28E79EA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-320.png",
+      "bytes": 134633,
+      "sha256": "09BB18101F03521613AE89FA3E60FCE8E16530E379F09E0DE521AB7355A1D926"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-all-backed.json",
+      "bytes": 1781,
+      "sha256": "84A1E19514F8BC1D55B9D0C9E3931142E08029CE0045D27728B3070674A9A566"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-all-backed.png",
+      "bytes": 142738,
+      "sha256": "954C5BBE4B199C474BAC28EF0473EB5A5EC96FA6C876B3F82F3A5615478D25ED"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-all-doors.json",
+      "bytes": 1669,
+      "sha256": "FA53A605DD9DBA1BF368516D46E1DBBB909AE94C21A2DB320BC438DBA55186D3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-all-doors.png",
+      "bytes": 142936,
+      "sha256": "AEBF5A3B04D7B8DD961ACCEC29A5130EE6092B6A44E12FE430B260216762FDE9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-closed-backed.json",
+      "bytes": 1211,
+      "sha256": "D219524BFDE2BF51C8627128048F313495548D275B73F523896C556AC85136FB"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-closed-backed.png",
+      "bytes": 210611,
+      "sha256": "CC4406ED683870297C7D014DE35BA3353BC0F9D012DD2D58D0BDAC488D9137D1"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-contacts.json",
+      "bytes": 1292,
+      "sha256": "9F6EBEF9CB922EE49512E6DA2E215AE8CECC09C226C79370B6E629448814B983"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-contacts.png",
+      "bytes": 234812,
+      "sha256": "E47E02D26AA5E811AA66C63F180E30E3642E768454FDB78BF3E0DA56FE03A549"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-desktop.png",
+      "bytes": 265704,
+      "sha256": "E2F69568B5E658AD2A89CD6062B159080D0BE4CD1AEC0E7427FB9E92BCBFC4DF"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-empty.json",
+      "bytes": 1115,
+      "sha256": "A7A27E0B6DD8C5E53A2DFA446028F87550B24BA3F51945461498F54EF7B7D2B0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-empty.png",
+      "bytes": 183059,
+      "sha256": "BB1BD21B7891F559AE3300A89067BB4F9306432EF5A856583A9995B9D44265EA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-operator-brief.json",
+      "bytes": 1082,
+      "sha256": "808513DFFB85F08C39D8D0D35BCC9405424219566BE7858DF2FB496F3B007B16"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-operator-brief.png",
+      "bytes": 218828,
+      "sha256": "78D1F1B608D936325D081DBD4FF3EBC4B6AC20F20D5056136492631A4F599F53"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-operator-current.json",
+      "bytes": 1163,
+      "sha256": "DBDB043A163DF927F5641F5AC11CE9AA006688F96C86C108520DE03864B4F10A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-operator-current.png",
+      "bytes": 218334,
+      "sha256": "29196DD156FF5CBD30029D7A2DE548E027050C2FE297D0470486425927BCE247"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-routes.json",
+      "bytes": 1309,
+      "sha256": "367C5C0F13857747F4E1BC03100D03CD22005284B529BD0DB6D33460970F36C5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-routes.png",
+      "bytes": 206745,
+      "sha256": "2A88DA96BF426E57D96E21D74F47F7BE3B259AEB82AAC70B3B511E35EFBA72E3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-scan-seated-west.json",
+      "bytes": 1119,
+      "sha256": "53B23A2C2A208784F5FF597390114A6F7205C7BB16D3D6DCAB136202D36D3462"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/mri-scan-seated-west.png",
+      "bytes": 218197,
+      "sha256": "A05F7A4C9634F9A93018B75896FA39EC071D0B32404D10DB019FA7150E1B7B5B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/owned-source.diff",
+      "bytes": 170217,
+      "sha256": "5423BC50255F5BA30450250404B7946D9002294E8C1F441BFB6163C034A23E12"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/reproducibility-report.json",
+      "bytes": 1159,
+      "sha256": "246F4667013F2CD8CBD990C5B4E9BA6B7EC1515D7585E709A83D8F0004671EA9"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/revision-fit.json",
+      "bytes": 3217,
+      "sha256": "48F8FFA117D7E257960AABBC9848AA25F2AF01B2963E04FB240B525149AB703F"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/source-landmarks.json",
+      "bytes": 8831,
+      "sha256": "116C696E2DC00F053199F0B0B24D72AAA827108A5E9586E5F093AD2F8053F03D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/validation-report.json",
+      "bytes": 19983,
+      "sha256": "F26C53D0F34787441835AADA40BB3E8DA09CA724BCAF225AD8AE9A9EDEA3CFCA"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/evidence/validation.log",
+      "bytes": 1197,
+      "sha256": "C050E5938EC7F25B13D0B3EF801A2BEE9E33A11F6DDAF6487EA90F944CA5476E"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/index.html",
+      "bytes": 4916,
+      "sha256": "22DF814E2F05970BA68B601ED882B4121227EB9348CC47F4C885FEB9C86F3F4A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/lab.js",
+      "bytes": 52805,
+      "sha256": "0D1637E49BACE546E0D00EE36C63F6104C72073BBA7C36909663646149F9EB53"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepare-assets.mjs",
+      "bytes": 12636,
+      "sha256": "AE9922105ECB1A1C2026DBA1E5F3AD37B0DC29EF54B43A6E8F4472E12CE19A55"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/coil-cabinet.png",
+      "bytes": 84548,
+      "sha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/comfort-cart.png",
+      "bytes": 55583,
+      "sha256": "A57241873742BE14CF981F4016F042A0ED26D13EFD182E8B2D30258E2D9A2742"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/console.png",
+      "bytes": 51037,
+      "sha256": "23B08F159841F519175CFD508797A661110247E9E9C8F0B58D9CE49BEE997821"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/contract-used.json",
+      "bytes": 5521,
+      "sha256": "0D2B472F8C7CD9C982BE0360709D99830849EF628B424AB13EBCE50C07F8A230"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/gantry-side.png",
+      "bytes": 209907,
+      "sha256": "B8E8B3373B07E2EB5BA89687058B88DEDF52D147F552709ECFA0AB6554B22F56"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/metadata.json",
+      "bytes": 25552,
+      "sha256": "2760011A87BDC937255D98D8CE560FF2D9D291A9C550C93B74E7B0370C7443C0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/open-shelves.png",
+      "bytes": 94810,
+      "sha256": "52303B83B50465137F318FEF3B723D8510BD28CAC858187F52A3472B24FB06A0"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/operator-chair.png",
+      "bytes": 15440,
+      "sha256": "9709EFAF4EB26DF1560F99896907F2867C3D7C7BD633DCE6E88A170EA4DD95F5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/scan-light.png",
+      "bytes": 8184,
+      "sha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/table-empty.png",
+      "bytes": 31201,
+      "sha256": "6479AFB89B324B919E26534387F61E2FFDE78BEAAB49B2255C63D9A6A6420DB5"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/prepared/zone-sign.png",
+      "bytes": 16491,
+      "sha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/proof-manifest.json",
+      "bytes": 81026,
+      "sha256": "D5BCB9125B0BE7BBEC24B556C893627DC018E0DB81A37438495C4C0DBFCDEABD"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/README.md",
+      "bytes": 14019,
+      "sha256": "7E12EB7E5E47EBF5776E79C9B87C0683C7F730340EAA7849A103993915140F01"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/registration-contract.json",
+      "bytes": 21335,
+      "sha256": "4D106F3D2996125FB546B15048AFFC0E6B362FBD5A8AC4DD5DD144788054195C"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/history/v6-west-tech-seated-patient/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/index.html",
+      "bytes": 4935,
+      "sha256": "129CE8AD53AA051AEFB0241508DD5BC45CD2F734A9AB2A061D038CD56162774A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/inspect-fit.cjs",
+      "bytes": 2095,
+      "sha256": "686B8AC46AC8E49E2CFA08F6C052A08707B0867B166A9D8B1F581FF0FA13BB87"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/inspect-landmarks.cjs",
+      "bytes": 2215,
+      "sha256": "1EB7F36C832B3D649B5659B542A52E9D515C9C65A9631D9A013F57CBCCA5C951"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/lab.js",
+      "bytes": 53080,
+      "sha256": "7A02076AB7B3F2DFC42BFAEF2650637EC648F2916DD58671D173B779B87F2A8A"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/layout-revision.mjs",
+      "bytes": 5136,
+      "sha256": "70F53B52D377FBE0858558BE1AFC30982FF8567EE57B27FC4F9DAC5B6A2761B2"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/proof-manifest.json",
+      "bytes": 80688,
+      "sha256": "F8DDE3C7761C81E93304F6EC1248C7264252ADCBAF04C749591862DCE47444F3"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/README.md",
+      "bytes": 5117,
+      "sha256": "7DD3BF8E823570CC60C7E64791B3B1EA5703912A36433DFDA592B3C21DB741D7"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/registration-contract.json",
+      "bytes": 16489,
+      "sha256": "7C7C1E0EF03D65B1573D72A80D500A4636F3CF1A565D93F0194800DD59B53F1B"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/revise-north-tech.mjs",
+      "bytes": 2710,
+      "sha256": "74CCA080D0794B2244A3F1F947ADA716E4719C968ADFFE1F978E0C9402985968"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/room-touchups.mjs",
+      "bytes": 31749,
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/snapshot-history.mjs",
+      "bytes": 1239,
+      "sha256": "88792A54A2E1AEB116FF32C49487FF8316B5C82188004C6D3A515A40CCA6DA74"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/validate.cjs",
+      "bytes": 28935,
+      "sha256": "2DEC6B6A5051F4D509A02E8F068BF0C4135459C8EEFA1F05DB7A30B2FC33817D"
+    },
+    {
+      "file": "tools/room-design/level-4/mri/proof/write-report.mjs",
+      "bytes": 5820,
+      "sha256": "D1092527DED89E4F51CBC12CA8EB44F522693B3FF534535F0A5632CF1AEE9464"
+    }
+  ]
+}

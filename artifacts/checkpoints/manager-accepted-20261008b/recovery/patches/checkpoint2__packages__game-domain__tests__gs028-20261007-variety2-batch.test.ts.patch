@@ -1,0 +1,14 @@
+--- a/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
+@@ -273,7 +273,10 @@
+   expect(availability.kind).toBe("returning_at");
+   if (availability.kind !== "returning_at") throw new Error("The reachable training fixture requires a known return.");
+   expect(phase.mode).toBe("local");
+-  expect(phase.resource?.employeeIds).toContain(employee.id);
++  if (phase.kind === "interpretation") {
++    expect(phase.resource).toBeNull();
++    expect(phase.forecast.employeePaths.map(item => item.employeeId)).toContain(employee.id);
++  } else expect(phase.resource?.employeeIds).toContain(employee.id);
+   // Central reservations resume on the tick after the employee reaches home.
+   expect(phase.forecast.startsAtTick).toBeGreaterThanOrEqual(availability.availableAtTick + 1);
+   expect(phase.forecast.employeePaths.find((item) => item.employeeId === employee.id)?.path[0]).toEqual(availability.homeLocation);

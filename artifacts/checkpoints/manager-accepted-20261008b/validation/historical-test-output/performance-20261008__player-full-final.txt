@@ -1,0 +1,45 @@
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1 --config ../../.local-dev/performance-20261008/vitest-player.config.mjs --configLoader native
+
+(node:21400) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/rowla/Projects/GamifySurgery/scripts/vite/forbid-private-modules.ts?fresh-import-9iulj9b85bj=0,file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/performance-20261008/vitest-player.config.mjs is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\rowla\Projects\GamifySurgery\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 326ms
+     × ignores the retired concealment flag and preserves the scheduled external service after an answer 36ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
+AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+
+Expected: "Off-site thyroid fine-needle aspiration"
+Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
+
+ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
+     83|     const pending = state.encounters[encounterId]!.pendingResult!;
+     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
+     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
+       |                                                    ^
+     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
+     87|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 139 passed (140)
+      Tests  1 failed | 1111 passed (1112)
+   Start at  15:08:33
+   Duration  53.04s (transform 2.65s, setup 0ms, import 26.44s, tests 17.11s, environment 6ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1 --config ../../.local-dev/performance-20261008/vitest-player.config.mjs --configLoader native

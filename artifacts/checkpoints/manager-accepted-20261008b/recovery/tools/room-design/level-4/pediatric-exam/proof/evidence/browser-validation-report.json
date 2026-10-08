@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-4/pediatric-exam/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "doorLabels": [
+    "N1",
+    "N2",
+    "N3",
+    "S1",
+    "S2",
+    "S3",
+    "WA",
+    "WB",
+    "WC",
+    "EA",
+    "EB",
+    "EC"
+  ],
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Manager decision 2026-10-08: use the game model for the frozen 3x3 room, three one-tile sections per wall. Original shared room/navigation unchanged."
+  },
+  "proofManifestSha256": "7C99DB2D333F4F7D081690A6DBF4B2A80FEDDFAE46C91C8B90109D981AD9A5FD",
+  "stoolDerivationSha256": "E8AA64819C0A01A6C9CA575654ADD4520CFBFCB3C6E40593AF01B197B45E0D01",
+  "checks": [
+    "real .021 pediatric child east, clinician west and same-room parent west",
+    "112 states, 768 routes, 5 decoded alpha/anchor assets, clinician above single backless stool with readable seat/column/base, parent layers and full-height counter",
+    "all 12 one-tile door controls, own-section art hiding and exact restoration",
+    "all four bulk controls, idempotent open-all and exact restoration",
+    "three independent backing controls, full-height counter and wall hides",
+    "parent, child, clinician and all-occupancy toggles",
+    "keyboard toggles, Escape and Space/Enter button activation",
+    "320px layout without horizontal overflow; rendered pixels"
+  ],
+  "technical": {
+    "states": 112,
+    "routes": 768,
+    "assets": 5,
+    "armrestOverlap": 679,
+    "backlessStool": true,
+    "stoolForegroundLayers": 0,
+    "readableStool": {
+      "seat": 386,
+      "column": 314,
+      "base": 454
+    },
+    "clinicianOverStoolPixels": 251,
+    "failures": []
+  },
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "viewport": [
+    320,
+    900
+  ],
+  "designApproval": true,
+  "ownerApproval": {
+    "date": "2026-10-08",
+    "quote": "Remove the 'backs' on rolling stools and just have the clinician layer on top of the stool. Then we don't have to worry about the back funniness. Otherwise this is approved.",
+    "ownerDesign": "approved_with_requested_revision",
+    "revisionImplemented": true,
+    "managerBrowserValidation": "pending"
+  }
+}

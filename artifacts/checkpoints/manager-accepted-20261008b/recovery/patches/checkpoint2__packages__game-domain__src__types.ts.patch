@@ -1,0 +1,207 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -228,6 +228,8 @@
+ 
+ export interface DiagnosticOrderPlan {
+   version: "diagnostic-order.v1";
++  /** New accepted plans freeze nurse skill; unmarked legacy plans stay exempt. */
++  periopNurseAttentionQuote?: Pick<PeriopNurseAttentionState, "version" | "trainingPercent">;
+   timingVersion: "diagnostic-timing.v1";
+   orderId: string;
+   encounterId: string;
+@@ -243,6 +245,10 @@
+     /** Optional for older v1 plans; new local acquisitions freeze their fee. */
+     incomeLineId?: string;
+     quoteFee?: number;
++    /** Frozen fee paid once by the local interpretation. */
++    readIncomeFee?: number;
++    /** Absent on accepted legacy split contracts; new fees are additional. */
++    readIncomeBilling?: "additive";
+     roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+     roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
+     kind: "explicit_route_phases" | "approved_operation" | "retained_inclusive_total" | "retained_profile";
+@@ -265,7 +271,7 @@
+   careComplete: DiagnosticOrderMilestone;
+ }
+ 
+-/** Internal remote work, never an additional paid clinical service. */
++/** Internal remote work; a marked read receives its reserved bundle portion. */
+ export interface DiagnosticPhaseWork {
+   version: "diagnostic-phase-work.v1";
+   orderId: string;
+@@ -277,6 +283,7 @@
+   remainingMinutes: number;
+   resource: DiagnosticResourceChoice | null;
+   readingUpgradeWork?: RoomUpgradeReadingWork;
++  readIncomeFee?: number;
+ }
+ 
+ /** Binding of frozen diagnostic patient work to the existing physical engine. */
+@@ -286,6 +293,8 @@
+   encounterId: string;
+   componentId: string | null;
+   billing: "existing_service" | "none";
++  /** Legacy split only: withheld from acquisition, paid by the linked read. */
++  readIncomeFee?: number;
+   phaseBindings: Array<{ diagnosticPhaseId: string; operationPhaseId: string; resource: DiagnosticResourceChoice | null }>;
+   phaseWitnesses: Array<{ operationPhaseId: string; startedAtFacilityTick: number | null; completedAtFacilityTick: number | null }>;
+   /** Frozen remaining work at the most recent start/resume, never tick-decremented. */
+@@ -384,6 +393,9 @@
+ export interface DomainContext {
+   /** Session-only storage failure gate; never serialized as campaign state. */
+   guidanceTipsDeliveryBlocked?: boolean;
++  /** Session attention holds never acquire or serialize a pause. */
++  guidanceAttentionBlocked?: boolean;
++  guidanceBlockedTopicIds?: readonly string[];
+   clinicalRelease: SyntheticClinicalRelease;
+   balanceRelease: PrototypeBalanceRelease;
+ }
+@@ -678,6 +690,37 @@
+   completedAtFacilityTick: number;
+ }
+ 
++export interface RadiologistReadTotals {
++  inHouseReads: number;
++  inHouseIncomeCents: number;
++  outsideReads: number;
++  outsideIncomeCents: number;
++}
++
++export interface RadiologistReadIncomeState {
++  version: "radiologist-read-income.v1";
++  nextOutsideReadSequence: number;
++  dayNumber: number;
++  facilityLevel: number;
++  today: RadiologistReadTotals;
++  thisLevel: RadiologistReadTotals;
++}
++
++export interface OutsideRadiologyRead {
++  version: "outside-radiology-read.v1";
++  sequence: number;
++  employeeId: string;
++  roomInstanceId: string;
++  stationId: string;
++  startedAtFacilityTick: number;
++  lastObservedAtFacilityTick: number;
++  baselineMinutes: number;
++  employeeReductionPercent: number;
++  upgradeLevel: RoomUpgradeLevel;
++  durationMinutes: number;
++  fee: number;
++}
++
+ export type ServiceOperationStatus =
+   | "arriving"
+   | "waiting_for_resources"
+@@ -689,6 +732,27 @@
+   | "leaving"
+   | "completed"
+   | "cancelled";
++
++export interface PeriopNurseAttentionTask {
++  phaseIndex: number;
++  kind: "pre_op" | "post_op";
++  /** Frozen once, independently of the patient's (possibly trained) phase. */
++  durationMinutes: number;
++  remainingMinutes: number;
++  readyAtFacilityTick: number | null;
++  requiredUntilFacilityTick: number | null;
++  employeeId: string | null;
++  standingPoint: GridPoint | null;
++  startedAtFacilityTick: number | null;
++  completedAtFacilityTick: number | null;
++  lastProgressAtFacilityTick: number | null;
++}
++
++export interface PeriopNurseAttentionState {
++  version: "periop-nurse-attention.v1";
++  trainingPercent: number;
++  tasks: PeriopNurseAttentionTask[];
++}
+ 
+ export interface ServiceOperationState {
+   diagnosticPhaseWork?: DiagnosticPhaseWork;
+@@ -742,6 +806,8 @@
+   phaseFlowVersion?: 1;
+   /** New operations bind one real Periop bed from preparation through physical discharge. */
+   periopBedFlowVersion?: 1;
++  /** Opt-in for new work; unmarked saved phases retain legacy attendance. */
++  periopNurseAttention?: PeriopNurseAttentionState;
+   periopBedReservation?: {
+     version: "periop-bed-reservation.v1";
+     roomInstanceId: string;
+@@ -855,6 +921,22 @@
+   departureServiceOperationId?: string;
+ }
+ 
++export interface ProcedureCompanionState {
++  version: "procedure-companion.v1";
++  phase: "waiting_in_periop" | "walking_to_amenity" | "using_amenity" | "returning_to_periop" | "leaving_with_patient";
++  periopRoomInstanceId: string | null;
++  waitingReservation: {
++    roomInstanceId: string;
++    location: GridPoint;
++    kind: "chair" | "standing";
++    seatId: string | null;
++  } | null;
++  /** One seeded amenity decision per procedure phase, preserved through reload. */
++  amenityDecisionPhaseIndex: number | null;
++  amenityRoomInstanceId: string | null;
++  amenityDwellEndsAtFacilityTick: number | null;
++}
++
+ export interface RetailExternalActorState {
+   id: string;
+   kind: "retail_visitor" | "companion";
+@@ -868,6 +950,10 @@
+   pathIndex: number;
+   lastMovedAtFacilityTick: number;
+   activeRetailOperationId: string | null;
++  /** A blocked optional actor journey is visible and retried, never an alert. */
++  movementWaitReason?: string | null;
++  /** Linked legacy procedure companions are adopted on load/tick. */
++  procedureCompanion?: ProcedureCompanionState;
+ }
+ 
+ export interface RetailOrderState {
+@@ -1109,7 +1195,7 @@
+ }
+ 
+ export interface EmployeeFacilityTaskState {
+-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi";
++  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "periop_attention" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi";
+   startedAtFacilityTick: number;
+   workMinutesRemaining: number;
+   targetId?: string;
+@@ -1159,6 +1245,8 @@
+   lastMovedAtFacilityTick: number;
+   lastPraisedAtFacilityTick: number | null;
+   lastBreakAtFacilityTick?: number | null;
++  /** Fair peri-op dispatch; absent in older saves means no previous check. */
++  lastPeriopAttentionAssignedAtFacilityTick?: number;
+   nextIdleActionAtFacilityTick: number;
+   /** Persisted operational work that temporarily supersedes room idling. */
+   facilityTask?: EmployeeFacilityTaskState | null;
+@@ -1510,6 +1598,10 @@
+   reviewIntents: SchedulerReviewIntent[];
+   settlements: EncounterSettlement[];
+   serviceIncomeReceipts: ServiceIncomeReceipt[];
++  /** Independent counters survive normal retirement of income receipts. */
++  radiologistReadIncome?: RadiologistReadIncomeState;
++  /** Only current station work; legacy campaigns start with no outside jobs. */
++  outsideRadiologyReads?: OutsideRadiologyRead[];
+   nextServiceIncomeReceiptSequence: number;
+   serviceAppointmentsEnabled: boolean;
+   nextServiceAppointmentTicks: Record<string, number>;
+@@ -1664,6 +1756,10 @@
+       type: "ACKNOWLEDGE_ALERTS_TUTORIAL";
+     })
+   | (CommandBase & {
++      type: "RECORD_GUIDANCE_TOPIC_EXPOSURE";
++      topicIds: string[];
++    })
++  | (CommandBase & {
+       type: "SET_PAUSED";
+       paused: boolean;
+     })

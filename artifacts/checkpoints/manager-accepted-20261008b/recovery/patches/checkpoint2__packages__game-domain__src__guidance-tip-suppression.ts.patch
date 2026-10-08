@@ -1,0 +1,12 @@
+--- a/packages/game-domain/src/guidance-tip-suppression.ts
++++ b/packages/game-domain/src/guidance-tip-suppression.ts
+@@ -5,7 +5,8 @@
+ /** The shared introductory delivery gate, independent of tutorial coaching. */
+ export function guidanceDeliveryUnlocked(state: GameState): boolean {
+   const tips = state.alertHumor.guidanceTips;
+-  if (!tips || ![TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].every((id) => state.encounters[id]?.resolutionReason === "completed")) return false;
++  if (!tips || state.facilityLevel < 1 && ![TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].every((id) =>
++    state.encounters[id]?.lifecycle === "resolved" && state.encounters[id]?.resolutionReason === "completed")) return false;
+   const completed = tips.introductoryCompletedAtTick ?? Math.max(...[TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].map((id) => state.encounters[id]?.resolvedAtFacilityTick ?? tips.initializedAtTick));
+   return state.facilityTick - completed >= GUIDANCE_TIP_POLICY.introductoryQuietMinutes;
+ }

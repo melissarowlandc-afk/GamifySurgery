@@ -1,0 +1,584 @@
+import { describe, expect, it } from "vitest";
+
+import {
+  APPROVED_SOUTH_SEAT_CUSHION_INSET_TILES,
+  APPROVED_WAITING_BENCH_ADDITIONAL_CUSHION_INSET_TILES,
+  APPROVED_ROOM_PRESENTATIONS,
+  getApprovedRoomProofCapture,
+  getApprovedRoomOrientation,
+  getApprovedRoomPresentation,
+  isApprovedFixtureVisible,
+  isApprovedDrawVisible,
+  isApprovedProceduralDrawVisible,
+  insetApprovedSouthSeatSurface,
+  resolveApprovedRoomDrawRecords,
+  resolveApprovedRoomActorSupports,
+  resolveApprovedRoomProceduralDrawRecords,
+} from "./approvedRoomPresentation";
+import { APPROVED_GS015_ROOM_ATLASES } from "../art/bitmapAssetManifest";
+
+describe("approved GS-015 room presentation contract", () => {
+  // Twenty-four since the owner-approved Radiology Reading Room (2026-10-07).
+  it("covers each of the twenty-four approved proofs exactly once", () => {
+    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(24);
+    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(24);
+    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(24);
+    expect(getApprovedRoomPresentation("room.reading")?.proofId).toBe("radiology-reading");
+    expect(getApprovedRoomPresentation("room.imaging_control")).toBeUndefined();
+  });
+
+  it("maps every approved rectangular second view to runtime 270 without changing global rotation semantics", () => {
+    for (const id of ["room.examination", "room.waiting", "room.phlebotomy", "room.endoscopy", "room.glp1_telehealth_suite"]) {
+      expect(getApprovedRoomOrientation(id, 270)?.proofTransform).toBe("(x,y)->(y,W-x)");
+      expect(getApprovedRoomOrientation(id, 90)).toBeUndefined();
+      expect(getApprovedRoomPresentation(id)?.migration).toBe("legacy-90-to-270");
+    }
+    expect(getApprovedRoomPresentation("room.periop_recovery")?.orientations).toEqual([
+      { runtimeOrientation: 0, proofView: "north-up", footprint: [6, 6] },
+    ]);
+  });
+
+  it("gives every image-backed fixture a declared production asset and every floor fixture a contact", () => {
+    for (const room of APPROVED_ROOM_PRESENTATIONS) {
+      const assetIds = new Set(room.assets.map((asset) => asset.id));
+      for (const fixture of room.fixtures as readonly import("./approvedRoomPresentation").ApprovedFixturePresentation[]) {
+        if (fixture.assetId) expect(assetIds, `${room.proofId}:${fixture.id}`).toContain(fixture.assetId);
+        if (fixture.depth !== "wall") expect(fixture.contacts.length, `${room.proofId}:${fixture.id}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("preserves proof-authored collision categories and examination navigation inflation", () => {
+    const collisions = (definitionId: string) => Object.fromEntries(
+      getApprovedRoomPresentation(definitionId)!.fixtures.map((fixture) => [fixture.id, fixture.collision]),
+    );
+    expect(collisions("room.bathroom")).toMatchObject({ sink: "solid", toilet: "solid", mirror: "nonblocking" });
+    expect(collisions("room.waiting")).toMatchObject({ bench: "solid", chairs: "solid", "magazine-table": "solid", "magazine-rack": "none", plant: "none" });
+    expect(collisions("room.minor_procedure")["wall-light"]).toBe("nonblocking");
+    expect(collisions("room.ultrasound")["wall-print"]).toBe("nonblocking");
+    expect(collisions("room.xray").apron).toBe("nonblocking");
+    expect(collisions("room.ct")["cat-scans"]).toBe("nonblocking");
+    const examinationTable = getApprovedRoomPresentation("room.examination")!.fixtures.find((fixture) => fixture.id === "exam-table")!;
+    expect(examinationTable.footprint).toEqual([1.3, .65, 1.55, .7]);
+    expect(examinationTable.navigationFootprint).toEqual([1.09, .44, 1.97, 1.12]);
+  });
+
+  it("hides a complete owned fixture for a door or backed north segment and restores it otherwise", () => {
+    const cabinet = getApprovedRoomPresentation("room.endoscopy")!.fixtures.find((fixture) => fixture.id === "prep-cabinet")!;
+    expect(isApprovedFixtureVisible(cabinet, new Set(), new Set())).toBe(true);
+    expect(isApprovedFixtureVisible(cabinet, new Set(["WA"]), new Set())).toBe(false);
+    expect(isApprovedFixtureVisible(cabinet, new Set(), new Set(["N1"]))).toBe(false);
+    expect(isApprovedFixtureVisible(cabinet, new Set(["N4"]), new Set(["N4"]))).toBe(true);
+  });
+
+  it("carries approved shell and floor inputs independently of furniture", () => {
+    for (const room of APPROVED_ROOM_PRESENTATIONS) {
+      expect(room.shell.tilePixels).toBe(room.proofId === "front-desk" ? 88 : 120);
+      expect(room.shell.floorPattern.length).toBeGreaterThan(3);
+      expect(room.shell.floorPalette.length).toBeGreaterThan(0);
+      expect(room.shell.floorBase).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(room.shell.background).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(room.shell.rearWall).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(room.shell.doorJamb).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+    expect(getApprovedRoomPresentation("room.front_desk")!.shell).toMatchObject({
+      tilePixels: 88,
+      floorPatternSizePixels: 44,
+      floorAlgorithm: "front-desk-square",
+      floorBase: "#ead9b5",
+      rearWall: "#efe1bd",
+      rearWallHeightPixels: 80,
+      doorInsetPixels: 10,
+    });
+    expect(getApprovedRoomPresentation("room.evs_closet")!.shell.floorBase).toBe("#85877a");
+    expect(getApprovedRoomPresentation("room.periop_recovery")!.shell.rearWall).toBe("#899b91");
+  });
+
+  it("exposes exact CT and per-bay Recovery procedural fixtures", () => {
+    const ct = resolveApprovedRoomProceduralDrawRecords("room.ct", 0);
+    expect(ct).toEqual([expect.objectContaining({
+      id: "partition",
+      rect: { left: 2.69, top: .75, width: .12, height: 2.4 },
+      doorOwners: [],
+      drawPhase: "after-scanner-before-console",
+      depthKey: 3.15,
+      style: expect.objectContaining({
+        kind: "ct-observation-partition",
+        windowTopFraction: .39,
+        windowHeightFraction: .25,
+        windowOuterHorizontalBleedPixels: 2,
+      }),
+    })]);
+    const recovery = resolveApprovedRoomProceduralDrawRecords("room.periop_recovery", 0);
+    expect(recovery).toHaveLength(4);
+    expect(recovery.map((draw) => [draw.id, draw.rect, draw.doorOwners, draw.drawPhase, draw.depthKey])).toEqual([
+      ["partitionN", { left: 2.95, top: 0, width: .10, height: 1.55 }, ["N3", "N4"], "before-bitmaps", 1.55],
+      ["partitionS", { left: 2.95, top: 4.45, width: .10, height: 1.55 }, ["S3", "S4"], "before-bitmaps", 6],
+      ["partitionW", { left: 0, top: 2.95, width: 1.55, height: .10 }, ["WC", "WD"], "depth-sorted", 3],
+      ["partitionE", { left: 4.45, top: 2.95, width: 1.55, height: .10 }, ["EC", "ED"], "depth-sorted", 3],
+    ]);
+    expect(isApprovedProceduralDrawVisible(recovery[0]!, new Set(["N3"]), new Set())).toBe(false);
+    expect(isApprovedProceduralDrawVisible(recovery[1]!, new Set(["N3"]), new Set())).toBe(true);
+    expect(isApprovedProceduralDrawVisible(recovery[2]!, new Set(["WD"]), new Set())).toBe(false);
+    expect(resolveApprovedRoomProceduralDrawRecords("room.periop_recovery", 270)).toEqual([]);
+  });
+
+  it("resolves exact proof captures for every authored orientation", () => {
+    for (const room of APPROVED_ROOM_PRESENTATIONS) {
+      for (const orientation of room.orientations) {
+        const capture = getApprovedRoomProofCapture(room.roomDefinitionId, orientation.runtimeOrientation);
+        expect(capture, `${room.proofId}:${orientation.runtimeOrientation}`).toBeDefined();
+        expect(capture!.drawImages.every((draw) => draw.src.width > 0 && draw.src.height > 0)).toBe(true);
+      }
+    }
+  });
+
+  it("keeps repeated Recovery bay draws individually owned", () => {
+    const draws = resolveApprovedRoomDrawRecords("room.periop_recovery", 0);
+    for (const segment of ["N3", "N4", "S3", "S4", "WC", "WD", "EC", "ED"] as const) {
+      const bed = draws.find((draw) => draw.id === `${segment}.bed`);
+      expect(bed, segment).toBeDefined();
+      expect(bed!.doorOwners).toEqual([segment]);
+      expect(bed!.sourceRect[2]).toBeGreaterThan(0);
+    }
+    const n3Bed = draws.find((draw) => draw.id === "N3.bed")!;
+    const n4Bed = draws.find((draw) => draw.id === "N4.bed")!;
+    expect(isApprovedDrawVisible(n3Bed, new Set(["N3"]), new Set())).toBe(false);
+    expect(isApprovedDrawVisible(n4Bed, new Set(["N3"]), new Set())).toBe(true);
+  });
+
+  it("attaches every Peri-op patient support to its exact inward-facing bed foot", () => {
+    const supports = resolveApprovedRoomActorSupports("room.periop_recovery", 0);
+    expect(supports.map((support) => [support.id, support.role, support.pose, support.facing])).toEqual([
+      ["periop-bed:N3", "periop-bed-patient", "seated", "south"],
+      ["periop-bed:N4", "periop-bed-patient", "seated", "south"],
+      ["periop-bed:S3", "periop-bed-patient", "seated", "north"],
+      ["periop-bed:S4", "periop-bed-patient", "seated", "north"],
+      ["periop-bed:WC", "periop-bed-patient", "seated", "east"],
+      ["periop-bed:WD", "periop-bed-patient", "seated", "east"],
+      ["periop-bed:EC", "periop-bed-patient", "seated", "west"],
+      ["periop-bed:ED", "periop-bed-patient", "seated", "west"],
+    ]);
+    expect(supports.map(({ id, seat, ground, fixtureGround }) => [id, seat, ground, fixtureGround])).toEqual([
+      ["periop-bed:N3", { x: 2.25, y: 1.20443 }, { x: 2.25, y: 1.55 }, { x: 2.25, y: 1.55 }],
+      ["periop-bed:N4", { x: 3.75, y: 1.20443 }, { x: 3.75, y: 1.55 }, { x: 3.75, y: 1.55 }],
+      ["periop-bed:S3", { x: 2.25, y: 4.104393 }, { x: 2.25, y: 4.45 }, { x: 2.25, y: 4.45 }],
+      ["periop-bed:S4", { x: 3.75, y: 4.104393 }, { x: 3.75, y: 4.45 }, { x: 3.75, y: 4.45 }],
+      ["periop-bed:WC", { x: 1.428906, y: 2.25125 }, { x: 1.55, y: 2.6 }, { x: 1.55, y: 2.6 }],
+      ["periop-bed:WD", { x: 1.428906, y: 3.75125 }, { x: 1.55, y: 4.1 }, { x: 1.55, y: 4.1 }],
+      ["periop-bed:EC", { x: 4.570905, y: 2.254212 }, { x: 4.45, y: 2.6 }, { x: 4.45, y: 2.6 }],
+      ["periop-bed:ED", { x: 4.570905, y: 3.754212 }, { x: 4.45, y: 4.1 }, { x: 4.45, y: 4.1 }],
+    ]);
+  });
+
+  it("applies door and backing ownership to one resolved instance at a time", () => {
+    const evs = resolveApprovedRoomDrawRecords("room.evs_closet", 0);
+    const shelf1 = evs.find((draw) => draw.id === "shelf1")!;
+    const shelf2 = evs.find((draw) => draw.id === "shelf2")!;
+    expect(isApprovedDrawVisible(shelf1, new Set(), new Set(["N1"]))).toBe(false);
+    expect(isApprovedDrawVisible(shelf2, new Set(), new Set(["N1"]))).toBe(true);
+    const front = resolveApprovedRoomDrawRecords("room.front_desk", 0);
+    expect(isApprovedDrawVisible(front.find((draw) => draw.id === "gallery")!, new Set(["N2"]), new Set())).toBe(false);
+    expect(isApprovedDrawVisible(front.find((draw) => draw.id === "botanical")!, new Set(["N2"]), new Set())).toBe(true);
+    const apron = resolveApprovedRoomDrawRecords("room.xray", 0).find((draw) => draw.id === "apron")!;
+    expect(apron.doorOwners).toEqual(["N1"]);
+    expect(isApprovedDrawVisible(apron, new Set(["N1"]), new Set())).toBe(false);
+    const cat1 = resolveApprovedRoomDrawRecords("room.ct", 0).find((draw) => draw.id.endsWith("cat1"))!;
+    expect(cat1.doorOwners).toEqual(["N1"]);
+    expect(isApprovedDrawVisible(cat1, new Set(), new Set(["N1"]))).toBe(false);
+    const endoscopyCabinet = resolveApprovedRoomDrawRecords("room.endoscopy", 270).find((draw) => draw.id === "cabinet")!;
+    expect(endoscopyCabinet.doorOwners).toEqual(["WD", "S1"]);
+    expect(isApprovedDrawVisible(endoscopyCabinet, new Set(["WD"]), new Set())).toBe(false);
+  });
+
+  it("hides only the Ultrasound wall print when its exact north segment is backed", () => {
+    const draws = resolveApprovedRoomDrawRecords("room.ultrasound", 0);
+    const wallPrint = draws.find((draw) => draw.id === "wallPrint")!;
+    const otherDraws = draws.filter((draw) => draw !== wallPrint);
+
+    expect(wallPrint).toMatchObject({ doorOwners: ["N2"], backedOwners: ["N2"] });
+    expect(isApprovedDrawVisible(wallPrint, new Set(), new Set())).toBe(true);
+    expect(isApprovedDrawVisible(wallPrint, new Set(), new Set(["N1"]))).toBe(true);
+    expect(isApprovedDrawVisible(wallPrint, new Set(), new Set(["N3"]))).toBe(true);
+    expect(isApprovedDrawVisible(wallPrint, new Set(), new Set(["N2"]))).toBe(false);
+    expect(otherDraws.every((draw) => isApprovedDrawVisible(draw, new Set(), new Set(["N2"])))).toBe(true);
+    expect(isApprovedDrawVisible(wallPrint, new Set(), new Set())).toBe(true);
+  });
+
+  it("binds supplemental windows to their exact world wall segment in both authored views", () => {
+    const cases = [
+      ["room.phlebotomy", 0, [["window-1", "N2"], ["window-2", "N3"]]],
+      ["room.phlebotomy", 270, [["window-1", "N1"], ["window-2", "N2"]]],
+      ["room.glp1_telehealth_suite", 0, [["window-1", "N1"], ["window-2", "N2"], ["window-3", "N3"]]],
+      ["room.glp1_telehealth_suite", 270, [["window-1", "N1"], ["window-2", "N2"]]],
+    ] as const;
+
+    for (const [definitionId, orientation, expected] of cases) {
+      const windows = resolveApprovedRoomDrawRecords(definitionId, orientation)
+        .filter((draw) => draw.id.startsWith("window-"));
+      expect(windows.map((draw) => [draw.id, draw.doorOwners, draw.backedOwners]), `${definitionId}:${orientation}`).toEqual(
+        expected.map(([id, owner]) => [id, [owner], [owner]]),
+      );
+      for (const [id, owner] of expected) {
+        const ownedWindow = windows.find((draw) => draw.id === id)!;
+        expect(isApprovedDrawVisible(ownedWindow, new Set([owner]), new Set())).toBe(false);
+        expect(isApprovedDrawVisible(ownedWindow, new Set(), new Set([owner]))).toBe(false);
+        expect(windows.filter((draw) => draw.id !== id).every((draw) =>
+          isApprovedDrawVisible(draw, new Set([owner]), new Set([owner])),
+        )).toBe(true);
+      }
+    }
+  });
+
+  it("keeps proof-local optional plant ownership and grounds in the active physical view", () => {
+    const south = resolveApprovedRoomDrawRecords("room.glp1_telehealth_suite", 0)
+      .filter((draw) => draw.id.startsWith("plant"));
+    expect(south.map((draw) => [draw.id, draw.worldLocalGround, draw.doorOwners, draw.backedOwners])).toEqual([
+      ["plant1", [.25, .33], ["N1", "WA"], ["N1"]],
+      ["plant2", [2.75, .33], ["N3", "EA"], ["N3"]],
+    ]);
+
+    const west = resolveApprovedRoomDrawRecords("room.glp1_telehealth_suite", 270)
+      .filter((draw) => draw.id.startsWith("plant"));
+    expect(west.map((draw) => [draw.id, draw.worldLocalGround, draw.doorOwners, draw.backedOwners])).toEqual([
+      ["plant1", [.33, .25], ["WA", "N1"], ["N1"]],
+      ["plant2", [.33, 2.75], ["WC", "S1"], []],
+    ]);
+    expect(isApprovedDrawVisible(west[0]!, new Set(["WA"]), new Set())).toBe(false);
+    expect(isApprovedDrawVisible(west[0]!, new Set(), new Set(["N1"]))).toBe(false);
+    expect(isApprovedDrawVisible(west[1]!, new Set(["WA"]), new Set(["N1"]))).toBe(true);
+  });
+
+  it("projects every proof-authored optional fixture owner into the active physical wall frame", () => {
+    const expected = [
+      ["room.front_desk", 0, "gallery", ["N2", "N3"], ["N2", "N3"]],
+      ["room.front_desk", 0, "botanical", ["N4"], ["N4"]],
+      ["room.front_desk", 0, "ficus", ["WC"], []],
+      ["room.ct", 0, "cat1", ["N1"], ["N1"]],
+      ["room.ct", 0, "cat2", ["N2"], ["N2"]],
+      ["room.ct", 0, "cat3", ["N3"], ["N3"]],
+      ["room.ct", 0, "cat4", ["N4"], ["N4"]],
+      ["room.phlebotomy", 0, "sink", ["N1", "WA"], ["N1"]],
+      ["room.phlebotomy", 270, "sink", ["WC", "S1"], ["WC"]],
+      ["room.evs_closet", 0, "shelf1", ["N1"], ["N1"]],
+      ["room.evs_closet", 0, "shelf2", ["N2"], ["N2"]],
+      ["room.evs_closet", 0, "clutter1", ["WB", "S1"], []],
+      ["room.evs_closet", 0, "clutter2", ["EB", "S2"], []],
+      ["room.endoscopy", 0, "cabinet", ["N1", "WA"], ["N1"]],
+      ["room.endoscopy", 0, "sink", ["N4", "EA"], ["N4"]],
+      ["room.endoscopy", 270, "cabinet", ["WD", "S1"], ["WD"]],
+      ["room.endoscopy", 270, "sink", ["WA", "N1"], ["WA"]],
+      ["room.training", 0, "cabinetAnatomy", ["N1", "WA"], ["N1"]],
+      ["room.training", 0, "whiteboard", ["N2"], ["N2"]],
+      ["room.training", 0, "skeleton", ["N3", "EA"], ["N3"]],
+      ["room.coffee_kiosk", 0, "print1", ["N1"], ["N1"]],
+      ["room.coffee_kiosk", 0, "print2", ["N2"], ["N2"]],
+    ] as const;
+
+    for (const [definitionId, orientation, idSuffix, doorOwners, backedOwners] of expected) {
+      const record = resolveApprovedRoomDrawRecords(definitionId, orientation)
+        .find((draw) => draw.id === idSuffix || draw.id.endsWith(`.${idSuffix}`));
+      expect(record, `${definitionId}:${orientation}:${idSuffix}`).toBeDefined();
+      expect(record!.doorOwners, `${definitionId}:${orientation}:${idSuffix}:doors`).toEqual(doorOwners);
+      expect(record!.backedOwners, `${definitionId}:${orientation}:${idSuffix}:backing`).toEqual(backedOwners);
+    }
+  });
+
+  it("uses the approved Front Desk floor-contact centers", () => {
+    const draws = resolveApprovedRoomDrawRecords("room.front_desk", 0);
+    expect(draws.find((draw) => draw.id === "receptionist-chair")!.worldLocalGround).toEqual([1.5, 2]);
+    expect(draws.find((draw) => draw.id === "visitor-chair")!.worldLocalGround).toEqual([4.5, 4]);
+    expect(draws.find((draw) => draw.id === "ficus")!.worldLocalGround).toEqual([0.4034, 3]);
+  });
+
+  it("exposes exact actor furniture supports in each authored orientation", () => {
+    const waitingSouth = resolveApprovedRoomActorSupports("room.waiting", 0);
+    const waitingWest = resolveApprovedRoomActorSupports("room.waiting", 270);
+    expect(waitingSouth).toHaveLength(4);
+    expect(waitingWest).toHaveLength(4);
+    expect(waitingSouth.every((support) => Number.isFinite(support.seat.x) && Number.isFinite(support.ground.y))).toBe(true);
+    expect(waitingWest.map((support) => [support.seat.x, support.seat.y])).not.toEqual(
+      waitingSouth.map((support) => [support.seat.x, support.seat.y]),
+    );
+    for (const orientation of [0, 270] as const) {
+      const examination = resolveApprovedRoomActorSupports("room.examination", orientation);
+      expect(examination.length).toBeGreaterThan(0);
+      expect(examination.some((support) => support.id.includes("exam"))).toBe(true);
+    }
+  });
+
+  it("keeps proof surface contacts distinct from per-seat depth grounds", () => {
+    const south = resolveApprovedRoomActorSupports("room.waiting", 0);
+    expect(south.map(({ id, facing, seat, ground }) => ({ id, facing, seat, ground }))).toEqual([
+      { id: "bench:seat-1", facing: "south", seat: { x: 1.55, y: .38 }, ground: { x: 1.55, y: .95 } },
+      { id: "bench:seat-2", facing: "south", seat: { x: 2.45, y: .38 }, ground: { x: 2.45, y: .95 } },
+      { id: "leftChair:seat-1", facing: "east", seat: { x: .7, y: 1.72 }, ground: { x: .7, y: 1.95 } },
+      { id: "rightChair:seat-1", facing: "west", seat: { x: 3.3, y: 1.72 }, ground: { x: 3.3, y: 1.95 } },
+    ]);
+    const west = resolveApprovedRoomActorSupports("room.waiting", 270);
+    expect(west.find((item) => item.id === "bench:seat-1")).toMatchObject({
+      facing: "east", seat: { x: .88, y: 2.45 }, ground: { x: .95, y: 2.45 },
+    });
+    const secondWestBench = west.find((item) => item.id === "bench:seat-2")!;
+    expect(secondWestBench).toMatchObject({ facing: "east" });
+    expect(secondWestBench.seat.x).toBeCloseTo(.88);
+    expect(secondWestBench.seat.y).toBeCloseTo(1.55);
+    expect(secondWestBench.ground).toMatchObject({ x: .95 });
+    expect(secondWestBench.ground.y).toBeCloseTo(1.55);
+    expect(secondWestBench.fixtureGround).toEqual({ x: .95, y: 2 });
+    expect(west.find((item) => item.id === "leftChair:seat-1")?.ground).toEqual({ x: 1.95, y: 3.3 });
+    expect(west.find((item) => item.id === "rightChair:seat-1")?.ground).toEqual({ x: 1.95, y: .7000000000000002 });
+    expect(west.find((item) => item.id === "rightChair:seat-1")?.seat.y).toBeCloseTo(.45);
+  });
+
+  it("insets only opted-in south-facing cushion surfaces", () => {
+    const source = { x: 2, y: 3 };
+    expect(APPROVED_SOUTH_SEAT_CUSHION_INSET_TILES).toBe(.25);
+    expect(APPROVED_WAITING_BENCH_ADDITIONAL_CUSHION_INSET_TILES).toBe(.25);
+    expect(insetApprovedSouthSeatSurface(source, "south", true)).toEqual({ x: 2, y: 2.75 });
+    expect(insetApprovedSouthSeatSurface(source, "east", true)).toBe(source);
+    expect(insetApprovedSouthSeatSurface(source, "south", false)).toBe(source);
+
+    const frontDesk = resolveApprovedRoomActorSupports("room.front_desk", 0);
+    expect(frontDesk.find((item) => item.role === "front-desk-staff")).toMatchObject({
+      facing: "south", seat: { x: 1.5, y: 1.57 }, ground: { x: 1.5, y: 2 }, fixtureGround: { x: 1.5, y: 2 },
+    });
+    expect(frontDesk.find((item) => item.role === "front-desk-public")?.seat).toEqual({ x: 4.5, y: 3.72 });
+
+    const examination = resolveApprovedRoomActorSupports("room.examination", 270);
+    expect(examination.find((item) => item.role === "examination-patient")?.seat).toEqual({ x: 1, y: 1.342094455852156 });
+    const ultrasound = resolveApprovedRoomActorSupports("room.ultrasound", 0);
+    expect(ultrasound.find((item) => item.role === "ultrasound-patient")!.seat.y).toBeCloseTo(1.3324);
+  });
+
+  it("uses authored care surfaces, grounds, roles, and cardinal facing", () => {
+    expect(resolveApprovedRoomActorSupports("room.examination", 0)).toMatchObject([
+      { role: "examination-patient", pose: "exam-table", facing: "west", seat: { x: 1.39, y: .9959610027855154 }, ground: { x: 1.15, y: 1.35 } },
+      { role: "examination-clinician", pose: "seated", facing: "east", seat: { x: .78, y: .8276515151515151 }, ground: { x: .78, y: 1.25 } },
+    ]);
+    expect(resolveApprovedRoomActorSupports("room.examination", 270)).toMatchObject([
+      { role: "examination-patient", facing: "south" },
+      { role: "examination-clinician", facing: "north" },
+    ]);
+    const ultrasound = resolveApprovedRoomActorSupports("room.ultrasound", 0);
+    expect(ultrasound).toMatchObject([
+      { role: "ultrasound-patient", facing: "south", ground: { x: 1.5, y: 1.75 } },
+      { role: "ultrasound-clinician", facing: "north", ground: { x: 2.2, y: 2.75 } },
+    ]);
+    expect(ultrasound[0]!.seat.x).toBeCloseTo(2.2);
+    expect(ultrasound[0]!.seat.y).toBeCloseTo(1.3324);
+    expect(ultrasound[1]!.seat.x).toBeCloseTo(2.2);
+    expect(ultrasound[1]!.seat.y).toBeCloseTo(2.347037);
+    const minor = resolveApprovedRoomActorSupports("room.minor_procedure", 0);
+    expect(minor).toMatchObject([
+      { role: "minor-procedure-patient", facing: "south", ground: { x: 1.5, y: 1.95 } },
+      { role: "minor-procedure-clinician", facing: "north", ground: { x: 1.5, y: 2.75 } },
+    ]);
+    expect(minor[0]!.seat.y).toBeCloseTo(1.557748);
+    expect(minor[1]!.seat.y).toBeCloseTo(2.327744);
+    expect(resolveApprovedRoomActorSupports("room.ct", 0)).toMatchObject([
+      { role: "ct-patient", pose: "exam-table", facing: "south", ground: { x: 1.4, y: 2.65 } },
+      { role: "ct-operator", pose: "standing", facing: "north", seat: { x: 3.35, y: 2.7 } },
+    ]);
+    expect(resolveApprovedRoomActorSupports("room.phlebotomy", 0)).toMatchObject([
+      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "south", ground: { x: 1.5, y: .98 } },
+      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "north", ground: { x: 1.5, y: 1.7 } },
+    ]);
+    const phlebotomySouth = resolveApprovedRoomActorSupports("room.phlebotomy", 0);
+    expect(phlebotomySouth[0]!.seat.y).toBeCloseTo(.5148039);
+    expect(phlebotomySouth[1]!.seat.y).toBeCloseTo(1.2891473);
+    const phlebotomyEast = resolveApprovedRoomActorSupports("room.phlebotomy", 270);
+    expect(phlebotomyEast).toMatchObject([
+      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "east", ground: { x: .98, y: 1.5 } },
+      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "west", ground: { x: 1.7, y: 1.5 } },
+    ]);
+    expect(phlebotomyEast[0]!.seat.x).toBeCloseTo(1.3535956);
+    expect(phlebotomyEast[0]!.seat.y).toBeCloseTo(1.0228165);
+    expect(phlebotomyEast[1]!.seat.x).toBeCloseTo(1.7012281);
+    expect(phlebotomyEast[1]!.seat.y).toBeCloseTo(1.0394705);
+
+    const telehealthSouth = resolveApprovedRoomActorSupports("room.glp1_telehealth_suite", 0);
+    expect(telehealthSouth).toMatchObject([
+      { id: "telehealth:leftSeat", role: "glp1-np-station-1", pose: "seated", facing: "east", ground: { x: .65, y: 1 } },
+      { id: "telehealth:rightSeat", role: "glp1-np-station-2", pose: "seated", facing: "west", ground: { x: 2.35, y: 1 } },
+    ]);
+    expect(telehealthSouth.every((support) => support.fixtureGround.y > support.ground.y)).toBe(true);
+    expect(telehealthSouth[0]!.seat).not.toEqual(telehealthSouth[1]!.seat);
+    const telehealthWest = resolveApprovedRoomActorSupports("room.glp1_telehealth_suite", 270);
+    expect(telehealthWest).toMatchObject([
+      { id: "telehealth:leftSeat", role: "glp1-np-station-1", pose: "seated", facing: "north", ground: { x: 1, y: 2.35 }, fixtureGround: { x: 1, y: 2.35 } },
+      { id: "telehealth:rightSeat", role: "glp1-np-station-2", pose: "seated", facing: "south" },
+    ]);
+    expect(telehealthWest[1]!.ground.y).toBeCloseTo(.65);
+    const southChair = resolveApprovedRoomDrawRecords("room.glp1_telehealth_suite", 270)
+      .find((draw) => draw.id === "chair2")!;
+    expect(telehealthWest[1]!.fixtureGround.y).toBeCloseTo(
+      southChair.destinationTopLeftTiles[1] + southChair.renderSizeTiles[1],
+    );
+    expect(telehealthWest[1]!.seat.y).toBeCloseTo(.245741);
+    expect(telehealthWest[0]!.seat).not.toEqual(telehealthWest[1]!.seat);
+  });
+
+  it("backs every resolved proof draw with a shipped approved atlas", () => {
+    const assets = new Map(APPROVED_GS015_ROOM_ATLASES.map((asset) => [asset.id, asset]));
+    for (const room of APPROVED_ROOM_PRESENTATIONS) {
+      for (const orientation of room.orientations) {
+        const capture = getApprovedRoomProofCapture(room.roomDefinitionId, orientation.runtimeOrientation)!;
+        const draws = resolveApprovedRoomDrawRecords(room.roomDefinitionId, orientation.runtimeOrientation);
+        expect(draws, `${room.proofId}:${orientation.runtimeOrientation}`).toHaveLength(capture.drawImages.length);
+        expect(new Set(draws.map((draw) => draw.id)).size).toBe(draws.length);
+        for (const draw of draws) {
+          const atlas = assets.get(draw.assetId);
+          expect(atlas, `${room.proofId}:${draw.id}`).toBeDefined();
+          const [sourceX, sourceY, sourceWidth, sourceHeight] = draw.sourceRect;
+          expect(sourceX, `${room.proofId}:${draw.id}:crop-x`).toBeGreaterThanOrEqual(0);
+          expect(sourceY, `${room.proofId}:${draw.id}:crop-y`).toBeGreaterThanOrEqual(0);
+          expect(sourceX + sourceWidth, `${room.proofId}:${draw.id}:crop-width`).toBeLessThanOrEqual(atlas!.nativeWidth);
+          expect(sourceY + sourceHeight, `${room.proofId}:${draw.id}:crop-height`).toBeLessThanOrEqual(atlas!.nativeHeight);
+          const [originX, originY] = capture.coordinateSpace.floorOriginPixels;
+          const tilePixels = capture.coordinateSpace.tilePixels;
+          const destination = [
+            originX + draw.destinationTopLeftTiles[0] * tilePixels,
+            originY + draw.destinationTopLeftTiles[1] * tilePixels,
+            draw.renderSizeTiles[0] * tilePixels,
+            draw.renderSizeTiles[1] * tilePixels,
+          ];
+          const matchingCalls = capture.drawImages.filter((call) =>
+            call.src.assetId === draw.assetId && call.args.slice(-4).every((value, index) =>
+              Math.abs(value - destination[index]!) < .01
+            )
+          );
+          expect(matchingCalls, `${room.proofId}:${draw.id}:destination`).toHaveLength(1);
+          expect(draw.assetId, `${room.proofId}:${draw.id}:asset`).toBe(matchingCalls[0]!.src.assetId);
+          expect(draw.destinationTopLeftTiles.every(Number.isFinite)).toBe(true);
+          expect(draw.canvasTransform).toHaveLength(6);
+          expect(Number.isFinite(draw.depthKey)).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("registers approved state variants as different exact proof draws", () => {
+    const front = getApprovedRoomProofCapture("room.front_desk", 0)!;
+    const normalCooler = front.drawImages.find((draw) => draw.src.assetId === "gs015:front-desk:upkeep")!;
+    const emptyCooler = front.variants!.emptyWater!.drawImages.find((draw) => draw.src.assetId === "gs015:front-desk:upkeep")!;
+    expect(emptyCooler.args.slice(0, 4)).not.toEqual(normalCooler.args.slice(0, 4));
+    expect(front.variants!.visitorEdHidden!.drawImages.length).toBe(front.drawImages.length - 1);
+    for (const orientation of [0, 270] as const) {
+      const endoscopy = getApprovedRoomProofCapture("room.endoscopy", orientation)!;
+      const emptyCrops = endoscopy.drawImages.map((draw) => draw.args.slice(0, 4));
+      const occupiedCrops = endoscopy.variants!.occupiedCovered!.drawImages.map((draw) => draw.args.slice(0, 4));
+      expect(occupiedCrops).not.toEqual(emptyCrops);
+      expect(endoscopy.variants!.occupiedCovered!.dataset?.model).toMatchObject({ tableState: "occupiedCovered" });
+    }
+  });
+
+  it("resolves approved state variants into render-ready records", () => {
+    const front = resolveApprovedRoomDrawRecords("room.front_desk", 0);
+    const emptyWater = resolveApprovedRoomDrawRecords("room.front_desk", 0, "emptyWater");
+    const visitorHidden = resolveApprovedRoomDrawRecords("room.front_desk", 0, "visitorEdHidden");
+    expect(emptyWater.map((draw) => draw.sourceRect)).not.toEqual(front.map((draw) => draw.sourceRect));
+    expect(visitorHidden).toHaveLength(front.length - 1);
+    expect(visitorHidden.some((draw) => draw.id === "visitor-chair")).toBe(false);
+    for (const orientation of [0, 270] as const) {
+      const empty = resolveApprovedRoomDrawRecords("room.endoscopy", orientation);
+      const occupied = resolveApprovedRoomDrawRecords("room.endoscopy", orientation, "occupiedCovered");
+      expect(occupied).toHaveLength(empty.length);
+      expect(occupied.map((draw) => draw.sourceRect)).not.toEqual(empty.map((draw) => draw.sourceRect));
+    }
+    expect(() => resolveApprovedRoomDrawRecords("room.ct", 0, "occupiedCovered")).toThrow(/no occupiedCovered variant/);
+  });
+
+  it("registers the seven Level 3 proofs with their approved footprints and exact draw counts", () => {
+    const expected = [
+      ["room.ambulatory_or", "98759E8F0C2ACF681B469D47F84B6F447B52D1D0FD24DBF5E37AEF9F59C90C56", [4, 4], 8],
+      ["room.laboratory", "1A2D3AE0A8A0623114B52F3D23D56956AC5E21C8E38E496535060766488A4C95", [3, 3], 4],
+      ["room.pharmacy", "F2775A9104E494E7F9F51E3424054DAC4CE4A91969266799CA0CD6A03CD00C1C", [3, 3], 4],
+      ["room.maintenance_workshop", "A7C8D8BFAC5F5087B795B96EA67D2E3E0DAB7C1BF536701F586945213CFBE439", [3, 3], 4],
+      ["room.staff_break", "FD4DE2CA6EAF353AA52D5BAFB2D8C1E9C42C5E3F15498F35DA1433905A71ACFC", [4, 4], 20],
+      ["room.surgeon_office", "AE268AD14EC7F6A9365031C4C7FA45AFFC9F4E1C5AA69CDF077EA9C5E0E375C5", [2, 2], 5],
+      ["room.vending", "939A3CFA901891DBFED1578B7CA68819844BB821A7E3E01174347DB6B959573B", [2, 2], 3],
+    ] as const;
+    for (const [definitionId, sha256, footprint, drawCount] of expected) {
+      const room = getApprovedRoomPresentation(definitionId)!;
+      const capture = getApprovedRoomProofCapture(definitionId, 0)!;
+      expect(room.orientations[0]!.footprint, definitionId).toEqual(footprint);
+      expect(room.proofPath, definitionId).toContain(`/level-3/${room.proofId}/proof/`);
+      expect(capture.dataset.proofSha256, definitionId).toBe(sha256);
+      expect(resolveApprovedRoomDrawRecords(definitionId, 0), definitionId).toHaveLength(drawCount);
+    }
+    expect(getApprovedRoomProofCapture("room.ambulatory_or", 0)!.coordinateSpace.floorOriginPixels).toEqual([60, 130]);
+    expect(getApprovedRoomProofCapture("room.surgeon_office", 0)!.coordinateSpace.floorOriginPixels).toEqual([60, 120]);
+    expect(getApprovedRoomProofCapture("room.vending", 0)!.coordinateSpace.floorOriginPixels).toEqual([150, 150]);
+    expect(resolveApprovedRoomDrawRecords("room.vending", 0).find((draw) => draw.id === "machine")!.worldLocalGround).toEqual([1, 1.24]);
+  });
+
+  it("uses live actor supports instead of approved-proof character stand-ins", () => {
+    const level3Ids = [
+      "room.ambulatory_or", "room.laboratory", "room.pharmacy",
+      "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
+      "room.vending",
+    ];
+    const forbiddenFiles = /(?:^|:)(?:actor-|surgeon\.webp|nurse\.webp|technician\.webp|pharmacist\.webp|repairPerson\.webp|staff\.webp|employee\.webp|founder\.webp|patient\.webp|visitor\.webp)/;
+    for (const definitionId of level3Ids) {
+      expect(resolveApprovedRoomDrawRecords(definitionId, 0).every((draw) =>
+        !forbiddenFiles.test(draw.assetId)
+      ), definitionId).toBe(true);
+    }
+    expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) => support.role)).toEqual([
+      "ambulatory-or-surgeon", "ambulatory-or-surgeon", "ambulatory-or-nurse", "ambulatory-or-nurse",
+    ]);
+    expect(resolveApprovedRoomActorSupports("room.laboratory", 0)[0]?.role).toBe("laboratory-technician");
+    expect(resolveApprovedRoomActorSupports("room.pharmacy", 0)[0]?.role).toBe("pharmacist");
+    expect(resolveApprovedRoomActorSupports("room.maintenance_workshop", 0)[0]?.role).toBe("repair-person");
+  });
+
+  it("keeps all seven stable Break Room seats on their approved contacts and facings", () => {
+    expect(resolveApprovedRoomActorSupports("room.staff_break", 0).map(({ id, facing, seat, fixtureGround }) =>
+      [id, facing, seat, fixtureGround]
+    )).toEqual([
+      ["massage", "south", { x: 1.05, y: 2.51 }, { x: 1.05, y: 3 }],
+      ["largeNorth", "south", { x: 2, y: .595 }, { x: 2, y: .97 }],
+      ["largeSouth", "north", { x: 2, y: 1.745 }, { x: 2, y: 2.12 }],
+      ["largeWest", "east", { x: 1.05, y: 1.16 }, { x: .99, y: 1.56 }],
+      ["largeEast", "west", { x: 2.95, y: 1.16 }, { x: 3.01, y: 1.56 }],
+      ["smallNorth", "south", { x: 2.7, y: 2.095 }, { x: 2.7, y: 2.47 }],
+      ["smallSouth", "north", { x: 2.7, y: 3.195 }, { x: 2.7, y: 3.57 }],
+    ]);
+    expect(resolveApprovedRoomActorSupports("room.surgeon_office", 0)).toMatchObject([
+      { id: "surgeon", role: "surgeon-office", pose: "seated", facing: "south", seat: { x: 1.135, y: .495 }, fixtureGround: { x: 1.135, y: .87 } },
+    ]);
+  });
+
+  it("hides and restores every Level 3 proof-owned draw for each door and backing owner", () => {
+    const level3Ids = [
+      "room.ambulatory_or", "room.laboratory", "room.pharmacy",
+      "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
+      "room.vending",
+    ];
+    for (const definitionId of level3Ids) {
+      for (const draw of resolveApprovedRoomDrawRecords(definitionId, 0)) {
+        expect(isApprovedDrawVisible(draw, new Set(), new Set()), `${definitionId}:${draw.id}:restore`).toBe(true);
+        for (const owner of draw.doorOwners) {
+          expect(isApprovedDrawVisible(draw, new Set([owner]), new Set()), `${definitionId}:${draw.id}:door:${owner}`).toBe(false);
+        }
+        for (const owner of draw.backedOwners) {
+          expect(isApprovedDrawVisible(draw, new Set(), new Set([owner])), `${definitionId}:${draw.id}:backing:${owner}`).toBe(false);
+        }
+      }
+    }
+  });
+
+  it("switches only the OR table to the approved covered-patient bitmap", () => {
+    const empty = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0);
+    const occupied = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0, "occupiedCovered");
+    const emptyTable = empty.find((draw) => draw.id === "table")!;
+    const occupiedTable = occupied.find((draw) => draw.id === "table")!;
+    expect(emptyTable.assetId).toBe("level3:ambulatory-or:tableEmpty.webp");
+    expect(occupiedTable.assetId).toBe("level3:ambulatory-or:tableOccupied.webp");
+    expect(occupied.filter((draw) => draw.id !== "table")).toEqual(empty.filter((draw) => draw.id !== "table"));
+    expect(occupiedTable.worldLocalGround).toEqual(emptyTable.worldLocalGround);
+    expect(occupiedTable.depthKey).toBe(emptyTable.depthKey);
+  });
+
+});

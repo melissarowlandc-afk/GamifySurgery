@@ -1,0 +1,28 @@
+--- a/apps/player/src/ui/NeedsYouTray.tsx
++++ b/apps/player/src/ui/NeedsYouTray.tsx
+@@ -7,11 +7,13 @@
+   compact?: boolean;
+ }) {
+   const visible = items.slice(0, 3);
++  const empty = visible.length === 0;
+   return (
+-    <section className={`needs-you-zone${compact ? " is-compact" : ""}`} aria-label="Needs you">
+-      <div className="clinic-zone-label"><span>Needs you</span><small>{items.length > 3 ? `+${items.length - 3} other actionable problems` : ""}</small></div>
+-      <div className="needs-you-cards">
+-        {visible.length === 0 ? <p className="needs-you-calm">All quiet. Nothing needs you right now.</p> : visible.map((item) => (
++    <section className={`needs-you-zone${compact ? " is-compact" : ""}${empty ? " is-empty" : ""}`} aria-label="Needs you" data-needs-state={empty ? "quiet" : "actionable"}>
++      <div className="clinic-zone-label"><span>Needs you</span>{empty ? <span className="needs-you-calm" role="status">All quiet.</span> : <small>{items.length > 3 ? `+${items.length - 3} other actionable problems` : ""}</small>}</div>
++      <div className="needs-you-expansion" aria-hidden={empty || undefined}>
++        <div className="needs-you-cards"><div className="needs-you-card-stack">
++        {visible.map((item) => (
+           <article className={`needs-you-card is-${item.kind}`} key={item.id} data-need-id={item.id}>
+             <strong>{item.title}</strong>
+             <p>{item.why}</p>
+@@ -23,6 +25,7 @@
+             {failures[item.id] ? <p className="clinic-action-failure" role="status">{failures[item.id]}</p> : null}
+           </article>
+         ))}
++        </div></div>
+       </div>
+     </section>
+   );

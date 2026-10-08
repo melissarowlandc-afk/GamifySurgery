@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "nativeFrameMultiplier": 2,
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "minimumClearancePixels": 4,
+  "packingMarginPixels": 6,
+  "alphaCleanupThreshold": 8,
+  "opaqueThreshold": 160,
+  "assets": {
+    "aquarium": {
+      "assetId": "design:pw:aquarium",
+      "recordIds": [
+        "aquarium"
+      ],
+      "canvas": [
+        460,
+        566
+      ],
+      "widthTiles": 0.96,
+      "heightTiles": 1.18,
+      "ground": [
+        [
+          0.54,
+          0.32
+        ]
+      ],
+      "anchorKind": "floor"
+    },
+    "kids-table": {
+      "assetId": "design:pw:kids-table",
+      "recordIds": [
+        "kidsTable"
+      ],
+      "canvas": [
+        336,
+        220
+      ],
+      "widthTiles": 0.7,
+      "heightTiles": 0.46,
+      "ground": [
+        [
+          2,
+          2.635
+        ]
+      ],
+      "anchorKind": "floor",
+      "sourcePoints": {
+        "frontTabletop": [
+          765,
+          377
+        ]
+      }
+    },
+    "kid-stool": {
+      "assetId": "design:pw:kid-stool",
+      "recordIds": [
+        "kidStoolWest",
+        "kidStoolEast",
+        "kidStoolNorth",
+        "kidStoolSouth"
+      ],
+      "canvas": [
+        144,
+        192
+      ],
+      "widthTiles": 0.3,
+      "heightTiles": 0.4,
+      "ground": [
+        [
+          1.49,
+          2.66
+        ],
+        [
+          2.51,
+          2.66
+        ],
+        [
+          2,
+          2.16
+        ],
+        [
+          2,
+          2.98
+        ]
+      ],
+      "anchorKind": "floor",
+      "sourcePoints": {
+        "seat": [
+          543,
+          177
+        ]
+      },
+      "expectedSeatRiseProofPixels": 37.2,
+      "seatToleranceProofPixels": 1.5
+    },
+    "toy-chest": {
+      "assetId": "design:pw:toy-chest",
+      "recordIds": [
+        "toyChest"
+      ],
+      "canvas": [
+        460,
+        272
+      ],
+      "widthTiles": 0.96,
+      "heightTiles": 0.5676521739130435,
+      "ground": [
+        [
+          0.52,
+          3.86
+        ]
+      ],
+      "anchorKind": "floor",
+      "direction": "east"
+    },
+    "book-bin": {
+      "assetId": "design:pw:book-bin",
+      "recordIds": [
+        "bookBin"
+      ],
+      "canvas": [
+        346,
+        394
+      ],
+      "widthTiles": 0.72,
+      "heightTiles": 0.8198843930635838,
+      "ground": [
+        [
+          3.6,
+          3.86
+        ]
+      ],
+      "anchorKind": "floor",
+      "direction": "west"
+    },
+    "animal-prints": {
+      "assetId": "design:pw:animal-prints",
+      "recordIds": [
+        "animalPrints"
+      ],
+      "canvas": [
+        336,
+        182
+      ],
+      "widthTiles": 0.7,
+      "heightTiles": 0.38,
+      "top": [
+        2.58,
+        -0.68
+      ],
+      "anchorKind": "wall"
+    },
+    "wall-clock-kids": {
+      "assetId": "design:pw:clock",
+      "recordIds": [
+        "clock"
+      ],
+      "canvas": [
+        124,
+        124
+      ],
+      "widthTiles": 0.26,
+      "heightTiles": 0.26,
+      "top": [
+        3.5,
+        -0.66
+      ],
+      "anchorKind": "wall"
+    }
+  },
+  "notes": [
+    "Owner revision2 retains the table/native stool sources, explicitly enlarges regenerated chest/bin frames and adds seating. Private contracts record all changed anchors/sizes; shared stand-ins remain unchanged.",
+    "Fit preserves source aspect ratio. No semantic painting or stretching is performed by preparation. Alpha below 8/255 is technical generated fringe, recorded and removed; original source bytes remain intact.",
+    "Seat and tabletop points are visual landmarks in selected original source pixels, not values asserted from image-generation prompts."
+  ]
+}

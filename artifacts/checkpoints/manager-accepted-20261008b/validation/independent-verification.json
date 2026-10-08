@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "manifestedFiles": 1017,
+  "archiveFiles": 1018,
+  "patchContracts": 74,
+  "forwardReverseReapply": 74,
+  "recoveredTargets": 860,
+  "wholeOwnedTargets": 786,
+  "stagePaths": 1067,
+  "liveStageSourcesChecked": 49,
+  "liveRecoveryTargetsChecked": 860,
+  "gitMutations": 0,
+  "workingTreeWrites": 0,
+  "verifierCommand": "python artifacts/checkpoints/manager-accepted-20261008b/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+  "note": "Counts are bound to final archive; exact total bytes are in archive-size.json to avoid a self-size dependency."
+}

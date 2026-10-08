@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "task": "Level 4 Pediatric Waiting Room milestone 2 / owner revision 2",
+  "root": "tools/room-design/level-4/pediatric-waiting",
+  "owner": "assigned Sol worker",
+  "outsideLaneEdit": "Append only to docs/execplans/level4-pediatric-waiting-mockup-20261007.md Worker handoff",
+  "excluded": [
+    "ART_BRIEF.md",
+    "stand-in/**",
+    "proof/evidence/owned-files.json (self)",
+    "proof/evidence/browser-validation-report.json",
+    "proof/evidence/capture-report.json",
+    "proof/evidence/pediatric-320.png",
+    "proof/evidence/pediatric-all-backed.json",
+    "proof/evidence/pediatric-all-backed.png",
+    "proof/evidence/pediatric-all-doors.json",
+    "proof/evidence/pediatric-all-doors.png",
+    "proof/evidence/pediatric-backed.json",
+    "proof/evidence/pediatric-backed.png",
+    "proof/evidence/pediatric-children.json",
+    "proof/evidence/pediatric-children.png",
+    "proof/evidence/pediatric-contacts.json",
+    "proof/evidence/pediatric-contacts.png",
+    "proof/evidence/pediatric-desktop.png",
+    "proof/evidence/pediatric-empty.json",
+    "proof/evidence/pediatric-empty.png",
+    "proof/evidence/pediatric-painted.json",
+    "proof/evidence/pediatric-painted.png",
+    "proof/evidence/pediatric-parents.json",
+    "proof/evidence/pediatric-parents.png"
+  ],
+  "fileCount": 124,
+  "files": {
+    "README.md": {
+      "sha256": "D3D2CC729950DBF5D647D9C16108819818B6CE3B2D8B4834F070AAB8C11473DD",
+      "bytes": 7358
+    },
+    "assets/derived/armchair-east-front.png": {
+      "sha256": "EF279064D528B8FCBD46623EC5CE0FE087259C4C820340BE964BF4C62DF7B6A8",
+      "bytes": 25707
+    },
+    "assets/derived/armchair-west-front.png": {
+      "sha256": "4C39536CEC6FC7D17A2D078C2DB42B9F18528CA062836DBD19DAEFFE123E31E8",
+      "bytes": 26358
+    },
+    "assets/derived/occluder-manifest.json": {
+      "sha256": "5F2EA8E67E256F266E8E6D0578C33DC37B3DC526814320DD5ED96D2ACDA603BD",
+      "bytes": 4509
+    },
+    "assets/generation-manifest.json": {
+      "sha256": "0A5E1C53628CCBC80A1C7CFC2FD02D35D14BDB7E7661A8E83C5EE923BC90BAC6",
+      "bytes": 26058
+    },
+    "assets/generation-receipts.json": {
+      "sha256": "451A989DEF488B3F2CEAF75487FD1361688BDEE60C1C2098AE783CD83CF45072",
+      "bytes": 15564
+    },
+    "assets/image-utils.mjs": {
+      "sha256": "3567E1A805B6258EC415E53D20F56177D71FE0B7ED3801BDEEEC9A2B72359A60",
+      "bytes": 1587
+    },
+    "assets/originals/animal-prints-01.png": {
+      "sha256": "8CDA65309C8ED4A8BAF0950104541E0F193A59804D304F0CDC78C554D34CDE2F",
+      "bytes": 1373611
+    },
+    "assets/originals/animal-prints-02.png": {
+      "sha256": "B9FCAF0A50FF902690292F6898F7F2D8FCAB0B84FBC05B9FCA9A404D3E94B327",
+      "bytes": 1402593
+    },
+    "assets/originals/animal-prints-03.png": {
+      "sha256": "0E5A27166896033E0206D39240CF14D7CA7C617CC0B79B13ADFA32558F6F5F66",
+      "bytes": 1655535
+    },
+    "assets/originals/aquarium-01.png": {
+      "sha256": "1D4B87D83267604C93C0D18E5E5ECA4F57400AC2D17ED22DBD79206CB8E2022E",
+      "bytes": 1640549
+    },
+    "assets/originals/book-bin-01.png": {
+      "sha256": "D60A2FEC19858AD185DAB90956E112A1AC9782C63BC9297F021701CE84FCD5EC",
+      "bytes": 1456173
+    },
+    "assets/originals/book-bin-02.png": {
+      "sha256": "44279DD49CD211434E3517CC26C22CC945E2486C23CE39CE640032F3EA895323",
+      "bytes": 1460263
+    },
+    "assets/originals/book-bin-03.png": {
+      "sha256": "2A5DB728215AA2D572B0E52DBD66437F6BA4200BE47DC7D604DF14F43790420B",
+      "bytes": 1784832
+    },
+    "assets/originals/book-bin-04.png": {
+      "sha256": "EC5BD60AFB62A88D8FF9D6D91F47546AD47C9452900C5F15BA675A283436A68C",
+      "bytes": 1338478
+    },
+    "assets/originals/kid-stool-01.png": {
+      "sha256": "241ACE3A16088FAAD8B1F62473102CBB7101672307730F438AA1B76825FA138D",
+      "bytes": 823954
+    },
+    "assets/originals/kid-stool-02.png": {
+      "sha256": "689EC27DD9B00B0CC2E5D4EA2391E0A828C324C463B89D954F9702463FFE5D86",
+      "bytes": 921463
+    },
+    "assets/originals/kid-stool-03.png": {
+      "sha256": "EA68D6F67E259AA503CC733826E392319B085EBB9E08D9295F726332E8316BCE",
+      "bytes": 953905
+    },
+    "assets/originals/kids-table-01.png": {
+      "sha256": "B36B4DA864834083B529E4AF3732E788BB904F124826706974DCF55E86EA642A",
+      "bytes": 704426
+    },
+    "assets/originals/kids-table-02.png": {
+      "sha256": "131279C586DC102D63195484FA57791BF3444FE1332D578366E268BE188A7498",
+      "bytes": 664090
+    },
+    "assets/originals/toy-chest-01.png": {
+      "sha256": "76B753B8C680DAEFA9710419E41630D99777752F1E6D6EA95A79889006871CF5",
+      "bytes": 1323977
+    },
+    "assets/originals/toy-chest-02.png": {
+      "sha256": "FDACA7E2EC2D1CE5A04C6D19370B294D6A563C89257A2CBEB8A6ECBB845436C7",
+      "bytes": 1558791
+    },
+    "assets/originals/toy-chest-03.png": {
+      "sha256": "063583DD8688057E5532A50CDFF389D78D62DAF047CBA7573217D3D0EB1E5474",
+      "bytes": 1173225
+    },
+    "assets/originals/wall-clock-kids-01.png": {
+      "sha256": "9495974EC0D64378A58E7C9534258B6F4AEAAD0CDEE1C30F94D5B0EA46B90CBF",
+      "bytes": 1439073
+    },
+    "assets/prepare-assets.mjs": {
+      "sha256": "44C051DA0579519A122DE4D1BF853214FEBE6D051F958AF243180353B2C7D03A",
+      "bytes": 7179
+    },
+    "assets/prepare-occluders.mjs": {
+      "sha256": "22F569013436A9702DE9ED10BB729D0700B31B27B1A4DF367C82A12B0D4FF382",
+      "bytes": 3118
+    },
+    "assets/prepared/animal-prints.png": {
+      "sha256": "D112727649A36570055E3AEC8A74AEEC8BD89857DCA4482BC754C13F3756D331",
+      "bytes": 86440
+    },
+    "assets/prepared/aquarium.png": {
+      "sha256": "3C5958B0B873ACA093E93F712615714A05C8853ED85739D8048E79B8E54C973A",
+      "bytes": 345983
+    },
+    "assets/prepared/book-bin.png": {
+      "sha256": "219185B31CBA3AD4DE5E9F216D56B7FB1B33482D9853EC6229BEBB21D26168FF",
+      "bytes": 147245
+    },
+    "assets/prepared/contract-used.json": {
+      "sha256": "C64402486DCE8A5C055A03BF87EBDCBBF13C7BA5C5693F19950D0CED62483F42",
+      "bytes": 3652
+    },
+    "assets/prepared/kid-stool.png": {
+      "sha256": "42B14F4E2F844F847950E97779DD98E1BF75AF41952D1401068FEEEBF864EEC5",
+      "bytes": 22496
+    },
+    "assets/prepared/kids-table.png": {
+      "sha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632",
+      "bytes": 50807
+    },
+    "assets/prepared/metadata.json": {
+      "sha256": "0A8BCAE4C056EDA95DDEC4921F8B1C3595096BC74415B2356AA73D654FD90BB7",
+      "bytes": 21823
+    },
+    "assets/prepared/toy-chest.png": {
+      "sha256": "C8EBD2BBFC44E94766CCBB21046D368A470F4E91BD88EF9F5F6023E7A24E9736",
+      "bytes": 132475
+    },
+    "assets/prepared/wall-clock-kids.png": {
+      "sha256": "E9039FB01E1E4D1EC6490E4103EEFD9BE294FD91DE5DF49A0AFF5224B2ED11E2",
+      "bytes": 21425
+    },
+    "assets/prompts/animal-prints-01.prompt.txt": {
+      "sha256": "A3C35CC60AB3D8D877F52306BBDA530B566EA5558175548857449FB740CA0AFD",
+      "bytes": 2024
+    },
+    "assets/prompts/animal-prints-02.prompt.txt": {
+      "sha256": "B211C4F8C1BF512779D3A6AE8FD04CEA8D5F3B45266E2202FA58D50E85DB9D43",
+      "bytes": 1003
+    },
+    "assets/prompts/animal-prints-03.prompt.txt": {
+      "sha256": "0AD93419F80C24053948322C5852230A3B96C96F6E8674BD368C22939CD7D686",
+      "bytes": 786
+    },
+    "assets/prompts/aquarium-01.prompt.txt": {
+      "sha256": "71A4DCF3B0A22FD7173C9A0153949ED9520058EFD46E400E6A4EB25C1313450A",
+      "bytes": 1992
+    },
+    "assets/prompts/book-bin-01.prompt.txt": {
+      "sha256": "50AEF483C655E537043D2DE1CE62BDB036F466119CB24FF3B72A8542E9466C2F",
+      "bytes": 1852
+    },
+    "assets/prompts/book-bin-02.prompt.txt": {
+      "sha256": "DA61E1F4995E7F77602606BD2195449B909EBCD6E4700121FBE5AAED5A41A638",
+      "bytes": 940
+    },
+    "assets/prompts/book-bin-03.prompt.txt": {
+      "sha256": "DB115972BA69EEBB24CF2F4369F35FC44D9ABB3C3323FD2EA60B35D54031D26B",
+      "bytes": 960
+    },
+    "assets/prompts/book-bin-04.prompt.txt": {
+      "sha256": "F64801E6846FF2CCEEDD32DFA13DC6FBB863E75801CD74890C0AF9C82C35361D",
+      "bytes": 1582
+    },
+    "assets/prompts/kid-stool-01.prompt.txt": {
+      "sha256": "594178CAEB33B1956F70C94B0448D0A66D569508E9C98C60E1C80B78476569E3",
+      "bytes": 1827
+    },
+    "assets/prompts/kid-stool-02.prompt.txt": {
+      "sha256": "6BFE13D260DC9F16A7EBF0497C4BB5F527B738B78CF2A7389B579F19B69FAB2F",
+      "bytes": 1053
+    },
+    "assets/prompts/kid-stool-03.prompt.txt": {
+      "sha256": "EFCB96BDFE27440E404867C83A29C53B601627F54AF05FD11FFD96E2AF7190A5",
+      "bytes": 1034
+    },
+    "assets/prompts/kids-table-01.prompt.txt": {
+      "sha256": "95534ADF7C9D0B3F8DE1DEDB1CC7A344C4AF8009D116D8698D637A7F1959615F",
+      "bytes": 1867
+    },
+    "assets/prompts/kids-table-02.prompt.txt": {
+      "sha256": "14ACE25EE0EF212E22AAA72B334BBCDAA8D9D4067C0A56C7CA1C7C64F61B6891",
+      "bytes": 1250
+    },
+    "assets/prompts/toy-chest-01.prompt.txt": {
+      "sha256": "34C18335C39DF6D273D25D3EBE1BE480029CBB84AF8EB23A2F23F959E631F1D0",
+      "bytes": 1836
+    },
+    "assets/prompts/toy-chest-02.prompt.txt": {
+      "sha256": "0B237D8ED4B8EF01F80D01DDFECB0F23552E10885F6E285A5AD9B8E07C64F1AE",
+      "bytes": 901
+    },
+    "assets/prompts/toy-chest-03.prompt.txt": {
+      "sha256": "11FB1EC4C51612585705D66BDB69F50F504FAC6D9B90F237857FA8FA03E7FB14",
+      "bytes": 1581
+    },
+    "assets/prompts/wall-clock-kids-01.prompt.txt": {
+      "sha256": "D556592C20A6C7C22312E8036911ADCBBCDAB74AB10271F336E365681285F7D9",
+      "bytes": 1864
+    },
+    "assets/provenance.md": {
+      "sha256": "D245D068D6A3C1FF4FDB8A08CA73EC0EC211F418C7A501C5F30FB18D5B7C04BD",
+      "bytes": 17258
+    },
+    "assets/record-generations.mjs": {
+      "sha256": "D238E64689ACAAB7F429948A55541A63CDC4F08BB29516B04D166D742CB6BE1D",
+      "bytes": 2865
+    },
+    "assets/record-references.mjs": {
+      "sha256": "088C29C0E544CC876118D718260AB07E474A0C3571039154DBEB33F4933D5317",
+      "bytes": 1800
+    },
+    "assets/reference-baseline.json": {
+      "sha256": "CE03BF9C8DAA66169C09DF930CD005B7DD81A20FA74231A33AD78952EBB6887E",
+      "bytes": 174557
+    },
+    "assets/write-provenance-revision-2.mjs": {
+      "sha256": "9E6E6DC4830A2DA405300A53EEC732EDF98CEBC5CA6817FB462AB443822FA8B5",
+      "bytes": 10625
+    },
+    "assets/write-provenance.mjs": {
+      "sha256": "AC896E054BCB7841EFB51C9C04DCEF2153BB8C043016378F66ED21CEEF775858",
+      "bytes": 128
+    },
+    "proof/README.md": {
+      "sha256": "DE59AC3CFD3DDAE3135D78AFA508C9ED999526BBAF8C460F89FD9CB5DF67A37D",
+      "bytes": 2284
+    },
+    "proof/WORKER_HANDOFF.md": {
+      "sha256": "4FC73CC4C0863709513A1D3CBB9874851DD9F224773456323F7BD1B18AF60439",
+      "bytes": 25468
+    },
+    "proof/actor-baseline.json": {
+      "sha256": "C3FE84A6FC4B4B3B1EF63B5951360B945EF6BAEF1B14C77411AB483F4B672C89",
+      "bytes": 58563
+    },
+    "proof/asset-contract.json": {
+      "sha256": "C64402486DCE8A5C055A03BF87EBDCBBF13C7BA5C5693F19950D0CED62483F42",
+      "bytes": 3652
+    },
+    "proof/audit-revision-2.mjs": {
+      "sha256": "233F6F367131B302DE3A789CC7155F2C5C28CAB1459D01AC3DDC48512033210F",
+      "bytes": 3536
+    },
+    "proof/build.mjs": {
+      "sha256": "7F1F13B594AEE7774AE1CA23DFF6B8169F505E6C563CC72BC7CAE34DD98B1E96",
+      "bytes": 18863
+    },
+    "proof/capture.cjs": {
+      "sha256": "8C580E27FB0F076A00D8483673B3142A9F341FDCCDFFD5EF5A2DAEFB002F04F8",
+      "bytes": 3740
+    },
+    "proof/configure-revision-2.mjs": {
+      "sha256": "E457C1E05FAA8D5A7FDEB2ED08151F9D19BB8E055EC5D9CF68660C5640FA17EB",
+      "bytes": 7354
+    },
+    "proof/data.json": {
+      "sha256": "984797B031FE0E2C0A3630E63844D9DCE5BD19E646D32F448E5CAC7CC37E2575",
+      "bytes": 111744
+    },
+    "proof/design-rooms.js": {
+      "sha256": "DBDB0EB805FBB236AF08F37286F12913FA55201A8CEB3BF362FC1BFF66E3EB2C",
+      "bytes": 38608
+    },
+    "proof/evidence/actor-contacts.json": {
+      "sha256": "F6D3B0C98BD581A7825A74D5399F6A056037C5851EEC63D4A1834C8D949F45E4",
+      "bytes": 3450
+    },
+    "proof/evidence/chair-layering-report.json": {
+      "sha256": "4951D18940CB23AC5B6291B2DEC7368ECDBD0459F110690043CD99405CA84527",
+      "bytes": 9223
+    },
+    "proof/evidence/native-all-doors.json": {
+      "sha256": "CAD1827BC086F3FFB63A502DF02D6897F4ADD166C81512E1191AA8346F4E551D",
+      "bytes": 398
+    },
+    "proof/evidence/native-all-doors.png": {
+      "sha256": "CFDB62AAC65256BC793DBDE37F7EC3D3E5B8123C920CBB3D19D47BF7AB4695AC",
+      "bytes": 140490
+    },
+    "proof/evidence/native-backed.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-backed.png": {
+      "sha256": "57E7326AED96882E735BFA86EBFCC0481EEA4B53D59D5765048AF629721B5E3B",
+      "bytes": 233207
+    },
+    "proof/evidence/native-contacts.json": {
+      "sha256": "50291B03C10B38AAD7AD105DACB8E4C6303E05CE1CD1DBA65E1519364408A988",
+      "bytes": 346
+    },
+    "proof/evidence/native-contacts.png": {
+      "sha256": "CA1B14152EE16F84A80BE194A73F3C61F4C39417BE90BB290F8CCF36C7AE3BD7",
+      "bytes": 228109
+    },
+    "proof/evidence/native-empty.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-empty.png": {
+      "sha256": "F4D4E20F1C9B7F9BC6F58047B0AC140D7DED6620FE5DBA8871E6DDDEB4B73911",
+      "bytes": 188362
+    },
+    "proof/evidence/native-inspection-report.json": {
+      "sha256": "914283252FDA1C83E48A0B71836205D0ACB820CA3393EE9E52580B3904029117",
+      "bytes": 227
+    },
+    "proof/evidence/native-painted.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-painted.png": {
+      "sha256": "5F0CF254D6A9D8FFB08BD5CDD87A79A12402F7E132362745A89B4FAF8D8A0C14",
+      "bytes": 242813
+    },
+    "proof/evidence/original-grid-failure.json": {
+      "sha256": "24D412C0BDBA62EBD1AFC3B0109B703B2DCF9D83EB7DB23E1464D79C59EB3F78",
+      "bytes": 24237
+    },
+    "proof/evidence/original-grid-failure.log": {
+      "sha256": "1C81ACE2EA9561D1C5A1F38F542A2D647163985E643261B289B1C43B704FD46F",
+      "bytes": 1881
+    },
+    "proof/evidence/pediatric-source-contact-sheet.png": {
+      "sha256": "9329305F2E89E09A92EF697574858E28897B06831D12BEB03EB1E17258AFE9A9",
+      "bytes": 105967
+    },
+    "proof/evidence/presentation-revision-report.json": {
+      "sha256": "6A35EE4570D1089DCBC48235DEF0AD5002A797A5C34B8AA2D047BF1710848D87",
+      "bytes": 13555
+    },
+    "proof/evidence/reference-chair-east.png": {
+      "sha256": "D0D502ADF671DBDD6AE15AD108412DA59F29D7603DC3F4FF6F284E91C2130153",
+      "bytes": 117736
+    },
+    "proof/evidence/reference-chair-west.png": {
+      "sha256": "A4F560A793A5089D7A30423038D22B0A6933D6775905FCF74FB27FB87BC6F6D8",
+      "bytes": 119143
+    },
+    "proof/evidence/reference-parent-hip.png": {
+      "sha256": "D3C32219FF9770D836D528C0B28B7368E63429EF2CD0B8816955E15E739ABB50",
+      "bytes": 18755
+    },
+    "proof/evidence/reference-revision-2-contacts.png": {
+      "sha256": "1E84EF58F26E460193174A4884CE44CCF6386CDDA83BA68579009B45B4420601",
+      "bytes": 39247
+    },
+    "proof/evidence/reproducibility-report.json": {
+      "sha256": "0B476372FF5874118ED8EFF572B7D8BE2B54A956DC5D699AB416F3559B1B94BE",
+      "bytes": 4084
+    },
+    "proof/evidence/revision-2-scope-audit.json": {
+      "sha256": "AC448CFED3816AFB1FBB955F617D09B0ABFE1A4380FDA683973515A9A045FCFB",
+      "bytes": 22730
+    },
+    "proof/evidence/seat-approaches.json": {
+      "sha256": "F2607AA67A759A3B7689F8C13A44BD09C80A723FB258C0E1EF98735F7C55E55F",
+      "bytes": 102460
+    },
+    "proof/evidence/syntax-report.json": {
+      "sha256": "92A41E7F0346251CE5FB70CB792D0A4CFF8C3C6D2223B8C3DC816588CA1E5F83",
+      "bytes": 4919
+    },
+    "proof/evidence/syntax.log": {
+      "sha256": "2FF0C82AECEF4D08F124DFB163B8068513A460270E2FB797DE9A18DB1B7FC2FA",
+      "bytes": 67
+    },
+    "proof/evidence/validation-report.json": {
+      "sha256": "99C11A96F99BB2FE8E842D7EEDCE4900E381906689F9C807C2DD5D51477AC52E",
+      "bytes": 44498
+    },
+    "proof/evidence/validation.log": {
+      "sha256": "4FC1434C257B5CDE88017492291DDBAA5DD2EC4541DA4011881A9303F450DD12",
+      "bytes": 1179
+    },
+    "proof/extension.js": {
+      "sha256": "F1A79C0F03E0100C92143D5EA02609F1D41A6D338509DC2636AEA22CBFAFAF98",
+      "bytes": 5005
+    },
+    "proof/geometry.mjs": {
+      "sha256": "9DECD22CD202DCE76D84C625DAC8BD61799B2D8A5D25DE98CB675FC2C75AF2CF",
+      "bytes": 17935
+    },
+    "proof/index.html": {
+      "sha256": "DA2DF8584063016188718970AC303F74503C39EC05F24BB80BE467F57CFBB4E6",
+      "bytes": 4736
+    },
+    "proof/inspect-native.mjs": {
+      "sha256": "85380E0DF0492F0ECCE942B7227ACF250AFEFFEEB560CB869FC12AF9F6903117",
+      "bytes": 2032
+    },
+    "proof/lab.js": {
+      "sha256": "59C5239F3389C190CECF3C433F7ECE4F4F260C6E15D95439B0B823AC1DDD7A50",
+      "bytes": 46041
+    },
+    "proof/layout-baseline.json": {
+      "sha256": "D9AAE654D9F65BFCE67E937C751DEC8DD39B7758BD622772C0F7C9C954BB6876",
+      "bytes": 29715
+    },
+    "proof/measure-children.mjs": {
+      "sha256": "0C4213683837CD4BF9EC542AE068DA8BCF204EB5D99B70799677CCC5D95645B4",
+      "bytes": 2000
+    },
+    "proof/native-engine.mjs": {
+      "sha256": "C6729914FF9D32D8953317B5898F090D14D3FC7D14BFB047C0A4750A046AABEA",
+      "bytes": 2141
+    },
+    "proof/package.json": {
+      "sha256": "609158E6C5FBC237939FA3DDF7FAAB80AB690BDC0C8D584414A885130103C4E8",
+      "bytes": 42
+    },
+    "proof/proof-manifest.json": {
+      "sha256": "A91781C2680A9BF0518B6DA005BEDE47B6F0236BA3114575A6CE381BECCD1A7B",
+      "bytes": 24407
+    },
+    "proof/reproduce.mjs": {
+      "sha256": "CE05A4FE4A2010136ECC9AEE968B5A731BCF8D37E22683512B092ECED05DA77A",
+      "bytes": 1702
+    },
+    "proof/revision-contract.json": {
+      "sha256": "E417607E85180F43A57AFB8A00208FEB8D19BB0E9AD324349F518BDD697C8B73",
+      "bytes": 23919
+    },
+    "proof/revisions/initial-actor-baseline.json": {
+      "sha256": "F4C2FF845DF4B10E9411A6A1F7889E2B06366809353B89FF20A3E186EA6E3D7B",
+      "bytes": 26215
+    },
+    "proof/revisions/revision-1-actor-baseline.json": {
+      "sha256": "69022A7308D69C9568CC3275C85BDDDD573E69C7E5104A81FD717CFFD5F9FFED",
+      "bytes": 30143
+    },
+    "proof/revisions/revision-1-audit.json": {
+      "sha256": "6B543BBB1C2179187958422ACCC63F0A9A9B90E729074327ACAAA4966C47827A",
+      "bytes": 2036
+    },
+    "proof/revisions/revision-1-contract.json": {
+      "sha256": "994E220A762B75E253D9DF6D735D3CCDFF1014EDFDBE89E1D2E377EECF713355",
+      "bytes": 3605
+    },
+    "proof/revisions/revision-1-generation-manifest.json": {
+      "sha256": "6841723D72BA52BCAA73D9F1EDEF2EE259058B46D50E2CCC9321F3EBE280D6AF",
+      "bytes": 22665
+    },
+    "proof/revisions/revision-1-intake.json": {
+      "sha256": "BEBC31940EDE1DBCEC199F943C76A8209D949D8BE34D34F2A662C723AF97B1B1",
+      "bytes": 2592
+    },
+    "proof/revisions/revision-1-provenance.md": {
+      "sha256": "03054297728877DAC78D7CF62CA905DB843F2112116B9966F58D3A2B83E523ED",
+      "bytes": 17384
+    },
+    "proof/revisions/revision-1-validation-report.json": {
+      "sha256": "AD8ADAEC269DF7982191ECF112DACA085DBC2B9324C7A67F8A13F8EF804E2780",
+      "bytes": 31156
+    },
+    "proof/revisions/revision-1-write-provenance.mjs": {
+      "sha256": "73A79C165AE0DFF5D0AEC42D8CB1F33EE42955B6789A5A2300AAF10DB8CEE8A5",
+      "bytes": 11978
+    },
+    "proof/revisions/revision-2-intake.json": {
+      "sha256": "5465FBC0F607811C4E04893B8010F6131DA7875CCA2D56560BBB70188DC851F0",
+      "bytes": 19442
+    },
+    "proof/room-touchups.mjs": {
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995",
+      "bytes": 31749
+    },
+    "proof/validate-browser.cjs": {
+      "sha256": "C462447576E3904A0B9E03C61EC2CDB95FA2468D6758E99B4B24A327DC4494DA",
+      "bytes": 12418
+    },
+    "proof/validate-chairs.mjs": {
+      "sha256": "3FEC41FAE6BB2191F106395DB08C53FFB151B379997433C565026972CA1CEA83",
+      "bytes": 6195
+    },
+    "proof/validate-presentation.mjs": {
+      "sha256": "DA71E1CD5F47D4CAE0B43D7474C69E53AC7980C36E0C18798A162D71B666CE90",
+      "bytes": 9019
+    },
+    "proof/validate.cjs": {
+      "sha256": "E3CBC9678DD3CFD7E3707805CDA40BB918408A840D6C1AC49C50AD6E4CB3B4E2",
+      "bytes": 19825
+    },
+    "proof/write-inventory.mjs": {
+      "sha256": "A260B902B0485164FBD93905B97D4E7EE5AF1355DE37B13F6ECD756DA2D47097",
+      "bytes": 1780
+    }
+  }
+}

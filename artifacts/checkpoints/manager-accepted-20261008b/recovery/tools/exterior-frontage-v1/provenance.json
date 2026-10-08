@@ -1,0 +1,478 @@
+{
+  "pack": "exterior-frontage-v1",
+  "runtimeVersion": "frontage-v2",
+  "date": "2026-10-08",
+  "generator": "built-in image_gen.imagegen; no API/CLI or purchases",
+  "authorship": "Original AI-generated project artwork; owner Option B art direction; needs manager visual acceptance",
+  "references": "Proposal concepts viewed for direction only; no pixels extracted; existing trees/rooms untouched",
+  "assets": [
+    {
+      "id": "frontage:bed-west-v2",
+      "original": "tools/exterior-frontage-v1/originals/bed-west-v2.png",
+      "originalSize": [
+        2172,
+        724
+      ],
+      "originalSha256": "5498ab7d509933cb5dae4f97490f3b68f86955abf0f667f4a285fa53b16b52f4",
+      "prompt": "tools/exterior-frontage-v1/prompts/bed-west-v2.txt",
+      "promptSha256": "f3a99e95c5915734728e34caa5b3774f43f2cd8de105e66a016bb6978dec8db1",
+      "export": "apps/player/public/art/environment/frontage-v2/bed-west-v2.png",
+      "exportSha256": "4c83cc6fabd97ebf52661cf8f42b46a5d21d22ea34a965fb75a745a062bb793a",
+      "nativeSize": [
+        512,
+        160
+      ],
+      "anchor": [
+        256,
+        160
+      ],
+      "kind": "prop",
+      "crop": [
+        20,
+        124,
+        2153,
+        652
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        32,
+        510,
+        158
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:bed-east-v2",
+      "original": "tools/exterior-frontage-v1/originals/bed-east-v2.png",
+      "originalSize": [
+        2172,
+        724
+      ],
+      "originalSha256": "46f3928980369cbd2062e29e9083e0a6d0cd6cd63c649970268c7ffe8c13668a",
+      "prompt": "tools/exterior-frontage-v1/prompts/bed-east-v2.txt",
+      "promptSha256": "30efebc9843cfe492c036d8dcde1515facfd5a97b88cec28be0bece0e65df6bf",
+      "export": "apps/player/public/art/environment/frontage-v2/bed-east-v2.png",
+      "exportSha256": "eda86f1fd138aba6360ab425a00a3c49cff0e65e052e1f7306bb533426ed5f78",
+      "nativeSize": [
+        512,
+        160
+      ],
+      "anchor": [
+        256,
+        160
+      ],
+      "kind": "prop",
+      "crop": [
+        29,
+        185,
+        2144,
+        675
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        40,
+        510,
+        158
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:lawn-sage-v2",
+      "original": "tools/exterior-frontage-v1/originals/lawn-sage-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "cccdf997d15e19ff9bf0bc9999f8a0635d8c4ff2bf74c37e1237c5973fddbb5e",
+      "prompt": "tools/exterior-frontage-v1/prompts/lawn-sage-v2.txt",
+      "promptSha256": "7015efe33125348ecdf3ddeaa53db78fa05e4ab7d8cdecd911dbefb32ffc3fad",
+      "export": "apps/player/public/art/environment/frontage-v2/lawn-sage-v2.png",
+      "exportSha256": "735ea91012f97af2bcf8ed8f823dd89025d2af5e64584a61271c429cb941289b",
+      "nativeSize": [
+        256,
+        128
+      ],
+      "anchor": [
+        128,
+        64
+      ],
+      "kind": "overlay",
+      "crop": [
+        183,
+        108,
+        1609,
+        788
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        2,
+        254,
+        122
+      ],
+      "alphaRange": [
+        0,
+        253
+      ]
+    },
+    {
+      "id": "frontage:lawn-olive-v2",
+      "original": "tools/exterior-frontage-v1/originals/lawn-olive-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "80c219ae224a30f2c8aded76dce64443710a857bb3c5add597a3d4bab1cf3f78",
+      "prompt": "tools/exterior-frontage-v1/prompts/lawn-olive-v2.txt",
+      "promptSha256": "7f5f488d11235c03b5ab8478e448cf8e1c847a517afe04d0e634288449cc233d",
+      "export": "apps/player/public/art/environment/frontage-v2/lawn-olive-v2.png",
+      "exportSha256": "6e9bdcfa263d479a19657d9688188c8158a29ed0e3b0356b7be6cc789dfba447",
+      "nativeSize": [
+        256,
+        128
+      ],
+      "anchor": [
+        128,
+        64
+      ],
+      "kind": "overlay",
+      "crop": [
+        117,
+        124,
+        1656,
+        765
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        9,
+        254,
+        114
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:grass-low-v2",
+      "original": "tools/exterior-frontage-v1/originals/grass-low-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "5042d6aca76b46dcd6db2d59a8f5c177bdb7c119cc0039a91cb72c5c67e8fe97",
+      "prompt": "tools/exterior-frontage-v1/prompts/grass-low-v2.txt",
+      "promptSha256": "1dd1710f581da5b81193d58486dd0e13f412067fff2a87e3fba52b715df8e227",
+      "export": "apps/player/public/art/environment/frontage-v2/grass-low-v2.png",
+      "exportSha256": "2a1e2b5b1e9e3a968784e6f4f93da441018a9fa34d607401acb8e80a04d43dd1",
+      "nativeSize": [
+        64,
+        32
+      ],
+      "anchor": [
+        32,
+        28
+      ],
+      "kind": "cluster",
+      "crop": [
+        454,
+        406,
+        1320,
+        673
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        8,
+        62,
+        26
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:grass-clover-v2",
+      "original": "tools/exterior-frontage-v1/originals/grass-clover-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "ee8833956070b32404477b6d2ff880cc276c955d93e4443e817eadbac2904833",
+      "prompt": "tools/exterior-frontage-v1/prompts/grass-clover-v2.txt",
+      "promptSha256": "c9a1ab43c9a481c3d8c0bcb1f8db93df53e4277c3e1f39c875318b9c18adeef5",
+      "export": "apps/player/public/art/environment/frontage-v2/grass-clover-v2.png",
+      "exportSha256": "5c55857105327206074a6feaee0843156ad18703523228411b74f694d79d4471",
+      "nativeSize": [
+        64,
+        32
+      ],
+      "anchor": [
+        32,
+        28
+      ],
+      "kind": "cluster",
+      "crop": [
+        437,
+        383,
+        1337,
+        715
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        4,
+        62,
+        26
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:grass-upright-v2",
+      "original": "tools/exterior-frontage-v1/originals/grass-upright-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "0807cb00afb6f70cdee06c0617e9be92c947ce29f19de9c9f112ff1cab69779d",
+      "prompt": "tools/exterior-frontage-v1/prompts/grass-upright-v2.txt",
+      "promptSha256": "bb56cab35028616b02d68762de7cd3264a9e4409df709713785e48b2c164b13b",
+      "export": "apps/player/public/art/environment/frontage-v2/grass-upright-v2.png",
+      "exportSha256": "5df14b105b13b966c6507db344436b075074d6398113846bdeac6493cfb7df5c",
+      "nativeSize": [
+        64,
+        32
+      ],
+      "anchor": [
+        32,
+        28
+      ],
+      "kind": "cluster",
+      "crop": [
+        484,
+        298,
+        1295,
+        618
+      ],
+      "operation": "alpha>8 bounds + 4 source px margin; uniform fit + 2 export px padding, alpha preserved",
+      "alphaBounds": [
+        2,
+        2,
+        62,
+        26
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "frontage:paving-v2",
+      "original": "tools/exterior-frontage-v1/originals/paving-v2.png",
+      "originalSize": [
+        1254,
+        1254
+      ],
+      "originalSha256": "85216eb467e68134aaec311b5f7e69b0e35e6809a10770f3fc408295b4b16de6",
+      "prompt": "tools/exterior-frontage-v1/prompts/paving-v2.txt",
+      "promptSha256": "511cce1a7fdbd55220161ba0bb6bd94e8b5043ab6db3229a4fddd758c4e0108c",
+      "export": "apps/player/public/art/environment/frontage-v2/paving-v2.png",
+      "exportSha256": "5f77c31ef8a8c4ffdbbb02b32f9107f25d5954590fcfa2d121fd8824520b79e0",
+      "nativeSize": [
+        128,
+        128
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "kind": "material",
+      "crop": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "operation": "central aspect-matched crop and uniform resample; alpha preserved",
+      "alphaBounds": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "alphaRange": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "frontage:curb-a-v2",
+      "original": "tools/exterior-frontage-v1/originals/curb-a-v2.png",
+      "originalSize": [
+        1586,
+        992
+      ],
+      "originalSha256": "b072f959c56a5ae4b19783a7aa4b772cbc6ff135c9026f4823c12f4d9cdc2168",
+      "prompt": "tools/exterior-frontage-v1/prompts/curb-a-v2.txt",
+      "promptSha256": "57aab02917118fdd70794470acb8903e039797ce0bdf1e288e19463069afd81b",
+      "export": "apps/player/public/art/environment/frontage-v2/curb-a-v2.png",
+      "exportSha256": "862d678795b3cf6c005d5e19336188dd8ba4aaf39bc6cc40e63e51227378fdc4",
+      "nativeSize": [
+        256,
+        16
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "kind": "strip",
+      "crop": [
+        0,
+        443,
+        1586,
+        550
+      ],
+      "operation": "opaque central band crop (0, 443, 1586, 550); central aspect crop (0, 4, 1586, 103); uniform resample",
+      "alphaBounds": [
+        0,
+        0,
+        256,
+        16
+      ],
+      "alphaRange": [
+        250,
+        253
+      ]
+    },
+    {
+      "id": "frontage:curb-b-v2",
+      "original": "tools/exterior-frontage-v1/originals/curb-b-v2.png",
+      "originalSize": [
+        1586,
+        992
+      ],
+      "originalSha256": "a807f21d8b4fa951e5f07e11a127b790a22d4bcb392eaed7f0d17ba7336a6b1f",
+      "prompt": "tools/exterior-frontage-v1/prompts/curb-b-v2.txt",
+      "promptSha256": "214f430172b37224c6910b3dda070f302e155675d09dcdbb87ac85195f69a348",
+      "export": "apps/player/public/art/environment/frontage-v2/curb-b-v2.png",
+      "exportSha256": "56fc4b9fd4450b765b9abc08a028c774fee139dc7ade0a30e99fc43bd05129e7",
+      "nativeSize": [
+        256,
+        16
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "kind": "strip",
+      "crop": [
+        153,
+        455,
+        1433,
+        535
+      ],
+      "operation": "opaque central band crop (153, 455, 1433, 535); central aspect crop (0, 0, 1280, 80); uniform resample",
+      "alphaBounds": [
+        0,
+        0,
+        256,
+        16
+      ],
+      "alphaRange": [
+        246,
+        254
+      ]
+    },
+    {
+      "id": "frontage:entry-inset-v2",
+      "original": "tools/exterior-frontage-v1/originals/entry-inset-v2.png",
+      "originalSize": [
+        1774,
+        887
+      ],
+      "originalSha256": "fed45f660ffc35338d4ad6c8012af3249221a0cc207083f657825922c506d1d7",
+      "prompt": "tools/exterior-frontage-v1/prompts/entry-inset-v2.txt",
+      "promptSha256": "0a2c4d9315c19167b95d56e308643bd58081b4a7e311ea56ef018f1913b6e02f",
+      "export": "apps/player/public/art/environment/frontage-v2/entry-inset-v2.png",
+      "exportSha256": "483cadc515e29211ec6ae8b86a9b31b6804ae21baf4245933e84faba3390248e",
+      "nativeSize": [
+        128,
+        64
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "kind": "decal",
+      "crop": [
+        0,
+        0,
+        1774,
+        887
+      ],
+      "operation": "central aspect-matched crop and uniform resample; alpha preserved",
+      "alphaBounds": [
+        0,
+        0,
+        128,
+        64
+      ],
+      "alphaRange": [
+        255,
+        255
+      ]
+    }
+  ],
+  "bedReductionProof": {
+    "canvas": [
+      920,
+      325
+    ],
+    "syntheticSite": [
+      64,
+      40
+    ],
+    "fullSiteTileSize": 7,
+    "workingTileSize": 37,
+    "samples": [
+      {
+        "label": "24px pilot",
+        "tileSize": 24
+      },
+      {
+        "label": "110%",
+        "tileSize": 41
+      },
+      {
+        "label": "100%",
+        "tileSize": 37
+      },
+      {
+        "label": "70%",
+        "tileSize": 27
+      },
+      {
+        "label": "50%",
+        "tileSize": 20
+      },
+      {
+        "label": "10%",
+        "tileSize": 7
+      }
+    ],
+    "browserQA": "pending manager"
+  }
+}

@@ -1,0 +1,283 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -33,6 +33,11 @@
+ import type { FacilityCameraView } from "../facility";
+ import { getInitialFacilityCamera } from "../facility/defaultCamera";
+ import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
++import {
++  bindFacilityCameraPreferenceLifecycle,
++  createFacilityCameraPreferenceSession,
++  type FacilityCameraPreferenceSession,
++} from "./facilityCameraPreference";
+ import {
+   loadPrototypeProfile,
+   requireActiveCampaign,
+@@ -71,6 +76,7 @@
+ import type { ClinicAlertAction, ClinicAlertActionResult } from "../ui/types";
+ import { clinicAlertCommand, getClinicAlertActionProblem } from "./clinicAlertActions";
+ import { clearRecoveredSaveNotices } from "./clinicSaveNotices";
++import { getCampaignTutorialGuidance } from "./tutorialGuidance";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -180,7 +186,10 @@
+   dismissTutorialIntro: () => void;
+   performTutorialAction: (actionId: TutorialActionId) => void;
+   setTutorialsEnabled: (enabled: boolean) => void;
++  setReferencePauseLocked: (locked: boolean) => void;
++  recordTutorialTopicExposure: (topicIds: readonly string[]) => void;
+   saveAndPause: () => PrototypeSaveResult;
++  saveForFirstShiftReplay: () => LocalPrototypeProfile | null;
+   clearLocalCampaigns: () => boolean;
+ }
+ 
+@@ -277,6 +286,7 @@
+     requireActiveCampaign(loadedRef.current.profile).state,
+   );
+   const stateRef = useRef(state);
++  const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
+   const [
+     selectedRoomDefinitionId,
+     setSelectedRoomDefinitionId,
+@@ -287,6 +297,7 @@
+     useState<RoomOrientation>(0);
+   const [buildMode, setBuildMode] = useState(false);
+   const [managementMode, setManagementMode] = useState(false);
++  const [referencePauseLocked, setReferencePauseLocked] = useState(false);
+   const [movingRoomInstanceId, setMovingRoomInstanceId] =
+     useState<string | null>(null);
+   const [buildUndoCount, setBuildUndoCount] = useState(0);
+@@ -297,10 +308,23 @@
+     useState<string[]>([]);
+   const buildHistoryRef = useRef<GameState[]>([]);
+   const buildHistoryLabelsRef = useRef<string[]>([]);
+-  const [facilityCamera, setFacilityCamera] =
+-    useState<FacilityCameraView>(() => getInitialFacilityCamera(
+-      requireActiveCampaign(loadedRef.current!.profile).state,
+-    ));
++  const cameraPreferencesRef = useRef<FacilityCameraPreferenceSession | null>(null);
++  if (cameraPreferencesRef.current === null) {
++    cameraPreferencesRef.current = createFacilityCameraPreferenceSession();
++  }
++  const [facilityCamera, setFacilityCameraView] = useState<FacilityCameraView>(() => {
++    const campaign = requireActiveCampaign(loadedRef.current!.profile);
++    return cameraPreferencesRef.current!.restore(campaign.campaignId,
++      getInitialFacilityCamera(campaign.state));
++  });
++  const setFacilityCamera = useCallback((camera: FacilityCameraView) => {
++    if (cameraPreferencesRef.current!.change(stateRef.current.campaignId, camera)) {
++      setFacilityCameraView({ ...camera });
++    }
++  }, []);
++  useEffect(() => bindFacilityCameraPreferenceLifecycle(
++    cameraPreferencesRef.current!, window, document,
++  ), []);
+   const preBuildPausedRef = useRef(true);
+   const preManagementPausedRef = useRef(true);
+   const [summaryVisible, setSummaryVisible] = useState(false);
+@@ -519,7 +543,8 @@
+         operationId,
+       } as GameCommand;
+       const previous = stateRef.current;
+-      const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current });
++      const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
++        guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked });
+       stateRef.current = next;
+       setState(next);
+ 
+@@ -797,6 +822,7 @@
+       );
+     }
+     setManagementMode(true);
++    execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: ["management"]}, {announceReceipt: false});
+     setAnnouncement(
+       "Management Mode opened. Facility time is paused while you manage staff.",
+     );
+@@ -1611,6 +1637,7 @@
+   );
+ 
+   const saveAndPause = useCallback((): PrototypeSaveResult => {
++    cameraPreferencesRef.current!.flush();
+     if (!stateRef.current.paused) {
+       execute(
+         { type: "SET_PAUSED", paused: true },
+@@ -1683,6 +1710,7 @@
+     // This must happen before deleting keys: pagehide/unmount can otherwise
+     // synchronously put the in-memory whole-profile snapshot back.
+     campaignWriteGateRef.current.suppress();
++    cameraPreferencesRef.current!.discard();
+     cancelScheduledAutosave();
+     pendingAutosaveProfileRef.current = null;
+     const result = clearPrototypeCampaignStorage();
+@@ -1739,7 +1767,8 @@
+     setBuildUndoCount(0);
+     setBuildUndoLabel(null);
+     setBuildExitBlockedReason(null);
+-    setFacilityCamera(getInitialFacilityCamera(selectedCampaign.state));
++    setFacilityCameraView(cameraPreferencesRef.current!.restore(campaignId,
++      getInitialFacilityCamera(selectedCampaign.state)));
+     setSummaryVisible(false);
+     const saveResult = attemptSaveProfile(nextProfile);
+     const saved = saveResult.ok;
+@@ -1756,9 +1785,11 @@
+ 
+   const tutorialIntroDismissed =
+     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
++  const campaignGuidance = getCampaignTutorialGuidance(profile, { campaignId: state.campaignId, state });
++  const tutorialsEnabled = campaignGuidance.mode === "guided";
+   const tutorialStep = createTutorialStepView({
+     state,
+-    tutorialsEnabled: profile.tutorialsEnabled,
++    tutorialsEnabled,
+     introDismissed: tutorialIntroDismissed,
+     acknowledgedStepIds: acknowledgedTutorialStepIds,
+     dailyRoutineTipsStarted:
+@@ -1768,19 +1799,30 @@
+     selectedRoomDefinitionId,
+     selectedRoomInstanceId,
+     summaryVisible,
++    managementMode,
++    exposedTopicIds: [...campaignGuidance.exposedTopicIds, ...Object.keys(state.alertHumor.guidanceTips?.topicActivity ?? {})],
++    buildExitBlockedIssues,
+   });
+   const tutorialTargetEncounter =
+     tutorialStep?.patientEncounterId
+       ? state.encounters[tutorialStep.patientEncounterId] ?? null
+       : null;
++  guidanceContextRef.current = { blockedTopicIds: tutorialStep?.topicIds ?? [],
++    attentionBlocked: referencePauseLocked || buildMode || managementMode || tutorialStep?.target === "answer-choices" || tutorialStep?.target === "chart-feedback" };
++
++  const recordTutorialTopicExposure = useCallback((topicIds: readonly string[]) => {
++    const unseen = topicIds.filter((id) => stateRef.current.alertHumor.guidanceTips?.topicActivity?.[id]?.exposedAtTick === undefined);
++    if (unseen.length) execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: unseen}, {announceReceipt: false, announceEvents: false});
++  }, [execute]);
++
++  useEffect(() => { recordTutorialTopicExposure(campaignGuidance.exposedTopicIds); },
++    [state.campaignId, campaignGuidance.exposedTopicIds.join("|"), recordTutorialTopicExposure]);
+ 
+   useEffect(() => {
+     if (
+-      profile.tutorialsEnabled ||
+       state.alertHumor.alertsTutorialAcknowledgedAtTick !== null ||
+-      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]
+-        ?.resolutionReason === null ||
+-      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] === undefined
++      state.facilityLevel < 1 && ![TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID]
++        .every((id) => state.encounters[id]?.lifecycle === "resolved")
+     ) {
+       return;
+     }
+@@ -1790,7 +1832,7 @@
+     );
+   }, [
+     execute,
+-    profile.tutorialsEnabled,
++    state.facilityLevel,
+     state.alertHumor.alertsTutorialAcknowledgedAtTick,
+     state.encounters,
+   ]);
+@@ -1817,33 +1859,30 @@
+   );
+ 
+   useEffect(() => {
++    if (state.facilityLevel < 1 || profile.tutorialGuidanceByCampaign?.[state.campaignId]?.mode === "complete") return;
++    const currentProfile = profileRef.current;
++    const guidance = getCampaignTutorialGuidance(currentProfile, { campaignId: state.campaignId, state });
++    persistTutorialProfile({ ...currentProfile, tutorialGuidanceByCampaign: {
++      ...currentProfile.tutorialGuidanceByCampaign, [state.campaignId]: guidance,
++    } }, "First-shift guidance complete. Help and contextual tips remain available.");
++    if (currentProfile.tutorialGuidanceByCampaign?.[state.campaignId]?.mode === "guided") {
++      publishSystemNotice("alert.system.first-shift-complete", "You're running the clinic now. Waiting and Existing Patients hold the work. Needs you flags live problems; Around the clinic supplies tips and commentary.");
++    }
++  }, [persistTutorialProfile, publishSystemNotice, profile.tutorialGuidanceByCampaign, state.campaignId, state.facilityLevel]);
++
++  useEffect(() => {
+     const campaignId = state.campaignId;
+     const previousPaused = profile.tutorialDailyRoutinePauseByCampaign[campaignId];
+     const transition = getDailyRoutinePauseTransition({
+       activeTipId: tutorialStep?.id,
+       previousPaused,
+       currentlyPaused: state.paused,
+-      modeLocksPause: managementMode || buildMode,
++      modeLocksPause: managementMode || buildMode || referencePauseLocked,
+     });
+-    if (transition === "capture-and-pause") {
+-        persistTutorialProfile(
+-          {
+-            ...profile,
+-            tutorialDailyRoutinePauseByCampaign: {
+-              ...profile.tutorialDailyRoutinePauseByCampaign,
+-              [campaignId]: state.paused,
+-            },
+-          },
+-          "Tutorial guidance paused facility time.",
+-        );
+-      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+-      return;
+-    }
+-    if (transition === "keep-paused" || transition === "reassert-pause") {
+-      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+-      return;
+-    }
+     if (transition === "none" || transition === "defer-release") return;
++    if (transition === "release-keep-paused" && !state.paused) {
++      execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
++    }
+     if (transition === "release-resume" && state.paused) {
+       // Persist resumed time while the owner still exists. If the page exits
+       // between these writes, the next session can safely finish the release.
+@@ -1864,7 +1903,7 @@
+         ? "Tutorial guidance closed. The clinic remains paused."
+         : "Tutorial guidance closed. Facility operations resumed.",
+     );
+-  }, [buildMode, execute, managementMode, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
++  }, [buildMode, execute, managementMode, referencePauseLocked, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
+ 
+   const acknowledgeDailyRoutineTip = useCallback((stepId: string) => {
+     const campaignId = stateRef.current.campaignId;
+@@ -1909,17 +1948,19 @@
+   const setTutorialsEnabled = useCallback(
+     (enabled: boolean) => {
+       const currentProfile = profileRef.current;
+-      if (currentProfile.tutorialsEnabled === enabled) {
+-        return;
+-      }
++      const campaign = { campaignId: stateRef.current.campaignId, state: stateRef.current };
++      const guidance = getCampaignTutorialGuidance(currentProfile, campaign);
+       persistTutorialProfile(
+         {
+           ...currentProfile,
+-          tutorialsEnabled: enabled,
++          tutorialGuidanceByCampaign: {
++            ...currentProfile.tutorialGuidanceByCampaign,
++            [campaign.campaignId]: { ...guidance, mode: campaign.state.facilityLevel >= 1 ? "complete" : enabled ? "guided" : "off" },
++          },
+         },
+         enabled
+-          ? "Tutorial guidance enabled."
+-          : "Tutorial guidance disabled. Help remains available.",
++          ? "Guidance shown for this clinic's current work."
++          : "Guidance skipped in this clinic. Help and contextual tips remain available.",
+       );
+     },
+     [persistTutorialProfile],
+@@ -2042,7 +2083,7 @@
+     profile,
+     state,
+     campaigns,
+-    tutorialsEnabled: profile.tutorialsEnabled,
++    tutorialsEnabled,
+     tutorialTargetEncounterId: tutorialTargetEncounter?.id ?? null,
+     tutorialStep,
+     selectedRoomDefinitionId,
+@@ -2120,7 +2161,10 @@
+     dismissTutorialIntro,
+     performTutorialAction,
+     setTutorialsEnabled,
++    setReferencePauseLocked,
++    recordTutorialTopicExposure,
+     saveAndPause,
++    saveForFirstShiftReplay: () => saveAndPause().ok ? profileRef.current : null,
+     clearLocalCampaigns,
+   };
+ }

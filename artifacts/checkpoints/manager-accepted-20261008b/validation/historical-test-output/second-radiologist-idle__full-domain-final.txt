@@ -1,0 +1,37 @@
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/periop-nurse-real-visit.test.ts (5 tests | 1 failed) 20293ms
+     × holds real pre-op and recovery beyond their timers when both nurses are away training, including reload 1966ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/periop-nurse-real-visit.test.ts > Peri-op nurses through the real chart UI command pipeline > holds real pre-op and recovery beyond their timers when both nurses are away training, including reload
+TypeError: .toMatch() expects to receive a string, but got object
+ ❯ tests/periop-nurse-real-visit.test.ts:117:74
+    115|         delayed.add(task.kind);
+    116|         expect(current!.status).toBe("in_service");
+    117|         expect(state.encounters[patient.id]!.patientLocation).toEqual(…
+       |                                                                          ^
+    118|         if (task.startedAtFacilityTick === null || task.employeeId ===…
+    119|         if (!reloaded) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 109 passed (110)
+      Tests  1 failed | 3417 passed (3418)
+   Start at  12:14:28
+   Duration  565.54s (transform 3.73s, setup 0ms, import 53.28s, tests 500.81s, environment 8ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1

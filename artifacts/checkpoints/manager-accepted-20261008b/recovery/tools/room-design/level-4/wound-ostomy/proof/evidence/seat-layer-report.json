@@ -1,0 +1,119 @@
+{
+  "actors": [
+    {
+      "kind": "actor",
+      "id": "recliner:patient",
+      "characterId": "patient.adult.007",
+      "category": "patient",
+      "group": "patients",
+      "pose": "sit",
+      "direction": "east",
+      "url": "art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "x": 41.13812588273794,
+      "y": 24.846907402941866,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 1.9501,
+      "seat": {
+        "x": 0.6288793103448275,
+        "y": 1.4886135057471264
+      },
+      "ground": {
+        "x": 0.62,
+        "y": 1.95
+      },
+      "renderSeatContact": [
+        50,
+        224
+      ],
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ]
+    },
+    {
+      "kind": "actor",
+      "id": "stool:clinician",
+      "characterId": "gs026-employee-001",
+      "category": "employee",
+      "group": "clinicians",
+      "pose": "sit",
+      "direction": "west",
+      "url": "art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-west.png",
+      "x": 196.21069555444555,
+      "y": 5.95416705005519,
+      "w": 109.84765234765236,
+      "h": 219.6953046953047,
+      "py": 1.9001,
+      "seat": {
+        "x": 2.15,
+        "y": 1.4169924812030075
+      },
+      "ground": {
+        "x": 2.15,
+        "y": 1.9
+      },
+      "renderSeatContact": [
+        90,
+        239
+      ],
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ]
+    }
+  ],
+  "patientReclinerOverlap": 1405,
+  "clinicianAboveStoolOverlap": 274,
+  "entireClinicianAboveStool": true,
+  "stoolHasBack": false,
+  "order": [
+    {
+      "id": "lamp",
+      "kind": "fixture",
+      "py": 1.2
+    },
+    {
+      "id": "stool",
+      "kind": "fixture",
+      "py": 1.9
+    },
+    {
+      "id": "stool:clinician",
+      "kind": "actor",
+      "py": 1.9001
+    },
+    {
+      "id": "recliner",
+      "kind": "fixture",
+      "py": 1.95
+    },
+    {
+      "id": "recliner:patient",
+      "kind": "actor",
+      "py": 1.9501
+    },
+    {
+      "id": "curtain",
+      "kind": "fixture",
+      "py": 2.32
+    },
+    {
+      "id": "dressingCart",
+      "kind": "fixture",
+      "py": 2.88
+    },
+    {
+      "id": "bio",
+      "kind": "fixture",
+      "py": 2.88
+    }
+  ],
+  "fullHeightOnLowWall": [
+    "ostomyShelf",
+    "sink"
+  ],
+  "note": "Existing seated stills retain their bent-leg poses. No character repaint or leg extension."
+}

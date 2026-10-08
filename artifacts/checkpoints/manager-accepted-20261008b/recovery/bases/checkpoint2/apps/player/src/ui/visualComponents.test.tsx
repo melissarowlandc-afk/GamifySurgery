@@ -1,0 +1,498 @@
+import { renderToStaticMarkup } from "react-dom/server";
+import { readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
+import { TutorialCoach } from "./TutorialCoach";
+import { ChartPanel } from "./ChartPanel";
+import { PatientLists } from "./PatientLists";
+import { ResourceBar } from "./ResourceBar";
+import { CharacterQaGallery } from "./CharacterQaGallery";
+import { PixelAvatar } from "./PixelAvatar";
+import type { ChartView, ResourceBarView } from "./types";
+import type { FacilityViewModel } from "../facility";
+
+const noop = () => undefined;
+
+describe("paper chart presentation", () => {
+  it("shows the compact patient header, reviewable decisions, and separate encounter rewards", () => {
+    const chart: ChartView = {
+      id: "chart-1",
+      patientName: "Morgan Reyes",
+      patientDetails: "Outpatient clinic",
+      ageLabel: "42 years",
+      sexLabel: "Female",
+      chiefComplaint: "Painful swelling",
+      patientSatisfactionLabel: "94%",
+      vitals: [
+        {
+          id: "temperature",
+          label: "Temp",
+          value: "38.1 C",
+          icon: "temperature",
+        },
+      ],
+      statusLabel: "Action required",
+      presentation: "Three days of worsening localized pain.",
+      presentationUpdate:
+        "Ultrasound now shows a simple fluid-filled cyst.",
+      answerChoices: [],
+      terminalFeedbackNeedsAcknowledgment: false,
+      summaryAvailable: true,
+      summaryVisible: false,
+      summaryBody: "A concise disease summary.",
+      canFile: false,
+      readOnly: false,
+      reward: {
+        heading: "Decisions Correct: 1/1",
+        moneyLabel: "Encounter Payment: +$75",
+        xpLabel: "Encounter XP: +20",
+      },
+      decisionSteps: [
+        {
+          id: "decision-0",
+          heading: "Decision 1 of 2",
+          questionPrompt: "Which test should be ordered?",
+          answerChoices: [],
+          feedbackTitle: "Correct",
+          feedbackBody: "The requested result was obtained.",
+          collapsedResultLabel: "Correct · Chest X-ray ordered",
+          current: false,
+          complete: true,
+        },
+        {
+          id: "decision-1",
+          heading: "Decision 2 of 2",
+          questionPrompt: "What is the best next step?",
+          answerChoices: [
+            {
+              id: "choice-1",
+              label: "Incision and drainage",
+              selected: false,
+              disabled: false,
+            },
+          ],
+          feedbackTitle: "Correct",
+          feedbackBody: "Source control is required.",
+          rewardLabel: "+10 learning XP",
+          currentUpdate: "Ultrasound now shows a simple fluid-filled cyst.",
+          current: true,
+          complete: false,
+        },
+      ],
+    };
+
+    const markup = renderToStaticMarkup(
+      <ChartPanel
+        chart={chart}
+        onClose={noop}
+        onSubmitAnswer={noop}
+        onFlagQuestion={noop}
+        onAcknowledgeTerminalFeedback={noop}
+        onToggleSummary={noop}
+        onFileChart={noop}
+      />,
+    );
+
+    expect(markup).toContain("paper-chart");
+    expect(markup).toContain("Morgan Reyes");
+    expect(markup).toContain("Painful swelling");
+    expect(markup).toContain("Three days of worsening localized pain.");
+    expect(markup).not.toContain(">Chief complaint<");
+    expect(markup).not.toContain(">HPI &amp; presentation<");
+    expect(markup).not.toContain(">History of present illness<");
+    expect(markup).toContain("38.1 C");
+    expect(markup).toContain("Satisfaction 94%");
+    expect(markup).toContain("+10 learning XP");
+    expect(markup).toContain("Flip for More Disease Information");
+    expect(markup).toContain(
+      "Decision 1 Result — Correct · Chest X-ray ordered",
+    );
+    expect(markup).toContain("Decisions Correct: 1/1");
+    expect(markup).toContain("Encounter Payment: +$75");
+    expect(markup).toContain("Encounter XP: +20");
+    const updatePosition = markup.indexOf("Current update");
+    const activeDecisionPosition = markup.indexOf("Decision 2 of 2");
+    expect(updatePosition).toBeGreaterThan(
+      markup.indexOf("chart-decision-region"),
+    );
+    expect(updatePosition).toBeLessThan(activeDecisionPosition);
+    expect(markup).toContain(
+      "Ultrasound now shows a simple fluid-filled cyst.",
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="current-answer-choices"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="current-decision-feedback"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="encounter-summary"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="flip-chart"',
+    );
+    expect(markup.match(/Action required/g)).toHaveLength(1);
+    expect(markup).not.toContain("Outpatient clinic");
+    expect(markup).not.toMatch(/Step [0-9]/);
+
+    const filingMarkup = renderToStaticMarkup(
+      <ChartPanel
+        chart={{
+          ...chart,
+          reward: undefined,
+          summaryAvailable: false,
+          canFile: true,
+        }}
+        onClose={noop}
+        onSubmitAnswer={noop}
+        onFlagQuestion={noop}
+        onAcknowledgeTerminalFeedback={noop}
+        onToggleSummary={noop}
+        onFileChart={noop}
+      />,
+    );
+    expect(filingMarkup).toContain(
+      'data-tutorial-anchor="resolve-chart"',
+    );
+
+    const feedbackActionMarkup = renderToStaticMarkup(
+      <ChartPanel
+        chart={{
+          ...chart,
+          reward: undefined,
+          summaryAvailable: false,
+          terminalFeedbackNeedsAcknowledgment: true,
+          primaryActionLabel: "Dismiss",
+        }}
+        onClose={noop}
+        onSubmitAnswer={noop}
+        onFlagQuestion={noop}
+        onAcknowledgeTerminalFeedback={noop}
+        onToggleSummary={noop}
+        onFileChart={noop}
+      />,
+    );
+    expect(feedbackActionMarkup).toContain(
+      'data-tutorial-anchor="decision-feedback-action"',
+    );
+  });
+});
+
+describe("patient chart tabs", () => {
+  it("shows only the persistent portrait, name, and satisfaction indicator", () => {
+    const markup = renderToStaticMarkup(
+      <PatientLists
+        patients={[
+          {
+            id: "encounter-1",
+            name: "Morgan Reyes",
+            subtitle: "42 years · Female",
+            folder: "waiting",
+            statusLabel: "Clinic patient",
+            actionRequired: true,
+            selected: false,
+            satisfactionPercent: 94,
+            patienceLabel: "Waiting 38 min",
+          },
+        ]}
+        onOpen={noop}
+      />,
+    );
+
+    expect(markup).toContain("Morgan Reyes");
+    expect(markup).toContain("Satisfaction 94%");
+    expect(markup.match(/Action required/g)).toHaveLength(1);
+    expect(markup).not.toContain("42 years");
+    expect(markup).not.toContain("Female");
+    expect(markup).not.toContain("Clinic patient");
+    expect(markup).not.toContain("Waiting 38 min");
+  });
+});
+
+describe("tutorial controls", () => {
+  it("always offers acknowledgment and tutorial opt-out without performing the highlighted action", () => {
+    const markup = renderToStaticMarkup(
+      <TutorialCoach
+        step={{
+          id: "first-decision",
+          eyebrow: "Level 0 tutorial",
+          title: "Read across the chart, then choose",
+          body: "",
+          target: "answer-choices",
+          targetSelector: ".answer-list",
+        }}
+        onAction={noop}
+        onDisableTutorials={noop}
+      />,
+    );
+
+    expect(markup).toContain("Got It");
+    expect(markup).toContain("Turn off tutorials");
+    expect(markup).not.toContain("Enact Plan");
+    expect(markup).toContain('data-anchor-state="locating"');
+    expect(markup).toContain("visibility:hidden");
+  });
+
+  it("uses authored tutorial action labels and action identifiers", () => {
+    const markup = renderToStaticMarkup(
+      <TutorialCoach
+        step={{
+          id: "level-one-await-first-arrival",
+          eyebrow: "Level 1 guide",
+          title: "Ready",
+          body: "The clinic is ready.",
+          target: "facility-clock",
+          targetSelector: ".facility-time-chip",
+          primaryAction: {
+            id: "acknowledge-step",
+            label: "Close tutorial",
+          },
+          secondaryAction: {
+            id: "level-up",
+            label: "Advance now",
+          },
+        }}
+        onAction={noop}
+      />,
+    );
+
+    expect(markup).toContain("Close tutorial");
+    expect(markup).toContain("Advance now");
+    expect(markup).toContain(
+      'data-tutorial-action="acknowledge-step"',
+    );
+    expect(markup).toContain('data-tutorial-action="level-up"');
+  });
+
+  it("shows only the completion action on the final tutorial prompt", () => {
+    const markup = renderToStaticMarkup(
+      <TutorialCoach
+        step={{
+          id: "level-one-await-first-arrival",
+          eyebrow: "Level 1 guide",
+          title: "Your first Level 1 patient is on the way",
+          body: "Facility time is running.",
+          target: "facility-clock",
+          targetSelector: ".facility-time-chip",
+          primaryAction: {
+            id: "complete-tutorial",
+            label: "Complete tutorial",
+          },
+        }}
+        onAction={noop}
+        onDisableTutorials={noop}
+      />,
+    );
+
+    expect(markup).toContain("Complete tutorial");
+    expect(markup).toContain(
+      'data-tutorial-action="complete-tutorial"',
+    );
+    expect(markup).not.toContain("Got It");
+    expect(markup).not.toContain("Turn off tutorials");
+    expect(markup.match(/<button/g)).toHaveLength(1);
+  });
+});
+
+describe("segmented resource HUD", () => {
+  it("keeps money, learning, satisfaction, time, and controls distinct", () => {
+    const view: ResourceBarView = {
+      moneyLabel: "$350",
+      moneyDeltaLabel: "-$12/hour",
+      xpLabel: "20 XP",
+      satisfactionLabel: "94%",
+      facilityTimeLabel: "Day 1, 9 AM",
+      workloadLabel: "1 waiting",
+      workloadStatusLabel: "Stable",
+      facilityLevelLabel: "Level 0",
+      xpProgressPercent: 50,
+      xpProgressLabel: "20/40 XP",
+      goals: [],
+    };
+
+    const markup = renderToStaticMarkup(
+      <ResourceBar
+        view={view}
+        paused={false}
+        onTogglePause={noop}
+        onSaveAndClose={noop}
+      />,
+    );
+
+    expect(markup).toContain("resource-bar-redesign");
+    expect(markup).toContain("hud-outline-icon is-learning");
+    expect(markup).toContain("hud-outline-icon is-money");
+    expect(markup).toContain(
+      "hud-outline-icon is-satisfaction is-happy",
+    );
+    expect(markup).toContain("hud-outline-icon is-time");
+    expect(markup).toContain('data-smooth-hud-icon="learning"');
+    expect(markup).toContain('data-smooth-hud-icon="money"');
+    expect(markup).toContain('data-smooth-hud-icon="satisfaction"');
+    expect(markup).toContain('data-smooth-hud-icon="time"');
+    expect(markup).not.toContain("pixel-hud-icon");
+    expect(markup).not.toContain('class="pixel-icon');
+    expect(markup).toContain(
+      'class="pixel-control-button pause-button" type="button" aria-label="Pause facility time" aria-pressed="false"',
+    );
+    expect(markup).toContain(
+      'class="pixel-control-button is-selected" type="button" aria-label="Resume facility time" aria-pressed="true"',
+    );
+    expect(markup).toContain("$350");
+    expect(markup).toContain("20/40 XP");
+    expect(markup).not.toContain("<strong>20 XP</strong>");
+    expect(markup).toContain('aria-label="Level 0, 20 XP learning XP"');
+    expect(markup).not.toContain("see Goals panel");
+    expect(markup).not.toContain(
+      "Recurring operating change per hour",
+    );
+    expect(markup).not.toContain("Last 10 completed encounters");
+    expect(markup).not.toContain("Clinic open");
+    expect(markup).not.toContain("Demonstration content only");
+  });
+
+  it("uses the facility time cell for compact Build Mode status", () => {
+    const markup = renderToStaticMarkup(
+      <ResourceBar
+        view={{
+          moneyLabel: "$350",
+          moneyDeltaLabel: "-$12/hour",
+          xpLabel: "20 XP",
+          satisfactionLabel: "94%",
+          facilityTimeLabel: "Day 1, 9 AM",
+          workloadLabel: "1 waiting",
+          workloadStatusLabel: "Stable",
+          facilityLevelLabel: "Level 0",
+          xpProgressPercent: 50,
+          goals: [],
+          contentNoticeLabel: "Demonstration content only.",
+        }}
+        paused
+        buildMode
+        onTogglePause={noop}
+      />,
+    );
+
+    expect(markup).toContain("facility-time-chip is-build-mode");
+    expect(markup).toContain("BUILD MODE");
+    expect(markup).toContain(
+      "Facility time is stopped while you remodel.",
+    );
+    expect(markup).not.toContain("global-content-notice");
+    expect(markup).not.toContain("Demonstration content only.");
+  });
+
+  it("uses the facility time cell for locked Management Mode status", () => {
+    const markup = renderToStaticMarkup(
+      <ResourceBar
+        view={{
+          moneyLabel: "$350",
+          moneyDeltaLabel: "-$12/hour",
+          xpLabel: "20 XP",
+          satisfactionLabel: "94%",
+          facilityTimeLabel: "Day 1, 9 AM",
+          workloadLabel: "1 waiting",
+          workloadStatusLabel: "Stable",
+          facilityLevelLabel: "Level 0",
+          xpProgressPercent: 50,
+          goals: [],
+          contentNoticeLabel: "Demonstration content only.",
+        }}
+        paused
+        managementMode
+        pauseLocked
+        onTogglePause={noop}
+      />,
+    );
+
+    expect(markup).toContain("facility-time-chip is-management-mode");
+    expect(markup).toContain("MANAGEMENT MODE");
+    expect(markup).toContain(
+      "Facility time is stopped while you manage staff.",
+    );
+    expect(markup).toMatch(
+      /aria-label="Pause facility time"[^>]*disabled=""/,
+    );
+    expect(markup).toMatch(
+      /aria-label="Resume facility time"[^>]*disabled=""/,
+    );
+    expect(markup).toContain(
+      "Management Mode controls the pause. Exit Management Mode to resume.",
+    );
+  });
+});
+
+describe("character visual QA gallery", () => {
+  it("uses smooth sampling for authored atlas crops while retaining the crisp SVG fallback", () => {
+    const markup = renderToStaticMarkup(
+      <PixelAvatar
+        label="Avery"
+        representation="full"
+        avatar={{
+          version: "pixel-avatar.v1",
+          bodyShape: "average",
+          hairStyle: "short",
+          skinTone: 1,
+          hairShade: 3,
+          faceStyle: "round",
+          outfitStyle: "coat",
+          outfitShade: 1,
+          accessory: "none",
+          headVariant: 0,
+          bodyVariant: 0,
+          roleStyle: "founder",
+        }}
+      />,
+    );
+    expect(markup).toContain("pixel-avatar-authored");
+    expect(markup).toContain("pixel-avatar-authored-actor");
+    expect((markup.match(/image-rendering:auto/g) ?? [])).toHaveLength(2);
+
+    const source = readFileSync(new URL("./PixelAvatar.tsx", import.meta.url), "utf8");
+    expect(source).toContain('shapeRendering="crispEdges"');
+  });
+
+  it("keeps the shared descriptor visible through idle, movement, work, interaction, seating, and portrait representations", () => {
+    const markup = renderToStaticMarkup(
+      <CharacterQaGallery
+        facility={{
+          founder: {
+            displayName: "Avery",
+            appearance: {
+              version: "pixel-avatar.v1",
+              bodyShape: "average",
+              hairStyle: "short",
+              skinTone: 1,
+              hairShade: 3,
+              faceStyle: "round",
+              outfitStyle: "coat",
+              outfitShade: 1,
+              accessory: "none",
+              headVariant: 0,
+              bodyVariant: 3,
+              roleStyle: "founder",
+            },
+          },
+          staff: [],
+          patients: [],
+        } as unknown as FacilityViewModel}
+      />,
+    );
+
+    expect(markup).toContain("Map front / idle");
+    expect(markup).toContain("Live route west A");
+    expect(markup).toContain("Live route east B");
+    expect(markup).toContain("Seated");
+    expect(markup).toContain("Working");
+    expect(markup).toContain("Interaction");
+    expect(markup).toContain("Portrait");
+    expect(markup).toContain("Star jump");
+    expect(markup).toContain("Avery working map sprite");
+    expect(markup).toContain("Avery interaction map sprite");
+    expect(
+      (markup.match(/data-character-id="patient-roster:patient\.adult\./g) ?? []),
+    ).toHaveLength(50);
+    expect(markup).toContain("canonical-patient-atlas-v1");
+    expect(markup).toContain("patients-thumbnail-v1.png");
+    expect(markup).toContain("patients-portrait-v1.png");
+  });
+});

@@ -1,0 +1,20 @@
+// Repeat technical preparation/build in-process: no browser or child process.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const assets=path.resolve(here,'../assets/prepared');
+const derived=path.resolve(here,'../assets/derived');
+const targets=[...fs.readdirSync(assets).filter(x=>x.endsWith('.png')||x.endsWith('.json')).map(x=>path.join(assets,x)),...fs.readdirSync(derived).map(x=>path.join(derived,x)),...['data.json','layout-baseline.json','actor-baseline.json','design-rooms.js','room-touchups.mjs','lab.js','proof-manifest.json'].map(x=>path.join(here,x))];
+const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').toUpperCase();
+const before=Object.fromEntries(targets.map(file=>[path.relative(here,file).replaceAll('\\','/'),sha(file)]));
+await import('../assets/prepare-assets.mjs?reproduction');
+await import('../assets/prepare-occluders.mjs?reproduction');
+await import('./build.mjs?reproduction');
+const after=Object.fromEntries(targets.map(file=>[path.relative(here,file).replaceAll('\\','/'),sha(file)]));
+const changed=Object.keys(before).filter(file=>before[file]!==after[file]);
+const report={status:changed.length?'FAIL':'PASS',kind:'Node-only repeat preparation/build',files:targets.length,changed,before,after};
+fs.writeFileSync(path.join(here,'evidence/reproducibility-report.json'),JSON.stringify(report,null,2)+'\n');
+if(changed.length)throw new Error('Nondeterministic generated files: '+changed.join(', '));
+console.log(`REPRODUCE PASS ${targets.length} generated files byte-identical; Node-only`);

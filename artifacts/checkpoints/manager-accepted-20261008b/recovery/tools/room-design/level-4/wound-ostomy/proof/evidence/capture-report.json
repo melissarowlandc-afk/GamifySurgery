@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-4/wound-ostomy/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "70AB4DB0DB326AB59969F90AE57827EF824CC6E65DC3D31FC3EF44479DE09184",
+  "doorModel": {
+    "count": 12,
+    "perWall": 3,
+    "spanTiles": 1,
+    "kind": "game-one-tile",
+    "basis": "Owner binding rule: a 3x3 room has twelve one-tile wall sections."
+  },
+  "cases": [
+    "wound-painted",
+    "wound-empty",
+    "wound-patient",
+    "wound-clinician",
+    "wound-all-doors",
+    "wound-backed",
+    "wound-all-backed",
+    "wound-contacts",
+    "wound-shelf-door",
+    "wound-corner-door",
+    "wound-recliner-door"
+  ],
+  "screenshots": [
+    "wound-desktop.png",
+    "wound-320.png"
+  ],
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "designApproval": true,
+  "ownerRevision": "remove-chair-leg-rest"
+}

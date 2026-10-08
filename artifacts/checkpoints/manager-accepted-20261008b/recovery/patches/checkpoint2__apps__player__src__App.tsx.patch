@@ -1,0 +1,88 @@
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -19,7 +19,7 @@
+ 
+ interface ActivePrototypeGameProps {
+   loadedProfile: LoadedPrototypeProfile;
+-  onRequestNewCampaign: (profile: LocalPrototypeProfile) => void;
++  onRequestNewCampaign: (profile: LocalPrototypeProfile, guidanceEnabled?: boolean) => void;
+   onRequestRestart: (
+     profile: LocalPrototypeProfile,
+     campaignSeed: string,
+@@ -156,6 +156,9 @@
+       onSwitchCampaign={session.switchCampaign}
+       onTutorialAction={session.performTutorialAction}
+       onTutorialsEnabledChange={session.setTutorialsEnabled}
++      onReferencePauseLockedChange={session.setReferencePauseLocked}
++      onTutorialTopicExposure={session.recordTutorialTopicExposure}
++      onReplayFirstShift={() => { const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); }}
+       onSaveAndPause={session.saveAndPause}
+       onClinicAlertAction={session.runClinicAlertAction}
+       onClearLocalCampaigns={session.clearLocalCampaigns}
+@@ -171,6 +174,7 @@
+   profile: LocalPrototypeProfile;
+   campaignSeed?: string;
+   initialStep: "main" | "founder";
++  guidanceEnabled?: boolean;
+   sequence: number;
+ }
+ 
+@@ -198,12 +202,14 @@
+     profile: LocalPrototypeProfile,
+     campaignSeed?: string,
+     initialStep: "main" | "founder" = "founder",
++    guidanceEnabled?: boolean,
+   ) => {
+     setLaunch((current) => ({
+       mode: "opening",
+       profile,
+       ...(campaignSeed ? { campaignSeed } : {}),
+       initialStep,
++      ...(guidanceEnabled === undefined ? {} : { guidanceEnabled }),
+       sequence: current.mode === "opening" ? current.sequence + 1 : 1,
+     }));
+   };
+@@ -231,13 +237,15 @@
+         profile={launch.profile}
+         campaignSeed={launch.campaignSeed}
+         initialStep={launch.initialStep}
+-        onBeginClinic={(founder, clinicName, campaignSeed) => {
++        initialGuidanceEnabled={launch.guidanceEnabled}
++        onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
+           const next = appendLocalCampaign(
+             launch.profile,
+             founder,
+             clinicName,
+             Date.now(),
+             campaignSeed,
++            guidanceEnabled,
+           );
+           const saved = savePrototypeProfileResult(next.profile);
+           setLaunch({
+@@ -277,11 +285,14 @@
+       <OpeningSequence
+         profile={launch.loadedProfile.profile}
+         initialStep="main"
+-        onBeginClinic={(founder, clinicName) => {
++        onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
+           const next = appendLocalCampaign(
+             launch.loadedProfile.profile,
+             founder,
+             clinicName,
++            Date.now(),
++            campaignSeed,
++            guidanceEnabled,
+           );
+           const saved = savePrototypeProfileResult(next.profile);
+           setLaunch({
+@@ -319,8 +330,8 @@
+     <ActivePrototypeGame
+       key={activeCampaign.campaignId}
+       loadedProfile={launch.loadedProfile}
+-      onRequestNewCampaign={(profile) =>
+-        requestOpening(profile, undefined, "founder")
++      onRequestNewCampaign={(profile, guidanceEnabled) =>
++        requestOpening(profile, undefined, "founder", guidanceEnabled)
+       }
+       onRequestRestart={(profile, campaignSeed) => {
+         const archived = archiveLocalCampaign(

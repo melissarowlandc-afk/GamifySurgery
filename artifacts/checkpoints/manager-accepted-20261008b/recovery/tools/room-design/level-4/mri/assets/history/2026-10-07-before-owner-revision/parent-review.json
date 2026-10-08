@@ -1,0 +1,80 @@
+{
+  "checked": "2026-10-07",
+  "ownedRecordCount": 233,
+  "ownedRecordMismatches": [],
+  "finalReferences": [
+    {
+      "path": "tools/room-design/level-4/mri/proof/index.html",
+      "sha256": "5262B3955B9B708CDB26DD112DFF6BEC7B0C3D35CB82E62D998820277DD09032"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/proof-manifest.json",
+      "sha256": "74EC7D395710ED0FBDB8EF34DF780109FF4C0434F2043E74189FEEA9C02AC835"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/assets/prepared/metadata.json",
+      "sha256": "343F9AA585816DFBD8AEB9C8C46E03BB0E882F39852DE1A944FAFC2E129EE077"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/evidence/mri-empty.png",
+      "sha256": "0514B861B2903EC2C7BAC7F44DDBF5F30324D76C22B21252310CA2FE185F12D3"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/evidence/mri-occupied.png",
+      "sha256": "0EF812C4932F1F2CA1214AA14827882FD5D65B601E04F7DC12E0FB5E3E433925"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/proof/evidence/validation-report.json",
+      "sha256": "ECF79FC217DC4BADA4340D79D2E810D815FB2A9A806F7CE3FB37D689CFB3B4C4"
+    }
+  ],
+  "task": "GS-039",
+  "status": "artwork_candidate_complete_owner_review_pending",
+  "worker": {
+    "name": "mri_asset_proof",
+    "role": "sol_worker",
+    "milestone": "Uniform native preparation and isolated MRI proof"
+  },
+  "parentReview": {
+    "sourceDiff": "proof/evidence/owned-source.diff",
+    "codeReviewed": [
+      "assets/prepare-assets.mjs",
+      "proof/build.mjs",
+      "proof/extension.js",
+      "proof/validate.cjs",
+      "proof/asset-contract.json",
+      "proof/README.md"
+    ],
+    "capturesInspected": [
+      "mri-empty.png",
+      "mri-occupied.png",
+      "mri-all-doors.png",
+      "mri-closed-backed.png",
+      "mri-contacts.png",
+      "mri-320.png"
+    ],
+    "independentValidation": {
+      "command": "node tools/room-design/level-4/mri/proof/validate.cjs",
+      "exitCode": 0,
+      "checks": 80,
+      "doorBackingStates": 272,
+      "routes": 2048,
+      "lowerBaseSamples": 22304,
+      "supportApproachSamples": 82,
+      "browserErrors": 0
+    },
+    "originalAndPromptAudit": "source-integrity.json",
+    "originalCount": 16
+  },
+  "designApproval": false,
+  "runtimeIntegrated": false,
+  "githubBackup": false,
+  "ownerGameOrigin": "http://127.0.0.1:4173",
+  "reviewOrigin": "http://127.0.0.1:4191",
+  "remainingReview": [
+    "Prescribed portrait magnet envelope conflicts with longer-than-tall wording",
+    "Extra source-preserving transparent padding beyond brief4–8px target",
+    "Current character39.111px rise versus45px chair/support contact",
+    "Projected 2D base audit does not prove actual physical floor depth"
+  ]
+}

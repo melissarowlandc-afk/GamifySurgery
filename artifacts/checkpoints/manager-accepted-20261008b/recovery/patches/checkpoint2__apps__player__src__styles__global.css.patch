@@ -1,0 +1,93 @@
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -1192,15 +1192,15 @@
+   position: fixed;
+   /*
+    * The phone chart is a full-viewport sheet at z-index 1000. Tutorial
+-   * guidance must remain visibly above that sheet so its acknowledgement
+-   * controls cannot be hidden behind the clinical content it explains.
++   * guidance remains visible above that sheet; native chart controls stay
++   * usable without dismissing the coach.
+    */
+   z-index: 1100;
+   top: 12px;
+   right: auto;
+   bottom: auto;
+   left: 12px;
+-  width: min(410px, calc(100vw - 32px));
++  width: min(340px, calc(100vw - 32px));
+   max-height: calc(100vh - 24px);
+   padding: 0;
+   border: 5px solid var(--ink);
+@@ -1262,12 +1262,12 @@
+ }
+ 
+ .tutorial-coach h2 {
+-  margin-bottom: var(--space-2);
+-  font-size: 1.18rem;
++  margin-bottom: 0.35rem;
++  font-size: 1rem;
+ }
+ 
+ .tutorial-coach p {
+-  margin-bottom: var(--space-2);
++  margin-bottom: 0.4rem;
+   font-size: 0.86rem;
+   line-height: 1.5;
+ }
+@@ -9037,27 +9037,42 @@
+ }
+ 
+ /* Alerts & Events: restrained live cards above the chronological clinic feed. */
++.event-message-board {
++  --clinic-feed-row-padding: 2px;
++  --clinic-feed-row-gap: 2px;
++  --clinic-feed-action-gap: 1px;
++}
++.event-message-board .message-board-item,
++.event-message-board.is-ticker .message-board-item { padding-block: var(--clinic-feed-row-padding); row-gap: var(--clinic-feed-row-gap); }
++.event-message-board .message-board-compact-action { row-gap: var(--clinic-feed-action-gap); }
++.event-message-board .message-board-item p { margin-block: 2px 0; }
+ .event-message-board .needs-you-zone { flex: 0 0 auto; border-bottom: 2px dashed var(--shade-3); }
+-.clinic-zone-label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 8px 10px 4px; font: 700 11px/1.3 var(--font-pixel); text-transform: uppercase; }
++.clinic-zone-label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 4px 8px; font: 700 11px/1.3 var(--font-pixel); text-transform: uppercase; }
+ .clinic-zone-label small { font: 12px/1.3 var(--font-read); text-transform: none; }
+-.needs-you-cards { display: grid; gap: 6px; padding: 4px 8px 8px; }
++.needs-you-zone.is-empty .clinic-zone-label { padding-block: 2px; }
++.event-message-board .needs-you-zone.is-empty { border-bottom-width: 1px; }
++.needs-you-expansion { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 160ms ease-out; }
++.needs-you-zone.is-empty .needs-you-expansion { grid-template-rows: 0fr; }
++.needs-you-cards { min-height: 0; overflow: hidden; }
++.needs-you-card-stack { display: grid; gap: 4px; padding: 2px 8px 6px; }
+ .needs-you-card { min-width: 0; padding: 8px; border: 2px solid var(--ink); border-left: 5px solid #8a3b2a; background: var(--panel); font: 14px/1.35 var(--font-read); }
+ .needs-you-card.is-payroll { border-left-color: #6a5824; }
+ .needs-you-card.is-resource { border-left-color: #2f5a33; }
+ .needs-you-card strong { font: 700 15px/1.25 var(--font-read); }
+ .needs-you-card p { margin: 4px 0 6px; font: 14px/1.35 var(--font-read); }
+-.needs-you-calm { margin: 2px; color: var(--ink-soft); font: 14px/1.4 var(--font-read); }
++.needs-you-calm { margin: 0; color: var(--ink-soft); font: 14px/1.4 var(--font-read); text-transform: none; }
+ .clinic-fix-button { min-height: 30px; max-width: 100%; padding: 5px 8px; border: 2px solid var(--ink); background: var(--ink); color: var(--panel); font: 700 13px/1.3 var(--font-read); cursor: pointer; }
+ .clinic-fix-button:focus-visible { outline: 3px solid #b88b2b; outline-offset: 2px; }
+ .needs-you-deadline { display: grid; gap: 2px; margin: 5px 0; font: 12px/1.3 var(--font-read); }
+ .needs-you-deadline meter { width: 100%; height: 10px; }
+ .clinic-action-failure { color: #8a3b2a; font: 14px/1.35 var(--font-read); }
+-.clinic-feed-byline { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-soft); font: 700 11px/1.4 var(--font-pixel); }
+-.clinic-feed-byline time { font: 12px/1.4 var(--font-read); text-align: right; }
++.clinic-feed-byline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 8px; color: var(--ink-soft); font: 700 11px/1.4 var(--font-pixel); }
++.clinic-feed-byline > span { min-width: 0; overflow-wrap: anywhere; }
++.clinic-feed-byline time { flex: 0 0 auto; margin-inline-start: auto; font: 12px/1.4 var(--font-read); text-align: right; white-space: nowrap; }
+ .event-message-board .message-board-compact-copy,
+ .event-message-board .message-board-compact-action-copy { font: 14px/1.4 var(--font-read); }
+ .event-message-board .message-board-compact-action-label { font: 700 13px/1.4 var(--font-read); }
+-.event-message-board .message-board-item.is-day_summary { background: var(--ink); color: var(--paper-raised); border: 2px solid var(--ink); padding: 10px; opacity: 1; filter: none; animation: none; box-shadow: none; mix-blend-mode: normal; isolation: isolate; }
++.event-message-board .message-board-item.is-day_summary { background: var(--ink); color: var(--paper-raised); border: 2px solid var(--ink); padding: 6px 10px; opacity: 1; filter: none; animation: none; box-shadow: none; mix-blend-mode: normal; isolation: isolate; }
+ .message-board-item.is-day_summary .clinic-feed-byline,
+ .message-board-item.is-day_summary p,
+ .message-board-item.is-day_summary small { color: inherit; }
+@@ -9085,3 +9100,6 @@
+   font-weight: 700;
+   color: var(--ink);
+ }
++@media (prefers-reduced-motion: reduce) {
++  .needs-you-expansion { transition: none; }
++}

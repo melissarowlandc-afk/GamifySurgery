@@ -1,0 +1,30 @@
+--- a/apps/player/src/ui/NeedsYouTray.test.tsx
++++ b/apps/player/src/ui/NeedsYouTray.test.tsx
+@@ -9,6 +9,27 @@
+ const card = (id: string): NeedsYouItemView => ({ id, kind: "patient", title: `${id} may walk out`, why: "Satisfaction is close to the departure threshold.", sortKey: 1, actionLabel: "Open chart", action: { kind: "open_chart", encounterId: id } });
+ 
+ describe("two-zone clinic board", () => {
++  it.each([false, true])("collapses the empty zone to one quiet status line (Build tray: %s)", (compact) => {
++    const html = renderToStaticMarkup(<EventMessageBoard items={[]} needsYou={[]} compact={compact} />);
++    expect(html).toContain('data-needs-state="quiet"');
++    expect(html).toContain(`class="needs-you-zone${compact ? " is-compact" : ""} is-empty"`);
++    expect(html).toContain('<span class="needs-you-calm" role="status">All quiet.</span>');
++    expect(html).toContain('class="needs-you-expansion" aria-hidden="true"');
++    expect(html).not.toContain('data-need-id=');
++    expect(html).not.toContain('<p class="needs-you-calm"');
++    expect(html).not.toContain("Nothing needs you right now");
++  });
++  it("expands actionable cards inside the same board and restores the slim state on resolution", () => {
++    const render = (needsYou: NeedsYouItemView[]) => renderToStaticMarkup(<EventMessageBoard items={[]} needsYou={needsYou} onNeedAction={vi.fn()} />);
++    const quiet = render([]); const active = render([card("A")]); const resolved = render([]);
++    expect(active).toContain('data-needs-state="actionable"');
++    expect(active).toContain('class="needs-you-expansion"');
++    expect(active).not.toContain('class="needs-you-expansion" aria-hidden="true"');
++    expect(active).not.toContain("All quiet.");
++    expect(active).toContain('data-need-id="A"'); expect(active).toContain("Open chart");
++    expect(active.match(/^<aside[^>]*>/)?.[0]).toBe(quiet.match(/^<aside[^>]*>/)?.[0]);
++    expect(resolved).toBe(quiet);
++  });
+   it("shows at most three actionable cards above the time-ordered feed without fillers", () => {
+     const html = renderToStaticMarkup(<EventMessageBoard items={[{ id: "joke", message: "The printer has opinions.", speaker: "Printer", timeLabel: "Day 1, 9:00 AM", rowKind: "humor" }]} needsYou={[card("A"), card("B"), card("C"), card("D")]} onNeedAction={vi.fn()} />);
+     expect((html.match(/data-need-id=/g) ?? [])).toHaveLength(3);

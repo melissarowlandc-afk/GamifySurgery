@@ -1,0 +1,35 @@
+--- a/packages/balance-config/src/schema.ts
++++ b/packages/balance-config/src/schema.ts
+@@ -220,6 +220,12 @@
+             y: z.number().int().nonnegative(),
+           }),
+         ),
++        companionSeats: z.array(z.object({
++          id: z.string().min(1),
++          kind: z.literal("armchair"),
++          anchor: z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }),
++          facing: z.enum(["north", "east", "south", "west"]),
++        }).strict()).optional(),
+         standingWaitingAnchors: z
+           .array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }))
+           .optional(),
+@@ -407,6 +413,19 @@
+         careStationAnchors.add(key(station.patientAnchor));
+       });
+       const waitingKeys = new Set<string>();
++      const companionSeatIds = new Set<string>();
++      const companionSeatAnchors = new Set<string>();
++      navigation.companionSeats?.forEach((seat, index) => {
++        validateAnchor(seat.anchor, ["navigation", "companionSeats", index, "anchor"]);
++        if (companionSeatIds.has(seat.id) || companionSeatAnchors.has(key(seat.anchor))) {
++          context.addIssue({ code: "custom", message: "Companion seat ids and anchors must be unique.", path: ["navigation", "companionSeats", index] });
++        }
++        if (careStationAnchors.has(key(seat.anchor)) || navigation.waitingAnchors.some((point) => key(point) === key(seat.anchor))) {
++          context.addIssue({ code: "custom", message: "Companion seats must be separate from patient contacts.", path: ["navigation", "companionSeats", index, "anchor"] });
++        }
++        companionSeatIds.add(seat.id);
++        companionSeatAnchors.add(key(seat.anchor));
++      });
+       navigation.waitingAnchors.forEach((point, index) => {
+         validateAnchor(point, [
+           "navigation",

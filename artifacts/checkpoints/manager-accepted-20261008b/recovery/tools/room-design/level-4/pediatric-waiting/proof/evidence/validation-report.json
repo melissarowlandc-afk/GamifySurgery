@@ -1,0 +1,1833 @@
+{
+  "status": "PASS",
+  "kind": "Node-only validation",
+  "presentationRevision": 2,
+  "browserValidation": "pending_manager_rerun",
+  "checks": 382,
+  "assetCount": 7,
+  "originalPromptPairs": 17,
+  "preservedReferences": 1086,
+  "actorPoses": 40,
+  "segments": 16,
+  "doorBackingStates": 288,
+  "routes": 4560,
+  "routeSamples": 632928,
+  "lowerBaseSamples": 518928,
+  "footprintWalkingSamples": 518928,
+  "standingToSeatApproaches": 141,
+  "distinctDoorSeatStandingStops": 253,
+  "finalSeatContactSamples": 4048,
+  "seatRiseProofPixels": 26.775365259740262,
+  "ordinarySeats": 5,
+  "kidStools": 4,
+  "designApproval": false,
+  "runtimeIntegrated": false,
+  "details": [
+    {
+      "name": "Isolated 4x4 pediatric room",
+      "pass": true
+    },
+    {
+      "name": "Candidate remains unapproved and outside runtime",
+      "pass": true
+    },
+    {
+      "name": "Preserved original shell/floor/solid footprint",
+      "pass": true
+    },
+    {
+      "name": "Preserved original shell/floor/solid shell",
+      "pass": true
+    },
+    {
+      "name": "Preserved original shell/floor/solid solids",
+      "pass": true
+    },
+    {
+      "name": "Preserved original shell/floor/solid floor",
+      "pass": true
+    },
+    {
+      "name": "Preserved original shell/floor/solid procedural",
+      "pass": true
+    },
+    {
+      "name": "Shared navigation preserved; private waiting targets/routes explicitly revised",
+      "pass": true
+    },
+    {
+      "name": "Support preserved outside authorized fit bench:seat-1",
+      "pass": true
+    },
+    {
+      "name": "Support preserved outside authorized fit bench:seat-2",
+      "pass": true
+    },
+    {
+      "name": "Support preserved outside authorized fit armchair",
+      "pass": true
+    },
+    {
+      "name": "Support preserved outside authorized fit kidWest",
+      "pass": true
+    },
+    {
+      "name": "Support preserved outside authorized fit kidEast",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision bench",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision aquarium",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision armchair",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision toyChest",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision bookBin",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Original record preserved outside authorized revision clock",
+      "pass": true
+    },
+    {
+      "name": "Only four added seats and three chair front overlays",
+      "pass": true
+    },
+    {
+      "name": "Selected pediatric registry entry unchanged level3-roster-v2.022",
+      "pass": true
+    },
+    {
+      "name": "Selected pediatric registry entry unchanged level3-roster-v2.025",
+      "pass": true
+    },
+    {
+      "name": "Selected pediatric registry entry unchanged level3-roster-v2.029",
+      "pass": true
+    },
+    {
+      "name": "Owner-authorized private revision contract hashes",
+      "pass": true
+    },
+    {
+      "name": "Renderer metadata matches prepared receipt",
+      "pass": true
+    },
+    {
+      "name": "Preparation input hashes",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions aquarium",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile aquarium",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash aquarium",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha aquarium",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds aquarium",
+      "pass": true,
+      "details": [
+        6,
+        8,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit aquarium",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop aquarium",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor aquarium",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit aquarium",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor aquarium",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions kids-table",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile kids-table",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash kids-table",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha kids-table",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds kids-table",
+      "pass": true,
+      "details": [
+        7,
+        6,
+        7,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit kids-table",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop kids-table",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor kids-table",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidsTable",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds kid-stool",
+      "pass": true,
+      "details": [
+        6,
+        22,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit kid-stool",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor kid-stool",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolWest",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolEast",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolNorth",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolNorth",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit kidStoolSouth",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor kidStoolSouth",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds toy-chest",
+      "pass": true,
+      "details": [
+        6,
+        16,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit toy-chest",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor toy-chest",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit toyChest",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor toyChest",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions book-bin",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile book-bin",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash book-bin",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha book-bin",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds book-bin",
+      "pass": true,
+      "details": [
+        6,
+        31,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit book-bin",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop book-bin",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor book-bin",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit bookBin",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor bookBin",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds animal-prints",
+      "pass": true,
+      "details": [
+        6,
+        19,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit animal-prints",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor animal-prints",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Native dimensions wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Minimum 240 native pixels per tile wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Prepared hash wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Genuine transparent alpha wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Transparent margins and bounds wall-clock-kids",
+      "pass": true,
+      "details": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "name": "Uniform source fit wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "No meaningful source crop wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Actual floor/top alpha anchor wall-clock-kids",
+      "pass": true
+    },
+    {
+      "name": "Uniform world fit clock",
+      "pass": true
+    },
+    {
+      "name": "Registered physical anchor clock",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/aquarium-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/aquarium-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/aquarium-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kids-table-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kids-table-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kids-table-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/wall-clock-kids-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/wall-clock-kids-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/wall-clock-kids-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/toy-chest-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/toy-chest-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/toy-chest-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-04.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-04.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-04.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kids-table-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kids-table-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kids-table-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/kid-stool-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/kid-stool-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/kid-stool-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/toy-chest-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/toy-chest-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/toy-chest-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/toy-chest-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/toy-chest-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/toy-chest-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-02.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/book-bin-03.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/book-bin-03.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/book-bin-03.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-01.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-01.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-01.png",
+      "pass": true
+    },
+    {
+      "name": "Original hash originals/animal-prints-02.png",
+      "pass": true
+    },
+    {
+      "name": "Exact prompt hash prompts/animal-prints-02.prompt.txt",
+      "pass": true
+    },
+    {
+      "name": "Builtin generation and visual inspection originals/animal-prints-02.png",
+      "pass": true
+    },
+    {
+      "name": "Current authorized actor sources and presentation contract frozen",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.022/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.025/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/stand-north.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-south.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-east.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-west.png",
+      "pass": true
+    },
+    {
+      "name": "Actor source hash apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.029/sit-north.png",
+      "pass": true
+    },
+    {
+      "name": "Approved reused furniture hash ../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "pass": true
+    },
+    {
+      "name": "Approved reused furniture hash ../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "pass": true
+    },
+    {
+      "name": "Approved reused furniture hash ../../../../../apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "pass": true
+    },
+    {
+      "name": "Read-only MRI/Reading Room/Level 3/GS015/stand-in/lab preservation",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Renderer and geometry build hashes",
+      "pass": true
+    },
+    {
+      "name": "Built data/layout/actor/preparation hashes",
+      "pass": true
+    },
+    {
+      "name": "All sixteen wall segments usable as doors",
+      "pass": true
+    },
+    {
+      "name": "All door/backing/route/actual-base cases",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Expanded layout exhausts all 288 states and 4560 visible-target routes",
+      "pass": true
+    },
+    {
+      "name": "Every visible seat gets a distinct door/standing approach",
+      "pass": true,
+      "details": {
+        "approaches": 253,
+        "seatStops": 141
+      }
+    },
+    {
+      "name": "Two parents and three actual pediatric children; vacant ordinary seats",
+      "pass": true
+    },
+    {
+      "name": "Actual source hip registration bench:seat-1",
+      "pass": true
+    },
+    {
+      "name": "Actual source hip registration armchair",
+      "pass": true
+    },
+    {
+      "name": "Actual source hip registration kidWest",
+      "pass": true
+    },
+    {
+      "name": "Child draws after table kidWest",
+      "pass": true
+    },
+    {
+      "name": "Child faces table kidWest",
+      "pass": true
+    },
+    {
+      "name": "Actual source hip registration kidEast",
+      "pass": true
+    },
+    {
+      "name": "Child draws after table kidEast",
+      "pass": true
+    },
+    {
+      "name": "Child faces table kidEast",
+      "pass": true
+    },
+    {
+      "name": "Actual source hip registration olderChildChair",
+      "pass": true
+    },
+    {
+      "name": "Original native stool preparation remains registered; private instance scale is separately validated",
+      "pass": true
+    },
+    {
+      "name": "Independent parent and child controls",
+      "pass": true
+    },
+    {
+      "name": "Empty occupancy",
+      "pass": true
+    },
+    {
+      "name": "Original table width/height retained",
+      "pass": true
+    },
+    {
+      "name": "Pediatric scale matches parent source-pixel scale",
+      "pass": true
+    },
+    {
+      "name": "Actual pediatric source size/category kidWest",
+      "pass": true,
+      "details": {
+        "id": "level3-roster-v2.022",
+        "height": 184,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "name": "Age-appropriate seat kidWest",
+      "pass": true,
+      "details": {
+        "age": 5,
+        "type": "kid-stool"
+      }
+    },
+    {
+      "name": "Uniform common pediatric scale kidWest",
+      "pass": true
+    },
+    {
+      "name": "Contact column inside inspected posterior region kidWest",
+      "pass": true
+    },
+    {
+      "name": "Measured posterior alpha edge at contact column kidWest",
+      "pass": true,
+      "details": {
+        "posteriorBottom": 254,
+        "contact": [
+          70,
+          255
+        ]
+      }
+    },
+    {
+      "name": "Actual hip/furniture surface contact kidWest",
+      "pass": true,
+      "details": {
+        "hip": [
+          178.8,
+          292.42463474025976
+        ],
+        "seatSurface": [
+          178.8,
+          292.42463474025976
+        ]
+      }
+    },
+    {
+      "name": "Natural child foot clearance kidWest",
+      "pass": true,
+      "details": {
+        "footGapPixels": 4.805834790209815
+      }
+    },
+    {
+      "name": "Hand rests within table surface kidWest",
+      "pass": true,
+      "details": {
+        "hand": [
+          204.88881743256744,
+          275.26093906093905
+        ],
+        "tableFrontY": 279.8517412935323,
+        "frontToHand": 4.590802232593262
+      }
+    },
+    {
+      "name": "Actual pediatric source size/category kidEast",
+      "pass": true,
+      "details": {
+        "id": "level3-roster-v2.025",
+        "height": 211,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "name": "Age-appropriate seat kidEast",
+      "pass": true,
+      "details": {
+        "age": 9,
+        "type": "kid-stool"
+      }
+    },
+    {
+      "name": "Uniform common pediatric scale kidEast",
+      "pass": true
+    },
+    {
+      "name": "Contact column inside inspected posterior region kidEast",
+      "pass": true
+    },
+    {
+      "name": "Measured posterior alpha edge at contact column kidEast",
+      "pass": true,
+      "details": {
+        "posteriorBottom": 251,
+        "contact": [
+          90,
+          252
+        ]
+      }
+    },
+    {
+      "name": "Actual hip/furniture surface contact kidEast",
+      "pass": true,
+      "details": {
+        "hip": [
+          301.2,
+          292.42463474025976
+        ],
+        "seatSurface": [
+          301.2,
+          292.42463474025976
+        ]
+      }
+    },
+    {
+      "name": "Natural child foot clearance kidEast",
+      "pass": true,
+      "details": {
+        "footGapPixels": 3.4327391358641535
+      }
+    },
+    {
+      "name": "Hand rests within table surface kidEast",
+      "pass": true,
+      "details": {
+        "hand": [
+          274.4246347402597,
+          273.88784340659345
+        ],
+        "tableFrontY": 279.8517412935323,
+        "frontToHand": 5.963897886938867
+      }
+    },
+    {
+      "name": "Actual pediatric source size/category olderChildChair",
+      "pass": true,
+      "details": {
+        "id": "level3-roster-v2.029",
+        "height": 234,
+        "category": "future-pediatric-presentation"
+      }
+    },
+    {
+      "name": "Age-appropriate seat olderChildChair",
+      "pass": true,
+      "details": {
+        "age": 14,
+        "type": "ordinary-chair"
+      }
+    },
+    {
+      "name": "Uniform common pediatric scale olderChildChair",
+      "pass": true
+    },
+    {
+      "name": "Contact column inside inspected posterior region olderChildChair",
+      "pass": true
+    },
+    {
+      "name": "Measured posterior alpha edge at contact column olderChildChair",
+      "pass": true,
+      "details": {
+        "posteriorBottom": 242,
+        "contact": [
+          70,
+          243
+        ]
+      }
+    },
+    {
+      "name": "Actual hip/furniture surface contact olderChildChair",
+      "pass": true,
+      "details": {
+        "hip": [
+          63.523809523809526,
+          189.8095238095238
+        ],
+        "seatSurface": [
+          63.523809523809526,
+          189.8095238095238
+        ]
+      }
+    },
+    {
+      "name": "Natural child foot clearance olderChildChair",
+      "pass": true,
+      "details": {
+        "footGapPixels": 13.982371794871824
+      }
+    },
+    {
+      "name": "Toy block 1 fully readable between children",
+      "pass": true,
+      "details": {
+        "pixels": 1077,
+        "occluded": 0
+      }
+    },
+    {
+      "name": "Toy block 2 fully readable between children",
+      "pass": true,
+      "details": {
+        "pixels": 1057,
+        "occluded": 0
+      }
+    },
+    {
+      "name": "Toy block 3 fully readable between children",
+      "pass": true,
+      "details": {
+        "pixels": 1113,
+        "occluded": 0
+      }
+    },
+    {
+      "name": "Entire wall item visible with seated parents animalPrints",
+      "pass": true,
+      "details": {
+        "pixels": 49119,
+        "occluded": 0
+      }
+    },
+    {
+      "name": "Wall item owns actual segment animalPrints",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/N1",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/N2",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/N3",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/N4",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/S1",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/S2",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/S3",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/S4",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/WA",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/WB",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/WC",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/WD",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/EA",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/EB",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/EC",
+      "pass": true
+    },
+    {
+      "name": "Door visibility animalPrints/ED",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility animalPrints/N1",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility animalPrints/N2",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility animalPrints/N3",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility animalPrints/N4",
+      "pass": true
+    },
+    {
+      "name": "Entire wall item visible with seated parents clock",
+      "pass": true,
+      "details": {
+        "pixels": 9787,
+        "occluded": 0
+      }
+    },
+    {
+      "name": "Wall item owns actual segment clock",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/N1",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/N2",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/N3",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/N4",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/S1",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/S2",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/S3",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/S4",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/WA",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/WB",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/WC",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/WD",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/EA",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/EB",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/EC",
+      "pass": true
+    },
+    {
+      "name": "Door visibility clock/ED",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility clock/N1",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility clock/N2",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility clock/N3",
+      "pass": true
+    },
+    {
+      "name": "Backing visibility clock/N4",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists allDoors",
+      "pass": true
+    },
+    {
+      "name": "Bulk control allDoors produces 16 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists allDoors",
+      "pass": true
+    },
+    {
+      "name": "Bulk control allDoors produces 16 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists closeDoors",
+      "pass": true
+    },
+    {
+      "name": "Bulk control closeDoors produces 0 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists closeDoors",
+      "pass": true
+    },
+    {
+      "name": "Bulk control closeDoors produces 0 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists allBacked",
+      "pass": true
+    },
+    {
+      "name": "Bulk control allBacked produces 4 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists allBacked",
+      "pass": true
+    },
+    {
+      "name": "Bulk control allBacked produces 4 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists clearBacked",
+      "pass": true
+    },
+    {
+      "name": "Bulk control clearBacked produces 0 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk handler exists clearBacked",
+      "pass": true
+    },
+    {
+      "name": "Bulk control clearBacked produces 0 segments",
+      "pass": true
+    },
+    {
+      "name": "Bulk controls refresh chips and redraw",
+      "pass": true
+    },
+    {
+      "name": "Five ordinary seats and four kid stools",
+      "pass": true,
+      "details": {
+        "ordinary": [
+          "bench:seat-1",
+          "bench:seat-2",
+          "armchair",
+          "olderChildChair",
+          "spareAdultChair"
+        ],
+        "stools": [
+          "kidWest",
+          "kidEast",
+          "kidNorth",
+          "kidSouth"
+        ]
+      }
+    },
+    {
+      "name": "Occluder/source hashes west",
+      "pass": true
+    },
+    {
+      "name": "Front wood preserves approved pixels west",
+      "pass": true,
+      "details": {
+        "pixels": 18685,
+        "opaque": 17633,
+        "bad": 0
+      }
+    },
+    {
+      "name": "Transparent full-frame occluder west",
+      "pass": true
+    },
+    {
+      "name": "Occluder/source hashes east",
+      "pass": true
+    },
+    {
+      "name": "Front wood preserves approved pixels east",
+      "pass": true,
+      "details": {
+        "pixels": 17760,
+        "opaque": 16312,
+        "bad": 0
+      }
+    },
+    {
+      "name": "Transparent full-frame occluder east",
+      "pass": true
+    },
+    {
+      "name": "Actual renderer chair/occupant/front order armchair",
+      "pass": true,
+      "details": {
+        "indexes": [
+          2,
+          4,
+          6
+        ],
+        "depths": [
+          1.95,
+          1.9501,
+          1.9502
+        ]
+      }
+    },
+    {
+      "name": "Overlay aligns exactly with approved chair armchair",
+      "pass": true
+    },
+    {
+      "name": "Measured hip on cushion armchair",
+      "pass": true,
+      "details": {
+        "seat": [
+          412,
+          189.5047619047619
+        ],
+        "hip": {
+          "x": 3.433333333333333,
+          "y": 1.5792063492063493
+        }
+      }
+    },
+    {
+      "name": "Seat contact is actual blue cushion armchair",
+      "pass": true,
+      "details": {
+        "rgba": [
+          70,
+          106,
+          108,
+          253
+        ]
+      }
+    },
+    {
+      "name": "Front armrest occludes actual occupant; head/body stay visible armchair",
+      "pass": true,
+      "details": {
+        "overlap": 789,
+        "correctComposites": 789,
+        "visibleActor": 6721
+      }
+    },
+    {
+      "name": "Actual renderer chair/occupant/front order adultChairEastNorth",
+      "pass": true,
+      "details": {
+        "indexes": [
+          3,
+          5,
+          7
+        ],
+        "depths": [
+          1.95,
+          1.9501,
+          1.9502
+        ]
+      }
+    },
+    {
+      "name": "Overlay aligns exactly with approved chair adultChairEastNorth",
+      "pass": true
+    },
+    {
+      "name": "Measured hip on cushion adultChairEastNorth",
+      "pass": true,
+      "details": {
+        "seat": [
+          63.523809523809526,
+          189.8095238095238
+        ],
+        "hip": {
+          "x": 0.5293650793650794,
+          "y": 1.5817460317460317
+        }
+      }
+    },
+    {
+      "name": "Seat contact is actual blue cushion adultChairEastNorth",
+      "pass": true,
+      "details": {
+        "rgba": [
+          68,
+          104,
+          105,
+          253
+        ]
+      }
+    },
+    {
+      "name": "Front armrest occludes actual occupant; head/body stay visible adultChairEastNorth",
+      "pass": true,
+      "details": {
+        "overlap": 511,
+        "correctComposites": 511,
+        "visibleActor": 3993
+      }
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N1",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility N1",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N1",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N2",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility N2",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N2",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N3",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility N3",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N3",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/N4",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility N4",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/N4",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S1",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility S1",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S1",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S2",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility S2",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S2",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S3",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility S3",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S3",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/S4",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility S4",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/S4",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WA",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility WA",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WA",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WB",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility WB",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WB",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WC",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility WC",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WC",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/WD",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility WD",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/WD",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EA",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility EA",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EA",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EB",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility EB",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EB",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/EC",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility EC",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/EC",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastNorth/ED",
+      "pass": true
+    },
+    {
+      "name": "Older occupant follows own chair visibility ED",
+      "pass": true
+    },
+    {
+      "name": "Chair/occluder doorway visibility adultChairEastSouth/ED",
+      "pass": true
+    },
+    {
+      "name": "West parent actual posterior contact measured at X105",
+      "pass": true
+    },
+    {
+      "name": "Refitted west parent feet near approved chair floor",
+      "pass": true,
+      "details": {
+        "footResidual": 2.629404761904766
+      }
+    },
+    {
+      "name": "Native renderer loaded chair overlays without warnings",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Manager revision1 browser evidence preserved",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Browser script syntax validate-browser.cjs",
+      "pass": true
+    },
+    {
+      "name": "Browser script syntax capture.cjs",
+      "pass": true
+    },
+    {
+      "name": "320px responsive constraints present; browser execution pending",
+      "pass": true
+    }
+  ],
+  "limits": [
+    "Private expanded layout intentionally uses radius-clear footprint routes for all targets; original shared navigation and historical parity evidence remain frozen.",
+    "Static contact to seat is separate from walking; no seating animation is implemented.",
+    "Projected opaque base pixels constrain a 2D review, not a physical 3D model.",
+    "Unrelated generated-registry edits occurred concurrently; selected pediatric entries and all pose pixels are guarded.",
+    "Actual browser DOM/keyboard, 320px overflow, Chrome layering and captures require manager execution."
+  ]
+}

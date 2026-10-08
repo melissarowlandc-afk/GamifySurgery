@@ -1,0 +1,1098 @@
+{
+  "sourceSha256": "FFD029E54F481AC0C352B4B799A18A7B6C109B2DAB295EFB17ECF231F2916096",
+  "room": {
+    "proofId": "wound-ostomy",
+    "definitionId": "room.wound_ostomy",
+    "design": true,
+    "footprint": [
+      3,
+      3
+    ],
+    "shell": {
+      "tilePixels": 120,
+      "rearWallHeightPixels": 90,
+      "lowNorthHeightPixels": 29,
+      "sideCapWidthPixels": 14,
+      "southHeightPixels": 29,
+      "floorAlgorithm": "design",
+      "floorBase": "#e6e8df",
+      "floorPalette": [
+        "#e6e8df"
+      ],
+      "background": "#f3ead3",
+      "rearWall": "#b9c7a5",
+      "baseTrim": "#58735a",
+      "edgeTrim": "#294632",
+      "doorJamb": "#744a29",
+      "doorInsetPixels": 12
+    },
+    "records": [
+      {
+        "id": "recliner",
+        "assetId": "design:wo:recliner",
+        "sourceRect": [
+          0,
+          0,
+          312,
+          235
+        ],
+        "renderSizeTiles": [
+          1.3,
+          0.9791666666666666
+        ],
+        "destinationTopLeftTiles": [
+          0.25,
+          0.9708333333333333
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.9,
+          1.95
+        ],
+        "depthKey": 1.95,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "lamp",
+        "assetId": "design:wo:exam-lamp",
+        "sourceRect": [
+          0,
+          0,
+          86,
+          326
+        ],
+        "renderSizeTiles": [
+          0.36,
+          1.3646511627906976
+        ],
+        "destinationTopLeftTiles": [
+          1.4400000000000002,
+          -0.1646511627906977
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          1.62,
+          1.2
+        ],
+        "depthKey": 1.2,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 1.5,
+          "top": 1.08,
+          "width": 0.22,
+          "height": 0.12
+        }
+      },
+      {
+        "id": "stool",
+        "assetId": "design:reuse:stool",
+        "sourceRect": [
+          8,
+          2448,
+          266,
+          427
+        ],
+        "renderSizeTiles": [
+          0.44,
+          0.7063157894736842
+        ],
+        "destinationTopLeftTiles": [
+          1.93,
+          1.1936842105263157
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          2.15,
+          1.9
+        ],
+        "depthKey": 1.9,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "sink",
+        "assetId": "design:reuse:sink",
+        "sourceRect": [
+          8,
+          1569,
+          265,
+          386
+        ],
+        "renderSizeTiles": [
+          0.62,
+          0.9030943396226415
+        ],
+        "destinationTopLeftTiles": [
+          0.14,
+          -0.5830943396226416
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.45,
+          0.32
+        ],
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [
+          "N1"
+        ],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0.25,
+          "top": 0.18,
+          "width": 0.4,
+          "height": 0.12
+        }
+      },
+      {
+        "id": "ostomyShelf",
+        "assetId": "design:wo:ostomy-shelf",
+        "sourceRect": [
+          0,
+          0,
+          221,
+          298
+        ],
+        "renderSizeTiles": [
+          0.92,
+          1.2405429864253394
+        ],
+        "destinationTopLeftTiles": [
+          1.5499999999999998,
+          -0.9205429864253394
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          2.01,
+          0.32
+        ],
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N2",
+          "N3"
+        ],
+        "backedOwners": [
+          "N2",
+          "N3"
+        ],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 1.65,
+          "top": 0.18,
+          "width": 0.72,
+          "height": 0.12
+        }
+      },
+      {
+        "id": "dressingCart",
+        "assetId": "design:wo:dressing-cart",
+        "sourceRect": [
+          0,
+          0,
+          134,
+          206
+        ],
+        "renderSizeTiles": [
+          0.56,
+          0.8608955223880598
+        ],
+        "destinationTopLeftTiles": [
+          2.34,
+          2.0191044776119402
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          2.62,
+          2.88
+        ],
+        "depthKey": 2.88,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [
+          "S3",
+          "EC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 2.45,
+          "top": 2.76,
+          "width": 0.34,
+          "height": 0.1
+        }
+      },
+      {
+        "id": "curtain",
+        "assetId": "design:reuse:curtain",
+        "sourceRect": [
+          0,
+          0,
+          62,
+          211
+        ],
+        "renderSizeTiles": [
+          0.2,
+          0.6806451612903226
+        ],
+        "destinationTopLeftTiles": [
+          0.06,
+          1.6393548387096772
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.16,
+          2.32
+        ],
+        "depthKey": 2.32,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [
+          "WC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.08,
+          "top": 2.22,
+          "width": 0.16,
+          "height": 0.1
+        }
+      },
+      {
+        "id": "bio",
+        "assetId": "design:reuse:biohazard-bin",
+        "sourceRect": [
+          0,
+          0,
+          77,
+          92
+        ],
+        "renderSizeTiles": [
+          0.4,
+          0.47792207792207797
+        ],
+        "destinationTopLeftTiles": [
+          0.14,
+          2.402077922077922
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "worldLocalGround": [
+          0.34,
+          2.88
+        ],
+        "depthKey": 2.88,
+        "depthPolicy": "ground-contact",
+        "doorOwners": [
+          "S1",
+          "WC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.22,
+          "top": 2.76,
+          "width": 0.24,
+          "height": 0.1
+        }
+      },
+      {
+        "id": "hygieneSign",
+        "assetId": "design:wo:hygiene-sign",
+        "sourceRect": [
+          0,
+          0,
+          72,
+          86
+        ],
+        "renderSizeTiles": [
+          0.3,
+          0.35833333333333334
+        ],
+        "destinationTopLeftTiles": [
+          2.5900000000000003,
+          -0.64
+        ],
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "depthKey": -1,
+        "depthPolicy": "wall",
+        "doorOwners": [
+          "N3"
+        ],
+        "backedOwners": [
+          "N3"
+        ],
+        "touchupKeepWhenBacked": false
+      }
+    ],
+    "solids": [
+      {
+        "id": "recliner",
+        "footprint": {
+          "left": 0.35,
+          "top": 1.55,
+          "width": 1.15,
+          "height": 0.4
+        },
+        "endpoint": true
+      }
+    ],
+    "procedural": [],
+    "supports": [
+      {
+        "id": "recliner:patient",
+        "role": "examination-patient",
+        "pose": "seated",
+        "facing": "east",
+        "seat": {
+          "x": 0.62,
+          "y": 1.4
+        },
+        "ground": {
+          "x": 0.62,
+          "y": 1.95
+        },
+        "fixtureGround": {
+          "x": 0.62,
+          "y": 1.95
+        }
+      },
+      {
+        "id": "stool:clinician",
+        "role": "examination-clinician",
+        "pose": "seated",
+        "facing": "west",
+        "seat": {
+          "x": 2.15,
+          "y": 1.54
+        },
+        "ground": {
+          "x": 2.15,
+          "y": 1.9
+        },
+        "fixtureGround": {
+          "x": 2.15,
+          "y": 1.9
+        }
+      }
+    ],
+    "floor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 360,
+        "color": "#e6e8df"
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 1,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 73,
+        "y": 1,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 145,
+        "y": 25,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 217,
+        "y": 25,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 289,
+        "y": 49,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 25,
+        "y": 73,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 97,
+        "y": 73,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 169,
+        "y": 97,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 97,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 313,
+        "y": 121,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 49,
+        "y": 145,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 145,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 193,
+        "y": 169,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 265,
+        "y": 169,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 193,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 337,
+        "y": 193,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 73,
+        "y": 217,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 145,
+        "y": 217,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 217,
+        "y": 241,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 289,
+        "y": 241,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 25,
+        "y": 265,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 97,
+        "y": 289,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 169,
+        "y": 289,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 313,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 313,
+        "y": 313,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 49,
+        "y": 337,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "line",
+        "x": 24,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 48,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 72,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 96,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 144,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 168,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 192,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 216,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 264,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 288,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 312,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 336,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 24,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 48,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 72,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 96,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 144,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 168,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 192,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 216,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 264,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 312,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 336,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      }
+    ],
+    "notes": [
+      "Design only (stand-in art for new pieces; stool, sink, curtain and bin reuse approved art).",
+      "Treatment recliner seen from the side with the leg rest out to the east; the clinician sits on a stool facing the patient's legs, with an exam lamp between them.",
+      "Ostomy supply shelving and a hand-hygiene sign on the north wall, sink in the north-west corner, dressing cart (south-east), biohazard bin and a gathered privacy curtain (south-west)."
+    ]
+  },
+  "navigation": {
+    "roomDefinitionId": "room.wound_ostomy",
+    "width": 3,
+    "height": 3,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "recliner",
+        "footprint": {
+          "left": 0.35,
+          "top": 1.55,
+          "width": 1.15,
+          "height": 0.4
+        },
+        "blockedTiles": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "endpointOnlyContacts": [
+          {
+            "x": 0,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "doorThresholdExceptions": [
+      {
+        "side": "west",
+        "offset": 1
+      }
+    ],
+    "primaryAnchor": {
+      "x": 0,
+      "y": 1
+    },
+    "waitingAnchors": [],
+    "staffAnchor": {
+      "x": 2,
+      "y": 1
+    },
+    "patientCareAnchor": {
+      "x": 0,
+      "y": 1
+    },
+    "clinicianCareAnchor": {
+      "x": 2,
+      "y": 1
+    }
+  },
+  "assets": {
+    "design:wo:recliner": {
+      "src": "../../level-4/wound-ostomy/stand-in/wound-recliner.png",
+      "size": [
+        312,
+        235
+      ]
+    },
+    "design:wo:exam-lamp": {
+      "src": "../../level-4/wound-ostomy/stand-in/exam-lamp.png",
+      "size": [
+        86,
+        326
+      ]
+    },
+    "design:reuse:stool": {
+      "src": "../../../../apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+      "sourceRect": [
+        8,
+        2448,
+        266,
+        427
+      ],
+      "size": [
+        266,
+        427
+      ]
+    },
+    "design:reuse:sink": {
+      "src": "../../../../apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+      "sourceRect": [
+        8,
+        1569,
+        265,
+        386
+      ],
+      "size": [
+        265,
+        386
+      ]
+    },
+    "design:wo:ostomy-shelf": {
+      "src": "../../level-4/wound-ostomy/stand-in/ostomy-shelf.png",
+      "size": [
+        221,
+        298
+      ]
+    },
+    "design:wo:dressing-cart": {
+      "src": "../../level-4/wound-ostomy/stand-in/dressing-cart.png",
+      "size": [
+        134,
+        206
+      ]
+    },
+    "design:reuse:curtain": {
+      "src": "../../../../apps/player/public/art/rooms/touchup-v1/curtain-bunch.png",
+      "size": [
+        62,
+        211
+      ]
+    },
+    "design:reuse:biohazard-bin": {
+      "src": "../../../../apps/player/public/art/rooms/touchup-v1/biohazard-bin.png",
+      "size": [
+        77,
+        92
+      ]
+    },
+    "design:wo:hygiene-sign": {
+      "src": "../../level-4/wound-ostomy/stand-in/hygiene-sign.png",
+      "size": [
+        72,
+        86
+      ]
+    }
+  }
+}

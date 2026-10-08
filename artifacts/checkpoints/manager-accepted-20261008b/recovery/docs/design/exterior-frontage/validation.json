@@ -1,0 +1,189 @@
+{
+  "checked": "2026-10-08",
+  "method": "Read-only Python standard-library link, PNG CRC/zlib, file hash and prompt verification; compared source hashes in functions.exec. No Git or runtime tests.",
+  "result": "PASS — proposal links, PNGs, prompt records and byte-exact copies",
+  "localLinks": 51,
+  "lineReferences": 39,
+  "pngFiles": [
+    {
+      "file": "concept-01-overview.png",
+      "dimensions": [
+        2112,
+        745
+      ],
+      "validChunkCRCs": true,
+      "validCompressedPixels": true,
+      "sha256": "738a715ff79053112c22d7b44f06dd2c0315cc893d76ea7e175828f959666d68"
+    },
+    {
+      "file": "concept-02-entry-detail.png",
+      "dimensions": [
+        1686,
+        933
+      ],
+      "validChunkCRCs": true,
+      "validCompressedPixels": true,
+      "sha256": "3d6dbb60be1bd13732ae94890be8e89e9487af608e2db243ea8ace083025c3d9"
+    },
+    {
+      "file": "current-qa-front-door-3x.png",
+      "dimensions": [
+        840,
+        465
+      ],
+      "validChunkCRCs": true,
+      "validCompressedPixels": true,
+      "sha256": "55331437fb2ed21dce8aec215b7b5e46ba380cdeb48376f3c538e296702ff127"
+    },
+    {
+      "file": "current-qa-overview.png",
+      "dimensions": [
+        920,
+        325
+      ],
+      "validChunkCRCs": true,
+      "validCompressedPixels": true,
+      "sha256": "9e2467b4819f6f165da2544aeaee0a9eefda5a42c0c6f3c00adeefd0d5d07b28"
+    }
+  ],
+  "exactPromptTextMatchesToolCalls": true,
+  "generatedCopiesByteExact": true,
+  "protectedFilesCompared": 116,
+  "protectedFilesChanged": [
+    "apps/player/src/facility/defaultCamera.ts",
+    "apps/player/src/facility/FacilityCanvas.tsx"
+  ],
+  "protectedFilesAdded": [
+    "apps/player/src/facility/facilityCameraBounds.test.ts",
+    "apps/player/src/facility/facilityCameraBounds.ts"
+  ],
+  "failures": [],
+  "proposalWordCount": 4155,
+  "runtimeTests": "Not run; documentation/concept-only work. Future commands are in the proposal.",
+  "writes": "Only docs/design/exterior-frontage-proposal.md and new files under docs/design/exterior-frontage/.",
+  "subagents": "None",
+  "notes": "Source guards cover immediate facility/art source files, environment runtime files and supplied QA images. All cited drawing files, atlas files and supplied screenshots remained byte-exact. Concurrent defaultCamera.ts / FacilityCanvas.tsx changes and new facilityCameraBounds files were observed; no source files were written by this worker. This is a scoped guard, not a repository-wide Git cleanliness or acceptance claim.",
+  "protectedSourceGuard": "Concurrent source changes observed; preserved and excluded from this worker's write lane.",
+  "protectedFilesUnchanged": 114,
+  "comparisonExpansion": {
+    "checked": "2026-10-08",
+    "result": "PASS",
+    "scope": "Owner-requested A/C overviews, B finish comparison and B entry comparison; documentation/concepts only.",
+    "newConcepts": [
+      "concept-03-option-a-overview.png",
+      "concept-04-option-c-overview.png",
+      "concept-05-b-stone-with-inset.png",
+      "concept-06-b-green-with-inset.png",
+      "concept-07-b-stone-without-inset.png"
+    ],
+    "totalConcepts": 7,
+    "localLinks": 65,
+    "lineReferences": 39,
+    "pngChecks": [
+      {
+        "file": "concept-01-overview.png",
+        "dimensions": [
+          2112,
+          745
+        ],
+        "sha256": "738a715ff79053112c22d7b44f06dd2c0315cc893d76ea7e175828f959666d68",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-02-entry-detail.png",
+        "dimensions": [
+          1686,
+          933
+        ],
+        "sha256": "3d6dbb60be1bd13732ae94890be8e89e9487af608e2db243ea8ace083025c3d9",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-03-option-a-overview.png",
+        "dimensions": [
+          2112,
+          744
+        ],
+        "sha256": "6bc34340f06fa2ad8c2b2ead8f057d47f453cb3a6d6313532e91b7c55629e209",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-04-option-c-overview.png",
+        "dimensions": [
+          2112,
+          745
+        ],
+        "sha256": "3b7ea185af6479a580f10b67fd3756f8ac4172dda9246fd9b9db3402c0e10be4",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-05-b-stone-with-inset.png",
+        "dimensions": [
+          1686,
+          933
+        ],
+        "sha256": "94d3e1227b697c0b5f1aae08a516e350e971ffcc0866752f232c6e16bee495ec",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-06-b-green-with-inset.png",
+        "dimensions": [
+          1686,
+          933
+        ],
+        "sha256": "b41e342ee22fa21c39a459040c0be34c356f0d3eed157025004f72ccd10f9aa1",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "concept-07-b-stone-without-inset.png",
+        "dimensions": [
+          1686,
+          933
+        ],
+        "sha256": "df2cdba5a968e39571139bc9cbe30b401a5a0a0e7dab682ec2c0849291f863fc",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "current-qa-front-door-3x.png",
+        "dimensions": [
+          840,
+          465
+        ],
+        "sha256": "55331437fb2ed21dce8aec215b7b5e46ba380cdeb48376f3c538e296702ff127",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      },
+      {
+        "file": "current-qa-overview.png",
+        "dimensions": [
+          920,
+          325
+        ],
+        "sha256": "9e2467b4819f6f165da2544aeaee0a9eefda5a42c0c6f3c00adeefd0d5d07b28",
+        "validChunkCRCs": true,
+        "validPixelStream": true
+      }
+    ],
+    "utf8WithoutBOM": true,
+    "textFilesChecked": 10,
+    "exactNewPromptTextMatchesToolCalls": true,
+    "originalPromptTextsPreserved": false,
+    "allSevenGeneratedCopiesByteExact": true,
+    "existingProtectedFilesCompared": 124,
+    "existingProtectedFilesChanged": [],
+    "concurrentSourceFilesAdded": [],
+    "scopedSourceGuard": "No changes detected in the protected snapshot.",
+    "failures": [],
+    "proposalWords": 4510,
+    "runtimeTests": "Not run; no game implementation.",
+    "workerWrites": "Five new PNGs and five exact prompt files; updates to proposal, concept-provenance.json and this validation receipt. All inside docs/design/exterior-frontage*.",
+    "limitations": "Concepts are visually reviewed generative comparisons, not pixel-registered runtime or movement proofs. A output height differs by one pixel from B/C; originals were not resampled."
+  }
+}

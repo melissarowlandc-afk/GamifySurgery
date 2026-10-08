@@ -1,0 +1,248 @@
+--- a/tests/e2e/patient-chart-density.spec.ts
++++ b/tests/e2e/patient-chart-density.spec.ts
+@@ -1,7 +1,7 @@
+ import { mkdirSync } from "node:fs";
+ import { expect, test, type Page } from "@playwright/test";
+ 
+-import { installLevelOneVisualState, startClinic, waitForDecisionChoices } from "./helpers";
++import { installLevelOneVisualState, setFastFacilitySpeed, startClinic, waitForDecisionChoices } from "./helpers";
+ 
+ const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
+ 
+@@ -11,8 +11,14 @@
+   await startClinic(page, `Chart Density ${projectName}`, `Chart Density ${projectName} Clinic`);
+   // The fixture disables tutorials while retaining the normal persisted-game UI.
+   await installLevelOneVisualState(page);
+-  await page.locator(".patient-tab").first().click();
+-  await expect(page.locator(".paper-chart")).toBeVisible();
++  // The fixture patient must finish checking in before the chart opens.
++  const resume = page.getByRole("button", { name: "Resume facility time" });
++  if (await resume.isVisible()) await resume.click();
++  await setFastFacilitySpeed(page);
++  await expect(async () => {
++    await page.locator(".patient-tab").first().click();
++    await expect(page.locator(".chart-sheet")).toBeVisible({ timeout: 1_000 });
++  }).toPass({ timeout: 30_000 });
+   await waitForDecisionChoices(page);
+ }
+ 
+@@ -26,18 +32,18 @@
+   return `${SCREENSHOT_DIRECTORY}/${names[projectName]!}`;
+ }
+ 
+-test("patient chart is compact, single-prompt, and paper-contained across responsive layouts", async ({
++test("patient chart floats at its content size with one scroll and a one-line header", async ({
+   page,
+ }, testInfo) => {
+   await openFirstChart(page, testInfo.project.name);
++  const phone = testInfo.project.name === "phone-chrome";
+ 
+-  const chart = page.locator(".paper-chart");
+-  const workspace = chart.locator(".chart-workspace");
+-  const prompt = chart.locator(".chart-step-column.is-current .question-prompt");
+-  const answers = chart.locator(".chart-step-column.is-current .answer-list");
+-  const concern = chart.locator(".chart-presentation-column .chart-clinical-section");
++  const chart = page.locator(".chart-sheet");
++  const prompt = chart.locator(".cs-step.is-current .cs-prompt");
++  const answers = chart.locator(".cs-step.is-current .cs-answers");
++  const concern = chart.locator(".cs-head .cs-complaint");
+ 
+-  await expect(page.locator(".desk-workspace .chart-drawer")).toBeVisible();
++  await expect(chart).toBeVisible();
+   await expect(page.getByRole("button", { name: "Enter Management Mode" })).toHaveCount(0);
+   await expect(page.getByRole("button", { name: "Enter Build Mode" })).toHaveCount(0);
+   await expect(page.locator(".footer-content-notice")).toContainText(
+@@ -47,10 +53,7 @@
+   await expect(chart.getByText("History of present illness", { exact: true })).toHaveCount(0);
+   await expect(chart.getByText("HPI & presentation", { exact: true })).toHaveCount(0);
+   await expect(concern).toHaveCount(1);
+-  await expect(concern).toContainText(/^(I|My)\b/);
+-  const presentationCopy = (await chart
+-    .locator(".chart-presentation-column")
+-    .innerText()).trim();
++  const presentationCopy = (await chart.locator(".cs-story").innerText()).trim();
+   expect(presentationCopy).toContain("COPD");
+   expect(presentationCopy).not.toContain(
+     "They ask what needs to happen before an operation can be scheduled.",
+@@ -64,74 +67,43 @@
+   const geometry = await page.evaluate(() => {
+     const get = <T extends HTMLElement>(selector: string) =>
+       document.querySelector<T>(selector);
+-    const rect = (element: Element | null) => element?.getBoundingClientRect();
+-    const chart = get<HTMLElement>(".paper-chart");
++    const chart = get<HTMLElement>(".chart-sheet");
++    const head = get<HTMLElement>(".chart-sheet .cs-head");
++    const scroll = get<HTMLElement>(".chart-sheet .cs-scroll");
++    const story = get<HTMLElement>(".chart-sheet .cs-story");
++    const prompt = get<HTMLElement>(".cs-step.is-current .cs-prompt");
++    const answers = get<HTMLElement>(".cs-step.is-current .cs-answers");
+     const desk = get<HTMLElement>(".desk-workspace");
+-    const stage = get<HTMLElement>(".chart-flip-stage");
+-    const face = get<HTMLElement>(".chart-card-face.is-front");
+-    const workspace = get<HTMLElement>(".chart-workspace");
+-    const identity = get<HTMLElement>(".chart-identity-column");
+-    const presentation = get<HTMLElement>(".chart-presentation-column");
+-    const decision = get<HTMLElement>(".chart-decision-region");
+-    const current = get<HTMLElement>(".chart-step-column.is-current");
+-    const prompt = get<HTMLElement>(".chart-step-column.is-current .question-prompt");
+-    const answers = get<HTMLElement>(".chart-step-column.is-current .answer-list");
+-    const title = get<HTMLElement>(".chart-drawer-titlebar");
+-    const portrait = get<HTMLElement>(".chart-identity-column .pixel-avatar-large");
+-    const stack = get<HTMLElement>(".paper-chart-stack");
+-    const clip = get<HTMLElement>(".paper-chart-clip");
+-    if (!chart || !desk || !stage || !face || !workspace || !identity || !presentation || !decision || !current || !prompt || !answers || !title || !portrait || !stack || !clip) return null;
+-    const chartBox = rect(chart)!;
+-    const deskBox = rect(desk)!;
+-    const stageBox = rect(stage)!;
+-    const faceBox = rect(face)!;
+-    const workspaceBox = rect(workspace)!;
+-    const identityBox = rect(identity)!;
+-    const presentationBox = rect(presentation)!;
+-    const decisionBox = rect(decision)!;
+-    const currentBox = rect(current)!;
+-    const promptBox = rect(prompt)!;
+-    const answerBox = rect(answers)!;
++    const main = desk?.closest<HTMLElement>("main") ?? null;
++    const footer = get<HTMLElement>(".footer-bar");
++    if (!chart || !head || !scroll || !story || !prompt || !answers || !desk || !main || !footer) return null;
++    const chartBox = chart.getBoundingClientRect();
++    const deskBox = desk.getBoundingClientRect();
++    const mainBox = main.getBoundingClientRect();
++    const promptBox = prompt.getBoundingClientRect();
++    const answerBox = answers.getBoundingClientRect();
+     const enabledAnswers = [...answers.querySelectorAll<HTMLButtonElement>("button:not(:disabled)")];
++    // Elements that scroll on their own inside the chart (the design allows one).
++    const scrollers = [...chart.querySelectorAll<HTMLElement>("*")].filter((element) => {
++      const style = getComputedStyle(element);
++      return /(auto|scroll)/.test(style.overflowY) && element.scrollHeight > element.clientHeight + 1;
++    });
+     return {
+-      viewportWidth: window.innerWidth,
+       pageOverflow: document.documentElement.scrollWidth - window.innerWidth,
+-      chartDeskEdges: [
+-        Math.abs(chartBox.left - deskBox.left), Math.abs(chartBox.top - deskBox.top),
+-        Math.abs(chartBox.right - deskBox.right), Math.abs(chartBox.bottom - deskBox.bottom),
+-      ],
++      chart: { left: chartBox.left, top: chartBox.top, right: chartBox.right, bottom: chartBox.bottom },
++      desk: { left: deskBox.left, right: deskBox.right, bottom: deskBox.bottom },
++      main: { left: mainBox.left, top: mainBox.top, right: mainBox.right },
++      footerTop: footer.getBoundingClientRect().top,
+       promptImmediatelyBeforeAnswers: prompt.compareDocumentPosition(answers) & Node.DOCUMENT_POSITION_FOLLOWING ? promptBox.bottom <= answerBox.top + 2 : false,
+-      promptOutsidePresentation: !presentation.contains(prompt),
+-      promptInCurrentUpdate: Boolean(get<HTMLElement>(".chart-current-update")?.contains(prompt)),
+-      presentationHasQuestionTail: /\?\s*$/.test(presentation.innerText.trim()),
+-      presentationHasCopdContext: /\bCOPD\b/.test(presentation.innerText),
+-      presentationHasExactDuplicate: presentation.innerText.includes(
+-        "They ask what needs to happen before an operation can be scheduled.",
+-      ),
++      promptOutsideStory: !story.contains(prompt),
+       answerHeights: enabledAnswers.map((answer) => answer.getBoundingClientRect().height),
+-      answerCopyFits: enabledAnswers.every((answer) => {
+-        const copy = answer.querySelector<HTMLElement>(".answer-choice-copy");
+-        return Boolean(copy && copy.scrollWidth <= copy.clientWidth && copy.scrollHeight <= copy.clientHeight);
++      answerLabelsFit: enabledAnswers.every((answer) => {
++        const label = answer.querySelector<HTMLElement>(".cs-answer-label");
++        return Boolean(label && label.scrollWidth <= label.clientWidth && label.scrollHeight <= label.clientHeight);
+       }),
+-      titleHeight: rect(title)!.height,
+-      portrait: { width: rect(portrait)!.width, height: rect(portrait)!.height },
+-      chartBodyBottom: stageBox.bottom,
+-      faceBottom: faceBox.bottom,
+-      workspaceBottom: workspaceBox.bottom,
+-      identityBottom: identityBox.bottom,
+-      presentationBottom: presentationBox.bottom,
+-      decisionBottom: decisionBox.bottom,
+-      currentBottom: currentBox.bottom,
+-      stageScroll: { clientHeight: stage.clientHeight, scrollHeight: stage.scrollHeight },
+-      workspaceScroll: { clientHeight: workspace.clientHeight, scrollHeight: workspace.scrollHeight },
+-      paperDecoration: {
+-        stackPosition: getComputedStyle(stack).position,
+-        stackPointerEvents: getComputedStyle(stack).pointerEvents,
+-        clipPosition: getComputedStyle(clip).position,
+-        clipPointerEvents: getComputedStyle(clip).pointerEvents,
+-        stackDisplay: getComputedStyle(stack).display,
+-        clipDisplay: getComputedStyle(clip).display,
+-      },
++      headHeight: head.getBoundingClientRect().height,
++      innerScrollers: scrollers.map((element) => element.className),
++      oneScrollFits: scroll.scrollHeight <= scroll.clientHeight + 1,
+     };
+   });
+   expect(geometry).not.toBeNull();
+@@ -142,56 +114,29 @@
+   });
+   expect(geometry!.pageOverflow).toBeLessThanOrEqual(0);
+   expect(geometry!.promptImmediatelyBeforeAnswers).toBe(true);
+-  expect(geometry!.promptOutsidePresentation).toBe(true);
+-  expect(geometry!.promptInCurrentUpdate).toBe(false);
+-  expect(geometry!.presentationHasQuestionTail).toBe(false);
+-  expect(geometry!.presentationHasCopdContext).toBe(true);
+-  expect(geometry!.presentationHasExactDuplicate).toBe(false);
++  expect(geometry!.promptOutsideStory).toBe(true);
+   expect(geometry!.answerHeights).not.toHaveLength(0);
+   expect(geometry!.answerHeights.every((height) => height >= 44)).toBe(true);
+-  expect(geometry!.answerCopyFits).toBe(true);
+-  // Current compact titlebar stays below the former 4.15rem physical-paper
+-  // treatment while retaining room for the Close control at laptop widths.
+-  expect(geometry!.titleHeight).toBeLessThanOrEqual(testInfo.project.name === "phone-chrome" ? 80 : 60);
+-  expect(geometry!.portrait.width).toBeLessThanOrEqual(testInfo.project.name === "phone-chrome" ? 104 : 78);
+-  expect(geometry!.portrait.height).toBeLessThanOrEqual(testInfo.project.name === "phone-chrome" ? 128 : 104);
++  expect(geometry!.answerLabelsFit).toBe(true);
++  // The header is one line on desktop; on phones a long name or complaint wraps it.
++  expect(geometry!.headHeight).toBeLessThanOrEqual(phone ? 140 : 60);
++  // Only the single chart scroll region may scroll.
++  expect(geometry!.innerScrollers.every((name) => name.includes("cs-scroll"))).toBe(true);
+ 
+-  if (testInfo.project.name === "phone-chrome") {
+-    expect(geometry!.paperDecoration.stackDisplay).toBe("none");
+-    expect(geometry!.paperDecoration.clipDisplay).toBe("none");
+-    expect(geometry!.workspaceScroll.scrollHeight).toBeGreaterThanOrEqual(
+-      geometry!.workspaceScroll.clientHeight,
+-    );
+-  } else {
+-    expect(geometry!.chartDeskEdges.every((edge) => edge <= 4)).toBe(true);
+-    expect(geometry!.paperDecoration).toMatchObject({
+-      stackPosition: "absolute",
+-      stackPointerEvents: "none",
+-      clipPosition: "absolute",
+-      clipPointerEvents: "none",
+-    });
+-    expect(Math.abs(geometry!.faceBottom - geometry!.chartBodyBottom)).toBeLessThanOrEqual(4);
+-    expect(Math.abs(geometry!.workspaceBottom - geometry!.chartBodyBottom)).toBeLessThanOrEqual(4);
+-
+-    if (testInfo.project.name === "compact-desktop-chrome") {
+-      // At the two-row breakpoint, identity/presentation own their first row;
+-      // the current decision owns the lower full-width paper surface.
+-      expect(geometry!.identityBottom).toBeLessThanOrEqual(geometry!.decisionBottom + 4);
+-      expect(geometry!.presentationBottom).toBeLessThanOrEqual(geometry!.decisionBottom + 4);
+-      expect(Math.abs(geometry!.decisionBottom - geometry!.chartBodyBottom)).toBeLessThanOrEqual(4);
+-      expect(Math.abs(geometry!.currentBottom - geometry!.chartBodyBottom)).toBeLessThanOrEqual(4);
+-    } else {
+-      for (const [surface, bottom] of Object.entries({
+-        identity: geometry!.identityBottom,
+-        presentation: geometry!.presentationBottom,
+-        decision: geometry!.decisionBottom,
+-        current: geometry!.currentBottom,
+-      })) {
+-        expect(
+-          Math.abs(bottom - geometry!.chartBodyBottom),
+-          `${surface} bottom=${bottom}, chartBodyBottom=${geometry!.chartBodyBottom}`,
+-        ).toBeLessThanOrEqual(4);
+-      }
++  if (!phone) {
++    const { chart: box, desk, main, footerTop } = geometry!;
++    // A first question fits without scrolling, so the chart is content-sized.
++    expect(geometry!.oneScrollFits).toBe(true);
++    // It floats inside the play area, anchored to the desk bottom, and never
++    // covers the HUD or the demonstration-content footer.
++    expect(box.top).toBeGreaterThanOrEqual(main.top - 1);
++    expect(box.bottom).toBeLessThanOrEqual(desk.bottom + 1);
++    expect(box.bottom).toBeLessThanOrEqual(footerTop);
++    expect(box.left).toBeGreaterThanOrEqual(main.left - 1);
++    expect(box.right).toBeLessThanOrEqual(main.right + 1);
++    // With room to the right, the patient list beside the desk stays visible.
++    if (main.right - desk.left >= 1040 + 8) {
++      expect(box.left).toBeGreaterThanOrEqual(desk.left - 1);
+     }
+   }
+ });

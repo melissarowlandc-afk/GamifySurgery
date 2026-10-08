@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "revision": 2,
+  "derived": true,
+  "generator": "deterministic extraction of approved pixels",
+  "entries": {
+    "west": {
+      "file": "armchair-west-front.png",
+      "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceSha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8",
+      "sourceRect": [
+        8,
+        748,
+        315,
+        369
+      ],
+      "canvas": [
+        315,
+        369
+      ],
+      "polygons": [
+        [
+          [
+            38,
+            200
+          ],
+          [
+            38,
+            177
+          ],
+          [
+            51,
+            167
+          ],
+          [
+            277,
+            166
+          ],
+          [
+            291,
+            172
+          ],
+          [
+            290,
+            195
+          ],
+          [
+            263,
+            196
+          ],
+          [
+            77,
+            193
+          ],
+          [
+            63,
+            211
+          ]
+        ],
+        [
+          [
+            31,
+            197
+          ],
+          [
+            65,
+            198
+          ],
+          [
+            57,
+            285
+          ],
+          [
+            51,
+            362
+          ],
+          [
+            29,
+            362
+          ]
+        ],
+        [
+          [
+            264,
+            191
+          ],
+          [
+            289,
+            183
+          ],
+          [
+            300,
+            362
+          ],
+          [
+            278,
+            362
+          ],
+          [
+            265,
+            208
+          ]
+        ],
+        [
+          [
+            55,
+            282
+          ],
+          [
+            271,
+            282
+          ],
+          [
+            276,
+            302
+          ],
+          [
+            52,
+            302
+          ]
+        ]
+      ],
+      "woodSelection": "Inside polygons: original R > G+2 and G >= B+2; excludes cool blue cushion slivers. Selected RGBA copied unchanged.",
+      "keptPixels": 18685,
+      "sha256": "4C39536CEC6FC7D17A2D078C2DB42B9F18528CA062836DBD19DAEFFE123E31E8",
+      "method": "Pixel-preserving extraction of front wooden armrest, two posts and seat rail; no resampling, painting or source mutation."
+    },
+    "east": {
+      "file": "armchair-east-front.png",
+      "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+      "sourceSha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8",
+      "sourceRect": [
+        8,
+        372,
+        315,
+        368
+      ],
+      "canvas": [
+        315,
+        368
+      ],
+      "polygons": [
+        [
+          [
+            277,
+            200
+          ],
+          [
+            277,
+            177
+          ],
+          [
+            264,
+            167
+          ],
+          [
+            38,
+            166
+          ],
+          [
+            24,
+            172
+          ],
+          [
+            25,
+            195
+          ],
+          [
+            52,
+            196
+          ],
+          [
+            238,
+            193
+          ],
+          [
+            252,
+            211
+          ]
+        ],
+        [
+          [
+            284,
+            197
+          ],
+          [
+            250,
+            198
+          ],
+          [
+            258,
+            285
+          ],
+          [
+            264,
+            362
+          ],
+          [
+            286,
+            362
+          ]
+        ],
+        [
+          [
+            51,
+            191
+          ],
+          [
+            26,
+            183
+          ],
+          [
+            15,
+            362
+          ],
+          [
+            37,
+            362
+          ],
+          [
+            50,
+            208
+          ]
+        ],
+        [
+          [
+            260,
+            282
+          ],
+          [
+            44,
+            282
+          ],
+          [
+            39,
+            302
+          ],
+          [
+            263,
+            302
+          ]
+        ]
+      ],
+      "woodSelection": "Inside polygons: original R > G+2 and G >= B+2; excludes cool blue cushion slivers. Selected RGBA copied unchanged.",
+      "keptPixels": 17760,
+      "sha256": "EF279064D528B8FCBD46623EC5CE0FE087259C4C820340BE964BF4C62DF7B6A8",
+      "method": "Pixel-preserving extraction of front wooden armrest, two posts and seat rail; no resampling, painting or source mutation."
+    }
+  }
+}
