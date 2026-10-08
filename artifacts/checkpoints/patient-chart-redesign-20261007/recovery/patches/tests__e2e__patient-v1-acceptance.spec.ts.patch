@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/patient-v1-acceptance.spec.ts b/tests/e2e/patient-v1-acceptance.spec.ts
+index 36554c6..5229076 100644
+--- a/tests/e2e/patient-v1-acceptance.spec.ts
++++ b/tests/e2e/patient-v1-acceptance.spec.ts
+@@ -89,7 +89,7 @@ test("patient-v1 keeps the same identity through map/list/chart and reload", asy
+   const thumbnailSrc = await thumbnail.getAttribute("src");
+   expect(thumbnailSrc).toBeTruthy();
+   await jordanTab.click();
+-  const chartPortrait = page.locator(".chart-identity-column img.pixel-avatar-still");
++  const chartPortrait = page.locator(".cs-avatar img.pixel-avatar-still");
+   await expect(chartPortrait).toHaveAttribute("src", thumbnailSrc!);
+   await expect(page.locator(".facility-host canvas")).toBeVisible();
+   await page.screenshot({

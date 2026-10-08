@@ -1,0 +1,321 @@
+{
+  "checkpoint": "patient-chart-redesign-20261007",
+  "patches": [
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "baselineSha256": "966496be417b67061b5e9a860f5d87baef5fd186089a65316dc8d6e8f4a1b943",
+      "liveSha256": "9f8c6e43bedd99b6666f233d21249f02cf9d545d81806a37b4c7ddff085ca431",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded edits reversed"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "baselineSha256": "86adc132ab1fe61c39c84075ed5a748990b3bd39a6eb8c88164a3d67f8c395fc",
+      "liveSha256": "d6a4721980e520160219fd639c7b018db7994586b8dfa8e3626031b7ed91fa69",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "patch": "recovery/patches/apps__player__src__session__diagnosticTimingPresentation.ts.patch",
+      "baselineSha256": "900ff03b504bcfb8f5022f83bc963965a301557691e141130c12ebcd1779a48a",
+      "liveSha256": "4c6adf1bc1632ffb2240f00b24d110ea936ea2789c42821a2748152bbd7477df",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded edits reversed"
+    },
+    {
+      "path": "apps/player/src/ui/visualComponents.test.tsx",
+      "patch": "recovery/patches/apps__player__src__ui__visualComponents.test.tsx.patch",
+      "baselineSha256": "580ae53ceb382301054d926183eb1dcd094ca5da78573fadd1115ec3e57d187d",
+      "liveSha256": "93c76ba664c360c838edfba9c248c16fc489eea59e1f31941ff76d87bd375927",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded edits reversed"
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.test.tsx",
+      "patch": "recovery/patches/apps__player__src__ui__ChartPanel.test.tsx.patch",
+      "baselineSha256": "532a55db01efb8114797b5062f7ea705a92a67f2a0bc43dcd677945b651a1a93",
+      "liveSha256": "51c901f2bd256590b03a141d49462dae908a923df7621eaaa6b9e6e2cc82bac0",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__tutorialViewModels.ts.patch",
+      "baselineSha256": "8212e99a46506184d074f3eb12bf04fc811e7edc6bc38a3477400b183f391165",
+      "liveSha256": "9ee88ece59396abee39465942140bfe49e27cf8ce4a55eb2074e4afabbc76ca8",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's recorded insert and three selector swaps reversed"
+    },
+    {
+      "path": "tests/e2e/answered-chart-action-recovery.spec.ts",
+      "patch": "recovery/patches/tests__e2e__answered-chart-action-recovery.spec.ts.patch",
+      "baselineSha256": "faf2185f98b27d5e36872e24d46cca0381bac114b3b9b6ce3bd9bce2d964b43c",
+      "liveSha256": "a5f056e3aa8b1a5dfd53fc994d876ee036658f6dd5a9f61d6b1610b54d222e26",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/autonomous-clinical-batch.spec.ts",
+      "patch": "recovery/patches/tests__e2e__autonomous-clinical-batch.spec.ts.patch",
+      "baselineSha256": "357e1307b58a6d5ac9d0b200f97c7e25042fcd0aa70ee32d65ffb198e2571310",
+      "liveSha256": "3ff78439cf8dd591f39a318ae0bae32cf3cc312d46aeb34b9a383cba7167211f",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/board-concept-expansion-20260912.spec.ts",
+      "patch": "recovery/patches/tests__e2e__board-concept-expansion-20260912.spec.ts.patch",
+      "baselineSha256": "f2f98dedd97c25791b766603c4e9774138ec4b12047b504cb615ba98e6485c90",
+      "liveSha256": "2a7ae4342137136551cb10ef40c05b6fd57bee9415250dbd50928ec9fdd3484f",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/board-concept-expansion.spec.ts",
+      "patch": "recovery/patches/tests__e2e__board-concept-expansion.spec.ts.patch",
+      "baselineSha256": "7a4723e5afefe655f348ec79dbc89e5b66434b42956c62f77c17a3b2442102f3",
+      "liveSha256": "9dc45bc902d3eae67ceaf2e5cd270d8ff808aefc23b3989d94b5b3c83395c2d0",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/facility-diagnostic-timing.spec.ts",
+      "patch": "recovery/patches/tests__e2e__facility-diagnostic-timing.spec.ts.patch",
+      "baselineSha256": "a6e1fc290bdd4772d9aaae83338b61942350fac8e3a8f745ef5dd8b2c20580a0",
+      "liveSha256": "5272950a6d41a4aa160c4eb553573da29d3c37efdc9c15043a9cc5096655b965",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/founder-activity-chart-endoscopy.spec.ts",
+      "patch": "recovery/patches/tests__e2e__founder-activity-chart-endoscopy.spec.ts.patch",
+      "baselineSha256": "b00201b8dd4e4016306be734188bd68bf0dc5ae70d32e804f7cb8e74fa96f20a",
+      "liveSha256": "301c3f5008fe20be2e52a1c88b987f58f1c67f31b157281eb091d691d57faca1",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/golden-slice-visual.spec.ts",
+      "patch": "recovery/patches/tests__e2e__golden-slice-visual.spec.ts.patch",
+      "baselineSha256": "b782fec900541d535aea1dcea43d6678ac421b6dec6eca57ef9e96219e69c4be",
+      "liveSha256": "1305f733275684d8db90c0e5b00f8dfcf889f5a9fbea8ce42d6305f68ec34a94",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/gs028-20261002.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs028-20261002.spec.ts.patch",
+      "baselineSha256": "f8636d3f8cb4233c354b15969313e43be6097b5fd868fae080c76cb2b311b593",
+      "liveSha256": "e11ccd131af69eebf4f7071a3d250aae92178ed9a156d3d662b360df57535232",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/gs028-20261003.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs028-20261003.spec.ts.patch",
+      "baselineSha256": "ae26986ffcbb33de6c84ff7a8c3424c695f9963287b514a8aa3f4010ba07f4c4",
+      "liveSha256": "0e2bd5b7e506c65a6e5ca374982ebde0f85b29750fbb2b8b2ef12e9487405cb3",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/gs028-20261007.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs028-20261007.spec.ts.patch",
+      "baselineSha256": "df119c6a9b559232365dc3e7cc3a27ae64c569366660c5b011f68599d217397e",
+      "liveSha256": "7a1d55bfd4b93d0f1c09b9b37939b00d882b57bc07ec2a2778c223f51fbcb1a3",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/gs028-pre-endoscopy.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs028-pre-endoscopy.spec.ts.patch",
+      "baselineSha256": "6bdd08f58f94441f9bf957dcf0cad47ab5d2eb4eceb3c212b8dbca17910786b4",
+      "liveSha256": "f248d3ec40eb1b975fc8c87eb88ea8ca2cdfc6b4993c896e7d8292c792c33a3e",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/gs028-second-pre-endoscopy.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs028-second-pre-endoscopy.spec.ts.patch",
+      "baselineSha256": "0672fcd3f2aeefe8cf18f88edeb88e11e86cb9b1e645efbe452ea53916cc281a",
+      "liveSha256": "3b20db4ebde21ec2ca33cb4e0b1ee712aabd777acc14dc340144fc443a97175b",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/gs031-care-flow.spec.ts",
+      "patch": "recovery/patches/tests__e2e__gs031-care-flow.spec.ts.patch",
+      "baselineSha256": "da688cd0f59620504083acba8824e60bd8a945cd5382d141178ff8d10f3cca2d",
+      "liveSha256": "b9aada010195f133ea61841839c58feb75c41d6ee71e2990b07b6a4662e57242",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/helpers.ts",
+      "patch": "recovery/patches/tests__e2e__helpers.ts.patch",
+      "baselineSha256": "29e141164da616a144f370436c4fbcff879cbf7707c86c80fe82e9841e6ae4ed",
+      "liveSha256": "7dc25574a08609b91b30e9b7bd301e3969d52b01e43f0a0a963232c11aa8ee73",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/management-mode.spec.ts",
+      "patch": "recovery/patches/tests__e2e__management-mode.spec.ts.patch",
+      "baselineSha256": "66f9276e26cddcd19268dab032fb78d113d82ff0a324dd6c535dec1480275ad7",
+      "liveSha256": "0d22dde302d5269aa80a514e9d5816474cc0cc7fb4fe3c23b5c798964fda2d84",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/patient-v1-acceptance.spec.ts",
+      "patch": "recovery/patches/tests__e2e__patient-v1-acceptance.spec.ts.patch",
+      "baselineSha256": "980a9998dbfbb0527b840b8fc0a89a9edfb1024c0018697351be49494a609a8a",
+      "liveSha256": "0a80bf21461657d3ad3b8eb55a57737672fa16821cf9b2d7d6eb8938a368bbc8",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline differs from HEAD (other uncommitted edits)"
+    },
+    {
+      "path": "tests/e2e/patient-wording-test-times.spec.ts",
+      "patch": "recovery/patches/tests__e2e__patient-wording-test-times.spec.ts.patch",
+      "baselineSha256": "e23e5bd75a8542a855aa08dcea27ec1cd6cb46fe33e7faad0e70cbe9e32b37de",
+      "liveSha256": "b0dabb631c3ba03703898208db752194698894229fd69b8a455555a804bc6b91",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/periop-beds-recovery.spec.ts",
+      "patch": "recovery/patches/tests__e2e__periop-beds-recovery.spec.ts.patch",
+      "baselineSha256": "4094b1456d85a012779a65f96f749b7b9655cb7929f6139951e37a3a14c7775d",
+      "liveSha256": "f74709765304cc03e09497cc1b676b5c6bd73e1e27a6b2969e692d04ed35dcd0",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/periop-preparation.spec.ts",
+      "patch": "recovery/patches/tests__e2e__periop-preparation.spec.ts.patch",
+      "baselineSha256": "a9ffafbb98edb4478210bd1f2071a3c3fc3043cd8aab6ae3d63e5d07296ab246",
+      "liveSha256": "83a2634b800ef2fbbe96d0c29d68a8633f1804cf8ee060c4dda43236d191706d",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/playthrough-batch.spec.ts",
+      "patch": "recovery/patches/tests__e2e__playthrough-batch.spec.ts.patch",
+      "baselineSha256": "aaf32a39f16467df30a85fbe4199f4eb8ce811e9c4d474f77adbe81b0956dba8",
+      "liveSha256": "da86fd9ebd0113b71d1bed0cd4f0e51d86ba2299beb164572f8069840dbabb54",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/prototype.spec.ts",
+      "patch": "recovery/patches/tests__e2e__prototype.spec.ts.patch",
+      "baselineSha256": "1320b0dd895b90bad7b4927f1e2dce39beb984ea191819d20ef0f822ee8ec272",
+      "liveSha256": "6e771b5fc1a522a071282577de29c8babcc23a2f83601a0cfe89d11672238f78",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/staffed-checkin-pathing.spec.ts",
+      "patch": "recovery/patches/tests__e2e__staffed-checkin-pathing.spec.ts.patch",
+      "baselineSha256": "78d4b7ed3898ffc683f74af14ec31f4d8deb257484b9fff093a5c2bff392b44d",
+      "liveSha256": "13506f441d804eab97e5ce2b6df42ac455ff4367f7c0d5a832ce8eb70c1063a1",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/surgery-center-concepts.spec.ts",
+      "patch": "recovery/patches/tests__e2e__surgery-center-concepts.spec.ts.patch",
+      "baselineSha256": "1588c35199c6e264093ed0924b7a0eb7a40056b121cf04cd61650aef6ad23903",
+      "liveSha256": "8d4729fc5c28118120729bb20f376ad27e686dff31b30def0606eba3943b65be",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/tutorial-graduation.spec.ts",
+      "patch": "recovery/patches/tests__e2e__tutorial-graduation.spec.ts.patch",
+      "baselineSha256": "304161dbe964426bdb7fbf88b6e496d5975c88c402ff000dba69dcbdbf0baf10",
+      "liveSha256": "0284dbb2eb0f67821287ade9963c1a7f92395fa11bbcb76ce366047c64341e24",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/tutorial-positioning.spec.ts",
+      "patch": "recovery/patches/tests__e2e__tutorial-positioning.spec.ts.patch",
+      "baselineSha256": "47c7a419b8432ce4ed75b648ee629ca12ff47a231cea034314519cb95913d9ae",
+      "liveSha256": "25f7156c8d0d1f756e80c74eda851e2d8046152ed75f9d8c1e802e211174e4c9",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/ui-density.spec.ts",
+      "patch": "recovery/patches/tests__e2e__ui-density.spec.ts.patch",
+      "baselineSha256": "3af9c7aa7f961836dfb9fa6b8c9fe0fb00abb943c32c592562e19126524f8f63",
+      "liveSha256": "4b055d3daf1766bc17502400ad78536f5061bdcfdd526fe4a90a85316cc35f96",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "tests/e2e/ultrasound-first-imaging.spec.ts",
+      "patch": "recovery/patches/tests__e2e__ultrasound-first-imaging.spec.ts.patch",
+      "baselineSha256": "5ae401d85878bae8c33a34b211c200621d36b896832f1015d9b6fd25bd1ff381",
+      "liveSha256": "c45944272a9c528b2eb452d9072cfbfae95c8d67311da336f2c205a34da6a5f5",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "untracked"
+    },
+    {
+      "path": "tests/e2e/visual-ui.spec.ts",
+      "patch": "recovery/patches/tests__e2e__visual-ui.spec.ts.patch",
+      "baselineSha256": "3146603e4237647f84c2810c4b459f8b95594b709a48afb02526bcb509c1b964",
+      "liveSha256": "1c66ff6e586d7f2ca59441e6cb1aceecb4f8604cad9879cdfd0e5ec40401a46d",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's selector mapping (and recorded edits) reversed",
+      "headCheck": "tracked; baseline equals HEAD"
+    },
+    {
+      "path": "apps/player/package.json",
+      "patch": "recovery/patches/apps__player__package.json.patch",
+      "baselineSha256": "0eb7c0d1692288a0d20e0eae9bb5be8a560626f82fdf6c7ae3671c951edb7161",
+      "liveSha256": "3d5da44a383f0c9dbd34eced11d9ee20a728a5130d0769245dd95f3991c22395",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "pre-install copy saved before npm install"
+    },
+    {
+      "path": "package-lock.json",
+      "patch": "recovery/patches/package-lock.json.patch",
+      "baselineSha256": "340e1833a8dfd854b090f3a67c24c2460c3be322318f1d5025bdb055b79585cd",
+      "liveSha256": "0ced8405b85ed44607de06a1a15c5396524cd7b4cce7677e98b5a87afede3c80",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "pre-install copy saved before npm install"
+    }
+  ]
+}

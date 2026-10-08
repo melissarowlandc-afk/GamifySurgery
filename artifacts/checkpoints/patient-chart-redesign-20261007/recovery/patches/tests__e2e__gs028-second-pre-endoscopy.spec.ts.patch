@@ -1,0 +1,43 @@
+diff --git a/tests/e2e/gs028-second-pre-endoscopy.spec.ts b/tests/e2e/gs028-second-pre-endoscopy.spec.ts
+index 0c550fa..0691181 100644
+--- a/tests/e2e/gs028-second-pre-endoscopy.spec.ts
++++ b/tests/e2e/gs028-second-pre-endoscopy.spec.ts
+@@ -34,9 +34,9 @@ function timingFor(node: BatchNode) {
+ 
+ async function expectChoiceTimingPreviews(page: Page, node: BatchNode) {
+   const timing = timingFor(node);
+-  const choices = page.locator(".chart-step-column.is-current .answer-choice");
++  const choices = page.locator(".cs-step.is-current .cs-answer");
+   if (timing.classification.kind === "no_test") {
+-    await expect(choices.locator(".answer-choice-eta")).toHaveCount(0);
++    await expect(choices.locator(".cs-wait-label")).toHaveCount(0);
+     await expect(choices.locator("small")).toHaveCount(0);
+     return;
+   }
+@@ -45,7 +45,7 @@ async function expectChoiceTimingPreviews(page: Page, node: BatchNode) {
+     if (!timingChoice) throw new Error(`Missing timing choice for ${node.questionVariantId}/${choice.id}.`);
+     const rendered = choices.filter({ hasText: choice.label });
+     await expect(rendered).toHaveCount(1);
+-    const eta = rendered.locator(".answer-choice-eta");
++    const eta = rendered.locator(".cs-wait-label");
+     await expect(eta).toHaveCount(1);
+     if (timingChoice.timing.kind === "no_test") {
+       await expect(eta).toHaveText("No test wait");
+@@ -184,7 +184,7 @@ test("a paired ultrasound gate hides its result across reload and returns to the
+   await openChart(page, encounterId, patientName);
+   const firstQuestion = getCurrentQuestion((await getActiveState(page)) as unknown as GameState, encounterId);
+   if (!firstQuestion) throw new Error("GS-028B ultrasound case did not render its first question.");
+-  await expect(page.locator(".chart-step-column.is-current .answer-choice")).toHaveCount(4);
++  await expect(page.locator(".cs-step.is-current .cs-answer")).toHaveCount(4);
+   await expectChoiceTimingPreviews(page, firstQuestion.node);
+   await page.screenshot({ path: `${SHOTS}/ultrasound-initial.png`, animations: "disabled" });
+   const { question } = await openAndChoose(page, encounterId, patientName, false);
+@@ -244,7 +244,7 @@ test("external breast mapping gate returns its result before the paired planning
+   await openChart(page, encounterId, patientName);
+   await expect(page.getByTestId("chart-current-update")).toContainText(clinicalCase.decisionNodes[1]!.currentUpdate!);
+   await page.screenshot({ path: `${SHOTS}/breast-mapping-returned.png`, animations: "disabled" });
+-  const returnedFinalChoice = page.locator(".chart-step-column.is-current .answer-choice").last();
++  const returnedFinalChoice = page.locator(".cs-step.is-current .cs-answer").last();
+   await returnedFinalChoice.scrollIntoViewIfNeeded();
+   await expect(returnedFinalChoice).toBeInViewport();
+   await page.screenshot({ path: `${SHOTS}/breast-mapping-returned-last-choice.png`, animations: "disabled" });

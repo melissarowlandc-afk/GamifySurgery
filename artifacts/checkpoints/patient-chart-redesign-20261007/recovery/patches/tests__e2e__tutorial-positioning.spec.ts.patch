@@ -1,0 +1,47 @@
+diff --git a/tests/e2e/tutorial-positioning.spec.ts b/tests/e2e/tutorial-positioning.spec.ts
+index 441eddb..78fdbf6 100644
+--- a/tests/e2e/tutorial-positioning.spec.ts
++++ b/tests/e2e/tutorial-positioning.spec.ts
+@@ -197,7 +197,7 @@ test("keeps tutorial guidance beside real controls at variable widths", async ({
+   ).toBeVisible();
+ 
+   const answers = page.locator(
+-    ".chart-step-column.is-current .answer-list",
++    ".cs-step.is-current .cs-answers",
+   );
+   await expectCoachBesideTarget(page, answers);
+   await expectCoachToRemainStable(page);
+@@ -240,7 +240,7 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
+   await page.getByRole("button", { name: serviceChoice.label, exact: true }).click();
+ 
+   const currentFeedback = page.locator(
+-    ".chart-step-column.is-current .chart-step-feedback",
++    ".cs-step.is-current .cs-feedback",
+   );
+   await expect(
+     page.getByRole("heading", { name: "Review the decision result" }),
+@@ -383,7 +383,7 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
+   ).toBeVisible();
+   await page.getByRole("button", { name: "Got It" }).click();
+   await page
+-    .locator(".chart-step-column.is-current .answer-choice")
++    .locator(".cs-step.is-current .cs-answer")
+     .first()
+     .click();
+ 
+@@ -391,13 +391,13 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
+     page.getByRole("heading", { name: "Review the final decision" }),
+   ).toBeVisible();
+   const finalFeedback = page.locator(
+-    ".chart-step-column.is-current .chart-step-feedback",
++    ".cs-step.is-current .cs-feedback",
+   );
+   await expectCoachBesideTarget(page, finalFeedback);
+   await expectCoachToRemainStable(page);
+   await expect(
+     page.locator(
+-      ".chart-completed-decision .chart-step-feedback.tutorial-target-highlight",
++      ".cs-past .cs-feedback.tutorial-target-highlight",
+     ),
+   ).toHaveCount(0);
+ 

@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/ultrasound-first-imaging.spec.ts b/tests/e2e/ultrasound-first-imaging.spec.ts
+index 08986ac..99d68a9 100644
+--- a/tests/e2e/ultrasound-first-imaging.spec.ts
++++ b/tests/e2e/ultrasound-first-imaging.spec.ts
+@@ -191,7 +191,7 @@ test("onsite authored ultrasound stays pending through reload and reveals its re
+   await expect(page.getByText(question.node.resultGateAfter!.resultNarrative, { exact: true })).toHaveCount(0);
+   await page.getByRole("button", { name: "Enact Plan", exact: true }).click();
+   await page.getByText("Ultrasound Review Patient", { exact: true }).click();
+-  await expect(page.locator(".chart-pending-card")).toContainText("Onsite ultrasound");
++  await expect(page.locator(".cs-away")).toContainText("Onsite ultrasound");
+   await page.screenshot({ path: `${SHOTS}/gs-020-onsite-ultrasound-pending.png`, animations: "disabled" });
+   const pending = ((await getActiveState(page)) as unknown as GameState).encounters[encounter.id]!.pendingResult!;
+   expect(pending.imagingTechnicianId).toBe("employee.gs020.imaging");

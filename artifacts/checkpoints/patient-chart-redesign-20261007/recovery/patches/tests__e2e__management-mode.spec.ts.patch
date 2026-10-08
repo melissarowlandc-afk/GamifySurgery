@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/management-mode.spec.ts b/tests/e2e/management-mode.spec.ts
+index f913f5d..4022561 100644
+--- a/tests/e2e/management-mode.spec.ts
++++ b/tests/e2e/management-mode.spec.ts
+@@ -213,7 +213,7 @@ test("Management Mode yields its desk to charts and tracks the splitter", async
+   await expectNoHorizontalOverflow(page);
+ 
+   await page.locator(".patient-tab").first().click();
+-  const chart = page.locator(".paper-chart");
++  const chart = page.locator(".chart-sheet");
+   await expect(chart).toBeVisible();
+   await expect(panel).toHaveCount(0);
+   await expect(managementTrigger).toHaveCount(0);

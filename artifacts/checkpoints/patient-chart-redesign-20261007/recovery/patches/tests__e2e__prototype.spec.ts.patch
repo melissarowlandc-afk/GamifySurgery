@@ -1,0 +1,94 @@
+diff --git a/tests/e2e/prototype.spec.ts b/tests/e2e/prototype.spec.ts
+index dc4f2f4..83c9c44 100644
+--- a/tests/e2e/prototype.spec.ts
++++ b/tests/e2e/prototype.spec.ts
+@@ -295,15 +295,15 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+     page.getByRole("heading", { name: "Open your first patient chart" }),
+   ).toBeVisible();
+   await firstPatient.click();
+-  await expect(page.locator(".chart-panel")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+   await expect(
+-    page.locator(".chart-title-status"),
++    page.locator(".cs-status"),
+   ).toBeVisible();
+   // At 4x, a busy parallel browser run may complete the short exam-room
+   // route between the tab click and this assertion. Both labels represent
+   // the same valid forward-only transition; the earlier check-in tutorial
+   // heading already proves that visible movement began.
+-  await expect(page.locator(".chart-title-status")).toHaveText(
++  await expect(page.locator(".cs-status")).toHaveText(
+     /Walking to Examination|Action required/,
+   );
+   await expect(
+@@ -338,10 +338,10 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+       exact: true,
+     })
+     .click();
+-  await expect(page.locator(".chart-step-feedback")).toContainText(
++  await expect(page.locator(".cs-feedback")).toContainText(
+     "Correct",
+   );
+-  await expect(page.locator(".chart-step-feedback")).toContainText(
++  await expect(page.locator(".cs-feedback")).toContainText(
+     "Decision XP: +20",
+   );
+   await expect(xpValue(page)).toHaveText("20");
+@@ -349,13 +349,13 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+     page.getByRole("heading", { name: "Review the decision result" }),
+   ).toBeVisible();
+   await page.getByRole("button", { name: "Got It" }).click();
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Decisions Correct: 1/1",
+   );
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Encounter Payment: +$75",
+   );
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Encounter XP: +20",
+   );
+   await expect(
+@@ -426,7 +426,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+       ),
+     })
+     .click();
+-  await expect(page.locator(".chart-step-feedback")).toContainText(
++  await expect(page.locator(".cs-feedback")).toContainText(
+     "Decision XP: +10",
+   );
+   await expect(
+@@ -468,7 +468,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+   ).toBeVisible();
+   await page.getByRole("button", { name: "Got It" }).click();
+   await expect(
+-    page.locator(".chart-completed-decision"),
++    page.locator(".cs-past"),
+   ).toHaveCount(1);
+   await expect(
+     page.getByText("Decision 2 of 2", { exact: true }),
+@@ -498,18 +498,18 @@ test("movement, sequential feedback, off-site return, and settlement are visible
+     })
+     .click();
+   const finalFeedback = page.locator(
+-    ".chart-step-column.is-current .chart-step-feedback",
++    ".cs-step.is-current .cs-feedback",
+   );
+   await expect(finalFeedback).toBeVisible();
+   await expect(finalFeedback).toContainText("Correct");
+   await expect(finalFeedback).toContainText("Decision XP: +10");
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Decisions Correct: 2/2",
+   );
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Encounter Payment: +$135",
+   );
+-  await expect(page.locator(".chart-reward-banner")).toContainText(
++  await expect(page.locator(".cs-reward")).toContainText(
+     "Encounter XP: +20",
+   );
+   await expect(

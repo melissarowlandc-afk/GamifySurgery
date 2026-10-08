@@ -1,0 +1,34 @@
+diff --git a/tests/e2e/gs028-20261002.spec.ts b/tests/e2e/gs028-20261002.spec.ts
+index f83c81b..34cae73 100644
+--- a/tests/e2e/gs028-20261002.spec.ts
++++ b/tests/e2e/gs028-20261002.spec.ts
+@@ -49,9 +49,9 @@ function timingFor(node: BatchNode) {
+ 
+ async function expectChoiceTimingPreviews(page: Page, node: BatchNode) {
+   const timing = timingFor(node);
+-  const choices = page.locator(".chart-step-column.is-current .answer-choice");
++  const choices = page.locator(".cs-step.is-current .cs-answer");
+   if (timing.classification.kind === "no_test") {
+-    await expect(choices.locator(".answer-choice-eta")).toHaveCount(0);
++    await expect(choices.locator(".cs-wait-label")).toHaveCount(0);
+     await expect(choices.locator("small")).toHaveCount(0);
+     return;
+   }
+@@ -66,7 +66,7 @@ async function expectChoiceTimingPreviews(page: Page, node: BatchNode) {
+     }
+     const rendered = choices.filter({ hasText: choice.label });
+     await expect(rendered).toHaveCount(1);
+-    const eta = rendered.locator(".answer-choice-eta");
++    const eta = rendered.locator(".cs-wait-label");
+     await expect(eta).toHaveCount(1);
+     if (timingChoice.timing.kind === "no_test") {
+       await expect(eta).toHaveText("No test wait");
+@@ -324,7 +324,7 @@ async function openAndChoose(
+ }
+ 
+ async function showAllChoices(page: Page) {
+-  const choices = page.locator(".chart-step-column.is-current .answer-choice");
++  const choices = page.locator(".cs-step.is-current .cs-answer");
+   await expect(choices).toHaveCount(4);
+   const last = choices.last();
+   await last.scrollIntoViewIfNeeded();

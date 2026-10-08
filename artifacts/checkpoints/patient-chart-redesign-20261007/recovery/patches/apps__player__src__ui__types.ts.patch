@@ -1,0 +1,42 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index 17d8260..872cbe0 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -113,6 +113,17 @@ export interface AnswerChoiceView {
+   /** Facility-time estimate shown before selection when this choice orders work. */
+   etaLabel?: string;
+   detailLabel?: string;
++  /** Set only after the decision is answered, so the key is never revealed early. */
++  revealedCorrect?: boolean;
++}
++
++/** One stage of pending diagnostic work, shown as a list in the chart. */
++export interface ChartPendingPhaseView {
++  label: string;
++  location: "onsite" | "offsite";
++  progressLabel: string;
++  delayLabel?: string;
++  complete: boolean;
+ }
+ 
+ export interface ChartDecisionStepView {
+@@ -127,6 +138,9 @@ export interface ChartDecisionStepView {
+   answerChoices: AnswerChoiceView[];
+   resultHeading?: string;
+   resultBody?: string;
++  /** Diagnostic result status without the per-stage clause, paired with `resultPhases`. */
++  resultSummary?: string;
++  resultPhases?: ChartPendingPhaseView[];
+   etaLabel?: string;
+   feedbackTitle?: string;
+   feedbackBody?: string;
+@@ -202,6 +216,9 @@ export interface ChartView {
+   /** Later-step findings shown with the presentation, never above answers. */
+   presentationUpdate?: string;
+   pendingLabel?: string;
++  /** Diagnostic pending status without the per-stage clause, paired with `pendingPhases`. */
++  pendingSummary?: string;
++  pendingPhases?: ChartPendingPhaseView[];
+   /** Whether the active pending service sends the patient away from clinic. */
+   pendingPatientIsAway?: boolean;
+   etaLabel?: string;

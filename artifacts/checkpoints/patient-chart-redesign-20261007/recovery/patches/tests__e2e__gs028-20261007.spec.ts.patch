@@ -1,0 +1,36 @@
+diff --git a/tests/e2e/gs028-20261007.spec.ts b/tests/e2e/gs028-20261007.spec.ts
+index 287744c..f2ca36c 100644
+--- a/tests/e2e/gs028-20261007.spec.ts
++++ b/tests/e2e/gs028-20261007.spec.ts
+@@ -221,11 +221,11 @@ function assertNamedAgeSex(state: GameState, encounterId: string) {
+ async function expectChoiceTiming(page: Page, encounterId: string, node: BatchNode) {
+   const timing = GS028_20261007_TIMING_ENTRIES.find((item) => item.questionVariantId === node.questionVariantId);
+   if (!timing) throw new Error(`Missing central timing metadata for ${node.questionVariantId}.`);
+-  const choices = page.locator(".chart-step-column.is-current .answer-choice");
++  const choices = page.locator(".cs-step.is-current .cs-answer");
+   await expect(choices).toHaveCount(4);
+   await expect(choices.locator("strong")).toHaveText(node.answerChoices.map((choice) => choice.label));
+   if (timing.classification.kind === "no_test") {
+-    await expect(choices.locator(".answer-choice-eta")).toHaveCount(0);
++    await expect(choices.locator(".cs-wait-label")).toHaveCount(0);
+     await expect(choices.locator("small")).toHaveCount(0);
+   } else {
+     const state = await activeState(page);
+@@ -236,7 +236,7 @@ async function expectChoiceTiming(page: Page, encounterId: string, node: BatchNo
+       if (!expectedChoice?.etaLabel) throw new Error(`No central ETA exists for ${choice.id}.`);
+       const rendered = choices.filter({ hasText: choice.label });
+       await expect(rendered).toHaveCount(1);
+-      await expect(rendered.locator(".answer-choice-eta")).toHaveText(expectedChoice.etaLabel);
++      await expect(rendered.locator(".cs-wait-label")).toHaveText(expectedChoice.etaLabel);
+       await expect(rendered.locator("small")).toHaveText("Estimated test wait (game time)");
+     }
+   }
+@@ -301,7 +301,7 @@ async function answerStandalone(page: Page, prepared: ReturnType<typeof putCaseI
+   await expectChoiceTiming(page, prepared.encounterId, question.node);
+   await screenshot(page, testInfo, `${prefix}-choices`);
+   await choose(page, prepared.encounterId, true);
+-  await expect(page.locator(".chart-step-feedback.is-correct")).toHaveCount(1);
++  await expect(page.locator(".cs-feedback.is-correct")).toHaveCount(1);
+   await screenshot(page, testInfo, `${prefix}-feedback`);
+   state = await resolveAndDepart(page, prepared.encounterId, testInfo, prefix);
+   expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);

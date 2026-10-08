@@ -1,0 +1,31 @@
+diff --git a/tests/e2e/visual-ui.spec.ts b/tests/e2e/visual-ui.spec.ts
+index 7456a1d..9cb2c94 100644
+--- a/tests/e2e/visual-ui.spec.ts
++++ b/tests/e2e/visual-ui.spec.ts
+@@ -47,7 +47,7 @@ test("the facility stays fixed above the clinical desk", async ({
+     .first()
+     .click();
+   await waitForDecisionChoices(page);
+-  const chart = page.locator(".paper-chart");
++  const chart = page.locator(".chart-sheet");
+   await expect(chart).toBeVisible();
+ 
+   const [after, chartBox] = await Promise.all([
+@@ -130,7 +130,7 @@ test("the paper chart becomes a readable phone-width sheet", async ({
+     .click();
+   await waitForDecisionChoices(page);
+ 
+-  const chart = page.locator(".paper-chart");
++  const chart = page.locator(".chart-sheet");
+   await expect(chart).toBeVisible();
+   const box = await chart.boundingBox();
+   expect(box).not.toBeNull();
+@@ -139,7 +139,7 @@ test("the paper chart becomes a readable phone-width sheet", async ({
+   expect(box!.width).toBeLessThanOrEqual(390);
+   expect(box!.height).toBeLessThanOrEqual(844);
+   await expect(
+-    page.locator(".chart-step-column.is-current .answer-choice").first(),
++    page.locator(".cs-step.is-current .cs-answer").first(),
+   ).toBeVisible();
+   await expect(
+     page.getByRole("button", { name: "Close patient chart" }),

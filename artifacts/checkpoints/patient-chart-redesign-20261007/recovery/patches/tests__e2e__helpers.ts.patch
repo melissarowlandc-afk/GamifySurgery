@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/helpers.ts b/tests/e2e/helpers.ts
+index b4265bf..574e716 100644
+--- a/tests/e2e/helpers.ts
++++ b/tests/e2e/helpers.ts
+@@ -130,7 +130,7 @@ export async function waitForDecisionChoices(
+   page: Page,
+ ): Promise<Locator> {
+   const choices = page.locator(
+-    ".chart-step-column.is-current .answer-choice",
++    ".cs-step.is-current .cs-answer",
+   );
+   await expect(choices.first()).toBeVisible({ timeout: 15_000 });
+   return choices;

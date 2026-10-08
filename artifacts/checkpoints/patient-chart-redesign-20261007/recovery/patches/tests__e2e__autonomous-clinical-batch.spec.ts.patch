@@ -1,0 +1,61 @@
+diff --git a/tests/e2e/autonomous-clinical-batch.spec.ts b/tests/e2e/autonomous-clinical-batch.spec.ts
+index 63bf5de..04ec4fb 100644
+--- a/tests/e2e/autonomous-clinical-batch.spec.ts
++++ b/tests/e2e/autonomous-clinical-batch.spec.ts
+@@ -182,9 +182,9 @@ async function openPreparedEncounter(
+     .filter({ hasText: encounter.patientName });
+   await expect(patient).toBeVisible({ timeout: 20_000 });
+   await patient.click();
+-  await expect(page.locator(".paper-chart")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+   await expect(
+-    page.locator(".paper-chart").getByText(encounter.patientName, { exact: true }),
++    page.locator(".chart-sheet").getByText(encounter.patientName, { exact: true }),
+   ).toBeVisible();
+ }
+ 
+@@ -202,7 +202,7 @@ async function clickCorrectAnswer(
+     })
+     .click();
+   await expect(
+-    page.locator(".chart-step-column.is-current .chart-step-feedback"),
++    page.locator(".cs-step.is-current .cs-feedback"),
+   ).toContainText("Correct");
+ }
+ 
+@@ -219,7 +219,7 @@ async function openPendingEncounter(
+     .filter({ hasText: encounter.patientName });
+   await expect(patient).toBeVisible();
+   await patient.click();
+-  await expect(page.locator(".paper-chart")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+ }
+ 
+ async function finishEncounter(page: Page, encounterId: string): Promise<void> {
+@@ -303,7 +303,7 @@ test("celiac pathway preserves a generated patient through two real service wait
+   await clickCorrectAnswer(page, prepared.id);
+   await enactPlan(page);
+   await openPendingEncounter(page, prepared);
+-  await expect(page.locator(".chart-pending-card")).toContainText(
++  await expect(page.locator(".cs-away")).toContainText(
+     "Off-site basic laboratory testing",
+   );
+   await expect(
+@@ -362,7 +362,7 @@ test("celiac pathway preserves a generated patient through two real service wait
+   await clickCorrectAnswer(page, prepared.id);
+   await enactPlan(page);
+   await openPendingEncounter(page, prepared);
+-  await expect(page.locator(".chart-pending-card")).toContainText(
++  await expect(page.locator(".cs-away")).toContainText(
+     "Off-site upper endoscopy with duodenal biopsy",
+   );
+   await expect(
+@@ -418,7 +418,7 @@ test("soft-tissue mass pathway completes the real external MRI route before biop
+   await clickCorrectAnswer(page, prepared.id);
+   await enactPlan(page);
+   await openPendingEncounter(page, prepared);
+-  await expect(page.locator(".chart-pending-card")).toContainText(
++  await expect(page.locator(".cs-away")).toContainText(
+     "Off-site extremity MRI",
+   );
+   await expect(

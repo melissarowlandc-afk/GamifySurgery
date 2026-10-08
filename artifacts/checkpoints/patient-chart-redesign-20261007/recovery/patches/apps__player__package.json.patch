@@ -1,0 +1,12 @@
+diff --git a/apps/player/package.json b/apps/player/package.json
+index 366e6ed..f1e82c0 100644
+--- a/apps/player/package.json
++++ b/apps/player/package.json
+@@ -10,6 +10,7 @@
+     "typecheck": "tsc --noEmit -p tsconfig.json"
+   },
+   "dependencies": {
++    "@fontsource/atkinson-hyperlegible": "5.2.8",
+     "@gamify-surgery/balance-config": "0.0.1",
+     "@gamify-surgery/clinical-content": "0.0.1",
+     "@gamify-surgery/game-domain": "0.0.1",

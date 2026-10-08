@@ -1,0 +1,197 @@
+{
+  "checkpoint": "patient-chart-redesign-20261007",
+  "createdBy": "Claude Code",
+  "branch": "beta",
+  "entries": [
+    {
+      "path": "README.md",
+      "sha256": "35bfd4e48b681f6681989d31c44ebed4001f7fcf49e7b1bae9713b8f3d4c69da"
+    },
+    {
+      "path": "evidence/compact-1024x768.png",
+      "sha256": "3963f099afa845df5cc649b8f7e085979313954c92f72e74f01fb65b56a371d6"
+    },
+    {
+      "path": "evidence/desktop-1440x1000.png",
+      "sha256": "c8de8425f4a041f862bbf4eaa6c7d3e872af16dcacc6d69f7292639984e6f2ad"
+    },
+    {
+      "path": "evidence/laptop-1280x720.png",
+      "sha256": "7df0e619a3238170ca855a3f94b2412e4654cee77f62341a6f039be9bba052d6"
+    },
+    {
+      "path": "evidence/phone-pixel7.png",
+      "sha256": "d93a38718c8cf5d597bf9068702ac6621fed0d2c32c7a2a249a718cc9bf8667b"
+    },
+    {
+      "path": "files/apps/player/src/ui/ChartPanel.tsx",
+      "sha256": "0a18f27f6a499744276352cbcc6812fad5a8d5602c8da91c00661a0f9c079cf4",
+      "liveSource": "apps/player/src/ui/ChartPanel.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/ui/chartSheet.css",
+      "sha256": "9063bdca6586529e28bdc8bea8742be46553d90e06d614ddec5ff6a1c251c52b",
+      "liveSource": "apps/player/src/ui/chartSheet.css",
+      "matchesLive": true
+    },
+    {
+      "path": "files/tests/e2e/patient-chart-density.spec.ts",
+      "sha256": "2064a7a4ceb6e0902c94da9abad7ea53b79d50ff3cdf9fc9b64668c68c4f7267",
+      "liveSource": "tests/e2e/patient-chart-density.spec.ts",
+      "matchesLive": true
+    },
+    {
+      "path": "recovery/patch-verification.json",
+      "sha256": "91a9e4d575f79a2ca4ea4d8a73fed503511b6d7d3bbb97088ef7d4c952c9b5b3"
+    },
+    {
+      "path": "recovery/patches/apps__player__package.json.patch",
+      "sha256": "a6f53f6a2449f69feab7f44dd6d927e2065f04a17a1acbce2b50426c5f75c1e9"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__session__diagnosticTimingPresentation.ts.patch",
+      "sha256": "bae9f9ebf2125fae6f528b00c0f1fcd6f79fc03ac8442a6bb9fffdb3fee2f74c"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__session__tutorialViewModels.ts.patch",
+      "sha256": "6efe28c72774ed10991e05285c8fb834b5c2c47b7dac4d39102e1829b4685c7a"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "sha256": "3373c3a8ba7a77b79955eb4e982520bc792277f1fd7acb614cc372957679119a"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__ChartPanel.test.tsx.patch",
+      "sha256": "48b6dcc65d29ae739d959bc8fe8c4be1cf2eab1ef6df012de6034145c57cd7b7"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "sha256": "d25481f05c41651aa50cdd91dd50c65402c385b243327db4d3efe8f4435a9fb3"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__visualComponents.test.tsx.patch",
+      "sha256": "ba382e7795b37b21371c22252a003b7ce4fc93ae9d4af9fc9934c3b89dc1346e"
+    },
+    {
+      "path": "recovery/patches/package-lock.json.patch",
+      "sha256": "fd2fa4bad6411571556c48b677f02df67719eb1ea51fe4c36d255e251d08533a"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__answered-chart-action-recovery.spec.ts.patch",
+      "sha256": "4075e7eec3f180d0a5b7cd5b5139362df22f4561120093d37ab73d07e9f707e2"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__autonomous-clinical-batch.spec.ts.patch",
+      "sha256": "9fcab9344c860ae55abbebd28a31e4ab26f57fab4998947cdd69429de40a8386"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__board-concept-expansion-20260912.spec.ts.patch",
+      "sha256": "f49364e34e924de7ef34f77b11e365bae41399481f614ef7025060672d46f223"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__board-concept-expansion.spec.ts.patch",
+      "sha256": "916e3b7de56bb13f2fa09d96c8ce4472ab67b3848aba2a62914c570ec708654b"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__facility-diagnostic-timing.spec.ts.patch",
+      "sha256": "ea8c4a0e3caea3806ba028aa9290facd77fc7b8bcd4791098eb70c62dc399c66"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__founder-activity-chart-endoscopy.spec.ts.patch",
+      "sha256": "963e13d260c2670d8d045a900c00dc5f697dfccf9be6d0cc19d30748aa337ff3"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__golden-slice-visual.spec.ts.patch",
+      "sha256": "4c6cc1ee20a5318df5cd988656e71990d170d13084df1ae750381bfe5a47a465"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs028-20261002.spec.ts.patch",
+      "sha256": "390ce630ec0e57e57439b7f64e33860097a09dc3373fa42febefc5fb98e5d7ba"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs028-20261003.spec.ts.patch",
+      "sha256": "efba113f77006cb54afe2da20beae82e9bea7e0250b8702972824edf6520d0f5"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs028-20261007.spec.ts.patch",
+      "sha256": "be4e64abdc2495899dbddbe93750bd011944fdde95bdb28eaecc6ef0b17d4cb3"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs028-pre-endoscopy.spec.ts.patch",
+      "sha256": "6e51eb339d6f96e5089eb07bcf084a5366b0685d4dc9ef2dc5e5cc7701b78e75"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs028-second-pre-endoscopy.spec.ts.patch",
+      "sha256": "6ed8088a2615d869f0a6ffaf53bc20cad83e3094443ceabc3ff7b99181938fc5"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__gs031-care-flow.spec.ts.patch",
+      "sha256": "b8f7e5e4ff19bf0facb77513a21345ba5ea4e77c64a1e1b936a4b5bdcf93dbb7"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__helpers.ts.patch",
+      "sha256": "65ca4f74d5fe6aeebae300eb14b4383c744d7d6bd59815ca321249e1d1aab74e"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__management-mode.spec.ts.patch",
+      "sha256": "31cbba450e54aaafe64a8edc232793a4f1a0148a696097787cfaeb087b0e6a62"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__patient-v1-acceptance.spec.ts.patch",
+      "sha256": "87f654fea91740fdaee8e90fb9a1d7a3e704cbda333a850d1f71bf2393c15c1f"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__patient-wording-test-times.spec.ts.patch",
+      "sha256": "cdf1b3ff4f5cde6bd802b5f49609ce847cc007851cac59342a86ee661ebbd9d1"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__periop-beds-recovery.spec.ts.patch",
+      "sha256": "9bbfd6439a22108232e2347d03a4fb2a7ce342616c457fd312d0b25e247370f6"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__periop-preparation.spec.ts.patch",
+      "sha256": "37d013ff1def3829ca8bedea6125904c0950a5e3218473c7c6dd7facff154436"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__playthrough-batch.spec.ts.patch",
+      "sha256": "2da089f878a07aa1378a43daef564342ec1cf80ac99a3a15cf6f0d38870c8f5a"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__prototype.spec.ts.patch",
+      "sha256": "f9de0594040b095068af5a82fcbdb0b142fdc756971109bb9df00f65725ca28b"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__staffed-checkin-pathing.spec.ts.patch",
+      "sha256": "af9e58881ce9a8762a4303c84c9d6cccd92652af1c405b3b702a8128e9f7a057"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__surgery-center-concepts.spec.ts.patch",
+      "sha256": "7eb307f826b7d875bdf1b59cf26d3123988ec094d5a9c6ca4fb91d4d381404fa"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__tutorial-graduation.spec.ts.patch",
+      "sha256": "7e4e851d9469765e8b1c0ff5705ab4cd7f8ce1d22987d18fbbfee0ef340d8825"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__tutorial-positioning.spec.ts.patch",
+      "sha256": "2e10c7038415ac45781f6ffc3c53bd2d8b6b543d09436ed62fb116137a9cf294"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__ui-density.spec.ts.patch",
+      "sha256": "8505d22225bea77c2db5c868a7f6edf901d430ccc2609b83eb4f06a0850d9e0a"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__ultrasound-first-imaging.spec.ts.patch",
+      "sha256": "f8721e512a0c3791e7cab23c2ee7939b0f92bdf599639fc39c2b3462845beed7"
+    },
+    {
+      "path": "recovery/patches/tests__e2e__visual-ui.spec.ts.patch",
+      "sha256": "24ee8c28a5873a8a980990204c6222fd7f2c06fed8407fde12a577397d16a447"
+    },
+    {
+      "path": "validation/results.json",
+      "sha256": "08c2b90774a71b15d986a6dc4694e49184074d75bdada9b78f4c6fafc8255a44"
+    }
+  ]
+}

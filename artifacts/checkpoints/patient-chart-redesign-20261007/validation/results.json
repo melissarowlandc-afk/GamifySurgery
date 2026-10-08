@@ -1,0 +1,46 @@
+{
+  "checkpoint": "patient-chart-redesign-20261007",
+  "date": "2026-10-07",
+  "typecheck": {
+    "command": "npx tsc --noEmit -p tsconfig.json (apps/player)",
+    "result": "Clean for all chart files. At backup time the only errors are EmployeeDiscussionPanel finalStep/summary, from another session's in-progress employee discussion work."
+  },
+  "unitTests": {
+    "command": "npx vitest run src/ui src/session (apps/player)",
+    "result": "347 passed / 348 before the concurrent employee-discussion edits",
+    "updatedTests": [
+      "apps/player/src/ui/ChartPanel.test.tsx (answer list class)",
+      "apps/player/src/ui/visualComponents.test.tsx (chart-sheet class, past-decision row, update position)"
+    ],
+    "failures": {
+      "surgeryCenterServicePreviews.test.ts": "Pre-existing: expects the route name in the diagnostic pendingLabel; the label text is unchanged by this work.",
+      "employeeDiscussionView.test.tsx, EmployeeDiscussionPanel.test.tsx": "Appeared mid-session with another session's in-progress employee discussion edits.",
+      "briefEarlyLevelsPresentation, earlyLevelsPresentation": "Timed out only while Playwright ran in parallel; both pass when rerun alone."
+    }
+  },
+  "e2e": {
+    "server": "http://127.0.0.1:5181 (QA origin, GAMIFY_E2E_EXTERNAL_SERVER=1)",
+    "passed": [
+      "patient-chart-density (desktop, laptop, compact-desktop, phone)",
+      "visual-ui",
+      "answered-chart-action-recovery",
+      "facility-diagnostic-timing"
+    ],
+    "passedCount": 23,
+    "failedOutsideChart": {
+      "prototype.spec.ts:272": "Chart feedback and Decision XP assertions pass; fails at the HUD .resource-xp-row locator.",
+      "prototype.spec.ts:93, :129, :527, :578": "Campaign branch, clinic initialization, GLP-1 cooldown and failed-save message; no chart involvement.",
+      "tutorial-positioning.spec.ts:209": "All chart coach anchors pass; times out waiting for the off-site patient to return (diagnostic timing)."
+    }
+  },
+  "liveQa": {
+    "origin": "http://127.0.0.1:5181, synthetic 'Chart QA Clinic' campaign",
+    "viewports": ["1024x768", "1366x657", "1920x945", "412x915"],
+    "checked": [
+      "chart above map and side columns (portal), content-sized height",
+      "patient list visible at 1366; centered on desk at 1920; full sheet on phone",
+      "1-4 answer keys, Enter resolves, in-place feedback, waiting card, back of chart",
+      "tutorial coach placed above the chart when room exists"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+diff --git a/apps/player/src/ui/visualComponents.test.tsx b/apps/player/src/ui/visualComponents.test.tsx
+index 3502192..144ab01 100644
+--- a/apps/player/src/ui/visualComponents.test.tsx
++++ b/apps/player/src/ui/visualComponents.test.tsx
+@@ -93,7 +93,7 @@ describe("paper chart presentation", () => {
+       />,
+     );
+ 
+-    expect(markup).toContain("paper-chart");
++    expect(markup).toContain("chart-sheet");
+     expect(markup).toContain("Morgan Reyes");
+     expect(markup).toContain("Painful swelling");
+     expect(markup).toContain("Three days of worsening localized pain.");
+@@ -104,17 +104,15 @@ describe("paper chart presentation", () => {
+     expect(markup).toContain("Satisfaction 94%");
+     expect(markup).toContain("+10 learning XP");
+     expect(markup).toContain("Flip for More Disease Information");
+-    expect(markup).toContain(
+-      "Decision 1 Result — Correct · Chest X-ray ordered",
+-    );
++    expect(markup).toContain(">Decision 1<");
++    expect(markup).toContain("Correct · Chest X-ray ordered");
+     expect(markup).toContain("Decisions Correct: 1/1");
+     expect(markup).toContain("Encounter Payment: +$75");
+     expect(markup).toContain("Encounter XP: +20");
+     const updatePosition = markup.indexOf("Current update");
+     const activeDecisionPosition = markup.indexOf("Decision 2 of 2");
+-    expect(updatePosition).toBeGreaterThan(
+-      markup.indexOf("chart-decision-region"),
+-    );
++    // Updates sit with the patient story, before the active decision.
++    expect(updatePosition).toBeGreaterThan(markup.indexOf("cs-story"));
+     expect(updatePosition).toBeLessThan(activeDecisionPosition);
+     expect(markup).toContain(
+       "Ultrasound now shows a simple fluid-filled cyst.",

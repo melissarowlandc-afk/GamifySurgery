@@ -1,0 +1,814 @@
+/*
+ * Patient chart sheet (owner-approved redesign, 2026-10-07).
+ * The chart floats over the play area at its content height: ChartPanel's
+ * placement hook sets left/width/bottom/max-height from the desk. Every rule is
+ * scoped to .chart-sheet so the legacy chart rules in global.css (still used by
+ * the employee discussion panel) never reach it.
+ */
+
+.chart-sheet {
+  --cs-read: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --cs-mono: var(--font-pixel);
+  --cs-good: #2f5a33;
+  --cs-good-bg: #e2e9d4;
+  --cs-bad: #7c3326;
+  --cs-bad-bg: #f2e1d6;
+  --cs-wait: #6a5824;
+  --cs-wait-bg: #efe7cf;
+  position: fixed;
+  z-index: 60;
+  bottom: 40px;
+  left: 50%;
+  display: flex;
+  width: min(1040px, calc(100vw - 16px));
+  max-height: calc(100vh - 120px);
+  flex-direction: column;
+  border: 3px solid var(--ink);
+  background: var(--paper-raised);
+  box-shadow: 8px 8px 0 rgb(35 39 32 / 35%);
+  color: var(--ink);
+  container-type: inline-size;
+  font: 15px/1.35 var(--cs-mono);
+  transform: translateX(-50%);
+}
+
+.chart-sheet[data-placed="true"] {
+  transform: none;
+}
+
+.chart-sheet button {
+  font: inherit;
+}
+
+.chart-sheet button:focus-visible,
+.chart-sheet summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.chart-sheet p {
+  margin: 0;
+}
+
+.chart-sheet .cs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- one-line header ---------- */
+
+.chart-sheet .cs-head {
+  display: flex;
+  min-height: 48px;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 5px 8px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--panel);
+}
+
+.chart-sheet .cs-avatar {
+  --avatar-width: 36px;
+  --avatar-height: 36px;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-width: 2px;
+  box-shadow: none;
+}
+
+.chart-sheet .cs-avatar .pixel-avatar-still {
+  top: -2px;
+  left: -25%;
+  width: 150%;
+}
+
+.chart-sheet .cs-name {
+  margin: 0;
+  font: 700 16px/1.2 var(--cs-mono);
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-demographics,
+.chart-sheet .cs-satisfaction {
+  color: var(--ink-soft);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-satisfaction {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-complaint {
+  min-width: 0;
+  max-width: 34ch;
+  overflow: hidden;
+  padding-left: 10px;
+  border-left: 3px solid var(--ink);
+  font: 700 15px/1.3 var(--cs-read);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-spacer {
+  flex: 1 1 0;
+}
+
+.chart-sheet .cs-status {
+  padding: 5px 8px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-status.is-waiting {
+  background: var(--cs-wait);
+}
+
+.chart-sheet .cs-status.is-done {
+  background: var(--cs-good);
+}
+
+.chart-sheet .cs-close {
+  display: grid;
+  width: 34px;
+  min-width: 0;
+  height: 32px;
+  min-height: 0;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.chart-sheet .cs-close:hover {
+  background: var(--paper);
+}
+
+/* ---------- one scroll region ---------- */
+
+.chart-sheet .cs-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.chart-sheet .cs-body {
+  display: grid;
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+}
+
+.chart-sheet .cs-story {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-self: start;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px 16px;
+}
+
+.chart-sheet .cs-vitals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chart-sheet .cs-vitals li {
+  padding: 2px 7px;
+  border: 1px solid var(--shade-3);
+  background: var(--panel);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-presentation {
+  max-width: 62ch;
+  font: 400 15.5px/1.55 var(--cs-read);
+}
+
+.chart-sheet .cs-update {
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  background: var(--panel);
+}
+
+.chart-sheet .cs-update p {
+  margin-top: 4px;
+  font: 15px/1.5 var(--cs-read);
+}
+
+.chart-sheet .cs-eyebrow {
+  color: var(--ink-soft);
+  font: 700 11px/1.3 var(--cs-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-decisions {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px 18px;
+  border-left: 2px dashed var(--shade-3);
+  container-type: inline-size;
+}
+
+/* ---------- decisions ---------- */
+
+.chart-sheet .cs-step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chart-sheet .cs-step-row {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-sheet .cs-pips {
+  display: flex;
+  gap: 4px;
+}
+
+.chart-sheet .cs-pips > span {
+  width: 18px;
+  height: 6px;
+  border: 1.5px solid var(--ink);
+}
+
+.chart-sheet .cs-pips > span.is-on {
+  background: var(--ink);
+}
+
+.chart-sheet .cs-step-status {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.chart-sheet .cs-flag {
+  display: grid;
+  width: 30px;
+  height: 28px;
+  min-height: 0;
+  margin-left: auto;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chart-sheet .cs-flag.is-flagged {
+  background: var(--ink);
+  color: var(--cream);
+  cursor: default;
+}
+
+.chart-sheet .cs-prompt {
+  font: 700 18px/1.35 var(--cs-read);
+  text-wrap: balance;
+}
+
+.chart-sheet .cs-answers {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+@container (min-width: 580px) {
+  .chart-sheet .cs-answers.is-open {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.chart-sheet .cs-answer {
+  display: grid;
+  align-content: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 10px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  box-shadow: 3px 3px 0 var(--ink-soft);
+  color: var(--ink);
+  cursor: pointer;
+  font: 15px/1.35 var(--cs-read);
+  text-align: left;
+  transition:
+    transform 80ms ease-out,
+    box-shadow 80ms ease-out,
+    background 80ms ease-out;
+}
+
+.chart-sheet .cs-answer:hover:not(:disabled) {
+  background: var(--pixel-highlight);
+  box-shadow: 4px 4px 0 var(--ink-soft);
+  transform: translate(-1px, -1px);
+}
+
+.chart-sheet .cs-answer:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--ink-soft);
+  transform: translate(2px, 2px);
+}
+
+.chart-sheet .cs-answer:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.chart-sheet .cs-key {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  grid-row: 1 / span 2;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--paper-raised);
+  box-shadow: 0 2px 0 var(--ink);
+  font: 700 13px/1 var(--cs-mono);
+}
+
+.chart-sheet .cs-key.is-blank {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.chart-sheet .cs-wait {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 5px;
+  padding: 1px 7px;
+  border: 1px solid var(--shade-3);
+  background: var(--panel);
+  color: var(--ink-soft);
+  font: 12px/1.4 var(--cs-mono);
+}
+
+.chart-sheet .cs-clock {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+}
+
+.chart-sheet .cs-hint {
+  margin-top: -4px;
+  color: var(--ink-soft);
+  font: 12px/1.3 var(--cs-mono);
+}
+
+.chart-sheet .cs-answer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 2px solid var(--shade-3);
+  background: var(--cream);
+  font: 15px/1.35 var(--cs-read);
+}
+
+.chart-sheet .cs-answer-row.is-picked.is-correct {
+  border-color: var(--cs-good);
+  background: var(--cs-good-bg);
+}
+
+.chart-sheet .cs-answer-row.is-picked.is-incorrect {
+  border-color: var(--cs-bad);
+  background: var(--cs-bad-bg);
+}
+
+.chart-sheet .cs-answer-row.is-picked.is-neutral {
+  border-color: var(--ink);
+}
+
+.chart-sheet .cs-answer-row.is-key {
+  border-style: dashed;
+  border-color: var(--cs-good);
+}
+
+.chart-sheet .cs-answer-row.is-other {
+  opacity: 0.6;
+}
+
+.chart-sheet .cs-tag {
+  margin-left: auto;
+  padding-left: 10px;
+  font: 700 11px/1.3 var(--cs-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-link {
+  min-height: 0;
+  align-self: flex-start;
+  margin-top: -4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: 13px/1.3 var(--cs-mono);
+  text-decoration: underline;
+}
+
+/* ---------- feedback, results, waiting ---------- */
+
+.chart-sheet .cs-feedback,
+.chart-sheet .cs-away,
+.chart-sheet .cs-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+}
+
+.chart-sheet .cs-result {
+  border-width: 2px;
+}
+
+.chart-sheet .cs-feedback.is-correct {
+  border-color: var(--cs-good);
+  background: var(--cs-good-bg);
+}
+
+.chart-sheet .cs-feedback.is-incorrect {
+  border-color: var(--cs-bad);
+  background: var(--cs-bad-bg);
+}
+
+.chart-sheet .cs-away {
+  border-color: var(--cs-wait);
+  background: var(--cs-wait-bg);
+}
+
+.chart-sheet .cs-feedback p,
+.chart-sheet .cs-away p,
+.chart-sheet .cs-result p {
+  font: 15.5px/1.55 var(--cs-read);
+}
+
+.chart-sheet .cs-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.chart-sheet .cs-card-head strong {
+  font: 700 15px/1.3 var(--cs-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-feedback.is-correct .cs-card-head strong {
+  color: var(--cs-good);
+}
+
+.chart-sheet .cs-feedback.is-incorrect .cs-card-head strong {
+  color: var(--cs-bad);
+}
+
+.chart-sheet .cs-away .cs-card-head strong {
+  color: var(--cs-wait);
+}
+
+.chart-sheet .cs-chip {
+  padding: 1px 7px;
+  border: 1.5px solid currentColor;
+  font: 12px/1.4 var(--cs-mono);
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-feedback p.cs-next {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+.chart-sheet .cs-phases {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 14.5px/1.4 var(--cs-read);
+}
+
+.chart-sheet .cs-phases li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 3px 0;
+  border-bottom: 1px dotted var(--shade-3);
+}
+
+.chart-sheet .cs-phases li.is-complete {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.chart-sheet .cs-phases small {
+  color: var(--ink-soft);
+  font-size: 12.5px;
+}
+
+.chart-sheet .cs-phase-progress {
+  font: 13px/1.4 var(--cs-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.chart-sheet .cs-outcome {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-left-width: 8px;
+  background: var(--panel);
+  font: 15px/1.5 var(--cs-read);
+}
+
+.chart-sheet .cs-outcome strong {
+  font: 700 13px/1.3 var(--cs-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-outcome.is-major,
+.chart-sheet .cs-outcome.is-severe,
+.chart-sheet .cs-outcome.is-critical {
+  border-color: var(--cs-bad);
+}
+
+/* ---------- actions ---------- */
+
+.chart-sheet .cs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.chart-sheet .cs-actions.is-completion {
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 2px solid var(--ink);
+}
+
+.chart-sheet .cs-reward {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+.chart-sheet .cs-reward strong {
+  font: 700 12px/1.3 var(--cs-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-button {
+  padding: 9px 14px;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink-soft);
+  cursor: pointer;
+  font: 700 13px/1.2 var(--cs-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chart-sheet .cs-button.is-primary {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.chart-sheet .cs-button.is-secondary {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.chart-sheet .cs-button:active {
+  box-shadow: 1px 1px 0 var(--ink-soft);
+  transform: translate(2px, 2px);
+}
+
+.chart-sheet .cs-button kbd {
+  margin-left: 8px;
+  font: 11px/1 var(--cs-mono);
+  opacity: 0.75;
+}
+
+/* ---------- earlier decisions ---------- */
+
+.chart-sheet .cs-past {
+  border: 2px solid var(--shade-3);
+  background: var(--cream);
+}
+
+.chart-sheet .cs-past > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font: 14px/1.35 var(--cs-read);
+  list-style: none;
+}
+
+.chart-sheet .cs-past > summary::-webkit-details-marker {
+  display: none;
+}
+
+.chart-sheet .cs-past > summary::after {
+  margin-left: auto;
+  content: "▸";
+  font-family: var(--cs-mono);
+}
+
+.chart-sheet .cs-past[open] > summary::after {
+  content: "▾";
+}
+
+.chart-sheet .cs-past-heading {
+  font: 700 12px/1.3 var(--cs-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chart-sheet .cs-past-label {
+  min-width: 0;
+}
+
+.chart-sheet .cs-past-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 12px 12px;
+}
+
+.chart-sheet .cs-past-prompt {
+  font: 700 15px/1.4 var(--cs-read);
+}
+
+.chart-sheet .cs-mark {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  place-items: center;
+  background: var(--ink-soft);
+  color: var(--cream);
+  font: 700 13px/1 var(--cs-mono);
+}
+
+.chart-sheet .cs-mark.is-correct {
+  background: var(--cs-good);
+}
+
+.chart-sheet .cs-mark.is-incorrect {
+  background: var(--cs-bad);
+}
+
+.chart-sheet .cs-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: 15px/1.5 var(--cs-read);
+}
+
+/* ---------- back of chart ---------- */
+
+.chart-sheet .cs-back {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 20px 18px;
+  font: 15px/1.5 var(--cs-read);
+}
+
+.chart-sheet .cs-back .chart-back-content {
+  position: relative;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chart-sheet .cs-back h3 {
+  margin: 0;
+  font: 700 19px/1.25 var(--cs-mono);
+}
+
+.chart-sheet .cs-back .chart-back-stamp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px 8px;
+  border: 2px solid var(--ink-soft);
+  color: var(--ink-soft);
+  font: 700 11px/1.3 var(--cs-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(3deg);
+}
+
+/* ---------- narrow layouts ---------- */
+
+@container (max-width: 720px) {
+  .chart-sheet .cs-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chart-sheet .cs-story {
+    position: static;
+    padding-bottom: 4px;
+  }
+
+  .chart-sheet .cs-decisions {
+    border-top: 2px dashed var(--shade-3);
+    border-left: 0;
+  }
+
+  .chart-sheet .cs-satisfaction {
+    display: none;
+  }
+}
+
+/* The phone chart is a full-viewport sheet; the tutorial coach sits above it. */
+@media (max-width: 760px) {
+  .chart-sheet {
+    z-index: 1000;
+    inset: 0;
+    width: 100%;
+    max-height: none;
+    border-width: 0;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .chart-sheet .cs-hint,
+  .chart-sheet .cs-key,
+  .chart-sheet .cs-button kbd {
+    display: none;
+  }
+
+  .chart-sheet .cs-answer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Keep the global 44px touch targets on phones. */
+  .chart-sheet .cs-close,
+  .chart-sheet .cs-flag {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .chart-sheet .cs-link {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-sheet .cs-answer,
+  .chart-sheet .cs-button {
+    transition: none;
+  }
+
+  .chart-sheet .cs-answer:hover:not(:disabled),
+  .chart-sheet .cs-answer:active:not(:disabled),
+  .chart-sheet .cs-button:active {
+    transform: none;
+  }
+}

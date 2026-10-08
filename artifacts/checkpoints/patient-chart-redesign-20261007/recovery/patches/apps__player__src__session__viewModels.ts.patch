@@ -1,0 +1,30 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 56a21cf..036cb6a 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1082,6 +1082,7 @@ function createChartView(
+               terminalFeedbackNeedsAcknowledgment ||
+               readOnly,
+             ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
++            ...(answer !== null && choice.isCorrect ? { revealedCorrect: true } : {}),
+           };
+         }) : [],
+         resultHeading:
+@@ -1092,6 +1093,8 @@ function createChartView(
+             : resultDelivered
+               ? "Result returned"
+               : visibleResult.pendingLabel,
++        resultSummary: diagnosticForStep && visibleResult !== null ? diagnosticForStep.summary : undefined,
++        resultPhases: diagnosticForStep && visibleResult !== null ? diagnosticForStep.phases : undefined,
+         resultBody:
+           (!isCurrent && !diagnosticForStep) || visibleResult === null
+             ? undefined
+@@ -1266,6 +1269,8 @@ function createChartView(
+               encounter.pendingResult?.routeDisplayName ?? "approved route"
+             }`
+         : undefined,
++    pendingSummary: showDiagnosticPending ? diagnosticPresentation!.summary : undefined,
++    pendingPhases: showDiagnosticPending ? diagnosticPresentation!.phases : undefined,
+     pendingPatientIsAway:
+       showDiagnosticPending
+         ? encounter.patientLocation === null

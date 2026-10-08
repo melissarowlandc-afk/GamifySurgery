@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/periop-beds-recovery.spec.ts b/tests/e2e/periop-beds-recovery.spec.ts
+index 92ed39f..9ef44c9 100644
+--- a/tests/e2e/periop-beds-recovery.spec.ts
++++ b/tests/e2e/periop-beds-recovery.spec.ts
+@@ -1381,7 +1381,7 @@ test("actual colonoscopy preserves prep, recovery, and its Waiting Room bathroom
+   await installState(page, prepared, campaignName, "periop-bed-timing-question");
+   await waitForDecisionChoices(page);
+   await page.getByRole("button", { name: /^Diagnostic colonoscopy(?:$|\s)/ }).click();
+-  await expect(page.locator(".chart-step-feedback")).toContainText("Correct");
++  await expect(page.locator(".cs-feedback")).toContainText("Correct");
+   await page.getByRole("button", { name: "Enact Plan", exact: true }).click();
+   let state = (await getActiveState(page)) as unknown as GameState;
+   state = advanceUntil(state, "question-prep-start", (candidate) => {

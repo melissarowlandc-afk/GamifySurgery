@@ -1,0 +1,51 @@
+diff --git a/tests/e2e/patient-wording-test-times.spec.ts b/tests/e2e/patient-wording-test-times.spec.ts
+index 5186443..4f1e78b 100644
+--- a/tests/e2e/patient-wording-test-times.spec.ts
++++ b/tests/e2e/patient-wording-test-times.spec.ts
+@@ -135,7 +135,7 @@ async function prepareCase(
+ }
+ 
+ function answerChoice(page: Page, label: string) {
+-  return page.locator(".chart-step-column.is-current .answer-choice").filter({ hasText: label });
++  return page.locator(".cs-step.is-current .cs-answer").filter({ hasText: label });
+ }
+ 
+ test("thyroid testing alternatives show complete neutral game-time estimates", async ({ browser }) => {
+@@ -158,8 +158,8 @@ test("thyroid testing alternatives show complete neutral game-time estimates", a
+       await expect(choice).toContainText(eta);
+       await expect(choice).not.toContainText(/Off-site|Onsite|unavailable/i);
+     }
+-    await expect(page.locator(".chart-step-column.is-current .answer-choice")).toHaveCount(4);
+-    await page.locator(".paper-chart").screenshot({
++    await expect(page.locator(".cs-step.is-current .cs-answer")).toHaveCount(4);
++    await page.locator(".chart-sheet").screenshot({
+       path: `${SCREENSHOTS}/patient-wording-test-times-thyroid.png`,
+     });
+   } finally {
+@@ -187,7 +187,7 @@ test("mixed FHH alternatives distinguish one test from no-test actions", async (
+       await expect(choice).toContainText("No test wait");
+       await expect(choice).not.toContainText("Estimated test wait");
+     }
+-    await page.locator(".paper-chart").screenshot({
++    await page.locator(".chart-sheet").screenshot({
+       path: `${SCREENSHOTS}/patient-wording-test-times-fhh.png`,
+     });
+   } finally {
+@@ -203,7 +203,7 @@ test("current and frozen legacy pilonidal charts use descriptive anatomy", async
+       "case.pilonidal-disease.recurrent-drainage",
+       "wording-pilonidal-current",
+     );
+-    const chart = page.locator(".paper-chart");
++    const chart = page.locator(".chart-sheet");
+     await expect(chart).toContainText("upper groove between the buttocks near the tailbone");
+     await expect(chart).not.toContainText(/natal[- ]cleft/i);
+     await chart.screenshot({
+@@ -228,7 +228,7 @@ test("current and frozen legacy pilonidal charts use descriptive anatomy", async
+           `Which diagnosis best explains ${state.encounters[encounterId]!.patientDisplayName}'s recurrent natal-cleft finding?`;
+       },
+     );
+-    const chart = page.locator(".paper-chart");
++    const chart = page.locator(".chart-sheet");
+     await expect(chart).toContainText(
+       "intermittent drainage and tenderness in the upper groove between the buttocks near the tailbone",
+     );

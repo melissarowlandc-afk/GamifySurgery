@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/periop-preparation.spec.ts b/tests/e2e/periop-preparation.spec.ts
+index ac4255f..b4791ee 100644
+--- a/tests/e2e/periop-preparation.spec.ts
++++ b/tests/e2e/periop-preparation.spec.ts
+@@ -264,7 +264,7 @@ test("actual colonoscopy waits 30 onsite minutes in periop and preserves elapsed
+   await installState(page, seedQuestionWithRealContention((await getActiveState(page)) as unknown as GameState), campaignName);
+   await waitForDecisionChoices(page);
+   await page.getByRole("button", { name: /^Diagnostic colonoscopy(?:$|\s)/ }).click();
+-  await expect(page.locator(".chart-step-feedback")).toContainText("Correct");
++  await expect(page.locator(".cs-feedback")).toContainText("Correct");
+   let answered = (await getActiveState(page)) as unknown as GameState;
+   expect(answered.encounters[ENCOUNTER_ID]!.pendingResult?.localServiceOperation).toMatchObject({
+     version: "pending-result-service-operation.v1", status: "feedback_pending", incomeLineId: "income.endoscopy", serviceOperationId: null,

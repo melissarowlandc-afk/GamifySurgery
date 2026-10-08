@@ -1,0 +1,58 @@
+diff --git a/tests/e2e/answered-chart-action-recovery.spec.ts b/tests/e2e/answered-chart-action-recovery.spec.ts
+index 0f72f5c..38be4ea 100644
+--- a/tests/e2e/answered-chart-action-recovery.spec.ts
++++ b/tests/e2e/answered-chart-action-recovery.spec.ts
+@@ -132,7 +132,7 @@ async function installFinalQuestionFixture(
+ 
+ async function openWhileWalkingToCare(page: Page, encounterId: string) {
+   await page.getByText(`${encounterId} Patient`, { exact: true }).click();
+-  await expect(page.locator(".chart-panel")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+   await expect.poll(async () => {
+     const state = await snapshot(page);
+     const encounter = activeEncounter(state, encounterId);
+@@ -183,14 +183,14 @@ async function reloadAndReopen(page: Page, clinicName: string, encounterId: stri
+   const resume = page.getByRole("button", { name: `Resume ${clinicName}` });
+   if (await resume.isVisible()) await resume.click();
+   await expect(page.getByTestId("facility-canvas")).toBeVisible();
+-  if (!(await page.locator(".chart-panel").isVisible())) {
++  if (!(await page.locator(".chart-sheet").isVisible())) {
+     await page.getByText(`${encounterId} Patient`, { exact: true }).click();
+   }
+-  await expect(page.locator(".chart-panel")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+ }
+ 
+ async function expectActionInViewport(page: Page, name: string) {
+-  const footer = page.locator(".chart-action-bar");
++  const footer = page.locator(".chart-sheet .cs-actions >> nth=-1");
+   const action = page.getByRole("button", { name, exact: true });
+   await expect(footer).toBeVisible();
+   await expect(action).toBeVisible();
+@@ -244,7 +244,7 @@ test("correct final answer remains fileable after the patient finishes walking t
+     name: "Resolve Completed Chart",
+     exact: true,
+   }).click();
+-  await expect(page.locator(".chart-panel")).toBeHidden();
++  await expect(page.locator(".chart-sheet")).toBeHidden();
+   await expectVisibleDeparture(page, id);
+ });
+ 
+@@ -269,7 +269,7 @@ test("wrong final feedback remains dismissible after the patient finishes walkin
+     animations: "disabled",
+   });
+   await dismiss.click();
+-  await expect(page.locator(".chart-panel")).toBeHidden();
++  await expect(page.locator(".chart-sheet")).toBeHidden();
+   expect(activeEncounter(await snapshot(page), id).terminalFeedback?.acknowledged).toBe(
+     true,
+   );
+@@ -288,7 +288,7 @@ test("compact chart keeps long wrong-answer feedback and its dismissal action to
+   await submitFinalAnswer(page, id, "wrong");
+   await finishCareApproach(page, id);
+   await reloadAndReopen(page, clinic, id);
+-  const feedback = page.locator(".chart-step-feedback");
++  const feedback = page.locator(".cs-feedback");
+   await expect(feedback).toBeVisible();
+   await feedback.scrollIntoViewIfNeeded();
+   await expect(feedback).toBeInViewport();

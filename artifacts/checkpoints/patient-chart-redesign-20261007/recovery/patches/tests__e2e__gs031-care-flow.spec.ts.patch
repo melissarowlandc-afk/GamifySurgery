@@ -1,0 +1,20 @@
+diff --git a/tests/e2e/gs031-care-flow.spec.ts b/tests/e2e/gs031-care-flow.spec.ts
+index e03c96c..8d62662 100644
+--- a/tests/e2e/gs031-care-flow.spec.ts
++++ b/tests/e2e/gs031-care-flow.spec.ts
+@@ -371,13 +371,13 @@ test("Waiting and Existing charts open immediately while founder travel remains
+   let fixture!: ReturnType<typeof patientFixture>;
+   await prepare(page, "GS031 Immediate Charts", (initial) => { fixture = patientFixture(initial); return fixture.state; });
+   await page.getByText("Waiting Chart Patient", { exact: true }).click();
+-  await expect(page.locator(".chart-panel .answer-choice").first()).toBeVisible();
++  await expect(page.locator(".chart-sheet .cs-answer").first()).toBeVisible();
+   let current = await state(page);
+   expect(current.openChartEncounterId).toBe("gs031.waiting-patient");
+   expect(current.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: "gs031.waiting-patient" });
+   expect(current.environment.founderActivity!.pathIndex).toBeLessThan(current.environment.founderActivity!.path.length - 1);
+   await page.getByText("Existing Chart Patient", { exact: true }).click();
+-  await expect(page.locator(".chart-panel .answer-choice").first()).toBeVisible();
++  await expect(page.locator(".chart-sheet .cs-answer").first()).toBeVisible();
+   current = await state(page);
+   expect(current.openChartEncounterId).toBe("gs031.existing-patient");
+   expect(current.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: "gs031.existing-patient" });

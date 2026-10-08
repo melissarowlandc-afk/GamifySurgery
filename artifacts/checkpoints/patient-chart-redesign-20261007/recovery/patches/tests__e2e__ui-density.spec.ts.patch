@@ -1,0 +1,12 @@
+diff --git a/tests/e2e/ui-density.spec.ts b/tests/e2e/ui-density.spec.ts
+index cabf67c..a30385e 100644
+--- a/tests/e2e/ui-density.spec.ts
++++ b/tests/e2e/ui-density.spec.ts
+@@ -327,6 +327,6 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
+   await page.getByRole("button", { name: "Done / Save" }).click();
+   await expect(page.getByRole("button", { name: "Enter Build Mode" })).toBeVisible();
+   await page.locator(".patient-tab").first().click();
+-  await expect(page.locator(".paper-chart")).toBeVisible();
++  await expect(page.locator(".chart-sheet")).toBeVisible();
+   expect(await assertNoOverflow()).toBe(true);
+ });

@@ -1,0 +1,57 @@
+diff --git a/apps/player/src/session/diagnosticTimingPresentation.ts b/apps/player/src/session/diagnosticTimingPresentation.ts
+index f0533b5..e0b8768 100644
+--- a/apps/player/src/session/diagnosticTimingPresentation.ts
++++ b/apps/player/src/session/diagnosticTimingPresentation.ts
+@@ -8,6 +8,15 @@ type ChoicePreview = ReturnType<typeof getAnswerChoiceServicePreview>;
+ export type DiagnosticTimingView = NonNullable<ReturnType<typeof getDiagnosticOrderTiming>>;
+ type DurationFormatter = (minutes: number) => string;
+ 
++export interface DiagnosticPendingPhaseView {
++  label: string;
++  location: "onsite" | "offsite";
++  /** "complete", "waiting for capacity", or "<duration> remaining". */
++  progressLabel: string;
++  delayLabel?: string;
++  complete: boolean;
++}
++
+ const phaseLabels: Record<DiagnosticOrderPhase["kind"], string> = {
+   collection: "Collection",
+   acquisition: "Image acquisition",
+@@ -85,21 +94,33 @@ export function diagnosticPendingPresentation(
+   if (timing.blocked) clauses.push("Waiting for compatible room or staff capacity; the full time estimate is unavailable.");
+   const phasesToShow = timing.phases.filter((phase) => phase.status !== "cancelled" &&
+     (phase.status !== "completed" || phase.kind === "pathology"));
+-  const phaseDetails = phasesToShow.map((phase) => {
++  const phases: DiagnosticPendingPhaseView[] = phasesToShow.map((phase) => {
+     const location = phase.mode === "local" ? "onsite" : "offsite";
+-    if (phase.status === "completed") return `${phase.label} (${location}): complete`;
++    if (phase.status === "completed") return { label: phase.label, location, progressLabel: "complete", complete: true };
+     const progress = phase.remainingTicks === null ? "waiting for capacity"
+       : `${formatDuration(phase.remainingTicks)} remaining`;
+     const delays = phase.remainingTicks !== null ? [
+       ...(phase.queueMinutes > 0 ? [`${formatDuration(phase.queueMinutes)} queue`] : []),
+       ...(phase.walkingMinutes > 0 ? [`${formatDuration(phase.walkingMinutes)} walking`] : []),
+     ] : [];
+-    return `${phase.label} (${location}): ${progress}${delays.length ? ` (${delays.join(", ")})` : ""}`;
++    return {
++      label: phase.label,
++      location,
++      progressLabel: progress,
++      delayLabel: delays.length ? delays.join(", ") : undefined,
++      complete: false,
++    };
+   });
++  const phaseDetails = phases.map((phase) =>
++    `${phase.label} (${phase.location}): ${phase.progressLabel}${phase.delayLabel ? ` (${phase.delayLabel})` : ""}`);
++  // The chart shows `summary` beside the structured `phases`; `body` keeps the one-sentence form.
++  const summary = clauses.join(" ");
+   if (phaseDetails.length) clauses.push(`Game time: ${phaseDetails.join("; ")}.`);
+   return {
+     heading,
+     body: clauses.join(" "),
++    summary,
++    phases,
+     etaLabel: timing.blocked || timing.totalRemainingTicks === null || unfinished.length === 0 ? undefined
+       : `${formatDuration(timing.totalRemainingTicks)} remaining (game time)`,
+     hasPendingWork: unfinished.length > 0,

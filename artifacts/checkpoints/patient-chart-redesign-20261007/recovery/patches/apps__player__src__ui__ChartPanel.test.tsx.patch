@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/ui/ChartPanel.test.tsx b/apps/player/src/ui/ChartPanel.test.tsx
+index dbf94a8..058de10 100644
+--- a/apps/player/src/ui/ChartPanel.test.tsx
++++ b/apps/player/src/ui/ChartPanel.test.tsx
+@@ -98,7 +98,7 @@ describe("ChartPanel decision prompt placement", () => {
+     );
+ 
+     expect(markup.split(prompt)).toHaveLength(2);
+-    expect(markup.indexOf(prompt)).toBeLessThan(markup.indexOf('class="answer-list"'));
++    expect(markup.indexOf(prompt)).toBeLessThan(markup.indexOf('class="cs-answers is-open"'));
+     expect(markup.indexOf("A focused update for this decision.")).toBeLessThan(markup.indexOf(prompt));
+     expect(markup.indexOf("The original presentation remains separate from the decision.")).toBeLessThan(markup.indexOf(prompt));
+   });

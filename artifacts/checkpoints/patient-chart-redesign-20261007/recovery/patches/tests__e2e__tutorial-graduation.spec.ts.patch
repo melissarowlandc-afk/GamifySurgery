@@ -1,0 +1,19 @@
+diff --git a/tests/e2e/tutorial-graduation.spec.ts b/tests/e2e/tutorial-graduation.spec.ts
+index 3a1158a..c14bac4 100644
+--- a/tests/e2e/tutorial-graduation.spec.ts
++++ b/tests/e2e/tutorial-graduation.spec.ts
+@@ -53,12 +53,12 @@ async function chooseWrong(page: Page): Promise<void> {
+ 
+ async function dismissWrongTerminalFeedback(page: Page): Promise<void> {
+   await page.getByRole("button", { name: "Dismiss and close chart" }).click();
+-  await expect(page.locator(".paper-chart")).toHaveCount(0);
++  await expect(page.locator(".chart-sheet")).toHaveCount(0);
+ }
+ 
+ async function dismissWrongIntermediateFeedback(page: Page): Promise<void> {
+   await page.getByRole("button", { name: "Close patient chart" }).click();
+-  await expect(page.locator(".paper-chart")).toHaveCount(0);
++  await expect(page.locator(".chart-sheet")).toHaveCount(0);
+ }
+ 
+ async function facilityLayout(page: Page): Promise<{ originX: number; originY: number; tileSize: number }> {

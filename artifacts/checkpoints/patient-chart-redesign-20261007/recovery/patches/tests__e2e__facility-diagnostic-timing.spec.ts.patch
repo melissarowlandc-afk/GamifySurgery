@@ -1,0 +1,54 @@
+diff --git a/tests/e2e/facility-diagnostic-timing.spec.ts b/tests/e2e/facility-diagnostic-timing.spec.ts
+index 6cea56d..181a3ba 100644
+--- a/tests/e2e/facility-diagnostic-timing.spec.ts
++++ b/tests/e2e/facility-diagnostic-timing.spec.ts
+@@ -95,7 +95,7 @@ async function install(page: Page, state: GameState, name: string, marker: strin
+   await expect(page.getByTestId("facility-canvas")).toBeVisible();
+   expect(await page.evaluate(() => location.origin)).toBe(process.env.GAMIFY_E2E_BASE_URL);
+ }
+-async function open(page: Page, id: string) { await page.getByText(`${id} Patient`, { exact: true }).click(); await expect(page.locator(".chart-panel")).toBeVisible(); }
++async function open(page: Page, id: string) { await page.getByText(`${id} Patient`, { exact: true }).click(); await expect(page.locator(".chart-sheet")).toBeVisible(); }
+ async function reload(page: Page, name: string) {
+   await page.reload(); const button = page.getByRole("button", { name: `Resume ${name}`, exact: true });
+   if (await button.isVisible()) await button.click(); await expect(page.getByTestId("facility-canvas")).toBeVisible();
+@@ -112,8 +112,8 @@ test("choices show complete outside versus collected onsite laboratory time", as
+   expect(local.durationTicks).toBeLessThan(external.durationTicks!);
+   for (const [suffix, seeded, preview] of [["offsite", outside, external], ["onsite", state, local]] as const) {
+     await install(page, seeded, name, `quote.${suffix}`); await open(page, "quote");
+-    const button = page.locator(".answer-choice").filter({ has: page.locator("strong", { hasText: state.encounters.quote!.frozenCase.decisionNodes[0]!.answerChoices.find((choice) => choice.id === choiceId)!.label }) });
+-    await expect(button.locator(".answer-choice-eta")).toHaveText(format(preview.durationTicks!));
++    const button = page.locator(".cs-answer").filter({ has: page.locator(".cs-answer-label", { hasText: state.encounters.quote!.frozenCase.decisionNodes[0]!.answerChoices.find((choice) => choice.id === choiceId)!.label }) });
++    await expect(button.locator(".cs-wait-label")).toHaveText(format(preview.durationTicks!));
+     await expect(button).toContainText("includes queues and walking");
+     await expect(button).toContainText(suffix === "onsite" ? "Laboratory processing 15 min onsite" : "Collection 2 hours offsite");
+     await page.screenshot({ path: `${SHOTS}/quotes-${suffix}-${info.project.name}.png`, animations: "disabled" });
+@@ -182,7 +182,7 @@ test("a markerless prior-version order keeps its frozen outside contract after r
+   expect(pending).toBeDefined(); expect(pending.diagnosticTiming).toBeUndefined();
+   const frozen = structuredClone(pending);
+   await install(page, state, name, "legacy.seed"); await open(page, "legacy");
+-  await expect(page.locator(".chart-pending-card")).toContainText(pending.pendingLabel);
++  await expect(page.locator(".cs-away")).toContainText(pending.pendingLabel);
+   await reload(page, name);
+   const restored = (await getActiveState(page)) as unknown as GameState;
+   expect(restored.encounters.legacy!.pendingResult).toEqual(frozen);
+@@ -205,15 +205,15 @@ for (const [suffix, caseId, sampling] of [["visual", "case.recovered-diverticuli
+     const operation = state.serviceOperations.find((op) => op.diagnosticPhysicalWork)!; expect(operation.periopBedReservation).toBeDefined();
+     const bed = structuredClone(operation.periopBedReservation); const narrative = state.encounters.scope!.pendingResult!.resultNarrative;
+     await install(page, state, name, `scope.${suffix}`); await open(page, "scope");
+-    const card = page.locator(".chart-pending-card"); await expect(card).toContainText("next decision waits for care completion");
++    const card = page.locator(".cs-away"); await expect(card).toContainText("next decision waits for care completion");
+     if (sampling) { await expect(card).toContainText("Visual findings are available"); await expect(card).not.toContainText(narrative); await expect(card).toContainText("Pathology (offsite)"); }
+     else {
+       await expect(card).toContainText(narrative);
+-      await expect(page.locator(".chart-panel")).not.toContainText("external pathology");
++      await expect(page.locator(".chart-sheet")).not.toContainText("external pathology");
+     }
+-    // The answered question stays visible; no subsequent choice can be submitted.
+-    await expect(page.locator(".answer-choice")).toHaveCount(4);
+-    await expect(page.locator(".answer-choice:not([disabled])")).toHaveCount(0);
++    // The answered question collapses into its history row; no choice can be submitted.
++    await expect(page.locator(".cs-past")).toHaveCount(1);
++    await expect(page.locator(".cs-answer:not([disabled])")).toHaveCount(0);
+     await page.screenshot({ path: `${SHOTS}/endoscopy-${suffix}-${info.project.name}.png`, animations: "disabled" });
+     await reload(page, name); const restored = (await getActiveState(page)) as unknown as GameState;
+     expect(restored.serviceOperations.find((op) => op.id === operation.id)?.periopBedReservation).toEqual(bed);

@@ -1,0 +1,138 @@
+diff --git a/apps/player/src/session/tutorialViewModels.ts b/apps/player/src/session/tutorialViewModels.ts
+index ac8a5d7..fd1607f 100644
+--- a/apps/player/src/session/tutorialViewModels.ts
++++ b/apps/player/src/session/tutorialViewModels.ts
+@@ -400,6 +400,7 @@ function createLevelZeroTutorialStepView(
+         target: "answer-choices",
+         targetSelector:
+           "[data-tutorial-anchor='current-answer-choices']",
++        avoidSelector: ".chart-sheet, .chart-panel",
+         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+       });
+     }
+@@ -605,6 +606,7 @@ function createLevelZeroTutorialStepView(
+         target: "answer-choices",
+         targetSelector:
+           "[data-tutorial-anchor='current-answer-choices']",
++        avoidSelector: ".chart-sheet, .chart-panel",
+         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+       });
+     }
+@@ -759,6 +761,7 @@ function createLevelZeroTutorialStepView(
+         target: "answer-choices",
+         targetSelector:
+           "[data-tutorial-anchor='current-answer-choices']",
++        avoidSelector: ".chart-sheet, .chart-panel",
+         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+       });
+     }
+@@ -982,8 +985,8 @@ export function createTutorialStepView({
+       flavor:
+         "Healthcare has briefly become a pathfinding problem.",
+       target: "chart",
+-      targetSelector: ".chart-panel",
+-      avoidSelector: ".chart-panel",
++      targetSelector: ".chart-sheet, .chart-panel",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1044,8 +1047,8 @@ export function createTutorialStepView({
+         "A bold new era of clicking the thing the chart explicitly says has begun.",
+       target: "answer-choices",
+       targetSelector:
+-        ".chart-step-column.is-current .answer-list",
+-      avoidSelector: ".chart-panel",
++        "[data-tutorial-anchor='current-answer-choices']",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1075,8 +1078,8 @@ export function createTutorialStepView({
+         "The result, explanation, XP, and next step are shown in the chart. Click the real Continue button when you are ready.",
+       target: "chart-feedback",
+       targetSelector:
+-        ".chart-action-buttons .button.button-primary",
+-      avoidSelector: ".chart-panel",
++        ".chart-sheet .cs-primary-action",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1128,8 +1131,8 @@ export function createTutorialStepView({
+         "The returned result appears beside the earlier decision. Choose the next action.",
+       target: "answer-choices",
+       targetSelector:
+-        ".chart-step-column.is-current .answer-list",
+-      avoidSelector: ".chart-panel",
++        "[data-tutorial-anchor='current-answer-choices']",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1157,8 +1160,8 @@ export function createTutorialStepView({
+           "The explanation closes the learning loop. When you have read it, click the real Continue to summary button at the bottom of the chart.",
+         target: "chart-feedback",
+         targetSelector:
+-          ".chart-action-buttons .button.button-primary",
+-        avoidSelector: ".chart-panel",
++          ".chart-sheet .cs-primary-action",
++        avoidSelector: ".chart-sheet, .chart-panel",
+         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+       });
+     }
+@@ -1172,8 +1175,8 @@ export function createTutorialStepView({
+         "You solved this nonsensical tutorial patient. Your clinical decision making is truly godlike.",
+       target: "resolve-chart",
+       targetSelector:
+-        ".chart-action-buttons .button.button-primary",
+-      avoidSelector: ".chart-panel",
++        ".chart-sheet .cs-primary-action",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1216,8 +1219,8 @@ export function createTutorialStepView({
+       body:
+         "The chart remains open. The decision unlocks when the patient reaches the destination.",
+       target: "chart",
+-      targetSelector: ".chart-panel",
+-      avoidSelector: ".chart-panel",
++      targetSelector: ".chart-sheet, .chart-panel",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1268,8 +1271,8 @@ export function createTutorialStepView({
+       body: "Choose the answer supported by the chart.",
+       target: "answer-choices",
+       targetSelector:
+-        ".chart-step-column.is-current .answer-list",
+-      avoidSelector: ".chart-panel",
++        "[data-tutorial-anchor='current-answer-choices']",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+     });
+   }
+@@ -1299,8 +1302,8 @@ export function createTutorialStepView({
+           "The feedback explains the tested point and records it in this campaign's learning history. Click the real Continue to summary button when ready.",
+         target: "chart-feedback",
+         targetSelector:
+-          ".chart-action-buttons .button.button-primary",
+-        avoidSelector: ".chart-panel",
++          ".chart-sheet .cs-primary-action",
++        avoidSelector: ".chart-sheet, .chart-panel",
+         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+       });
+     }
+@@ -1314,8 +1317,8 @@ export function createTutorialStepView({
+         "The chart is signed. Medico-legally, time may resume.",
+       target: "resolve-chart",
+       targetSelector:
+-        ".chart-action-buttons .button.button-primary",
+-      avoidSelector: ".chart-panel",
++        ".chart-sheet .cs-primary-action",
++      avoidSelector: ".chart-sheet, .chart-panel",
+       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+     });
+   }
