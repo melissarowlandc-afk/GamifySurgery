@@ -1537,3 +1537,64 @@ for Codex's next integrated checkpoint. Secret/privacy/clinical/source scans
 clean; no clinical content changed. No merge, release or Pages publication.
 Owner pathway unchanged (START_GAME.cmd → http://127.0.0.1:4173); owner
 storage untouched.
+
+### Claude — patient chart presentation redesign (owner-approved, 2026-10-07) — complete, claim released
+
+Owner approved all seven changes from the mockup
+(https://claude.ai/artifact/EkXc5tE8Tdh2HnoAn7E3io) plus a sizing rule: "the
+chart [should] only be as big and cover as much of the screen as is needed to
+fit the patient presentation and choices." Owner: do **not** auto-pause when a
+chart opens (same play feel on every monitor); pausing stays player-driven.
+Owner deferred the waiting-on-test format to Claude (structured stage list).
+
+Changes: chart floats over the play area sized to its content (anchored to the
+desk, grows over the right column / map only as needed; phone stays a
+full-viewport sheet); one-line header; no bottom action bar (actions live in
+the feedback / waiting / completion blocks); one scroll region with pinned
+patient story; feedback replaces the answer list in place; Atkinson
+Hyperlegible for prose (bundled, OFL); 2x2 answers when wide, 1–9 / Enter /
+Esc keys, flag icon, wait chip with breakdown tooltip + screen-reader text.
+
+Touched files (Claude): `ui/ChartPanel.tsx`, new `ui/chartSheet.css`,
+`ui/types.ts` (additive `pendingSummary` / `pendingPhases`),
+`session/diagnosticTimingPresentation.ts` (additive `summary` / `phases`),
+`session/viewModels.ts` (exposes those two fields only), chart unit tests, and
+chart selectors in e2e specs (old chart class names are retired for the
+patient chart only; `EmployeeDiscussionPanel` keeps the old classes/CSS).
+Codex: please avoid these chart files until this entry says complete.
+
+Result: the chart now renders through a `<body>` portal as `.chart-sheet`
+(new `cs-*` classes in `ui/chartSheet.css`), placed by a small hook from the
+desk/main rects: centered on the desk when the desk is ≥1040 px wide, otherwise
+starting at the desk's left edge (patient list stays visible) and extending
+right; height is content-sized, anchored to the desk bottom, capped below the
+HUD. Phone (≤760 px) stays a full-viewport sheet at z-index 1000. No auto-pause.
+Tutorial selectors in `session/tutorialViewModels.ts` now target
+`.chart-sheet, .chart-panel`, `[data-tutorial-anchor='current-answer-choices']`
+and `.chart-sheet .cs-primary-action`; the three answer-choice coach steps
+also avoid the chart. New dependency: `@fontsource/atkinson-hyperlegible`
+5.2.8 (OFL-1.1, bundled; no runtime web fetch). E2E selectors were remapped
+mechanically; `patient-chart-density.spec.ts` was rewritten for the new layout
+(and now resumes time so the fixture patient can check in before opening).
+
+- **Validation:** player typecheck clean except Codex's in-progress
+  `EmployeeDiscussionPanel` `finalStep`/`summary` errors; `src/ui` + `src/session`
+  unit tests pass except pre-existing `surgeryCenterServicePreviews` and the
+  in-progress employee-discussion tests. E2E on 127.0.0.1:5181:
+  chart-density, visual-ui, answered-chart-action-recovery,
+  facility-diagnostic-timing — 23 passed. `prototype.spec.ts:272` fails at the
+  HUD `.resource-xp-row` (not chart); other prototype failures (campaign
+  branch, GLP-1 cooldown, failed save) are unrelated; `tutorial-positioning:209`
+  passes all chart/coach anchors then times out waiting for the off-site
+  patient to return (timing, not chart). Live QA at 1024x768, 1366x657,
+  1920x945 and 412x915 (QA origin only).
+- **Not done / follow-ups:** legacy patient-chart rules in `styles/global.css`
+  are now unused by the patient chart but still shared by
+  `EmployeeDiscussionPanel`; prune only when that panel moves off them.
+  Owner pathway unchanged: START_GAME.cmd -> 127.0.0.1:4173.
+- **GitHub backup verified:** checkpoint `5482dc66` on origin/beta
+  (`git ls-remote`), archive
+  `artifacts/checkpoints/patient-chart-redesign-20261007/` (full copies of
+  `ChartPanel.tsx`, `chartSheet.css`, `patient-chart-density.spec.ts`;
+  Claude-only patches for 36 shared files, each verified byte for byte).
+  No merge, release or Pages publication.

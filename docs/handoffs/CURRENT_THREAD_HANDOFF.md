@@ -1,3 +1,17 @@
+> PATIENT CHART REDESIGN GITHUB BACKUP VERIFIED (2026-10-07, Claude Code).
+> Owner-approved chart redesign: the chart floats over the play area at its
+> content size, one-line header, no bottom bar, one scroll, feedback in
+> place, bundled Atkinson Hyperlegible prose font, 1-9/Enter/Esc keys and a
+> stage-by-stage waiting-on-test card. Opening a chart never pauses time.
+> Files, tutorial selector swaps, e2e selector remap and validation:
+> CLAUDE_ANIMATION_COORDINATION.md (patient chart presentation redesign).
+> No domain/save/balance/clinical edits; saves compatible. New dependency:
+> @fontsource/atkinson-hyperlegible 5.2.8 (restart START_GAME.cmd once).
+> GitHub backup verified: checkpoint 5482dc66 on origin/beta (archive
+> artifacts/checkpoints/patient-chart-redesign-20261007/, Claude-only patches
+> for shared files). No merge, release or Pages publication. Owner pathway
+> unchanged: START_GAME.cmd -> http://127.0.0.1:4173, same profile.
+
 > GS-034 DIAGNOSTIC TIMING GITHUB BACKUP VERIFIED (2026-10-07).
 > Owner said "Push to GitHub". Checkpoint d77aa13c8ad8d903cbcd9d01c85488fd610c9fca
 > is on origin/beta, confirmed with git ls-remote. Recovery archive:
