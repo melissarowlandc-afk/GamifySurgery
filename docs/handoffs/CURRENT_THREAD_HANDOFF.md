@@ -1812,3 +1812,18 @@ Sol demographic4_integration completed append-only integration; Sol demographic4
 Verified GitHub checkpoint: beta @ dfe25aac04a2ce40424973471db1079cfc883daa (remote refs/heads/beta matched). Scope4365 audited paths: complete newbatch, all1830 public poses, direct provenance sources/input receipts and one metadata level, six exact runtime snapshots/deltas and immutable baseline. Dependency-free portable verifier PASS for4362 archive files; every staged blob was byte-exact. Backup guide: artifacts/character-statics/patient-demographics20-v4/runtime-backup/README.md.
 
 Mixed live runtime code and unrelated unfinished work remain local and unstaged. This checkpoint is an art/integration recovery archive, not a full playable current HEAD or older-native regeneration archive. No clinical approval, merge, release, Pages publication or deployment occurred. Integration/art ownership claim released; workers stopped. Task complete.
+
+## Claude — map click info boxes / founder seats / re-seating GitHub backup verified (2026-10-07)
+
+Owner said "push to GitHub". Checkpoint
+ec2d061f76f1c8a122c275f20c5fbff9bb7a9c86 on origin/beta (verified with
+git ls-remote) holds `artifacts/checkpoints/map-click-info-20261007/`: whole
+copies of `founder-seats.ts`, `characterActivityPresentation.ts` (+ test),
+`characterInspect.ts`, `tests/founder-seats-and-reseating.test.ts`, the
+`map-click-info` e2e spec and fixture; 15 Claude-only patches for shared
+files, each verified to rebuild the live file byte for byte; browser
+evidence; validation and performance record. Live sources stay uncommitted
+for Codex's next integrated checkpoint. Secret/privacy/clinical/source scans
+clean; no clinical content changed. No merge, release or Pages publication.
+Owner pathway unchanged (START_GAME.cmd → http://127.0.0.1:4173); owner
+storage untouched.
