@@ -1,0 +1,27 @@
+diff --git a/packages/clinical-content/src/synthetic-content.ts b/packages/clinical-content/src/synthetic-content.ts
+--- a/packages/clinical-content/src/synthetic-content.ts
++++ b/packages/clinical-content/src/synthetic-content.ts
+@@ -84,6 +84,7 @@
+ import { GS028_20261003_CASES, GS028_20261003_TESTED_CONCEPTS } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+ import { GS028_20261007_CASES, GS028_20261007_TESTED_CONCEPTS } from "./development-batch/2026-10-07-variety/variety-batch";
+ import { GS028_20261007_VARIETY2_CASES, GS028_20261007_VARIETY2_TESTED_CONCEPTS } from "./development-batch/2026-10-07-variety-2/variety-batch";
++import { GS028_20261007_LEVEL3_CASES, GS028_20261007_LEVEL3_TESTED_CONCEPTS } from "./development-batch/2026-10-07-level3/level3-batch";
+ 
+ const PROTOTYPE_REVIEW_NOTICE =
+   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
+@@ -1210,6 +1211,7 @@
+     ...GS028_20261003_TESTED_CONCEPTS,
+     ...GS028_20261007_TESTED_CONCEPTS,
+     ...GS028_20261007_VARIETY2_TESTED_CONCEPTS,
++    ...GS028_20261007_LEVEL3_TESTED_CONCEPTS,
+   ],
+   cases: [
+     ...applyPatientLibraryWordingRepair(PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES),
+@@ -1223,6 +1225,7 @@
+     ...GS028_20261003_CASES,
+     ...GS028_20261007_CASES,
+     ...GS028_20261007_VARIETY2_CASES,
++    ...GS028_20261007_LEVEL3_CASES,
+   ],
+ });
+ 

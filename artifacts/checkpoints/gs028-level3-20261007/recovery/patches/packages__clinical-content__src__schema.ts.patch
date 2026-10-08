@@ -1,0 +1,12 @@
+diff --git a/packages/clinical-content/src/schema.ts b/packages/clinical-content/src/schema.ts
+--- a/packages/clinical-content/src/schema.ts
++++ b/packages/clinical-content/src/schema.ts
+@@ -365,7 +365,7 @@
+     selectedInstantiationProfileId: stableIdSchema.optional(),
+     tutorialEligible: z.boolean(),
+     routineEligible: z.boolean(),
+-    earliestFacilityStage: z.number().int().min(0).max(2),
++    earliestFacilityStage: z.number().int().min(0).max(3),
+     requiredClinicalSetting: z.enum([
+       "clinic",
+       "ambulatory_surgery",

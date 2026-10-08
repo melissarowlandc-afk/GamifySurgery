@@ -1,0 +1,18 @@
+diff --git a/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts b/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+--- a/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+@@ -4,7 +4,13 @@
+ import { resolve } from "node:path";
+ import { fileURLToPath } from "node:url";
+ import { syntheticClinicalCaseSchema } from "../../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
++// Keep this historical batch's inventory proof scoped to its original bank.
++// New level3 admission and complete protected-intake checks live in its own test.
++const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
++  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")),
++  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")),
++};
+ import { BRIEF_EARLY_LEVELS_20260917_AUTHORING_CONCEPTS as concepts, BRIEF_EARLY_LEVELS_20260917_BATCH_MANIFEST as manifest, BRIEF_EARLY_LEVELS_20260917_CASE_REVIEWS as reviews, BRIEF_EARLY_LEVELS_20260917_CASES as cases, BRIEF_EARLY_LEVELS_20260917_CLAIMS as claims, BRIEF_EARLY_LEVELS_20260917_QUESTIONS as questions, BRIEF_EARLY_LEVELS_20260917_SOURCES as sources, BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES as timings } from "./brief-early-levels-batch";
+ 
+ describe("September 17 brief early-level admission", () => {

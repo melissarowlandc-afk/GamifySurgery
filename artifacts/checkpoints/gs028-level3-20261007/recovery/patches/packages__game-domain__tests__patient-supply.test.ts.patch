@@ -1,0 +1,18 @@
+diff --git a/packages/game-domain/tests/patient-supply.test.ts b/packages/game-domain/tests/patient-supply.test.ts
+--- a/packages/game-domain/tests/patient-supply.test.ts
++++ b/packages/game-domain/tests/patient-supply.test.ts
+@@ -225,9 +225,11 @@
+ describe("routine patient supply", () => {
+   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
+     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+-    expect(release.concepts).toHaveLength(331);
+-    expect(release.cases).toHaveLength(1008);
+-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
++    expect(release.concepts).toHaveLength(351);
++    // The current old bank includes the concurrent interpreter pairing:
++    // 1,008 existing cases plus this batch's 62 new Level-3 cases.
++    expect(release.cases).toHaveLength(1008 + 62);
++    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1375);
+ 
+     const noCapabilities = new Set<string>();
+     const everyCapability = new Set(

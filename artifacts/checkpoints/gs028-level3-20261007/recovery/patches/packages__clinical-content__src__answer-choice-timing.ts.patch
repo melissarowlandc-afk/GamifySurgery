@@ -1,0 +1,19 @@
+diff --git a/packages/clinical-content/src/answer-choice-timing.ts b/packages/clinical-content/src/answer-choice-timing.ts
+--- a/packages/clinical-content/src/answer-choice-timing.ts
++++ b/packages/clinical-content/src/answer-choice-timing.ts
+@@ -11,6 +11,7 @@
+ import { GS028_20261003_TIMING_ENTRIES } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+ import { GS028_20261007_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety/variety-batch";
+ import { GS028_20261007_VARIETY2_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety-2/variety-batch";
++import { GS028_20261007_LEVEL3_TIMING_ENTRIES } from "./development-batch/2026-10-07-level3/level3-batch";
+ 
+ /**
+  * Explicit presentation-only timing classifications for every node in the admitted bank.
+@@ -5953,6 +5954,7 @@
+   ...GS028_20261003_TIMING_ENTRIES,
+   ...GS028_20261007_TIMING_ENTRIES,
+   ...GS028_20261007_VARIETY2_TIMING_ENTRIES,
++  ...GS028_20261007_LEVEL3_TIMING_ENTRIES,
+ ];
+ 
+ export const ANSWER_CHOICE_TIMING_REGISTRY = entries.map((entry) =>

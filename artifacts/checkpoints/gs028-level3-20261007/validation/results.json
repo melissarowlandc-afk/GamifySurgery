@@ -1,0 +1,138 @@
+{
+  "acceptedContentVersion": "development-batch.2026-10-07.level3.1",
+  "clinicalReviewStatus": "needs_clinician_review",
+  "publicReleaseAuthorized": false,
+  "batchCounts": {
+    "contentVersion": "development-batch.2026-10-07.level3.1",
+    "authoringConceptCount": 20,
+    "testedConceptCount": 20,
+    "questionVariantCount": 80,
+    "caseCount": 62,
+    "decisionNodeCount": 80,
+    "runtimeCaseProfileCount": 248,
+    "questionProfileReferenceCount": 320,
+    "sourceCount": 14,
+    "evidenceClaimCount": 66,
+    "timingEntryCount": 80,
+    "caseReviewCount": 62,
+    "resultGateCount": 0,
+    "publicReleaseAuthorized": false
+  },
+  "softwareChecks": {
+    "clinical-review": {
+      "passed": 69,
+      "failed": 0,
+      "total": 69,
+      "failures": []
+    },
+    "gameplay-final": {
+      "passed": 264,
+      "failed": 0,
+      "total": 264,
+      "failures": []
+    },
+    "full-clinical-final": {
+      "passed": 583,
+      "failed": 0,
+      "total": 583,
+      "failures": []
+    },
+    "full-domain-final": {
+      "passed": 3103,
+      "failed": 3,
+      "total": 3106,
+      "failures": [
+        {
+          "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+          "test": "GS-028 second October 7 actual gameplay executes the actual CT pair case.gs028f.neck-mass.paired-persistent-solid with busy_reading capacity",
+          "firstMessage": "AssertionError: expected 0 to be greater than 0"
+        },
+        {
+          "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+          "test": "GS-028 second October 7 actual gameplay executes the actual CT pair case.gs028f.neck-mass.paired-cystic-is-not-benign with busy_reading capacity",
+          "firstMessage": "AssertionError: expected 0 to be greater than 0"
+        },
+        {
+          "file": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+          "test": "GS-028 statistics and ethics runtime admission admits the 28 objectives and 112 nodes in 108 cases into the active release exactly once",
+          "firstMessage": "AssertionError: expected [ Array(351) ] to have a length of 331 but got 351"
+        }
+      ]
+    },
+    "inventory-final": {
+      "passed": 361,
+      "failed": 3,
+      "total": 364,
+      "failures": [
+        {
+          "file": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+          "test": "GS-028 October 3 batch admission admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+          "firstMessage": "AssertionError: expected [ { …(17) }, { …(17) }, …(1006) ] to have a length of 1012 but got 1008"
+        },
+        {
+          "file": "packages/game-domain/tests/patient-supply.test.ts",
+          "test": "routine patient supply records the current clinical inventory and exact unseen-patient boundary by stage",
+          "firstMessage": "AssertionError: expected [ { …(17) }, { …(17) }, …(1068) ] to have a length of 1074 but got 1070"
+        },
+        {
+          "file": "packages/game-domain/tests/patient-supply.test.ts",
+          "test": "routine patient supply admits and completes patients in prepared day-six through day-eight states",
+          "firstMessage": "Error: Snapshot `routine patient supply > admits and completes patients in prepared day-six through day-eight states 1` mismatched"
+        }
+      ]
+    },
+    "balance": {
+      "passed": 66,
+      "failed": 0,
+      "total": 66,
+      "failures": []
+    },
+    "player-focused": {
+      "passed": 18,
+      "failed": 1,
+      "total": 19,
+      "failures": [
+        {
+          "file": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+          "test": "surgery-center test timing previews ignores the retired concealment flag and preserves the scheduled external service after an answer",
+          "firstMessage": "AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'"
+        }
+      ]
+    },
+    "statistics-inventory-final": {
+      "passed": 50,
+      "failed": 0,
+      "total": 50,
+      "scope": "Subsequent targeted rerun resolves the stale331-concept current-inventory assertion by excluding only the newgs028g lane from the statistics prior-bank proof."
+    },
+    "remainingFailures": {
+      "count": 2,
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "tests": [
+        "CT pair persistent-solid with busy_reading",
+        "CT pair cystic-is-not-benign with busy_reading"
+      ],
+      "reason": "Earlier CT tests expect a positive busy interpretation queue; observed queue0. No CT or resource scheduler behavior was changed by this batch."
+    }
+  },
+  "browser": {
+    "desktopPassed": 3,
+    "phonePassed": 3,
+    "origin": "http://127.0.0.1:4329",
+    "profiles": "Fresh Playwright profiles; owner campaign storage untouched",
+    "visualInspection": [
+      "desktop gallbladder first and second/reloaded",
+      "phone Merkel staging estimate",
+      "desktop stoma care"
+    ]
+  },
+  "sourceAndPrivacyChecks": "Original fictional content/bibliographic metadata and atomic facts only. Raw sheet, corpus/source prose, patient data, credentials, owner saves, artwork and build/dependencies excluded.",
+  "typechecks": {
+    "configurations": 8,
+    "status": "pass"
+  },
+  "boundaries": "pass",
+  "balance": "66/66 pass",
+  "build": "pass",
+  "scopeVerificationLimit": "Automatic approval review rejected SCORE outline local download; no alternate download was performed. Fresh official ABSITE/QE categories support scope; precise SCORE depth withheld."
+}

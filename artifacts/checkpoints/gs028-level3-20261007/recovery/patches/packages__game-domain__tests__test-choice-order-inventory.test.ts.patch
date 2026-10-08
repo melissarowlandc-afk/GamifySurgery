@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/tests/test-choice-order-inventory.test.ts b/packages/game-domain/tests/test-choice-order-inventory.test.ts
+--- a/packages/game-domain/tests/test-choice-order-inventory.test.ts
++++ b/packages/game-domain/tests/test-choice-order-inventory.test.ts
+@@ -17,8 +17,8 @@
+       const entry = ANSWER_CHOICE_TIMING_REGISTRY.find((candidate) => candidate.caseId === clinicalCase.id && candidate.nodeId === node.id && candidate.questionVariantId === node.questionVariantId);
+       return entry?.classification.kind === "test_choices" ? entry.classification.choices.map((choice) => ({ isTerminal: index === clinicalCase.decisionNodes.length - 1, isCorrect: node.answerChoices.find((candidate) => candidate.id === choice.choiceId)?.isCorrect === true, timing: choice.timing })) : [];
+     })).filter((item) => item.timing.kind === "test");
+-    expect(timed).toHaveLength(1448);
+-    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(129);
++    expect(timed).toHaveLength(1452);
++    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(133);
+   });
+ 
+   it("classifies every timing.test choice and permits incorrect records only as explicit non-execution", () => {

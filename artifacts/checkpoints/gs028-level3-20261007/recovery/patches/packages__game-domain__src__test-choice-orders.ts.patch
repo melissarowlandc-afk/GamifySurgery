@@ -1,0 +1,18 @@
+diff --git a/packages/game-domain/src/test-choice-orders.ts b/packages/game-domain/src/test-choice-orders.ts
+--- a/packages/game-domain/src/test-choice-orders.ts
++++ b/packages/game-domain/src/test-choice-orders.ts
+@@ -1,4 +1,4 @@
+-import { ANSWER_CHOICE_TIMING_REGISTRY, type DecisionNode } from "@gamify-surgery/clinical-content";
++import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, type DecisionNode } from "@gamify-surgery/clinical-content";
+ import type { EncounterState } from "./types";
+ 
+ export type TestChoiceOrderDisposition =
+@@ -479,6 +479,8 @@
+   ...gs028October3Records,
+   ...gs028October7Records,
+   ...gs028October7Variety2Records,
++  // Planned specialist sentinel-node staging; no generic clinic biopsy alias.
++  ...GS028_20261007_LEVEL3_TIMING_ENTRIES.flatMap((entry): ExactTestChoiceOrderRecord[] => entry.classification.kind === "test_choices" ? entry.classification.choices.flatMap((choice): ExactTestChoiceOrderRecord[] => choice.timing.kind === "test" ? [{ caseId: entry.caseId, nodeId: entry.nodeId, questionVariantId: entry.questionVariantId, choiceId: choice.choiceId, choiceLabel: choice.choiceLabel, timingProfileId: choice.timing.timingProfileId, disposition: { kind: "not_executed", reason: "specialist_or_unsupported_service" } }] : []) : []),
+   ...explicitNonExecutionRecords,
+   ...existingTerminalProcedureRecords,
+ ];

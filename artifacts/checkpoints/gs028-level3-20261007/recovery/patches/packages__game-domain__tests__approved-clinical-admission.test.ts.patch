@@ -1,0 +1,27 @@
+diff --git a/packages/game-domain/tests/approved-clinical-admission.test.ts b/packages/game-domain/tests/approved-clinical-admission.test.ts
+--- a/packages/game-domain/tests/approved-clinical-admission.test.ts
++++ b/packages/game-domain/tests/approved-clinical-admission.test.ts
+@@ -1,5 +1,5 @@
+ import { describe, expect, it } from "vitest";
+-import { GS028_20261007_VARIETY2_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
++import { GS028_20261007_LEVEL3_TESTED_CONCEPTS, GS028_20261007_VARIETY2_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+ import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, GS028_20260929_TESTED_CONCEPTS, GS028_20261002_TESTED_CONCEPTS, GS028_20261003_TESTED_CONCEPTS, GS028_20261007_TESTED_CONCEPTS, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from "@gamify-surgery/clinical-content";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -152,7 +152,7 @@
+     );
+   });
+ 
+-  it("keeps the active runtime release limited to reviewed concepts", () => {
++  it("keeps the unapproved prototype runtime release limited to explicitly admitted concepts", () => {
+     expect(
+       PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map(
+         (concept) => concept.id,
+@@ -208,6 +208,7 @@
+       ...GS028_20261003_TESTED_CONCEPTS.map((concept) => concept.id),
+       ...GS028_20261007_TESTED_CONCEPTS.map((concept) => concept.id),
+       ...GS028_20261007_VARIETY2_TESTED_CONCEPTS.map((concept) => concept.id),
++      ...GS028_20261007_LEVEL3_TESTED_CONCEPTS.map((concept) => concept.id),
+     ]);
+   });
+ 

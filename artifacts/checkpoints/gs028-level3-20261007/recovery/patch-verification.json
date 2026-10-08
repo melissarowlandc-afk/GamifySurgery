@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "command": "python -X utf8 artifacts/checkpoints/gs028-level3-20261007/verify-checkpoint.py --baseline-root .local-dev/gs028-20261007-level3/backup/compatible-baselines",
+  "exactCopies": 15,
+  "patches": 23,
+  "forwardReverseReapplyPass": true,
+  "fixtureProvenance": "11 exact captured pre-edit baselines and 12 explicitly inferred compatible counterfactuals; full fixtures remain ignored/local only.",
+  "targetByteConvention": "LF-normalized fixture bytes; raw active-file hashes recorded separately.",
+  "sourcePrivacySecretAssetAudit": "PASS: original fictional concepts, atomic claims, bibliographic metadata and scoped software/doc patches only. No raw sheet, source corpus, patient data, credentials, saves, binary assets, build output or unrelated full source.",
+  "liveSourceIndexRefsTouchedByReplay": false,
+  "clinicalReviewStatus": "needs_clinician_review",
+  "publicReleaseAuthorized": false
+}

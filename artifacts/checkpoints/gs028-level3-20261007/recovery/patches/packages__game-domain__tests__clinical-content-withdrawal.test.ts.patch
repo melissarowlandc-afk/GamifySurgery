@@ -1,0 +1,19 @@
+diff --git a/packages/game-domain/tests/clinical-content-withdrawal.test.ts b/packages/game-domain/tests/clinical-content-withdrawal.test.ts
+--- a/packages/game-domain/tests/clinical-content-withdrawal.test.ts
++++ b/packages/game-domain/tests/clinical-content-withdrawal.test.ts
+@@ -32,6 +32,7 @@
+   GS028_20261003_CASES,
+   GS028_20261007_CASES,
+   GS028_20261007_VARIETY2_CASES,
++  GS028_20261007_LEVEL3_CASES,
+ } from "@gamify-surgery/clinical-content";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -111,6 +112,7 @@
+       ...GS028_20261003_CASES.map((clinicalCase) => clinicalCase.id),
+       ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),
+       ...GS028_20261007_VARIETY2_CASES.map((clinicalCase) => clinicalCase.id),
++      ...GS028_20261007_LEVEL3_CASES.map((clinicalCase) => clinicalCase.id),
+     ]);
+   });
+ 

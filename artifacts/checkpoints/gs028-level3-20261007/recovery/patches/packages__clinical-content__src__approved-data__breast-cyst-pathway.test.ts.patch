@@ -1,0 +1,17 @@
+diff --git a/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts b/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
+--- a/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
++++ b/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
+@@ -1,6 +1,12 @@
+ import { describe, expect, it } from "vitest";
+ import { validateSyntheticClinicalRelease } from "../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../synthetic-content";
++// Keep this historical batch's inventory proof scoped to its original bank.
++// New level3 admission and complete protected-intake checks live in its own test.
++const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
++  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")),
++  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")),
++};
+ import { TWENTY_CONCEPT_BATCH_CASES } from "../development-batch/2026-09-09/twenty-concept-batch";
+ import { SURGERY_CENTER_CASES } from "../development-batch/2026-09-10/surgery-center-batch";
+ import { BOARD_EXPANSION_CASES } from "../development-batch/2026-09-11/board-expansion-batch";

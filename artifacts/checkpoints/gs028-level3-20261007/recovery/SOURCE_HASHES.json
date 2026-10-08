@@ -1,0 +1,701 @@
+{
+  "patchCount": 23,
+  "fullBaselineFilesIncluded": false,
+  "patches": [
+    {
+      "targetPath": "packages/clinical-content/src/schema.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__schema.ts.patch",
+      "patchSha256": "d54f4dbfa9e36483b421d50a095f4bd51e0e4225425feaecc1b1681b4a2b9a45",
+      "baselineSha256": "06aad6943af5827ce7c125bcb2d5010f3f8f3f53285efa3986092676c10d0c34",
+      "targetSha256": "ff7bc72b3a0b0ae58c71045f460c82c919ab636e35debcba60417950ff45775d",
+      "baselineBytes": 27131,
+      "targetBytes": 27131,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "06aad6943af5827ce7c125bcb2d5010f3f8f3f53285efa3986092676c10d0c34",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-    earliestFacilityStage: z.number().int().min(0).max(2),",
+        "+    earliestFacilityStage: z.number().int().min(0).max(3),"
+      ],
+      "hunks": [
+        "@@ -365,7 +365,7 @@"
+      ],
+      "currentRawTargetSha256": "ff7bc72b3a0b0ae58c71045f460c82c919ab636e35debcba60417950ff45775d",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/index.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__index.ts.patch",
+      "patchSha256": "ff67125b4202a6cf284c8159cccf040777eac8e9052eac0d11b4f23548147c77",
+      "baselineSha256": "e352b5a91af81cf8786beb66fa000d2aa89c292f457dc4d3db3a11a92e88b6cf",
+      "targetSha256": "4325a5b52eb8f8e608c1b8874132cfe72bf74851adce615da375f4ed1a88cab5",
+      "baselineBytes": 3460,
+      "targetBytes": 3528,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "e352b5a91af81cf8786beb66fa000d2aa89c292f457dc4d3db3a11a92e88b6cf",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "+export * from \"./development-batch/2026-10-07-level3/level3-batch\";"
+      ],
+      "hunks": [
+        "@@ -54,3 +54,4 @@"
+      ],
+      "currentRawTargetSha256": "4325a5b52eb8f8e608c1b8874132cfe72bf74851adce615da375f4ed1a88cab5",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/synthetic-content.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__synthetic-content.ts.patch",
+      "patchSha256": "a1733e0dbd4044108d69fdd6ce25f4b13b6e710eda0e493c7daab707b14f7887",
+      "baselineSha256": "e0a6b1f38e7cf3efe995c10de4ff5947e81b0b9a4cfe68637e51d02c685e2f19",
+      "targetSha256": "1d9a47a200de81645c8c81ae3abc16fe88456006e6f03a57b4763a969cfb21a4",
+      "baselineBytes": 51511,
+      "targetBytes": 51730,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "e0a6b1f38e7cf3efe995c10de4ff5947e81b0b9a4cfe68637e51d02c685e2f19",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "+import { GS028_20261007_LEVEL3_CASES, GS028_20261007_LEVEL3_TESTED_CONCEPTS } from \"./development-batch/2026-10-07-level3/level3-batch\";",
+        "+    ...GS028_20261007_LEVEL3_TESTED_CONCEPTS,",
+        "+    ...GS028_20261007_LEVEL3_CASES,"
+      ],
+      "hunks": [
+        "@@ -84,6 +84,7 @@",
+        "@@ -1210,6 +1211,7 @@",
+        "@@ -1223,6 +1225,7 @@"
+      ],
+      "currentRawTargetSha256": "1d9a47a200de81645c8c81ae3abc16fe88456006e6f03a57b4763a969cfb21a4",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/answer-choice-timing.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__answer-choice-timing.ts.patch",
+      "patchSha256": "2b73859692c6a114bb57783019839f86d2af44f2e88bd7ea834f854f9634dcf5",
+      "baselineSha256": "0b7f5c21fd70f2f98add17e106d49817914a646d0093dfc901c703aff27a78a8",
+      "targetSha256": "7caac808658faeee9af09b56a65c8e7cdc96f99019314793b600a3e4b05bb01f",
+      "baselineBytes": 184434,
+      "targetBytes": 184584,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "0b7f5c21fd70f2f98add17e106d49817914a646d0093dfc901c703aff27a78a8",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "+import { GS028_20261007_LEVEL3_TIMING_ENTRIES } from \"./development-batch/2026-10-07-level3/level3-batch\";",
+        "+  ...GS028_20261007_LEVEL3_TIMING_ENTRIES,"
+      ],
+      "hunks": [
+        "@@ -11,6 +11,7 @@",
+        "@@ -5953,6 +5954,7 @@"
+      ],
+      "currentRawTargetSha256": "7caac808658faeee9af09b56a65c8e7cdc96f99019314793b600a3e4b05bb01f",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/src/test-choice-orders.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "patchSha256": "e5bfbc5c6933bf68c930f618f0dd559ee44890824452a513fa84bd4d801c9aa7",
+      "baselineSha256": "2c0a9e6193eb70c3adf131be8e2bb98ed81d458530407605e37aea052b092436",
+      "targetSha256": "2282385db6216bd4d0fbd49967e30d21a35b3822a3b8f1b56b2206b088af710c",
+      "baselineBytes": 42912,
+      "targetBytes": 43576,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "2c0a9e6193eb70c3adf131be8e2bb98ed81d458530407605e37aea052b092436",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { ANSWER_CHOICE_TIMING_REGISTRY, type DecisionNode } from \"@gamify-surgery/clinical-content\";",
+        "+import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, type DecisionNode } from \"@gamify-surgery/clinical-content\";",
+        "+  // Planned specialist sentinel-node staging; no generic clinic biopsy alias.",
+        "+  ...GS028_20261007_LEVEL3_TIMING_ENTRIES.flatMap((entry): ExactTestChoiceOrderRecord[] => entry.classification.kind === \"test_choices\" ? entry.classification.choices.flatMap((choice): ExactTestChoiceOrderRecord[] => choice.timing.kind === \"test\" ? [{ caseId: entry.caseId, nodeId: entry.nodeId, questionVariantId: entry.questionVariantId, choiceId: choice.choiceId, choiceLabel: choice.choiceLabel, timingProfileId: choice.timing.timingProfileId, disposition: { kind: \"not_executed\", reason: \"specialist_or_unsupported_service\" } }] : []) : []),"
+      ],
+      "hunks": [
+        "@@ -1,4 +1,4 @@",
+        "@@ -479,6 +479,8 @@"
+      ],
+      "currentRawTargetSha256": "2282385db6216bd4d0fbd49967e30d21a35b3822a3b8f1b56b2206b088af710c",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts.patch",
+      "patchSha256": "37565d8e2272a4ead6e8d2b36014490a4dc3d8f2f8e988247d48235d8740b395",
+      "baselineSha256": "d334e31d3c17ba6529ea24e76ccab8923deccd6ae619227efd202071c0fc0c02",
+      "targetSha256": "dcb042739b356912135f734278830196c0192868d661d56ce54ca95e526b405c",
+      "baselineBytes": 6541,
+      "targetBytes": 6949,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "ab3225199bac8d36873ab66c8a6dec43f82314262baba94512e57c72eec62bd3",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -3,7 +3,13 @@"
+      ],
+      "currentRawTargetSha256": "dcb042739b356912135f734278830196c0192868d661d56ce54ca95e526b405c",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts.patch",
+      "patchSha256": "c70027e0eac43a791704a75b34f79a181de8870e44e6fac6978325228e149f71",
+      "baselineSha256": "1462ff75acae9ab8ca54d8e28e3d4527924e9fd9a9eb77d0b5ffb2a23981a577",
+      "targetSha256": "9d6c54ae6d9ec46aaeb0e2a88ab6d305a1640429075a0b76500e55c930d97ecb",
+      "baselineBytes": 7110,
+      "targetBytes": 7518,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "98f1c2e55aac21a8b05a2ecaeb51e13c8a729b8a7e88f960541edd517cbe6c36",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -3,7 +3,13 @@"
+      ],
+      "currentRawTargetSha256": "9d6c54ae6d9ec46aaeb0e2a88ab6d305a1640429075a0b76500e55c930d97ecb",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts.patch",
+      "patchSha256": "7d084ed14c364578f5ef45c63608c6587d12d52e6190938b8010605d8c6cdc5c",
+      "baselineSha256": "ea1328e0126152ade8dbbe0a246ad0ebd67c807c3c198b9140b07eea198fb41d",
+      "targetSha256": "45ce5945872e06f128936f596eb95d71baebe59e2411245b9eb79aec14fd6eed",
+      "baselineBytes": 6207,
+      "targetBytes": 6615,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "ecb78f323360ea0d64b6937f5bd8e3fdca9feb4f2a0f3815f11ae2c487d5dc52",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -3,7 +3,13 @@"
+      ],
+      "currentRawTargetSha256": "45ce5945872e06f128936f596eb95d71baebe59e2411245b9eb79aec14fd6eed",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts.patch",
+      "patchSha256": "b162d44779a2a0ad3c4b8e954456dc640ee5d36e2250321323020f8d1ac42161",
+      "baselineSha256": "dbfd6980ad754f6376d90cff54f0654514d498ea88aff929927c5e89e0ade84d",
+      "targetSha256": "1fc0b0e91a0f5275962ed54bf3b6cee0e6f1593cda08553dddc5d3a743c1960a",
+      "baselineBytes": 5042,
+      "targetBytes": 5450,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "79b632cc3cfe35e01751ced1239cb4196b50a7cff0ae59b865a3d8f6bc3b6cca",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -4,7 +4,13 @@"
+      ],
+      "currentRawTargetSha256": "1fc0b0e91a0f5275962ed54bf3b6cee0e6f1593cda08553dddc5d3a743c1960a",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts.patch",
+      "patchSha256": "06fc687665b9e89fe42833ce171e29ed859643180e71ec408b13e85cc6c19fcc",
+      "baselineSha256": "5272e9e8c58dd923298410be971927391eb39a4a575ab46d360b391d2c6c26ee",
+      "targetSha256": "e8a5aa0d89c8f01aae694dfb1bb0be3e5e7b37ed18a8815a31281504fa8ff20e",
+      "baselineBytes": 6689,
+      "targetBytes": 7097,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "364fb418048c2ff6faab7b8b6850d1dbf0fb1a2baf25980fbe6e17b3e6886043",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -1,6 +1,12 @@"
+      ],
+      "currentRawTargetSha256": "e8a5aa0d89c8f01aae694dfb1bb0be3e5e7b37ed18a8815a31281504fa8ff20e",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts.patch",
+      "patchSha256": "44bf00ffb41f3efc3ba25c4052663c50524113e54b2126d5c1c259c1bf5259f2",
+      "baselineSha256": "3de55bd7fb9ac405eafaef7bc2bf5cd3b88d13ba37a63ce937efeb911ab84a56",
+      "targetSha256": "da38e57480e29b9a7acfe057e60f3151462a6e4078cc31d1e4629be1481baa68",
+      "baselineBytes": 5537,
+      "targetBytes": 5915,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "c22caf05b12b0f4ca8612d108da1cd77b0d72f0c0e372e7350b899717482b293",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE as currentRelease } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const currentRelease = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -2,7 +2,13 @@"
+      ],
+      "currentRawTargetSha256": "da38e57480e29b9a7acfe057e60f3151462a6e4078cc31d1e4629be1481baa68",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts.patch",
+      "patchSha256": "c54bc4e56140da3cb3c5ad2111dd418a2434b5e2cd45af6af6f3d82cd4592b0c",
+      "baselineSha256": "3049c92d810aa1edb9ad9d6a5802b5aa3a786773e730a19843599aee7aa9e744",
+      "targetSha256": "ba997dc5fa739d94539bc66ce456de6bf56f8e93cb3f95c4c26453b8eddf4136",
+      "baselineBytes": 3320,
+      "targetBytes": 3698,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "ec1eede0b4afecfcfcc67f60454205c4970aa6c0f4fbb27d2bb4dae2c9ff3e38",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE as release } from \"../../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const release = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -2,7 +2,13 @@"
+      ],
+      "currentRawTargetSha256": "ba997dc5fa739d94539bc66ce456de6bf56f8e93cb3f95c4c26453b8eddf4136",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts.patch",
+      "patchSha256": "2575229001c0165d8efc36df79147504efbbb085c7a56dcc987ae9ed61b93298",
+      "baselineSha256": "cf74bf64138b2451e38ee3afedc1f584d9dbf5c31ff97993c23dcaa5b1d6a5c1",
+      "targetSha256": "dbc1ef7570606449ab0a244a69b4cac9264f54a6ac2d44deb899757312711cd1",
+      "baselineBytes": 11928,
+      "targetBytes": 12336,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "cf74bf64138b2451e38ee3afedc1f584d9dbf5c31ff97993c23dcaa5b1d6a5c1",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { SYNTHETIC_CLINICAL_RELEASE } from \"../synthetic-content\";",
+        "+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from \"../synthetic-content\";",
+        "+// Keep this historical batch's inventory proof scoped to its original bank.",
+        "+// New level3 admission and complete protected-intake checks live in its own test.",
+        "+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,",
+        "+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith(\"concept.gs028g.\")),",
+        "+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith(\"case.gs028g.\")),",
+        "+};"
+      ],
+      "hunks": [
+        "@@ -1,6 +1,12 @@"
+      ],
+      "currentRawTargetSha256": "dbc1ef7570606449ab0a244a69b4cac9264f54a6ac2d44deb899757312711cd1",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__approved-clinical-admission.test.ts.patch",
+      "patchSha256": "c33dc874fef143ef332fbd6c0d4d583ff70b1348125d55b879190998b6d92dea",
+      "baselineSha256": "3ef65d54edff05a616e2687f61cc66a04ef038c6b1477f7d4c25bcc86513e3d3",
+      "targetSha256": "d04b12144eac84d3cd334578c66246dba7a10dac1b22d273dee9467e41fdd38e",
+      "baselineBytes": 14476,
+      "targetBytes": 14617,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "3ef65d54edff05a616e2687f61cc66a04ef038c6b1477f7d4c25bcc86513e3d3",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-import { GS028_20261007_VARIETY2_TESTED_CONCEPTS } from \"@gamify-surgery/clinical-content\";",
+        "+import { GS028_20261007_LEVEL3_TESTED_CONCEPTS, GS028_20261007_VARIETY2_TESTED_CONCEPTS } from \"@gamify-surgery/clinical-content\";",
+        "-  it(\"keeps the active runtime release limited to reviewed concepts\", () => {",
+        "+  it(\"keeps the unapproved prototype runtime release limited to explicitly admitted concepts\", () => {",
+        "+      ...GS028_20261007_LEVEL3_TESTED_CONCEPTS.map((concept) => concept.id),"
+      ],
+      "hunks": [
+        "@@ -1,5 +1,5 @@",
+        "@@ -152,7 +152,7 @@",
+        "@@ -208,6 +208,7 @@"
+      ],
+      "currentRawTargetSha256": "d04b12144eac84d3cd334578c66246dba7a10dac1b22d273dee9467e41fdd38e",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__clinical-content-withdrawal.test.ts.patch",
+      "patchSha256": "e2c2e1e9ffbc19fbdf9232c15656cb7e3e8f8f9a05bbf1c4800dc1c9d0c1098c",
+      "baselineSha256": "08516fdc603ac797de16602abbc8871779f4083506b83ccd2625a67ee239824a",
+      "targetSha256": "79a07d8abcf026db9e630bda3cf5dba2ee771cbd7e66b6d577b1fa0ead8127c3",
+      "baselineBytes": 6904,
+      "targetBytes": 7012,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "08516fdc603ac797de16602abbc8871779f4083506b83ccd2625a67ee239824a",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "+  GS028_20261007_LEVEL3_CASES,",
+        "+      ...GS028_20261007_LEVEL3_CASES.map((clinicalCase) => clinicalCase.id),"
+      ],
+      "hunks": [
+        "@@ -32,6 +32,7 @@",
+        "@@ -111,6 +112,7 @@"
+      ],
+      "currentRawTargetSha256": "79a07d8abcf026db9e630bda3cf5dba2ee771cbd7e66b6d577b1fa0ead8127c3",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "patchSha256": "8337d983c616bab929b0580859191243e4003c645ede3965228affcead91c79a",
+      "baselineSha256": "bfe1e960f5282814dab621a12b8ab5c141d2393c37ac9b1e8865fe473414e7f8",
+      "targetSha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70",
+      "baselineBytes": 33663,
+      "targetBytes": 33804,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "9e4f1a801713a45d2ebf5c635f3c2e55b833f27944fc86efb822a52d85d79ba5",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(331);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(1008);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith(\"concept.gs028g.\"))).toHaveLength(331);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith(\"case.gs028g.\"))).toHaveLength(1008);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith(\"case.gs028g.\")).flatMap((item) => item.decisionNodes)).toHaveLength(1295);"
+      ],
+      "hunks": [
+        "@@ -238,9 +238,9 @@"
+      ],
+      "currentRawTargetSha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/patient-supply.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__patient-supply.test.ts.patch",
+      "patchSha256": "6655cc58ceceabfbfb22b31d76549b13eb2b605fd4b8ddb658ba491985c0deab",
+      "baselineSha256": "f7203558cf483ee23b0083e27386a578328c3a3335e23c68b9d742840222d1b4",
+      "targetSha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d",
+      "baselineBytes": 18863,
+      "targetBytes": 19009,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "1e4229dd80ccbdb9f8c7f4ddba6b8fcf7726e5c4d09d813760ac11583b8065b9",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-    expect(release.concepts).toHaveLength(331);",
+        "-    expect(release.cases).toHaveLength(1008);",
+        "-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);",
+        "+    expect(release.concepts).toHaveLength(351);",
+        "+    // The current old bank includes the concurrent interpreter pairing:",
+        "+    // 1,008 existing cases plus this batch's 62 new Level-3 cases.",
+        "+    expect(release.cases).toHaveLength(1008 + 62);",
+        "+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1375);"
+      ],
+      "hunks": [
+        "@@ -225,9 +225,11 @@"
+      ],
+      "currentRawTargetSha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__test-choice-order-inventory.test.ts.patch",
+      "patchSha256": "acda8a4247d60344587e50d49adb12f1db68506e941c829479afc13b687b5840",
+      "baselineSha256": "3954e28598feceee3b6270f10fe847cd7ab3ee19624a5dc0b66349a274691f32",
+      "targetSha256": "56178eba7b3e433b736e9f1b330651b6c091a767707a02e8eff8a8b6dfa7f0e2",
+      "baselineBytes": 13175,
+      "targetBytes": 13175,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "3954e28598feceee3b6270f10fe847cd7ab3ee19624a5dc0b66349a274691f32",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-    expect(timed).toHaveLength(1448);",
+        "-    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(129);",
+        "+    expect(timed).toHaveLength(1452);",
+        "+    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(133);"
+      ],
+      "hunks": [
+        "@@ -17,8 +17,8 @@"
+      ],
+      "currentRawTargetSha256": "56178eba7b3e433b736e9f1b330651b6c091a767707a02e8eff8a8b6dfa7f0e2",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts.patch",
+      "patchSha256": "62c83b86689a9dca9bfa308cdcafa3b2d8ce5beab583e5f74c432ab659db9b2d",
+      "baselineSha256": "abbc82e013347f0d6f6e762be2f6efff6b7c094cefb87420837bf5bef0c80efe",
+      "targetSha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2",
+      "baselineBytes": 10240,
+      "targetBytes": 10381,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "abbc82e013347f0d6f6e762be2f6efff6b7c094cefb87420837bf5bef0c80efe",
+      "reason": "Only this Level3 batch's additive registry/stage/execution or inventory edits; concurrent statistics baseline repairs remain in the compatible baseline and are excluded from this patch.",
+      "changedLines": [
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(331);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(1008);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith(\"concept.gs028g.\"))).toHaveLength(331);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith(\"case.gs028g.\"))).toHaveLength(1008);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith(\"case.gs028g.\")).flatMap((item) => item.decisionNodes)).toHaveLength(1295);"
+      ],
+      "hunks": [
+        "@@ -192,9 +192,9 @@"
+      ],
+      "currentRawTargetSha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "docs/handoffs/GS-028_AUTONOMOUS_CONCEPT_PRODUCTION.md",
+      "patchPath": "recovery/patches/docs__handoffs__GS-028_AUTONOMOUS_CONCEPT_PRODUCTION.md.patch",
+      "patchSha256": "713c7ac0d889c3616c233b111dd130dd2a63cab2f1ab402e06e6279adc054a84",
+      "baselineSha256": "59ee5a19f2b16ae2d25e5049acafcd4d67875f3b45ef9830e35a60ac50bdda5f",
+      "targetSha256": "e086ac65664f38363ec17fbdad92531bcdb6fbf7cc1e8c17e5ead3b1ff11647a",
+      "baselineBytes": 28813,
+      "targetBytes": 30461,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "5633252945238c9b7f4047b1096760f176ed14e26065200bf950bc1c679e66a9",
+      "reason": "Only the completed Level3 batch section and its historical-heading rename; other project/handoff history is omitted.",
+      "changedLines": [
+        "-",
+        "-## Latest completed content batch — second October 7 variety batch",
+        "+## Latest completed batch — October 7 Level 3",
+        "+",
+        "+October 7 Level-3 GS-028 batch completed locally:20 new groups /80 variants /",
+        "+62 encounters, including18 two-decision visits. All start at Level3; the current",
+        "+game maximum remains3. Ten subjects gain distinct meanings, including the first",
+        "+two Nervous System objectives. All44 subjects/373 prior meanings and177 live-sheet",
+        "+candidates reviewed. Runtime351/1070/1375 includes the concurrent statistics/ethics",
+        "+overhaul; protected303/900/1183 outside that named lane remains exact to intake.",
+        "+All new clinical content remains needs_clinician_review in the unapproved owner",
+        "+prototype. New clinical69, gameplay258, exact timing inventory6, full clinical",
+        "+583, eight types, boundaries/launcher, balance66, build and desktop/phone",
+        "+browser6 PASS. Full domain snapshot3103/3106; subsequent statistics50/50",
+        "+resolves its inventory failure. Two earlier CT busy-reading checks remain;",
+        "+the existing player dynamic pending-label expectation remains separate. Actual",
+        "+diffs, final hashes, source rights and specific SCORE retrieval limits are in the",
+        "+[receipt](../clinical-workbench/approvals/owner-level3-2026-10-07.md) and",
+        "+[coverage audit](../clinical-workbench/audits/gs028-subject-coverage-level3-2026-10-07.md).",
+        "+Primary Sol executed directly; no workers dispatched under current sole-Claude-",
+        "+manager AGENTS.md. Shared concurrent work preserved. Owned QA4329 stopped;",
+        "+owner profile/saves untouched. START_GAME.cmd → http://127.0.0.1:4173 remains the",
+        "+owner pathway. This batch is LOCAL ONLY; say **\"push to GitHub\"** for audited",
+        "+backup. No commit/push/deployment. Keep GS-028 open for future requested batches.",
+        "+",
+        "+",
+        "+## Historical completed content batch — second October 7 variety batch"
+      ],
+      "hunks": [
+        "@@ -1,7 +1,30 @@"
+      ],
+      "currentRawTargetSha256": "e086ac65664f38363ec17fbdad92531bcdb6fbf7cc1e8c17e5ead3b1ff11647a",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    },
+    {
+      "targetPath": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "patchPath": "recovery/patches/docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "patchSha256": "da9d75672604efd26660f033a84ce221f0d20d3ee5308c812f47c325075cef26",
+      "baselineSha256": "05d91dd01b9c87b53b2ad2f9cd41756bf5aed8aa094e251ce786f3bdb722b23b",
+      "targetSha256": "8c4939e433808e75f6f93838ec876738ac9054bedb3504929751d6d0ce816fb0",
+      "baselineBytes": 360552,
+      "targetBytes": 362254,
+      "historicalPreEditSourceCaptured": true,
+      "preimageKind": "captured_exact_pre_edit",
+      "capturedIntakeSha256": "05d91dd01b9c87b53b2ad2f9cd41756bf5aed8aa094e251ce786f3bdb722b23b",
+      "reason": "Only the completed Level3 batch section and its historical-heading rename; other project/handoff history is omitted.",
+      "changedLines": [
+        "+> GS-028 LEVEL-3 TWENTY-GROUP BATCH COMPLETE LOCALLY (2026-10-07).",
+        "+> October 7 Level-3 GS-028 batch completed locally:20 new groups /80 variants /",
+        "+> 62 encounters, including18 two-decision visits. All start at Level3; the current",
+        "+> game maximum remains3. Ten subjects gain distinct meanings, including the first",
+        "+> two Nervous System objectives. All44 subjects/373 prior meanings and177 live-sheet",
+        "+> candidates reviewed. Runtime351/1070/1375 includes the concurrent statistics/ethics",
+        "+> overhaul; protected303/900/1183 outside that named lane remains exact to intake.",
+        "+> All new clinical content remains needs_clinician_review in the unapproved owner",
+        "+> prototype. New clinical69, gameplay258, exact timing inventory6, full clinical",
+        "+> 583, eight types, boundaries/launcher, balance66, build and desktop/phone",
+        "+> browser6 PASS. Full domain snapshot3103/3106; subsequent statistics50/50",
+        "+> resolves its inventory failure. Two earlier CT busy-reading checks remain;",
+        "+> the existing player dynamic pending-label expectation remains separate. Actual",
+        "+> diffs, final hashes, source rights and specific SCORE retrieval limits are in the",
+        "+> [receipt](../clinical-workbench/approvals/owner-level3-2026-10-07.md) and",
+        "+> [coverage audit](../clinical-workbench/audits/gs028-subject-coverage-level3-2026-10-07.md).",
+        "+> Primary Sol executed directly; no workers dispatched under current sole-Claude-",
+        "+> manager AGENTS.md. Shared concurrent work preserved. Owned QA4329 stopped;",
+        "+> owner profile/saves untouched. START_GAME.cmd → http://127.0.0.1:4173 remains the",
+        "+> owner pathway. This batch is LOCAL ONLY; say **\"push to GitHub\"** for audited",
+        "+> backup. No commit/push/deployment. Keep GS-028 open for future requested batches.",
+        "+"
+      ],
+      "hunks": [
+        "@@ -1,3 +1,25 @@"
+      ],
+      "currentRawTargetSha256": "f37c318e2f676c444fd20533f1734fdfb83659ef9efb4b626e43b1b10817a0b7",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": false
+    },
+    {
+      "targetPath": "docs/project-management/PROJECT_BOARD.md",
+      "patchPath": "recovery/patches/docs__project-management__PROJECT_BOARD.md.patch",
+      "patchSha256": "71fe64b046de7668858af9adcc789ad9188e8519cfd4537b659dc6755d1be876",
+      "baselineSha256": "0c4ed4e8d0646b32d73942221f79bcab0a610a8d2a75d1ad5f28c324ebf815b2",
+      "targetSha256": "ae63c45e16ddc1f965561d114d2d364b10d5987d2422bbbe2e8faa27191fbc96",
+      "baselineBytes": 52075,
+      "targetBytes": 53719,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "e5a2d4e56a5273c01c699b61922fcbfa4d2c52c1f2017d76ed62a550ef3189f3",
+      "reason": "Only the completed Level3 batch section and its historical-heading rename; other project/handoff history is omitted.",
+      "changedLines": [
+        "+",
+        "+## Latest completed batch — October 7 Level 3",
+        "+",
+        "+October 7 Level-3 GS-028 batch completed locally:20 new groups /80 variants /",
+        "+62 encounters, including18 two-decision visits. All start at Level3; the current",
+        "+game maximum remains3. Ten subjects gain distinct meanings, including the first",
+        "+two Nervous System objectives. All44 subjects/373 prior meanings and177 live-sheet",
+        "+candidates reviewed. Runtime351/1070/1375 includes the concurrent statistics/ethics",
+        "+overhaul; protected303/900/1183 outside that named lane remains exact to intake.",
+        "+All new clinical content remains needs_clinician_review in the unapproved owner",
+        "+prototype. New clinical69, gameplay258, exact timing inventory6, full clinical",
+        "+583, eight types, boundaries/launcher, balance66, build and desktop/phone",
+        "+browser6 PASS. Full domain snapshot3103/3106; subsequent statistics50/50",
+        "+resolves its inventory failure. Two earlier CT busy-reading checks remain;",
+        "+the existing player dynamic pending-label expectation remains separate. Actual",
+        "+diffs, final hashes, source rights and specific SCORE retrieval limits are in the",
+        "+[receipt](../clinical-workbench/approvals/owner-level3-2026-10-07.md) and",
+        "+[coverage audit](../clinical-workbench/audits/gs028-subject-coverage-level3-2026-10-07.md).",
+        "+Primary Sol executed directly; no workers dispatched under current sole-Claude-",
+        "+manager AGENTS.md. Shared concurrent work preserved. Owned QA4329 stopped;",
+        "+owner profile/saves untouched. START_GAME.cmd → http://127.0.0.1:4173 remains the",
+        "+owner pathway. This batch is LOCAL ONLY; say **\"push to GitHub\"** for audited",
+        "+backup. No commit/push/deployment. Keep GS-028 open for future requested batches."
+      ],
+      "hunks": [
+        "@@ -1,4 +1,27 @@"
+      ],
+      "currentRawTargetSha256": "74f6ec42908f2dc2307fcef843e7f76f13dd0cc2c557b97ae556767ebf4e414c",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": false
+    },
+    {
+      "targetPath": "docs/project-management/GS-028_AUTONOMOUS_CONCEPT_PRODUCTION.md",
+      "patchPath": "recovery/patches/docs__project-management__GS-028_AUTONOMOUS_CONCEPT_PRODUCTION.md.patch",
+      "patchSha256": "917d7d21123228cb929dd7996deee46a965ee51c58ad60d9689c2579f7127686",
+      "baselineSha256": "2dfa0c932d95ee5e8833e413e08135b3a94912dd938533c73ff52922804e0582",
+      "targetSha256": "a70ff63046d22199cf431bb8b6b27c8300a536e47cffd4f2c1044e55ff51245f",
+      "baselineBytes": 22347,
+      "targetBytes": 23991,
+      "historicalPreEditSourceCaptured": false,
+      "preimageKind": "inferred_compatible_counterfactual_preserving_concurrent_edits",
+      "capturedIntakeSha256": "74661969535be16dab984f0729ca5749f0679798d839db6891b3fabe1d5efd98",
+      "reason": "Only the completed Level3 batch section and its historical-heading rename; other project/handoff history is omitted.",
+      "changedLines": [
+        "+",
+        "+## Latest completed batch — October 7 Level 3",
+        "+",
+        "+October 7 Level-3 GS-028 batch completed locally:20 new groups /80 variants /",
+        "+62 encounters, including18 two-decision visits. All start at Level3; the current",
+        "+game maximum remains3. Ten subjects gain distinct meanings, including the first",
+        "+two Nervous System objectives. All44 subjects/373 prior meanings and177 live-sheet",
+        "+candidates reviewed. Runtime351/1070/1375 includes the concurrent statistics/ethics",
+        "+overhaul; protected303/900/1183 outside that named lane remains exact to intake.",
+        "+All new clinical content remains needs_clinician_review in the unapproved owner",
+        "+prototype. New clinical69, gameplay258, exact timing inventory6, full clinical",
+        "+583, eight types, boundaries/launcher, balance66, build and desktop/phone",
+        "+browser6 PASS. Full domain snapshot3103/3106; subsequent statistics50/50",
+        "+resolves its inventory failure. Two earlier CT busy-reading checks remain;",
+        "+the existing player dynamic pending-label expectation remains separate. Actual",
+        "+diffs, final hashes, source rights and specific SCORE retrieval limits are in the",
+        "+[receipt](../clinical-workbench/approvals/owner-level3-2026-10-07.md) and",
+        "+[coverage audit](../clinical-workbench/audits/gs028-subject-coverage-level3-2026-10-07.md).",
+        "+Primary Sol executed directly; no workers dispatched under current sole-Claude-",
+        "+manager AGENTS.md. Shared concurrent work preserved. Owned QA4329 stopped;",
+        "+owner profile/saves untouched. START_GAME.cmd → http://127.0.0.1:4173 remains the",
+        "+owner pathway. This batch is LOCAL ONLY; say **\"push to GitHub\"** for audited",
+        "+backup. No commit/push/deployment. Keep GS-028 open for future requested batches."
+      ],
+      "hunks": [
+        "@@ -1,4 +1,27 @@"
+      ],
+      "currentRawTargetSha256": "a70ff63046d22199cf431bb8b6b27c8300a536e47cffd4f2c1044e55ff51245f",
+      "targetNormalization": "LF-normalized compatible fixture; exact replay proof refers to those fixture bytes.",
+      "targetMatchesCurrentRaw": true
+    }
+  ],
+  "fixtureRootMeaning": "Local ignored fixtures only; never included in archive. Inferred baselines are not presented as actual historic captures.",
+  "capturedCount": 11,
+  "inferredCount": 12
+}

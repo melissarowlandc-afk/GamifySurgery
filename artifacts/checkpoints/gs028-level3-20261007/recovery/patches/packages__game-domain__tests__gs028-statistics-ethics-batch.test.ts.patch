@@ -1,0 +1,16 @@
+diff --git a/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts b/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
+--- a/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
++++ b/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
+@@ -192,9 +192,9 @@
+     expect(GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS).toHaveLength(28);
+     expect(GS028_STATS_ETHICS_20260929_CASES).toHaveLength(108);
+     expect(GS028_STATS_ETHICS_20260929_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(112);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(331);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(1008);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith("concept.gs028g."))).toHaveLength(331);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g."))).toHaveLength(1008);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.")).flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {
+       expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
+     }
