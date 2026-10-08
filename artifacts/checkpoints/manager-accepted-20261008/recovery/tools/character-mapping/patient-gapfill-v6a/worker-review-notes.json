@@ -1,0 +1,46 @@
+{
+  "reviewer": "sol-v6a-worker",
+  "scope": "Worker visual QA only; manager visual acceptance and browser validation pending.",
+  "beforeGenerationExamples": [
+    "future-roster20-v5.017",
+    "future-roster20-v5.018",
+    "future-roster20-v5.019",
+    "patient-demographics20-v4.001",
+    "patient-demographics20-v4.007",
+    "patient-demographics20-v4.019",
+    "patient-women20-v3.001",
+    "patient-women20-v3.010"
+  ],
+  "styleReference": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+  "promptTemplate": "tools/character-mapping/future-roster20-v5/prompts/018/",
+  "styleAssessment": "The normalized stills match the recent v3/v4/v5 compact head/body proportions, dark stepped contours, muted clothing palette, eye rendering, directional shading and pixel texture. Reviewed native sheets, light/dark pose proofs, all four existing-band boards, all 20 nearest-six comparisons, 80 seated-contact overlays and all 20 south-facing chair proofs.",
+  "limitations": [
+    "Style similarity remains a visual judgment; hashes, RMSE and geometry checks do not establish artistic equivalence. Some early legacy catalog sprites have smaller heads and taller bodies than the recent reference cohorts, so they are included in comparisons without changing the established v5 normalization.",
+    "007's regenerated native sheet looks slightly smoother at full source size; its normalized dark contour and shading remain consistent with the recent cohorts. Manager should inspect this identity closely.",
+    "The draped skirt/cardigan/culotte contacts for 003, 006, 007, 016 and 017 are manually authored estimates of support placement. South-facing chair composites are provided; no approved east/west/north chair support exists in this proof fixture.",
+    "Stylized faces do not demonstrate exact age. Sex and age remain explicit identity metadata within the assigned bands.",
+    "Only alpha-1 fringe noise occurs outside normalized footprints or on output borders. Native pixels are preserved; the manager's acceptance of this exact alpha report remains pending."
+  ],
+  "identities": {
+    "001": { "features": "Medium build; deep brown skin; copper-tipped short black twists; gold square studs; plum tied jumpsuit; cream sneakers.", "distinction": "Copper-tipped tapered hair, jumpsuit waist tie and continuous plum outfit distinguish this design from the existing curly-haired and cardigan-wearing women." },
+    "002": { "features": "Slim; fair warm skin; two low auburn braids; blue oval glasses; khaki utility vest over powder-blue blouse; slate trousers; tan boots.", "distinction": "The two auburn braids, blue glasses and pocketed vest differ from the closest v5 single dark braid and orange blouse." },
+    "003": { "features": "Petite; light olive skin; chin-length brown bob with broad white forelock; slate pinafore over mustard sleeves; maroon tights; navy flats.", "distinction": "Broad white forelock and contrasting pinafore/tights separate this look from the existing brown bob with red glasses and patterned skirt." },
+    "004": { "features": "Full figure; medium brown skin; shoulder-length gray-streaked corkscrew curls; teal square glasses; dusty-rose cardigan; sage wide-leg trousers; plum flats.", "distinction": "Longer streaked curls, teal glasses and wide-leg sage trousers differ from the existing short gray curls and lavender cardigan/skirt." },
+    "005": { "features": "Athletic; fair skin; asymmetric silver pixie; navy track top with ochre sleeve stripes; rust cargo trousers; gray trainers.", "distinction": "Asymmetric silver pixie, stripe sleeves and rust cargos differ from the existing pale cropped hair and plain green zip top." },
+    "006": { "features": "Sturdy; tan skin; high salt-and-pepper twisted bun; red rectangular glasses; cream cable-knit sweater with lilac V trim; petrol-blue culottes; brown loafers.", "distinction": "High twisted bun, red frames, cable texture and cropped wide trousers differ from the same-band short-curl/cardigan designs." },
+    "007": { "features": "Full figure; deep dark brown skin; smoothly shaved head; gold hoops; sage long cardigan over peach top; plum trousers; navy slip-ons.", "distinction": "Shaved head with hoops and a long sage outer layer is a distinct silhouette in the existing female middle-aged pool." },
+    "008": { "features": "Lean; olive skin; bald head; small dark chin beard; dark round glasses; coral henley; light gray chinos; charcoal boots.", "distinction": "Round glasses, isolated chin beard, coral top and light trousers distinguish it from the existing bald men with gray facial hair or navy/plum tops." },
+    "009": { "features": "Broad; deep brown skin; short black twists with gray flecks; clean-shaven; ochre quilted vest over teal sleeves; maroon trousers; white sneakers.", "distinction": "Gray-flecked cropped twists and ochre/teal/maroon layering differ from the existing brown curls, beard and orange/navy vest combination." },
+    "010": { "features": "Slim; fair skin; dark side-parted hair with silver forelock and clipped sides; navy rectangular glasses; lavender overshirt; charcoal tee; olive trousers; navy trainers.", "distinction": "Silver forelock, undercut, clean-shaven face and lavender overshirt separate it from the existing gray swept hair, mustache and green zip top." },
+    "011": { "features": "Stocky; medium tan skin; neck-length salt-and-pepper waves; thick dark mustache; oatmeal knit polo with dark-red collar; cobalt trousers; red loafers.", "distinction": "Neck-length waves, mustache-only face, light knit top and cobalt trousers provide a different silhouette and palette from nearby bearded men." },
+    "012": { "features": "Average build; dark brown skin; cropped silver curls; fine bronze oval glasses; clean-shaven; taupe chore jacket over olive top; indigo jeans; cream slip-ons.", "distinction": "Silver crop, subtle oval glasses and taupe jacket differ from the nearest short gray curls with no glasses and blue check shirt.", "realizationNote": "The intended very short silver buzz cut rendered as a compact curly crop. The final appearance is recorded here; no identity or band changed." },
+    "013": { "features": "Full figure; fair warm skin; bald crown with white curly fringe; green round glasses; clean-shaven; teal zip top over salmon collar; brown corduroy trousers; mustard sneakers.", "distinction": "White curly fringe, green frames, teal/salmon layering and mustard shoes distinguish this bald-crown design from the existing bald and gray-bearded men.", "realizationNote": "The planned white side hair rendered as a rounded curly fringe rather than swept hair; this is accepted for worker QA and remains subject to manager review." },
+    "014": { "features": "Slim; medium olive skin; asymmetric black pixie with purple streak; silver hoops; peach sweatshirt; ivory wide-leg trousers; green sneakers.", "distinction": "Purple-streaked pixie and peach/ivory palette differ from the existing buns, bobs, braids and orange/lavender layers." },
+    "015": { "features": "Full figure; deep brown skin; long black locs in a high burgundy-tied ponytail; gold round glasses; navy overalls over mustard-and-cream check sleeves; burgundy boots.", "distinction": "High loc ponytail, round gold frames, overalls and check sleeves separate it from the existing long braids with a green vest and plain gray sleeves." },
+    "016": { "features": "Medium build; fair skin; dark-blond shoulder-length hair with blunt bangs and half-up knot; cobalt quarter-zip; beige knee skirt; black tights; white sneakers.", "distinction": "Blond bangs with a half-up knot and the cobalt/beige/tights combination differ from the existing dark full bun with coral dress and denim jacket." },
+    "017": { "features": "Petite; tan skin; black blunt bob with silver temples; violet cat-eye glasses; crimson long cardigan; ochre knit top; teal trousers; black loafers.", "distinction": "Silver temple panels, violet glasses and crimson/ochre/teal layers differ from same-band short curls, headbands and check shirts." },
+    "018": { "features": "Athletic; fair warm skin; copper quiff with clipped sides; clean-shaven; gray-blue zip jacket with cream shoulders; russet trousers; gray loafers.", "distinction": "Copper quiff, lack of glasses/facial hair and shoulder-panel jacket separate it from the nearest blond spiky hair, glasses and mustard sweater.", "realizationNote": "The zip-front casual shirt was rendered as a light jacket; outfit consistency is maintained across all eight poses." },
+    "019": { "features": "Full figure; dark brown skin; tall rounded afro; silver round glasses; clean-shaven; cinnamon cable-knit sweater with ivory collar; pale moss trousers; black lace-ups.", "distinction": "Rounded afro, silver frames, cable knit and moss trousers differ from the existing short twists with beard and burgundy hoodie." },
+    "020": { "features": "Slim; golden brown skin; black high bun with shaved sides; short goatee and fine mustache; cream hoodie over teal tee; brick-red trousers; navy high-tops.", "distinction": "High bun, shaved sides, narrow goatee and cream/teal/brick palette differ from the existing short-haired and broader-bearded adult men." }
+  }
+}

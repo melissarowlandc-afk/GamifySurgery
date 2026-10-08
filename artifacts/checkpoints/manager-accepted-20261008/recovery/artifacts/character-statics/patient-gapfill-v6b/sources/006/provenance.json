@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-original-cane-rear-wrong-hand",
+  "reason": "North standing and seated cane switched to anatomical right; restore anatomical left-hand continuity.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a11979-f32e-7152-9b58-97a941d9b242\\exec-b38fa8af-b9f6-4e07-a7b2-75d93105aabe.png",
+    "sha256": "bde66d79a2a2bf20a3a3d506bde7c9465df4c803ef0a7f866112da022d3437c9"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "bde66d79a2a2bf20a3a3d506bde7c9465df4c803ef0a7f866112da022d3437c9",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\004\\source.png",
+      "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6b\\sources\\006\\history\\original-cane-rear-wrong-hand\\source.png",
+      "sha256": "2f5db9a53859371bace1197d53a29d2179f098609b2e9e993056cde10a52543e",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "e1a1a7c734f1befcd3a3ac12c15d586a5f5422b4c8c2322347bfde4d4cb066c0"
+  }
+}

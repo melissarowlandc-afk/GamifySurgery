@@ -1,0 +1,30 @@
+--- a/packages/balance-config/src/prototype-alerts.ts
++++ b/packages/balance-config/src/prototype-alerts.ts
+@@ -1216,6 +1216,10 @@
+     "The thermostat has opened a new ticket. It remains emotionally unresolved.",
+     [],
+   ],
++  ["38", "The Reading Room has reviewed the lighting. The findings are guarded.", [{ kind: "room_exists", roomDefinitionId: "room.reading" }]],
++  ["39", "The Operating Room has requested fewer meetings. The request was tabled.", [{ kind: "room_exists", roomDefinitionId: "room.ambulatory_or" }]],
++  ["40", "The Pharmacy has labeled the label maker. Compliance is improving.", [{ kind: "room_exists", roomDefinitionId: "room.pharmacy" }]],
++  ["41", "The Laboratory has received a specimen of optimism. Processing is delayed.", [{ kind: "room_exists", roomDefinitionId: "room.laboratory" }]],
+ ] as const satisfies readonly [
+   string,
+   string,
+@@ -1231,7 +1235,7 @@
+       title: "Around the clinic",
+       body,
+       eligibility: [
+-        { kind: "facility_level", levels: [0, 1, 2] },
++        { kind: "facility_level", levels: [0, 1, 2, 3] },
+         ...contextualEligibility,
+       ],
+       cooldownMinutes: 30,
+@@ -1336,6 +1340,7 @@
+   suppressedEventTypes: [
+     "operating_expense",
+     "clinical_decision_recorded",
++    "employee_discussion_decision",
+     "encounter_settled",
+     "emergency_glp1_consultation",
+     "development_money_added",

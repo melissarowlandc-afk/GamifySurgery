@@ -1,0 +1,63 @@
+--- a/packages/clinical-content/src/schema.ts
++++ b/packages/clinical-content/src/schema.ts
+@@ -11,6 +11,7 @@
+     id: stableIdSchema,
+     label: z.string().min(1).max(240),
+     isCorrect: z.boolean(),
++    rationale: z.string().min(1).max(1_000).optional(),
+     /**
+      * Optional operational preview for a choice that requests a timed service.
+      *
+@@ -101,6 +102,35 @@
+   })
+   .strict();
+ 
++/** Small, independently authored teaching exhibits; optional on legacy saves. */
++export const caseExhibitSchema = z.discriminatedUnion("kind", [
++  z.object({
++    kind: z.literal("table"),
++    caption: z.string().min(1).max(240),
++    columnHeaders: z.array(z.string().min(1).max(240)).min(1).max(12),
++    rowHeaders: z.array(z.string().min(1).max(240)).min(1).max(12),
++    cells: z.array(z.array(z.string().max(500)).min(1).max(12)).min(1).max(12),
++  }).strict().superRefine((table, context) => {
++    if (table.cells.length !== table.rowHeaders.length ||
++        table.cells.some((row) => row.length !== table.columnHeaders.length)) {
++      context.addIssue({ code: "custom", message: "Exhibit cells must match the row and column headers.", path: ["cells"] });
++    }
++  }),
++  z.object({
++    kind: z.literal("keyValue"),
++    caption: z.string().min(1).max(240).optional(),
++    items: z.array(z.object({
++      label: z.string().min(1).max(240),
++      value: z.string().min(1).max(500),
++    }).strict()).min(1).max(20),
++  }).strict(),
++  z.object({
++    kind: z.literal("abstract"),
++    title: z.string().min(1).max(240),
++    body: z.string().min(1).max(2_000),
++  }).strict(),
++]);
++
+ export const decisionNodeSchema = z
+   .object({
+     id: stableIdSchema,
+@@ -121,6 +151,8 @@
+     answerChoices: z.array(answerChoiceSchema).min(2).max(8),
+     shuffleAnswers: z.boolean(),
+     explanation: z.string().min(1).max(2_000),
++    teachingPoint: z.string().min(1).max(1_000).optional(),
++    exhibit: caseExhibitSchema.optional(),
+     sourceLabels: z.array(z.string().min(1).max(240)).min(1),
+     resultGateAfter: resultGateSchema.nullable(),
+     terminalDispositions: z.array(terminalOutcomeDispositionSchema),
+@@ -687,6 +719,7 @@
+   });
+ 
+ export type AnswerChoice = z.infer<typeof answerChoiceSchema>;
++export type CaseExhibit = z.infer<typeof caseExhibitSchema>;
+ export type AnswerChoiceTimingClassification = z.infer<
+   typeof answerChoiceTimingClassificationSchema
+ >;

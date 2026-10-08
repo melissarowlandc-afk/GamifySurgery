@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,copyFileSync,existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {root,hash} from './build-roster.mjs';
+const [number,stage,nativePath]=process.argv.slice(2);
+assert(/^0(0[1-9]|1[0-4])$/.test(number)); assert(['1','2'].includes(stage));
+assert(existsSync(nativePath),'Native built-in output does not exist');
+const stage1=stage==='1',dir=resolve(root,'sources',number),name=stage1?'stage1-standing-cardinals.png':'source.png';
+const prefix=stage1?'stage1-':'';
+const args=JSON.parse(readFileSync(resolve(dir,prefix+'tool-args.json'),'utf8'));
+assert(args.transparent_background===true && args.referenced_image_paths.length===(stage1?1:2));
+const destination=resolve(dir,name); assert(!existsSync(destination),'Preserve prior generation before replacing an active source');
+copyFileSync(nativePath,destination);
+const sha256=hash(destination); assert.equal(hash(nativePath),sha256);
+writeFileSync(resolve(dir,prefix+'provenance.json'),JSON.stringify({status:'candidate_pending_manager_visual_review;not-approved;not-runtime-integrated',toolMode:'built-in-image_gen',stage:Number(stage),nativeOutput:{path:nativePath,sha256},workspaceCopy:{path:name,sha256,copyFidelity:'byte-exact'},references:args.referenced_image_paths.map((path,i)=>({path,sha256:hash(path),role:i===0?'style-layout-pose-reference':'identity-outfit-reference'})),prompt:{path:prefix+'exact-prompt.txt',sha256:hash(resolve(dir,prefix+'exact-prompt.txt'))}},null,2)+'\n');
+console.log(JSON.stringify({status:'PASS',number,stage,sha256,copyFidelity:'byte-exact'}));

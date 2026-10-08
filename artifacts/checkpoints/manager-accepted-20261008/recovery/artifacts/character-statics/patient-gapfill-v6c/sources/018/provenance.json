@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-adult-first-tight-rowgap",
+  "reason": "Adult appearance accepted by worker; original adult revision rejected by unchanged extractor because figure rows overlap. Preserve and correct the source layout only.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a119af-929b-75f0-be9d-7986d6f54e61\\exec-b19576ea-24af-4c7c-911f-95ea93948c8f.png",
+    "sha256": "4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\004\\source.png",
+      "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6c\\sources\\018\\history\\adult-first-tight-rowgap\\source.png",
+      "sha256": "03d2b562aab145000a5f8d945c4ffbab641a1e8a5b4c85db85d172ac4f8d82c9",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "7cd1bebade6a4ab9a16bdc007beb979055ded2ba124871b9e7c8c30237426c7e"
+  }
+}

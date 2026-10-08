@@ -1,0 +1,173 @@
+--- before/tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs
++++ after/tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs
+@@ -7,6 +7,7 @@
+ import {fileURLToPath} from 'node:url';
+ import {loadCatalog} from '../patient-gapfill-v6a/runtime-baseline.mjs';
+ export {loadCatalog} from '../patient-gapfill-v6a/runtime-baseline.mjs';
++import {expectedCatalogSource,readIntegrationBaseline,runtimeIntegrationState,verifyAppendOnlyCatalog,verifyAppendOnlyRegistry} from './runtime-contract.mjs';
+ const tool=resolve(fileURLToPath(new URL('.',import.meta.url))),repo=resolve(tool,'../../..');
+ const baselineFile=resolve(tool,'runtime-baseline.json');
+ const json=file=>JSON.parse(readFileSync(file,'utf8'));
+@@ -72,15 +73,24 @@
+   const registry=json(registryFile),catalog=loadCatalog();
+   for(const item of baseline.priorRegistry)assert.deepEqual(registry.characters.find(c=>c.id===item.id),item,'prior registry metadata changed '+item.id);
+   for(const item of baseline.priorCatalog)assert.deepEqual(catalog.find(c=>c.stillId===item.stillId),item,'prior catalog metadata changed '+item.stillId);
+-  const allowed=new Set([...baseline.stableIds,...baseline.allowedAddedIds]);
+-  assert(registry.characters.every(c=>allowed.has(c.id)),'unexpected runtime identity outside authorized concurrent v6a lane');
+-  assert(catalog.every(c=>allowed.has(c.stillId)),'unexpected catalog identity outside authorized concurrent v6a lane');
++  const approved=existsSync(resolve(tool,'owner-approval.json'));
++  const ownIds=approved?json(resolve(tool,'roster.json')).identities.map(c=>c.stableId):[];
++  const allowed=new Set([...baseline.stableIds,...baseline.allowedAddedIds,...ownIds]);
++  assert(registry.characters.every(c=>allowed.has(c.id)),'unexpected runtime identity outside authorized v6a/v6b lanes');
++  assert(catalog.every(c=>allowed.has(c.stillId)),'unexpected catalog identity outside authorized v6a/v6b lanes');
+   assert.equal(new Set(registry.characters.map(c=>c.id)).size,registry.characters.length);
+   assert.equal(new Set(catalog.map(c=>c.stillId)).size,catalog.length);
++  if(registry.characters.some(c=>ownIds.includes(c.id))||catalog.some(c=>ownIds.includes(c.stillId))){
++    assert(approved);verifyAppendOnlyRegistry();verifyAppendOnlyCatalog();
++    assert.equal(readFileSync(resolve(repo,'packages/game-domain/src/characterStillCatalog.ts'),'utf8'),expectedCatalogSource());
++  }else if(approved){
++    verifyAppendOnlyRegistry({allowBefore:true});verifyAppendOnlyCatalog({allowBefore:true});
++  }
+   return baseline;
+ }
+ 
+ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+   const b=captureRuntimeBaseline();const registry=json(registryFile);
+-  console.log(JSON.stringify({status:'PASS',preservedIdentities:b.identityCount,preservedAssets:b.assetCount,priorSelectablePatients:b.selectablePatientCount,protectedFiles:b.protectedFiles.length,pinnedV6aPoses:b.v6aAssets.length,pinnedV6aNativeSources:b.v6aNative.length,currentRuntimeIdentities:registry.characters.length,concurrentV6aAppendAllowed:true,runtimeReady:false,ownerApproval:'pending'}));
++  const integration=runtimeIntegrationState(),before=readIntegrationBaseline();
++  console.log(JSON.stringify({status:'PASS',preservedIdentities:before.identityCount,preservedAssets:before.assetCount,priorSelectablePatients:before.patientCount,generationPinnedIdentities:b.identityCount,generationPinnedAssets:b.assetCount,protectedFiles:b.protectedFiles.length,pinnedV6aPoses:b.v6aAssets.length,pinnedV6aNativeSources:b.v6aNative.length,currentRuntimeIdentities:registry.characters.length,concurrentV6aAppendAllowed:true,runtimeReady:integration.ready,ownerApproval:integration.ownerApproval}));
+ }
+--- before/tools/character-mapping/patient-gapfill-v6b/validate-roster.mjs
++++ after/tools/character-mapping/patient-gapfill-v6b/validate-roster.mjs
+@@ -1,4 +1,5 @@
+ import assert from 'node:assert/strict';
++import { runtimeIntegrationState } from './runtime-contract.mjs';
+ import { createHash } from 'node:crypto';
+ import { existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+ import { isAbsolute, relative, resolve } from 'node:path';
+@@ -233,7 +234,7 @@
+ }
+ verifyRuntimeBaseline();
+ assert.equal(hash(resolve(tool, 'review-acceptance.json')), ledgerSha256, 'root ledger changed during validation; rebuild the review snapshot');
+-const runtime = integration;
++const runtime = runtimeIntegrationState();
+ const result = {
+   status: 'PASS', requireComplete: complete, requireRootReview: reviewed,
+   identities: staging.entries.length, poses: staging.entries.length * 8, reportedIssues: staging.issues.length,
+--- before/tools/character-mapping/patient-gapfill-v6b/validate-placement-qa.mjs
++++ after/tools/character-mapping/patient-gapfill-v6b/validate-placement-qa.mjs
+@@ -1,4 +1,5 @@
+ import assert from 'node:assert/strict';
++import { runtimeIntegrationState } from './runtime-contract.mjs';
+ import { createHash } from 'node:crypto';
+ import { existsSync, readFileSync } from 'node:fs';
+ import { resolve } from 'node:path';
+@@ -116,5 +117,5 @@
+   for (const proof of ledger.chairPlacementReview.pages) assert.equal(hash(resolve(repo, proof.path)), proof.sha256, 'root-reviewed chair board changed');
+ }
+ verifyRuntimeBaseline();
+-const runtime = integration;
++const runtime = runtimeIntegrationState();
+ console.log(JSON.stringify({ status: 'PASS', diagnostics: placement.diagnostics.length, requireRootReview: reviewed, runtimeReady: runtime.ready, ownerApproval: runtime.ownerApproval, frozenChairEvidenceUnchanged: true, schemaVersion: placement.schemaVersion }));
+--- before/tools/character-mapping/patient-gapfill-v6b/validate-worker-review.mjs
++++ after/tools/character-mapping/patient-gapfill-v6b/validate-worker-review.mjs
+@@ -1,4 +1,5 @@
+ import assert from 'node:assert/strict';
++import { runtimeIntegrationState } from './runtime-contract.mjs';
+ import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+ import { dirname, isAbsolute, relative, resolve } from 'node:path';
+ import { createCanvas } from '@napi-rs/canvas';
+@@ -206,11 +207,14 @@
+   assert(main.includes('../placement-qa/' + identity.number + '-front-desk-chair-placement.png'), 'gallery missing chair proof link');
+ }
+ verifyRuntimeBaseline();
++const runtime = runtimeIntegrationState();
+ const result = {
+   status: 'PASS', identities: 20, poses: 160, authoredSeatedContacts: 80, reviewedChairProofs: 20,
+   existingSameBandIdentities: 97, existingComparisons, withinBatchPairs: within.length, nearDuplicateFlags: flags.length,
+-  staticGalleryPages: pages.length, mainGalleryImages: 60, managerVisualAcceptance: 'pending', browserValidation: 'not-run-left-to-manager',
++  staticGalleryPages: pages.length, mainGalleryImages: 60,
++  managerVisualAcceptance: runtime.authorized ? 'approved' : 'pending',
++  browserValidation: runtime.authorized ? 'manager-accepted-gallery-run-recorded-in-program-plan' : 'not-run-left-to-manager',
+ };
+ mkdirSync(resolve(root, 'validation'), {recursive:true});
+-writeFileSync(resolve(root, 'validation/worker-review-results.json'), JSON.stringify({...result, staticLinks, comparisonAlgorithm: comparison.algorithm, alphaSummary: alpha.summary, visualReceipt: {path: 'artifacts/character-statics/patient-gapfill-v6b/worker-review/visual-review.json', sha256: hash(resolve(root, 'worker-review/visual-review.json'))}}, null, 2) + '\n');
++if (!process.argv.includes('--check-only')) writeFileSync(resolve(root, 'validation/worker-review-results.json'), JSON.stringify({...result, staticLinks, comparisonAlgorithm: comparison.algorithm, alphaSummary: alpha.summary, visualReceipt: {path: 'artifacts/character-statics/patient-gapfill-v6b/worker-review/visual-review.json', sha256: hash(resolve(root, 'worker-review/visual-review.json'))}}, null, 2) + '\n');
+ console.log(JSON.stringify(result));
+--- before/tools/character-mapping/patient-gapfill-v6b/validate-all-catalog-comparison.mjs
++++ after/tools/character-mapping/patient-gapfill-v6b/validate-all-catalog-comparison.mjs
+@@ -1,6 +1,7 @@
+ // Independently reconstruct the complete comparison inventory from preservation
+ // snapshots and accepted v6a artifacts, then recalculate every comparison score.
+ import assert from 'node:assert/strict';
++import {runtimeIntegrationState} from './runtime-contract.mjs';
+ import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
+ import {resolve} from 'node:path';
+ import {createCanvas} from '@napi-rs/canvas';
+@@ -47,5 +48,6 @@
+ for(const b of manifest.catalogBoards)assert.equal(hash(resolve(repo,b.proof.path)),b.proof.sha256);
+ const html=readFileSync(resolve(directory,'all-catalog.html'),'utf8');assert.equal([...html.matchAll(/<img\b/gi)].length,20);
+ for(const m of html.matchAll(/(?:src|href)="([^"#]+)"/g)){assert(!/^[a-z]+:|^\/\//i.test(m[1]));assert(existsSync(resolve(directory,m[1])));}
+-const result={status:'PASS',originalCatalogIdentities:245,acceptedV6aIdentities:20,allCatalogIdentities:265,independentlyRecomputedCatalogComparisons:pairs,withinBatchPairs:within.length,nearDuplicateFlags:flags.length,minimumCatalogRmse:Math.min(...manifest.entries.map(e=>e.nearestSix[0].rmse)),minimumWithinBatchRmse:Math.min(...within.map(p=>p.rmse)),managerVisualAcceptance:'pending',browserValidation:'not-run-left-to-manager'};
+-mkdirSync(resolve(root,'validation'),{recursive:true});writeFileSync(resolve(root,'validation/all-catalog-results.json'),JSON.stringify(result,null,2)+'\n');verifyRuntimeBaseline();console.log(JSON.stringify(result));
++const runtime=runtimeIntegrationState();
++const result={status:'PASS',originalCatalogIdentities:245,acceptedV6aIdentities:20,allCatalogIdentities:265,independentlyRecomputedCatalogComparisons:pairs,withinBatchPairs:within.length,nearDuplicateFlags:flags.length,minimumCatalogRmse:Math.min(...manifest.entries.map(e=>e.nearestSix[0].rmse)),minimumWithinBatchRmse:Math.min(...within.map(p=>p.rmse)),managerVisualAcceptance:runtime.authorized?'approved':'pending',browserValidation:runtime.authorized?'manager-accepted-gallery-run-recorded-in-program-plan':'not-run-left-to-manager'};
++mkdirSync(resolve(root,'validation'),{recursive:true});if(!process.argv.includes('--check-only'))writeFileSync(resolve(root,'validation/all-catalog-results.json'),JSON.stringify(result,null,2)+'\n');verifyRuntimeBaseline();console.log(JSON.stringify(result));
+--- before/tools/character-mapping/patient-gapfill-v6b/README.md
++++ after/tools/character-mapping/patient-gapfill-v6b/README.md
+@@ -95,3 +95,55 @@
+ including all-catalog comparisons, using fresh file-gallery contexts. It does
+ not open the game or change its origin/storage. No integration, promotion,
+ deployment or publication command is provided in this generation lane.
++
++## Manager-authorized runtime integration (2026-10-08)
++
++The manager accepted v6b under the owner's delegated visual approval in
++`docs/execplans/character-gapfill-v6-20261007.md`. The separate
++`owner-approval.json` binds that exact acceptance statement, the owner's exact
++instruction, 20 sources, 160 packaged poses, 80 authored contacts, alpha report,
++gallery and worker review. Historical pending labels and art evidence stay
++byte-identical; approval and runtime receipts report the current status.
++
++This lane follows the proven v5/v6a append-only flow. Capture the immutable
++**live** baseline before every runtime/test edit: v6a is already integrated, so
++it includes all 265 identities, 2,150 public assets, 140 patients, anchors and
++prior provenance. The original generation baseline remains frozen at 245
++identities plus pinned accepted v6a sources/poses; it is not rebased.
++
++```text
++node tools/character-mapping/patient-gapfill-v6b/bind-owner-approval.mjs
++node tools/character-mapping/patient-gapfill-v6b/capture-integration-baseline.mjs
++node tools/character-mapping/patient-gapfill-v6b/promote-runtime.mjs
++python tools/character-mapping/patient-gapfill-v6b/update-runtime-tests.py
++node tools/character-mapping/patient-gapfill-v6b/validate-runtime-integration.mjs
++node tools/character-mapping/patient-gapfill-v6b/validate-promotion-rerun.mjs
++python tools/character-mapping/patient-gapfill-v6b/audit-scoped-changes.py
++```
++
++Promotion preflights complete roster, placement, worker review and all-catalog
++checks without rewriting review outputs. It refuses source drift, unrelated
++runtime edits, replacement PNG bytes or changed provenance claims. It appends
++only `patient-gapfill-v6b.001`–`.020` and the exact accepted PNGs beneath
++`apps/player/public/art/characters/patient-gapfill-v6b/`. Result: 285 identities,
++2,310 assets and 160 adult patients. The new patients enter only their exact
++sex/age-band pools. `appearance.ts` and existing occupancy/LRU/saved-ID logic
++remain byte-identical. Repeated promotion performs no input/runtime writes.
++
++Only catalog/registry test counts increase. Additional integration assertions
++check sex/age boundaries, complete pool exhaustion, occupied/free/LRU reuse,
++saved IDs, accepted pose hashes and authored contacts. Full package validation
++uses this batch's native test-only config, leaving shared Vite configuration
++unchanged:
++
++```text
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --configLoader=native
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 --config ../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs --configLoader=native
++npm.cmd run typecheck
++```
++
++`run-validation.py <log-name> <command> ...` records exact combined stdout/stderr,
++exit codes, timestamps and log hashes in this batch's `validation/` directory.
++The manager reviews the filesystem diff and performs canonical HTTP delivery
++checks. The owner pathway stays `START_GAME.cmd` → `http://127.0.0.1:4173`, same
++persistent profile and saves. This lane does not authorize Git or publication.

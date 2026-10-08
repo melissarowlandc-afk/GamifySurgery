@@ -1,0 +1,47 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -382,6 +382,8 @@
+ }
+ 
+ export interface DomainContext {
++  /** Session-only storage failure gate; never serialized as campaign state. */
++  guidanceTipsDeliveryBlocked?: boolean;
+   clinicalRelease: SyntheticClinicalRelease;
+   balanceRelease: PrototypeBalanceRelease;
+ }
+@@ -1349,6 +1351,8 @@
+ }
+ 
+ export interface AlertHumorState {
++  /** Additive namespace: absent in older campaigns until safely initialized. */
++  guidanceTips?: import("./guidance-tip-types").GuidanceTipsState;
+   /** Facility tick at which the player acknowledged the Alerts tutorial. */
+   alertsTutorialAcknowledgedAtTick: number | null;
+   /** Facility-time deadline; null keeps ambient messages locked. */
+@@ -1420,6 +1424,17 @@
+   facilityTick: number;
+   encounterId: string | null;
+   message: string;
++  /** Additive rollover snapshot; older events have only their original text. */
++  clinicDaySummary?: {
++    dayNumber: number;
++    patientsSeen: number;
++    moneyEarnedCents: number;
++    satisfactionPercent: number;
++    reviewLine?: string;
++    partial?: boolean;
++    completedTotal: number;
++    earnedTotalCents: number;
++  };
+   priority?: "critical" | "action_required" | "informational" | "flavor";
+   definitionId?: string;
+   alertCategory?: PrototypeAlertCategory;
+@@ -1535,6 +1550,8 @@
+    * removed from live state. Optional for save compatibility.
+    */
+   retiredServiceHistory?: RetiredServiceHistory;
++  /** Daily totals survive eviction of the bounded raw event history. */
++  clinicDaySummaryBaseline?: { facilityTick: number; completedTotal: number; earnedTotalCents: number };
+ }
+ 
+ export interface RetiredServiceHistory {

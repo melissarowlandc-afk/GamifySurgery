@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/ResourceBar.tsx
++++ b/apps/player/src/ui/ResourceBar.tsx
+@@ -14,6 +14,7 @@
+   onSimulationSpeedChange?: (speed: SimulationSpeed) => void;
+   onSaveAndClose?: () => void;
+   endControls?: ReactNode;
++  headline?: ReactNode;
+ }
+ 
+ function clampPercent(value: number | undefined): number {
+@@ -62,6 +63,7 @@
+   onSimulationSpeedChange,
+   onSaveAndClose,
+   endControls,
++  headline,
+ }: ResourceBarProps) {
+   const levelLabel = view.levelLabel ?? view.facilityLevelLabel;
+   const controlledMode = buildMode
+@@ -234,6 +236,7 @@
+           {endControls}
+         </div>
+       </div>
++      {headline}
+     </header>
+   );
+ }

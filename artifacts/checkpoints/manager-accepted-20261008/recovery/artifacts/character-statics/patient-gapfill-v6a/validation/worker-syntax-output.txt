@@ -1,0 +1,8 @@
+Additional helper syntax check
+The initial batched child-process syntax checker could not launch Node children (spawnSync EPERM). No files were parsed by that attempt. The replacement parses all modules in the current process using Node's native SourceTextModule parser.
+
+exit code: 0
+{"status":"PASS","syntaxChecked":17,"method":"in-process native module parser;no child processes","failures":[]}
+(node:36296) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+

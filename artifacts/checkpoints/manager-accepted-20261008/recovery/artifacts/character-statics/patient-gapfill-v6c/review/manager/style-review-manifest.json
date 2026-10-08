@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "patient-gapfill-v6c-style-review/v1",
+  "scope": "Accepted v6b above / v6c candidates below with unchanged 160x320 canvases and scale. Five dark sheets contain all 152 normalized poses. Review compositing only.",
+  "comparisonBoard": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/v6b-top-v6c-bottom.png",
+    "sha256": "5a323bad3a4fb0e7de5e1f546e54daaf594a6e4bff03ef1a0ca03379078184f8"
+  },
+  "comparisons": [
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/001/stand-south.png",
+        "sha256": "d2277d74eb38cec1f1ed9768f0d1f00dd872d0f8a9414312a32411e37acfd6ae"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/002/stand-south.png",
+        "sha256": "0c46a6643b82c347f1429fd12194c037bcff2606e39ec412d333ace3e5c7c27a"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/003/stand-south.png",
+        "sha256": "bb06748cd80d13c7defbb381f6b99ead9e84d92ce50d9ecb42149319fbee559c"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/006/stand-south.png",
+        "sha256": "8bf3d7e57966b6dbd878fec6a07868696ff3029d47405fc44a84b50fcbf72dba"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/006/stand-south.png",
+        "sha256": "1fad7d0e9d7286f1c82fbf78afed00ac42096f9fd49171267fabb71135342dea"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/007/stand-south.png",
+        "sha256": "9a2d73d093aab424431390a2b0cf0bf85513672b0a84154061524933ef0afb2f"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/007/stand-south.png",
+        "sha256": "e69bb9e31695d57b4f10ef0658b9d9fc927ebaa8530912a970cb48306d4990f4"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/004/stand-south.png",
+        "sha256": "c557d6ca3256491ded74f1f36fc29fb31f0f834e60b8e40ae680039693b2881c"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/010/stand-south.png",
+        "sha256": "e4297b4b442e9a86e195cd653cc134e67b4ffa5781408ccab86bdc72b0549aab"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/011/stand-south.png",
+        "sha256": "df97b0adf6c076b7990ab79cf415d55283f893578e3909725d5cdb73e6057fac"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/012/stand-south.png",
+        "sha256": "f4642082fe809a30320afe6aba61b250d15f01ddec0ee5371907dc76ef6ae279"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/012/stand-south.png",
+        "sha256": "bd317432a2ed997179599c115bd0bb36ffaad4ce7888d447b7d619606fd4f6d5"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/013/stand-south.png",
+        "sha256": "bf703cd69009524f79289a63d83f0b1f305c5c4348c11eda756b11d0fe182e43"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/013/stand-south.png",
+        "sha256": "8daa1249c161482c5293942346a6a4d0ab2aa8affce30f3126718bf607101df2"
+      }
+    },
+    {
+      "acceptedReference": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/packages/018/stand-south.png",
+        "sha256": "f3e345ba162e425c6934afcae916c8a6a718fb8b53d00bb8e3d7064b55c7c90b"
+      },
+      "candidate": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/packages/017/stand-south.png",
+        "sha256": "e2ea8f82766f76ecbcebb6246e36658a2b024d140befc1b8cccfeb3d34b2e4ee"
+      }
+    }
+  ],
+  "darkBoards": [
+    {
+      "identities": [
+        "001",
+        "002",
+        "003",
+        "004"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/normalized-dark-001-004.png",
+        "sha256": "3b550569dbdb58823dece5b2482281ea8f4fd4ca41956d46de2cf326757ff8a8"
+      }
+    },
+    {
+      "identities": [
+        "005",
+        "006",
+        "007",
+        "008"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/normalized-dark-005-008.png",
+        "sha256": "fe8eef62ed49b492cbbe7e202e3a08f55ef7cb9f660412793b68b8d9dcbf9e25"
+      }
+    },
+    {
+      "identities": [
+        "009",
+        "010",
+        "011",
+        "012"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/normalized-dark-009-012.png",
+        "sha256": "cd105869c3fe1cc090f719af0153ec56f3ea552fa914a60bd9d6ec259e5fe64d"
+      }
+    },
+    {
+      "identities": [
+        "013",
+        "014",
+        "015",
+        "016"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/normalized-dark-013-016.png",
+        "sha256": "88bab148b05ebd6fe42ce8c828ce479e78bbe319dec518be3e675a28d576af13"
+      }
+    },
+    {
+      "identities": [
+        "017",
+        "018",
+        "019"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/normalized-dark-017-019.png",
+        "sha256": "962ecec8cffda5de19ecdf579b6fb1859e806b4873ac90da692c5d1825360ffb"
+      }
+    }
+  ],
+  "managerAcceptance": "pending"
+}

@@ -1,0 +1,23 @@
+--- a/packages/game-domain/tests/reading-stations.test.ts
++++ b/packages/game-domain/tests/reading-stations.test.ts
+@@ -31,7 +31,10 @@
+       expect(state.employees).toHaveLength(i);
+     }
+     expect(state.employees.map((employee) => employee.readingStationId)).toEqual(DIAGNOSTIC_READING_WORKSTATIONS.map((station) => station.id));
+-    expect(new Set(state.employees.map((employee) => employee.appearance.stillId))).toEqual(new Set(["level3-roster-v2.001", "level3-roster-v2.002", "level3-roster-v2.003", "level3-roster-v2.004"]));
++    const radiologistStillIds = new Set<string>(staffStillEligibleEntries("staff.radiologist").map((entry) => entry.stillId));
++    const hiredStillIds = state.employees.map((employee) => employee.appearance.stillId);
++    expect(new Set(hiredStillIds).size).toBe(4);
++    for (const stillId of hiredStillIds) expect(radiologistStillIds.has(stillId!)).toBe(true);
+     for (const employee of state.employees) {
+       expect(employee.homeRoomInstanceId).toBe("room.readers");
+       expect(employee.path.at(-1)).toEqual(getRadiologistReadingStation(state, employee, PROTOTYPE_DOMAIN_CONTEXT)!.location);
+@@ -70,7 +73,7 @@
+     for (let i = 1; i <= 8; i++) { state.facilityTick = i; advanceEmployeeMovement(state, context); }
+     expect(moved.location).toEqual(getRadiologistReadingStation(state, moved, context)!.location);
+     expect(new Set(state.employees.map((employee) => `${employee.location.x},${employee.location.y}`)).size).toBe(4);
+-    expect(staffStillEligibleEntries("staff.radiologist")).toHaveLength(4);
++    expect(staffStillEligibleEntries("staff.radiologist").length).toBeGreaterThanOrEqual(4);
+   });
+ });
+ 

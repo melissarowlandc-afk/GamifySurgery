@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "requireComplete": true,
+  "requireRootReview": false,
+  "identities": 14,
+  "poses": 112,
+  "reportedIssues": 0,
+  "immutableReviewSnapshots": 31,
+  "rosterContract": {
+    "identities": 14,
+    "posesPerIdentity": 8,
+    "totalPoses": 112,
+    "categoryCounts": {
+      "staff": 14,
+      "patient": 0
+    },
+    "staffRoleCounts": {
+      "staff.imaging_technician": 2,
+      "staff.phlebotomist": 2,
+      "staff.laboratory_technician": 2,
+      "staff.surgeon": 2,
+      "staff.or_nurse": 2,
+      "staff.pharmacist": 2,
+      "staff.repair_person": 2
+    },
+    "plannedStaffRoleCounts": {},
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 3,
+        "middle_aged": 4,
+        "older_adult": 0
+      },
+      "Male": {
+        "young_adult": 2,
+        "adult": 2,
+        "middle_aged": 3,
+        "older_adult": 0
+      }
+    }
+  },
+  "reviewStatus": "candidate-review-root-checks-pending",
+  "runtimeBaseline": "265 prior identities/2150 assets and140 selectable patients preserved; accepted v6b art pinned",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+}

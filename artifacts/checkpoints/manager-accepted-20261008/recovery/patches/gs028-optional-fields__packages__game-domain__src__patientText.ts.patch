@@ -1,0 +1,27 @@
+--- a/packages/game-domain/src/patientText.ts
++++ b/packages/game-domain/src/patientText.ts
+@@ -41,7 +41,23 @@
+     if (node.currentUpdate) node.currentUpdate = materialize(node.currentUpdate, patientName);
+     node.stem = materialize(node.stem, patientName);
+     node.explanation = materialize(node.explanation, patientName);
+-    for (const choice of node.answerChoices) choice.label = materialize(choice.label, patientName);
++    if (node.teachingPoint) node.teachingPoint = materialize(node.teachingPoint, patientName);
++    if (node.exhibit?.kind === "table") {
++      node.exhibit.caption = materialize(node.exhibit.caption, patientName);
++      node.exhibit.columnHeaders = node.exhibit.columnHeaders.map((value) => materialize(value, patientName));
++      node.exhibit.rowHeaders = node.exhibit.rowHeaders.map((value) => materialize(value, patientName));
++      node.exhibit.cells = node.exhibit.cells.map((row) => row.map((value) => materialize(value, patientName)));
++    } else if (node.exhibit?.kind === "keyValue") {
++      if (node.exhibit.caption) node.exhibit.caption = materialize(node.exhibit.caption, patientName);
++      node.exhibit.items = node.exhibit.items.map((item) => ({ label: materialize(item.label, patientName), value: materialize(item.value, patientName) }));
++    } else if (node.exhibit?.kind === "abstract") {
++      node.exhibit.title = materialize(node.exhibit.title, patientName);
++      node.exhibit.body = materialize(node.exhibit.body, patientName);
++    }
++    for (const choice of node.answerChoices) {
++      choice.label = materialize(choice.label, patientName);
++      if (choice.rationale) choice.rationale = materialize(choice.rationale, patientName);
++    }
+     if (node.resultGateAfter) {
+       node.resultGateAfter.pendingLabel = materialize(node.resultGateAfter.pendingLabel, patientName);
+       node.resultGateAfter.resultNarrative = materialize(node.resultGateAfter.resultNarrative, patientName);

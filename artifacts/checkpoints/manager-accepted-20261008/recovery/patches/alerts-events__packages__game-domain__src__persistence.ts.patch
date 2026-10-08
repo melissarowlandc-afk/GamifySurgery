@@ -1,0 +1,18 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -1,5 +1,6 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
++import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
+ import {
+   EMPLOYEE_DISCUSSION_FIRST_DELAY_MINUTES,
+   employeeDiscussionCaseIsRuntimeSafe,
+@@ -366,6 +367,8 @@
+     alertsTutorialAcknowledgedAtTick,
+     nextAmbientAlertTick,
+     ambientCadenceVersion: 1,
++    // Match fresh-state key order: the campaign repository verifies raw bytes.
++    guidanceTips: normalizeGuidanceTipsState(candidate.guidanceTips, facilityTick),
+     lastPatientArrivalTick:
+       typeof candidate.lastPatientArrivalTick === "number" &&
+       Number.isSafeInteger(candidate.lastPatientArrivalTick) &&

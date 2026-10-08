@@ -1,0 +1,523 @@
+{
+  "schemaVersion": "patient-gapfill-v6a-worker-validation/v1",
+  "status": "complete-with-attributed-pre-existing-player-failure-and-worker-browser-limitation",
+  "baselineCapturedAt": "2026-10-08T03:11:12.671Z",
+  "before": {
+    "identities": 245,
+    "assets": 1990,
+    "patients": 120
+  },
+  "after": {
+    "identities": 265,
+    "assets": 2150,
+    "patients": 140
+  },
+  "fullDomain": {
+    "exitCode": 0,
+    "files": 96,
+    "passed": 3159
+  },
+  "fullPlayer": {
+    "exitCode": 1,
+    "files": 111,
+    "passed": 845,
+    "failed": 1,
+    "preIntegrationPassed": 844,
+    "preIntegrationFailed": 1
+  },
+  "typecheckExitCode": 0,
+  "outputs": [
+    {
+      "name": "approval",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/bind-owner-approval.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/approval.txt",
+        "sha256": "5e122942f449f646ea22fa882ad40b450f735b7d8cd369f036ee868b7f97dcd2"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "approvedIdentities": 20,
+          "approvedPoses": 160,
+          "approvedAuthoredContacts": 80,
+          "approvedBy": "GamifySurgery manager (Claude Code)",
+          "ownerDelegated": true,
+          "sourceAndReviewControlsUnchanged": true
+        }
+      ]
+    },
+    {
+      "name": "integration-baseline",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/capture-integration-baseline.mjs (initial capture before runtime edits; logged repeat reads immutable baseline)",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/integration-baseline.txt",
+        "sha256": "b3791624d6bbe6a6bcea0e8750ae9818a7ab311c54a54b037646b37a4c7c2a01"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "identities": 245,
+          "assets": 1990,
+          "patients": 120,
+          "immutableSnapshots": 41,
+          "approvedInputHashes": 3362
+        }
+      ]
+    },
+    {
+      "name": "promotion",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/promote-runtime.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/promotion.txt",
+        "sha256": "1eb5c5eb129f6af00ba16b221bfcb8e2ac37d80525e6c96a98d2d2eb4022c8e6"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "requireComplete": true,
+          "requireRootReview": false,
+          "identities": 20,
+          "poses": 160,
+          "reportedIssues": 0,
+          "immutableReviewSnapshots": 41,
+          "rosterContract": {
+            "identities": 20,
+            "posesPerIdentity": 8,
+            "totalPoses": 160,
+            "categoryCounts": {
+              "staff": 0,
+              "patient": 20
+            },
+            "staffRoleCounts": {},
+            "plannedStaffRoleCounts": {},
+            "demographicCounts": {
+              "Female": {
+                "young_adult": 0,
+                "adult": 4,
+                "middle_aged": 7,
+                "older_adult": 0
+              },
+              "Male": {
+                "young_adult": 0,
+                "adult": 3,
+                "middle_aged": 6,
+                "older_adult": 0
+              }
+            }
+          },
+          "reviewStatus": "candidate-review-root-checks-pending",
+          "runtimeBaseline": "245 identities/1990 assets and120 selectable patients preserved",
+          "runtimeReady": false,
+          "ownerApproval": "approved",
+          "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+        },
+        {
+          "status": "PASS",
+          "diagnostics": 20,
+          "requireRootReview": false,
+          "runtimeReady": false,
+          "ownerApproval": "approved",
+          "frozenChairEvidenceUnchanged": true,
+          "schemaVersion": "patient-gapfill-v6a-placement-qa/v2"
+        },
+        {
+          "status": "PASS",
+          "identities": 20,
+          "poses": 160,
+          "authoredSeatedContacts": 80,
+          "reviewedChairProofs": 20,
+          "existingSameBandIdentities": 77,
+          "existingComparisons": 397,
+          "withinBatchPairs": 45,
+          "nearDuplicateFlags": 0,
+          "staticGalleryPages": 25,
+          "mainGalleryImages": 60,
+          "managerVisualAcceptance": "approved",
+          "browserValidation": "manager-accepted-gallery-run-recorded-in-program-plan"
+        },
+        {
+          "status": "PASS",
+          "integrated": 20,
+          "poses": 160,
+          "runtime": {
+            "identities": 265,
+            "cardinalPoses": 2120,
+            "clipboardPoses": 30,
+            "assets": 2150
+          },
+          "patients": 140,
+          "ownerDelegatedManagerApproval": true,
+          "published": false
+        }
+      ]
+    },
+    {
+      "name": "roster",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-roster.mjs --require-complete",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/roster.txt",
+        "sha256": "85ce18b01da8c019a744cfb09aca968f23071d2d7ddda98e2a0bfc5349d0b76f"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "requireComplete": true,
+          "requireRootReview": false,
+          "identities": 20,
+          "poses": 160,
+          "reportedIssues": 0,
+          "immutableReviewSnapshots": 41,
+          "rosterContract": {
+            "identities": 20,
+            "posesPerIdentity": 8,
+            "totalPoses": 160,
+            "categoryCounts": {
+              "staff": 0,
+              "patient": 20
+            },
+            "staffRoleCounts": {},
+            "plannedStaffRoleCounts": {},
+            "demographicCounts": {
+              "Female": {
+                "young_adult": 0,
+                "adult": 4,
+                "middle_aged": 7,
+                "older_adult": 0
+              },
+              "Male": {
+                "young_adult": 0,
+                "adult": 3,
+                "middle_aged": 6,
+                "older_adult": 0
+              }
+            }
+          },
+          "reviewStatus": "candidate-review-root-checks-pending",
+          "runtimeBaseline": "245 identities/1990 assets and120 selectable patients preserved",
+          "runtimeReady": true,
+          "ownerApproval": "approved",
+          "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+        }
+      ]
+    },
+    {
+      "name": "placement",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-placement-qa.mjs --require-complete",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/placement.txt",
+        "sha256": "df7b517b9ab02e1c1d6cbd33856e050f870b86b416f57a1dbe9e50b01ed559e1"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "diagnostics": 20,
+          "requireRootReview": false,
+          "runtimeReady": true,
+          "ownerApproval": "approved",
+          "frozenChairEvidenceUnchanged": true,
+          "schemaVersion": "patient-gapfill-v6a-placement-qa/v2"
+        }
+      ]
+    },
+    {
+      "name": "worker-review",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-worker-review.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/worker-review.txt",
+        "sha256": "4396eedadb06a798b3d7fa535b303857e64c0a3424e5994f9c5db9f79c629983"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "identities": 20,
+          "poses": 160,
+          "authoredSeatedContacts": 80,
+          "reviewedChairProofs": 20,
+          "existingSameBandIdentities": 77,
+          "existingComparisons": 397,
+          "withinBatchPairs": 45,
+          "nearDuplicateFlags": 0,
+          "staticGalleryPages": 25,
+          "mainGalleryImages": 60,
+          "managerVisualAcceptance": "approved",
+          "browserValidation": "manager-accepted-gallery-run-recorded-in-program-plan"
+        }
+      ]
+    },
+    {
+      "name": "runtime-baseline",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/runtime-baseline.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/runtime-baseline.txt",
+        "sha256": "c155ffc8e753223e369a8b940ceb567e251edff878f0178c11bc3def23fbb5fb"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "preservedIdentities": 245,
+          "preservedAssets": 1990,
+          "priorSelectablePatients": 120,
+          "protectedFiles": 10,
+          "runtimeReady": true,
+          "ownerApproval": "approved"
+        }
+      ]
+    },
+    {
+      "name": "runtime-integration",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-runtime-integration.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/runtime-integration.txt",
+        "sha256": "773fdde4834ae5a5965eae26a8b7744ff0afb08727bef7f32d7e6e48c4adaa34"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "preservedIdentities": 245,
+          "preservedAssets": 1990,
+          "preservedSourceControlArtHashes": 3362,
+          "appendedIdentities": 20,
+          "appendedAssets": 160,
+          "totalIdentities": 265,
+          "totalAssets": 2150,
+          "adultPatientDesigns": 140,
+          "patientPools": {
+            "Female.young_adult": 9,
+            "Female.adult": 25,
+            "Female.middle_aged": 29,
+            "Female.older_adult": 13,
+            "Male.young_adult": 9,
+            "Male.adult": 18,
+            "Male.middle_aged": 25,
+            "Male.older_adult": 12
+          },
+          "provenanceRecords": 2150,
+          "exactApprovedRuntimeURLs": 160,
+          "frozenReviewMetadataUnchanged": true,
+          "ownerDelegatedManagerApproval": true,
+          "selectionSourceByteIdentical": true,
+          "published": false
+        }
+      ]
+    },
+    {
+      "name": "promotion-rerun",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-promotion-rerun.mjs",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/promotion-rerun.txt",
+        "sha256": "d976b4bd5e484ad713e510d29bb43f8fef6b745bc6a3d22deea4d3c8d286a258"
+      },
+      "summaries": [
+        {
+          "status": "PASS",
+          "requireComplete": true,
+          "requireRootReview": false,
+          "identities": 20,
+          "poses": 160,
+          "reportedIssues": 0,
+          "immutableReviewSnapshots": 41,
+          "rosterContract": {
+            "identities": 20,
+            "posesPerIdentity": 8,
+            "totalPoses": 160,
+            "categoryCounts": {
+              "staff": 0,
+              "patient": 20
+            },
+            "staffRoleCounts": {},
+            "plannedStaffRoleCounts": {},
+            "demographicCounts": {
+              "Female": {
+                "young_adult": 0,
+                "adult": 4,
+                "middle_aged": 7,
+                "older_adult": 0
+              },
+              "Male": {
+                "young_adult": 0,
+                "adult": 3,
+                "middle_aged": 6,
+                "older_adult": 0
+              }
+            }
+          },
+          "reviewStatus": "candidate-review-root-checks-pending",
+          "runtimeBaseline": "245 identities/1990 assets and120 selectable patients preserved",
+          "runtimeReady": true,
+          "ownerApproval": "approved",
+          "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+        },
+        {
+          "status": "PASS",
+          "diagnostics": 20,
+          "requireRootReview": false,
+          "runtimeReady": true,
+          "ownerApproval": "approved",
+          "frozenChairEvidenceUnchanged": true,
+          "schemaVersion": "patient-gapfill-v6a-placement-qa/v2"
+        },
+        {
+          "status": "PASS",
+          "identities": 20,
+          "poses": 160,
+          "authoredSeatedContacts": 80,
+          "reviewedChairProofs": 20,
+          "existingSameBandIdentities": 77,
+          "existingComparisons": 397,
+          "withinBatchPairs": 45,
+          "nearDuplicateFlags": 0,
+          "staticGalleryPages": 25,
+          "mainGalleryImages": 60,
+          "managerVisualAcceptance": "approved",
+          "browserValidation": "manager-accepted-gallery-run-recorded-in-program-plan"
+        },
+        {
+          "status": "PASS",
+          "integrated": 20,
+          "poses": 160,
+          "runtime": {
+            "identities": 265,
+            "cardinalPoses": 2120,
+            "clipboardPoses": 30,
+            "assets": 2150
+          },
+          "patients": 140,
+          "ownerDelegatedManagerApproval": true,
+          "published": false
+        },
+        {
+          "status": "PASS",
+          "hashedFilesUnchanged": 5589,
+          "runtimeAssetsUnchanged": 2150,
+          "registryUnchanged": true,
+          "catalogUnchanged": true,
+          "provenanceUnchanged": true,
+          "integrationReceiptUnchanged": true,
+          "approvalAndReviewEvidenceUnchanged": true
+        }
+      ]
+    },
+    {
+      "name": "typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/typecheck.txt",
+        "sha256": "ee30482ec6d0c2dd8b0768f683a5ebd289e5fe8133025cbd1e0e6da5b73fd2b5"
+      },
+      "summaries": []
+    },
+    {
+      "name": "domain-full",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --configLoader=native",
+      "exitCode": 0,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/domain-full.txt",
+        "sha256": "c5530e937c6fdc37b9b24fa208576345604da73157e27da4b362ca03d400498d"
+      },
+      "summaries": []
+    },
+    {
+      "name": "player-full",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 --configLoader=native --config ../../tools/character-mapping/patient-gapfill-v6a/vitest-player.config.mjs",
+      "exitCode": 1,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/player-full.txt",
+        "sha256": "405c98b7932fc8cb86b68f845bcaea2f546a9849ff4529b372e3fc8a873e3e1b"
+      },
+      "summaries": []
+    },
+    {
+      "name": "gallery",
+      "command": "node tools/character-mapping/patient-gapfill-v6a/validate-gallery.mjs",
+      "exitCode": 1,
+      "log": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/validation/gallery.txt",
+        "sha256": "9b5b716c8784aae06abdaa86755d8c853f3c36b69ce7f00048c56d607b4c6766"
+      },
+      "summaries": []
+    }
+  ],
+  "integration": {
+    "status": "PASS",
+    "preservedIdentities": 245,
+    "preservedAssets": 1990,
+    "preservedSourceControlArtHashes": 3362,
+    "appendedIdentities": 20,
+    "appendedAssets": 160,
+    "totalIdentities": 265,
+    "totalAssets": 2150,
+    "adultPatientDesigns": 140,
+    "patientPools": {
+      "Female.young_adult": 9,
+      "Female.adult": 25,
+      "Female.middle_aged": 29,
+      "Female.older_adult": 13,
+      "Male.young_adult": 9,
+      "Male.adult": 18,
+      "Male.middle_aged": 25,
+      "Male.older_adult": 12
+    },
+    "provenanceRecords": 2150,
+    "exactApprovedRuntimeURLs": 160,
+    "frozenReviewMetadataUnchanged": true,
+    "ownerDelegatedManagerApproval": true,
+    "selectionSourceByteIdentical": true,
+    "published": false
+  },
+  "preExistingFailure": {
+    "file": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+    "line": 85,
+    "failure": "ignores the retired concealment flag and preserves the scheduled external service after an answer",
+    "unchangedFailureSources": [
+      {
+        "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "sha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849"
+      },
+      {
+        "path": "apps/player/src/session/viewModels.ts",
+        "sha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f"
+      }
+    ],
+    "evidence": [
+      "validation/pre-integration-player-full.txt",
+      "validation/player-full.txt",
+      "validation/pre-integration-suite-source-hashes.json",
+      "validation/scoped-change-report.json"
+    ]
+  },
+  "browserLimitation": {
+    "failure": "browserType.launch: spawn EPERM",
+    "observedBeforeAndAfterIntegration": true,
+    "managerAcceptedGalleryRun": "Recorded in docs/execplans/character-gapfill-v6-20261007.md: PASS (50 pages/viewports, 60 images). No fresh worker browser PASS or HTTP delivery check claimed."
+  },
+  "changedExistingPaths": [
+    "apps/player/src/art/characterStillRegistry.generated.json",
+    "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+    "packages/game-domain/src/characterStillCatalog.ts",
+    "packages/game-domain/src/characterStillCatalog.test.ts",
+    "apps/player/src/art/characterStillRegistry.ts",
+    "apps/player/src/art/characterStillRegistry.test.ts",
+    "tools/character-mapping/patient-gapfill-v6a/runtime-baseline.mjs",
+    "tools/character-mapping/patient-gapfill-v6a/validate-roster.mjs",
+    "tools/character-mapping/patient-gapfill-v6a/validate-placement-qa.mjs",
+    "tools/character-mapping/patient-gapfill-v6a/validate-worker-review.mjs",
+    "tools/character-mapping/patient-gapfill-v6a/README.md"
+  ],
+  "existingCountTestsChanged": [
+    "packages/game-domain/src/characterStillCatalog.test.ts",
+    "apps/player/src/art/characterStillRegistry.test.ts"
+  ],
+  "canonicalOpeningPathway": "START_GAME.cmd -> http://127.0.0.1:4173 in the same persistent browser profile; unchanged.",
+  "git": "One accidental read-only git status during intake; no subsequent Git commands, no Git mutations, commits or pushes.",
+  "managerNextAction": "Review the scoped diff and run default-config/full-suite and canonical HTTP delivery acceptance. Local only; GitHub checkpoint handling belongs to the manager."
+}

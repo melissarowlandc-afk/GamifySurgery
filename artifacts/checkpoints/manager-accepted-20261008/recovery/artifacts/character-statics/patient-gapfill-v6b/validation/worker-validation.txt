@@ -1,0 +1,41 @@
+$ node tools/character-mapping/patient-gapfill-v6b/bind-worker-review.mjs
+{"status":"PASS","workerReviewedIdentities":20,"comparisonBoards":20,"chairProofs":20,"authoredContactDirections":80,"managerAcceptance":"pending"}
+(node:54648) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit 0
+
+$ node tools/character-mapping/patient-gapfill-v6b/validate-roster.mjs --require-complete
+(node:51316) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":20,"poses":160,"reportedIssues":0,"immutableReviewSnapshots":40,"rosterContract":{"identities":20,"posesPerIdentity":8,"totalPoses":160,"categoryCounts":{"staff":0,"patient":20},"staffRoleCounts":{},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":3,"middle_aged":7,"older_adult":0},"Male":{"young_adult":0,"adult":4,"middle_aged":6,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"245 identities/1990 assets and120 selectable patients preserved","runtimeReady":false,"ownerApproval":"pending","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+exit 0
+
+$ node tools/character-mapping/patient-gapfill-v6b/validate-placement-qa.mjs --require-complete
+(node:54200) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","diagnostics":20,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"pending","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6b-placement-qa/v2"}
+exit 0
+
+$ node tools/character-mapping/patient-gapfill-v6b/validate-worker-review.mjs
+(node:21876) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","identities":20,"poses":160,"authoredSeatedContacts":80,"reviewedChairProofs":20,"existingSameBandIdentities":97,"existingComparisons":500,"withinBatchPairs":45,"nearDuplicateFlags":0,"staticGalleryPages":26,"mainGalleryImages":60,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager"}
+exit 0
+
+$ node tools/character-mapping/patient-gapfill-v6b/validate-all-catalog-comparison.mjs
+(node:5960) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","originalCatalogIdentities":245,"acceptedV6aIdentities":20,"allCatalogIdentities":265,"independentlyRecomputedCatalogComparisons":5300,"withinBatchPairs":190,"nearDuplicateFlags":0,"minimumCatalogRmse":45.55298209843013,"minimumWithinBatchRmse":53.2102506088514,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager"}
+exit 0
+
+$ node tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs
+{"status":"PASS","preservedIdentities":245,"preservedAssets":1990,"priorSelectablePatients":120,"protectedFiles":7,"pinnedV6aPoses":160,"pinnedV6aNativeSources":40,"currentRuntimeIdentities":265,"concurrentV6aAppendAllowed":true,"runtimeReady":false,"ownerApproval":"pending"}
+(node:24504) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit 0
+
+$ node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6b/check-syntax.mjs
+{"status":"PASS","syntaxParsedModules":22}
+(node:17184) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit 0

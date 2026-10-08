@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checkedManifestSha256": "f6d4c675d6ad04ba7818879ecb953212243b71c0878ccfafb6a36ca87104ccd3",
+  "checks": [
+    {
+      "command": "python artifacts/checkpoints/manager-accepted-20261008/verify_archive.py --check-live-stage-files",
+      "exitCode": 0,
+      "archiveFiles": 2455,
+      "patchContracts": 60,
+      "forwardReverseReapply": "60/60",
+      "liveStageSourcesChecked": 19
+    },
+    {
+      "command": "python artifacts/checkpoints/manager-accepted-20261008/restore_recovery.py --dry-run",
+      "exitCode": 0,
+      "recoveredFiles": 3255,
+      "recoveredBytes": 357800071
+    },
+    {
+      "command": "git hash-object --stdin-paths (without -w)",
+      "exitCode": 0,
+      "archiveFilesChecked": 2455,
+      "matchesUnfilteredRawGitBlobBytes": 2455,
+      "mismatches": 0
+    }
+  ],
+  "note": "Historical independent check before adding this receipt and final metadata seal; payload contracts are unchanged. Rerun the provided verifier against the final manifest.",
+  "gitMutations": 0
+}

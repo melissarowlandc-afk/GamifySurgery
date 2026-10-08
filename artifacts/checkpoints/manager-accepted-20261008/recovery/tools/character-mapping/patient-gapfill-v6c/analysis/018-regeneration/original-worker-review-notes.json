@@ -1,0 +1,164 @@
+{
+  "reviewer": "sol-v6c-worker",
+  "scope": "Generation and packaging worker visual QA only; manager visual acceptance and browser validation pending. Appearance is visual only.",
+  "beforeGenerationExamples": [
+    "patient-demographics20-v4.013",
+    "patient-demographics20-v4.014",
+    "patient-demographics20-v4.015",
+    "patient-demographics20-v4.016",
+    "patient-demographics20-v4.017",
+    "patient-gapfill-v6a.015",
+    "patient-gapfill-v6a.019",
+    "patient-gapfill-v6b.018"
+  ],
+  "styleReference": "artifacts/character-statics/patient-gapfill-v6a/sources/004/source.png",
+  "promptTemplate": "tools/character-mapping/patient-gapfill-v6a/prompts/001/",
+  "styleAssessment": "The normalized batch matches the accepted v6a/v6b compact head/body proportions, dark stepped contours, large eye rendering, muted clothing palette and smooth cel shading in worker visual judgment. Inspected all 39 native generation outputs, all 152 final normalized poses on five dark sheets, the 19-identity overview, eight identical-scale v6b/v6c pairs, all six full-catalog inventory boards, all 19 same-band and 19 all-catalog nearest-six boards, all 76 final seated contact lines and all 19 south-facing chair proofs. Older identities use silver/white hair, thinning patterns, modest age lines and varied civilian wardrobes without diagnosis associations. No unresolved duplicate or pose-consistency concern found. Manager acceptance remains pending.",
+  "glassesAssessment": {
+    "observed": 4,
+    "batchSize": 19,
+    "maximum": 5,
+    "capFraction": 0.3,
+    "identities": [
+      "002",
+      "006",
+      "010",
+      "013"
+    ],
+    "grayCurlyHairWithGlasses": 0,
+    "method": "Visual inspection of all eight final poses for every identity, independently recorded from planned roster fields."
+  },
+  "limitations": [
+    "Artistic equivalence cannot be established by geometry or RMSE. The accepted v6a/v6b anchor follows recent v3/v4/v5 art; earlier gs018 catalog art remains grainier and is included without changing normalization.",
+    "017's targeted east-profile hair correction is slightly smoother at full native source size. At the normalized 160x320 scale its contour weight, head/body proportion and shading remain consistent in worker judgment; manager should inspect 017 closely. Its shaved side is anatomical left, visible in west profiles and covered by the long bob on east profiles.",
+    "Draped garment contacts, especially skirts 002, 004 and 007, are source-bound worker estimates of support beneath the pelvis rather than hem-bottom measurements. All four directions are shown; only the approved south-facing Front Desk chair geometry has a placement proof. Cane and hearing aids are visual only and do not set support coordinates.",
+    "Stylized faces do not prove exact ages. Intended age and compatible sex remain explicit assigned-band metadata; no clinical meaning or appearance-selection weighting was added.",
+    "Only alpha-1 native fringe noise occurs outside normalized footprints or on output borders. No protected alpha is clipped and no source pixels were repainted. Explicit manager acceptance of this exact alpha report remains pending.",
+    "Browser gallery validation is left to the manager as requested. Worker validation checks static links and PNG decoding only; no browser, game origin or campaign storage was accessed."
+  ],
+  "identities": {
+    "001": {
+      "features": "Average build; deep brown skin; smooth silver side-part jaw bob; gold bar earrings, no glasses; sage overshirt over plum top; cream trousers; ochre sneakers.",
+      "distinction": "No glasses, straight bob, gold bar earrings and sage/plum/cream palette separate it from v6b.004's silver ponytail, rimless frames and berry quilted gilet.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "002": {
+      "features": "Slim; fair freckled skin; white spiky straight pixie; burgundy rectangular glasses; coral boat-neck knit; slate knee skirt; black tights; brown lace-up shoes.",
+      "distinction": "Spiky pixie, narrow burgundy frames, coral knit and skirt/tights silhouette distinguish it from the catalog's rounded white waves, cardigans and long trousers.",
+      "actualGlasses": true,
+      "grayCurlyHairWithGlasses": false
+    },
+    "003": {
+      "features": "Petite; golden brown skin; smooth silver hair in a single long braid; beige hearing aid on anatomical right ear, no glasses; navy cardigan; pale-lime blouse; gray cropped trousers; peach slip-ons.",
+      "distinction": "Single silver braid, right hearing aid, no glasses and navy/lime/gray palette differ from v6b.004's ponytail/gilet and existing gray-bob/glasses combinations.",
+      "realizationNote": "The planned long zip cardigan renders as a hip-length cardigan. Braid, right-ear hearing aid and sleeve coverage remain consistent in all eight views.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "004": {
+      "features": "Full figure; warm light-olive/tan skin; loose silver waves; copper hoops, no glasses; plum V sweater over cream collar; moss calf pleated skirt; cream socks; rust loafers.",
+      "distinction": "Loose silver waves without frames, copper hoops and plum/moss pleated skirt differ from v6b.007's compact curls, glasses and mustard skirt.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "005": {
+      "features": "Petite; medium tan skin; charcoal jaw bob with broad white face streak; navy studs, no glasses; ochre tunic with maroon yoke; navy trousers; lilac trainers.",
+      "distinction": "Dark bob with white facial streak, no glasses, maroon yoke and lilac trainers create a different silhouette and palette from existing white crops and plain cardigans.",
+      "realizationNote": "The planned center part renders as a soft near-center/side part. The broad white streak and tunic yoke stay consistent across poses.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "006": {
+      "features": "Lean; fair skin; smooth white hair in a low bun; teal oval glasses; burgundy tailored waistcoat over cream full-sleeved blouse; teal trousers; brown lace-ups.",
+      "distinction": "Smooth low bun, teal oval frames, tailored waistcoat and teal trousers differ from v6b.013's white waves, round frames, mustache and charcoal cardigan.",
+      "actualGlasses": true,
+      "grayCurlyHairWithGlasses": false
+    },
+    "007": {
+      "features": "Sturdy; deep dark brown skin; soft short swept silver crop; pearl studs, no glasses; lilac cardigan over pale-yellow blouse; cream calf skirt; navy slip-ons; brown cane with cream curved handle in anatomical left hand.",
+      "distinction": "Short swept crop without glasses, lilac/cream skirt palette and left-hand cane differ from v6b.006's shoulder hair, slate tunic and ochre trousers.",
+      "realizationNote": "The planned fine straight crop renders as soft short waves. Cane remains anatomical left in standing and seated views; it is visual only.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "008": {
+      "features": "Athletic; fair freckled skin; silver high quiff; chin-only gray beard, no glasses; burgundy henley with cream placket; mustard trousers; teal trainers.",
+      "distinction": "High silver quiff, isolated chin beard and burgundy/mustard/teal palette distinguish it from swept-haired staff, v6b.013's mustache and v6a.017's younger copper hair.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "009": {
+      "features": "Average build; warm brown skin; compact gray curly crop; clean-shaven, no glasses; dusty-blue zip cardigan with two narrow cream front stripes; camel tee; cream trousers; slate slip-ons.",
+      "distinction": "Clean-shaven close gray crop without frames, paired narrow cream cardigan stripes and cream trousers differ from v6b.014's dark high-top and broad lilac panel.",
+      "realizationNote": "The planned straight gray flat-top renders as a compact curly crop. No glasses were introduced; stripe layout and hair remain pose-consistent.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "010": {
+      "features": "Lean; olive skin; receding smooth sparse gray hair with thinning crown; clean-shaven; gold rectangular glasses; lavender knit vest over sage shirt; navy trousers; rust loafers.",
+      "distinction": "Receding smooth crown, gold rectangular frames and lavender vest distinguish it from v6b.017's curly crop, jawline beard, round frames and sage cable knit.",
+      "actualGlasses": true,
+      "grayCurlyHairWithGlasses": false
+    },
+    "011": {
+      "features": "Broad; deep brown skin; bald crown with a small white nape fringe; full silver beard, no glasses; terracotta quarter-zip with cream placket; teal trousers; cream trainers.",
+      "distinction": "Full silver beard, bald crown, terracotta quarter-zip and teal trousers differ from v6b.010's mustache-only face, rib cardigan and beige trousers.",
+      "realizationNote": "The planned fully smooth shaved head retains a small white nape fringe in rear views. It is consistent between standing and seated north; bald crown and full beard remain distinct.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "012": {
+      "features": "Slim; golden brown skin; swept white top with cropped sides; chin-only white goatee, no glasses; mint/sage herringbone jacket over cream tee; chocolate trousers; burgundy ankle boots.",
+      "distinction": "White swept top and chin-only goatee without frames, open mint jacket and dark trousers differ from v6b.017's silver curls, glasses and closed knit sweater.",
+      "realizationNote": "The planned straight swept hair renders as soft white waves. The cropped sides, white chin beard and outfit are consistent across all poses.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "013": {
+      "features": "Average build; fair pink-toned skin; smooth white hair in a small low ponytail; clean-shaven; black rectangular glasses; slate sweater with orange elbow patches and cuffs; mustard trousers; navy low boots.",
+      "distinction": "Small smooth ponytail, black rectangular frames, clean-shaven face and orange elbow patches differ from v6b.013's white waves, mustache and round burgundy frames.",
+      "actualGlasses": true,
+      "grayCurlyHairWithGlasses": false
+    },
+    "014": {
+      "features": "Sturdy; tan skin; close silver curls; broad white mustache; beige hearing aid on anatomical left ear, no glasses; aubergine quilted vest over cream henley; blue trousers; moss shoes.",
+      "distinction": "Mustache-only face, left hearing aid, glasses-free close crop and aubergine quilted vest differ from catalog full beards and v6b.015's auburn ponytail/glasses.",
+      "realizationNote": "The planned straight silver buzz cut renders as close silver curls. No glasses were introduced; left-ear hearing aid remains on its anatomical side.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "015": {
+      "features": "Slim; deep brown skin; wide bald crown with wispy white side fringe; clean-shaven, no glasses; forest-green cardigan over coral shirt; cream trousers; chestnut lace-ups.",
+      "distinction": "Glasses-free bald crown, wispy white fringe, clean-shaven face and forest/coral/cream palette differ from v6b.004's ponytail/gilet and bearded older men.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "016": {
+      "features": "Athletic; fair warm skin; two auburn low braids; blue triangular studs, no glasses; cream mock-neck under lilac dungarees with square chest pocket; purple trainers.",
+      "distinction": "Two auburn braids without glasses and lilac overalls differ from v6a.002's blue frames, blue blouse, pocketed vest and navy trousers.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "017": {
+      "features": "Full figure; deep brown skin; smooth black asymmetric bob with anatomical-left shaved side; magenta studs, no glasses; slate wrap top with side tie; teal cropped trousers; ochre ankle shoes.",
+      "distinction": "Black asymmetric bob, shaved left side without frames, wrap tie and slate/teal/ochre palette differ from v6b.005's streaked waves, glasses and striped knit.",
+      "realizationNote": "One targeted native edit corrected standing and seated east to show the bob covering anatomical right, leaving the shaved side anatomical left. Original wrong-east-profile source and receipts are preserved. Native finish is slightly smoother; normalized style remains consistent in worker judgment.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "018": {
+      "features": "Lean; olive skin; jet-black rounded bowl cut with tapered sides; clean-shaven, no glasses; navy mock-neck with ochre chest/back panel; rust knee shorts; cream calf socks; slate trainers.",
+      "distinction": "Rounded bowl cut without beard/frames, ochre chest/back panel and shorts/socks silhouette differ from v6a.019's afro, glasses and full-trouser knit outfit.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    },
+    "019": {
+      "features": "Broad; golden brown skin; tight ginger curls; dark stubble, no glasses; coral sweater with teal shoulder panels; indigo trousers; tan lace-ups.",
+      "distinction": "Short tight ginger curls, stubble without glasses, teal shoulder panels and coral/indigo palette differ from v6b.015's low auburn ponytail, full beard, teal frames and rose overshirt.",
+      "actualGlasses": false,
+      "grayCurlyHairWithGlasses": false
+    }
+  }
+}
+

@@ -1,0 +1,143 @@
+{
+  "reviewer": "sol-v6d-worker",
+  "glassesIdentities": [
+    "003",
+    "012"
+  ],
+  "scope": "Generation and packaging only. Viewed all sixteen existing eligible role looks before generation, accepted v6a/v6b style, all 112 normalized poses, fourteen source sheets, all 56 authored contact overlays, fourteen south-facing chair proofs, seven existing/new role sheets, all 285 catalog looks and twenty-eight nearest-comparison boards. Worker QA only; manager acceptance pending.",
+  "beforeGenerationExamples": [
+    "gs022-new-employee-004",
+    "gs022-new-employee-005",
+    "gs022-new-employee-006",
+    "gs022-new-employee-015",
+    "gs022-new-employee-016",
+    "gs026-employee-009",
+    "level3-roster-v2.009",
+    "level3-roster-v2.010",
+    "level3-roster-v2.005",
+    "level3-roster-v2.006",
+    "level3-roster-v2.007",
+    "level3-roster-v2.008",
+    "level3-roster-v2.011",
+    "level3-roster-v2.012",
+    "level3-roster-v2.013",
+    "level3-roster-v2.014"
+  ],
+  "styleAssessment": "Compact v6a/v6b head/body proportions, outlined cel shading, restrained gradients, coherent cardinal profiles, legible uniform blocks, upright arms-down standing and chair-free seated poses. Imaging olive/sage; phlebotomy graphite/sage; laboratory plum or sage without coat/cap; surgeon teal/blue with caps; OR nurse sage/steel blue and cream waist cord without cap; pharmacist white coat; repair terracotta/olive jacket, cargo trousers and work boots. Two glasses identities (14.3%), no gray-curls-plus-glasses designs, no logos or readable badge text. All fourteen reviewed at native 160x320 frame size and in actual runtime chair geometry.",
+  "limitations": [
+    "005's corrected source uses slightly flatter cel shading than the other thirteen; proportions, role colour, outline and pose continuity remain coherent on the final comparison sheets.",
+    "008 navy colour issue is resolved by the manager-requested deterministic measured RGB correction. Original native sheets remain bright blue and immutable; all eight packaged poses use navy. New correction proof requires manager verification.",
+    "003 shares the general braid-and-glasses motif with an existing perioperative nurse, but has graphite phlebotomy clothes, a different face/fringe, green rectangular frames and lighter skin. Whole-catalog comparison and visual review found no near-duplicate.",
+    "Contacts are independently authored worker candidates, not manager/root acceptance. E/W/N overlays are supplied; chair proofs use only the authentic south-facing Front Desk fixture, as in v5.",
+    "Native extraction preserves imperceptible alpha-1 edge noise: 9 poses have alpha-1 source footprint outside the canvas; 7 derived poses have alpha-1 border pixels. No alpha >=13 clipping. No thresholding, erasing or repainting was applied.",
+    "Browser gallery validation was deliberately not run and belongs to the manager. No runtime integration, approval, publication or Git backup is claimed. No game origin, browser profile or campaign storage changed."
+  ],
+  "identities": {
+    "001": {
+      "features": "Fair freckled woman, copper pixie with silver forelock, olive imaging top and charcoal cargos; no glasses.",
+      "distinction": "Copper/silver pixie and freckled light face differ from the existing black bob, gray bun with glasses and bald bearded imaging pool.",
+      "regenerations": 0,
+      "realizationNote": "Sturdy planned build reads moderate in the final stylized body."
+    },
+    "002": {
+      "features": "Deep-brown young man, narrow upright black twist crest with close sides, olive imaging top and charcoal cargos.",
+      "distinction": "Upright twist crest, younger clean-shaven face and lean torso differ from all three existing imaging looks and the other new imaging identity.",
+      "regenerations": 0
+    },
+    "003": {
+      "features": "Light olive woman, neat chestnut low braid, green rectangular glasses, graphite-gray phlebotomy top and charcoal trousers.",
+      "distinction": "Low braid and rectangular frames add a female silhouette to a role pool with orange curls, a moustached side part, and a high black hairstyle with ivory vest.",
+      "regenerations": 0,
+      "realizationNote": "General braid/glasses motif also occurs in perioperative staff; explicit whole-catalog review distinguishes uniform, face, fringe, tone and frames."
+    },
+    "004": {
+      "features": "Fair warm older man, receding close silver hair and bald crown, clean-shaven face, graphite/sage phlebotomy uniform.",
+      "distinction": "Silver receding hair and clean-shaven older face differ from the role pool's younger dark/orange hair and moustached identity.",
+      "regenerations": 0,
+      "realizationNote": "Full planned build renders moderately broad, still distinct from 003."
+    },
+    "005": {
+      "features": "Warm deep-brown bald clean-shaven man, straight slim torso, plum laboratory top with lower pockets and charcoal cargos.",
+      "distinction": "Smooth bald head, deep skin and male straight torso differ from the existing plum-clad black bob and sage-clad copper curls.",
+      "regenerations": 1,
+      "realizationNote": "Original eight-pose sheet inherited a rounded bust/torso from the female role reference. One built-in imagegen edit straightened all torso profiles; rejected original and exact correction provenance are retained. Final cel shading is slightly flatter."
+    },
+    "006": {
+      "features": "Medium-tan woman, swept black pixie with silver forelock, broad sage laboratory top with chest pocket and charcoal cargos.",
+      "distinction": "Dark/silver short crop and tan broad build differ from the laboratory black bob and copper curls, and from new bald plum 005.",
+      "regenerations": 0,
+      "realizationNote": "Hair is a tousled swept pixie rather than the planned strictly straight angular cut."
+    },
+    "007": {
+      "features": "Deep warm-brown woman with a full build, dark-teal scrubs, teal surgical cap and black clinical shoes; no glasses.",
+      "distinction": "Deeper skin, broader silhouette and fuller cap separate her from the existing fair teal surgeon and blue-clad bearded surgeon.",
+      "regenerations": 0,
+      "realizationNote": "Cap renders fuller/bouffant-looking instead of tightly fitted; clear surgeon cue is preserved."
+    },
+    "008": {
+      "features": "Fair pink-toned older broad man, silver sides, neat white moustache, navy scrubs and tied navy surgical cap; no glasses.",
+      "distinction": "White moustache, silver sides and older fair face differ from the deep-brown black-bearded blue surgeon and both teal surgeons.",
+      "regenerations": 0,
+      "realizationNote": "Manager-requested deterministic navy palette correction from existing surgeon level3-roster-v2.006. All alpha, protected ink, silhouette boundary, non-uniform pixels and relative shading scale are preserved; no new image generation.",
+      "deterministicCorrections": 1
+    },
+    "009": {
+      "features": "Golden-brown young woman, straight black low braid, sage/olive OR nursing scrubs and short cream waist cord; no cap or glasses.",
+      "distinction": "Low braid, slimmer body and golden skin differ from the existing dark bun and fair blond curls; distinct from new steel-blue 010.",
+      "regenerations": 0,
+      "realizationNote": "A small blank chest badge appeared in the source; no readable text or logo."
+    },
+    "010": {
+      "features": "Medium olive man, swept black hair with gray temple streak, small chin goatee, steel-blue OR scrubs and cream cord; no cap.",
+      "distinction": "Male silhouette, straight swept hair and tiny chin goatee add a distinct look to the existing two female OR identities.",
+      "regenerations": 0
+    },
+    "011": {
+      "features": "Deep-brown lean man, short rust locs tied low, white pharmacist coat over lilac collared shirt, charcoal trousers and black loafers.",
+      "distinction": "Close-sided tied rust locs, young clean-shaven face and lilac collar differ from the existing dark curls/plum and silver-haired blue-tie pharmacists.",
+      "regenerations": 0,
+      "realizationNote": "A small blank badge appeared on the white coat; no text or logo."
+    },
+    "012": {
+      "features": "Fair older woman, smooth brown bob with silver front panel, teal round glasses, white pharmacist coat and sage collared shirt.",
+      "distinction": "Straight bob with silver panel and teal frames differ from both curly-haired existing pharmacists and the new rust-loc pharmacist.",
+      "regenerations": 0,
+      "realizationNote": "Frames render round rather than planned oval; build moderately full. Blank coat badge contains no text."
+    },
+    "013": {
+      "features": "Golden-brown woman, black low ponytail with blunt bangs, terracotta work jacket, charcoal cargos, belt and dark-brown work boots.",
+      "distinction": "Straight bangs and ponytail, narrower build and actual work boots differ from the existing terracotta repair person's rounded curls and clinical shoes.",
+      "regenerations": 0
+    },
+    "014": {
+      "features": "Fair freckled stocky young man, blond blunt bowl crop with shaved sides, olive work jacket, khaki cargos, brown belt and work boots.",
+      "distinction": "Blond undercut, freckles and clean-shaven broad face differ from the existing brown curly-haired bearded repair man and new black-ponytail woman.",
+      "regenerations": 0,
+      "realizationNote": "Jacket retains flap chest pockets; the planned lower pockets are omitted in the native render."
+    }
+  },
+  "managerReview": {
+    "status": "manager-accepted-original-batch-except-008;008-navy-correction-for-verification",
+    "acceptedIdentities": [
+      "001",
+      "002",
+      "003",
+      "004",
+      "005",
+      "006",
+      "007",
+      "009",
+      "010",
+      "011",
+      "012",
+      "013",
+      "014"
+    ],
+    "requestedRevision": "008",
+    "authority": "User manager review in this thread and program plan Progress; no runtime integration authorization"
+  },
+  "paletteCorrection": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/corrections/008-navy-palette-v1.json",
+    "sha256": "0676c33981f57f368b8a24a90b0bf237abaf3dcedd1551ead6a2affdbd38bb6a"
+  }
+}

@@ -1,0 +1,84 @@
+$ node tools/character-mapping/staff-gapfill-v6d/validate-roster.mjs --require-complete
+exit=0
+{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":14,"poses":112,"reportedIssues":0,"immutableReviewSnapshots":31,"rosterContract":{"identities":14,"posesPerIdentity":8,"totalPoses":112,"categoryCounts":{"staff":14,"patient":0},"staffRoleCounts":{"staff.imaging_technician":2,"staff.phlebotomist":2,"staff.laboratory_technician":2,"staff.surgeon":2,"staff.or_nurse":2,"staff.pharmacist":2,"staff.repair_person":2},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":3,"middle_aged":4,"older_adult":0},"Male":{"young_adult":2,"adult":2,"middle_aged":3,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"265 prior identities/2150 assets and140 selectable patients preserved; accepted v6b art pinned","runtimeReady":false,"ownerApproval":"pending","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+node : (node:53244) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/validate-roster.mjs -- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:53244) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-placement-qa.mjs --require-complete
+exit=0
+{"status":"PASS","diagnostics":14,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"pending","frozenChairEvidenceUnchanged":true,"schemaVersion":"staff-gapfill-v6d-placement-qa/v2"}
+node : (node:27508) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/validate-placement-qa. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:27508) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-worker-review.mjs
+exit=0
+{"status":"PASS","identities":14,"poses":112,"roles":7,"authoredSeatedContacts":56,"reviewedChairProofs":14,"reviewedRoleSheets":7,"reviewedCatalogIdentities":285,"reviewedComparisonBoards":28,"glassesIdentities":2,"regenerations":1,"staticGalleryPages":22,"mainGalleryImages":42,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager"}
+node : (node:13096) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/validate-worker-review ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:13096) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-all-catalog-comparison.mjs
+exit=0
+{"status":"PASS","priorRuntimeIdentities":265,"acceptedV6bIdentities":20,"allCatalogIdentities":285,"existingRoleLooks":16,"independentlyRecomputedCatalogComparisons":3990,"independentlyRecomputedSameRoleComparisons":32,"withinBatchPairs":91,"sameRoleNewPairs":7,"perRoleComparisonSheets":7,"nearDuplicateFlags":0,"minimumCatalogRmse":41.540485534915966,"minimumWithinBatchRmse":50.65658776941163,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager"}
+node : (node:5304) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/validate-all-catalog-c ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:5304) Exp...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-navy-correction.mjs
+exit=0
+{"status":"PASS","identity":"staff-gapfill-v6d.008","correctedPoses":8,"changedRgbPixels":73821,"alphaDifferences":0,"unselectedRgbDifferences":0,"protectedInkDifferences":0,"silhouetteBoundaryDifferences":0,"shadingScaleViolations":0,"preservedOtherPoses":104,"preservedNativeSourceFiles":56,"referenceMedianRgb":[36,63,118],"originalMedianRgb":[31,75,162],"correctedMedianHsv":{"h":220.2439024390244,"s":0.6923076923076923,"v":0.4627450980392157},"regenerations":0,"runtimeReady":false}
+node : (node:55592) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/validate-navy-correcti ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:55592) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/staff-gapfill-v6d/runtime-baseline.mjs
+exit=0
+{"status":"PASS","preservedIdentities":265,"preservedAssets":2150,"priorSelectablePatients":140,"protectedFiles":7,"pinnedAcceptedV6bPoses":160,"pinnedAcceptedV6bSources":40,"currentRuntimeIdentities":285,"concurrentV6bAppendAllowed":true,"runtimeReady":false,"managerAcceptance":"pending"}
+node : (node:54164) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:2 char:1
++ node tools/character-mapping/staff-gapfill-v6d/runtime-baseline.mjs 1 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:54164) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node --experimental-vm-modules tools/character-mapping/staff-gapfill-v6d/check-syntax.mjs
+exit=0
+{"status":"PASS","syntaxParsedModules":28}
+node : (node:56112) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+At line:2 char:1
++ node --experimental-vm-modules tools/character-mapping/staff-gapfill- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:56112) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+

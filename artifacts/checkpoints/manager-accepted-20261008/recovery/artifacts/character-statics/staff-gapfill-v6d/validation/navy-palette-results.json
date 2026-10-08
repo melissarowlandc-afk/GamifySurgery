@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "identity": "staff-gapfill-v6d.008",
+  "correctedPoses": 8,
+  "changedRgbPixels": 73821,
+  "alphaDifferences": 0,
+  "unselectedRgbDifferences": 0,
+  "protectedInkDifferences": 0,
+  "silhouetteBoundaryDifferences": 0,
+  "shadingScaleViolations": 0,
+  "preservedOtherPoses": 104,
+  "preservedNativeSourceFiles": 56,
+  "referenceMedianRgb": [
+    36,
+    63,
+    118
+  ],
+  "originalMedianRgb": [
+    31,
+    75,
+    162
+  ],
+  "correctedMedianHsv": {
+    "h": 220.2439024390244,
+    "s": 0.6923076923076923,
+    "v": 0.4627450980392157
+  },
+  "regenerations": 0,
+  "runtimeReady": false,
+  "poses": [
+    {
+      "pose": "stand",
+      "direction": "south",
+      "originalSha256": "51264bb8b66070b18f9f73551917eecada3dfc9e30f270543a910c412195a046",
+      "correctedSha256": "ff9373803c98d657a2397267392b5e75e078cfb60cca8af3431d98808c662b32",
+      "eligiblePixels": 11897,
+      "changedPixels": 11897
+    },
+    {
+      "pose": "stand",
+      "direction": "east",
+      "originalSha256": "38e60017d9943c184d208191da4eca4e3f68d589227dcdcb579425f61b7047c1",
+      "correctedSha256": "e9040c82685660d4bce1515c90d93cd3fef45196fb5a9b8805267bd3f04497d5",
+      "eligiblePixels": 7868,
+      "changedPixels": 7868
+    },
+    {
+      "pose": "stand",
+      "direction": "west",
+      "originalSha256": "fed5957c247b0784e80e406a98475121ae15ecc71c410d95c780ed2d5ffd5edc",
+      "correctedSha256": "6e51ba05b501175c9601d1623d9bbbd961f663ba77356127a9040a4685c58538",
+      "eligiblePixels": 7993,
+      "changedPixels": 7993
+    },
+    {
+      "pose": "stand",
+      "direction": "north",
+      "originalSha256": "42c58e2a84d3d722aa762c85663399f5920a1cf9f4ea4d53a6dd5f9e73d0345d",
+      "correctedSha256": "5ea66698cf39ce349194b2ca06bff08bc6321f97bc564e4854948d48a6f98176",
+      "eligiblePixels": 13942,
+      "changedPixels": 13942
+    },
+    {
+      "pose": "sit",
+      "direction": "south",
+      "originalSha256": "cbf3caa48eebea12b726681403a0f277dc262a34a12e6d0a21e504439a8134b7",
+      "correctedSha256": "bfeb85fab9e6b7c4fd6c0b07738d2807476e171d93e1def3609eea30ea345200",
+      "eligiblePixels": 8064,
+      "changedPixels": 8064
+    },
+    {
+      "pose": "sit",
+      "direction": "east",
+      "originalSha256": "b8771dbef79a79edc93c55c51b9a5b912aa78e64f0d15b38bff8e5acde6cd3fc",
+      "correctedSha256": "5efb51d72f82ec2d483b65468ea57a2913257a736071ce78d4d15ac22692dece",
+      "eligiblePixels": 6703,
+      "changedPixels": 6703
+    },
+    {
+      "pose": "sit",
+      "direction": "west",
+      "originalSha256": "9bfa7db0b6812506219dd6c9df782af1f650b2297b15152d9091206380dca742",
+      "correctedSha256": "5bbd611244c50563f2a540103fc813eeadeb39b5713afb79143522183052bf11",
+      "eligiblePixels": 6675,
+      "changedPixels": 6675
+    },
+    {
+      "pose": "sit",
+      "direction": "north",
+      "originalSha256": "7f46414d581553bcbcf664c3f623a29e646d3ae14c82420bcf849331d46dc054",
+      "correctedSha256": "2139cd0093feb062a0c9307b5abca68b66fcb2ac4645d0b682cb6ec9f5697735",
+      "eligiblePixels": 10679,
+      "changedPixels": 10679
+    }
+  ],
+  "correction": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/corrections/008-navy-palette-v1.json",
+    "sha256": "0676c33981f57f368b8a24a90b0bf237abaf3dcedd1551ead6a2affdbd38bb6a"
+  }
+}

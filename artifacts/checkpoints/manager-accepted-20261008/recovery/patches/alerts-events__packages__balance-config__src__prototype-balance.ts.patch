@@ -1,0 +1,10 @@
+--- a/packages/balance-config/src/prototype-balance.ts
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -980,7 +980,6 @@
+     waterCoolerLowThreshold: 25,
+     // One operating day is ten facility hours (8 AM through 6 PM).
+     waterCoolerEmptyReminderMinutes: 600,
+-    receptionistWaterRefillDelayMinutes: 60,
+     waterRefillSatisfactionBonus: 1,
+     praiseMoraleBonus: 5,
+     praiseCooldownMinutes: 600,

@@ -1,0 +1,38 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -700,7 +700,7 @@
+ 
+     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+       color: "#232720",
+-      fontFamily: '"Courier New", Courier, monospace',
++      fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
+       fontSize: "14px",
+       fontStyle: "bold",
+       resolution: 2,
+@@ -6670,7 +6670,7 @@
+         text = this.add
+           .text(0, 0, "", {
+             color: "#2a9d4b",
+-            fontFamily: '"Courier New", Courier, monospace',
++            fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
+             fontSize: "14px",
+             fontStyle: "bold",
+             stroke: "#f7f3df",
+@@ -7426,7 +7426,7 @@
+             {
+               color: "#232720",
+               backgroundColor: "#e0ded0",
+-              fontFamily: '"Courier New", Courier, monospace',
++              fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
+               fontSize: `${fontSize}px`,
+               fontStyle: "bold",
+               align: "center",
+@@ -7467,7 +7467,7 @@
+             .text(label.x, nextTop + 2, "! NO ACCESS", {
+               color: "#f0eddd",
+               backgroundColor: "#9b3b25",
+-              fontFamily: '"Courier New", Courier, monospace',
++              fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
+               fontSize: `${Math.max(8, fontSize - 1)}px`,
+               fontStyle: "bold",
+               resolution: 2,

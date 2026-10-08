@@ -1,0 +1,31 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -269,6 +269,8 @@
+  * asks the owner to place a room through `onPlaceExamRoom`.
+  */
+ export interface FacilityViewModel {
++  /** Only the displayed live Needs-you cards; commands stay in the session. */
++  alertPins?: FacilityAlertPinView[];
+   facilityTitle: string;
+   /** A scene-local receipt cursor resets when this persisted campaign changes. */
+   campaignId?: string;
+@@ -317,6 +319,19 @@
+   camera?: FacilityCameraView;
+ }
+ 
++export interface FacilityAlertPinView {
++  id: string;
++  title: string;
++  actionLabel: string;
++  target: { kind: "patient" | "service_visitor" | "room"; id: string };
++}
++
++export interface FacilityAlertPinPosition {
++  id: string;
++  x: number;
++  y: number;
++}
++
+ export type PlaceRoomRequest = (
+   tileX: number,
+   tileY: number,

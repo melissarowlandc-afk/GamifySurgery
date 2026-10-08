@@ -1,0 +1,60 @@
+{
+  "scope": "Stable-ledger full build after selected 017 correction. The contact binder initially printed a copied identities:20 label despite processing 19; final corrected binder output and byte-identical ledger check are recorded separately.",
+  "runs": [
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/bind-worker-contacts.mjs",
+      "startedAt": "2026-10-08T04:46:50.875Z",
+      "finishedAt": "2026-10-08T04:46:52.467Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"identities\":20,\"workerReviewedContacts\":76,\"contactContractSha256\":\"d1ee9219ff0476c06306b2f7bc1b0de73bd40c98895cb40ba74c793a1a45f0db\",\"managerAccepted\":false}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-roster.mjs",
+      "startedAt": "2026-10-08T04:46:52.468Z",
+      "finishedAt": "2026-10-08T04:47:14.342Z",
+      "exitCode": 0,
+      "output": "(node:42448) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"packaged\":19,\"poses\":152,\"issues\":[],\"runtimeReady\":false,\"ownerApproval\":\"pending\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-placement-qa.mjs",
+      "startedAt": "2026-10-08T04:47:14.342Z",
+      "finishedAt": "2026-10-08T04:47:15.949Z",
+      "exitCode": 0,
+      "output": "(node:21968) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"diagnostics\":19,\"runtimeReady\":false,\"schemaVersion\":\"patient-gapfill-v6c-placement-qa/v2\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-comparison.mjs",
+      "startedAt": "2026-10-08T04:47:15.950Z",
+      "finishedAt": "2026-10-08T04:47:19.202Z",
+      "exitCode": 0,
+      "output": "(node:32652) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"existingIdentities\":75,\"existingComparisons\":287,\"withinBatchPairs\":51,\"flags\":0,\"comparisonBoards\":19,\"mainGalleryImages\":57}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-all-catalog-comparison.mjs",
+      "startedAt": "2026-10-08T04:47:19.202Z",
+      "finishedAt": "2026-10-08T04:47:29.303Z",
+      "exitCode": 0,
+      "output": "(node:44012) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"originalCatalogIdentities\":245,\"acceptedV6aIdentities\":20,\"acceptedV6bIdentities\":20,\"catalogComparisons\":5415,\"withinBatchPairs\":171,\"nearDuplicateFlags\":0,\"catalogReferenceBoards\":6,\"allCatalogNearestBoards\":19,\"minimumCatalogRmse\":52.874929201095235}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-style-review.mjs",
+      "startedAt": "2026-10-08T04:47:29.303Z",
+      "finishedAt": "2026-10-08T04:47:30.362Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"sameScaleV6bV6cPairs\":8,\"normalizedDarkPoseBoards\":5,\"posesShown\":152}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-qa-atlases.mjs",
+      "startedAt": "2026-10-08T04:47:30.362Z",
+      "finishedAt": "2026-10-08T04:47:31.880Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"nearestComparisonBoardsShown\":38,\"reviewAtlases\":10}\n"
+    }
+  ],
+  "ledgerRebindCheck": {
+    "before": "2D228CF461B38B4C46C0396BC8A71E56BA583E280E479F79BDDC2AA65FB9CB23",
+    "after": "2D228CF461B38B4C46C0396BC8A71E56BA583E280E479F79BDDC2AA65FB9CB23",
+    "unchanged": true
+  }
+}
+

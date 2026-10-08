@@ -1,0 +1,13 @@
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run src/art/characterStillRegistry.test.ts src/art/characterBitmapArt.test.ts src/facility/characterPresentation.test.ts src/content/patientAppearanceCatalog.test.ts src/content/founderAppearancePresets.test.ts --pool=threads --maxWorkers=1 --config ../../tools/character-mapping/patient-gapfill-v6c/vitest-player.config.mjs --configLoader=native
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+
+ Test Files  5 passed (5)
+      Tests  36 passed (36)
+   Start at  02:04:47
+   Duration  4.15s (transform 1.74s, setup 0ms, import 3.31s, tests 310ms, environment 0ms)
+

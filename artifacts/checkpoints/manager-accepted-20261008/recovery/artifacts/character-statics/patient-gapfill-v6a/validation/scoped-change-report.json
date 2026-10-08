@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "immutableSnapshots": 41,
+  "unchangedSourceControlArtHashes": 3362,
+  "changedSnapshotPaths": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "beforeSha256": "7b832ffa231520a098ccbd5ab8f0252f1d93cd23b3ae29277c10827a91fcde0d",
+      "afterSha256": "57bd0a6e0af246be2719484da123d4824c40de04afdac70905195acf2a98c7ce",
+      "addedLines": 3003,
+      "removedLines": 3
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "beforeSha256": "200137dd2a90162108a55e3f658801a856d2997e648b5d0ed9e082a27e8bc594",
+      "afterSha256": "d53b89cfea40d4a65ac8890983ffffd32b85d313f9d7390624e61ce6ba135f5b",
+      "addedLines": 3535,
+      "removedLines": 4
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "beforeSha256": "923366318c3da1bd7611e11a95c3578dc2b4784107489eb78d5bf2403d192c1b",
+      "afterSha256": "7e217f27d4628cb7943ded282826df1fc137ba379734baf8ba917bd7ec1c3b75",
+      "addedLines": 32,
+      "removedLines": 1
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "beforeSha256": "71a12541c09d9528aac9d99bb52b9a6e44865e1ed9c2fd2bf09af97fc2ebeea2",
+      "afterSha256": "e596e8153705164d013b3fc0fad8817a63afaf25b00c5a62cc2db46d12d88ff1",
+      "addedLines": 59,
+      "removedLines": 4
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "beforeSha256": "f030c99d270ff984370c504a4df89049365c6aa2defcc35c5e013b877f1c7f7a",
+      "afterSha256": "b57b9f63d36eb5d42be0c277368e9ce6c2a65cae14a6be44adc0478987d53ae7",
+      "addedLines": 1,
+      "removedLines": 1
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "beforeSha256": "40209c2a9641d1ea2cf213a38152f6412eff0f203c54c8a3d5e871dff502176c",
+      "afterSha256": "5379db5e468d366900415afd42395e61700ceb5b0333ace5c6bc5494cef809eb",
+      "addedLines": 34,
+      "removedLines": 5
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6a/runtime-baseline.mjs",
+      "beforeSha256": "7fc608ab88cea3967fbab0f3fa0c69958a41441390b5053d14af40b0315ff30a",
+      "afterSha256": "01d71cb28e102abdebd342ececd08ebda191df226d15c630b9d8265889b956f0",
+      "addedLines": 6,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6a/validate-roster.mjs",
+      "beforeSha256": "fbcde193fa8c8fbb355a12615c1afe70d2c97eb6998a520deef2f2201cb719b6",
+      "afterSha256": "f391dd15f411257e2a95d7d09150b71fd7a53650a96b6e1511d7c8de339efc2d",
+      "addedLines": 2,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6a/validate-placement-qa.mjs",
+      "beforeSha256": "de52937bace8484fcc3a62c4c5e75a7710431f7feca09b6e1f6aca48f8e3279e",
+      "afterSha256": "9847e71198daaa00b4182a4ab4ef133df174f78ae9167afaf85d95174701f7ba",
+      "addedLines": 2,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6a/validate-worker-review.mjs",
+      "beforeSha256": "7c8977b5c5b56027f9e42afe43bacdfedc52d7dedb55209355f1fad171708734",
+      "afterSha256": "ebf97e8ebee848baa5d39f3cddb54f974dfc11f63291d7d7f37c15bd8bcf8e39",
+      "addedLines": 5,
+      "removedLines": 3
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6a/README.md",
+      "beforeSha256": "1bf7e5f6ee2f3cbdc7c6bf041e6f51683eb1c7b5abc7cf4295eb53d184b4a5dc",
+      "afterSha256": "00937f71fd18c74500d01ffee2e2253a55af067d24e8b86a1467a8e3313116f2",
+      "addedLines": 39,
+      "removedLines": 1
+    }
+  ],
+  "suiteSourceDrift": [
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "71a12541c09d9528aac9d99bb52b9a6e44865e1ed9c2fd2bf09af97fc2ebeea2",
+      "afterSha256": "e596e8153705164d013b3fc0fad8817a63afaf25b00c5a62cc2db46d12d88ff1"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "923366318c3da1bd7611e11a95c3578dc2b4784107489eb78d5bf2403d192c1b",
+      "afterSha256": "7e217f27d4628cb7943ded282826df1fc137ba379734baf8ba917bd7ec1c3b75"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "7b832ffa231520a098ccbd5ab8f0252f1d93cd23b3ae29277c10827a91fcde0d",
+      "afterSha256": "57bd0a6e0af246be2719484da123d4824c40de04afdac70905195acf2a98c7ce"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "40209c2a9641d1ea2cf213a38152f6412eff0f203c54c8a3d5e871dff502176c",
+      "afterSha256": "5379db5e468d366900415afd42395e61700ceb5b0333ace5c6bc5494cef809eb"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "f030c99d270ff984370c504a4df89049365c6aa2defcc35c5e013b877f1c7f7a",
+      "afterSha256": "b57b9f63d36eb5d42be0c277368e9ce6c2a65cae14a6be44adc0478987d53ae7"
+    }
+  ],
+  "note": "Unrelated concurrent suite-source changes are recorded, not reverted. Runtime preservation is checked separately by validate-runtime-integration.mjs."
+}

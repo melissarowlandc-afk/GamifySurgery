@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/ManagementPanel.tsx
++++ b/apps/player/src/ui/ManagementPanel.tsx
+@@ -16,6 +16,7 @@
+   staffTraining?: StaffTrainingOverviewView | null;
+   highlightedRoleId?: string | null;
+   highlightedEmployeeId?: string | null;
++  requestedTraining?: { employeeId: string; requestKey: number } | null;
+   serviceIncome: ServiceIncomeView;
+   onEnterManagementMode: () => void;
+   onExitManagementMode: () => void;
+@@ -45,6 +46,7 @@
+   staffTraining = null,
+   highlightedRoleId,
+   highlightedEmployeeId,
++  requestedTraining,
+   serviceIncome,
+   onEnterManagementMode,
+   onExitManagementMode,
+@@ -112,6 +114,7 @@
+           staffTraining={staffTraining}
+           highlightedRoleId={highlightedRoleId}
+           highlightedEmployeeId={highlightedEmployeeId}
++          requestedTraining={requestedTraining}
+           onHire={onHire}
+           onDecreaseSalary={onDecreaseSalary}
+           onIncreaseSalary={onIncreaseSalary}

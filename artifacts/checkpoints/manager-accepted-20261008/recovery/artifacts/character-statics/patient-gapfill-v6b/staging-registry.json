@@ -1,0 +1,713 @@
+{
+  "schemaVersion": "patient-gapfill-v6b-staging/v1",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "status": "candidate-review-root-checks-pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "baseline": "tools/character-mapping/patient-gapfill-v6b/runtime-baseline.json",
+  "target": {
+    "width": 160,
+    "height": 320,
+    "bodyAxisX": 80,
+    "floorY": 287,
+    "standingSouthVisibleHeight": 246
+  },
+  "coverageAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f",
+    "use": "Historical gap metric; this batch follows the manager program plan allocation."
+  },
+  "rosterEvidence": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/roster.json",
+    "sha256": "e58f4cb1ba0d2aaecb3f6bcc118e38bd20579cb2462b3fd404d7935800de1bf7"
+  },
+  "reviewLedger": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/review-acceptance.json",
+    "sha256": "2d17314b8aa14b269425abdc9518869514babdfa776c4fc1e5ae441448bdc700"
+  },
+  "rosterContract": {
+    "identities": 20,
+    "posesPerIdentity": 8,
+    "totalPoses": 160,
+    "categoryCounts": {
+      "staff": 0,
+      "patient": 20
+    },
+    "staffRoleCounts": {},
+    "plannedStaffRoleCounts": {},
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 3,
+        "middle_aged": 7,
+        "older_adult": 0
+      },
+      "Male": {
+        "young_adult": 0,
+        "adult": 4,
+        "middle_aged": 6,
+        "older_adult": 0
+      }
+    }
+  },
+  "seatContactContractSha256": "b277a1323acb02dac3812a4ed6baaf47e7f3347ad7923d8003cca9cc1b1100ef",
+  "derivedAlphaReport": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/alpha-normalization-report.json",
+    "sha256": "9884bfedecb1f895b33caf39d3b976277523ff574fe2e042b75658b3c89cf52e",
+    "rootWarningAccepted": false
+  },
+  "entries": [
+    {
+      "number": "001",
+      "stableId": "patient-gapfill-v6b.001",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/001/manifest.json",
+      "sourceSha256": "cf367141f842d6fdea4ea5afbc520ea99bf00de222dd1934e0c083f4213d884e",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 232,
+        "east": 237,
+        "west": 237,
+        "north": 238
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/001/full-poses-transparent.png",
+          "sha256": "db6828008c44bb21bde88f44fe2cc2a56132b34cfa2249804489e5902e22ac66"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/001/full-poses-light.png",
+          "sha256": "793430fc779f662a2c67adc492c3bc0aeb9aaf2bb3357dbff624ee4a29c8d134"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/001/full-poses-dark.png",
+          "sha256": "050b6d8a393ab31eccbb15662a64a5eafbe960099880ddab741f20a9b71ab1ba"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/001/seated-contact-grid-2x.png",
+          "sha256": "6c74de19efafa5c037cb14779e2db9c1e3e8b00adabb34ab77b34ebbc5f0e7bd"
+        }
+      }
+    },
+    {
+      "number": "002",
+      "stableId": "patient-gapfill-v6b.002",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/002/manifest.json",
+      "sourceSha256": "f9081b607d0dc332f209ab27ea06cac9ab961e5e8432b1bbee2e4409b433259f",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 237,
+        "east": 250,
+        "west": 250,
+        "north": 253
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/002/full-poses-transparent.png",
+          "sha256": "dae40ae474546d369aa2ab825355eb1070a35169a12efa953a857c5d1d89e5f3"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/002/full-poses-light.png",
+          "sha256": "9df9f75b845dd4a84dbccbb8a4e7632f9dafe455f080286f9341b1a80bd09496"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/002/full-poses-dark.png",
+          "sha256": "3dbe5b081ae285d23294fdbd0db3b4c5433d922b9e347346c9f450b81f140492"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/002/seated-contact-grid-2x.png",
+          "sha256": "771c3315ba690286173d6a3eca613699ba81eec18a2c65346f3d952d2e1c102c"
+        }
+      }
+    },
+    {
+      "number": "003",
+      "stableId": "patient-gapfill-v6b.003",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/003/manifest.json",
+      "sourceSha256": "f142090f09d3a793d9a6bdc7fa49dfe168c033bbea671b79e9f8c660664a73b7",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 247,
+        "west": 247,
+        "north": 250
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/003/full-poses-transparent.png",
+          "sha256": "e6095a3e89446bbcff61c8d244965256dcb077c7c9ef7c6f546c5fc2f6ce9f86"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/003/full-poses-light.png",
+          "sha256": "394d9cb2a6d073c40307c138ce51556535585b4812c14b5f26ca04850d904511"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/003/full-poses-dark.png",
+          "sha256": "9c7fa9f0525d8539f53c535ea5b2460d0ef1fe5b8488aac89d5cd980ed867156"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/003/seated-contact-grid-2x.png",
+          "sha256": "60e17e9a8d381076c7ea6483f5a6326c4f2027dcaade5ab98e0b3bf239b04a5b"
+        }
+      }
+    },
+    {
+      "number": "004",
+      "stableId": "patient-gapfill-v6b.004",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/004/manifest.json",
+      "sourceSha256": "6c08ec0f1d5bd48a0ab521264d3803c630044aac58f4650118b7b16594e1ee4b",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 238,
+        "west": 238,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/004/full-poses-transparent.png",
+          "sha256": "fdd0216ccb56f7792e92fbe201ba155695c5ea266cadfedaa786fd892e3570da"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/004/full-poses-light.png",
+          "sha256": "19b207f62f58c670bf10138be85ed3d190855585bbe1165b23a8a00e84661ff9"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/004/full-poses-dark.png",
+          "sha256": "a87b33f70181c02e05512d847e7241f4431bc9deb9d1e3a2d69c696ac269f817"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/004/seated-contact-grid-2x.png",
+          "sha256": "5ad1b5782073716adf3eb7ae9fdce60745d0533159bcee5db08540e09fd34730"
+        }
+      }
+    },
+    {
+      "number": "005",
+      "stableId": "patient-gapfill-v6b.005",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/005/manifest.json",
+      "sourceSha256": "ff6d2691e293cf56168b988df371d85f13aa234da84b99c8b4698c935c2de6de",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 232,
+        "east": 242,
+        "west": 242,
+        "north": 245
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/005/full-poses-transparent.png",
+          "sha256": "334edf7af83bef6b753e53db00cccb78330e7a9fb8d27f47de5fe32399940c00"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/005/full-poses-light.png",
+          "sha256": "da83ec1b0fa40576fc793517f43679e1c22f039a999380130f35da2908a86130"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/005/full-poses-dark.png",
+          "sha256": "0443ac1ff78062b775881ce959da358b23cc46038a8ac93bc306c4269f27d762"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/005/seated-contact-grid-2x.png",
+          "sha256": "3a000ec0f5de6db0c46bda49bdf50bab3e25497ff2a7d2fcec125521ca248cca"
+        }
+      }
+    },
+    {
+      "number": "006",
+      "stableId": "patient-gapfill-v6b.006",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/006/manifest.json",
+      "sourceSha256": "bde66d79a2a2bf20a3a3d506bde7c9465df4c803ef0a7f866112da022d3437c9",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 240,
+        "west": 240,
+        "north": 244
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/006/full-poses-transparent.png",
+          "sha256": "85db31e6cc7bb6e4f5fd0c9c6113d5c8398199fa5f2b1f15334ccb892a313b1b"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/006/full-poses-light.png",
+          "sha256": "3ebc631de102c24937411598db9d8aa9924844ff5cb84b08fc2c57cc1b1cc40f"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/006/full-poses-dark.png",
+          "sha256": "d8939d41cf9bc36afe57bbd750dd2dd7226dfe166419f652c0d58464952c4f16"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/006/seated-contact-grid-2x.png",
+          "sha256": "ec2cdf1a98649281338f2e69548d28a6730b267bb7b451021a918a135c4381f9"
+        }
+      }
+    },
+    {
+      "number": "007",
+      "stableId": "patient-gapfill-v6b.007",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/007/manifest.json",
+      "sourceSha256": "45ea4fcfd098b47a9ce866c34317553a4df4f7fe468eb2336abd637cae5027f9",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 238,
+        "west": 238,
+        "north": 240
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/007/full-poses-transparent.png",
+          "sha256": "9132cf4165d56839aefbbf6a2c83409c826c00a2c71304d71198e3497b97270d"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/007/full-poses-light.png",
+          "sha256": "c49048737f2b56c0eee08be9c55d0800b250b8598204b7698074678eba77ed77"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/007/full-poses-dark.png",
+          "sha256": "0a43e2f9668867958c4dec837d8dcf04c54e5ec98789c95039539880458b4aa4"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/007/seated-contact-grid-2x.png",
+          "sha256": "3adcc35a8b06afa6fc24d0b6a4537ce15cb2dec8c5454db9e1ffdd0bd1b51759"
+        }
+      }
+    },
+    {
+      "number": "008",
+      "stableId": "patient-gapfill-v6b.008",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/008/manifest.json",
+      "sourceSha256": "a73db96c03b8a5956b3d7d4927d34718488167b235e0f12a5ca17f598a6b3f79",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 244,
+        "west": 244,
+        "north": 249
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/008/full-poses-transparent.png",
+          "sha256": "e924253e6accd81022f9d4f33ec78b2182680ff9fbfa6df8c840aa54df561e94"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/008/full-poses-light.png",
+          "sha256": "a07277b2e740c55fd3562412dde9ca81bcb0340c4cf2468e8bf5ef1d8879f1cc"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/008/full-poses-dark.png",
+          "sha256": "8aeb4e5171ce06ae10b6866d7bada1f5d3a490881a2d1a85f6f230fb894b7814"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/008/seated-contact-grid-2x.png",
+          "sha256": "bd191d8790835de7dae716effdd411c76e79cc39a461d0bbfc07fd55a9456df8"
+        }
+      }
+    },
+    {
+      "number": "009",
+      "stableId": "patient-gapfill-v6b.009",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/009/manifest.json",
+      "sourceSha256": "9170306a641dddef0af8b71f966f95443c22844b936a3078a3f36976dfc0a699",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 239,
+        "east": 250,
+        "west": 250,
+        "north": 253
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/009/full-poses-transparent.png",
+          "sha256": "02546e67ee7eb5d157c07ff6020e0a9c8496d239c5f782f43cea0679f634f275"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/009/full-poses-light.png",
+          "sha256": "3880c915b1390194467da3bfe0948f9af5ca038e13ab8579b719a1ae1c43de7c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/009/full-poses-dark.png",
+          "sha256": "590682121697dfaaa652d9f8632e27a8679be862f1cfb316cfce42673c60f7ec"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/009/seated-contact-grid-2x.png",
+          "sha256": "d5ce6eeb4f8ea868dc076d9d492a4767352a898e35cbc474aa3dc2b5795b13d6"
+        }
+      }
+    },
+    {
+      "number": "010",
+      "stableId": "patient-gapfill-v6b.010",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/010/manifest.json",
+      "sourceSha256": "a1f9d8a6a49ea2c66c9ca9bbf0143c79c209a13157c94e7afce7aed7d5eed16b",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 237,
+        "west": 237,
+        "north": 240
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/010/full-poses-transparent.png",
+          "sha256": "5efdeeed193d1c54e07a61e771cd1a036322232de4dbcdf1b8369f0848c9046a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/010/full-poses-light.png",
+          "sha256": "4aaefe981e2c11581078d0c8e9baa41a69b7dece306ffccabe90e7904d8eb694"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/010/full-poses-dark.png",
+          "sha256": "cdd2baa49a2f3cbb73516c02891a699c1b08671203cdce75331484971e88aae4"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/010/seated-contact-grid-2x.png",
+          "sha256": "398e73664296084dd4c549139b3badfb3294caa5e3a3a6f51fb80427912a180c"
+        }
+      }
+    },
+    {
+      "number": "011",
+      "stableId": "patient-gapfill-v6b.011",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/011/manifest.json",
+      "sourceSha256": "2096075ece9d0ea4fb032e4266934c2af90757580c5972214810d9de1b6a08da",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/011/full-poses-transparent.png",
+          "sha256": "150abbf56643c98a1ecce88af7e26e48e8d1bfde3b2403d565f6d40eca5e002a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/011/full-poses-light.png",
+          "sha256": "7cbe58559c28fe9e5e47cec6bb047baa7a9315646ea7b2ed526b07113b18f565"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/011/full-poses-dark.png",
+          "sha256": "e67347c4201375e7af2d16291f64b0c7420ceda9b114c70e6bc2eb4a30aa1387"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/011/seated-contact-grid-2x.png",
+          "sha256": "dd08edc47b7f36e65e47663f3b4ad85c4ef06bff2beb6a6b02cf58741d5d4c48"
+        }
+      }
+    },
+    {
+      "number": "012",
+      "stableId": "patient-gapfill-v6b.012",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/012/manifest.json",
+      "sourceSha256": "770ab1a9a4f416e251547a1f01adf8d48b34fc9b330a6342ec886d9a8d398777",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 239,
+        "west": 239,
+        "north": 242
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/012/full-poses-transparent.png",
+          "sha256": "84001db8ecfa7e8b91e906c2ca26692352401955302280d99ea152537ead88cb"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/012/full-poses-light.png",
+          "sha256": "2551eaf61163fd20524afd1045595960062ee29242708c60c03928104fef0298"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/012/full-poses-dark.png",
+          "sha256": "aeae4f8908b1d5675600b558b6ad5b99ffc75f86e566c703620c7d0ae557409f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/012/seated-contact-grid-2x.png",
+          "sha256": "82dd08e352f9e43075e4ee694c3245b8a5c5cd518f15a107d39bbfba78e5ae29"
+        }
+      }
+    },
+    {
+      "number": "013",
+      "stableId": "patient-gapfill-v6b.013",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/013/manifest.json",
+      "sourceSha256": "b663ca5dedc9a1225a2f68308fb816d3b62441adb97d8521d9e41869c7291b4b",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 247,
+        "west": 247,
+        "north": 249
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/013/full-poses-transparent.png",
+          "sha256": "5317fcffcb9f569b68b5810a1e367fd0b1fb5ff71d12218ab438993d4b107608"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/013/full-poses-light.png",
+          "sha256": "16ebb86984b7ed81b88c0f4426157e57434da6f99599212e8ab9cc2520442f32"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/013/full-poses-dark.png",
+          "sha256": "62d71438fc6c3181dce6c2dda249746a751a6bd138fb35081d1247c6984dcc48"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/013/seated-contact-grid-2x.png",
+          "sha256": "dbbc0090ee81ab7d64f3f7da5424afafd5e0bc390cdc87eb76ee1a98b6deceb9"
+        }
+      }
+    },
+    {
+      "number": "014",
+      "stableId": "patient-gapfill-v6b.014",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/014/manifest.json",
+      "sourceSha256": "fddfaa9aed214659fb909c7c6f19fdbdff67e5e9b096f9ab42c2a0ae942a3a97",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 245,
+        "west": 245,
+        "north": 248
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/014/full-poses-transparent.png",
+          "sha256": "fa480d681969c95634eb17e2157fcd673746b3b090311128172ee94284a5358d"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/014/full-poses-light.png",
+          "sha256": "2806757bd732f5b668cecaa69d0f1c55a7b2dfe7a4b2ab6ea2d6291d45217f83"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/014/full-poses-dark.png",
+          "sha256": "bc8fd51ccefc9c100479f6f3a0da95c94fb7dc8c22fdb943448ba1205030da73"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/014/seated-contact-grid-2x.png",
+          "sha256": "6d510639fc5e00e6b9e5b56c86f285bec901026b7936cd4f5a71aa3fd7651f91"
+        }
+      }
+    },
+    {
+      "number": "015",
+      "stableId": "patient-gapfill-v6b.015",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/015/manifest.json",
+      "sourceSha256": "0566adc63073a06dd144b0c368f0bf84beda3c3a5af5532ff8e31507ce72d12c",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 237,
+        "west": 237,
+        "north": 240
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/015/full-poses-transparent.png",
+          "sha256": "a6677b706a12e0d859012bdda75e96ee5a9d5e0a21a63a33b86cadaa7ecc4b95"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/015/full-poses-light.png",
+          "sha256": "b5aa5ff88ed6403951f18b8e7db9560559e1e701a6daddf1391bcd4cf0ba51a6"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/015/full-poses-dark.png",
+          "sha256": "01f0655f62adf95a6ad17a4ee876ad8d15691d73662fb461e6d7894d96991176"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/015/seated-contact-grid-2x.png",
+          "sha256": "c4a7e318c956dda6d0143bb808a6a928a46e1c44fe96f590dbf485395575ccc3"
+        }
+      }
+    },
+    {
+      "number": "016",
+      "stableId": "patient-gapfill-v6b.016",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/016/manifest.json",
+      "sourceSha256": "bd169acef8e195ff4397625c0fb3ac45bbb753beef24e75064c95cb93310a213",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 242,
+        "west": 242,
+        "north": 242
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/016/full-poses-transparent.png",
+          "sha256": "fbe78bd8e9c7ec282baffb881f60831df8e08dda1b61388d36aa4ba0cd08a294"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/016/full-poses-light.png",
+          "sha256": "103690b8f65b883c0d521cba203b41424a9776832d2b01de461a1e7841767d7c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/016/full-poses-dark.png",
+          "sha256": "a719092ea3e8c14319af30ea2a60613827319855b805ce543c9047b023eda1a6"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/016/seated-contact-grid-2x.png",
+          "sha256": "89b13f0055ec18de84db63d1fb952cd2d58cb40410561b1d7bf539fd3f1869cc"
+        }
+      }
+    },
+    {
+      "number": "017",
+      "stableId": "patient-gapfill-v6b.017",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/017/manifest.json",
+      "sourceSha256": "6f60492d5eeab958093b9f32edf9b406729880f58009b36d296e55393afe514b",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 250,
+        "west": 250,
+        "north": 251
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/017/full-poses-transparent.png",
+          "sha256": "c1f0a6f0248577acdd2923e50bf95be6f04cee3d16956fb470cb7a8e80f4e8b0"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/017/full-poses-light.png",
+          "sha256": "2aee99abcb134d48d78faf1173c0665e59c7dfabd3d5fb9bcd4b254b5e1c3b8b"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/017/full-poses-dark.png",
+          "sha256": "7fdf721e79b2f98a0f65cbb7a2308fc7ef9edbb9c01a13ef8a800d7e98f3a66c"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/017/seated-contact-grid-2x.png",
+          "sha256": "938da38bd3da15f90c3d60c16221b88e6a1a13f1da569f1640c358c74ef53dd3"
+        }
+      }
+    },
+    {
+      "number": "018",
+      "stableId": "patient-gapfill-v6b.018",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/018/manifest.json",
+      "sourceSha256": "f7067a197607e005f12a04e8163e09b181ef7a331a4bb71db60905697f11bf95",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 243,
+        "west": 243,
+        "north": 246
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/018/full-poses-transparent.png",
+          "sha256": "9729688f0888da209062e654096e293b1fbbb89f1237c4361e0232ae20d0a63e"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/018/full-poses-light.png",
+          "sha256": "507e7d56bc961d5e04f93579234abb7c46d96ce3483b176f36080f90de68cf70"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/018/full-poses-dark.png",
+          "sha256": "c1de1a703f1007e9d542470bc86fc2930618e246a0f42c2c08475423a8e45679"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/018/seated-contact-grid-2x.png",
+          "sha256": "48433584149fd0654c281a0eda45ae1dee60a2687af660306b7a2a8b241085af"
+        }
+      }
+    },
+    {
+      "number": "019",
+      "stableId": "patient-gapfill-v6b.019",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/019/manifest.json",
+      "sourceSha256": "1ab02f51e7af9f330dba7ff25bec70fc5864a3defe18385ee4fc2e893b25f78a",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 233,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/019/full-poses-transparent.png",
+          "sha256": "23252c655a25958527062e7049fcb79719da9831481b5bf1a0c221c82fe84db4"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/019/full-poses-light.png",
+          "sha256": "44326ed4c1f0f9d81aa8228ccee16f59fb508d1d4ec7d7825e47ba7783d0b4d0"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/019/full-poses-dark.png",
+          "sha256": "9e7752e62169a374124754a02968be4a22a4d165022b870715faeb27a77abb90"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/019/seated-contact-grid-2x.png",
+          "sha256": "c8fe7f0fef153d6505b69cdc9458d8c240510af2f008080bf16d5810779e281f"
+        }
+      }
+    },
+    {
+      "number": "020",
+      "stableId": "patient-gapfill-v6b.020",
+      "manifest": "artifacts/character-statics/patient-gapfill-v6b/packages/020/manifest.json",
+      "sourceSha256": "04c8f70e59f4297f5c2a31fdd477c793fd2d84a1333c0ade5ba871e92c7f0ed9",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 236,
+        "east": 240,
+        "west": 240,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/020/full-poses-transparent.png",
+          "sha256": "2d07cc620d52ea065b46506d280a89c3dd634b6ab0edc0c4c8dc64755ab4523a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/020/full-poses-light.png",
+          "sha256": "34abf61db58e3b5a73faac8282d98285a1d53b84cf82190a06902f056ba76dbc"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/020/full-poses-dark.png",
+          "sha256": "7dfd6971634846910adde435a366678cf25afc508969ca3fa1e9957dd8e28f83"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-gapfill-v6b/packages/020/seated-contact-grid-2x.png",
+          "sha256": "4c2e9475d210e0869b81088ee69f5d222d197bdffa3c0af5462a31b66c657974"
+        }
+      }
+    }
+  ],
+  "issues": [],
+  "totals": {
+    "expected": 20,
+    "packaged": 20,
+    "poses": 160,
+    "issues": 0
+  }
+}

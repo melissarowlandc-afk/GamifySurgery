@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "patient-gapfill-v6c-browser-revalidation-needed/v1",
+  "createdAt": "2026-10-08T05:45:06.722Z",
+  "reason": "Manager-requested 018 adult regeneration changed eight poses and shared gallery images/links. Prior manager browser receipt covers the original teen-reading attempt.",
+  "previousBrowserReceipt": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/validation/gallery-browser-results.json",
+    "sha256": "c4bcbc68cf44ec087d53de92bb37b2215d310fdb62fe94ed9577d844a3973850",
+    "status": "preserved-historical-original-batch-PASS"
+  },
+  "currentSource": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/sources/018/source.png",
+    "sha256": "4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a"
+  },
+  "pending": true,
+  "freshValidationCommand": "node tools/character-mapping/patient-gapfill-v6c/validate-gallery.mjs",
+  "owner": "GamifySurgery manager",
+  "workerBrowserValidation": "not-run-left-to-manager",
+  "managerAcceptance": "other18-accepted;revised018-pending",
+  "runtimeReady": false
+}

@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": "patient-gapfill-v6b-worker-visual-review/v1",
+  "reviewer": "sol-v6b-worker",
+  "scope": "Generation and packaging worker visual QA only; manager visual acceptance and browser validation pending. Appearance is visual only.",
+  "managerAcceptance": "pending",
+  "browserValidation": "not-run-left-to-manager",
+  "runtimeReady": false,
+  "notes": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/worker-review-notes.json",
+    "sha256": "5443ca154df3856b0c65a9732438aa7b4fb9b3515843e159164926ad623d10d6"
+  },
+  "preGenerationExamples": [
+    {
+      "id": "patient-gapfill-v6a.001",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/001/stand-south.png",
+        "sha256": "4929abf726edfe6d6a9175999b9b1fdd9accc907144083cdd9b6d7ea7747c1be"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.004",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/004/stand-south.png",
+        "sha256": "b107759e85ce652ed64270cfbdcf30bb430e3090814f1745f6a3029cd08dc688"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.005",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/005/stand-south.png",
+        "sha256": "4f72751e7c28ba835bd41d54a7ac78473e8ac788ea4a42f26bd93a33abbf1293"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.008",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/008/stand-south.png",
+        "sha256": "cb57b2c469bef43e5f5c3b9f74a1e912ab673be3c40a0f6d896cfbdaddc5cc2b"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.011",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/011/stand-south.png",
+        "sha256": "afe7b8f89460e5c3c4e80cfc5260104724a4d90e9c6cf4f3f44f30f1d51cbf32"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.013",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/013/stand-south.png",
+        "sha256": "dddd1cbf3b12d2a41e3a34c4d2ebeb7e470934d745abd8b79fc7f1a5e62bc128"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.015",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/015/stand-south.png",
+        "sha256": "ba31979302170549c41826993c4545287960f234ec3404d5e7c1c789c8a1938d"
+      }
+    },
+    {
+      "id": "patient-gapfill-v6a.019",
+      "pose": {
+        "path": "artifacts/character-statics/patient-gapfill-v6a/packages/019/stand-south.png",
+        "sha256": "06b2fdee5eb59aaf872dbf583d1d590417191f3b2fd0842c75bef0e738a7301a"
+      }
+    }
+  ],
+  "styleReference": {
+    "path": "artifacts/character-statics/patient-gapfill-v6a/sources/004/source.png",
+    "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78"
+  },
+  "existingBandBoards": [
+    {
+      "sex": "Female",
+      "ageBand": "middle_aged",
+      "identities": [
+        "patient.adult.013",
+        "patient.adult.014",
+        "patient.adult.015",
+        "patient.adult.016",
+        "patient.adult.017",
+        "patient.adult.018",
+        "gs022-new-person-007",
+        "gs022-new-person-009",
+        "gs022-new-person-011",
+        "gs022-new-person-013",
+        "gs022-new-person-016",
+        "patient-women20-v3.013",
+        "patient-women20-v3.014",
+        "patient-women20-v3.015",
+        "patient-women20-v3.016",
+        "patient-women20-v3.017",
+        "patient-women20-v3.018",
+        "patient-women20-v3.019",
+        "patient-women20-v3.020",
+        "patient-demographics20-v4.019",
+        "patient-demographics20-v4.020",
+        "future-roster20-v5.018",
+        "patient-gapfill-v6a.001",
+        "patient-gapfill-v6a.002",
+        "patient-gapfill-v6a.003",
+        "patient-gapfill-v6a.004",
+        "patient-gapfill-v6a.005",
+        "patient-gapfill-v6a.006",
+        "patient-gapfill-v6a.007"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/female-middle_aged-existing.png",
+        "sha256": "1c61304bef1f55cef0597ae7fee6e1573cd78e29f48afa7150c209431f997a9b"
+      }
+    },
+    {
+      "sex": "Female",
+      "ageBand": "adult",
+      "identities": [
+        "patient.adult.007",
+        "patient.adult.008",
+        "patient.adult.009",
+        "patient.adult.010",
+        "patient.adult.011",
+        "patient.adult.012",
+        "gs022-new-person-002",
+        "gs022-new-person-004",
+        "gs022-new-person-006",
+        "patient-women20-v3.001",
+        "patient-women20-v3.002",
+        "patient-women20-v3.003",
+        "patient-women20-v3.004",
+        "patient-women20-v3.005",
+        "patient-women20-v3.006",
+        "patient-women20-v3.007",
+        "patient-women20-v3.008",
+        "patient-women20-v3.009",
+        "patient-women20-v3.010",
+        "patient-women20-v3.011",
+        "patient-women20-v3.012",
+        "patient-gapfill-v6a.014",
+        "patient-gapfill-v6a.015",
+        "patient-gapfill-v6a.016",
+        "patient-gapfill-v6a.017"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/female-adult-existing.png",
+        "sha256": "57ff305a0b1c01bf78f2d824c666f92ae569fe0cdefa6d66870b3f0de4b4b462"
+      }
+    },
+    {
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "identities": [
+        "patient.adult.038",
+        "patient.adult.039",
+        "patient.adult.040",
+        "patient.adult.041",
+        "patient.adult.042",
+        "patient.adult.043",
+        "gs022-new-person-008",
+        "gs022-new-person-010",
+        "gs022-new-person-012",
+        "gs022-new-person-014",
+        "gs022-new-person-015",
+        "patient-demographics20-v4.006",
+        "patient-demographics20-v4.007",
+        "patient-demographics20-v4.008",
+        "patient-demographics20-v4.009",
+        "patient-demographics20-v4.010",
+        "patient-demographics20-v4.011",
+        "patient-demographics20-v4.012",
+        "future-roster20-v5.019",
+        "patient-gapfill-v6a.008",
+        "patient-gapfill-v6a.009",
+        "patient-gapfill-v6a.010",
+        "patient-gapfill-v6a.011",
+        "patient-gapfill-v6a.012",
+        "patient-gapfill-v6a.013"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/male-middle_aged-existing.png",
+        "sha256": "d74989056a3a4a2f81be2cd8ac05dc1a2742bb3f36dd596217ac96861a9ff90e"
+      }
+    },
+    {
+      "sex": "Male",
+      "ageBand": "adult",
+      "identities": [
+        "patient.adult.032",
+        "patient.adult.033",
+        "patient.adult.034",
+        "patient.adult.035",
+        "patient.adult.036",
+        "patient.adult.037",
+        "gs022-new-person-003",
+        "gs022-new-person-005",
+        "level3-roster-v2.020",
+        "patient-demographics20-v4.001",
+        "patient-demographics20-v4.002",
+        "patient-demographics20-v4.003",
+        "patient-demographics20-v4.004",
+        "patient-demographics20-v4.005",
+        "future-roster20-v5.017",
+        "patient-gapfill-v6a.018",
+        "patient-gapfill-v6a.019",
+        "patient-gapfill-v6a.020"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/male-adult-existing.png",
+        "sha256": "5372dd1a16bd28af82c209a502c377200c1749f2be38511467ff99b30c2b8143"
+      }
+    }
+  ],
+  "comparisonManifest": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/manifest.json",
+    "sha256": "c6868bd32c5ca73d3ef0a0b857939fbcc6c585fbeea1480cbd4f3e3f217bb7d8"
+  },
+  "allCatalogComparisonManifest": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/all-catalog-manifest.json",
+    "sha256": "681c0f024b69cbb3b00739a742b740ba8173fc7719a33e86afe9a48f583ef7f0"
+  },
+  "styleReviewManifest": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/review/manager/style-review-manifest.json",
+    "sha256": "3bed561364a7d332943cd961aa155b28c6b7a0ac2deba5af1c20808bb1e603aa"
+  },
+  "comparisonAtlasesManifest": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/review/manager/qa-atlases-manifest.json",
+    "sha256": "e4844a08a3d091e58e786c712ba9b9cee8372722a2f5acabf54f1934403a956a"
+  },
+  "chairBoards": [
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/chair-review-01.png",
+      "sha256": "ec2e45fff6e7d4f4165d18da8e0aa64e920a5ab61eba09c8b9990f247b6de076"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/chair-review-02.png",
+      "sha256": "f0c9936aba3a9f5ff75d1536e174175666a1c30dbbf9687a99f45e8cb7df08bb"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/chair-review-03.png",
+      "sha256": "37be55e8695841b919d95f94ff606e2e4f2eb71632bb017138ce5bbd9a21c9ac"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/chair-review-04.png",
+      "sha256": "821ee07552345645f51953f22a49ba64295cf256ee9fd4606cf29b59d952cee1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/chair-review-05.png",
+      "sha256": "a1c84e169f9927916e4101f416afcf32d73be57c37a6389ce00cab0a198f551a"
+    }
+  ],
+  "contactBoards": [
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/contact-review/contact-review-01.png",
+      "sha256": "7e8e7d924971a05c42c1b250f71182609cb0bb2048cc97e6865bc4ea28de1804"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/contact-review/contact-review-02.png",
+      "sha256": "f0b61c89ddc39feee9883b80befb6fefcb5f7e0d28050badcdbbc719e0f38231"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/contact-review/contact-review-03.png",
+      "sha256": "0eae09cef3892125a6de0fb0407392a3cbb167f8dc0072bb3f3d0eee97bdeb55"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/contact-review/contact-review-04.png",
+      "sha256": "aadd270e22a947526d741c0adb54c9ec695825d37f53ba380625603a614db6f2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6b/contact-review/contact-review-05.png",
+      "sha256": "f8d1cc37489e5137549ee84fc4c464fb0ce02841b8e97073eba269a8d81ec0e9"
+    }
+  ],
+  "contactLedger": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/review-acceptance.json",
+    "sha256": "2d17314b8aa14b269425abdc9518869514babdfa776c4fc1e5ae441448bdc700"
+  },
+  "authoredContactContractSha256": "b277a1323acb02dac3812a4ed6baaf47e7f3347ad7923d8003cca9cc1b1100ef",
+  "alphaReport": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/alpha-normalization-report.json",
+    "sha256": "9884bfedecb1f895b33caf39d3b976277523ff574fe2e042b75658b3c89cf52e",
+    "summary": {
+      "identities": 20,
+      "poses": 160,
+      "sourceNonzeroPixelsWithFootprintOutside": 4500,
+      "sourcePosesWithFootprintOutside": 130,
+      "maxSourceAlphaWithFootprintOutside": 1,
+      "derivedBorderNonzeroPixels": 63,
+      "derivedPosesWithBorderAlpha": 22,
+      "derivedBorderMaxAlpha": 1,
+      "protectedAlphaClipping": false
+    },
+    "status": "worker-QA-pass-with-alpha1-noise;manager-acceptance-pending"
+  },
+  "identities": [
+    {
+      "number": "001",
+      "id": "patient-gapfill-v6b.001",
+      "sex": "Female",
+      "age": 46,
+      "ageBand": "middle_aged",
+      "sourceSha256": "cf367141f842d6fdea4ea5afbc520ea99bf00de222dd1934e0c083f4213d884e",
+      "features": "Slim; deep brown skin; short rounded silver curls; violet rectangular glasses; belted ochre corduroy shirt dress; black leggings; muted-teal boots.",
+      "distinction": "Silver curls, violet frames, dark dress belt and teal boots separate it from v6a's silver pixie/track top and gray curls/cardigan silhouettes.",
+      "realizationNote": "The planned squared silver flat-top rendered as rounded short curls. Final visible appearance is recorded without changing identity or demographic metadata.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/001/full-poses-light.png",
+          "sha256": "793430fc779f662a2c67adc492c3bc0aeb9aaf2bb3357dbff624ee4a29c8d134"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/001/full-poses-dark.png",
+          "sha256": "050b6d8a393ab31eccbb15662a64a5eafbe960099880ddab741f20a9b71ab1ba"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/001-nearest-six.png",
+        "sha256": "17efa2675a58dbfe7eb88289c0ed72c65236602c2579f0cc9c47101df6004b90"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/001-front-desk-chair-placement.png",
+        "sha256": "3a33061c73aac629b65ffbbd7abb98869e661de5dd1b9d1328168cf73641480a"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/001.png",
+        "sha256": "6b255ba59479898d2daaf75d1e69bc70e60fa5de538cca6d2364c22d890ce39a"
+      },
+      "contacts": {
+        "south": 232,
+        "east": 237,
+        "west": 237,
+        "north": 238
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "002",
+      "id": "patient-gapfill-v6b.002",
+      "sex": "Female",
+      "age": 49,
+      "ageBand": "middle_aged",
+      "sourceSha256": "f9081b607d0dc332f209ab27ea06cac9ab961e5e8432b1bbee2e4409b433259f",
+      "features": "Athletic; fair freckled skin; ginger shoulder-length flipped bob; pearl studs, no glasses; lavender turtleneck; navy patch-pocket knee skirt; charcoal tights; plum trainers.",
+      "distinction": "Flipped ginger bob, absence of glasses and lavender/navy/tights palette distinguish it from v6a's auburn braids, blue glasses and pocketed vest.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/002/full-poses-light.png",
+          "sha256": "9df9f75b845dd4a84dbccbb8a4e7632f9dafe455f080286f9341b1a80bd09496"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/002/full-poses-dark.png",
+          "sha256": "3dbe5b081ae285d23294fdbd0db3b4c5433d922b9e347346c9f450b81f140492"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/002-nearest-six.png",
+        "sha256": "b97281ee6791fd650fe77bae5b6f73c7eaf7dfad2a6e344acc8fcc244c38eca4"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/002-front-desk-chair-placement.png",
+        "sha256": "18243c31d11b739bbedf34d083fc5ed39b9330eb6f4f148e309a3124d0682aa9"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/002.png",
+        "sha256": "023d6c547bb93ae566d71c033f13fea2ed3c66e24817d42853467e6c7d579d77"
+      },
+      "contacts": {
+        "south": 237,
+        "east": 250,
+        "west": 250,
+        "north": 253
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "003",
+      "id": "patient-gapfill-v6b.003",
+      "sex": "Female",
+      "age": 52,
+      "ageBand": "middle_aged",
+      "sourceSha256": "f142090f09d3a793d9a6bdc7fa49dfe168c033bbea671b79e9f8c660664a73b7",
+      "features": "Full figure; light olive skin; black braided crown with silver strands; navy square glasses; teal collared blouse; apricot trousers; tan slip-ons.",
+      "distinction": "Silver-banded crown braid, light olive complexion and teal/apricot outfit distinguish it from v6a.004's loose gray curls, rose cardigan and sage trousers.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/003/full-poses-light.png",
+          "sha256": "394d9cb2a6d073c40307c138ce51556535585b4812c14b5f26ca04850d904511"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/003/full-poses-dark.png",
+          "sha256": "9c7fa9f0525d8539f53c535ea5b2460d0ef1fe5b8488aac89d5cd980ed867156"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/003-nearest-six.png",
+        "sha256": "5a0c533e5d4c9b92835815af40797b0a0aa5356e5a79745d07bfaab4791b918b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/003-front-desk-chair-placement.png",
+        "sha256": "bf572bb871c70904a38750930ca22f3fb97a5078139f847325aad50e3aa559f7"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/003.png",
+        "sha256": "a5ae1f31c502012b9a4b64652d2435b1583ae5a716d358c33c1840854d07b3f9"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 247,
+        "west": 247,
+        "north": 250
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "004",
+      "id": "patient-gapfill-v6b.004",
+      "sex": "Female",
+      "age": 55,
+      "ageBand": "middle_aged",
+      "sourceSha256": "6c08ec0f1d5bd48a0ab521264d3803c630044aac58f4650118b7b16594e1ee4b",
+      "features": "Petite; golden brown skin; long low silver ponytail with red tie; thin rimless rectangular glasses; berry quilted gilet over slate sleeves; cream trousers; white sneakers.",
+      "distinction": "Long silver ponytail, red tie, rimless frames and berry quilted layer create a different profile and palette from the catalog's braids and short silver crops.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/004/full-poses-light.png",
+          "sha256": "19b207f62f58c670bf10138be85ed3d190855585bbe1165b23a8a00e84661ff9"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/004/full-poses-dark.png",
+          "sha256": "a87b33f70181c02e05512d847e7241f4431bc9deb9d1e3a2d69c696ac269f817"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/004-nearest-six.png",
+        "sha256": "d3d31c1ccf9838b8976e558c9e01638a15064adcd00a9a6f82204877e159ef15"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/004-front-desk-chair-placement.png",
+        "sha256": "dd213772edd247e4df5a125bc87e7d3749994b2e0cdcf233e453719bdc323e7e"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/004.png",
+        "sha256": "17b04a76befba435a982832c4a2b3e9e0b1557e8238f7ccd9329d13b969576ed"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 238,
+        "west": 238,
+        "north": 241
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "005",
+      "id": "patient-gapfill-v6b.005",
+      "sex": "Female",
+      "age": 58,
+      "ageBand": "middle_aged",
+      "sourceSha256": "ff6d2691e293cf56168b988df371d85f13aa234da84b99c8b4698c935c2de6de",
+      "features": "Broad; fair warm skin; black waves with a silver forelock/temple and clipped side; charcoal cat-eye glasses; mustard/garnet striped pullover; slate wide trousers; burgundy loafers.",
+      "distinction": "Asymmetric silver-on-black waves and wide striped sweater silhouette differ from v6a.004's longer streaked curls and plain dusty-rose cardigan.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/005/full-poses-light.png",
+          "sha256": "da83ec1b0fa40576fc793517f43679e1c22f039a999380130f35da2908a86130"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/005/full-poses-dark.png",
+          "sha256": "0443ac1ff78062b775881ce959da358b23cc46038a8ac93bc306c4269f27d762"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/005-nearest-six.png",
+        "sha256": "99c85c94d00f09392d0ac92fd2c3572130ae4d192a547ea1a3f5ebe3b6273a3c"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/005-front-desk-chair-placement.png",
+        "sha256": "55f94166ff2893ec0c793c3acfa9524ddb84b32b64fc52fa98bc336b43efc937"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/005.png",
+        "sha256": "e43c1bdf79fe5ea453a0f1b647b8ea3c14ea66f7a146d6d87f41b89453dae4c2"
+      },
+      "contacts": {
+        "south": 232,
+        "east": 242,
+        "west": 242,
+        "north": 245
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "006",
+      "id": "patient-gapfill-v6b.006",
+      "sex": "Female",
+      "age": 61,
+      "ageBand": "middle_aged",
+      "sourceSha256": "bde66d79a2a2bf20a3a3d506bde7c9465df4c803ef0a7f866112da022d3437c9",
+      "features": "Lean; medium tan skin; straight gray/silver shoulder hair with deep side part; pearl studs, no glasses; slate button tunic with rose collar; ochre trousers; brown lace-ups; brown cane with cream handle in anatomical left hand.",
+      "distinction": "Straight side-parted silver hair, no glasses, long slate tunic and left-hand cane distinguish it from v6a's glasses, buns, pixies and cardigans.",
+      "realizationNote": "One targeted native edit corrected the cane to anatomical left in standing and seated north. Original wrong-hand source and all generation receipts are preserved. Full native finish is slightly smoother; normalized style remains consistent.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/006/full-poses-light.png",
+          "sha256": "3ebc631de102c24937411598db9d8aa9924844ff5cb84b08fc2c57cc1b1cc40f"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/006/full-poses-dark.png",
+          "sha256": "d8939d41cf9bc36afe57bbd750dd2dd7226dfe166419f652c0d58464952c4f16"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/006-nearest-six.png",
+        "sha256": "d43081c54550630195aa3f833e77ec250a3a20a50b9861d5a5fc1246d3545906"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/006-front-desk-chair-placement.png",
+        "sha256": "7ff3d0bfb86a16af1f5e65e57c0d31bcf045c5bd7eeeb9bbf08f0705222c2774"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/006.png",
+        "sha256": "645f45334597bbabef6c0253ad87854d55d779900c395f8c3524503bd9a316c4"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 240,
+        "west": 240,
+        "north": 244
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "007",
+      "id": "patient-gapfill-v6b.007",
+      "sex": "Female",
+      "age": 64,
+      "ageBand": "middle_aged",
+      "sourceSha256": "45ea4fcfd098b47a9ce866c34317553a4df4f7fe468eb2336abd637cae5027f9",
+      "features": "Sturdy; deep dark brown skin; rounded silver curls; black oval glasses; aubergine cardigan over celadon shirt; mustard calf skirt; cream socks; chestnut loafers.",
+      "distinction": "Black frames, silver crop, celadon neckline and mustard skirt differ from v6a.004's teal glasses, darker streaked curls and sage wide-leg trousers.",
+      "realizationNote": "The planned close silver waves rendered as rounded curls; the collarless jacket reads as a cardigan. Both are consistent across all eight poses.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/007/full-poses-light.png",
+          "sha256": "c49048737f2b56c0eee08be9c55d0800b250b8598204b7698074678eba77ed77"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/007/full-poses-dark.png",
+          "sha256": "0a43e2f9668867958c4dec837d8dcf04c54e5ec98789c95039539880458b4aa4"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/007-nearest-six.png",
+        "sha256": "279023f0cf27c0959f30f651966858c56c4acf0907d17729af84634fa380ddd9"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/007-front-desk-chair-placement.png",
+        "sha256": "e2e260e0b84a33f1a52d05e5bc28ef508544a57e932ca5d175de9127a98cd6f2"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/007.png",
+        "sha256": "4fb4917974e3b8f2ab1b09e5c8ee007cbf4fb66dfcb5b00a39fda6f5d9c893d0"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 238,
+        "west": 238,
+        "north": 240
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "008",
+      "id": "patient-gapfill-v6b.008",
+      "sex": "Male",
+      "age": 45,
+      "ageBand": "middle_aged",
+      "sourceSha256": "a73db96c03b8a5956b3d7d4927d34718488167b235e0f12a5ca17f598a6b3f79",
+      "features": "Athletic; fair freckled skin; flax-blond loose curls; clean-shaven, no glasses; navy/cream striped rugby shirt with cream collar; sage trousers; brown trainers.",
+      "distinction": "Blond curls, striped rugby collar, lack of beard or glasses and sage trousers separate it from existing blond bearded and silver-cropped same-band men.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/008/full-poses-light.png",
+          "sha256": "a07277b2e740c55fd3562412dde9ca81bcb0340c4cf2468e8bf5ef1d8879f1cc"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/008/full-poses-dark.png",
+          "sha256": "8aeb4e5171ce06ae10b6866d7bada1f5d3a490881a2d1a85f6f230fb894b7814"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/008-nearest-six.png",
+        "sha256": "c886334bf91e605796694de662e56d24142147f9f04ced85c4119c68ff02bee7"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/008-front-desk-chair-placement.png",
+        "sha256": "9301875671e33a9b2af7176f5b010979695e19e1028f15435ef75076f697154f"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/008.png",
+        "sha256": "364ec55edcf45d753fa93acf3f48d63c6b7b40a64e0d8e200fa42e15a69959e9"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 244,
+        "west": 244,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "009",
+      "id": "patient-gapfill-v6b.009",
+      "sex": "Male",
+      "age": 48,
+      "ageBand": "middle_aged",
+      "sourceSha256": "9170306a641dddef0af8b71f966f95443c22844b936a3078a3f36976dfc0a699",
+      "features": "Slim; medium warm brown skin; black low ponytail with broad silver temples; bronze rectangular glasses; clean-shaven; mint button shirt; plum trousers; navy slip-ons.",
+      "distinction": "Long black ponytail, broad silver side panels and mint/plum palette differ from v6a.010's short silver-forelock hair and lavender/olive outfit.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/009/full-poses-light.png",
+          "sha256": "3880c915b1390194467da3bfe0948f9af5ca038e13ab8579b719a1ae1c43de7c"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/009/full-poses-dark.png",
+          "sha256": "590682121697dfaaa652d9f8632e27a8679be862f1cfb316cfce42673c60f7ec"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/009-nearest-six.png",
+        "sha256": "445a486e07cc6f2f0de290ddae7f654a1bcd40464c0725e833bbc74390030c5a"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/009-front-desk-chair-placement.png",
+        "sha256": "5e86bfe6c70bfc2cc631b9a7af9d1109584f9531b0895c729fd26b52e5be40f5"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/009.png",
+        "sha256": "975b32f72f76f24db915de2b12219c17044138ed8c175a7b5235b97e49a3464c"
+      },
+      "contacts": {
+        "south": 239,
+        "east": 250,
+        "west": 250,
+        "north": 253
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "010",
+      "id": "patient-gapfill-v6b.010",
+      "sex": "Male",
+      "age": 51,
+      "ageBand": "middle_aged",
+      "sourceSha256": "a1f9d8a6a49ea2c66c9ca9bbf0143c79c209a13157c94e7afce7aed7d5eed16b",
+      "features": "Full figure; deep brown skin; bald head; short silver mustache, no glasses; terracotta rib cardigan over lavender tee; beige trousers; dark-green loafers.",
+      "distinction": "Mustache-only silver facial hair, fuller build, rib cardigan and green shoes differ from v6a.008's glasses, isolated dark chin beard and coral henley.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/010/full-poses-light.png",
+          "sha256": "4aaefe981e2c11581078d0c8e9baa41a69b7dece306ffccabe90e7904d8eb694"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/010/full-poses-dark.png",
+          "sha256": "cdd2baa49a2f3cbb73516c02891a699c1b08671203cdce75331484971e88aae4"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/010-nearest-six.png",
+        "sha256": "737f1db18bf053139f0ddb2fa1b71d21e9877fb80075c793b130b6133964de45"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/010-front-desk-chair-placement.png",
+        "sha256": "42ea7b9d7cb7e226eb6ff89ab96668fce72fa9433587335fa72f9db011c20a55"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/010.png",
+        "sha256": "b32b30d1eeba0ed74b39aeb4d6f15195e76d908490c33405f96dcdc52a0b3c83"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 237,
+        "west": 237,
+        "north": 240
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "011",
+      "id": "patient-gapfill-v6b.011",
+      "sex": "Male",
+      "age": 54,
+      "ageBand": "middle_aged",
+      "sourceSha256": "2096075ece9d0ea4fb032e4266934c2af90757580c5972214810d9de1b6a08da",
+      "features": "Lean; light olive skin; short dark curls with silver clipped sides; gray chin goatee without mustache; amber square glasses; indigo shirt with cream patch pockets; rust chinos; cream sneakers.",
+      "distinction": "Gray chin-only beard, amber frames, cream double pockets and rust trousers distinguish it from v6a.010's clean-shaven forelock and lavender overshirt.",
+      "realizationNote": "The planned crew cut rendered as short curls with close silver sides. Pose-consistent final hair is documented here.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/011/full-poses-light.png",
+          "sha256": "7cbe58559c28fe9e5e47cec6bb047baa7a9315646ea7b2ed526b07113b18f565"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/011/full-poses-dark.png",
+          "sha256": "e67347c4201375e7af2d16291f64b0c7420ceda9b114c70e6bc2eb4a30aa1387"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/011-nearest-six.png",
+        "sha256": "ca1c613eec414bea0c8c04b88da01e2a14eb7484fd46c537033fbca981096279"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/011-front-desk-chair-placement.png",
+        "sha256": "969efbc38a07c40a88f823383e866a9b4d66e3526c9feaa59950229f1091b2d8"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/011.png",
+        "sha256": "797d636bdcbf5b6044310760a8396ae2c486fdd80913937ac2076d1733d1e233"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "012",
+      "id": "patient-gapfill-v6b.012",
+      "sex": "Male",
+      "age": 59,
+      "ageBand": "middle_aged",
+      "sourceSha256": "770ab1a9a4f416e251547a1f01adf8d48b34fc9b330a6342ec886d9a8d398777",
+      "features": "Broad; medium tan skin; silver pompadour and close dark sides; squared dark beard, no glasses; moss knit polo with lilac collar; light-gray cargo trousers; brown boots.",
+      "distinction": "High silver pompadour, dark squared beard and lilac-collared moss polo differ from existing swept silver hair, mustaches, round glasses and plain knit tops.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/012/full-poses-light.png",
+          "sha256": "2551eaf61163fd20524afd1045595960062ee29242708c60c03928104fef0298"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/012/full-poses-dark.png",
+          "sha256": "aeae4f8908b1d5675600b558b6ad5b99ffc75f86e566c703620c7d0ae557409f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/012-nearest-six.png",
+        "sha256": "bf5618c72aea7bec55970ba940e458b0218bc8f5154c43fa641b8c7623ad179b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/012-front-desk-chair-placement.png",
+        "sha256": "972598e109caa7b7316773725b158a99c4c23b6ed8f647f74e5a93d19e8fd39b"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/012.png",
+        "sha256": "ab15db2fb00580742f23c49c3e2d886a867b5b5cf061d65e8e7db8156e4e6adf"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 239,
+        "west": 239,
+        "north": 242
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "013",
+      "id": "patient-gapfill-v6b.013",
+      "sex": "Male",
+      "age": 63,
+      "ageBand": "middle_aged",
+      "sourceSha256": "b663ca5dedc9a1225a2f68308fb816d3b62441adb97d8521d9e41869c7291b4b",
+      "features": "Average build; fair pink-toned skin; white side-swept wavy hair; white mustache; burgundy round glasses; charcoal cardigan with copper elbow patches; yellow shirt; dusty-blue trousers; brown loafers.",
+      "distinction": "Full white hair, burgundy frames, white mustache and elbow patches separate it from v6a.013's bald crown, white fringe, green frames and teal zip top.",
+      "realizationNote": "The planned straight white center part rendered as soft side-swept waves; pose-consistent final appearance is recorded.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/013/full-poses-light.png",
+          "sha256": "16ebb86984b7ed81b88c0f4426157e57434da6f99599212e8ab9cc2520442f32"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/013/full-poses-dark.png",
+          "sha256": "62d71438fc6c3181dce6c2dda249746a751a6bd138fb35081d1247c6984dcc48"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/013-nearest-six.png",
+        "sha256": "53d59fb9d846d45b6b68e29a42cdac100a4ba36b241e8be7d1f2823f7b73fc29"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/013-front-desk-chair-placement.png",
+        "sha256": "e840b881825e153968984118fab1a30ff091fcb22a0f042bd2cad380c75e540f"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/013.png",
+        "sha256": "eb760cbf267b3aacd3f60d080e90ebba4abb34f50af9bbe355e0182115126691"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 247,
+        "west": 247,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "014",
+      "id": "patient-gapfill-v6b.014",
+      "sex": "Male",
+      "age": 30,
+      "ageBand": "adult",
+      "sourceSha256": "fddfaa9aed214659fb909c7c6f19fdbdff67e5e9b096f9ab42c2a0ae942a3a97",
+      "features": "Slim; deep dark brown skin; black high-top fade with shaved side line; clean-shaven, no glasses; lilac sweatshirt with sage chest panel; cream joggers; ochre sneakers.",
+      "distinction": "High-top fade and shaved line, lilac/sage panel and ochre shoes differ from v6a.019's rounded afro, silver glasses and brown cable-knit outfit.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/014/full-poses-light.png",
+          "sha256": "2806757bd732f5b668cecaa69d0f1c55a7b2dfe7a4b2ab6ea2d6291d45217f83"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/014/full-poses-dark.png",
+          "sha256": "bc8fd51ccefc9c100479f6f3a0da95c94fb7dc8c22fdb943448ba1205030da73"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/014-nearest-six.png",
+        "sha256": "0974fa33a82a9d173ebc103b1ecbddddf16ae998623b60036ffa7875f9154c8d"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/014-front-desk-chair-placement.png",
+        "sha256": "8fed4914ca5639c60e0ccdfac6374476422d6e6386c9e437dc5897e2f448aeea"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/014.png",
+        "sha256": "4086c34332cc6914c27016e4ef3663f0a82755e6a82df89b02f1331a90634f7d"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 245,
+        "west": 245,
+        "north": 248
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "015",
+      "id": "patient-gapfill-v6b.015",
+      "sex": "Male",
+      "age": 34,
+      "ageBand": "adult",
+      "sourceSha256": "0566adc63073a06dd144b0c368f0bf84beda3c3a5af5532ff8e31507ce72d12c",
+      "features": "Full figure; fair freckled skin; wavy auburn low short ponytail; full auburn beard; teal rectangular glasses; dusty-rose overshirt over cream tee; charcoal trousers; navy lace-ups.",
+      "distinction": "Low auburn ponytail, teal frames and rose overshirt distinguish it from the catalog's shorter red curls, glasses-free green polo and copper quiff/jacket.",
+      "realizationNote": "The planned straight low ponytail rendered as wavy auburn hair. Final hairstyle remains consistent in all views.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/015/full-poses-light.png",
+          "sha256": "b5aa5ff88ed6403951f18b8e7db9560559e1e701a6daddf1391bcd4cf0ba51a6"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/015/full-poses-dark.png",
+          "sha256": "01f0655f62adf95a6ad17a4ee876ad8d15691d73662fb461e6d7894d96991176"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/015-nearest-six.png",
+        "sha256": "19496c5c83b3ab058ff2d4fb16c78cb07b9a7fbd6b58b1f46abf79e45653cdc4"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/015-front-desk-chair-placement.png",
+        "sha256": "14f1b6d09b27a725487033100d8937649e1d2fb397dc0ad1be57766a4cc6004c"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/015.png",
+        "sha256": "4c0f63917f630f606f44b5880bce1b5fb6ad9fca8f03d6b475d046ce18bb7f19"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 237,
+        "west": 237,
+        "north": 240
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "016",
+      "id": "patient-gapfill-v6b.016",
+      "sex": "Male",
+      "age": 38,
+      "ageBand": "adult",
+      "sourceSha256": "bd169acef8e195ff4397625c0fb3ac45bbb753beef24e75064c95cb93310a213",
+      "features": "Athletic; golden brown skin; black jaw-length middle-part hair; narrow dark mustache, no beard or glasses; mustard henley with navy placket; teal trousers; white trainers.",
+      "distinction": "Jaw-length middle part, mustache-only face and mustard/teal palette separate it from v6a.020's high bun, shaved sides, goatee and cream hoodie.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/016/full-poses-light.png",
+          "sha256": "103690b8f65b883c0d521cba203b41424a9776832d2b01de461a1e7841767d7c"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/016/full-poses-dark.png",
+          "sha256": "a719092ea3e8c14319af30ea2a60613827319855b805ce543c9047b023eda1a6"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/016-nearest-six.png",
+        "sha256": "24f975fe7cceb83f857072c6366401e5abae72ed70dfdb952724a05803f87498"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/016-front-desk-chair-placement.png",
+        "sha256": "460b4dc1d3d847707f57c0ea2481a0fb76a2e634f0e889dd4a6890e5ff220c12"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/016.png",
+        "sha256": "62baa1e3afaf33d2a5ac01f9fa7d29b1be9ade156a1ed4e3eea3b35a0a22d379"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 242,
+        "west": 242,
+        "north": 242
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "017",
+      "id": "patient-gapfill-v6b.017",
+      "sex": "Male",
+      "age": 42,
+      "ageBand": "adult",
+      "sourceSha256": "6f60492d5eeab958093b9f32edf9b406729880f58009b36d296e55393afe514b",
+      "features": "Average build; medium olive skin; compact silver curly crop; dark jawline beard; black round glasses; sage cable-knit sweater with burgundy collar; brown trousers; burgundy boots.",
+      "distinction": "Silver crop, dark jawline beard, black frames and sage cable knit differ from v6a.019's dark rounded afro, clean-shaven face, silver glasses and brown knit.",
+      "realizationNote": "The planned silver buzz cut rendered as a compact curly crop. It remains distinct and pose-consistent.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/017/full-poses-light.png",
+          "sha256": "2aee99abcb134d48d78faf1173c0665e59c7dfabd3d5fb9bcd4b254b5e1c3b8b"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/017/full-poses-dark.png",
+          "sha256": "7fdf721e79b2f98a0f65cbb7a2308fc7ef9edbb9c01a13ef8a800d7e98f3a66c"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/017-nearest-six.png",
+        "sha256": "384d6194b532c5365c6469fc262d86919d3cb3466ad5f05c565270d130380ce5"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/017-front-desk-chair-placement.png",
+        "sha256": "3e551fb687906ab800b5503d6a42b5b22cfe696703e15743534b9a6f898515ac"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/017.png",
+        "sha256": "ec32cf2b2db398d053d53224bfe81b6d6845e41aede8d8d9c715f41f47a3fe22"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 250,
+        "west": 250,
+        "north": 251
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "018",
+      "id": "patient-gapfill-v6b.018",
+      "sex": "Female",
+      "age": 32,
+      "ageBand": "adult",
+      "sourceSha256": "f7067a197607e005f12a04e8163e09b181ef7a331a4bb71db60905697f11bf95",
+      "features": "Petite; fair skin; long dark-brown low side ponytail with green ribbon; copper round glasses; pale-ochre blouse under burgundy sweater vest; dusty-blue wide trousers; cream flats.",
+      "distinction": "Low side ponytail with green ribbon, copper glasses, burgundy vest and wide blue trousers differ from v6a.015's high loc ponytail, gold frames and navy overalls.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/018/full-poses-light.png",
+          "sha256": "507e7d56bc961d5e04f93579234abb7c46d96ce3483b176f36080f90de68cf70"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/018/full-poses-dark.png",
+          "sha256": "c1de1a703f1007e9d542470bc86fc2930618e246a0f42c2c08475423a8e45679"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/018-nearest-six.png",
+        "sha256": "8a709d4635aa6d2199ec131d9a52f25e259e0199a9f50c864f682a0deede4f01"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/018-front-desk-chair-placement.png",
+        "sha256": "bd0ffcf8f42566b9728a85246c6e804a04175d3fe66b0d74f96a521f51b2f55b"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/018.png",
+        "sha256": "f2b6f8be69cb624a8312e191c0b3f16f6cab021d8e9eb5abbdeb2f17ac02bf1f"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 243,
+        "west": 243,
+        "north": 246
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "019",
+      "id": "patient-gapfill-v6b.019",
+      "sex": "Female",
+      "age": 37,
+      "ageBand": "adult",
+      "sourceSha256": "1ab02f51e7af9f330dba7ff25bec70fc5864a3defe18385ee4fc2e893b25f78a",
+      "features": "Athletic; deep brown skin; two compact black rounded low buns; silver triangular studs, no glasses; coral track jacket with cream panel; forest-green trousers; lilac sneakers.",
+      "distinction": "Two low rounded buns, triangular studs and coral/forest/lilac palette separate it from v6a.017's blunt bob, violet frames and crimson cardigan.",
+      "realizationNote": null,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/019/full-poses-light.png",
+          "sha256": "44326ed4c1f0f9d81aa8228ccee16f59fb508d1d4ec7d7825e47ba7783d0b4d0"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/019/full-poses-dark.png",
+          "sha256": "9e7752e62169a374124754a02968be4a22a4d165022b870715faeb27a77abb90"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/019-nearest-six.png",
+        "sha256": "ea8a2ad1f753ea0606b5262ec34492a32de0af7298abd0214d0c8be8d64716f9"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/019-front-desk-chair-placement.png",
+        "sha256": "05ab529cb843840f8449c7f06a9ebba20be080fc29ddaaf113976fe0faa0dd68"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/019.png",
+        "sha256": "6af9d2ef53df957d136b62f08e49fd30f35ae1471d1f531c8450fdc8f64fa6c6"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "020",
+      "id": "patient-gapfill-v6b.020",
+      "sex": "Female",
+      "age": 44,
+      "ageBand": "adult",
+      "sourceSha256": "04c8f70e59f4297f5c2a31fdd477c793fd2d84a1333c0ade5ba871e92c7f0ed9",
+      "features": "Full figure; medium tan skin; dark-blond wavy jaw bob with blunt bangs; blue oval glasses; sage round-neck top; terracotta A-line knee skirt; navy tights; brown boots.",
+      "distinction": "Wavy blond bob and bangs, blue frames and sage/terracotta skirt silhouette differ from v6a.016's straighter half-up blond hair and cobalt/beige outfit.",
+      "realizationNote": "The sage blouse renders as a simple round-neck top; outfit and hair are consistent across all eight poses.",
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/020/full-poses-light.png",
+          "sha256": "34abf61db58e3b5a73faac8282d98285a1d53b84cf82190a06902f056ba76dbc"
+        },
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6b/packages/020/full-poses-dark.png",
+          "sha256": "7dfd6971634846910adde435a366678cf25afc508969ca3fa1e9957dd8e28f83"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/comparison/020-nearest-six.png",
+        "sha256": "bcb94ca1d8c24f15a7d3bda812e4caf663091eba28f1a1f037a855f834dd2f4b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/placement-qa/020-front-desk-chair-placement.png",
+        "sha256": "992861217a35213d1b5a2c52d60aae185fd46979842a7f5dc55c8a7f7142f6f7"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/contact-overlays/020.png",
+        "sha256": "69f85d896d5a2f88ef2b0b27d41e294e54e052daa543d255e079f11826d9e79b"
+      },
+      "contacts": {
+        "south": 236,
+        "east": 240,
+        "west": 240,
+        "north": 241
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    }
+  ],
+  "styleAssessment": "The normalized batch matches accepted v6a's compact head/body proportions, dark stepped contours, large eye rendering, muted clothing palette and smooth cel shading. Inspected all native generation outputs, all 160 normalized poses on dark sheets, the 20-identity overview, eight identical-scale v6a/v6b pairs, all six full-catalog inventory boards, all 20 same-band and 20 all-catalog nearest-six boards, all 80 final seated contact lines and all 20 south-facing chair proofs. No duplicate or pose-consistency concern found in worker visual QA. This remains a visual judgment for manager acceptance.",
+  "limitations": [
+    "Artistic equivalence cannot be established by geometry or RMSE. The accepted v6a anchor follows recent v3/v4/v5 art; early gs018 catalog art remains grainier and is included without changing normalization.",
+    "006's targeted cane correction is slightly smoother at full native source size. At the normalized 160x320 scale its contour weight, head/body proportion and shading are consistent with v6a; manager should inspect it closely. The cane is held in anatomical left hand, hidden in true west profiles, and is visual only.",
+    "Draped garment contact positions, especially 001, 002, 006, 007 and 020, are source-bound worker estimates of support beneath the pelvis rather than hem-bottom measurements. All four directions are shown; only the approved south-facing Front Desk chair geometry has a placement proof.",
+    "Stylized faces do not prove exact ages. Intended age and compatible sex remain explicit assigned-band metadata; no clinical meaning or appearance-selection weighting was added.",
+    "Only alpha-1 native fringe noise occurs outside normalized footprints or on output borders. No protected alpha is clipped and no source pixels were repainted. Explicit manager acceptance of this exact alpha report remains pending.",
+    "Browser gallery validation is left to the manager as requested. Worker validation checks static links and PNG decoding only; no browser, game origin or campaign storage was accessed."
+  ]
+}

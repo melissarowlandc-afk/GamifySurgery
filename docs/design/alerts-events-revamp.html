@@ -1,0 +1,361 @@
+<title>Alerts &amp; Events Revamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: proposal text on the left, a live slice of the game (HUD, map strip, right column) on the right; stacks on phones.
+   Single deliberate look: the game's own light olive/cream palette, so it reads as the real UI. */
+:root {
+  color-scheme: light;
+  --ink: #232720;
+  --ink-soft: #4c5449;
+  --paper: #e0ded0;
+  --panel: #f0eddd;
+  --raised: #faf7e8;
+  --shade-1: #d8d7cb;
+  --shade-2: #b6b9aa;
+  --shade-3: #7e8476;
+  --urgent: #8a3b2a;
+  --urgent-bg: #f3e1d8;
+  --money: #6a5824;
+  --money-bg: #efe6c8;
+  --good: #2f5a33;
+  --good-bg: #e2e9d4;
+  --chatter: #4f5f76;
+  --chatter-bg: #e3e6ea;
+  --read: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --pixel: "Courier New", "Lucida Console", Monaco, ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--read); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; display: grid; gap: 28px; }
+.kicker { font: 700 11px/1.3 var(--pixel); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+h1 { font: 700 30px/1.15 var(--read); margin: 4px 0 8px; text-wrap: balance; }
+h2 { font: 700 19px/1.25 var(--read); margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0 0 10px; max-width: 66ch; }
+.top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 28px; align-items: start; }
+@media (max-width: 900px) { .top { grid-template-columns: minmax(0, 1fr); } }
+.ideas { display: grid; gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; }
+.ideas li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; }
+.ideas b { display: block; }
+.num { font: 700 13px/26px var(--pixel); text-align: center; border: 2px solid var(--ink); background: var(--raised); }
+
+/* game slice */
+.game { border: 3px solid var(--ink); background: var(--shade-1); box-shadow: 6px 6px 0 rgb(52 58 50 / 30%); display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-width: 0; }
+.hud { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 6px 8px; background: var(--panel); border-bottom: 3px solid var(--ink); }
+.hud .stat { border: 2px solid var(--ink); background: var(--raised); padding: 2px 8px; font: 12px/1.4 var(--pixel); font-variant-numeric: tabular-nums; }
+.hud .stat span { display: block; font: 700 9px/1.2 var(--pixel); letter-spacing: .1em; color: var(--ink-soft); }
+.headline { flex: 1 1 220px; min-width: 0; border: 2px dashed var(--shade-3); background: var(--raised); padding: 4px 8px; font: 13px/1.35 var(--read); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--ink-soft); }
+.headline.flash { animation: flash 1.6s ease-out; color: var(--ink); }
+@keyframes flash { 0% { background: #fff6c9; } 100% { background: var(--raised); } }
+.body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; min-height: 520px; }
+@media (max-width: 640px) { .body { grid-template-columns: minmax(0, 1fr); } }
+.map { position: relative; background:
+  linear-gradient(var(--shade-2) 1px, transparent 1px) 0 0 / 28px 28px,
+  linear-gradient(90deg, var(--shade-2) 1px, transparent 1px) 0 0 / 28px 28px, #cfd0c2; min-height: 260px; border-right: 3px solid var(--ink); }
+@media (max-width: 640px) { .map { border-right: 0; border-bottom: 3px solid var(--ink); } }
+.room { position: absolute; border: 3px solid var(--ink); background: #ece6d2; font: 700 10px/1.2 var(--pixel); letter-spacing: .08em; padding: 3px 5px; color: var(--ink-soft); }
+.pin { position: absolute; width: 26px; height: 26px; border: 2px solid var(--ink); background: var(--raised); display: grid; place-items: center; font: 700 14px/1 var(--pixel); cursor: pointer; transform: translate(-50%, -100%); }
+.pin::after { content: ""; position: absolute; bottom: -7px; left: 50%; width: 8px; height: 8px; background: inherit; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateX(-50%) rotate(45deg); }
+.pin.urgent { background: var(--urgent-bg); color: var(--urgent); animation: bob 1.2s ease-in-out infinite; }
+.pin.money { background: var(--money-bg); color: var(--money); }
+.pin.task { background: var(--good-bg); color: var(--good); }
+@keyframes bob { 50% { transform: translate(-50%, calc(-100% - 4px)); } }
+.buildtray { position: absolute; left: 8px; right: 8px; bottom: 8px; display: none; gap: 6px; flex-direction: column; }
+.game.building .buildtray { display: flex; }
+.game.building .col { display: none; }
+.game.building .body { grid-template-columns: minmax(0, 1fr); }
+.game.building .map { border-right: 0; }
+.buildbanner { position: absolute; top: 8px; left: 8px; font: 700 11px/1.3 var(--pixel); letter-spacing: .1em; background: var(--ink); color: var(--raised); padding: 3px 8px; display: none; }
+.game.building .buildbanner { display: block; }
+
+.col { background: var(--panel); display: grid; grid-template-rows: auto minmax(0, 1fr); min-width: 0; }
+.col-h { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--ink); color: var(--raised); font: 700 11px/1.3 var(--pixel); letter-spacing: .12em; text-transform: uppercase; }
+.col-h .live { font-weight: 400; letter-spacing: .06em; }
+.col-in { display: grid; grid-template-rows: auto minmax(0, 1fr); min-height: 0; }
+.zone-label { font: 700 10px/1.2 var(--pixel); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); padding: 8px 10px 4px; display: flex; justify-content: space-between; }
+.needs { display: grid; gap: 6px; padding: 0 8px 8px; border-bottom: 2px dashed var(--shade-3); }
+.need { border: 2px solid var(--ink); background: var(--raised); padding: 7px 8px 8px; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 8px; animation: slidein .35s ease-out; }
+.need.urgent { border-left: 6px solid var(--urgent); }
+.need.money { border-left: 6px solid var(--money); }
+.need.task { border-left: 6px solid var(--good); }
+.need.goal { border-left: 6px solid var(--ink-soft); }
+.need.done { animation: done .6s ease-in forwards; }
+@keyframes slidein { from { transform: translateX(16px); opacity: .2; } to { transform: none; opacity: 1; } }
+@keyframes done { 0% { background: var(--good-bg); } 100% { opacity: 0; transform: translateX(20px); } }
+.face { width: 30px; height: 30px; border: 2px solid var(--ink); display: grid; place-items: center; font: 700 13px/1 var(--pixel); background: var(--shade-1); grid-row: span 2; }
+.need h3 { font: 700 14px/1.25 var(--read); margin: 0; }
+.need .why { font: 13px/1.35 var(--read); color: var(--ink-soft); margin: 0; }
+.need .row { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.meter { flex: 1; height: 8px; border: 1px solid var(--ink); background: var(--shade-1); position: relative; overflow: hidden; }
+.meter i { position: absolute; inset: 0 auto 0 0; background: var(--urgent); }
+.need.money .meter i { background: var(--money); }
+.act { font: 700 12px/1 var(--read); border: 2px solid var(--ink); background: var(--ink); color: var(--raised); padding: 6px 9px; cursor: pointer; white-space: nowrap; }
+.act:hover { background: var(--ink-soft); }
+.act:focus-visible, .pin:focus-visible, .ctl:focus-visible { outline: 3px solid #d39b2a; outline-offset: 2px; }
+.calm { font: 13px/1.35 var(--read); color: var(--ink-soft); padding: 2px 4px 6px; }
+.feed { overflow: auto; padding: 0 8px 10px; display: grid; gap: 6px; align-content: start; min-height: 0; max-height: 340px; }
+.item { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 6px 4px; border-bottom: 1px solid var(--shade-2); animation: slidein .35s ease-out; }
+.item .face { width: 24px; height: 24px; font-size: 11px; grid-row: auto; }
+.item .who { font: 700 10px/1.3 var(--pixel); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 6px; }
+.item .who time { font-weight: 400; font-variant-numeric: tabular-nums; }
+.item p { margin: 1px 0 0; font: 13.5px/1.4 var(--read); }
+.item.chatter .face { background: var(--chatter-bg); color: var(--chatter); }
+.item.handled p { color: var(--ink-soft); }
+.item.handled .face { background: var(--good-bg); color: var(--good); }
+.item.milestone { background: var(--good-bg); border: 2px solid var(--good); }
+.item.digest { background: var(--raised); border: 2px solid var(--ink); }
+.item.digest .stars { font: 700 13px/1 var(--pixel); color: var(--money); letter-spacing: .1em; }
+
+/* demo controls */
+.controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; }
+.ctl { font: 13px/1 var(--read); border: 2px solid var(--ink); background: var(--raised); padding: 7px 10px; cursor: pointer; }
+.ctl:hover { background: var(--shade-1); }
+.ctl.on { background: var(--ink); color: var(--raised); }
+.controls .kicker { margin-right: 4px; }
+
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.tablewrap { overflow-x: auto; border: 2px solid var(--ink); background: var(--raised); }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--shade-2); vertical-align: top; }
+th { font: 700 11px/1.3 var(--pixel); letter-spacing: .1em; text-transform: uppercase; background: var(--panel); }
+td.n { font: 700 14px/1.3 var(--pixel); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.box { border: 2px solid var(--ink); background: var(--panel); padding: 14px 16px; min-width: 0; }
+.box ul { margin: 6px 0 0; padding-left: 18px; }
+.box li { margin-bottom: 5px; }
+.decide { display: grid; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
+.decide li { border-left: 4px solid var(--ink); padding: 2px 0 2px 10px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <section class="top">
+    <div>
+      <div class="kicker">Stitchin' Time · design proposal · needs owner approval</div>
+      <h1>Alerts &amp; Events, rebuilt as the clinic's pulse</h1>
+      <p>Today the panel is one long log. Warnings, jokes and old history share it, so a new joke can push "this patient is about to leave" out of view, and most rows only take you somewhere: fixing the problem is a second click. This proposal splits the panel in two and makes every alert do its job in one click.</p>
+      <ul class="ideas">
+        <li><span class="num">1</span><div><b>"Needs you" sits on top, at most three cards.</b> Only live problems: a patient close to leaving, payroll at risk, trash, an empty cooler, the next build or hire. Each card says what is wrong, why it matters and how long you have. Cards remove themselves when the problem is fixed. Nothing to dismiss.</div></li>
+        <li><span class="num">2</span><div><b>The button does the thing.</b> "Send founder", "Refill", "Hire · $400", "+1 ad", "Place Waiting Room". Today each of these is a link to another screen plus a second click.</div></li>
+        <li><span class="num">3</span><div><b>"Around the clinic" below, in time order.</b> The jokes come back at every level, spoken by someone: the water cooler, the printer, the receptionist. Fixed problems drop in here in the past tense ("Trash cleaned"), so old rows never read as current.</div></li>
+        <li><span class="num">4</span><div><b>You notice it without clicking.</b> The newest line also scrolls across the top bar for a few seconds, live problems get a bobbing pin on the map (click the pin or the card), and the "Needs you" cards stay visible as a tray in Build Mode.</div></li>
+        <li><span class="num">5</span><div><b>A short end-of-day card.</b> Patients seen, money made, and the review of the day: the funniest one-star line from anyone who walked out. One card per day, never one per walkout.</div></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="game" id="game">
+        <div class="hud">
+          <div class="stat"><span>MONEY</span><b id="cash">$184.00</b></div>
+          <div class="stat"><span>SATISFACTION</span><b>82%</b></div>
+          <div class="stat"><span>TIME</span><b id="clock">Day 3 · 2:10 PM</b></div>
+          <div class="headline" id="headline" aria-live="polite">The good pen has been sighted near the Front Desk.</div>
+        </div>
+        <div class="body">
+          <div class="map" id="map">
+            <span class="buildbanner">BUILD MODE</span>
+            <div class="room" style="left:6%;top:10%;width:34%;height:30%">WAITING</div>
+            <div class="room" style="left:46%;top:10%;width:26%;height:30%">EXAM 1</div>
+            <div class="room" style="left:6%;top:52%;width:26%;height:26%">FRONT DESK</div>
+            <div class="room" style="left:38%;top:52%;width:20%;height:26%">X-RAY</div>
+            <div id="pins"></div>
+            <div class="buildtray" id="buildtray"></div>
+          </div>
+          <div class="col">
+            <div class="col-h"><span>Alerts &amp; Events</span><span class="live" id="count">2 need you</span></div>
+            <div class="col-in">
+              <div>
+                <div class="zone-label"><span>Needs you</span><span id="zonecount"></span></div>
+                <div class="needs" id="needs"></div>
+              </div>
+              <div style="display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0">
+                <div class="zone-label"><span>Around the clinic</span><span>newest first</span></div>
+                <div class="feed" id="feed"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="controls" role="group" aria-label="Try the mockup">
+        <span class="kicker">Try it</span>
+        <button class="ctl" data-sim="patient" type="button">Patient getting impatient</button>
+        <button class="ctl" data-sim="trash" type="button">Trash appears</button>
+        <button class="ctl" data-sim="joke" type="button">Something funny happens</button>
+        <button class="ctl" data-sim="hire" type="button">Next goal: receptionist</button>
+        <button class="ctl" data-sim="day" type="button">Day ends</button>
+        <button class="ctl" id="buildbtn" type="button" aria-pressed="false">Build Mode</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clicks to fix each problem</h2>
+    <p>Counted from seeing the alert to the problem being handled, as the game works today (from the code survey) and in this proposal.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Alert</th><th>Today</th><th>Proposed</th><th>What the button does</th></tr></thead>
+        <tbody>
+          <tr><td>Patient about to leave</td><td class="n">1</td><td class="n">1</td><td>Opens the chart (unchanged), and the card shows how much patience is left</td></tr>
+          <tr><td>Trash on the floor</td><td class="n">2</td><td class="n">1</td><td>Sends the founder to clean it</td></tr>
+          <tr><td>Water cooler empty</td><td class="n">2</td><td class="n">1</td><td>Sends the founder to refill it</td></tr>
+          <tr><td>Hire a receptionist / imaging tech</td><td class="n">2 + Done</td><td class="n">1</td><td>Hires at the listed salary; the cost is on the button</td></tr>
+          <tr><td>Room upgrade requested</td><td class="n">2 + Done</td><td class="n">1</td><td>Buys the named room's next upgrade; the cost is on the button</td></tr>
+          <tr><td>Build a missing room</td><td class="n">3–4 + Done</td><td class="n">2</td><td>Opens Build Mode with that room already picked up; you click where it goes</td></tr>
+          <tr><td>No patients arriving</td><td class="n">2</td><td class="n">1</td><td>Raises advertising one step (only shown when advertising is actually low)</td></tr>
+          <tr><td>Cash under $200</td><td class="n">2</td><td class="n">1</td><td>Runs the emergency consult, or names what else will help when that is unavailable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid2">
+    <div class="box">
+      <h2>Fixed regardless of the design</h2>
+      <ul>
+        <li>Team-discussion answers stop posting "decision recorded" rows.</li>
+        <li>Upgrade requests name the room instead of "The room".</li>
+        <li>"Add cash before payroll" points at money, not the employee screen.</li>
+        <li>"Increase Advertising" only appears when advertising is low and the clinic has room for patients.</li>
+        <li>A save error clears itself once an autosave succeeds.</li>
+        <li>Setup hints stop jumping back to the top every second.</li>
+        <li>Jokes and setup guidance work at Level 3 and above, with new lines for the Reading Room, OR, pharmacy and lab.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Your decisions</h2>
+      <ol class="decide">
+        <li>Approve the two-part panel: "Needs you" on top, the timeline below. In September you turned down collapsible groups; this keeps one simple timeline and only lifts live problems above it.</li>
+        <li>Approve one-click actions that spend money (Hire, Upgrade), with the price on the button.</li>
+        <li>Keep or drop the scrolling top-bar line and the map pins.</li>
+        <li>Keep or drop the end-of-day card with the review of the day.</li>
+        <li>Optional: a soft sound when a "Needs you" card appears, off by default.</li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const needsEl = document.getElementById("needs");
+  const feedEl = document.getElementById("feed");
+  const pinsEl = document.getElementById("pins");
+  const trayEl = document.getElementById("buildtray");
+  const headline = document.getElementById("headline");
+  const countEl = document.getElementById("count");
+  const clockEl = document.getElementById("clock");
+  const game = document.getElementById("game");
+  let minute = 14 * 60 + 10, day = 3, uid = 0;
+
+  const clock = () => {
+    const h = Math.floor(minute / 60), m = minute % 60;
+    const hh = ((h + 11) % 12) + 1, ap = h < 12 ? "AM" : "PM";
+    return `${hh}:${String(m).padStart(2, "0")} ${ap}`;
+  };
+  const tick = (n = 7) => { minute += n; clockEl.textContent = `Day ${day} · ${clock()}`; };
+
+  const jokes = [
+    ["Water cooler", "WC", "I made a bubble. Three people looked. I have never felt more seen."],
+    ["Printer", "PR", "Out of cyan. Printing in black. Morale unaffected, mostly."],
+    ["Reading Room", "RR", "The radiologists dimmed the lights again. Productivity is up, eyebrows are down."],
+    ["Waiting-room plant", "PL", "I have been promoted. My duties remain unclear."],
+    ["Front Desk phone", "PH", "Rang once. Stopped. The mystery remains open."],
+    ["Label maker", "LM", "I have named myself. Authority is under review."],
+  ];
+  let jokeIx = 0;
+
+  let needs = [
+    { id: "n1", kind: "urgent", face: "MR", title: "Maya Reed may walk out", why: "Waiting 48 min for her chart to be opened.", meter: 0.28, act: "Open chart", done: "Maya Reed's chart opened before she left.", pin: [22, 30] },
+    { id: "n2", kind: "money", face: "$", title: "Cash is under $200", why: "Payroll posts at 4:00 PM. A quick consult covers it.", meter: 0.55, act: "Emergency consult · +$50", done: "Emergency consult added $50.", pin: null },
+  ];
+  let feed = [
+    { kind: "chatter", who: "Front Desk", face: "FD", text: "The good pen has been sighted near the Front Desk.", t: "2:05 PM" },
+    { kind: "handled", who: "Handled", face: "OK", text: "Water cooler refilled. Hydration has resumed normal operations.", t: "1:52 PM" },
+    { kind: "milestone", who: "Milestone", face: "**", text: "Satisfaction passed 80% for the first time today. Please act natural.", t: "1:31 PM" },
+    { kind: "chatter", who: "Break-room fridge", face: "FR", text: "Contains one yogurt with tenure.", t: "1:12 PM" },
+    { kind: "handled", who: "Handled", face: "OK", text: "Trash removed from the Waiting Room. The floor is a floor again.", t: "12:40 PM" },
+  ];
+
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function renderNeeds() {
+    const live = needs.slice(0, 3);
+    const card = (n) => `
+      <article class="need ${n.kind}" data-id="${n.id}">
+        <div class="face" aria-hidden="true">${esc(n.face)}</div>
+        <h3>${esc(n.title)}</h3>
+        <p class="why">${esc(n.why)}</p>
+        <div class="row">${n.meter != null ? `<div class="meter" role="img" aria-label="Time left"><i style="width:${Math.round(n.meter * 100)}%"></i></div>` : `<span style="flex:1"></span>`}
+          <button class="act" type="button" data-act="${n.id}">${esc(n.act)}</button></div>
+      </article>`;
+    needsEl.innerHTML = live.length ? live.map(card).join("") : `<div class="calm">All quiet. Nothing needs you right now.</div>`;
+    trayEl.innerHTML = live.map(card).join("");
+    const extra = needs.length - live.length;
+    document.getElementById("zonecount").textContent = extra > 0 ? `+${extra} more` : "";
+    countEl.textContent = needs.length ? `${needs.length} need${needs.length === 1 ? "s" : ""} you` : "Live";
+    pinsEl.innerHTML = needs.filter((n) => n.pin).map((n) =>
+      `<button class="pin ${n.kind}" type="button" style="left:${n.pin[0]}%;top:${n.pin[1]}%" data-act="${n.id}" aria-label="${esc(n.title)}">!</button>`).join("");
+  }
+
+  function renderFeed() {
+    feedEl.innerHTML = feed.slice(0, 30).map((f) => {
+      if (f.kind === "digest") return `
+        <div class="item digest"><div class="face" aria-hidden="true">D${day - 1}</div><div>
+          <div class="who"><span>End of day ${day - 1}</span><time>${esc(f.t)}</time></div>
+          <p><b>11 patients seen · +$1,240 · satisfaction 82%</b></p>
+          <p>Review of the day <span class="stars">★☆☆☆☆</span> "I was seen by three magazines and zero clinicians."</p></div></div>`;
+      return `<div class="item ${f.kind}"><div class="face" aria-hidden="true">${esc(f.face)}</div><div>
+        <div class="who"><span>${esc(f.who)}</span><time>${esc(f.t)}</time></div><p>${esc(f.text)}</p></div></div>`;
+    }).join("");
+  }
+
+  function announce(text) {
+    headline.textContent = text;
+    headline.classList.remove("flash"); void headline.offsetWidth; headline.classList.add("flash");
+  }
+
+  function addFeed(item) { tick(); feed.unshift({ ...item, t: clock() }); renderFeed(); announce(item.text); }
+
+  function resolve(id) {
+    const n = needs.find((x) => x.id === id);
+    if (!n) return;
+    document.querySelectorAll(`.need[data-id="${id}"]`).forEach((el) => el.classList.add("done"));
+    setTimeout(() => {
+      needs = needs.filter((x) => x.id !== id);
+      if (n.kind === "money") document.getElementById("cash").textContent = "$234.00";
+      renderNeeds();
+      addFeed({ kind: "handled", who: "Handled", face: "OK", text: n.done });
+    }, 450);
+  }
+
+  function addNeed(n) {
+    n.id = `s${++uid}`;
+    needs.push(n);
+    tick();
+    renderNeeds();
+    announce(n.title + ". " + n.why);
+  }
+
+  const sims = {
+    patient: () => addNeed({ kind: "urgent", face: "JL", title: "Jamal Lewis may walk out", why: "His X-ray result is back and nobody has reviewed it.", meter: 0.22, act: "Open chart", done: "Jamal Lewis's result reviewed in time.", pin: [58, 22] }),
+    trash: () => addNeed({ kind: "task", face: "TR", title: "Trash in the Waiting Room", why: "Patients notice. Cleanliness is pulling satisfaction down.", meter: null, act: "Send founder", done: "Trash removed. The floor has been returned to the floor.", pin: [30, 24] }),
+    hire: () => addNeed({ kind: "goal", face: "RC", title: "Next goal: hire a receptionist", why: "Check-in is the slowest step. Level 2 needs one.", meter: null, act: "Hire · $400/day", done: "Reese hired as receptionist. The clipboard recognizes a new authority.", pin: [16, 62] }),
+    joke: () => { const j = jokes[jokeIx++ % jokes.length]; addFeed({ kind: "chatter", who: j[0], face: j[1], text: j[2] }); },
+    day: () => { day += 1; minute = 8 * 60; feed.unshift({ kind: "digest", t: "8:00 AM" }); renderFeed(); clockEl.textContent = `Day ${day} · ${clock()}`; announce(`Day ${day - 1} wrapped: 11 patients seen, +$1,240.`); },
+  };
+
+  document.addEventListener("click", (e) => {
+    const act = e.target.closest("[data-act]");
+    if (act) { resolve(act.dataset.act); return; }
+    const sim = e.target.closest("[data-sim]");
+    if (sim) { sims[sim.dataset.sim](); return; }
+    if (e.target.id === "buildbtn") {
+      const on = game.classList.toggle("building");
+      e.target.classList.toggle("on", on);
+      e.target.setAttribute("aria-pressed", String(on));
+    }
+  });
+
+  renderNeeds();
+  renderFeed();
+})();
+</script>

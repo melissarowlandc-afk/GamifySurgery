@@ -1,0 +1,58 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -628,7 +628,36 @@
+   | "litter"
+   | "build_mode"
+   | "goal"
+-  | "emergency_glp1";
++  | "emergency_glp1"
++  | "money"
++  | "save";
++
++/** Intent only; the session revalidates and dispatches the guarded command. */
++export type ClinicAlertAction = (import("@gamify-surgery/game-domain").GuidanceTipAction |
++  { kind: "save_and_pause" }) & {
++    tip?: { id: import("@gamify-surgery/balance-config").GuidanceTipId; targetKey: string };
++  };
++
++export interface ClinicAlertActionResult {
++  ok: boolean;
++  reason?: string;
++}
++
++export interface NeedsYouItemView {
++  id: string;
++  kind: "save" | "patient" | "payroll" | "resource";
++  title: string;
++  why: string;
++  sortKey: number;
++  timeLabel?: string;
++  actionLabel: string;
++  action: ClinicAlertAction;
++  targetType?: MessageBoardTargetType;
++  targetId?: string;
++  /** Only a modeled deadline; patient satisfaction is not a countdown. */
++  deadline?: { minutesLeft: number; windowMinutes: number; label: string };
++  pin?: { kind: "patient" | "service_visitor" | "room"; id: string };
++}
+ 
+ export interface MessageBoardItemView {
+   id: string;
+@@ -653,4 +682,16 @@
+   persistent?: boolean;
+   targetType?: MessageBoardTargetType;
+   targetId?: string;
+-}
++  /** M3 can add tip rows without changing the board or gameplay history. */
++  rowKind?: "event" | "humor" | "milestone" | "resolved" | "day_summary" | "tip";
++  speaker?: string;
++  action?: ClinicAlertAction;
++  daySummary?: {
++    dayNumber: number;
++    patientsSeen: number;
++    moneyEarnedLabel: string;
++    satisfactionLabel: string;
++    reviewLine?: string;
++    partial?: boolean;
++  };
++}

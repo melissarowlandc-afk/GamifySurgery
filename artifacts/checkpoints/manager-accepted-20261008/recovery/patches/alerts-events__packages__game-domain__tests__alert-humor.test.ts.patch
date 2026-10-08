@@ -1,0 +1,32 @@
+--- a/packages/game-domain/tests/alert-humor.test.ts
++++ b/packages/game-domain/tests/alert-humor.test.ts
+@@ -5,6 +5,8 @@
+ } from "@gamify-surgery/balance-config";
+ import {
+   SECOND_TUTORIAL_ENCOUNTER_ID,
++  PROTOTYPE_DOMAIN_CONTEXT,
++  createGuidanceTipsState,
+   TUTORIAL_ENCOUNTER_ID,
+   createInitialGameState,
+   deserializeGameState,
+@@ -16,10 +18,11 @@
+ } from "../src";
+ 
+ function tick(state: GameState, operationId: string): GameState {
++  // Isolate humor here; due-tip arbitration has its own scheduler regression.
+   return gameReducer(state, {
+     type: "ADVANCE_TICK",
+     operationId,
+-  });
++  }, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: true });
+ }
+ 
+ function advance(
+@@ -314,6 +317,7 @@
+     const restored = deserializeGameState(JSON.stringify(legacy));
+     expect(restored.schemaVersion).toBe(9);
+     expect(restored.alertHumor).toEqual({
++      guidanceTips: createGuidanceTipsState(restored.facilityTick),
+       alertsTutorialAcknowledgedAtTick: null,
+       nextAmbientAlertTick: null,
+       ambientCadenceVersion: 1,

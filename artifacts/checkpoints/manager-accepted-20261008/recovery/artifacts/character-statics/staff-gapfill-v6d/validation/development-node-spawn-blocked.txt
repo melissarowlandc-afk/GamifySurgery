@@ -1,0 +1,30 @@
+$ node tools/character-mapping/staff-gapfill-v6d/validate-roster.mjs --require-complete
+exit=null
+
+
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-placement-qa.mjs --require-complete
+exit=null
+
+
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-worker-review.mjs
+exit=null
+
+
+
+$ node tools/character-mapping/staff-gapfill-v6d/validate-all-catalog-comparison.mjs
+exit=null
+
+
+
+$ node tools/character-mapping/staff-gapfill-v6d/runtime-baseline.mjs
+exit=null
+
+
+
+$ node --experimental-vm-modules tools/character-mapping/staff-gapfill-v6d/check-syntax.mjs
+exit=null
+
+
+

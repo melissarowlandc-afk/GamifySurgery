@@ -1,0 +1,24 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "test",
+    "--workspace",
+    "@gamify-surgery/game-domain",
+    "--",
+    "src/characterStillCatalog.test.ts",
+    "src/appearance.test.ts",
+    "tests/character-still-persistence.test.ts",
+    "tests/employee-still-uniqueness.test.ts",
+    "tests/patient-appearance-rotation.test.ts",
+    "--pool=threads",
+    "--maxWorkers=1",
+    "--configLoader=native"
+  ],
+  "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+  "startedAt": "2026-10-08T06:04:46.603153+00:00",
+  "finishedAt": "2026-10-08T06:04:51.327236+00:00",
+  "exitCode": 0,
+  "log": "artifacts/character-statics/patient-gapfill-v6c/validation/domain-focused-tests.txt",
+  "sha256": "30403c162c46acb4c1967dd8cd5c48e25cd8ad83b1d3588591989a2a23a05789"
+}

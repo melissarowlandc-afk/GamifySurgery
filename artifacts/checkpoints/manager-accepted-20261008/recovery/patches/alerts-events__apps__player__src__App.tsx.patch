@@ -1,0 +1,18 @@
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -81,6 +81,7 @@
+       staffTraining={view.staffTraining}
+       serviceIncome={view.serviceIncome}
+       messages={view.messages}
++      needsYou={view.needsYou}
+       systemNotices={session.systemNotices}
+       questionReviewFlags={session.questionReviewFlags}
+       development={view.development}
+@@ -156,6 +157,7 @@
+       onTutorialAction={session.performTutorialAction}
+       onTutorialsEnabledChange={session.setTutorialsEnabled}
+       onSaveAndPause={session.saveAndPause}
++      onClinicAlertAction={session.runClinicAlertAction}
+       onClearLocalCampaigns={session.clearLocalCampaigns}
+       onRestart={() =>
+         onRequestRestart(session.profile, session.state.campaignSeed)

@@ -1,0 +1,608 @@
+{
+  "schemaVersion": "staff-gapfill-v6d-package/v1",
+  "status": "candidate-packaged-not-runtime-ready",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "identity": {
+    "number": "011",
+    "stableId": "staff-gapfill-v6d.011",
+    "category": "staff",
+    "eligibleStaffRoleDefinitionIds": [
+      "staff.pharmacist"
+    ],
+    "roleLabel": "Pharmacist",
+    "intendedAge": 33,
+    "compatibleSexLabel": "Male",
+    "ageBand": "adult",
+    "visualBrief": {
+      "build": "lean build",
+      "skin": "deep brown skin",
+      "hair": "short rust-brown locs in a small low tied bundle with close-cut sides",
+      "accessory": "a clean-shaven face and no glasses",
+      "outfit": "a knee-above-length white full-sleeved pharmacist coat with lapels and two large lower patch pockets over a dusty-lilac collared shirt, charcoal trousers and black loafers; no tie and no cap"
+    },
+    "stage1": {
+      "prompt": "prompts/011/stage1-standing-cardinals.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.011-eight-poses.png",
+          "sha256": "1ba401b29ba82b47f1f7238a18c1881725729cdf76446e7b6f4c139b678a9b86",
+          "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+          "existingIdentity": "level3-roster-v2.011"
+        }
+      ]
+    },
+    "stage2": {
+      "prompt": "prompts/011/stage2-eight-pose.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.011-eight-poses.png",
+          "sha256": "1ba401b29ba82b47f1f7238a18c1881725729cdf76446e7b6f4c139b678a9b86",
+          "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+          "existingIdentity": "level3-roster-v2.011"
+        },
+        {
+          "path": "sources/011/stage1-standing-cardinals.png",
+          "role": "new-identity-and-uniform-reference"
+        }
+      ]
+    },
+    "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+  },
+  "source": {
+    "stage1": {
+      "png": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/stage1-standing-cardinals.png",
+        "sha256": "854600da23402fb4794ccc455fa019f494f0ae95ad8f1f9e34b8e29861403e61"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/stage1-exact-prompt.txt",
+        "sha256": "22674000f5bc17a0fa25df385cfe9250a80db08037122a0e4d65413241ebf8de"
+      },
+      "args": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/stage1-tool-args.json",
+        "sha256": "f4f65093fb43da5a2064a4e7eca9abc8e3d76621f91b4651a7180beceababc7a"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/stage1-provenance.json",
+        "sha256": "95c7b81fbe435058070a22829c05bc0527a8354d28680f7329740bc44bafa36d"
+      }
+    },
+    "stage2": {
+      "png": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/source.png",
+        "sha256": "e49ed12b5d4327744c1825de8fcf2bf34cddf094a23fddec74b922a7ee14ce33"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/exact-prompt.txt",
+        "sha256": "5fe30e9f7cf6896367b91cd4c0e3e230093b939ac7296b3fd70d73fa5ca1aeb2"
+      },
+      "args": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/tool-args.json",
+        "sha256": "00b0df527f9dc615c8ca79fdb659886c3a47899deed0213eeac004047a0c60d7"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/provenance.json",
+        "sha256": "b74f5a47d872ee9c1be01ea53391014574ef1f94cadbe6a5fa6bdd4db91a3a61"
+      }
+    }
+  },
+  "provenanceValidation": {
+    "stage1": "original-spec-stage1",
+    "stage2": "original-spec-stage2",
+    "stage2Chain": [
+      {
+        "kind": "original-spec-stage2",
+        "source": {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/source.png",
+          "sha256": "e49ed12b5d4327744c1825de8fcf2bf34cddf094a23fddec74b922a7ee14ce33"
+        },
+        "exactPrompt": {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/exact-prompt.txt",
+          "sha256": "5fe30e9f7cf6896367b91cd4c0e3e230093b939ac7296b3fd70d73fa5ca1aeb2"
+        },
+        "toolArguments": {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/tool-args.json",
+          "sha256": "00b0df527f9dc615c8ca79fdb659886c3a47899deed0213eeac004047a0c60d7"
+        },
+        "provenance": {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/sources/011/provenance.json",
+          "sha256": "b74f5a47d872ee9c1be01ea53391014574ef1f94cadbe6a5fa6bdd4db91a3a61"
+        }
+      }
+    ]
+  },
+  "rootVisualAcceptance": {
+    "ledger": "tools/character-mapping/staff-gapfill-v6d/review-acceptance.json",
+    "sourceSha256": "e49ed12b5d4327744c1825de8fcf2bf34cddf094a23fddec74b922a7ee14ce33",
+    "accepted": false,
+    "scope": "Worker source/pose/style/contact QA; manager acceptance pending. No runtime integration."
+  },
+  "seatContactAcceptance": {
+    "ledger": "tools/character-mapping/staff-gapfill-v6d/review-acceptance.json",
+    "coordinates": {
+      "south": 234,
+      "east": 243,
+      "west": 243,
+      "north": 245
+    },
+    "reviewedDirections": [],
+    "status": "worker-visual-reviewed-authored-contact-pending-manager"
+  },
+  "extraction": {
+    "method": "immutable GS026 extractEight",
+    "sourceRects": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 338,
+        "height": 710
+      },
+      {
+        "x": 338,
+        "y": 0,
+        "width": 289,
+        "height": 710
+      },
+      {
+        "x": 627,
+        "y": 0,
+        "width": 287,
+        "height": 710
+      },
+      {
+        "x": 914,
+        "y": 0,
+        "width": 340,
+        "height": 710
+      },
+      {
+        "x": 0,
+        "y": 710,
+        "width": 313,
+        "height": 544
+      },
+      {
+        "x": 313,
+        "y": 710,
+        "width": 314,
+        "height": 544
+      },
+      {
+        "x": 627,
+        "y": 710,
+        "width": 313,
+        "height": 544
+      },
+      {
+        "x": 940,
+        "y": 710,
+        "width": 314,
+        "height": 544
+      }
+    ],
+    "componentCount": 28,
+    "ignoredComponents": [
+      {
+        "area": 1,
+        "left": 84,
+        "top": 150,
+        "right": 84,
+        "bottom": 150
+      },
+      {
+        "area": 1,
+        "left": 696,
+        "top": 182,
+        "right": 696,
+        "bottom": 182
+      },
+      {
+        "area": 1,
+        "left": 814,
+        "top": 232,
+        "right": 814,
+        "bottom": 232
+      },
+      {
+        "area": 1,
+        "left": 805,
+        "top": 249,
+        "right": 805,
+        "bottom": 249
+      },
+      {
+        "area": 1,
+        "left": 1053,
+        "top": 255,
+        "right": 1053,
+        "bottom": 255
+      },
+      {
+        "area": 1,
+        "left": 504,
+        "top": 266,
+        "right": 504,
+        "bottom": 266
+      },
+      {
+        "area": 1,
+        "left": 88,
+        "top": 277,
+        "right": 88,
+        "bottom": 277
+      },
+      {
+        "area": 1,
+        "left": 84,
+        "top": 280,
+        "right": 84,
+        "bottom": 280
+      },
+      {
+        "area": 1,
+        "left": 56,
+        "top": 339,
+        "right": 56,
+        "bottom": 339
+      },
+      {
+        "area": 1,
+        "left": 1218,
+        "top": 425,
+        "right": 1218,
+        "bottom": 425
+      },
+      {
+        "area": 1,
+        "left": 559,
+        "top": 427,
+        "right": 559,
+        "bottom": 427
+      },
+      {
+        "area": 1,
+        "left": 86,
+        "top": 485,
+        "right": 86,
+        "bottom": 485
+      },
+      {
+        "area": 1,
+        "left": 558,
+        "top": 636,
+        "right": 558,
+        "bottom": 636
+      },
+      {
+        "area": 1,
+        "left": 85,
+        "top": 863,
+        "right": 85,
+        "bottom": 863
+      },
+      {
+        "area": 1,
+        "left": 1171,
+        "top": 866,
+        "right": 1171,
+        "bottom": 866
+      },
+      {
+        "area": 1,
+        "left": 419,
+        "top": 907,
+        "right": 419,
+        "bottom": 907
+      },
+      {
+        "area": 1,
+        "left": 824,
+        "top": 919,
+        "right": 824,
+        "bottom": 919
+      },
+      {
+        "area": 1,
+        "left": 197,
+        "top": 929,
+        "right": 197,
+        "bottom": 929
+      },
+      {
+        "area": 1,
+        "left": 1186,
+        "top": 1062,
+        "right": 1186,
+        "bottom": 1062
+      },
+      {
+        "area": 1,
+        "left": 686,
+        "top": 1146,
+        "right": 686,
+        "bottom": 1146
+      }
+    ]
+  },
+  "normalization": {
+    "target": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 246
+    },
+    "policy": "one identity-wide whole-body scale; source remains byte-exact; no repaint or mirroring; alpha >=13 outside the derived canvas is forbidden; sub-13 alpha loss is measured for root warning review"
+  },
+  "poses": {
+    "stand": {
+      "south": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/stand-south.png",
+        "sha256": "5a05d310ea1a9930d8a29ad37973f292baea3b6f3490d4bb9085d0010477e2fa",
+        "visibleBounds": {
+          "x": 19,
+          "y": 41,
+          "width": 121,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 6.690217391304344,
+          "translateY": -1.7826086956521863,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/stand-east.png",
+        "sha256": "1fca8619fb1e09aa5af565c728d7780c2533732b26ab1864a7f8f5121e856223",
+        "visibleBounds": {
+          "x": 38,
+          "y": 42,
+          "width": 84,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 20.505434782608695,
+          "translateY": -1.3369565217391255,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/stand-west.png",
+        "sha256": "d7ec5ca784d0df343a29bb72eea6530a5fce3a20e6bb4c7597747a10190989f9",
+        "visibleBounds": {
+          "x": 38,
+          "y": 42,
+          "width": 84,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 11.146739130434781,
+          "translateY": -1.3369565217391255,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/stand-north.png",
+        "sha256": "bf94d727073f2a84e65070f0bf5ad221bb97342c87ba33ea61eac467b7e801c1",
+        "visibleBounds": {
+          "x": 20,
+          "y": 42,
+          "width": 120,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 2.0108695652173907,
+          "translateY": -1.7826086956521863,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/sit-south.png",
+        "sha256": "5dd2be3bae27e8269473b694bd6c651aa2a21eccb140b526ccdbdcba58e94103",
+        "visibleBounds": {
+          "x": 30,
+          "y": 93,
+          "width": 100,
+          "height": 194
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 9.58695652173914,
+          "translateY": 65.5108695652174,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 234,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/sit-east.png",
+        "sha256": "b404ed0af651a0fea7ce26c67845f9f2b5e2cbfbfb318617e546616f767422bd",
+        "visibleBounds": {
+          "x": 24,
+          "y": 95,
+          "width": 112,
+          "height": 192
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 4.239130434782609,
+          "translateY": 67.29347826086956,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 243,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/sit-west.png",
+        "sha256": "4b77ac7172a13b23702e5241f038db61ec9834064766cc9fb96a53358eaa1294",
+        "visibleBounds": {
+          "x": 25,
+          "y": 95,
+          "width": 111,
+          "height": 192
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 16.048913043478265,
+          "translateY": 67.29347826086956,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 243,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/sit-north.png",
+        "sha256": "a9452ff2ddfbd047304af91846b6df4c230e184a504407a109fd4ef801c6dcdc",
+        "visibleBounds": {
+          "x": 30,
+          "y": 96,
+          "width": 100,
+          "height": 191
+        },
+        "transform": {
+          "scale": 0.44565217391304346,
+          "translateX": 10.478260869565219,
+          "translateY": 66.84782608695653,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 245,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      }
+    }
+  },
+  "proofs": {
+    "fullTransparent": {
+      "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/full-poses-transparent.png",
+      "sha256": "197b068ece6d53ddc5f0c35f53544fee01ac8d46614891a1034d92d86da250f6"
+    },
+    "fullLight": {
+      "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/full-poses-light.png",
+      "sha256": "610f3c692b2613b37db4167dc6b09b8d9b1f002f0a9899b92c1c9c99da0bda28"
+    },
+    "fullDark": {
+      "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/full-poses-dark.png",
+      "sha256": "b95e21de9ced4eb2b7ea9eb0b92312d49e89fe37c60c891dadb6848597665ea7"
+    },
+    "seatedContactGrid": {
+      "file": "artifacts/character-statics/staff-gapfill-v6d/packages/011/seated-contact-grid-2x.png",
+      "sha256": "f4a04191ae90dbc4058a4e138927d4d124af9fa6441c77cfec7f40f1f4e447ee"
+    }
+  }
+}

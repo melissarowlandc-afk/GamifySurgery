@@ -1,0 +1,107 @@
+--- a/packages/game-domain/src/facility-experience.ts
++++ b/packages/game-domain/src/facility-experience.ts
+@@ -12,6 +12,8 @@
+ import { getCachedFacilityAccessValidation } from "./facility-access-cache";
+ import { getOccupiedTiles } from "./spatial";
+ import { isEmployeeAwayForTraining } from "./employee-training";
++import { hasAutoTrashCoverage, hasAutoWaterCoverage } from "./facility-automation";
++import { isEmployeeAssignedToOperationalRoom, isRoomOperationalForFacilityWork } from "./selectors";
+ import type {
+   DomainContext,
+   FacilityConditionAlertTarget,
+@@ -528,15 +530,22 @@
+         };
+       case "unavailable_onsite_xray":
+         {
+-          const xrayRoomExists = state.rooms.some(
++          const xrayRoom = state.rooms.find(
+             (room) => room.roomDefinitionId === "room.xray",
+           );
+-          const imagingTechnicianExists = state.employees.some(
++          const imagingTechnician = state.employees.find(
+             (employee) =>
+               employee.staffRoleDefinitionId ===
+               "staff.imaging_technician",
+           );
+-          if (xrayRoomExists && !imagingTechnicianExists) {
++          const unavailableRoomId = xrayRoom && !isRoomOperationalForFacilityWork(state, xrayRoom.id, context) ? xrayRoom.id :
++            imagingTechnician?.homeRoomInstanceId && !isEmployeeAssignedToOperationalRoom(state, imagingTechnician.id, context) ? imagingTechnician.homeRoomInstanceId : null;
++          if (unavailableRoomId) {
++            const room = state.rooms.find((candidate) => candidate.id === unavailableRoomId);
++            return { definitionId: "alert.facility.room-unreachable", values: { room_name: roomDefinition(context, room?.roomDefinitionId ?? "")?.displayName ?? "Room" }, priority: "informational" as const,
++              target: { kind: "room", id: unavailableRoomId } satisfies FacilityConditionAlertTarget };
++          }
++          if (xrayRoom && !imagingTechnician) {
+             return {
+               definitionId:
+                 "alert.staff.imaging-technician-needed",
+@@ -639,12 +648,12 @@
+       return checkedInWaiting.length > 0;
+     }
+     if (conditionKey === "missing_waiting_room") {
+-      return state.facilityLevel === 1 && checkedInWaiting.length > 0;
++      return state.facilityLevel >= 1 && checkedInWaiting.length > 0;
+     }
+     if (conditionKey === "missing_bathroom") {
+       const firstWaitingPatient = checkedInWaiting[0];
+       return Boolean(
+-        state.facilityLevel === 1 &&
++        state.facilityLevel >= 1 &&
+           firstWaitingPatient &&
+           state.facilityTick -
+             firstWaitingPatient.waiting.arrivedAtTick >=
+@@ -652,7 +661,7 @@
+       );
+     }
+     if (conditionKey === "no_receptionist") {
+-      return state.facilityLevel === 1 && checkedInWaiting.length > 0;
++      return state.facilityLevel >= 1 && checkedInWaiting.length > 0;
+     }
+     if (conditionKey === "unavailable_onsite_xray") {
+       return Object.values(state.encounters).some(
+@@ -702,8 +711,13 @@
+       condition.conditionKey,
+       context,
+     );
++    // Suppress delivery, not the real satisfaction condition or saved cadence.
++    // Existing manual warnings still resolve when the actual amenity recovers.
++    if (condition.conditionKey === "empty_water_cooler" && hasAutoWaterCoverage(state, context)) continue;
++    if (condition.conditionKey === "visible_litter" && presentation.target?.kind === "litter" &&
++      hasAutoTrashCoverage(state, presentation.target.id, context)) continue;
+     const activeOccurrence =
+-      state.environment.facilityConditionOccurrences.find(
++      state.environment.facilityConditionOccurrences.slice().reverse().find(
+         (occurrence) =>
+           occurrence.conditionKey === condition.conditionKey &&
+           occurrence.resolvedAtFacilityTick === null,
+@@ -719,14 +733,14 @@
+         : alertCadencePolicy(condition.conditionKey, context);
+     if (policy) {
+       if (activeOccurrence && !targetMatches) {
+-        activeOccurrence.resolvedAtFacilityTick = state.facilityTick;
++        for (const occurrence of state.environment.facilityConditionOccurrences) {
++          if (occurrence.conditionKey === condition.conditionKey && occurrence.resolvedAtFacilityTick === null) occurrence.resolvedAtFacilityTick = state.facilityTick;
++        }
+       }
+       if (!conditionAlertIsDue(state, condition.conditionKey, policy)) {
+         continue;
+       }
+-      if (activeOccurrence && targetMatches) {
+-        activeOccurrence.resolvedAtFacilityTick = state.facilityTick;
+-      }
++      // A cadence reminder is still the same live condition, not a recovery.
+       appendFacilityConditionOccurrence(state, {
+         conditionKey: condition.conditionKey,
+         kind: activeOccurrence && targetMatches ? "reminder" : "onset",
+@@ -750,8 +764,9 @@
+       continue;
+     }
+     if (activeOccurrence) {
+-      activeOccurrence.resolvedAtFacilityTick =
+-        state.facilityTick;
++      for (const occurrence of state.environment.facilityConditionOccurrences) {
++        if (occurrence.conditionKey === condition.conditionKey && occurrence.resolvedAtFacilityTick === null) occurrence.resolvedAtFacilityTick = state.facilityTick;
++      }
+     }
+     appendFacilityConditionOccurrence(state, {
+       conditionKey: condition.conditionKey,

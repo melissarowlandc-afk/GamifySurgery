@@ -1,0 +1,190 @@
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -16,7 +16,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "patient";
+-      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4";
++      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4" | "future-roster20-v5" | "patient-gapfill-v6a" | "patient-gapfill-v6b" | "patient-gapfill-v6c";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+       readonly ageBand: PatientVisualAgeBand;
+       readonly intendedAge?: number;
+@@ -24,7 +24,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -174,6 +174,157 @@
+   intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
+ }));
+ 
++// Owner-approved GS-033 art. Empty role lists keep the four planned APP and
++// executive identities renderable without admitting them to any staff pool.
++const FUTURE_ROSTER20_V5_STAFF_ROWS = [
++  ["001", []],
++  ["002", []],
++  ["003", []],
++  ["004", []],
++  ["005", ["staff.radiologist"]],
++  ["006", ["staff.radiologist"]],
++  ["007", ["staff.radiologist"]],
++  ["008", ["staff.radiologist"]],
++  ["009", ["staff.radiologist"]],
++  ["010", ["staff.radiologist"]],
++  ["011", ["staff.radiologist"]],
++  ["012", ["staff.radiologist"]],
++  ["013", ["staff.radiologist"]],
++  ["014", ["staff.radiologist"]],
++  ["015", ["staff.radiologist"]],
++  ["016", ["staff.radiologist"]],
++] as const;
++
++const FUTURE_ROSTER20_V5_STAFF_STILLS = FUTURE_ROSTER20_V5_STAFF_ROWS.map(([number, roles]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "staff" as const,
++  sourceCohort: "future-roster20-v5" as const, eligibleStaffRoleDefinitionIds: roles as readonly string[],
++}));
++
++const FUTURE_ROSTER20_V5_PATIENT_ROWS = [
++  ["017", 41, "Male"],
++  ["018", 54, "Female"],
++  ["019", 57, "Male"],
++  ["020", 69, "Female"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const FUTURE_ROSTER20_V5_PATIENT_STILLS = FUTURE_ROSTER20_V5_PATIENT_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "patient" as const,
++  sourceCohort: "future-roster20-v5" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
++// Owner-delegated manager approval recorded on 2026-10-07; visual metadata only.
++const PATIENT_GAPFILL_V6A_ROWS = [
++  ["001", 45, "Female"],
++  ["002", 48, "Female"],
++  ["003", 51, "Female"],
++  ["004", 54, "Female"],
++  ["005", 57, "Female"],
++  ["006", 60, "Female"],
++  ["007", 63, "Female"],
++  ["008", 46, "Male"],
++  ["009", 49, "Male"],
++  ["010", 52, "Male"],
++  ["011", 55, "Male"],
++  ["012", 58, "Male"],
++  ["013", 62, "Male"],
++  ["014", 31, "Female"],
++  ["015", 35, "Female"],
++  ["016", 39, "Female"],
++  ["017", 43, "Female"],
++  ["018", 32, "Male"],
++  ["019", 37, "Male"],
++  ["020", 44, "Male"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const PATIENT_GAPFILL_V6A_STILLS = PATIENT_GAPFILL_V6A_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`patient-gapfill-v6a.${number}`), category: "patient" as const,
++  sourceCohort: "patient-gapfill-v6a" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
++// Owner-delegated manager approval recorded on 2026-10-08; visual metadata only.
++const PATIENT_GAPFILL_V6B_ROWS = [
++  ["001", 46, "Female"],
++  ["002", 49, "Female"],
++  ["003", 52, "Female"],
++  ["004", 55, "Female"],
++  ["005", 58, "Female"],
++  ["006", 61, "Female"],
++  ["007", 64, "Female"],
++  ["008", 45, "Male"],
++  ["009", 48, "Male"],
++  ["010", 51, "Male"],
++  ["011", 54, "Male"],
++  ["012", 59, "Male"],
++  ["013", 63, "Male"],
++  ["014", 30, "Male"],
++  ["015", 34, "Male"],
++  ["016", 38, "Male"],
++  ["017", 42, "Male"],
++  ["018", 32, "Female"],
++  ["019", 37, "Female"],
++  ["020", 44, "Female"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const PATIENT_GAPFILL_V6B_STILLS = PATIENT_GAPFILL_V6B_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`patient-gapfill-v6b.${number}`), category: "patient" as const,
++  sourceCohort: "patient-gapfill-v6b" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
++// Owner-delegated manager approval recorded on 2026-10-08; visual metadata only.
++const PATIENT_GAPFILL_V6C_ROWS = [
++  ["001", 65, "Female"],
++  ["002", 68, "Female"],
++  ["003", 72, "Female"],
++  ["004", 76, "Female"],
++  ["005", 80, "Female"],
++  ["006", 84, "Female"],
++  ["007", 88, "Female"],
++  ["008", 65, "Male"],
++  ["009", 68, "Male"],
++  ["010", 71, "Male"],
++  ["011", 74, "Male"],
++  ["012", 77, "Male"],
++  ["013", 81, "Male"],
++  ["014", 85, "Male"],
++  ["015", 88, "Male"],
++  ["016", 34, "Female"],
++  ["017", 42, "Female"],
++  ["018", 33, "Male"],
++  ["019", 43, "Male"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const PATIENT_GAPFILL_V6C_STILLS = PATIENT_GAPFILL_V6C_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`patient-gapfill-v6c.${number}`), category: "patient" as const,
++  sourceCohort: "patient-gapfill-v6c" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
++// Owner-delegated manager approval recorded on 2026-10-08; one exact role per look.
++const STAFF_GAPFILL_V6D_ROWS = [
++  ["001", "staff.imaging_technician"],
++  ["002", "staff.imaging_technician"],
++  ["003", "staff.phlebotomist"],
++  ["004", "staff.phlebotomist"],
++  ["005", "staff.laboratory_technician"],
++  ["006", "staff.laboratory_technician"],
++  ["007", "staff.surgeon"],
++  ["008", "staff.surgeon"],
++  ["009", "staff.or_nurse"],
++  ["010", "staff.or_nurse"],
++  ["011", "staff.pharmacist"],
++  ["012", "staff.pharmacist"],
++  ["013", "staff.repair_person"],
++  ["014", "staff.repair_person"],
++] as const satisfies readonly (readonly [string, string])[];
++
++const STAFF_GAPFILL_V6D_STILLS = STAFF_GAPFILL_V6D_ROWS.map(([number, role]) => ({
++  stillId: id(`staff-gapfill-v6d.${number}`), category: "staff" as const,
++  sourceCohort: "staff-gapfill-v6d" as const, eligibleStaffRoleDefinitionIds: [role],
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -194,6 +345,11 @@
+   ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
+   ...PATIENT_WOMEN20_V3_STILLS,
+   ...PATIENT_DEMOGRAPHICS20_V4_STILLS,
++  ...FUTURE_ROSTER20_V5_STAFF_STILLS, ...FUTURE_ROSTER20_V5_PATIENT_STILLS,
++  ...PATIENT_GAPFILL_V6A_STILLS,
++  ...PATIENT_GAPFILL_V6B_STILLS,
++  ...PATIENT_GAPFILL_V6C_STILLS,
++  ...STAFF_GAPFILL_V6D_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");

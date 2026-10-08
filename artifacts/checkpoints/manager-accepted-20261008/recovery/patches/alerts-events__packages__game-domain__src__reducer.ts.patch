@@ -1,0 +1,91 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -113,6 +113,7 @@
+ } from "./facility-experience";
+ import { synchronizeFacilityOperationalAlertOccurrences } from "./facility-alert-conditions";
+ import { operatingDayMinutes } from "./alert-cadence";
++import { advanceGuidanceTips, createGuidanceTipsState } from "./guidance-tips";
+ import { advanceLevelThreeSupport } from "./level-three-support";
+ import { advanceEmployeeTraining, cancelEmployeeTrainingForDismissal, isEmployeeAwayForTraining, requestEmployeeTraining } from "./employee-training";
+ import {
+@@ -177,6 +178,8 @@
+   retireFinishedRetailHistory,
+   retireFinishedServiceHistory,
+ } from "./retired-service-history";
++import { captureClinicDaySummary } from "./clinic-day-summary";
++import { getWaterCoolerApproachLocation } from "./facility-automation";
+ import type {
+   AnswerRecord,
+   DoorState,
+@@ -6325,21 +6328,6 @@
+     : state.environment.founderLocation;
+ }
+ 
+-/** The A5 cooler is an obstacle; workers refill from adjacent B5. */
+-function getWaterCoolerApproachLocation(
+-  state: GameState,
+-  context: DomainContext,
+-) : GridPoint | null {
+-  const frontRoom = state.rooms.find((room) =>
+-    context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
+-      room.roomDefinitionId,
+-    ),
+-  );
+-  if (!frontRoom) return null;
+-  const cooler = getWaterCoolerLocation(state, context);
+-  return { x: cooler.x, y: frontRoom.y + 1 };
+-}
+-
+ function canReachCurrentWaterCooler(
+   state: GameState,
+   context: DomainContext,
+@@ -6571,7 +6559,6 @@
+   const environment = state.environment;
+   if (
+     environment.waterCoolerFillPercent > 0 ||
+-    environment.waterCoolerEmptySinceTick === null ||
+     environment.founderActivity?.kind === "refill_water" ||
+     state.employees.some(
+       (employee) => employee.facilityTask?.kind === "refill_water",
+@@ -8662,12 +8649,15 @@
+     next.emergencyGlp1.dayNumber = dayNumber;
+     next.emergencyGlp1.usesToday = 0;
+     next.emergencyGlp1.lastFlavorMessage = null;
++    const clinicDaySummary = captureClinicDaySummary(next, context);
++    next.clinicDaySummaryBaseline = { facilityTick: next.facilityTick, completedTotal: clinicDaySummary.completedTotal, earnedTotalCents: clinicDaySummary.earnedTotalCents };
+     appendEvent(next, {
+       id: `event.day-rollover.${dayNumber}`,
+       type: "day_rollover",
+       facilityTick: next.facilityTick,
+       encounterId: null,
+       message: `Day ${dayNumber} begins at 8 AM.`,
++      clinicDaySummary,
+       priority: "informational",
+       definitionId: "event.facility.day-rollover",
+       target: {
+@@ -8951,12 +8941,15 @@
+   prioritizeReceptionistPatients(next, context);
+   advanceEmployeeFacilityTasks(next, context, "refill_only");
+   advanceEmployeeTraining(next, context);
++  // A receptionist freed by check-in/training this minute can refill now.
++  // The same intake-priority guard still wins over this second assignment pass.
++  maybeAssignReceptionistWaterRefill(next, context);
+   retireDepartedEncounters(next, context);
+   retireFinishedServiceHistory(next, context);
+   retireFinishedRetailHistory(next);
+   synchronizeFacilityConditionOccurrences(next, context);
+-  synchronizeFacilityOperationalAlertOccurrences(next, context);
+-  maybeEmitAmbientMessage(next, context);
++  synchronizeFacilityOperationalAlertOccurrences(next, context, command.advancedAtRealMs ?? next.createdAtRealMs + next.facilityTick * 60_000);
++  if (!advanceGuidanceTips(next, context, command.advancedAtRealMs ?? next.createdAtRealMs + next.facilityTick * 60_000)) maybeEmitAmbientMessage(next, context);
+ 
+   return recordReceipt(next, command, "applied", "Facility time advanced once.");
+ }
+@@ -10839,6 +10832,7 @@
+       alertsTutorialAcknowledgedAtTick: null,
+       nextAmbientAlertTick: null,
+       ambientCadenceVersion: 1,
++      guidanceTips: createGuidanceTipsState(0),
+       lastPatientArrivalTick: null,
+       conditionActiveSinceTicks: {},
+       conditionLastEmittedTicks: {},

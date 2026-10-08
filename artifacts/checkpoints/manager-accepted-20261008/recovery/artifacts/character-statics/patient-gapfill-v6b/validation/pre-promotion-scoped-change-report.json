@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "immutableSnapshots": 42,
+  "unchangedSourceControlArtHashes": 3588,
+  "changedSnapshotPaths": [
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs",
+      "beforeSha256": "e307a4de555bf16dca212b4407cc2a63de642957f46b6af62505cf8fdd203121",
+      "afterSha256": "7633789f5d9e729bfa4496ef165e3f51dd1a17005d05c4c963a230a88f18cb14",
+      "addedLines": 14,
+      "removedLines": 4
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/validate-roster.mjs",
+      "beforeSha256": "70194632ffcce23248d52d2823852a184511d8ba73c2432e7558e17ba67f0dfc",
+      "afterSha256": "ed4475b18de926734ddfe948407b24c04d19de5d897512a4ac74a4112c9fecb9",
+      "addedLines": 2,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/validate-placement-qa.mjs",
+      "beforeSha256": "4532db9a1e1654b79cf6bc3586d465231b5fee2014a6b7a7f172760830157094",
+      "afterSha256": "8b636791197942db1d440ab6dcbb410f3b64cafd831d7a5eae20f3a60f6ebbfc",
+      "addedLines": 2,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/validate-worker-review.mjs",
+      "beforeSha256": "5c7c330b636a906762ab54b33d2e71739fab3ac5d6309b7354b040cd88ca0f69",
+      "afterSha256": "221417e39c09734a04bbc43b90c07814addaec7024963e168b86cf355e433ee5",
+      "addedLines": 6,
+      "removedLines": 2
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/validate-all-catalog-comparison.mjs",
+      "beforeSha256": "5bd48a4d15a1b0a71c84d5ad1e6428f6d670e8c1248dad141fb940f830d00a74",
+      "afterSha256": "f36d825f28885c17340ba98e91c16a193cf7cbdfe76a800019f40578c8a6b6d6",
+      "addedLines": 4,
+      "removedLines": 2
+    },
+    {
+      "path": "tools/character-mapping/patient-gapfill-v6b/README.md",
+      "beforeSha256": "cc7c6e807b882bd7c820d870e7edb8027bc7cafa8e2ba6474c0a507031ccaa4e",
+      "afterSha256": "5413122bfc00229b53d796d9cef3a360c529f5ed1212214d40e71b8336644d68",
+      "addedLines": 52,
+      "removedLines": 0
+    }
+  ],
+  "suiteSourceDrift": [],
+  "note": "Unrelated concurrent suite-source changes are recorded, not reverted. Runtime preservation is checked separately by validate-runtime-integration.mjs."
+}

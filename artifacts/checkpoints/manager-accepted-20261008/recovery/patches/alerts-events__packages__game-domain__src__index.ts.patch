@@ -1,0 +1,20 @@
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -1,5 +1,9 @@
+ export * from "./appearance";
+ export * from "./alert-cadence";
++export * from "./guidance-tip-types";
++export * from "./guidance-tips";
++export * from "./guidance-tip-suppression";
++export * from "./clinic-day-summary";
+ export * from "./characterStillCatalog";
+ export * from "./care-room-access";
+ export * from "./ambient-pedestrians";
+@@ -16,6 +20,7 @@
+ export * from "./diagnostic-timing";
+ export * from "./diagnostic-result-dispositions";
+ export * from "./facility-alert-conditions";
++export * from "./facility-automation";
+ export * from "./facility-experience";
+ export * from "./fsrs-adapter";
+ export * from "./level-three-support";

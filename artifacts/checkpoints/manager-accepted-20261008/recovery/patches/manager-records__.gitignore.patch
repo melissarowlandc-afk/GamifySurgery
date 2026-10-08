@@ -1,0 +1,9 @@
+--- a/.gitignore
++++ b/.gitignore
+@@ -22,3 +22,6 @@
+ artifacts/screenshots/tmp-*.png
+ .DS_Store
+ Thumbs.db
++
++# Machine-specific Claude Code permissions
++.claude/settings.local.json

@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "scannedArchiveFiles": 2456,
+  "logicalSourcePathsChecked": 3255,
+  "credentialsOrSecretsDetected": 0,
+  "privateKeyOrTokenPatternMatches": [],
+  "gitCheckIgnore": {
+    "command": "git check-ignore --no-index --stdin -z",
+    "exitCode": 1,
+    "ignoredPaths": []
+  },
+  "ownerSaveDataOrBrowserStorageIncluded": false,
+  "ownerSaveDataOrBrowserStorageRead": false,
+  "personalClinicalDataIncluded": false,
+  "syntheticPatientAndEmployeeNamesOnly": true,
+  "proprietarySourceFilesIncluded": false,
+  "fullArticlesOrSourceExcerptsIncluded": false,
+  "sourceBoundary": "Original software/content metadata and AI-generated art. Clinical source/claim catalogs retain bibliographic/atomic factual records; no clinical corpus, PDF or new web retrieval.",
+  "technicalPathMetadata": "Generation/evidence receipts retain machine paths and thread IDs needed for provenance; no browser session or account credentials.",
+  "clinicalReview": {
+    "status": "PASS",
+    "groups": {
+      "AUTHORING_CONCEPTS": {
+        "count": 28,
+        "reviewStatus": "needs_clinician_review",
+        "namedClinicianApproval": false
+      },
+      "QUESTIONS": {
+        "count": 112,
+        "reviewStatus": "needs_clinician_review",
+        "namedClinicianApproval": false
+      },
+      "CLAIMS": {
+        "count": 63,
+        "reviewStatus": "needs_clinician_review",
+        "namedClinicianApproval": false
+      },
+      "SOURCES": {
+        "count": 30,
+        "reviewStatus": "needs_clinician_review",
+        "namedClinicianApproval": false
+      },
+      "CASE_REVIEWS": {
+        "count": 108,
+        "reviewStatus": "needs_clinician_review",
+        "namedClinicianApproval": false
+      }
+    },
+    "cases": 108,
+    "decisionNodes": 112,
+    "publicReleaseAuthorized": false,
+    "admissionScope": "owner_development_preview_only",
+    "sourcesFetched": 0,
+    "modelsCalled": 0,
+    "ownerSavesAccessed": 0
+  },
+  "clinicalApprovalClaimed": false,
+  "rawIgnoredLogsOrPrivateInputsArchived": false,
+  "ignoredEvidenceUse": "Ignored worker logs/intake files were read only as evidence. Selected source modules were reconstructed/copied under their public repository paths, with scope/hash proofs; whole ignored directories were never copied."
+}

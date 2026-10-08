@@ -1,0 +1,42 @@
+--- a/apps/player/src/ui/StaffPanel.tsx
++++ b/apps/player/src/ui/StaffPanel.tsx
+@@ -13,6 +13,7 @@
+   staffTraining?: StaffTrainingOverviewView | null;
+   highlightedRoleId?: string | null;
+   highlightedEmployeeId?: string | null;
++  requestedTraining?: { employeeId: string; requestKey: number } | null;
+   onHire: (staffRoleDefinitionId: string) => void;
+   onDecreaseSalary: (employeeId: string) => void;
+   onIncreaseSalary: (employeeId: string) => void;
+@@ -47,13 +48,16 @@
+   staffTraining = null,
+   highlightedRoleId,
+   highlightedEmployeeId,
++  requestedTraining,
+   onHire,
+   onDecreaseSalary,
+   onIncreaseSalary,
+   onFire,
+   onTrain,
+ }: StaffPanelProps) {
+-  const [popover, setPopover] = useState<{ employeeId: string; kind: "fire" | "train" } | null>(null);
++  const [popover, setPopover] = useState<{ employeeId: string; kind: "fire" | "train" } | null>(() =>
++    requestedTraining ? { employeeId: requestedTraining.employeeId, kind: "train" } : null,
++  );
+   const [openRoles, setOpenRoles] = useState<Record<string, boolean>>(() =>
+     Object.fromEntries(roles.map((role) => [
+       role.id,
+@@ -63,6 +67,13 @@
+     ])),
+   );
+   const trainingAvailable = staffTraining !== null;
++
++  useEffect(() => {
++    if (!requestedTraining) return;
++    setPopover({ employeeId: requestedTraining.employeeId, kind: "train" });
++    const role = roles.find((item) => item.employees.some((employee) => employee.id === requestedTraining.employeeId));
++    if (role) setOpenRoles((current) => ({ ...current, [role.id]: true }));
++  }, [requestedTraining]);
+ 
+   useEffect(() => {
+     const highlightedRole = highlightedRoleId ??

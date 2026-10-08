@@ -1,0 +1,132 @@
+--- a/packages/game-domain/src/facility-alert-conditions.ts
++++ b/packages/game-domain/src/facility-alert-conditions.ts
+@@ -18,7 +18,9 @@
+ import {
+   getFacilityProgressionStatus,
+   getRoomDefinition,
++  getWorkloadSnapshot,
+ } from "./selectors";
++import { getRoutinePatientAvailability } from "./routine-patient-availability";
+ import { getRoomNavigableTiles } from "./spatial";
+ import type {
+   DomainContext,
+@@ -62,15 +64,6 @@
+     priority,
+     target,
+   };
+-}
+-
+-function checkedInWaitingPatients(state: GameState) {
+-  return Object.values(state.encounters).filter(
+-    (encounter) =>
+-      encounter.lifecycle === "waiting_unopened" &&
+-      encounter.patientMovement?.kind !== "arriving_for_check_in" &&
+-      encounter.patientMovement?.kind !== "leaving_after_walkout",
+-  );
+ }
+ 
+ function roomUpgradeCondition(
+@@ -163,6 +156,7 @@
+ export function evaluateFacilityOperationalAlertConditions(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++  asOfRealMs = state.createdAtRealMs + state.facilityTick * 60_000,
+ ): OperationalAlertCondition[] {
+   const conditions: OperationalAlertCondition[] = [];
+   const lowCashThreshold =
+@@ -195,7 +189,6 @@
+     );
+   }
+ 
+-  const waitingPatients = checkedInWaitingPatients(state);
+   const normalAdmissionsUnlocked = [
+     TUTORIAL_ENCOUNTER_ID,
+     SECOND_TUTORIAL_ENCOUNTER_ID,
+@@ -203,10 +196,11 @@
+     state.encounters[encounterId]?.resolutionReason !== null &&
+     state.encounters[encounterId] !== undefined,
+   );
++  const arrivalsQuiet = state.alertHumor.lastPatientArrivalTick !== null && state.facilityTick - state.alertHumor.lastPatientArrivalTick > 75;
++  const arrivalAvailability = normalAdmissionsUnlocked && arrivalsQuiet && state.facilityLevel >= 1 && state.advertisingLevel === 0 && !getWorkloadSnapshot(state, context).atRoutineCapacity
++    ? getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context).reason : null;
+   if (
+-    normalAdmissionsUnlocked &&
+-    state.alertHumor.lastPatientArrivalTick !== null &&
+-    state.facilityTick - state.alertHumor.lastPatientArrivalTick > 60
++    arrivalAvailability === "available" || arrivalAvailability === "arrival_scheduled"
+   ) {
+     conditions.push(
+       renderedCondition(
+@@ -217,27 +211,6 @@
+         {
+           kind: "advertising",
+           id: "advertising",
+-        },
+-      ),
+-    );
+-  }
+-
+-  if (
+-    state.facilityLevel === 1 &&
+-    waitingPatients.length >= 3 &&
+-    state.rooms.some(
+-      (room) => room.roomDefinitionId === "room.waiting",
+-    )
+-  ) {
+-    conditions.push(
+-      renderedCondition(
+-        "waiting_room_crowded",
+-        "alert.facility.waiting-room-crowded",
+-        {},
+-        "informational",
+-        {
+-          kind: "build_mode",
+-          id: "room.waiting",
+         },
+       ),
+     );
+@@ -273,10 +246,12 @@
+ export function synchronizeFacilityOperationalAlertOccurrences(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++  asOfRealMs = state.createdAtRealMs + state.facilityTick * 60_000,
+ ): void {
+   const active = evaluateFacilityOperationalAlertConditions(
+     state,
+     context,
++    asOfRealMs,
+   );
+   const activeByKey = new Map(
+     active.map((condition) => [condition.conditionKey, condition]),
+@@ -297,6 +272,10 @@
+     ) {
+       continue;
+     }
++    // Low/zero cash are severities of one problem. A severity change cannot
++    // resolve that problem; recovery requires clearing the low-cash threshold.
++    if ((occurrence.conditionKey === "low_cash" || occurrence.conditionKey === "no_cash") &&
++      state.cash < context.balanceRelease.emergencyGlp1.lowCashAlertThreshold) continue;
+     const condition = activeByKey.get(
+       occurrence.conditionKey as FacilityOperationalAlertConditionKey,
+     );
+@@ -313,7 +292,7 @@
+   }
+ 
+   for (const condition of active) {
+-    const existing = state.environment.facilityConditionOccurrences.find(
++    const existing = state.environment.facilityConditionOccurrences.slice().reverse().find(
+       (occurrence) =>
+         occurrence.conditionKey === condition.conditionKey &&
+         occurrence.resolvedAtFacilityTick === null,
+@@ -323,9 +302,8 @@
+       if (!conditionAlertIsDue(state, condition.conditionKey, policy)) {
+         continue;
+       }
+-      if (existing) {
+-        existing.resolvedAtFacilityTick = state.facilityTick;
+-      }
++      // Renewing the notification does not resolve the underlying condition.
++      // All occurrences resolve together only when its predicate stops holding.
+       appendFacilityConditionOccurrence(state, {
+         ...condition,
+         kind: existing ? "reminder" : "onset",

@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-original-east-shaved-side-mismatch",
+  "reason": "Both profiles showed the shaved side; correct east to the long-haired anatomical right side.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a119af-929b-75f0-be9d-7986d6f54e61\\exec-c08044be-4ecc-4a25-a278-8ec4d9b2004d.png",
+    "sha256": "c4b949705a0699d0c279e690a87b2269579b1a465efe48c1023a4a7a3c59167b"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "c4b949705a0699d0c279e690a87b2269579b1a465efe48c1023a4a7a3c59167b",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\004\\source.png",
+      "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6c\\sources\\017\\history\\original-east-shaved-side-mismatch\\source.png",
+      "sha256": "fc8f4b12073decb6d6ad4dca5459b455da75e7a2db77e420d0ccd9f43193f5ae",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "666631fc51abfa4a41bbb6b16520c1d31328f9fe5953cb9ef457c9d0c1101773"
+  }
+}

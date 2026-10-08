@@ -1,0 +1,176 @@
+{
+  "scope": "Manager-requested .018 adult regeneration only; actual save/build/review/final validation runs.",
+  "generationCalls": [
+    {
+      "startedAt": "2026-10-08T05:19:17.536Z",
+      "finishedAt": "2026-10-08T05:19:54.498Z",
+      "mode": "built-in-image_gen",
+      "referenced_image_paths": [
+        "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\004\\source.png",
+        "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6c\\sources\\018\\history\\original-teen-reading\\source.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "startedAt": "2026-10-08T05:23:00.838Z",
+      "finishedAt": "2026-10-08T05:23:32.599Z",
+      "mode": "built-in-image_gen",
+      "referenced_image_paths": [
+        "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\004\\source.png",
+        "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6c\\sources\\018\\history\\adult-first-tight-rowgap\\source.png"
+      ],
+      "transparent_background": true
+    }
+  ],
+  "rejectedAdultLayout": {
+    "command": "node tools/character-mapping/patient-gapfill-v6c/preview-018-revision.mjs",
+    "exitCode": 1,
+    "reason": "AssertionError [ERR_ASSERTION]: figure rows overlap; reject rather than bisect feet",
+    "sourceSha256": "03d2b562aab145000a5f8d945c4ffbab641a1e8a5b4c85db85d172ac4f8d82c9",
+    "unchangedExtractor": "tools/character-mapping/gs026-employee-expansion-v1/pipeline.mjs:49",
+    "capturedFailureExcerpt": true
+  },
+  "runs": [
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/save-correction.mjs 018 'C:\\Users\\rowla\\.codex\\generated_images\\01a119af-929b-75f0-be9d-7986d6f54e61\\exec-d4c3692b-9984-4ad4-9cce-b4e5d936c32b.png'",
+      "startedAt": "2026-10-08T05:21:13.807Z",
+      "finishedAt": "2026-10-08T05:21:14.154Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"number\":\"018\",\"generation\":\"targeted-original-teen-reading\",\"sha256\":\"03d2b562aab145000a5f8d945c4ffbab641a1e8a5b4c85db85d172ac4f8d82c9\",\"copyFidelity\":\"byte-exact\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/save-correction.mjs 018 'C:\\Users\\rowla\\.codex\\generated_images\\01a119af-929b-75f0-be9d-7986d6f54e61\\exec-b19576ea-24af-4c7c-911f-95ea93948c8f.png'",
+      "startedAt": "2026-10-08T05:24:02.193Z",
+      "finishedAt": "2026-10-08T05:24:02.545Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"number\":\"018\",\"generation\":\"targeted-adult-first-tight-rowgap\",\"sha256\":\"4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a\",\"copyFidelity\":\"byte-exact\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/preview-018-revision.mjs",
+      "startedAt": "2026-10-08T05:24:02.546Z",
+      "finishedAt": "2026-10-08T05:24:03.378Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"previewPoses\":8,\"target\":{\"width\":160,\"height\":320,\"bodyAxisX\":80,\"floorY\":287,\"standingSouthVisibleHeight\":246},\"componentCount\":8,\"visibleBounds\":[{\"x\":21,\"y\":41,\"width\":118,\"height\":246},{\"x\":40,\"y\":45,\"width\":80,\"height\":242},{\"x\":40,\"y\":45,\"width\":80,\"height\":242},{\"x\":20,\"y\":43,\"width\":119,\"height\":244},{\"x\":29,\"y\":89,\"width\":102,\"height\":198},{\"x\":24,\"y\":94,\"width\":112,\"height\":193},{\"x\":23,\"y\":94,\"width\":114,\"height\":193},{\"x\":29,\"y\":93,\"width\":102,\"height\":194}]}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-roster.mjs",
+      "stage": "initial regenerated source packaging before authored contact binding",
+      "startedAt": "2026-10-08T05:26:25.966Z",
+      "finishedAt": "2026-10-08T05:26:49.102Z",
+      "exitCode": 0,
+      "output": "(node:26500) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"packaged\":19,\"poses\":152,\"issues\":[],\"runtimeReady\":false,\"ownerApproval\":\"pending\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/bind-worker-contacts.mjs",
+      "startedAt": "2026-10-08T05:27:15.507Z",
+      "finishedAt": "2026-10-08T05:27:16.810Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"identities\":19,\"workerReviewedContacts\":76,\"contactContractSha256\":\"ca75289ee41772b0cd9a12859dcad681fca850e635f5644ea5821330eb47095a\",\"managerAccepted\":false}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-roster.mjs",
+      "startedAt": "2026-10-08T05:27:16.810Z",
+      "finishedAt": "2026-10-08T05:27:40.251Z",
+      "exitCode": 0,
+      "output": "(node:45032) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"packaged\":19,\"poses\":152,\"issues\":[],\"runtimeReady\":false,\"ownerApproval\":\"pending\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-placement-qa.mjs",
+      "startedAt": "2026-10-08T05:27:40.252Z",
+      "finishedAt": "2026-10-08T05:27:41.813Z",
+      "exitCode": 0,
+      "output": "(node:48832) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"diagnostics\":19,\"runtimeReady\":false,\"schemaVersion\":\"patient-gapfill-v6c-placement-qa/v2\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-comparison.mjs",
+      "startedAt": "2026-10-08T05:27:41.813Z",
+      "finishedAt": "2026-10-08T05:27:45.295Z",
+      "exitCode": 0,
+      "output": "(node:33096) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"existingIdentities\":75,\"existingComparisons\":287,\"withinBatchPairs\":51,\"flags\":0,\"comparisonBoards\":19,\"mainGalleryImages\":57}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-all-catalog-comparison.mjs",
+      "startedAt": "2026-10-08T05:27:45.295Z",
+      "finishedAt": "2026-10-08T05:27:55.916Z",
+      "exitCode": 0,
+      "output": "(node:41928) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"originalCatalogIdentities\":245,\"acceptedV6aIdentities\":20,\"acceptedV6bIdentities\":20,\"catalogComparisons\":5415,\"withinBatchPairs\":171,\"nearDuplicateFlags\":0,\"catalogReferenceBoards\":6,\"allCatalogNearestBoards\":19,\"minimumCatalogRmse\":52.874929201095235}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-style-review.mjs",
+      "startedAt": "2026-10-08T05:27:55.916Z",
+      "finishedAt": "2026-10-08T05:27:56.991Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"sameScaleV6bV6cPairs\":8,\"normalizedDarkPoseBoards\":5,\"posesShown\":152}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-qa-atlases.mjs",
+      "startedAt": "2026-10-08T05:27:56.991Z",
+      "finishedAt": "2026-10-08T05:27:58.551Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"nearestComparisonBoardsShown\":38,\"reviewAtlases\":10}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/build-018-revision-review.mjs",
+      "startedAt": "2026-10-08T05:30:28.925Z",
+      "finishedAt": "2026-10-08T05:30:29.364Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"identity\":\"patient-gapfill-v6c.018\",\"allEightPoseBeforeAfter\":true,\"actualRuntimeFrame\":{\"width\":55,\"height\":110},\"proofs\":2,\"sourceSha256\":\"4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a\",\"managerReview\":\"pending\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/bind-worker-review.mjs",
+      "startedAt": "2026-10-08T05:32:20.065Z",
+      "finishedAt": "2026-10-08T05:32:21.087Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"workerReviewedIdentities\":19,\"comparisonBoards\":19,\"chairProofs\":19,\"authoredContactDirections\":76,\"managerAcceptance\":\"pending\"}\n(node:14944) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/validate-roster.mjs --require-complete",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:33:05.190Z",
+      "exitCode": 0,
+      "output": "(node:20364) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"requireComplete\":true,\"requireRootReview\":false,\"identities\":19,\"poses\":152,\"reportedIssues\":0,\"immutableReviewSnapshots\":40,\"rosterContract\":{\"identities\":19,\"posesPerIdentity\":8,\"totalPoses\":152,\"categoryCounts\":{\"staff\":0,\"patient\":19},\"staffRoleCounts\":{},\"plannedStaffRoleCounts\":{},\"demographicCounts\":{\"Female\":{\"young_adult\":0,\"adult\":2,\"middle_aged\":0,\"older_adult\":7},\"Male\":{\"young_adult\":0,\"adult\":2,\"middle_aged\":0,\"older_adult\":8}}},\"reviewStatus\":\"candidate-review-root-checks-pending\",\"runtimeBaseline\":\"245 identities/1990 assets and120 selectable patients preserved\",\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"reviewStatusPolicy\":\"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them.\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/validate-placement-qa.mjs --require-complete",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:43.666Z",
+      "exitCode": 0,
+      "output": "(node:18924) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"diagnostics\":19,\"requireRootReview\":false,\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"frozenChairEvidenceUnchanged\":true,\"schemaVersion\":\"patient-gapfill-v6c-placement-qa/v2\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/validate-worker-review.mjs",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:46.097Z",
+      "exitCode": 0,
+      "output": "(node:3984) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"identities\":19,\"poses\":152,\"authoredSeatedContacts\":76,\"reviewedChairProofs\":19,\"existingSameBandIdentities\":75,\"existingComparisons\":287,\"withinBatchPairs\":51,\"nearDuplicateFlags\":0,\"staticGalleryPages\":25,\"mainGalleryImages\":57,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\",\"observedGlasses\":4,\"maximumGlasses\":5,\"grayCurlyHairWithGlasses\":0}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/validate-all-catalog-comparison.mjs",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:46.923Z",
+      "exitCode": 0,
+      "output": "(node:54404) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"originalCatalogIdentities\":245,\"acceptedV6aIdentities\":20,\"acceptedV6bIdentities\":20,\"allCatalogIdentities\":285,\"independentlyRecomputedCatalogComparisons\":5415,\"withinBatchPairs\":171,\"nearDuplicateFlags\":0,\"minimumCatalogRmse\":52.874929201095235,\"minimumWithinBatchRmse\":55.31435893180412,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\"}\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/runtime-baseline.mjs",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:43.285Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"preservedIdentities\":245,\"preservedAssets\":1990,\"priorSelectablePatients\":120,\"protectedFiles\":7,\"pinnedAcceptedPoses\":320,\"pinnedAcceptedNativeSources\":80,\"currentRuntimeIdentities\":285,\"concurrentV6bAppendAllowed\":true,\"runtimeReady\":false,\"ownerApproval\":\"pending\"}\n(node:46172) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": "node tools/character-mapping/patient-gapfill-v6c/018-revision-baseline.mjs verify",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:43.476Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"unchangedOtherIdentities\":18,\"unchangedOtherPosePngs\":144,\"unchangedPinnedFiles\":686,\"original018Preserved\":true,\"originalStandingSeedPreserved\":true,\"stableIdAgeSexPreserved\":true,\"runtimeReady\":false}\n(node:18444) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": "node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6c/check-syntax.mjs",
+      "startedAt": "2026-10-08T05:32:42.384Z",
+      "finishedAt": "2026-10-08T05:32:42.931Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"syntaxParsedModules\":25}\n(node:45460) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    }
+  ]
+}

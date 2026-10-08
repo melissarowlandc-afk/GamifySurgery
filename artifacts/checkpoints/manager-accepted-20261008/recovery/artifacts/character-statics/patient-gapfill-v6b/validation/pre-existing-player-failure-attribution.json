@@ -1,0 +1,91 @@
+{
+  "status": "PRE_EXISTING_FAILURE_CONFIRMED",
+  "reason": "The same named assertion at line 85 failed before every runtime/test edit and after integration, with exactly identical Expected and Received strings. The test and relevant view-model/reducer/selection source files are byte-identical to intake. The bounded art lane does not edit this UI behavior.",
+  "failure": {
+    "failure": "FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer",
+    "expected": "Expected: \"Off-site thyroid fine-needle aspiration\"",
+    "received": "Received: \"The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking).\"",
+    "site": "\u276f src/session/surgeryCenterServicePreviews.test.ts:85:52"
+  },
+  "sourceEvidence": [
+    {
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "beforeSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "afterSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "byteIdentical": true
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "beforeSha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "afterSha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "byteIdentical": true
+    },
+    {
+      "path": "packages/game-domain/src/appearance.ts",
+      "beforeSha256": "ec439709c4ef79ab2de222a8754e64d17cb13699229d6754cccda94eb024d0e9",
+      "afterSha256": "ec439709c4ef79ab2de222a8754e64d17cb13699229d6754cccda94eb024d0e9",
+      "byteIdentical": true
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "beforeSha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "afterSha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "byteIdentical": true
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "test",
+        "--workspace",
+        "@gamify-surgery/player",
+        "--",
+        "--pool=threads",
+        "--maxWorkers=1",
+        "--config",
+        "../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs",
+        "--configLoader=native"
+      ],
+      "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+      "startedAt": "2026-10-08T04:09:09.715727+00:00",
+      "finishedAt": "2026-10-08T04:09:58.271868+00:00",
+      "exitCode": 1,
+      "log": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-player-full.txt",
+      "sha256": "de785a946c9cd31ecece4d0ed09d73efe310fe9d6354d1cefe1416a5faf27189"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "test",
+        "--workspace",
+        "@gamify-surgery/player",
+        "--",
+        "--pool=threads",
+        "--maxWorkers=1",
+        "--config",
+        "../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs",
+        "--configLoader=native"
+      ],
+      "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+      "startedAt": "2026-10-08T04:21:52.928008+00:00",
+      "finishedAt": "2026-10-08T04:22:41.871206+00:00",
+      "exitCode": 1,
+      "log": "artifacts/character-statics/patient-gapfill-v6b/validation/player-full.txt",
+      "sha256": "443c849341535b974d4b35a5c1d7976f0abd0a05961d2741a82b1fba5c196ea6"
+    }
+  ],
+  "before": {
+    "passedTests": 845,
+    "failedTests": 1,
+    "totalTests": 846
+  },
+  "after": {
+    "passedTests": 846,
+    "failedTests": 1,
+    "totalTests": 847
+  },
+  "action": "Manager may route the pending-label expectation separately; no fix was made outside the assigned lane."
+}

@@ -1,0 +1,9 @@
+# Resolved workflow issues and scope disclosure
+
+- An inadvertent read-only `git status` was executed at intake despite the brief's no-Git restriction. It was acknowledged immediately. No further Git commands or Git mutations occurred.
+- One early full packaging run overlapped preparation of the 017 correction/rejection ledger. Its immutable-ledger guard correctly stopped with `AssertionError [ERR_ASSERTION]: root review ledger changed during packaging` at build-roster.mjs:543. Actual hash: `b577c25ed280bb6a8d0b24841702118da92241c164eb11dc2631f190ca1834c4`; expected: `5303d1e0326a2e39054e6bca164c8030ac399ce11520b5f4aa57b09aa15e73e2`. The run exited 1. The final source and ledger were stabilized before the complete successful build in build-runs.json. No guard was relaxed.
+- Two inherited contact/review binder output labels still said 20. Actual processing, contacts and proofs were already 19/76. Labels were corrected to 19. The final contact rebind left review-acceptance.json byte-identical: `2d228cf461b38b4c46c0396bc8a71e56ba583e280e479f79bddc2aa65fb9cb23`.
+- The initial independent worker review audit exited 1 because the first gallery was built before chair proofs existed and lacked per-identity chair links. The v6c comparison builder now adds the 19 links after verifying each proof exists, also adding the placement index link. Copied comparison titles and the 80-contact display label were corrected to v6c/76. No character, anchor, chair or normalization pixels changed. The full failure and successful rerun are in worker-validation-log.json.
+- All final batch validators exit 0. Node's experimental TypeScript/VM warnings are retained in exact logs.
+- No runtime integration, installs, web, external messages, subagents, commits, push, deployment or publication. The two new v6c lanes contain worker writes; the program plan has only the worker's intake note correction and appended progress.
+

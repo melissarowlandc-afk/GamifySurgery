@@ -1,0 +1,210 @@
+{
+  "status": "PASS",
+  "batch": "staff-gapfill-v6d",
+  "immutableSnapshots": 34,
+  "unchangedSourceControlArtHashes": 6993,
+  "changedSnapshotPaths": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "beforeSha256": "4710d151ba93b0f1ead3d438e38c1b1c2558c9bf2b489da94acfeb86bc396aca",
+      "afterSha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16",
+      "addedLines": 2159,
+      "removedLines": 3
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "beforeSha256": "e1d9f1359619de6d2e8d6fd2e9550591f3fdcbd411fc1377b2b202477dbb9c39",
+      "afterSha256": "3fe6633843ee7189cbb4e7b0648847dbb6a63bcaf0487ce122253bf16c9cd0bd",
+      "addedLines": 2479,
+      "removedLines": 4
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "beforeSha256": "913be7175ed7a729d7d181911584708a935a916746524e57525c976e0e91372a",
+      "afterSha256": "cadb49a4969b14f7a0b04df2bf76e2e8148fc5423014d90d408417727b02de0b",
+      "addedLines": 25,
+      "removedLines": 1
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "beforeSha256": "b143d02efa1cd6b9d6d08bfe19f4da02839857c94f546d9af94fce5e9a6ac44c",
+      "afterSha256": "a7de59aebdfe09b6c468ec0a20d3b3b0d996e6c6f6d630773026a3613cb579ae",
+      "addedLines": 51,
+      "removedLines": 4
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "beforeSha256": "8da1dfaa0b707056b45d0c715fc3e35664057c38226d5830b424865706ae03f3",
+      "afterSha256": "9e3fb77d541a89f549a41086cc6c13d44169e6a4040ff7c7872c9100292b01e8",
+      "addedLines": 1,
+      "removedLines": 1
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "beforeSha256": "42144c9a60da096e276ce9e9f4bbb0218eabf781db1f01c530d6c65a6e8206ce",
+      "afterSha256": "94e75b0c468dbb0f9f70083d1a8e4f54b172172b4467c2eeb571f77740af0780",
+      "addedLines": 34,
+      "removedLines": 5
+    }
+  ],
+  "suiteSourceDrift": [
+    {
+      "path": "apps/player/src/App.tsx",
+      "sha256": "286b0041746f919e32d4b25edebdb567f6c72d546d6278fe89387ce598a61896",
+      "afterSha256": "d4bbbcfde988471cddd50e46b6b67e95d2778f48a4fce8d074914ec94060ecf8"
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "sha256": "21a6689d2eef314672b46589686e70d57dbe859794cdab84afc48df541cd2e3c",
+      "afterSha256": "33ce7cc03b9b382549f980d1d0ac3fb1c5a34b2b7bd84f764d33776ae06555fb"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "07093a68487f980ee12ae1640a9ec399e17c3e8d68780a98da00e7d6272edd54",
+      "afterSha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "77eb67f72c822aed43f7f5166e14e1d239af72fff498ef85d2fc005608bf98c1",
+      "afterSha256": "94e75b0c468dbb0f9f70083d1a8e4f54b172172b4467c2eeb571f77740af0780"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "206ba7f474eb47f1fb35fd14b09cf2381563c8a8ada81219c5c07ed4b5472ee0",
+      "afterSha256": "9e3fb77d541a89f549a41086cc6c13d44169e6a4040ff7c7872c9100292b01e8"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "sha256": "7b9c36a972d83c8be4f61b42d3751030936201af339e2342a79dea7929f0e767",
+      "afterSha256": "c6ffed8504a50215b000407076768eef04abfbb48fe30c585cdc025607e549a0"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "sha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "afterSha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5"
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "sha256": "85b95613c5561e38a91274ffe22944baf1de8563881f15f2dc4f54501109746e",
+      "afterSha256": "5a39b1576a0637c1a9cacb47511aa220801195f10143b6e0add82c1fe5267cfe"
+    },
+    {
+      "path": "apps/player/src/ui/EventMessageBoard.tsx",
+      "sha256": "a86f23b4c656147ab60f7030bd9ee98ab7f8d754ee276e0709ade0ae75ac867e",
+      "afterSha256": "fd7002becf81e05133ce4c1bb464433ba618318c449f84b2af99bf6164853d45"
+    },
+    {
+      "path": "apps/player/src/ui/index.ts",
+      "sha256": "080c8cb523584e44f6cd079c54d1af6eb0923c5605a378273a012892845ee86a",
+      "afterSha256": "e8149cc74ec853994dc6707c7f29c69f164d68087d0a2d5bba1a443b33fd3bc3"
+    },
+    {
+      "path": "apps/player/src/ui/ResourceBar.tsx",
+      "sha256": "86702754f47a61419ef7d1f0966ab66097086a73c850c684051a8eb822772449",
+      "afterSha256": "b123a62d2372efa98d29b5788022985eb89d6a2d3e213a408f91366f8e065193"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "sha256": "43b5e8dcb0a7b94d233e692d90fec8c1350385d8a880cecd218292a0bc3ce32c",
+      "afterSha256": "c330576823067ba997cd0e6c0b11b57b6dbb79ca8e50f80d15cb308ee3b0fd77"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "ff73e307b40d38de7a248af1b32b21e54b4b86ee17779f8fcb36516fa67ea982",
+      "afterSha256": "a7de59aebdfe09b6c468ec0a20d3b3b0d996e6c6f6d630773026a3613cb579ae"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "80a0a0a5e6acbf7892bc11daf6cd35a6a61b30e70045df969650f6c3d02faa83",
+      "afterSha256": "cadb49a4969b14f7a0b04df2bf76e2e8148fc5423014d90d408417727b02de0b"
+    },
+    {
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "sha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+      "afterSha256": "db51c9f392f3d79be7abafe995d34fb626c7a8a788ed1731a6ae6a94a7e217cb"
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "sha256": "d45503823d70f556bd099ea9d8d8f2c3aa133c81e94041885458ba1312c51b5f",
+      "afterSha256": "fbae5c94a37804b3841dad6bae8f681db0ab7f8dfbdbef84c8d502364bfe9831"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "sha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "afterSha256": "f02d71e819bb31c57221481778b2c952e46463625aa71bb37ef71de5944a2e9e"
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "sha256": "424cc27706e45685c9268feb4334928131801636ef80162d9b7012b24ad7eccb",
+      "afterSha256": "20866669e24029021287c57ade114a7947831a9097d4d079a4247696263e093f"
+    }
+  ],
+  "unrelatedConcurrentSuiteChanges": [
+    {
+      "path": "apps/player/src/App.tsx",
+      "sha256": "286b0041746f919e32d4b25edebdb567f6c72d546d6278fe89387ce598a61896",
+      "afterSha256": "d4bbbcfde988471cddd50e46b6b67e95d2778f48a4fce8d074914ec94060ecf8"
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "sha256": "21a6689d2eef314672b46589686e70d57dbe859794cdab84afc48df541cd2e3c",
+      "afterSha256": "33ce7cc03b9b382549f980d1d0ac3fb1c5a34b2b7bd84f764d33776ae06555fb"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "sha256": "7b9c36a972d83c8be4f61b42d3751030936201af339e2342a79dea7929f0e767",
+      "afterSha256": "c6ffed8504a50215b000407076768eef04abfbb48fe30c585cdc025607e549a0"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "sha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "afterSha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5"
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "sha256": "85b95613c5561e38a91274ffe22944baf1de8563881f15f2dc4f54501109746e",
+      "afterSha256": "5a39b1576a0637c1a9cacb47511aa220801195f10143b6e0add82c1fe5267cfe"
+    },
+    {
+      "path": "apps/player/src/ui/EventMessageBoard.tsx",
+      "sha256": "a86f23b4c656147ab60f7030bd9ee98ab7f8d754ee276e0709ade0ae75ac867e",
+      "afterSha256": "fd7002becf81e05133ce4c1bb464433ba618318c449f84b2af99bf6164853d45"
+    },
+    {
+      "path": "apps/player/src/ui/index.ts",
+      "sha256": "080c8cb523584e44f6cd079c54d1af6eb0923c5605a378273a012892845ee86a",
+      "afterSha256": "e8149cc74ec853994dc6707c7f29c69f164d68087d0a2d5bba1a443b33fd3bc3"
+    },
+    {
+      "path": "apps/player/src/ui/ResourceBar.tsx",
+      "sha256": "86702754f47a61419ef7d1f0966ab66097086a73c850c684051a8eb822772449",
+      "afterSha256": "b123a62d2372efa98d29b5788022985eb89d6a2d3e213a408f91366f8e065193"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "sha256": "43b5e8dcb0a7b94d233e692d90fec8c1350385d8a880cecd218292a0bc3ce32c",
+      "afterSha256": "c330576823067ba997cd0e6c0b11b57b6dbb79ca8e50f80d15cb308ee3b0fd77"
+    },
+    {
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "sha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+      "afterSha256": "db51c9f392f3d79be7abafe995d34fb626c7a8a788ed1731a6ae6a94a7e217cb"
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "sha256": "d45503823d70f556bd099ea9d8d8f2c3aa133c81e94041885458ba1312c51b5f",
+      "afterSha256": "fbae5c94a37804b3841dad6bae8f681db0ab7f8dfbdbef84c8d502364bfe9831"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "sha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "afterSha256": "f02d71e819bb31c57221481778b2c952e46463625aa71bb37ef71de5944a2e9e"
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "sha256": "424cc27706e45685c9268feb4334928131801636ef80162d9b7012b24ad7eccb",
+      "afterSha256": "20866669e24029021287c57ade114a7947831a9097d4d079a4247696263e093f"
+    }
+  ],
+  "note": "Concurrent reducer/UI changes are recorded and preserved. No Git commands or out-of-lane edits."
+}

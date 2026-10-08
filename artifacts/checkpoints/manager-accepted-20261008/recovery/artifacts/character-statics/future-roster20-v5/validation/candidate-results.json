@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "requireComplete": false,
+  "requireRootReview": false,
+  "identities": 8,
+  "poses": 64,
+  "reportedIssues": 12,
+  "rosterContract": {
+    "identities": 20,
+    "posesPerIdentity": 8,
+    "totalPoses": 160,
+    "categoryCounts": {
+      "staff": 16,
+      "patient": 4
+    },
+    "staffRoleCounts": {
+      "staff.radiologist": 12
+    },
+    "plannedStaffRoleCounts": {
+      "Advanced practice provider (APP) (level 4; referenced-not-yet-defined)": 2,
+      "Executive (level 5; roadmap-only)": 2
+    },
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 3,
+        "middle_aged": 6,
+        "older_adult": 1
+      },
+      "Male": {
+        "young_adult": 1,
+        "adult": 3,
+        "middle_aged": 5,
+        "older_adult": 1
+      }
+    }
+  },
+  "reviewStatus": "candidate-review-root-checks-pending",
+  "runtimeBaseline": "225 identities/1830 assets and116 selectable patients preserved",
+  "runtimeReady": false,
+  "ownerApproval": "pending"
+}

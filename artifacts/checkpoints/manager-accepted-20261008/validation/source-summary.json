@@ -1,0 +1,96 @@
+{
+  "sourceStatusCounts": {
+    "worker_archive_metadata_or_verification_tool": 17,
+    "historical_acceptance_receipt_only": 1,
+    "historical_acceptance_inventory_only": 1,
+    "whole_owned_accepted_file": 2315,
+    "compatible_patch_base": 60,
+    "accepted_shared_file_patch": 60
+  },
+  "classification": "Per-file source status and evidence are embedded in manifest.json",
+  "patchContracts": 60,
+  "compatibleBasesWithInference": [
+    "satisfaction-rounding__apps__player__src__session__viewModels.ts",
+    "gs028-optional-fields__packages__clinical-content__src__schema.ts",
+    "alerts-events__packages__balance-config__src__schema.ts",
+    "manager-records__AGENTS.md"
+  ],
+  "changedLiveFilesRecoveredExactly": [
+    "packages/game-domain/src/characterStillCatalog.ts",
+    "apps/player/src/facility/FacilityScene.ts",
+    "apps/player/src/styles/global.css",
+    "apps/player/src/ui/ChartPanel.tsx",
+    "apps/player/src/ui/chartSheet.css",
+    "apps/player/src/ui/OpeningSequence.css",
+    "apps/player/src/session/viewModels.ts",
+    "apps/player/src/styles/global.css",
+    "apps/player/src/AppShell.tsx",
+    "apps/player/src/session/usePrototypeSession.ts",
+    "apps/player/src/ui/types.ts",
+    "packages/game-domain/src/index.ts",
+    "packages/game-domain/src/persistence.ts",
+    "packages/game-domain/src/reducer.ts",
+    "packages/game-domain/src/types.ts",
+    "apps/player/src/App.tsx",
+    "apps/player/src/session/viewModels.ts",
+    "apps/player/src/facility/FacilityScene.ts",
+    "apps/player/src/session/alertViewModels.ts",
+    "packages/balance-config/src/schema.ts"
+  ],
+  "scopeGaps": [
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "acceptedScope": "Alerts & Events M2 canvas/map-pin integration",
+      "missing": "Accepted M2 final source bytes or a hash-bound pre-active-worker snapshot",
+      "availableBase": "gs-alerts-events-revamp-20261008-baseline (before M1/M2)",
+      "recoveryAction": "Manager supply/locate the exact accepted M2 FacilityCanvas.tsx snapshot, then add and verify its scoped patch. Do not stage the mixed live file."
+    },
+    {
+      "path": "tools/room-design/level-4/pediatric-waiting/**",
+      "acceptedScope": "Last manager-reviewed pediatric mockup, revision 1",
+      "missing": "Complete exact revision-1 source state; 32 recorded files changed before their bytes could be recovered",
+      "missingReviewedFiles": [
+        "assets/generation-manifest.json",
+        "assets/generation-receipts.json",
+        "assets/prepared/book-bin.png",
+        "assets/prepared/contract-used.json",
+        "assets/prepared/metadata.json",
+        "assets/prepared/toy-chest.png",
+        "assets/record-generations.mjs",
+        "proof/actor-baseline.json",
+        "proof/asset-contract.json",
+        "proof/build.mjs",
+        "proof/data.json",
+        "proof/design-rooms.js",
+        "proof/evidence/native-all-doors.png",
+        "proof/evidence/native-backed.png",
+        "proof/evidence/native-contacts.json",
+        "proof/evidence/native-contacts.png",
+        "proof/evidence/native-empty.png",
+        "proof/evidence/native-painted.png",
+        "proof/evidence/presentation-revision-report.json",
+        "proof/evidence/seat-approaches.json",
+        "proof/evidence/validation-report.json",
+        "proof/evidence/validation.log",
+        "proof/extension.js",
+        "proof/geometry.mjs",
+        "proof/inspect-native.mjs",
+        "proof/lab.js",
+        "proof/proof-manifest.json",
+        "proof/reproduce.mjs",
+        "proof/revision-contract.json",
+        "proof/validate-browser.cjs",
+        "proof/validate-presentation.mjs",
+        "proof/validate.cjs"
+      ],
+      "reviewedFileCount": 97,
+      "recoveryAction": "Locate a full revision-1 snapshot matching the retained inventory, or back up revision 2 separately after manager acceptance. Current mixed mockup must stay out of this checkpoint."
+    }
+  ],
+  "withheldLiveManagerRecords": [
+    {
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "reason": "Live manager record changed after archive capture; archive copy remains exact, original is withheld from staging"
+    }
+  ]
+}

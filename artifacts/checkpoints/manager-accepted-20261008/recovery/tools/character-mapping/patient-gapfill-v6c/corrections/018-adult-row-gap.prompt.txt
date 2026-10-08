@@ -1,0 +1,14 @@
+Use case: edit
+Asset type: transparent eight-pose adult patient game-character source sheet
+Primary request: Fix ONLY sheet spacing in Image2. The adult man's revised identity, mature jaw and light dark stubble, short black side-parted hair, average solid adult shoulders, navy/ochre sweater, FULL-LENGTH rust-red chinos and slate shoes are correct. Preserve that adult appearance, all clothing and all eight view directions. Image1 is the accepted v6a/v6b pixel-art style anchor.
+
+The current sheet fails its unchanged extraction validator because some top-row shoe bottoms vertically overlap the height of some bottom-row hair tops. Produce the same two-row four-column layout with a WIDE CLEAR TRANSPARENT HORIZONTAL GUTTER. Across the full width, the lowest visible pixel of ANY standing figure must be at least 80 pixels ABOVE the highest visible pixel of ANY seated figure on a 1024px-high canvas. Keep ALL four standing figures aligned to a common shoe baseline; keep ALL four seated figures aligned to a common shoe baseline. No part of either row can enter that horizontal transparent band.
+
+Composition target for a 1536x1024 source: top standing heads around y30, all top shoes fully above y500; bottom seated heads at or below y600, all bottom shoes fully above y1000. Uniformly reduce ALL eight complete figures to the SAME head and body scale as necessary to fit the two rows and generous row gap. Preserve proportions within each figure. It is fine for figures to be smaller on the native sheet: downstream normalization uses one identical whole-identity scale. Never scale standing and seated views differently.
+
+Exactly eight independent figures. Top left-to-right standing SOUTH/front, EAST/true profile facing screen-right, WEST/true profile facing screen-left, NORTH/rear. Bottom in the same order seated SOUTH/EAST/WEST/NORTH. Full heads, shoes and limbs; transparent outer margins and horizontal gutters between figures. Seated knees bent around 90 degrees, hands on thighs, feet flat, invisible chairs. All eight have the SAME mature 33-year-old adult man's face/build/hair/stubble and full-length trousers. All sleeves cover forearms and elbows to the wrists, including the seated rear. No glasses.
+
+Match the accepted compact rounded pixel-art proportions, dark stepped outline weight, muted palette and restrained smooth cel shading. Do not return to the rejected teen/bowl-cut/shorts design, add realism or make the man elderly. Do not change any garment colors or introduce new accessories.
+
+Genuine transparent RGBA PNG. No floor, cast shadow, glow, chair, furniture, backdrop, grid, border, text, labels, watermark, extra people, missing pose, duplicate view, cropped shoes or limbs. The horizontal band between rows must be completely transparent, with visibly generous vertical separation.
+

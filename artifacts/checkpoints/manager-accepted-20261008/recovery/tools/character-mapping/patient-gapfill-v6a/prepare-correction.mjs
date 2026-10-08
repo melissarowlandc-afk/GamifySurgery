@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {root,repo,tool,hash} from './build-roster.mjs';
+const [number,slug,reason,prompt]=process.argv.slice(2);
+assert(/^0(0[1-9]|1\d|20)$/.test(number)); assert(/^[a-z0-9-]+$/.test(slug));
+const dir=resolve(root,'sources',number), history=resolve(dir,'history',slug);
+assert(!existsSync(history),'History immutable'); mkdirSync(history,{recursive:true});
+for(const file of ['source.png','exact-prompt.txt','tool-args.json','provenance.json'])copyFileSync(resolve(dir,file),resolve(history,file));
+const args={prompt,referenced_image_paths:[resolve(repo,'tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png'),resolve(history,'source.png')],transparent_background:true};
+writeFileSync(resolve(dir,'correction-tool-args.json'),JSON.stringify(args,null,2)+'\n');
+writeFileSync(resolve(dir,'correction-reason.json'),JSON.stringify({number,slug,reason,rejectedSourceSha256:hash(resolve(history,'source.png'))},null,2)+'\n');
+const ledgerFile=resolve(tool,'review-acceptance.json'),ledger=JSON.parse(readFileSync(ledgerFile,'utf8'));
+ledger.rejected[number]=[...ledger.rejected[number]??[],hash(resolve(history,'source.png'))];
+writeFileSync(ledgerFile,JSON.stringify(ledger,null,2)+'\n');
+console.log(JSON.stringify(args));

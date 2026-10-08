@@ -1,0 +1,19 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "test",
+    "--workspace",
+    "@gamify-surgery/game-domain",
+    "--",
+    "--pool=threads",
+    "--maxWorkers=1",
+    "--configLoader=native"
+  ],
+  "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+  "startedAt": "2026-10-08T04:21:52.912991+00:00",
+  "finishedAt": "2026-10-08T04:29:12.782028+00:00",
+  "exitCode": 0,
+  "log": "artifacts/character-statics/patient-gapfill-v6b/validation/domain-full.txt",
+  "sha256": "bec0278dc4f1ee7dd4bef117b2ad9b5eda8762501fc8bef558a8f8147723a92e"
+}

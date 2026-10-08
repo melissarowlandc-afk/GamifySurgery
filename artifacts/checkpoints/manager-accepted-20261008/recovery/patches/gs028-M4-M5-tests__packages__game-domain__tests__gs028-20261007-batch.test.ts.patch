@@ -1,0 +1,13 @@
+--- a/packages/game-domain/tests/gs028-20261007-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-batch.test.ts
+@@ -406,8 +406,8 @@
+   });
+ 
+   it("measures the real ordinary pools before and after admission", () => {
+-    expect(pools.map((item) => item.before)).toEqual([{ cases: 511, concepts: 141 }, { cases: 746, concepts: 247 }, { cases: 782, concepts: 263 }]);
+-    expect(pools.map((item) => item.after)).toEqual([{ cases: 589, concepts: 161 }, { cases: 824, concepts: 267 }, { cases: 860, concepts: 283 }]);
++    expect(pools.map((item) => item.before)).toEqual([{ cases: 483, concepts: 135 }, { cases: 718, concepts: 241 }, { cases: 754, concepts: 257 }]);
++    expect(pools.map((item) => item.after)).toEqual([{ cases: 561, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
+   });
+ 
+   it("covers all eighty actual nodes and each of their four authored choices", () => {

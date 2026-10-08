@@ -1,0 +1,49 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -352,7 +352,7 @@
+ 
+ function signedPercent(value: number): string {
+   const sign = value >= 0 ? "+" : "";
+-  return `${sign}${value}% satisfaction`;
++  return `${sign}${Math.round(value)}% satisfaction`;
+ }
+ 
+ function buildEligibleDoorSlots(
+@@ -733,8 +733,8 @@
+     statusLabel: periopStatus ?? pendingStatus ?? item.statusLabel,
+     actionRequired: item.actionRequired,
+     selected: selectedEncounterId === item.encounterId,
+-    satisfactionPercent: item.patientSatisfaction,
+-    patienceLabel: `Satisfaction: ${item.patientSatisfaction}% · Waiting: ${item.waitingMinutes} min`,
++    satisfactionPercent: Math.round(item.patientSatisfaction),
++    patienceLabel: `Satisfaction: ${Math.round(item.patientSatisfaction)}% · Waiting: ${item.waitingMinutes} min`,
+     avatar: encounter?.patientAppearance,
+     sortKey: encounter?.waiting.arrivedAtTick,
+   };
+@@ -869,7 +869,7 @@
+     return {
+       id: encounter.id,
+       patientName: encounter.patientDisplayName,
+-      patientDetails: `Final satisfaction: ${encounter.finalPatientSatisfaction ?? encounter.patientSatisfaction}%`,
++      patientDetails: `Final satisfaction: ${Math.round(encounter.finalPatientSatisfaction ?? encounter.patientSatisfaction)}%`,
+       statusLabel: "Walked out",
+       presentation: "The patient left before the encounter was completed.",
+       answerChoices: [],
+@@ -1200,7 +1200,7 @@
+       text: encounter.frozenCase.chiefComplaint,
+       field: "chiefComplaint",
+     }),
+-    patientSatisfactionLabel: `${encounter.patientSatisfaction}%`,
++    patientSatisfactionLabel: `${Math.round(encounter.patientSatisfaction)}%`,
+     vitals: encounter.frozenCase.prototypeVitalSigns
+       ? [
+           {
+@@ -1789,7 +1789,7 @@
+       moneyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
+       xpLabel: state.clinicalXp.toLocaleString(),
+       satisfactionLabel:
+-        effectiveSatisfaction === null ? "—" : `${effectiveSatisfaction}%`,
++        effectiveSatisfaction === null ? "—" : `${Math.round(effectiveSatisfaction)}%`,
+       facilityTimeLabel: clock.displayLabel,
+       workloadLabel: `${workload.occupancy}/${workload.routineLimit}`,
+       workloadStatusLabel: workload.atRoutineCapacity

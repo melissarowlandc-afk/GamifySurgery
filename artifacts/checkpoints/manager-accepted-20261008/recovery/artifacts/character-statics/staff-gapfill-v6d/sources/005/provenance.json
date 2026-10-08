@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-straight-torso",
+  "reason": "Initial source carried the rounded chest contour of the female uniform reference; clarify the planned slender adult male torso while preserving the bald identity and plum laboratory uniform.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a119af-929a-7231-b032-ce3afe5818c5\\exec-15e1cca3-8ee3-4397-a556-304fca120dac.png",
+    "sha256": "9a60d8b61817b223fdd0cfcfae6914c07c643e9d9122d903af2da85a222f0355"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "9a60d8b61817b223fdd0cfcfae6914c07c643e9d9122d903af2da85a222f0355",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\staff-gapfill-v6d\\references\\level3-roster-v2.009-eight-poses.png",
+      "sha256": "603825b8dad24effe434bfc4b221cd26063af9e8f93d49eadd650da99bfc88fe",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\staff-gapfill-v6d\\sources\\005\\history\\original-rounded-torso\\source.png",
+      "sha256": "628290787d54a7d78033dd0f0c065fad058f4427ca00c8b0e1e194d274ac7ddd",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "ec6a56b03c945534de4645003df776ef6f82e2868a87babe21b329841abf2c22"
+  }
+}

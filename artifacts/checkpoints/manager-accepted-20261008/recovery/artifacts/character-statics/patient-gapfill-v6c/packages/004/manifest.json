@@ -1,0 +1,544 @@
+{
+  "schemaVersion": "patient-gapfill-v6c-package/v1",
+  "status": "candidate-packaged-not-runtime-ready",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "identity": {
+    "number": "004",
+    "stableId": "patient-gapfill-v6c.004",
+    "category": "patient",
+    "roleLabel": "Patient",
+    "intendedAge": 76,
+    "compatibleSexLabel": "Female",
+    "ageBand": "older_adult",
+    "visualBrief": {
+      "build": "full-figured build",
+      "skin": "light olive skin",
+      "hair": "loose silver shoulder-length waves with a deep side part",
+      "accessory": "small copper hoop earrings and no glasses",
+      "outfit": "a plum full-sleeved V-neck sweater over a cream shirt collar, a moss-green calf-length pleated skirt, cream socks and rust-red loafers"
+    },
+    "visualOnly": true,
+    "glasses": false,
+    "mobilityAid": null,
+    "hearingAid": null,
+    "stage1": {
+      "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6a/sources/004/source.png",
+          "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78",
+          "role": "accepted-v6a-v6b-style-layout-pose-reference"
+        }
+      ]
+    },
+    "stage2": {
+      "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/patient-gapfill-v6a/sources/004/source.png",
+          "sha256": "43fdfac5186499b7681637bba1d3729d2d5bef1592d073591cfc6ca1e8a8ab78",
+          "role": "accepted-v6a-v6b-style-layout-pose-reference"
+        },
+        {
+          "path": "sources/004/stage1-standing-cardinals.png",
+          "role": "identity-outfit-reference"
+        }
+      ]
+    },
+    "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+  },
+  "source": {
+    "stage1": {
+      "png": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/stage1-standing-cardinals.png",
+        "sha256": "84c23efaa27ac45247e438d9e18e3de819dda6b6af4b9875cd6917e5b52e9935"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/stage1-exact-prompt.txt",
+        "sha256": "4f287f9d91f5a2870fa02bd4ad0044bc4118f68ce8d24d43a8fc26349f4697d6"
+      },
+      "args": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/stage1-tool-args.json",
+        "sha256": "6afeefc11100fe4d7ee6d602d8441f31a019b437720b2928b4250a5acf20203e"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/stage1-provenance.json",
+        "sha256": "3e7f6af946ca3d5d568ef4a9133e2a608098ad638880f0778d51a0fc64f5edca"
+      }
+    },
+    "stage2": {
+      "png": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/source.png",
+        "sha256": "b647ddc65a596379958e88766f326c888bd8cef953a79d8b86766600d603fca5"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/exact-prompt.txt",
+        "sha256": "d41e43ce877386e4113c54792da9f465158729361bbf3eeefe836e0e5ffd631a"
+      },
+      "args": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/tool-args.json",
+        "sha256": "8c5ef6fbbb4934f083bf9c68112f857065f0b6ae2609e05baee754f97af68257"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/provenance.json",
+        "sha256": "cef8bb0699ceb9caf16ebb544aa4ff71ff24735b3768b595b418fdc06aa22a2c"
+      }
+    }
+  },
+  "provenanceValidation": {
+    "stage1": "original-spec-stage1",
+    "stage2": "original-spec-stage2",
+    "stage2Chain": [
+      {
+        "kind": "original-spec-stage2",
+        "source": {
+          "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/source.png",
+          "sha256": "b647ddc65a596379958e88766f326c888bd8cef953a79d8b86766600d603fca5"
+        },
+        "exactPrompt": {
+          "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/exact-prompt.txt",
+          "sha256": "d41e43ce877386e4113c54792da9f465158729361bbf3eeefe836e0e5ffd631a"
+        },
+        "toolArguments": {
+          "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/tool-args.json",
+          "sha256": "8c5ef6fbbb4934f083bf9c68112f857065f0b6ae2609e05baee754f97af68257"
+        },
+        "provenance": {
+          "path": "artifacts/character-statics/patient-gapfill-v6c/sources/004/provenance.json",
+          "sha256": "cef8bb0699ceb9caf16ebb544aa4ff71ff24735b3768b595b418fdc06aa22a2c"
+        }
+      }
+    ]
+  },
+  "rootVisualAcceptance": {
+    "ledger": "tools/character-mapping/patient-gapfill-v6c/review-acceptance.json",
+    "sourceSha256": "b647ddc65a596379958e88766f326c888bd8cef953a79d8b86766600d603fca5",
+    "accepted": false,
+    "scope": "Worker source and authored-contact QA only. Manager visual acceptance pending. No runtime integration or clinical semantics."
+  },
+  "seatContactAcceptance": {
+    "ledger": "tools/character-mapping/patient-gapfill-v6c/review-acceptance.json",
+    "coordinates": {
+      "south": 234,
+      "east": 243,
+      "west": 243,
+      "north": 245
+    },
+    "reviewedDirections": [],
+    "status": "worker-visual-reviewed-authored-contact-pending-manager"
+  },
+  "extraction": {
+    "method": "immutable GS026 extractEight",
+    "sourceRects": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 414,
+        "height": 559
+      },
+      {
+        "x": 414,
+        "y": 0,
+        "width": 349,
+        "height": 559
+      },
+      {
+        "x": 763,
+        "y": 0,
+        "width": 355,
+        "height": 559
+      },
+      {
+        "x": 1118,
+        "y": 0,
+        "width": 418,
+        "height": 559
+      },
+      {
+        "x": 0,
+        "y": 559,
+        "width": 400,
+        "height": 465
+      },
+      {
+        "x": 400,
+        "y": 559,
+        "width": 367,
+        "height": 465
+      },
+      {
+        "x": 767,
+        "y": 559,
+        "width": 364,
+        "height": 465
+      },
+      {
+        "x": 1131,
+        "y": 559,
+        "width": 405,
+        "height": 465
+      }
+    ],
+    "componentCount": 19,
+    "ignoredComponents": [
+      {
+        "area": 2,
+        "left": 666,
+        "top": 665,
+        "right": 666,
+        "bottom": 666
+      },
+      {
+        "area": 1,
+        "left": 505,
+        "top": 101,
+        "right": 505,
+        "bottom": 101
+      },
+      {
+        "area": 1,
+        "left": 1450,
+        "top": 283,
+        "right": 1450,
+        "bottom": 283
+      },
+      {
+        "area": 1,
+        "left": 620,
+        "top": 494,
+        "right": 620,
+        "bottom": 494
+      },
+      {
+        "area": 1,
+        "left": 973,
+        "top": 495,
+        "right": 973,
+        "bottom": 495
+      },
+      {
+        "area": 1,
+        "left": 1034,
+        "top": 651,
+        "right": 1034,
+        "bottom": 651
+      },
+      {
+        "area": 1,
+        "left": 1229,
+        "top": 689,
+        "right": 1229,
+        "bottom": 689
+      },
+      {
+        "area": 1,
+        "left": 869,
+        "top": 711,
+        "right": 869,
+        "bottom": 711
+      },
+      {
+        "area": 1,
+        "left": 215,
+        "top": 940,
+        "right": 215,
+        "bottom": 940
+      },
+      {
+        "area": 1,
+        "left": 841,
+        "top": 946,
+        "right": 841,
+        "bottom": 946
+      },
+      {
+        "area": 1,
+        "left": 632,
+        "top": 949,
+        "right": 632,
+        "bottom": 949
+      }
+    ]
+  },
+  "normalization": {
+    "target": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 246
+    },
+    "policy": "one identity-wide whole-body scale; source remains byte-exact; no repaint or mirroring; alpha >=13 outside the derived canvas is forbidden; sub-13 alpha loss is measured for root warning review"
+  },
+  "poses": {
+    "stand": {
+      "south": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/stand-south.png",
+        "sha256": "c557d6ca3256491ded74f1f36fc29fb31f0f834e60b8e40ae680039693b2881c",
+        "visibleBounds": {
+          "x": 18,
+          "y": 41,
+          "width": 124,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -16.280898876404493,
+          "translateY": 32.707865168539314,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 20,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/stand-east.png",
+        "sha256": "caac07e5c52235f886845360d31bd515adb0b4e9a890d5f9d274d9e8cdb24d88",
+        "visibleBounds": {
+          "x": 31,
+          "y": 42,
+          "width": 98,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -1.078651685393254,
+          "translateY": 32.707865168539314,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 4,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/stand-west.png",
+        "sha256": "68263e5d4fa76e99f079b4992d8a64a6979eb8dfdc098db129c7662528a022c9",
+        "visibleBounds": {
+          "x": 30,
+          "y": 42,
+          "width": 100,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -2,
+          "translateY": 33.16853932584269,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 4,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 4,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/stand-north.png",
+        "sha256": "6b021bbf7f7b89d845b38d37b4bd451556f58580ef4c128c22faaf92dbae42d7",
+        "visibleBounds": {
+          "x": 17,
+          "y": 41,
+          "width": 126,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -14.898876404494388,
+          "translateY": 33.16853932584269,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 66,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 3,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/sit-south.png",
+        "sha256": "4ed4dc8d158d6d2ee0bf58f9b51df50b3b3b30b5c4659fce33332b25e5f6203d",
+        "visibleBounds": {
+          "x": 28,
+          "y": 85,
+          "width": 104,
+          "height": 202
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -14.898876404494388,
+          "translateY": 81.07865168539325,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 21,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 234,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/sit-east.png",
+        "sha256": "e22b8eeffcecc67ab267c2103d0432215b6a20d7b3bfe5e2f3fb806650c6b700",
+        "visibleBounds": {
+          "x": 20,
+          "y": 89,
+          "width": 120,
+          "height": 198
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -17.66292134831461,
+          "translateY": 83.38202247191012,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 31,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 7,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 243,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/sit-west.png",
+        "sha256": "2e150d83b10e0b50735537f929cab4f7248496552aa0d3add32cb8277038457b",
+        "visibleBounds": {
+          "x": 20,
+          "y": 89,
+          "width": 120,
+          "height": 198
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": 8.365168539325836,
+          "translateY": 82.92134831460675,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 498,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 21,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 243,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/sit-north.png",
+        "sha256": "15f336e91cdf6552f8e53ca896fc62e0e7ea0d3853247ac733adb68784b84e5e",
+        "visibleBounds": {
+          "x": 26,
+          "y": 88,
+          "width": 108,
+          "height": 199
+        },
+        "transform": {
+          "scale": 0.4606741573033708,
+          "translateX": -10.292134831460672,
+          "translateY": 83.38202247191012,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 5,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 245,
+          "seatContactStatus": "worker-authored-contact-pending-manager-acceptance"
+        }
+      }
+    }
+  },
+  "proofs": {
+    "fullTransparent": {
+      "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/full-poses-transparent.png",
+      "sha256": "5fec970d046b6456c6ab4a6cf6b4d31e57c2c3a9689e797a9fb8e0da7eda6b75"
+    },
+    "fullLight": {
+      "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/full-poses-light.png",
+      "sha256": "3dc69552185674fc5116b28a2b3ed22671f1251636413df440acacb2f33bf363"
+    },
+    "fullDark": {
+      "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/full-poses-dark.png",
+      "sha256": "4ebaceeb2bdedb876d32107861ed8d7fb99c6cd877bb4775de6ced79be135349"
+    },
+    "seatedContactGrid": {
+      "file": "artifacts/character-statics/patient-gapfill-v6c/packages/004/seated-contact-grid-2x.png",
+      "sha256": "b9af141a217cb13dba79a1506c73bb96acd6bd0c20b2a545c72eda52b57f8b0c"
+    }
+  }
+}

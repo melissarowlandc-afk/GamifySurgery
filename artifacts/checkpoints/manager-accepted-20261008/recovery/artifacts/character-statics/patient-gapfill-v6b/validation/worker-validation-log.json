@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "patient-gapfill-v6b-worker-validation/v1",
+  "status": "PASS",
+  "records": [
+    {
+      "name": "bind-worker-review",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/bind-worker-review.mjs",
+      "startedAt": "2026-10-08T03:57:11.335Z",
+      "completedAt": "2026-10-08T03:57:12.152Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"workerReviewedIdentities\":20,\"comparisonBoards\":20,\"chairProofs\":20,\"authoredContactDirections\":80,\"managerAcceptance\":\"pending\"}\n(node:54648) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "name": "roster",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/validate-roster.mjs --require-complete",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:58:02.602Z",
+      "exitCode": 0,
+      "output": "(node:51316) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"requireComplete\":true,\"requireRootReview\":false,\"identities\":20,\"poses\":160,\"reportedIssues\":0,\"immutableReviewSnapshots\":40,\"rosterContract\":{\"identities\":20,\"posesPerIdentity\":8,\"totalPoses\":160,\"categoryCounts\":{\"staff\":0,\"patient\":20},\"staffRoleCounts\":{},\"plannedStaffRoleCounts\":{},\"demographicCounts\":{\"Female\":{\"young_adult\":0,\"adult\":3,\"middle_aged\":7,\"older_adult\":0},\"Male\":{\"young_adult\":0,\"adult\":4,\"middle_aged\":6,\"older_adult\":0}}},\"reviewStatus\":\"candidate-review-root-checks-pending\",\"runtimeBaseline\":\"245 identities/1990 assets and120 selectable patients preserved\",\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"reviewStatusPolicy\":\"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them.\"}\n"
+    },
+    {
+      "name": "placement",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/validate-placement-qa.mjs --require-complete",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:57:39.490Z",
+      "exitCode": 0,
+      "output": "(node:54200) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"diagnostics\":20,\"requireRootReview\":false,\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"frozenChairEvidenceUnchanged\":true,\"schemaVersion\":\"patient-gapfill-v6b-placement-qa/v2\"}\n"
+    },
+    {
+      "name": "worker-review",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/validate-worker-review.mjs",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:57:42.131Z",
+      "exitCode": 0,
+      "output": "(node:21876) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"identities\":20,\"poses\":160,\"authoredSeatedContacts\":80,\"reviewedChairProofs\":20,\"existingSameBandIdentities\":97,\"existingComparisons\":500,\"withinBatchPairs\":45,\"nearDuplicateFlags\":0,\"staticGalleryPages\":26,\"mainGalleryImages\":60,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\"}\n"
+    },
+    {
+      "name": "all-catalog",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/validate-all-catalog-comparison.mjs",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:57:42.548Z",
+      "exitCode": 0,
+      "output": "(node:5960) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n{\"status\":\"PASS\",\"originalCatalogIdentities\":245,\"acceptedV6aIdentities\":20,\"allCatalogIdentities\":265,\"independentlyRecomputedCatalogComparisons\":5300,\"withinBatchPairs\":190,\"nearDuplicateFlags\":0,\"minimumCatalogRmse\":45.55298209843013,\"minimumWithinBatchRmse\":53.2102506088514,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\"}\n"
+    },
+    {
+      "name": "runtime-preservation",
+      "command": "node tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:57:39.160Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"preservedIdentities\":245,\"preservedAssets\":1990,\"priorSelectablePatients\":120,\"protectedFiles\":7,\"pinnedV6aPoses\":160,\"pinnedV6aNativeSources\":40,\"currentRuntimeIdentities\":265,\"concurrentV6aAppendAllowed\":true,\"runtimeReady\":false,\"ownerApproval\":\"pending\"}\n(node:24504) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "name": "syntax",
+      "command": "node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6b/check-syntax.mjs",
+      "startedAt": "2026-10-08T03:57:38.378Z",
+      "completedAt": "2026-10-08T03:57:38.858Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"syntaxParsedModules\":22}\n(node:17184) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    }
+  ],
+  "browserValidation": "not-run-left-to-manager",
+  "runtimeIntegration": "not-authorized",
+  "notes": [
+    "stdout/stderr collected from direct node commands; no browser gallery command was run.",
+    "An optional PowerShell runner could not launch under the system script execution policy. It was removed; the same authorized checks ran through direct node commands without changing that policy."
+  ]
+}

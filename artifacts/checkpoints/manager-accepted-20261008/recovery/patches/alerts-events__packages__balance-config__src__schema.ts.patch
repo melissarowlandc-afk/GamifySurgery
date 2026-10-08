@@ -1,0 +1,10 @@
+--- a/packages/balance-config/src/schema.ts
++++ b/packages/balance-config/src/schema.ts
+@@ -646,7 +646,6 @@
+         waterCoolerDrainPerInterval: z.number().int().positive().max(100),
+         waterCoolerLowThreshold: z.number().int().min(0).max(99),
+         waterCoolerEmptyReminderMinutes: z.number().int().positive(),
+-        receptionistWaterRefillDelayMinutes: z.number().int().positive(),
+         waterRefillSatisfactionBonus: z.number().int().nonnegative().max(10),
+         praiseMoraleBonus: z.number().int().positive().max(25),
+         praiseCooldownMinutes: z.number().int().positive(),

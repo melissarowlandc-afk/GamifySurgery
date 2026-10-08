@@ -1,0 +1,37 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -60,7 +60,7 @@
+ import type { FacilityActorSupportRole } from "../facility/types";
+ import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
+ import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
+-import { createMessageBoardView } from "./alertViewModels";
++import { createClinicFeedView, createNeedsYouView } from "./alertsEventsViewModel";
+ import {
+   normalizeFrozenClinicalText,
+   splitClinicalDecisionStem,
+@@ -100,6 +100,7 @@
+   ProcedureSetupRequirementView,
+   EmergencyGlp1View,
+   MessageBoardItemView,
++  NeedsYouItemView,
+   PatientFolder,
+   PatientTabView,
+   ProgressionView,
+@@ -136,6 +137,7 @@
+   staffRoles: StaffRoleGroupView[];
+   staffTraining: StaffTrainingOverviewView | null;
+   messages: MessageBoardItemView[];
++  needsYou: NeedsYouItemView[];
+   selectedRoomBuild: SelectedRoomBuildView | null;
+   emergencyGlp1: EmergencyGlp1View;
+   advertising: AdvertisingView;
+@@ -2644,7 +2646,8 @@
+         };
+       }),
+     staffTraining: createStaffTrainingOverview(state),
+-    messages: createMessageBoardView(state),
++    messages: createClinicFeedView(state),
++    needsYou: createNeedsYouView(state),
+     selectedRoomBuild: (() => {
+       if (!selectedRoomInstanceId) {
+         return null;

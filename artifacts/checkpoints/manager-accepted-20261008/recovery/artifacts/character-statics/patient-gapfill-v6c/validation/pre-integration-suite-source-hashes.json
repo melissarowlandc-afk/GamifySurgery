@@ -1,0 +1,1536 @@
+{
+  "inputs": [
+    {
+      "path": "apps/player/src/App.tsx",
+      "sha256": "286b0041746f919e32d4b25edebdb567f6c72d546d6278fe89387ce598a61896"
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "sha256": "21a6689d2eef314672b46589686e70d57dbe859794cdab84afc48df541cd2e3c"
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetAdapters.ts",
+      "sha256": "cb6b53b2f11cb042390b92245a76fd62f63e3fde03aea015772f05d595c7e749"
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetManifest.test.ts",
+      "sha256": "ca8d2a8eaa1557cefa2d3b0512e801f74d9c7e218850270e3de1710c99a30e71"
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "sha256": "6618d32ebae21033c8906f997f4ba1857b2a65b411f07be57486b80729a3bac9"
+    },
+    {
+      "path": "apps/player/src/art/characterArt.test.ts",
+      "sha256": "7d6291fef878a7672195f377dfa19b21df640a8086397052c545c15f39be64e6"
+    },
+    {
+      "path": "apps/player/src/art/characterArt.ts",
+      "sha256": "9a721c34ed64bea7e12acf359258003dece7cf4698a861dbe6b33a74cc04c7fb"
+    },
+    {
+      "path": "apps/player/src/art/characterBitmapArt.test.ts",
+      "sha256": "dedf23108e4faa5bfdd34beff20d80fd6085620e3a045a95e5bc6be877b7209a"
+    },
+    {
+      "path": "apps/player/src/art/characterBitmapArt.ts",
+      "sha256": "33f732505215c495a0a9df7145e1a49f46325fde328a7aec9196ea983a5cfc15"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "07093a68487f980ee12ae1640a9ec399e17c3e8d68780a98da00e7d6272edd54"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "77eb67f72c822aed43f7f5166e14e1d239af72fff498ef85d2fc005608bf98c1"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "206ba7f474eb47f1fb35fd14b09cf2381563c8a8ada81219c5c07ed4b5472ee0"
+    },
+    {
+      "path": "apps/player/src/art/characterWalkRegistry.generated.json",
+      "sha256": "c51c33a9f051171dc89274b12a7a489496b193f22ae9e8f0e6acfb4915446491"
+    },
+    {
+      "path": "apps/player/src/art/characterWalkRegistry.test.ts",
+      "sha256": "f3a3ef4bed4cc2e8602b28afa681df358f180c4f252875fbb9a76610cda3acc1"
+    },
+    {
+      "path": "apps/player/src/art/characterWalkRegistry.ts",
+      "sha256": "a17f0bcb434e5662c1f4b51be84ba3ad750f1b21f6e1cfdc5adc52ada2a7bc64"
+    },
+    {
+      "path": "apps/player/src/art/fixtureArt.test.ts",
+      "sha256": "37a68a929400abd24ec11eb9b4295adb0319a917bf5c54da1910044962befe54"
+    },
+    {
+      "path": "apps/player/src/art/fixtureArt.ts",
+      "sha256": "fb0ccab7fbbd986572d65cb740ad35886aaa3f00d438bd2035dc8d35fe5e1967"
+    },
+    {
+      "path": "apps/player/src/art/iconArt.ts",
+      "sha256": "968e94cc761fc282981803a34c2e62110c9ca0b55e2832f15f7ff9debaa2d7d3"
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.test.ts",
+      "sha256": "ac19fd3a7466cc5f58ca6be3c6170c6c26a06d4eb8cfc31fca1cc74561c94f71"
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.ts",
+      "sha256": "60538c8fef611693268a3c597cac92ba2cf61b206b2ab220a207efcd147983b3"
+    },
+    {
+      "path": "apps/player/src/art/pixelArt.ts",
+      "sha256": "a98dcdd69d35c249bf3f1fa4c511aadde1fae811841d3e46054909af21190d9f"
+    },
+    {
+      "path": "apps/player/src/art/pixelPalette.ts",
+      "sha256": "0732036ebd341153cd864dceeadaf8e3618e742317a1295c987c76b4777f46e3"
+    },
+    {
+      "path": "apps/player/src/art/treeGapCleanup.test.ts",
+      "sha256": "0f4f025c8f868660f3923bff26a072aebcce843baf75636312cc7c8e5abe2fab"
+    },
+    {
+      "path": "apps/player/src/art/treeGapCleanup.ts",
+      "sha256": "9c431b432a94c7d662bad7dd65f816f9bc917045b8ea3118df3322562d64e64c"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx",
+      "sha256": "f54a75e3d519601c4d36e2938631dd227f0126449d4806b7aa6cc777c867651d"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts",
+      "sha256": "847694be65a87bf0b2d0d97eaf21383c019cc66ced3921001d8add595f7a6d5d"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.ts",
+      "sha256": "097847e6d6376f78bde72e18f4755b5743b59157e87386bbe2f0c65f11a2a8ad"
+    },
+    {
+      "path": "apps/player/src/auth/supabaseAuth.ts",
+      "sha256": "10aaa24e3d6df22da90cc100f04ab8b37802827e756bf0a1ad1616503ea622b9"
+    },
+    {
+      "path": "apps/player/src/content/founderAppearancePresets.test.ts",
+      "sha256": "5f7b953025f1479b6198113d1ee0ed85d722e9342556d634cfb34f3ee4ddcc49"
+    },
+    {
+      "path": "apps/player/src/content/founderAppearancePresets.ts",
+      "sha256": "da8e8dd42c5f514f8885d0dad763547ea338a348de2429bd1417a3130abadef6"
+    },
+    {
+      "path": "apps/player/src/content/introTaglines.test.ts",
+      "sha256": "74649f72552fbd493db789f11837aed8b9485c6e3e80a3159bda4d6a6dcca57e"
+    },
+    {
+      "path": "apps/player/src/content/introTaglines.ts",
+      "sha256": "11e63b5be2e953274ce1dc0d5174435fc29526f72a6ac6e71cbe7892688c496b"
+    },
+    {
+      "path": "apps/player/src/content/patientAppearanceCatalog.test.ts",
+      "sha256": "ed5b11414ac554184ae6f546c8a46ff48a36db8dad032275e0ae6fa8798fe14e"
+    },
+    {
+      "path": "apps/player/src/content/patientAppearanceCatalog.ts",
+      "sha256": "fda9461d8360e5839583bcab24ef3be586052c91cd7d8c11444bb246fa32945f"
+    },
+    {
+      "path": "apps/player/src/facility/approvedLevel3RoomProofData.ts",
+      "sha256": "03a0be52197997d7d88cefa5d311be44c735480a2448e1325515765f79c79845"
+    },
+    {
+      "path": "apps/player/src/facility/approvedReadingRoomData.ts",
+      "sha256": "df6a384690f620c965baa25c79744f672657fa5004d2540d37d3534f913b1ebe"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "sha256": "89140b6defc56a165a0006b1cf2494f525478045c0cce7b8b291c316db7bf62a"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "sha256": "743b5353bb2b0ed62429183d420493642e0b76f4a18089a0fe85e3f1c0004091"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomProofData.json",
+      "sha256": "19fce29a7dec5fc25031da74f08292dd897c52eaaded0e8bf62116de59f5fa88"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "sha256": "c29cdafb687699086a64eeafa05934fac89daa99cc5607966ee6b7741efbbd4b"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomRenderer.ts",
+      "sha256": "806a8490f1c1711bb26985d1ed5060f3772f089fed5480624c7ad3fa4fb1ff1d"
+    },
+    {
+      "path": "apps/player/src/facility/approvedSideChairLayers.test.ts",
+      "sha256": "117a4a283aa7ba802c1a994b554878e9846d92f0d9473f777214c043d96e1bc0"
+    },
+    {
+      "path": "apps/player/src/facility/approvedSideChairLayers.ts",
+      "sha256": "feeb4b21de68287a8c80c109ee0e29aa62d5f4f23595c57a5f7b6045a29d1183"
+    },
+    {
+      "path": "apps/player/src/facility/canonicalRoomShell.test.ts",
+      "sha256": "30e01c3f81eb9d94b1a9eed51a17af8480aeae71c32427c78289fce0d4e2af33"
+    },
+    {
+      "path": "apps/player/src/facility/canonicalRoomShell.ts",
+      "sha256": "92fa19787c14250001f25fc2bf917ae6c89386d69cbf64d87cb84035eff714ee"
+    },
+    {
+      "path": "apps/player/src/facility/characterHopMotion.test.ts",
+      "sha256": "a729c9726ff7221fc9d24c781cf7686cfac9787cba65a479990eb6aa12efb610"
+    },
+    {
+      "path": "apps/player/src/facility/characterHopMotion.ts",
+      "sha256": "8074a6724eaac7193aee848a6882a23a2f42a001bc867f4997156be238f5e6f7"
+    },
+    {
+      "path": "apps/player/src/facility/characterInspect.ts",
+      "sha256": "53d2dff0261ef53c2400ace3a5928193601fd9fad94203508ad19f47fffe1d1e"
+    },
+    {
+      "path": "apps/player/src/facility/characterMotionPresentation.test.ts",
+      "sha256": "b3dd4c98591563abbdb9abcb2ac7c44aa979d9046a6ac6c04c92b37ba4c0376f"
+    },
+    {
+      "path": "apps/player/src/facility/characterMotionPresentation.ts",
+      "sha256": "ad27bd31fdb6744793f35fe941195775f071c4a037ce3d915d7867f2a13c3cb6"
+    },
+    {
+      "path": "apps/player/src/facility/characterPauseArrival.test.ts",
+      "sha256": "b5345885ce1c44799c55bbd069b026e4734d9d6633bbe88f334199ffd31ddc5b"
+    },
+    {
+      "path": "apps/player/src/facility/characterPresentation.test.ts",
+      "sha256": "12c41d9e7b2195132693600af5edb7aca5c68fe24c5154630cc12b7a772a2678"
+    },
+    {
+      "path": "apps/player/src/facility/characterPresentation.ts",
+      "sha256": "e6224a46d5af7e0ca0b485e2b75383a4eb3369ee2ffc12f6a8723fa610929da3"
+    },
+    {
+      "path": "apps/player/src/facility/characterSeatSettle.test.ts",
+      "sha256": "4d226c145a2a178380df7b367c4cce5afb2b7b659faffba90a1f3d4523bcda8e"
+    },
+    {
+      "path": "apps/player/src/facility/characterSeatSettle.ts",
+      "sha256": "1649c27b2b701e55d579da534857c8d515fc9761ef842bfae61c4aefe9893bfd"
+    },
+    {
+      "path": "apps/player/src/facility/defaultCamera.test.ts",
+      "sha256": "ea66da97a515a67449e2d6a07cb9e4161cb3ead3f25395d2acf21d7c00568000"
+    },
+    {
+      "path": "apps/player/src/facility/defaultCamera.ts",
+      "sha256": "ea22ffee1a9b718824a416e843da50e44636783342c42cfbf34caac013e94ef8"
+    },
+    {
+      "path": "apps/player/src/facility/doorInteractionGeometry.test.ts",
+      "sha256": "c156cb08faf6328c82b0786294be8690adef77a062fa4359a61a7162a3d13fe9"
+    },
+    {
+      "path": "apps/player/src/facility/doorInteractionGeometry.ts",
+      "sha256": "29dfb363afdba705759969395eb3efb05da9c60bdb85680aa01fc950afe16b11"
+    },
+    {
+      "path": "apps/player/src/facility/doorPresentation.test.ts",
+      "sha256": "177bb59e41d5380bf55ec185cf3585c1c9dd95b3647f5a4d929d3b2dfda1ddbf"
+    },
+    {
+      "path": "apps/player/src/facility/doorPresentation.ts",
+      "sha256": "a9caa72f173194ae4a94be3a7c655b1c449f747e1760d276dd62c706f76e1b51"
+    },
+    {
+      "path": "apps/player/src/facility/earningsPopupFrameCost.test.ts",
+      "sha256": "1f11b66eacf8b518c6aea2c021d8a0f92ec809599fd39d95eb86e675ed223f6a"
+    },
+    {
+      "path": "apps/player/src/facility/earningsPopupPresentation.test.ts",
+      "sha256": "7c6b5899aeb9fe4f2d235fd803927ce08c372ad392c469a7f67bcb2ba0323f21"
+    },
+    {
+      "path": "apps/player/src/facility/earningsPopupPresentation.ts",
+      "sha256": "e545fca14f7535151771820672d7571d9fa54cdc07a5e479893371e0c4351610"
+    },
+    {
+      "path": "apps/player/src/facility/employeeTrainingPresentation.test.ts",
+      "sha256": "e61d08f2f769bd33fee5400ce4d5f2bb59762bbffecbe73dc4d395274a7512bd"
+    },
+    {
+      "path": "apps/player/src/facility/environmentPresentation.test.ts",
+      "sha256": "aa59a555c8b6f827270e9a466d26a012aef6f1e8ba6c15a27922546744cc8763"
+    },
+    {
+      "path": "apps/player/src/facility/environmentPresentation.ts",
+      "sha256": "bb66cb674769b38f722c2d519cd59693502a2a9f08781d4fff1cb0225cb1c978"
+    },
+    {
+      "path": "apps/player/src/facility/environmentTilePhase.test.ts",
+      "sha256": "f85392b6334999f43f34f2843faafaa92fe9ae5f30e074cc742035a758e18afe"
+    },
+    {
+      "path": "apps/player/src/facility/environmentTilePhase.ts",
+      "sha256": "f0bf45661a1d0246fcd1f55f67bff7a0aa871a39a711b8693796c911d425a8fe"
+    },
+    {
+      "path": "apps/player/src/facility/examinationRoomPresentation.test.ts",
+      "sha256": "e1412734d45909952c37ecbca72e8d858e9449732a450fb5ed01060187e0a12d"
+    },
+    {
+      "path": "apps/player/src/facility/examinationRoomPresentation.ts",
+      "sha256": "729959df51886a1010667a24eec5e78599f1220e993920bc34b0702567a75385"
+    },
+    {
+      "path": "apps/player/src/facility/examinationV3Architecture.test.ts",
+      "sha256": "565c9f89269b77ee58da77262bc76d52e02edd59b9218c5026741e51adadbd3a"
+    },
+    {
+      "path": "apps/player/src/facility/examinationV3Architecture.ts",
+      "sha256": "a7deea3ede17e8e24a8ab853f04db059e9775f55efd05bc5bd03d63cc8b3b2ea"
+    },
+    {
+      "path": "apps/player/src/facility/exteriorActorPresentation.test.ts",
+      "sha256": "9c3db3806ef3c4c88890aa999c875c2ad762f701a7c471b23b5e595fbac706a9"
+    },
+    {
+      "path": "apps/player/src/facility/exteriorActorPresentation.ts",
+      "sha256": "f34f50c1ce10667892d034f2b12390f118c9ae913d9d47cd10c70b92aa78ea09"
+    },
+    {
+      "path": "apps/player/src/facility/exteriorLandscape.test.ts",
+      "sha256": "1cfe77d6e4eca8852aff6f5590a6780214ad66571b7e0f2103ba816e4e8c94d4"
+    },
+    {
+      "path": "apps/player/src/facility/exteriorLandscape.ts",
+      "sha256": "23d19773e39787b57b197f69d770b2cba7ee656098103d2d5f2bebd370d83996"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "sha256": "fd1384875e08db5f5e5bd5942f4ef6cbf1b56537c2916f18084812069c33a714"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "sha256": "be733380a0b148c1091e81f82e5af480d3907bf12170a9b43b5ecc40f10727b1"
+    },
+    {
+      "path": "apps/player/src/facility/facilityWorldSignature.test.ts",
+      "sha256": "69f8fc26396e14b4562250fafe8f87a0bd8abe96033a34652396fd43bfd97f91"
+    },
+    {
+      "path": "apps/player/src/facility/facilityWorldSignature.ts",
+      "sha256": "1d43e70424fecd33d142339eab458700a5525b1801651f25f6db1abe53a7d8a0"
+    },
+    {
+      "path": "apps/player/src/facility/fiveRoomPresentation.test.ts",
+      "sha256": "bcab2cbdf3a4671bbb0be2cb5c4e136c273c4c6d7d1c2456b3102cc58795fb6a"
+    },
+    {
+      "path": "apps/player/src/facility/fiveRoomPresentation.ts",
+      "sha256": "ac06b7079f7121a3eeea985da59232e83d8eec3733395df83ba6c1432c6c6ec8"
+    },
+    {
+      "path": "apps/player/src/facility/fixturePresentation.test.ts",
+      "sha256": "7ace566a630b20f4737a8792dd1d5c9e75d80fb7f9e0926a695abab5ce69ab08"
+    },
+    {
+      "path": "apps/player/src/facility/fixturePresentation.ts",
+      "sha256": "080fa5169df62010b35103049e3969b9016943385813efe220ea920ccefe7493"
+    },
+    {
+      "path": "apps/player/src/facility/frontDeskPresentation.test.ts",
+      "sha256": "018cbec4c97c72a424715ea292ea22284639f65848403af69ce9593129ba1be5"
+    },
+    {
+      "path": "apps/player/src/facility/frontDeskPresentation.ts",
+      "sha256": "e5d975aff2773db6e2c82c51b883e1ec0b7585a0c289eb5d730aa9b9649eff72"
+    },
+    {
+      "path": "apps/player/src/facility/frontDeskSeatInteraction.test.ts",
+      "sha256": "60aed471eccebdd0d233f906b3ef85ba1fb63bed3bda90c602022f1df8029532"
+    },
+    {
+      "path": "apps/player/src/facility/frontDeskV5Architecture.test.ts",
+      "sha256": "db0066703f823ca63f172a3fb007d14dd92d7c737a5c886bf5f16cefb2c315c2"
+    },
+    {
+      "path": "apps/player/src/facility/frontDeskV5Architecture.ts",
+      "sha256": "35e1079f597c725f579fe8c0c6bddc070c52a74aa13c0f074061b3a45d2fc123"
+    },
+    {
+      "path": "apps/player/src/facility/hallwayPainting.test.ts",
+      "sha256": "de88ff265db72b52a2a0418c3c9315a32cbf3dfdff43dce5ea4278c3b8c556f1"
+    },
+    {
+      "path": "apps/player/src/facility/hallwayPainting.ts",
+      "sha256": "7bf74229d010271a79e008822de91a079201cdd16fba1d7992468a52a90f064b"
+    },
+    {
+      "path": "apps/player/src/facility/index.ts",
+      "sha256": "e6285b60a4b6a30f7ebd2231c764aa8cf594814bc172b7676158f6a1d9fd42d1"
+    },
+    {
+      "path": "apps/player/src/facility/lateralGaitProof.test.ts",
+      "sha256": "7bb5345d529b13ad5f256c82d9022b0286f1d39acf122fd6ea70083d2f36a59c"
+    },
+    {
+      "path": "apps/player/src/facility/lateralGaitProof.ts",
+      "sha256": "29070b76f110de72cc450330cec05d1a6b08e02ce4d0e405528b73155256a42c"
+    },
+    {
+      "path": "apps/player/src/facility/patientPlacement.test.ts",
+      "sha256": "aef608cd8f82f395b00e268c83fbb21e142512e7e2886daf893afc81e6d47497"
+    },
+    {
+      "path": "apps/player/src/facility/patientPlacement.ts",
+      "sha256": "f1b191752b26ec197eb422ee6fe80a5b2a209b5af021ca702324d62ad30f00e7"
+    },
+    {
+      "path": "apps/player/src/facility/presentationOrigin.test.ts",
+      "sha256": "8db7c9b9292b781a18a60f5b40a5c7c76f6a2a4749c43df3a2060f17c5887751"
+    },
+    {
+      "path": "apps/player/src/facility/presentationOrigin.ts",
+      "sha256": "80fe5ee163e13219c5b3b512e643a695b65ecbc897523a9d6c4e665bd77f9083"
+    },
+    {
+      "path": "apps/player/src/facility/proceduralSurfacePhase.test.ts",
+      "sha256": "76158789d709d06deac9a4853abde68a81f7da2d41fec6ffbe2b33355aa476a0"
+    },
+    {
+      "path": "apps/player/src/facility/proceduralSurfacePhase.ts",
+      "sha256": "e1c3ac78c269bd8d9239fed70cbc1f85381a3742c25b3cb2d576953014cc4cdc"
+    },
+    {
+      "path": "apps/player/src/facility/renderDepth.test.ts",
+      "sha256": "bc54cd6050ddf17d9b9f690657837231a011b94a9e2f8c78c45fdbe28e1ea85a"
+    },
+    {
+      "path": "apps/player/src/facility/renderDepth.ts",
+      "sha256": "e842c85ab32793cd3393ab5aba3943d4405eb842ff05308497034d5958db0864"
+    },
+    {
+      "path": "apps/player/src/facility/roomCutaway.test.ts",
+      "sha256": "d9cc8ad35828c0bcb0da1538b18c7092259393f662687335030f14ae1272eeb0"
+    },
+    {
+      "path": "apps/player/src/facility/roomCutaway.ts",
+      "sha256": "2979b175877f9c84ddcdbeb81bed4ad0681e0624d452cf3341580867239fb41a"
+    },
+    {
+      "path": "apps/player/src/facility/roomTouchups.test.ts",
+      "sha256": "43907ece5d2c269e79693dd41bff460138d0a1c51e0025941d5bc7afbd4c3f92"
+    },
+    {
+      "path": "apps/player/src/facility/roomTouchups.ts",
+      "sha256": "99a874c5bcd2b9fdfd2e31a3fb26c29b40f1a5a2eeb6fb931acc0a8f33a1fd57"
+    },
+    {
+      "path": "apps/player/src/facility/roomUpgradeAppearance.test.ts",
+      "sha256": "c97569ae57e69dfd3c84674509c44c8414bdcb2891d82dea2392fbf4d7fe0374"
+    },
+    {
+      "path": "apps/player/src/facility/roomVisualLayout.test.ts",
+      "sha256": "d5baabe9691a979e78c01f5cf08de9d63a608bfca686d8a0976e751b6c1b765a"
+    },
+    {
+      "path": "apps/player/src/facility/roomVisualLayout.ts",
+      "sha256": "31b15a383f7702535259808370b7e31bee2ccb9d72d876e22ed54f1968c31f43"
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.test.ts",
+      "sha256": "dfa7b3e97f1782e4c289470c0f4d8af96adb8a9caba1581c93b5f4a3625defb2"
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.ts",
+      "sha256": "45ac17a1388ea0231df21d933d1b6c28445816c139aa935a9c2695552a28b722"
+    },
+    {
+      "path": "apps/player/src/facility/staffIdleSupports.test.ts",
+      "sha256": "d2840a97b2fd13603449a1cb7336a12f8df7f83797ba6bf9e852612b65ecc1ee"
+    },
+    {
+      "path": "apps/player/src/facility/staffIdleSupports.ts",
+      "sha256": "332a147c6249110762756e0672aa8dcf37dd99c641890b4d9f7302d1b5682a0c"
+    },
+    {
+      "path": "apps/player/src/facility/surgeryCenterArchitecture.test.ts",
+      "sha256": "9ebcbe5b24af9c58b9ceb563a1e9517bab6c95189893b6acf8a6ffae92d2fe75"
+    },
+    {
+      "path": "apps/player/src/facility/surgeryCenterArchitecture.ts",
+      "sha256": "3f42594e261a663e5a32925028d28bae41929994df4474eb38dddebc6f97be96"
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "sha256": "e4f89eafab31eb3297a6c331b44349c9db9de8ba703b2799c087bfbab03bda0f"
+    },
+    {
+      "path": "apps/player/src/facility/worldExteriorLayout.test.ts",
+      "sha256": "53e1fbf2db632af4328079a28376b218cdc9a8f2cc55506af3834deb2ac22036"
+    },
+    {
+      "path": "apps/player/src/facility/worldExteriorLayout.ts",
+      "sha256": "62bf3329e19492ac25623d6ffa12d255516522c69138778eaa94786a89a12c53"
+    },
+    {
+      "path": "apps/player/src/main.tsx",
+      "sha256": "4d2fbc8f7368248656fbe55bafd35d7312c7286536adb9417bdcc895ebfcf30c"
+    },
+    {
+      "path": "apps/player/src/session/alertViewModels.test.ts",
+      "sha256": "169dcc3713c71d101a99ad5f031971829c92496b38b8cb80753ed6ce705dc1fe"
+    },
+    {
+      "path": "apps/player/src/session/alertViewModels.ts",
+      "sha256": "945fb5e4a8816c87a8bb2de520ef5510ad78184977078e1d4d55c131327d231c"
+    },
+    {
+      "path": "apps/player/src/session/ambientPedestrianViewModels.test.ts",
+      "sha256": "f3b63db51a12ce5c3da463ae6d7d75b8ee119b1c8c34f4ef9b2f22932a32d0de"
+    },
+    {
+      "path": "apps/player/src/session/answerChoiceTimingPresentation.test.ts",
+      "sha256": "59c432b059b0d4ff23a930014169a49894303e862a58900e0082479505eabae0"
+    },
+    {
+      "path": "apps/player/src/session/approvedRoomPatientPose.test.ts",
+      "sha256": "41a415e10fa5bd2523be98dcf95fd79234076a166af5d47dd4bd2dbb967859bc"
+    },
+    {
+      "path": "apps/player/src/session/breadButterPresentation.test.ts",
+      "sha256": "3fa4996c8056a481d6db5bfc02cdcb8870bbf75e6ffc21171a508cb1f31f1ae4"
+    },
+    {
+      "path": "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+      "sha256": "ec9c2c6f869bd641c359238e3bd49f86b0c4fac5b212de044d8c84d12be4ad26"
+    },
+    {
+      "path": "apps/player/src/session/buildModePresentation.test.ts",
+      "sha256": "01325fe43af14fbd5826db12b94d65801499394c11e8b0d546fb2595d77b4b5f"
+    },
+    {
+      "path": "apps/player/src/session/buildModePresentation.ts",
+      "sha256": "d2b6820aa088f66d125c23c49270629cf1417673e47dd78c60f13661b1260258"
+    },
+    {
+      "path": "apps/player/src/session/buildViewModels.test.ts",
+      "sha256": "ad86067c88b4b71583a6168801eae8d3909d9d6af8ee9382e269ef083db853d8"
+    },
+    {
+      "path": "apps/player/src/session/characterActivityPresentation.test.ts",
+      "sha256": "3604b6a8a7f619111966d1f78ff6abe36695dffccb883f369f5ad6bd58c76cc4"
+    },
+    {
+      "path": "apps/player/src/session/characterActivityPresentation.ts",
+      "sha256": "88e47590d22356dac1ef134c0bf30b8e5c0ed32fa270c874bf4955c85a0fcabb"
+    },
+    {
+      "path": "apps/player/src/session/chartCloseBehavior.ts",
+      "sha256": "6b5de6fdbb583ba141666be9bce218a7af47f33b42f2e4dc2a9d8b9077a2ed76"
+    },
+    {
+      "path": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "sha256": "65b128f0414b3cb7e7cd4ccd6c6274520127dd58d4430e098dd3102f55b5c779"
+    },
+    {
+      "path": "apps/player/src/session/clinicalServiceLabels.test.ts",
+      "sha256": "42dec92049e0003f1561c78eaea67e33ac349901e76ca861900fe7faae47917f"
+    },
+    {
+      "path": "apps/player/src/session/clinicalText.test.ts",
+      "sha256": "770166abd6473151b9f01e4d0e42353c59ae04f3419950521ef4a3d4fb2d3c39"
+    },
+    {
+      "path": "apps/player/src/session/clinicalText.ts",
+      "sha256": "60d40076c67999e03b509f7b9b8a2617a4483e534a534583f1d97ffed7cd8631"
+    },
+    {
+      "path": "apps/player/src/session/dailyRoutineTutorialPause.test.ts",
+      "sha256": "d2d4acf25c1a3d3187ade7c0a90016b8dfa18626f960c7a75792ac3333ded54d"
+    },
+    {
+      "path": "apps/player/src/session/dailyRoutineTutorialPause.ts",
+      "sha256": "2957b6cb893441ff76cc5c10c58efef7d808e1d54b972c8e64790873d3e50b55"
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "sha256": "b012f4421f361d238a170ec6802d0163ebf7fd5b0e3c9f0da7bd71952725fe35"
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "sha256": "4c6adf1bc1632ffb2240f00b24d110ea936ea2789c42821a2748152bbd7477df"
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "sha256": "aa745ada68c8b996d4c42c951498ee3931545fdaadfb4a698fb02902e2706172"
+    },
+    {
+      "path": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "sha256": "1499c953b76e2a3adbf2f641ccc467df47c43bfe48962b6ef0a8a5ccaff70f6f"
+    },
+    {
+      "path": "apps/player/src/session/economyViewModels.test.ts",
+      "sha256": "23a50803ee97e646a5979bf996d5df0ff881b5977eefa95f62546ab82926f346"
+    },
+    {
+      "path": "apps/player/src/session/employeeDiscussionView.test.tsx",
+      "sha256": "17691dc27effcec1b12fa9531b215936e73b41bb94d0082dcfd0fba01f6eb71e"
+    },
+    {
+      "path": "apps/player/src/session/employeeTrainingViewModels.test.ts",
+      "sha256": "9b2a65793f0ad8ece38e721766069190beb73db70cc3c5f00aa8363f3fa2778d"
+    },
+    {
+      "path": "apps/player/src/session/employeeTrainingViewModels.ts",
+      "sha256": "8c2f10036af8961ae079bc77796996207972793fb849d343384f88517e1a43d5"
+    },
+    {
+      "path": "apps/player/src/session/facilityDuration.test.ts",
+      "sha256": "09f84ad1576e0b8bd04780beab8cfa982a9b8936deccd85c4bc9da7854a28e56"
+    },
+    {
+      "path": "apps/player/src/session/facilityDuration.ts",
+      "sha256": "e3473b348ffa8a3db5ad6971e39dc075ef218b0ffc49f3f85c7e3ea8d040637d"
+    },
+    {
+      "path": "apps/player/src/session/founderActivityPresentation.test.ts",
+      "sha256": "94ac0981a0496232cb1ce4456c4230cdd66c97157a1746a36971be1e74f52574"
+    },
+    {
+      "path": "apps/player/src/session/founderActivityPresentation.ts",
+      "sha256": "87481dfd7acc565b7593612f9f799e6005e13577e6e3e13a6f1bd9bbf2f134be"
+    },
+    {
+      "path": "apps/player/src/session/frontDeskWaterCooler.test.ts",
+      "sha256": "2efaef7170f3749ddfb161b994576b5d57156ec64d5afcf54d8e5b6011247596"
+    },
+    {
+      "path": "apps/player/src/session/glp1NursePractitionerPresentation.test.ts",
+      "sha256": "9141a8e5189bb2fae7d9cd5b88e89514dcde32197b58a1977f2ffd1a1b692d94"
+    },
+    {
+      "path": "apps/player/src/session/index.ts",
+      "sha256": "58e5316200b8ae4f715df626a1115c2f100dc52a2aa0ff0f515f7e6e98c8c789"
+    },
+    {
+      "path": "apps/player/src/session/learningCardFormatting.test.ts",
+      "sha256": "8be5dcea04ba1b15b0ee66f192fecf719de39ba188d80eca0ee8896d35234cb7"
+    },
+    {
+      "path": "apps/player/src/session/level3ControlsViewModels.test.ts",
+      "sha256": "e06a432eda458cbbef26e5688beb56ea087c833fce8fb7e018b0925be02a01ca"
+    },
+    {
+      "path": "apps/player/src/session/level3GoalsViewModels.test.ts",
+      "sha256": "94a59a3e397c8e67744affc6747e83f71e8b6d3a293d97228b6ba0532c5addf9"
+    },
+    {
+      "path": "apps/player/src/session/localCampaignRepository.test.ts",
+      "sha256": "be152666720559c2e668c1aa4dc35f9235b91a0ae80e9fa1c5fb42544791baf8"
+    },
+    {
+      "path": "apps/player/src/session/localCampaignRepository.ts",
+      "sha256": "ab6e7d06681e90d6a7febfd003343eb0abc0fb437eea8987ae8484549a9f0302"
+    },
+    {
+      "path": "apps/player/src/session/managementViewModels.test.ts",
+      "sha256": "e02f9512ff4c5e83318a760c082ec10a22dfe7f21a895e36413658bdd7e33926"
+    },
+    {
+      "path": "apps/player/src/session/managementViewModels.ts",
+      "sha256": "5c9244736801dd4569603a234be5f9cb1ee9bcdff060f716a50058bd5ee51745"
+    },
+    {
+      "path": "apps/player/src/session/multistepChoiceTiming.test.ts",
+      "sha256": "c3ca4defef0cf314a24670706025131835dab30039493c6423ceb765dbc4fb8d"
+    },
+    {
+      "path": "apps/player/src/session/newestServiceIncomeReceipts.test.ts",
+      "sha256": "3b7386fcc73372e174037455ab0e8ed0e2ad4e919868ec4fa2d4a446e823c5d9"
+    },
+    {
+      "path": "apps/player/src/session/patientAvailabilityViewModel.test.ts",
+      "sha256": "ce099f219909c43fa4585578c170c675aeaf6596a6d32336314f04e1b044b57e"
+    },
+    {
+      "path": "apps/player/src/session/patientAvailabilityViewModel.ts",
+      "sha256": "5176d64ff569f160bea9bf7b02e66776901f7e31c33a6eec173f7cb75b179a60"
+    },
+    {
+      "path": "apps/player/src/session/patientMovementViewModels.test.ts",
+      "sha256": "3d82efa302d52b8ed88549af74478e4d991146756aeb85f4870e24f752a1c1cd"
+    },
+    {
+      "path": "apps/player/src/session/prototypeAlertContent.test.ts",
+      "sha256": "87e23e91e4ca83569924e5b7817c3a5643226a49db6fe7d4ac80cfd05b7b489a"
+    },
+    {
+      "path": "apps/player/src/session/prototypeAutosave.test.ts",
+      "sha256": "22966481828c34c31e70057e501257e35ae7eeece1f3d0e98adca34c72236b2b"
+    },
+    {
+      "path": "apps/player/src/session/prototypeAutosave.ts",
+      "sha256": "27d5285516668aabd3dff303687aef7b371797495d24c2d6f87ff7fe1f04c8bd"
+    },
+    {
+      "path": "apps/player/src/session/prototypeStorage.test.ts",
+      "sha256": "0c05bf4be69dac7a6c3e01cacc1e375fb4e6c4dd122c9883be0808f5e9a3029a"
+    },
+    {
+      "path": "apps/player/src/session/prototypeStorage.ts",
+      "sha256": "bb1beb420cf233c8e67b3b5808af74b0c9583081e543e8e223a1eb46b1bf96ab"
+    },
+    {
+      "path": "apps/player/src/session/questionReviewFlags.test.ts",
+      "sha256": "04442d64cf82f413db77a228bd900021bd0bf365616c30fcc1449e48bce9f862"
+    },
+    {
+      "path": "apps/player/src/session/questionReviewFlags.ts",
+      "sha256": "dccdd9bb9aff5ff3053ee923104e7dad418223d3213063d0babb91a7ce2e41cc"
+    },
+    {
+      "path": "apps/player/src/session/readingRoomRadiologists.test.ts",
+      "sha256": "c6e60f77b6b807cac38735e85857956bbb24ec9b43d34f1791c1c65c0eb5a363"
+    },
+    {
+      "path": "apps/player/src/session/roomCapacityViewModels.test.ts",
+      "sha256": "c1e591b7b126d1a3dae6ac1c8f850a0f8176efc092f794e7c1b21727eec16bad"
+    },
+    {
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "sha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849"
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.test.ts",
+      "sha256": "83336cb718d9e5f9a3a6bee7d68be7c34a1587735bc2b5754101d073ac23400f"
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "sha256": "9ee88ece59396abee39465942140bfe49e27cf8ce4a55eb2074e4afabbc76ca8"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "sha256": "7b9c36a972d83c8be4f61b42d3751030936201af339e2342a79dea7929f0e767"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "sha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f"
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "sha256": "85b95613c5561e38a91274ffe22944baf1de8563881f15f2dc4f54501109746e"
+    },
+    {
+      "path": "apps/player/src/styles/tokens.css",
+      "sha256": "c2e0ff23c86634ce6ae60de87660494b51f739facdcfd2b785b9c8d9d58b798f"
+    },
+    {
+      "path": "apps/player/src/ui/AdvertisingPanel.test.tsx",
+      "sha256": "0080665f4ebda05a73835080fa730649b63c7e8eaa8c44037d6fa1bad8fdb0c2"
+    },
+    {
+      "path": "apps/player/src/ui/AdvertisingPanel.tsx",
+      "sha256": "d4aaf094b051c0a7fb1fed4c416ae2cbddc352be9d237ac4be9112e2add4376e"
+    },
+    {
+      "path": "apps/player/src/ui/animationFrameTask.test.ts",
+      "sha256": "3cebfae8ff8b52a143d09d87ee79045832ac44098441e76a8d67622e82606695"
+    },
+    {
+      "path": "apps/player/src/ui/animationFrameTask.ts",
+      "sha256": "1362c55a661e7e273b04dcdb251f4b959e517a4309d2139c817512cf0a089b94"
+    },
+    {
+      "path": "apps/player/src/ui/BuildPanel.test.tsx",
+      "sha256": "7b323e86d88c127f5ea648a916ac55fbf87ec887e0a919a4ff32060e7dc1151d"
+    },
+    {
+      "path": "apps/player/src/ui/BuildPanel.tsx",
+      "sha256": "1e4226faf89f070d60ca547de956a80e2944dee949d0af16b5981b2de006796a"
+    },
+    {
+      "path": "apps/player/src/ui/CampaignManager.tsx",
+      "sha256": "64e8607c02967e06f2d8624d83d996e05cf92d276b489c880c1d047782d30cd2"
+    },
+    {
+      "path": "apps/player/src/ui/CharacterQaGallery.tsx",
+      "sha256": "926b6831f5f405e23cd9bd7b7a96e12bab965b191c922a94fc16821c9688fdcf"
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.test.tsx",
+      "sha256": "51c901f2bd256590b03a141d49462dae908a923df7621eaaa6b9e6e2cc82bac0"
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "sha256": "0613aa8ffc24d767f5734b4f241eb667160ed0c855039b412359d821317c5ec9"
+    },
+    {
+      "path": "apps/player/src/ui/chartSheet.css",
+      "sha256": "505c4ee7b9e1828444b0848cbc70ff63b8420e0dc2a78206a7b7fdc632e3641f"
+    },
+    {
+      "path": "apps/player/src/ui/clinicalReview.css",
+      "sha256": "816ed2516309cd8a3546f8a2bb279c649e19cdd498205926f608fa0a235ffb39"
+    },
+    {
+      "path": "apps/player/src/ui/ClinicalReview.test.tsx",
+      "sha256": "bc08ef28fe73bb32438221cbc22168e5e91fb66ad898abf4648c356d7778d5b1"
+    },
+    {
+      "path": "apps/player/src/ui/DevelopmentPanel.tsx",
+      "sha256": "54d422220e492f88f2950f22fd5470c0ef955912c6cc732ec3e74b25fed836bd"
+    },
+    {
+      "path": "apps/player/src/ui/EmergencyGlp1Panel.test.tsx",
+      "sha256": "b150a52a0b940d281694f178b070e204f26eb30d4df62c2bd104b83dc1508f1b"
+    },
+    {
+      "path": "apps/player/src/ui/EmergencyGlp1Panel.tsx",
+      "sha256": "0b4885c910b048247af5c41b20aa5346e61e4737036b5753d4eec95194ec972f"
+    },
+    {
+      "path": "apps/player/src/ui/EmployeeDiscussionPanel.test.tsx",
+      "sha256": "cd6676a66302e019ece3510805bae3f27dc33eefc115a870f0726e1aba03aa9a"
+    },
+    {
+      "path": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+      "sha256": "e2e7417e7e5fc621dae79201f5e79cb152bad88f37b8aab36bf59463db269171"
+    },
+    {
+      "path": "apps/player/src/ui/EventMessageBoard.test.tsx",
+      "sha256": "ebf51ef6851870e2592a172430dd3d231b2386165bc0b04ea4bc67f1b78e18e8"
+    },
+    {
+      "path": "apps/player/src/ui/EventMessageBoard.tsx",
+      "sha256": "a86f23b4c656147ab60f7030bd9ee98ab7f8d754ee276e0709ade0ae75ac867e"
+    },
+    {
+      "path": "apps/player/src/ui/GoalsPanel.test.tsx",
+      "sha256": "685ee14c94b158c95cddb4702ba24f82aa1af2371a8b80a195d1ad845800c6dd"
+    },
+    {
+      "path": "apps/player/src/ui/GoalsPanel.tsx",
+      "sha256": "df6d3caf5c34c77b03f112175558797100f5fb419779cea42a6656e48765ae90"
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "sha256": "03025ff167075bf1703bfbe5e43a8b9bdccd63f7571280b84b5399173c669cb8"
+    },
+    {
+      "path": "apps/player/src/ui/index.ts",
+      "sha256": "080c8cb523584e44f6cd079c54d1af6eb0923c5605a378273a012892845ee86a"
+    },
+    {
+      "path": "apps/player/src/ui/ManagementPanel.test.tsx",
+      "sha256": "89cd68fd5a2ab1810350b4d9a3b6557f4b77b15215058a6c2286de2a8235d6b9"
+    },
+    {
+      "path": "apps/player/src/ui/ManagementPanel.tsx",
+      "sha256": "b75d4c3dde5af9334a6c3697f72b7c09c34e388223c143783abe448910c63193"
+    },
+    {
+      "path": "apps/player/src/ui/MoneyPanel.test.tsx",
+      "sha256": "94dc1db058371bd7bdde17cf7e66fbfd77a22f1d1693b6daf559118cb7ee2e0f"
+    },
+    {
+      "path": "apps/player/src/ui/MoneyPanel.tsx",
+      "sha256": "a540392202d568f01047c5984e8c8a4d219128c5c3ae6bffc04e15c53ac4dc90"
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.css",
+      "sha256": "3c3738e5b39f3bb836d1d1f2491799b329bd3409829795d38678a52ecf557d59"
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx",
+      "sha256": "7a073c750d1a7872e7aa83b2a98feb2128fd80243830059b2953d9a986b0825c"
+    },
+    {
+      "path": "apps/player/src/ui/PatientLists.tsx",
+      "sha256": "aedb0a7aed213586169ad2384f6f02fd0cc0a34634b1a2558f73679a11400edf"
+    },
+    {
+      "path": "apps/player/src/ui/PixelAvatar.tsx",
+      "sha256": "9b69a2384148056adf4f56cdfc406e5056cfff6ae715f5a861c50ce284bb4110"
+    },
+    {
+      "path": "apps/player/src/ui/PixelIcon.tsx",
+      "sha256": "9b25dce516158e300f53bfe9ad630be78f0127bae0669c87a73a9c1d795a1129"
+    },
+    {
+      "path": "apps/player/src/ui/QuestionReviewFlag.test.tsx",
+      "sha256": "f80c0eeb96c8ef78cb7aee2b044ce8ed513a11e34697d8d1748507ecbb9dd7ca"
+    },
+    {
+      "path": "apps/player/src/ui/QuestionReviewQueueDialog.tsx",
+      "sha256": "85f25dc328440df876ec4bdeb405a611118806d4cd4715c7720eaea467ba2a6f"
+    },
+    {
+      "path": "apps/player/src/ui/ResourceBar.tsx",
+      "sha256": "86702754f47a61419ef7d1f0966ab66097086a73c850c684051a8eb822772449"
+    },
+    {
+      "path": "apps/player/src/ui/RestartDialog.tsx",
+      "sha256": "cff81af3d35228586ce61ebbaefca9fa652406e231e96588c01ec17a814325d4"
+    },
+    {
+      "path": "apps/player/src/ui/RoomActionMenu.tsx",
+      "sha256": "a4f23e110373f5de5a929113b09ffb1729378929d6f25e80ef69288638f29ee2"
+    },
+    {
+      "path": "apps/player/src/ui/SaveCloseDialog.test.tsx",
+      "sha256": "46afe364da7524bfcdfe25528175ebf231d61a2b4e331ed45eedb7a87b98ee40"
+    },
+    {
+      "path": "apps/player/src/ui/SaveCloseDialog.tsx",
+      "sha256": "9e189cd28c8a172254bbe4f28bb72a213e21d2b634499ec1e3cf2a2b0931b338"
+    },
+    {
+      "path": "apps/player/src/ui/ServiceIncomePanel.test.tsx",
+      "sha256": "eb6e234f54b373f9cc6c57e729de1e231cb48638d81aff6a6e9af5058dd9280a"
+    },
+    {
+      "path": "apps/player/src/ui/ServiceIncomePanel.tsx",
+      "sha256": "9a1cd79060fb9eab4816477650d66055978ebaeb0a7360845361674319f76d64"
+    },
+    {
+      "path": "apps/player/src/ui/SmoothHudIcon.tsx",
+      "sha256": "dfa0d2812d18cfaca0aa717ea12e1e8d9f3a56e69298b38782a2a4423fc9d237"
+    },
+    {
+      "path": "apps/player/src/ui/StaffPanel.test.tsx",
+      "sha256": "990a5a991f6c9d0cf74433e94575baf8bde257490eb612d560c9b4f816d12df1"
+    },
+    {
+      "path": "apps/player/src/ui/StaffPanel.tsx",
+      "sha256": "041fc8b08f3cb1d54626f23a966058fa01db61927bfbea89ba4ba207a2559ba0"
+    },
+    {
+      "path": "apps/player/src/ui/TutorialCoach.tsx",
+      "sha256": "d3f35c9a89a0bc79489d80cd65d28f3b7799e129cb3aaacf0a55dc2f31f65e82"
+    },
+    {
+      "path": "apps/player/src/ui/tutorialPositioning.test.ts",
+      "sha256": "e4c388494439ab9e812411bbe6194dca299fdcedceeb6fd78c4af77e63824ebe"
+    },
+    {
+      "path": "apps/player/src/ui/tutorialPositioning.ts",
+      "sha256": "d6c653724e8bf34c8eb44e8fbdc1572e71612639d56d74523ad07458727b898f"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "sha256": "43b5e8dcb0a7b94d233e692d90fec8c1350385d8a880cecd218292a0bc3ce32c"
+    },
+    {
+      "path": "apps/player/src/ui/visualComponents.test.tsx",
+      "sha256": "93c76ba664c360c838edfba9c248c16fc489eea59e1f31941ff76d87bd375927"
+    },
+    {
+      "path": "apps/player/src/ui/workspaceSplitPreference.ts",
+      "sha256": "dc4135ea3434ffa6e848e6bb2f155bd45a8173f3a3233619f006857305fb8b7a"
+    },
+    {
+      "path": "apps/player/src/ui/workspaceSplitter.test.ts",
+      "sha256": "bd2a05bcf6a937adaf401abf037036367de2e3763c106589a0e779cc90dc7d2b"
+    },
+    {
+      "path": "apps/player/src/ui/WorkspaceSplitter.tsx",
+      "sha256": "b244d5e3e884db2d39f79c0272c01c1aa208a24c74b6bd8c6ec9209d784fd30d"
+    },
+    {
+      "path": "packages/game-domain/src/alert-cadence.ts",
+      "sha256": "d130ef7d321ff48bf4b5b3c2aa173681f850c961a40160f7f08390e5ad236455"
+    },
+    {
+      "path": "packages/game-domain/src/ambient-pedestrians.ts",
+      "sha256": "0a744e9c59b1884ec645f7dd55c2320b9a5a931c373aaa992a4762fd871fc1b9"
+    },
+    {
+      "path": "packages/game-domain/src/appearance.test.ts",
+      "sha256": "38d0e4180408d62d04f1b31186cf4e3cac2fc608ccbf7d926c8bf08b70bc5d5f"
+    },
+    {
+      "path": "packages/game-domain/src/appearance.ts",
+      "sha256": "ec439709c4ef79ab2de222a8754e64d17cb13699229d6754cccda94eb024d0e9"
+    },
+    {
+      "path": "packages/game-domain/src/approved-room-geometry-migration.ts",
+      "sha256": "ec12afe41af9032f6bb9c161f18f177dc11576b47399fa9c4e95b1789d92b992"
+    },
+    {
+      "path": "packages/game-domain/src/care-room-access.ts",
+      "sha256": "bd3bd21301ddd096a3c1dada6e6e42b5a3f1c98523d4ef54f43a4c0b822ef83e"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "ff73e307b40d38de7a248af1b32b21e54b4b86ee17779f8fcb36516fa67ea982"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "80a0a0a5e6acbf7892bc11daf6cd35a6a61b30e70045df969650f6c3d02faa83"
+    },
+    {
+      "path": "packages/game-domain/src/clinical-selection.ts",
+      "sha256": "9fb64941a4c1931ee00052fafd4e05ab7aaf8a8200a258ef2f3050b4563a1d9e"
+    },
+    {
+      "path": "packages/game-domain/src/context.ts",
+      "sha256": "6dff0d6f84c6c349ab6ea3b86d3ea921d56a4bd018f2f3dc726bd490d55e7d5f"
+    },
+    {
+      "path": "packages/game-domain/src/departure-risk-alerts.ts",
+      "sha256": "b206e304aad57e83a2c01b547bf6888b0e6ad2ccc85b18642f23c57f28b62203"
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-order-requests.ts",
+      "sha256": "9c721ebd63a473fbe29d1ffb368c27282c5cd559b98d607b0c93036861f6ca7d"
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-orders.ts",
+      "sha256": "8ffa899e7f634a6d9dacb42cefab0ff64c81837315d9044f0ade2c403035b5fd"
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-result-dispositions.ts",
+      "sha256": "3c79223463663ad4dfce9b1be384f244fb914d0426ac49755910b365224402a6"
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-timing.ts",
+      "sha256": "d090cb6914571069e737894296bca5346af2c7b219d6093df00ce18bf5077b51"
+    },
+    {
+      "path": "packages/game-domain/src/displaced-routing.ts",
+      "sha256": "99847c235832bb9e50a303b9f6b86a10b471ab7eae0b3c1ab8febbdab3be9d72"
+    },
+    {
+      "path": "packages/game-domain/src/doors.ts",
+      "sha256": "15e10458911fbf15360b2e3f88021ec48f815e2653bb9c30d1b0bb7fc82375f0"
+    },
+    {
+      "path": "packages/game-domain/src/employee-discussions.ts",
+      "sha256": "7ff1da0773a14051f6e3c37fe683bfafa0c629993a812ad81d6e544b6f97ea32"
+    },
+    {
+      "path": "packages/game-domain/src/employee-idle-spots.test.ts",
+      "sha256": "ca2b0b87495cbd248a0dd96ed3906bfefc4af8154e60efbb912eb6ddd0026c13"
+    },
+    {
+      "path": "packages/game-domain/src/employee-idle-spots.ts",
+      "sha256": "61ef44cce3bcf482df8c5e92e992ef53a958c463bd4e5bd6da62580f3b546eaf"
+    },
+    {
+      "path": "packages/game-domain/src/employee-training-effects.ts",
+      "sha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298"
+    },
+    {
+      "path": "packages/game-domain/src/employee-training.ts",
+      "sha256": "b461499590fef463f0acce6be46a16d727c87fa7567a4b4fd34f30703c662662"
+    },
+    {
+      "path": "packages/game-domain/src/facility-access-cache.ts",
+      "sha256": "6d1d3e2378e9027b4cf725c6c4a8cf19147c0704cb9ee90dfd52fe815e6be42e"
+    },
+    {
+      "path": "packages/game-domain/src/facility-alert-conditions.ts",
+      "sha256": "e3292bee187a526a09e1c1fa717fb2ceafdda984e0ca9391f48b9f69d80cbe25"
+    },
+    {
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "sha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee"
+    },
+    {
+      "path": "packages/game-domain/src/founder-seats.ts",
+      "sha256": "84482e5cc212573d898a2ecbcb8f962b3f83fe79936fa1a5d03ff73a1da38cf2"
+    },
+    {
+      "path": "packages/game-domain/src/fsrs-adapter.ts",
+      "sha256": "537f65153c7cf878a5401422e1e028d68e0718fbb795155f248d7151da9678cf"
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "sha256": "d45503823d70f556bd099ea9d8d8f2c3aa133c81e94041885458ba1312c51b5f"
+    },
+    {
+      "path": "packages/game-domain/src/level-three-support.ts",
+      "sha256": "cd5e5f7c7d27630d0e5052ea1a656ae65b02c30b3ee3aeeff81b59dba401a89d"
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "sha256": "9557d26c45bed87e19ba0dd5f8201b54252e594910a17ff17b1f507dc1b8e55f"
+    },
+    {
+      "path": "packages/game-domain/src/patient-travel.ts",
+      "sha256": "401769f93f845721345726e01c26a45643d7d7e960e30b3d7dfec4afc5e5ea63"
+    },
+    {
+      "path": "packages/game-domain/src/patientAppearanceCatalog.ts",
+      "sha256": "95d43741dbdc023add3cd0f42683ba56de4de62751840a25cc5bfebd5181e0f4"
+    },
+    {
+      "path": "packages/game-domain/src/patientDemographics.test.ts",
+      "sha256": "a97d8bf29dbaebfae57a7f2f5dcf976b93f5257ca519160172b00d83fb159aea"
+    },
+    {
+      "path": "packages/game-domain/src/patientDemographics.ts",
+      "sha256": "8d4f009ee290153ae01438f85112b57cf11895724f0aa10c3ed2e9bc828c2c39"
+    },
+    {
+      "path": "packages/game-domain/src/patientText.ts",
+      "sha256": "a4d1a344e2af30b923263e0fbe1f4a347fbec164040eda59dad46286c6129478"
+    },
+    {
+      "path": "packages/game-domain/src/persistence.ts",
+      "sha256": "e881705c8c16356942d89e6573f987ec5d441e9c0322bc02c11630b93002ab6f"
+    },
+    {
+      "path": "packages/game-domain/src/randomness.ts",
+      "sha256": "b18d5a0b6249fe7b9c5c6dcfc32a0ad879e605565cee656941bf068dd4048a9c"
+    },
+    {
+      "path": "packages/game-domain/src/reading-stations.ts",
+      "sha256": "343fd586cbeebadd3b8165c9b8a560e0f426110d3ee9488b2cab8c4009f9a166"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "sha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "sha256": "739370372ad953bdc46fa49a2848af51b742934cf3d8f412d2c7778249082c23"
+    },
+    {
+      "path": "packages/game-domain/src/retired-encounters.ts",
+      "sha256": "14f55ae5d94d46d0b9397e68cc1f6a4c49a2df8f7ac178b887d5064cb8691a66"
+    },
+    {
+      "path": "packages/game-domain/src/retired-service-history.ts",
+      "sha256": "b4ccd003837f42262699814782b81ab5e94c7b39810f04df96c28280500baa03"
+    },
+    {
+      "path": "packages/game-domain/src/room-capacity.ts",
+      "sha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d"
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrade-experience.ts",
+      "sha256": "65daec94594f763ada54e1e40d93478dad580a6df701e4e0d5c51bb524c321d2"
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrade-reading.ts",
+      "sha256": "7fa966c1e738e0059a24c305afb3973e8ca6e8284ebfcfa779eaec89e7fe6547"
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrade-support.ts",
+      "sha256": "29da1590758afc63f89f9661d804f37e9755a348630f04989025185f445a6b16"
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrades.ts",
+      "sha256": "ebc96f6188332fcd723d89adabe671044522a552de800d4cc6388a4803156d23"
+    },
+    {
+      "path": "packages/game-domain/src/routine-patient-availability.ts",
+      "sha256": "46221165c12ba75f098d5f475aed064a82dcd48c5f18f2fb6a3c37883e797b7a"
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "sha256": "36afc099c34c7a3ec587d3b295f5e78835a8ceffa830d6e9ef44fa9e0de0049f"
+    },
+    {
+      "path": "packages/game-domain/src/service-operations.ts",
+      "sha256": "87a2c624e391834e1e72b36e3461c7e9bf5efd3c48df3f52411e5a9ef103dcae"
+    },
+    {
+      "path": "packages/game-domain/src/spatial.ts",
+      "sha256": "6d6468f46f7334495d4dd0032a1c9d7f1a194e234279e039d68eb22b1afece35"
+    },
+    {
+      "path": "packages/game-domain/src/staff.ts",
+      "sha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "sha256": "2282385db6216bd4d0fbd49967e30d21a35b3822a3b8f1b56b2206b088af710c"
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "sha256": "424cc27706e45685c9268feb4334928131801636ef80162d9b7012b24ad7eccb"
+    },
+    {
+      "path": "packages/game-domain/tests/advertising-insolvency.test.ts",
+      "sha256": "d9c22b2084d69b8d84b53dac6c448bf6cbba6166e0664e3681e909652a4bea2f"
+    },
+    {
+      "path": "packages/game-domain/tests/alert-cadence.test.ts",
+      "sha256": "9bbd31aee54d69d25ac5a3524730c6a23e032e5fedb6693fec37991a6a3226e8"
+    },
+    {
+      "path": "packages/game-domain/tests/alert-humor.test.ts",
+      "sha256": "a26123369ce6a41db7a47784588d00b3f9470c36be376c2696c3c7c78f82a455"
+    },
+    {
+      "path": "packages/game-domain/tests/ambient-sidewalk-pedestrians.test.ts",
+      "sha256": "9ff1c7cd7002eab58947b74bea5b6c32d9b5da9cf85523bc20570d2d940f93b3"
+    },
+    {
+      "path": "packages/game-domain/tests/answer-choice-timing.test.ts",
+      "sha256": "ae5c5462eec374e714dd508e16007b7a03e85df057872c2c033d547ccd6b2960"
+    },
+    {
+      "path": "packages/game-domain/tests/answered-chart-action-recovery.test.ts",
+      "sha256": "43822d83dfbce9018022ae381e5590ec09d338c4be1045af7e16603818b45b04"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "sha256": "d04b12144eac84d3cd334578c66246dba7a10dac1b22d273dee9467e41fdd38e"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-room-geometry-migration.test.ts",
+      "sha256": "2e51e58524b838c6096b31ea136d4971379468a613af46f2768df7595ed76244"
+    },
+    {
+      "path": "packages/game-domain/tests/board-expansion-20260912-batch.test.ts",
+      "sha256": "ff6698e1f2e8dda7d647e34cf401a3a1594c8ef043cd22fb9d3646ab9129318a"
+    },
+    {
+      "path": "packages/game-domain/tests/board-expansion-batch.test.ts",
+      "sha256": "a968d8c5f4f11e1ca6ede0e33325642e3e3f2d9ba533493e1b0a0eaaee5f57d5"
+    },
+    {
+      "path": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "sha256": "0f06676d05c35ce6c2a08e634867c99c3fed61d01be0a2b205d51da12ceb3631"
+    },
+    {
+      "path": "packages/game-domain/tests/brief-early-levels-20260917-batch.test.ts",
+      "sha256": "83b85986a14a80c6b6fccfb2f8b5560b2757eb5194dc6fb44fd714c403ac3b98"
+    },
+    {
+      "path": "packages/game-domain/tests/care-room-access.test.ts",
+      "sha256": "3afbaf0a46caa99754a8a0cbdd2fe07cce62cd50ee1dabb1a8a4b86e7885f068"
+    },
+    {
+      "path": "packages/game-domain/tests/character-still-persistence.test.ts",
+      "sha256": "1c48f3c99bd87b51ac9a3384cd155b3c6294664209cc5e26cbe516239d45f13a"
+    },
+    {
+      "path": "packages/game-domain/tests/character-variety.test.ts",
+      "sha256": "ce520e0709177ae7c95dd51427dd7d1103e6551cc5085ebea5e4db770f976c86"
+    },
+    {
+      "path": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "sha256": "79a07d8abcf026db9e630bda3cf5dba2ee771cbd7e66b6d577b1fa0ead8127c3"
+    },
+    {
+      "path": "packages/game-domain/tests/clinical-selection.test.ts",
+      "sha256": "e080135dde139dfa001a01b167a5dd1545b9c35a52c21b1c71d54b4b56215fcf"
+    },
+    {
+      "path": "packages/game-domain/tests/departure-risk-alerts.test.ts",
+      "sha256": "c2dacf623b493ad318ae4e72e6d091ac5102d451ca602406f30f55e74ee93dda"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-orders.test.ts",
+      "sha256": "54a50538d65396631b1b63ca3ed222fdd914e6b22efc5f22f3fc0a2bbf22de46"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-result-dispositions.test.ts",
+      "sha256": "e78313da018a57635b457b206ee8989d8165cad47dcdd90a8f73b94d1354d164"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+      "sha256": "49ebe8167f7f4dcd631efcc08dca13ab5c347f68309dfb3cff91cd2b6324c7fb"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-timing-fixtures.ts",
+      "sha256": "4093906208674ebf02d867661ba404dcce64292b0be425cd30a68856e6d49cd1"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-timing-persistence.test.ts",
+      "sha256": "cbd9d18b9a09a0c362cff52ada416727e1a4ff5808cf8c8857aae3caf14896a4"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-timing.test.ts",
+      "sha256": "05386cfaf85ac23daa2a9388af6ddc08b36435d286dff717b3c373d720d056b9"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "sha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d"
+    },
+    {
+      "path": "packages/game-domain/tests/early-levels-20260913-batch.test.ts",
+      "sha256": "792f74a45bbe457f89c592ccff87978d89220be46b049eb9ad70fbcf9c74de02"
+    },
+    {
+      "path": "packages/game-domain/tests/emergency-glp1.test.ts",
+      "sha256": "e86fbf1735c6c3875078336c90e76d1820a63192bfe7090b7c38dc3a001dc338"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-discussions.test.ts",
+      "sha256": "b1ffaf3257584fc9e17b0460cba3b02574b3ca18f3fb64b2c26d52d5fadc2d85"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-still-uniqueness.test.ts",
+      "sha256": "76ab2c86ef0836a9e08256310c966a03e22073c1aee1007219f8155d28674618"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training-benefits.test.ts",
+      "sha256": "b644d51c561a001d81ec9e5327062d301a1255ddb0038342b4cbb82483150a10"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training-fixtures.ts",
+      "sha256": "87b6309ee4de3fc88816672d231a2c261a0b658edf4c0ad10b154109b22ded6a"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training-np-queue.test.ts",
+      "sha256": "92f8d6db7c696e109398bcc19122f5898dacc8ce48e9423e90cd690591088cf1"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training-persistence.test.ts",
+      "sha256": "33f1704a6baf8df053d396cc9f0ef696285f524479fa3eb14b8920b652e9a211"
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training.test.ts",
+      "sha256": "cd1c0dcfc33bf87b70d5c366f14d2b0322024731a562f0d33901d370e2f5a499"
+    },
+    {
+      "path": "packages/game-domain/tests/facility-alert-conditions.test.ts",
+      "sha256": "6d5426a74ec934ec1eff0c7bfa96213cf42a9cc11bca6b5521cc68a679cd0adf"
+    },
+    {
+      "path": "packages/game-domain/tests/facility-experience.test.ts",
+      "sha256": "ece74020b751a0e4df4eb6bbd78b041335843bed43d5ca7bb9f34781f372c6fa"
+    },
+    {
+      "path": "packages/game-domain/tests/facility-management.test.ts",
+      "sha256": "4d1cec08d2c3b7a991a3a2377eb0ea2b94946721cb8c2ebb2207a73e1b2105e9"
+    },
+    {
+      "path": "packages/game-domain/tests/founder-map-movement.test.ts",
+      "sha256": "d250772ce1c8cb91d04fbdb1a534e8d0e8a7909b3bbb9c89ce882b1478bbb66d"
+    },
+    {
+      "path": "packages/game-domain/tests/founder-seats-and-reseating.test.ts",
+      "sha256": "b5845028a9e4396caecbe2e7c91e4a7a9ee45a57bf8b060d0c1d26a5cf863037"
+    },
+    {
+      "path": "packages/game-domain/tests/game-domain.test.ts",
+      "sha256": "b040d5969729d932cf458d7419d5c332b8c6cd558dea28e86b59d1540be0f3ed"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "sha256": "2100aabed7cd41cde815b2b5e3e7fd06d692c2113feea37d49209b9e92587426"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "sha256": "b307fb755a7eaadf86b2a7fe492b2e40892539272ec00959912c4961aebf6235"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "sha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "sha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+      "sha256": "747aa073f33fec17f45b50b9e0fc340240a2dbb88ac54453bd96445630bd4ce5"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "sha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-second-pre-endoscopy-batch.test.ts",
+      "sha256": "c8e5a219cb0ab1af4c387e1ae7f1f9d6b826d038d8757e22c04e11245fb31bc0"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "sha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2"
+    },
+    {
+      "path": "packages/game-domain/tests/level-three-goals.test.ts",
+      "sha256": "0f7fe50e10bcddefe8837f23f1817096f2da47120db5fb5831939688bc9b15f2"
+    },
+    {
+      "path": "packages/game-domain/tests/level-three-roster-capacity.test.ts",
+      "sha256": "7f9c9a4d88d21ea3e34f7ce71bfa26fa1f752419127d58f4ddf60432e92bc8d1"
+    },
+    {
+      "path": "packages/game-domain/tests/level-three-support.test.ts",
+      "sha256": "0530f9ac4f674757881e3809ea706df54bb85902bb0f15f11d613fb3d63d41a6"
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "sha256": "c4a03132078b78ee7a6e1625c114cf18f07a4016c185a7f064deae77339e8ce2"
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-persistence.test.ts",
+      "sha256": "8fa3055a2b7a2f1317e143eb45b45ca68c0065dd5c5d3b242a145ff02e3725a6"
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-progression.test.ts",
+      "sha256": "a85789f1934875b44947b061dcd9ced31c9ca74dba3d9ef221ea27ed1e233dbf"
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-support-operations.test.ts",
+      "sha256": "e5054a621f42067d073fddaf8f1e497250d4c9591b1f43918d086623a381072c"
+    },
+    {
+      "path": "packages/game-domain/tests/litter-reachability.test.ts",
+      "sha256": "68be2b6a3b5e589aa38527f87e2bbcd4fda828d72a9dcb52c821b415354e4b86"
+    },
+    {
+      "path": "packages/game-domain/tests/opening-founder.test.ts",
+      "sha256": "5e8d2aa61053a8cab2c23542d877a1c72ae90ac999d4188bf55959f44abd1f33"
+    },
+    {
+      "path": "packages/game-domain/tests/owner-passable-door-slots.test.ts",
+      "sha256": "2a181afb73e932c71a17b9d1be115deb5b237c7ab5068a2303dbb0a6ae96645a"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-alert-delay.test.ts",
+      "sha256": "82a312cb402d0288afc94d8ebb6634cee7a46fc000e800d951231ec3b89c1c0c"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-amenities.test.ts",
+      "sha256": "6b0c1e42a6da840c7fa6ca3d46bcfdd02b3eb7fb2df545c6b2e5d12f127717f0"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-appearance-rotation.test.ts",
+      "sha256": "b555eba349cd479ed0c11243348179ced6cedbd55d02bcd1ee94bdbcebce0407"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-identity-persistence.test.ts",
+      "sha256": "0e4e4ca37c6fde79f3dafe810c13818859045ad476c566532995a1c885b5a9e4"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-list-order.test.ts",
+      "sha256": "fd72517cc3898d1371a9003b4ce16e843a26438d9f5e15e66690917388a08612"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-name-variety.test.ts",
+      "sha256": "54cee4326c964397637fa7e520c8969a758856c2075ac9a7c21556ff8855ddb9"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "sha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d"
+    },
+    {
+      "path": "packages/game-domain/tests/patientText.test.ts",
+      "sha256": "0075a3bdffb134348319c9eabd99fc4416ca66e4225369dec95133067b1185d9"
+    },
+    {
+      "path": "packages/game-domain/tests/randomness.test.ts",
+      "sha256": "b51d262c73b7eee7585b6d3ea4fb5f808273daa44bbb8c48b63a6ba757d75781"
+    },
+    {
+      "path": "packages/game-domain/tests/reading-stations.test.ts",
+      "sha256": "187a9eb7f4267a3338c52aef52559a340f75058e434003d42e2e19245131263e"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "sha256": "3fd44d482aaf3c989b49b244167efef079a122397c244ebb13243312e1477449"
+    },
+    {
+      "path": "packages/game-domain/tests/retail-operations.test.ts",
+      "sha256": "f3ede2a807f90938ec98870d4001d686b4dd42a948bc0ce3889dbcfcd70f0da0"
+    },
+    {
+      "path": "packages/game-domain/tests/retail-scheduling-performance.test.ts",
+      "sha256": "a1060d2b631a0fc3ce025c66e168eda3b5b3dd541936547d2722b4b2e2d8d454"
+    },
+    {
+      "path": "packages/game-domain/tests/retired-encounters.test.ts",
+      "sha256": "b1cb37fe1f535d258a694f0dd49bc4f4b48245e8b350cf071d9c7bd097935f8b"
+    },
+    {
+      "path": "packages/game-domain/tests/retired-service-history.test.ts",
+      "sha256": "a593d3f288d99818f1680d3d0fcfa5aef7d993adf59eb4d1978616dcf629ce56"
+    },
+    {
+      "path": "packages/game-domain/tests/room-capacity-sales.test.ts",
+      "sha256": "3e34d4f946364fd8d241e368dc8bccdb063162e5a59f1180cc2669edb9880dd2"
+    },
+    {
+      "path": "packages/game-domain/tests/room-sale-departure.test.ts",
+      "sha256": "46b8bf8aa8bb08baf7dc8e3731427a2580b45cd496b02b626f6c8b48743ca061"
+    },
+    {
+      "path": "packages/game-domain/tests/room-upgrade-experience.test.ts",
+      "sha256": "96b6f9d843926119e3e6bb36534d5bc6e4e1c463e1ff832d89116d602e439068"
+    },
+    {
+      "path": "packages/game-domain/tests/room-upgrade-reading.test.ts",
+      "sha256": "67a6c76bec2ee77b2569038ec42028fc7d5a181db1b3c0086834fa4e3a21e048"
+    },
+    {
+      "path": "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+      "sha256": "36a4dfaef5de29c491c47dd6fa9aa2d0e5d6fce6c2e273a3218832bcd7bee073"
+    },
+    {
+      "path": "packages/game-domain/tests/room-upgrade-support.test.ts",
+      "sha256": "64fd93638484f5dc48561ace6ce6065cba067ae9eb020ce6d65f7b0dfce7b48a"
+    },
+    {
+      "path": "packages/game-domain/tests/routine-patient-availability.test.ts",
+      "sha256": "db92a627e0b98906bd15fd535e308595da184f77b29caea229683372f1221b8e"
+    },
+    {
+      "path": "packages/game-domain/tests/runtime-stability.test.ts",
+      "sha256": "2d41b575d4b78ee04a32885ab58dd6ddedacbbbe2758830472c53339c21ef25b"
+    },
+    {
+      "path": "packages/game-domain/tests/service-income.test.ts",
+      "sha256": "72a6e7f22b5c4f8aaa944cf9682d28bc3c503b473e58c08b39482a4cd417ed68"
+    },
+    {
+      "path": "packages/game-domain/tests/service-operations.test.ts",
+      "sha256": "a97864e2c53014adcec2ae65d2d932361b92294826ee3a2680e4277db4f2f1a7"
+    },
+    {
+      "path": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "sha256": "5132241ff267d16394fbafc2c97873d868abe2f50d69e5575baa2cd20d8d15ff"
+    },
+    {
+      "path": "packages/game-domain/tests/spatial.test.ts",
+      "sha256": "b2d537785da84103186bc37bf441c8eed5c6e5c887425bc8ffb3b20be0f30e3c"
+    },
+    {
+      "path": "packages/game-domain/tests/staff-care-room-access.test.ts",
+      "sha256": "969f88de01a97e6760a8bf651f002f1eadbbf184a013c2e021ad309ce40dee97"
+    },
+    {
+      "path": "packages/game-domain/tests/street-arrivals.test.ts",
+      "sha256": "13f5aee0a1865dcc349efcfda6862bff1bdaf24b83d058ad4fbb4f3440a289a7"
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "sha256": "a2f992919893bee5ba5b84cfc1d059020e51e075139f93e97eb1590034375bfe"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "sha256": "56178eba7b3e433b736e9f1b330651b6c091a767707a02e8eff8a8b6dfa7f0e2"
+    },
+    {
+      "path": "packages/game-domain/tests/tick-history-performance.test.ts",
+      "sha256": "2bf4aaf74c571abd313a2b833bd066d1b895489cf1e7054c2d4414ee63090c23"
+    },
+    {
+      "path": "packages/game-domain/tests/timing-encounters.test.ts",
+      "sha256": "0321baa3877c94d78f40d2be44d136d37e3a66ca616c306f0d2610a8de464aaf"
+    },
+    {
+      "path": "packages/game-domain/tests/twenty-concept-batch.test.ts",
+      "sha256": "8add3f3905ac501d5f2a2d25e1d6eb0fc94b6fd07ec076645afcade8ea843381"
+    },
+    {
+      "path": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "sha256": "a608b263df16106090982f4f9cdacba83fb0666717196b00838a4404f68ed735"
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-destination-routing.test.ts",
+      "sha256": "8381a895b1001f9dc6e8c47cbec880f1a5c8f0b8f4bff5bb31fbda0031448763"
+    }
+  ]
+}

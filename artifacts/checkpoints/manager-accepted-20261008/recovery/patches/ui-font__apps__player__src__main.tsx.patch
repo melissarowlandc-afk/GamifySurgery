@@ -1,0 +1,10 @@
+--- a/apps/player/src/main.tsx
++++ b/apps/player/src/main.tsx
+@@ -1,5 +1,7 @@
+ import { StrictMode } from "react";
+ import { createRoot } from "react-dom/client";
++import "@fontsource/atkinson-hyperlegible/latin-400.css";
++import "@fontsource/atkinson-hyperlegible/latin-700.css";
+ import { App } from "./App";
+ import "./styles/tokens.css";
+ import "./styles/global.css";

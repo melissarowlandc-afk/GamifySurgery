@@ -1,0 +1,100 @@
+--- a/apps/player/src/ui/EventMessageBoard.tsx
++++ b/apps/player/src/ui/EventMessageBoard.tsx
+@@ -11,7 +11,9 @@
+   MessageBoardItemView,
+   MessageBoardPriority,
+   MessageBoardTargetType,
++  NeedsYouItemView,
+ } from "./types";
++import { NeedsYouTray } from "./NeedsYouTray";
+ 
+ interface EventMessageBoardProps {
+   items: MessageBoardItemView[];
+@@ -21,6 +23,10 @@
+   ) => void;
+   maximumVisibleItems?: number;
+   mode?: "recent_log" | "ticker";
++  needsYou?: NeedsYouItemView[];
++  onNeedAction?: (item: NeedsYouItemView) => void;
++  failures?: Readonly<Record<string, string>>;
++  compact?: boolean;
+ }
+ 
+ interface FeedScrollSnapshot {
+@@ -79,6 +85,10 @@
+   onAction,
+   maximumVisibleItems = 30,
+   mode = "recent_log",
++  needsYou = [],
++  onNeedAction,
++  failures,
++  compact = false,
+ }: EventMessageBoardProps) {
+   const feedRef = useRef<HTMLDivElement | null>(null);
+   // Seed every supplied ID, including rows outside the current display cap.
+@@ -290,7 +300,7 @@
+ 
+   return (
+     <aside
+-      className={`panel event-message-board is-${mode}`}
++      className={`panel event-message-board is-${mode}${compact ? " is-build-tray" : ""}`}
+       aria-labelledby="event-board-title"
+     >
+       <div className="panel-heading">
+@@ -307,9 +317,11 @@
+             {offscreenNewCount} new {offscreenNewCount === 1 ? "message" : "messages"}
+           </button>
+         ) : (
+-          <small>{mode === "ticker" ? "Live" : "Newest first"}</small>
++          <small>{needsYou.length ? `${needsYou.length} need you` : "Live"}</small>
+         )}
+       </div>
++      <NeedsYouTray items={needsYou} onAction={onNeedAction} failures={failures} compact={compact} />
++      <div className="clinic-zone-label clinic-feed-label" hidden={compact}><span>Around the clinic</span><small>Newest first</small></div>
+       <div
+         ref={feedRef}
+         className="message-board-feed"
+@@ -318,6 +330,7 @@
+         aria-live="polite"
+         aria-relevant="additions"
+         onScroll={handleFeedScroll}
++        hidden={compact}
+       >
+         {listItems.length === 0 ? (
+           <p className="empty-state">
+@@ -335,12 +348,13 @@
+               item.targetType === undefined
+                 ? undefined
+                 : { type: item.targetType, id: item.targetId };
+-            const isNewMessage = emphasizedIds.has(item.id);
++            // Day dividers retain full contrast through arrival and history.
++            const isNewMessage = item.rowKind !== "day_summary" && emphasizedIds.has(item.id);
+             return (
+               <article
+                 className={`message-board-item is-${priority} is-category-${category}${
+                   hasAttentionMarker ? " has-attention-marker" : ""
+-                }${item.persistent ? " is-persistent" : ""}${
++                }${item.rowKind ? ` is-${item.rowKind}` : ""}${item.persistent ? " is-persistent" : ""}${
+                   isNewMessage ? " is-new-message" : ""
+                 }`}
+                 key={item.id}
+@@ -349,7 +363,9 @@
+                 data-attention-marker={hasAttentionMarker}
+                 data-message-id={item.id}
+                 data-new-message={isNewMessage}
++                data-row-kind={item.rowKind ?? "event"}
+               >
++                <div className="clinic-feed-byline"><span>{item.rowKind === "tip" ? <><b className="clinic-tip-label">Tip</b> · </> : null}{item.speaker ?? (item.rowKind === "resolved" ? "Handled" : "Front Desk")}</span>{item.timeLabel ? <time>{item.timeLabel}</time> : null}</div>
+                 {isNewMessage ? (
+                   <span className="message-board-new-token" aria-hidden="true">
+                     New
+@@ -383,6 +399,9 @@
+                     {item.message}
+                   </span>
+                 )}
++                {item.daySummary?.reviewLine ? <p className="clinic-review-line">Review of the day: “{item.daySummary.reviewLine}”</p> : null}
++                {item.daySummary?.partial ? <small>Totals from retained records in this older campaign.</small> : null}
++                {failures?.[item.id] ? <p className="clinic-action-failure" role="status">{failures[item.id]}</p> : null}
+               </article>
+             );
+           })

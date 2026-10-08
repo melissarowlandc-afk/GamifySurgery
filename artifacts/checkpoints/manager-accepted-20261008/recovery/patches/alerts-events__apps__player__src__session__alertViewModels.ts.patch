@@ -1,0 +1,169 @@
+--- a/apps/player/src/session/alertViewModels.ts
++++ b/apps/player/src/session/alertViewModels.ts
+@@ -14,7 +14,6 @@
+   employeeDepartureRiskIsActive,
+   evaluateFacilityOperationalAlertConditions,
+   getFacilityProgressionStatus,
+-  getOperationalGlp1AutomationCapacity,
+   isEmployeeAssignedToOperationalRoom,
+   isRoomOperationalForFacilityWork,
+   operatingDayMinutes,
+@@ -59,6 +58,7 @@
+ 
+ export interface LevelTwoOperationalGuidance {
+   definitionId: string;
++  title?: string;
+   message: string;
+   targetType: MessageBoardTargetType;
+   targetId?: string;
+@@ -134,7 +134,7 @@
+     const roomName = getRoomDefinition(builtImaging)?.displayName ?? "This imaging room";
+     rows.push({ definitionId: "alert.facility.imaging-inoperable", ...hiringAction("staff.imaging_technician", `${roomName} is operational but needs an Imaging Technician. Hire one or restore their room assignment.`) });
+   }
+-  if (state.facilityLevel !== 2) {
++  if (state.facilityLevel < 2) {
+     return rows;
+   }
+   if (hasBuilt("room.phlebotomy") && !hasOperationalRoom("room.phlebotomy")) {
+@@ -149,8 +149,17 @@
+   }
+   if (hasBuilt("room.glp1_telehealth_suite") && !hasOperationalRoom("room.glp1_telehealth_suite")) {
+     rows.push({ definitionId: "alert.facility.glp1-inoperable", ...roomAction("room.glp1_telehealth_suite", "The telehealth suite is not operational. Restore operational access.") });
+-  } else if (hasBuilt("room.glp1_telehealth_suite") && getOperationalGlp1AutomationCapacity(state) === 0) {
++  } else if (hasBuilt("room.glp1_telehealth_suite") && !hasAssignedStaff("staff.glp1_np")) {
+     rows.push({ definitionId: "alert.facility.glp1-inoperable", ...hiringAction("staff.glp1_np", "The telehealth suite is operational but needs NP coverage before automation can begin. Hire one or restore their room assignment.") });
++  }
++  if (state.facilityLevel >= 3) {
++    for (const [roomId, roleId] of [["room.reading", "staff.radiologist"], ["room.laboratory", "staff.laboratory_technician"], ["room.pharmacy", "staff.pharmacist"], ["room.maintenance_workshop", "staff.repair_person"], ["room.ambulatory_or", "staff.or_nurse"]]) {
++      if (!hasBuilt(roomId!)) continue;
++      const name = getRoomDefinition(roomId!)?.displayName ?? "Room";
++      const title = `${name} setup`;
++      if (!hasOperationalRoom(roomId!)) rows.push({ definitionId: `alert.facility.setup.${roomId}`, title, ...roomAction(roomId!, `${name} needs operational access before work can begin.`) });
++      else if (!hasAssignedStaff(roleId!)) rows.push({ definitionId: `alert.facility.setup.${roomId}`, title, ...hiringAction(roleId!, `${name} has space but needs its assigned staff coverage. The furniture declines to help.`) });
++    }
+   }
+   return rows;
+ }
+@@ -354,6 +363,7 @@
+ ]);
+ 
+ function conditionOccurrenceToMessage(
++  state: GameState,
+   occurrence: FacilityConditionOccurrenceState,
+   isLatestForCondition: boolean,
+ ): MessageBoardItemView {
+@@ -362,7 +372,8 @@
+     unresolved &&
+     isLatestForCondition &&
+     occurrence.priority === "action_required";
+-  const rendered = renderPrototypeAlert(occurrence.definitionId);
++  const room = occurrence.target?.kind === "room" ? state.rooms.find((candidate) => candidate.id === occurrence.target?.id) : undefined;
++  const rendered = renderPrototypeAlert(occurrence.definitionId, { room_name: room ? getRoomDefinition(room.roomDefinitionId)?.displayName ?? "the room" : "the room" });
+   const message = CLINIC_WIDE_COMPLAINT_DEFINITION_IDS.has(
+     occurrence.definitionId,
+   )
+@@ -909,6 +920,7 @@
+         message: configuredCopy.message,
+         timeLabel: facilityTimeLabel(state.facilityTick),
+         targetType: "build_mode",
++        targetId: "room.xray",
+         actionLabel: "Open Build Mode",
+         sortKey:
+           pendingOffsiteXray.pendingResult!.scheduledAtTick + 0.043,
+@@ -959,6 +971,7 @@
+       message: configuredCopy.message,
+       timeLabel: facilityTimeLabel(state.facilityTick),
+       targetType: "build_mode",
++      targetId: "room.waiting",
+       actionLabel: "Open Build Mode",
+       sortKey: firstWaitingPatient.waiting.arrivedAtTick + 0.041,
+       persistent: true,
+@@ -987,6 +1000,7 @@
+       message: configuredCopy.message,
+       timeLabel: facilityTimeLabel(state.facilityTick),
+       targetType: "build_mode",
++      targetId: "room.bathroom",
+       actionLabel: "Open Build Mode",
+       sortKey: firstWaitingPatient.waiting.arrivedAtTick + 30.04,
+       persistent: true,
+@@ -1250,9 +1264,8 @@
+       title: configuredCopy.title,
+       message: configuredCopy.message,
+       timeLabel: facilityTimeLabel(warningTick),
+-      targetType: "employee",
+-      targetId: employee.id,
+-      actionLabel: "Show employee",
++      targetType: "money",
++      actionLabel: "Show money",
+       sortKey: warningTick,
+       persistent: true,
+     });
+@@ -1308,39 +1321,15 @@
+     });
+   }
+ 
+-  if (
+-    state.facilityLevel === 1 &&
+-    checkedInWaiting.length >= 3 &&
+-    state.rooms.some((room) => room.roomDefinitionId === "room.waiting") &&
+-    !materializedConditionKeys.has("waiting_room_crowded")
+-  ) {
+-    const configuredCopy = configuredAlertCopy(
+-      "alert.facility.waiting-room-crowded",
+-      {},
+-    );
+-    messages.push({
+-      id: "persistent.facility.waiting-room-crowded",
+-      priority: "informational",
+-      category: "guidance",
+-      showAttentionMarker: false,
+-      title: configuredCopy.title,
+-      message: configuredCopy.message,
+-      timeLabel: facilityTimeLabel(state.facilityTick),
+-      targetType: "build_mode",
+-      actionLabel: "Open Build Mode",
+-      sortKey:
+-        Math.max(
+-          ...checkedInWaiting.map(
+-            (encounter) => encounter.waiting.arrivedAtTick,
+-          ),
+-        ) + 0.037,
+-      persistent: true,
+-    });
+-  }
+-
+   const operationalGuidance = getLevelTwoOperationalGuidance(state);
+   for (const guidance of operationalGuidance) {
+-    const configuredCopy = configuredAlertCopy(guidance.definitionId, {});
++    const configuredCopy = getPrototypeAlertDefinition(guidance.definitionId) ? configuredAlertCopy(guidance.definitionId, {}) : { title: guidance.title ?? "Clinic setup" };
++    const guidanceRoomIds: Record<string, string> = { "alert.facility.endoscopy-inoperable": "room.endoscopy", "alert.facility.imaging-inoperable": "room.xray", "alert.facility.phlebotomy-inoperable": "room.phlebotomy", "alert.facility.evs-inoperable": "room.evs_closet", "alert.facility.glp1-inoperable": "room.glp1_telehealth_suite" };
++    const targetRoom = guidance.targetType === "build_mode" ? state.rooms.find((room) => room.roomDefinitionId === guidance.targetId) :
++      state.rooms.find((room) => state.employees.some((employee) => employee.staffRoleDefinitionId === guidance.targetId && employee.homeRoomInstanceId === room.id));
++    const setupRoom = targetRoom ?? state.rooms.find((room) => room.roomDefinitionId === (guidanceRoomIds[guidance.definitionId] ?? guidance.definitionId.replace("alert.facility.setup.", "")));
++    const onset = state.events.find((event) => event.type === "room_placed" && event.target?.id === setupRoom?.id)?.facilityTick ??
++      state.events.find((event) => event.type === "facility_level_advanced" && event.message.includes(`Level ${state.facilityLevel}`))?.facilityTick ?? 0;
+     messages.push({
+       id: `persistent.${guidance.definitionId}`,
+       priority: "informational",
+@@ -1348,11 +1337,11 @@
+       showAttentionMarker: false,
+       title: configuredCopy.title,
+       message: guidance.message,
+-      timeLabel: facilityTimeLabel(state.facilityTick),
++      timeLabel: facilityTimeLabel(onset),
+       targetType: guidance.targetType,
+       targetId: guidance.targetId,
+       actionLabel: guidance.actionLabel,
+-      sortKey: state.facilityTick + 0.041,
++      sortKey: onset + 0.041,
+       persistent: true,
+     });
+   }
+@@ -1609,6 +1598,7 @@
+     .map(
+     (occurrence) =>
+       conditionOccurrenceToMessage(
++        state,
+         occurrence,
+         latestOccurrenceIdByCondition.get(
+           occurrence.conditionKey,

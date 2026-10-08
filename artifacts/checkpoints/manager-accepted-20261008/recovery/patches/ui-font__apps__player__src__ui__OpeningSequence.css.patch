@@ -1,0 +1,35 @@
+--- a/apps/player/src/ui/OpeningSequence.css
++++ b/apps/player/src/ui/OpeningSequence.css
+@@ -1,5 +1,6 @@
+ .opening-screen {
+   min-height: 100dvh;
++  font-family: var(--font-read);
+   box-sizing: border-box;
+   display: grid;
+   place-items: center;
+@@ -82,6 +83,8 @@
+ }
+ 
+ .founder-preset-label small {
++  font-family: var(--font-pixel);
++  font-variant-numeric: tabular-nums;
+   color: var(--ink-soft, #4c5449);
+   font-size: 0.68rem;
+   font-weight: 800;
+@@ -192,6 +195,7 @@
+ }
+ 
+ .opening-wordmark {
++  font-family: var(--font-pixel);
+   border: 2px solid #35382f;
+   padding: 0.35rem 0.55rem;
+   background: #e8e7d6;
+@@ -324,7 +328,7 @@
+   border: 2px solid #30352c;
+   background: #eee9cf;
+   color: #30352c;
+-  font: 700 0.7rem/1 monospace;
++  font: 700 0.7rem/1 var(--font-read);
+ }
+ 
+ @keyframes founder-idle-bounce {

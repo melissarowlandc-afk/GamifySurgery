@@ -1,0 +1,56 @@
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -9035,3 +9035,53 @@
+ .service-row-price small {
+   font-family: var(--font-read);
+ }
++
++/* Alerts & Events: restrained live cards above the chronological clinic feed. */
++.event-message-board .needs-you-zone { flex: 0 0 auto; border-bottom: 2px dashed var(--shade-3); }
++.clinic-zone-label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 8px 10px 4px; font: 700 11px/1.3 var(--font-pixel); text-transform: uppercase; }
++.clinic-zone-label small { font: 12px/1.3 var(--font-read); text-transform: none; }
++.needs-you-cards { display: grid; gap: 6px; padding: 4px 8px 8px; }
++.needs-you-card { min-width: 0; padding: 8px; border: 2px solid var(--ink); border-left: 5px solid #8a3b2a; background: var(--panel); font: 14px/1.35 var(--font-read); }
++.needs-you-card.is-payroll { border-left-color: #6a5824; }
++.needs-you-card.is-resource { border-left-color: #2f5a33; }
++.needs-you-card strong { font: 700 15px/1.25 var(--font-read); }
++.needs-you-card p { margin: 4px 0 6px; font: 14px/1.35 var(--font-read); }
++.needs-you-calm { margin: 2px; color: var(--ink-soft); font: 14px/1.4 var(--font-read); }
++.clinic-fix-button { min-height: 30px; max-width: 100%; padding: 5px 8px; border: 2px solid var(--ink); background: var(--ink); color: var(--panel); font: 700 13px/1.3 var(--font-read); cursor: pointer; }
++.clinic-fix-button:focus-visible { outline: 3px solid #b88b2b; outline-offset: 2px; }
++.needs-you-deadline { display: grid; gap: 2px; margin: 5px 0; font: 12px/1.3 var(--font-read); }
++.needs-you-deadline meter { width: 100%; height: 10px; }
++.clinic-action-failure { color: #8a3b2a; font: 14px/1.35 var(--font-read); }
++.clinic-feed-byline { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-soft); font: 700 11px/1.4 var(--font-pixel); }
++.clinic-feed-byline time { font: 12px/1.4 var(--font-read); text-align: right; }
++.event-message-board .message-board-compact-copy,
++.event-message-board .message-board-compact-action-copy { font: 14px/1.4 var(--font-read); }
++.event-message-board .message-board-compact-action-label { font: 700 13px/1.4 var(--font-read); }
++.event-message-board .message-board-item.is-day_summary { background: var(--ink); color: var(--paper-raised); border: 2px solid var(--ink); padding: 10px; opacity: 1; filter: none; animation: none; box-shadow: none; mix-blend-mode: normal; isolation: isolate; }
++.message-board-item.is-day_summary .clinic-feed-byline,
++.message-board-item.is-day_summary p,
++.message-board-item.is-day_summary small { color: inherit; }
++.message-board-item.is-day_summary::before,
++.message-board-item.is-day_summary::after { content: none; }
++.message-board-item.is-milestone { background: #e2e9d4; border-left: 4px solid #2f5a33; }
++.message-board-item.is-resolved { color: var(--ink-soft); }
++.clinic-review-line { font: 14px/1.4 var(--font-read); }
++.clinic-headline { height: 30px; min-height: 30px; max-height: 30px; padding: 4px 12px; border-top: 1px dashed var(--shade-3); overflow: hidden; visibility: hidden; background: var(--panel); font: 14px/1.4 var(--font-read); white-space: nowrap; text-overflow: ellipsis; }
++.clinic-headline.is-showing { visibility: visible; }
++.event-message-board.is-build-tray { flex: 0 0 auto; min-height: 0; max-height: none; }
++.needs-you-zone.is-compact .needs-you-card { padding: 6px 8px; }
++.event-message-board [hidden] { display: none; }
++.clinic-map-pins { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
++.clinic-map-pin { position: absolute; transform: translate(-50%, -100%); width: 28px; height: 28px; padding: 0; border: 2px solid var(--ink); border-radius: 50% 50% 50% 2px; background: #eed280; color: var(--ink); box-shadow: 1px 2px 0 #23272055; font: 700 16px/1 var(--font-read); pointer-events: auto; cursor: pointer; }
++.clinic-map-pin:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
++.message-board-item.is-tip {
++  border-inline-start: 3px solid var(--ink);
++  background: var(--paper-raised);
++  color: var(--ink);
++  font-family: var(--font-read);
++}
++.clinic-tip-label {
++  font-family: var(--font-read);
++  font-weight: 700;
++  color: var(--ink);
++}

@@ -1,0 +1,98 @@
+--- a/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
++++ b/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
+@@ -89,23 +89,37 @@
+   );
+   expect(state.operationReceipts[`${prefix}.admit`]?.status).toBe("applied");
+   state = readyForPatientQuestion(state, encounterId, prefix);
+-  const question = getCurrentQuestion(state, encounterId)!;
+-  const choice = question.node.answerChoices.find((item) => item.isCorrect === correct)!;
+-  state = gameReducer(state, {
+-    type: "SUBMIT_ANSWER",
+-    operationId: `${prefix}.answer`,
+-    encounterId,
+-    decisionNodeId: question.node.id,
+-    answerChoiceId: choice.id,
+-    reviewedAtMs: REVIEWED_AT_MS + index,
+-  });
+-  expect(state.operationReceipts[`${prefix}.answer`]?.status).toBe("applied");
+-  expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);
+-  expect(state.encounters[encounterId]?.steps[0]?.answer).toMatchObject({
+-    correct,
+-    correctedForward: false,
+-    ratingIntent: correct ? "Good" : "Again",
+-  });
++  for (const [nodeIndex, authoredNode] of clinicalCase.decisionNodes.entries()) {
++    const question = getCurrentQuestion(state, encounterId)!;
++    expect(question.node.id).toBe(authoredNode.id);
++    const choice = question.node.answerChoices.find((item) => item.isCorrect === correct)!;
++    state = gameReducer(state, {
++      type: "SUBMIT_ANSWER",
++      operationId: `${prefix}.answer.${nodeIndex}`,
++      encounterId,
++      decisionNodeId: question.node.id,
++      answerChoiceId: choice.id,
++      reviewedAtMs: REVIEWED_AT_MS + index,
++    });
++    expect(state.operationReceipts[`${prefix}.answer.${nodeIndex}`]?.status).toBe("applied");
++    expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);
++    const nonfinal = nodeIndex < clinicalCase.decisionNodes.length - 1;
++    expect(state.encounters[encounterId]?.steps[nodeIndex]?.answer).toMatchObject({
++      correct,
++      correctedForward: !correct && nonfinal,
++      ratingIntent: correct ? "Good" : "Again",
++    });
++    if (nonfinal) {
++      state = gameReducer(state, {
++        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
++        operationId: `${prefix}.continue.${nodeIndex}`,
++        encounterId,
++        decisionNodeId: question.node.id,
++      });
++      expect(state.operationReceipts[`${prefix}.continue.${nodeIndex}`]?.status).toBe("applied");
++      expect(state.encounters[encounterId]?.currentNodeIndex).toBe(nodeIndex + 1);
++    }
++  }
+   state = gameReducer(state, {
+     type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+     operationId: `${prefix}.acknowledge`,
+@@ -120,7 +134,9 @@
+   });
+   expect(state.operationReceipts[`${prefix}.close`]?.status).toBe("applied");
+   expect(state.encounters[encounterId]?.lifecycle).toBe("resolved");
+-  expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);
++  for (const node of clinicalCase.decisionNodes) {
++    expect(state.learningHistories[node.primaryConceptId]?.reviews).toHaveLength(1);
++  }
+   return state;
+ }
+ 
+@@ -172,12 +188,13 @@
+ }
+ 
+ describe("GS-028 statistics and ethics runtime admission", () => {
+-  it("admits the 28 objectives and 112 cases into the active release exactly once", () => {
++  it("admits the 28 objectives and 112 nodes in 108 cases into the active release exactly once", () => {
+     expect(GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS).toHaveLength(28);
+-    expect(GS028_STATS_ETHICS_20260929_CASES).toHaveLength(112);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(331);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(1012);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
++    expect(GS028_STATS_ETHICS_20260929_CASES).toHaveLength(108);
++    expect(GS028_STATS_ETHICS_20260929_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(112);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith("concept.gs028g."))).toHaveLength(331);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g."))).toHaveLength(1008);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.")).flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {
+       expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
+     }
+@@ -196,8 +213,9 @@
+   );
+ 
+   it("schedules a real NP discussion without creating a patient encounter or economics", () => {
+-    expect(employeeCases).toHaveLength(36);
++    expect(employeeCases).toHaveLength(60);
+     let state = ordinaryFixture("employee");
++    state.facilityLevel = 2;
+     state.nextEmployeeDiscussionTick = 1;
+     state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
+     addReachableNp(state);

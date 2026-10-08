@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "staff-gapfill-v6d-browser-revalidation-needed/v1",
+  "status": "PENDING-MANAGER",
+  "reason": "008 poses and rebuilt review images changed after the manager original-batch 44-page/viewports PASS. Historical result is preserved; it does not validate the revised navy package.",
+  "managerOriginalReview": "accepted-original-batch-except-008",
+  "priorManagerRun": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/validation/gallery-browser-results.json",
+    "sha256": "017a3594c9ae396a67a40f5871f3799e64fc9c12e0c3f1bb5c1bba39b8a21c41",
+    "status": "PASS",
+    "pageViewports": 44
+  },
+  "currentCorrection": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/corrections/008-navy-palette-v1.json",
+    "sha256": "0676c33981f57f368b8a24a90b0bf237abaf3dcedd1551ead6a2affdbd38bb6a"
+  },
+  "currentPoses": [
+    {
+      "pose": "stand",
+      "direction": "south",
+      "sha256": "ff9373803c98d657a2397267392b5e75e078cfb60cca8af3431d98808c662b32"
+    },
+    {
+      "pose": "stand",
+      "direction": "east",
+      "sha256": "e9040c82685660d4bce1515c90d93cd3fef45196fb5a9b8805267bd3f04497d5"
+    },
+    {
+      "pose": "stand",
+      "direction": "west",
+      "sha256": "6e51ba05b501175c9601d1623d9bbbd961f663ba77356127a9040a4685c58538"
+    },
+    {
+      "pose": "stand",
+      "direction": "north",
+      "sha256": "5ea66698cf39ce349194b2ca06bff08bc6321f97bc564e4854948d48a6f98176"
+    },
+    {
+      "pose": "sit",
+      "direction": "south",
+      "sha256": "bfeb85fab9e6b7c4fd6c0b07738d2807476e171d93e1def3609eea30ea345200"
+    },
+    {
+      "pose": "sit",
+      "direction": "east",
+      "sha256": "5efb51d72f82ec2d483b65468ea57a2913257a736071ce78d4d15ac22692dece"
+    },
+    {
+      "pose": "sit",
+      "direction": "west",
+      "sha256": "5bbd611244c50563f2a540103fc813eeadeb39b5713afb79143522183052bf11"
+    },
+    {
+      "pose": "sit",
+      "direction": "north",
+      "sha256": "2139cd0093feb062a0c9307b5abca68b66fcb2ac4645d0b682cb6ec9f5697735"
+    }
+  ],
+  "currentGallery": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/review/index.html",
+    "sha256": "a9d05afd88843ca8df870bc4fd2e42760bcddbf80dd9bc35cb30953a3fb5c749"
+  },
+  "command": "node tools/character-mapping/staff-gapfill-v6d/validate-gallery.mjs",
+  "runtimeReady": false
+}

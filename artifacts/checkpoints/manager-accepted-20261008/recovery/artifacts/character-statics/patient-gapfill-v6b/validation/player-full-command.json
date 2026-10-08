@@ -1,0 +1,21 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "test",
+    "--workspace",
+    "@gamify-surgery/player",
+    "--",
+    "--pool=threads",
+    "--maxWorkers=1",
+    "--config",
+    "../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs",
+    "--configLoader=native"
+  ],
+  "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+  "startedAt": "2026-10-08T04:21:52.928008+00:00",
+  "finishedAt": "2026-10-08T04:22:41.871206+00:00",
+  "exitCode": 1,
+  "log": "artifacts/character-statics/patient-gapfill-v6b/validation/player-full.txt",
+  "sha256": "443c849341535b974d4b35a5c1d7976f0abd0a05961d2741a82b1fba5c196ea6"
+}

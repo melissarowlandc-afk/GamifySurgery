@@ -1,0 +1,1437 @@
+{
+  "schemaVersion": 1,
+  "method": "Dependency-free exact in-memory unified-patch forward/reverse/reapply; no Git writes",
+  "contracts": [
+    {
+      "id": "characters-225-to-318__apps__player__src__art__characterStillRegistry.generated.json",
+      "scope": "characters-225-to-318",
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "base": "recovery/bases/characters-225-to-318/apps/player/src/art/characterStillRegistry.generated.json",
+      "patch": "recovery/patches/characters-225-to-318__apps__player__src__art__characterStillRegistry.generated.json.patch",
+      "baseSha256": "9ddaa8381d092c5c49536465bea036edd3c9ab8e8659731a85e7f3d4def94374",
+      "acceptedSha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16",
+      "acceptedBytes": 1512231,
+      "patchSha256": "f5e1f76896bb6b66db1063cd9f2092b170ed6955cd4b1037343f7edb7afa843d",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "characters-225-to-318__tools__character-mapping__gs026-runtime-stills__provenance-manifest.json",
+      "scope": "characters-225-to-318",
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "base": "recovery/bases/characters-225-to-318/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "patch": "recovery/patches/characters-225-to-318__tools__character-mapping__gs026-runtime-stills__provenance-manifest.json.patch",
+      "baseSha256": "9304d56a9bb0ae75b7e11f8dcd58490b47189f07df71a253cd14759ad2f061e6",
+      "acceptedSha256": "3fe6633843ee7189cbb4e7b0648847dbb6a63bcaf0487ce122253bf16c9cd0bd",
+      "acceptedBytes": 2249336,
+      "patchSha256": "e868aa3d54ac3f997d7616ffe0264334e3cd48067d3fe3d910e2cabfe4df465d",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "characters-225-to-318__packages__game-domain__src__characterStillCatalog.ts",
+      "scope": "characters-225-to-318",
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "base": "recovery/bases/characters-225-to-318/packages/game-domain/src/characterStillCatalog.ts",
+      "patch": "recovery/patches/characters-225-to-318__packages__game-domain__src__characterStillCatalog.ts.patch",
+      "baseSha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d",
+      "acceptedSha256": "cadb49a4969b14f7a0b04df2bf76e2e8148fc5423014d90d408417727b02de0b",
+      "acceptedBytes": 20525,
+      "patchSha256": "7cd7c3a065c8f73d3c5c42208e2796689044ae64e317267813180439ed8c314c",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "characters-225-to-318__packages__game-domain__src__characterStillCatalog.test.ts",
+      "scope": "characters-225-to-318",
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "base": "recovery/bases/characters-225-to-318/packages/game-domain/src/characterStillCatalog.test.ts",
+      "patch": "recovery/patches/characters-225-to-318__packages__game-domain__src__characterStillCatalog.test.ts.patch",
+      "baseSha256": "24be461ee07e6c7831a0618164e020449777dcd179b81b592e6d4bcc97f9b583",
+      "acceptedSha256": "a7de59aebdfe09b6c468ec0a20d3b3b0d996e6c6f6d630773026a3613cb579ae",
+      "acceptedBytes": 31126,
+      "patchSha256": "1625f191b6ffebd8b38257680295c76ca8573f5f685de14a4145980ea00d9dc9",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "characters-225-to-318__apps__player__src__art__characterStillRegistry.ts",
+      "scope": "characters-225-to-318",
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "base": "recovery/bases/characters-225-to-318/apps/player/src/art/characterStillRegistry.ts",
+      "patch": "recovery/patches/characters-225-to-318__apps__player__src__art__characterStillRegistry.ts.patch",
+      "baseSha256": "d272179b736928d8533a395bbd2d67efaa0cf6eb73a1212b2a0d5c609d7a06d6",
+      "acceptedSha256": "9e3fb77d541a89f549a41086cc6c13d44169e6a4040ff7c7872c9100292b01e8",
+      "acceptedBytes": 3906,
+      "patchSha256": "34b00fb7c4768aad2cfd30070676369b9e750eb655f122aaf4b7adf45be40c99",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "characters-225-to-318__apps__player__src__art__characterStillRegistry.test.ts",
+      "scope": "characters-225-to-318",
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "base": "recovery/bases/characters-225-to-318/apps/player/src/art/characterStillRegistry.test.ts",
+      "patch": "recovery/patches/characters-225-to-318__apps__player__src__art__characterStillRegistry.test.ts.patch",
+      "baseSha256": "9f09f142dde5d5d01bad48c0f23e6c5b95abf127dcccebacfd76f412728f021e",
+      "acceptedSha256": "94e75b0c468dbb0f9f70083d1a8e4f54b172172b4467c2eeb571f77740af0780",
+      "acceptedBytes": 18705,
+      "patchSha256": "33c58cf61daf8a65588d57bb59c444aea80e0b9951f84d14331c5ebcec49aba1",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "baseReceipt": "artifacts/character-statics/future-roster20-v5/runtime-integration-baseline/manifest.json",
+        "finalReceipt": "artifacts/character-statics/staff-gapfill-v6d/validation/scoped-change-report.json",
+        "acceptance": "docs/execplans/character-gapfill-v6-20261007.md; future-roster20-v5-integration-20261007.md"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "ui-font__apps__player__src__facility__FacilityScene.ts",
+      "scope": "ui-font",
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "base": "recovery/bases/ui-font/apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/ui-font__apps__player__src__facility__FacilityScene.ts.patch",
+      "baseSha256": "83645d2ac1b6f01c08f47ecdb60ade4aec13efc7d0b2208f787e12b3cc65b761",
+      "acceptedSha256": "be733380a0b148c1091e81f82e5af480d3907bf12170a9b43b5ecc40f10727b1",
+      "acceptedBytes": 327143,
+      "patchSha256": "333c4530f0d9c03dcdf4790b6e112dd3fe395bf248a552670a2213dc0623cdc6",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "ui-font__apps__player__src__main.tsx",
+      "scope": "ui-font",
+      "path": "apps/player/src/main.tsx",
+      "base": "recovery/bases/ui-font/apps/player/src/main.tsx",
+      "patch": "recovery/patches/ui-font__apps__player__src__main.tsx.patch",
+      "baseSha256": "7b19c09e7b02d94accb3f1b954c8dc1253c64d03f343a3fd9899976f8931d8cd",
+      "acceptedSha256": "4d2fbc8f7368248656fbe55bafd35d7312c7286536adb9417bdcc895ebfcf30c",
+      "acceptedBytes": 502,
+      "patchSha256": "fe8b343e177ad834e62d6d765ee8b0a39636ec3277f2cc5c83231ec426ef55e0",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "ui-font__apps__player__src__styles__global.css",
+      "scope": "ui-font",
+      "path": "apps/player/src/styles/global.css",
+      "base": "recovery/bases/ui-font/apps/player/src/styles/global.css",
+      "patch": "recovery/patches/ui-font__apps__player__src__styles__global.css.patch",
+      "baseSha256": "68cbc0a7686ad10fade71bf4c8015d39f0db4c953ae8bbb8211a98aed9796ddc",
+      "acceptedSha256": "85b95613c5561e38a91274ffe22944baf1de8563881f15f2dc4f54501109746e",
+      "acceptedBytes": 171337,
+      "patchSha256": "307916647d3c6bd8759c851a2611cddbe91ae3a2b520ea6facfa9cc0665872e5",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "ui-font__apps__player__src__styles__tokens.css",
+      "scope": "ui-font",
+      "path": "apps/player/src/styles/tokens.css",
+      "base": "recovery/bases/ui-font/apps/player/src/styles/tokens.css",
+      "patch": "recovery/patches/ui-font__apps__player__src__styles__tokens.css.patch",
+      "baseSha256": "b3d70768d0ec1bd17513a686836e4bf1bed244ecdd6e01a9bea293a9dd1c8aec",
+      "acceptedSha256": "c2e0ff23c86634ce6ae60de87660494b51f739facdcfd2b785b9c8d9d58b798f",
+      "acceptedBytes": 853,
+      "patchSha256": "861534ac01f65154f32a6f9cc57adf2ae936edb100c1e019c1bad8898c6d85f7",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "ui-font__apps__player__src__ui__ChartPanel.tsx",
+      "scope": "ui-font",
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "base": "recovery/bases/ui-font/apps/player/src/ui/ChartPanel.tsx",
+      "patch": "recovery/patches/ui-font__apps__player__src__ui__ChartPanel.tsx.patch",
+      "baseSha256": "0a18f27f6a499744276352cbcc6812fad5a8d5602c8da91c00661a0f9c079cf4",
+      "acceptedSha256": "0613aa8ffc24d767f5734b4f241eb667160ed0c855039b412359d821317c5ec9",
+      "acceptedBytes": 32340,
+      "patchSha256": "f45e7c29ee2911c1e14c77b3c32f91a4be9e3adbfbd49674efe9f68c68c856bf",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "ui-font__apps__player__src__ui__chartSheet.css",
+      "scope": "ui-font",
+      "path": "apps/player/src/ui/chartSheet.css",
+      "base": "recovery/bases/ui-font/apps/player/src/ui/chartSheet.css",
+      "patch": "recovery/patches/ui-font__apps__player__src__ui__chartSheet.css.patch",
+      "baseSha256": "9063bdca6586529e28bdc8bea8742be46553d90e06d614ddec5ff6a1c251c52b",
+      "acceptedSha256": "505c4ee7b9e1828444b0848cbc70ff63b8420e0dc2a78206a7b7fdc632e3641f",
+      "acceptedBytes": 15645,
+      "patchSha256": "87b01e9cfc3be83652c1b424b0a9422d53b58205bda286e26d03e15d426fafd1",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "ui-font__apps__player__src__ui__OpeningSequence.css",
+      "scope": "ui-font",
+      "path": "apps/player/src/ui/OpeningSequence.css",
+      "base": "recovery/bases/ui-font/apps/player/src/ui/OpeningSequence.css",
+      "patch": "recovery/patches/ui-font__apps__player__src__ui__OpeningSequence.css.patch",
+      "baseSha256": "46579dc91de097f5d30c6118f835daf50e1de753fc173deddc8584a41aa6c350",
+      "acceptedSha256": "3c3738e5b39f3bb836d1d1f2491799b329bd3409829795d38678a52ecf557d59",
+      "acceptedBytes": 6516,
+      "patchSha256": "5833197711605251aeae25ee205f55716c7bfd16ce913060bc06f9f2e660bb5c",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/ui-font-system-20261007.md: Manager review",
+        "ledgerSource": "machine-local gamifysurgery-ui-font-system-ke9h1s/baseline.json + edits.json",
+        "ledgerSha256": "3470484ac4e69abf3584e34e56a85f51e1e14725c6b8a9ef5846a122898a0320",
+        "proof": "Each before/after chain matches every recorded SHA256 exactly"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "satisfaction-rounding__apps__player__src__session__viewModels.ts",
+      "scope": "satisfaction-rounding",
+      "path": "apps/player/src/session/viewModels.ts",
+      "base": "recovery/bases/satisfaction-rounding/apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/satisfaction-rounding__apps__player__src__session__viewModels.ts.patch",
+      "baseSha256": "b5dedd70d36c2cd0b8073a0474700e12a14975e10af89730b11e6ef67aca64d1",
+      "acceptedSha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "acceptedBytes": 123054,
+      "patchSha256": "a82e02f5575f745ea01c7793120fb6f37539b74029f9043d8af0a6868008c852",
+      "baselineKind": "explicitly_inferred_compatible_base",
+      "proof": {
+        "acceptance": "docs/handoffs/CURRENT_THREAD_HANDOFF.md: Manager checkpoint (4)",
+        "acceptedCapture": "gs-alerts-events-revamp-20261008-baseline/apps/player/src/session/viewModels.ts",
+        "edits": 6,
+        "limitation": "Compatible before-state inferred by reversing only the six documented Math.round label wrappers"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "gs028-optional-fields__packages__clinical-content__src__schema.ts",
+      "scope": "gs028-optional-fields",
+      "path": "packages/clinical-content/src/schema.ts",
+      "base": "recovery/bases/gs028-optional-fields/packages/clinical-content/src/schema.ts",
+      "patch": "recovery/patches/gs028-optional-fields__packages__clinical-content__src__schema.ts.patch",
+      "baseSha256": "15c27fb7cb91745aca528a86a1a0c4e5062313a937f2e1e47c982723c4d7cc38",
+      "acceptedSha256": "ff7bc72b3a0b0ae58c71045f460c82c919ab636e35debcba60417950ff45775d",
+      "acceptedBytes": 27131,
+      "patchSha256": "07a1cfff3a22afcbdd23eeaf11a41020aaa6159513b8c73ed816dca52e33ad6c",
+      "baselineKind": "HEAD_plus_explicitly_preserved_preexisting_Level3_seam",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "ff7bc72b3a0b0ae58c71045f460c82c919ab636e35debcba60417950ff45775d",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-optional-fields__packages__clinical-content__src__pilot-schema.ts",
+      "scope": "gs028-optional-fields",
+      "path": "packages/clinical-content/src/pilot-schema.ts",
+      "base": "recovery/bases/gs028-optional-fields/packages/clinical-content/src/pilot-schema.ts",
+      "patch": "recovery/patches/gs028-optional-fields__packages__clinical-content__src__pilot-schema.ts.patch",
+      "baseSha256": "2f530c4d364bfa20146c0c5ed2508d7d822d75c2967f8c5e9346ff014232350c",
+      "acceptedSha256": "5c8e0c83e1fcd8f28c34e8f568ea3a6e231c2d3dd4c30ca540185ec4325f2ba3",
+      "acceptedBytes": 19198,
+      "patchSha256": "8242c0160bc84c9c4339e02ffa107b7cd1aaf5da49de42f7b82087d09eee8375",
+      "baselineKind": "HEAD_compatible_base",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "5c8e0c83e1fcd8f28c34e8f568ea3a6e231c2d3dd4c30ca540185ec4325f2ba3",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-optional-fields__packages__game-domain__src__patientText.ts",
+      "scope": "gs028-optional-fields",
+      "path": "packages/game-domain/src/patientText.ts",
+      "base": "recovery/bases/gs028-optional-fields/packages/game-domain/src/patientText.ts",
+      "patch": "recovery/patches/gs028-optional-fields__packages__game-domain__src__patientText.ts.patch",
+      "baseSha256": "81d1e55941accb64fcfc4c3a76d702db378228cfd16e1e3d80e64b518713ca20",
+      "acceptedSha256": "a4d1a344e2af30b923263e0fbe1f4a347fbec164040eda59dad46286c6129478",
+      "acceptedBytes": 4219,
+      "patchSha256": "b90a6bcea8204540f135e117d4ef10b9b4b5d5f3bd70d5f3fafb78338ee90f5a",
+      "baselineKind": "HEAD_compatible_base",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "a4d1a344e2af30b923263e0fbe1f4a347fbec164040eda59dad46286c6129478",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "a4d1a344e2af30b923263e0fbe1f4a347fbec164040eda59dad46286c6129478",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__approved-data__quality-improvement-pdsa-iteration.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/approved-data/quality-improvement-pdsa-iteration.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/approved-data/quality-improvement-pdsa-iteration.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__approved-data__quality-improvement-pdsa-iteration.test.ts.patch",
+      "baseSha256": "861a111d271e5e85c0bb5d6f347a897d7552d231d32ebe4617e9b0653bed9eac",
+      "acceptedSha256": "5dc754dad48f210de34ce1bc829dd887bc6d1002509199a1ad38ca95812c8a0a",
+      "acceptedBytes": 8187,
+      "patchSha256": "272bfad61d25e564fe0cefc2ede120b91f59a8395dce7b69fd786aa321274e37",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "5dc754dad48f210de34ce1bc829dd887bc6d1002509199a1ad38ca95812c8a0a",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts.patch",
+      "baseSha256": "8751b054889063bf89eff356c0fa387147fd2e8be759731dd3310a49397e4f60",
+      "acceptedSha256": "dcb042739b356912135f734278830196c0192868d661d56ce54ca95e526b405c",
+      "acceptedBytes": 6949,
+      "patchSha256": "78cbcd053400bd5e379ffff5fecf10c832b1ef8b48b336e47bf9910512a0be93",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "dcb042739b356912135f734278830196c0192868d661d56ce54ca95e526b405c",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts.patch",
+      "baseSha256": "5eebb44fc4b41d374fe1856d16a101db1ed65478640d1bba6e30030b211b82f7",
+      "acceptedSha256": "9d6c54ae6d9ec46aaeb0e2a88ab6d305a1640429075a0b76500e55c930d97ecb",
+      "acceptedBytes": 7518,
+      "patchSha256": "69dc345a5a96c1e7a1b9cf8747e048379e5ceebe2027ac8c1015789c2b73a03f",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "9d6c54ae6d9ec46aaeb0e2a88ab6d305a1640429075a0b76500e55c930d97ecb",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts.patch",
+      "baseSha256": "ba2bf0e6a7f30d0753eb44ff2df48f9f515fbd1a5392790a009009599e4f34a8",
+      "acceptedSha256": "45ce5945872e06f128936f596eb95d71baebe59e2411245b9eb79aec14fd6eed",
+      "acceptedBytes": 6615,
+      "patchSha256": "1a6285ba4743e34d2044d48502fb6006e9ccd09357ad4d2756d5fad7a2ee218b",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "45ce5945872e06f128936f596eb95d71baebe59e2411245b9eb79aec14fd6eed",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts.patch",
+      "baseSha256": "5fa392a163f448b9f387c19b8ca385f8a3d208bb9770f043ce48a41466ee53d0",
+      "acceptedSha256": "1fc0b0e91a0f5275962ed54bf3b6cee0e6f1593cda08553dddc5d3a743c1960a",
+      "acceptedBytes": 5450,
+      "patchSha256": "94160ac2f8ecc72a1ab068a61c1bea4269252c976c18d700fb5b29eaca33bae5",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "1fc0b0e91a0f5275962ed54bf3b6cee0e6f1593cda08553dddc5d3a743c1960a",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts.patch",
+      "baseSha256": "a18df2d8f6c06558078956db8c09962061399736a8a42a9373569ad55f1a3e0a",
+      "acceptedSha256": "e8a5aa0d89c8f01aae694dfb1bb0be3e5e7b37ed18a8815a31281504fa8ff20e",
+      "acceptedBytes": 7097,
+      "patchSha256": "2fd6b3a137aa6e4038e5a34a10d3f0bffd760b5c1f35a5ec1721543334ba7e1e",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "e8a5aa0d89c8f01aae694dfb1bb0be3e5e7b37ed18a8815a31281504fa8ff20e",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts.patch",
+      "baseSha256": "2b6625b642be6710bb3dd70923c04b6bade8600efab8091df2f58f0c7d6c3daa",
+      "acceptedSha256": "7be50687e23f134e98bb38e979416b62cabf8594221aba354e8a6a8cee5e83af",
+      "acceptedBytes": 5915,
+      "patchSha256": "d4f8ce242b6b751700846ad4e508278f6dc943247b53067d084820b72c3f65c3",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "7be50687e23f134e98bb38e979416b62cabf8594221aba354e8a6a8cee5e83af",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts.patch",
+      "baseSha256": "07bbea1126f3932f1485e915ce10fd62da874e1d209a50a5ee63f976ea9f9f7c",
+      "acceptedSha256": "9c9ba1114c0c59843d221242e32cd54be6dd53c0bdb96bbba3cb93db6180a57e",
+      "acceptedBytes": 3698,
+      "patchSha256": "fd2d45664ba48ddbc585d2ee759a30bd3f953c5c5b9334b9c3303d7c4404c01c",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "9c9ba1114c0c59843d221242e32cd54be6dd53c0bdb96bbba3cb93db6180a57e",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts.patch",
+      "baseSha256": "6b824bd411b80edb404750bc397f24e95bcbe1e5857b36ab11fea5e02fb05eb2",
+      "acceptedSha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2",
+      "acceptedBytes": 10381,
+      "patchSha256": "1c32b8e52340592246200ff5964fb38ba86383ec166f42c9dffa2afb8d66f03b",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "f62f6bd54b20db1e54090a32ec79423c9e84f978250a4c5220b051909a4a42a2",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261003-batch.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "baseSha256": "de6c4fc2333fc2a93f1b907021c9d824071e5725ce96a48e4205455d2c74306b",
+      "acceptedSha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70",
+      "acceptedBytes": 33804,
+      "patchSha256": "739eee138f0a88bcb81b299d1eb1d2aec598596a467b7b894d00aca9ac1a2fd3",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "edf8bcbaacc6d31d4a2bc62f744cbdbcda52cedb9f8983d86eea03a89fc5ac70",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-batch.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-batch.test.ts.patch",
+      "baseSha256": "a671c746bef5a43437704f47f6d1428bee851d3bb7791225c987ae5bbbc6cc2d",
+      "acceptedSha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245",
+      "acceptedBytes": 30929,
+      "patchSha256": "7d2e541247ab517195191a9f5835afc835ac9bf9905150d7a5f8d634620d53e6",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts.patch",
+      "baseSha256": "74699481a3869632dc20f0e417a65abbb21948caacd360eb0292dee446717ee4",
+      "acceptedSha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403",
+      "acceptedBytes": 45619,
+      "patchSha256": "afe253b1e3dd3f968076790ad34952681497cdc6c9180809da4e02415c561ca4",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "8b3f09fcb0152f32e086e967e6ee73d733f38214cbbd19a74f3b23ac974b5403",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__patient-supply.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/patient-supply.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__patient-supply.test.ts.patch",
+      "baseSha256": "d655735c6023e13c4fc3ed9726fbe404aa3224373dcadc3d74467ec374ab283f",
+      "acceptedSha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d",
+      "acceptedBytes": 19009,
+      "patchSha256": "4e475c33591849aa911aab1d0bb76afc91b0a083751dcee432fb42f5b9bd6882",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "39b9cc657b61009e5a3c5f839dcd0f0528e448a85b4a126c3711e3cfaae9231d",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "gs028-M4-M5-tests__packages__game-domain__tests__diagnostics__patient-supply.test.ts",
+      "scope": "gs028-M4-M5-tests",
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "base": "recovery/bases/gs028-M4-M5-tests/packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "patch": "recovery/patches/gs028-M4-M5-tests__packages__game-domain__tests__diagnostics__patient-supply.test.ts.patch",
+      "baseSha256": "67c53315288d2f39fecc625d83d93e373ffd280a3f2e35486bea1a9868dc75e9",
+      "acceptedSha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d",
+      "acceptedBytes": 20969,
+      "patchSha256": "0d40c037b4c9f9d4133802b082f13230671a1041e3a81f4f0f910307e99b790c",
+      "baselineKind": "captured_source_strings",
+      "proof": {
+        "acceptedHashReceipts": [
+          {
+            "sha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md: M1-M5",
+        "clinicalStatus": "needs_clinician_review",
+        "beforeCapture": "machine-local gs028-m4-tests-before.json; exact captured UTF-8 strings"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "GS033-manager-test-correction__packages__game-domain__tests__reading-stations.test.ts",
+      "scope": "GS033-manager-test-correction",
+      "path": "packages/game-domain/tests/reading-stations.test.ts",
+      "base": "recovery/bases/GS033-manager-test-correction/packages/game-domain/tests/reading-stations.test.ts",
+      "patch": "recovery/patches/GS033-manager-test-correction__packages__game-domain__tests__reading-stations.test.ts.patch",
+      "baseSha256": "7b30f3c88824c02374803b5194cd64085760d864a3ee2d100ee0dcf57c29df1e",
+      "acceptedSha256": "187a9eb7f4267a3338c52aef52559a340f75058e434003d42e2e19245131263e",
+      "acceptedBytes": 5058,
+      "patchSha256": "9c1b81882fb2560374b83f8b7cd772c38a33ebdc1e358f4a2955710bf8a6332f",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "base": "artifacts/checkpoints/gs034-diagnostic-timing-20261007/source/packages/game-domain/tests/reading-stations.test.ts",
+        "afterHashReceipts": [
+          {
+            "sha256": "187a9eb7f4267a3338c52aef52559a340f75058e434003d42e2e19245131263e",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6a/validation/pre-integration-suite-source-hashes.json"
+          },
+          {
+            "sha256": "187a9eb7f4267a3338c52aef52559a340f75058e434003d42e2e19245131263e",
+            "receipt": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-suite-source-hashes.json"
+          }
+        ],
+        "acceptance": "future-roster20-v5-integration-20261007.md: Post-acceptance correction"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__EventMessageBoard.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/EventMessageBoard.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/EventMessageBoard.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__EventMessageBoard.tsx.patch",
+      "baseSha256": "a86f23b4c656147ab60f7030bd9ee98ab7f8d754ee276e0709ade0ae75ac867e",
+      "acceptedSha256": "8052e50e803546433a001cc1433b9f063fca3836552693f54a0f35aac3886302",
+      "acceptedBytes": 14231,
+      "patchSha256": "d1a4575540a215b0e9283ad7f94c5bf2cb547624bfdccc4eccd234febe479e8c",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "8052e50e803546433a001cc1433b9f063fca3836552693f54a0f35aac3886302",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__styles__global.css",
+      "scope": "alerts-events",
+      "path": "apps/player/src/styles/global.css",
+      "base": "recovery/bases/alerts-events/apps/player/src/styles/global.css",
+      "patch": "recovery/patches/alerts-events__apps__player__src__styles__global.css.patch",
+      "baseSha256": "85b95613c5561e38a91274ffe22944baf1de8563881f15f2dc4f54501109746e",
+      "acceptedSha256": "8b5b9acc474e2b0f45a88046c7aa60a8313c0fc80c41f342aa01483c002a2fcc",
+      "acceptedBytes": 175379,
+      "patchSha256": "033f655674db458d19da53c7d9aa2a6b14d2b3f6fca37c8e0356af934dbe9db5",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "8b5b9acc474e2b0f45a88046c7aa60a8313c0fc80c41f342aa01483c002a2fcc",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__facility-alert-conditions.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/facility-alert-conditions.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/facility-alert-conditions.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__facility-alert-conditions.ts.patch",
+      "baseSha256": "e3292bee187a526a09e1c1fa717fb2ceafdda984e0ca9391f48b9f69d80cbe25",
+      "acceptedSha256": "099ab755585667cfe6a5971c6ae298e2f412620d2e164f696788894500e3ba90",
+      "acceptedBytes": 10029,
+      "patchSha256": "113f7dbbef8de3e2bae07d09d0ea72138d6f97262ef608e2ebf2ca3f15393966",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "099ab755585667cfe6a5971c6ae298e2f412620d2e164f696788894500e3ba90",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__facility-experience.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/facility-experience.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__facility-experience.ts.patch",
+      "baseSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+      "acceptedSha256": "08a1d706a84219e03372582a78055221304fd9240c0d708955b03d3a1db796ea",
+      "acceptedBytes": 24497,
+      "patchSha256": "73605e9268baf24978d178325275e372c92b5e9f669e7b20af7e4b94a61f18d4",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "08a1d706a84219e03372582a78055221304fd9240c0d708955b03d3a1db796ea",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__game-domain__tests__facility-alert-conditions.test.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/tests/facility-alert-conditions.test.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/tests/facility-alert-conditions.test.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__tests__facility-alert-conditions.test.ts.patch",
+      "baseSha256": "6de3bcc76b7335435cde2c6f3c2229c8958de769cd49bbb9886c19697011e55a",
+      "acceptedSha256": "220121091f5eab01bcf13fb10cd893da4aff9a2564cdd6b742c51df0b8396fd2",
+      "acceptedBytes": 13334,
+      "patchSha256": "99d8d485c4eccc79fe52c504bd20167ec17d00adc8f357c9a6b2bb524878b0ba",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "220121091f5eab01bcf13fb10cd893da4aff9a2564cdd6b742c51df0b8396fd2",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__AppShell.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/AppShell.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__AppShell.tsx.patch",
+      "baseSha256": "21a6689d2eef314672b46589686e70d57dbe859794cdab84afc48df541cd2e3c",
+      "acceptedSha256": "e419e9a057d7c2055bb0fdd2d5ee6fb18054a00a6f47146f20e7d2fc847f5d93",
+      "acceptedBytes": 38580,
+      "patchSha256": "e660efb976be1992ce0d629617dffd23f106e4595810085cdcf410a7fdefbcbb",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "e419e9a057d7c2055bb0fdd2d5ee6fb18054a00a6f47146f20e7d2fc847f5d93",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__session__usePrototypeSession.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__session__usePrototypeSession.ts.patch",
+      "baseSha256": "7b9c36a972d83c8be4f61b42d3751030936201af339e2342a79dea7929f0e767",
+      "acceptedSha256": "61ae295e2552126ea9de944241e1e4f1bafc968131c59442733b7a0b3efad15e",
+      "acceptedBytes": 70676,
+      "patchSha256": "17ea50130d3988c1a04e5cd243c7ae8d8ab8c01fb52fd09795127e50ac1076c3",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "61ae295e2552126ea9de944241e1e4f1bafc968131c59442733b7a0b3efad15e",
+        "reconstruction": "reconstructed-scoped-patch"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__ManagementPanel.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/ManagementPanel.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/ManagementPanel.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__ManagementPanel.tsx.patch",
+      "baseSha256": "b75d4c3dde5af9334a6c3697f72b7c09c34e388223c143783abe448910c63193",
+      "acceptedSha256": "3dbbeff9d9f5153c404c16c1f89e8179c25f5fcace43e7b6f713bebc59d75d1c",
+      "acceptedBytes": 4316,
+      "patchSha256": "6fbd4b50338a28e8b3b5e699165436e6c1e098a08c1c701b956650834c4731c9",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "3dbbeff9d9f5153c404c16c1f89e8179c25f5fcace43e7b6f713bebc59d75d1c",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__StaffPanel.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/StaffPanel.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/StaffPanel.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__StaffPanel.tsx.patch",
+      "baseSha256": "041fc8b08f3cb1d54626f23a966058fa01db61927bfbea89ba4ba207a2559ba0",
+      "acceptedSha256": "d8738fb601d352266c6c84b805da0e9b7ce93b1a34751f4c585eca6c31843c7f",
+      "acceptedBytes": 16838,
+      "patchSha256": "d598f47f27af71442e0755019c14a1605125e52ec62e7aaa8921d7d1ba09e741",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "d8738fb601d352266c6c84b805da0e9b7ce93b1a34751f4c585eca6c31843c7f",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__types.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/types.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__types.ts.patch",
+      "baseSha256": "43b5e8dcb0a7b94d233e692d90fec8c1350385d8a880cecd218292a0bc3ce32c",
+      "acceptedSha256": "1f9fc78db0048eef1d720bf70f1878fa43aa4e7e14b35d09f3817cf90cf1b6e6",
+      "acceptedBytes": 19365,
+      "patchSha256": "678a856a5aec3e2a48fc0e18a17e09cd254473444fdec6aab3036ef8dedef431",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "1f9fc78db0048eef1d720bf70f1878fa43aa4e7e14b35d09f3817cf90cf1b6e6",
+        "reconstruction": "reconstructed-scoped-patch"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__balance-config__src__index.ts",
+      "scope": "alerts-events",
+      "path": "packages/balance-config/src/index.ts",
+      "base": "recovery/bases/alerts-events/packages/balance-config/src/index.ts",
+      "patch": "recovery/patches/alerts-events__packages__balance-config__src__index.ts.patch",
+      "baseSha256": "0bb2bab14828870894a296bf25555c3a883eb8d2f3c48b48c9d3334b641359db",
+      "acceptedSha256": "0c8c64f82e2f303117c663a0c83849b7483716631a2796da09a1d7d82bdd1fa6",
+      "acceptedBytes": 322,
+      "patchSha256": "9a2e86ede1340e3587df222e2401a70f97aea88d86b5de53eea208c0120422b0",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "0c8c64f82e2f303117c663a0c83849b7483716631a2796da09a1d7d82bdd1fa6",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__index.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/index.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/index.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__index.ts.patch",
+      "baseSha256": "d45503823d70f556bd099ea9d8d8f2c3aa133c81e94041885458ba1312c51b5f",
+      "acceptedSha256": "3c87454a4504089f209dc5028ff4a750b7529ee2f1e79a781ff057857aeda1b6",
+      "acceptedBytes": 1788,
+      "patchSha256": "464abb28607a11e54f907ac7e3a4d9e063da40e7b3d41a2a4b477b5160713276",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "3c87454a4504089f209dc5028ff4a750b7529ee2f1e79a781ff057857aeda1b6",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__persistence.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/persistence.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/persistence.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__persistence.ts.patch",
+      "baseSha256": "e881705c8c16356942d89e6573f987ec5d441e9c0322bc02c11630b93002ab6f",
+      "acceptedSha256": "067182effe4c06e51296b21b83b7efc0e406252c1e7078b9e439cc2b46cdafcb",
+      "acceptedBytes": 208672,
+      "patchSha256": "3c077b7a5c4c2ed0e07eb17d0f779ca334f8d35e66fa3ddad44b8ff3f5409f85",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "067182effe4c06e51296b21b83b7efc0e406252c1e7078b9e439cc2b46cdafcb",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__reducer.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/reducer.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/reducer.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__reducer.ts.patch",
+      "baseSha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "acceptedSha256": "b86da31764ece41134b7ddd5317424fd39310b14c9e771d8baced14e1f50fc81",
+      "acceptedBytes": 400848,
+      "patchSha256": "29be77dc9f46061d5055f48e1e9164b4759de534961d92b74800f37d4592a6bf",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "b86da31764ece41134b7ddd5317424fd39310b14c9e771d8baced14e1f50fc81",
+        "reconstruction": "reconstructed-scoped-patch"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__game-domain__src__types.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/src/types.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/src/types.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__src__types.ts.patch",
+      "baseSha256": "424cc27706e45685c9268feb4334928131801636ef80162d9b7012b24ad7eccb",
+      "acceptedSha256": "82b1f16a81be82842721fbb57aafbbff60b7173634fda8559739450304352079",
+      "acceptedBytes": 61083,
+      "patchSha256": "49619711b61bc03ddbb7ad0caadca88504436975848ff25d8481bd9ef98c3df9",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "82b1f16a81be82842721fbb57aafbbff60b7173634fda8559739450304352079",
+        "reconstruction": "reconstructed-scoped-patch"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__packages__game-domain__tests__alert-humor.test.ts",
+      "scope": "alerts-events",
+      "path": "packages/game-domain/tests/alert-humor.test.ts",
+      "base": "recovery/bases/alerts-events/packages/game-domain/tests/alert-humor.test.ts",
+      "patch": "recovery/patches/alerts-events__packages__game-domain__tests__alert-humor.test.ts.patch",
+      "baseSha256": "a926c2fa53e7765189c10725ab3809a991b4f97aa0b9cf59e1967ef2e2f18f3f",
+      "acceptedSha256": "2082f58f856214c3f4f8df5bec18d9d55967c765c5fda5030eed56e9bab619f5",
+      "acceptedBytes": 18042,
+      "patchSha256": "65e407b2f5a4cdd533846b73effcd9fe64e73b3755898cc7f75895f362d7f647",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: M1-M3 + fixes accepted",
+        "hashReceipt": "m2-fix / m3 / m3-fix-reviewed-files.json (machine-local evidence)",
+        "acceptedSha256": "2082f58f856214c3f4f8df5bec18d9d55967c765c5fda5030eed56e9bab619f5",
+        "reconstruction": "live"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__App.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/App.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/App.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__App.tsx.patch",
+      "baseSha256": "286b0041746f919e32d4b25edebdb567f6c72d546d6278fe89387ce598a61896",
+      "acceptedSha256": "49ba3f6ab0404d5dd1a5bd93f0d713cac62288fbf3771875b0f7c5a627c2fb68",
+      "acceptedBytes": 11646,
+      "patchSha256": "0bcd4348c3af8f26083653ae99327a1a4c3a83e6980f7545e5c8a90479442b52",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\tutorial-validation\\intake\\apps\\player\\src\\App.tsx",
+        "captureSha256": "49ba3f6ab0404d5dd1a5bd93f0d713cac62288fbf3771875b0f7c5a627c2fb68",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__session__viewModels.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/session/viewModels.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__session__viewModels.ts.patch",
+      "baseSha256": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+      "acceptedSha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5",
+      "acceptedBytes": 123169,
+      "patchSha256": "993eb3fbebbb1862238201ce45f213c6d51dbb846596da426c61bf467cfb0fd8",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\AppData\\Local\\Temp\\gs-chart-goals-20261008\\apps\\player\\src\\session\\viewModels.ts",
+        "captureSha256": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__facility__FacilityScene.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__facility__FacilityScene.ts.patch",
+      "baseSha256": "be733380a0b148c1091e81f82e5af480d3907bf12170a9b43b5ecc40f10727b1",
+      "acceptedSha256": "8b3ab41cbd06059b2e2327d7e5faf84931ca7dd5c61c347039ce2f50cec678d1",
+      "acceptedBytes": 328694,
+      "patchSha256": "6235ae9f763c9910f808988ff79cdec52f0ece9315865fb49509f661f108f612",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\AppData\\Local\\Temp\\gamifysurgery-layering-20261008\\FacilityScene.ts",
+        "captureSha256": "8b3ab41cbd06059b2e2327d7e5faf84931ca7dd5c61c347039ce2f50cec678d1",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__facility__types.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/facility/types.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__facility__types.ts.patch",
+      "baseSha256": "e4f89eafab31eb3297a6c331b44349c9db9de8ba703b2799c087bfbab03bda0f",
+      "acceptedSha256": "4895c8eadf868d26a2f6cae6559308b0b3029b3be1f4683f24bdafee69a1157c",
+      "acceptedBytes": 12226,
+      "patchSha256": "03c2f9a200313a6152e833308b496c97b12e081c123efce2f70f261524879077",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\alerts-events-validation\\m2-fix-intake\\apps\\player\\src\\facility\\types.ts",
+        "captureSha256": "4895c8eadf868d26a2f6cae6559308b0b3029b3be1f4683f24bdafee69a1157c",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__session__alertViewModels.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/session/alertViewModels.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/session/alertViewModels.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__session__alertViewModels.ts.patch",
+      "baseSha256": "945fb5e4a8816c87a8bb2de520ef5510ad78184977078e1d4d55c131327d231c",
+      "acceptedSha256": "b3b1c73024cba37b9809c968b2ea1e964a2ad43fe4caf8830bfacf3b1146a486",
+      "acceptedBytes": 55630,
+      "patchSha256": "3493b4bab8ff287fe3c4b3060658f12704e966e1c2892f411a99d521d0090392",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\alerts-events-validation\\m2-fix-intake\\apps\\player\\src\\session\\alertViewModels.ts",
+        "captureSha256": "b3b1c73024cba37b9809c968b2ea1e964a2ad43fe4caf8830bfacf3b1146a486",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__ResourceBar.tsx",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/ResourceBar.tsx",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/ResourceBar.tsx",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__ResourceBar.tsx.patch",
+      "baseSha256": "86702754f47a61419ef7d1f0966ab66097086a73c850c684051a8eb822772449",
+      "acceptedSha256": "b123a62d2372efa98d29b5788022985eb89d6a2d3e213a408f91366f8e065193",
+      "acceptedBytes": 7459,
+      "patchSha256": "da0def0e32bfa6e02b458df86a8dc0df17bea4bb405d57ac063b82cf023cd18c",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\AppData\\Local\\Temp\\gs-alerts-events-revamp-20261008-m1\\apps\\player\\src\\ui\\ResourceBar.tsx",
+        "captureSha256": "b123a62d2372efa98d29b5788022985eb89d6a2d3e213a408f91366f8e065193",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__apps__player__src__ui__index.ts",
+      "scope": "alerts-events",
+      "path": "apps/player/src/ui/index.ts",
+      "base": "recovery/bases/alerts-events/apps/player/src/ui/index.ts",
+      "patch": "recovery/patches/alerts-events__apps__player__src__ui__index.ts.patch",
+      "baseSha256": "080c8cb523584e44f6cd079c54d1af6eb0923c5605a378273a012892845ee86a",
+      "acceptedSha256": "e8149cc74ec853994dc6707c7f29c69f164d68087d0a2d5bba1a443b33fd3bc3",
+      "acceptedBytes": 2240,
+      "patchSha256": "53c479c9c72e8f1ddcd4e20cf4f07869b9fd177bbf331f47da4003e9cad3bf07",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md",
+        "acceptedCapture": "C:\\Users\\rowla\\AppData\\Local\\Temp\\gs-alerts-events-revamp-20261008-m1\\apps\\player\\src\\ui\\index.ts",
+        "captureSha256": "e8149cc74ec853994dc6707c7f29c69f164d68087d0a2d5bba1a443b33fd3bc3",
+        "boundary": "Exact pre-edit snapshot from the next bounded worker or frozen earlier milestone; excludes every active worker delta"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__balance-config__src__prototype-alerts.ts",
+      "scope": "alerts-events",
+      "path": "packages/balance-config/src/prototype-alerts.ts",
+      "base": "recovery/bases/alerts-events/packages/balance-config/src/prototype-alerts.ts",
+      "patch": "recovery/patches/alerts-events__packages__balance-config__src__prototype-alerts.ts.patch",
+      "baseSha256": "4002e6430539894cc2addfd51b575ffd9c411e95b27d58cc27d08850dc6290eb",
+      "acceptedSha256": "56620407c9d4b71a174b9f4e418dc76dfe81925676e95841040cfc6e9039b521",
+      "acceptedBytes": 48986,
+      "patchSha256": "e598bc649a3a6c6e15d59781b291f4b4f957cdb80c33026b9b21659284a641cf",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: Manager M1-M3 acceptance",
+        "sourceBoundary": "Last write predates the final accepted worker hash receipt and the launch of every 2026-10-08 owner-request lane",
+        "lastWriteUtc": "2026-10-08T06:22:42.501668+00:00",
+        "acceptanceReceiptRecordedUtc": "2026-10-08T09:49:18.869532+00:00",
+        "currentSha256": "56620407c9d4b71a174b9f4e418dc76dfe81925676e95841040cfc6e9039b521"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__balance-config__src__prototype-balance.ts",
+      "scope": "alerts-events",
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "base": "recovery/bases/alerts-events/packages/balance-config/src/prototype-balance.ts",
+      "patch": "recovery/patches/alerts-events__packages__balance-config__src__prototype-balance.ts.patch",
+      "baseSha256": "3f74f80c1f8adf6d63460241ab89205ab5a8d171c4f5cc9f85544fd6d2f45ef5",
+      "acceptedSha256": "e89e394ff9fdd046b74eaff99e97330052b348f9a05ea91e3d816c7e023c5425",
+      "acceptedBytes": 90270,
+      "patchSha256": "fa629bb046a519a4817c4af76b2dcd8298c233e79325aaa9c5c6102fc49a1d98",
+      "baselineKind": "immutable_capture",
+      "proof": {
+        "acceptance": "docs/execplans/alerts-events-revamp-20261007.md: Manager M1-M3 acceptance",
+        "sourceBoundary": "Last write predates the final accepted worker hash receipt and the launch of every 2026-10-08 owner-request lane",
+        "lastWriteUtc": "2026-10-08T06:11:16.698353+00:00",
+        "acceptanceReceiptRecordedUtc": "2026-10-08T09:49:18.869532+00:00",
+        "currentSha256": "e89e394ff9fdd046b74eaff99e97330052b348f9a05ea91e3d816c7e023c5425"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "alerts-events__packages__balance-config__src__schema.ts",
+      "scope": "alerts-events",
+      "path": "packages/balance-config/src/schema.ts",
+      "base": "recovery/bases/alerts-events/packages/balance-config/src/schema.ts",
+      "patch": "recovery/patches/alerts-events__packages__balance-config__src__schema.ts.patch",
+      "baseSha256": "6b1481cec0342882c8d29645d740d7ee77ed0c7f102e46dd2bccd0535ebd1715",
+      "acceptedSha256": "2b69d24defbd54abc9b3cb461903669c8f964c0423ae17fbcbeacf12716b7f35",
+      "acceptedBytes": 45415,
+      "patchSha256": "633270be7fbb8bb4ac83bf684e9b209d91bde543fd2b9ba9e9a339f6d0721372",
+      "baselineKind": "explicitly_inferred_compatible_base",
+      "proof": {
+        "acceptedCapture": ".local-dev/owner-requests-companions/baseline/packages__balance-config__src__schema.ts",
+        "captureSha256": "2b69d24defbd54abc9b3cb461903669c8f964c0423ae17fbcbeacf12716b7f35",
+        "acceptance": "alerts-events-revamp-20261007.md: remove dead receptionist refill delay",
+        "limitation": "Compatible before-state inferred by restoring only the removed delay schema property"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": false
+    },
+    {
+      "id": "manager-records__AGENTS.md",
+      "scope": "manager-records",
+      "path": "AGENTS.md",
+      "base": "recovery/bases/manager-records/AGENTS.md",
+      "patch": "recovery/patches/manager-records__AGENTS.md.patch",
+      "baseSha256": "439cf5dfc71e7386d213823fca10632deffec774cee31639898cf23b8a3b5bff",
+      "acceptedSha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc",
+      "acceptedBytes": 13067,
+      "patchSha256": "d0c78d33898e057d8d391f16e6cc5bba40c2b605ad60015afbf273f4547a2144",
+      "baselineKind": "explicitly_inferred_compatible_base",
+      "proof": {
+        "scope": "Only the explicitly named manager delegation block",
+        "ownerAuthorization": "Worker task accepted scope (7)"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "manager-records__.gitignore",
+      "scope": "manager-records",
+      "path": ".gitignore",
+      "base": "recovery/bases/manager-records/.gitignore",
+      "patch": "recovery/patches/manager-records__.gitignore.patch",
+      "baseSha256": "302b72371c3908e6f4765e0b61df65ec1ed4ef5ee0ab776e669541ab0cdd7a14",
+      "acceptedSha256": "733109ad7bce7c3801c66e4706654830048df6fbe6bb53512e80575dd7f052ab",
+      "acceptedBytes": 441,
+      "patchSha256": "2a7cfe6d23041f101ad8aab88c364a80fbc8ea80d7143b8f59eaa9268ab4222d",
+      "baselineKind": "HEAD_compatible_base",
+      "proof": {
+        "scope": "Only ignore machine-specific Claude settings",
+        "ownerAuthorization": "Worker task accepted scope (7)"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    }
+  ],
+  "liveComparisonCheckedAtUtc": "2026-10-08T13:40:47.338372+00:00"
+}

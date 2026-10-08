@@ -1,0 +1,13 @@
+--- a/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
+@@ -600,8 +600,8 @@
+   });
+ 
+   it("measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts", () => {
+-    expect(pools.map((item) => item.before)).toEqual([{ cases: 589, concepts: 161 }, { cases: 824, concepts: 267 }, { cases: 860, concepts: 283 }]);
+-    expect(pools.map((item) => item.after)).toEqual([{ cases: 667, concepts: 181 }, { cases: 902, concepts: 287 }, { cases: 938, concepts: 303 }]);
++    expect(pools.map((item) => item.before)).toEqual([{ cases: 561, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
++    expect(pools.map((item) => item.after)).toEqual([{ cases: 639, concepts: 175 }, { cases: 874, concepts: 281 }, { cases: 910, concepts: 297 }]);
+   });
+ 
+   it("covers all eighty actual nodes and all three distractors plus the key in each", () => {

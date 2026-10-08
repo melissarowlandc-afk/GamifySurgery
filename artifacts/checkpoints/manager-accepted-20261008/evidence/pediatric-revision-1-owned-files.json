@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "task": "Level 4 Pediatric Waiting Room milestone 2 / manager revision 1",
+  "root": "tools/room-design/level-4/pediatric-waiting",
+  "owner": "assigned Sol worker",
+  "outsideLaneEdit": "Append only to docs/execplans/level4-pediatric-waiting-mockup-20261007.md Worker handoff",
+  "excluded": [
+    "ART_BRIEF.md",
+    "stand-in/**",
+    "proof/evidence/owned-files.json (self)",
+    "proof/evidence/browser-validation-report.json",
+    "proof/evidence/capture-report.json",
+    "proof/evidence/pediatric-320.png",
+    "proof/evidence/pediatric-all-backed.json",
+    "proof/evidence/pediatric-all-backed.png",
+    "proof/evidence/pediatric-all-doors.json",
+    "proof/evidence/pediatric-all-doors.png",
+    "proof/evidence/pediatric-backed.json",
+    "proof/evidence/pediatric-backed.png",
+    "proof/evidence/pediatric-children.json",
+    "proof/evidence/pediatric-children.png",
+    "proof/evidence/pediatric-contacts.json",
+    "proof/evidence/pediatric-contacts.png",
+    "proof/evidence/pediatric-desktop.png",
+    "proof/evidence/pediatric-empty.json",
+    "proof/evidence/pediatric-empty.png",
+    "proof/evidence/pediatric-painted.json",
+    "proof/evidence/pediatric-painted.png",
+    "proof/evidence/pediatric-parents.json",
+    "proof/evidence/pediatric-parents.png"
+  ],
+  "fileCount": 97,
+  "files": {
+    "README.md": {
+      "sha256": "D6D0B537B353B0ABA99013080CE45834BC226AD651EC2173C639FE53F6A12889",
+      "bytes": 9203
+    },
+    "assets/generation-manifest.json": {
+      "sha256": "6841723D72BA52BCAA73D9F1EDEF2EE259058B46D50E2CCC9321F3EBE280D6AF",
+      "bytes": 22665
+    },
+    "assets/generation-receipts.json": {
+      "sha256": "5BFBBEB311135C233830561A03988D3D1DA3137B4F8FBC25631442A70AD49CE3",
+      "bytes": 13319
+    },
+    "assets/image-utils.mjs": {
+      "sha256": "3567E1A805B6258EC415E53D20F56177D71FE0B7ED3801BDEEEC9A2B72359A60",
+      "bytes": 1587
+    },
+    "assets/originals/animal-prints-01.png": {
+      "sha256": "8CDA65309C8ED4A8BAF0950104541E0F193A59804D304F0CDC78C554D34CDE2F",
+      "bytes": 1373611
+    },
+    "assets/originals/animal-prints-02.png": {
+      "sha256": "B9FCAF0A50FF902690292F6898F7F2D8FCAB0B84FBC05B9FCA9A404D3E94B327",
+      "bytes": 1402593
+    },
+    "assets/originals/animal-prints-03.png": {
+      "sha256": "0E5A27166896033E0206D39240CF14D7CA7C617CC0B79B13ADFA32558F6F5F66",
+      "bytes": 1655535
+    },
+    "assets/originals/aquarium-01.png": {
+      "sha256": "1D4B87D83267604C93C0D18E5E5ECA4F57400AC2D17ED22DBD79206CB8E2022E",
+      "bytes": 1640549
+    },
+    "assets/originals/book-bin-01.png": {
+      "sha256": "D60A2FEC19858AD185DAB90956E112A1AC9782C63BC9297F021701CE84FCD5EC",
+      "bytes": 1456173
+    },
+    "assets/originals/book-bin-02.png": {
+      "sha256": "44279DD49CD211434E3517CC26C22CC945E2486C23CE39CE640032F3EA895323",
+      "bytes": 1460263
+    },
+    "assets/originals/book-bin-03.png": {
+      "sha256": "2A5DB728215AA2D572B0E52DBD66437F6BA4200BE47DC7D604DF14F43790420B",
+      "bytes": 1784832
+    },
+    "assets/originals/kid-stool-01.png": {
+      "sha256": "241ACE3A16088FAAD8B1F62473102CBB7101672307730F438AA1B76825FA138D",
+      "bytes": 823954
+    },
+    "assets/originals/kid-stool-02.png": {
+      "sha256": "689EC27DD9B00B0CC2E5D4EA2391E0A828C324C463B89D954F9702463FFE5D86",
+      "bytes": 921463
+    },
+    "assets/originals/kid-stool-03.png": {
+      "sha256": "EA68D6F67E259AA503CC733826E392319B085EBB9E08D9295F726332E8316BCE",
+      "bytes": 953905
+    },
+    "assets/originals/kids-table-01.png": {
+      "sha256": "B36B4DA864834083B529E4AF3732E788BB904F124826706974DCF55E86EA642A",
+      "bytes": 704426
+    },
+    "assets/originals/kids-table-02.png": {
+      "sha256": "131279C586DC102D63195484FA57791BF3444FE1332D578366E268BE188A7498",
+      "bytes": 664090
+    },
+    "assets/originals/toy-chest-01.png": {
+      "sha256": "76B753B8C680DAEFA9710419E41630D99777752F1E6D6EA95A79889006871CF5",
+      "bytes": 1323977
+    },
+    "assets/originals/toy-chest-02.png": {
+      "sha256": "FDACA7E2EC2D1CE5A04C6D19370B294D6A563C89257A2CBEB8A6ECBB845436C7",
+      "bytes": 1558791
+    },
+    "assets/originals/wall-clock-kids-01.png": {
+      "sha256": "9495974EC0D64378A58E7C9534258B6F4AEAAD0CDEE1C30F94D5B0EA46B90CBF",
+      "bytes": 1439073
+    },
+    "assets/prepare-assets.mjs": {
+      "sha256": "44C051DA0579519A122DE4D1BF853214FEBE6D051F958AF243180353B2C7D03A",
+      "bytes": 7179
+    },
+    "assets/prepared/animal-prints.png": {
+      "sha256": "D112727649A36570055E3AEC8A74AEEC8BD89857DCA4482BC754C13F3756D331",
+      "bytes": 86440
+    },
+    "assets/prepared/aquarium.png": {
+      "sha256": "3C5958B0B873ACA093E93F712615714A05C8853ED85739D8048E79B8E54C973A",
+      "bytes": 345983
+    },
+    "assets/prepared/book-bin.png": {
+      "sha256": "7B1E1211C53995FEDC317C0D026F9EB8CD675ED3B402ACCC29481CA9A7DE68C8",
+      "bytes": 85141
+    },
+    "assets/prepared/contract-used.json": {
+      "sha256": "724EAADA237FB86CA057722D9A39CFD25A2A4F78493580E96216ECCA79911BAA",
+      "bytes": 3459
+    },
+    "assets/prepared/kid-stool.png": {
+      "sha256": "42B14F4E2F844F847950E97779DD98E1BF75AF41952D1401068FEEEBF864EEC5",
+      "bytes": 22496
+    },
+    "assets/prepared/kids-table.png": {
+      "sha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632",
+      "bytes": 50807
+    },
+    "assets/prepared/metadata.json": {
+      "sha256": "20689E30497A5A684C232CC03FC16B2FC0CD0C981E293759DA29FBA5547CF72A",
+      "bytes": 21704
+    },
+    "assets/prepared/toy-chest.png": {
+      "sha256": "35369C1F74CD969FF28AF4DF076391EAF87D8D37894EC7E5474044ECB2008621",
+      "bytes": 72658
+    },
+    "assets/prepared/wall-clock-kids.png": {
+      "sha256": "E9039FB01E1E4D1EC6490E4103EEFD9BE294FD91DE5DF49A0AFF5224B2ED11E2",
+      "bytes": 21425
+    },
+    "assets/prompts/animal-prints-01.prompt.txt": {
+      "sha256": "A3C35CC60AB3D8D877F52306BBDA530B566EA5558175548857449FB740CA0AFD",
+      "bytes": 2024
+    },
+    "assets/prompts/animal-prints-02.prompt.txt": {
+      "sha256": "B211C4F8C1BF512779D3A6AE8FD04CEA8D5F3B45266E2202FA58D50E85DB9D43",
+      "bytes": 1003
+    },
+    "assets/prompts/animal-prints-03.prompt.txt": {
+      "sha256": "0AD93419F80C24053948322C5852230A3B96C96F6E8674BD368C22939CD7D686",
+      "bytes": 786
+    },
+    "assets/prompts/aquarium-01.prompt.txt": {
+      "sha256": "71A4DCF3B0A22FD7173C9A0153949ED9520058EFD46E400E6A4EB25C1313450A",
+      "bytes": 1992
+    },
+    "assets/prompts/book-bin-01.prompt.txt": {
+      "sha256": "50AEF483C655E537043D2DE1CE62BDB036F466119CB24FF3B72A8542E9466C2F",
+      "bytes": 1852
+    },
+    "assets/prompts/book-bin-02.prompt.txt": {
+      "sha256": "DA61E1F4995E7F77602606BD2195449B909EBCD6E4700121FBE5AAED5A41A638",
+      "bytes": 940
+    },
+    "assets/prompts/book-bin-03.prompt.txt": {
+      "sha256": "DB115972BA69EEBB24CF2F4369F35FC44D9ABB3C3323FD2EA60B35D54031D26B",
+      "bytes": 960
+    },
+    "assets/prompts/kid-stool-01.prompt.txt": {
+      "sha256": "594178CAEB33B1956F70C94B0448D0A66D569508E9C98C60E1C80B78476569E3",
+      "bytes": 1827
+    },
+    "assets/prompts/kid-stool-02.prompt.txt": {
+      "sha256": "6BFE13D260DC9F16A7EBF0497C4BB5F527B738B78CF2A7389B579F19B69FAB2F",
+      "bytes": 1053
+    },
+    "assets/prompts/kid-stool-03.prompt.txt": {
+      "sha256": "EFCB96BDFE27440E404867C83A29C53B601627F54AF05FD11FFD96E2AF7190A5",
+      "bytes": 1034
+    },
+    "assets/prompts/kids-table-01.prompt.txt": {
+      "sha256": "95534ADF7C9D0B3F8DE1DEDB1CC7A344C4AF8009D116D8698D637A7F1959615F",
+      "bytes": 1867
+    },
+    "assets/prompts/kids-table-02.prompt.txt": {
+      "sha256": "14ACE25EE0EF212E22AAA72B334BBCDAA8D9D4067C0A56C7CA1C7C64F61B6891",
+      "bytes": 1250
+    },
+    "assets/prompts/toy-chest-01.prompt.txt": {
+      "sha256": "34C18335C39DF6D273D25D3EBE1BE480029CBB84AF8EB23A2F23F959E631F1D0",
+      "bytes": 1836
+    },
+    "assets/prompts/toy-chest-02.prompt.txt": {
+      "sha256": "0B237D8ED4B8EF01F80D01DDFECB0F23552E10885F6E285A5AD9B8E07C64F1AE",
+      "bytes": 901
+    },
+    "assets/prompts/wall-clock-kids-01.prompt.txt": {
+      "sha256": "D556592C20A6C7C22312E8036911ADCBBCDAB74AB10271F336E365681285F7D9",
+      "bytes": 1864
+    },
+    "assets/provenance.md": {
+      "sha256": "03054297728877DAC78D7CF62CA905DB843F2112116B9966F58D3A2B83E523ED",
+      "bytes": 17384
+    },
+    "assets/record-generations.mjs": {
+      "sha256": "E0FDCE60ED7A8EF07AAC3647D8AA27D7C90A77D7C01E7CB8BCD7BA989B9EC50D",
+      "bytes": 2714
+    },
+    "assets/record-references.mjs": {
+      "sha256": "088C29C0E544CC876118D718260AB07E474A0C3571039154DBEB33F4933D5317",
+      "bytes": 1800
+    },
+    "assets/reference-baseline.json": {
+      "sha256": "CE03BF9C8DAA66169C09DF930CD005B7DD81A20FA74231A33AD78952EBB6887E",
+      "bytes": 174557
+    },
+    "assets/write-provenance.mjs": {
+      "sha256": "73A79C165AE0DFF5D0AEC42D8CB1F33EE42955B6789A5A2300AAF10DB8CEE8A5",
+      "bytes": 11978
+    },
+    "proof/README.md": {
+      "sha256": "DD02FB391DB7BF85F35F99A12F4CA5DFD5E5F9605C43626E773CEE2B3FC91ED4",
+      "bytes": 3134
+    },
+    "proof/WORKER_HANDOFF.md": {
+      "sha256": "8DEE25908306DCEFFAE2EF51205003A0414E3D38D7F9A6EF4D2337F3035E0179",
+      "bytes": 15949
+    },
+    "proof/actor-baseline.json": {
+      "sha256": "69022A7308D69C9568CC3275C85BDDDD573E69C7E5104A81FD717CFFD5F9FFED",
+      "bytes": 30143
+    },
+    "proof/asset-contract.json": {
+      "sha256": "724EAADA237FB86CA057722D9A39CFD25A2A4F78493580E96216ECCA79911BAA",
+      "bytes": 3459
+    },
+    "proof/build.mjs": {
+      "sha256": "FB76C18255502E3D087D5CCB03770154EF142B02630C87A5F18C864FC22F7FA1",
+      "bytes": 17177
+    },
+    "proof/capture.cjs": {
+      "sha256": "A5EB3DA47064162A8DD7FB0DAD59DCAFDFA2212620C157392AC400684B278CE6",
+      "bytes": 3554
+    },
+    "proof/data.json": {
+      "sha256": "A050DF133239D40ECEB1F14EE0252B5D8BF0C629486D081558D9831486A7462D",
+      "bytes": 72431
+    },
+    "proof/design-rooms.js": {
+      "sha256": "D07D4A44643ACC42B4623F908509C516339AAC26A47E59E60DA64A4D9FD1690A",
+      "bytes": 33635
+    },
+    "proof/evidence/actor-contacts.json": {
+      "sha256": "DACF00A201B0CBB29A3D7EB2B42B6FE964ED1704E8694722E819626AB1D7B299",
+      "bytes": 3144
+    },
+    "proof/evidence/native-all-doors.json": {
+      "sha256": "CAD1827BC086F3FFB63A502DF02D6897F4ADD166C81512E1191AA8346F4E551D",
+      "bytes": 398
+    },
+    "proof/evidence/native-all-doors.png": {
+      "sha256": "15D3C7641890E9DCB0FE5604C65C29784FB3F328D9E4DE813ECE0812A03C023D",
+      "bytes": 137483
+    },
+    "proof/evidence/native-backed.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-backed.png": {
+      "sha256": "6303E8A91ADE3103FEF79286E47768356BF2EF8470AE877265319C62837C9D60",
+      "bytes": 179193
+    },
+    "proof/evidence/native-contacts.json": {
+      "sha256": "E9CF29B48383675626DFE51C7E25F4B5EB6E7F024AED6268309786D7CABC7454",
+      "bytes": 346
+    },
+    "proof/evidence/native-contacts.png": {
+      "sha256": "D4F2281FF063E3EEF772905707C189F03F93507126633599B216497E0973CF4E",
+      "bytes": 166737
+    },
+    "proof/evidence/native-empty.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-empty.png": {
+      "sha256": "66F06D6AEDDB88BB58B986B2D2975F53146F9D0441516C78DBC607D83F400EEB",
+      "bytes": 140841
+    },
+    "proof/evidence/native-inspection-report.json": {
+      "sha256": "914283252FDA1C83E48A0B71836205D0ACB820CA3393EE9E52580B3904029117",
+      "bytes": 227
+    },
+    "proof/evidence/native-painted.json": {
+      "sha256": "4C92B5B1CDF492FF8A5648444B8E5F35B9C2B245BE8FD1D67ED818EA9E20936D",
+      "bytes": 194
+    },
+    "proof/evidence/native-painted.png": {
+      "sha256": "046035B40B78E621AB1E266190916A8C71272A899F5435BDABCA6F28F6267335",
+      "bytes": 188667
+    },
+    "proof/evidence/original-grid-failure.json": {
+      "sha256": "24D412C0BDBA62EBD1AFC3B0109B703B2DCF9D83EB7DB23E1464D79C59EB3F78",
+      "bytes": 24237
+    },
+    "proof/evidence/original-grid-failure.log": {
+      "sha256": "1C81ACE2EA9561D1C5A1F38F542A2D647163985E643261B289B1C43B704FD46F",
+      "bytes": 1881
+    },
+    "proof/evidence/pediatric-source-contact-sheet.png": {
+      "sha256": "A2B3585CB0E2F48EBEA62024C58D30A808EFF1A4E08B17C2B9F3BA65B3839518",
+      "bytes": 73012
+    },
+    "proof/evidence/presentation-revision-report.json": {
+      "sha256": "18F8A6D2EBEFAF9F259DC89FE5395ED26BBD7F65399A74F07CCF39B94E6A9097",
+      "bytes": 11200
+    },
+    "proof/evidence/reproducibility-report.json": {
+      "sha256": "2DCEA7F611DBFD19CCAEE0538BEDBE037487777E9CFFC21A2E00D2C11E3D2D0A",
+      "bytes": 3384
+    },
+    "proof/evidence/seat-approaches.json": {
+      "sha256": "15CC789FEFFC55B96F7AA4ACC55D5A7C0B8745261914731F8F1CF8D8E6324DF0",
+      "bytes": 33464
+    },
+    "proof/evidence/syntax.log": {
+      "sha256": "2FF0C82AECEF4D08F124DFB163B8068513A460270E2FB797DE9A18DB1B7FC2FA",
+      "bytes": 67
+    },
+    "proof/evidence/validation-report.json": {
+      "sha256": "AD8ADAEC269DF7982191ECF112DACA085DBC2B9324C7A67F8A13F8EF804E2780",
+      "bytes": 31156
+    },
+    "proof/evidence/validation.log": {
+      "sha256": "DB7AC5005DC7D5884A92F7D50019711E919A4133EBDC6C21CC5ACAC22CE88174",
+      "bytes": 1050
+    },
+    "proof/extension.js": {
+      "sha256": "9BF827F1A44B4ACA19A5BB002204A649BE0CB9D1142C4E87802EE09E2DD39054",
+      "bytes": 4998
+    },
+    "proof/geometry.mjs": {
+      "sha256": "B63FC06062D869CBC4D7D770DF2CD1CE691044A052E3AB1131A722043882F917",
+      "bytes": 13776
+    },
+    "proof/index.html": {
+      "sha256": "DA2DF8584063016188718970AC303F74503C39EC05F24BB80BE467F57CFBB4E6",
+      "bytes": 4736
+    },
+    "proof/inspect-native.mjs": {
+      "sha256": "550B2DCFDA102B1AEF1BB23C18DAEE2DF97356DC1F9D2C92D7E0075C2983796E",
+      "bytes": 3547
+    },
+    "proof/lab.js": {
+      "sha256": "66D6828A7A0540119F63DDABAA2DB3F4E57B9F562BDCAA22DE5A64CE24B7CB8C",
+      "bytes": 46034
+    },
+    "proof/layout-baseline.json": {
+      "sha256": "D9AAE654D9F65BFCE67E937C751DEC8DD39B7758BD622772C0F7C9C954BB6876",
+      "bytes": 29715
+    },
+    "proof/measure-children.mjs": {
+      "sha256": "10CCCFA90F28051F8A5743D747CF1F503D78D1E8974E2C1248375C1259693D8F",
+      "bytes": 1893
+    },
+    "proof/package.json": {
+      "sha256": "609158E6C5FBC237939FA3DDF7FAAB80AB690BDC0C8D584414A885130103C4E8",
+      "bytes": 42
+    },
+    "proof/proof-manifest.json": {
+      "sha256": "5803525E014395B7CA65FD20F9C862C300B8EC4B4D7DF01FFFCE1F7E707EED6F",
+      "bytes": 14882
+    },
+    "proof/reproduce.mjs": {
+      "sha256": "E944751AC86BACC4F4688D1C2720985ADCD428064920DC537B95A525E9EAF270",
+      "bytes": 1530
+    },
+    "proof/revision-contract.json": {
+      "sha256": "994E220A762B75E253D9DF6D735D3CCDFF1014EDFDBE89E1D2E377EECF713355",
+      "bytes": 3605
+    },
+    "proof/revisions/initial-actor-baseline.json": {
+      "sha256": "F4C2FF845DF4B10E9411A6A1F7889E2B06366809353B89FF20A3E186EA6E3D7B",
+      "bytes": 26215
+    },
+    "proof/revisions/revision-1-audit.json": {
+      "sha256": "6B543BBB1C2179187958422ACCC63F0A9A9B90E729074327ACAAA4966C47827A",
+      "bytes": 2036
+    },
+    "proof/revisions/revision-1-intake.json": {
+      "sha256": "BEBC31940EDE1DBCEC199F943C76A8209D949D8BE34D34F2A662C723AF97B1B1",
+      "bytes": 2592
+    },
+    "proof/room-touchups.mjs": {
+      "sha256": "C57B7B4F31ED13F9B0E412FBFA21AB629C6D699D672CFF6824D7656AC3A73995",
+      "bytes": 31749
+    },
+    "proof/validate-browser.cjs": {
+      "sha256": "6414B52DA410B3DA0DB17E242F151CAB435A051640A20EA09E6ECE27218DFB9A",
+      "bytes": 10284
+    },
+    "proof/validate-presentation.mjs": {
+      "sha256": "668023CD9DD05077F57C59ED653FDFB1CECECF15CF2DF215677271CB38C64B49",
+      "bytes": 8626
+    },
+    "proof/validate.cjs": {
+      "sha256": "1774DD681CC61AA0493760F46B19A072DD3F85FE3035856C784FED58E153F074",
+      "bytes": 21777
+    },
+    "proof/write-inventory.mjs": {
+      "sha256": "6B5AFB92CA844C5A58D1B192CC0BBAFE4B1926B44A83659532144A2FDFF38F8E",
+      "bytes": 1782
+    }
+  }
+}

@@ -1,0 +1,53 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -303,6 +303,7 @@
+   onCameraChange?: FacilityCameraChangeRequest;
+   /** Build Mode room menu anchor, in canvas pixels; null when nothing is selected. */
+   onSelectedRoomRectChange?: (rect: FacilityScreenRect | null) => void;
++  onAlertPinPositionsChange?: (positions: import("./types").FacilityAlertPinPosition[]) => void;
+ }
+ 
+ export interface FacilityScreenRect {
+@@ -540,6 +541,7 @@
+   private roomTexts: Phaser.GameObjects.Text[] = [];
+   private roomStarGraphics: Phaser.GameObjects.Graphics | undefined;
+   private lastReportedSelectedRoomRect = "";
++  private lastReportedAlertPins = "";
+   /** Local-only receipt cursor; it never participates in simulation state. */
+   private earningsPopupState: EarningsPopupState | undefined;
+   private readonly earningsPopupTexts = new Map<
+@@ -1203,6 +1205,7 @@
+     this.refreshLayout();
+     this.reportSelectedRoomRect();
+     this.drawCharacters();
++    this.reportAlertPinPositions();
+     this.drawEarningsPopups(time);
+     // Atlas completion callbacks can redraw outside update(). Delta belongs to
+     // this update only, never to a later event-driven redraw.
+@@ -7391,6 +7394,26 @@
+     );
+   }
+ 
++  private reportAlertPinPositions(): void {
++    const positions = (this.bridge.viewModel.alertPins ?? []).flatMap((pin) => {
++      if (pin.target.kind === "room") {
++        const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === pin.target.id);
++        if (!room) return [];
++        const rect = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
++        return [{ id: pin.id, x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + Math.min(rect.height / 2, this.layout.tileSize)) }];
++      }
++      const key = `character:${pin.target.kind === "patient" ? "patient" : "service-visitor"}:${pin.target.id}`;
++      const actor = this.characterMotionSnapshots.get(key);
++      if (!actor || !this.activeCharacterGraphics.has(key)) return [];
++      return [{ id: pin.id, x: Math.round(this.layout.originX + actor.anchorXInTiles * this.layout.tileSize),
++        y: Math.round(this.layout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.layout.tileSize) }];
++    }).filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
++    const signature = JSON.stringify(positions);
++    if (signature === this.lastReportedAlertPins) return;
++    this.lastReportedAlertPins = signature;
++    this.bridge.onAlertPinPositionsChange?.(positions);
++  }
++
+   private positionText(): void {
+     const { originX, originY, width, tileSize } = this.layout;
+     const model = this.bridge.viewModel;

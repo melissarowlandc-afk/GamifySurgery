@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "future-roster20-v5-packaging-handoff/v1",
+  "status": "review-ready-pending-owner-approval",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "rosterContract": {
+    "identities": 20,
+    "posesPerIdentity": 8,
+    "totalPoses": 160,
+    "categoryCounts": {
+      "staff": 16,
+      "patient": 4
+    },
+    "staffRoleCounts": {
+      "staff.radiologist": 12
+    },
+    "plannedStaffRoleCounts": {
+      "Advanced practice provider (APP) (level 4; referenced-not-yet-defined)": 2,
+      "Executive (level 5; roadmap-only)": 2
+    },
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 3,
+        "middle_aged": 6,
+        "older_adult": 1
+      },
+      "Male": {
+        "young_adult": 1,
+        "adult": 3,
+        "middle_aged": 5,
+        "older_adult": 1
+      }
+    }
+  },
+  "sourceEvidence": {
+    "selectedIdentities": 20,
+    "stage1Generations": 20,
+    "originalStage2Generations": 20,
+    "targetedStage2Generations": 10,
+    "nativeByteEqualityChecks": 50,
+    "exactPromptArgumentPairs": 50,
+    "orderedReferenceHashChecks": 80
+  },
+  "rootEvidence": {
+    "acceptedSources": 20,
+    "authoredContacts": 80,
+    "durableManualContactOverlays": 20,
+    "chairProofs": 20,
+    "chairBoards": 5,
+    "immutableReviewSnapshots": 58
+  },
+  "seatContactContractSha256": "78bb654ae8de0006e84959066e74c36260436d0922ffeb396442807200a402c8",
+  "alpha": {
+    "reportSha256": "b549cf008b910c0447760d85afd8a417e10fe59c2aa6af58e82123a612b9ccdd",
+    "identities": 20,
+    "poses": 160,
+    "sourceNonzeroPixelsWithFootprintOutside": 13773,
+    "sourcePosesWithFootprintOutside": 153,
+    "maxSourceAlphaWithFootprintOutside": 1,
+    "derivedBorderNonzeroPixels": 166,
+    "derivedPosesWithBorderAlpha": 45,
+    "derivedBorderMaxAlpha": 1,
+    "protectedAlphaClipping": false
+  },
+  "checks": {
+    "strictRoster": "PASS",
+    "strictSourceContactAlphaAndManualEvidence": true,
+    "strictApprovedChairGeometry": "PASS",
+    "gallery": "PASS",
+    "galleryPagesAndViewports": 8,
+    "galleryMainImages": 40,
+    "desktopWidth": 1440,
+    "phoneWidth": 390,
+    "ownerGameStorage": "not accessed",
+    "immutableRuntimeBaseline": {
+      "status": "PASS",
+      "identities": 225,
+      "assets": 1830,
+      "selectableAdultPatients": 116,
+      "protectedSources": 10
+    },
+    "alphaClippingNegativeControls": {
+      "status": "PASS",
+      "fixture": "source pixel footprint crossing left canvas boundary",
+      "measuredAllowedFaintAlpha": 12,
+      "protectedAlpha13Rejected": true,
+      "opaqueAlpha255Rejected": true,
+      "runtimeReady": false
+    }
+  },
+  "ownedTools": [
+    "tools/character-mapping/future-roster20-v5/build-roster.mjs",
+    "tools/character-mapping/future-roster20-v5/validate-roster.mjs",
+    "tools/character-mapping/future-roster20-v5/runtime-baseline.mjs",
+    "tools/character-mapping/future-roster20-v5/runtime-baseline.json",
+    "tools/character-mapping/future-roster20-v5/build-placement-qa.mjs",
+    "tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs",
+    "tools/character-mapping/future-roster20-v5/validate-gallery.mjs",
+    "tools/character-mapping/future-roster20-v5/README.md"
+  ],
+  "generatedOutputDirectories": [
+    "artifacts/character-statics/future-roster20-v5/packages",
+    "artifacts/character-statics/future-roster20-v5/review",
+    "artifacts/character-statics/future-roster20-v5/contact-review",
+    "artifacts/character-statics/future-roster20-v5/placement-qa",
+    "artifacts/character-statics/future-roster20-v5/validation"
+  ],
+  "receipts": [
+    {
+      "path": "tools/character-mapping/future-roster20-v5/build-roster.mjs",
+      "sha256": "3e2e8753edd1441e2239b2e0e4ca71e4681af12236f9d5c125c8f3c887cf790d"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/validate-roster.mjs",
+      "sha256": "b25add3de9fa2700f44183a6644858b3fd46837438c7612360585db51ba6676a"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/runtime-baseline.mjs",
+      "sha256": "3f867f525db60f4ef25d6c16657548188c653968e5f935f4c26f746b3b4cbefc"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/runtime-baseline.json",
+      "sha256": "90d4b0e6bf68a6207e78f6ae7fc9ada60924aba0f403dca76426f60ce8c3798f"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/build-placement-qa.mjs",
+      "sha256": "76450f950042675682525c2a0906ba6b1e9e1c8f7fc1dcc32f680543913b9c1c"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs",
+      "sha256": "34843af25ef007b144c4cf19a6079d38ffa9643cc3f83e3b03b38d7d64e79eea"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/validate-gallery.mjs",
+      "sha256": "ec7197785ae8f00a76f412fbe404f10312ba1e45bd43a25c2a48337ecda2b6b7"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/README.md",
+      "sha256": "bd2d292a64049bbe3ce6fd0a5c69d0d8bc1d7bd0d288911a412c34487f1dfae1"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/roster.json",
+      "sha256": "e3cc475d7827c42187b6d891b669625abccee2e22fcf8a0d90b6a8a9df22f533"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/review-acceptance.json",
+      "sha256": "a914f30d89cc2060138256340b08225bd0c9a90fc8649f8cd6defed595abc0f1"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/staging-registry.json",
+      "sha256": "1d3ea87e399c62897aa99573f80fe8630cfba2ff9f589ca74fd86f089c2c7861"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/seat-contact-candidates.json",
+      "sha256": "ca13bfd8dda1d091cac237b228d0163b4361e0c4d0f9ec5b7cf279eec64ea69f"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/alpha-normalization-report.json",
+      "sha256": "b549cf008b910c0447760d85afd8a417e10fe59c2aa6af58e82123a612b9ccdd"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/review/index.html",
+      "sha256": "d8f5056f294a9fd05fdfbbe7de23ef0672c1320acc02727cad7687b5a2dc0163"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/review/owner-overview-stand-south-sit-east.png",
+      "sha256": "c9272ac2bdf7a1eb55aaca5fbad2ec93969c53d8eb56126a14285652f1b3bc8c"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/review/source-review-manifest.json",
+      "sha256": "986a622e2c35e69de363d7ab3af5a9281116b043616a28728b3b4a8f07a22396"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/contact-review/contact-review-manifest.json",
+      "sha256": "eab0905dd740b3d23d904d959633fac1baed02b42d1825e78183275b068a15da"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/placement-qa/placement-manifest.json",
+      "sha256": "ba976a0bc4b9683b054b638cae5b768051b13bab14f0705a2334285c7e334215"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/root-review-results.json",
+      "sha256": "3e4f57f9e9d9e96c600c794c4f46c8a012312564aa9eee9f1b32db30102b1f1c"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/gallery-browser-results.json",
+      "sha256": "79954df776957e1d475f1dd441096db480c58c283122043885296d71e7efb35d"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/alpha-guard-results.json",
+      "sha256": "cae599e432a9bb87722f20b1ad9b96dca9b3afcd860fe55e1f27a135ccf19e92"
+    }
+  ],
+  "coverageAuditNote": "The roster pins historical audit12cd31... . Root supplemental post-review records show fresh execution PASS and unchanged capacity/patient model despite later reducer hash/citation-line drift. See README and analysis/coverage-post-review-drift.json; later runtime integration must inspect fresh shared state."
+}

@@ -1,0 +1,119 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -68,6 +68,9 @@
+ import { describeBuildUndoAction } from "./buildModePresentation";
+ import { describeFacilityCharacter } from "./characterActivityPresentation";
+ import type { DescribeCharacterRequest } from "../facility/types";
++import type { ClinicAlertAction, ClinicAlertActionResult } from "../ui/types";
++import { clinicAlertCommand, getClinicAlertActionProblem } from "./clinicAlertActions";
++import { clearRecoveredSaveNotices } from "./clinicSaveNotices";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -105,6 +108,7 @@
+   summaryVisible: boolean;
+   announcement: string;
+   systemNotices: PrototypeSystemNotice[];
++  runClinicAlertAction: (action: ClinicAlertAction) => ClinicAlertActionResult;
+   questionReviewFlags: QuestionReviewFlag[];
+   togglePause: () => void;
+   setSimulationSpeed: (speed: SimulationSpeed) => void;
+@@ -181,6 +185,7 @@
+ }
+ 
+ export interface PrototypeSystemNotice {
++  targetType?: "save";
+   id: string;
+   definitionId: string;
+   priority: PrototypeAlertPriority;
+@@ -351,6 +356,7 @@
+   );
+   const sessionIdRef = useRef(createSessionId());
+   const sequenceRef = useRef(0);
++  const lastCommandReceiptRef = useRef<OperationReceipt | undefined>(undefined);
+   const systemNoticeSequenceRef = useRef(0);
+   const saveWarningShownRef = useRef(false);
+   const lastSaveSucceededRef = useRef(true);
+@@ -391,6 +397,7 @@
+         sortKey:
+           facilityTick + systemNoticeSequenceRef.current / 10_000,
+         persistent: definition?.persistent ?? false,
++        ...(definitionId === "alert.system.save-failed" ? { targetType: "save" as const } : {}),
+       };
+       setSystemNotices((current) => {
+         const withoutResolvedSaveFailure =
+@@ -430,6 +437,7 @@
+         // A later verified write makes the previous warning stale and allows
+         // a distinct future failure to be reported again.
+         saveWarningShownRef.current = false;
++        setSystemNotices(clearRecoveredSaveNotices);
+       }
+       return result;
+     },
+@@ -511,7 +519,7 @@
+         operationId,
+       } as GameCommand;
+       const previous = stateRef.current;
+-      const next = gameReducer(previous, command);
++      const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current });
+       stateRef.current = next;
+       setState(next);
+ 
+@@ -530,6 +538,7 @@
+         stageActiveState(next);
+       }
+       const receipt = next.operationReceipts[operationId];
++      lastCommandReceiptRef.current = receipt;
+       const previousEventIds = new Set(
+         previous.events.map((event) => event.id),
+       );
+@@ -1634,6 +1643,41 @@
+     );
+     return result;
+   }, [execute, persistActiveState, publishSystemNotice]);
++
++  const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
++    const problem = getClinicAlertActionProblem(stateRef.current, action);
++    if (problem) return { ok: false, reason: problem };
++    if (action.kind === "save_and_pause") {
++      const result = saveAndPause();
++      return result.ok ? { ok: true } : { ok: false, reason: describePrototypeStorageFailure(result.failure) };
++    }
++    if (action.kind === "place_room" || action.kind === "restore_access" || action.kind === "train_employee" || action.kind === "show_goals") return { ok: true };
++    if (action.kind === "open_discussion") {
++      if (buildMode) {
++        const access = getFacilityAccessValidation(stateRef.current);
++        if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a discussion." };
++        exitBuildMode();
++      }
++      openEmployeeDiscussion(action.discussionId);
++      return stateRef.current.openEmployeeDiscussionId === action.discussionId ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The discussion could not be opened." };
++    }
++    if (action.kind === "open_chart") {
++      if (buildMode) {
++        const access = getFacilityAccessValidation(stateRef.current);
++        if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a chart." };
++        exitBuildMode();
++      }
++      openPatient(action.encounterId);
++      return stateRef.current.openChartEncounterId === action.encounterId ? { ok: true } :
++        { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The chart could not be opened." };
++    }
++    const command = clinicAlertCommand(action, nextInstanceId("employee.instance", stateRef.current.employees.map((employee) => employee.id)));
++    if (!command) return { ok: false, reason: "This action is no longer available." };
++    // Build undo stores whole-state snapshots. Include every tray mutation so
++    // undoing an older room edit cannot silently erase a later clinic fix.
++    const status = buildMode ? executeBuildCommand(command) : execute(command);
++    return status === "applied" ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The clinic could not apply this action." };
++  }, [buildMode, execute, executeBuildCommand, exitBuildMode, openPatient, openEmployeeDiscussion, saveAndPause]);
+ 
+   const clearLocalCampaigns = useCallback((): boolean => {
+     // This must happen before deleting keys: pagehide/unmount can otherwise
+@@ -2017,6 +2061,7 @@
+     systemNotices: systemNotices.filter((notice) =>
+       shouldStoreSystemNotice(notice.definitionId),
+     ),
++    runClinicAlertAction,
+     questionReviewFlags,
+     togglePause,
+     setSimulationSpeed,

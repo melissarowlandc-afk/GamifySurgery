@@ -1,0 +1,11 @@
+--- a/apps/player/src/ui/chartSheet.css
++++ b/apps/player/src/ui/chartSheet.css
+@@ -7,7 +7,7 @@
+  */
+ 
+ .chart-sheet {
+-  --cs-read: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
++  --cs-read: var(--font-read);
+   --cs-mono: var(--font-pixel);
+   --cs-good: #2f5a33;
+   --cs-good-bg: #e2e9d4;

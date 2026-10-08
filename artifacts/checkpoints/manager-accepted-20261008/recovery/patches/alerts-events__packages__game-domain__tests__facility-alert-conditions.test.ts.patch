@@ -1,0 +1,24 @@
+--- a/packages/game-domain/tests/facility-alert-conditions.test.ts
++++ b/packages/game-domain/tests/facility-alert-conditions.test.ts
+@@ -14,6 +14,21 @@
+ } from "../src";
+ 
+ describe("durable operational alert conditions", () => {
++  it("treats low-to-zero cash as an escalation until the cash problem is actually fixed", () => {
++    const state = createInitialGameState(); state.cash = 60; state.cashCents = 6000;
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    state.facilityTick = 10; state.cash = 0; state.cashCents = 0;
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    const rows = state.environment.facilityConditionOccurrences.filter((row) => row.conditionKey === "low_cash" || row.conditionKey === "no_cash");
++    expect(rows.map((row) => row.resolvedAtFacilityTick)).toEqual([null, null]);
++    expect(rows.map((row) => row.conditionKey)).toEqual(["low_cash", "no_cash"]);
++    state.facilityTick = 20; state.cash = 50; state.cashCents = 5000;
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    expect(rows.map((row) => row.resolvedAtFacilityTick)).toEqual([null, null]);
++    state.facilityTick = 30; state.cash = 200; state.cashCents = 20000;
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    expect(rows.map((row) => row.resolvedAtFacilityTick)).toEqual([30, 30]);
++  });
+   it.each([60, 0])("keeps a continuous $%s cash condition live across day rollover and daily renewal", (cash) => {
+     const state = createInitialGameState();
+     state.cash = cash; state.cashCents = cash * 100;

@@ -1,0 +1,9 @@
+{"status":"PASS","syntaxParsedModules":24}
+node.exe : (node:54276) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+At line:3 char:1
++ & node --experimental-vm-modules --input-type=module -e "import fs fr ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:54276) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)

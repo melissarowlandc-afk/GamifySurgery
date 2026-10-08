@@ -1,0 +1,10 @@
+node.exe : (node:18096) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At line:4 char:1
++ & node tools/character-mapping/patient-gapfill-v6a/validate-placement ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:18096) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","diagnostics":20,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"approved","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6a-placement-qa/v2"}

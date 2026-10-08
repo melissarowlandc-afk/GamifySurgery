@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-original-short-sleeve-north",
+  "reason": "Seated north sleeves became short instead of wrist length.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a1193a-6ec9-7f53-9d76-b72d5946ddbb\\exec-80125c87-fada-465d-9e89-ac627912e0d6.png",
+    "sha256": "01deb9fd47d1248d90cc6dc650a1418787fc1f848ac1b1e569dd1bc63530d7bc"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "01deb9fd47d1248d90cc6dc650a1418787fc1f848ac1b1e569dd1bc63530d7bc",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\gs026-employee-expansion-v1\\assets\\gs026-employee-001-cardinals-v1.png",
+      "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\patient-gapfill-v6a\\sources\\008\\history\\original-short-sleeve-north\\source.png",
+      "sha256": "d98a3480ccd117639e3d228a42352d58f1649b72c809ea3d156902949f6c2ebd",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "5f163685e90915db4bd5bf56031313468dd1133b4ad0ff07bebf7a44f1a34bad"
+  }
+}

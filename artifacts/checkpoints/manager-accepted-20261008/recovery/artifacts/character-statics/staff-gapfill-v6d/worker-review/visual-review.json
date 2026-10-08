@@ -1,0 +1,961 @@
+{
+  "schemaVersion": "staff-gapfill-v6d-worker-visual-review/v1",
+  "reviewer": "sol-v6d-worker",
+  "scope": "Generation and packaging only. Viewed all sixteen existing eligible role looks before generation, accepted v6a/v6b style, all 112 normalized poses, fourteen source sheets, all 56 authored contact overlays, fourteen south-facing chair proofs, seven existing/new role sheets, all 285 catalog looks and twenty-eight nearest-comparison boards. Worker QA only; manager acceptance pending.",
+  "managerAcceptance": "pending",
+  "browserValidation": "not-run-left-to-manager",
+  "runtimeReady": false,
+  "notes": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/worker-review-notes.json",
+    "sha256": "14d9bd19addfe8cab0ef4894df1b41209a137dabb39ff596db9c804546d81224"
+  },
+  "preGenerationExamples": [
+    {
+      "id": "gs022-new-employee-004",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-stills-v1/gs022-new-employee-004/stand-south.png",
+        "sha256": "03e469ef1f0a6ffa91f0a7592064487045fa57dde47bf423341e0e1d06f73f34"
+      }
+    },
+    {
+      "id": "gs022-new-employee-005",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-stills-v1/gs022-new-employee-005/stand-south.png",
+        "sha256": "7e8a3aeb2e5124866a5d89f79febba81aac88b1c34511426ba6601d58071fdd2"
+      }
+    },
+    {
+      "id": "gs022-new-employee-006",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-stills-v1/gs022-new-employee-006/stand-south.png",
+        "sha256": "667358808bb8c2ae21e4cdd1cf5f8c1e7c4d7f425c8dbcc2b47fcead592b17f1"
+      }
+    },
+    {
+      "id": "gs022-new-employee-015",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-stills-v1/gs022-new-employee-015/stand-south.png",
+        "sha256": "a2a06ffeed5d0dbd8df21fc52b25d5015ebb654d57a41cbd591d3b524d7b35c2"
+      }
+    },
+    {
+      "id": "gs022-new-employee-016",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-stills-v1/gs022-new-employee-016/stand-south.png",
+        "sha256": "e9fe6dd2641605f6e12fc7454e9285bc99635e1153895dd540dbb14715e89189"
+      }
+    },
+    {
+      "id": "gs026-employee-009",
+      "pose": {
+        "path": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-009/stand-south.png",
+        "sha256": "c07c043943a993a272c7ad98aa935d7269a3becf111e6b303d096a605ad31bbd"
+      }
+    },
+    {
+      "id": "level3-roster-v2.009",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.009/stand-south.png",
+        "sha256": "511b6203c2b51a364ca8307d102f87c035094526268b765d314aa29b94238f0b"
+      }
+    },
+    {
+      "id": "level3-roster-v2.010",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.010/stand-south.png",
+        "sha256": "6eeea8ae3bb482d1159bf384da487241d03f225fc6191bd98596187e267fa17f"
+      }
+    },
+    {
+      "id": "level3-roster-v2.005",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.005/stand-south.png",
+        "sha256": "c4a16e0a7804a0cd82e15011ff7457e366f55a1e318db663cfe8d881e5cfdb93"
+      }
+    },
+    {
+      "id": "level3-roster-v2.006",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.006/stand-south.png",
+        "sha256": "bc852b0dbc8b761f208c0dfd897182454709a7fd79a0b6c7a161b2ba5d4e9348"
+      }
+    },
+    {
+      "id": "level3-roster-v2.007",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.007/stand-south.png",
+        "sha256": "473d3a2035d2c35beee7ebac01756b0c449e0f486d58ffee7cef87a4e4d03be2"
+      }
+    },
+    {
+      "id": "level3-roster-v2.008",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.008/stand-south.png",
+        "sha256": "668ae8b7d6515bb966cfeadf656d7f07dcfd6fe797424ef79fbe3f4d2f9dbe6c"
+      }
+    },
+    {
+      "id": "level3-roster-v2.011",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.011/stand-south.png",
+        "sha256": "916267a31d29b19d52f9994478fe317cd6f7c6f7ddf9b960d55f590f16676c78"
+      }
+    },
+    {
+      "id": "level3-roster-v2.012",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.012/stand-south.png",
+        "sha256": "831d90ffc56985e6ad2a8808b6b31d66c92fca3f1129caad92b469357d31338b"
+      }
+    },
+    {
+      "id": "level3-roster-v2.013",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.013/stand-south.png",
+        "sha256": "41559ff65519d23183605efe4a0384582159b12b426a774f74ae7a1fd67175e3"
+      }
+    },
+    {
+      "id": "level3-roster-v2.014",
+      "pose": {
+        "path": "apps/player/public/art/characters/level3-roster-v2/level3-roster-v2.014/stand-south.png",
+        "sha256": "5a8fc50313158745e4ad5692374256a6a40b29eb3558d5dc4e740e5177fa8a91"
+      }
+    }
+  ],
+  "existingRoleBoards": [
+    {
+      "role": "staff.imaging_technician",
+      "identities": [
+        "gs022-new-employee-004",
+        "gs022-new-employee-005",
+        "gs022-new-employee-006"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/imaging_technician-existing.png",
+        "sha256": "ca68c69d6df67e57e3b198a1dc97926c113fcf7e4be997be4f35a58c3e78c2b0"
+      }
+    },
+    {
+      "role": "staff.phlebotomist",
+      "identities": [
+        "gs022-new-employee-015",
+        "gs022-new-employee-016",
+        "gs026-employee-009"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/phlebotomist-existing.png",
+        "sha256": "b0f09eaa3ed86c7a1a0f2ac8d79c23c493abd7ee45dcd01b4ffe7a43f8c589a3"
+      }
+    },
+    {
+      "role": "staff.laboratory_technician",
+      "identities": [
+        "level3-roster-v2.009",
+        "level3-roster-v2.010"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/laboratory_technician-existing.png",
+        "sha256": "2968381ef9497d00ca2928805fecf1919c1844b76c2e36ba9da3c97c74ff1b24"
+      }
+    },
+    {
+      "role": "staff.surgeon",
+      "identities": [
+        "level3-roster-v2.005",
+        "level3-roster-v2.006"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/surgeon-existing.png",
+        "sha256": "62540d16f8bfc7b7eeb7af367b8eee55f6510cbd8599dca936c1148935e527d1"
+      }
+    },
+    {
+      "role": "staff.or_nurse",
+      "identities": [
+        "level3-roster-v2.007",
+        "level3-roster-v2.008"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/or_nurse-existing.png",
+        "sha256": "17a0819a705fa1b5eb3f0b5d28706bf7a4cc8c34e6c6bb0ac5110c46646b6abb"
+      }
+    },
+    {
+      "role": "staff.pharmacist",
+      "identities": [
+        "level3-roster-v2.011",
+        "level3-roster-v2.012"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/pharmacist-existing.png",
+        "sha256": "e164463ae411c4dec40f638b9294594d0c5243ed0d5125a1326cf1f3d9369367"
+      }
+    },
+    {
+      "role": "staff.repair_person",
+      "identities": [
+        "level3-roster-v2.013",
+        "level3-roster-v2.014"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/repair_person-existing.png",
+        "sha256": "143b60af8cb077acc724c7d26ca1a2a881aded098278f30e0e5936da367aa894"
+      }
+    }
+  ],
+  "comparisonManifest": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/manifest.json",
+    "sha256": "70c419eab41596c73a1c60fa064bc0e287ddb8fb460773a117c065070845f45f"
+  },
+  "allCatalogComparisonManifest": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/all-catalog-manifest.json",
+    "sha256": "cb98d8ca6c939411a3ceb50bcff6f15f002d6d35e30a134452409dd7c9ba46bb"
+  },
+  "styleReviewManifest": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/review/manager/style-review-manifest.json",
+    "sha256": "beeb3aaea921446e7ecdff79d13b65192900424dd6ac7c8d76a8f1a9cc31bf1c"
+  },
+  "comparisonAtlasesManifest": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/review/manager/qa-atlases-manifest.json",
+    "sha256": "3655493dbd4b454f3c90b66d2265aa159114172e5866aaeacb921c08bb22445a"
+  },
+  "chairBoards": [
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/chair-review-01.png",
+      "sha256": "09cf40edc845648d7e3e0eede5afedfb543680b6ad4591dbbd04a6f38b9be0d5"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/chair-review-02.png",
+      "sha256": "0bfb0495f9aba5d57b907bb909c6a6d01220f1eede8fcbc7cc6e67d45cf75bf9"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/chair-review-03.png",
+      "sha256": "006647db95be6b22c05cc4eb977d80439d40ed389dac4e32af8cc63bef49cdaf"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/chair-review-04.png",
+      "sha256": "65e4a3b50a2e4a1543ed9e6d32832e707d703d1daef9418f8ac78d01482db55b"
+    }
+  ],
+  "contactBoards": [
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/contact-review/contact-review-01.png",
+      "sha256": "0f8d2aae3ccf42beaabbd01d6008e276f298e2012f7e44b973182f9a38737a3e"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/contact-review/contact-review-02.png",
+      "sha256": "8a2fd6c893a5680ae2557a02d8e8ba52d02276545079ab0cf4248a873fac1b2e"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/contact-review/contact-review-03.png",
+      "sha256": "9da7a8980398afe636efeecd97b4030a896c681b956bb50b000f9aca95394e94"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/contact-review/contact-review-04.png",
+      "sha256": "c85b14f4a156afc35c5c16d99d1fab4d403039b5e9dfe1410fcba6709b1d311a"
+    }
+  ],
+  "contactLedger": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/review-acceptance.json",
+    "sha256": "965164ca7342693bcc5b70b6c00c8310177cde7a570553edfe0075639a8ecfbd"
+  },
+  "authoredContactContractSha256": "4a6707ae8e2ebffeb7502ea38a940d2965de4c7c19fb966715a319fac4fc346b",
+  "alphaReport": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/alpha-normalization-report.json",
+    "sha256": "f46bdc3e34de07ff87bfb5eb2aa6b4420ef5d28a327984272661255ab4f36fe8",
+    "summary": {
+      "identities": 14,
+      "poses": 112,
+      "sourceNonzeroPixelsWithFootprintOutside": 135,
+      "sourcePosesWithFootprintOutside": 9,
+      "maxSourceAlphaWithFootprintOutside": 1,
+      "derivedBorderNonzeroPixels": 27,
+      "derivedPosesWithBorderAlpha": 7,
+      "derivedBorderMaxAlpha": 1,
+      "protectedAlphaClipping": false
+    },
+    "status": "worker-QA-pass-with-alpha1-noise;manager-acceptance-pending"
+  },
+  "identities": [
+    {
+      "number": "001",
+      "id": "staff-gapfill-v6d.001",
+      "role": "staff.imaging_technician",
+      "sex": "Female",
+      "age": 52,
+      "sourceSha256": "b3dd4f9a7ddbcf78728192e89064d92572896063e58c25c3fc94e9a43a1d8577",
+      "features": "Fair freckled woman, copper pixie with silver forelock, olive imaging top and charcoal cargos; no glasses.",
+      "distinction": "Copper/silver pixie and freckled light face differ from the existing black bob, gray bun with glasses and bald bearded imaging pool.",
+      "regenerations": 0,
+      "realizationNote": "Sturdy planned build reads moderate in the final stylized body.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/001/full-poses-light.png",
+          "sha256": "3c6a1d1149f6a5b324b780e70ae05d7b98f2e5f4ecc1225096d9d74b30ea2ffb"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/001/full-poses-dark.png",
+          "sha256": "615f7d6882e9c2f6d85ae868a90548405b04f8f028f6de45fb5dc74561501f38"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/001-nearest-six.png",
+        "sha256": "f0f17132965be9d4d3cc1b0800173724456262c6d5f9df7353f73ebb3e4e28b0"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/001-all-catalog-nearest-six.png",
+        "sha256": "161e441c2e7653f4f54da6d5c590117c24660753cda5227b6aa05ac294ed3b01"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/001-front-desk-chair-placement.png",
+        "sha256": "d485808310bedd9f076f1b9944cee6fe5d4ca0db5ff71aa36df7ec1dc31728ad"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/001.png",
+        "sha256": "6595e654e1b4b2c8933f307c96d3463e44747db2f63115a84ea7f501a8d3c97a"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 241,
+        "west": 241,
+        "north": 243
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "002",
+      "id": "staff-gapfill-v6d.002",
+      "role": "staff.imaging_technician",
+      "sex": "Male",
+      "age": 29,
+      "sourceSha256": "c154dc42cbde541b175bb3e915f5b2bebec6f18f31828920655486deafb89990",
+      "features": "Deep-brown young man, narrow upright black twist crest with close sides, olive imaging top and charcoal cargos.",
+      "distinction": "Upright twist crest, younger clean-shaven face and lean torso differ from all three existing imaging looks and the other new imaging identity.",
+      "regenerations": 0,
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/002/full-poses-light.png",
+          "sha256": "34743e6068a0624966817dff455bd781357ee2f95297a80de09c8d41c3cd5672"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/002/full-poses-dark.png",
+          "sha256": "f38bebe0806c688be0949baf3927f2067dce2481ac2435b894f80f0fb8e7921f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/002-nearest-six.png",
+        "sha256": "6d361ebd5d0cdf1a41075895a0430baedf1a853258aa22f06cb52ae4050b4c8c"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/002-all-catalog-nearest-six.png",
+        "sha256": "cad9807db7345185dfefc0adf261ef1c54fd2b9c84900ec161af54357d52006f"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/002-front-desk-chair-placement.png",
+        "sha256": "754e070eb1626b7a5c41ff5a53c4292bda5acd6c0d84e1bd02fa1547f110ad2e"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/002.png",
+        "sha256": "06b9f7d1f62379d7e47d3de99696c1b420d3b5785bc611c1c18d079cba29be18"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 239,
+        "west": 239,
+        "north": 242
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "003",
+      "id": "staff-gapfill-v6d.003",
+      "role": "staff.phlebotomist",
+      "sex": "Female",
+      "age": 44,
+      "sourceSha256": "7a32cf3848d7626adeba5fd4b0b7b1c47f4e1c0558daf56bca2730cd45dc4ebc",
+      "features": "Light olive woman, neat chestnut low braid, green rectangular glasses, graphite-gray phlebotomy top and charcoal trousers.",
+      "distinction": "Low braid and rectangular frames add a female silhouette to a role pool with orange curls, a moustached side part, and a high black hairstyle with ivory vest.",
+      "regenerations": 0,
+      "realizationNote": "General braid/glasses motif also occurs in perioperative staff; explicit whole-catalog review distinguishes uniform, face, fringe, tone and frames.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/003/full-poses-light.png",
+          "sha256": "210781e0244760643b87b0d2705d6339c415c2a89893ee26a3b9fe2f936cfbe0"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/003/full-poses-dark.png",
+          "sha256": "212b48c1a75ee58630e1777feddbacb326cb2583105072543cfa874dfce823eb"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/003-nearest-six.png",
+        "sha256": "9f8288580f70cc9404db1f31b1eecae24095066b74248aa065d13135b730c310"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/003-all-catalog-nearest-six.png",
+        "sha256": "29dd55b699395dd2e1b61e1b780f56a3dd2c54262595f6dbee0ba46626a40619"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/003-front-desk-chair-placement.png",
+        "sha256": "1d116ccd9cd408e0e73f50268cbd70a88025d661c250533bcf08f4e146ec98eb"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/003.png",
+        "sha256": "7f3330d5e0ca7641aabe65c55d6b71e44ebcc5add02cb7c411754ca34fb6b864"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 248,
+        "west": 248,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "004",
+      "id": "staff-gapfill-v6d.004",
+      "role": "staff.phlebotomist",
+      "sex": "Male",
+      "age": 57,
+      "sourceSha256": "535c479aca3947b3ecee5667ee1a2d45ef057ffbaae07f03a4a8975432aa61c1",
+      "features": "Fair warm older man, receding close silver hair and bald crown, clean-shaven face, graphite/sage phlebotomy uniform.",
+      "distinction": "Silver receding hair and clean-shaven older face differ from the role pool's younger dark/orange hair and moustached identity.",
+      "regenerations": 0,
+      "realizationNote": "Full planned build renders moderately broad, still distinct from 003.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/004/full-poses-light.png",
+          "sha256": "531b9bfdbb4849fa731662cadb6c71455f8e309e4b744dcd96edede3bb122510"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/004/full-poses-dark.png",
+          "sha256": "fe4e2c7ef07ab97cbee6f08cc030241893a8ef0957aad411fff6759632454f1a"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/004-nearest-six.png",
+        "sha256": "e15ee349449a3b34564e86c11732536c9d81c6427d753fd654298656c2d8eccc"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/004-all-catalog-nearest-six.png",
+        "sha256": "acbf65ad7ec81a6702c6fb9fd3691892cff80853e13c19e47a9e2f57fadc02d8"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/004-front-desk-chair-placement.png",
+        "sha256": "cb3327efe9b85591d1fe84a2e639654e4bb6c4210c1d527f1a584116c1ef60ff"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/004.png",
+        "sha256": "d978c40ab9398eb53b34642443421d00de819ffcdda34d5a79d9eb724e58a164"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 241,
+        "west": 241,
+        "north": 243
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "005",
+      "id": "staff-gapfill-v6d.005",
+      "role": "staff.laboratory_technician",
+      "sex": "Male",
+      "age": 36,
+      "sourceSha256": "9a60d8b61817b223fdd0cfcfae6914c07c643e9d9122d903af2da85a222f0355",
+      "features": "Warm deep-brown bald clean-shaven man, straight slim torso, plum laboratory top with lower pockets and charcoal cargos.",
+      "distinction": "Smooth bald head, deep skin and male straight torso differ from the existing plum-clad black bob and sage-clad copper curls.",
+      "regenerations": 1,
+      "realizationNote": "Original eight-pose sheet inherited a rounded bust/torso from the female role reference. One built-in imagegen edit straightened all torso profiles; rejected original and exact correction provenance are retained. Final cel shading is slightly flatter.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/005/full-poses-light.png",
+          "sha256": "95881e03f6e9d1a822c72ea5bded11acfc6eb5f60d07935d3df138a90faa56a3"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/005/full-poses-dark.png",
+          "sha256": "a69c2a0a9e2ca4780d2d5db9a9cc69b66e8f46335c95c9e7e6aef73c32c451dc"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/005-nearest-six.png",
+        "sha256": "d4d01c14d645e77de70e6fed722a07ab30a62fcd1cd3419d173cb2ef02819457"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/005-all-catalog-nearest-six.png",
+        "sha256": "1a34c29e271f9752732138dee1ec4e9e13d58c7b4ac2ec970b4598de6a39e711"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/005-front-desk-chair-placement.png",
+        "sha256": "4de41bfb0fab9f3164d555a47717b47ae5b952a656feb24b942a4aaf43b3e2ba"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/005.png",
+        "sha256": "ebf30b4119dd8593465f553db53afe3d98c0d2ec60f61077bc7a73899bc81560"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 249,
+        "west": 249,
+        "north": 250
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "006",
+      "id": "staff-gapfill-v6d.006",
+      "role": "staff.laboratory_technician",
+      "sex": "Female",
+      "age": 50,
+      "sourceSha256": "82c72aa3ebc2134fae0a121ec5b558fa06c84426ad2fc5b1e7183c3d822473e5",
+      "features": "Medium-tan woman, swept black pixie with silver forelock, broad sage laboratory top with chest pocket and charcoal cargos.",
+      "distinction": "Dark/silver short crop and tan broad build differ from the laboratory black bob and copper curls, and from new bald plum 005.",
+      "regenerations": 0,
+      "realizationNote": "Hair is a tousled swept pixie rather than the planned strictly straight angular cut.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/006/full-poses-light.png",
+          "sha256": "8b1f621bf7257ec8e89f426ca96f3520c9e0a6939d2542735c853b7d309dc44c"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/006/full-poses-dark.png",
+          "sha256": "52208a80b5345b8a49bbcbe6ce266b8d6052edde7006fbaa686101c6953e4cef"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/006-nearest-six.png",
+        "sha256": "30d1d760f30a33b1b4f2a90ce87af5d8ffbdfcdd7562e62df35bf51dd063470a"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/006-all-catalog-nearest-six.png",
+        "sha256": "ba3804e2e3befa620f0b16fa3a5370e5aec52d3ebae34b9794eb37b3d8cba457"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/006-front-desk-chair-placement.png",
+        "sha256": "41033348ee441a4a05e9a392045fff389d1e9a32cf9fe5eb413cc2a7c7940084"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/006.png",
+        "sha256": "b942f67ecee87d3b22ab86cd50445e78a30ea5168719768559b5b32311bd2f41"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 243,
+        "west": 243,
+        "north": 245
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "007",
+      "id": "staff-gapfill-v6d.007",
+      "role": "staff.surgeon",
+      "sex": "Female",
+      "age": 39,
+      "sourceSha256": "ab6758dcf536caf7eb77d39c62468f9c54a7d47f3aed04b84e12e8f94fa8691a",
+      "features": "Deep warm-brown woman with a full build, dark-teal scrubs, teal surgical cap and black clinical shoes; no glasses.",
+      "distinction": "Deeper skin, broader silhouette and fuller cap separate her from the existing fair teal surgeon and blue-clad bearded surgeon.",
+      "regenerations": 0,
+      "realizationNote": "Cap renders fuller/bouffant-looking instead of tightly fitted; clear surgeon cue is preserved.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/007/full-poses-light.png",
+          "sha256": "7fa154d54e423cf8ea92b207728dd0fccd36c9e9cfe004bb55b9aaad9f9181d4"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/007/full-poses-dark.png",
+          "sha256": "61a816661c50a1879b66464fcdeb5fae0b8ce9845099eb8efbe4556c9a722af8"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/007-nearest-six.png",
+        "sha256": "d73796489d48e48a8bb491b2aed503155f6494f08f6885c386d06ab77fee7830"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/007-all-catalog-nearest-six.png",
+        "sha256": "a93e3120895aa36b71fafb3923faf8598b7aeff37aba9d9745f4b0f059536190"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/007-front-desk-chair-placement.png",
+        "sha256": "79b5601bb05593385c048deeeb422c8a3ef11cba96d6e4ce0ffe955d4cec9833"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/007.png",
+        "sha256": "b8cc830e0bd7e923e4797cf332fd488fe6806dca286f82008b8da44947e7c6c9"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 248,
+        "west": 248,
+        "north": 250
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "008",
+      "id": "staff-gapfill-v6d.008",
+      "role": "staff.surgeon",
+      "sex": "Male",
+      "age": 61,
+      "sourceSha256": "5081be85b64dfdeed8cc2aa19979e32f029b0af0fff3caead9856f4989fd2604",
+      "features": "Fair pink-toned older broad man, silver sides, neat white moustache, navy scrubs and tied navy surgical cap; no glasses.",
+      "distinction": "White moustache, silver sides and older fair face differ from the deep-brown black-bearded blue surgeon and both teal surgeons.",
+      "regenerations": 0,
+      "realizationNote": "Manager-requested deterministic navy palette correction from existing surgeon level3-roster-v2.006. All alpha, protected ink, silhouette boundary, non-uniform pixels and relative shading scale are preserved; no new image generation.",
+      "deterministicCorrections": 1,
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/008/full-poses-light.png",
+          "sha256": "c7ebebdaa8a1b6d746c8171d58c102b9950aa779502416a60b2466cb1d8aca84"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/008/full-poses-dark.png",
+          "sha256": "2622d8e9db4cfc2a8d8b85aceda132b4c6fedd48f32270f7ad9cdefb280b0c40"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/008-nearest-six.png",
+        "sha256": "a855ea1090b49198421b50cedd08b283660452f4656e4ad4015f64f980d77ae1"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/008-all-catalog-nearest-six.png",
+        "sha256": "389cd66ecc590d880332176e24c76386b6364bcb12ea35c2ffbba05b59ff7c8d"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/008-front-desk-chair-placement.png",
+        "sha256": "37384c038de19d3a651cf856eb400e48d4d74a4b3aff493dff0312e4a2d499c7"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/008.png",
+        "sha256": "326e34fe2871e7cbbd5fa73f2b932b01d81fb23b6192a2b94346224758823df7"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 248,
+        "west": 248,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "009",
+      "id": "staff-gapfill-v6d.009",
+      "role": "staff.or_nurse",
+      "sex": "Female",
+      "age": 31,
+      "sourceSha256": "64016bc478131f99e07b495369ca7d89f90b37424f67a6dab086176be9c92e4e",
+      "features": "Golden-brown young woman, straight black low braid, sage/olive OR nursing scrubs and short cream waist cord; no cap or glasses.",
+      "distinction": "Low braid, slimmer body and golden skin differ from the existing dark bun and fair blond curls; distinct from new steel-blue 010.",
+      "regenerations": 0,
+      "realizationNote": "A small blank chest badge appeared in the source; no readable text or logo.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/009/full-poses-light.png",
+          "sha256": "606008eda7fdcd1c42e2ef6666dcd8ad5dde497a3f5a1834584d1ca6800235a2"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/009/full-poses-dark.png",
+          "sha256": "8d2bbe1654bdd50f72bad0114c295465e70507530de739e6c0a92dd56ed4774f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/009-nearest-six.png",
+        "sha256": "32f6071c10e03c736a6038a6551a22e9250222901551e92708b3fccef7f01f35"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/009-all-catalog-nearest-six.png",
+        "sha256": "6568657e22fb8b67d749751f0df66b7705cb736dbcd9cfdc1f685088a23652cb"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/009-front-desk-chair-placement.png",
+        "sha256": "dfa7dfe6edc4ee23c437cecec2818e8385ced55d6b68be06192e04cbad6bb2d5"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/009.png",
+        "sha256": "67f514a8deecde9908bcf3959163dc3f3410815214a800d855fc986bceadc87b"
+      },
+      "contacts": {
+        "south": 233,
+        "east": 240,
+        "west": 240,
+        "north": 241
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "010",
+      "id": "staff-gapfill-v6d.010",
+      "role": "staff.or_nurse",
+      "sex": "Male",
+      "age": 45,
+      "sourceSha256": "4201f491553b01798a51a31fa1a5588188d7707864057db03f1a634cd45e49cd",
+      "features": "Medium olive man, swept black hair with gray temple streak, small chin goatee, steel-blue OR scrubs and cream cord; no cap.",
+      "distinction": "Male silhouette, straight swept hair and tiny chin goatee add a distinct look to the existing two female OR identities.",
+      "regenerations": 0,
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/010/full-poses-light.png",
+          "sha256": "bea6ed4eaf2d5e503637e376f68be5b626ea15f31da4d654aa7a03d03d13d205"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/010/full-poses-dark.png",
+          "sha256": "9b4fb2f4371c262f7e248a31fe67c87e2b050a2838b5865db9fa9a643819fe7b"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/010-nearest-six.png",
+        "sha256": "7bf2f1f5234ec2406c81ed286a29a1944ff4ca78e7ce341884d6c9d0db6745a9"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/010-all-catalog-nearest-six.png",
+        "sha256": "0261c96ba60cba0325ae3c69d8b74dbaee82a73db0aeb8cd9cb8effa6985970b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/010-front-desk-chair-placement.png",
+        "sha256": "8ddf3f4ba7f4b5e31fcdcf0e7f14411fd1829fed5e945c5a878c17925b65ec35"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/010.png",
+        "sha256": "0539dded1c2003179c102de57fae6f76e2e83d498827f0a3ea397c66239cb284"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 247,
+        "west": 247,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "011",
+      "id": "staff-gapfill-v6d.011",
+      "role": "staff.pharmacist",
+      "sex": "Male",
+      "age": 33,
+      "sourceSha256": "e49ed12b5d4327744c1825de8fcf2bf34cddf094a23fddec74b922a7ee14ce33",
+      "features": "Deep-brown lean man, short rust locs tied low, white pharmacist coat over lilac collared shirt, charcoal trousers and black loafers.",
+      "distinction": "Close-sided tied rust locs, young clean-shaven face and lilac collar differ from the existing dark curls/plum and silver-haired blue-tie pharmacists.",
+      "regenerations": 0,
+      "realizationNote": "A small blank badge appeared on the white coat; no text or logo.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/011/full-poses-light.png",
+          "sha256": "610f3c692b2613b37db4167dc6b09b8d9b1f002f0a9899b92c1c9c99da0bda28"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/011/full-poses-dark.png",
+          "sha256": "b95e21de9ced4eb2b7ea9eb0b92312d49e89fe37c60c891dadb6848597665ea7"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/011-nearest-six.png",
+        "sha256": "ccc7cbb0d477c528e84c69364096037425f68107bae221eb9fcd48cb91077c0e"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/011-all-catalog-nearest-six.png",
+        "sha256": "1cbc2a8632cb4c852cbaa48e200fab95afb87819310058e4d62fb42f74fe27e1"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/011-front-desk-chair-placement.png",
+        "sha256": "cc4ffa6d806d05b2459313d02bd6b1530641f5f27ecd3723da99337727776c5e"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/011.png",
+        "sha256": "d5a878d253196c135709eab5e323b70d5ae7befd63a3f8f745175b225303132c"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 243,
+        "west": 243,
+        "north": 245
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "012",
+      "id": "staff-gapfill-v6d.012",
+      "role": "staff.pharmacist",
+      "sex": "Female",
+      "age": 58,
+      "sourceSha256": "e3287db00b8ea688fb2f9e7e623dbbe30d6b2e822ebd6a235de25411ba9ea324",
+      "features": "Fair older woman, smooth brown bob with silver front panel, teal round glasses, white pharmacist coat and sage collared shirt.",
+      "distinction": "Straight bob with silver panel and teal frames differ from both curly-haired existing pharmacists and the new rust-loc pharmacist.",
+      "regenerations": 0,
+      "realizationNote": "Frames render round rather than planned oval; build moderately full. Blank coat badge contains no text.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/012/full-poses-light.png",
+          "sha256": "4b1f23ba6c01977cae0affad0ba122b1ca6ab426e9d756344db9965f61385763"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/012/full-poses-dark.png",
+          "sha256": "6e01f89c92698abcf24b48f4bbaf0369bf8578d2c64fdacec3a35512b3835b2b"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/012-nearest-six.png",
+        "sha256": "3c8e59e7d4b75c37c526694920de5c68308e93f334f3b0079f776cb31f7af069"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/012-all-catalog-nearest-six.png",
+        "sha256": "5ee4e27042a5c9b5b9efd8c3adc1b84273f000c949addf258ca52afe5bf31e3b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/012-front-desk-chair-placement.png",
+        "sha256": "18151aadaac459fcc3bec03120771504a146dc8de68d2088cb6e6d03ffc68193"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/012.png",
+        "sha256": "ae939be40b5231132b788578b9f9f79bb0511da388c1627056d4c7c01f56d18b"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 246,
+        "west": 246,
+        "north": 246
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "013",
+      "id": "staff-gapfill-v6d.013",
+      "role": "staff.repair_person",
+      "sex": "Female",
+      "age": 47,
+      "sourceSha256": "1796294b7a289fc1295425db11480a1fed82fa0f1080372e499f4ffa751845f1",
+      "features": "Golden-brown woman, black low ponytail with blunt bangs, terracotta work jacket, charcoal cargos, belt and dark-brown work boots.",
+      "distinction": "Straight bangs and ponytail, narrower build and actual work boots differ from the existing terracotta repair person's rounded curls and clinical shoes.",
+      "regenerations": 0,
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/013/full-poses-light.png",
+          "sha256": "7feb00e0ea6c9c3859b31c30b7cb66e9deafa6b464406e67b203c2f7b1ea35e3"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/013/full-poses-dark.png",
+          "sha256": "a27d86cdbf47af962ba7e82822b3cd1a8c02658c2529296eedb4c777aebca8b4"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/013-nearest-six.png",
+        "sha256": "32cfe93c2bcb5e5aeedfed372f41417b060a75853e7f067b8598a82b4c8f60a5"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/013-all-catalog-nearest-six.png",
+        "sha256": "13debd8407f29a8ddab7b8b3f9110704e6548f531cce0e2b841c40c6b0b14058"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/013-front-desk-chair-placement.png",
+        "sha256": "1581bccf53bf257e1ee72f010e51f4d5c63f5a5dfc157448ede6fa4229e6c9dd"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/013.png",
+        "sha256": "dafcf87ff97cf04513b4a9cb43e9c0b332ffe80dcb05ec3edc7f39e631c26335"
+      },
+      "contacts": {
+        "south": 232,
+        "east": 239,
+        "west": 239,
+        "north": 243
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "014",
+      "id": "staff-gapfill-v6d.014",
+      "role": "staff.repair_person",
+      "sex": "Male",
+      "age": 28,
+      "sourceSha256": "145a8888c893a256fecc80affed9e762a296d7d2d25580291fcfe35a14c12782",
+      "features": "Fair freckled stocky young man, blond blunt bowl crop with shaved sides, olive work jacket, khaki cargos, brown belt and work boots.",
+      "distinction": "Blond undercut, freckles and clean-shaven broad face differ from the existing brown curly-haired bearded repair man and new black-ponytail woman.",
+      "regenerations": 0,
+      "realizationNote": "Jacket retains flap chest pockets; the planned lower pockets are omitted in the native render.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/014/full-poses-light.png",
+          "sha256": "355ddc3e2bce63b2beeeb976d840f59984742b0e5aa4a7aa7f8646651bf5d591"
+        },
+        {
+          "path": "artifacts/character-statics/staff-gapfill-v6d/packages/014/full-poses-dark.png",
+          "sha256": "a584556d9d618b3a38c079ab1aa0590706ede23f2aef753d7d995dc7c9d40622"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/014-nearest-six.png",
+        "sha256": "9fad49ebb0f1f69ae92b5b3fa74c42e2b644680d7e59ee4484729b75b6e7be3b"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/014-all-catalog-nearest-six.png",
+        "sha256": "f40e46c85722edd3adde27ec7177c0c30b76db5a13710936a23fb5770d3ab779"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/014-front-desk-chair-placement.png",
+        "sha256": "5a741dcf72a16eb72ef927c06b7ec473556275e7d926a4f853dccec935863809"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/contact-overlays/014.png",
+        "sha256": "6ce81e0e98438c8dece352d2b5d97cc8988ce61fb929496781048939baa207af"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 242,
+        "west": 242,
+        "north": 248
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    }
+  ],
+  "styleAssessment": "Compact v6a/v6b head/body proportions, outlined cel shading, restrained gradients, coherent cardinal profiles, legible uniform blocks, upright arms-down standing and chair-free seated poses. Imaging olive/sage; phlebotomy graphite/sage; laboratory plum or sage without coat/cap; surgeon teal/blue with caps; OR nurse sage/steel blue and cream waist cord without cap; pharmacist white coat; repair terracotta/olive jacket, cargo trousers and work boots. Two glasses identities (14.3%), no gray-curls-plus-glasses designs, no logos or readable badge text. All fourteen reviewed at native 160x320 frame size and in actual runtime chair geometry.",
+  "limitations": [
+    "005's corrected source uses slightly flatter cel shading than the other thirteen; proportions, role colour, outline and pose continuity remain coherent on the final comparison sheets.",
+    "008 navy colour issue is resolved by the manager-requested deterministic measured RGB correction. Original native sheets remain bright blue and immutable; all eight packaged poses use navy. New correction proof requires manager verification.",
+    "003 shares the general braid-and-glasses motif with an existing perioperative nurse, but has graphite phlebotomy clothes, a different face/fringe, green rectangular frames and lighter skin. Whole-catalog comparison and visual review found no near-duplicate.",
+    "Contacts are independently authored worker candidates, not manager/root acceptance. E/W/N overlays are supplied; chair proofs use only the authentic south-facing Front Desk fixture, as in v5.",
+    "Native extraction preserves imperceptible alpha-1 edge noise: 9 poses have alpha-1 source footprint outside the canvas; 7 derived poses have alpha-1 border pixels. No alpha >=13 clipping. No thresholding, erasing or repainting was applied.",
+    "Browser gallery validation was deliberately not run and belongs to the manager. No runtime integration, approval, publication or Git backup is claimed. No game origin, browser profile or campaign storage changed."
+  ],
+  "paletteCorrection": {
+    "path": "tools/character-mapping/staff-gapfill-v6d/corrections/008-navy-palette-v1.json",
+    "sha256": "0676c33981f57f368b8a24a90b0bf237abaf3dcedd1551ead6a2affdbd38bb6a"
+  },
+  "navyProof": {
+    "path": "artifacts/character-statics/staff-gapfill-v6d/corrections/008-navy-palette-v1/proof-manifest.json",
+    "sha256": "185aabb791afda3224b33e2626d111877ba40469f8474ef545eb6e6f518d3121"
+  },
+  "managerReview": {
+    "status": "manager-accepted-original-batch-except-008;008-navy-correction-for-verification",
+    "acceptedIdentities": [
+      "001",
+      "002",
+      "003",
+      "004",
+      "005",
+      "006",
+      "007",
+      "009",
+      "010",
+      "011",
+      "012",
+      "013",
+      "014"
+    ],
+    "requestedRevision": "008",
+    "authority": "User manager review in this thread and program plan Progress; no runtime integration authorization"
+  }
+}

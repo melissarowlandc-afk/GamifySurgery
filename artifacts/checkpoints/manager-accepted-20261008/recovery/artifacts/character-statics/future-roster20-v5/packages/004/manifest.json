@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "future-roster20-v5-package/v1",
+  "status": "root-reviewed-pending-owner-approval",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "identity": {
+    "number": "004",
+    "category": "staff",
+    "roleLabel": "Executive",
+    "intendedAge": 52,
+    "compatibleSexLabel": "Male",
+    "ageBand": "middle_aged",
+    "visualBrief": {
+      "build": "broad build",
+      "skin": "deep brown skin",
+      "hair": "close-cropped salt-and-pepper hair",
+      "accessory": "square dark glasses and a clean-shaven face",
+      "outfit": "a full-sleeved navy suit jacket over a white shirt and short burnt-umber necktie, matching navy trousers and polished dark-brown shoes"
+    },
+    "stableId": "future-roster20-v5.004",
+    "eligibleStaffRoleDefinitionIds": [],
+    "plannedStaffRole": {
+      "label": "Executive",
+      "facilityLevel": 5,
+      "status": "roadmap-only",
+      "evidencePaths": [
+        "docs/features/facility-levels-and-clinical-release-points.md"
+      ]
+    },
+    "stage1": {
+      "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+      "references": [
+        {
+          "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+          "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+          "role": "style-layout-pose-reference"
+        }
+      ]
+    },
+    "stage2": {
+      "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+      "references": [
+        {
+          "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+          "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+          "role": "style-layout-pose-reference"
+        },
+        {
+          "path": "sources/004/stage1-standing-cardinals.png",
+          "role": "identity-outfit-reference"
+        }
+      ]
+    },
+    "status": "planned-for-review;not-approved;not-runtime-integrated"
+  },
+  "source": {
+    "stage1": {
+      "png": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/stage1-standing-cardinals.png",
+        "sha256": "f1190fbfa4cb7fb3b791c57c410bac41f52245df7fffa85d2bebd1d311d4129d"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/stage1-exact-prompt.txt",
+        "sha256": "4653bb4bd0adf0fd6cda9b9f550f07ff30019bb35c368681a3a7861f32314de1"
+      },
+      "args": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/stage1-tool-args.json",
+        "sha256": "50535baf390d1235126b99b4214c8bb2b16922b55673dc24880ce9ee99148d99"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/stage1-provenance.json",
+        "sha256": "c0d6966a49a480c90b0f6d5d4021a4e359e211f6e8dc25936cf4e950af192ea5"
+      }
+    },
+    "stage2": {
+      "png": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/source.png",
+        "sha256": "b5560272d62f24d040b6dc465788f6f498857a5691ed633b3e1745440f9505f9"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/exact-prompt.txt",
+        "sha256": "926932a131519cba878b50a3dcf8f7ca338a3bd835fd00a0d118f9c2c6fd74ab"
+      },
+      "args": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/tool-args.json",
+        "sha256": "dd0a34102102ec3b013280c68e99541a1b009e22d34e15609418e8e0a3efeb3f"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/future-roster20-v5/sources/004/provenance.json",
+        "sha256": "617bddcda7f57db5be54d6a94733163f330e0974db5f1b2dbb77e8269b8f8300"
+      }
+    }
+  },
+  "provenanceValidation": {
+    "stage1": "original-spec-stage1",
+    "stage2": "original-spec-stage2",
+    "stage2Chain": [
+      {
+        "kind": "original-spec-stage2",
+        "source": {
+          "path": "artifacts/character-statics/future-roster20-v5/sources/004/source.png",
+          "sha256": "b5560272d62f24d040b6dc465788f6f498857a5691ed633b3e1745440f9505f9"
+        },
+        "exactPrompt": {
+          "path": "artifacts/character-statics/future-roster20-v5/sources/004/exact-prompt.txt",
+          "sha256": "926932a131519cba878b50a3dcf8f7ca338a3bd835fd00a0d118f9c2c6fd74ab"
+        },
+        "toolArguments": {
+          "path": "artifacts/character-statics/future-roster20-v5/sources/004/tool-args.json",
+          "sha256": "dd0a34102102ec3b013280c68e99541a1b009e22d34e15609418e8e0a3efeb3f"
+        },
+        "provenance": {
+          "path": "artifacts/character-statics/future-roster20-v5/sources/004/provenance.json",
+          "sha256": "617bddcda7f57db5be54d6a94733163f330e0974db5f1b2dbb77e8269b8f8300"
+        }
+      }
+    ]
+  },
+  "rootVisualAcceptance": {
+    "ledger": "tools/character-mapping/future-roster20-v5/review-acceptance.json",
+    "sourceSha256": "b5560272d62f24d040b6dc465788f6f498857a5691ed633b3e1745440f9505f9",
+    "accepted": true,
+    "scope": "Visual source, exact approved seated-contact, derived faint-alpha and approved-chair review only; pending owner approval and separate runtime integration."
+  },
+  "seatContactAcceptance": {
+    "ledger": "tools/character-mapping/future-roster20-v5/review-acceptance.json",
+    "coordinates": {
+      "south": 231,
+      "east": 238,
+      "west": 238,
+      "north": 240
+    },
+    "reviewedDirections": [
+      "south",
+      "east",
+      "west",
+      "north"
+    ],
+    "status": "root-visual-reviewed-manual-contact"
+  },
+  "extraction": {
+    "method": "immutable GS026 extractEight",
+    "sourceRects": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 432,
+        "height": 564
+      },
+      {
+        "x": 432,
+        "y": 0,
+        "width": 336,
+        "height": 564
+      },
+      {
+        "x": 768,
+        "y": 0,
+        "width": 336,
+        "height": 564
+      },
+      {
+        "x": 1104,
+        "y": 0,
+        "width": 432,
+        "height": 564
+      },
+      {
+        "x": 0,
+        "y": 564,
+        "width": 412,
+        "height": 460
+      },
+      {
+        "x": 412,
+        "y": 564,
+        "width": 356,
+        "height": 460
+      },
+      {
+        "x": 768,
+        "y": 564,
+        "width": 354,
+        "height": 460
+      },
+      {
+        "x": 1122,
+        "y": 564,
+        "width": 414,
+        "height": 460
+      }
+    ],
+    "componentCount": 21,
+    "ignoredComponents": [
+      {
+        "area": 1,
+        "left": 137,
+        "top": 95,
+        "right": 137,
+        "bottom": 95
+      },
+      {
+        "area": 1,
+        "left": 668,
+        "top": 112,
+        "right": 668,
+        "bottom": 112
+      },
+      {
+        "area": 1,
+        "left": 1253,
+        "top": 115,
+        "right": 1253,
+        "bottom": 115
+      },
+      {
+        "area": 1,
+        "left": 1278,
+        "top": 185,
+        "right": 1278,
+        "bottom": 185
+      },
+      {
+        "area": 1,
+        "left": 1009,
+        "top": 375,
+        "right": 1009,
+        "bottom": 375
+      },
+      {
+        "area": 1,
+        "left": 1327,
+        "top": 429,
+        "right": 1327,
+        "bottom": 429
+      },
+      {
+        "area": 1,
+        "left": 1392,
+        "top": 611,
+        "right": 1392,
+        "bottom": 611
+      },
+      {
+        "area": 1,
+        "left": 1398,
+        "top": 629,
+        "right": 1398,
+        "bottom": 629
+      },
+      {
+        "area": 1,
+        "left": 1009,
+        "top": 713,
+        "right": 1009,
+        "bottom": 713
+      },
+      {
+        "area": 1,
+        "left": 1277,
+        "top": 716,
+        "right": 1277,
+        "bottom": 716
+      },
+      {
+        "area": 1,
+        "left": 88,
+        "top": 838,
+        "right": 88,
+        "bottom": 838
+      },
+      {
+        "area": 1,
+        "left": 107,
+        "top": 854,
+        "right": 107,
+        "bottom": 854
+      },
+      {
+        "area": 1,
+        "left": 1219,
+        "top": 854,
+        "right": 1219,
+        "bottom": 854
+      }
+    ]
+  },
+  "normalization": {
+    "target": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 246
+    },
+    "policy": "one identity-wide whole-body scale; source remains byte-exact; no repaint or mirroring; alpha >=13 outside the derived canvas is forbidden; sub-13 alpha loss is measured for root warning review"
+  },
+  "poses": {
+    "stand": {
+      "south": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/stand-south.png",
+        "sha256": "aafb5c209e98c49d546e06153adec730c0eb19c132075cd0361819e3a4e77ba7",
+        "visibleBounds": {
+          "x": 11,
+          "y": 41,
+          "width": 139,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -20.133072407045006,
+          "translateY": 21.26223091976516,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 90,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/stand-east.png",
+        "sha256": "f75d6663c0b05a6238733a187f0a6f101f15e7d888e3a3226629ebb7678a84b3",
+        "visibleBounds": {
+          "x": 39,
+          "y": 41,
+          "width": 82,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": 0.5675146771037163,
+          "translateY": 21.74363992172215,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 332,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 20,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/stand-west.png",
+        "sha256": "294ad7ab789607558c01d88ca51d622326023a089cbde9f9921bbdc041696ba7",
+        "visibleBounds": {
+          "x": 39,
+          "y": 41,
+          "width": 82,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -2.5616438356164366,
+          "translateY": 21.74363992172215,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 491,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 26,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/stand-north.png",
+        "sha256": "cce0496a4ca4149e457043d7370c2238828f0d9b239ec375ce654ad6ad3ceea7",
+        "visibleBounds": {
+          "x": 11,
+          "y": 41,
+          "width": 138,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -27.594911937377688,
+          "translateY": 21.74363992172215,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 126,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 1,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/sit-south.png",
+        "sha256": "54f609e6688b5287917aad477ece0a0e9fbf621c1a9a636a32e922b28ba161ba",
+        "visibleBounds": {
+          "x": 19,
+          "y": 82,
+          "width": 122,
+          "height": 205
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -20.614481409001954,
+          "translateY": 76.14285714285717,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 304,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 2,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 231,
+          "seatContactStatus": "root-reviewed-contact-pending-owner-approval"
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/sit-east.png",
+        "sha256": "f9283f09d50c2c282cc0eaa928e378a1b2f637b49252b210c17fd27fc0b562a2",
+        "visibleBounds": {
+          "x": 19,
+          "y": 83,
+          "width": 122,
+          "height": 204
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -18.688845401174163,
+          "translateY": 77.587084148728,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 104,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 238,
+          "seatContactStatus": "root-reviewed-contact-pending-owner-approval"
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/sit-west.png",
+        "sha256": "b2a50aa94c2fe37d11175fac231b49b9e74efb4333f130b2b490a61730afd8b0",
+        "visibleBounds": {
+          "x": 19,
+          "y": 83,
+          "width": 122,
+          "height": 204
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": 7.066536203522503,
+          "translateY": 77.587084148728,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 187,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 238,
+          "seatContactStatus": "root-reviewed-contact-pending-owner-approval"
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/future-roster20-v5/packages/004/sit-north.png",
+        "sha256": "494ffd1d886ba078ae56b4ebe9b8332d85b466a0c11940cbe7f10aa39297bbc3",
+        "visibleBounds": {
+          "x": 18,
+          "y": 83,
+          "width": 124,
+          "height": 204
+        },
+        "transform": {
+          "scale": 0.48140900195694714,
+          "translateX": -17.96673189823875,
+          "translateY": 77.587084148728,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 259,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 240,
+          "seatContactStatus": "root-reviewed-contact-pending-owner-approval"
+        }
+      }
+    }
+  },
+  "proofs": {
+    "fullTransparent": {
+      "file": "artifacts/character-statics/future-roster20-v5/packages/004/full-poses-transparent.png",
+      "sha256": "aca9e020d5800c3fff945a168ca6d0d54e73b5a18720e74acbf4523af167cfc0"
+    },
+    "fullLight": {
+      "file": "artifacts/character-statics/future-roster20-v5/packages/004/full-poses-light.png",
+      "sha256": "bd2ab212a6b1410d3f62fcdb4e459ea2500c713820c1a68384aaa92fd2dee67b"
+    },
+    "fullDark": {
+      "file": "artifacts/character-statics/future-roster20-v5/packages/004/full-poses-dark.png",
+      "sha256": "2fb44e2c668f90cae62778f3075212365d8af58ba4fd5c25a2318829d587552c"
+    },
+    "seatedContactGrid": {
+      "file": "artifacts/character-statics/future-roster20-v5/packages/004/seated-contact-grid-2x.png",
+      "sha256": "22058ab1df307daa1566eeb5f4855bdc008d044c24d640c66ce0ae83434c2377"
+    }
+  }
+}

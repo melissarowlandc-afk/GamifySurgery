@@ -1,0 +1,126 @@
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -19,7 +19,7 @@
+     linear-gradient(90deg, rgb(0 0 0 / 3%) 1px, transparent 1px) 0 0 / 12px
+       12px,
+     var(--paper);
+-  font-family: var(--font-pixel);
++  font-family: var(--font-read);
+   font-size: 15px;
+   line-height: 1.35;
+   image-rendering: pixelated;
+@@ -31,6 +31,7 @@
+ textarea {
+   color: inherit;
+   font: inherit;
++  font-family: var(--font-read);
+ }
+ 
+ button {
+@@ -8931,3 +8932,106 @@
+ .build-mode-panel .build-room-catalog .build-group .build-option-list {
+   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+ }
++
++/* Shared chart typography: compact labels and aligned numeric readouts. */
++.resource-chip > span,
++.resource-chip-content > span,
++.resource-chip-heading > span,
++.eyebrow:where(:not(.chart-sheet *)),
++.panel-heading span,
++.patient-folder h2,
++.tutorial-tab-callout,
++.chart-section h3,
++.build-section h2,
++.campaign-card-heading span,
++.character-qa-heading span,
++.character-qa-heading strong,
++.character-qa-representations figcaption,
++.chart-completed-decision > summary strong,
++.resolved-cabinet-button > span:last-child,
++.chart-title-status,
++.chart-state-badge,
++.chart-confidence-badge,
++.chart-timeline-guide,
++.chart-step-heading,
++.chart-back-stamp,
++.chart-vitals dt,
++.message-board-new-token,
++.message-board-priority-icon,
++.message-board-item-heading strong,
++.staff-summary-stat > span,
++.staff-stat-label,
++.staff-role-note::before,
++.service-fact > span,
++.money-tile > span,
++.staff-training-status,
++.build-cash-banner > span,
++.room-upgrade-dialog h3,
++.management-mode-title,
++.management-paused-chip,
++.service-kind,
++.service-status-tag,
++.money-period,
++.money-ledger th,
++.build-mode-title,
++.build-mode-money > span,
++.build-tool-toolbar-label,
++.game-display-title,
++.question-review-dialog-heading > span,
++.question-review-item > header span,
++.question-review-item > header strong,
++.question-review-item li strong,
++.build-problem-chip,
++.build-ready-badge,
++.build-group-heading,
++.build-group-toggle > span:first-child,
++.build-owned-status,
++.room-max-tag,
++.room-upgrade-benefit-key {
++  font-family: var(--font-pixel);
++}
++
++.resource-chip strong,
++.resource-money-value small,
++.resource-xp-row > small,
++.speed-button,
++.patient-folder h2 > span,
++.answer-choice-eta,
++.staff-summary-stat strong,
++.staff-role-count,
++.staff-role-meta b,
++.staff-morale-value,
++.staff-salary-value,
++.staff-training-pips small,
++.staff-training-status,
++.management-section-meta,
++.service-row-price,
++.service-level-tag,
++.money-tile strong,
++.money-cost-legend b,
++.money-runway b,
++.money-earnings-value,
++.money-ledger .is-number,
++.money-ledger tbody td:first-child,
++.build-cash-banner > strong,
++.build-mode-money > strong,
++.upgrade-level-change,
++.selected-room-level,
++.chart-vitals dd,
++.facility-heading-actions strong,
++.facility-zoom-overlay output,
++.build-group-stats,
++.build-owned-summary > span,
++.room-action-menu-level > span,
++.room-upgrade-benefit-delta b,
++.room-action-menu-spent,
++.build-ready-badge {
++  font-family: var(--font-pixel);
++  font-variant-numeric: tabular-nums;
++}
++
++.facility-time-chip.is-build-mode .resource-chip-content > strong,
++.facility-time-chip.is-management-mode .resource-chip-content > strong,
++.service-row-price small {
++  font-family: var(--font-read);
++}

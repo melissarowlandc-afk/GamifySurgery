@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {tool,root,repo} from './build-roster.mjs';
+const [number,stage] = process.argv.slice(2);
+assert(/^0(0[1-9]|1\d|20)$/.test(number)); assert(['1','2'].includes(stage));
+const dir = resolve(root,'sources',number); mkdirSync(dir,{recursive:true});
+const stage1=stage==='1';
+const args = {prompt:readFileSync(resolve(tool,'prompts',number,stage1?'stage1-standing-cardinals.prompt.txt':'stage2-eight-pose.prompt.txt'),'utf8').trimEnd(),referenced_image_paths:[resolve(repo,'tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png'),...stage1?[]:[resolve(dir,'stage1-standing-cardinals.png')]],transparent_background:true};
+writeFileSync(resolve(dir,stage1?'stage1-exact-prompt.txt':'exact-prompt.txt'),args.prompt);
+writeFileSync(resolve(dir,stage1?'stage1-tool-args.json':'tool-args.json'),JSON.stringify(args,null,2)+'\n');
+console.log(JSON.stringify(args));

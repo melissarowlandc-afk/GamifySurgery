@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "identities": 19,
+  "poses": 152,
+  "authoredSeatedContacts": 76,
+  "reviewedChairProofs": 19,
+  "existingSameBandIdentities": 75,
+  "existingComparisons": 287,
+  "withinBatchPairs": 51,
+  "nearDuplicateFlags": 0,
+  "staticGalleryPages": 25,
+  "mainGalleryImages": 57,
+  "managerVisualAcceptance": "pending",
+  "browserValidation": "not-run-left-to-manager",
+  "observedGlasses": 4,
+  "maximumGlasses": 5,
+  "grayCurlyHairWithGlasses": 0,
+  "staticLinks": 646,
+  "comparisonAlgorithm": "RGB RMSE of 64x128 light-background thumbnails, each fitted to common 112px visible height and centered; threshold <8 flags near-identical silhouettes/palettes for manual review. Ranking is a review aid, not proof that identities differ.",
+  "alphaSummary": {
+    "identities": 19,
+    "poses": 152,
+    "sourceNonzeroPixelsWithFootprintOutside": 7661,
+    "sourcePosesWithFootprintOutside": 122,
+    "maxSourceAlphaWithFootprintOutside": 1,
+    "derivedBorderNonzeroPixels": 125,
+    "derivedPosesWithBorderAlpha": 29,
+    "derivedBorderMaxAlpha": 1,
+    "protectedAlphaClipping": false
+  },
+  "visualReceipt": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/worker-review/visual-review.json",
+    "sha256": "29546b682a83d528064f2864dffb710213c8ff7557f88678e75edebea0da7306"
+  }
+}

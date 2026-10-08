@@ -1,0 +1,11 @@
+--- a/apps/player/src/ui/ChartPanel.tsx
++++ b/apps/player/src/ui/ChartPanel.tsx
+@@ -8,8 +8,6 @@
+   type RefObject,
+ } from "react";
+ import { createPortal } from "react-dom";
+-import "@fontsource/atkinson-hyperlegible/latin-400.css";
+-import "@fontsource/atkinson-hyperlegible/latin-700.css";
+ import { PixelAvatar } from "./PixelAvatar";
+ import type {
+   AnswerChoiceView,

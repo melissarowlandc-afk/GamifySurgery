@@ -1,0 +1,811 @@
+{
+  "schemaVersion": "patient-gapfill-v6a-runtime-integration/v1",
+  "status": "owner-delegated-manager-approved-locally-integrated-not-published",
+  "prior": {
+    "identities": 245,
+    "assets": 1990,
+    "patients": 120
+  },
+  "appended": {
+    "identities": 20,
+    "assets": 160,
+    "patients": 20
+  },
+  "resulting": {
+    "identities": 265,
+    "cardinalPoses": 2120,
+    "clipboardPoses": 30,
+    "assets": 2150,
+    "patients": 140
+  },
+  "registry": {
+    "path": "apps/player/src/art/characterStillRegistry.generated.json",
+    "sha256": "57bd0a6e0af246be2719484da123d4824c40de04afdac70905195acf2a98c7ce"
+  },
+  "catalog": {
+    "path": "packages/game-domain/src/characterStillCatalog.ts",
+    "sha256": "7e217f27d4628cb7943ded282826df1fc137ba379734baf8ba917bd7ec1c3b75"
+  },
+  "provenance": {
+    "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+    "sha256": "d53b89cfea40d4a65ac8890983ffffd32b85d313f9d7390624e61ce6ba135f5b"
+  },
+  "ownerApproval": {
+    "path": "artifacts/character-statics/patient-gapfill-v6a/owner-runtime-approval.json",
+    "sha256": "20f83a199c4dac8ecce08efc00e5be4a6116622ef8b3ad2e978cc9c51db91b90"
+  },
+  "frozenArtReview": {
+    "policy": "Historical worker-review status labels stay byte-exact. This receipt and the owner-delegated manager approval supersede pending labels without changing accepted sources, controls, poses, proofs or coordinates."
+  },
+  "selectability": {
+    "patients": [
+      {
+        "stillId": "patient-gapfill-v6a.001",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 45
+      },
+      {
+        "stillId": "patient-gapfill-v6a.002",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 48
+      },
+      {
+        "stillId": "patient-gapfill-v6a.003",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 51
+      },
+      {
+        "stillId": "patient-gapfill-v6a.004",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 54
+      },
+      {
+        "stillId": "patient-gapfill-v6a.005",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 57
+      },
+      {
+        "stillId": "patient-gapfill-v6a.006",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 60
+      },
+      {
+        "stillId": "patient-gapfill-v6a.007",
+        "sex": "Female",
+        "ageBand": "middle_aged",
+        "intendedAge": 63
+      },
+      {
+        "stillId": "patient-gapfill-v6a.008",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 46
+      },
+      {
+        "stillId": "patient-gapfill-v6a.009",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 49
+      },
+      {
+        "stillId": "patient-gapfill-v6a.010",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 52
+      },
+      {
+        "stillId": "patient-gapfill-v6a.011",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 55
+      },
+      {
+        "stillId": "patient-gapfill-v6a.012",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 58
+      },
+      {
+        "stillId": "patient-gapfill-v6a.013",
+        "sex": "Male",
+        "ageBand": "middle_aged",
+        "intendedAge": 62
+      },
+      {
+        "stillId": "patient-gapfill-v6a.014",
+        "sex": "Female",
+        "ageBand": "adult",
+        "intendedAge": 31
+      },
+      {
+        "stillId": "patient-gapfill-v6a.015",
+        "sex": "Female",
+        "ageBand": "adult",
+        "intendedAge": 35
+      },
+      {
+        "stillId": "patient-gapfill-v6a.016",
+        "sex": "Female",
+        "ageBand": "adult",
+        "intendedAge": 39
+      },
+      {
+        "stillId": "patient-gapfill-v6a.017",
+        "sex": "Female",
+        "ageBand": "adult",
+        "intendedAge": 43
+      },
+      {
+        "stillId": "patient-gapfill-v6a.018",
+        "sex": "Male",
+        "ageBand": "adult",
+        "intendedAge": 32
+      },
+      {
+        "stillId": "patient-gapfill-v6a.019",
+        "sex": "Male",
+        "ageBand": "adult",
+        "intendedAge": 37
+      },
+      {
+        "stillId": "patient-gapfill-v6a.020",
+        "sex": "Male",
+        "ageBand": "adult",
+        "intendedAge": 44
+      }
+    ],
+    "enforcement": "Only existing compatible patientStillEligibleEntries sex/age-band pools. Patient occupancy/LRU logic and compatible saved IDs are unchanged; appearance.ts is byte-identical to the pre-edit baseline."
+  },
+  "provenancePreservation": {
+    "preservedGlobalRecords": 1990,
+    "newOwnerApprovedRecords": 160
+  },
+  "runtimeFiles": [
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/stand-south.png",
+      "sha256": "4929abf726edfe6d6a9175999b9b1fdd9accc907144083cdd9b6d7ea7747c1be"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/stand-east.png",
+      "sha256": "7640bf4080ddf205b996e344e1c97afd194bb697464ea9ca169f34531f993195"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/stand-west.png",
+      "sha256": "82ecd992a4b40a4c6722211a347dae11cda7888a1610b02d54a996388c9ebf05"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/stand-north.png",
+      "sha256": "9b91402976b1f6820c81a6d2c283219fdc501c1b46f4ce2de2f67ea2dfe97e74"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/sit-south.png",
+      "sha256": "da4fcbf82631b4c472aca9611484c58c026f54858bdb68c1f6a3232b401f0f34"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/sit-east.png",
+      "sha256": "697dfe70961c8b8d61acf817afc593da4f293af4c82131f1afd5619235eee0ac"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/sit-west.png",
+      "sha256": "cb2cc1ad12c2602f30b9a326fe81be337c5cb5b275be0fb3d0d56e097b891aa1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.001/sit-north.png",
+      "sha256": "17541e6045043ef91517c09fbf4e4abedca24e2af22d401ef164a8153e568451"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/stand-south.png",
+      "sha256": "47df096d8c489e95453fbb1e9171202976587e9595ac992fe4fcdd684c67130c"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/stand-east.png",
+      "sha256": "eccb92b3374ba68871acfb15ad19a689000cd807400f0b1d79db22433872e690"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/stand-west.png",
+      "sha256": "db8a91e912d44e73949cfa55c71b6f23e40c88492b2eeb60891a9de5d0f80411"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/stand-north.png",
+      "sha256": "3afe6ad02300feaebb69ff5d7fb82566598dccbece78105a5afa83546d125263"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/sit-south.png",
+      "sha256": "301a8b7f2ee895a08f708b5d357e04cc47270a02f95505ed732ba02b04cdf900"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/sit-east.png",
+      "sha256": "214b4e19ac2a663a8fac73e5067065121bebabd953f5438f94b4dcbd47771dea"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/sit-west.png",
+      "sha256": "b7eaf9c27d041424a48eedc268d067a853f4be94ac201785807090a6a9b7fdcf"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.002/sit-north.png",
+      "sha256": "69083fce00d3f3ba17a0d198d24f8a5193e5d61224af529afb56f870a3f9194e"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/stand-south.png",
+      "sha256": "a7727d51ed166e286d5e54239bea834725f27dc94be49e85e07d3c534b219783"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/stand-east.png",
+      "sha256": "1ea0c796b74b8625d0d1afc17ae74c1805400ac99520bda27e130d56cd91d796"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/stand-west.png",
+      "sha256": "307e65916eaeb57d322512de4b5a229b71f2efb1e1bbbcf9636236078596c33b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/stand-north.png",
+      "sha256": "e4bcc02f74db18be2c8c1772d40e98da47df7b5cdb10285e3bb020260ac2584a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/sit-south.png",
+      "sha256": "3b14890fda4c65c08b3e9363863a18e21d89c432e1a7ab7f20ff1bc787251946"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/sit-east.png",
+      "sha256": "7b8f19741db8d57953f83a372aa09ede5d0c32e7283d2efb3f00aacd00483172"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/sit-west.png",
+      "sha256": "5f0440e7e3e65a4f8b02b301c6fa877f2fbe80661cf0b43a123a8a822005ad1a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.003/sit-north.png",
+      "sha256": "1a4b3456628dc76f5296f003347a4e7afae40c355af86c1643b35ac087e74b79"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/stand-south.png",
+      "sha256": "b107759e85ce652ed64270cfbdcf30bb430e3090814f1745f6a3029cd08dc688"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/stand-east.png",
+      "sha256": "33f3f4141a2ccf5e8a3b925741bc51b029d654dff96a733882c3fc4bcf971d7f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/stand-west.png",
+      "sha256": "5ff27290b5b3014134a50f9b5261a544506866500e096230781378ffe6afc84a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/stand-north.png",
+      "sha256": "682b7595ee0bd55244d1210f4c49587948cbef4210ddcdc1337ca57e706175f6"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/sit-south.png",
+      "sha256": "96f83d357d6045af749d255fb5211963fa23be992e06290a1a670cf30bab0851"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/sit-east.png",
+      "sha256": "2ac956be66bf16d8de7af53210226e48d223fe779fb120195ad0eca876de157a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/sit-west.png",
+      "sha256": "59ad3b5f02f8156d49f16eb5ff463e4c6f489f6f9322c8c64f5ad1727753ce29"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.004/sit-north.png",
+      "sha256": "fc9fcccf8a3094565cb8f76ba6787a53efe824a5773a983fb567e1a0f51401f2"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/stand-south.png",
+      "sha256": "4f72751e7c28ba835bd41d54a7ac78473e8ac788ea4a42f26bd93a33abbf1293"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/stand-east.png",
+      "sha256": "2d23b8067cb638543887e30881e6ad3d2a38cabcb876dd998e41ac98d75c16e8"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/stand-west.png",
+      "sha256": "0ca8a3c119ed14dad022f6ccf3b86525030c435bd9829384761a0c4845928188"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/stand-north.png",
+      "sha256": "1a4f8af46553891704b70e13546bb8ea456e06a5e8d622bdc83da0d8b50974d2"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/sit-south.png",
+      "sha256": "f525cb91e6bcffba6838cb227972b465fb37c64a14cb8973336f170ccf18d27f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/sit-east.png",
+      "sha256": "a502ca196cdbb80943c59eb0f4ff8ee8ef4fa3e1103eea7f159098f7e83a8085"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/sit-west.png",
+      "sha256": "eabd6fdb1342c72121b5e2faddcc1a86abc017e702a5c4e522e728d62b4feb34"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.005/sit-north.png",
+      "sha256": "5410aa84073afa919d438cfbd15e256f79b087a2e626ad3b60ec9493464cd012"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/stand-south.png",
+      "sha256": "6101203ca132da93b9c4c391df287d8c46b2c1754a35580eb9763aa7cb5df076"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/stand-east.png",
+      "sha256": "d2a42b73a77b484bd1d0a74d43f80f80384e8212bf8d2dba784eee87e0b086ee"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/stand-west.png",
+      "sha256": "1633ccfa55b2a69652316868104eda8d293f5a874e6f36be965e55d2bbd768bb"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/stand-north.png",
+      "sha256": "5b460a2c66c8383813094997ce572f3e03739dd06423937546660c169579f6db"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/sit-south.png",
+      "sha256": "adffce46a83c09048b41480fa0ece3f6070c334a92bb6532b914888857d87479"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/sit-east.png",
+      "sha256": "073b51e219a07bb5c2678bb067ce2031cd4ccf8c4c7ab7dd9130046ad2c620bb"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/sit-west.png",
+      "sha256": "88d3b69c3ae51bd67adf6a095d92fe24904f75a866c1508444f6f5753e6ed238"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.006/sit-north.png",
+      "sha256": "3be4ed4126c12b7bfafd9bb1701cfc1758e4cb0f61978e999840d389cd6d7b73"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/stand-south.png",
+      "sha256": "3c1274931d7e9afd377bd0ccff6b8504222637b10da284b94a3600aa8107ec55"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/stand-east.png",
+      "sha256": "0b604ea8d7a675e44b805cb78c4ad0ab7d40f39b99986a7c82db1b04de9d93a0"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/stand-west.png",
+      "sha256": "f08b20305b2553738ab429b0b4c7c84a8979062e87521e22d08b360b734b17fa"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/stand-north.png",
+      "sha256": "ed030454b5b9c1ea25dbff6a53557f69effc74838e6048f420d3a5ce7fceddc4"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/sit-south.png",
+      "sha256": "e45ed753addcc3c04d9abe49197357de3c7d9405d65675f3f58e0c0b66b423da"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/sit-east.png",
+      "sha256": "d4b3e9b6d1238408b5ffa70f50a732481631bf1532d30f588a0bb62c015ec7fb"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/sit-west.png",
+      "sha256": "db265e3e0d8bbbca6be532c1217d09c975ade5ff40eb9f1f02f385f7b7a67a8e"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.007/sit-north.png",
+      "sha256": "a5f082a85a9cf3c250378c0d1bd03944bfc510d2c312b6057880f17a6bafcdaf"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/stand-south.png",
+      "sha256": "cb57b2c469bef43e5f5c3b9f74a1e912ab673be3c40a0f6d896cfbdaddc5cc2b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/stand-east.png",
+      "sha256": "c79d01445d6af407d7bdef6629cde308d00053c8c384139e0b2070ccdbf950f1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/stand-west.png",
+      "sha256": "ff08f8d2ed4ab8e3734c3c560314f13257c09c1c7d02fd2dd2de8381d4cc66d1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/stand-north.png",
+      "sha256": "b4ab5ef711b90874e7256806be32f662d833edf7951c5ec768202b600d5cc97a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/sit-south.png",
+      "sha256": "4aa7e8373c6b3d0f0554117e57b75f32fbcdcbe9ea6755d0d41da51fc782e64b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/sit-east.png",
+      "sha256": "9addfbec9a397de3ebaa466d561e9c33787371628e6fa8b9b6fa506fd373f81d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/sit-west.png",
+      "sha256": "7d515f049fd6e7500108a92a78ea34f9da9affc1f0718a81e5e3545b7fd5238b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.008/sit-north.png",
+      "sha256": "18b5337f6aac642e3e4c6a8c9c7e0a0a74140df641137b6882f4a17d8e42ca7f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/stand-south.png",
+      "sha256": "4666811b112c13cdd86e05e6b2a71dc87f79e1519774ed9fadbca1f98a35ac38"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/stand-east.png",
+      "sha256": "832519a28881d3157c2846c4c5883a9b8b96f4e8d0d90e0d01ac84a78520216d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/stand-west.png",
+      "sha256": "f18a6f7744178feba7456c891d70b4284a2d8a7e7999603ca4ddb5b7879021bb"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/stand-north.png",
+      "sha256": "1e4a6ded6f1e7e98efc85033c773a1b3ee1fa133f500af001c506e7c911f5895"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/sit-south.png",
+      "sha256": "9f22ae1e9235758cd988970c4ea935d2e5483a3a6557217c6e42e4336895bc64"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/sit-east.png",
+      "sha256": "804d244dbc94635d67295a32c6721c2e1fd1a3817c132644d5b50ff629a72f4f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/sit-west.png",
+      "sha256": "e7a6903a33929f693acf51b88206f3d4d74248bf491897b40703b057ee7c8683"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.009/sit-north.png",
+      "sha256": "cbb69c7f30837b63f2b434a39ce701229641e9e539dd71abc30f10d42e93980b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/stand-south.png",
+      "sha256": "098a608869702d04e418950cd207ace79156e37b9b296aa55b18099529535fe4"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/stand-east.png",
+      "sha256": "e9b2f08bbbbfc09deeefaa4f38681e09cbb2bbec94662b2a484441ffe9db5810"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/stand-west.png",
+      "sha256": "b5332497f56ef40b062b06be2877d74003189d2aba14c49da0a0681bb75ae3ba"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/stand-north.png",
+      "sha256": "81cba72c0b881a7ed03a53880b835b70a036668e5b725067a929fbc0681e3261"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/sit-south.png",
+      "sha256": "1787b10a8474518b4b7353c9218e12b5f0942d8077c1d613f395f1034a608e33"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/sit-east.png",
+      "sha256": "04e77129f8d1a4459adf63532672ab8bd2fa32cd5783de7262ad989311038516"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/sit-west.png",
+      "sha256": "61519690188fc399ee3fc2da2e3a87f605a276ebb5cbf00b6d0e6a901ac3a52a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.010/sit-north.png",
+      "sha256": "2c22cbada131442e23338e555401698a3c78d2ef0b1fc2bf8824eeeea8c54503"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/stand-south.png",
+      "sha256": "afe7b8f89460e5c3c4e80cfc5260104724a4d90e9c6cf4f3f44f30f1d51cbf32"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/stand-east.png",
+      "sha256": "87afeae0b9a22cc29cfa272c7e35479b622a96405c3282005c8237462aa5332f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/stand-west.png",
+      "sha256": "008013830ba6116637702fd26ab5be0398b4653d37a2341feb00ecf221ebde66"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/stand-north.png",
+      "sha256": "55011c0b71cc2c7f6e79ff3aace9880b5199facbdfcc8fa3cc09ed540dd0eb3a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/sit-south.png",
+      "sha256": "0636e5317601f0d0409b374b28d7254a1e1e42b8030ab946dd8435061933553f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/sit-east.png",
+      "sha256": "b108205602d9603905d5b4dded49640f3ac92cb13d0e9ad29e9bf6298af99e88"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/sit-west.png",
+      "sha256": "dcb1d2118e9535a85c1c8459a8b8d97d4abc59f35a8128711fcf3e20c4491008"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.011/sit-north.png",
+      "sha256": "392644e2667d83f56b843037894c6e47033544950d55f9f637be22fdef2d2fc3"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/stand-south.png",
+      "sha256": "7d9ec68c1d90361da581cc11e5e66eb239e306b2e35bc2b904790a8e8d1e8218"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/stand-east.png",
+      "sha256": "fc93d6c5a74080c761af20085974f8a9c36e2eaf2a5e0de3d1298eb976964207"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/stand-west.png",
+      "sha256": "f25879349585aeea51cfac4debcb8a5f94a03d5ae19322a4074584a20ed296da"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/stand-north.png",
+      "sha256": "b7ccb7b3b2328090b1ba439397fdb0e06c564f901d5c26b00a3f4cbbb28a2921"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/sit-south.png",
+      "sha256": "97ae82bfc99991c25ee5dfaebde4886fd6cf6ad974586717eb7a16e1d5ce804a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/sit-east.png",
+      "sha256": "968207fcf3ad54202a980d84fbba8a8e362d8cd96e57a25db6466c075179912d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/sit-west.png",
+      "sha256": "fcc5ebafabcd359d76daa8968649210b00b8f9fcc937ad5fbfb1a88fda907e60"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.012/sit-north.png",
+      "sha256": "b276fcf39a04b22535b4b7112d0e00c64e82ab0553e29c93327ceceee5bbb173"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/stand-south.png",
+      "sha256": "dddd1cbf3b12d2a41e3a34c4d2ebeb7e470934d745abd8b79fc7f1a5e62bc128"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/stand-east.png",
+      "sha256": "084a14d08a3bd7d9b42ff4606d6eeb801f4f511a8fbacfd07e3af72adb1779d7"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/stand-west.png",
+      "sha256": "6285e5be3137e91e9d06ac0d99a24026a4ae9b57d1d2d32b1078ad2ac96c16e4"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/stand-north.png",
+      "sha256": "2e5387e802ee550384b994201f1f32d991015e5e56bf452ed793a54b5d7c4c7c"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/sit-south.png",
+      "sha256": "a861da87d58671c36b6455e76da3b5bce806f675913a1ba538cd09bf21d63daf"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/sit-east.png",
+      "sha256": "2f676b1e448a4376273e0a1e567f18c194b03cda19d01ddf80c7766a138e0e7a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/sit-west.png",
+      "sha256": "046e2b715c4602f124167e65a73ad66bfc1ce6121935f5b96e6e24595247a2ff"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.013/sit-north.png",
+      "sha256": "e6ffcdb36024d4dcaa8bda11d6c7c3520dc39511fadc0f33ecd8f0a8ff506aec"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/stand-south.png",
+      "sha256": "7d945a8b533d59af65d2375aeea713e9c092e78cbfb235616443ec15c2255b3b"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/stand-east.png",
+      "sha256": "6f52766db44fff56e8984a845b350b3a85daae36b031838bd9e61ea97f25183a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/stand-west.png",
+      "sha256": "52f2c0b32005b132f9e919891dd00c53fd789e63f39291bfee230d35b4dbcfce"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/stand-north.png",
+      "sha256": "b7fadaf289082e810a1026ba014684c13371f8c60beeb68dcccd170e86b7005c"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/sit-south.png",
+      "sha256": "a048836cdc47bf92505d39be037a15c19d5e3fb4af738bb5abb503aabc7cb214"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/sit-east.png",
+      "sha256": "95f9a9723d85b5898c66e6e45f4350e373d178310868ada8ad9f68738ca212d9"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/sit-west.png",
+      "sha256": "e3bdb040bc384904af62c133ac1852739cbbace250fd56e316007014cb965a2e"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.014/sit-north.png",
+      "sha256": "e79065a196fc8c4086bdbbc83e28761c397da4a08e1985a57990069fca902c3d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/stand-south.png",
+      "sha256": "ba31979302170549c41826993c4545287960f234ec3404d5e7c1c789c8a1938d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/stand-east.png",
+      "sha256": "ccd36aaa4b2f55356964b93fcdf85b3bef658a74a5aac9c9a7ffec45ef214603"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/stand-west.png",
+      "sha256": "ab7ecfb1a44718dfe7a577843354763672dc4af28104050b4b5208318f810662"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/stand-north.png",
+      "sha256": "ae4bd16ae31827462082c59c331dde35e127a1d3f5ce8a12ec9ef294f928a8f5"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/sit-south.png",
+      "sha256": "5131875412991b0e4560802687db38a5fcc0b7633eb1302fc9da100c09a12cf7"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/sit-east.png",
+      "sha256": "ba642817479f4e5a0eb01979b94838fa44fc93a946f9204d1b5347651f16a2a1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/sit-west.png",
+      "sha256": "45414d3f004a0a43723ac714d3a6a9e55b5cc1de97203fe81f379a3dd1063ff5"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.015/sit-north.png",
+      "sha256": "4bd59547802a721ad413beac8692359f4fffd2e683b533bc728ee2f5e9ce22a1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/stand-south.png",
+      "sha256": "0808849b26392bd1565b7360fa7f38e2273c5f0951ab2d33b4878f23ce456251"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/stand-east.png",
+      "sha256": "531d21bc5d5779b6421dac265da713710d334922deac1959d2bed043b7d98686"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/stand-west.png",
+      "sha256": "86c4f1edd3850dfdba6ada82f7bb080c016f17567a2dff1701065154a6a975a2"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/stand-north.png",
+      "sha256": "1070ef791b306f474f911fe09e5719932cdd8e4d1de846fbdf829b8777cc6574"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/sit-south.png",
+      "sha256": "66d531b5caaa8a702d2e5805f1863a4817e264bf349be5762351c6c0ca5507f3"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/sit-east.png",
+      "sha256": "b492a955b2d7d3a3dd235a99499c40a3dbf176085a2f82529322a3e3d45a75f6"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/sit-west.png",
+      "sha256": "da86099099a800a51e3f28c4bceeedd3ba6db20b2b7bd88850d134a8f2262bac"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.016/sit-north.png",
+      "sha256": "ce345adc708ab7419ec2de34b8e2e2780be2da5888e753526eea4c8fc765a82e"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/stand-south.png",
+      "sha256": "60db6342d4eb76e9b1fc9615df1ed77c74fc6715e03072e874caa23a4e7538d6"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/stand-east.png",
+      "sha256": "c5263e6bd60b6ded75b8dc4923a3463bfe9939500aad8b899bbb6608e81fe7d7"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/stand-west.png",
+      "sha256": "86395038595c782e7394944fdec09847bbd561c8c7a13e919cfb954a7dc57b1f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/stand-north.png",
+      "sha256": "218ee9d5f12b15306374e541671a742c15d994d641186f2498ab58edf5512be3"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/sit-south.png",
+      "sha256": "d12a9e21f39f5e03abed11a5d580dc358f7514c3473d6fc9a3f05a19bb32175f"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/sit-east.png",
+      "sha256": "6c193fb6c4bba8ecc99de34c4442ee38fa07e9b4200003088a6b00ab8d83d33a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/sit-west.png",
+      "sha256": "aeff0d17f8e57550ad1109dcac6ae081368b362ed138e9692b90480c22477f06"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.017/sit-north.png",
+      "sha256": "2001930f254bc96baaccf642f21f5e13bdc51514fa6395766dd66ffd3205e853"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/stand-south.png",
+      "sha256": "ee415c6e34c8bad9433cb7606cf6fb4c1369bd7bb796b6f746bfeec70cdae4e1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/stand-east.png",
+      "sha256": "85ca5ed0a67c525d3b108499d3cb1292ccc32b4f1430ed4fb5d8a47d9e01d06c"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/stand-west.png",
+      "sha256": "aac646d7741b3fcb5e1ca1954454fdc6013670940b1e3449f5e673007a9ee9c1"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/stand-north.png",
+      "sha256": "d7cba944f831ca5047fc105683f06ffb83be637e91b54805cffc4e68f7e58302"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/sit-south.png",
+      "sha256": "8f9647731d6f567ed57a656c1d340a2224cc1e9f49c7ed06e7fa37690a030e1d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/sit-east.png",
+      "sha256": "3689cc90fefd292cf1de83627be54e75a971af01470dd2321a6b16a6fcff024a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/sit-west.png",
+      "sha256": "c22231339ad80e59e09202b96d46eb1e5dbe3d12582c47d5f1a1f6dbf29b6f49"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.018/sit-north.png",
+      "sha256": "e4be995f832b18bca20ef4aaad98eb6003754ae81ba88d3a9ac1d56325146385"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/stand-south.png",
+      "sha256": "06b2fdee5eb59aaf872dbf583d1d590417191f3b2fd0842c75bef0e738a7301a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/stand-east.png",
+      "sha256": "8afc28a0b12649119c5b3338ef107fc39d78607ee126717c3849074455e0ff3d"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/stand-west.png",
+      "sha256": "83ab1adf72d3787ecf21a2b01ebf6872efa7808ecac16a3dbf7d7a3e230ca7ff"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/stand-north.png",
+      "sha256": "2b3d279bdbacce1593e39ef3d1f2f53df9813b75777444b2c66fb0ef409f4d18"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/sit-south.png",
+      "sha256": "fdc1b4f77cebf58fe016c9045b3e2ef44bb2fea1f67a6704c56a9bb92a10c307"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/sit-east.png",
+      "sha256": "d338d53f341e13d651df489ab38df6bf8ce01ed21458e90feecfcf8777fdaafb"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/sit-west.png",
+      "sha256": "15e21fb486329b9e3a0ab7a4a7c822de965ad062c4e1646bf4baf5b131ecbdac"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.019/sit-north.png",
+      "sha256": "3df8f2e983475de7975ee5510e9b533b62a2be83aa31e9cba0befed57d01af07"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/stand-south.png",
+      "sha256": "6a4fe5d60d08212a320842af1247678999f307f6ba795c84202220afb048c3fe"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/stand-east.png",
+      "sha256": "e2d89e780f36599a6436a94b88258c544d42c24af21d4c31abb0df9472b7120a"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/stand-west.png",
+      "sha256": "c8a984b860b6dae98c613dc2566ba71565a7ffd2b396166b39f61a8d72d03456"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/stand-north.png",
+      "sha256": "1f73b1d0d76814eafe56d97729ef52936fff96ce7f70b6284112b9ef77f09708"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/sit-south.png",
+      "sha256": "abcc2d022d514a1e59f42101b9e9f30d3a4ea734d5252c840734750fcb569fb5"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/sit-east.png",
+      "sha256": "a9e1bc4781dc53a6d0c6dab2436f67d888bdd3999a62365a35bd64e4f41803da"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/sit-west.png",
+      "sha256": "8182c1414a887e9d6aa03a43dba0bf27c1f5160300c2a53f454359c228ab0664"
+    },
+    {
+      "path": "apps/player/public/art/characters/patient-gapfill-v6a/patient-gapfill-v6a.020/sit-north.png",
+      "sha256": "33327acf83a802c3b7f70256cd377067d390df85880b4d97c5e9739acf1ecf56"
+    }
+  ]
+}

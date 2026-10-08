@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "patient-gapfill-v6c-018-revision-review/v1",
+  "scope": "Saved original left / revised right; native package pixels unchanged. Game-scale board uses actual 55x110 frame derived from approved Front Desk runtime geometry, followed by 4x nearest-pixel inspection and accepted adult references.",
+  "managerStatus": "other18-accepted;revised018-pending",
+  "originalSourceSha256": "f1e06de40115b8ae82bc84fe9017d09a5112765a48427105b88f236617dc1ba7",
+  "selectedSource": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/sources/018/source.png",
+    "sha256": "4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a"
+  },
+  "originalPackageSnapshot": {
+    "path": "artifacts/character-statics/patient-gapfill-v6c/packages/018/review-history/8c0e0cee4b5333581234bac527674d448cd810a089c268e1235e9eda2036deef/manifest.json",
+    "sha256": "8c0e0cee4b5333581234bac527674d448cd810a089c268e1235e9eda2036deef"
+  },
+  "contacts": {
+    "south": 236,
+    "east": 240,
+    "west": 241,
+    "north": 246,
+    "status": "worker-authored-contact-pending-manager-acceptance"
+  },
+  "proofs": [
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/018-original-left-revised-right.png",
+      "sha256": "228f2a0f1b01e552faa689d17492cedbf830128970acdc7ae0838fa1ac500c90"
+    },
+    {
+      "path": "artifacts/character-statics/patient-gapfill-v6c/review/manager/018-adult-before-after-game-scale.png",
+      "sha256": "62306beabbd6478d4dfd6096f14cf16f97234d8b604796f16e411f068e6a9251"
+    }
+  ],
+  "gameScale": {
+    "width": 55,
+    "height": 110,
+    "identityScale": 1
+  },
+  "referenceFrames": [
+    {
+      "label": "018 original (rejected)",
+      "path": "artifacts/character-statics/patient-gapfill-v6c/packages/018/review-history/8c0e0cee4b5333581234bac527674d448cd810a089c268e1235e9eda2036deef/stand-south.png",
+      "sha256": "0c949605cb5b8fa5022286f8b3cc3282e554d6f570cfe46ef0f496c6763279db"
+    },
+    {
+      "label": "018 revised, Male 33",
+      "path": "artifacts/character-statics/patient-gapfill-v6c/packages/018/stand-south.png",
+      "sha256": "458e98fc2bd9137787fc6ce477904ae48dc9d89ef11a2daeccb6a430a1797eb2"
+    },
+    {
+      "label": "Accepted v6b.015, Male 34",
+      "path": "artifacts/character-statics/patient-gapfill-v6b/packages/015/stand-south.png",
+      "sha256": "0183ea42adeaaeb611b3dc67c4dc0f30a3e556af1cdc37aa6cb4fe1a6a597bd3"
+    },
+    {
+      "label": "Accepted v6a.019, Male 37",
+      "path": "artifacts/character-statics/patient-gapfill-v6a/packages/019/stand-south.png",
+      "sha256": "06b2fdee5eb59aaf872dbf583d1d590417191f3b2fd0842c75bef0e738a7301a"
+    }
+  ]
+}

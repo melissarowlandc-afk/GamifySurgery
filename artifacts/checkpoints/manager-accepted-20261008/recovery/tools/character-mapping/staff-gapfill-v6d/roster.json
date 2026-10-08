@@ -1,0 +1,665 @@
+{
+  "schemaVersion": "staff-gapfill-v6d-roster/v1",
+  "cohort": "staff-gapfill-v6d",
+  "programPlan": "docs/execplans/character-gapfill-v6-20261007.md",
+  "allocation": {
+    "staff.imaging_technician": 2,
+    "staff.phlebotomist": 2,
+    "staff.laboratory_technician": 2,
+    "staff.surgeon": 2,
+    "staff.or_nurse": 2,
+    "staff.pharmacist": 2,
+    "staff.repair_person": 2
+  },
+  "coverageAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f",
+    "use": "Historical gap metric; seven staff rehire pools, exactly two new identities per role in the manager-assigned order."
+  },
+  "identities": [
+    {
+      "number": "001",
+      "stableId": "staff-gapfill-v6d.001",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.imaging_technician"
+      ],
+      "roleLabel": "Imaging technician",
+      "intendedAge": 52,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "sturdy compact build",
+        "skin": "fair freckled skin",
+        "hair": "a very short straight copper pixie crop with a broad silver forelock and tapered sides",
+        "accessory": "no glasses",
+        "outfit": "an olive-green short-sleeved V-neck imaging-uniform top with pale-sage neckline and sleeve-edge trim, two lower patch pockets, a small blank ivory chest badge, charcoal cargo trousers and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/001/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-005-eight-poses.png",
+            "sha256": "27906f0a33f5a063b0d3a7b9ce6558c0b1cc3a4be8e15b4668b29518bcb5a046",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-005"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/001/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-005-eight-poses.png",
+            "sha256": "27906f0a33f5a063b0d3a7b9ce6558c0b1cc3a4be8e15b4668b29518bcb5a046",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-005"
+          },
+          {
+            "path": "sources/001/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "002",
+      "stableId": "staff-gapfill-v6d.002",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.imaging_technician"
+      ],
+      "roleLabel": "Imaging technician",
+      "intendedAge": 29,
+      "compatibleSexLabel": "Male",
+      "ageBand": "young_adult",
+      "visualBrief": {
+        "build": "lean build",
+        "skin": "deep dark-brown skin",
+        "hair": "a narrow upright black twist crest with very closely cropped sides",
+        "accessory": "a clean-shaven face and no glasses",
+        "outfit": "an olive-green short-sleeved V-neck imaging-uniform top with pale-sage neckline and sleeve-edge trim, two lower patch pockets, a small blank ivory chest badge, charcoal cargo trousers and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/002/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-004-eight-poses.png",
+            "sha256": "f0dd7dee2e1b2866159e1217c02513a6752681f0b8b24747c05dfa86f932a890",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-004"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/002/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-004-eight-poses.png",
+            "sha256": "f0dd7dee2e1b2866159e1217c02513a6752681f0b8b24747c05dfa86f932a890",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-004"
+          },
+          {
+            "path": "sources/002/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "003",
+      "stableId": "staff-gapfill-v6d.003",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.phlebotomist"
+      ],
+      "roleLabel": "Phlebotomist",
+      "intendedAge": 44,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "medium build",
+        "skin": "light olive skin",
+        "hair": "straight chestnut hair in one long neat low braid with a dark-green tie",
+        "accessory": "small dark-green rectangular glasses",
+        "outfit": "a graphite-gray short-sleeved V-neck phlebotomy-uniform top with pale-sage neckline and sleeve trim, two lower patch pockets, a small blank ivory chest badge, charcoal cargo trousers and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/003/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-015-eight-poses.png",
+            "sha256": "d18ef66776a8fe0a80668120de76f003c7f7e6ec32ab13b52942b0440fe77f8c",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-015"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/003/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-015-eight-poses.png",
+            "sha256": "d18ef66776a8fe0a80668120de76f003c7f7e6ec32ab13b52942b0440fe77f8c",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-015"
+          },
+          {
+            "path": "sources/003/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "004",
+      "stableId": "staff-gapfill-v6d.004",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.phlebotomist"
+      ],
+      "roleLabel": "Phlebotomist",
+      "intendedAge": 57,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "full-figured build",
+        "skin": "fair warm skin",
+        "hair": "short straight silver hair with a high receding hairline and close silver sideburns",
+        "accessory": "a clean-shaven face and no glasses",
+        "outfit": "a graphite-gray short-sleeved V-neck phlebotomy-uniform top with pale-sage neckline and sleeve trim, two lower patch pockets, a small blank ivory chest badge, charcoal cargo trousers and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-016-eight-poses.png",
+            "sha256": "1e7e7ee946ea592e3f72f1308102ecb779e079a5dac727ffacf8c52f4585a45c",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-016"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/gs022-new-employee-016-eight-poses.png",
+            "sha256": "1e7e7ee946ea592e3f72f1308102ecb779e079a5dac727ffacf8c52f4585a45c",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "gs022-new-employee-016"
+          },
+          {
+            "path": "sources/004/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "005",
+      "stableId": "staff-gapfill-v6d.005",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.laboratory_technician"
+      ],
+      "roleLabel": "Laboratory technician",
+      "intendedAge": 36,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "slender build",
+        "skin": "deep dark-brown skin",
+        "hair": "a smoothly shaved bald head",
+        "accessory": "a clean-shaven face and no glasses",
+        "outfit": "a muted-plum short-sleeved V-neck laboratory scrub top with two lower square patch pockets, charcoal cargo trousers and black clinical sneakers; no white coat and no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/005/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.009-eight-poses.png",
+            "sha256": "603825b8dad24effe434bfc4b221cd26063af9e8f93d49eadd650da99bfc88fe",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.009"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/005/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.009-eight-poses.png",
+            "sha256": "603825b8dad24effe434bfc4b221cd26063af9e8f93d49eadd650da99bfc88fe",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.009"
+          },
+          {
+            "path": "sources/005/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "006",
+      "stableId": "staff-gapfill-v6d.006",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.laboratory_technician"
+      ],
+      "roleLabel": "Laboratory technician",
+      "intendedAge": 50,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "broad build",
+        "skin": "medium tan skin",
+        "hair": "a straight angular black pixie cut with a single silver side streak and a closely cropped nape",
+        "accessory": "no glasses",
+        "outfit": "a muted-sage short-sleeved V-neck laboratory scrub top with a single square upper chest pocket, charcoal cargo trousers and black clinical sneakers; no white coat and no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/006/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.010-eight-poses.png",
+            "sha256": "8c623f38ba5719c7095a2bc882d94e7cf1d9c8a6e3c1e7851ef8835eef76cadc",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.010"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/006/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.010-eight-poses.png",
+            "sha256": "8c623f38ba5719c7095a2bc882d94e7cf1d9c8a6e3c1e7851ef8835eef76cadc",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.010"
+          },
+          {
+            "path": "sources/006/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "007",
+      "stableId": "staff-gapfill-v6d.007",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.surgeon"
+      ],
+      "roleLabel": "Surgeon",
+      "intendedAge": 39,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "full-figured compact build",
+        "skin": "deep warm-brown skin",
+        "hair": "black hair fully tucked under a plain dark-teal surgical cap",
+        "accessory": "no glasses",
+        "outfit": "matching dark-teal short-sleeved V-neck surgeon scrubs, one square chest pocket and cargo trouser pockets, a plain dark-teal fitted surgical cap, and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/007/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.005-eight-poses.png",
+            "sha256": "dff066fa835490068a19805eed61181b356a96247f9e82c7b0c086dba9e7cc12",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.005"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/007/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.005-eight-poses.png",
+            "sha256": "dff066fa835490068a19805eed61181b356a96247f9e82c7b0c086dba9e7cc12",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.005"
+          },
+          {
+            "path": "sources/007/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "008",
+      "stableId": "staff-gapfill-v6d.008",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.surgeon"
+      ],
+      "roleLabel": "Surgeon",
+      "intendedAge": 61,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "broad build",
+        "skin": "fair pink-toned skin",
+        "hair": "close silver hair at the sides under a plain cobalt-blue fitted surgical cap",
+        "accessory": "a neat white moustache without a beard and no glasses",
+        "outfit": "matching cobalt-blue short-sleeved V-neck surgeon scrubs, one square chest pocket and cargo trouser pockets, a plain cobalt-blue fitted surgical cap, and black clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/008/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.006-eight-poses.png",
+            "sha256": "91a24d082a9b93f72748716b71cfec1bb17614517dc677b3888adcdbef5e0dcb",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.006"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/008/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.006-eight-poses.png",
+            "sha256": "91a24d082a9b93f72748716b71cfec1bb17614517dc677b3888adcdbef5e0dcb",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.006"
+          },
+          {
+            "path": "sources/008/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "009",
+      "stableId": "staff-gapfill-v6d.009",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.or_nurse"
+      ],
+      "roleLabel": "OR nurse",
+      "intendedAge": 31,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "lean athletic build",
+        "skin": "golden-brown skin",
+        "hair": "straight black hair gathered in one low tight braid down the back",
+        "accessory": "no glasses",
+        "outfit": "matching muted-sage short-sleeved V-neck operating-room nursing scrubs with two lower patch pockets, cargo trouser pockets and a short cream waist drawstring, and black clinical sneakers; no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/009/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.007-eight-poses.png",
+            "sha256": "6e6b95f2f99f30649a88fc34072e913c495f92af69470986576a78b286968c7b",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/009/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.007-eight-poses.png",
+            "sha256": "6e6b95f2f99f30649a88fc34072e913c495f92af69470986576a78b286968c7b",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.007"
+          },
+          {
+            "path": "sources/009/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "010",
+      "stableId": "staff-gapfill-v6d.010",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.or_nurse"
+      ],
+      "roleLabel": "OR nurse",
+      "intendedAge": 45,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "sturdy build",
+        "skin": "medium olive skin",
+        "hair": "short straight black hair swept flat to one side with a narrow silver temple streak",
+        "accessory": "a small dark chin goatee without a moustache and no glasses",
+        "outfit": "matching muted-steel-blue short-sleeved V-neck operating-room nursing scrubs with one square chest pocket, cargo trouser pockets and a short cream waist drawstring, and black clinical sneakers; no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/010/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.008-eight-poses.png",
+            "sha256": "901a4c043bfdc375d96ba8463efdb73cf9f75627720868c8914b0c1be4316308",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.008"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/010/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.008-eight-poses.png",
+            "sha256": "901a4c043bfdc375d96ba8463efdb73cf9f75627720868c8914b0c1be4316308",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.008"
+          },
+          {
+            "path": "sources/010/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "011",
+      "stableId": "staff-gapfill-v6d.011",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.pharmacist"
+      ],
+      "roleLabel": "Pharmacist",
+      "intendedAge": 33,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "lean build",
+        "skin": "deep brown skin",
+        "hair": "short rust-brown locs in a small low tied bundle with close-cut sides",
+        "accessory": "a clean-shaven face and no glasses",
+        "outfit": "a knee-above-length white full-sleeved pharmacist coat with lapels and two large lower patch pockets over a dusty-lilac collared shirt, charcoal trousers and black loafers; no tie and no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/011/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.011-eight-poses.png",
+            "sha256": "1ba401b29ba82b47f1f7238a18c1881725729cdf76446e7b6f4c139b678a9b86",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.011"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/011/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.011-eight-poses.png",
+            "sha256": "1ba401b29ba82b47f1f7238a18c1881725729cdf76446e7b6f4c139b678a9b86",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.011"
+          },
+          {
+            "path": "sources/011/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "012",
+      "stableId": "staff-gapfill-v6d.012",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.pharmacist"
+      ],
+      "roleLabel": "Pharmacist",
+      "intendedAge": 58,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "full-figured build",
+        "skin": "fair skin",
+        "hair": "straight warm-brown jaw-length asymmetrical bob with one smooth silver side panel",
+        "accessory": "small teal oval glasses",
+        "outfit": "a knee-above-length white full-sleeved pharmacist coat with lapels and two large lower patch pockets over a muted-sage collared blouse, dark-charcoal trousers and black loafers; no cap"
+      },
+      "stage1": {
+        "prompt": "prompts/012/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.012-eight-poses.png",
+            "sha256": "02890301966a92cd1e85de49234736e98ab2a87eb7dc1c89101edb2962e50868",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.012"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/012/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.012-eight-poses.png",
+            "sha256": "02890301966a92cd1e85de49234736e98ab2a87eb7dc1c89101edb2962e50868",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.012"
+          },
+          {
+            "path": "sources/012/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "013",
+      "stableId": "staff-gapfill-v6d.013",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.repair_person"
+      ],
+      "roleLabel": "Repair person",
+      "intendedAge": 47,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "lean build",
+        "skin": "golden-brown skin",
+        "hair": "straight black hair in a compact low ponytail with blunt short bangs",
+        "accessory": "no glasses",
+        "outfit": "a full-sleeved terracotta repair-work jacket with two flap chest pockets and rolled-looking stitched cuffs over a charcoal crew-neck shirt, dark-gray cargo work trousers, a brown belt with a plain square buckle and dark-brown work boots; no cap and no held tools"
+      },
+      "stage1": {
+        "prompt": "prompts/013/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.013-eight-poses.png",
+            "sha256": "bce0f25859db52ecfd802602068a70111a3a23c3ea947ac9b07b358c82660a8d",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.013"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/013/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.013-eight-poses.png",
+            "sha256": "bce0f25859db52ecfd802602068a70111a3a23c3ea947ac9b07b358c82660a8d",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.013"
+          },
+          {
+            "path": "sources/013/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "014",
+      "stableId": "staff-gapfill-v6d.014",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.repair_person"
+      ],
+      "roleLabel": "Repair person",
+      "intendedAge": 28,
+      "compatibleSexLabel": "Male",
+      "ageBand": "young_adult",
+      "visualBrief": {
+        "build": "stocky build",
+        "skin": "fair freckled skin",
+        "hair": "straight light-blond hair in a short blunt bowl crop with shaved sides",
+        "accessory": "a clean-shaven face and no glasses",
+        "outfit": "a full-sleeved olive-green repair-work jacket with two flap chest pockets and two lower pockets over a charcoal crew-neck shirt, khaki cargo work trousers, a brown belt with a plain square buckle and dark-brown work boots; no cap and no held tools"
+      },
+      "stage1": {
+        "prompt": "prompts/014/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.014-eight-poses.png",
+            "sha256": "d2efb97ea49960cda2d11dc02dddb62e13ceca2b7e0f71069c74962482d77875",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.014"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/014/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/staff-gapfill-v6d/references/level3-roster-v2.014-eight-poses.png",
+            "sha256": "d2efb97ea49960cda2d11dc02dddb62e13ceca2b7e0f71069c74962482d77875",
+            "role": "existing-same-role-style-proportions-uniform-and-pose-reference",
+            "existingIdentity": "level3-roster-v2.014"
+          },
+          {
+            "path": "sources/014/stage1-standing-cardinals.png",
+            "role": "new-identity-and-uniform-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    }
+  ]
+}

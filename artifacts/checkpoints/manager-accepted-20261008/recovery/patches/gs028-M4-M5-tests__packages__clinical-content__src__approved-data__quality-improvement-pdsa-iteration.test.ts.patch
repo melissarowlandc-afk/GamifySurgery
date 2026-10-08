@@ -1,0 +1,11 @@
+--- a/packages/clinical-content/src/approved-data/quality-improvement-pdsa-iteration.test.ts
++++ b/packages/clinical-content/src/approved-data/quality-improvement-pdsa-iteration.test.ts
+@@ -175,7 +175,7 @@
+     );
+     expect(activeConcept).toMatchObject({
+       id: conceptId,
+-      earliestFacilityStage: 0,
++      earliestFacilityStage: 2,
+     });
+     expect(GS028_STATS_ETHICS_20260929_AUTHORING_CONCEPTS.find(
+       (concept) => concept.id === conceptId,

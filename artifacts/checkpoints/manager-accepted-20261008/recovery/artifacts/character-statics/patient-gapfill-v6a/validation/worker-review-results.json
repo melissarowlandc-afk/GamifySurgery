@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "identities": 20,
+  "poses": 160,
+  "authoredSeatedContacts": 80,
+  "reviewedChairProofs": 20,
+  "existingSameBandIdentities": 77,
+  "existingComparisons": 397,
+  "withinBatchPairs": 45,
+  "nearDuplicateFlags": 0,
+  "staticGalleryPages": 25,
+  "mainGalleryImages": 60,
+  "managerVisualAcceptance": "approved",
+  "browserValidation": "manager-accepted-gallery-run-recorded-in-program-plan",
+  "staticLinks": 743,
+  "comparisonAlgorithm": "RGB RMSE of 64x128 light-background thumbnails, each fitted to common 112px visible height and centered; threshold <8 flags near-identical silhouettes/palettes for manual review. Ranking is a review aid, not proof that identities differ.",
+  "alphaSummary": {
+    "identities": 20,
+    "poses": 160,
+    "sourceNonzeroPixelsWithFootprintOutside": 8052,
+    "sourcePosesWithFootprintOutside": 146,
+    "maxSourceAlphaWithFootprintOutside": 1,
+    "derivedBorderNonzeroPixels": 95,
+    "derivedPosesWithBorderAlpha": 34,
+    "derivedBorderMaxAlpha": 1,
+    "protectedAlphaClipping": false
+  },
+  "visualReceipt": {
+    "path": "artifacts/character-statics/patient-gapfill-v6a/worker-review/visual-review.json",
+    "sha256": "77337d7477022e8e771e987185d0e6a4b59738a21268fd8e6a6f52b2de7caa53"
+  }
+}

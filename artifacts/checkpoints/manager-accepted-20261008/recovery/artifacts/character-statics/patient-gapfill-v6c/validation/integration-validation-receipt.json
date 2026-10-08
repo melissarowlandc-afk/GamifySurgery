@@ -1,0 +1,395 @@
+{
+  "status": "PASS_WITH_REPRODUCED_PREEXISTING_PLAYER_FAILURE",
+  "scope": "v6c then v6d append-only local runtime integration",
+  "commands": {
+    "patient-gapfill-v6c": [
+      {
+        "name": "approval",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/bind-owner-approval.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T05:57:15.714204+00:00",
+        "finishedAt": "2026-10-08T05:57:15.889278+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/approval.txt",
+        "sha256": "df517ae32eec2ff1927d7d79eddba8c1bfcc0d39f3b1db93683d5e09c1c965b1"
+      },
+      {
+        "name": "integration-baseline",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/capture-integration-baseline.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T05:57:23.918055+00:00",
+        "finishedAt": "2026-10-08T05:57:28.554974+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/integration-baseline.txt",
+        "sha256": "87c16d3afd95f13cfe387f1ce78446dc9d5b4f4088f4bb77dcb626f4cd57bdb9"
+      },
+      {
+        "name": "promotion",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/promote-runtime.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:02:51.186427+00:00",
+        "finishedAt": "2026-10-08T06:04:21.312083+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/promotion.txt",
+        "sha256": "30ba9aa63204d338aced4fe006d6d79b8375f22fbce63f47965319429f59160e"
+      },
+      {
+        "name": "runtime-integration",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/validate-runtime-integration.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:04:46.567785+00:00",
+        "finishedAt": "2026-10-08T06:04:59.947827+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/runtime-integration.txt",
+        "sha256": "735527ef2ba0960c290779ab7a0d8a3dd110d56837ab12dabd57f1697c6ec9b9"
+      },
+      {
+        "name": "runtime-integration-after-v6d",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/validate-runtime-integration.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:33.168397+00:00",
+        "finishedAt": "2026-10-08T06:09:46.654693+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/runtime-integration-after-v6d.txt",
+        "sha256": "710b474d1c39d8a4835286374ddebbfe351d651b4bcf906eae88ae3c8fb353e9"
+      },
+      {
+        "name": "promotion-rerun",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/validate-promotion-rerun.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:05:07.257779+00:00",
+        "finishedAt": "2026-10-08T06:07:00.195709+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/promotion-rerun.txt",
+        "sha256": "3ecea785d911a5018d6e59a0a46df08a38082cb15f4f186d3ec744bce548442b"
+      },
+      {
+        "name": "promotion-rerun-after-v6d",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/validate-promotion-rerun.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:11:57.866653+00:00",
+        "finishedAt": "2026-10-08T06:13:52.906860+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/promotion-rerun-after-v6d.txt",
+        "sha256": "59417c2fdd7a6f5cf7284fac6c2cb7bab1d3a2ae25e90d18256d38de3230e635"
+      },
+      {
+        "name": "domain-focused-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/game-domain",
+          "--",
+          "src/characterStillCatalog.test.ts",
+          "src/appearance.test.ts",
+          "tests/character-still-persistence.test.ts",
+          "tests/employee-still-uniqueness.test.ts",
+          "tests/patient-appearance-rotation.test.ts",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:04:46.603153+00:00",
+        "finishedAt": "2026-10-08T06:04:51.327236+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/domain-focused-tests.txt",
+        "sha256": "30403c162c46acb4c1967dd8cd5c48e25cd8ad83b1d3588591989a2a23a05789"
+      },
+      {
+        "name": "player-focused-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/player",
+          "--",
+          "src/art/characterStillRegistry.test.ts",
+          "src/art/characterBitmapArt.test.ts",
+          "src/facility/characterPresentation.test.ts",
+          "src/content/patientAppearanceCatalog.test.ts",
+          "src/content/founderAppearancePresets.test.ts",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--config",
+          "../../tools/character-mapping/patient-gapfill-v6c/vitest-player.config.mjs",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:04:46.633663+00:00",
+        "finishedAt": "2026-10-08T06:04:51.522001+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/player-focused-tests.txt",
+        "sha256": "30d403a75234589797a902991a3505432f744484664f15fcea860770740ab271"
+      },
+      {
+        "name": "pre-integration-domain-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/game-domain",
+          "--",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T05:51:14.114944+00:00",
+        "finishedAt": "2026-10-08T05:58:38.235685+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/pre-integration-domain-tests.txt",
+        "sha256": "5256ed37f547f543a833760e8a7c9ad537f9528ff3c6d4bade5832b14926668b"
+      },
+      {
+        "name": "pre-integration-player-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/player",
+          "--",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--config",
+          "../../tools/character-mapping/patient-gapfill-v6c/vitest-player.config.mjs",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T05:51:14.145154+00:00",
+        "finishedAt": "2026-10-08T05:52:02.400020+00:00",
+        "exitCode": 1,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/pre-integration-player-tests.txt",
+        "sha256": "b55b3b1e4bf64bdbb0b311ca6b3dbe9f7fcd3475e0cbc7e164600481f481c809"
+      },
+      {
+        "name": "pre-integration-batch-validators-corrected",
+        "command": [
+          "node",
+          "tools/character-mapping/patient-gapfill-v6c/validate-approved-batch.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:00:15.378758+00:00",
+        "finishedAt": "2026-10-08T06:01:29.710854+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/pre-integration-batch-validators-corrected.txt",
+        "sha256": "2761210603aa1805dc9c617ff00979402cda3dcae68119bd9dd9879b3f8ca6fc"
+      },
+      {
+        "name": "final-scoped-diff-audit",
+        "command": [
+          "python",
+          "tools/character-mapping/patient-gapfill-v6c/audit-scoped-changes.py"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:18:12.984145+00:00",
+        "finishedAt": "2026-10-08T06:18:15.127393+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/patient-gapfill-v6c/validation/final-scoped-diff-audit.txt",
+        "sha256": "a843c3cdabcb6e873b1501ab254aacc140372b9b13aa774766cf213432a84d2b"
+      }
+    ],
+    "staff-gapfill-v6d": [
+      {
+        "name": "approval",
+        "command": [
+          "node",
+          "tools/character-mapping/staff-gapfill-v6d/bind-owner-approval.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T05:57:23.473382+00:00",
+        "finishedAt": "2026-10-08T05:57:23.611914+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/approval.txt",
+        "sha256": "c56c9f5c5b742df445ecfb206ab66501a2356a821e67079b0d532ac31c554172"
+      },
+      {
+        "name": "integration-baseline",
+        "command": [
+          "node",
+          "tools/character-mapping/staff-gapfill-v6d/capture-integration-baseline.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:07:26.509574+00:00",
+        "finishedAt": "2026-10-08T06:07:29.738449+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/integration-baseline.txt",
+        "sha256": "749619d063904ac78bd5bc855c01c51b265e6b21b9b378f5fa04b36e2476ccc8"
+      },
+      {
+        "name": "promotion",
+        "command": [
+          "node",
+          "tools/character-mapping/staff-gapfill-v6d/promote-runtime.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:07:30.086497+00:00",
+        "finishedAt": "2026-10-08T06:08:54.779011+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/promotion.txt",
+        "sha256": "b5fdef3bfddde3fd37bff11533da7018059dcf4c68bcb9fc679e334217a65bcd"
+      },
+      {
+        "name": "runtime-integration",
+        "command": [
+          "node",
+          "tools/character-mapping/staff-gapfill-v6d/validate-runtime-integration.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:33.142316+00:00",
+        "finishedAt": "2026-10-08T06:09:46.630080+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/runtime-integration.txt",
+        "sha256": "fba80a06fa9e0e425678a08e7d1c7f3e8b7c6f7e6e4dd911ebdf866d80e7eb94"
+      },
+      {
+        "name": "promotion-rerun",
+        "command": [
+          "node",
+          "tools/character-mapping/staff-gapfill-v6d/validate-promotion-rerun.mjs"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:49.524030+00:00",
+        "finishedAt": "2026-10-08T06:11:36.308415+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/promotion-rerun.txt",
+        "sha256": "d4b542cd6285798a6017232299b83172959ae76b323049338e13514f30d8d1be"
+      },
+      {
+        "name": "full-domain-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/game-domain",
+          "--",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:49.482030+00:00",
+        "finishedAt": "2026-10-08T06:17:07.462083+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/full-domain-tests.txt",
+        "sha256": "4ba3dbb3bc6ed6772ea33207c58c9b7b3c66d8c528d76165abba4a3b90b32572"
+      },
+      {
+        "name": "full-player-tests",
+        "command": [
+          "npm.cmd",
+          "run",
+          "test",
+          "--workspace",
+          "@gamify-surgery/player",
+          "--",
+          "--pool=threads",
+          "--maxWorkers=1",
+          "--config",
+          "../../tools/character-mapping/staff-gapfill-v6d/vitest-player.config.mjs",
+          "--configLoader=native"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:49.514030+00:00",
+        "finishedAt": "2026-10-08T06:10:39.861243+00:00",
+        "exitCode": 1,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/full-player-tests.txt",
+        "sha256": "7bb4db3752936f55632918757c806d4dbe7207b3bb1145333cf321051295a79a"
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:09:33.205399+00:00",
+        "finishedAt": "2026-10-08T06:09:38.435885+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/typecheck.txt",
+        "sha256": "918ba7f61de41398d6b6878a4f862aa2d19d01fba381d7560b5e41560bacf9b4"
+      },
+      {
+        "name": "typecheck-after-concurrent-changes",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:17:32.659380+00:00",
+        "finishedAt": "2026-10-08T06:17:36.526518+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/typecheck-after-concurrent-changes.txt",
+        "sha256": "918ba7f61de41398d6b6878a4f862aa2d19d01fba381d7560b5e41560bacf9b4"
+      },
+      {
+        "name": "final-scoped-diff-audit",
+        "command": [
+          "python",
+          "tools/character-mapping/staff-gapfill-v6d/audit-scoped-changes.py"
+        ],
+        "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+        "startedAt": "2026-10-08T06:18:12.990142+00:00",
+        "finishedAt": "2026-10-08T06:18:15.127393+00:00",
+        "exitCode": 0,
+        "log": "artifacts/character-statics/staff-gapfill-v6d/validation/final-scoped-diff-audit.txt",
+        "sha256": "057454b34c48562a2d18bd7ddcd21b36a142085a3ea1b59d677cc17f7ad48efa"
+      }
+    ]
+  },
+  "fullSuites": {
+    "gameDomain": {
+      "filesPassed": 97,
+      "testsPassed": 3167,
+      "exitCode": 0
+    },
+    "player": {
+      "filesPassed": 112,
+      "filesFailed": 1,
+      "testsPassed": 863,
+      "testsFailed": 1,
+      "exitCode": 1
+    }
+  },
+  "preexistingPlayerFailure": {
+    "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+    "line": 85,
+    "expected": "\"Off-site thyroid fine-needle aspiration\"",
+    "received": "\"The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking).\"",
+    "testSourceSha256Unchanged": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+    "beforeRuntimeEditsReproduced": true,
+    "afterBothIntegrationsIdentical": true
+  },
+  "noClinicalArtSourceSelectionReducerOrUiEdits": true,
+  "localOnly": true,
+  "published": false
+}

@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "comparison": "immutable pre-edit filesystem snapshots; no Git operation",
+  "changed": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "beforeSha256": "9ddaa8381d092c5c49536465bea036edd3c9ab8e8659731a85e7f3d4def94374",
+      "afterSha256": "7b832ffa231520a098ccbd5ab8f0252f1d93cd23b3ae29277c10827a91fcde0d",
+      "addedLines": 3091,
+      "removedLines": 3
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "beforeSha256": "9304d56a9bb0ae75b7e11f8dcd58490b47189f07df71a253cd14759ad2f061e6",
+      "afterSha256": "200137dd2a90162108a55e3f658801a856d2997e648b5d0ed9e082a27e8bc594",
+      "addedLines": 3533,
+      "removedLines": 4
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "beforeSha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d",
+      "afterSha256": "923366318c3da1bd7611e11a95c3578dc2b4784107489eb78d5bf2403d192c1b",
+      "addedLines": 42,
+      "removedLines": 2
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "beforeSha256": "24be461ee07e6c7831a0618164e020449777dcd179b81b592e6d4bcc97f9b583",
+      "afterSha256": "71a12541c09d9528aac9d99bb52b9a6e44865e1ed9c2fd2bf09af97fc2ebeea2",
+      "addedLines": 66,
+      "removedLines": 6
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "beforeSha256": "d272179b736928d8533a395bbd2d67efaa0cf6eb73a1212b2a0d5c609d7a06d6",
+      "afterSha256": "f030c99d270ff984370c504a4df89049365c6aa2defcc35c5e013b877f1c7f7a",
+      "addedLines": 11,
+      "removedLines": 1
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "beforeSha256": "9f09f142dde5d5d01bad48c0f23e6c5b95abf127dcccebacfd76f412728f021e",
+      "afterSha256": "40209c2a9641d1ea2cf213a38152f6412eff0f203c54c8a3d5e871dff502176c",
+      "addedLines": 35,
+      "removedLines": 5
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/runtime-baseline.mjs",
+      "beforeSha256": "3f867f525db60f4ef25d6c16657548188c653968e5f935f4c26f746b3b4cbefc",
+      "afterSha256": "e526de5eeae926333d7cb489bb9bd7b4d095d50a7634ddfc704e49eede5c5eb4",
+      "addedLines": 12,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/build-roster.mjs",
+      "beforeSha256": "3e2e8753edd1441e2239b2e0e4ca71e4681af12236f9d5c125c8f3c887cf790d",
+      "afterSha256": "41c6f6354a6d1c51bf983a0bd8ffa83277ff2b7cd7dfdec5045dfce734f346c3",
+      "addedLines": 1,
+      "removedLines": 0
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/validate-roster.mjs",
+      "beforeSha256": "b25add3de9fa2700f44183a6644858b3fd46837438c7612360585db51ba6676a",
+      "afterSha256": "17d19739c9352cb99cb7d54545b782ab747d0a0b0f36e9f6d154509d4d0eda8e",
+      "addedLines": 6,
+      "removedLines": 2
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs",
+      "beforeSha256": "34843af25ef007b144c4cf19a6079d38ffa9643cc3f83e3b03b38d7d64e79eea",
+      "afterSha256": "741b35a30e4f84b2046361fee905b1a61647e8cf7e739ddf715d0517be88ab92",
+      "addedLines": 4,
+      "removedLines": 1
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/README.md",
+      "beforeSha256": "bd2d292a64049bbe3ce6fd0a5c69d0d8bc1d7bd0d288911a412c34487f1dfae1",
+      "afterSha256": "b80b7dc3cd876853c58aac57e752e5e40cb3c3482e732fadd83e252f0665bc01",
+      "addedLines": 36,
+      "removedLines": 0
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "requireComplete": true,
+  "requireRootReview": false,
+  "identities": 19,
+  "poses": 152,
+  "reportedIssues": 0,
+  "immutableReviewSnapshots": 40,
+  "rosterContract": {
+    "identities": 19,
+    "posesPerIdentity": 8,
+    "totalPoses": 152,
+    "categoryCounts": {
+      "staff": 0,
+      "patient": 19
+    },
+    "staffRoleCounts": {},
+    "plannedStaffRoleCounts": {},
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 2,
+        "middle_aged": 0,
+        "older_adult": 7
+      },
+      "Male": {
+        "young_adult": 0,
+        "adult": 2,
+        "middle_aged": 0,
+        "older_adult": 8
+      }
+    }
+  },
+  "reviewStatus": "candidate-review-root-checks-pending",
+  "runtimeBaseline": "245 identities/1990 assets and120 selectable patients preserved",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+}

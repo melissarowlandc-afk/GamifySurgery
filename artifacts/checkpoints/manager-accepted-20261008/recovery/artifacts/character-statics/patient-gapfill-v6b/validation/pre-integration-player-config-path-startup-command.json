@@ -1,0 +1,22 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "test",
+    "--workspace",
+    "@gamify-surgery/player",
+    "--",
+    "--pool=threads",
+    "--maxWorkers=1",
+    "--config",
+    "tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs",
+    "--configLoader=native"
+  ],
+  "cwd": "C:\\Users\\rowla\\Projects\\GamifySurgery",
+  "startedAt": "2026-10-08T04:08:45.285788+00:00",
+  "finishedAt": "2026-10-08T04:08:45.894878+00:00",
+  "exitCode": 1,
+  "log": "artifacts/character-statics/patient-gapfill-v6b/validation/pre-integration-player-config-path-startup.txt",
+  "sha256": "279107176c9618bce554d6cff4ee17015be9506d9ae1e67fc1612c389aa26390",
+  "note": "Initial worker command used a repository-relative config path inside the player workspace. Corrected to ../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs; the subsequent full suite ran all tests."
+}

@@ -1,0 +1,13 @@
+node.exe : (node:46604) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At line:3 char:1
++ & node tools/character-mapping/patient-gapfill-v6a/promote-runtime.mj ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:46604) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":20,"poses":160,"reportedIssues":0,"immutableReviewSnapshots":41,"rosterContract":{"identities":20,"posesPerIdentity":8,"totalPoses":160,"categoryCounts":{"staff":0,"patient":20},"staffRoleCounts":{},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":4,"middle_aged":7,"older_adult":0},"Male":{"young_adult":0,"adult":3,"middle_aged":6,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"245 identities/1990 assets and120 selectable patients preserved","runtimeReady":false,"ownerApproval":"approved","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+{"status":"PASS","diagnostics":20,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"approved","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6a-placement-qa/v2"}
+{"status":"PASS","identities":20,"poses":160,"authoredSeatedContacts":80,"reviewedChairProofs":20,"existingSameBandIdentities":77,"existingComparisons":397,"withinBatchPairs":45,"nearDuplicateFlags":0,"staticGalleryPages":25,"mainGalleryImages":60,"managerVisualAcceptance":"approved","browserValidation":"manager-accepted-gallery-run-recorded-in-program-plan"}
+{"status":"PASS","integrated":20,"poses":160,"runtime":{"identities":265,"cardinalPoses":2120,"clipboardPoses":30,"assets":2150},"patients":140,"ownerDelegatedManagerApproval":true,"published":false}

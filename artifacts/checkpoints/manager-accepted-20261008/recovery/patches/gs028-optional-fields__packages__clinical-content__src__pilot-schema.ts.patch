@@ -1,0 +1,25 @@
+--- a/packages/clinical-content/src/pilot-schema.ts
++++ b/packages/clinical-content/src/pilot-schema.ts
+@@ -1,4 +1,4 @@
+-import type { SyntheticClinicalCase } from "./schema";
++import type { CaseExhibit, SyntheticClinicalCase } from "./schema";
+ 
+ export type ReviewStatus =
+   | "needs_clinician_review"
+@@ -180,6 +180,7 @@
+   label: string;
+   isCorrect: boolean;
+   distractorRationale: string | null;
++  rationale?: string;
+ }
+ 
+ export interface QuestionVariant extends AuthoredClinicalRecord {
+@@ -188,6 +189,8 @@
+   stem: string;
+   answerChoices: QuestionAnswer[];
+   explanation: string;
++  teachingPoint?: string;
++  exhibit?: CaseExhibit;
+   supportingEvidenceClaimIds: string[];
+ }
+ 

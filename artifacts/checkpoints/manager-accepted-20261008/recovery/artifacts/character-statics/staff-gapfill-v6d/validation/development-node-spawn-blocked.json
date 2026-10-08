@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "staff-gapfill-v6d-worker-validation/v1",
+  "status": "FAIL",
+  "runAt": "2026-10-08T04:57:13.323Z",
+  "browserValidation": "not-run-left-to-manager",
+  "managerAcceptance": "pending",
+  "runtimeReady": false,
+  "results": [
+    {
+      "command": "node tools/character-mapping/staff-gapfill-v6d/validate-roster.mjs --require-complete",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    },
+    {
+      "command": "node tools/character-mapping/staff-gapfill-v6d/validate-placement-qa.mjs --require-complete",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    },
+    {
+      "command": "node tools/character-mapping/staff-gapfill-v6d/validate-worker-review.mjs",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    },
+    {
+      "command": "node tools/character-mapping/staff-gapfill-v6d/validate-all-catalog-comparison.mjs",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    },
+    {
+      "command": "node tools/character-mapping/staff-gapfill-v6d/runtime-baseline.mjs",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    },
+    {
+      "command": "node --experimental-vm-modules tools/character-mapping/staff-gapfill-v6d/check-syntax.mjs",
+      "exitCode": null,
+      "signal": null,
+      "error": "spawnSync C:\\Users\\rowla\\AppData\\Local\\Microsoft\\WinGet\\Packages\\OpenJS.NodeJS.LTS_Microsoft.Winget.Source_8wekyb3d8bbwe\\node-v24.19.0-win-x64\\node.exe EPERM",
+      "stdout": "",
+      "stderr": "",
+      "records": []
+    }
+  ],
+  "receipts": [
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/staging-registry.json",
+      "sha256": "37f49da9294160394743b02065b52d81a07a3219f4b1786cf43dbf983fb45321"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/worker-review/visual-review.json",
+      "sha256": "fec2d504b7912885407b312346661f8e514851d1833da1986596abb0455caf1e"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/manifest.json",
+      "sha256": "53bd73c31244748679fdd384e785d1a4b7b8672bbf238fdcc017b88f7724d725"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/comparison/all-catalog-manifest.json",
+      "sha256": "6d1e2dbaa3dc5eed82a763c907d9bb103f4e13b0340f68ccb08aa9778c4e477b"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/placement-qa/placement-manifest.json",
+      "sha256": "5388b4a8ea7f4583bdd9f91c222b5e773c26c767af7b0f08bb34811466e7452f"
+    },
+    {
+      "path": "artifacts/character-statics/staff-gapfill-v6d/alpha-normalization-report.json",
+      "sha256": "f46bdc3e34de07ff87bfb5eb2aa6b4420ef5d28a327984272661255ab4f36fe8"
+    }
+  ]
+}

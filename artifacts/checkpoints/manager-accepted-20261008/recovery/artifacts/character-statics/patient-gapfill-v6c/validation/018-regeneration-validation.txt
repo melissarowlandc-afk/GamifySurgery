@@ -1,0 +1,60 @@
+v6c .018 adult regeneration — exact final worker stdout/stderr
+All seven final commands exit 0. Manager accepted other 18; regenerated018 pending visual review.
+Browser gallery validation left to manager. Earlier batch logs preserved in history/pre-018-regeneration.
+
+$ node tools/character-mapping/patient-gapfill-v6c/validate-roster.mjs --require-complete
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:33:05.190Z
+Exit code: 0
+(node:20364) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":19,"poses":152,"reportedIssues":0,"immutableReviewSnapshots":40,"rosterContract":{"identities":19,"posesPerIdentity":8,"totalPoses":152,"categoryCounts":{"staff":0,"patient":19},"staffRoleCounts":{},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":2,"middle_aged":0,"older_adult":7},"Male":{"young_adult":0,"adult":2,"middle_aged":0,"older_adult":8}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"245 identities/1990 assets and120 selectable patients preserved","runtimeReady":false,"ownerApproval":"pending","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+
+$ node tools/character-mapping/patient-gapfill-v6c/validate-placement-qa.mjs --require-complete
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:43.666Z
+Exit code: 0
+(node:18924) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","diagnostics":19,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"pending","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6c-placement-qa/v2"}
+
+$ node tools/character-mapping/patient-gapfill-v6c/validate-worker-review.mjs
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:46.097Z
+Exit code: 0
+(node:3984) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","identities":19,"poses":152,"authoredSeatedContacts":76,"reviewedChairProofs":19,"existingSameBandIdentities":75,"existingComparisons":287,"withinBatchPairs":51,"nearDuplicateFlags":0,"staticGalleryPages":25,"mainGalleryImages":57,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager","observedGlasses":4,"maximumGlasses":5,"grayCurlyHairWithGlasses":0}
+
+$ node tools/character-mapping/patient-gapfill-v6c/validate-all-catalog-comparison.mjs
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:46.923Z
+Exit code: 0
+(node:54404) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"status":"PASS","originalCatalogIdentities":245,"acceptedV6aIdentities":20,"acceptedV6bIdentities":20,"allCatalogIdentities":285,"independentlyRecomputedCatalogComparisons":5415,"withinBatchPairs":171,"nearDuplicateFlags":0,"minimumCatalogRmse":52.874929201095235,"minimumWithinBatchRmse":55.31435893180412,"managerVisualAcceptance":"pending","browserValidation":"not-run-left-to-manager"}
+
+$ node tools/character-mapping/patient-gapfill-v6c/runtime-baseline.mjs
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:43.285Z
+Exit code: 0
+{"status":"PASS","preservedIdentities":245,"preservedAssets":1990,"priorSelectablePatients":120,"protectedFiles":7,"pinnedAcceptedPoses":320,"pinnedAcceptedNativeSources":80,"currentRuntimeIdentities":285,"concurrentV6bAppendAllowed":true,"runtimeReady":false,"ownerApproval":"pending"}
+(node:46172) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/patient-gapfill-v6c/018-revision-baseline.mjs verify
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:43.476Z
+Exit code: 0
+{"status":"PASS","unchangedOtherIdentities":18,"unchangedOtherPosePngs":144,"unchangedPinnedFiles":686,"original018Preserved":true,"originalStandingSeedPreserved":true,"stableIdAgeSexPreserved":true,"runtimeReady":false}
+(node:18444) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6c/check-syntax.mjs
+Started: 2026-10-08T05:32:42.384Z
+Finished: 2026-10-08T05:32:42.931Z
+Exit code: 0
+{"status":"PASS","syntaxParsedModules":25}
+(node:45460) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+

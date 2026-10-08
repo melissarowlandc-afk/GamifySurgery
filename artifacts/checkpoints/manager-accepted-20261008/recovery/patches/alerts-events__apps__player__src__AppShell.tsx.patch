@@ -1,0 +1,165 @@
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -1,6 +1,7 @@
+ import { useEffect, useRef, useState, type CSSProperties } from "react";
+ import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
+ import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
++import { ClinicHeadline } from "./ui/ClinicHeadline";
+ import type {
+   EmployeeDiscussionTabView,
+   EmployeeDiscussionView,
+@@ -42,6 +43,9 @@
+   type EmergencyGlp1View,
+   type MessageBoardItemView,
+   type MessageBoardTargetType,
++  type NeedsYouItemView,
++  type ClinicAlertAction,
++  type ClinicAlertActionResult,
+   type PatientTabView,
+   type ProgressionView,
+   type ResourceBarView,
+@@ -96,6 +100,8 @@
+   staffTraining?: StaffTrainingOverviewView | null;
+   serviceIncome: ServiceIncomeView;
+   messages: MessageBoardItemView[];
++  needsYou?: NeedsYouItemView[];
++  onClinicAlertAction?: (action: ClinicAlertAction) => ClinicAlertActionResult;
+   systemNotices: MessageBoardItemView[];
+   questionReviewFlags: QuestionReviewFlag[];
+   development: DevelopmentView;
+@@ -213,6 +219,8 @@
+   staffTraining = null,
+   serviceIncome,
+   messages,
++  needsYou = [],
++  onClinicAlertAction,
+   systemNotices,
+   questionReviewFlags,
+   development,
+@@ -314,16 +322,22 @@
+     useState<string | null>(null);
+   const [highlightedEmployeeId, setHighlightedEmployeeId] =
+     useState<string | null>(null);
++  const [requestedTipTraining, setRequestedTipTraining] = useState<{ employeeId: string; requestKey: number } | null>(null);
++  useEffect(() => {
++    if (!managementMode) setRequestedTipTraining(null);
++  }, [managementMode]);
+   const [advertisingHighlightKey, setAdvertisingHighlightKey] =
+     useState(0);
+   const [highlightedLitterId, setHighlightedLitterId] =
+     useState<string | null>(null);
+   const [pendingProcedureSetupAction, setPendingProcedureSetupAction] = useState<NonNullable<ProcedureSetupRequirementView["action"]> | null>(null);
+   const messageActionFrameRef = useRef<number | null>(null);
++  const [clinicActionFailures, setClinicActionFailures] = useState<Record<string, string>>({});
+   const dailyRoutineHighlightTipRef = useRef<string | null>(null);
+   const activeCampaignId =
+     campaigns.find((campaign) => campaign.active)?.campaignId ?? null;
+   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
++  useEffect(() => { setClinicActionFailures({}); }, [activeCampaignId]);
+   const developmentToolPreference = new URLSearchParams(
+     window.location.search,
+   ).get("prototype-tools");
+@@ -600,6 +614,10 @@
+       return;
+     }
+     if (target?.type === "build_mode") {
++      if (target.id) {
++        setPendingProcedureSetupAction({ target: "room", id: target.id, label: "Build" });
++        return;
++      }
+       if (!buildMode) {
+         onEnterBuildMode();
+       }
+@@ -615,6 +633,38 @@
+       document
+         .querySelector<HTMLElement>(".emergency-glp1-panel")
+         ?.scrollIntoView({ behavior: "smooth", block: "center" });
++    }
++    if (target?.type === "money") {
++      document.querySelector<HTMLElement>(".resource-money-value")?.scrollIntoView({ block: "nearest" });
++    }
++  };
++
++  const clinicNeeds: NeedsYouItemView[] = [
++    ...systemNotices.filter((notice) => notice.targetType === "save").slice(-1).map((notice): NeedsYouItemView => ({
++      id: notice.id, kind: "save", title: "Campaign save failed", why: notice.message,
++      sortKey: notice.sortKey ?? 0, timeLabel: notice.timeLabel,
++      action: { kind: "save_and_pause" }, actionLabel: "Retry save & pause", targetType: "save",
++    })),
++    ...needsYou,
++  ];
++  const clinicFeed = [...messages, ...systemNotices.filter((notice) => notice.targetType !== "save")];
++  const runClinicAction = (id: string, action: ClinicAlertAction) => {
++    const result = onClinicAlertAction?.(action) ?? (action.kind === "save_and_pause"
++      ? (() => { const saved = onSaveAndPause(); return { ok: saved.ok, reason: saved.ok ? undefined : "The save failed. Keep this tab open and retry." }; })()
++      : { ok: false, reason: "This action is unavailable in this preview." });
++    setClinicActionFailures((current) => {
++      const next = { ...current };
++      if (result.ok) delete next[id]; else next[id] = result.reason ?? "The action could not be applied.";
++      return next;
++    });
++    if (!result.ok) return;
++    if (action.kind === "place_room") setPendingProcedureSetupAction({ target: "room", id: action.definitionId, label: "Build" });
++    if (action.kind === "restore_access") handleMessageAction(id, { type: "room", id: action.roomId });
++    if (action.kind === "open_chart") setLocatedPatientId(action.encounterId);
++    if (action.kind === "show_goals") handleMessageAction(id, { type: "goal" });
++    if (action.kind === "train_employee") {
++      handleMessageAction(id, { type: "employee", id: action.employeeId });
++      setRequestedTipTraining((previous) => ({ employeeId: action.employeeId, requestKey: (previous?.requestKey ?? 0) + 1 }));
+     }
+   };
+ 
+@@ -628,6 +678,7 @@
+     >
+       <div className="game-display-title">Stitchin&apos; Time</div>
+       <ResourceBar
++        headline={<ClinicHeadline key={activeCampaignId} items={clinicFeed} needs={clinicNeeds} />}
+         view={resourceBar}
+         paused={paused}
+         buildMode={buildMode}
+@@ -762,6 +813,7 @@
+                   ...facility,
+                   buildDoorTool,
+                   selectedPatientInstanceId: locatedPatientId,
++                  alertPins: clinicNeeds.slice(0, 3).flatMap((item) => item.pin ? [{ id: item.id, title: item.title, actionLabel: item.actionLabel, target: item.pin }] : []),
+                   ...(facility.waterCooler
+                     ? {
+                         waterCooler: {
+@@ -789,6 +841,7 @@
+                 onRemoveDoor={onRemoveDoor}
+                 onRequestRoomUpgrade={openRoomMenu}
+                 onSelectedRoomRectChange={setSelectedRoomRect}
++                onAlertPinAction={(id) => { const item = clinicNeeds.slice(0, 3).find((candidate) => candidate.id === id); if (item) runClinicAction(id, item.action); }}
+                 onCollectLitter={onCollectLitter}
+                 onRefillWaterCooler={onRefillWaterCooler}
+                 onSeatFounderAtFrontDesk={onSeatFounderAtFrontDesk}
+@@ -924,6 +977,7 @@
+               serviceIncome={serviceIncome}
+               highlightedRoleId={highlightedStaffRoleId}
+               highlightedEmployeeId={highlightedEmployeeId}
++              requestedTraining={requestedTipTraining}
+               onEnterManagementMode={onEnterManagementMode}
+               onExitManagementMode={onExitManagementMode}
+               onHire={onHireStaff}
+@@ -967,14 +1021,17 @@
+             onProcedureSetupAction={setPendingProcedureSetupAction}
+           />
+ 
+-          {!buildMode ? (
+             <EventMessageBoard
+-              items={[...messages, ...systemNotices]}
+-              onAction={handleMessageAction}
++              key={activeCampaignId}
++              items={clinicFeed}
++              needsYou={clinicNeeds}
++              compact={buildMode}
++              failures={clinicActionFailures}
++              onNeedAction={(item) => runClinicAction(item.id, item.action)}
++              onAction={(id, target) => { const item = clinicFeed.find((candidate) => candidate.id === id); if (item?.action) runClinicAction(id, item.action); else handleMessageAction(id, target); }}
+               mode="ticker"
+               maximumVisibleItems={7}
+             />
+-          ) : null}
+         </aside>
+       </main>
+ 

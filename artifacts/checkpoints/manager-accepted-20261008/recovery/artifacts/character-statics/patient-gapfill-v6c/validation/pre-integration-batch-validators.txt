@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+304 !== 285
+
+    at verifyRuntimeBaseline (file:///C:/Users/rowla/Projects/GamifySurgery/tools/character-mapping/patient-gapfill-v6c/runtime-baseline.mjs:42:103)
+    at file:///C:/Users/rowla/Projects/GamifySurgery/tools/character-mapping/patient-gapfill-v6c/validate-roster.mjs:23:18 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 304,
+  expected: 285,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
