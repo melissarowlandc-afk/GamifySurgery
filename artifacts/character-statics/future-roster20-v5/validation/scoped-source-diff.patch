@@ -1,0 +1,406 @@
+--- before/packages/game-domain/src/characterStillCatalog.ts
++++ after/packages/game-domain/src/characterStillCatalog.ts
+@@ -16,7 +16,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "patient";
+-      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4";
++      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4" | "future-roster20-v5";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+       readonly ageBand: PatientVisualAgeBand;
+       readonly intendedAge?: number;
+@@ -24,7 +24,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -174,6 +174,45 @@
+   intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
+ }));
+ 
++// Owner-approved GS-033 art. Empty role lists keep the four planned APP and
++// executive identities renderable without admitting them to any staff pool.
++const FUTURE_ROSTER20_V5_STAFF_ROWS = [
++  ["001", []],
++  ["002", []],
++  ["003", []],
++  ["004", []],
++  ["005", ["staff.radiologist"]],
++  ["006", ["staff.radiologist"]],
++  ["007", ["staff.radiologist"]],
++  ["008", ["staff.radiologist"]],
++  ["009", ["staff.radiologist"]],
++  ["010", ["staff.radiologist"]],
++  ["011", ["staff.radiologist"]],
++  ["012", ["staff.radiologist"]],
++  ["013", ["staff.radiologist"]],
++  ["014", ["staff.radiologist"]],
++  ["015", ["staff.radiologist"]],
++  ["016", ["staff.radiologist"]],
++] as const;
++
++const FUTURE_ROSTER20_V5_STAFF_STILLS = FUTURE_ROSTER20_V5_STAFF_ROWS.map(([number, roles]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "staff" as const,
++  sourceCohort: "future-roster20-v5" as const, eligibleStaffRoleDefinitionIds: roles as readonly string[],
++}));
++
++const FUTURE_ROSTER20_V5_PATIENT_ROWS = [
++  ["017", 41, "Male"],
++  ["018", 54, "Female"],
++  ["019", 57, "Male"],
++  ["020", 69, "Female"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const FUTURE_ROSTER20_V5_PATIENT_STILLS = FUTURE_ROSTER20_V5_PATIENT_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "patient" as const,
++  sourceCohort: "future-roster20-v5" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -194,6 +233,7 @@
+   ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
+   ...PATIENT_WOMEN20_V3_STILLS,
+   ...PATIENT_DEMOGRAPHICS20_V4_STILLS,
++  ...FUTURE_ROSTER20_V5_STAFF_STILLS, ...FUTURE_ROSTER20_V5_PATIENT_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");
+--- before/packages/game-domain/src/characterStillCatalog.test.ts
++++ after/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -1,4 +1,5 @@
+ import { describe, expect, it } from "vitest";
++import { PROTOTYPE_BALANCE_RELEASE } from "@gamify-surgery/balance-config";
+ import {
+   createPatientPixelAppearance,
+   createPixelAppearance,
+@@ -22,14 +23,73 @@
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 225 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(225);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(225);
+-    expect(PATIENT_CHARACTER_STILLS).toHaveLength(116);
+-    expect(STAFF_CHARACTER_STILLS).toHaveLength(61);
++  it("covers all 245 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(245);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(245);
++    expect(PATIENT_CHARACTER_STILLS).toHaveLength(120);
++    expect(STAFF_CHARACTER_STILLS).toHaveLength(77);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
+     expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(12);
++  });
++
++  it("selects all twelve new radiologists without collisions and retains existing saved staff IDs", () => {
++    const pool = staffStillEligibleEntries("staff.radiologist");
++    const additions = pool.filter(entry => entry.sourceCohort === "future-roster20-v5");
++    expect(additions).toHaveLength(12);
++    expect(pool).toHaveLength(16);
++    const occupied = new Set<string>();
++    for (let index = 0; index < pool.length; index += 1) {
++      const selected = selectStaffStillId("GS-033-radiologists", `employee.${index}`, "staff.radiologist", undefined, occupied);
++      expect(selected).toBeDefined();
++      expect(occupied.has(selected!)).toBe(false);
++      occupied.add(selected!);
++    }
++    expect([...occupied].sort()).toEqual(pool.map(entry => entry.stillId).sort());
++    for (const entry of STAFF_CHARACTER_STILLS) for (const role of entry.eligibleStaffRoleDefinitionIds) {
++      expect(selectStaffStillId("saved-campaign", "saved-employee", role, entry.stillId)).toBe(entry.stillId);
++    }
++  });
++
++  it("registers APP and executive art while excluding it from every current staff role and patient pool", () => {
++    const inactive = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "future-roster20-v5" && entry.eligibleStaffRoleDefinitionIds.length === 0);
++    expect(inactive.map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", "future-roster20-v5.003", "future-roster20-v5.004"]);
++    const roleIds = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.app", "staff.executive"];
++    for (const role of roleIds) for (const entry of inactive) {
++      expect(staffStillEligibleEntries(role)).not.toContainEqual(entry);
++      expect(selectStaffStillId("GS-033-inactive", "new-hire", role, entry.stillId)).not.toBe(entry.stillId);
++    }
++    for (const entry of inactive) expect(patientStillEligibleEntries()).not.toContainEqual(entry);
++    expect(selectStaffStillId("GS-033-inactive", "APP", "staff.app")).toBeUndefined();
++    expect(selectStaffStillId("GS-033-inactive", "executive", "staff.executive")).toBeUndefined();
++  });
++
++  it("reaches all four GS-033 patients using unchanged compatible occupancy and LRU selection", () => {
++    const additions = PATIENT_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "future-roster20-v5");
++    expect(additions.map(entry => [entry.stillId, entry.compatibleSexLabel, entry.intendedAge])).toEqual([
++      ["future-roster20-v5.017", "Male", 41], ["future-roster20-v5.018", "Female", 54],
++      ["future-roster20-v5.019", "Male", 57], ["future-roster20-v5.020", "Female", 69],
++    ]);
++    for (const entry of additions) {
++      const profile = { sexLabel: entry.compatibleSexLabel, ageYears: entry.intendedAge };
++      const pool = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
++      expect(pool).toContainEqual(entry);
++      expect(patientStillEligibleEntries(profile.sexLabel === "Male" ? "Female" : "Male", profile.ageYears)).not.toContainEqual(entry);
++      expect(patientStillEligibleEntries(profile.sexLabel, 12)).not.toContainEqual(entry);
++      for (const ageYears of [24, 38, 54, 70]) if (pool[0]!.ageBand !== patientStillEligibleEntries(profile.sexLabel, ageYears)[0]!.ageBand) {
++        expect(patientStillEligibleEntries(profile.sexLabel, ageYears)).not.toContainEqual(entry);
++      }
++      const occupiedStillIds = new Set<string>(), recentlyUsedStillIds: string[] = [];
++      for (let index = 0; index < pool.length; index += 1) {
++        const selected = selectNewPatientStillId("GS-033-patients", `${entry.stillId}.${index}`, profile, { occupiedStillIds, recentlyUsedStillIds });
++        expect(selected).toBeDefined();
++        expect(occupiedStillIds.has(selected!)).toBe(false);
++        occupiedStillIds.add(selected!); recentlyUsedStillIds.push(selected!);
++      }
++      expect([...occupiedStillIds].sort()).toEqual(pool.map(candidate => candidate.stillId).sort());
++      expect(selectNewPatientStillId("GS-033-patients", "exhausted", profile, { occupiedStillIds, recentlyUsedStillIds })).toBe(recentlyUsedStillIds[0]);
++      expect(selectPatientStillId("saved-campaign", "saved-patient", profile, entry.stillId)).toBe(entry.stillId);
++    }
+   });
+ 
+   it("reaches all twenty approved demographic-gap designs before repeating each compatible pool", () => {
+@@ -175,7 +235,7 @@
+     expect(pediatric.every((entry) => entry.availability === "excluded-until-future-approved-pediatric-release")).toBe(true);
+     expect(radiologists).toHaveLength(0);
+     expect(patientStillEligibleEntries(undefined, undefined).map((entry) => entry.stillId)).not.toContain("level3-roster-v2.021");
+-    expect(staffStillEligibleEntries("staff.radiologist").map(entry => entry.stillId)).toEqual([
++    expect(staffStillEligibleEntries("staff.radiologist").filter(entry => entry.sourceCohort === "level3-roster-v2").map(entry => entry.stillId)).toEqual([
+       "level3-roster-v2.001", "level3-roster-v2.002", "level3-roster-v2.003", "level3-roster-v2.004",
+     ]);
+   });
+--- before/apps/player/src/art/characterStillRegistry.ts
++++ after/apps/player/src/art/characterStillRegistry.ts
+@@ -6,7 +6,7 @@
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;
+@@ -33,6 +33,16 @@
+   readonly cohort: CharacterStillCohort;
+   readonly category: string;
+   readonly role?: string;
++  /** Explicit current role membership; planned roles use an empty list. */
++  readonly eligibleStaffRoleDefinitionIds?: readonly string[];
++  /** Editorial roadmap metadata does not grant staffing eligibility. */
++  readonly plannedStaffRole?: Readonly<{
++    label: string;
++    facilityLevel: number;
++    status: "roadmap-only" | "referenced-not-yet-defined";
++    roleDefinitionId?: string;
++    evidencePaths: readonly string[];
++  }>;
+   readonly intendedAge?: number;
+   readonly intendedSex?: string;
+   readonly displayGender?: string;
+--- before/apps/player/src/art/characterStillRegistry.test.ts
++++ after/apps/player/src/art/characterStillRegistry.test.ts
+@@ -9,13 +9,14 @@
+   resolveCharacterStillAssetUrl,
+ } from "./characterStillRegistry";
+ import { PATIENT_CHARACTER_STILLS, STAFF_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
++import ownerApproval from "../../../../tools/character-mapping/future-roster20-v5/owner-approval.json";
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 225, cardinalPoses: 1800, clipboardPoses: 30, assets: 1830 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 245, cardinalPoses: 1960, clipboardPoses: 30, assets: 1990 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(225);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(225);
++    expect(entries).toHaveLength(245);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(245);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+@@ -30,13 +31,15 @@
+                 ? "patient-women20-v3"
+                 : entry.cohort === "patientDemographics20V4"
+                   ? "patient-demographics20-v4"
+-                  : "gs026-stills-v1";
++                  : entry.cohort === "futureRoster20V5"
++                    ? "future-roster20-v5"
++                    : "gs026-stills-v1";
+           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(900);
++    expect(seatedAssets).toHaveLength(980);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -44,6 +47,33 @@
+     }
+     expect(getCharacterStill("missing-character", "stand", "south")).toBeUndefined();
+     expect(getCharacterStillEntry("missing-character")).toBeUndefined();
++  });
++
++  it("registers the GS-033 batch with all 160 exact approved pose hashes and authored contacts", () => {
++    const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "futureRoster20V5");
++    expect(entries).toHaveLength(20);
++    expect(entries.filter(entry => entry.role === "staff.radiologist")).toHaveLength(12);
++    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(4);
++    expect(entries.filter(entry => entry.category === "patient-or-general-population")).toHaveLength(4);
++    const approvedPoseHashes = ownerApproval.acceptedPoses as Record<string, Record<string, string>>;
++    const hashes: string[] = [];
++    for (const entry of entries) {
++      const number = entry.id.split(".").at(-1)!;
++      expect(entry.clipboard).toBeUndefined();
++      for (const posture of ["stand", "sit"] as const) for (const direction of CHARACTER_STILL_DIRECTIONS) {
++        const asset = getCharacterStill(entry.id, posture, direction)!;
++        expect(asset.sha256).toBe(approvedPoseHashes[number]![`${posture}-${direction}`]);
++        expect(asset.anchors).toMatchObject({ bodyAxisX: 80, floorY: 287 });
++        if (posture === "sit") expect(asset.anchors).toMatchObject({ seatContactStatus: "owner-approved-authored-contact" });
++        expect(resolveCharacterStillAssetUrl(asset, "/GamifySurgery/")).toBe(`/GamifySurgery/art/characters/future-roster20-v5/${entry.id}/${posture}-${direction}.png`);
++        hashes.push(asset.sha256);
++      }
++      if (entry.plannedStaffRole) {
++        expect(entry.eligibleStaffRoleDefinitionIds).toEqual([]);
++        expect(entry.role).toBeUndefined();
++      }
++    }
++    expect(new Set(hashes).size).toBe(160);
+   });
+ 
+   it("renders all twenty approved demographic-gap identities with complete unique poses and authored contacts", () => {
+--- before/tools/character-mapping/future-roster20-v5/runtime-baseline.mjs
++++ after/tools/character-mapping/future-roster20-v5/runtime-baseline.mjs
+@@ -5,6 +5,7 @@
+ import { stripTypeScriptTypes } from 'node:module';
+ import { fileURLToPath } from 'node:url';
+ import { runInNewContext } from 'node:vm';
++import { baselineManifest, catalogPath, readIntegrationBaseline, registryPath, runtimeIntegrationState, verifyAppendOnlyCatalog, verifyAppendOnlyRegistry } from './runtime-contract.mjs';
+ 
+ const tool = resolve(fileURLToPath(new URL('.', import.meta.url)));
+ const repo = resolve(tool, '../../..');
+@@ -79,7 +80,16 @@
+   assert.equal(baseline.stableIds.length, 225); assert.equal(new Set(baseline.stableIds).size, 225);
+   assert.equal(new Set(baseline.assets.map(item => item.path)).size, 1830);
+   assert.deepEqual(baseline.protectedFiles.map(item => item.path), protectedFiles.map(rel));
++  const integratedBaseline = existsSync(baselineManifest);
++  const integration = integratedBaseline ? runtimeIntegrationState() : { ready: false };
++  if (integratedBaseline) {
++    readIntegrationBaseline();
++    verifyAppendOnlyRegistry({ allowBefore: !integration.ready });
++    // Promotion may append the catalog before publishing its matching registry.
++    verifyAppendOnlyCatalog({ allowBefore: !integration.ready });
++  }
+   for (const item of [...baseline.protectedFiles, ...baseline.assets]) {
++    if (integratedBaseline && [registryPath, catalogPath].includes(item.path)) continue;
+     const file = resolve(repo, item.path);
+     assert.equal(hash(file), item.sha256, 'protected runtime, source or asset changed: ' + item.path);
+     assert.equal(statSync(file).size, item.bytes, 'protected file size changed: ' + item.path);
+@@ -89,6 +99,7 @@
+ 
+ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+   const baseline = captureRuntimeBaseline(); verifyRuntimeBaseline();
++  const integration = existsSync(baselineManifest) ? runtimeIntegrationState() : { ready: false, ownerApproval: 'pending' };
+   console.log(JSON.stringify({ status: 'PASS', preservedIdentities: baseline.identityCount, preservedAssets: baseline.assetCount,
+-    selectablePatients: baseline.selectablePatientCount, protectedFiles: baseline.protectedFiles.length, runtimeReady: false, ownerApproval: 'pending' }));
++    priorSelectablePatients: baseline.selectablePatientCount, protectedFiles: baseline.protectedFiles.length, runtimeReady: integration.ready, ownerApproval: integration.ownerApproval }));
+ }
+--- before/tools/character-mapping/future-roster20-v5/build-roster.mjs
++++ after/tools/character-mapping/future-roster20-v5/build-roster.mjs
+@@ -484,6 +484,7 @@
+ }
+ 
+ export async function build() {
++  assert(!existsSync(resolve(tool, 'owner-approval.json')), 'Approved review evidence is frozen. Use promote-runtime.mjs for integration; do not regenerate the approved batch.');
+   const roster = json(resolve(tool, 'roster.json')); assertRoster(roster);
+   mkdirSync(root, { recursive: true });
+   captureRuntimeBaseline(); const baseline = verifyRuntimeBaseline();
+--- before/tools/character-mapping/future-roster20-v5/validate-roster.mjs
++++ after/tools/character-mapping/future-roster20-v5/validate-roster.mjs
+@@ -6,6 +6,7 @@
+ import { extractEight, inferSeatContact, loadCanvas, measure, normalizeCells, SLOTS } from '../gs026-employee-expansion-v1/pipeline.mjs';
+ import { assertRoster, contactContractPayload, rosterContract, directions, hash, hashText, repo, root, sourceFiles, target, tool, verifyRuntimeBaseline, verifySource } from './build-roster.mjs';
+ import { alphaSummary, contactAnchorStatus, packageStatus, reviewState } from './build-roster.mjs';
++import { baselineManifest, runtimeIntegrationState, verifyFrozenReviewMetadata } from './runtime-contract.mjs';
+ 
+ const complete = process.argv.includes('--require-complete') || process.argv.includes('--require-root-review');
+ const reviewed = process.argv.includes('--require-root-review');
+@@ -233,13 +234,16 @@
+ }
+ verifyRuntimeBaseline();
+ assert.equal(hash(resolve(tool, 'review-acceptance.json')), ledgerSha256, 'root ledger changed during validation; rebuild the review snapshot');
++if (existsSync(baselineManifest)) verifyFrozenReviewMetadata();
++const runtime = existsSync(baselineManifest) ? runtimeIntegrationState() : integration;
+ const result = {
+   status: 'PASS', requireComplete: complete, requireRootReview: reviewed,
+   identities: staging.entries.length, poses: staging.entries.length * 8, reportedIssues: staging.issues.length,
+   immutableReviewSnapshots: reviewSnapshots,
+   rosterContract: rosterContract(roster), reviewStatus: staging.status,
+-  runtimeBaseline: '225 identities/1830 assets and116 selectable patients preserved', runtimeReady: integration.ready, ownerApproval: integration.ownerApproval,
++  runtimeBaseline: '225 identities/1830 assets and116 selectable patients preserved', runtimeReady: runtime.ready, ownerApproval: runtime.ownerApproval,
++  reviewStatusPolicy: 'Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them.',
+ };
+ mkdirSync(resolve(root, 'validation'), { recursive: true });
+-writeFileSync(resolve(root, 'validation', reviewed ? 'root-review-results.json' : complete ? 'complete-results.json' : 'candidate-results.json'), JSON.stringify(result, null, 2) + '\n');
++if (!process.argv.includes('--check-only')) writeFileSync(resolve(root, 'validation', reviewed ? 'root-review-results.json' : complete ? 'complete-results.json' : 'candidate-results.json'), JSON.stringify(result, null, 2) + '\n');
+ console.log(JSON.stringify(result));
+--- before/tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs
++++ after/tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs
+@@ -6,6 +6,7 @@
+ import { loadImage } from '@napi-rs/canvas';
+ import { verifyRuntimeBaseline } from './runtime-baseline.mjs';
+ import { reviewState } from './build-roster.mjs';
++import { baselineManifest, runtimeIntegrationState, verifyFrozenReviewMetadata } from './runtime-contract.mjs';
+ 
+ const tool = resolve(fileURLToPath(new URL('.', import.meta.url)));
+ const repo = resolve(tool, '../../..');
+@@ -116,4 +117,6 @@
+   for (const proof of ledger.chairPlacementReview.pages) assert.equal(hash(resolve(repo, proof.path)), proof.sha256, 'root-reviewed chair board changed');
+ }
+ verifyRuntimeBaseline();
+-console.log(JSON.stringify({ status: 'PASS', diagnostics: placement.diagnostics.length, requireRootReview: reviewed, runtimeReady: false, schemaVersion: placement.schemaVersion }));
++if (existsSync(baselineManifest)) verifyFrozenReviewMetadata();
++const runtime = existsSync(baselineManifest) ? runtimeIntegrationState() : integration;
++console.log(JSON.stringify({ status: 'PASS', diagnostics: placement.diagnostics.length, requireRootReview: reviewed, runtimeReady: runtime.ready, ownerApproval: runtime.ownerApproval, frozenChairEvidenceUnchanged: true, schemaVersion: placement.schemaVersion }));
+--- before/tools/character-mapping/future-roster20-v5/README.md
++++ after/tools/character-mapping/future-roster20-v5/README.md
+@@ -1,4 +1,40 @@
+ # Twenty future employees and patients — batch 5
++
++Owner approved GS-033 on October 7, 2026: "I reviewed the character stills in
++033, those are approved and can be implemented into the game." The exact source,
++pose, gallery, alpha and authored-contact hashes are bound in `owner-approval.json`.
++The original review artifacts and their historical pending labels are frozen;
++the separate `artifacts/character-statics/future-roster20-v5/runtime-integration.json`
++supersedes those labels after promotion. No approval claim for another batch changes.
++
++Integration uses the pre-edit `runtime-integration-baseline` (225 identities,
++1,830 assets, 116 adult patients), appends 20 identities / 160 exact approved PNGs,
++and results in 245 identities / 1,990 assets / 120 adult patients. Radiologist art
++enters only `staff.radiologist` (4 existing + 12 new designs). APP and executive
++entries have empty eligible role lists and no runtime role; their roadmap metadata
++does not make them selectable. Patient occupancy, LRU, saved IDs and selection
++code remain unchanged. Approved artwork must not be regenerated with `build-roster.mjs`.
++
++Run from the root using the existing Node runtime and dependencies:
++
++```powershell
++node tools/character-mapping/future-roster20-v5/capture-integration-baseline.mjs
++node tools/character-mapping/future-roster20-v5/promote-runtime.mjs
++node tools/character-mapping/future-roster20-v5/validate-roster.mjs --require-root-review
++node tools/character-mapping/future-roster20-v5/validate-placement-qa.mjs --require-root-review
++node tools/character-mapping/future-roster20-v5/runtime-baseline.mjs
++node tools/character-mapping/future-roster20-v5/validate-runtime-integration.mjs
++node tools/character-mapping/future-roster20-v5/validate-promotion-rerun.mjs
++```
++
++Promotion performs strict source validation in-process and refuses changed sources,
++controls, prior entries, destination images or provenance. Re-running it does not
++rewrite any runtime or approved art file. This is local integration only. The owner
++opening pathway remains `START_GAME.cmd` → `http://127.0.0.1:4173` in the same browser
++profile. No save origin, browser storage, deployment or Git operation is changed.
++
++The following describes the historical art-production milestone; its pending labels
++are retained as source history and are superseded by the approval above.
+ 
+ This is an art-only review batch with twenty adult identities and eight poses per
+ identity: standing and seated south, east, west and north. Employee coverage is

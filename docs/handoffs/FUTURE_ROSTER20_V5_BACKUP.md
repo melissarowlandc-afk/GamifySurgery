@@ -1,0 +1,11 @@
+# Character batch 5 GitHub checkpoint
+
+Owner requested **“Push to GitHub”** after the twenty-character batch. The current shared tree also contains its later owner-approved integration, accepted by the Claude manager and documented in `docs/execplans/future-roster20-v5-integration-20261007.md`.
+
+Backup scope: `tools/character-mapping/future-roster20-v5/`, `artifacts/character-statics/future-roster20-v5/`, the 160 new cohort public PNGs, the two scoped plans and original art handoff, and `artifacts/checkpoints/future-roster20-v5-20261007/`. Shared live catalog, registry, provenance and tests are preserved as six exact integration recovery pre/post snapshots and verified patches; the later reading-station assertion correction is an explicitly labeled compatibility snapshot. Unrelated dirty gameplay, clinical-content, rooms, saves, environment and private inputs are excluded.
+
+Fresh backup audit verifies exact owner-approved source/pose/control evidence, all 1,990 runtime images, unchanged prior 225 registry/catalog entries and 1,830 image bytes, 120 adult patient designs, 16 selectable radiologists and four inactive APP/executive identities. Six integration patches passed exact forward/reverse restoration. Credential-pattern, extension, private-path, ignored-path, file-size and scoped-index audits passed. Prior focused tests, typecheck, gallery and promotion-idempotence results are preserved as historical evidence.
+
+Fresh historical integration/roster/chair checks stop on a later concurrent `appearance.ts` hash change. Independent backup verification confirms all frozen art, the append-only integration and every other protected input; this unrelated selection edit is excluded. No historical baseline or validator was weakened. The checkpoint preserves exact recovery inputs and postimages; it does not claim a clean runnable aggregate checkout or fresh whole-game validation.
+
+Status: scoped checkpoint prepared on `beta`; remote commit verification will be appended after push. No merge, release, deployment or Pages publication. Original art review receipts remain frozen; owner approval/runtime-integration receipts are authoritative for the current integrated state. The canonical local playtest origin and existing profile/saves are unchanged.

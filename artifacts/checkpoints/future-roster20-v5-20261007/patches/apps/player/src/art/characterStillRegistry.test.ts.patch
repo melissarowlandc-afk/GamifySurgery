@@ -1,0 +1,74 @@
+diff --git a/preimages/apps/player/src/art/characterStillRegistry.test.ts b/postimages/apps/player/src/art/characterStillRegistry.test.ts
+index 6b8146a..3d4c502 100644
+--- a/preimages/apps/player/src/art/characterStillRegistry.test.ts
++++ b/postimages/apps/player/src/art/characterStillRegistry.test.ts
+@@ -9,13 +9,14 @@ import {
+   resolveCharacterStillAssetUrl,
+ } from "./characterStillRegistry";
+ import { PATIENT_CHARACTER_STILLS, STAFF_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
++import ownerApproval from "../../../../tools/character-mapping/future-roster20-v5/owner-approval.json";
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 225, cardinalPoses: 1800, clipboardPoses: 30, assets: 1830 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 245, cardinalPoses: 1960, clipboardPoses: 30, assets: 1990 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(225);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(225);
++    expect(entries).toHaveLength(245);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(245);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+@@ -30,13 +31,15 @@ describe("characterStillRegistry", () => {
+                 ? "patient-women20-v3"
+                 : entry.cohort === "patientDemographics20V4"
+                   ? "patient-demographics20-v4"
+-                  : "gs026-stills-v1";
++                  : entry.cohort === "futureRoster20V5"
++                    ? "future-roster20-v5"
++                    : "gs026-stills-v1";
+           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(900);
++    expect(seatedAssets).toHaveLength(980);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -46,6 +49,33 @@ describe("characterStillRegistry", () => {
+     expect(getCharacterStillEntry("missing-character")).toBeUndefined();
+   });
+ 
++  it("registers the GS-033 batch with all 160 exact approved pose hashes and authored contacts", () => {
++    const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "futureRoster20V5");
++    expect(entries).toHaveLength(20);
++    expect(entries.filter(entry => entry.role === "staff.radiologist")).toHaveLength(12);
++    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(4);
++    expect(entries.filter(entry => entry.category === "patient-or-general-population")).toHaveLength(4);
++    const approvedPoseHashes = ownerApproval.acceptedPoses as Record<string, Record<string, string>>;
++    const hashes: string[] = [];
++    for (const entry of entries) {
++      const number = entry.id.split(".").at(-1)!;
++      expect(entry.clipboard).toBeUndefined();
++      for (const posture of ["stand", "sit"] as const) for (const direction of CHARACTER_STILL_DIRECTIONS) {
++        const asset = getCharacterStill(entry.id, posture, direction)!;
++        expect(asset.sha256).toBe(approvedPoseHashes[number]![`${posture}-${direction}`]);
++        expect(asset.anchors).toMatchObject({ bodyAxisX: 80, floorY: 287 });
++        if (posture === "sit") expect(asset.anchors).toMatchObject({ seatContactStatus: "owner-approved-authored-contact" });
++        expect(resolveCharacterStillAssetUrl(asset, "/GamifySurgery/")).toBe(`/GamifySurgery/art/characters/future-roster20-v5/${entry.id}/${posture}-${direction}.png`);
++        hashes.push(asset.sha256);
++      }
++      if (entry.plannedStaffRole) {
++        expect(entry.eligibleStaffRoleDefinitionIds).toEqual([]);
++        expect(entry.role).toBeUndefined();
++      }
++    }
++    expect(new Set(hashes).size).toBe(160);
++  });
++
+   it("renders all twenty approved demographic-gap identities with complete unique poses and authored contacts", () => {
+     const additions = PATIENT_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "patient-demographics20-v4");
+     expect(additions).toHaveLength(20);

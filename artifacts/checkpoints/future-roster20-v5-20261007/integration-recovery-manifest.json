@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "future-roster20-v5-checkpoint/v1",
+  "scope": "Exact batch5 art, approved append-only local integration and scoped recovery; no aggregate mixed gameplay commit or deployment.",
+  "ownerApproval": "I reviewed the character stills in 033, those are approved and can be implemented into the game.",
+  "resulting": {
+    "identities": 245,
+    "cardinalPoses": 1960,
+    "clipboardPoses": 30,
+    "assets": 1990,
+    "patients": 120,
+    "radiologists": 16
+  },
+  "archivedRuntimeFiles": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/apps/player/src/art/characterStillRegistry.generated.json",
+        "sha256": "9ddaa8381d092c5c49536465bea036edd3c9ab8e8659731a85e7f3d4def94374"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/apps/player/src/art/characterStillRegistry.generated.json",
+        "sha256": "7b832ffa231520a098ccbd5ab8f0252f1d93cd23b3ae29277c10827a91fcde0d"
+      }
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+        "sha256": "9304d56a9bb0ae75b7e11f8dcd58490b47189f07df71a253cd14759ad2f061e6"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+        "sha256": "200137dd2a90162108a55e3f658801a856d2997e648b5d0ed9e082a27e8bc594"
+      }
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/packages/game-domain/src/characterStillCatalog.ts",
+        "sha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/packages/game-domain/src/characterStillCatalog.ts",
+        "sha256": "923366318c3da1bd7611e11a95c3578dc2b4784107489eb78d5bf2403d192c1b"
+      }
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/packages/game-domain/src/characterStillCatalog.test.ts",
+        "sha256": "24be461ee07e6c7831a0618164e020449777dcd179b81b592e6d4bcc97f9b583"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/packages/game-domain/src/characterStillCatalog.test.ts",
+        "sha256": "71a12541c09d9528aac9d99bb52b9a6e44865e1ed9c2fd2bf09af97fc2ebeea2"
+      }
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/apps/player/src/art/characterStillRegistry.ts",
+        "sha256": "d272179b736928d8533a395bbd2d67efaa0cf6eb73a1212b2a0d5c609d7a06d6"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/apps/player/src/art/characterStillRegistry.ts",
+        "sha256": "f030c99d270ff984370c504a4df89049365c6aa2defcc35c5e013b877f1c7f7a"
+      }
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "before": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/preimages/apps/player/src/art/characterStillRegistry.test.ts",
+        "sha256": "9f09f142dde5d5d01bad48c0f23e6c5b95abf127dcccebacfd76f412728f021e"
+      },
+      "after": {
+        "file": "artifacts/checkpoints/future-roster20-v5-20261007/postimages/apps/player/src/art/characterStillRegistry.test.ts",
+        "sha256": "40209c2a9641d1ea2cf213a38152f6412eff0f203c54c8a3d5e871dff502176c"
+      }
+    }
+  ],
+  "patchContracts": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/apps/player/src/art/characterStillRegistry.generated.json.patch",
+      "sha256": "566b1e580320753a9a00044fdd2b78d95803cd857f64ec9e3ee5fa1242e81773",
+      "forwardReverseByteExact": true
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json.patch",
+      "sha256": "bc85f7ee69430cab113fc0794934c6b4b97d73ab3b69fde4920fe7a1ec0ec855",
+      "forwardReverseByteExact": true
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/packages/game-domain/src/characterStillCatalog.ts.patch",
+      "sha256": "00573646d244d59ff1ce32f2478d1218b62a8752030ea73e22edb36bd513976e",
+      "forwardReverseByteExact": true
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/packages/game-domain/src/characterStillCatalog.test.ts.patch",
+      "sha256": "5267e3a0bc3f349c014adf6f22a7e9bb62f6a45ed1f6c64452af9f31d580f555",
+      "forwardReverseByteExact": true
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/apps/player/src/art/characterStillRegistry.ts.patch",
+      "sha256": "92618ee5a14ade5a2b094a982073f92e8707f399280e227f91c0918b4b6acccd",
+      "forwardReverseByteExact": true
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "patch": "artifacts/checkpoints/future-roster20-v5-20261007/patches/apps/player/src/art/characterStillRegistry.test.ts.patch",
+      "sha256": "624ed2ef5223e278e0c742b949de60a7581bd39560b99f8c5ff413fcb130d11b",
+      "forwardReverseByteExact": true
+    }
+  ],
+  "compatibilityTest": {
+    "file": "artifacts/checkpoints/future-roster20-v5-20261007/compatibility-tests/packages/game-domain/tests/reading-stations.test.ts",
+    "sha256": "187a9eb7f4267a3338c52aef52559a340f75058e434003d42e2e19245131263e",
+    "note": "Manager-adjusted pool test snapshot; no exact preimage captured for this later two-assertion correction."
+  },
+  "historicalGuardDrift": [
+    {
+      "path": "packages/game-domain/src/appearance.ts",
+      "baselineSha256": "ec439709c4ef79ab2de222a8754e64d17cb13699229d6754cccda94eb024d0e9",
+      "currentSha256": "94b9845b3e411ea6f18c1952555caf53250aeabee44c6e3955225cc6e079fdb1"
+    }
+  ],
+  "verification": {
+    "ownerApproved": true,
+    "runtimeAssets": 1990,
+    "preservedRuntimeAssets": 1830,
+    "preservedInputs": 3353,
+    "frozenArtUnaffected": true,
+    "appendOnlyRegistry": true,
+    "appendOnlyCatalog": true,
+    "appendOnlyProvenance": true,
+    "approvedNewAssets": 160,
+    "recoveryPatchRoundTrips": 6
+  },
+  "historicalStrictCheck": "Fresh strict integration/roster/chair guards stop on concurrent appearance.ts hash drift. No guard or baseline weakened. Backup verification independently validates all other frozen inputs and exact approved art/runtime records.",
+  "recovery": "Use pre-edit integration snapshots and postimages/patches together with the 160 cohort PNGs. Patches use git apply -p2 and require the exact recorded preimages. Existing repository HEAD may lack other local gameplay and previous integrated catalogs; this is a recovery checkpoint, not a clean runnable aggregate checkout."
+}

@@ -1,0 +1,76 @@
+diff --git a/preimages/packages/game-domain/src/characterStillCatalog.ts b/postimages/packages/game-domain/src/characterStillCatalog.ts
+index 00ec19f..4ca9f14 100644
+--- a/preimages/packages/game-domain/src/characterStillCatalog.ts
++++ b/postimages/packages/game-domain/src/characterStillCatalog.ts
+@@ -16,7 +16,7 @@ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "patient";
+-      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4";
++      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4" | "future-roster20-v5";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+       readonly ageBand: PatientVisualAgeBand;
+       readonly intendedAge?: number;
+@@ -24,7 +24,7 @@ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -174,6 +174,45 @@ const PATIENT_DEMOGRAPHICS20_V4_STILLS = PATIENT_DEMOGRAPHICS20_V4_ROWS.map(([nu
+   intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
+ }));
+ 
++// Owner-approved GS-033 art. Empty role lists keep the four planned APP and
++// executive identities renderable without admitting them to any staff pool.
++const FUTURE_ROSTER20_V5_STAFF_ROWS = [
++  ["001", []],
++  ["002", []],
++  ["003", []],
++  ["004", []],
++  ["005", ["staff.radiologist"]],
++  ["006", ["staff.radiologist"]],
++  ["007", ["staff.radiologist"]],
++  ["008", ["staff.radiologist"]],
++  ["009", ["staff.radiologist"]],
++  ["010", ["staff.radiologist"]],
++  ["011", ["staff.radiologist"]],
++  ["012", ["staff.radiologist"]],
++  ["013", ["staff.radiologist"]],
++  ["014", ["staff.radiologist"]],
++  ["015", ["staff.radiologist"]],
++  ["016", ["staff.radiologist"]],
++] as const;
++
++const FUTURE_ROSTER20_V5_STAFF_STILLS = FUTURE_ROSTER20_V5_STAFF_ROWS.map(([number, roles]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "staff" as const,
++  sourceCohort: "future-roster20-v5" as const, eligibleStaffRoleDefinitionIds: roles as readonly string[],
++}));
++
++const FUTURE_ROSTER20_V5_PATIENT_ROWS = [
++  ["017", 41, "Male"],
++  ["018", 54, "Female"],
++  ["019", 57, "Male"],
++  ["020", 69, "Female"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const FUTURE_ROSTER20_V5_PATIENT_STILLS = FUTURE_ROSTER20_V5_PATIENT_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`future-roster20-v5.${number}`), category: "patient" as const,
++  sourceCohort: "future-roster20-v5" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -194,6 +233,7 @@ export const CHARACTER_STILL_CATALOG = [
+   ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
+   ...PATIENT_WOMEN20_V3_STILLS,
+   ...PATIENT_DEMOGRAPHICS20_V4_STILLS,
++  ...FUTURE_ROSTER20_V5_STAFF_STILLS, ...FUTURE_ROSTER20_V5_PATIENT_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");

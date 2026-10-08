@@ -1,0 +1,30 @@
+diff --git a/preimages/apps/player/src/art/characterStillRegistry.ts b/postimages/apps/player/src/art/characterStillRegistry.ts
+index c909f71..ca1cf78 100644
+--- a/preimages/apps/player/src/art/characterStillRegistry.ts
++++ b/postimages/apps/player/src/art/characterStillRegistry.ts
+@@ -6,7 +6,7 @@ export const CHARACTER_STILL_POSTURES = ["stand", "sit"] as const;
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;
+@@ -33,6 +33,16 @@ export interface CharacterStillEntry {
+   readonly cohort: CharacterStillCohort;
+   readonly category: string;
+   readonly role?: string;
++  /** Explicit current role membership; planned roles use an empty list. */
++  readonly eligibleStaffRoleDefinitionIds?: readonly string[];
++  /** Editorial roadmap metadata does not grant staffing eligibility. */
++  readonly plannedStaffRole?: Readonly<{
++    label: string;
++    facilityLevel: number;
++    status: "roadmap-only" | "referenced-not-yet-defined";
++    roleDefinitionId?: string;
++    evidencePaths: readonly string[];
++  }>;
+   readonly intendedAge?: number;
+   readonly intendedSex?: string;
+   readonly displayGender?: string;

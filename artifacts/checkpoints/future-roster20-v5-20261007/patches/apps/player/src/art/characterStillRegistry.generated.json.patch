@@ -1,0 +1,3113 @@
+diff --git a/preimages/apps/player/src/art/characterStillRegistry.generated.json b/postimages/apps/player/src/art/characterStillRegistry.generated.json
+index bc5d398..dbba271 100644
+--- a/preimages/apps/player/src/art/characterStillRegistry.generated.json
++++ b/postimages/apps/player/src/art/characterStillRegistry.generated.json
+@@ -9,10 +9,10 @@
+     "floorY": 287
+   },
+   "counts": {
+-    "identities": 225,
+-    "cardinalPoses": 1800,
++    "identities": 245,
++    "cardinalPoses": 1960,
+     "clipboardPoses": 30,
+-    "assets": 1830
++    "assets": 1990
+   },
+   "characters": [
+     {
+@@ -33242,6 +33242,3094 @@
+           }
+         }
+       }
++    },
++    {
++      "id": "future-roster20-v5.001",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "eligibleStaffRoleDefinitionIds": [],
++      "plannedStaffRole": {
++        "label": "Advanced practice provider (APP)",
++        "facilityLevel": 4,
++        "status": "referenced-not-yet-defined",
++        "roleDefinitionId": "staff.app",
++        "evidencePaths": [
++          "docs/features/facility-levels-and-clinical-release-points.md",
++          "packages/balance-config/src/prototype-balance.ts"
++        ]
++      },
++      "intendedAge": 36,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
++            "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/stand-east.png",
++            "sha256": "8e9346fc051887b21c793d880c71f8b0e15fd45d851ba52aa2e93e72ffd6bf35",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 79,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/stand-west.png",
++            "sha256": "75bd0b634c1e5c65fd5961fccdb8d879d4d1c8ad62754f6170c3bf93567e1c89",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 79,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/stand-north.png",
++            "sha256": "09440dbe222ee92a3b242e4d975c41a619c58eb67799123975e070be7cd4094d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/sit-south.png",
++            "sha256": "3c736c93394ac1826448be0a36fa2905467e815fccb9620992747a5be22c84c7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 85,
++              "width": 103,
++              "height": 202
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/sit-east.png",
++            "sha256": "e6ee488ca9a720eefed105e39ed8605aa146baadcd08d81d6dd1a0c8eecab84d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 85,
++              "width": 118,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/sit-west.png",
++            "sha256": "a0f2c2488e18f01738d7113e7c621d704b969deb115205e7eb5eb90376b7d66a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 85,
++              "width": 119,
++              "height": 202
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.001/sit-north.png",
++            "sha256": "55bacaa21f23d31df8b9065390ba166c555f23b1ce1b23f7944408013dcd2457",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 85,
++              "width": 100,
++              "height": 202
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.002",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "eligibleStaffRoleDefinitionIds": [],
++      "plannedStaffRole": {
++        "label": "Advanced practice provider (APP)",
++        "facilityLevel": 4,
++        "status": "referenced-not-yet-defined",
++        "roleDefinitionId": "staff.app",
++        "evidencePaths": [
++          "docs/features/facility-levels-and-clinical-release-points.md",
++          "packages/balance-config/src/prototype-balance.ts"
++        ]
++      },
++      "intendedAge": 47,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
++            "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/stand-east.png",
++            "sha256": "889f726f9a99ac34876a97a5dd1955bc78c33968609ddbb9ba166b7b066a38ea",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/stand-west.png",
++            "sha256": "b1493f9dcd0bb24855dbbbd53c0836f6adfbe244e6d2ef421b6fff281a0ab55d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 41,
++              "width": 92,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/stand-north.png",
++            "sha256": "37613cb84c6765bdb8c837d8cac63231e633e041d4d4e01313866ed2d3aa32a1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 114,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/sit-south.png",
++            "sha256": "b656850caa57b1ca942b1c517322d5f6da1e75814bf40b1be94b0726fe3fbcee",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 88,
++              "width": 102,
++              "height": 199
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/sit-east.png",
++            "sha256": "ba9b3040c68debdf2d89b7cf85885b48cee5d5282b300572e7160adf0d78238e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 89,
++              "width": 126,
++              "height": 198
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/sit-west.png",
++            "sha256": "77690a452eaee236ba1dccfa117677abb8251095a6a42084e2dec99d7240510f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 89,
++              "width": 126,
++              "height": 198
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.002/sit-north.png",
++            "sha256": "a5d0b0dce1ba8478995994692a55271c3500f152f6e392b962785027f957f00f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 90,
++              "width": 102,
++              "height": 197
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.003",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "eligibleStaffRoleDefinitionIds": [],
++      "plannedStaffRole": {
++        "label": "Executive",
++        "facilityLevel": 5,
++        "status": "roadmap-only",
++        "evidencePaths": [
++          "docs/features/facility-levels-and-clinical-release-points.md"
++        ]
++      },
++      "intendedAge": 58,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/stand-south.png",
++            "sha256": "347849dff26809298ff7d1c6929fefc63c53f15568dac7d1141edc05311e3530",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/stand-east.png",
++            "sha256": "4939960f6bbb416e81dcce1b742a727f73743fcc3af05a8bb657f68cba6dd31a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 43,
++              "width": 88,
++              "height": 244
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/stand-west.png",
++            "sha256": "26972311365bec9eac71ac532d3355ea112d4ab1db3c46bb38c971509fdbc22a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 88,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/stand-north.png",
++            "sha256": "1e2ef4182ad812bae325fa6e36dee37889ea9e5ff9d4c3c320fa32146dbc9c66",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 43,
++              "width": 124,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/sit-south.png",
++            "sha256": "8952cbbad71a4760fd68009095b2e04d40a27b7070832770ff6912e2e436705b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 231,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 89,
++              "width": 104,
++              "height": 198
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/sit-east.png",
++            "sha256": "0ed5b5e4106c077e0a6d631e0ced948ef037b72d8d90b5368ae3a91da7ed2b2b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 90,
++              "width": 124,
++              "height": 197
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/sit-west.png",
++            "sha256": "f0608203b815f80504218043b0e2c6b61ea993b1ba10790f3b4d2c91890599fa",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 90,
++              "width": 126,
++              "height": 197
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.003/sit-north.png",
++            "sha256": "33cb15f64feaad75e8e6eba94b3a0b8844ddb857b0dd2dac2c7280beb7511a65",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 92,
++              "width": 104,
++              "height": 195
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.004",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "eligibleStaffRoleDefinitionIds": [],
++      "plannedStaffRole": {
++        "label": "Executive",
++        "facilityLevel": 5,
++        "status": "roadmap-only",
++        "evidencePaths": [
++          "docs/features/facility-levels-and-clinical-release-points.md"
++        ]
++      },
++      "intendedAge": 52,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/stand-south.png",
++            "sha256": "aafb5c209e98c49d546e06153adec730c0eb19c132075cd0361819e3a4e77ba7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 11,
++              "y": 41,
++              "width": 139,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/stand-east.png",
++            "sha256": "f75d6663c0b05a6238733a187f0a6f101f15e7d888e3a3226629ebb7678a84b3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/stand-west.png",
++            "sha256": "294ad7ab789607558c01d88ca51d622326023a089cbde9f9921bbdc041696ba7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/stand-north.png",
++            "sha256": "cce0496a4ca4149e457043d7370c2238828f0d9b239ec375ce654ad6ad3ceea7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 11,
++              "y": 41,
++              "width": 138,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/sit-south.png",
++            "sha256": "54f609e6688b5287917aad477ece0a0e9fbf621c1a9a636a32e922b28ba161ba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 231,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 82,
++              "width": 122,
++              "height": 205
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/sit-east.png",
++            "sha256": "f9283f09d50c2c282cc0eaa928e378a1b2f637b49252b210c17fd27fc0b562a2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 83,
++              "width": 122,
++              "height": 204
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/sit-west.png",
++            "sha256": "b2a50aa94c2fe37d11175fac231b49b9e74efb4333f130b2b490a61730afd8b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 83,
++              "width": 122,
++              "height": 204
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.004/sit-north.png",
++            "sha256": "494ffd1d886ba078ae56b4ebe9b8332d85b466a0c11940cbe7f10aa39297bbc3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 83,
++              "width": 124,
++              "height": 204
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.005",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 40,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/stand-south.png",
++            "sha256": "b26331e210c59b72394e88dc8ba9512204e1a45db23be76d66e27c9d16350346",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/stand-east.png",
++            "sha256": "000fdf79bb2fd494fef051ca2e1212db866ec45632b3f229cd4df6d53170123e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 41,
++              "width": 88,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/stand-west.png",
++            "sha256": "69bb0b39bb7b1563636855383e78a920432c1be2ad7a0670471c1f5e93ede79b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 41,
++              "width": 89,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/stand-north.png",
++            "sha256": "7d91a4a8aa73acec9e3b381e77754f464c41b8c40831b9de336704fc84a49e68",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/sit-south.png",
++            "sha256": "e45ccf22638c1fdadcba67ba7f150f0fc43be579df3d8a728de84f2eb61dfae5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 232,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 97,
++              "width": 99,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/sit-east.png",
++            "sha256": "01bce3a4ea951a8c2c2c2dea968d488deab6b38c37edd9e7e1a515829e2c34bf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 99,
++              "width": 118,
++              "height": 188
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/sit-west.png",
++            "sha256": "5348757ca3eda3a919d5f7fe164e8589c05a1e0644613e02fbc0c97dc446c820",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 99,
++              "width": 122,
++              "height": 188
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.005/sit-north.png",
++            "sha256": "5d84d63993773507db080126071527ab8d93caa53473ad25a698ef062c92ce04",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.006",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 48,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/stand-south.png",
++            "sha256": "0fd81e3cd91718457aac68e78a9948aa18bf9066caf9522c64d3010b2ba1b99c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 121,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/stand-east.png",
++            "sha256": "7fba8ab6869ccf94a5be00de14362a83499c8d42b0117c824378ba51e14d46f6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 40,
++              "width": 78,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/stand-west.png",
++            "sha256": "4356504aa29e0fbe4b091f37a6d5ff5bc3f44ca77348a549e8d4b40cf1076cdb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 40,
++              "width": 78,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/stand-north.png",
++            "sha256": "24583cac317b5b2d357bb56bebad023737368b9af3b6d2426e3e7480f42c6c20",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 40,
++              "width": 122,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/sit-south.png",
++            "sha256": "62415fb8eefd4996a33ed37460160de286199e112b7bcb6829d44e83d7bf3fdf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 227,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 79,
++              "width": 108,
++              "height": 208
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/sit-east.png",
++            "sha256": "578810855bb9b949025bbdc87ed09c9759f1f7edf3dd3587e46f95d84bb4ff97",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 79,
++              "width": 116,
++              "height": 208
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/sit-west.png",
++            "sha256": "b752a7db2c76925e15cdaabc5a512e983989b0314d2ec9b714c46cea8c6bb3d0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 79,
++              "width": 117,
++              "height": 208
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.006/sit-north.png",
++            "sha256": "7b52196ab29d4db8e14d23b7b1f0fe372324405547d73f0007a6964c5f9aa5f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 236,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 80,
++              "width": 104,
++              "height": 207
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.007",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 33,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/stand-south.png",
++            "sha256": "fe4acce91c7e0ef5fca96e18944e762d3ed66d583be2c5c2b52ddcb05e386437",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/stand-east.png",
++            "sha256": "76e1f750241737e37e303681ea6fcc6b2d5da3edda59b99e8da43a6320cda99d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 41,
++              "width": 91,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/stand-west.png",
++            "sha256": "b465a42e6ab6440d94fec442bdce6d61acd157f891f75eb31e38b5af7c0fae59",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/stand-north.png",
++            "sha256": "1a3cb5657f7e4ed49430432706f8fe1508284018c4012856876b51bbfc1a1387",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/sit-south.png",
++            "sha256": "22f42ef6ec4ec7db3dbfb6044e3f3e589ad5df4ce4b3b0e7c0af64251869968f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 99,
++              "width": 90,
++              "height": 188
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/sit-east.png",
++            "sha256": "21e27f6a43693251cc7cf51ba4949a4d81db9bb251f96d0d717bcaae19975410",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 100,
++              "width": 114,
++              "height": 187
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/sit-west.png",
++            "sha256": "bf5482be1d1413acc9e162543d52dc3b9de5e575a1cfcce2d6153aba51eb8438",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 100,
++              "width": 116,
++              "height": 187
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.007/sit-north.png",
++            "sha256": "babc2650317eac0d4ba976355e7d9ee1f06148baceb2c62d3e36826c178eaa95",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 100,
++              "width": 86,
++              "height": 187
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.008",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 61,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/stand-south.png",
++            "sha256": "54d5f981b845a9fd566c51b9901456a9576c2fe64645012416b78baef806c5b2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/stand-east.png",
++            "sha256": "97ca53a919af946dca85f43f44f42cea7c039d6a284e09893e6dc35eebba6575",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/stand-west.png",
++            "sha256": "caa7c7a04262c15365d2a57d8e195e0b82f3b35f60fbcfa7b8a4a39d5ae9d7b4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/stand-north.png",
++            "sha256": "2ffa9d00bda7fa4c3f4575666e1699f2a76571b8eabf0b3a2d61df4f792dbf83",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/sit-south.png",
++            "sha256": "ef58bf146783bd6974a69f276b48490a993a233cb1a3edffdafa600f2d835db6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 83,
++              "width": 105,
++              "height": 204
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/sit-east.png",
++            "sha256": "076ab64123747bfa75c8dc171a850e344ab4d604a152e1e654ee6d3caa47cece",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 120,
++              "height": 203
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/sit-west.png",
++            "sha256": "cbbbce299a9d14e6f0049db7fc5b61ade596de165befc2bdee6211b4d0088fc6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 120,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.008/sit-north.png",
++            "sha256": "634564e610907ac595bfdae7e07351a51e29d90901e30137b1d029071266eea9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 85,
++              "width": 100,
++              "height": 202
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.009",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 56,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/stand-south.png",
++            "sha256": "b4ed941e11d4d2ef10597dfde3f5970bb008d71427828ed501be81712652c220",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/stand-east.png",
++            "sha256": "7b82c272bc55b2762a928b1fe7cb0569021bd9d5bbc3d6c7e72a41e64bda0b8a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/stand-west.png",
++            "sha256": "da94fd2bcb794882ed8b56d9f9649277c16fca25cd8c949bec0f3b1f1ac3c497",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/stand-north.png",
++            "sha256": "fa73988ef8af4481f469eaa4e394675f372369f1321a7ed38cad6e023a902ed7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 43,
++              "width": 116,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/sit-south.png",
++            "sha256": "d2ccc26c66f906478e0ab0ad4ac47063143287603b6601908c8c854fc928d347",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 231,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 84,
++              "width": 102,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/sit-east.png",
++            "sha256": "5482b44f454a872b55095f6c226eb84a7476ec5c892c4fc939da703ba74b46f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 86,
++              "width": 114,
++              "height": 201
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/sit-west.png",
++            "sha256": "c6117bacbc2b3b2881b48d36b6b9811a3bfacd4f09d4e47f9254fba259ffad32",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 85,
++              "width": 115,
++              "height": 202
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.009/sit-north.png",
++            "sha256": "b4248f6e43c55312ec5c5912b7deb393b738b00a5c006279a361499368b7a3d5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 87,
++              "width": 98,
++              "height": 200
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.010",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 37,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/stand-south.png",
++            "sha256": "c095b1f96ca1c9a8e204b6324f6a0677720cd8e15ab646461899e68f2d3b2fbd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 122,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/stand-east.png",
++            "sha256": "0d09a5b5f045bb0837ea3a12ece648c6056485c2630dd743ec19605561d56ce8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/stand-west.png",
++            "sha256": "6deed3dc0b3706e11318b2df854e5846946418c5922ac15cf47a532ebd184daa",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/stand-north.png",
++            "sha256": "9bd3c9592aada2352950936096bc2cf7ff16c2222b10f36f0764e5f01476a9cd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 122,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/sit-south.png",
++            "sha256": "e7f2f8480c00325517b8e4731b2dcd1067effdd591f1428409be4dd3ea654b2c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 236,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 104,
++              "width": 102,
++              "height": 183
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/sit-east.png",
++            "sha256": "2ae6213861172f51420f6383770858f6a55bfbcbd07c6de338a667181ac092b7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 104,
++              "width": 110,
++              "height": 183
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/sit-west.png",
++            "sha256": "f0ea1b685e583d6ce1bfba2add102aaee4b774e9e47bae117f0ccfc16df3b015",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 104,
++              "width": 110,
++              "height": 183
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.010/sit-north.png",
++            "sha256": "d8c8d7efae9f6f71c311f12bebd5a12e2f012700efa1a49c8571beae631caafc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 104,
++              "width": 102,
++              "height": 183
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.011",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 46,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/stand-south.png",
++            "sha256": "4a289c2f5d5f997ce1c4178bfd392bb9b351380a56ddbb011c2a16ee7cee2994",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/stand-east.png",
++            "sha256": "cdfdecfc54627a3958329ca0994bd037ee225f817d9fe3051314fd3913dba9c0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 41,
++              "width": 94,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/stand-west.png",
++            "sha256": "eb08e1bad44b24078fb0e790fce579e16fbcf32c148836f23220385c965254a6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 41,
++              "width": 93,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/stand-north.png",
++            "sha256": "8a3efd7e59a67ff638be35d6b30c5b4dabb352a78d1ad1064dce85aeca10154a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 40,
++              "width": 126,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/sit-south.png",
++            "sha256": "275f331907e3ecb7ca1d0f5d7cf15efbc65b64ec11bbe64063f90f92d553b07d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 88,
++              "width": 104,
++              "height": 199
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/sit-east.png",
++            "sha256": "b3e239a694936b6c798ea6e442b27f49a2a50775a3ff2b911ce86f92050bcf76",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 89,
++              "width": 122,
++              "height": 198
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/sit-west.png",
++            "sha256": "b804bee31456d892a05b10052613e62bd8497cd98cc10aaca1b4c09c0dfa50c8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 89,
++              "width": 124,
++              "height": 198
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.011/sit-north.png",
++            "sha256": "d0e383abb5148c5c292853c04b186d3e7e08f05abcd6d737d9a7d55ee3fb4593",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 89,
++              "width": 101,
++              "height": 198
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.012",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 29,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/stand-south.png",
++            "sha256": "16f349c1d17ef7e9b0b53f1a4052daab4985dbea32c440928658d26b61664c4f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 114,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/stand-east.png",
++            "sha256": "13fed40de7d1c5be69c3f3855a2759bc23ed0a17abe998f01034ed64c87fa918",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/stand-west.png",
++            "sha256": "61bff4019b2c5286c314375c8f0b26011fecc63a38cfa9a7a81b9f20fe5f0a2a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 83,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/stand-north.png",
++            "sha256": "e302eb62438020a31bf01e58aed376c0d8bdb20440686fb77ec445c83381cd6c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 40,
++              "width": 114,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/sit-south.png",
++            "sha256": "d16452f1f13285b1ec5b76d106d61889ed52247368f865af18458c9c709216dd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 228,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 81,
++              "width": 106,
++              "height": 206
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/sit-east.png",
++            "sha256": "923d72d2a2221155f4e54f48b638e7bb5dd5c81bda2cae8f186eba2c7b54a42f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 81,
++              "width": 118,
++              "height": 206
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/sit-west.png",
++            "sha256": "2c394894e01a1b0aa4b645e275314ae0cea96a5e2bc623eff6c30c5ca4fc22cb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 82,
++              "width": 118,
++              "height": 205
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.012/sit-north.png",
++            "sha256": "938c547582d5be48269845b8498272d72ae89b21595c1f4a92a5cd6114323136",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 81,
++              "width": 103,
++              "height": 206
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.013",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 63,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/stand-south.png",
++            "sha256": "aedc4da973bf7ab82fd2a9377cd2b8fc9674be9c1ba6050bcde6e20f5dec4868",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 119,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/stand-east.png",
++            "sha256": "a6864104dcf9e6701c04ba272cc60811f76463a8a7b6fda7fc8380e9d59c7d1b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/stand-west.png",
++            "sha256": "58b668db4a157dd6268c9fd69e752d2a14d298e92b9ef6ac95d0414626430c47",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 42,
++              "width": 85,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/stand-north.png",
++            "sha256": "cc54bec9af448f58bd68ad7d0a7e9f4df24dcae5665d988b2ab405c9cb171923",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 43,
++              "width": 116,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/sit-south.png",
++            "sha256": "dd5746b69370f638390eaab3ebd7bbc2a3ba84fa6ebdfbfc2cd970282b3e78a0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 86,
++              "width": 102,
++              "height": 201
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/sit-east.png",
++            "sha256": "1d7d41c5bb331d95600c0b8a2575f2ab828404d68715c787732d5bd6f4bdf55b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 87,
++              "width": 119,
++              "height": 200
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/sit-west.png",
++            "sha256": "8e6dbdd61bcf91e72d80ca510068b8aeb8839d6066409f11f810195dd2bc786e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 87,
++              "width": 118,
++              "height": 200
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.013/sit-north.png",
++            "sha256": "9a501c26b99117d5803c66aad36330901a14e852f2fa11600a27b0dc820114dd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 88,
++              "width": 102,
++              "height": 199
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.014",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 53,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/stand-south.png",
++            "sha256": "dbe90f5375a6e0b3837e2adac3049acb5c5752c7f45add250de974361250b283",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 14,
++              "y": 41,
++              "width": 132,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/stand-east.png",
++            "sha256": "6b174fc9bfa367a427df6f3f6f269cff8c33fe630e71e0531d44aa5de56c3c9a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 42,
++              "width": 81,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/stand-west.png",
++            "sha256": "96b5bff6f4bb977eed175400561c0b13a1fa4ef8fc88c856e918d3f0c426fe85",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 42,
++              "width": 82,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/stand-north.png",
++            "sha256": "55b47be8bd37195a5e4b8481a2d40bde582a305fb69493c94633e2c1ec431bb8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 15,
++              "y": 41,
++              "width": 130,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/sit-south.png",
++            "sha256": "4b521354982e2d1d67cea5a9d42471d6517eb864f63525ec02c7e933ee7cf620",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 85,
++              "width": 110,
++              "height": 202
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/sit-east.png",
++            "sha256": "377b76082eb19f22435d310017db534bb483ba1e6b58674a8ac3e4587cc5306b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 89,
++              "width": 116,
++              "height": 198
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/sit-west.png",
++            "sha256": "bf53efaf7a2c1b367a8ee02f487822cdfa06569015bba13f86d304863c4f3b23",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 90,
++              "width": 116,
++              "height": 197
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.014/sit-north.png",
++            "sha256": "35709708db5a3e6e894b0d3f442c24c9597072d148bf5a0c03525c0294c502b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 87,
++              "width": 112,
++              "height": 200
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.015",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 35,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/stand-south.png",
++            "sha256": "1c8a0972b9d7a5bfc600eb0040b811071818b215268e66830449409198a4a01a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/stand-east.png",
++            "sha256": "45d5d8d52bf38b1195e34b3ae9871c745546594245b81e088cebe99bab9fecad",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/stand-west.png",
++            "sha256": "1d1965b3829a9fbbf994a240be4e9ad64f18875a78769b1ffe708b30eabdea90",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/stand-north.png",
++            "sha256": "b14f714f6891307f4bf14df8d11afc56836862e4d3aaa7689a4d2a330df8057b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 42,
++              "width": 116,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/sit-south.png",
++            "sha256": "52cf8d38b17cc96af787ad13b3e4292457a617d4b22234fc8f75eb16ab492fb6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 229,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 81,
++              "width": 102,
++              "height": 206
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/sit-east.png",
++            "sha256": "321a1ec7f86a479cda35c6338501d0b3a15420ba8a57a598bb581770803bda46",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 82,
++              "width": 126,
++              "height": 205
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/sit-west.png",
++            "sha256": "56a46c806264e0a67ab62c7f556c41ab16f001864e68fd1eb55ca69ef31b8746",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 16,
++              "y": 82,
++              "width": 128,
++              "height": 205
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.015/sit-north.png",
++            "sha256": "e1325a0985291bcd0601acac66c927615ad14dd05a972e8ec53e3c565f116692",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 84,
++              "width": 101,
++              "height": 203
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.016",
++      "cohort": "futureRoster20V5",
++      "category": "employee",
++      "role": "staff.radiologist",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.radiologist"
++      ],
++      "intendedAge": 66,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/stand-south.png",
++            "sha256": "b41ea29654d8efb8dfec151e6cd76ddc1375d2a1c4053ae41cbcdc845a57fee2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 14,
++              "y": 41,
++              "width": 132,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/stand-east.png",
++            "sha256": "cb2ac6b6baabbfb6f54994506d5a15ea7d7553c4232af0ad73526812a6b93b82",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/stand-west.png",
++            "sha256": "276a02b52fc97d9964291c3a888cf62b700ea6c113ac473019765047eb975e5f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 42,
++              "width": 84,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/stand-north.png",
++            "sha256": "4b07d485ce0d4f903a5eb10c956f4115d48cca989e9a948249abaa1b1d281a1d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 15,
++              "y": 42,
++              "width": 130,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/sit-south.png",
++            "sha256": "76b6c02b7654261d6a5ce741cb94baf97e6a384051d550ab7d4619d6905b246f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 228,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 81,
++              "width": 114,
++              "height": 206
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/sit-east.png",
++            "sha256": "f1faefef0854a9091e0792ec2a694baada187b36505fc56bb1e7a0b1f35f2ec5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 84,
++              "width": 116,
++              "height": 203
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/sit-west.png",
++            "sha256": "82f2ba135583b51b465be16847f7af997a98cbb9f6f8ed54edef56f0729ff91a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 120,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.016/sit-north.png",
++            "sha256": "391e082feb4d744de4ac300a46fda9265e98c6cdf45719dba0047e5aaad36876",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 236,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 84,
++              "width": 115,
++              "height": 203
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.017",
++      "cohort": "futureRoster20V5",
++      "category": "patient-or-general-population",
++      "intendedAge": 41,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/stand-south.png",
++            "sha256": "8119a859a4825dbc40e384e8ed4cd85950116412178615a566d69bc0d957ff93",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/stand-east.png",
++            "sha256": "2509634d9f9ec893d6c1892fcc5c6fd81c86f4dad170dbb0e80fe10c70d4dd1e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 85,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/stand-west.png",
++            "sha256": "c8f9239b9e1d355374546e5476dffcf7dd453fd9ca6cf349ca29567781899275",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 85,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/stand-north.png",
++            "sha256": "46143973965d76527a2633732c5fba34b55ecb94adaf70e10438bf2ddf5f8ed0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/sit-south.png",
++            "sha256": "85e025bac084b5f266117d7a839b2513cc6f262b211cf38dc4950a41ceaae37b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 231,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 83,
++              "width": 114,
++              "height": 204
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/sit-east.png",
++            "sha256": "82a153630b64a4beeef0b247e91ebdc8f10e2b92bce42af3a8bfd8348e591cb0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 120,
++              "height": 203
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/sit-west.png",
++            "sha256": "37bc5351d87a0eda8bb98f18f09ab9cf18399a23572813354df81eea47dd8d4b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 120,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.017/sit-north.png",
++            "sha256": "1c71f4b4973febf9981a98deb89c77d2eef523c5a636ca50c364fca094318f97",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 85,
++              "width": 111,
++              "height": 202
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.018",
++      "cohort": "futureRoster20V5",
++      "category": "patient-or-general-population",
++      "intendedAge": 54,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/stand-south.png",
++            "sha256": "7c5b63a96e6080aa4598a50147eb65abd4899d1223a9d83620767a4bd8c3b2b4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/stand-east.png",
++            "sha256": "7e6c1b320f54bcac27a8385b6f817ade9f7361c866d58f14f226a5af2b6d684c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 43,
++              "width": 77,
++              "height": 244
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/stand-west.png",
++            "sha256": "88f88d6cdd041f0b95e2d2ba6797ad9a580fef5490b6419f52f894d7d49828dc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 43,
++              "width": 78,
++              "height": 244
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/stand-north.png",
++            "sha256": "6a629c74504bb4442a3a593366767e86e585d689782f548cbb6cd22d2bb02a9b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/sit-south.png",
++            "sha256": "3932e242488cc2778f7c4089c848375b856d91496f3aad1fd8f7f1f07702afb9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 229,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 96,
++              "width": 100,
++              "height": 191
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/sit-east.png",
++            "sha256": "40be10104999cb8354b08739779fffb22c48a1f5d750900348d219e199dc461a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 100,
++              "width": 114,
++              "height": 187
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/sit-west.png",
++            "sha256": "a766f62196f425b645e4f93632a7204b277528e28a6b95d9596f57107423ea73",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 100,
++              "width": 116,
++              "height": 187
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.018/sit-north.png",
++            "sha256": "d460ce9a409339d931e8c328a8aed0d0153f46dcf33b4516f7e74dbc16842aa4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 97,
++              "width": 98,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.019",
++      "cohort": "futureRoster20V5",
++      "category": "patient-or-general-population",
++      "intendedAge": 57,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/stand-south.png",
++            "sha256": "189f73a8bafb8b02a0de174c8396f21721e17f068605cde868f170f7ca8a752b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/stand-east.png",
++            "sha256": "2e313c07cbd9eb129d315e07b66dc1d4197df5524123febd8e3e96d439314d9c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/stand-west.png",
++            "sha256": "ca1883be625632e5f93ca751f511f232dee90817e4268edffb7c58a5ee37860a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 43,
++              "width": 78,
++              "height": 244
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/stand-north.png",
++            "sha256": "a4f2831373e10c26402462bcfb0a5687749b3dd763705f4aa277eb77174a7af4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 16,
++              "y": 41,
++              "width": 127,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/sit-south.png",
++            "sha256": "fc27f1b0e6c246505d822886eeb4e87faca190bde878aa9f27a03b6fd391dc1d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 228,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 77,
++              "width": 112,
++              "height": 210
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/sit-east.png",
++            "sha256": "81fba0691e3b79bed8a4112743d0026bf7949c6ee961895a0b1503e79faa3494",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 79,
++              "width": 111,
++              "height": 208
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/sit-west.png",
++            "sha256": "324f93f01ef729c3b61b071df05200cc7867d8eee5b0099c6e5b0921f20a72dd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 79,
++              "width": 112,
++              "height": 208
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.019/sit-north.png",
++            "sha256": "e807eb0e3c76323402eae146ff81d7ab0d3e4aaae2ff170270a1e7930b81887e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 236,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 80,
++              "width": 110,
++              "height": 207
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "future-roster20-v5.020",
++      "cohort": "futureRoster20V5",
++      "category": "patient-or-general-population",
++      "intendedAge": 69,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/stand-south.png",
++            "sha256": "89c2a0e7514a6e931808ab7fcdae9abe7a154eb309779c5deaee80fcacdb3129",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/stand-east.png",
++            "sha256": "3a421de4384a9a5bc2595baa2e52891be8d321d20ecb241b1ff323d2cd312241",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/stand-west.png",
++            "sha256": "36f5f9aad577e627461240ab2487351296fd89a5aca9ab2868ca1fef4356c462",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/stand-north.png",
++            "sha256": "438bfcb24957ba7e4906834fa9884dbbfdcfca0f58bf27e09528d0d6f198d332",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 122,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/sit-south.png",
++            "sha256": "f088a02432c1f88ce9e5058ae476227c3956b985a5338ad17f25a7567b4dd365",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 230,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 85,
++              "width": 102,
++              "height": 202
++            }
++          },
++          "east": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/sit-east.png",
++            "sha256": "0752e41c4583b90c2e42fceb421b8c94d3c522b88835e9d8c319589bfadfb5c1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 85,
++              "width": 118,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/sit-west.png",
++            "sha256": "01fc4e98321f6e7da1efda311395fea16687bf43f10e53356497571058d16bae",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 84,
++              "width": 119,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/future-roster20-v5/future-roster20-v5.020/sit-north.png",
++            "sha256": "3df6884205271a9c6102aeba56f10479ae701d2c040cc3e7c002d33bdbe5f6e0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 87,
++              "width": 101,
++              "height": 200
++            }
++          }
++        }
++      }
+     }
+   ]
+ }

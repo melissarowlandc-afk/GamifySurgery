@@ -1,0 +1,13 @@
+# Character batch 5 and approved integration checkpoint
+
+This backup preserves twenty identities, all 160 standing/seated poses, native generation sources and immutable correction history, exact prompts/arguments/reference receipts, manual seated contacts, approved-chair proofs, galleries and validation. Owner approval and the later integration receipts supersede the original frozen review labels.
+
+The local integration contains 245 identities / 1,990 assets / 120 adult patient designs / 16 radiologists. Two APPs and two executives are registered with no current staff eligibility, awaiting their future roles. All prior 225 identities and 1,830 image bytes remain exact.
+
+Live character catalog, registry, provenance and test files are shared with earlier local work, so their whole files are preserved here as **integration recovery snapshots** rather than committed at their live paths. The six `patches/` have verified byte-exact forward/reverse contracts against their recorded `preimages/` and `postimages/`. Apply with `git apply -p2` from the intended recovery workspace only after verifying the exact preimage hashes. The manager's later reading-station pool test correction is preserved under `compatibility-tests/`, without an invented preimage.
+
+Historical manager validation passed focused domain 45 tests, player 33 tests, typechecks, art/chair/gallery checks and a 5,404-file promotion idempotence check. Fresh backup verification checks all 1,990 runtime PNGs, the exact owner-approved 160 new assets, prior registry/catalog/provenance records and frozen art. The full historical integration/roster/chair guard now stops on a concurrently changed `packages/game-domain/src/appearance.ts`. That unrelated patient-selection edit is excluded from this checkpoint; no guard or baseline was weakened. Its hashes and the scoped verification are recorded in `integration-recovery-manifest.json`.
+
+This is a scoped recovery checkpoint, not a clean runnable snapshot of all current local gameplay. Other local gameplay, clinical-content and Claude changes remain outside this commit. Reproduce full game state only with the appropriate compatible prior checkpoints and deliberate integration of those separate lanes. Native generation receipt paths describe the original machine; the byte-exact source copies and sidecars remain in the batch for recovery.
+
+No clinical corpus, proprietary sources, credentials, environment files, private inputs or campaign saves are included. The audit enumerates every staged path and SHA-256. No merge, deployment or Pages publication is authorized by this backup. The owner playtest remains `START_GAME.cmd` → `http://127.0.0.1:4173` in the existing persistent browser profile.

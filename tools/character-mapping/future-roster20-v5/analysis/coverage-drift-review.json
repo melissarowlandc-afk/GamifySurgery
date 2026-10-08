@@ -1,0 +1,131 @@
+{
+  "reviewer": "root",
+  "status": "reviewed-concurrent-source-drift-allocation-unchanged",
+  "originalAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/history/06edcf0315e824cb4607479147579041fb50a76bee802018eb2517b62c2f09ed/coverage-audit.json",
+    "sha256": "06edcf0315e824cb4607479147579041fb50a76bee802018eb2517b62c2f09ed"
+  },
+  "changes": [
+    {
+      "path": "/employeeCoverage/configuredRoles/0/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/1/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/2/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/3/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/4/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/5/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/6/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/7/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/8/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/9/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/10/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/11/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/12/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/13/evidence/2/line",
+      "before": 9814,
+      "after": 9844
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/diagnostic-timing.ts",
+      "before": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+      "after": "abb93a43e9011eb7e255eed995e07cef48e02cb526652ad60723bd0d05447ee3"
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/employee-training.ts",
+      "before": "257d06af1610a5ef4dac4a78ceffe6dc26e72bc1b12b2869772f1af6153775f2",
+      "after": "2767f41bf1746dea51c4bdc6124661f3cce69ff8a00e8fa162da2261bf690f79"
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/level-three-support.ts",
+      "before": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+      "after": "cd5e5f7c7d27630d0e5052ea1a656ae65b02c30b3ee3aeeff81b59dba401a89d"
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/reducer.ts",
+      "before": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+      "after": "c07e444a1e40578544b49e68cca4affcf6c22de03992cf3eba12ba461857bef3"
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/service-operations.ts",
+      "before": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+      "after": "1e0f98bd95753933e33ecde1d9e924c1b9fcdd72d853bd226eff2c70b4f03c3b"
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/room-upgrade-experience.ts",
+      "after": "65daec94594f763ada54e1e40d93478dad580a6df701e4e0d5c51bb524c321d2"
+    }
+  ],
+  "decision": "Preserve historical audit and refresh source evidence only after actual fresh 25184 completion/128 selector/1830 asset/488 staff source/244 anchor checks passed with unchanged role capacities and exact patient allocation. Root inspected current hiring reducer: built-room capacity remains authority. No gameplay or clinical files edited by this art task.",
+  "refreshedAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f"
+  },
+  "validation": {
+    "freshAudit": "PASS",
+    "exactCheck": "PASS",
+    "recommendationUnchanged": true,
+    "patientModelUnchanged": true,
+    "checks": {
+      "runtimeCompletionChecks": 25184,
+      "actualSelectorChecks": 128,
+      "registryAssetHashChecks": 1830,
+      "staffSourceHashChecks": 488,
+      "staffSeatedContactAnchorChecks": 244,
+      "all61StaffEightCardinals": true,
+      "nonRadiologistDedicatedFiniteCeilingsCovered": 13,
+      "noRuntimeOrClinicalWrites": true,
+      "sourceFilesUnchangedDuringAudit": true
+    }
+  }
+}

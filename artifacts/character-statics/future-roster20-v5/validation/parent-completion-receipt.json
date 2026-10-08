@@ -1,0 +1,61 @@
+{
+  "reviewer": "root",
+  "status": "PASS-review-ready-owner-approval-pending",
+  "identities": 20,
+  "poses": 160,
+  "manualContacts": 80,
+  "chairProofs": 20,
+  "galleryPageViewports": 8,
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "runtimeBaseline": {
+    "identities": 225,
+    "assets": 1830,
+    "adultPatients": 116,
+    "protectedSources": 10
+  },
+  "workers": "Sol coverage auditor, artists A/B, packaging; actual code and artifacts reviewed by root; independent strict validators rerun",
+  "checks": {
+    "roster": "PASS --require-root-review",
+    "chair": "PASS --require-root-review",
+    "gallery": "PASS complete desktop1440/phone390",
+    "baseline": "PASS",
+    "credentialPatternScan": "no matches",
+    "freshCoverageExecution": "PASS; historical exact source drift disclosed in scoped handoff"
+  },
+  "backup": "local only; no commit or push for this batch",
+  "evidence": [
+    {
+      "path": "tools/character-mapping/future-roster20-v5/roster.json",
+      "sha256": "e3cc475d7827c42187b6d891b669625abccee2e22fcf8a0d90b6a8a9df22f533"
+    },
+    {
+      "path": "tools/character-mapping/future-roster20-v5/review-acceptance.json",
+      "sha256": "a914f30d89cc2060138256340b08225bd0c9a90fc8649f8cd6defed595abc0f1"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/staging-registry.json",
+      "sha256": "1d3ea87e399c62897aa99573f80fe8630cfba2ff9f589ca74fd86f089c2c7861"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/alpha-normalization-report.json",
+      "sha256": "b549cf008b910c0447760d85afd8a417e10fe59c2aa6af58e82123a612b9ccdd"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/root-review-results.json",
+      "sha256": "3e4f57f9e9d9e96c600c794c4f46c8a012312564aa9eee9f1b32db30102b1f1c"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/gallery-browser-results.json",
+      "sha256": "79954df776957e1d475f1dd441096db480c58c283122043885296d71e7efb35d"
+    },
+    {
+      "path": "artifacts/character-statics/future-roster20-v5/validation/packaging-final-receipts.json",
+      "sha256": "eac2d69b6628f49b2aeed96833c4ce744800c345a54328e1400b056223fb29ae"
+    },
+    {
+      "path": "docs/handoffs/FUTURE_ROSTER20_V5.md",
+      "sha256": "1e98ab4a7880f6862ee04bcc3209c06b6f17f7639928c6069725637141017aca"
+    }
+  ]
+}

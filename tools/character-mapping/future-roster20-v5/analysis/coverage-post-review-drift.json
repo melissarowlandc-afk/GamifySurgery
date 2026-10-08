@@ -1,0 +1,92 @@
+{
+  "reviewer": "root",
+  "status": "fresh-execution-pass-allocation-unchanged-pinned-history-preserved",
+  "pinnedAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f"
+  },
+  "freshRecheck": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-post-review-recheck.json",
+    "sha256": "c772e81d31aeb3890c0e103825c318f77677159df4751b7e5b016c1fc8c04b44"
+  },
+  "differences": [
+    {
+      "path": "/employeeCoverage/configuredRoles/0/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/1/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/2/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/3/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/4/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/5/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/6/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/7/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/8/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/9/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/10/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/11/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/12/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/employeeCoverage/configuredRoles/13/evidence/2/line",
+      "before": 9844,
+      "after": 9848
+    },
+    {
+      "path": "/sourceHashes/packages/game-domain/src/reducer.ts",
+      "before": "c07e444a1e40578544b49e68cca4affcf6c22de03992cf3eba12ba461857bef3",
+      "after": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0"
+    }
+  ],
+  "exactPinnedAuditCheck": "Failed as designed after concurrent reducer source edits; do not silently rebase the accepted historical allocation receipt.",
+  "semanticComparison": "All employee capacities, patient distributions, allocation and 25184 demographic completions / 128 selectors / 1830 assets / 488 staff sources / 244 seat-anchor validations remain exactly equal.",
+  "decision": "Art scope can complete with unchanged coverage. Preserve both exact receipts; later runtime integration must inspect the then-current shared tree. No runtime or clinical source modified by this task."
+}
