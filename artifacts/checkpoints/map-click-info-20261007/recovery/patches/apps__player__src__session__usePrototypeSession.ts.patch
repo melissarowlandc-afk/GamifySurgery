@@ -1,0 +1,64 @@
+diff --git a/apps/player/src/session/usePrototypeSession.ts b/apps/player/src/session/usePrototypeSession.ts
+index e3d55373..4663e1e6 100644
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -19,6 +19,7 @@ import {
+   type GameCommand,
+   type GameState,
+   type GridPoint,
++  type LevelThreeBreakSeatId,
+   type OperationReceipt,
+   type RoomOrientation,
+   type SimulationSpeed,
+@@ -65,6 +66,8 @@ import {
+ import { getChartFeedbackAcknowledgmentCommand } from "./chartCloseBehavior";
+ import { getDailyRoutinePauseTransition, isDailyRoutineTipId } from "./dailyRoutineTutorialPause";
+ import { describeBuildUndoAction } from "./buildModePresentation";
++import { describeFacilityCharacter } from "./characterActivityPresentation";
++import type { DescribeCharacterRequest } from "../facility/types";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -155,7 +158,9 @@ export interface PrototypeSession {
+   collectLitter: (litterId: string) => void;
+   refillWaterCooler: () => void;
+   seatFounderAtFrontDesk: () => boolean;
+-  seatFounderInChair: (roomInstanceId: string, location: GridPoint) => boolean;
++  seatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
++  /** Map info box text for a clicked character; reads live state only. */
++  describeCharacter: DescribeCharacterRequest;
+   praiseEmployee: (employeeId: string) => void;
+   moveFounder: (destination: GridPoint) => boolean;
+   levelUp: () => void;
+@@ -1408,11 +1413,21 @@ export function usePrototypeSession(
+   );
+ 
+   const seatFounderInChair = useCallback(
+-    (roomInstanceId: string, location: GridPoint) =>
+-      execute({ type: "SEAT_FOUNDER_IN_CHAIR", roomInstanceId, location }) === "applied",
++    (roomInstanceId: string, location: GridPoint, seatId?: string) =>
++      execute({
++        type: "SEAT_FOUNDER_IN_CHAIR",
++        roomInstanceId,
++        location,
++        ...(seatId ? { seatId: seatId as LevelThreeBreakSeatId } : {}),
++      }) === "applied",
+     [execute],
+   );
+ 
++  const describeCharacter = useCallback<DescribeCharacterRequest>(
++    (character) => describeFacilityCharacter(stateRef.current, character),
++    [],
++  );
++
+   const praiseEmployee = useCallback(
+     (employeeId: string) => {
+       execute({ type: "PRAISE_EMPLOYEE", employeeId });
+@@ -2044,6 +2059,7 @@ export function usePrototypeSession(
+     refillWaterCooler,
+     seatFounderAtFrontDesk,
+     seatFounderInChair,
++    describeCharacter,
+     praiseEmployee,
+     moveFounder,
+     levelUp,

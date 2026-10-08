@@ -1,0 +1,12 @@
+diff --git a/apps/player/src/App.tsx b/apps/player/src/App.tsx
+index 11ab592f..e3fbd1f8 100644
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -141,6 +141,7 @@ function ActivePrototypeGame({
+       onRefillWaterCooler={session.refillWaterCooler}
+       onSeatFounderAtFrontDesk={session.seatFounderAtFrontDesk}
+       onSeatFounderInChair={session.seatFounderInChair}
++      onDescribeCharacter={session.describeCharacter}
+       onPraiseEmployee={session.praiseEmployee}
+       onMoveFounder={session.moveFounder}
+       onLevelUp={session.levelUp}

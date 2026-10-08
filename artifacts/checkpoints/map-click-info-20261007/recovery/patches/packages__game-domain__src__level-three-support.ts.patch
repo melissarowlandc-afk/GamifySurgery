@@ -1,0 +1,42 @@
+diff --git a/packages/game-domain/src/level-three-support.ts b/packages/game-domain/src/level-three-support.ts
+index 3f66fa0a..2917e8dd 100644
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -96,6 +96,28 @@ function samePoint(left: GridPoint, right: GridPoint): boolean {
+   return left.x === right.x && left.y === right.y;
+ }
+ 
++const FOUNDER_BREAK_SEAT_PREFIX = "break-seat:";
++
++/** Founder `sit_in_chair` target for a Break Room seat; the seat id rides in the saved targetId. */
++export function formatFounderBreakSeatTargetId(roomId: string, seatId: LevelThreeBreakSeatId): string {
++  return `${FOUNDER_BREAK_SEAT_PREFIX}${roomId}:${seatId}`;
++}
++
++/** The Break Room seat the founder is walking to or sitting in, if any. */
++export function getFounderBreakSeatClaim(state: GameState): { roomId: string; seatId: LevelThreeBreakSeatId } | null {
++  const activity = state.environment.founderActivity;
++  if (activity?.kind !== "sit_in_chair" || !activity.targetId.startsWith(FOUNDER_BREAK_SEAT_PREFIX)) return null;
++  const body = activity.targetId.slice(FOUNDER_BREAK_SEAT_PREFIX.length);
++  const split = body.lastIndexOf(":");
++  const seatId = body.slice(split + 1);
++  const seat = LEVEL_THREE_BREAK_SEATS.find((candidate) => candidate.id === seatId);
++  return split > 0 && seat ? { roomId: body.slice(0, split), seatId: seat.id } : null;
++}
++
++export function getLevelThreeBreakSeatTarget(state: GameState, room: PlacedRoom, seatId: LevelThreeBreakSeatId, context: DomainContext): GridPoint | null {
++  return targetForBreakSeat(state, room, seatId, context);
++}
++
+ function targetForBreakSeat(state: GameState, room: PlacedRoom, seatId: LevelThreeBreakSeatId, context: DomainContext): GridPoint | null {
+   const definition = getRoomDefinition(room.roomDefinitionId, context);
+   const seat = LEVEL_THREE_BREAK_SEATS.find((candidate) => candidate.id === seatId);
+@@ -374,6 +396,8 @@ function assignBreaks(state: GameState, context: DomainContext): void {
+   const tuning = context.balanceRelease.environment.levelThreeSupport;
+   const occupied = new Set(state.employees.flatMap((employee) => employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId && employee.facilityTask.seatId
+     ? [`${employee.facilityTask.targetId}:${employee.facilityTask.seatId}`] : []));
++  const founderSeat = getFounderBreakSeatClaim(state);
++  if (founderSeat) occupied.add(`${founderSeat.roomId}:${founderSeat.seatId}`);
+   for (const employee of state.employees) {
+     if (!idle(state, employee) || employeeHasCareDemand(state, employee) || employee.morale >= 100 ||
+         (employee.lastBreakAtFacilityTick != null && state.facilityTick - employee.lastBreakAtFacilityTick < tuning.breakCooldownMinutes)) continue;

@@ -1,0 +1,40 @@
+diff --git a/packages/game-domain/src/retail-operations.ts b/packages/game-domain/src/retail-operations.ts
+index 3d18f593..773630cd 100644
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -197,7 +197,9 @@ function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line
+   if (kind === "employee") return Boolean(state.employees.some((employee) => employee.id === id && !employee.facilityTask && isEmployeeOperational(state, id, context) && !clinical.employeeIds.has(id) && !getActiveServiceOperationEmployeeIds(state).has(id) &&
+     !state.retailOperations.some((operation) => ["walking_to_outlet", "queued", "purchasing"].includes(operation.status) && operation.servingEmployeeId === id) &&
+     !state.environment.glp1AutomationSlots.some((slot) => slot.employeeId === id)));
+-  if (kind === "founder") return (state.environment.founderActivity === null || ["attend_encounter", "return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) && !clinical.founderReserved && !founderHasActiveServiceOperation(state);
++  // A seat the player chose holds until they move the founder or open a chart (owner rule, 2026-10-07).
++  if (kind === "founder") return (state.environment.founderActivity === null || ["attend_encounter", "return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) &&
++    state.environment.founderActivity?.explicitSeat !== true && !clinical.founderReserved && !founderHasActiveServiceOperation(state);
+   if (kind === "encounter") return isWaitingEncounterEligible(state, id, line.retail?.category === "food_drink");
+   if (kind === "service_visitor") {
+     const actor = state.serviceOperations.find((operation) => operation.id === id);
+@@ -862,6 +864,24 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
+   advanceCompanions(state, context, companionsCreatedThisTick);
+ }
+ 
++/** Same chair rule as bathroom returns, for a patient walking back from a shop. */
++export function redirectRetailReturn(
++  state: GameState,
++  encounterId: string,
++  target: GridPoint,
++  context: DomainContext,
++): boolean {
++  const operation = activeRetailOperationForActor(state, "encounter", encounterId);
++  if (!operation || operation.status !== "returning" || operation.departureServiceOperationId) return false;
++  const path = facilityRoute(state, context, operation.location, target);
++  if (path.length === 0) return false;
++  operation.returnLocation = { ...target };
++  operation.path = path;
++  operation.pathIndex = 0;
++  operation.lastMovedAtFacilityTick = state.facilityTick;
++  return true;
++}
++
+ export function activeRetailOperationForActor(state: GameState, kind: RetailActorKind, actorId: string): RetailOperationState | null {
+   return state.retailOperations.find((operation) => !terminal(operation) && operation.actorKind === kind && operation.actorId === actorId) ?? null;
+ }

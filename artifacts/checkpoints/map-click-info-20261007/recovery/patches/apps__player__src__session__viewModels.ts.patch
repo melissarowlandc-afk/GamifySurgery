@@ -1,0 +1,60 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index f2162360..036cb6a9 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1,6 +1,9 @@
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+   TUTORIAL_ENCOUNTER_ID,
++  getFounderBreakSeatClaim,
++  isFounderSeatOccupied,
++  listFounderSeats,
+   getAnswerChoiceServicePreview,
+   getDiagnosticOrderTiming,
+   getDisplayedClinicSatisfaction,
+@@ -621,8 +624,13 @@ function getFounderSupportRole(state: GameState): FacilityActorSupportRole | und
+     return room ? clinicianSupportRoleForRoom(room.roomDefinitionId) : undefined;
+   }
+   if (activity?.kind === "sit_in_chair") {
++    if (getFounderBreakSeatClaim(state)) return "staff-break-seat";
+     const room = roomContainingPoint(state, state.environment.founderLocation);
+-    return room?.roomDefinitionId === "room.front_desk" ? "front-desk-staff" : "waiting-seat";
++    if (room?.roomDefinitionId !== "room.front_desk") return "waiting-seat";
++    const definition = getRoomDefinition(room.roomDefinitionId);
++    return definition && samePoint(state.environment.founderLocation, getRoomNavigationAnchor(room, definition, "staff"))
++      ? "front-desk-staff"
++      : "front-desk-public";
+   }
+   return founderIsIdleAtUnstaffedFrontDesk(state) ? "front-desk-staff" : undefined;
+ }
+@@ -1937,19 +1945,19 @@ export function createPrototypePlayerView(
+               state.environment.founderActivity.path.length - 1),
+         ...(() => {
+           const supportRole = getFounderSupportRole(state);
+-          return supportRole ? { supportRole } : {};
++          const breakSeat = supportRole === "staff-break-seat" ? getFounderBreakSeatClaim(state) : null;
++          return supportRole
++            ? { supportRole, ...(breakSeat ? { supportId: breakSeat.seatId, supportRoomInstanceId: breakSeat.roomId } : {}) }
++            : {};
+         })(),
+       },
+-      founderChairs: state.rooms.flatMap((room) => {
+-        if (room.roomDefinitionId !== "room.waiting") return [];
+-        const definition = getRoomDefinition(room.roomDefinitionId);
+-        return definition
+-          ? getRoomWaitingAnchors(room, definition).map((location) => ({
+-              roomInstanceId: room.id,
+-              location,
+-            }))
+-          : [];
+-      }),
++      founderChairs: listFounderSeats(state, PROTOTYPE_DOMAIN_CONTEXT).map((seat) => ({
++        roomInstanceId: seat.roomInstanceId,
++        location: seat.location,
++        kind: seat.kind,
++        ...(seat.seatId ? { seatId: seat.seatId } : {}),
++        occupied: isFounderSeatOccupied(state, seat),
++      })),
+       ambientPedestrians: state.environment.ambientPedestrians.map(
+         (pedestrian) => ({
+           instanceId: pedestrian.id,

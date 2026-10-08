@@ -1,0 +1,392 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index cd4ca832..8060123c 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -28,6 +28,9 @@ import type {
+   RemoveDoorRequest,
+   RequestRoomUpgrade,
+   SelectRoomRequest,
++  DescribeCharacterRequest,
++  FacilityCharacterRef,
++  FacilityFounderChairView,
+ } from "./types";
+ import {
+   ROOM_TOUCHUP_DECOR_ASSETS,
+@@ -279,6 +282,7 @@ import {
+ import { getDoorPresentationOpenings } from "./doorPresentation";
+ import { rasterizeGridLine } from "./hallwayPainting";
+ import { getFacilityWorldSignature } from "./facilityWorldSignature";
++import { characterRefFromKey, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
+ 
+ export interface FacilitySceneBridge {
+   viewModel: FacilityViewModel;
+@@ -291,6 +295,8 @@ export interface FacilitySceneBridge {
+   onRefillWaterCooler?: RefillWaterCoolerRequest;
+   onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
+   onSeatFounderInChair?: SeatFounderInChairRequest;
++  /** Map info box text for a clicked character. */
++  onDescribeCharacter?: DescribeCharacterRequest;
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
+@@ -519,6 +525,15 @@ export class FacilityScene extends Phaser.Scene {
+   private interactionHintText?: Phaser.GameObjects.Text;
+   private founderActivityText?: Phaser.GameObjects.Text;
+   private founderActivityBox?: Phaser.GameObjects.Graphics;
++  /** Click-to-inspect info box above a character or seat (owner request, 2026-10-07). */
++  private inspectText?: Phaser.GameObjects.Text;
++  private inspectBox?: Phaser.GameObjects.Graphics;
++  private inspectTarget:
++    | { kind: "character"; key: string; ref: FacilityCharacterRef; shownAt: number }
++    | { kind: "seat"; seat: FacilityFounderChairView; label: string; shownAt: number }
++    | null = null;
++  private inspectLabelCache: { key: string; viewModel: FacilityViewModel; label: string | null } | null = null;
++  private pointerDownCharacterKey: string | null = null;
+   private waterCoolerLabelText?: Phaser.GameObjects.Text;
+   private litterHighlightText?: Phaser.GameObjects.Text;
+   private roomTexts: Phaser.GameObjects.Text[] = [];
+@@ -752,6 +767,21 @@ export class FacilityScene extends Phaser.Scene {
+     this.founderActivityBox = this.add.graphics()
+       .setDepth(FACILITY_DEPTH_UI - 0.01)
+       .setVisible(false);
++    this.inspectText = this.add
++      .text(0, 0, "", {
++        ...textStyle,
++        align: "center",
++        color: "#20282a",
++        fontSize: "10px",
++        lineSpacing: 1,
++        padding: { x: 2, y: 1 },
++      })
++      .setOrigin(0.5, 1)
++      .setDepth(FACILITY_DEPTH_UI + 0.02)
++      .setVisible(false);
++    this.inspectBox = this.add.graphics()
++      .setDepth(FACILITY_DEPTH_UI + 0.01)
++      .setVisible(false);
+ 
+     this.waterCoolerLabelText = this.add
+       .text(0, 0, "", {
+@@ -5755,7 +5785,8 @@ export class FacilityScene extends Phaser.Scene {
+   ): void {
+     const text = this.founderActivityText;
+     const box = this.founderActivityBox;
+-    if (!text || !box || !label) {
++    const inspected = this.inspectTarget?.kind === "character" && this.inspectTarget.key === founderKey;
++    if (!text || !box || !label || inspected) {
+       text?.setVisible(false);
+       box?.setVisible(false);
+       return;
+@@ -6155,16 +6186,19 @@ export class FacilityScene extends Phaser.Scene {
+       let resolvedFounderPose = this.bridge.viewModel.founder.seated && !founderPresentation.moving
+         ? "seated"
+         : founderPose;
+-      const founderDisplay = this.bridge.viewModel.founder.supportRole === "front-desk-staff"
++      const founderSupportRole = this.bridge.viewModel.founder.supportRole;
++      const founderDisplay = founderSupportRole === "front-desk-staff" || founderSupportRole === "front-desk-public"
+         ? this.getFrontDeskV5ActorDisplayPosition(
+             candidateFounderLocation,
+             founderPresentation.moving,
+-            "staff",
++            founderSupportRole === "front-desk-staff" ? "staff" : "public",
+           )
+         : this.getApprovedActorSupportDisplayPosition(
+             candidateFounderLocation,
+             founderPresentation.moving,
+-            this.bridge.viewModel.founder.supportRole,
++            founderSupportRole,
++            this.bridge.viewModel.founder.supportId,
++            this.bridge.viewModel.founder.supportRoomInstanceId,
+           );
+       resolvedFounderPose = founderDisplay?.pose ?? resolvedFounderPose;
+       const founderAtFrontDesk = founderDisplay?.supportRole === "front-desk-staff";
+@@ -6429,6 +6463,150 @@ export class FacilityScene extends Phaser.Scene {
+     );
+     this.removeInactiveCharacterBitmapContainers();
+     this.reconcileApprovedSideChairLayers();
++    this.renderInspectBox();
++  }
++
++  /** Bitmap actor under the pointer; the front-most (highest depth) wins. */
++  private characterAtPointer(pointer: Phaser.Input.Pointer): string | null {
++    let best: { key: string; depth: number } | null = null;
++    for (const [key, container] of this.characterBitmapContainers) {
++      if (!container.visible || !characterRefFromKey(key)) continue;
++      const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
++      if (!actor?.visible) continue;
++      const bounds = actor.getBounds();
++      if (bounds.width <= 0 || bounds.height <= 0) continue;
++      // Sprite cells carry side margins; a narrower box avoids picking a neighbour.
++      const insetX = bounds.width * 0.2;
++      if (pointer.x < bounds.left + insetX || pointer.x > bounds.right - insetX ||
++        pointer.y < bounds.top || pointer.y > bounds.bottom) continue;
++      if (!best || container.depth > best.depth) best = { key, depth: container.depth };
++    }
++    return best?.key ?? null;
++  }
++
++  private handleCharacterClick(key: string): void {
++    const ref = characterRefFromKey(key);
++    if (!ref) return;
++    const alreadyShown = this.inspectTarget?.kind === "character" && this.inspectTarget.key === key;
++    // Owner rule: the first click on an employee shows the box; a second
++    // click while it is up opens Praise.
++    if (ref.kind === "staff" && alreadyShown && this.bridge.onPraiseEmployee) {
++      this.inspectTarget = null;
++      this.bridge.onPraiseEmployee(ref.id);
++      return;
++    }
++    this.inspectTarget = { kind: "character", key, ref, shownAt: this.time.now };
++    this.inspectLabelCache = null;
++  }
++
++  private showSeatBox(seat: FacilityFounderChairView, label: string): void {
++    this.inspectTarget = { kind: "seat", seat, label, shownAt: this.time.now };
++  }
++
++  private inspectCharacterLabel(key: string, ref: FacilityCharacterRef): string | null {
++    const viewModel = this.bridge.viewModel;
++    if (this.inspectLabelCache?.key === key && this.inspectLabelCache.viewModel === viewModel) {
++      return this.inspectLabelCache.label;
++    }
++    const description = this.bridge.onDescribeCharacter?.(ref) ?? null;
++    const label = description ? `${description.name}\n${description.activity}` : null;
++    this.inspectLabelCache = { key, viewModel, label };
++    return label;
++  }
++
++  /** Seat contact point in canvas pixels, for seat hit tests and the seat box. */
++  private founderSeatScreenPoint(seat: FacilityFounderChairView): { x: number; y: number } | null {
++    const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === seat.roomInstanceId);
++    if (!room) return null;
++    const role: FacilityActorSupportRole = seat.kind === "front_desk_public"
++      ? "front-desk-public"
++      : seat.kind === "break" ? "staff-break-seat" : "waiting-seat";
++    const orientation: RoomOrientation = seat.kind === "front_desk_public" || room.orientation !== 270 ? 0 : 270;
++    const support = getNearestApprovedActorSupport(
++      resolveApprovedRoomActorSupports(room.definitionId, orientation).filter((candidate) => candidate.role === role),
++      { x: seat.location.x - room.tileX, y: seat.location.y - room.tileY },
++      role,
++      seat.seatId,
++    );
++    if (!support) {
++      return {
++        x: this.layout.originX + (seat.location.x + 0.5) * this.layout.tileSize,
++        y: this.layout.originY + (seat.location.y + 0.5) * this.layout.tileSize,
++      };
++    }
++    const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
++    return {
++      x: bounds.x + support.seat.x * this.layout.tileSize,
++      y: bounds.y + support.seat.y * this.layout.tileSize,
++    };
++  }
++
++  /** Light box with a small pointer, matching the founder activity box. */
++  private renderInspectBox(): void {
++    const text = this.inspectText;
++    const box = this.inspectBox;
++    if (!text || !box) return;
++    const target = this.inspectTarget;
++    const age = target ? this.time.now - target.shownAt : 0;
++    const hide = () => {
++      text.setVisible(false);
++      box.setVisible(false);
++    };
++    if (!target || age > INSPECT_BOX_VISIBLE_MS || this.bridge.viewModel.buildMode) {
++      this.inspectTarget = null;
++      hide();
++      return;
++    }
++    let anchorX: number;
++    let anchorY: number;
++    let label: string | null;
++    if (target.kind === "character") {
++      const container = this.characterBitmapContainers.get(target.key);
++      const actor = container?.getByName("actor") as Phaser.GameObjects.Image | null | undefined;
++      const bounds = container?.visible && actor?.visible ? actor.getBounds() : undefined;
++      label = bounds && bounds.height > 0 ? this.inspectCharacterLabel(target.key, target.ref) : null;
++      if (!bounds || !label) {
++        // The character left the map (went home, off-site) — close the box.
++        this.inspectTarget = null;
++        hide();
++        return;
++      }
++      anchorX = bounds.centerX;
++      anchorY = bounds.top;
++    } else {
++      const point = this.founderSeatScreenPoint(target.seat);
++      if (!point) {
++        this.inspectTarget = null;
++        hide();
++        return;
++      }
++      anchorX = point.x;
++      anchorY = point.y - this.layout.tileSize * 0.55;
++      label = target.label;
++    }
++    const pointerSize = 3;
++    const fade = Math.min(1, Math.max(0, (INSPECT_BOX_VISIBLE_MS - age) / INSPECT_BOX_FADE_MS));
++    text.setText(label)
++      .setPosition(anchorX, anchorY - pointerSize - 4)
++      .setAlpha(fade)
++      .setVisible(true);
++    const textBounds = text.getBounds();
++    const insetX = 3;
++    const insetY = 2;
++    const left = textBounds.x - insetX;
++    const top = textBounds.y - insetY;
++    const width = textBounds.width + insetX * 2;
++    const height = textBounds.height + insetY * 2;
++    box.clear();
++    box.setAlpha(fade);
++    box.fillStyle(0xf0f0ea, 0.97);
++    box.fillRect(left, top, width, height);
++    box.fillTriangle(anchorX - pointerSize, top + height, anchorX + pointerSize, top + height, anchorX, top + height + pointerSize);
++    box.lineStyle(1, 0x20282a, 1);
++    box.strokeRect(left + 0.5, top + 0.5, width - 1, height - 1);
++    box.lineBetween(anchorX - pointerSize, top + height, anchorX, top + height + pointerSize);
++    box.lineBetween(anchorX + pointerSize, top + height, anchorX, top + height + pointerSize);
++    box.setVisible(true);
+   }
+ 
+   /**
+@@ -7368,13 +7546,29 @@ export class FacilityScene extends Phaser.Scene {
+       }
+       return;
+     }
++    const characterKey = this.characterAtPointer(pointer);
++    if (characterKey) {
++      const ref = characterRefFromKey(characterKey);
++      const shown = this.inspectTarget?.kind === "character" && this.inspectTarget.key === characterKey;
++      const employee = ref?.kind === "staff"
++        ? this.bridge.viewModel.staff.find((candidate) => candidate.instanceId === ref.id)
++        : undefined;
++      this.setInteractionHint(
++        shown && employee
++          ? `CLICK TO PRAISE ${employee.displayName.toUpperCase()}`
++          : "CLICK TO SEE ACTIVITY",
++        pointer,
++      );
++      return;
++    }
+     const point = this.gridPointAtPointer(pointer);
+     if (point) {
+       const interaction = getEnvironmentalInteraction(
+         this.bridge.viewModel,
+         point,
+       );
+-      if (interaction) {
++      // Employees are clicked by their sprite above (box first, then praise).
++      if (interaction && interaction.kind !== "employee") {
+         this.setInteractionHint(interaction.label, pointer);
+         return;
+       }
+@@ -7388,8 +7582,9 @@ export class FacilityScene extends Phaser.Scene {
+       this.setInteractionHint("Sit here to check in patients", pointer);
+       return;
+     }
+-    if (this.ordinaryChairAtPointer(pointer)) {
+-      this.setInteractionHint("SIT HERE", pointer);
++    const hoveredChair = this.ordinaryChairAtPointer(pointer);
++    if (hoveredChair) {
++      this.setInteractionHint(hoveredChair.occupied ? "SEAT OCCUPIED" : "SIT HERE", pointer);
+       return;
+     }
+     this.setInteractionHint(
+@@ -7526,9 +7721,26 @@ export class FacilityScene extends Phaser.Scene {
+     ) {
+       return;
+     }
++    const characterKey = this.pointerDownCharacterKey;
++    this.pointerDownCharacterKey = null;
++    if (characterKey) {
++      this.handleCharacterClick(characterKey);
++      // The box replaces the hover hint until the pointer moves again.
++      this.setInteractionHint(null);
++      return;
++    }
++    // Clicking anywhere else closes an open info box.
++    this.inspectTarget = null;
+     const chair = this.ordinaryChairAtPointer(pointer);
+     if (chair && this.bridge.onSeatFounderInChair) {
+-      const accepted = this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location);
++      if (chair.occupied) {
++        this.showSeatBox(chair, "Seat occupied");
++        return;
++      }
++      const accepted = chair.seatId
++        ? this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location, chair.seatId)
++        : this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location);
++      if (!accepted) this.showSeatBox(chair, "Seat unavailable");
+       this.setInteractionHint(
+         accepted ? "FOUNDER WALKING TO CHAIR" : "CHAIR UNAVAILABLE",
+         pointer,
+@@ -7618,7 +7830,12 @@ export class FacilityScene extends Phaser.Scene {
+       return;
+     }
+ 
+-    if (!this.bridge.viewModel.buildMode) {
++    this.pointerDownCharacterKey = null;
++    const characterKey = this.bridge.viewModel.buildMode ? null : this.characterAtPointer(pointer);
++    if (characterKey) {
++      // Resolved on pointer-up so a drag that starts on a person still pans.
++      this.pointerDownCharacterKey = characterKey;
++    } else if (!this.bridge.viewModel.buildMode) {
+       const point = this.gridPointAtPointer(pointer);
+       if (point) {
+         const litter = (this.bridge.viewModel.litterItems ?? []).find(
+@@ -7645,17 +7862,11 @@ export class FacilityScene extends Phaser.Scene {
+           this.bridge.onRefillWaterCooler?.();
+           return;
+         }
+-        const employee = this.bridge.viewModel.staff.find(
+-          (candidate) =>
+-            candidate.location?.x === point.x &&
+-            candidate.location?.y === point.y,
+-        );
+-        if (employee) {
+-          this.bridge.onPraiseEmployee?.(employee.instanceId);
+-          return;
+-        }
+       }
++      // The patient-side Front Desk chair sits beside the counter; let the
++      // pointer-up seat flow own it instead of the desk.
+       if (
++        this.ordinaryChairAtPointer(pointer)?.kind !== "front_desk_public" &&
+         this.frontDeskSeatInteractionAtPointer(pointer) &&
+         this.bridge.onSeatFounderAtFrontDesk
+       ) {
+@@ -8183,7 +8394,7 @@ export class FacilityScene extends Phaser.Scene {
+ 
+   private ordinaryChairAtPointer(
+     pointer: Phaser.Input.Pointer,
+-  ): { roomInstanceId: string; location: GridPoint } | null {
++  ): FacilityFounderChairView | null {
+     for (const room of this.bridge.viewModel.rooms) {
+       if (room.definitionId !== "room.waiting") continue;
+       const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+@@ -8230,8 +8441,23 @@ export class FacilityScene extends Phaser.Scene {
+           .sort((left, right) => left.distance - right.distance)[0]!.chair;
+       }
+     }
++    // Front Desk public chair and Break Room seats: nearest seat contact
++    // within half a tile (break seats can share one logical tile).
++    const reach = this.layout.tileSize * 0.5;
++    const nearby = (this.bridge.viewModel.founderChairs ?? [])
++      .filter((chair) => chair.kind === "front_desk_public" || chair.kind === "break")
++      .flatMap((chair) => {
++        const seat = this.founderSeatScreenPoint(chair);
++        if (!seat) return [];
++        // The seat contact is at hip height; accept clicks on the seat back above it too.
++        const distance = Math.hypot(pointer.x - seat.x, Math.max(0, Math.abs(pointer.y - (seat.y - reach * 0.4)) - reach * 0.4));
++        return distance <= reach ? [{ chair, distance }] : [];
++      })
++      .sort((left, right) => left.distance - right.distance)[0];
++    if (nearby) return nearby.chair;
+     const point = this.gridPointAtPointer(pointer);
+     return this.bridge.viewModel.founderChairs?.find((chair) =>
++      chair.kind !== "break" &&
+       chair.location.x === point?.x && chair.location.y === point?.y,
+     ) ?? null;
+   }

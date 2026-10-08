@@ -1,0 +1,25 @@
+diff --git a/packages/game-domain/tests/waiting-destination-routing.test.ts b/packages/game-domain/tests/waiting-destination-routing.test.ts
+index a423d319..528fb86c 100644
+--- a/packages/game-domain/tests/waiting-destination-routing.test.ts
++++ b/packages/game-domain/tests/waiting-destination-routing.test.ts
+@@ -89,6 +89,20 @@ describe("waiting destination routing acceptance", () => {
+     chair.nextIdleActionAtFacilityTick = 0;
+     standing.nextIdleActionAtFacilityTick = 0;
+     wander.nextIdleActionAtFacilityTick = 0;
++    // Owner rule (2026-10-07): standing and hallway patients take a free
++    // chair, so every chair is filled to exercise the idle contract alone.
++    for (const [index, seat] of [
++      { roomInstanceId: "waiting", location: { x: 31, y: 28 } },
++      { roomInstanceId: "waiting", location: { x: 29, y: 29 } },
++      { roomInstanceId: "waiting", location: { x: 32, y: 29 } },
++      { roomInstanceId: "room.instance.founder_desk", location: { x: 37, y: 31 } },
++    ].entries()) {
++      const seated = addEncounter(state, `encounter.full.${index}`);
++      seated.waitingDestination = { ...seat, kind: "chair" };
++      seated.patientLocation = { ...seat.location };
++      seated.assignedRoomInstanceId = seat.roomInstanceId;
++      seated.nextIdleActionAtFacilityTick = Number.MAX_SAFE_INTEGER;
++    }
+     const eagerContext = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as typeof PROTOTYPE_DOMAIN_CONTEXT;
+     eagerContext.balanceRelease.environment.idleActionChancePercent = 100;
+     const advanced = gameReducer(state, { type: "ADVANCE_TICK", operationId: "wander.advance" }, eagerContext);

@@ -1,0 +1,515 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+index 8bc1c4ee..5d216fd5 100644
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -149,9 +149,16 @@ import {
+   getPatientAmenityTrip,
+   getReachablePatientBathroomRoomIds,
+   hasActivePatientAmenityTrip,
++  redirectPatientAmenityReturn,
+   requestPatientAmenityReturn,
+   tryStartPatientBathroomTrip,
+ } from "./patient-amenities";
++import {
++  findFounderSeat,
++  isFounderChairTileOccupied,
++  isFounderSeatOccupied,
++  listFounderSeats,
++} from "./founder-seats";
+ import {
+   activeRetailOperationForActor,
+   advanceRetailOperations,
+@@ -160,6 +167,7 @@ import {
+   cancelRetailOperationsForRoom,
+   startRetailPurchase,
+   getViableDepartureRetailLineIds,
++  redirectRetailReturn,
+ } from "./retail-operations";
+ import {
+   getRetiredEndedSatisfactionSamples,
+@@ -377,10 +385,13 @@ function chooseAutomaticFounderActivity(
+         : [];
+     }),
+   );
++  // Endpoints are collected first and only the chosen one is routed: idle
++  // choices now chain every few minutes, and routing to every candidate
++  // stalled a facility tick (owner stutter report, 2026-10-07).
+   const candidates: Array<{
+     kind: "wander_facility" | "sit_in_chair" | "visit_bathroom";
+     targetId: string;
+-    path: GridPoint[];
++    point: GridPoint;
+   }> = [];
+   for (const room of [...state.rooms].sort((left, right) => left.id.localeCompare(right.id))) {
+     if (examinationReservations.has(room.id)) continue;
+@@ -408,31 +419,19 @@ function chooseAutomaticFounderActivity(
+         occupied.has(pointKey(point)) ||
+         excludedEndpoints.has(pointKey(point))
+       ) return;
+-      const routedPath = pathFromLocationToFacilityPoint(
+-        state,
+-        context,
+-        state.environment.founderLocation,
+-        point,
+-      );
+-      const path =
+-        routedPath.length > 0
+-          ? routedPath
+-          : samePoint(state.environment.founderLocation, point)
+-            ? [{ ...point }]
+-            : [];
+-      if (path.length === 0) return;
+       candidates.push({
+         kind,
+         targetId: `${room.id}.${point.x}.${point.y}`,
+-        path,
++        point,
+       });
+     };
+ 
+     // The authored waiting anchors are chair inventory, not merely visual
+     // decoration.  A founder may choose any unoccupied chair once a
+     // receptionist is covering the desk.
++    const standingAnchors = getRoomStandingWaitingAnchors(room, definition).map(pointKey);
+     for (const chair of getRoomWaitingAnchors(room, definition)) {
+-      addCandidate("sit_in_chair", chair);
++      if (!standingAnchors.includes(pointKey(chair))) addCandidate("sit_in_chair", chair);
+     }
+     if (room.roomDefinitionId === "room.bathroom") {
+       if (!state.patientAmenityTrips?.some((trip) => trip.bathroomRoomInstanceId === room.id)) {
+@@ -454,21 +453,40 @@ function chooseAutomaticFounderActivity(
+     }
+   }
+   if (candidates.length === 0) return null;
+-  const chosen = candidates[
+-    deterministicInteger(
+-      state.campaignSeed,
+-      RANDOM_STREAMS.environment,
+-      `founder:auto-idle:${state.facilityTick}`,
+-      candidates.length,
+-    )
+-  ]!;
++  const first = deterministicInteger(
++    state.campaignSeed,
++    RANDOM_STREAMS.environment,
++    `founder:auto-idle:${state.facilityTick}`,
++    candidates.length,
++  );
++  let chosen: { kind: (typeof candidates)[number]["kind"]; targetId: string; path: GridPoint[] } | null = null;
++  for (let attempt = 0; attempt < Math.min(candidates.length, PUBLIC_WANDER_ROUTE_ATTEMPTS) && !chosen; attempt += 1) {
++    const candidate = candidates[(first + attempt) % candidates.length]!;
++    const routedPath = pathFromLocationToFacilityPoint(
++      state,
++      context,
++      state.environment.founderLocation,
++      candidate.point,
++    );
++    const path =
++      routedPath.length > 0
++        ? routedPath
++        : samePoint(state.environment.founderLocation, candidate.point)
++          ? [{ ...candidate.point }]
++          : [];
++    if (path.length > 0) chosen = { kind: candidate.kind, targetId: candidate.targetId, path };
++  }
++  if (!chosen) return null;
+   const config = context.balanceRelease.environment;
+   return {
+     ...chosen,
+     pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick,
+-    workMinutesRemaining:
+-      config.idleActionMinimumMinutes +
++    // Owner rule (2026-10-07): nobody stands idle in a hallway for more than
++    // a few game minutes, so a wander stop is short and chains onward.
++    workMinutesRemaining: chosen.kind === "wander_facility"
++      ? publicWanderDwellMinutes(state, "founder:auto-idle-dwell")
++      : config.idleActionMinimumMinutes +
+       deterministicInteger(
+         state.campaignSeed,
+         RANDOM_STREAMS.environment,
+@@ -571,7 +589,7 @@ function resumeFounderActivityAfterConsult(
+   const endpoint = suspended.path.at(-1);
+   if (!endpoint ||
+       (suspended.kind === "sit_in_chair" &&
+-        (!founderChairIsEligibleForResume(state, context, endpoint) || founderChairIsOccupied(state, endpoint)))) {
++        !founderSeatIsFreeForResume(state, context, suspended))) {
+     planFounderAfterEncounter(state, context);
+     return;
+   }
+@@ -839,6 +857,25 @@ function remainingMovementDuration(
+   );
+ }
+ 
++/**
++ * Editorial cadence (owner rule, 2026-10-07): an overflow patient or an idle
++ * founder never stands in a public hallway for more than a few game minutes.
++ * This is a simulation pacing value, not a clinical timeline.
++ */
++const PUBLIC_WANDER_DWELL_MINUTES = { minimum: 2, maximum: 4 } as const;
++/** Hallway overflow drifts locally rather than pacing the whole building. */
++const PUBLIC_WANDER_RADIUS_TILES = 8;
++const PUBLIC_WANDER_ROUTE_ATTEMPTS = 6;
++
++function publicWanderDwellMinutes(state: GameState, stableId: string): number {
++  return PUBLIC_WANDER_DWELL_MINUTES.minimum + deterministicInteger(
++    state.campaignSeed,
++    RANDOM_STREAMS.environment,
++    `${stableId}:public-wander-dwell:${state.facilityTick}`,
++    PUBLIC_WANDER_DWELL_MINUTES.maximum - PUBLIC_WANDER_DWELL_MINUTES.minimum + 1,
++  );
++}
++
+ function getNextIdleActionTick(
+   state: GameState,
+   context: DomainContext,
+@@ -969,26 +1006,16 @@ function getEncounterExaminationRoomId(
+   ) ?? null;
+ }
+ 
+-function chooseWaitingDestination(
++/** Tiles a waiting patient may not claim: other patients, the founder and staff. */
++function waitingOccupiedPointKeys(
+   state: GameState,
+-  context: DomainContext,
+-  encounter: EncounterState,
+-): {
+-  roomId: string | null;
+-  path: GridPoint[];
+-  reservation: EncounterState["waitingDestination"];
+-} {
+-  const start = encounter.patientLocation;
+-  const entrance = getPublicEntrance(state, context);
+-  if (!start || !entrance) {
+-    return { roomId: null, path: [], reservation: null };
+-  }
+-
++  excludedEncounterId: string | null,
++): Set<string> {
+   const occupiedPoints = new Set(
+     Object.values(state.encounters)
+       .filter(
+         (candidate) =>
+-          candidate.id !== encounter.id &&
++          candidate.id !== excludedEncounterId &&
+           (candidate.lifecycle !== "resolved" ||
+             encounterHasActiveServiceOperation(state, candidate.id)),
+       )
+@@ -1016,6 +1043,54 @@ function chooseWaitingDestination(
+     ]),
+   ];
+   for (const point of reservedActors) occupiedPoints.add(`${point.x},${point.y}`);
++  return occupiedPoints;
++}
++
++/**
++ * Cheap pre-check for re-seating: mirrors the chair tiers of
++ * chooseWaitingDestination (Waiting Room chairs, Front Desk chairs, other
++ * non-care chairs) without routing.
++ */
++function hasFreeWaitingChair(state: GameState, context: DomainContext): boolean {
++  const occupied = waitingOccupiedPointKeys(state, null);
++  const entrance = getPublicEntrance(state, context);
++  return state.rooms.some((room) => {
++    const definition = getRoomDefinition(room.roomDefinitionId, context);
++    if (!definition) return false;
++    if (room.roomDefinitionId === "room.waiting") {
++      const doorKeys = new Set(state.doors.filter((door) => door.roomId === room.id).flatMap((door) => {
++        const cells = getDoorCells(door, room, definition);
++        return cells ? [pointKey(cells.inside)] : [];
++      }));
++      return getRoomWaitingAnchors(room, definition).some((anchor) =>
++        !doorKeys.has(pointKey(anchor)) && !occupied.has(pointKey(anchor)));
++    }
++    if (room.id === entrance?.room.id) {
++      const standing = new Set(getRoomStandingWaitingAnchors(room, definition).map(pointKey));
++      return getRoomWaitingAnchors(room, definition).some((anchor) =>
++        !standing.has(pointKey(anchor)) && !occupied.has(pointKey(anchor)));
++    }
++    return !isProtectedCareRoom(room) &&
++      getRoomWaitingAnchors(room, definition).some((anchor) => !occupied.has(pointKey(anchor)));
++  });
++}
++
++function chooseWaitingDestination(
++  state: GameState,
++  context: DomainContext,
++  encounter: EncounterState,
++): {
++  roomId: string | null;
++  path: GridPoint[];
++  reservation: EncounterState["waitingDestination"];
++} {
++  const start = encounter.patientLocation;
++  const entrance = getPublicEntrance(state, context);
++  if (!start || !entrance) {
++    return { roomId: null, path: [], reservation: null };
++  }
++
++  const occupiedPoints = waitingOccupiedPointKeys(state, encounter.id);
+ 
+   const waitingRooms = state.rooms
+     .filter((room) => room.roomDefinitionId === "room.waiting")
+@@ -1208,7 +1283,7 @@ function choosePublicWanderDestination(
+     ...state.employees.flatMap((employee) => [employee.location, ...(employee.path.at(-1) ? [employee.path.at(-1)!] : [])]),
+   ]) occupied.add(`${point.x},${point.y}`);
+ 
+-  const candidates: { roomId: string; point: GridPoint; path: GridPoint[] }[] = [];
++  const candidates: { roomId: string; point: GridPoint }[] = [];
+   for (const room of state.rooms
+     .filter((candidate) =>
+       candidate.roomDefinitionId !== "room.waiting" &&
+@@ -1232,22 +1307,33 @@ function choosePublicWanderDestination(
+       .sort((left, right) => left.y - right.y || left.x - right.x)) {
+       const key = `${point.x},${point.y}`;
+       if (occupied.has(key) || excluded.has(key) || (point.x === start.x && point.y === start.y)) continue;
+-      const path = pathFromLocationToFacilityPoint(state, context, start, point, new Set());
+-      if (path.length > 1) candidates.push({ roomId: room.id, point, path });
++      candidates.push({ roomId: room.id, point });
+     }
+   }
+   if (candidates.length === 0) return null;
+-  const choice = candidates[deterministicInteger(
++  // Overflow patients now move every few minutes, so pick a nearby spot first
++  // and route only to it (routing to every public tile each time stalled ticks).
++  const nearby = candidates.filter(({ point }) =>
++    Math.abs(point.x - start.x) + Math.abs(point.y - start.y) <= PUBLIC_WANDER_RADIUS_TILES);
++  const pool = nearby.length > 0 ? nearby : candidates;
++  const first = deterministicInteger(
+     state.campaignSeed,
+     RANDOM_STREAMS.environment,
+     `${encounter.id}:public-wander:${state.facilityTick}`,
+-    candidates.length,
+-  )]!;
+-  return {
+-    roomId: choice.roomId,
+-    path: choice.path,
+-    reservation: { roomInstanceId: choice.roomId, location: { ...choice.point }, kind: "public_wander" },
+-  };
++    pool.length,
++  );
++  for (let attempt = 0; attempt < Math.min(pool.length, PUBLIC_WANDER_ROUTE_ATTEMPTS); attempt += 1) {
++    const choice = pool[(first + attempt) % pool.length]!;
++    const path = pathFromLocationToFacilityPoint(state, context, start, choice.point, new Set());
++    if (path.length > 1) {
++      return {
++        roomId: choice.roomId,
++        path,
++        reservation: { roomInstanceId: choice.roomId, location: { ...choice.point }, kind: "public_wander" },
++      };
++    }
++  }
++  return null;
+ }
+ 
+ function pointInsideRoom(
+@@ -7041,7 +7127,11 @@ function completeFounderActivity(
+     }
+   }
+   state.environment.founderActivity = null;
+-  if (completedAssignedWork) {
++  // Automatic idling chains to the next idle choice so the founder does not
++  // stand still in a hallway or at a vacated chair (owner rule, 2026-10-07).
++  const automaticIdle = activity.kind === "wander_facility" || activity.kind === "visit_bathroom" ||
++    (activity.kind === "sit_in_chair" && activity.explicitSeat !== true);
++  if (completedAssignedWork || automaticIdle) {
+     planFounderAfterEncounter(state, context);
+   }
+ }
+@@ -7560,11 +7650,14 @@ function completePatientMovement(
+         beginPendingResultTravel(state, encounter, context);
+         return;
+       }
+-      encounter.nextIdleActionAtFacilityTick = getNextIdleActionTick(
+-        state,
+-        context,
+-        encounter.id,
+-      );
++      encounter.nextIdleActionAtFacilityTick =
++        encounter.waitingDestination?.kind === "public_wander"
++          ? state.facilityTick + publicWanderDwellMinutes(state, encounter.id)
++          : getNextIdleActionTick(
++              state,
++              context,
++              encounter.id,
++            );
+       return;
+     case "leaving_after_resolution":
+       encounter.patientLocation = null;
+@@ -7749,6 +7842,25 @@ function maybeStartPatientIdleMovements(
+     ) {
+       continue;
+     }
++    // Hallway overflow keeps moving on the short owner cadence instead of the
++    // occasional idle roll (see PUBLIC_WANDER_DWELL_MINUTES).
++    if (encounter.waitingDestination?.kind === "public_wander") {
++      encounter.nextIdleActionAtFacilityTick =
++        state.facilityTick + publicWanderDwellMinutes(state, encounter.id);
++      const destination = choosePublicWanderDestination(state, context, encounter);
++      if (destination) {
++        encounter.waitingDestination = destination.reservation;
++        startPatientMovement(
++          state,
++          context,
++          encounter,
++          "idle_within_room",
++          destination.path,
++          destination.roomId,
++        );
++      }
++      continue;
++    }
+     encounter.nextIdleActionAtFacilityTick = getNextIdleActionTick(
+       state,
+       context,
+@@ -7855,6 +7967,68 @@ function maybeStartPatientIdleMovements(
+   }
+ }
+ 
++/**
++ * Owner rule (2026-10-07): a waiting patient does not stand while a waiting
++ * chair is free. Standing and hallway patients, including ones walking back
++ * from the bathroom or a shop, move to a free chair; the closest one wins.
++ * Patients with a pending result keep their frozen test travel untouched.
++ */
++function reseatStandingWaitingPatients(
++  state: GameState,
++  context: DomainContext,
++): void {
++  const gridHeight = context.balanceRelease.facility.gridHeight;
++  const candidates = Object.values(state.encounters).filter((encounter) => {
++    const reservation = encounter.waitingDestination;
++    if (
++      (reservation?.kind !== "standing" && reservation?.kind !== "public_wander") ||
++      (encounter.lifecycle !== "waiting_unopened" &&
++        encounter.lifecycle !== "active_action_required") ||
++      encounter.patientMovement !== null ||
++      encounter.patientLocation === null ||
++      encounter.patientLocation.y >= gridHeight ||
++      state.openChartEncounterId === encounter.id ||
++      encounterHasActiveServiceOperation(state, encounter.id)
++    ) {
++      return false;
++    }
++    const amenityTrip = getPatientAmenityTrip(state, "encounter", encounter.id);
++    const retailTrip = activeRetailOperationForActor(state, "encounter", encounter.id);
++    if (amenityTrip && (amenityTrip.status !== "returning" || amenityTrip.purpose)) return false;
++    if (retailTrip && (retailTrip.status !== "returning" || retailTrip.departureServiceOperationId)) return false;
++    return true;
++  });
++  if (candidates.length === 0 || !hasFreeWaitingChair(state, context)) return;
++  const remaining = new Set(candidates);
++  while (remaining.size > 0) {
++    let best: { encounter: EncounterState; destination: ReturnType<typeof chooseWaitingDestination> } | null = null;
++    for (const encounter of remaining) {
++      const destination = chooseWaitingDestination(state, context, encounter);
++      if (destination.reservation?.kind !== "chair" || destination.path.length <= 1) continue;
++      if (!best || destination.path.length < best.destination.path.length) best = { encounter, destination };
++    }
++    if (!best) return;
++    const { encounter, destination } = best;
++    const reservation = destination.reservation!;
++    remaining.delete(encounter);
++    const onTrip = getPatientAmenityTrip(state, "encounter", encounter.id) !== null;
++    const onRetailTrip = activeRetailOperationForActor(state, "encounter", encounter.id) !== null;
++    if (onTrip || onRetailTrip) {
++      const redirected = onTrip
++        ? redirectPatientAmenityReturn(state, encounter.id, reservation.location, context)
++        : redirectRetailReturn(state, encounter.id, reservation.location, context);
++      if (!redirected) continue;
++      encounter.assignedRoomInstanceId = reservation.roomInstanceId;
++    } else if (
++      startPatientMovement(state, context, encounter, "idle_within_room", destination.path, destination.roomId) < 0
++    ) {
++      continue;
++    }
++    encounter.waitingDestination = reservation;
++    if (!hasFreeWaitingChair(state, context)) return;
++  }
++}
++
+ function dispatchQueuedPendingResults(
+   state: GameState,
+   context: DomainContext,
+@@ -8510,6 +8684,7 @@ function reduceAdvanceTick(
+   for (const encounter of Object.values(next.encounters)) observeWaitingRoomExperience(next, encounter, context);
+   advancePatientAmenityTrips(next, context);
+   resumeOpenChartCareAfterAmenity(next, context);
++  reseatStandingWaitingPatients(next, context);
+   maybeStartPatientIdleMovements(next, context);
+   advanceAmbientPedestrians(next, context);
+   dispatchQueuedPendingResults(next, context);
+@@ -10345,16 +10520,12 @@ function reduceSeatFounderInChair(
+   command: Extract<GameCommand, { type: "SEAT_FOUNDER_IN_CHAIR" }>,
+   context: DomainContext,
+ ): GameState {
+-  const room = state.rooms.find((candidate) => candidate.id === command.roomInstanceId);
+-  const definition = room && getRoomDefinition(room.roomDefinitionId, context);
+-  if (!room || !definition || room.roomDefinitionId !== "room.waiting") {
+-    return rejectCommand(state, command, "That chair is not available for the founder.");
+-  }
+-  const chair = getRoomWaitingAnchors(room, definition).find((anchor) => samePoint(anchor, command.location));
+-  if (!chair) return rejectCommand(state, command, "That chair is not available for the founder.");
+-  const occupied = founderChairIsOccupied(state, chair);
+-  if (occupied) return rejectCommand(state, command, "That chair is occupied or reserved.");
+-  const next = beginFounderActivity(state, command, context, "sit_in_chair", `${room.id}.${chair.x}.${chair.y}`, chair, "The founder is walking to the chair.");
++  // Owner request (2026-10-07): any free public seat — Waiting Room chairs,
++  // the patient-side Front Desk chair and Break Room seats.
++  const seat = findFounderSeat(state, context, command.roomInstanceId, command.location, command.seatId);
++  if (!seat) return rejectCommand(state, command, "That chair is not available for the founder.");
++  if (isFounderSeatOccupied(state, seat)) return rejectCommand(state, command, "That chair is occupied or reserved.");
++  const next = beginFounderActivity(state, command, context, "sit_in_chair", seat.targetId, seat.location, "The founder is walking to the chair.");
+   if (next.operationReceipts[command.operationId]?.status === "applied" && next.environment.founderActivity) {
+     next.environment.founderActivity.explicitSeat = true;
+     next.environment.founderActivity.workMinutesRemaining = Number.MAX_SAFE_INTEGER;
+@@ -10362,40 +10533,19 @@ function reduceSeatFounderInChair(
+   return next;
+ }
+ 
+-function founderChairIsOccupied(state: GameState, chair: GridPoint): boolean {
+-  return state.employees.some((employee) =>
+-    samePoint(employee.location, chair) || samePoint(employee.path.at(-1) ?? employee.location, chair),
+-  ) || Object.values(state.encounters).some((encounter) =>
+-    (encounter.resolutionReason === null || encounter.patientMovement !== null) &&
+-    ((encounter.patientLocation && samePoint(encounter.patientLocation, chair)) ||
+-      (encounter.patientMovement?.path.at(-1) && samePoint(encounter.patientMovement.path.at(-1)!, chair)) ||
+-      (encounter.waitingDestination?.location && samePoint(encounter.waitingDestination.location, chair))),
+-  ) || state.serviceOperations.some((operation) =>
+-    operation.status !== "completed" && operation.status !== "cancelled" &&
+-    ((operation.location && samePoint(operation.location, chair)) ||
+-      (operation.path.at(-1) && samePoint(operation.path.at(-1)!, chair))),
+-  ) || state.retailOperations.some((operation) =>
+-    !(operation.actorKind === "founder" && operation.actorId === "founder") &&
+-    operation.status !== "completed" && operation.status !== "cancelled" && operation.status !== "abandoned" &&
+-    (samePoint(operation.location, chair) ||
+-      (operation.path.at(-1) && samePoint(operation.path.at(-1)!, chair))),
+-  ) || state.retailExternalActors.some((actor) =>
+-    actor.lifecycle !== "departed" &&
+-    ((actor.location && samePoint(actor.location, chair)) ||
+-      (actor.path.at(-1) && samePoint(actor.path.at(-1)!, chair))),
+-  );
+-}
+-
+-function founderChairIsEligibleForResume(
++/** A suspended explicit seat resumes only while that same seat still exists and is free. */
++function founderSeatIsFreeForResume(
+   state: GameState,
+   context: DomainContext,
+-  chair: GridPoint,
++  suspended: NonNullable<GameState["environment"]["founderActivity"]>,
+ ): boolean {
+-  return state.rooms.some((room) => {
+-    if (room.roomDefinitionId !== "room.waiting") return false;
+-    const definition = getRoomDefinition(room.roomDefinitionId, context);
+-    return Boolean(definition && getRoomWaitingAnchors(room, definition).some((anchor) => samePoint(anchor, chair)));
+-  });
++  const seats = listFounderSeats(state, context);
++  const endpoint = suspended.path.at(-1);
++  // Older saves and fixtures name chairs differently; a non-break chair is
++  // also recognised by its tile.
++  const seat = seats.find((candidate) => candidate.targetId === suspended.targetId) ??
++    seats.find((candidate) => candidate.kind !== "break" && endpoint !== undefined && samePoint(candidate.location, endpoint));
++  return Boolean(seat && !isFounderSeatOccupied(state, seat));
+ }
+ 
+ function reduceCollectLitter(

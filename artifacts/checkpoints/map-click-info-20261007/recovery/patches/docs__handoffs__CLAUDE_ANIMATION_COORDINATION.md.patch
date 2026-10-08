@@ -1,0 +1,111 @@
+diff --git a/docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md b/docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md
+index e8df1bb5..58b10774 100644
+--- a/docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md
++++ b/docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md
+@@ -1410,6 +1410,30 @@ mattress; and a yellow bar at the front door painted over people walking in.
+     shared dirty files, other sessions' work and the owner's save. No merge,
+     release, deployment or Pages publication. Owner pathway unchanged.
+ 
++## 2026-10-07 — Claude claim — map click info boxes, founder seats, no idle standing (owner-approved)
++
++Owner request + approvals (chat, 2026-10-07): click any character on the map →
++small box above the head with name + current activity ("Waiting for CT",
++"Walking to bathroom"…); clicking an employee shows the box first and a second
++click on the same employee while the box is up opens Praise. Founder may sit in
++free Waiting Room chairs, the front-desk public chair and Break Room seats;
++an occupied seat shows a "Seat occupied" box. Opening a chart still interrupts.
++Waiting patients must not stand around while waiting chairs are free: re-seat
++standing/wandering patients when a chair frees, return from amenity trips to a
++free chair, and overflow hallway wanderers move every few game minutes
++(editorial cadence, not clinical). Amenity/retail trip rates and income stay
++unchanged. Owner said "Claude does it all", including the reducer rule edits.
++
++Claude claims: new `session/characterActivityPresentation.ts` (+ test),
++inspect/seat wiring in `facility/FacilityScene.ts`, `FacilityCanvas.tsx`,
++`facility/types.ts`, `AppShell.tsx`, `App.tsx`, `session/usePrototypeSession.ts`,
++`session/viewModels.ts`; domain: `reduceSeatFounderInChair` /
++`founderChairIsOccupied`, waiting re-seat + public-wander cadence in
++`game-domain/src/reducer.ts`, amenity return target in `patient-amenities.ts`,
++break-seat occupancy in `level-three-support.ts` if needed. Targeted hunks
++only around concurrent Codex edits. No clinical content, save-schema or
++income changes.
++
+ ### Claude Build Mode revamp — complete, claim released (2026-10-07)
+ 
+ Implemented the owner-approved Build Mode revamp; ready for owner playtest.
+@@ -1617,3 +1641,75 @@ seats and seat ease`) is on `origin/beta`, confirmed with `git ls-remote`.
+   owner's saves and Claude's `.local-dev/` harnesses. Live sources stay
+   uncommitted in the shared tree. No merge, release, deployment or Pages
+   publication. Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.
++
++### Claude — map click info boxes / founder seats / no idle standing: implemented (2026-10-07)
++
++- **Info box:** `facility/characterInspect.ts` (key → character, 5 s box),
++  `session/characterActivityPresentation.ts` (+ test) builds "Name · Role" +
++  activity from live state (patients, staff, founder, visitors, shoppers).
++  Scene: sprite hit test (front-most wins), box drawn after each character
++  pass, founder activity box yields to it; first click on an employee shows
++  the box, second click opens Praise (old tile-based praise on pointer-down
++  removed). Any other click closes the box.
++- **Founder seats:** new `game-domain/src/founder-seats.ts` (Waiting Room
++  chairs, patient-side Front Desk chair, Break Room seats by seat id; break
++  claim saved in the `sit_in_chair` targetId `break-seat:<room>:<seat>`).
++  `SEAT_FOUNDER_IN_CHAIR` gains optional `seatId`; employees skip the
++  founder's break seat; resume after a chart also matches older chair ids by
++  tile. View: `founderChairs` carry kind/seatId/occupied; occupied → "Seat
++  occupied" box.
++- **No idle standing:** `reseatStandingWaitingPatients` (standing / hallway
++  patients and ones walking back from bathroom/shop take a free chair, closest
++  first; pending-result patients untouched); hallway overflow moves every 2–4
++  game min (`PUBLIC_WANDER_DWELL_MINUTES`, editorial); idle founder chains to
++  the next idle choice and hallway stops are 2–4 min; founder no longer "sits"
++  on the Front Desk standing spot.
++- **Perf:** wander and founder idle pickers now route only to the chosen spot
++  (were routing to every candidate). Overflow harness: tick median 22.7 →
++  3.0 ms; founder idle pick ~22 ms → single route.
++- **Tests:** domain `tests/founder-seats-and-reseating.test.ts` (new);
++  `waiting-destination-routing` test C now fills every chair (owner rule
++  changed its premise). Domain suite green except the known full-run
++  `patient-supply` flake (passes alone). Player suite green except Codex's
++  in-progress `surgeryCenterServicePreviews` chart-text test. E2E
++  `tests/e2e/map-click-info.spec.ts` + `fixtures/mapClickInfoScenario.ts`
++  (run on 5183 only); captures in `artifacts/screenshots/map-click-info/`.
++- QA server config `player-qa-claude-5183` added to `.claude/launch.json`.
++  Owner pathway (127.0.0.1:4173) unchanged; owner storage untouched.
++
++## Team discussions on the chart sheet (2026-10-07, owner-approved)
++
++Owner asked for stats/ethics questions to look like patient charts, with no
++separate explanation page. Owner decisions and the Codex content brief are in
++`docs/handoffs/STATS_ETHICS_OVERHAUL_BRIEF.md`.
++
++- `ui/EmployeeDiscussionPanel.tsx` is now an adapter (`employeeDiscussionChartView`)
++  onto `ChartPanel`: identity header (role as subtitle, case chief complaint as
++  topic), story column, decision column, feedback inline under the answered
++  choices, no summary page.
++- `ui/ChartPanel.tsx`: optional `subjectKind`/`subtitleLabel`
++  (accessible labels say "team discussion"); `primaryActionLabel` can now
++  override the file-button label (patient charts never set it in that state).
++- `session/viewModels.ts` `employeeDiscussionView`: `traveling` status (still
++  answerable), `topicLabel`, `feedbackTitle`, `revealedCorrect` after an
++  answer, plain explanation body, `finalStep`; dropped the duplicate `summary`.
++- `session/usePrototypeSession.ts`: the final acknowledgment also files the
++  discussion (domain commands unchanged).
++- Removed the dead `.employee-discussion-body` CSS.
++- Tests: rewrote `EmployeeDiscussionPanel.test.tsx`; updated
++  `employeeDiscussionView.test.tsx`. Player typecheck clean; session/ui
++  351/352 (only Codex's in-progress `surgeryCenterServicePreviews`).
++- Browser: synthetic QA campaign on new `player-qa-claude-5185`; question →
++  inline feedback → one-click file verified, no console errors. Owner pathway
++  and storage untouched.
++
++
++## Future roster batch 5 completed — 2026-10-07
++20 new characters /160 unique standing and seated poses are root-reviewed and ready for owner artwork review:12 radiologists,2 APPs,2 executives,4 patients. Parent independently passed strict source/contact/alpha,20 chair proofs,desktop/phone gallery and unchanged225/1830/116 baseline checks. Sol coverage/artists/packaging finished; all writers stopped and scoped art ownership is released. No runtime integration or GitHub push for this new batch; local checkpoint awaits owner approval and backup request. Undefined future APP/Executive headcounts and deferred hospital staffing are not claimed complete. Concurrent reducer-only coverage receipt drift was explicitly reviewed with a fresh execution and unchanged allocation; see docs/handoffs/FUTURE_ROSTER20_V5.md for exact evidence and recovery paths. Owner pathway unchanged:START_GAME.cmd → http://127.0.0.1:4173; same profile/storage.
++- Follow-up: founder automatic shop trips no longer pull the founder out of a
++  player-chosen seat (`retail-operations.ts` founder eligibility checks
++  `explicitSeat`), so only a chart (or a new click) interrupts. Last 9 e2e runs
++  passed; one earlier run (before this fix was confirmed) ended with the
++  founder idle at the desk after an accepted desk-chair click, not reproduced
++  since. Typecheck currently fails only in Codex's in-progress
++  `employee-training.ts` / `service-operations.ts`.

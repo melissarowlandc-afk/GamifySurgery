@@ -1,0 +1,38 @@
+diff --git a/apps/player/src/AppShell.tsx b/apps/player/src/AppShell.tsx
+index b89fe65f..69c601c9 100644
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -14,6 +14,7 @@ import {
+   type FacilityCameraView,
+   type FacilityViewModel,
+ } from "./facility";
++import type { DescribeCharacterRequest } from "./facility/types";
+ import {
+   AdvertisingPanel,
+   BuildPanel,
+@@ -163,7 +164,8 @@ interface AppShellProps {
+   onCollectLitter: (litterId: string) => void;
+   onRefillWaterCooler: () => void;
+   onSeatFounderAtFrontDesk: () => boolean;
+-  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint) => boolean;
++  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
++  onDescribeCharacter?: DescribeCharacterRequest;
+   onPraiseEmployee: (employeeId: string) => void;
+   onMoveFounder: (destination: GridPoint) => boolean;
+   onLevelUp: () => void;
+@@ -269,6 +271,7 @@ export function AppShell({
+   onRefillWaterCooler,
+   onSeatFounderAtFrontDesk,
+   onSeatFounderInChair,
++  onDescribeCharacter,
+   onPraiseEmployee,
+   onMoveFounder,
+   onLevelUp,
+@@ -790,6 +793,7 @@ export function AppShell({
+                 onRefillWaterCooler={onRefillWaterCooler}
+                 onSeatFounderAtFrontDesk={onSeatFounderAtFrontDesk}
+                 onSeatFounderInChair={onSeatFounderInChair}
++                onDescribeCharacter={onDescribeCharacter}
+                 onPraiseEmployee={setPraiseCandidateId}
+                 onMoveFounder={onMoveFounder}
+                 onCameraChange={onFacilityCameraChange}

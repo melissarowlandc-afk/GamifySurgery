@@ -1,0 +1,29 @@
+{
+  "checkpoint": "map-click-info-20261007",
+  "recordedBy": "Claude Code",
+  "date": "2026-10-07",
+  "typecheck": [
+    { "command": "packages/game-domain: npx tsc --noEmit -p .", "result": "no errors in any Claude-touched file; at checkpoint time the package reports 2 errors only in Codex's in-progress employee-training.ts and service-operations.ts" },
+    { "command": "apps/player: npx tsc --noEmit -p .", "result": "same 2 Codex errors only" }
+  ],
+  "focusedTests": [
+    { "command": "packages/game-domain: npx vitest run tests/founder-seats-and-reseating.test.ts tests/founder-map-movement.test.ts tests/employee-discussions.test.ts tests/waiting-destination-routing.test.ts", "files": 4, "tests": 31, "failed": 0 },
+    { "command": "apps/player: npx vitest run src/session/characterActivityPresentation.test.ts", "files": 1, "tests": 5, "failed": 0 }
+  ],
+  "fullSuites": [
+    { "suite": "packages/game-domain", "passed": 2397, "failed": 4, "note": "patient-supply (known full-run flake, passes alone) and room-upgrade-experience (Codex editing the file during the run; 44/44 pass alone)." },
+    { "suite": "apps/player", "passed": 705, "failed": 1, "note": "surgeryCenterServicePreviews chart-text test from Codex's in-progress diagnostic timing work; no simulation ticks involved." }
+  ],
+  "browserE2E": {
+    "spec": "tests/e2e/map-click-info.spec.ts (fixture tests/e2e/fixtures/mapClickInfoScenario.ts)",
+    "server": "http://127.0.0.1:5183 (QA only; owner origin 127.0.0.1:4173 untouched)",
+    "result": "last 9 consecutive runs passed; one earlier run (before the founder shop-trip fix was confirmed) ended with the founder idle at the desk after an accepted desk-chair click, not reproduced since",
+    "evidence": "evidence/*.png"
+  },
+  "performance": {
+    "harness": ".local-dev/claude-map-click/overflow-perf.test.ts (gitignored): 63-room layout, every chair full, 12 hallway overflow patients, 120 ticks",
+    "before": "tick median 22.7 ms, p95 49-67 ms (hallway picker routed to every public tile)",
+    "after": "tick median 3.0 ms, p95 5.1 ms; Claude code 0.7 ms of the 18 ms max tick",
+    "longestHallwayStandGameMinutes": 3
+  }
+}

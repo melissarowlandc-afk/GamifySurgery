@@ -1,0 +1,36 @@
+diff --git a/apps/player/src/facility/FacilityCanvas.tsx b/apps/player/src/facility/FacilityCanvas.tsx
+index 3d3f1298..c79640b4 100644
+--- a/apps/player/src/facility/FacilityCanvas.tsx
++++ b/apps/player/src/facility/FacilityCanvas.tsx
+@@ -14,6 +14,7 @@ import {
+ import type {
+   FacilityCameraChangeRequest,
+   CollectLitterRequest,
++  DescribeCharacterRequest,
+   FacilityViewModel,
+   MoveFounderRequest,
+   PlaceDoorRequest,
+@@ -38,6 +39,7 @@ export interface FacilityCanvasProps {
+   onRefillWaterCooler?: RefillWaterCoolerRequest;
+   onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
+   onSeatFounderInChair?: SeatFounderInChairRequest;
++  onDescribeCharacter?: DescribeCharacterRequest;
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
+@@ -74,6 +76,7 @@ export function FacilityCanvas({
+   onRefillWaterCooler,
+   onSeatFounderAtFrontDesk,
+   onSeatFounderInChair,
++  onDescribeCharacter,
+   onPraiseEmployee,
+   onMoveFounder,
+   onCameraChange,
+@@ -101,6 +104,7 @@ export function FacilityCanvas({
+   bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
+   bridgeRef.current.onSeatFounderAtFrontDesk = onSeatFounderAtFrontDesk;
+   bridgeRef.current.onSeatFounderInChair = onSeatFounderInChair;
++  bridgeRef.current.onDescribeCharacter = onDescribeCharacter;
+   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
+   bridgeRef.current.onMoveFounder = onMoveFounder;
+   bridgeRef.current.onCameraChange = onCameraChange;

@@ -1,0 +1,35 @@
+diff --git a/packages/game-domain/src/patient-amenities.ts b/packages/game-domain/src/patient-amenities.ts
+index 1f8fcf94..4795169e 100644
+--- a/packages/game-domain/src/patient-amenities.ts
++++ b/packages/game-domain/src/patient-amenities.ts
+@@ -280,6 +280,30 @@ export function requestPatientAmenityReturn(
+   return true;
+ }
+ 
++/**
++ * Re-points a patient's ordinary bathroom return walk at a newly freed waiting
++ * chair (owner rule, 2026-10-07: do not return to a standing spot when a chair
++ * is free). Departure trips keep their service-owned target.
++ */
++export function redirectPatientAmenityReturn(
++  state: GameState,
++  encounterId: string,
++  target: GridPoint,
++  context: DomainContext,
++): boolean {
++  const trip = getPatientAmenityTrip(state, "encounter", encounterId);
++  if (!trip || trip.status !== "returning" || trip.purpose) return false;
++  const current = actorLocation(state, "encounter", encounterId);
++  if (!current) return false;
++  const path = route(state, context, current, target);
++  if (path.length === 0) return false;
++  trip.returnTarget = { ...target };
++  trip.path = path.map((point) => ({ ...point }));
++  trip.pathIndex = 0;
++  trip.lastMovedAtFacilityTick = state.facilityTick;
++  return true;
++}
++
+ function advanceTrip(state: GameState, trip: PatientAmenityTripState, context: DomainContext): boolean {
+   const current = actorLocation(state, trip.actorKind, trip.actorId);
+   if (!current) return false;

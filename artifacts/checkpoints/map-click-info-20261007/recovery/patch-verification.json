@@ -1,0 +1,141 @@
+{
+  "verifiedAt": "2026-10-07",
+  "method": "baseline = live file with exactly Claude's hunks reversed; git apply patch to baseline must equal live",
+  "files": [
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "patch": "recovery/patches/packages__game-domain__src__types.ts.patch",
+      "addedLines": 2,
+      "removedLines": 0,
+      "liveSha256": "424cc27706e45685c9268feb4334928131801636ef80162d9b7012b24ad7eccb",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "patch": "recovery/patches/packages__game-domain__src__index.ts.patch",
+      "addedLines": 1,
+      "removedLines": 0,
+      "liveSha256": "d45503823d70f556bd099ea9d8d8f2c3aa133c81e94041885458ba1312c51b5f",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/src/level-three-support.ts",
+      "patch": "recovery/patches/packages__game-domain__src__level-three-support.ts.patch",
+      "addedLines": 24,
+      "removedLines": 0,
+      "liveSha256": "cd5e5f7c7d27630d0e5052ea1a656ae65b02c30b3ee3aeeff81b59dba401a89d",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "patch": "recovery/patches/packages__game-domain__src__patient-amenities.ts.patch",
+      "addedLines": 24,
+      "removedLines": 0,
+      "liveSha256": "9557d26c45bed87e19ba0dd5f8201b54252e594910a17ff17b1f507dc1b8e55f",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "patch": "recovery/patches/packages__game-domain__src__retail-operations.ts.patch",
+      "addedLines": 21,
+      "removedLines": 1,
+      "liveSha256": "739370372ad953bdc46fa49a2848af51b742934cf3d8f412d2c7778249082c23",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "patch": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "addedLines": 250,
+      "removedLines": 100,
+      "liveSha256": "fd925d60d0a99f78c97459494a2199386ee2278faab3403441da72c7eeaaa8a0",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/apps__player__src__facility__types.ts.patch",
+      "addedLines": 25,
+      "removedLines": 1,
+      "liveSha256": "e4f89eafab31eb3297a6c331b44349c9db9de8ba703b2799c087bfbab03bda0f",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "addedLines": 20,
+      "removedLines": 12,
+      "liveSha256": "9f8c6e43bedd99b6666f233d21249f02cf9d545d81806a37b4c7ddff085ca431",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/apps__player__src__session__usePrototypeSession.ts.patch",
+      "addedLines": 19,
+      "removedLines": 3,
+      "liveSha256": "7b9c36a972d83c8be4f61b42d3751030936201af339e2342a79dea7929f0e767",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "addedLines": 5,
+      "removedLines": 1,
+      "liveSha256": "21a6689d2eef314672b46589686e70d57dbe859794cdab84afc48df541cd2e3c",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/App.tsx",
+      "patch": "recovery/patches/apps__player__src__App.tsx.patch",
+      "addedLines": 1,
+      "removedLines": 0,
+      "liveSha256": "286b0041746f919e32d4b25edebdb567f6c72d546d6278fe89387ce598a61896",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "patch": "recovery/patches/apps__player__src__facility__FacilityCanvas.tsx.patch",
+      "addedLines": 4,
+      "removedLines": 0,
+      "liveSha256": "fd1384875e08db5f5e5bd5942f4ef6cbf1b56537c2916f18084812069c33a714",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/apps__player__src__facility__FacilityScene.ts.patch",
+      "addedLines": 245,
+      "removedLines": 19,
+      "liveSha256": "564a38f9e83e6bf8da6b42e87362008a82fe886d75651040576a31341e577a97",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-destination-routing.test.ts",
+      "patch": "recovery/patches/packages__game-domain__tests__waiting-destination-routing.test.ts.patch",
+      "addedLines": 14,
+      "removedLines": 0,
+      "liveSha256": "8381a895b1001f9dc6e8c47cbec880f1a5c8f0b8f4bff5bb31fbda0031448763",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    },
+    {
+      "path": "docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md",
+      "patch": "recovery/patches/docs__handoffs__CLAUDE_ANIMATION_COORDINATION.md.patch",
+      "addedLines": 96,
+      "removedLines": 0,
+      "liveSha256": "c3c2c7efd1b13326df46e2cf6cdeac76d7f15c7d9765c3cf14cb95ff7b70778b",
+      "rebuildsLiveByteForByte": true,
+      "applyError": null
+    }
+  ]
+}

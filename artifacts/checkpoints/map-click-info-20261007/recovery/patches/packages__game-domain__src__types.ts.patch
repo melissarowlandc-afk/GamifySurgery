@@ -1,0 +1,13 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+index 6014857e..12a5235c 100644
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -1737,6 +1737,8 @@ export type GameCommand =
+       type: "SEAT_FOUNDER_IN_CHAIR";
+       roomInstanceId: string;
+       location: GridPoint;
++      /** Break Room seats share nearest tiles, so they are named explicitly. */
++      seatId?: LevelThreeBreakSeatId;
+     })
+   | (CommandBase & { type: "SEAT_FOUNDER_AT_FRONT_DESK" })
+   | (CommandBase & {

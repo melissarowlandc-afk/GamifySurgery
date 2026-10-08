@@ -1,0 +1,50 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+index f2f80f8d..4bd8fc86 100644
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -163,12 +163,21 @@ export interface FacilityFounderView {
+   direction?: "front" | "side" | "back";
+   seated?: boolean;
+   supportRole?: FacilityActorSupportRole;
++  /** Break Room seat id while the founder sits there. */
++  supportId?: string;
++  supportRoomInstanceId?: string;
+ }
+ 
+ /** A domain-authorized ordinary chair; the scene uses this instead of guessing from floor art. */
+ export interface FacilityFounderChairView {
+   roomInstanceId: string;
+   location: GridPoint;
++  /** Waiting Room chair, patient-side Front Desk chair, or Break Room seat. */
++  kind?: "waiting" | "front_desk_public" | "break";
++  /** Break Room seat id; several break seats can share one logical tile. */
++  seatId?: string;
++  /** Someone is sitting there or has it reserved. */
++  occupied?: boolean;
+ }
+ 
+ /** Durable income receipts projected only for transient facility feedback. */
+@@ -324,7 +333,22 @@ export type RequestRoomUpgrade = (roomInstanceId: string) => void;
+ export type CollectLitterRequest = (litterId: string) => void;
+ export type RefillWaterCoolerRequest = () => void;
+ export type SeatFounderAtFrontDeskRequest = () => boolean;
+-export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint) => boolean;
++export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
++
++/** A character on the map the player clicked to see what they are doing. */
++export interface FacilityCharacterRef {
++  kind: "founder" | "staff" | "patient" | "service-visitor" | "retail-visitor" | "companion" | "ambient";
++  id: string;
++}
++
++export interface FacilityCharacterDescription {
++  name: string;
++  activity: string;
++}
++
++export type DescribeCharacterRequest = (
++  character: FacilityCharacterRef,
++) => FacilityCharacterDescription | null;
+ export type PraiseEmployeeRequest = (employeeId: string) => void;
+ export type MoveFounderRequest = (destination: GridPoint) => boolean;
+ export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;
