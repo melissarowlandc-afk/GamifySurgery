@@ -1,4 +1,8 @@
-> TEAM DISCUSSIONS USE THE CHART SHEET (2026-10-07, Claude Code). Owner
+> TEAM DISCUSSIONS ON THE CHART SHEET GITHUB BACKUP VERIFIED (2026-10-07,
+> Claude Code). Owner direction relayed by the manager. Checkpoint
+> 609d285317fa43a0810cccb0fb414f34e18a6938 is on origin/beta, confirmed with
+> git ls-remote. Live code stays uncommitted in the shared tree; no merge,
+> release or Pages publication. Owner
 > requested: stats/QI team discussions now render through ChartPanel (header,
 > story column, decision column) instead of the old single-column panel.
 > Feedback appears inline under the answered choices; the separate summary
