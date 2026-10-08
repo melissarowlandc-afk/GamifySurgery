@@ -1,3 +1,18 @@
+> GS-028 LEVEL-3 GITHUB RECOVERY BACKUP VERIFIED (2026-10-07).
+> Owner explicitly requested Push to GitHub. Verified origin/beta contains
+> checkpoint 517cb171f0f7d72a108bba0ea3b6db946ca4403c.
+> Archive: artifacts/checkpoints/gs028-level3-20261007/ —20 new concepts,
+> 80 variants,62 encounters including18 two-decision visits; all start Level3.
+> Fifteen exact task files and23 scoped patches passed integrity/source/privacy/
+> credential/asset checks and forward/reverse/reapply verification. Eleven
+> compatible baselines match actual captures; twelve are explicitly inferred.
+> All clinical content remains needs_clinician_review. Recovery archive only:
+> compatible earlier dirty dependencies are needed separately; no clean runnable
+> checkout, merge, release, Pages publication or clinical approval is claimed.
+> Concurrent source/artwork/staged changes and owner saves preserved. The
+> canonical pathway remains START_GAME.cmd -> http://127.0.0.1:4173 in the usual
+> persistent profile. Keep GS-028 open for future owner-requested batches.
+
 > TEAM DISCUSSIONS ON THE CHART SHEET GITHUB BACKUP VERIFIED (2026-10-07,
 > Claude Code). Owner direction relayed by the manager. Checkpoint
 > 609d285317fa43a0810cccb0fb414f34e18a6938 is on origin/beta, confirmed with
