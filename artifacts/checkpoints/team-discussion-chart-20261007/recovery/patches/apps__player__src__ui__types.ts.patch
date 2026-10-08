@@ -1,0 +1,31 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -94,8 +94,15 @@
+   sortKey?: number;
+ }
+ export interface EmployeeDiscussionView {
+-  summary?: string;
+-  id:string; employeeName:string; roleLabel:string; avatar?:PixelAvatarView; status:"traveling"|"question"|"feedback"|"summary"; presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[]; feedback?:string; correctAnswerText?:string;
++  id:string; employeeName:string; roleLabel:string; avatar?:PixelAvatarView;
++  /** `traveling` still accepts answers; the founder is walking over. */
++  status:"traveling"|"question"|"feedback"|"summary";
++  /** Short authored topic shown in the chart's chief-complaint slot. */
++  topicLabel?:string;
++  presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[];
++  feedbackTitle?:"Correct"|"Incorrect"; feedback?:string; correctAnswerText?:string;
++  /** True when acknowledging this step's feedback completes the discussion. */
++  finalStep:boolean;
+ }
+ 
+ export interface AnswerChoiceView {
+@@ -184,6 +191,10 @@
+ 
+ export interface ChartView {
+   id: string;
++  /** Team discussions reuse the chart sheet; omitted means a patient chart. */
++  subjectKind?: "patient" | "team_discussion";
++  /** Header line used in place of age/sex, such as an employee's role. */
++  subtitleLabel?: string;
+   /** Stable clinical case ID for provenance and development inspection. */
+   clinicalCaseId?: string;
+   patientName: string;

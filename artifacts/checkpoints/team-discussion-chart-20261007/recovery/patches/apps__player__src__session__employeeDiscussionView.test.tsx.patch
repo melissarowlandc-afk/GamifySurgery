@@ -1,0 +1,29 @@
+--- a/apps/player/src/session/employeeDiscussionView.test.tsx
++++ b/apps/player/src/session/employeeDiscussionView.test.tsx
+@@ -17,7 +17,8 @@
+     };
+     state.employeeDiscussions = { [discussion.id]: discussion };
+     state.openEmployeeDiscussionId = discussion.id;
+-    expect(employeeDiscussionView(state)).toMatchObject({employeeName: "Ari", status: "question", presentation: frozenCase.presentation});
++    expect(employeeDiscussionView(state)).toMatchObject({employeeName: "Ari", status: "traveling", presentation: frozenCase.presentation, finalStep: frozenCase.decisionNodes.length === 1});
++    expect(employeeDiscussionView(state)?.choices?.every((choice) => !choice.disabled && choice.revealedCorrect === undefined)).toBe(true);
+     discussion.lifecycle = "active_action_required";
+     const question = employeeDiscussionView(state)!;
+     expect(question.status).toBe("question");
+@@ -28,10 +29,13 @@
+     const wrong = node.answerChoices.find((choice) => !choice.isCorrect)!;
+     discussion.answers = [{decisionNodeId: node.id, primaryConceptId: node.primaryConceptId, answerChoiceId: wrong.id, correct: false, ratingIntent: "Again", answeredAtFacilityTick: 1, explanation: node.explanation, correctedForward: false}];
+     discussion.lifecycle = "feedback_pending";
+-    expect(employeeDiscussionView(state)).toMatchObject({status: "feedback", correctAnswerText: node.answerChoices.find((choice) => choice.isCorrect)!.label});
+-    expect(employeeDiscussionView(state)?.feedback).toContain(wrong.label);
++    const feedback = employeeDiscussionView(state)!;
++    expect(feedback).toMatchObject({status: "feedback", feedbackTitle: "Incorrect", feedback: node.explanation, correctAnswerText: node.answerChoices.find((choice) => choice.isCorrect)!.label});
++    expect(feedback.choices?.find((choice) => choice.id === wrong.id)).toMatchObject({selected: true, disabled: true, revealedCorrect: false});
++    expect(feedback.choices?.find((choice) => choice.revealedCorrect)?.label).toBe(feedback.correctAnswerText);
+     discussion.lifecycle = "resolved_summary_available";
+-    expect(employeeDiscussionView(state)).toMatchObject({status: "summary", summary: frozenCase.learningSummary});
++    expect(employeeDiscussionView(state)).toMatchObject({status: "summary", feedback: node.explanation});
++    expect(employeeDiscussionView(state)).not.toHaveProperty("summary");
+     state.openEmployeeDiscussionId = null;
+     expect(employeeDiscussionView(state)).toBeNull();
+   });

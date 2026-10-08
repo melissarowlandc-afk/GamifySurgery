@@ -1,0 +1,17 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -822,7 +822,13 @@
+     const current = stateRef.current;
+     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
+     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
+-    if (discussion && node) execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id});
++    if (!discussion || !node) return;
++    if (execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id}) !== "applied") return;
++    // The feedback card already holds the teaching text, so the final
++    // acknowledgment files the discussion instead of opening a summary page.
++    if (stateRef.current.employeeDiscussions?.[discussion.id]?.lifecycle === "resolved_summary_available") {
++      execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId: discussion.id});
++    }
+   }, [execute]);
+   const fileEmployeeDiscussion = useCallback(() => {
+     const discussionId = stateRef.current.openEmployeeDiscussionId;

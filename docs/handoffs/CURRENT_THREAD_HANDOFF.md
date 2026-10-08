@@ -1,3 +1,17 @@
+> TEAM DISCUSSIONS USE THE CHART SHEET (2026-10-07, Claude Code). Owner
+> requested: stats/QI team discussions now render through ChartPanel (header,
+> story column, decision column) instead of the old single-column panel.
+> Feedback appears inline under the answered choices; the separate summary
+> page is gone, and the final "File discussion" acknowledges and files in one
+> click. Presentation/session only: no domain, content, FSRS or save changes.
+> Content overhaul brief: docs/handoffs/STATS_ETHICS_OVERHAUL_BRIEF.md (now
+> dispatched by the manager to a Sol worker, see
+> docs/execplans/gs028-stats-ethics-overhaul-20261007.md). Recovery archive:
+> artifacts/checkpoints/team-discussion-chart-20261007/ (3 whole files,
+> 6 Claude-only patches verified byte for byte). Browser check used QA entry
+> player-qa-claude-5185 (http://127.0.0.1:5185, separate storage, synthetic
+> campaign). Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.
+
 > PATIENT CHART REDESIGN GITHUB BACKUP VERIFIED (2026-10-07, Claude Code).
 > Owner-approved chart redesign: the chart floats over the play area at its
 > content size, one-line header, no bottom bar, one scroll, feedback in

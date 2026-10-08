@@ -1,0 +1,56 @@
+--- a/apps/player/src/ui/ChartPanel.tsx
++++ b/apps/player/src/ui/ChartPanel.tsx
+@@ -723,9 +723,9 @@
+         }
+       : chart.canFile
+         ? {
+-            label: chart.readOnly
+-              ? "Close Resolved Chart"
+-              : "Resolve Completed Chart",
++            label:
++              chart.primaryActionLabel ??
++              (chart.readOnly ? "Close Resolved Chart" : "Resolve Completed Chart"),
+             run: onFileChart,
+             tutorialAnchor: "resolve-chart",
+           }
+@@ -809,7 +809,9 @@
+       ? chart.patientSatisfactionLabel
+       : `Satisfaction ${chart.patientSatisfactionLabel}`
+     : undefined;
+-  const demographics = [chart.ageLabel, chart.sexLabel].filter(Boolean).join(" · ");
++  const demographics =
++    chart.subtitleLabel ?? [chart.ageLabel, chart.sexLabel].filter(Boolean).join(" · ");
++  const isTeamDiscussion = chart.subjectKind === "team_discussion";
+   const visibleStatusLabel = /^Question \d+ of \d+$/i.test(chart.statusLabel)
+     ? "Clinical decision"
+     : chart.statusLabel;
+@@ -884,7 +886,7 @@
+     <aside
+       ref={sheetRef}
+       className={`chart-sheet${showingBack ? " is-showing-back" : ""}`}
+-      aria-label={`${chart.patientName} chart`}
++      aria-label={`${chart.patientName} ${isTeamDiscussion ? "team discussion" : "chart"}`}
+       data-placed={placement ? "true" : undefined}
+       style={placement}
+     >
+@@ -916,7 +918,7 @@
+           className="cs-close"
+           type="button"
+           onClick={onClose}
+-          aria-label="Close patient chart"
++          aria-label={isTeamDiscussion ? "Close team discussion" : "Close patient chart"}
+           title="Close (Esc)"
+         >
+           ✕
+@@ -948,7 +950,10 @@
+           </div>
+         ) : (
+           <div className="cs-body">
+-            <section className="cs-story" aria-label="Patient presentation">
++            <section
++              className="cs-story"
++              aria-label={isTeamDiscussion ? "Discussion scenario" : "Patient presentation"}
++            >
+               {chart.vitals && chart.vitals.length > 0 ? (
+                 <ul className="cs-vitals" aria-label="Vital signs">
+                   {chart.vitals.map((vital) => (

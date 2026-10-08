@@ -1,0 +1,37 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -748,21 +748,29 @@
+   if (!node) return null;
+   const employee = state.employees.find((item) => item.id === discussion.employeeId);
+   const answer = discussion.answers.find((item) => item.decisionNodeId === node.id);
+-  const selected = node.answerChoices.find((item) => item.id === answer?.answerChoiceId);
+   const correct = node.answerChoices.find((item) => item.isCorrect);
+-  const status = discussion.lifecycle === "active_traveling" || discussion.lifecycle === "active_action_required" ? "question"
++  const status = discussion.lifecycle === "active_traveling" ? "traveling"
++    : discussion.lifecycle === "active_action_required" ? "question"
+     : discussion.lifecycle === "feedback_pending" ? "feedback" : "summary";
++  const answerable = status === "traveling" || status === "question";
+   return {
+     id: discussion.id, employeeName: discussion.employeeDisplayName,
+     roleLabel: employee ? getStaffRoleDefinition(employee.staffRoleDefinitionId)?.displayName ?? "Team member" : "Team member",
+     avatar: discussion.employeeAppearance, status,
++    topicLabel: discussion.frozenCase.chiefComplaint,
+     presentation: discussion.frozenCase.presentation,
+     reviewStatus: "Educational draft · needs clinician review",
+     question: node.stem,
+-    choices: node.answerChoices.map((choice) => ({id: choice.id, label: choice.label, selected: choice.id === answer?.answerChoiceId, disabled: status !== "question"})),
+-    feedback: answer ? `${answer.correct ? "Correct." : "Incorrect."} Your answer: ${selected?.label ?? "Recorded answer"}. ${node.explanation}` : undefined,
++    // The key is revealed only after an answer exists, as on patient charts.
++    choices: node.answerChoices.map((choice) => ({
++      id: choice.id, label: choice.label, selected: choice.id === answer?.answerChoiceId, disabled: !answerable,
++      ...(answer ? {revealedCorrect: choice.isCorrect} : {}),
++    })),
++    // Selected/correct choices are tagged on the answer rows, so the body is the teaching text alone.
++    feedbackTitle: answer ? (answer.correct ? "Correct" : "Incorrect") : undefined,
++    feedback: answer ? answer.explanation || node.explanation : undefined,
+     correctAnswerText: correct?.label,
+-    summary: discussion.frozenCase.learningSummary,
++    finalStep: discussion.currentNodeIndex >= discussion.frozenCase.decisionNodes.length - 1,
+   };
+ }
+ 

@@ -1598,3 +1598,29 @@ mechanically; `patient-chart-density.spec.ts` was rewritten for the new layout
   `ChartPanel.tsx`, `chartSheet.css`, `patient-chart-density.spec.ts`;
   Claude-only patches for 36 shared files, each verified byte for byte).
   No merge, release or Pages publication.
+
+## Team discussions on the chart sheet (2026-10-07, owner-approved)
+
+Owner asked for stats/ethics questions to look like patient charts, with no
+separate explanation page. Owner decisions and the Codex content brief are in
+`docs/handoffs/STATS_ETHICS_OVERHAUL_BRIEF.md`.
+
+- `ui/EmployeeDiscussionPanel.tsx` is now an adapter (`employeeDiscussionChartView`)
+  onto `ChartPanel`: identity header (role as subtitle, case chief complaint as
+  topic), story column, decision column, feedback inline under the answered
+  choices, no summary page.
+- `ui/ChartPanel.tsx`: optional `subjectKind`/`subtitleLabel`
+  (accessible labels say "team discussion"); `primaryActionLabel` can now
+  override the file-button label (patient charts never set it in that state).
+- `session/viewModels.ts` `employeeDiscussionView`: `traveling` status (still
+  answerable), `topicLabel`, `feedbackTitle`, `revealedCorrect` after an
+  answer, plain explanation body, `finalStep`; dropped the duplicate `summary`.
+- `session/usePrototypeSession.ts`: the final acknowledgment also files the
+  discussion (domain commands unchanged).
+- Removed the dead `.employee-discussion-body` CSS.
+- Tests: rewrote `EmployeeDiscussionPanel.test.tsx`; updated
+  `employeeDiscussionView.test.tsx`. Player typecheck clean; session/ui
+  351/352 (only Codex's in-progress `surgeryCenterServicePreviews`).
+- Browser: synthetic QA campaign on new `player-qa-claude-5185`; question →
+  inline feedback → one-click file verified, no console errors. Owner pathway
+  and storage untouched.
