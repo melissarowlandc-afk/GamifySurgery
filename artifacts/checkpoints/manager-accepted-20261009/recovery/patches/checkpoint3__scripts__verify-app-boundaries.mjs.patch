@@ -1,0 +1,10 @@
+--- a/scripts/verify-app-boundaries.mjs
++++ b/scripts/verify-app-boundaries.mjs
+@@ -158,6 +158,7 @@
+   trackedPaths = execFileSync("git", ["ls-files", "-z"], {
+     cwd: repositoryRoot,
+     encoding: "utf8",
++    maxBuffer: 64 * 1024 * 1024,
+   })
+     .split("\0")
+     .filter(Boolean)

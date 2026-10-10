@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {tool,root,repo} from './build-roster.mjs';
+const [number,stage] = process.argv.slice(2);
+assert(/^00[1-8]$/.test(number)); assert(['1','2'].includes(stage));
+const dir = resolve(root,'sources',number); mkdirSync(dir,{recursive:true});
+const stage1=stage==='1';
+const roster=JSON.parse(readFileSync(resolve(tool,'roster.json'),'utf8'));
+const style=roster.identities.find(c=>c.number===number).stage1.references[0].path;
+const args = {prompt:readFileSync(resolve(tool,'prompts',number,stage1?'stage1-standing-cardinals.prompt.txt':'stage2-eight-pose.prompt.txt'),'utf8').trimEnd(),referenced_image_paths:[resolve(repo,style),...stage1?[]:[resolve(dir,'stage1-standing-cardinals.png')]],transparent_background:true};
+writeFileSync(resolve(dir,stage1?'stage1-exact-prompt.txt':'exact-prompt.txt'),args.prompt);
+writeFileSync(resolve(dir,stage1?'stage1-tool-args.json':'tool-args.json'),JSON.stringify(args,null,2)+'\n');
+console.log(JSON.stringify(args));

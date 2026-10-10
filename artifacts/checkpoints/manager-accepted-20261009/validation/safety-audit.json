@@ -1,0 +1,202 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-10T01:38:56.359742+00:00",
+  "logicalRecoveryTargetsScanned": 1218,
+  "physicalArchiveFilesScanned": 1433,
+  "utf8TextInspections": 1539,
+  "strongSecretSignatures": [],
+  "literalCredentialAssignments": [],
+  "personalIdentifiers": [],
+  "forbiddenPayloadPaths": [],
+  "utf8Boms": [],
+  "textEncodingErrors": [],
+  "reviewedBenignLiteralAssignments": [
+    {
+      "kind": "recovered",
+      "path": "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+      "category": "literal_credential_assignment",
+      "line": 220,
+      "disposition": "Clinical prototype editorial-authorization enum, not a credential. Source and test explicitly retain no clinical approval/public release."
+    },
+    {
+      "kind": "recovered",
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "category": "literal_credential_assignment",
+      "line": 104,
+      "disposition": "Clinical prototype editorial-authorization enum, not a credential. Source and test explicitly retain no clinical approval/public release."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__packages__clinical-content__src__synthetic-content.ts.patch",
+      "category": "literal_credential_assignment",
+      "line": 33,
+      "disposition": "Clinical prototype editorial-authorization enum, not a credential. Source and test explicitly retain no clinical approval/public release."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+      "category": "literal_credential_assignment",
+      "line": 220,
+      "disposition": "Clinical prototype editorial-authorization enum, not a credential. Source and test explicitly retain no clinical approval/public release."
+    }
+  ],
+  "preservedSourceOrPatchLineEndings": [
+    {
+      "kind": "recovered",
+      "path": "apps/player/src/art/bitmapAssetManifest.test.ts",
+      "crlf": 296,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "recovered",
+      "path": "apps/player/src/session/tutorialViewModels.test.ts",
+      "crlf": 265,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "recovered",
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "crlf": 294,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "recovered",
+      "path": "apps/player/src/ui/TutorialCoach.tsx",
+      "crlf": 764,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "recovered",
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "crlf": 55,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "recovered",
+      "path": "tools/room-design/level-5/founders-office/proof/evidence/v2/http-validation-report.json",
+      "crlf": 277,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__apps__player__src__AppShell.tsx.patch",
+      "crlf": 1110,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__apps__player__src__art__bitmapAssetManifest.test.ts.patch",
+      "crlf": 14,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__apps__player__src__session__tutorialViewModels.test.ts.patch",
+      "crlf": 9,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__apps__player__src__session__tutorialViewModels.ts.patch",
+      "crlf": 43,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__apps__player__src__ui__TutorialCoach.tsx.patch",
+      "crlf": 32,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__docs__execplans__character-gapfill-v6-20261007.md.patch",
+      "crlf": 311,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__docs__execplans__owner-requests-20261008.md.patch",
+      "crlf": 254,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/patches/checkpoint3__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "crlf": 55,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/apps/player/src/AppShell.tsx",
+      "crlf": 1110,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/apps/player/src/art/bitmapAssetManifest.test.ts",
+      "crlf": 300,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/apps/player/src/session/tutorialViewModels.test.ts",
+      "crlf": 266,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/apps/player/src/session/tutorialViewModels.ts",
+      "crlf": 304,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/apps/player/src/ui/TutorialCoach.tsx",
+      "crlf": 769,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/docs/execplans/character-gapfill-v6-20261007.md",
+      "crlf": 311,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint3/docs/execplans/owner-requests-20261008.md",
+      "crlf": 254,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/tools/room-design/level-5/founders-office/proof/evidence/v2/http-validation-report.json",
+      "crlf": 277,
+      "reason": "Literal accepted source or compatible patch bytes; pre-existing line endings preserved for exact recovery."
+    }
+  ],
+  "newMetadataAndNormalizedEvidenceUtf8NoBomLf": true,
+  "saveShapeInspection": {
+    "unexpected": [],
+    "syntheticTestFixture": [],
+    "fixtureSha256": "9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3",
+    "provenance": "M9 accepted synthetic pre-M3 schema shape from real factory/reducer fixture; not owner save data.",
+    "acceptanceRecord": "docs/execplans/level4-launch-plan-20261008.md#owned-files-and-approach"
+  },
+  "checkIgnore": {
+    "logicalTargetsChecked": 1218,
+    "physicalStagePathsChecked": 1438,
+    "ignoredLogicalTargets": [],
+    "ignoredPhysicalStagePaths": []
+  },
+  "sourceRestrictions": {
+    "proprietaryPdfsRead": 0,
+    "sourceCorporaCopied": 0,
+    "webOrAiCalls": 0,
+    "clinicalPayloads": "Independent atomic claims, bibliographic/provenance metadata and synthetic educational records; no source articles/excerpts."
+  },
+  "imagePrivacyReview": "Included images belong to static character/room authoring, generation originals and disposable design galleries. No owner campaign/browser screenshots or browser-storage data.",
+  "ownerSavesAccessed": 0,
+  "ownerBrowserStorageAccessed": 0,
+  "excludedActiveWorkerPath": "docs/design/mobile-discovery-20261009.md",
+  "gitMutations": 0
+}

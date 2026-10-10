@@ -1,0 +1,39 @@
+--- a/packages/game-domain/tests/service-operations.test.ts
++++ b/packages/game-domain/tests/service-operations.test.ts
+@@ -326,7 +326,7 @@
+     expect(state.serviceIncomeReceipts).toHaveLength(0);
+     state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.status === "completed", 180);
+     expect(state.serviceIncomeReceipts).toEqual([
+-      expect.objectContaining({ incomeLineId: "income.ambulatory_operation", grossAmount: 900 }),
++      expect.objectContaining({ incomeLineId: "income.ambulatory_operation", grossAmount: 1300 }),
+     ]);
+     state = advance(state, 2);
+     expect(state.rooms.find((room) => room.id === procedureRoom.id)!.maintenance?.status).toBe("out_of_service");
+@@ -1351,12 +1351,10 @@
+     const context = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as DomainContext;
+     const roomDefinitions = context.balanceRelease.facility.roomDefinitions as unknown as Array<(typeof context.balanceRelease.facility.roomDefinitions)[number]>;
+     const staffDefinitions = context.balanceRelease.facility.staffRoleDefinitions as unknown as Array<(typeof context.balanceRelease.facility.staffRoleDefinitions)[number]>;
+-    const stageDefinitions = context.balanceRelease.facility.stageDefinitions as unknown as Array<(typeof context.balanceRelease.facility.stageDefinitions)[number]>;
+     const roomSource = roomDefinitions.find((definition) => definition.id === "room.ultrasound")!;
+     const staffSource = staffDefinitions.find((definition) => definition.id === "staff.imaging_technician")!;
+     roomDefinitions.push({ ...roomSource, id: "room.reading", displayName: "Reading Room", capabilityIds: ["capability.radiology_reading"] });
+     staffDefinitions.push({ ...staffSource, id: "staff.radiologist", displayName: "Radiologist", requiredAnyRoomDefinitionIds: ["room.reading"], capabilityIds: ["capability.staff.radiologist"] });
+-    stageDefinitions.push({ ...stageDefinitions.find((stage) => stage.level === 2)!, level: 4, displayName: "Future fixture", nextFacilityLevel: null } as (typeof stageDefinitions)[number]);
+ 
+     const state = serviceState();
+     (state as { facilityLevel: number }).facilityLevel = 4;
+@@ -1386,10 +1384,11 @@
+   it("executes a future physical MRI handler from supplied room and staff capabilities", () => {
+     const context = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as DomainContext;
+     const roomDefinitions = context.balanceRelease.facility.roomDefinitions as unknown as Array<(typeof context.balanceRelease.facility.roomDefinitions)[number]>;
+-    const stageDefinitions = context.balanceRelease.facility.stageDefinitions as unknown as Array<(typeof context.balanceRelease.facility.stageDefinitions)[number]>;
+     const roomSource = roomDefinitions.find((definition) => definition.id === "room.ultrasound")!;
+-    roomDefinitions.push({ ...roomSource, id: "room.mri", displayName: "MRI Room", capabilityIds: ["capability.mri_machine"] });
+-    stageDefinitions.push({ ...stageDefinitions.find((stage) => stage.level === 2)!, level: 4, displayName: "Future fixture", nextFacilityLevel: null } as (typeof stageDefinitions)[number]);
++    // Preserve this isolated handler's simple geometry without duplicating M3's
++    // registered MRI definition or opting production services into new routes.
++    roomDefinitions.splice(roomDefinitions.findIndex((room) => room.id === "room.mri"), 1,
++      { ...roomSource, id: "room.mri", displayName: "MRI Room", capabilityIds: ["capability.mri_machine"] });
+     const state = serviceState();
+     (state as { facilityLevel: number }).facilityLevel = 4;
+     state.rooms.find((room) => room.id === "room.test.ultrasound")!.roomDefinitionId = "room.mri";

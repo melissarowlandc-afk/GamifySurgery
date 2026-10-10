@@ -1,0 +1,534 @@
+{
+  "schemaVersion": "app-gapfill-v6e-placement-qa/v2",
+  "status": "candidate-review-only-not-runtime-ready",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "evidence": {
+    "approvedRoomPresentation": {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "sha256": "86cfa665d36576e5f52ee5592c1a44d153331001ac01b82b961523390dc785ff"
+    },
+    "approvedRoomProofData": {
+      "path": "apps/player/src/facility/approvedRoomProofData.json",
+      "sha256": "19fce29a7dec5fc25031da74f08292dd897c52eaaded0e8bf62116de59f5fa88"
+    },
+    "characterPresentation": {
+      "path": "apps/player/src/facility/characterPresentation.ts",
+      "sha256": "e6224a46d5af7e0ca0b485e2b75383a4eb3369ee2ffc12f6a8723fa610929da3"
+    },
+    "characterBitmapArt": {
+      "path": "apps/player/src/art/characterBitmapArt.ts",
+      "sha256": "33f732505215c495a0a9df7145e1a49f46325fde328a7aec9196ea983a5cfc15"
+    }
+  },
+  "runtimeMath": {
+    "tileSize": 52,
+    "characterStillWidthInTiles": 1.0642421602787457,
+    "nativeWidth": 160,
+    "nativeHeight": 320,
+    "floorY": 287,
+    "visibleHeightCap": 246,
+    "identityScaleFormula": "min(1, 246 / (standingSouth.floorY - standingSouth.visibleBounds.y))",
+    "frameSizeFormula": "width = round(tileSize * CHARACTER_STILL_WIDTH_IN_TILES * identityScale); height = width * 2",
+    "baseFormula": "adjustedBaseY = worldSeatY + (floorY - seatContactY) * renderedHeight / nativeHeight; containerBaseY = round(adjustedBaseY)",
+    "frameTopFormula": "frameTopY = containerBaseY - floorY * renderedHeight / nativeHeight"
+  },
+  "chairAsset": {
+    "path": "apps/player/public/art/rooms/gs015-v1/front-desk/furniture.webp",
+    "sha256": "21a4adb141f1caf3b67494977e56ff00f00863d28d79d01bc7a9b4e9af0376f4",
+    "crop": {
+      "x": 167,
+      "y": 692,
+      "width": 331,
+      "height": 478
+    },
+    "approvedProofCoordinateSpace": {
+      "floorOriginPixels": [
+        70,
+        110
+      ],
+      "tilePixels": 88
+    },
+    "approvedProofDestination": {
+      "x": 164,
+      "y": 176,
+      "width": 76,
+      "height": 110
+    },
+    "destinationTopLeftTiles": [
+      1.0681818181818181,
+      0.75
+    ],
+    "renderSizeTiles": [
+      0.8636363636363636,
+      1.25
+    ],
+    "runtimeRoundedDestination": {
+      "left": 56,
+      "top": 39,
+      "width": 45,
+      "height": 65
+    }
+  },
+  "approvedSupport": {
+    "fixtureSeatTiles": {
+      "x": 1.5,
+      "y": 1.82
+    },
+    "southCushionInsetTiles": 0.25,
+    "visibleSeatTiles": {
+      "x": 1.5,
+      "y": 1.57
+    },
+    "worldSeatAtReferenceTileSize": {
+      "x": 78,
+      "y": 81.64
+    },
+    "facing": "south"
+  },
+  "diagnosticScale": 4,
+  "diagnostics": [
+    {
+      "number": "001",
+      "sourceSha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/manifest.json",
+        "sha256": "03d030223723eb46356d6f7ad6bc64fd95ea940039d6c60d22c41b50eb54958a"
+      },
+      "candidateContacts": {
+        "south": 242,
+        "east": 248,
+        "west": 248,
+        "north": 250,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 242,
+        "adjustedBaseY": 97.10875,
+        "roundedBaseY": 97,
+        "frameLeft": 50.5,
+        "frameTop": -1.65625,
+        "mappedSeatContactY": 81.53125,
+        "visibleLeft": 60.8125,
+        "visibleTop": 30.3125,
+        "visibleWidth": 34.375,
+        "visibleHeight": 66.6875
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/001-front-desk-chair-placement.png",
+            "sha256": "61a2818c57b8be2a5f034221a9aec124c0ddf565c8cde3c507887e25c98bc281",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "002",
+      "sourceSha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/manifest.json",
+        "sha256": "2424e00c4a19c10f94f57011e635a2b99375a4e45b94a1f0948c8c7ab224765d"
+      },
+      "candidateContacts": {
+        "south": 242,
+        "east": 248,
+        "west": 248,
+        "north": 251,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 242,
+        "adjustedBaseY": 97.10875,
+        "roundedBaseY": 97,
+        "frameLeft": 50.5,
+        "frameTop": -1.65625,
+        "mappedSeatContactY": 81.53125,
+        "visibleLeft": 60.46875,
+        "visibleTop": 31,
+        "visibleWidth": 35.0625,
+        "visibleHeight": 66
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/002-front-desk-chair-placement.png",
+            "sha256": "2d92f26b31a1b9e73053127c70775dcac7531dd91f013ca4bf451feb02bd35dd",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "003",
+      "sourceSha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/manifest.json",
+        "sha256": "7f23e94674b3468f97214c4301c3874b4d9d2f8dbdbf3e11d5a7164ff5499f3b"
+      },
+      "candidateContacts": {
+        "south": 243,
+        "east": 249,
+        "west": 249,
+        "north": 252,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 243,
+        "adjustedBaseY": 96.765,
+        "roundedBaseY": 97,
+        "frameLeft": 50.5,
+        "frameTop": -1.65625,
+        "mappedSeatContactY": 81.875,
+        "visibleLeft": 61.84375,
+        "visibleTop": 31.6875,
+        "visibleWidth": 32.3125,
+        "visibleHeight": 65.3125
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/003-front-desk-chair-placement.png",
+            "sha256": "881eda123b62df1555499a6459a60c6582f7c4170c33865e6e67171c58ada959",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "004",
+      "sourceSha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/manifest.json",
+        "sha256": "60e4ba8a22cc0a2b5e87e728ba2037a6c8e32da5857d052b529ec2887a4996e2"
+      },
+      "candidateContacts": {
+        "south": 245,
+        "east": 252,
+        "west": 252,
+        "north": 254,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 245,
+        "adjustedBaseY": 96.0775,
+        "roundedBaseY": 96,
+        "frameLeft": 50.5,
+        "frameTop": -2.65625,
+        "mappedSeatContactY": 81.5625,
+        "visibleLeft": 61.5,
+        "visibleTop": 34.46875,
+        "visibleWidth": 33,
+        "visibleHeight": 61.53125
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/004-front-desk-chair-placement.png",
+            "sha256": "cab214beb60f9cf1f9322c21b9256fe266652e73a1ebd97d928e22887f9cc29b",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "005",
+      "sourceSha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/manifest.json",
+        "sha256": "4c773f5658e987219a122aabcc39c681ba5f106bc18af52f36f76622f9def01f"
+      },
+      "candidateContacts": {
+        "south": 240,
+        "east": 246,
+        "west": 246,
+        "north": 248,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 240,
+        "adjustedBaseY": 97.79625,
+        "roundedBaseY": 98,
+        "frameLeft": 50.5,
+        "frameTop": -0.65625,
+        "mappedSeatContactY": 81.84375,
+        "visibleLeft": 61.84375,
+        "visibleTop": 32.6875,
+        "visibleWidth": 32.3125,
+        "visibleHeight": 65.3125
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/005-front-desk-chair-placement.png",
+            "sha256": "016a150582ef335c1c5f9d323306bd5adf49e732050146a66c9fa1e31e18eaf7",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "006",
+      "sourceSha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/manifest.json",
+        "sha256": "6d8268d12dd9aec83a31fca4bc2cbca7193a5a40bf48451fb4141337c5c9c028"
+      },
+      "candidateContacts": {
+        "south": 238,
+        "east": 244,
+        "west": 244,
+        "north": 247,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 238,
+        "adjustedBaseY": 98.48375,
+        "roundedBaseY": 98,
+        "frameLeft": 50.5,
+        "frameTop": -0.65625,
+        "mappedSeatContactY": 81.15625,
+        "visibleLeft": 60.125,
+        "visibleTop": 27.1875,
+        "visibleWidth": 36.09375,
+        "visibleHeight": 70.8125
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/006-front-desk-chair-placement.png",
+            "sha256": "90417ac01edadda68c99a27958a2451eda80f3b9567d4b2dc2e58db1b26ccc25",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "007",
+      "sourceSha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/manifest.json",
+        "sha256": "efd508a4fe88b58bff39fd95376564405dc0566f22f30b3dd8eab040bcb4e3b9"
+      },
+      "candidateContacts": {
+        "south": 237,
+        "east": 240,
+        "west": 240,
+        "north": 245,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 237,
+        "adjustedBaseY": 98.8275,
+        "roundedBaseY": 99,
+        "frameLeft": 50.5,
+        "frameTop": 0.34375,
+        "mappedSeatContactY": 81.8125,
+        "visibleLeft": 59.78125,
+        "visibleTop": 30.25,
+        "visibleWidth": 36.4375,
+        "visibleHeight": 68.75
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/007-front-desk-chair-placement.png",
+            "sha256": "e14f47890af39e27609ba81f385f55a5457559ac77014f016de07e46673f3070",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    },
+    {
+      "number": "008",
+      "sourceSha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b",
+      "packageManifest": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/manifest.json",
+        "sha256": "5faccb85dd4b1558f9daab907a24e6311ec0ca4906e4361a4d112f62e87fa412"
+      },
+      "candidateContacts": {
+        "south": 238,
+        "east": 243,
+        "west": 243,
+        "north": 247,
+        "status": "worker-authored-contact-pending-manager-acceptance"
+      },
+      "runtimeGeometry": {
+        "identityScale": 1,
+        "standingVisibleHeight": 246,
+        "renderedWidth": 55,
+        "renderedHeight": 110,
+        "seatContactY": 238,
+        "adjustedBaseY": 98.48375,
+        "roundedBaseY": 98,
+        "frameLeft": 50.5,
+        "frameTop": -0.65625,
+        "mappedSeatContactY": 81.15625,
+        "visibleLeft": 59.78125,
+        "visibleTop": 30.625,
+        "visibleWidth": 36.4375,
+        "visibleHeight": 67.375
+      },
+      "directions": {
+        "south": {
+          "status": "candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review",
+          "proof": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/008-front-desk-chair-placement.png",
+            "sha256": "30ca5fba07a2bac72541604d4126ed43cafac793837095055f02e0856842d2a9",
+            "width": 1040,
+            "height": 650
+          }
+        },
+        "east": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "west": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        },
+        "north": {
+          "status": "not-rendered-front-desk-support-is-authored-south-facing"
+        }
+      }
+    }
+  ],
+  "pages": [
+    {
+      "identities": [
+        "001",
+        "002",
+        "003",
+        "004"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/chair-review-01.png",
+        "sha256": "9d64e870df08db4f97bfab58b5898f3143c8bfff109322ac1dbc1ec6a9c313aa",
+        "width": 1040,
+        "height": 706
+      }
+    },
+    {
+      "identities": [
+        "005",
+        "006",
+        "007",
+        "008"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/chair-review-02.png",
+        "sha256": "a30aafffcf7e50101c88bb81a07c25a5526fc1e61fb6e88eef67bce5a5f549f2",
+        "width": 1040,
+        "height": 706
+      }
+    }
+  ]
+}

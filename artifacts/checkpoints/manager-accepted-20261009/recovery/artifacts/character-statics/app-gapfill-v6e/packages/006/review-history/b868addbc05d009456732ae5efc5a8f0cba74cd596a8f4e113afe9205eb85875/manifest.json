@@ -1,0 +1,643 @@
+{
+  "schemaVersion": "app-gapfill-v6e-package/v1",
+  "status": "candidate-packaged-not-runtime-ready",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "identity": {
+    "number": "006",
+    "stableId": "app-gapfill-v6e.006",
+    "category": "staff",
+    "eligibleStaffRoleDefinitionIds": [
+      "staff.app"
+    ],
+    "roleLabel": "Advanced practice provider",
+    "intendedAge": 41,
+    "compatibleSexLabel": "Male",
+    "ageBand": "adult",
+    "visualBrief": {
+      "build": "stocky broad-shouldered build with a straight masculine chest",
+      "skin": "fair pink-toned skin",
+      "hair": "short straight strawberry-blond side-parted crop with close sides",
+      "accessory": "a short neat ginger beard and moustache, no glasses",
+      "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching muted-apricot V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+    },
+    "stage1": {
+      "prompt": "prompts/006/stage1-standing-cardinals.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+          "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+          "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+          "existingIdentity": "future-roster20-v5.001"
+        }
+      ]
+    },
+    "stage2": {
+      "prompt": "prompts/006/stage2-eight-pose.prompt.txt",
+      "references": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+          "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+          "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+          "existingIdentity": "future-roster20-v5.001"
+        },
+        {
+          "path": "sources/006/stage1-standing-cardinals.png",
+          "role": "new-identity-and-outfit-reference"
+        }
+      ]
+    },
+    "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+  },
+  "source": {
+    "stage1": {
+      "png": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/stage1-standing-cardinals.png",
+        "sha256": "bdc8a13b021fe5f213acebbfea70e6cf6deaa3948077a41d577dde782c0a9f5e"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/stage1-exact-prompt.txt",
+        "sha256": "56a1e4b669282ad00be722e9c639a8fb99f5d9f19ebaba7cb1302a8cb4ab5fac"
+      },
+      "args": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/stage1-tool-args.json",
+        "sha256": "a0a3b5f105fdb226a29a759f4a213ca29c06c2173f7255fdddf379f6b856037f"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/stage1-provenance.json",
+        "sha256": "ebc056eebd2144bfcf0abb977488f585826712fbc4a86f76022f4fc8abfa8727"
+      }
+    },
+    "stage2": {
+      "png": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
+        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/exact-prompt.txt",
+        "sha256": "edc930f19e5b753d3f6811066c4bde22e7c7c65dfa109270ec80e866587b0189"
+      },
+      "args": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/tool-args.json",
+        "sha256": "686c7368c73ce9bcd7ebf46417343e54d8e0fdcb054f35380c11a514db3556a7"
+      },
+      "provenance": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
+        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
+      }
+    }
+  },
+  "provenanceValidation": {
+    "stage1": "original-spec-stage1",
+    "stage2": "original-spec-stage2",
+    "stage2Chain": [
+      {
+        "kind": "original-spec-stage2",
+        "source": {
+          "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
+          "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
+        },
+        "exactPrompt": {
+          "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/exact-prompt.txt",
+          "sha256": "edc930f19e5b753d3f6811066c4bde22e7c7c65dfa109270ec80e866587b0189"
+        },
+        "toolArguments": {
+          "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/tool-args.json",
+          "sha256": "686c7368c73ce9bcd7ebf46417343e54d8e0fdcb054f35380c11a514db3556a7"
+        },
+        "provenance": {
+          "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
+          "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
+        }
+      }
+    ]
+  },
+  "rootVisualAcceptance": {
+    "ledger": "tools/character-mapping/app-gapfill-v6e/review-acceptance.json",
+    "sourceSha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419",
+    "accepted": false,
+    "scope": "Worker source/pose/style/contact QA; manager acceptance pending. No runtime integration."
+  },
+  "seatContactAcceptance": {
+    "ledger": "tools/character-mapping/app-gapfill-v6e/review-acceptance.json",
+    "coordinates": {
+      "south": 221,
+      "east": 222,
+      "west": 221,
+      "north": 221
+    },
+    "reviewedDirections": [],
+    "status": "derived-candidate-pending-root-directional-review"
+  },
+  "extraction": {
+    "method": "immutable GS026 extractEight",
+    "sourceRects": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 337,
+        "height": 676
+      },
+      {
+        "x": 337,
+        "y": 0,
+        "width": 292,
+        "height": 676
+      },
+      {
+        "x": 629,
+        "y": 0,
+        "width": 292,
+        "height": 676
+      },
+      {
+        "x": 921,
+        "y": 0,
+        "width": 333,
+        "height": 676
+      },
+      {
+        "x": 0,
+        "y": 676,
+        "width": 311,
+        "height": 578
+      },
+      {
+        "x": 311,
+        "y": 676,
+        "width": 312,
+        "height": 578
+      },
+      {
+        "x": 623,
+        "y": 676,
+        "width": 318,
+        "height": 578
+      },
+      {
+        "x": 941,
+        "y": 676,
+        "width": 313,
+        "height": 578
+      }
+    ],
+    "componentCount": 33,
+    "ignoredComponents": [
+      {
+        "area": 8,
+        "left": 1099,
+        "top": 503,
+        "right": 1099,
+        "bottom": 510
+      },
+      {
+        "area": 2,
+        "left": 1186,
+        "top": 859,
+        "right": 1186,
+        "bottom": 860
+      },
+      {
+        "area": 2,
+        "left": 1050,
+        "top": 917,
+        "right": 1050,
+        "bottom": 918
+      },
+      {
+        "area": 2,
+        "left": 747,
+        "top": 1000,
+        "right": 747,
+        "bottom": 1001
+      },
+      {
+        "area": 2,
+        "left": 1177,
+        "top": 1126,
+        "right": 1177,
+        "bottom": 1127
+      },
+      {
+        "area": 1,
+        "left": 148,
+        "top": 69,
+        "right": 148,
+        "bottom": 69
+      },
+      {
+        "area": 1,
+        "left": 1142,
+        "top": 84,
+        "right": 1142,
+        "bottom": 84
+      },
+      {
+        "area": 1,
+        "left": 1144,
+        "top": 85,
+        "right": 1144,
+        "bottom": 85
+      },
+      {
+        "area": 1,
+        "left": 1146,
+        "top": 246,
+        "right": 1146,
+        "bottom": 246
+      },
+      {
+        "area": 1,
+        "left": 753,
+        "top": 256,
+        "right": 753,
+        "bottom": 256
+      },
+      {
+        "area": 1,
+        "left": 71,
+        "top": 266,
+        "right": 71,
+        "bottom": 266
+      },
+      {
+        "area": 1,
+        "left": 67,
+        "top": 272,
+        "right": 67,
+        "bottom": 272
+      },
+      {
+        "area": 1,
+        "left": 526,
+        "top": 284,
+        "right": 526,
+        "bottom": 284
+      },
+      {
+        "area": 1,
+        "left": 37,
+        "top": 342,
+        "right": 37,
+        "bottom": 342
+      },
+      {
+        "area": 1,
+        "left": 36,
+        "top": 345,
+        "right": 36,
+        "bottom": 345
+      },
+      {
+        "area": 1,
+        "left": 157,
+        "top": 473,
+        "right": 157,
+        "bottom": 473
+      },
+      {
+        "area": 1,
+        "left": 160,
+        "top": 475,
+        "right": 160,
+        "bottom": 475
+      },
+      {
+        "area": 1,
+        "left": 155,
+        "top": 480,
+        "right": 155,
+        "bottom": 480
+      },
+      {
+        "area": 1,
+        "left": 509,
+        "top": 799,
+        "right": 509,
+        "bottom": 799
+      },
+      {
+        "area": 1,
+        "left": 83,
+        "top": 846,
+        "right": 83,
+        "bottom": 846
+      },
+      {
+        "area": 1,
+        "left": 774,
+        "top": 929,
+        "right": 774,
+        "bottom": 929
+      },
+      {
+        "area": 1,
+        "left": 775,
+        "top": 932,
+        "right": 775,
+        "bottom": 932
+      },
+      {
+        "area": 1,
+        "left": 679,
+        "top": 1094,
+        "right": 679,
+        "bottom": 1094
+      },
+      {
+        "area": 1,
+        "left": 479,
+        "top": 1101,
+        "right": 479,
+        "bottom": 1101
+      },
+      {
+        "area": 1,
+        "left": 596,
+        "top": 1183,
+        "right": 596,
+        "bottom": 1183
+      }
+    ]
+  },
+  "normalization": {
+    "target": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 246
+    },
+    "policy": "one identity-wide whole-body scale; source remains byte-exact; no repaint or mirroring; alpha >=13 outside the derived canvas is forbidden; sub-13 alpha loss is measured for root warning review"
+  },
+  "poses": {
+    "stand": {
+      "south": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-south.png",
+        "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
+        "visibleBounds": {
+          "x": 18,
+          "y": 41,
+          "width": 124,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 6.246240601503757,
+          "translateY": 9.093984962406012,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 7,
+          "maxSourceAlphaWithFootprintOutside": 1,
+          "derivedBorderNonzeroPixels": 3,
+          "derivedBorderMaxAlpha": 1
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-east.png",
+        "sha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
+        "visibleBounds": {
+          "x": 38,
+          "y": 42,
+          "width": 84,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 17.34398496240601,
+          "translateY": 9.093984962406012,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-west.png",
+        "sha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
+        "visibleBounds": {
+          "x": 37,
+          "y": 42,
+          "width": 86,
+          "height": 245
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 7.633458646616546,
+          "translateY": 9.093984962406012,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-north.png",
+        "sha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
+        "visibleBounds": {
+          "x": 20,
+          "y": 41,
+          "width": 120,
+          "height": 246
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": -0.4586466165413583,
+          "translateY": 9.556390977443584,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-south.png",
+        "sha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
+        "visibleBounds": {
+          "x": 28,
+          "y": 81,
+          "width": 105,
+          "height": 206
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 6.708646616541358,
+          "translateY": 45.624060150375925,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 221,
+          "seatContactStatus": "candidate-no-runtime-promotion"
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-east.png",
+        "sha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
+        "visibleBounds": {
+          "x": 20,
+          "y": 83,
+          "width": 119,
+          "height": 204
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 2.084586466165419,
+          "translateY": 47.4736842105263,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 222,
+          "seatContactStatus": "candidate-no-runtime-promotion"
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-west.png",
+        "sha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
+        "visibleBounds": {
+          "x": 20,
+          "y": 82,
+          "width": 120,
+          "height": 205
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 12.951127819548873,
+          "translateY": 47.4736842105263,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 221,
+          "seatContactStatus": "candidate-no-runtime-promotion"
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-north.png",
+        "sha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
+        "visibleBounds": {
+          "x": 28,
+          "y": 82,
+          "width": 103,
+          "height": 205
+        },
+        "transform": {
+          "scale": 0.462406015037594,
+          "translateX": 8.095864661654133,
+          "translateY": 47.4736842105263,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 221,
+          "seatContactStatus": "candidate-no-runtime-promotion"
+        }
+      }
+    }
+  },
+  "proofs": {
+    "fullTransparent": {
+      "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/full-poses-transparent.png",
+      "sha256": "805ec1cfabafc2487cfd96ef434890047b33e84134b092f2235d5da171110625"
+    },
+    "fullLight": {
+      "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/full-poses-light.png",
+      "sha256": "fcead9886ec5ad7f1735678c8947d3dc151e7eb476b77dfab3c4c5eee8268c99"
+    },
+    "fullDark": {
+      "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/full-poses-dark.png",
+      "sha256": "f56995f8a290b6865c33b040cc502a3d37aa385d2485c37110c8208344fcbce0"
+    },
+    "seatedContactGrid": {
+      "file": "artifacts/character-statics/app-gapfill-v6e/packages/006/seated-contact-grid-2x.png",
+      "sha256": "fea4abc9f470cb7ac75f7d702a939f267b708ef7e3c4cdee263a465aa28aacdd"
+    }
+  }
+}

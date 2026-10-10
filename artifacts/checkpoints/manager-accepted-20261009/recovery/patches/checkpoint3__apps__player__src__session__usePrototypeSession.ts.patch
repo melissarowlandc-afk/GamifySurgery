@@ -1,0 +1,46 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -77,6 +77,7 @@
+ import { clinicAlertCommand, getClinicAlertActionProblem } from "./clinicAlertActions";
+ import { clearRecoveredSaveNotices } from "./clinicSaveNotices";
+ import { getCampaignTutorialGuidance } from "./tutorialGuidance";
++import { getTutorialTickIntervalMs } from "./tutorialTiming";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -753,6 +754,10 @@
+     };
+   }, [attemptSaveProfile, cancelScheduledAutosave, execute, publishSystemNotice]);
+ 
++  const campaignGuidance = getCampaignTutorialGuidance(profile, { campaignId: state.campaignId, state });
++  const tutorialsEnabled = campaignGuidance.mode === "guided";
++  const tutorialTickIntervalMs = getTutorialTickIntervalMs(state, tutorialsEnabled);
++
+   useEffect(() => {
+     if (!documentVisible || state.paused) {
+       return;
+@@ -770,13 +775,12 @@
+         },
+       );
+     },
+-    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock
+-      .realMillisecondsPerFacilityMinuteAt1x / state.simulationSpeed);
++    tutorialTickIntervalMs);
+ 
+     return () => {
+       window.clearInterval(timerId);
+     };
+-  }, [documentVisible, execute, state.paused, state.simulationSpeed]);
++  }, [documentVisible, execute, state.paused, tutorialTickIntervalMs]);
+ 
+   const exitManagementMode = useCallback(() => {
+     if (!managementMode) {
+@@ -1785,8 +1789,6 @@
+ 
+   const tutorialIntroDismissed =
+     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
+-  const campaignGuidance = getCampaignTutorialGuidance(profile, { campaignId: state.campaignId, state });
+-  const tutorialsEnabled = campaignGuidance.mode === "guided";
+   const tutorialStep = createTutorialStepView({
+     state,
+     tutorialsEnabled,

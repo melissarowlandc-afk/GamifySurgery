@@ -1,0 +1,10 @@
+--- a/apps/player/src/ui/StaffPanel.tsx
++++ b/apps/player/src/ui/StaffPanel.tsx
+@@ -277,6 +277,7 @@
+         />
+         <div className="staff-member-name">
+           <h4>{employee.displayName}</h4>
++          {employee.activityLabel ? <p className="staff-role-note">{employee.activityLabel}</p> : null}
+           {training ? (
+             <span className="staff-training-pips" aria-label={`Training level ${training.level} of 5`}>
+               {[1, 2, 3, 4, 5].map((level) => (

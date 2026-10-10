@@ -1,0 +1,11 @@
+--- a/apps/player/src/session/employeeTrainingViewModels.test.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.test.ts
+@@ -151,7 +151,7 @@
+     expect(view.serviceIncome.catalogLines.find((line) => line.id === "income.glp1_telehealth")?.feeLabel).toBe("$53.33");
+     expect(view.staffRoles.find((role) => role.id === "staff.glp1_np")?.staffingGuidance).toContain("$53.33 per facility hour");
+     expect(view.serviceIncome.catalogLines.find((line) => line.id === "income.pharmacy_pickup"))
+-      .toMatchObject({ feeLabel: "$25.00", stockCostLabel: "$13.50", contributionLabel: "$11.50" });
++      .toMatchObject({ feeLabel: "$70.00", stockCostLabel: "$13.50", contributionLabel: "$56.50" });
+   });
+ 
+   it("exposes training data in the staff list without requiring a new button", () => {

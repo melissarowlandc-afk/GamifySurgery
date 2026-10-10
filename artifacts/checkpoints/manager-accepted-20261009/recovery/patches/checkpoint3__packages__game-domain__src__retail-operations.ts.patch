@@ -1,0 +1,28 @@
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -199,6 +199,8 @@
+ }
+ 
+ function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line: ServiceIncomeLine, context: DomainContext): boolean {
++  if (Object.values(state.pediatricFamilies ?? {}).some(family => kind === "companion" ? family.parentActorId === id :
++    family.child.kind === kind && family.child.id === id)) return false;
+   if (state.retailOperations.some((operation) => !terminal(operation) && operation.actorKind === kind && operation.actorId === id)) return false;
+   if ((kind === "encounter" || kind === "service_visitor") &&
+     hasActivePatientAmenityTrip(state, kind, id)) return false;
+@@ -694,7 +696,7 @@
+ function ensureCompanions(state: GameState, context: DomainContext): Set<string> {
+   const created = new Set<string>();
+   for (const operation of state.serviceOperations) {
+-    if (operation.actorKind === "remote" || !companionLines.has(operation.incomeLineId) || operation.status === "completed" || operation.status === "cancelled") continue;
++    if (operation.clinicVisit?.pediatricFamilyId || operation.actorKind === "remote" || !companionLines.has(operation.incomeLineId) || operation.status === "completed" || operation.status === "cancelled") continue;
+     if (state.retailExternalActors.some((actor) => actor.kind === "companion" &&
+       (actor.linkedServiceOperationId === operation.id || operation.actorKind === "encounter" && actor.linkedEncounterId === operation.actorId))) continue;
+     const id = `companion.${state.companionSequence++}`;
+@@ -740,6 +742,7 @@
+ 
+ function advanceCompanions(state: GameState, context: DomainContext, createdThisTick: ReadonlySet<string> = new Set()): void {
+   for (const actor of state.retailExternalActors.filter((candidate) => candidate.lifecycle !== "departed")) {
++    if (actor.pediatricFamilyId) continue;
+     if (actor.activeRetailOperationId) continue;
+     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
+     const encounter = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : null;

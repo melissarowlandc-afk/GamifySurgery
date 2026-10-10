@@ -1,0 +1,47 @@
+--- a/packages/game-domain/src/patientDemographics.test.ts
++++ b/packages/game-domain/src/patientDemographics.test.ts
+@@ -3,9 +3,10 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { completePatientDemographics } from "./patientDemographics";
+ import { patientRosterEntryById } from "./patientAppearanceCatalog";
++import { pediatricStillEligibleEntries } from "./characterStillCatalog";
+ 
+ describe("patient demographic completion", () => {
+-  it("completes every active case or profile with an adult display identity without changing source content", () => {
++  it("completes every active case or profile with an age-compatible display identity without changing source content", () => {
+     const before = JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases);
+     for (const clinicalCase of PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases) {
+       const variants = clinicalCase.approvedInstantiationProfiles?.length
+@@ -17,19 +18,26 @@
+           campaignSeed: "identity-coverage",
+           encounterId: `encounter.${clinicalCase.id}.${index}`,
+           demographics: variant.prototypeDemographics,
++          pediatric: Boolean(clinicalCase.pediatricProfile),
+         });
+-        expect(demographics.ageYears, clinicalCase.id).toBeGreaterThanOrEqual(18);
++        expect(demographics.ageYears, clinicalCase.id).toBeGreaterThanOrEqual(clinicalCase.pediatricProfile ? 5 : 18);
+         expect(["Female", "Male"], clinicalCase.id).toContain(demographics.sexLabel);
+         const appearance = createPatientPixelAppearance(
+           "identity-coverage",
+           `encounter.${clinicalCase.id}.${index}`,
+           demographics,
+         );
+-        const rosterIdentity = patientRosterEntryById(appearance.patientIdentityId);
+-        expect(rosterIdentity, clinicalCase.id).toBeDefined();
+-        expect(rosterIdentity?.compatibleSexLabel, clinicalCase.id).toBe(
+-          demographics.sexLabel,
+-        );
++        if (clinicalCase.pediatricProfile) {
++          expect(demographics, clinicalCase.id).toEqual(variant.prototypeDemographics);
++          expect(demographics.ageYears, clinicalCase.id).toBeLessThanOrEqual(17);
++          expect(appearance.patientIdentityId).toBeUndefined();
++          expect(pediatricStillEligibleEntries(demographics.sexLabel, demographics.ageYears)
++            .some(entry => entry.stillId === appearance.stillId), clinicalCase.id).toBe(true);
++        } else {
++          const rosterIdentity = patientRosterEntryById(appearance.patientIdentityId);
++          expect(rosterIdentity, clinicalCase.id).toBeDefined();
++          expect(rosterIdentity?.compatibleSexLabel, clinicalCase.id).toBe(demographics.sexLabel);
++        }
+       }
+     }
+     expect(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases)).toBe(before);

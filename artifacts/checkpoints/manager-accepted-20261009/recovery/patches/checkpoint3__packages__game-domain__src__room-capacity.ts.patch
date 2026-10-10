@@ -1,0 +1,32 @@
+--- a/packages/game-domain/src/room-capacity.ts
++++ b/packages/game-domain/src/room-capacity.ts
+@@ -9,6 +9,7 @@
+     "room.ultrasound": 1,
+     "room.xray": 1,
+     "room.ct": 1,
++    "room.mri": 1,
+   },
+   "staff.periop_nurse": { "room.periop_recovery": 2 },
+   "staff.endoscopy_nurse": { "room.endoscopy": 1 },
+@@ -16,6 +17,12 @@
+   "staff.phlebotomist": { "room.phlebotomy": 1 },
+   "staff.evs_worker": { "room.evs_closet": 1 },
+   "staff.glp1_np": { "room.glp1_telehealth_suite": 2 },
++  "staff.app": {
++    "room.examination": 1,
++    "room.minor_procedure": 1,
++    "room.pediatric_examination": 1,
++    "room.wound_ostomy": 1,
++  },
+   "staff.surgeon": { "room.surgeon_office": 2 },
+   "staff.or_nurse": { "room.ambulatory_or": 1 },
+   "staff.laboratory_technician": { "room.laboratory": 1 },
+@@ -155,7 +162,7 @@
+   const room = state.rooms.find((candidate) => candidate.id === roomId);
+   if (!room) return [];
+   const imagingRoom = room.roomDefinitionId === "room.ultrasound" ||
+-    room.roomDefinitionId === "room.xray" || room.roomDefinitionId === "room.ct";
++    room.roomDefinitionId === "room.xray" || room.roomDefinitionId === "room.ct" || room.roomDefinitionId === "room.mri";
+   if (imagingRoom) {
+     const technicians = state.employees
+       .filter((employee) => employee.staffRoleDefinitionId === "staff.imaging_technician")

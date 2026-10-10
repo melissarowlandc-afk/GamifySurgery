@@ -1,0 +1,57 @@
+--- a/apps/player/src/ui/TutorialCoach.tsx
++++ b/apps/player/src/ui/TutorialCoach.tsx
+@@ -19,11 +19,16 @@
+   type TutorialViewport,
+ } from "./tutorialPositioning";
+ 
+-interface TutorialTargetBeacon {
++interface TutorialTargetBeacon {
+   top: number;
+   left: number;
+   direction: TutorialPlacement;
+-}
++}
++
++function stopTutorialMapInput(event: { stopPropagation: () => void }): void {
++  // Keep native coach buttons usable, but never pass a gesture into the map.
++  event.stopPropagation();
++}
+ 
+ function createTargetBeacon(
+   target: TutorialRect,
+@@ -661,7 +666,10 @@
+     return (
+       <aside
+         ref={coachRef}
+-        className="tutorial-coach"
++        className="tutorial-coach"
++        onPointerDown={stopTutorialMapInput}
++        onPointerUp={stopTutorialMapInput}
++        onClick={stopTutorialMapInput}
+         role="region"
+         aria-labelledby={coachTitleId}
+       >
+@@ -710,7 +718,10 @@
+     <>
+       {targetBeacon ? (
+         <span
+-          className="tutorial-target-beacon"
++          className="tutorial-target-beacon"
++          onPointerDown={stopTutorialMapInput}
++          onPointerUp={stopTutorialMapInput}
++          onClick={stopTutorialMapInput}
+           data-direction={targetBeacon.direction}
+           aria-hidden="true"
+           style={{
+@@ -723,7 +734,10 @@
+       ) : null}
+       <aside
+         ref={coachRef}
+-        className={`tutorial-coach tutorial-coach--${step.target}`}
++        className={`tutorial-coach tutorial-coach--${step.target}`}
++        onPointerDown={stopTutorialMapInput}
++        onPointerUp={stopTutorialMapInput}
++        onClick={stopTutorialMapInput}
+         data-tutorial-step={step.id}
+         data-placement={position?.placement}
+         data-anchor-mode={

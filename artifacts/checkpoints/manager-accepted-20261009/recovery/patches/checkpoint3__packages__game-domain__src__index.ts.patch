@@ -1,0 +1,25 @@
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -8,6 +8,7 @@
+ export * from "./care-room-access";
+ export * from "./ambient-pedestrians";
+ export * from "./clinical-selection";
++export * from "./clinical-case-eligibility";
+ export * from "./routine-patient-availability";
+ export * from "./context";
+ export * from "./doors";
+@@ -30,6 +31,8 @@
+ export * from "./patientText";
+ export * from "./patientAppearanceCatalog";
+ export * from "./patientDemographics";
++export * from "./pediatric-eligibility";
++export * from "./pediatric-family";
+ export * from "./randomness";
+ export * from "./reading-stations";
+ export * from "./radiologist-read-income";
+@@ -51,3 +54,5 @@
+ export * from "./guidance-topics";
+ export * from "./periop-nurse-attention";
+ export * from "./procedural-staffing";
++export * from "./rolling-income";
++export * from "./app-appointments";

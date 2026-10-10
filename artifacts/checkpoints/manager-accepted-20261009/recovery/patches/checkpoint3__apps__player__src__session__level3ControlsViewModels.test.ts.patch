@@ -1,0 +1,11 @@
+--- a/apps/player/src/session/level3ControlsViewModels.test.ts
++++ b/apps/player/src/session/level3ControlsViewModels.test.ts
+@@ -62,7 +62,7 @@
+     const view = viewOf(level3);
+     expect(view.roomOptions.filter((room) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find((definition) => definition.id === room.id)?.unlockFacilityLevel === 3)).toHaveLength(8);
+     expect(view.staffRoles.filter((role) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.staffRoleDefinitions.find((definition) => definition.id === role.id)?.unlockFacilityLevel === 3)).toHaveLength(6);
+-    expect(view.progression.nextLevelLabel).toBe("Level 4 preview");
++    expect(view.progression.nextLevelLabel).toBe("Level 4");
+   });
+ 
+   it("tolerates a legacy in-memory campaign before support defaults are hydrated", () => {

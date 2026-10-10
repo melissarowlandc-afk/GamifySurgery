@@ -1,0 +1,223 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -147,6 +147,7 @@
+   getApprovedRoomPresentation,
+   getApprovedRoomProofCapture,
+   isApprovedProceduralDrawVisible,
++  isApprovedActorSupportVisible,
+   resolveApprovedRoomActorSupports,
+   resolveApprovedRoomDrawRecords,
+   resolveApprovedRoomProceduralDrawRecords,
+@@ -158,6 +159,7 @@
+ import {
+   getApprovedFloorPrimitives,
+   getApprovedDrawPainterGround,
++  getApprovedDrawClipWidth,
+   getApprovedProceduralScreenRect,
+   getApprovedRoomStateVariant,
+   getApprovedSupportFacing,
+@@ -1076,7 +1078,7 @@
+    * per-record: another room pack failing to decode cannot hide this room.
+    */
+   private registerApprovedRoomFrame(record: ApprovedRoomDrawRecord): string | undefined {
+-    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
++    const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
+     if (!atlas) return undefined;
+     const textureKey = getPhaserTextureKey(atlas);
+     if (!this.textures.exists(textureKey)) return undefined;
+@@ -1204,6 +1206,16 @@
+         .setData("approved-chair-support-ids", runtime.supportIds)
+         .setData("approved-chair-draw-id", runtime.drawId)
+         .setData("approved-chair-occupied", occupied);
++    }
++    // Promoted native masks keep their exact source pixels; only their depth
++    // follows the actual sitter, including same-baseline/low-zoom rounding.
++    for (const key of this.activeFixtureBitmapImages) {
++      const mask = this.fixtureBitmapImages.get(key);
++      const ids = mask?.getData("approved-front-support-ids") as readonly string[] | null;
++      if (!mask || !ids) continue;
++      const roomId = mask.getData("approved-front-room-id") as string;
++      const depths = ids.flatMap((id) => actorDepths.get(`${roomId}:${id}`) ?? []);
++      mask.setDepth(getApprovedSideChairForegroundDepth(depths) ?? mask.getData("approved-front-base-depth") as number);
+     }
+   }
+ 
+@@ -5291,7 +5303,7 @@
+     for (const record of records) {
+       if (!isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments)) continue;
+       const frame = this.registerApprovedRoomFrame(record);
+-      const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
++      const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
+       if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
+       const stool = getApprovedRollingStoolSource(record);
+       const backlessTexture = stool?.derivation ? this.ensureBacklessRollingStoolTexture(stool) : undefined;
+@@ -5325,7 +5337,13 @@
+         .setDepth(recordDepth)
+         .setVisible(true)
+         .setData("approved-draw-id", record.id)
+-        .setData("approved-backless-stool-source", stool?.id ?? null);
++        .setData("approved-backless-stool-source", stool?.id ?? null)
++        .setData("approved-front-support-ids", record.foregroundSupportIds ?? null)
++        .setData("approved-front-room-id", room.instanceId)
++        .setData("approved-front-base-depth", recordDepth);
++      const clipWidth = getApprovedDrawClipWidth(record);
++      if (clipWidth !== undefined) image.setCrop(0, 0, clipWidth, record.sourceRect[3]);
++      else if (image.isCropped) image.setCrop();
+       this.activeFixtureBitmapImages.add(key);
+       if (lighting) {
+         this.drawTouchupTintedTop(`${key}:tint`, textureKey, renderFrame, left, top, width, height,
+@@ -5390,7 +5408,8 @@
+       const top = rectangle.y + proofRect.top * scale;
+       const width = proofRect.width * scale;
+       const height = proofRect.height * scale;
+-      if (procedural.style.kind === "ct-observation-partition" && getRoomTouchup(room.definitionId)?.glassPartition) {
++      if (procedural.style.kind === "approved-glass" ||
++        (procedural.style.kind === "ct-observation-partition" && getRoomTouchup(room.definitionId)?.glassPartition)) {
+         // Owner-approved framed glass observation window.
+         const k = TOUCHUP_TILE_PIXELS / presentation.shell.tilePixels;
+         this.drawTouchupPrimitives(
+@@ -5959,6 +5978,26 @@
+     moving: boolean;
+     rightFacing: boolean;
+   } {
++    try {
++      return this.getCharacterRouteMotionPresentation(key, input);
++    } catch {
++      // Isolate a bad actor's transient render track. The rest of the canvas
++      // must continue drawing even if an unexpected route/hop handoff fails.
++      this.routeMotionTracks.delete(key);
++      this.characterHopStates.delete(key);
++      return {
++        location: input.location,
++        direction: input.direction ?? "front",
++        moving: false,
++        rightFacing: this.characterFacingRight.get(key) ?? false,
++      };
++    }
++  }
++
++  private getCharacterRouteMotionPresentation(
++    key: string,
++    input: Parameters<FacilityScene["getCharacterRoutePresentation"]>[1],
++  ): ReturnType<FacilityScene["getCharacterRoutePresentation"]> {
+     // A paused redraw must never sync, hand off, prune, or advance a route.
+     // The final visual state is selected by drawCharacterPresentation below.
+     if (this.characterPresentationFrozen()) {
+@@ -5995,11 +6034,11 @@
+     });
+     if (!track) {
+       this.routeMotionTracks.delete(key);
+-      const hop = this.advanceCharacterHopState(key, input.moving ?? false, 0, 0);
++      const hop = this.advanceCharacterHopState(key, false, 0, 0);
+       return {
+         location: this.characterHopSettleLocation(input.location, hop),
+         direction: input.direction ?? "front",
+-        moving: input.moving ?? false,
++        moving: false,
+         rightFacing: this.characterFacingRight.get(key) ?? false,
+       };
+     }
+@@ -6030,16 +6069,17 @@
+       track,
+       this.frameDeltaMilliseconds,
+       tilesPerSecond,
+-    );
+-    const sample = sampleRouteMotion(track);
++      input.location,
++    );
++    const sample = sampleRouteMotion(track, input.location);
+     this.characterFacingRight.set(key, sample.rightFacing);
+     // A finished route stays parked at its last node, so the next route
+     // starts from where the character stands instead of popping forward.
+     this.routeMotionTracks.set(
+       key,
+-      routeMotionComplete(track) ? parkRouteMotion(track) : track,
+-    );
+-    const moving = sample.moving || (input.moving ?? false);
++      routeMotionComplete(track) ? parkRouteMotion(track, input.location) : track,
++    );
++    const moving = sample.moving || (track.routeActive && (input.moving ?? false));
+     const hop = this.advanceCharacterHopState(key, moving, travelledTiles, tilesPerSecond, sample);
+     // Hop steps: draw the character slightly behind or ahead of its logical
+     // route position (zero at every landing), sampled along the real path.
+@@ -6047,7 +6087,7 @@
+       ? sampleRouteMotion({
+           ...track,
+           progress: Math.max(0, Math.min(track.targetIndex, track.progress - characterHopOffsetTiles(hop))),
+-        })
++        }, input.location)
+       : sample;
+     return {
+       location: hop?.moving
+@@ -6141,7 +6181,7 @@
+     supportRole: FacilityActorSupportRole | undefined,
+     supportId?: string,
+     supportRoomInstanceId?: string,
+-  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
++  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; hidden?: boolean; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
+     if (!location || moving || !supportRole) return undefined;
+     const room = this.bridge.viewModel.rooms.find((candidate) => {
+       if (!getApprovedRoomPresentation(candidate.definitionId) || candidate.definitionId === "room.front_desk") return false;
+@@ -6163,6 +6203,8 @@
+       supportId,
+     );
+     if (!support) return undefined;
++    const segmentState = this.getApprovedSegmentState(room);
++    const hidden = !isApprovedActorSupportVisible(support, segmentState.openDoorSegments, segmentState.backedNorthSegments);
+     const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+     const facing = getApprovedSupportFacing(support.facing);
+     const painterGround = getApprovedSupportPainterGround(support);
+@@ -6172,6 +6214,7 @@
+       depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
+       scale: 1,
+       seatTarget: support.pose !== "standing",
++      hidden,
+       supportRole: support.role,
+       supportId: support.id,
+       supportRoomInstanceId: room.instanceId,
+@@ -6184,7 +6227,7 @@
+   private setCharacterSupportPresentation(
+     key: string,
+     graphics: Phaser.GameObjects.Graphics,
+-    support: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding }> | undefined,
++    support: Readonly<{ depthBaseY: number; hidden?: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding }> | undefined,
+     order: number,
+   ): void {
+     const depthY = support?.depthBaseY;
+@@ -6194,6 +6237,7 @@
+       this.characterBitmapContainers.get(key)?.setDepth(depth);
+     }
+     for (const target of [graphics, this.characterBitmapContainers.get(key)]) {
++      if (support?.hidden) target?.setVisible(false);
+       target?.setData("actor-support-role", support?.supportRole ?? null);
+       target?.setData("actor-support-id", support?.supportId ?? null);
+       target?.setData("actor-support-room-instance-id", support?.supportRoomInstanceId ?? null);
+@@ -7038,7 +7082,7 @@
+     const graphics = this.getCharacterGraphics(key);
+     const moving = Boolean(visitor.moving);
+     const direction = visitor.direction ?? "front";
+-    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId);
++    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId, visitor.supportRoomInstanceId);
+     const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
+     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
+@@ -7075,7 +7119,9 @@
+     const room = this.bridge.viewModel.rooms.find((candidate) =>
+       candidate.instanceId === actor.procedureCompanion?.waitingReservation?.roomInstanceId);
+     const chair = room ? getPeriopCompanionChairForActor(actor, this.getPeriopCompanionChairs(room)) : undefined;
+-    const supportDisplay = chair ? this.getApprovedActorSupportDisplayPosition(
++    const supportDisplay = actor.supportRole ? this.getApprovedActorSupportDisplayPosition(
++      location, moving, actor.supportRole, actor.supportId, actor.supportRoomInstanceId,
++    ) : chair ? this.getApprovedActorSupportDisplayPosition(
+       location, moving, chair.support.role, chair.support.id, chair.roomInstanceId,
+     ) : undefined;
+     // A paused/build redraw must not replay an attachment to a removed chair or
+@@ -7088,7 +7134,7 @@
+       this.characterSeatSettles.delete(key);
+     }
+     const baseY = this.drawCharacterPresentation(graphics, key, {
+-      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
++      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.layout.tileSize,
+       baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y), appearance: actor.appearance,
+       direction: supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false),
+       pose: supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),

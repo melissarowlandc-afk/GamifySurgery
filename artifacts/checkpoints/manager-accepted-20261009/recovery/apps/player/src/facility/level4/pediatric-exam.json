@@ -1,0 +1,2097 @@
+{
+  "proofId": "pediatric-exam",
+  "roomDefinitionId": "room.pediatric_examination",
+  "proofPath": "tools/room-design/level-4/pediatric-exam/proof/index.html",
+  "assets": [
+    {
+      "id": "level4:pediatric-exam:peds-table",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/peds-table.png"
+    },
+    {
+      "id": "level4:pediatric-exam:stool-backless",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/stool-backless.png"
+    },
+    {
+      "id": "level4:pediatric-exam:scale-counter",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/scale-counter.png"
+    },
+    {
+      "id": "gs015:waiting:south",
+      "relativePath": "art/rooms/gs015-v1/waiting/south.webp"
+    },
+    {
+      "id": "level4:pediatric-exam:toy-bin",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/toy-bin.png"
+    },
+    {
+      "id": "level4:pediatric-exam:growth-chart",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/growth-chart.png"
+    },
+    {
+      "id": "level4:pediatric-exam:animal-print",
+      "relativePath": "art/rooms/level4-v1/pediatric-exam/animal-print.png"
+    },
+    {
+      "id": "level4:pediatric-waiting:armchair-west-front",
+      "relativePath": "art/rooms/level4-v1/pediatric-waiting/armchair-west-front.png"
+    }
+  ],
+  "orientations": [
+    {
+      "runtimeOrientation": 0,
+      "proofView": "north-up",
+      "footprint": [
+        3,
+        3
+      ]
+    }
+  ],
+  "shell": {
+    "tilePixels": 120,
+    "rearWallHeightPixels": 90,
+    "lowNorthHeightPixels": 29,
+    "sideCapWidthPixels": 14,
+    "southHeightPixels": 29,
+    "floorAlgorithm": "approved-proof",
+    "floorBase": "#e8f0ec",
+    "floorPalette": [
+      "#e8f0ec"
+    ],
+    "background": "#f3ead3",
+    "rearWall": "#9fd3c7",
+    "baseTrim": "#58735a",
+    "edgeTrim": "#294632",
+    "doorJamb": "#744a29",
+    "doorInsetPixels": 12,
+    "floorPattern": "pediatric-exam approved material",
+    "floorPatternKind": "vinyl",
+    "floorPatternSizePixels": 30,
+    "floorPatternSeed": 17,
+    "floorGrout": "#7a6c5e",
+    "floorAccent": "#000000",
+    "exactProofFloor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 360,
+        "color": "#e8f0ec"
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#f6d58a",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#bfe1ee",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#cfe8c4",
+        "alpha": 0.55
+      },
+      {
+        "shape": "line",
+        "x": 30,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 60,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 90,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 150,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 180,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 210,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 270,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 300,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 330,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 30,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 60,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 90,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 150,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 180,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 210,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 270,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 300,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 330,
+        "width": 360,
+        "height": 0,
+        "color": "#6f8a80",
+        "alpha": 0.16
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "pedsTable",
+      "assetId": "level4:pediatric-exam:peds-table",
+      "sourceRect": [
+        0,
+        0,
+        374,
+        826
+      ],
+      "renderSizeTiles": [
+        0.78,
+        1.7226737967914438
+      ],
+      "destinationTopLeftTiles": [
+        0.09999999999999998,
+        0.35026737967914423
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.49,
+        2.05
+      ],
+      "depthKey": 2.05,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        187,
+        815
+      ]
+    },
+    {
+      "id": "stool",
+      "assetId": "level4:pediatric-exam:stool-backless",
+      "sourceRect": [
+        0,
+        0,
+        266,
+        427
+      ],
+      "renderSizeTiles": [
+        0.44,
+        0.7063157894736842
+      ],
+      "destinationTopLeftTiles": [
+        1.23,
+        1.0436842105263158
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.45,
+        1.75
+      ],
+      "depthKey": 1.75,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        133,
+        427.00000000000006
+      ]
+    },
+    {
+      "id": "scaleCounter",
+      "assetId": "level4:pediatric-exam:scale-counter",
+      "sourceRect": [
+        0,
+        0,
+        442,
+        490
+      ],
+      "renderSizeTiles": [
+        0.92,
+        1.0199095022624434
+      ],
+      "destinationTopLeftTiles": [
+        2.0100000000000002,
+        -0.705339366515837
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.47,
+        0.3
+      ],
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "backedOwners": [
+        "N3"
+      ],
+      "footprint": {
+        "left": 2.06,
+        "top": 0.18,
+        "width": 0.82,
+        "height": 0.12
+      },
+      "touchupKeepWhenBacked": true,
+      "sourceFloorContact": [
+        220.99999999999997,
+        483
+      ]
+    },
+    {
+      "id": "parentChair",
+      "assetId": "gs015:waiting:south",
+      "sourceRect": [
+        8,
+        748,
+        315,
+        369
+      ],
+      "renderSizeTiles": [
+        0.8,
+        0.937142857142857
+      ],
+      "destinationTopLeftTiles": [
+        2.12,
+        1.9428571428571428
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.52,
+        2.88
+      ],
+      "depthKey": 2.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        157.49999999999994,
+        369
+      ]
+    },
+    {
+      "id": "toyBin",
+      "assetId": "level4:pediatric-exam:toy-bin",
+      "sourceRect": [
+        0,
+        0,
+        212,
+        202
+      ],
+      "renderSizeTiles": [
+        0.44,
+        0.4192452830188679
+      ],
+      "destinationTopLeftTiles": [
+        0.12000000000000002,
+        2.4552830188679247
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.34,
+        2.86
+      ],
+      "depthKey": 2.86,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 0.21,
+        "top": 2.74,
+        "width": 0.26,
+        "height": 0.1
+      },
+      "sourceFloorContact": [
+        106,
+        194.99999999999991
+      ]
+    },
+    {
+      "id": "growthChart",
+      "assetId": "level4:pediatric-exam:growth-chart",
+      "sourceRect": [
+        0,
+        0,
+        172,
+        374
+      ],
+      "renderSizeTiles": [
+        0.36,
+        0.7827906976744186
+      ],
+      "destinationTopLeftTiles": [
+        1.27,
+        -0.8125581395348838
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N2"
+      ],
+      "backedOwners": [
+        "N2"
+      ]
+    },
+    {
+      "id": "animalPrint",
+      "assetId": "level4:pediatric-exam:animal-print",
+      "sourceRect": [
+        0,
+        0,
+        164,
+        172
+      ],
+      "renderSizeTiles": [
+        0.34,
+        0.3565853658536586
+      ],
+      "destinationTopLeftTiles": [
+        0.38,
+        -0.6807317073170732
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N1"
+      ],
+      "backedOwners": [
+        "N1"
+      ]
+    },
+    {
+      "id": "parentChair:front",
+      "assetId": "level4:pediatric-waiting:armchair-west-front",
+      "sourceRect": [
+        0,
+        0,
+        315,
+        369
+      ],
+      "renderSizeTiles": [
+        0.8,
+        0.937142857142857
+      ],
+      "destinationTopLeftTiles": [
+        2.12,
+        1.9428571428571428
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.52,
+        2.88
+      ],
+      "depthKey": 2.8802,
+      "depthPolicy": "authored-layer",
+      "doorOwners": [],
+      "backedOwners": [],
+      "overlayFor": "parentChair",
+      "sourceFloorContact": [
+        157.49999999999994,
+        369
+      ],
+      "foregroundSupportIds": [
+        "parentChair"
+      ]
+    }
+  ],
+  "supports": [
+    {
+      "id": "table:patient",
+      "role": "pediatric-examination-patient",
+      "pose": "exam-table",
+      "facing": "east",
+      "seat": {
+        "x": 0.66,
+        "y": 1.25
+      },
+      "ground": {
+        "x": 0.66,
+        "y": 1.6
+      },
+      "fixtureGround": {
+        "x": 0.49,
+        "y": 2.06
+      },
+      "supportRecord": "pedsTable",
+      "painterDepth": 2.06,
+      "allowedActors": [
+        "child"
+      ],
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "stool:clinician",
+      "role": "pediatric-examination-clinician",
+      "pose": "seated",
+      "facing": "west",
+      "seat": {
+        "x": 1.45,
+        "y": 1.2669924812030076
+      },
+      "ground": {
+        "x": 1.45,
+        "y": 1.75
+      },
+      "fixtureGround": {
+        "x": 1.45,
+        "y": 1.75
+      },
+      "supportRecord": "stool",
+      "painterDepth": 1.7501,
+      "allowedActors": [
+        "provider"
+      ],
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "parentChair",
+      "role": "pediatric-parent-seat",
+      "pose": "seated",
+      "facing": "west",
+      "seat": {
+        "x": 2.6533333333333333,
+        "y": 2.509206349206349
+      },
+      "ground": {
+        "x": 2.52,
+        "y": 2.88
+      },
+      "fixtureGround": {
+        "x": 2.52,
+        "y": 2.88
+      },
+      "supportRecord": "parentChair",
+      "painterDepth": 2.8801,
+      "allowedActors": [
+        "parent"
+      ],
+      "doorOwners": [],
+      "backedOwners": []
+    }
+  ],
+  "solids": [
+    {
+      "id": "pedsTable",
+      "footprint": {
+        "left": 0.12,
+        "top": 0.5,
+        "width": 0.74,
+        "height": 1.5
+      },
+      "endpoint": true
+    },
+    {
+      "id": "parentChair",
+      "footprint": {
+        "left": 2.24,
+        "top": 2.38,
+        "width": 0.56,
+        "height": 0.5
+      },
+      "endpoint": true
+    }
+  ],
+  "routeClearances": [
+    {
+      "id": "pedsTable",
+      "footprint": {
+        "left": 0.16256684491978604,
+        "top": 2.0333155080213903,
+        "width": 0.656951871657754,
+        "height": 0.01668449197860955
+      },
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "scaleCounter",
+      "footprint": {
+        "left": 2.0474660633484163,
+        "top": 0.28334841628959273,
+        "width": 0.8429864253393666,
+        "height": 0.01665158371040726
+      },
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "backedOwners": []
+    },
+    {
+      "id": "toyBin",
+      "footprint": {
+        "left": 0.15735849056603782,
+        "top": 2.843396226415094,
+        "width": 0.3632075471698114,
+        "height": 0.016603773584905834
+      },
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "backedOwners": []
+    },
+    {
+      "id": "stool",
+      "footprint": {
+        "left": 1.411954887218045,
+        "top": 1.6970676691729323,
+        "width": 0.07609022556390976,
+        "height": 0.047969924812029996
+      },
+      "doorOwners": [],
+      "backedOwners": []
+    }
+  ],
+  "approachRoutes": [
+    {
+      "doorSegment": "N1",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1.1,
+          0.2
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N1",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1.85,
+          0.2
+        ],
+        [
+          1.85,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N1",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1.85,
+          0.2
+        ],
+        [
+          1.85,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.5,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.85,
+          0.2
+        ],
+        [
+          1.85,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.85,
+          0.2
+        ],
+        [
+          1.85,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          2.2
+        ],
+        [
+          2.05,
+          2.2
+        ],
+        [
+          2.05,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          2.8,
+          0.5
+        ],
+        [
+          2.8,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          2.8,
+          0.5
+        ],
+        [
+          2.8,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          2.8,
+          0.5
+        ],
+        [
+          2.8,
+          2.2
+        ],
+        [
+          2.05,
+          2.2
+        ],
+        [
+          2.05,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          2.8,
+          1.5
+        ],
+        [
+          2.8,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          2.8,
+          1.5
+        ],
+        [
+          2.8,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          2.8,
+          1.5
+        ],
+        [
+          2.8,
+          2.2
+        ],
+        [
+          2.05,
+          2.2
+        ],
+        [
+          2.05,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          2.8,
+          2.5
+        ],
+        [
+          2.8,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          2.8,
+          2.5
+        ],
+        [
+          2.8,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          2.8,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          0.5,
+          2.8
+        ],
+        [
+          0.5,
+          2.25
+        ],
+        [
+          1,
+          2.25
+        ],
+        [
+          1,
+          2.2
+        ],
+        [
+          1.05,
+          2.2
+        ],
+        [
+          1.05,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          0.5,
+          2.8
+        ],
+        [
+          0.5,
+          2.25
+        ],
+        [
+          1,
+          2.25
+        ],
+        [
+          1,
+          2.2
+        ],
+        [
+          1.05,
+          2.2
+        ],
+        [
+          1.05,
+          1.95
+        ],
+        [
+          1.7,
+          1.95
+        ],
+        [
+          1.7,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          0.5,
+          2.8
+        ],
+        [
+          0.5,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          1.5,
+          2.8
+        ],
+        [
+          1.5,
+          1.95
+        ],
+        [
+          1.2,
+          1.95
+        ],
+        [
+          1.2,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          1.5,
+          2.8
+        ],
+        [
+          1.5,
+          1.95
+        ],
+        [
+          1.7,
+          1.95
+        ],
+        [
+          1.7,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          1.5,
+          2.8
+        ],
+        [
+          1.5,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          2.5,
+          2.8
+        ],
+        [
+          2.5,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          2.5,
+          2.8
+        ],
+        [
+          2.5,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          2.5,
+          2.8
+        ],
+        [
+          2.5,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          1.1,
+          0.5
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          0.2,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          1.95,
+          1.5
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          1.95,
+          1.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "table:patient",
+      "standingApproach": {
+        "x": 1.1,
+        "y": 1.15
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.2,
+          2.25
+        ],
+        [
+          1,
+          2.25
+        ],
+        [
+          1,
+          2.2
+        ],
+        [
+          1.05,
+          2.2
+        ],
+        [
+          1.05,
+          1.15
+        ],
+        [
+          1.1,
+          1.15
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 1.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.2,
+          2.25
+        ],
+        [
+          1,
+          2.25
+        ],
+        [
+          1,
+          2.2
+        ],
+        [
+          1.05,
+          2.2
+        ],
+        [
+          1.05,
+          1.95
+        ],
+        [
+          1.7,
+          1.95
+        ],
+        [
+          1.7,
+          1.8
+        ],
+        [
+          1.95,
+          1.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "parentChair",
+      "standingApproach": {
+        "x": 1.95,
+        "y": 2.5
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          1.95,
+          2.5
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    }
+  ],
+  "procedural": [],
+  "provenance": {
+    "receiptPath": "tools/room-design/level-4/pediatric-exam/approval-2026-10-08.md",
+    "receiptSha256": "9237bfc1cd5f611ae81f8fe2e48072301f7cfab9f4f4397156dc8adfd18ecbe6",
+    "designSha256": "4101758bb966df4848b8c4d599eab6ed6f9ed365873b987c355606f0daa7d8da",
+    "approved": [
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/proof/index.html",
+        "sha256": "2b614d21d92b598f9c445ed00e1add957504bbc5fa7c6bb64629da1ea8b91185"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/proof/data.json",
+        "sha256": "517d554c48c7cebfccae1aea0ac06ed501b5b0779c3effe87805c7c900aa5c65"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/generation-manifest.json",
+        "sha256": "88ae8947c55d0b0c7562f42bff1f2261c4e5270c20c637e93d87e8f1718672de"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/animal-print.png",
+        "sha256": "4ec70a711f18de0ad04db2ed7650764569270291846c9ca9783547ca15ec30c1"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/growth-chart.png",
+        "sha256": "bda4f96a37941663e942a06a78b71061ec2a036ad80e7e8cdbe339f423594074"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/peds-table.png",
+        "sha256": "bcb0d9fea19ecf4b469eb579ae772c334ddd92acab4b5148f6c6c2f52d8c9337"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/scale-counter.png",
+        "sha256": "56019bd9d51ae0803516e2491830503c9d81fff64443f2e15afdb025b2206abb"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/toy-bin.png",
+        "sha256": "645f17fa2474fe9a85ef851f3df4753f9f21d11d4d55ed365f1a30a35ee709b3"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/processed/metadata.json",
+        "sha256": "3c11d918d1d33921006f399fa7c21c9e1dcc4734438a01f59f989160c55566c6"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/derived/stool-backless-manifest.json",
+        "sha256": "e8aa64819c0a01a6c9ca575654add4520cfbfcb3c6e40593af01b197b45e0d01"
+      },
+      {
+        "source": "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+        "sha256": "0532e455112d364b21b1ae6d1fd482593c76357d1a3e73d966c9bd18291c9722"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/assets/derived/stool-backless.png",
+        "sha256": "94624408d870af708837547537d5fcc8ece96b49cc15b52b5048bf5d0260c399"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-waiting/assets/derived/occluder-manifest.json",
+        "sha256": "5f2ea8e67e256f266e8e6d0578c33dc37b3dc526814320dd5ed96d2acda603bd"
+      },
+      {
+        "source": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+        "sha256": "5bfa9f8b69241fc69c7f3b30b87f6df9c2f00d980d0e215e7e320ce48357f0d8"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-waiting/assets/derived/armchair-west-front.png",
+        "sha256": "4c39536cec6fc7d17a2d078c2db42b9f18528ca062836dbd19daeffe123e31e8"
+      },
+      {
+        "source": "tools/room-design/level-4/pediatric-exam/proof/presentation-contract.json",
+        "sha256": "4136ea828b2ac4e223d36588a58dc081a753af5a2c5a6c9d343cfb072f568d74"
+      }
+    ]
+  }
+}

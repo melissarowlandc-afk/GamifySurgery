@@ -1,0 +1,12 @@
+--- a/packages/game-domain/src/staff-dispatch.ts
++++ b/packages/game-domain/src/staff-dispatch.ts
+@@ -22,6 +22,9 @@
+     (resource.employeeIds.includes(employee.id) || resource.provider?.kind === "employee" && resource.provider.employeeId === employee.id));
+   for (const operation of state.serviceOperations) {
+     if (operation.id === excludedOperationId || !["arriving", "waiting_for_resources", "waiting_for_next_phase"].includes(operation.status)) continue;
++    if (employee.staffRoleDefinitionId === "staff.app" && operation.clinicVisit &&
++      ["adult_appointment", "pediatric_consult", "wound_care", "ostomy_support"].includes(operation.clinicVisit.kind) &&
++      operation.clinicVisit.requestedRoomInstanceId === employee.homeRoomInstanceId) return true;
+     if (usesHomeStaff(operation.diagnosticPhaseWork?.resource) || operation.diagnosticPhysicalWork?.phaseBindings
+       .slice(operation.phaseIndex).some(binding => usesHomeStaff(binding.resource))) return true;
+   }

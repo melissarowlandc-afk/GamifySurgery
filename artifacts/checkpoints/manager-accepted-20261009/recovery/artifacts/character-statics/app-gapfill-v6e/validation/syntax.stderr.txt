@@ -1,0 +1,8 @@
+node.exe : (node:23328) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+At line:11 char:20
++   $stdoutLines = @(& $executable @arguments 2> $stderrPath)
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:23328) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)

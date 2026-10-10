@@ -1,0 +1,64 @@
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -9,6 +9,7 @@
+   getDiagnosticTimingRuleForService,
+   getServiceIncomeForRoute,
+   getServiceIncomeLine,
++  mriServiceContract,
+   type DiagnosticTimingRule,
+   type ServiceOperationPhase,
+   type ServiceRouteDefinition,
+@@ -28,6 +29,7 @@
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getProcedureStaffStandingSpots, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
+ import { hasQueuedHomeRoomWork, staffHomeMismatchCount } from "./staff-dispatch";
++import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+ import {
+   getRoomDefinition,
+   getStaffRoleDefinition,
+@@ -203,6 +205,9 @@
+ /** History is a fallback for background work; live carrier copies are authoritative. */
+ export function getDiagnosticOrderPlans(state: GameState): DiagnosticOrderPlan[] {
+   const plans = new Map<string, DiagnosticOrderPlan>();
++  for (const operation of state.serviceOperations) {
++    if (operation.diagnosticTiming && operation.cancelledAtFacilityTick === null) plans.set(operation.diagnosticTiming.orderId, operation.diagnosticTiming);
++  }
+   for (const encounter of Object.values(state.encounters)) {
+     for (const step of encounter.steps) if (step.result?.diagnosticTiming && !plans.has(step.result.diagnosticTiming.orderId)) plans.set(step.result.diagnosticTiming.orderId, step.result.diagnosticTiming);
+   }
+@@ -1080,6 +1085,11 @@
+ 
+ /** One calculation for a quote and the frozen accepted order; never writes state. */
+ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingRequest, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): DiagnosticTimingQuote {
++  if (state.encounters[request.encounterId]?.frozenCase.pediatricProfile &&
++    [request, ...(request.components ?? [])].some(component => pediatricServiceIsUnsupported(component.serviceId ?? component.timingProfileId ?? "") ||
++      component.allowedRouteIds?.some(id => pediatricServiceIsUnsupported(id)))) {
++    return { kind: "unavailable", reason: "no_valid_route", estimateMinutes: null };
++  }
+   const calendar = calendarFor(state, context, request.orderId, request.encounterId);
+   const trainingCategories = snapshotEmployeeTrainingCategories(state);
+   const plan: DiagnosticOrderPlan = { version: "diagnostic-order.v1", timingVersion: DIAGNOSTIC_TIMING_VERSION,
+@@ -1122,8 +1132,11 @@
+     if (!rule && !profile) return { kind: "unavailable", reason: "unknown_service_or_profile", estimateMinutes: null };
+     const actualRule = rule ?? { family: "retained", reason: "specialist" };
+     if (!component.serviceId) plan.execution = "preview_only";
++    const mriContract = serviceId ? mriServiceContract(serviceId) : undefined;
+     const routes = (service?.routes ?? []).filter((route) => !component.allowedRouteIds || component.allowedRouteIds.includes(route.id) ||
+-      (component.allowOnsiteEquivalents === true && routeIsLocal(route))).sort((a, b) => a.preference - b.preference || a.id.localeCompare(b.id));
++      (component.allowOnsiteEquivalents === true && routeIsLocal(route) && (!mriContract ||
++        route.id === mriContract.onsite && component.allowedRouteIds.includes(mriContract.outsourced))))
++      .sort((a, b) => a.preference - b.preference || a.id.localeCompare(b.id));
+     const bedsideRequirement: DiagnosticResourceRequirement = { roomDefinitionId: "room.examination", staffRoleDefinitionIds: [], providerRoleDefinitionIds: [], founderEligible: false, stationKind: null };
+     const examinationId = state.encounters[request.encounterId]?.assignedRoomInstanceId ?? containingRoomId(state, context, patientLocation);
+     const bedsideRoom = actualRule.family === "bladder_scan" ? resourceCandidates(state, context, bedsideRequirement).find((resource) => resource.roomInstanceId === examinationId) : null;
+@@ -1201,7 +1214,9 @@
+       const requirement = processingRequirement(kind);
+       const localMinutes = kind === "interpretation" ? DIAGNOSTIC_TIMING_TABLE.imaging.onsiteInterpretationMinutes : kind === "pathology" ? DIAGNOSTIC_TIMING_TABLE.pathology.onsiteProcessingMinutes : DIAGNOSTIC_TIMING_TABLE.collectedLab.onsiteProcessingMinutes;
+       const externalMinutes = kind === "interpretation" ? DIAGNOSTIC_TIMING_TABLE.imaging.offsiteInterpretationMinutes : kind === "pathology" ? DIAGNOSTIC_TIMING_TABLE.pathology.offsiteProcessingMinutes : DIAGNOSTIC_TIMING_TABLE.collectedLab.offsiteProcessingMinutes;
+-      const localPhase = append(kind, "local", localMinutes, false, requirement, dependsOn, kind);
++      const outsideMri = kind === "interpretation" && actualRule.family === "imaging" &&
++        actualRule.onsiteReadRequiresLocalAcquisition && (!route || !routeIsLocal(route));
++      const localPhase = outsideMri ? null : append(kind, "local", localMinutes, false, requirement, dependsOn, kind);
+       const phase = localPhase ?? append(kind, "external", externalMinutes, false, null, dependsOn, kind)!;
+       lastResultId = phase.id;
+     };

@@ -1,0 +1,18 @@
+--- a/packages/game-domain/src/guidance-progression.ts
++++ b/packages/game-domain/src/guidance-progression.ts
+@@ -30,10 +30,14 @@
+ /** Real operational levers for a metric; none creates a navigation-only button. */
+ export function progressionMetricGuidance(state: GameState, goal: { id: string; current: number; required: number }, context: DomainContext): string | null {
+   const remaining = Math.max(0, goal.required - goal.current).toLocaleString("en-US");
+-  if (goal.id === "progression.clinical_xp") return `Complete patient visits to earn ${remaining} more Clinical XP.`;
++  if (goal.id === "progression.clinical_xp") return state.facilityLevel === 4
++    ? `Answer scored charts to earn ${remaining} more Clinical XP. APP and scheduled visits earn money, not XP or FSRS practice.`
++    : `Complete patient visits to earn ${remaining} more Clinical XP.`;
+   if (goal.id === "progression.completed_encounters") return `Complete ${remaining} more patient ${goal.required - goal.current === 1 ? "visit" : "visits"} to meet the completed-patient goal.`;
+   if (goal.id === "progression.endoscopy_completion") return "Complete the first endoscopy visit through the staffed Endoscopy and Peri-op/Recovery Rooms to meet this clinic goal.";
+   if (goal.id === "progression.ambulatory_operation_completion") return "Complete the first ambulatory operation visit through the staffed OR and Peri-op/Recovery Rooms to meet this clinic goal.";
++  if (goal.id === "progression.witness.pediatric_visit_with_parent") return "Complete a scored pediatric chart or an APP pediatric visit with its parent. Pediatric Waiting adds seats but is not a completion gate.";
++  if (goal.id === "progression.witness.wound_ostomy_care_visit") return "Assign an APP to a working Wound/Ostomy Room, enable Scheduled appointments and finish a wound or ostomy visit. This visit earns money, not Clinical XP or FSRS practice.";
+   if (goal.id !== "progression.satisfaction") return null;
+   const stage = context.balanceRelease.facility.stageDefinitions.find((entry) => entry.level === state.facilityLevel)!;
+   const current = getDisplayedClinicSatisfaction(state, context);

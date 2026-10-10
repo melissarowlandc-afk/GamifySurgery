@@ -1,0 +1,388 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -17,12 +17,16 @@
+   getEmergencyGlp1Status,
+   getEmployeeRoleTrainingPercent,
+   getEmployeeTrainingMoney,
++  appAppointmentFeeRange,
++  APP_APPOINTMENT_INCOME_LINE_IDS,
++  getAppAppointmentHomes,
++  pendingAppClinicService,
++  staffStillEligibleEntries,
+   getOperationalGlp1AutomationCapacity,
+   getEncounterSettlement,
+   getEncounterPatientLocation,
+   getLearningSummary,
+   getNextRoomUpgradeCost,
+-  getOperatingExpensePerFacilityHour,
+   isEmployeeOperational,
+   isEmployeeAssignedToOperationalRoom,
+   isRoomOperationalForFacilityWork,
+@@ -65,6 +69,7 @@
+ } from "@gamify-surgery/game-domain";
+ import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG, RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID, RADIOLOGIST_OUTSIDE_INCOME_LINE_ID, RADIOLOGIST_READ_INCOME, getCurrentRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type { FacilityActorSupportRole } from "../facility/types";
++import { pediatricActorSupport } from "./pediatricFamilyPresentation";
+ import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
+ import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
+ import { createClinicFeedView, createNeedsYouView } from "./alertsEventsViewModel";
+@@ -73,6 +78,7 @@
+   splitClinicalDecisionStem,
+ } from "./clinicalText";
+ import { getFounderActivityLabel } from "./founderActivityPresentation";
++import { describeFacilityCharacter } from "./characterActivityPresentation";
+ import {
+   describeRoomUpgradeBenefit,
+   letteredRoomNames,
+@@ -296,6 +302,16 @@
+   return status.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+ }
+ 
++function scheduledMriStatusLabel(state: GameState, operation: ServiceOperationState): string | null {
++  if (!operation.diagnosticTiming || operation.status === "leaving") return null;
++  const timing = getDiagnosticOrderTiming(state, operation.id);
++  if (!timing) return null;
++  const activity = describeFacilityCharacter(state, { kind: "service-visitor", id: operation.actorId })?.activity ?? serviceOperationStatusLabel(operation.status);
++  return timing.resultRemainingTicks === null ? `${activity} · Result waiting for capacity`
++    : timing.resultReady ? `${activity} · Result ready`
++    : `${activity} · Result in ${formatFacilityDuration(timing.resultRemainingTicks)} (game estimate)`;
++}
++
+ function operationPhase(operation: ServiceOperationState) {
+   const phases = operation.frozenOperationPhases ??
+     SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.operation?.phases;
+@@ -494,12 +510,23 @@
+ }
+ 
+ function patientSupportRoleForRoom(definitionId: string): FacilityActorSupportRole | undefined {
++  if (definitionId === "room.wound_ostomy") return "wound-ostomy-patient";
++  if (definitionId === "room.mri") return "mri-patient";
++  if (definitionId === "room.pediatric_examination") return "pediatric-examination-patient";
+   if (definitionId === "room.examination") return "examination-patient";
+   if (definitionId === "room.ultrasound") return "ultrasound-patient";
+   if (definitionId === "room.minor_procedure") return "minor-procedure-patient";
+   if (definitionId === "room.ct") return "ct-patient";
+   if (definitionId === "room.phlebotomy") return "phlebotomy-patient";
+   return undefined;
++}
++
++function mriPatientSupport(state: GameState, operation: ServiceOperationState | undefined, role: FacilityActorSupportRole | undefined) {
++  if (role !== "mri-patient" || !operation) return undefined;
++  const room = operation.reservedRoomInstanceIds.map(id => state.rooms.find(candidate => candidate.id === id))
++    .find(candidate => candidate?.roomDefinitionId === "room.mri");
++  return room ? { supportRoomInstanceId: room.id,
++    supportId: operation.status === "in_service" ? "patient-seated" : "patient-standing" } : undefined;
+ }
+ 
+ function getPeriopBedPatientSupport(
+@@ -526,6 +553,9 @@
+ }
+ 
+ function clinicianSupportRoleForRoom(definitionId: string): FacilityActorSupportRole | undefined {
++  if (definitionId === "room.wound_ostomy") return "wound-ostomy-clinician";
++  if (definitionId === "room.mri") return "mri-operator";
++  if (definitionId === "room.pediatric_examination") return "pediatric-examination-clinician";
+   if (definitionId === "room.examination") return "examination-clinician";
+   if (definitionId === "room.ultrasound") return "ultrasound-clinician";
+   if (definitionId === "room.minor_procedure") return "minor-procedure-clinician";
+@@ -1435,6 +1465,9 @@
+   const progressionStatus = getFacilityProgressionStatus(state);
+   const facilityBalance =
+     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
++  const usedStaffStills = new Set([...state.employees, ...(state.departingEmployees ?? [])].map(employee => employee.appearance.stillId));
++  const appArtAvailable = staffStillEligibleEntries("staff.app").some(entry => !usedStaffStills.has(entry.stillId));
++  const imagingCapacityRooms = state.facilityLevel >= 4 ? "Ultrasound, X-ray, CT or MRI" : "Ultrasound, X-ray, or CT";
+   const initialRoomInstanceIds = new Set(
+     facilityBalance.initialRooms.map((room) => room.id),
+   );
+@@ -1513,6 +1546,11 @@
+       : null;
+   };
+   const serviceIncomeTotals = getServiceIncomeTotalsCents(state);
++  const finances = createManagementFinanceView(
++    state,
++    serviceIncomeTotals,
++    (incomeLineId) => SERVICE_INCOME_CATALOG.find((line) => line.id === incomeLineId)?.displayName ?? incomeLineId,
++  );
+   const receiptActorLabel = (actorKind: string, actorId: string): string => {
+     if (actorKind === "remote") return state.employees.find((employee) => employee.id === actorId)?.displayName ?? "Remote service";
+     if (actorKind === "founder") return state.founder.displayName;
+@@ -1605,7 +1643,8 @@
+       );
+       const providerAvailable = !providerPhase || Boolean(
+         providerPhase.founderEligible || state.employees.some(
+-          (employee) => Boolean(providerPhase.providerRoleDefinitionIds?.includes(employee.staffRoleDefinitionId)) && isEmployeeOperational(state, employee.id),
++          (employee) => Boolean(providerPhase.providerRoleDefinitionIds?.includes(employee.staffRoleDefinitionId)) &&
++            (employee.staffRoleDefinitionId === "staff.app" ? isEmployeeAssignedToOperationalRoom(state, employee.id) : isEmployeeOperational(state, employee.id)),
+         ),
+       );
+       const phaseRequirements = [
+@@ -1622,7 +1661,10 @@
+         ...missingStaff.map((roleId) => getStaffRoleDefinition(roleId)?.displayName ?? humanizeIdentifier(roleId)),
+         ...(providerAvailable ? [] : ["approved provider"]),
+       ])];
+-      const lineAvailable = !levelLocked && unavailableRequirements.length === 0 && (line.retail ? retailOutletAvailable === true : true);
++      const pendingClinic = pendingAppClinicService(line.id);
++      const appClinic = APP_APPOINTMENT_INCOME_LINE_IDS.includes(line.id);
++      const appHomesMissing = appClinic && getAppAppointmentHomes(state, PROTOTYPE_DOMAIN_CONTEXT, line.id).length === 0;
++      const lineAvailable = !levelLocked && !pendingClinic && !appHomesMissing && unavailableRequirements.length === 0 && (line.retail ? retailOutletAvailable === true : true);
+       // Retail outlets name their own room/staff; offer the first outlet's setup.
+       const firstRetailOutlet = line.retail && !retailOutletAvailable ? line.retail.outlets[0] : undefined;
+       const retailMissingRooms = firstRetailOutlet ? [firstRetailOutlet.roomDefinitionId] : [];
+@@ -1635,7 +1677,11 @@
+           missingRoomDefinitionIds: [...missingRooms, ...retailMissingRooms.filter((id) => !state.rooms.some((room) => room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id)))],
+           missingStaffRoleIds: [...missingStaff, ...retailMissingStaff.filter((id) => !state.employees.some((employee) => employee.staffRoleDefinitionId === id && isEmployeeOperational(state, employee.id)))],
+         }),
+-        arrivalLabel: line.id === RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID
++        arrivalLabel: line.id === "income.app_consult" ? "Additional walk-in every 2 hr per staffed exam home · unscored"
++          : line.id === "income.pediatric_consult" ? "Child with parent every 90 min per staffed pediatric exam home · unscored"
++          : ["income.wound_care", "income.ostomy_support"].includes(line.id) ? "Every 3 hr per staffed wound/ostomy home · 30 min visit · unscored"
++          : line.id === "income.mri" ? "Every 4 hr · 60 min acquisition + 5 min onsite / 30 min external read · game estimates"
++          : line.id === RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID
+           ? "Additional fee when each study is read"
+           : line.id === RADIOLOGIST_OUTSIDE_INCOME_LINE_ID
+             ? `Automatic when idle · ${RADIOLOGIST_READ_INCOME.outsideDurationMinutes} min base per read`
+@@ -1644,7 +1690,10 @@
+         id: line.id,
+         displayName: line.displayName,
+         kind: line.kind,
+-        feeLabel: line.id === "income.glp1_telehealth"
++        feeLabel: appClinic ? (() => {
++          const [low, high] = appAppointmentFeeRange(state, line.id);
++          return low === high ? currency(low) : `${currency(low)}–${currency(high)} by APP training`;
++        })() : line.id === "income.glp1_telehealth"
+           ? currency(glp1ConsultPayment)
+           : line.scheduledVisitorFee === undefined
+           ? currency(line.fee)
+@@ -1654,11 +1703,14 @@
+         available: lineAvailable,
+         unavailableReason: levelLocked
+           ? `Locked until Facility Level ${line.minimumFacilityLevel}`
+-          : unavailableRequirements.length > 0
++          : pendingClinic ?? (appHomesMissing ? line.id === "income.pediatric_consult"
++            ? "Assign an APP to an operational Pediatric Examination Room"
++            : ["income.wound_care", "income.ostomy_support"].includes(line.id) ? "Assign an APP to an operational Wound/Ostomy Clinic"
++            : "Assign an APP to an operational Examination Room" : unavailableRequirements.length > 0
+             ? `Requires ${unavailableRequirements.join(" + ")}`
+             : line.retail && !retailOutletAvailable
+               ? `Requires ${retailOutletLabel}`
+-            : undefined,
++            : undefined),
+         ...(stockCost !== undefined ? { stockCostLabel: currency(stockCost), contributionLabel: currency(line.fee - stockCost) } : {}),
+       };
+     }),
+@@ -1667,8 +1719,12 @@
+       .map((operation) => ({
+         id: operation.id,
+         displayName: operation.diagnosticPhaseWork?.kind === "interpretation" ? "In-house study read" : SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+-        actorLabel: operation.diagnosticPhaseWork?.kind === "interpretation" ? state.encounters[operation.diagnosticPhaseWork.encounterId]?.patientDisplayName ?? "This center" : operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
+-        statusLabel: periopNurseAttentionStatus(operation, state.facilityTick) ?? operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
++        actorLabel: operation.clinicVisit?.kind === "mri"
++          ? `${operation.displayName} · ${operation.clinicVisit.demographics.ageYears}, ${operation.clinicVisit.demographics.sexLabel}`
++          : operation.clinicVisit && APP_APPOINTMENT_INCOME_LINE_IDS.includes(operation.incomeLineId)
++          ? `${operation.displayName} · ${operation.clinicVisit.demographics.ageYears}, ${operation.clinicVisit.demographics.sexLabel}${operation.clinicVisit.pediatricFamilyId ? " · With parent" : ""} · ${operation.providerReservation?.kind === "employee" ? state.employees.find(employee => employee.id === (operation.providerReservation?.kind === "employee" ? operation.providerReservation.employeeId : undefined))?.displayName ?? "APP" : "Awaiting APP"}`
++          : operation.diagnosticPhaseWork?.kind === "interpretation" ? state.encounters[operation.diagnosticPhaseWork.encounterId]?.patientDisplayName ?? state.serviceOperations.find(visitor => visitor.id === operation.diagnosticPhaseWork?.encounterId)?.displayName ?? "This center" : operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
++        statusLabel: scheduledMriStatusLabel(state, operation) ?? periopNurseAttentionStatus(operation, state.facilityTick) ?? operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
+         quoteFeeLabel: currency(operation.diagnosticPhaseWork?.readIncomeFee ?? (operation.quoteFee - (operation.diagnosticPhysicalWork?.readIncomeFee ?? 0))),
+       })),
+       ...getActiveOutsideRadiologyReads(state).map((read) => ({
+@@ -1697,11 +1753,7 @@
+         netLabel: currency(receipt.netCashDelta),
+         timeLabel: facilityTimeLabel(state, receipt.completedAtFacilityTick),
+       })),
+-    finances: createManagementFinanceView(
+-      state,
+-      serviceIncomeTotals,
+-      (incomeLineId) => SERVICE_INCOME_CATALOG.find((line) => line.id === incomeLineId)?.displayName ?? incomeLineId,
+-    ),
++    finances,
+     // Includes receipts retired from live state; see retiredServiceHistory.
+     grossTotalLabel: currency(serviceIncomeTotals.grossCents / 100),
+     stockCostTotalLabel: currency(serviceIncomeTotals.stockCostCents / 100),
+@@ -1727,7 +1779,6 @@
+       staffOnBreakCount: levelThreeSupport.occupiedBreakSeats.length,
+     } } : {}),
+   };
+-  const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
+   const xpRequirement = progressionStatus.requirements.find(
+     (requirement) => requirement.id === "progression.clinical_xp",
+   );
+@@ -1825,7 +1876,7 @@
+         minimumFractionDigits: 2,
+         maximumFractionDigits: 2,
+       })}`,
+-      moneyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
++      moneyDeltaLabel: finances.hourlyNetLabel,
+       xpLabel: state.clinicalXp.toLocaleString(),
+       satisfactionLabel:
+         effectiveSatisfaction === null ? "—" : `${Math.round(effectiveSatisfaction)}%`,
+@@ -1845,7 +1896,14 @@
+           ? `${Math.min(state.clinicalXp, xpRequired)}/${xpRequired} XP`
+           : "Maximum prototype level",
+       xpProgressPercent,
+-      moneyHourlyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
++      moneyHourlyDeltaLabel: finances.hourlyNetLabel,
++      moneyHourlyNetSign: finances.hourlyNetSign,
++      moneyHourlyBreakdown: {
++        incomeLabel: finances.hourlyIncomeLabel,
++        costLabel: finances.hourlyCostLabel,
++        windowLabel: finances.incomeWindowLabel,
++        explanation: finances.incomeWindowExplanation,
++      },
+       dayTimeLabel: clock.displayLabel,
+       goals: progressionStatus.requirements.map((requirement) => ({
+         id: requirement.id,
+@@ -1967,10 +2025,12 @@
+         ...(() => {
+           const supportRole = getFounderSupportRole(state);
+           const breakSeat = supportRole === "staff-break-seat" ? getFounderBreakSeatClaim(state) : null;
+-          const procedureRoom = state.environment.founderActivity?.kind === "perform_service"
+-            ? getServiceTargetRoom(state, state.environment.founderActivity.targetId, "founder") : undefined;
++          const activity = state.environment.founderActivity;
++          const procedureRoom = activity?.kind === "perform_service"
++            ? getServiceTargetRoom(state, activity.targetId, "founder") : activity?.kind === "attend_encounter"
++              ? state.rooms.find(room => room.id === state.encounters[activity.targetId]?.assignedRoomInstanceId) : undefined;
+           const procedureDefinition = procedureRoom ? getRoomDefinition(procedureRoom.roomDefinitionId) : null;
+-          const procedureSupportId = procedureRoom && procedureDefinition
++          const procedureSupportId = procedureRoom?.roomDefinitionId === "room.pediatric_examination" ? "stool:clinician" : procedureRoom && procedureDefinition
+             ? getProcedureStaffSupportId(procedureRoom, procedureDefinition, state.environment.founderLocation, "provider") : undefined;
+           return supportRole
+             ? { supportRole, ...(breakSeat ? { supportId: breakSeat.seatId, supportRoomInstanceId: breakSeat.roomId } : {}),
+@@ -2134,6 +2194,8 @@
+               : seated ? "seated" : undefined,
+             ...(supportRole ? { supportRole } : {}),
+             ...(periopBedSupport ? { supportId: periopBedSupport.supportId } : {}),
++            ...mriPatientSupport(state, periopOperation, supportRole),
++            ...pediatricActorSupport(state, "encounter", encounter.id, location, Boolean(encounter.patientMovement)),
+             ...movementPresentation(
+               presentationPath,
+               presentationPathIndex,
+@@ -2172,10 +2234,15 @@
+             ? getPeriopBedPatientSupport(state, operation, operation.location)
+             : undefined;
+           const supportRole = periopBedSupport?.supportRole ?? (amenityTrip === null && room && atServiceEndpoint ? patientSupportRoleForRoom(room.roomDefinitionId) : undefined);
++          const woundSupport = supportRole && room?.roomDefinitionId === "room.wound_ostomy"
++            ? { supportRoomInstanceId: room.id, supportId: "recliner:patient" } : undefined;
+           return {
+             instanceId: operation.id, actorId: operation.actorId, displayName: operation.displayName, appearance: operation.appearance,
+             ...(supportRole ? { supportRole } : {}),
+             ...(periopBedSupport ? { supportId: periopBedSupport.supportId } : {}),
++            ...woundSupport,
++            ...mriPatientSupport(state, operation, supportRole),
++            ...pediatricActorSupport(state, "service_visitor", operation.id, operation.location, operation.pathIndex < operation.path.length - 1),
+             ...(amenityTrip
+               ? movementPresentation(amenityTrip.path, amenityTrip.pathIndex)
+               : retailTrip ?? movementPresentation(operation.path, operation.pathIndex)),
+@@ -2195,6 +2262,8 @@
+           return {
+             instanceId: actor.id, actorKind: actor.kind, displayName: actor.displayName, appearance: actor.appearance,
+             ...(actor.procedureCompanion ? { procedureCompanion: actor.procedureCompanion } : {}),
++            ...pediatricActorSupport(state, "companion", actor.id, actor.location, actor.pathIndex < actor.path.length - 1),
++            ...(actor.pediatricFamilyId ? { pediatricFamilyId: actor.pediatricFamilyId } : {}),
+             ...(retailTrip ?? movementPresentation(actor.path, actor.pathIndex)),
+             ...(retailTrip?.location ? { location: retailTrip.location } : actor.location ? { location: actor.location } : {}),
+           };
+@@ -2327,7 +2396,8 @@
+           ? undefined
+           : serviceSupportRole && serviceRoom
+             ? { supportRole: serviceSupportRole, supportRoomInstanceId: serviceRoom.id,
+-                supportId: getProcedureStaffSupportId(serviceRoom, getRoomDefinition(serviceRoom.roomDefinitionId)!, employee.location,
++                supportId: serviceRoom.roomDefinitionId === "room.mri" ? "operator"
++                  : ["room.pediatric_examination", "room.wound_ostomy"].includes(serviceRoom.roomDefinitionId) ? "stool:clinician" : getProcedureStaffSupportId(serviceRoom, getRoomDefinition(serviceRoom.roomDefinitionId)!, employee.location,
+                   employee.staffRoleDefinitionId === "staff.endoscopy_nurse" || employee.staffRoleDefinitionId === "staff.or_nurse" ? "nurse" : "provider") }
+             : undefined;
+         const trainingSupport = !departing && employee.training?.stage === "training" &&
+@@ -2412,11 +2482,7 @@
+       facilityLevelLabel: `Level ${state.facilityLevel}`,
+       nextLevelLabel:
+         progressionStatus.nextFacilityLevel === null
+-          ? state.facilityLevel === 2
+-            ? "Level 3"
+-            : state.facilityLevel === 3
+-              ? "Level 4 preview"
+-              : null
++          ? null
+           : `Level ${progressionStatus.nextFacilityLevel}`,
+       goals: progressionStatus.requirements.map((requirement) => ({
+         id: requirement.id,
+@@ -2434,11 +2500,7 @@
+         progressLabel: `${Math.min(levelThreeSupport.completedQiReviewCount, 1)}/1`,
+       }] } : {}),
+       canLevelUp: progressionStatus.eligible,
+-      prototypeComplete:
+-        progressionStatus.nextFacilityLevel === null &&
+-        progressionStatus.requirements.every(
+-          (requirement) => requirement.met,
+-        ),
++      prototypeComplete: progressionStatus.terminalComplete,
+       endoscopySetupRequirements: getProcedureSetupRequirements(state, "endoscopy"),
+       ambulatoryOperationSetupRequirements: getProcedureSetupRequirements(state, "ambulatory_operation"),
+     },
+@@ -2576,11 +2638,13 @@
+         const affordable = state.cash >= role.hiringCost;
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+-        const blockedReason = roomCapacity.capacity === 0
++        const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
++        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
++          : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+           : role.id === "staff.imaging_technician"
+-            ? "Build an Ultrasound, X-ray, or CT Room to add imaging technician capacity."
++            ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
+             : "Build a compatible room to add hiring capacity."
+           : atMaximum
+             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
+@@ -2613,6 +2677,7 @@
+             !atMaximum &&
+             requirementsMet &&
+             !lacksGlp1StaffingSlot &&
++            !lacksAppArt &&
+             affordable,
+           blockedReason,
+         };
+@@ -2634,11 +2699,13 @@
+         const atMaximum = employees.length >= roomCapacity.capacity;
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+-        const blockedReason = roomCapacity.capacity === 0
++        const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
++        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
++          : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+           : role.id === "staff.imaging_technician"
+-            ? "Build an Ultrasound, X-ray, or CT Room to add imaging technician capacity."
++            ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
+             : "Build a compatible room to add hiring capacity."
+           : atMaximum
+             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
+@@ -2671,6 +2738,7 @@
+             id: employee.id,
+             displayName: employee.displayName,
+             roleDisplayName: role.displayName,
++            activityLabel: describeFacilityCharacter(state, { kind: "staff", id: employee.id })?.activity,
+             salaryLabel: `$${employee.salaryPerExpenseInterval.toLocaleString()}/hr`,
+             moraleLabel: `${employee.morale}%`,
+             moralePercent: employee.morale,
+@@ -2691,8 +2759,10 @@
+               ? "Each Reading Room has four radiologist positions. Each operational radiologist has a separate queue and reads one study at a time."
+             : role.id === "staff.glp1_np"
+               ? `Each GLP-1 Telehealth Suite has two NP positions. Each staffed NP earns $${glp1ConsultPayment.toLocaleString("en-US", { maximumFractionDigits: 2 })} per facility hour.`
++              : role.id === "staff.app"
++                 ? `One APP post per Examination, Minor-Procedure, Pediatric Examination or Wound/Ostomy Room. Each hire needs an unused approved APP look (${staffStillEligibleEntries("staff.app").length} total); room upgrades add no posts. Assign an APP to an exam or wound/ostomy home for scheduled visits. Children stay with a parent. APP visits earn money, no Clinical XP or FSRS practice.`
+               : role.id === "staff.imaging_technician"
+-                ? "Each Ultrasound, X-ray, or CT Room adds one shared imaging technician position."
++                ? `Each ${imagingCapacityRooms} Room adds one shared imaging technician position.`
+                 : roomCapacity.builtRoomCount > 0
+                   ? `Each compatible room adds capacity; ${roomCapacity.capacity} position${roomCapacity.capacity === 1 ? "" : "s"} available.`
+                   : undefined,
+@@ -2700,6 +2770,7 @@
+             !atMaximum &&
+             requirementsMet &&
+             !lacksGlp1StaffingSlot &&
++            !lacksAppArt &&
+             affordable,
+           blockedReason,
+           trainingSummary: createRoleTrainingSummary(state, role.id, employees),

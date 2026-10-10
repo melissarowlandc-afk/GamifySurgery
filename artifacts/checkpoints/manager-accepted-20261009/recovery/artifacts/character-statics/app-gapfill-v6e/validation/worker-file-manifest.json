@@ -1,0 +1,506 @@
+{
+  "status": "PASS",
+  "changedExistingFiles": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16",
+      "bytes": 1512231,
+      "owned": true,
+      "afterSha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "d5b282386171b7c1738bdca43abb14abfa8c4314875a0bff5e3e84f45ba87153",
+      "bytes": 18821,
+      "owned": true,
+      "afterSha256": "728448899f23bc02ce431037d9b253632ed84c2b763f040ef80317200ba7b8e6"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "3cb6e318a88c8f9eeea944a2ae828c05f8fc7e03a9b2d40654c9064e38d77551",
+      "bytes": 4963,
+      "owned": true,
+      "afterSha256": "9c484736511deaf6070263e1efa9d4ffcf99414e9c643e2bb5e2727d9fdc20b7"
+    },
+    {
+      "path": "apps/player/src/session/appAppointmentsViewModels.test.ts",
+      "sha256": "33e50aee7a3b0dd4ac39b23f044bf5896dae6809e40ccd0174d2e79c2ed3c917",
+      "bytes": 4720,
+      "owned": true,
+      "afterSha256": "14c6a1da12df582e362f9ab7308051dac41a93cafa15c54686f1ddaac06d2635"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "sha256": "5816cfc9e07399a885eb8f46498d4c29b10bf47b9dec4f61690e4ba200b88522",
+      "bytes": 132260,
+      "owned": true,
+      "afterSha256": "d77ba8dbc1d50a80c2fd45f859118a78cbb0a608eceb18fe751a3c9743093011"
+    },
+    {
+      "path": "docs/execplans/character-gapfill-v6-20261007.md",
+      "sha256": "78a4e0067e5faa6f29e8dbfc3201c31255a8200b18f400c9b414b76e6f43d1f3",
+      "bytes": 73828,
+      "owned": true,
+      "afterSha256": "bb16f668007d1d5384319ce8570b587c0b9c1f9f3ececf9f57f074f3561a7ac4"
+    },
+    {
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "sha256": "48dba94b154ae9a3fffe0b81b4e937d3ef78fb77040250c480d4f25de8adea5a",
+      "bytes": 389993,
+      "owned": true,
+      "afterSha256": "e28feea8bf406a69a1bd6b4e6074d32dc94bee8951819b7fbb502998c5f5ec9f"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "023bdf6d7b59771e2d79e38e205c478f5a994f47a16308afed3142b4a70205fc",
+      "bytes": 31108,
+      "owned": true,
+      "afterSha256": "9feeefef20872bd3c028a6a3d1bbc5500a3e0cd3100b19d3c1c89b6ae3ebae2b"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "fbd40f1c30a630b8e75357ef283a342548af07a0e28489db2bc91ace89a480f2",
+      "bytes": 22141,
+      "owned": true,
+      "afterSha256": "ed24d05932cd7e1ed55b26ea7ec8e136ee8f597155a038dd99f9fa363d8a68d9"
+    },
+    {
+      "path": "packages/game-domain/tests/app-staff.test.ts",
+      "sha256": "c32b828bf27a4734376ae9a0331f57dc1365e21e5e4866468bc958944a4b3e64",
+      "bytes": 4735,
+      "owned": true,
+      "afterSha256": "eb3cc562a7c502b5bf846d2be2f272ad1834025825fd65b59610a772577c0577"
+    },
+    {
+      "path": "packages/game-domain/tests/character-variety.test.ts",
+      "sha256": "95b208165805c41d149073c2b59df294015524a3aeabe5c46307c4b14ebcf274",
+      "bytes": 9345,
+      "owned": true,
+      "afterSha256": "8d4e7c47684572d7140061eb7b196a0af8b7888b94df657486ad4174aac9e1ea"
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "sha256": "3fe6633843ee7189cbb4e7b0648847dbb6a63bcaf0487ce122253bf16c9cd0bd",
+      "bytes": 2249336,
+      "owned": true,
+      "afterSha256": "7872b275a02ce144373947417d72bd308cb9345366561784515117e5356e04aa"
+    }
+  ],
+  "newToolFiles": 11,
+  "newRuntimePngs": 64,
+  "createdFiles": [
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/runtime-contract.mjs",
+      "sha256": "8d7a1f2a22a1108ea9a6b57c5882250584745a636f8bb121d432b6eeb531ce92",
+      "bytes": 25124
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/bind-owner-approval.mjs",
+      "sha256": "c1a3a3fad254dea037ac58e9e15aa43f722f69872d939d3c46dc200a9b2116c7",
+      "bytes": 4897
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/capture-integration-baseline.mjs",
+      "sha256": "0952bbe4a858367e7bda19657a7d01f15f9a4106dcffb2965d6d1e4a9f436c30",
+      "bytes": 392
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/integration-validator-hooks.mjs",
+      "sha256": "8efd6554a5a1483a6e4b1fc15be8596a459f71980d74a8e9c9d6227acff36349",
+      "bytes": 1710
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/validate-approved-batch.mjs",
+      "sha256": "f2222b028c3529200565b1bf79e02e6a90543a71fcf7bbb7f9fd2db3a8637a1f",
+      "bytes": 1076
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/promote-runtime.mjs",
+      "sha256": "cd13d3a98658228dfbe9c2d81e216620f94290030736b3f00d5f84d62c380313",
+      "bytes": 7812
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/validate-runtime-integration.mjs",
+      "sha256": "f5c7039e9808347f32605110d7a65de3ad0f7bb26dc330048b9c99bf390f746f",
+      "bytes": 6547
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/validate-promotion-rerun.mjs",
+      "sha256": "a561b559289baab3acaf198ac4cbc856b13fb015926eaefd362e66ede5e10072",
+      "bytes": 2094
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/audit-scoped-changes.py",
+      "sha256": "18dbc0d6f8955be50083ab6a09c4611abb0d98252beb2c5adaf567c8de804175",
+      "bytes": 3363
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/owner-approval.json",
+      "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607",
+      "bytes": 10999
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/INTEGRATION.md",
+      "sha256": "288f0e2d29790c96e951bb3495831bad8cf52c7a362293fc3a1d7549e906200e",
+      "bytes": 2915
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-east.png",
+      "sha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
+      "bytes": 32131
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-north.png",
+      "sha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
+      "bytes": 33049
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-south.png",
+      "sha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
+      "bytes": 38114
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-west.png",
+      "sha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
+      "bytes": 31935
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-east.png",
+      "sha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
+      "bytes": 37468
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-north.png",
+      "sha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
+      "bytes": 42294
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-south.png",
+      "sha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
+      "bytes": 46952
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-west.png",
+      "sha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
+      "bytes": 37465
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
+      "sha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
+      "bytes": 33109
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-north.png",
+      "sha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
+      "bytes": 33575
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-south.png",
+      "sha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
+      "bytes": 39712
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-west.png",
+      "sha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
+      "bytes": 33454
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-east.png",
+      "sha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
+      "bytes": 38211
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-north.png",
+      "sha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
+      "bytes": 44255
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+      "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+      "bytes": 49530
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-west.png",
+      "sha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
+      "bytes": 38182
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-east.png",
+      "sha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
+      "bytes": 30181
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-north.png",
+      "sha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
+      "bytes": 32124
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-south.png",
+      "sha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
+      "bytes": 34760
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-west.png",
+      "sha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
+      "bytes": 30375
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-east.png",
+      "sha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
+      "bytes": 38859
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-north.png",
+      "sha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
+      "bytes": 42935
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-south.png",
+      "sha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
+      "bytes": 46718
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-west.png",
+      "sha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
+      "bytes": 39037
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-east.png",
+      "sha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
+      "bytes": 31087
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-north.png",
+      "sha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
+      "bytes": 31001
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-south.png",
+      "sha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
+      "bytes": 36021
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-west.png",
+      "sha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
+      "bytes": 31306
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-east.png",
+      "sha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
+      "bytes": 39782
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-north.png",
+      "sha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
+      "bytes": 43456
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-south.png",
+      "sha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
+      "bytes": 49640
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-west.png",
+      "sha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
+      "bytes": 39849
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-east.png",
+      "sha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
+      "bytes": 30358
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-north.png",
+      "sha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
+      "bytes": 30369
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-south.png",
+      "sha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
+      "bytes": 34024
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-west.png",
+      "sha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
+      "bytes": 30704
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-east.png",
+      "sha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
+      "bytes": 35127
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-north.png",
+      "sha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
+      "bytes": 40243
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-south.png",
+      "sha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
+      "bytes": 44142
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-west.png",
+      "sha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
+      "bytes": 35270
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-east.png",
+      "sha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
+      "bytes": 36833
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-north.png",
+      "sha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
+      "bytes": 37193
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-south.png",
+      "sha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
+      "bytes": 43777
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-west.png",
+      "sha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
+      "bytes": 36908
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-east.png",
+      "sha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
+      "bytes": 40079
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-north.png",
+      "sha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
+      "bytes": 46391
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-south.png",
+      "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
+      "bytes": 51921
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-west.png",
+      "sha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
+      "bytes": 40335
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
+      "sha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
+      "bytes": 31236
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-north.png",
+      "sha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
+      "bytes": 32132
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-south.png",
+      "sha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
+      "bytes": 38754
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-west.png",
+      "sha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
+      "bytes": 31155
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-east.png",
+      "sha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
+      "bytes": 34899
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-north.png",
+      "sha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
+      "bytes": 40713
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+      "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+      "bytes": 47583
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-west.png",
+      "sha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
+      "bytes": 35192
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-east.png",
+      "sha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
+      "bytes": 33149
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-north.png",
+      "sha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
+      "bytes": 35190
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-south.png",
+      "sha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
+      "bytes": 39392
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-west.png",
+      "sha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
+      "bytes": 33237
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-east.png",
+      "sha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
+      "bytes": 40442
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-north.png",
+      "sha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
+      "bytes": 45816
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-south.png",
+      "sha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
+      "bytes": 49486
+    },
+    {
+      "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-west.png",
+      "sha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
+      "bytes": 40939
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
+      "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607",
+      "bytes": 10999
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/runtime-integration.json",
+      "sha256": "435c6bfcfabc5bb7b64d35e86c42aa5a3d7f5280854b08d26d6752a4a1d5bc57",
+      "bytes": 15710
+    }
+  ],
+  "concurrentExistingFilesPreserved": [
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "sha256": "911dc752ddd67643bbcc6be5a9dc3ef0a1f974c909bb5bb60dfa6dd6a51ff2f8",
+      "bytes": 338142,
+      "owned": false,
+      "afterSha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5"
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.test.ts",
+      "sha256": "dfa7b3e97f1782e4c289470c0f4d8af96adb8a9caba1581c93b5f4a3625defb2",
+      "bytes": 17327,
+      "owned": false,
+      "afterSha256": "dcb15535b03eafc20d43e5ab9608fc9b3148c6c558b0ac79d24edb264980a915"
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.ts",
+      "sha256": "45ac17a1388ea0231df21d933d1b6c28445816c139aa935a9c2695552a28b722",
+      "bytes": 14127,
+      "owned": false,
+      "afterSha256": "0239754e5eb0fc653789b5c986faf6e47d411b89bec2134d8bf7af5977a82d37"
+    }
+  ],
+  "concurrentNewFilesPreserved": [
+    "apps/player/src/facility/pediatricRouteMotion.test.ts"
+  ],
+  "immutableIntegrationIntake": "artifacts/character-statics/app-gapfill-v6e/runtime-integration-baseline/manifest.json",
+  "scratchFilesystemIntake": ".local-dev/app-gapfill-v6e-integration/intake.json"
+}

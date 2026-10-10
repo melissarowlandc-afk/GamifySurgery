@@ -1,0 +1,32 @@
+--- a/apps/player/src/facility/approvedRoomPresentation.test.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.test.ts
+@@ -16,13 +16,15 @@
+   resolveApprovedRoomProceduralDrawRecords,
+ } from "./approvedRoomPresentation";
+ import { APPROVED_GS015_ROOM_ATLASES } from "../art/bitmapAssetManifest";
++import { APPROVED_LEVEL4_ROOM_PRESENTATIONS } from "./approvedLevel4RoomData";
++import { ROOM_TOUCHUP_DECOR_ASSETS } from "./roomTouchups";
+ 
+ describe("approved GS-015 room presentation contract", () => {
+-  // Twenty-four since the owner-approved Radiology Reading Room (2026-10-07).
+-  it("covers each of the twenty-four approved proofs exactly once", () => {
+-    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(24);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(24);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(24);
++  it("covers the shipped proofs and separately promoted Level 4 art exactly once", () => {
++    const total = 24 + APPROVED_LEVEL4_ROOM_PRESENTATIONS.length;
++    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(total);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(total);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(total);
+     expect(getApprovedRoomPresentation("room.reading")?.proofId).toBe("radiology-reading");
+     expect(getApprovedRoomPresentation("room.imaging_control")).toBeUndefined();
+   });
+@@ -420,7 +422,7 @@
+   });
+ 
+   it("backs every resolved proof draw with a shipped approved atlas", () => {
+-    const assets = new Map(APPROVED_GS015_ROOM_ATLASES.map((asset) => [asset.id, asset]));
++    const assets = new Map([...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS].map((asset) => [asset.id, asset]));
+     for (const room of APPROVED_ROOM_PRESENTATIONS) {
+       for (const orientation of room.orientations) {
+         const capture = getApprovedRoomProofCapture(room.roomDefinitionId, orientation.runtimeOrientation)!;

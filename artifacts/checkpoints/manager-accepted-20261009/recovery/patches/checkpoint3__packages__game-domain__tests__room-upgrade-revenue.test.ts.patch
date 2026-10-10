@@ -1,0 +1,40 @@
+--- a/packages/game-domain/tests/room-upgrade-revenue.test.ts
++++ b/packages/game-domain/tests/room-upgrade-revenue.test.ts
+@@ -146,7 +146,7 @@
+ 
+   it.each([
+     ["income.endoscopy", "room.endoscopy", "staff.endoscopy_nurse", 504],
+-    ["income.ambulatory_operation", "room.ambulatory_or", "staff.or_nurse", 1008],
++    ["income.ambulatory_operation", "room.ambulatory_or", "staff.or_nurse", 1456],
+   ] as const)("attributes %s to the procedure suite, not upgraded prep/recovery", (lineId, roomId, roleId, gross) => {
+     const result = fixture();
+     const recovery = result.addRoom("room.periop_recovery", "staff.periop_nurse");
+@@ -267,7 +267,7 @@
+     const newRoom = alternative(result, room.room, 5);
+     bindRoomUpgradeRevenueQuote(quote, newRoom.id);
+     expect(getRoomUpgradeQuotedFee(quote)).toBe(120);
+-    expect(createRoomUpgradeRevenueQuote(result.state, 120, ["room.mri"])).toBeUndefined();
++    expect(createRoomUpgradeRevenueQuote(result.state, 120, ["room.gift_shop"])).toBeUndefined();
+   });
+ 
+   it("preserves markerless queued operation overrides and rejects inconsistent marked saves", () => {
+@@ -440,7 +440,7 @@
+     expect(authorizeRetailOrder(result.state, "upgrade.rx", "income.pharmacy_pickup", "retail_visitor", "upgrade.rx.actor", 1, result.context)).toBe(true);
+     const id = startRetailPurchase(result.state, "income.pharmacy_pickup", "retail_visitor", "upgrade.rx.actor", result.context, "upgrade.rx");
+     expect(id).not.toBeNull();
+-    expect(result.state.retailOperations[0]).toMatchObject({ quoteGross: 28, quoteStockCost: 13.5 });
++    expect(result.state.retailOperations[0]).toMatchObject({ quoteGross: 78.4, quoteStockCost: 13.5 });
+     pharmacy.room.upgradeLevel = 5;
+     result.state.employees.forEach((employee) => employee.trainingLevel = 1);
+     Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
+@@ -448,8 +448,8 @@
+     for (let count = 0; !result.state.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.pharmacy_pickup") && count < 150; count++) {
+       result.state.facilityTick++; advanceRetailOperations(result.state, result.context); advanceEmployeeMovement(result.state, result.context);
+     }
+-    expect(result.state.serviceIncomeReceipts.find((receipt) => receipt.incomeLineId === "income.pharmacy_pickup")).toMatchObject({ grossAmount: 28, stockCost: 13.5, netCashDelta: 14.5 });
+-    expect(result.state.cash).toBeCloseTo(cash + 14.5);
++    expect(result.state.serviceIncomeReceipts.find((receipt) => receipt.incomeLineId === "income.pharmacy_pickup")).toMatchObject({ grossAmount: 78.4, stockCost: 13.5, netCashDelta: 64.9 });
++    expect(result.state.cash).toBeCloseTo(cash + 64.9);
+     advanceRetailOperations(result.state, result.context);
+     expect(result.state.serviceIncomeReceipts).toHaveLength(1);
+   });

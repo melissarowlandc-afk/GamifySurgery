@@ -1,0 +1,18 @@
+--- a/packages/game-domain/tests/guidance-tip-predicates.test.ts
++++ b/packages/game-domain/tests/guidance-tip-predicates.test.ts
+@@ -45,9 +45,14 @@
+   { id: "tip.progression.next-step", setup: (f) => { f.state.facilityLevel = 0; f.state.clinicalXp = 0; return () => { f.state.encounters[TUTORIAL_ENCOUNTER_ID]!.resolutionReason = null; }; } },
+   { id: "tip.learning.team-discussion", setup: (f) => { const d = f.discussion(f.employee()); return () => { d.lifecycle = "resolved"; }; } },
+   { id: "tip.services.appointments", setup: (f) => { f.roomAndStaff("room.endoscopy", "staff.endoscopy_nurse"); f.roomAndStaff("room.periop_recovery", "staff.periop_nurse"); f.state.serviceAppointmentsEnabled = false; return () => { f.state.serviceAppointmentsEnabled = true; }; } },
++  { id: "tip.app.hire", setup: (f) => { f.state.facilityLevel = 4; return () => { f.employee("staff.app", "room.fixture.examination"); }; } },
++  { id: "tip.pediatric.setup", setup: (f) => { f.state.facilityLevel = 4; return () => { f.addRoom("room.pediatric_examination"); f.addRoom("room.pediatric_waiting"); }; } },
++  { id: "tip.wound.setup", setup: (f) => { f.state.facilityLevel = 4; return () => { f.roomAndStaff("room.wound_ostomy", "staff.app"); }; } },
++  { id: "tip.app.appointments", setup: (f) => { f.state.facilityLevel = 4; f.employee("staff.app", "room.fixture.examination"); f.state.serviceAppointmentsEnabled = false; return () => { f.state.serviceAppointmentsEnabled = true; }; } },
++  { id: "tip.app.capacity", setup: (f) => { f.state.facilityLevel = 4; f.employee("staff.app", "room.fixture.examination"); return () => { f.state.employees = []; }; } },
+ ];
+ 
+-describe("all forty approved guidance predicates", () => {
++describe("guidance catalog predicates", () => {
+   it("covers every stable catalog ID once", () => { expect(scenarios.map((scenario) => scenario.id)).toEqual(GUIDANCE_TIP_CATALOG.map((tip) => tip.id)); });
+   it.each(scenarios)("$id requires its actual trigger and loses eligibility on resolution/suppression", ({ id, setup }) => {
+     const f = tipsFixture(); const suppress = setup(f);

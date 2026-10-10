@@ -1,0 +1,74 @@
+--- a/packages/game-domain/src/guidance-tips.ts
++++ b/packages/game-domain/src/guidance-tips.ts
+@@ -26,6 +26,8 @@
+ import type { DomainContext, GameState, EmployeeState, DiagnosticResourceRequirement, DiagnosticOrderPhase, PlacedRoom } from "./types";
+ import type { GuidanceTipAction, GuidanceTipCandidate, GuidanceTipsState } from "./guidance-tip-types";
+ import { guidanceTopicsForTip, recordGuidanceTopicExposure } from "./guidance-topics";
++import { staffStillEligibleEntries } from "./characterStillCatalog";
++import { APP_APPOINTMENT_INCOME_LINE_IDS, getAppAppointmentHomes } from "./app-appointments";
+ 
+ const moneyFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+ const money = (value: number) => `$${moneyFormatter.format(value)}`;
+@@ -119,6 +121,10 @@
+     !capacity && employed.length > 0 || optional && !optionalPurchaseAllowed(state, role.hiringCost, context)) return null;
+   const home = getAvailableEmployeeHomeRoom(state, roleId);
+   if (!home || !isRoomOperationalForFacilityWork(state, home.id, context)) return null;
++  if (roleId === "staff.app") {
++    const used = new Set([...state.employees, ...(state.departingEmployees ?? [])].map((employee) => employee.appearance.stillId));
++    if (!staffStillEligibleEntries(roleId).some((entry) => !used.has(entry.stillId))) return null;
++  }
+   return { action: { kind: "hire_staff", roleId, expectedCost: role.hiringCost, requiresMissingCoverage: !capacity },
+     actionLabel: `Hire ${role.displayName} · ${money(role.hiringCost)} (+${money(role.salaryPerExpenseInterval)}/hour)`,
+     fix: `Hire ${role.displayName}`, rootKey: `setup:${home.roomDefinitionId}`,
+@@ -476,7 +482,7 @@
+   const progression = progressionStatus();
+   if (progression.eligible) add("tip.progression.next-step", `advance:${state.facilityLevel}`, simple({ kind: "level_up" }, "Advance level", "progression"),
+     { priority: 2, speaker: "Goals", values: { guidance: `Advance the clinic to Level ${progression.nextFacilityLevel}.` } });
+-  else if (guidanceIntroductoryEncountersComplete(state)) {
++  else if (!progression.terminalComplete && guidanceIntroductoryEncountersComplete(state)) {
+     const unmet = progression.requirements.filter((entry) => !entry.met);
+     // Requirements are listed metrics-first in Goals. A legal concrete remedy
+     // takes precedence here, in requirement order, even when XP is also unmet.
+@@ -491,9 +497,11 @@
+           ? `${remedy.fix} first to support the ${getRoomDefinition(roomId, context)!.displayName} requirement.`
+           : `${remedy?.fix} to meet this room requirement.`;
+       } else if (roleId) {
+-        const homeIds = getStaffRoleDefinition(roleId, context)?.requiredRoomDefinitionIds ?? [];
++        const role = getStaffRoleDefinition(roleId, context)!;
++        const homeIds = role.requiredRoomDefinitionIds.length ? role.requiredRoomDefinitionIds : role.requiredAnyRoomDefinitionIds;
+         const missingHome = homeIds.find((id) => !built(id).length);
+-        remedy = hireRemedy(state, roleId, context, true) ?? (missingHome ? placeRemedy(state, missingHome, context, true) :
++        const needsHome = role.requiredRoomDefinitionIds.length > 0 || !homeIds.some((id) => built(id).length);
++        remedy = hireRemedy(state, roleId, context, true) ?? (needsHome && missingHome ? placeRemedy(state, missingHome, context, true) :
+           homeIds.flatMap((id) => built(id)).map((room) => accessRemedy(state, room, context)).find(Boolean) ?? null);
+         guidance = remedy?.action?.kind === "hire_staff" ? `${remedy.fix} to meet this staffing requirement.` :
+           `${remedy?.fix} first to support ${getStaffRoleDefinition(roleId, context)!.displayName} staffing.`;
+@@ -521,6 +529,28 @@
+         { fix: guidance, rootKey: `progression:${goal.id}`, lastFixTick: latestEvent(state, ["facility_level_advanced"]) },
+         { priority: 2, speaker: "Goals", values: { guidance } });
+     }
++  }
++  if (state.facilityLevel === 4) {
++    const appHomes = APP_APPOINTMENT_INCOME_LINE_IDS.flatMap((id) => getAppAppointmentHomes(state, context, id));
++    const appLookCount = staffStillEligibleEntries("staff.app").length;
++    const usedLooks = new Set([...state.employees, ...(state.departingEmployees ?? [])].map((employee) => employee.appearance.stillId));
++    const appLookAvailable = staffStillEligibleEntries("staff.app").some((entry) => !usedLooks.has(entry.stillId));
++    add("tip.app.hire", "staff.app", hireRemedy(state, "staff.app", context, true), { priority: 1 });
++    const pediatricExamMissing = !built("room.pediatric_examination").length;
++    const pediatricRoomId = pediatricExamMissing ? "room.pediatric_examination" : "room.pediatric_waiting";
++    if (!built(pediatricRoomId).length) add("tip.pediatric.setup", pediatricRoomId,
++      placeRemedy(state, pediatricRoomId, context, true), { priority: 1, optional: true,
++        values: { purpose: pediatricExamMissing ? "A Pediatric Examination Room supports scored pediatric charts and APP visits with a parent." : "Pediatric Waiting gives the child and parent seats; it is an amenity, not a completion gate." } });
++    const woundRooms = built("room.wound_ostomy");
++    const woundRemedy = !woundRooms.length ? placeRemedy(state, "room.wound_ostomy", context, true)
++      : getAvailableEmployeeHomeRoom(state, "staff.app")?.roomDefinitionId === "room.wound_ostomy" && !getAppAppointmentHomes(state, context, "income.wound_care").length
++        ? hireRemedy(state, "staff.app", context, true, true) : null;
++    add("tip.wound.setup", "room.wound_ostomy", woundRemedy, { priority: 1, optional: true });
++    if (appHomes.length && !state.serviceAppointmentsEnabled)
++      add("tip.app.appointments", "app-appointments", simple({ kind: "enable_appointments" }, "Enable Scheduled appointments", "appointments"), { priority: 1 });
++    const appCapacity = getRoomStaffCapacity(state, "staff.app").capacity;
++    if (appCapacity > 0 && appLookAvailable && state.employees.filter((employee) => employee.staffRoleDefinitionId === "staff.app").length >= appCapacity)
++      add("tip.app.capacity", "staff.app", placeRemedy(state, "room.examination", context, true), { optional: true, values: { looks: String(appLookCount) } });
+   }
+   for (const discussion of Object.values(state.employeeDiscussions ?? {})) if (["waiting_unopened", "active_action_required"].includes(discussion.lifecycle) &&
+     state.facilityTick - discussion.createdAtFacilityTick >= GUIDANCE_TIP_POLICY.recentFixMinutes && state.openEmployeeDiscussionId !== discussion.id &&

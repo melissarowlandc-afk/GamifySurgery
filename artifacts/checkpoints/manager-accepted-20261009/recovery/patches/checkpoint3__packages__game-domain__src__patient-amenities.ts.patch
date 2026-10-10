@@ -1,0 +1,10 @@
+--- a/packages/game-domain/src/patient-amenities.ts
++++ b/packages/game-domain/src/patient-amenities.ts
+@@ -85,6 +85,7 @@
+ }
+ 
+ function actorEligible(state: GameState, kind: AmenityActorKind, id: string): boolean {
++  if (Object.values(state.pediatricFamilies ?? {}).some(family => family.child.kind === kind && family.child.id === id)) return false;
+   if (hasActiveRetailMovement(state, kind, id)) return false;
+   const location = actorLocation(state, kind, id);
+   if (!location) return false;

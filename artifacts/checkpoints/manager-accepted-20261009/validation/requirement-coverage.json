@@ -1,0 +1,1938 @@
+{
+  "status": "PASS",
+  "missingAcceptedChanges": [],
+  "managerAcceptanceRecords": [
+    "docs/execplans/owner-requests-20261008.md#manager-level-4-m9-accepted-level-4-launch-ready-2026-10-09",
+    "docs/execplans/level4-launch-plan-20261008.md",
+    "docs/execplans/character-gapfill-v6-20261007.md"
+  ],
+  "sourceReceipts": [
+    {
+      "record": ".local-dev/tutorial-owner-playtest-fixes/reviewed-scope.json",
+      "files": [
+        {
+          "path": "apps/player/src/App.tsx",
+          "sha256": "cb17027a87ce54ddb52bd9f4c74e59ae4fec9001c6b01fbccd5f08fb76073a6b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/tutorialTiming.ts",
+          "sha256": "2f03e12505daed3e31b206c4237a894384f349575d5f2d27e86182288258758d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/tutorialViewModels.test.ts",
+          "sha256": "30dfd4a980c3bdf9de3e812283b52b2e6f09aa6f70954d8ebc34ee9a3f554a63",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/tutorialViewModels.ts",
+          "sha256": "6b234748943e465fd1c2ecfdbaa935fc3a9b487405286aa986ef404d59f1d46b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/usePrototypeSession.ts",
+          "sha256": "1f9490a72aac06faddeeace7ff9621ce1aab820c9cf9515bf5e5815a7f81e501",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/styles/global.css",
+          "sha256": "187e77690b25c8c9bb8d4716b21d105708c49ea725c05ba5bc301a5a69219642",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/TutorialCoach.input.test.tsx",
+          "sha256": "37bbd64182d442cb75b2950ab93d868668e0b60aad884b30a56f52bc427d5c41",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/TutorialCoach.tsx",
+          "sha256": "9f995116498b76b3362522aabed69e261291a67fb14096bf58091760d1ef46af",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+          "sha256": "bb571235258bed617a0fd87a111dd3ae029aef0cfc1249c058717b68ac9f71b8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/tutorial-check-in-recovery.test.ts",
+          "sha256": "2dfb4750af7a2c7592944a6cf86ef861aa04a01786b1c53965d9ec32b105aac0",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/e2e/tutorial-owner-playtest.spec.ts",
+          "sha256": "8b4efb361459a54945dc487fe14b6337620a749faba36437475309db33821e6d",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/economy-b-20261008/owned-files.json",
+      "files": [
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+          "sha256": "bb571235258bed617a0fd87a111dd3ae029aef0cfc1249c058717b68ac9f71b8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/diagnostic-timing.test.ts",
+          "sha256": "749de1c76ce395dc007700dae0fc2f5f6e950e653aeb7dff07ee328cba696a18",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/option-b-economy.test.ts",
+          "sha256": "a9e5e6d3fc383246941b9492dd28c6874459b9bf8f4bcbe2a7fb8b25e2fb3967",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.test.ts",
+          "sha256": "fd1a15ea7467a1c0154ac260b73c277fbd382050fae71bc2bfe2de494bfe1583",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.ts",
+          "sha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/radiologist-read-income.test.ts",
+          "sha256": "457360a218d282f532b89778c7ea75314dfe16718707eee76a5be9bdfc16fd58",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/room-upgrades.test.ts",
+          "sha256": "c7289b2c2c823a728af07f2df43aeec4b9d49ca8162270ccae85a068f88fb47f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/service-income-catalog.test.ts",
+          "sha256": "2cebef9d193a53328d5f985ed7e8e3505d65b907e3389c267ac87874a7559012",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/service-income-catalog.ts",
+          "sha256": "0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/economy-compatibility.ts",
+          "sha256": "39585049ebe7bfcb20e85c2652e5ab5732a99fcd823c7f4342ebcc5a1411899e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/persistence.ts",
+          "sha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/room-upkeep-outages.ts",
+          "sha256": "87e1efc13333924c7228041c93f2fcdb797c52515819daa9de5f0457976f3f91",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/selectors.ts",
+          "sha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/economy-frozen-fees.test.ts",
+          "sha256": "62252f419a85a720b64863bad11eb9878aad3f995fcaac1a7ddcc43fa2c1bcc6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/economy-salary-rebasing.test.ts",
+          "sha256": "708d4a57a22c9c3ba2de4f35a8c90378135ea7333f3a74f1ccb981e104e2e0f1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/employee-training-benefits.test.ts",
+          "sha256": "6bd563a1a5207ab92af965753b056df772a7167cdcb3e3c17dc2b6e260207a57",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/facility-management.test.ts",
+          "sha256": "7ee39ea39595f8a3829e3eaf6c15f4a459d383b1bfaeb009edaca873238e8527",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/game-domain.test.ts",
+          "sha256": "ea706e325bde5bbf16e9a6f836c2b853cf8ec0c6bb3d132e87a8f8ff3e3ea84b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/retail-operations.test.ts",
+          "sha256": "eb07f1ccf21c1d4eb0d96de7ba0c009ebf00eed002cc38ef2ec16595be2ee562",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+          "sha256": "6adf6bf7388524fbfa2ce628aa7d8e2ebdd7eb9e243798688c7e998aaaa8267f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/room-upkeep-outages.test.ts",
+          "sha256": "142f6be00234ef01696d1807a5c181e9aff822a2ab4e2d526a192ec38118df95",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/service-operations.test.ts",
+          "sha256": "14d82f94b813c8b17c33d7ed02ff1c24a440ff561bc348d7d4243aec42190707",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/timing-encounters.test.ts",
+          "sha256": "9fa6500b2cdd44fe1343eaca4ef9abe3ef307dd9924f3d5879493911b96cc9fc",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/finance-display/validated-source-hashes.json",
+      "files": [
+        {
+          "path": "apps/player/src/session/economyViewModels.test.ts",
+          "sha256": "76bc5bbc3c00072990b0a36d30579f8e31bdde9c9d4aa85ea6de4c70a68b3dc4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/managementViewModels.test.ts",
+          "sha256": "397192f3159dbb8a88b4c8985e0d235d707c1f24349e92258680fcd7dbab75ff",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/managementViewModels.ts",
+          "sha256": "cd4ae988d934de9f808c04b5baa3ff1148c75a98f499248dc9ceafc75928bfab",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/MoneyPanel.test.tsx",
+          "sha256": "f7bb703dc8c82c60e85732fef9ea98e7375e6fff5ad2d037e3ec62f2b82bb271",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/MoneyPanel.tsx",
+          "sha256": "a9f264b15389e9c4f89562fe0027ad4c1eed1dea846426b81a32f5eb33adc04f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/ResourceBar.tsx",
+          "sha256": "a2da4447e4247b08449f6a74c484eac510f05d7caed1124d9970dece93bce402",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/ResourceBarFinance.test.tsx",
+          "sha256": "2e67aa8694e4aca71537c14af3395305212382ffe3ba443bfd29d712f306ead2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/financePresentation.css",
+          "sha256": "453d196f5d908dbeef70584099b54c41277c41f4c0aac7d2f401315faec50cce",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/types.ts",
+          "sha256": "cb886f9e869a097b667b466149376406bc979a9df64ff6378cf39f3bd9cb088c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/index.ts",
+          "sha256": "22de2d35d3f5bd19a0b89c877a06f3f3ac6e3b808c02573db897fde6769120be",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/rolling-income.ts",
+          "sha256": "40c8f54c7c492e9fa52e88ad171a6d22a09f25fdc6ec5bec8d931a3e8c3f8b65",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/rolling-income.test.ts",
+          "sha256": "56d26eea87662f7ffd9661c5321d0a612b08fe1043dcf96a6e21e93923def1e2",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m1-20261008/owned-files.json",
+      "files": [
+        {
+          "path": "packages/balance-config/src/level-four-schema.test.ts",
+          "sha256": "b5355e92f682af609908c045b0f867d344e937841d32d33de544fb785081f915",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-alerts.ts",
+          "sha256": "96a13b9f7aaa4347d1070fd97c48a308523ecb4d7feeac91b0b5d4fdf30fbb83",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/schema.ts",
+          "sha256": "cc6b4ba4532effca5defd6657493c4376bcf426ad535572e58ac89494c76cc23",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+          "sha256": "4a32197f2d7f336701570350267a64802cfd8dcbbba2865bfa675b1433f4f571",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/level-four-schema.test.ts",
+          "sha256": "a157cdcb09943c1066e5df9b58c43f7f73d56f896f6d7e4c32f903c2b3192f22",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/schema.ts",
+          "sha256": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/persistence.ts",
+          "sha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m2/owned-files.json",
+      "files": [
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/coil-cabinet.png",
+          "sha256": "6ec194370d8a46304f9a663386faffa036db0bb266e4b792050d8e5662783677",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/comfort-cart.png",
+          "sha256": "a57241873742be14cf981f4016f042a0ed26d13efd182e8b2d30258e2d9a2742",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/console.png",
+          "sha256": "6157154ffb36859a77de16e15f75b5ac6de7e94363267a76574c933393ef8724",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/gantry-side.png",
+          "sha256": "b8e8b3373b07e2eb5ba89687058b88dedf52d147f552709ecfa0ab6554b22f56",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/open-shelves.png",
+          "sha256": "52303b83b50465137f318fef3b723d8510bd28cac858187f52a3472b24fb06a0",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/operator-chair.png",
+          "sha256": "6ea0b9b51ad3d26473dabad55998bc09103e629fbbd0ed3dc3dcf5243cc3f50e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/scan-light.png",
+          "sha256": "48ada0f0f837863bb1d75c243989da7c0bcbd15d8128478647cf8fc6f9cb2315",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/table-empty.png",
+          "sha256": "6479afb89b324b919e26534387f61e2ffde78beaab49b2255c63d9a6a6420db5",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/mri/zone-sign.png",
+          "sha256": "2c055a2d517ef42d6bbf84d8394c23a2315b3e0c94270219fe3ff3e84e647851",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/animal-print.png",
+          "sha256": "4ec70a711f18de0ad04db2ed7650764569270291846c9ca9783547ca15ec30c1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/growth-chart.png",
+          "sha256": "bda4f96a37941663e942a06a78b71061ec2a036ad80e7e8cdbe339f423594074",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/peds-table.png",
+          "sha256": "bcb0d9fea19ecf4b469eb579ae772c334ddd92acab4b5148f6c6c2f52d8c9337",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/scale-counter.png",
+          "sha256": "56019bd9d51ae0803516e2491830503c9d81fff64443f2e15afdb025b2206abb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/stool-backless.png",
+          "sha256": "94624408d870af708837547537d5fcc8ece96b49cc15b52b5048bf5d0260c399",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-exam/toy-bin.png",
+          "sha256": "645f17fa2474fe9a85ef851f3df4753f9f21d11d4d55ed365f1a30a35ee709b3",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/animal-prints.png",
+          "sha256": "d112727649a36570055e3aec8a74aeec8bd89857dca4482bc754c13f3756d331",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/aquarium.png",
+          "sha256": "3c5958b0b873aca093e93f712615714a05c8853ed85739d8048e79b8e54c973a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/armchair-east-front.png",
+          "sha256": "ef279064d528b8fcbd46623ec5ce0fe087259c4c820340be964bf4c62df7b6a8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/armchair-west-front.png",
+          "sha256": "4c39536cec6fc7d17a2d078c2db42b9f18528ca062836dbd19daeffe123e31e8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/book-bin.png",
+          "sha256": "219185b31cba3ad4de5e9f216d56b7fb1b33482d9853ec6229bebb21d26168ff",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/kid-stool.png",
+          "sha256": "42b14f4e2f844f847950e97779dd98e1bf75af41952d1401068feeebf864eec5",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/kids-table.png",
+          "sha256": "421e5813ee73fdedec06d92289097000427a1ebe26c57138568e2458fd477632",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/toy-chest.png",
+          "sha256": "c8ebd2bbfc44e94766ccbb21046d368a470f4e91bd88ef9f5f6023e7a24e9736",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/pediatric-waiting/wall-clock-kids.png",
+          "sha256": "e9039fb01e1e4d1ec6490e4103eefd9be294fd91de5df49a0aff5224b2ed11e2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/dressing-cart.png",
+          "sha256": "c03d3b68d1493b7f32f057ead56695bc462ea091df8706b1cfdbeb0330a4771d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/exam-lamp.png",
+          "sha256": "465ac4a0d251a7fe6bb14118182b04dc7646f2baacfc968e991dab40d7192e2b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/hygiene-sign.png",
+          "sha256": "f3b057aa9b1e2bd64b095efc637037dd68a20064881a56c25fe19facf9665f9b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/ostomy-shelf.png",
+          "sha256": "a4265763867f0c93dd85c095e66950c7c0cc51a67f831eb4ddeb057b8be431b4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/rolling-stool-backless.png",
+          "sha256": "a0b7fa6af9ce63ff02a7685afbd959ee02c35737830075113e9d8052d49fbd47",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/public/art/rooms/level4-v1/wound-ostomy/wound-recliner.png",
+          "sha256": "8b9275db15c012bdced3a0d2e25c689860326a09bab59d0838688ec95bf26fbb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/approvedLevel4BitmapAssets.ts",
+          "sha256": "fdc839f03823f8ffe30272feb7ad6ab2e3edc850adc18af8e979e64594f709fa",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/bitmapAssetManifest.test.ts",
+          "sha256": "14d8c450fd7aef87610c8b75af65681bab26bc56e7fe5519181120656cd8a95c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/bitmapAssetManifest.ts",
+          "sha256": "5c1275f1402cd28f945f096d67f5fc6d2e03f99e6097d852f3d438cf65b05caa",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/level4/mri.json",
+          "sha256": "fdb2bc6ae247a8962dffbe2f9053f71ed7908ef2c2d35292fd3052c50a42b59e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/level4/pediatric-exam.json",
+          "sha256": "b128bf623ec4d4fe0e2ae36d51a0351ccfe96e8563150f9e23cfca01f288c094",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/level4/pediatric-waiting.json",
+          "sha256": "b8da9c1dae43949499646c7fa895f9b48200fa4a1d4a14ad2b89897c6438c6e1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/level4/wound-ostomy.json",
+          "sha256": "b70d6dbb10f623887e26966a2e1cd88614954d5b1a37d2fffe89da7a4d1b8d14",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/FacilityScene.ts",
+          "sha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedLevel4RoomData.ts",
+          "sha256": "d5660388efe74a5578f22f394b7db3051b5667382d78b195b5a79df42cc0205f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedMriRoom.test.ts",
+          "sha256": "e309d40510a83e05c649707a7aa9733c0e4b235170de02a95cb526d1f88a291e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedPediatricExaminationRoom.test.ts",
+          "sha256": "f04ae2f6f72cdfa33c8cdedb819ef1e2a6e8c81319f7b3940b944d6622d0a0d9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedPediatricWaitingRoom.test.ts",
+          "sha256": "220ddaefaa78ab77203f253d74fa537cc15377ac57ecf50f95e2656f42a3414e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+          "sha256": "1b1a324e00ceaf1df0b8d099bf5f01dd5b19e65d72a6520455f85863880d1f0f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+          "sha256": "86cfa665d36576e5f52ee5592c1a44d153331001ac01b82b961523390dc785ff",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedRoomRenderer.ts",
+          "sha256": "aa9f8c1ae5b3703e1d19f356643dc97003baca97c5d7ccd5639dacca24d7ce06",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/approvedWoundOstomyRoom.test.ts",
+          "sha256": "b08dc0834a0f3bf5fd028d730ec4f030b642314adeba0c5235eb60de854d2ed4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+          "sha256": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+          "sha256": "92d96745115f167e8de07c04578f03f480a422789d85b3de52f5d9c5add7cbbe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4/mri.json",
+          "sha256": "a32d2a6ab161a23aa1b111412eed33f2745ddc25f559a4d62f419fd83cb277ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4/pediatric-exam.json",
+          "sha256": "11266d9e3aa2fc14a356ebbe800b66a0bae93708f3028c2b84728816602909a6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4/pediatric-waiting.json",
+          "sha256": "64a5c63fa402aec369dbd01244728245e3b0351958eae36ee8c9692603737b88",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4/wound-ostomy.json",
+          "sha256": "b64c34038d51027d4cdd5d421b49b32833df2ac169ff93e37edae71c9da653ab",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+          "sha256": "c3bfa778bb60c0db22ac60448ce9afa5cb03bc99936e0044ae17e36198cdf606",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4ApprovedScene.test.ts",
+          "sha256": "6816cdfaecf4804083f8c6e2c272f2b773689c0dff866a916a13517061a27869",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/roomTouchups.ts",
+          "sha256": "6776d3be9702f0e6c575f74a8e567f8584fc8634371018c3f8590b8b4b93a034",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/roomVisualLayout.ts",
+          "sha256": "186d999fef9af72aea879ec69a7f4d8f63914eda2d05d9e6a836e914bdc62fed",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/types.ts",
+          "sha256": "bd966ce25bd49f21cb866c781c3c5d950050ccbedc87301aecfb39ed8500f88e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/approved-level4-room-layouts.ts",
+          "sha256": "5132495e638f34b1c88ddf4bdaa2cfd3104a82480e4182ad71607a04cd6927c0",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+          "sha256": "7d1097c52cffea081dd79c686a337bb8c62ba8b7a0c3d78d35cfd2306a54a739",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/approved-room-layouts.ts",
+          "sha256": "68dba37809f04665c29954f352a608493f9998aa399f186a87434aa58934ee46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/index.ts",
+          "sha256": "842265288488eccfc533f8aaddbc4dc37206581cde9956c3b43baa61914d55fb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level4-approved-navigation.test.ts",
+          "sha256": "2c57a66079bc4de086361200803275a97120efb30e219e70d61b790853f723c2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/spatial.test.ts",
+          "sha256": "e63befba58280c62105c6eb0ad5e6aecccddadc2fd9b662b7df80cc963506dc1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/room-design/level-4/runtime-promotion/README.md",
+          "sha256": "16895163509478ce3320b1f2c22018165a1be4531b102f75d5aad578affa0de0",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/room-design/level-4/runtime-promotion/promote.mjs",
+          "sha256": "0b89f2dcbafba0b9b441264baef0954516940ac49d17a630eb81f6b43d8a85b1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/room-design/level-4/runtime-promotion/routes.mjs",
+          "sha256": "4278fea100425ab8a82dc69d709713a95dfe3ac02f24323d0d52d35f0e1de5ae",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m3/owned-files.json",
+      "files": [
+        {
+          "path": "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+          "sha256": "c3bfa778bb60c0db22ac60448ce9afa5cb03bc99936e0044ae17e36198cdf606",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/roomUpgradeAppearance.test.ts",
+          "sha256": "d37f85ea98c5320e50cecb272488f7ae335c21355fe749c1a9717ea8b2c129d8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/alertViewModels.test.ts",
+          "sha256": "b5fbec3cbfe66ed9af5715fd9b5f838bc52a81629b75369247c9a5412090b29b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/buildModePresentation.ts",
+          "sha256": "39f341dde2d87d007a6f70aaddc23a88dfbab48659100b2f1b34a3697f8f757a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/levelFourRoomsViewModels.test.ts",
+          "sha256": "8b173aa70c10e25a8dc48b465ecf46f1021b7b9e960f389f810a8ed4ccc8988c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+          "sha256": "7d1097c52cffea081dd79c686a337bb8c62ba8b7a0c3d78d35cfd2306a54a739",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-rooms.test.ts",
+          "sha256": "0734860e3c3df7266735f2b7333b84297ad25ac8ee2dc3445d363340e7846373",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-schema.test.ts",
+          "sha256": "b5355e92f682af609908c045b0f867d344e937841d32d33de544fb785081f915",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.ts",
+          "sha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/room-instance-caps.test.ts",
+          "sha256": "92935ad6820a70b7aa463fa912ad5bbdd5f66e84e52891659c9adaacf98ce02e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/room-upgrades.test.ts",
+          "sha256": "c7289b2c2c823a728af07f2df43aeec4b9d49ca8162270ccae85a068f88fb47f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/room-upgrades.ts",
+          "sha256": "5020f6de7f240ac07a65166832ba3b9886919636699067414a327675ed13e7ef",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/care-room-access.ts",
+          "sha256": "c521512b8f72fa12a9813055b685cb78313e590cfa51996df3b8d5ec7e8b332b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/room-capacity.ts",
+          "sha256": "f5d6e07c2ee6c87bb924a6db4c95900ea7eb95d306fbfe4fee31f1d901f3fc8c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/room-upgrade-experience.ts",
+          "sha256": "53358bc399f5c1ec06657886dfa9cb6701532f9657683fcbd7ba703195ccc85b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/facility-alert-conditions.test.ts",
+          "sha256": "d21ee6fff9aad24e34c41a95c96f2d6440da3196e3a5133cb587a9bb1596278b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-rooms.test.ts",
+          "sha256": "9be888a3bddff49199bf597e55d8ded435477bc44801cc527c7962c89cc810f4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+          "sha256": "6adf6bf7388524fbfa2ce628aa7d8e2ebdd7eb9e243798688c7e998aaaa8267f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/service-operations.test.ts",
+          "sha256": "14d82f94b813c8b17c33d7ed02ff1c24a440ff561bc348d7d4243aec42190707",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/level-four-rooms.ts",
+          "sha256": "50976395644501211a6648167e5b96cfa592c068101994ef1be5ee8fc575e6bc",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms.mjs",
+          "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m4/final-owned-sha256.json",
+      "files": [
+        {
+          "path": "apps/player/src/art/characterStillRegistry.test.ts",
+          "sha256": "728448899f23bc02ce431037d9b253632ed84c2b763f040ef80317200ba7b8e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/characterStillRegistry.ts",
+          "sha256": "9c484736511deaf6070263e1efa9d4ffcf99414e9c643e2bb5e2727d9fdc20b7",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/appAppointmentsViewModels.test.ts",
+          "sha256": "50d14fe338d92a7dde2ade5709145241042be6fa9f10d2426d83623f3fb74f3b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/appStaffPresentation.test.ts",
+          "sha256": "7aff3ff921369bde3eed684a96acb0e53004d4a211d03af8e8c1badb528e7f97",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/characterActivityPresentation.ts",
+          "sha256": "abe6973ff89410d09b1032587effd0bb6e9eb63c5148cbb07f87578329aa6e63",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/employeeTrainingViewModels.ts",
+          "sha256": "3f8e3fcfa1b7a131f1f9f7243e1255511059c5e79f64deb0a1f202df6a165a9f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/StaffPanel.tsx",
+          "sha256": "0a7d11cb60ea21b6f82ebbd9efd54fb8d14f04f74912958d12681b8934b6c659",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/types.ts",
+          "sha256": "cb886f9e869a097b667b466149376406bc979a9df64ff6378cf39f3bd9cb088c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/app-role.test.ts",
+          "sha256": "bdbbb1f3664c94f2c5648875219f92aa70c41194091aff10216bbeadab2e48f6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/employee-training.test.ts",
+          "sha256": "fe307833f1cabb28f72d9692500b492d317486d237e4cf7c67018bb4f1be4033",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/employee-training.ts",
+          "sha256": "dbac4eef4aea90db10f5f12bce4b557040a853e4fb4cfa194bd68485d58a2fe3",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-rooms.test.ts",
+          "sha256": "0734860e3c3df7266735f2b7333b84297ad25ac8ee2dc3445d363340e7846373",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-schema.test.ts",
+          "sha256": "b5355e92f682af609908c045b0f867d344e937841d32d33de544fb785081f915",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.ts",
+          "sha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/service-income-catalog.ts",
+          "sha256": "0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/app-appointments.ts",
+          "sha256": "9053ef12e1024cdb87865de85d190bb9dc649976d927b345039f278e67dc0f1e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/appearance.ts",
+          "sha256": "4077f44d11622299b57aaaafc20834389d00a8c49b1d339363a80665363e020e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+          "sha256": "9feeefef20872bd3c028a6a3d1bbc5500a3e0cd3100b19d3c1c89b6ae3ebae2b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.ts",
+          "sha256": "ed24d05932cd7e1ed55b26ea7ec8e136ee8f597155a038dd99f9fa363d8a68d9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/employee-training-effects.ts",
+          "sha256": "f77f4b799d39a7820cad827310b015fa6613f17f62c8751d9b54277a21227e10",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/index.ts",
+          "sha256": "22de2d35d3f5bd19a0b89c877a06f3f3ac6e3b808c02573db897fde6769120be",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/persistence.ts",
+          "sha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/room-capacity.ts",
+          "sha256": "f5d6e07c2ee6c87bb924a6db4c95900ea7eb95d306fbfe4fee31f1d901f3fc8c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/selectors.ts",
+          "sha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/service-operations.ts",
+          "sha256": "e4a3c604fa774e1c2b0f026f6a1ce9877c944f4aef70ec4c51ba920c66365115",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/staff-dispatch.ts",
+          "sha256": "c95545f2677cf652a3c436b370d6b262cc9be9b5266227d88fc6a290c3e13c73",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/staff.ts",
+          "sha256": "1c666cd0829cfc2b0af8418b895912057dc8c67f16f715c917fdf74d55d02d27",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/app-appointments.test.ts",
+          "sha256": "81823d2ba71c2b3f546f03993220db0cf70a272a1cf37005e4ceabb518568aca",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/app-staff.test.ts",
+          "sha256": "eb3cc562a7c502b5bf846d2be2f272ad1834025825fd65b59610a772577c0577",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/character-variety.test.ts",
+          "sha256": "8d4e7c47684572d7140061eb7b196a0af8b7888b94df657486ad4174aac9e1ea",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/app-appointments.ts",
+          "sha256": "02077276ab855a23c7df3b3f4b44697da5f43458fc5b90ab53edb2ade455bced",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms.mjs",
+          "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m5/changed-paths.json",
+      "files": [
+        {
+          "path": "apps/player/src/art/characterStillRegistry.test.ts",
+          "sha256": "728448899f23bc02ce431037d9b253632ed84c2b763f040ef80317200ba7b8e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/characterStillRegistry.ts",
+          "sha256": "9c484736511deaf6070263e1efa9d4ffcf99414e9c643e2bb5e2727d9fdc20b7",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/FacilityScene.ts",
+          "sha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/types.ts",
+          "sha256": "bd966ce25bd49f21cb866c781c3c5d950050ccbedc87301aecfb39ed8500f88e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/appAppointmentsViewModels.test.ts",
+          "sha256": "50d14fe338d92a7dde2ade5709145241042be6fa9f10d2426d83623f3fb74f3b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/characterActivityPresentation.ts",
+          "sha256": "abe6973ff89410d09b1032587effd0bb6e9eb63c5148cbb07f87578329aa6e63",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/pediatricAppointmentsViewModels.test.ts",
+          "sha256": "ddd6d9b01e1e6485c2874294fba3ea2075b024c49c7487facba8dd8be55e4abc",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/pediatricFamilyPresentation.test.ts",
+          "sha256": "fedb701d5bf30197ed158d26281d32adaf5e72e129f6258399cb709dd39f911e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/pediatricFamilyPresentation.ts",
+          "sha256": "69a464c9b0e4b38696bab0fd4137ca4c7576d065ffa76245ce8ce5a244f228d8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/index.ts",
+          "sha256": "842265288488eccfc533f8aaddbc4dc37206581cde9956c3b43baa61914d55fb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/pediatric-support-routes.json",
+          "sha256": "1f18a42c2e2a8e64cc57afeedf647c77ef49641cdd99bce4e1ffde3781a4ad42",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/service-income-catalog.ts",
+          "sha256": "0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/app-appointments.ts",
+          "sha256": "9053ef12e1024cdb87865de85d190bb9dc649976d927b345039f278e67dc0f1e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/appearance.ts",
+          "sha256": "4077f44d11622299b57aaaafc20834389d00a8c49b1d339363a80665363e020e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+          "sha256": "9feeefef20872bd3c028a6a3d1bbc5500a3e0cd3100b19d3c1c89b6ae3ebae2b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.ts",
+          "sha256": "ed24d05932cd7e1ed55b26ea7ec8e136ee8f597155a038dd99f9fa363d8a68d9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-timing.ts",
+          "sha256": "6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/displaced-routing.ts",
+          "sha256": "4332d3f2bc962e26c76656a21e1148408ffb6d52b9b0ddc11d29a3a162735011",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/index.ts",
+          "sha256": "22de2d35d3f5bd19a0b89c877a06f3f3ac6e3b808c02573db897fde6769120be",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/patient-amenities.ts",
+          "sha256": "b14ca741f032b7f1b578224dd6fc7ca10caa7cf0ccc471c8af987d44b3af5951",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/patientDemographics.ts",
+          "sha256": "fc563f1e299d6ec6fba8d551c22999b86523bc6c44a7a2ca03e4a1baada02603",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/pediatric-eligibility.ts",
+          "sha256": "5e81dce31bc5a5b68937dfb088a10ccdccfa3592dc60379334a5edb75e84aba2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/pediatric-family.ts",
+          "sha256": "66e551d9bd3a665acfe2c879ecc7a8f6ddcf63f91baed86b85f62f98d5d34790",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/persistence.ts",
+          "sha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/retail-operations.ts",
+          "sha256": "72e19074f3cdbfe64ca43080e54e9380f190432dde8ba915c17579c9bd1ff282",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/selectors.ts",
+          "sha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/service-operations.ts",
+          "sha256": "e4a3c604fa774e1c2b0f026f6a1ce9877c944f4aef70ec4c51ba920c66365115",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/patient-appearance-rotation.test.ts",
+          "sha256": "6e5a65a7235e11fbdf4c37c4ffb3c35d233c1097d8ef5b3bb3a390a0adfd103e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/pediatric-appointments.test.ts",
+          "sha256": "55f9ec9867a40774e31dcf3e072504b97207a9de784d2ac07b83f3fcc3d66c50",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/pediatric-family.test.ts",
+          "sha256": "01f59f2dfdb8788a9165af4cf609772a8dea98725b376d2cf56564ea618348da",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/pediatric-identity.test.ts",
+          "sha256": "387d62eb4b5619dda2634df4d0d7a36afb6890eef672555086a8950e4ae67a69",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/pediatric-appointments.ts",
+          "sha256": "7c4dc01dbed442b16cb75040f90679a8fe7dff86e62b6ddd1a6825ef45b10d58",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/pediatric-families.ts",
+          "sha256": "4c7f88d68f7796069176f5f4d167d53b048f526fc5d2dbc65fb07f0ff519068b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms.mjs",
+          "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m6/changed-paths.json",
+      "files": [
+        {
+          "path": "apps/player/src/session/appAppointmentsViewModels.test.ts",
+          "sha256": "50d14fe338d92a7dde2ade5709145241042be6fa9f10d2426d83623f3fb74f3b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/characterActivityPresentation.ts",
+          "sha256": "abe6973ff89410d09b1032587effd0bb6e9eb63c5148cbb07f87578329aa6e63",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/managementViewModels.ts",
+          "sha256": "cd4ae988d934de9f808c04b5baa3ff1148c75a98f499248dc9ceafc75928bfab",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/mriServicesViewModels.test.ts",
+          "sha256": "c55e4c649ddeed3f122e4d6949991e34efc0c21a551b7a05b119b2a32c223bb2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/woundOstomyServicesViewModels.test.ts",
+          "sha256": "1ecec906d9029523facbf49d7d3ba368a3191645fe117df878dc9a778b317baf",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/diagnostic-timing.ts",
+          "sha256": "ff3c108ac731e8a02de16dfe3e9d237c1f74ab3b20f73038b6d2fe03428c4304",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/index.ts",
+          "sha256": "842265288488eccfc533f8aaddbc4dc37206581cde9956c3b43baa61914d55fb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/mri-services.test.ts",
+          "sha256": "42c55ee89d97d0585a5f8f67df34117cb6047fc7de2ea4b7fea03b38f99a53ed",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/mri-services.ts",
+          "sha256": "3bfa35a1a4dcc8ee3e0aed8faccd7da0070a7ae71da72a6b72fc4e05099fbef2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.test.ts",
+          "sha256": "fd1a15ea7467a1c0154ac260b73c277fbd382050fae71bc2bfe2de494bfe1583",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.ts",
+          "sha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/service-income-catalog.ts",
+          "sha256": "0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/wound-ostomy-services.test.ts",
+          "sha256": "ea80b78269308f4fcd16e52c33621f0a03d6c3713a4fd3e5766f0108a09e4ebb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/app-appointments.ts",
+          "sha256": "9053ef12e1024cdb87865de85d190bb9dc649976d927b345039f278e67dc0f1e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-orders.ts",
+          "sha256": "47f5e470ab5777fafa0f119ca74ecbd4c12adbefa8a1d05bf3380b0e6eafd4aa",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-timing.ts",
+          "sha256": "6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/persistence.ts",
+          "sha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/selectors.ts",
+          "sha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/service-operations.ts",
+          "sha256": "e4a3c604fa774e1c2b0f026f6a1ce9877c944f4aef70ec4c51ba920c66365115",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/staff-dispatch.ts",
+          "sha256": "c95545f2677cf652a3c436b370d6b262cc9be9b5266227d88fc6a290c3e13c73",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/app-appointments.test.ts",
+          "sha256": "81823d2ba71c2b3f546f03993220db0cf70a272a1cf37005e4ceabb518568aca",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/mri-services.test.ts",
+          "sha256": "56907276955b8fa9a24ca3656e75b3318c28b2397db77c7553b63ab52374009c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/wound-ostomy-services.test.ts",
+          "sha256": "e76cf96fefe379fcb29902e869cefaae3c8499765164b877839901b956bc28eb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/mri-appointments.ts",
+          "sha256": "e1fa418b75bf3ae92ac26e4ae4285b37ba629b36fdeb47289a10fe1d6ab97a10",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/wound-ostomy-appointments.ts",
+          "sha256": "ebca65da51ca3edd5db4341eb248d82b0887dc95bbd4b70ff73d7e0561cd8e66",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms.mjs",
+          "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m7/changed-paths.json",
+      "files": [
+        {
+          "path": "apps/player/src/session/pediatricChartsViewModels.test.ts",
+          "sha256": "7e1a62d8af326beda73d95d1d53a1b52c70600bafb187e4957d67694398ec4d2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "sha256": "d6f4082e28baa4f4f1fb054b208ebd41183b571c228849e5f3addc2584288ad9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+          "sha256": "9bf0b988e43dd7c346ee57495d77ac66dde730ac4481ce9dffec3aed377aab9d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+          "sha256": "ca35ac6c6eafe42d83cd96fcd9715ce948229c45115126c421e5f8ba4b73c835",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+          "sha256": "9c99f2674650bf3a7ccc363d04e736c57ae596bb2cf951eef9d328d485786577",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+          "sha256": "8f4013d4cb9fb13e2def6bd8550147a2fd2dde6493c120b19c572b86e0943590",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+          "sha256": "6ff0a70ec9fc13f8623d9fb2df347ca7c959066d13c4b29a833f2c5f08975c87",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+          "sha256": "885b7caa05b13ebda5d792a6d792306b666c73ce65119ab86599cff228e29ce1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+          "sha256": "4a32197f2d7f336701570350267a64802cfd8dcbbba2865bfa675b1433f4f571",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+          "sha256": "1991639f5041cd801d7ca78a47f7055bad6c22884b838a754b8df64f9981ea85",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+          "sha256": "ac3ef8b3b1c7b4e3918675432a8686e128756f748a3a4d6372220f382816664b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+          "sha256": "f7a20276f025367bd024276f9b7d66cf51ee6e9b8f7a29f739bef1193b9ecc9f",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "sha256": "3a075930e107166d5baa15f3a6d8bb283d8000f8df4b4e8cdedcd9aa2b86d32a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "sha256": "119202340591779abf9f4d0fa7ec9d4d2ad539d8ca73b7e72ef926906a628d28",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "sha256": "75d713f5e5b0c8474a1c2689f99c656ecdaa36fc724edc183952025ae422c767",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/clinical-case-eligibility.ts",
+          "sha256": "92238a6416d765813e7e154e4bc4173a5bd19c89ecbad1a9a9769cde0f3c73a8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/index.ts",
+          "sha256": "22de2d35d3f5bd19a0b89c877a06f3f3ac6e3b808c02573db897fde6769120be",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/patientDemographics.test.ts",
+          "sha256": "8fc39c73d0978508fb6e1430319f9165d74229ca9ddb653c142b9203d0122524",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/pediatric-family.ts",
+          "sha256": "66e551d9bd3a665acfe2c879ecc7a8f6ddcf63f91baed86b85f62f98d5d34790",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/routine-patient-availability.ts",
+          "sha256": "53ccb6442e59df1449c7c4b467b73a2506b1569eef713d54bb2385d7b7018732",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "sha256": "228ad1da3b5c62e8e2644fe2740c755ef706bc201e4c374b4f8449862165d9ce",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+          "sha256": "fe3ba6f84f115cd3c96a4aaa19efb9d5a68a14025b3a318bf1ff25fe19a2dbe3",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+          "sha256": "648d89cdfc8f9d945a9f1cf3f992eac44af13caec98805cc6f8d5de709ca983d",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+          "sha256": "cbd896686825b17ee7c0b6a44430dfd62d50883947c79567568493d91cd148a8",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/patient-supply.test.ts",
+          "sha256": "db6322410ea5da9caac6f5bee3fc21a0d62e5c7f0180674370db674e18e97db9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+          "sha256": "831e593d6a60015f03c124d4fa60107610391a7e718f53836a33c8dc9ef16b91",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/pediatric-charts.ts",
+          "sha256": "231049d16b9124e439860c24bb31f6ebf06325ac36ddb119fec75cd4d9e1af85",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m8/scoped-paths.json",
+      "files": [
+        {
+          "path": "apps/player/src/AppShell.tsx",
+          "sha256": "c96895f4c9127632cfbaacb3c690e0c3ff8daf18f4d7a399a678e889214f0173",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+          "sha256": "c3bfa778bb60c0db22ac60448ce9afa5cb03bc99936e0044ae17e36198cdf606",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/alertsEventsViewModel.ts",
+          "sha256": "c1320a5858d6eed56b098d8e2b4f1692ccf7eeaa141c2ff285f7d6d85aaa91f1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/clinicAlertActions.ts",
+          "sha256": "3198ae735863129226199c00284fb19c2cdb18a6ac206a23ffc409679ae05bd9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/level3ControlsViewModels.test.ts",
+          "sha256": "88f20dfe5eafc76fdfd8743b29935d4f773c44c5bd5ba8d61750274d4b2f62ce",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/levelFourProgressionViews.test.tsx",
+          "sha256": "483b9816103e82b0716a9e192b2a6e4ed117aa1472d212fa5aed236160ae125e",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/GoalsPanel.test.tsx",
+          "sha256": "7eb1f993f8b11a33a38deed76eab345d028437d10304bdc715fac5a0eb06f839",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/ui/GoalsPanel.tsx",
+          "sha256": "3dbf2b15dc9fad5aeedc14b5347fe9b7098b18392ee5f8b05fddf2d0d1f6ad0a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/app-role.test.ts",
+          "sha256": "bdbbb1f3664c94f2c5648875219f92aa70c41194091aff10216bbeadab2e48f6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+          "sha256": "7d1097c52cffea081dd79c686a337bb8c62ba8b7a0c3d78d35cfd2306a54a739",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/guidance-tips.ts",
+          "sha256": "044e6242578d5282081998aa3b42d87923eca848b1d88af6d4ea5a65732b4836",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-rooms.test.ts",
+          "sha256": "0734860e3c3df7266735f2b7333b84297ad25ac8ee2dc3445d363340e7846373",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/level-four-schema.test.ts",
+          "sha256": "b5355e92f682af609908c045b0f867d344e937841d32d33de544fb785081f915",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/mri-services.test.ts",
+          "sha256": "42c55ee89d97d0585a5f8f67df34117cb6047fc7de2ea4b7fea03b38f99a53ed",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-alerts.ts",
+          "sha256": "96a13b9f7aaa4347d1070fd97c48a308523ecb4d7feeac91b0b5d4fdf30fbb83",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.test.ts",
+          "sha256": "fd1a15ea7467a1c0154ac260b73c277fbd382050fae71bc2bfe2de494bfe1583",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/prototype-balance.ts",
+          "sha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/balance-config/src/wound-ostomy-services.test.ts",
+          "sha256": "ea80b78269308f4fcd16e52c33621f0a03d6c3713a4fd3e5766f0108a09e4ebb",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/guidance-progression.ts",
+          "sha256": "56bbc7b5a926128ebf48d9e373e6cf9637fd7d9d38094c778708e31d0543d0f1",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/guidance-tips.ts",
+          "sha256": "a62215bde6ba3825f797acf4d4c61976c7bd4603360d9641dae5300f1bcfb1f3",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/selectors.ts",
+          "sha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/types.ts",
+          "sha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/game-domain.test.ts",
+          "sha256": "ea706e325bde5bbf16e9a6f836c2b853cf8ec0c6bb3d132e87a8f8ff3e3ea84b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/guidance-tip-predicates.test.ts",
+          "sha256": "80b15600dbcd6a30e952bc28ace79dc9de8fff40fee701d293bd62a44a97ae82",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-economy.test.ts",
+          "sha256": "c85c942ee61215c19fa665309444589ab36aaf8768a8c49b5d0a1b0bb7bc5561",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-guidance.test.ts",
+          "sha256": "99349d57109e910be6f061e93cff02b75b6eb98b221a66f5c71d37c3dba4dc6c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+          "sha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-progression.test.ts",
+          "sha256": "bd4ddb34a17f1673b758ba64e8057a0bff7994e3d6c96847f02957ba30800c56",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-rooms.test.ts",
+          "sha256": "9be888a3bddff49199bf597e55d8ded435477bc44801cc527c7962c89cc810f4",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-three-goals.test.ts",
+          "sha256": "832737272f6b77d820134955c2f6bac599dbb23b2fa43087ec133ae1dd4eb925",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-two-progression.test.ts",
+          "sha256": "e1bad677f7dfc455c350daf0c6f18fccb4308f7656a5d09f745f528f3f003748",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/mri-services.test.ts",
+          "sha256": "56907276955b8fa9a24ca3656e75b3318c28b2397db77c7553b63ab52374009c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+          "sha256": "831e593d6a60015f03c124d4fa60107610391a7e718f53836a33c8dc9ef16b91",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/service-operations.test.ts",
+          "sha256": "14d82f94b813c8b17c33d7ed02ff1c24a440ff561bc348d7d4243aec42190707",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/level-four-progression.ts",
+          "sha256": "da3a9f689de721d913d45c245afc0ff68e0acd74ac2f7304c58adda91336bc27",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/level-four-rooms.ts",
+          "sha256": "50976395644501211a6648167e5b96cfa592c068101994ef1be5ee8fc575e6bc",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/economy-audit/level-four-results-20261009.json",
+          "sha256": "27af4e7753309af3031948107ba38c9ff4e3aafacc375ca9369b4e75b1916fa0",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/economy-audit/level-four-simulation.ts",
+          "sha256": "68d3273af0c59ec9897a441c27f6ec6b042eb8f1ae5dbbb050307e0e1568eba5",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/economy-audit/run.mjs",
+          "sha256": "877906435d1a769c733d79e41ff941316ad6670743eda19c4426454914a86080",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms-bootstrap.ts",
+          "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/qa/level-four-rooms.mjs",
+          "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": ".local-dev/level4-m9/preservation.json",
+      "files": [
+        {
+          "path": "apps/player/src/session/levelFourIntegration.test.ts",
+          "sha256": "5021f3a163aa276e9c1e3c705ca7d336c91f2baf3b516b5b22a8b4b3a0a59776",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/level4-launch-plan-20261008.md",
+          "sha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "docs/execplans/owner-requests-20261008.md",
+          "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-integration-defects.test.ts",
+          "sha256": "3f249a25a6083439ef2d8bdebe366642c435a1b474ea70db99ce8e607c84937c",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-integration-reload.test.ts",
+          "sha256": "9b334e1e8c51aea5cc3cb7aeb3ca5b3b29a03d783ade72b390f32e3715c9a374",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/level-four-integration.test.ts",
+          "sha256": "a24ab0f260d3e399d49fdd188c55d8347fc81d9e49cbc7033e516687195ab146",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/level-four-integration.ts",
+          "sha256": "18eb8cac1d3b3ed4db06759b8e533d1872855a88421b7f9c75baf8275207b822",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tests/fixtures/level-four-legacy-pre-m3.json",
+          "sha256": "9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    },
+    {
+      "record": "artifacts/character-statics/app-gapfill-v6e/validation/scoped-change-report.json",
+      "files": [
+        {
+          "path": "apps/player/src/art/characterStillRegistry.generated.json",
+          "sha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/characterStillRegistry.test.ts",
+          "sha256": "728448899f23bc02ce431037d9b253632ed84c2b763f040ef80317200ba7b8e6",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/art/characterStillRegistry.ts",
+          "sha256": "9c484736511deaf6070263e1efa9d4ffcf99414e9c643e2bb5e2727d9fdc20b7",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/appAppointmentsViewModels.test.ts",
+          "sha256": "50d14fe338d92a7dde2ade5709145241042be6fa9f10d2426d83623f3fb74f3b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "apps/player/src/session/viewModels.ts",
+          "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+          "sha256": "9feeefef20872bd3c028a6a3d1bbc5500a3e0cd3100b19d3c1c89b6ae3ebae2b",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/src/characterStillCatalog.ts",
+          "sha256": "ed24d05932cd7e1ed55b26ea7ec8e136ee8f597155a038dd99f9fa363d8a68d9",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/app-staff.test.ts",
+          "sha256": "eb3cc562a7c502b5bf846d2be2f272ad1834025825fd65b59610a772577c0577",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "packages/game-domain/tests/character-variety.test.ts",
+          "sha256": "8d4e7c47684572d7140061eb7b196a0af8b7888b94df657486ad4174aac9e1ea",
+          "status": "recovered_in_third_archive"
+        },
+        {
+          "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+          "sha256": "7872b275a02ce144373947417d72bd308cb9345366561784515117e5356e04aa",
+          "status": "recovered_in_third_archive"
+        }
+      ]
+    }
+  ],
+  "explicitRequiredTargets": [
+    "AGENTS.md",
+    ".gitignore",
+    "scripts/verify-app-boundaries.mjs",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "docs/design/room-economy-audit-20261008.md",
+    "docs/execplans/level4-launch-plan-20261008.md",
+    "docs/execplans/owner-requests-20261008.md",
+    "docs/execplans/character-gapfill-v6-20261007.md",
+    "apps/player/vite.config.ts",
+    "packages/game-domain/vitest.config.ts",
+    "tools/economy-audit/level-four-results-20261009.json",
+    "tools/economy-audit/level-four-simulation.ts",
+    "tools/economy-audit/run.mjs",
+    "tools/room-design/level-5/founders-office/approval-2026-10-09.md",
+    "tests/fixtures/level-four-legacy-pre-m3.json",
+    "tests/e2e/tutorial-owner-playtest.spec.ts"
+  ],
+  "milestones": {
+    "M1": {
+      "record": ".local-dev/level4-m1-20261008/owned-files.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M2": {
+      "record": ".local-dev/level4-m2/owned-files.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M3": {
+      "record": ".local-dev/level4-m3/owned-files.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M4": {
+      "record": ".local-dev/level4-m4/final-owned-sha256.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M5": {
+      "record": ".local-dev/level4-m5/changed-paths.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M6": {
+      "record": ".local-dev/level4-m6/changed-paths.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M7": {
+      "record": ".local-dev/level4-m7/changed-paths.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M8": {
+      "record": ".local-dev/level4-m8/scoped-paths.json",
+      "status": "captured or unchanged baseline"
+    },
+    "M9": {
+      "record": ".local-dev/level4-m9/preservation.json",
+      "status": "captured or unchanged baseline"
+    }
+  },
+  "appRuntimeImages": 64,
+  "level4RoomRuntimeImages": 30,
+  "newPediatricBatchFiles": 15,
+  "level5DesignStatus": "OWNER_APPROVED_2026-10-09; no runtime promotion",
+  "activeMobileDiscoveryExcluded": "docs/design/mobile-discovery-20261009.md",
+  "restoreScope": "Incremental accepted change set; older compatible runtime/art dependencies remain separate."
+}

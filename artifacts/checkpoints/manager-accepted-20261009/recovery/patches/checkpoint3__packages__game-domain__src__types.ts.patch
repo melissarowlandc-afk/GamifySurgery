@@ -1,0 +1,177 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -1,4 +1,4 @@
+-import type { PrototypeBalanceRelease } from "@gamify-surgery/balance-config";
++import type { FacilityLevel, PrototypeBalanceRelease } from "@gamify-surgery/balance-config";
+ import type {
+   DecisionNode,
+   SyntheticClinicalCase,
+@@ -380,7 +380,8 @@
+     | "endoscopist"
+     | "phlebotomist"
+     | "evs_worker"
+-    | "glp1_np";
++    | "glp1_np"
++    | "app";
+ }
+ 
+ export interface FounderIdentity {
+@@ -728,6 +729,7 @@
+   | "in_service"
+   | "walking_between_phases"
+   | "waiting_for_next_phase"
++  | "waiting_for_results"
+   | "discharging"
+   | "leaving"
+   | "completed"
+@@ -757,6 +759,8 @@
+ export interface ServiceOperationState {
+   diagnosticPhaseWork?: DiagnosticPhaseWork;
+   diagnosticPhysicalWork?: DiagnosticPhysicalWork;
++  /** Scheduled MRI uses the same frozen acquisition/read plan as chart orders. */
++  diagnosticTiming?: DiagnosticOrderPlan;
+   id: string;
+   incomeLineId: string;
+   catalogVersion: 1;
+@@ -764,6 +768,17 @@
+   actorId: string;
+   displayName: string;
+   appearance: PixelAppearanceDescriptor | null;
++  /** Frozen unscored clinic visit; omission retains legacy operation semantics. */
++  clinicVisit?: ClinicVisitState;
++  /** Optional, provider-specific payment contract for new adult APP visits. */
++  appAppointmentRevenue?: {
++    version: "app-appointment-revenue.v1";
++    providerEmployeeId: string;
++    baseFee: number;
++    trainingLevel: RoomUpgradeLevel;
++    trainingPercent: number;
++    fee: number;
++  };
+   status: ServiceOperationStatus;
+   createdAtFacilityTick: number;
+   waitDeadlineFacilityTick: number;
+@@ -937,6 +952,62 @@
+   amenityDwellEndsAtFacilityTick: number | null;
+ }
+ 
++export interface ClinicVisitState {
++  version: "clinic-visit.v1";
++  kind: "adult_appointment" | "pediatric_consult" | "wound_care" | "ostomy_support" | "mri";
++  demographics: { ageYears: number; sexLabel: PatientSexLabel };
++  /** Pediatric visits alone require a family; adults never gain one by default. */
++  pediatricFamilyId?: string;
++  /** Demand attribution and dispatch preference, not an exclusive reservation. */
++  requestedRoomInstanceId?: string;
++}
++
++/** One patient admission and one adult companion, independent of peri-op excursions. */
++export interface PediatricFamilyState {
++  version: "pediatric-family.v1";
++  id: string;
++  child: { kind: "encounter" | "service_visitor"; id: string };
++  parentActorId: string;
++  /** Optional on M1/older saves. Two aligned lanes cross each doorway together. */
++  movement?: {
++    version: "pediatric-pair-travel.v1";
++    childPath: GridPoint[];
++    parentPath: GridPoint[];
++    pathIndex: number;
++    lastMovedAtFacilityTick: number;
++    doorIds: string[];
++  };
++  phase: "arriving" | "waiting" | "in_care" | "results_wait" | "departing" | "departed";
++  /** Both places belong to the same room; no extra patient or learning slot. */
++  reservation: {
++    roomInstanceId: string;
++    childLocation: GridPoint;
++    parentLocation: GridPoint;
++    childSeatId: string | null;
++    parentSeatId: string | null;
++  } | null;
++}
++
++/** Historical service evidence intentionally does not require retained live actors/rooms. */
++export interface LevelFourVisitWitness {
++  completedAtFacilityTick: number;
++  serviceOperationId: string | null;
++  encounterId: string | null;
++}
++
++export interface LevelFourCompletionState {
++  version: "level-four-completion.v1";
++  pediatricVisitWithParent: (LevelFourVisitWitness & {
++    incomeLineId: "income.pediatric_consult";
++    parentActorId: string;
++  }) | null;
++  woundOstomyCareVisit: (LevelFourVisitWitness & {
++    incomeLineId: "income.wound_care" | "income.ostomy_support";
++  }) | null;
++  /** Once-only acknowledgement; no Level 5 successor or automatic reward. */
++  acknowledgedAtFacilityTick: number | null;
++}
++
+ export interface RetailExternalActorState {
+   id: string;
+   kind: "retail_visitor" | "companion";
+@@ -954,6 +1025,7 @@
+   movementWaitReason?: string | null;
+   /** Linked legacy procedure companions are adopted on load/tick. */
+   procedureCompanion?: ProcedureCompanionState;
++  pediatricFamilyId?: string;
+ }
+ 
+ export interface RetailOrderState {
+@@ -977,6 +1049,7 @@
+ 
+ export interface EncounterState {
+   id: string;
++  pediatricFamilyId?: string;
+   clinicalReleaseId: string;
+   frozenCase: SyntheticClinicalCase;
+   /**
+@@ -1149,6 +1222,12 @@
+   upgradeLevel: RoomUpgradeLevel;
+   /** Version-5 saves always persist this; optional only for legacy fixtures/imports. */
+   cleanliness?: number;
++  /** Continuous, observed technical outage; never inferred from old downtime. */
++  upkeepOutage?: {
++    version: "room-upkeep-outage.v1";
++    sinceFacilityTick: number;
++    lastObservedFacilityTick: number;
++  };
+   /** Level 3 equipment upkeep is independent of EVS cleanliness. */
+   maintenance?: {
+     status: "operational" | "due" | "out_of_service";
+@@ -1560,8 +1639,13 @@
+   founder: FounderIdentity;
+   clinicalReleaseId: string;
+   balanceReleaseId: string;
++  /** Missing only on pre-Option-B saves; rebased contracts are never shifted twice. */
++  salaryEconomyVersion?: "room-economy-b.v1";
+   schedulerPins: SchedulerPins;
+-  facilityLevel: 0 | 1 | 2 | 3;
++  facilityLevel: FacilityLevel;
++  /** Omission means no families or earned witnesses; preserve old save bytes. */
++  pediatricFamilies?: Record<string, PediatricFamilyState>;
++  levelFourCompletion?: LevelFourCompletionState;
+   facilityTick: number;
+   paused: boolean;
+   simulationSpeed: SimulationSpeed;
+@@ -1949,10 +2033,12 @@
+ }
+ 
+ export interface FacilityProgressionStatus {
+-  facilityLevel: 0 | 1 | 2 | 3;
++  facilityLevel: FacilityLevel;
+   displayName: string;
+   requirements: ProgressionRequirementStatus[];
+   eligible: boolean;
+-  nextFacilityLevel: 1 | 2 | 3 | null;
+-  maximumPlayableLevel: 3;
+-}
++  /** Terminal milestone, retained after acknowledgement even if live goals change. */
++  terminalComplete: boolean;
++  nextFacilityLevel: 1 | 2 | 3 | 4 | null;
++  maximumPlayableLevel: 3 | 4;
++}

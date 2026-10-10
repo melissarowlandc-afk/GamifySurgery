@@ -1,0 +1,123 @@
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -15,6 +15,16 @@
+ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
++      readonly category: "pediatric";
++      readonly sourceCohort: "level3-roster-v2";
++      readonly compatibleSexLabel: "Female" | "Male";
++      readonly intendedVisualAge: number;
++      /** Editorial art bounds from the authored child/older-child/teen groups. */
++      readonly minimumAge: number;
++      readonly maximumAge: number;
++    }
++  | {
++      readonly stillId: CharacterStillId;
+       readonly category: "patient";
+       readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4" | "future-roster20-v5" | "patient-gapfill-v6a" | "patient-gapfill-v6b" | "patient-gapfill-v6c";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+@@ -24,7 +34,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d" | "app-gapfill-v6e";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -144,16 +154,27 @@
+   ],
+ };
+ 
+-const LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS = [
+-  ...[
+-    ["021", 6], ["022", 5], ["023", 7], ["024", 6], ["025", 9], ["026", 10],
+-    ["027", 11], ["028", 12], ["029", 14], ["030", 14], ["031", 16], ["032", 17],
+-  ].map(([number, intendedVisualAge]) => ({
+-    stillId: id(`level3-roster-v2.${number}`), category: "future-presentation" as const,
+-    sourceCohort: "level3-roster-v2" as const, futurePresentationKind: "pediatric" as const,
+-    availability: "excluded-until-future-approved-pediatric-release" as const, intendedVisualAge,
+-  })),
+-];
++// Sex and visual age are explicit in level3-roster-complete-v2/roster.json,
++// identities 021-032. Bounds describe its authored art groups, not clinical risk.
++export const PEDIATRIC_CHARACTER_STILLS = [
++  ["021", 6, "Female", 5, 8], ["022", 5, "Male", 5, 8],
++  ["023", 7, "Female", 5, 8], ["024", 6, "Male", 5, 8],
++  ["025", 9, "Female", 9, 12], ["026", 10, "Male", 9, 12],
++  ["027", 11, "Female", 9, 12], ["028", 12, "Male", 9, 12],
++  ["029", 14, "Female", 13, 17], ["030", 14, "Male", 13, 17],
++  ["031", 16, "Female", 13, 17], ["032", 17, "Male", 13, 17],
++].map(([number, intendedVisualAge, compatibleSexLabel, minimumAge, maximumAge]) => ({
++  stillId: id(`level3-roster-v2.${number}`), category: "pediatric" as const,
++  sourceCohort: "level3-roster-v2" as const, intendedVisualAge, compatibleSexLabel,
++  minimumAge, maximumAge,
++})) as readonly Extract<CharacterStillCatalogEntry, { category: "pediatric" }>[];
++
++export function pediatricStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears?: number) {
++  if (!Number.isInteger(ageYears) || ageYears === undefined || ageYears < 5 || ageYears > 17 ||
++    (sexLabel !== "Female" && sexLabel !== "Male")) return [];
++  return PEDIATRIC_CHARACTER_STILLS.filter(entry => entry.compatibleSexLabel === sexLabel &&
++    ageYears >= entry.minimumAge && ageYears <= entry.maximumAge);
++}
+ 
+ const PATIENT_WOMEN20_V3_ROWS = [
+   ["001", 32], ["002", 34], ["003", 36], ["004", 38],
+@@ -185,11 +206,11 @@
+   intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
+ }));
+ 
+-// Owner-approved GS-033 art. Empty role lists keep the four planned APP and
+-// executive identities renderable without admitting them to any staff pool.
++// Owner-approved GS-033 provider art: M4 enables the two authored APP looks.
++// Executive looks remain future-only; no other role's preferred art is borrowed.
+ const FUTURE_ROSTER20_V5_STAFF_ROWS = [
+-  ["001", []],
+-  ["002", []],
++  ["001", ["staff.app"]],
++  ["002", ["staff.app"]],
+   ["003", []],
+   ["004", []],
+   ["005", ["staff.radiologist"]],
+@@ -336,6 +357,23 @@
+   sourceCohort: "staff-gapfill-v6d" as const, eligibleStaffRoleDefinitionIds: [role],
+ }));
+ 
++// Owner-delegated manager approval recorded on 2026-10-09; APP-only art.
++const APP_GAPFILL_V6E_ROWS = [
++  ["001", "staff.app"],
++  ["002", "staff.app"],
++  ["003", "staff.app"],
++  ["004", "staff.app"],
++  ["005", "staff.app"],
++  ["006", "staff.app"],
++  ["007", "staff.app"],
++  ["008", "staff.app"],
++] as const satisfies readonly (readonly [string, string])[];
++
++const APP_GAPFILL_V6E_STILLS = APP_GAPFILL_V6E_ROWS.map(([number, role]) => ({
++  stillId: id(`app-gapfill-v6e.${number}`), category: "staff" as const,
++  sourceCohort: "app-gapfill-v6e" as const, eligibleStaffRoleDefinitionIds: [role],
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -353,7 +391,7 @@
+ export const CHARACTER_STILL_CATALOG = [
+   ...LEGACY_PATIENT_STILLS, ...PUBLIC_PATIENT_STILLS, ...LEVEL3_ROSTER_V2_ADULT_PATIENT_STILLS,
+   ...STAFF_STILLS, ...LEVEL3_ROSTER_V2_STAFF_STILLS, ...FOUNDER_STILLS, ...EXPLICIT_EXTRA_STILLS,
+-  ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
++  ...PEDIATRIC_CHARACTER_STILLS,
+   ...PATIENT_WOMEN20_V3_STILLS,
+   ...PATIENT_DEMOGRAPHICS20_V4_STILLS,
+   ...FUTURE_ROSTER20_V5_STAFF_STILLS, ...FUTURE_ROSTER20_V5_PATIENT_STILLS,
+@@ -361,6 +399,7 @@
+   ...PATIENT_GAPFILL_V6B_STILLS,
+   ...PATIENT_GAPFILL_V6C_STILLS,
+   ...STAFF_GAPFILL_V6D_STILLS,
++  ...APP_GAPFILL_V6E_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");

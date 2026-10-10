@@ -1,0 +1,3089 @@
+--- before/apps/player/src/art/characterStillRegistry.generated.json
++++ after/apps/player/src/art/characterStillRegistry.generated.json
+@@ -9,10 +9,10 @@
+     "floorY": 287
+   },
+   "counts": {
+-    "identities": 318,
+-    "cardinalPoses": 2544,
++    "identities": 326,
++    "cardinalPoses": 2608,
+     "clipboardPoses": 30,
+-    "assets": 2574
++    "assets": 2638
+   },
+   "characters": [
+     {
+@@ -47336,6 +47336,1238 @@
+           }
+         }
+       }
++    },
++    {
++      "id": "app-gapfill-v6e.001",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 28,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-south.png",
++            "sha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 117,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-east.png",
++            "sha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 88,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-west.png",
++            "sha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 88,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-north.png",
++            "sha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 43,
++              "width": 116,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-south.png",
++            "sha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 93,
++              "width": 100,
++              "height": 194
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-east.png",
++            "sha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 94,
++              "width": 110,
++              "height": 193
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-west.png",
++            "sha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 94,
++              "width": 110,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-north.png",
++            "sha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 97,
++              "width": 100,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.002",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 38,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
++            "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-east.png",
++            "sha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 89,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-west.png",
++            "sha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-north.png",
++            "sha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 117,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-south.png",
++            "sha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 95,
++              "width": 102,
++              "height": 192
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
++            "sha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 96,
++              "width": 118,
++              "height": 191
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-west.png",
++            "sha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 96,
++              "width": 118,
++              "height": 191
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-north.png",
++            "sha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 251,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 96,
++              "width": 100,
++              "height": 191
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.003",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 49,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-south.png",
++            "sha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-east.png",
++            "sha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 89,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-west.png",
++            "sha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 40,
++              "width": 90,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-north.png",
++            "sha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-south.png",
++            "sha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-east.png",
++            "sha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 98,
++              "width": 106,
++              "height": 189
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-west.png",
++            "sha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 98,
++              "width": 106,
++              "height": 189
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-north.png",
++            "sha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 98,
++              "width": 96,
++              "height": 189
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.004",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 60,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-south.png",
++            "sha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-east.png",
++            "sha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 88,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-west.png",
++            "sha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 42,
++              "width": 90,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-north.png",
++            "sha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 40,
++              "width": 116,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-south.png",
++            "sha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 108,
++              "width": 96,
++              "height": 179
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-east.png",
++            "sha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 111,
++              "width": 112,
++              "height": 176
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-west.png",
++            "sha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 111,
++              "width": 112,
++              "height": 176
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-north.png",
++            "sha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 254,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 110,
++              "width": 94,
++              "height": 177
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.005",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 31,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-south.png",
++            "sha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-east.png",
++            "sha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 89,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-west.png",
++            "sha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 42,
++              "width": 90,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-north.png",
++            "sha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 110,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-south.png",
++            "sha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-east.png",
++            "sha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 95,
++              "width": 114,
++              "height": 192
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-west.png",
++            "sha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 94,
++              "width": 116,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-north.png",
++            "sha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.006",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 41,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-south.png",
++            "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-east.png",
++            "sha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 42,
++              "width": 84,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-west.png",
++            "sha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 42,
++              "width": 86,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-north.png",
++            "sha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-south.png",
++            "sha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 81,
++              "width": 105,
++              "height": 206
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-east.png",
++            "sha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 83,
++              "width": 119,
++              "height": 204
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-west.png",
++            "sha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 82,
++              "width": 120,
++              "height": 205
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-north.png",
++            "sha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 82,
++              "width": 103,
++              "height": 205
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.007",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 53,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
++            "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-east.png",
++            "sha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-west.png",
++            "sha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-north.png",
++            "sha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-south.png",
++            "sha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 87,
++              "width": 106,
++              "height": 200
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
++            "sha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 87,
++              "width": 116,
++              "height": 200
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-west.png",
++            "sha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 87,
++              "width": 115,
++              "height": 200
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-north.png",
++            "sha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 88,
++              "width": 106,
++              "height": 199
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.008",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 58,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-south.png",
++            "sha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-east.png",
++            "sha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 40,
++              "width": 83,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-west.png",
++            "sha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 39,
++              "width": 84,
++              "height": 248
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-north.png",
++            "sha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 42,
++              "width": 126,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-south.png",
++            "sha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 91,
++              "width": 106,
++              "height": 196
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-east.png",
++            "sha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 91,
++              "width": 110,
++              "height": 196
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-west.png",
++            "sha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 91,
++              "width": 111,
++              "height": 196
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-north.png",
++            "sha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 92,
++              "width": 106,
++              "height": 195
++            }
++          }
++        }
++      }
+     }
+   ]
+ }
+--- before/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json
++++ after/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json
+@@ -105,17 +105,28 @@
+       "sourceCohort": "staff-gapfill-v6d",
+       "seatContactContractSha256": "4a6707ae8e2ebffeb7502ea38a940d2965de4c7c19fb966715a319fac4fc346b",
+       "derivedAlphaReportSha256": "f46bdc3e34de07ff87bfb5eb2aa6b4420ef5d28a327984272661255ab4f36fe8"
++    },
++    "appGapfillV6e": {
++      "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++      "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607",
++      "reviewStatus": "owner-delegated-manager-approved-local-integration-not-published",
++      "ownerArtApproval": true,
++      "approvedBy": "GamifySurgery manager (Claude Code)",
++      "approvalAuthority": "owner-delegated-manager",
++      "sourceCohort": "app-gapfill-v6e",
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10",
++      "derivedAlphaReportSha256": "12af820e3861c7cf24592fb3c6bfdb259a17aef081ef9b291fb6b3d276269531"
+     }
+   },
+   "registry": {
+     "file": "apps/player/src/art/characterStillRegistry.generated.json",
+-    "sha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16"
++    "sha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a"
+   },
+   "counts": {
+-    "identities": 318,
+-    "cardinalPoses": 2544,
++    "identities": 326,
++    "cardinalPoses": 2608,
+     "clipboardPoses": 30,
+-    "assets": 2574
++    "assets": 2638
+   },
+   "assets": [
+     {
+@@ -39195,6 +39206,1414 @@
+         "sha256": "88ea19e7421029fb965c9efc41d96d1d7a9395e7e34917d6a56c011a24186135"
+       },
+       "seatContactContractSha256": "4a6707ae8e2ebffeb7502ea38a940d2965de4c7c19fb966715a319fac4fc346b"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-south.png",
++      "sourceSha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-south.png",
++      "outputSha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-east.png",
++      "sourceSha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-east.png",
++      "outputSha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-west.png",
++      "sourceSha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-west.png",
++      "outputSha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-north.png",
++      "sourceSha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-north.png",
++      "outputSha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-south.png",
++      "sourceSha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-south.png",
++      "outputSha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-east.png",
++      "sourceSha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-east.png",
++      "outputSha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-west.png",
++      "sourceSha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-west.png",
++      "outputSha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-north.png",
++      "sourceSha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-north.png",
++      "outputSha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-south.png",
++      "sourceSha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
++      "outputSha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-east.png",
++      "sourceSha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-east.png",
++      "outputSha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-west.png",
++      "sourceSha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-west.png",
++      "outputSha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-north.png",
++      "sourceSha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-north.png",
++      "outputSha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-south.png",
++      "sourceSha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-south.png",
++      "outputSha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-east.png",
++      "sourceSha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
++      "outputSha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-west.png",
++      "sourceSha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-west.png",
++      "outputSha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-north.png",
++      "sourceSha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-north.png",
++      "outputSha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-south.png",
++      "sourceSha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-south.png",
++      "outputSha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-east.png",
++      "sourceSha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-east.png",
++      "outputSha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-west.png",
++      "sourceSha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-west.png",
++      "outputSha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-north.png",
++      "sourceSha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-north.png",
++      "outputSha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-south.png",
++      "sourceSha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-south.png",
++      "outputSha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-east.png",
++      "sourceSha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-east.png",
++      "outputSha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-west.png",
++      "sourceSha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-west.png",
++      "outputSha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-north.png",
++      "sourceSha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-north.png",
++      "outputSha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-south.png",
++      "sourceSha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-south.png",
++      "outputSha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-east.png",
++      "sourceSha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-east.png",
++      "outputSha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-west.png",
++      "sourceSha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-west.png",
++      "outputSha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-north.png",
++      "sourceSha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-north.png",
++      "outputSha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-south.png",
++      "sourceSha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-south.png",
++      "outputSha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-east.png",
++      "sourceSha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-east.png",
++      "outputSha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-west.png",
++      "sourceSha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-west.png",
++      "outputSha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-north.png",
++      "sourceSha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-north.png",
++      "outputSha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-south.png",
++      "sourceSha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-south.png",
++      "outputSha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-east.png",
++      "sourceSha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-east.png",
++      "outputSha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-west.png",
++      "sourceSha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-west.png",
++      "outputSha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-north.png",
++      "sourceSha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-north.png",
++      "outputSha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-south.png",
++      "sourceSha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-south.png",
++      "outputSha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-east.png",
++      "sourceSha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-east.png",
++      "outputSha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-west.png",
++      "sourceSha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-west.png",
++      "outputSha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-north.png",
++      "sourceSha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-north.png",
++      "outputSha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-south.png",
++      "sourceSha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-south.png",
++      "outputSha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-east.png",
++      "sourceSha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-east.png",
++      "outputSha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-west.png",
++      "sourceSha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-west.png",
++      "outputSha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-north.png",
++      "sourceSha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-north.png",
++      "outputSha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-south.png",
++      "sourceSha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-south.png",
++      "outputSha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-east.png",
++      "sourceSha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-east.png",
++      "outputSha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-west.png",
++      "sourceSha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-west.png",
++      "outputSha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-north.png",
++      "sourceSha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-north.png",
++      "outputSha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-south.png",
++      "sourceSha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
++      "outputSha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-east.png",
++      "sourceSha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-east.png",
++      "outputSha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-west.png",
++      "sourceSha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-west.png",
++      "outputSha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-north.png",
++      "sourceSha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-north.png",
++      "outputSha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-south.png",
++      "sourceSha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-south.png",
++      "outputSha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-east.png",
++      "sourceSha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
++      "outputSha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-west.png",
++      "sourceSha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-west.png",
++      "outputSha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-north.png",
++      "sourceSha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-north.png",
++      "outputSha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-south.png",
++      "sourceSha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-south.png",
++      "outputSha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-east.png",
++      "sourceSha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-east.png",
++      "outputSha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-west.png",
++      "sourceSha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-west.png",
++      "outputSha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-north.png",
++      "sourceSha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-north.png",
++      "outputSha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-south.png",
++      "sourceSha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-south.png",
++      "outputSha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-east.png",
++      "sourceSha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-east.png",
++      "outputSha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-west.png",
++      "sourceSha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-west.png",
++      "outputSha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-north.png",
++      "sourceSha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-north.png",
++      "outputSha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
+     }
+   ]
+ }
+--- before/packages/game-domain/src/characterStillCatalog.ts
++++ after/packages/game-domain/src/characterStillCatalog.ts
+@@ -34,7 +34,7 @@
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d" | "app-gapfill-v6e";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -357,6 +357,23 @@
+   sourceCohort: "staff-gapfill-v6d" as const, eligibleStaffRoleDefinitionIds: [role],
+ }));
+ 
++// Owner-delegated manager approval recorded on 2026-10-09; APP-only art.
++const APP_GAPFILL_V6E_ROWS = [
++  ["001", "staff.app"],
++  ["002", "staff.app"],
++  ["003", "staff.app"],
++  ["004", "staff.app"],
++  ["005", "staff.app"],
++  ["006", "staff.app"],
++  ["007", "staff.app"],
++  ["008", "staff.app"],
++] as const satisfies readonly (readonly [string, string])[];
++
++const APP_GAPFILL_V6E_STILLS = APP_GAPFILL_V6E_ROWS.map(([number, role]) => ({
++  stillId: id(`app-gapfill-v6e.${number}`), category: "staff" as const,
++  sourceCohort: "app-gapfill-v6e" as const, eligibleStaffRoleDefinitionIds: [role],
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -382,6 +399,7 @@
+   ...PATIENT_GAPFILL_V6B_STILLS,
+   ...PATIENT_GAPFILL_V6C_STILLS,
+   ...STAFF_GAPFILL_V6D_STILLS,
++  ...APP_GAPFILL_V6E_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");
+--- before/packages/game-domain/src/characterStillCatalog.test.ts
++++ after/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -24,11 +24,11 @@
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 318 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(318);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(318);
++  it("covers all 326 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(326);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(326);
+     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179);
+-    expect(STAFF_CHARACTER_STILLS).toHaveLength(91);
++    expect(STAFF_CHARACTER_STILLS).toHaveLength(99);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
+     expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(0);
+@@ -277,7 +277,7 @@
+     }
+   });
+ 
+-  it("enables only the two authored APP looks and keeps executives excluded", () => {
++  it("retains the two original APP looks and keeps executives excluded", () => {
+     const inactive = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "future-roster20-v5" && entry.eligibleStaffRoleDefinitionIds.length === 0);
+     expect(inactive.map(entry => entry.stillId)).toEqual(["future-roster20-v5.003", "future-roster20-v5.004"]);
+     const roleIds = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.app", "staff.executive"];
+@@ -286,8 +286,34 @@
+       expect(selectStaffStillId("GS-033-inactive", "new-hire", role, entry.stillId)).not.toBe(entry.stillId);
+     }
+     for (const entry of inactive) expect(patientStillEligibleEntries()).not.toContainEqual(entry);
+-    expect(staffStillEligibleEntries("staff.app").map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
++    expect(staffStillEligibleEntries("staff.app").filter(entry => entry.sourceCohort === "future-roster20-v5").map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
+     expect(selectStaffStillId("GS-033-inactive", "executive", "staff.executive")).toBeUndefined();
++  });
++
++  it("admits all eight v6e looks only to APPs and preserves every compatible current or departing APP selection", () => {
++    const additions = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "app-gapfill-v6e");
++    expect(additions.map(entry => entry.stillId)).toEqual(Array.from({ length: 8 }, (_, i) => `app-gapfill-v6e.${String(i + 1).padStart(3, "0")}`));
++    const pool = staffStillEligibleEntries("staff.app");
++    expect(pool.map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", ...additions.map(entry => entry.stillId)]);
++    const allRoles = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.executive"];
++    for (const entry of additions) {
++      expect(entry.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
++      for (const role of allRoles) expect(staffStillEligibleEntries(role).includes(entry)).toBe(role === "staff.app");
++      expect(patientStillEligibleEntries()).not.toContainEqual(entry);
++      expect(PEDIATRIC_CHARACTER_STILLS.map(child => child.stillId)).not.toContain(entry.stillId);
++    }
++    const occupied = new Set<string>();
++    for (let index = 0; index < pool.length; index++) {
++      const selected = selectStaffStillId("v6e-hires", `app.${index}`, "staff.app", undefined, occupied);
++      expect(selected).toBeDefined(); expect(occupied.has(selected!)).toBe(false); occupied.add(selected!);
++    }
++    expect([...occupied].sort()).toEqual(pool.map(entry => entry.stillId).sort());
++    expect(selectStaffStillId("v6e-hires", "eleventh", "staff.app", undefined, occupied)).toBeUndefined();
++    for (const entry of pool) {
++      const otherCurrentOrDepartingIds = new Set(pool.filter(other => other.stillId !== entry.stillId).map(other => other.stillId));
++      expect(selectStaffStillId("saved-campaign", "current-app", "staff.app", entry.stillId, otherCurrentOrDepartingIds)).toBe(entry.stillId);
++      expect(selectStaffStillId("saved-campaign", "new-hire", "staff.app", undefined, otherCurrentOrDepartingIds)).toBe(entry.stillId);
++    }
+   });
+ 
+   it("reaches all four GS-033 patients using unchanged compatible occupancy and LRU selection", () => {
+--- before/apps/player/src/art/characterStillRegistry.ts
++++ after/apps/player/src/art/characterStillRegistry.ts
+@@ -7,7 +7,7 @@
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;
+--- before/apps/player/src/art/characterStillRegistry.test.ts
++++ after/apps/player/src/art/characterStillRegistry.test.ts
+@@ -14,13 +14,14 @@
+ import v6bApproval from "../../../../tools/character-mapping/patient-gapfill-v6b/owner-approval.json";
+ import v6dApproval from "../../../../tools/character-mapping/staff-gapfill-v6d/owner-approval.json";
+ import v6cApproval from "../../../../tools/character-mapping/patient-gapfill-v6c/owner-approval.json";
++import v6eApproval from "../../../../tools/character-mapping/app-gapfill-v6e/owner-approval.json";
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 318, cardinalPoses: 2544, clipboardPoses: 30, assets: 2574 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 326, cardinalPoses: 2608, clipboardPoses: 30, assets: 2638 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(318);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(318);
++    expect(entries).toHaveLength(326);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(326);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+@@ -45,13 +46,15 @@
+                           ? "patient-gapfill-v6c"
+                           : entry.cohort === "staffGapfillV6d"
+                             ? "staff-gapfill-v6d"
+-                            : "gs026-stills-v1";
++                            : entry.cohort === "appGapfillV6e"
++                              ? "app-gapfill-v6e"
++                              : "gs026-stills-v1";
+           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(1272);
++    expect(seatedAssets).toHaveLength(1304);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -162,6 +165,31 @@
+       }
+     }
+     expect(new Set(hashes).size).toBe(112);
++  });
++
++  it("renders every accepted APP v6e pose with its exact approved hash, URL and authored contact", () => {
++    expect(v6eApproval).toMatchObject({ status: "approved", approvedBy: "GamifySurgery manager (Claude Code)", authorizedBy: "owner" });
++    const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "appGapfillV6e");
++    const designs = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "app-gapfill-v6e");
++    expect(entries).toHaveLength(8); expect(designs).toHaveLength(8);
++    expect(entries.map(entry => entry.id)).toEqual(designs.map(entry => entry.stillId));
++    const acceptedPoses = v6eApproval.acceptedPoses as Record<string, Record<string, string>>;
++    const contacts = v6eApproval.acceptedContacts as Record<string, Record<string, number>>;
++    const hashes: string[] = [];
++    for (const entry of entries) {
++      const number = entry.id.split(".").at(-1)!;
++      expect(entry.category).toBe("employee"); expect(entry.clipboard).toBeUndefined();
++      expect(entry.role).toBe("staff.app"); expect(entry.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
++      for (const posture of ["stand", "sit"] as const) for (const direction of CHARACTER_STILL_DIRECTIONS) {
++        const asset = getCharacterStill(entry.id, posture, direction)!;
++        expect(asset.sha256).toBe(acceptedPoses[number]![`${posture}-${direction}`]);
++        expect(asset.anchors).toMatchObject({ bodyAxisX: 80, floorY: 287 });
++        if (posture === "sit") expect(asset.anchors).toMatchObject({ seatContactY: contacts[number]![direction], seatContactStatus: "owner-delegated-manager-approved-authored-contact" });
++        expect(resolveCharacterStillAssetUrl(asset, "/GamifySurgery/")).toBe(`/GamifySurgery/art/characters/app-gapfill-v6e/${entry.id}/${posture}-${direction}.png`);
++        hashes.push(asset.sha256);
++      }
++    }
++    expect(new Set(hashes).size).toBe(64);
+   });
+ 
+   it("registers the GS-033 batch with all 160 exact approved pose hashes and authored contacts", () => {
+--- before/packages/game-domain/tests/app-staff.test.ts
++++ after/packages/game-domain/tests/app-staff.test.ts
+@@ -4,9 +4,15 @@
+   normalizeServiceOperationTraining, PREFERRED_STAFF_STILL_IDS_BY_ROLE, serializeGameState, staffStillEligibleEntries, type GameState } from "../src";
+ 
+ const context = createLevelFourRoomsQaContext();
+-function twoExams(): GameState {
++function examHomes(count = 2): GameState {
+   let state = createLevelFourRoomsQaState(context);
+-  for (const [i, x] of [28, 38].entries()) {
++  if (count > 2) for (let x = 9; x < 25; x++) {
++    state = gameReducer(state, { type: "PLACE_ROOM", operationId: `staff.hall.${x}`, roomId: `room.staff.hall.${x}`,
++      roomDefinitionId: "room.hallway", x, y: 26, orientation: 0 }, context);
++    expect(state.operationReceipts[`staff.hall.${x}`]?.status).toBe("applied");
++  }
++  const positions = count === 2 ? [28, 38] : Array.from({ length: count }, (_, i) => 9 + 3 * i);
++  for (const [i, x] of positions.entries()) {
+     state = gameReducer(state, { type: "PLACE_ROOM", operationId: `staff.exam.${i}`, roomId: `room.app.${i}`,
+       roomDefinitionId: "room.examination", x, y: 24, orientation: 0 }, context);
+     state = gameReducer(state, { type: "PLACE_DOOR", operationId: `staff.door.${i}`, doorId: `door.app.${i}`,
+@@ -18,7 +24,7 @@
+ 
+ describe("APP physical posts, identity and training", () => {
+   it("counts exactly one post per eligible room at any upgrade level", () => {
+-    const state = twoExams();
++    const state = examHomes();
+     state.rooms.push(...["room.minor_procedure", "room.pediatric_examination", "room.wound_ostomy", "room.reading", "room.mri", "room.glp1_telehealth_suite"].map((id, i) =>
+       ({ id: `post.${i}`, roomDefinitionId: id, x: i * 4, y: 0, orientation: 0 as const, doorSide: null, upgradeLevel: 5 as const })));
+     expect(getRoomStaffCapacity(state, "staff.app")).toMatchObject({ capacity: 5, builtRoomCount: 5,
+@@ -28,36 +34,54 @@
+   });
+ 
+   it("hires two distinct approved APPs in separate homes and preserves them on reload", () => {
+-    let state = twoExams();
++    let state = examHomes();
+     for (let i = 0; i < 2; i++) {
+       state = gameReducer(state, { type: "HIRE_STAFF", operationId: `hire.app.${i}`, employeeId: `app.${i}`, staffRoleDefinitionId: "staff.app" }, context);
+       expect(state.operationReceipts[`hire.app.${i}`]?.status).toBe("applied");
+     }
+     expect(new Set(state.employees.map((row) => row.homeRoomInstanceId)).size).toBe(2);
+-    expect(state.employees.map((row) => row.appearance.stillId).sort()).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
++    expect(new Set(state.employees.map((row) => row.appearance.stillId)).size).toBe(2);
++    const pool = staffStillEligibleEntries("staff.app").map(row => row.stillId);
++    expect(state.employees.every(row => pool.includes(row.appearance.stillId!))).toBe(true);
+     expect(state.employees.every((row) => row.appearance.roleStyle === "app" && row.salaryPerExpenseInterval === 30)).toBe(true);
+     const loaded = deserializeGameState(serializeGameState(state), context);
+     expect(loaded.employees).toEqual(state.employees);
+-    const cash = state.cash;
+-    state = gameReducer(state, { type: "HIRE_STAFF", operationId: "hire.third", employeeId: "app.2", staffRoleDefinitionId: "staff.app" }, context);
+-    expect(state.operationReceipts["hire.third"]?.status).toBe("rejected");
+-    expect(state.cash).toBe(cash);
++  });
++
++  it("hires all ten approved APP looks and rejects the eleventh for art exhaustion with a free physical post", () => {
++    let state = examHomes(11);
++    expect(getRoomStaffCapacity(state, "staff.app").capacity).toBe(11);
++    for (let i = 0; i < 10; i++) {
++      const frozen = state.employees.map(row => ({ ...row.appearance }));
++      state = gameReducer(state, { type: "HIRE_STAFF", operationId: `hire.ten.${i}`, employeeId: `app.${i}`, staffRoleDefinitionId: "staff.app" }, context);
++      expect(state.operationReceipts[`hire.ten.${i}`]?.status).toBe("applied");
++      expect(state.employees.slice(0, i).map(row => row.appearance)).toEqual(frozen);
++    }
++    expect(new Set(state.employees.map(row => row.homeRoomInstanceId)).size).toBe(10);
++    expect(state.employees.map(row => row.appearance.stillId).sort()).toEqual(staffStillEligibleEntries("staff.app").map(row => row.stillId).sort());
++    expect(deserializeGameState(serializeGameState(state), context).employees).toEqual(state.employees);
++    const cash = state.cash, cashCents = state.cashCents;
++    state = gameReducer(state, { type: "HIRE_STAFF", operationId: "hire.eleventh", employeeId: "app.10", staffRoleDefinitionId: "staff.app" }, context);
++    expect(state.operationReceipts["hire.eleventh"]).toMatchObject({ status: "rejected",
++      message: `No unused ${getStaffRoleDefinition("staff.app", context)!.displayName} character design is available yet.` });
++    expect(state.employees).toHaveLength(10);
++    expect(state.cash).toBe(cash); expect(state.cashCents).toBe(cashCents);
+   });
+ 
+   it("uses only the authored APP pool, excluding other preferred lists and unrelated fallback", () => {
+     const pool = staffStillEligibleEntries("staff.app");
+-    expect(pool).toHaveLength(2);
++    expect(pool).toHaveLength(10);
+     const reserved = Object.entries(PREFERRED_STAFF_STILL_IDS_BY_ROLE).filter(([role]) => role !== "staff.app").flatMap(([, ids]) => ids ?? []);
+     for (const row of pool) {
+       expect(reserved).not.toContain(row.stillId);
+       expect(row.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
+     }
+     const role = getStaffRoleDefinition("staff.app", context)!;
+-    expect(role.maximumEmployees).toBeGreaterThan(2);
++    expect(role.maximumEmployees).toBeGreaterThan(10);
+   });
+ 
+   it("freezes individual-provider revenue without shortening clinical work or rewriting old category snapshots", () => {
+-    let state = twoExams();
++    let state = examHomes();
+     state = gameReducer(state, { type: "HIRE_STAFF", operationId: "hire.fee", employeeId: "app.fee", staffRoleDefinitionId: "staff.app" }, context);
+     const employee = state.employees[0]!;
+     employee.trainingLevel = 3;
+--- before/apps/player/src/session/appAppointmentsViewModels.test.ts
++++ after/apps/player/src/session/appAppointmentsViewModels.test.ts
+@@ -1,7 +1,7 @@
+ import { afterAll, beforeAll, describe, expect, it } from "vitest";
+ import { createAppAppointmentsQaState } from "../../../../tests/fixtures/app-appointments";
+-import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
+-import { advanceEmployeeMovement, advanceServiceOperations, isAppAppointment, PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
++import { createLevelFourRoomsQaContext, createLevelFourRoomsQaState } from "../../../../tests/fixtures/level-four-rooms";
++import { advanceEmployeeMovement, advanceServiceOperations, gameReducer, getRoomStaffCapacity, isAppAppointment, PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+ import { createPrototypePlayerView } from "./viewModels";
+ import { describeFacilityCharacter } from "./characterActivityPresentation";
+ 
+@@ -36,7 +36,34 @@
+     }
+     expect(view.staffRoles.find(row => row.id === "staff.app")?.staffingGuidance).toContain("upgrades add no posts");
+     expect(view.staffRoles.find(row => row.id === "staff.app")?.canHire).toBe(false);
+-    expect(view.staffRoles.find(row => row.id === "staff.app")?.blockedReason).toContain("approved APP looks");
++    expect(view.staffRoles.find(row => row.id === "staff.app")?.blockedReason).toContain("Maximum 2 hired");
++  });
++
++  it("shows art exhaustion for an eleventh APP while one reachable physical post remains free", () => {
++    let state = createLevelFourRoomsQaState(context);
++    for (let x = 9; x < 25; x++) {
++      state = gameReducer(state, { type: "PLACE_ROOM", operationId: `art.hall.${x}`, roomId: `room.art.hall.${x}`,
++        roomDefinitionId: "room.hallway", x, y: 26, orientation: 0 }, context);
++      expect(state.operationReceipts[`art.hall.${x}`]?.status).toBe("applied");
++    }
++    for (let i = 0; i < 11; i++) {
++      state = gameReducer(state, { type: "PLACE_ROOM", operationId: `art.exam.${i}`, roomId: `room.art.${i}`,
++        roomDefinitionId: "room.examination", x: 9 + 3 * i, y: 24, orientation: 0 }, context);
++      state = gameReducer(state, { type: "PLACE_DOOR", operationId: `art.door.${i}`, doorId: `door.art.${i}`,
++        roomId: `room.art.${i}`, side: "south", offset: 1 }, context);
++      expect(state.operationReceipts[`art.door.${i}`]?.status).toBe("applied");
++    }
++    for (let i = 0; i < 10; i++) {
++      expect(createPrototypePlayerView(state, null, false, null).staffRoles.find(row => row.id === "staff.app")?.canHire).toBe(true);
++      state = gameReducer(state, { type: "HIRE_STAFF", operationId: `art.hire.${i}`, employeeId: `app.art.${i}`, staffRoleDefinitionId: "staff.app" }, context);
++      expect(state.operationReceipts[`art.hire.${i}`]?.status).toBe("applied");
++    }
++    expect(getRoomStaffCapacity(state, "staff.app").capacity).toBe(11);
++    const view = createPrototypePlayerView(state, null, false, null);
++    expect(view.staffRoles.find(row => row.id === "staff.app")).toMatchObject({ canHire: false,
++      blockedReason: "All approved APP looks are in use; additional APP art is needed." });
++    expect(view.staffOptions.find(row => row.id === "staff.app")).toMatchObject({ enabled: false,
++      blockedReason: "All approved APP looks are in use; additional APP art is needed." });
+   });
+ 
+   it("shows pediatric readiness and preserves the pending wound service labels", () => {
+--- before/apps/player/src/session/viewModels.ts
++++ after/apps/player/src/session/viewModels.ts
+@@ -2611,7 +2611,7 @@
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
+-        const blockedReason = lacksAppArt ? "Both approved APP looks are in use; additional APP art is needed."
++        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
+           : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+@@ -2672,7 +2672,7 @@
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
+-        const blockedReason = lacksAppArt ? "Both approved APP looks are in use; additional APP art is needed."
++        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
+           : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+--- before/packages/game-domain/tests/character-variety.test.ts
++++ after/packages/game-domain/tests/character-variety.test.ts
+@@ -153,7 +153,7 @@
+     expect(selectStaffStillId("staff-variety", "freed", role.id, undefined, occupied)).toBe(freed);
+   });
+ 
+-  it("fills configured capacity with unique staff, stopping APPs at the two approved looks in both role orders", () => {
++  it("fills configured capacity with unique staff, stopping APPs at the ten approved looks in both role orders", () => {
+     const state = stateFor("staff-maximum-variety");
+     state.rooms = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.flatMap((room) =>
+       Array.from({ length: room.maximumInstances ?? 0 }, (_, index) => ({
+@@ -170,12 +170,11 @@
+       const occupied = new Set<string>();
+       for (const role of orderedRoles) {
+         const physicalCapacity = getRoomStaffCapacity(state, role.id).capacity;
+-        // M4 must report the art gap instead of borrowing another provider's
+-        // identity or imposing a hidden two-post physical-capacity limit.
+-        const capacity = role.id === "staff.app" ? 2 : physicalCapacity;
++        // Approved art availability remains separate from physical capacity.
++        const capacity = role.id === "staff.app" ? 10 : physicalCapacity;
+         if (role.id === "staff.app") {
+           expect(physicalCapacity).toBe(31);
+-          expect(staffStillEligibleEntries(role.id)).toHaveLength(2);
++          expect(staffStillEligibleEntries(role.id)).toHaveLength(10);
+         }
+         for (let index = 0; index < capacity; index += 1) {
+           const selected = selectStaffStillId("maximum-staff", `${role.id}.${index}`, role.id, undefined, occupied);
+@@ -185,7 +184,7 @@
+         }
+         if (role.id === "staff.app") expect(selectStaffStillId("maximum-staff", "app.art-gap", role.id, undefined, occupied)).toBeUndefined();
+       }
+-      expect(occupied.size).toBe(roles.reduce((sum, role) => sum + (role.id === "staff.app" ? 2 : getRoomStaffCapacity(state, role.id).capacity), 0));
++      expect(occupied.size).toBe(roles.reduce((sum, role) => sum + (role.id === "staff.app" ? 10 : getRoomStaffCapacity(state, role.id).capacity), 0));
+     }
+   });
+ 

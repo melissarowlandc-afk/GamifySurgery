@@ -1,0 +1,18 @@
+--- a/apps/player/src/session/buildViewModels.test.ts
++++ b/apps/player/src/session/buildViewModels.test.ts
+@@ -256,12 +256,9 @@
+       nextUpgradeLevel: 2,
+       upgradeCostLabel: "$90",
+     });
+-    expect(view.selectedRoomBuild?.upgradeImprovements).toEqual(
+-      expect.arrayContaining([
+-        "+2 satisfaction points after examination",
+-        "Hourly upkeep +$1.",
+-      ]),
+-    );
++    expect(view.selectedRoomBuild?.upgradeImprovements).toEqual([
++      "+2 satisfaction points after examination",
++    ]);
+     expect(view.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/finish|capacity|clinic|capped/);
+     expect(view.selectedRoomBuild?.upgradeImprovements).not.toContain(
+       "Room service time 5% faster.",

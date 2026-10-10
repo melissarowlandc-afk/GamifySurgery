@@ -1,0 +1,110 @@
+{
+  "newActiveTests": 31,
+  "skippedDefects": [
+    "DEFECT-M9-1",
+    "DEFECT-M9-2"
+  ],
+  "files": [
+    {
+      "path": "tests/fixtures/level-four-integration.ts",
+      "sha256": "18eb8cac1d3b3ed4db06759b8e533d1872855a88421b7f9c75baf8275207b822",
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "path": "tests/fixtures/level-four-legacy-pre-m3.json",
+      "sha256": "9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3",
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration.test.ts",
+      "sha256": "a24ab0f260d3e399d49fdd188c55d8347fc81d9e49cbc7033e516687195ab146",
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration-reload.test.ts",
+      "sha256": "9b334e1e8c51aea5cc3cb7aeb3ca5b3b29a03d783ade72b390f32e3715c9a374",
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration-defects.test.ts",
+      "sha256": "3f249a25a6083439ef2d8bdebe366642c435a1b474ea70db99ce8e607c84937c",
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "path": "apps/player/src/session/levelFourIntegration.test.ts",
+      "sha256": "5021f3a163aa276e9c1e3c705ca7d336c91f2baf3b516b5b22a8b4b3a0a59776",
+      "bom": false,
+      "cr": 0
+    }
+  ],
+  "documents": [
+    {
+      "name": "level4-launch-plan-20261008.md",
+      "originalPrefixPreserved": true,
+      "bom": false,
+      "cr": 0
+    },
+    {
+      "name": "owner-requests-20261008.md",
+      "originalPrefixPreserved": true,
+      "bom": false,
+      "cr": 0
+    }
+  ],
+  "checks": {
+    "V1": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads --maxWorkers=1",
+      "exitCode": 0
+    },
+    "V2": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1",
+      "exitCode": 0
+    },
+    "V3": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1",
+      "exitCode": 0
+    },
+    "V4": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1",
+      "exitCode": 1
+    },
+    "V5": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0
+    },
+    "V6": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0
+    },
+    "V7": {
+      "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "command": "npm.cmd run test --workspaces --if-present -- --pool=threads --maxWorkers=1",
+      "exitCode": 1
+    }
+  },
+  "preservation": {
+    "changes": [
+      "apps/player/src/session/levelFourIntegration.test.ts",
+      "packages/game-domain/tests/level-four-integration-defects.test.ts",
+      "packages/game-domain/tests/level-four-integration-reload.test.ts",
+      "packages/game-domain/tests/level-four-integration.test.ts",
+      "tests/fixtures/level-four-integration.ts",
+      "tests/fixtures/level-four-legacy-pre-m3.json",
+      "docs/execplans/level4-launch-plan-20261008.md",
+      "docs/execplans/owner-requests-20261008.md"
+    ],
+    "missing": [],
+    "unchanged": 909
+  }
+}

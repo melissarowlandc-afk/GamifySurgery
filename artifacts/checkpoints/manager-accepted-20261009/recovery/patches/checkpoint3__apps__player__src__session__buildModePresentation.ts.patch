@@ -1,0 +1,24 @@
+--- a/apps/player/src/session/buildModePresentation.ts
++++ b/apps/player/src/session/buildModePresentation.ts
+@@ -33,10 +33,13 @@
+   ["room.front_desk", "patient", "Check-in and the clinic's permanent entrance."],
+   ["room.waiting", "patient", "Seats patients until an exam room opens."],
+   ["room.examination", "patient", "Where the founder sees each patient."],
++  ["room.pediatric_waiting", "patient", "Children wait here with their parents."],
++  ["room.pediatric_examination", "patient", "Clinic visits for children with a parent present."],
+   ["room.bathroom", "patient", "Patient restroom. Clean rooms keep patients happier."],
+   ["room.xray", "diagnostics", "Runs X-ray studies onsite."],
+   ["room.ultrasound", "diagnostics", "Runs ultrasound studies onsite."],
+   ["room.ct", "diagnostics", "Runs CT and CTA studies onsite."],
++  ["room.mri", "diagnostics", "MRI acquisition with an imaging technician."],
+   ["room.phlebotomy", "diagnostics", "Collects blood and specimen samples."],
+   ["room.laboratory", "diagnostics", "Processes laboratory tests in house."],
+   ["room.reading", "diagnostics", "Radiologists read imaging studies here."],
+@@ -53,6 +56,7 @@
+   ["room.surgeon_office", "support", "Quality reviews happen here."],
+   ["room.glp1_telehealth_suite", "services", "Remote GLP-1 weight-management visits."],
+   ["room.pharmacy", "services", "Pharmacy sales to patients."],
++  ["room.wound_ostomy", "services", "Routine wound care and ostomy support visits."],
+   ["room.vending", "services", "Snack and drink sales for visitors."],
+ ];
+ 

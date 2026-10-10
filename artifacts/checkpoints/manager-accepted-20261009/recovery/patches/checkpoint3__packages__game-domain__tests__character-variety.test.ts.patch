@@ -1,0 +1,36 @@
+--- a/packages/game-domain/tests/character-variety.test.ts
++++ b/packages/game-domain/tests/character-variety.test.ts
+@@ -153,7 +153,7 @@
+     expect(selectStaffStillId("staff-variety", "freed", role.id, undefined, occupied)).toBe(freed);
+   });
+ 
+-  it("fills maximum configured room capacity with globally unique staff in both role orders", () => {
++  it("fills configured capacity with unique staff, stopping APPs at the ten approved looks in both role orders", () => {
+     const state = stateFor("staff-maximum-variety");
+     state.rooms = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.flatMap((room) =>
+       Array.from({ length: room.maximumInstances ?? 0 }, (_, index) => ({
+@@ -169,15 +169,22 @@
+     for (const orderedRoles of [roles, [...roles].reverse()]) {
+       const occupied = new Set<string>();
+       for (const role of orderedRoles) {
+-        const capacity = getRoomStaffCapacity(state, role.id).capacity;
++        const physicalCapacity = getRoomStaffCapacity(state, role.id).capacity;
++        // Approved art availability remains separate from physical capacity.
++        const capacity = role.id === "staff.app" ? 10 : physicalCapacity;
++        if (role.id === "staff.app") {
++          expect(physicalCapacity).toBe(31);
++          expect(staffStillEligibleEntries(role.id)).toHaveLength(10);
++        }
+         for (let index = 0; index < capacity; index += 1) {
+           const selected = selectStaffStillId("maximum-staff", `${role.id}.${index}`, role.id, undefined, occupied);
+           expect(selected, `${role.id} slot ${index + 1}/${capacity}`).toBeDefined();
+           expect(occupied.has(selected!)).toBe(false);
+           occupied.add(selected!);
+         }
++        if (role.id === "staff.app") expect(selectStaffStillId("maximum-staff", "app.art-gap", role.id, undefined, occupied)).toBeUndefined();
+       }
+-      expect(occupied.size).toBe(roles.reduce((sum, role) => sum + getRoomStaffCapacity(state, role.id).capacity, 0));
++      expect(occupied.size).toBe(roles.reduce((sum, role) => sum + (role.id === "staff.app" ? 10 : getRoomStaffCapacity(state, role.id).capacity), 0));
+     }
+   });
+ 

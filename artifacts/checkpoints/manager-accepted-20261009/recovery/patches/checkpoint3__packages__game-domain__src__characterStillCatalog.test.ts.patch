@@ -1,0 +1,102 @@
+--- a/packages/game-domain/src/characterStillCatalog.test.ts
++++ b/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -15,6 +15,7 @@
+   FOUNDER_STILL_IDS,
+   FUTURE_PRESENTATION_CHARACTER_STILLS,
+   PATIENT_CHARACTER_STILLS,
++  PEDIATRIC_CHARACTER_STILLS,
+   STAFF_CHARACTER_STILLS,
+   founderStillIdForPresetIds,
+   patientStillEligibleEntries,
+@@ -23,14 +24,15 @@
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 318 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(318);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(318);
++  it("covers all 326 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(326);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(326);
+     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179);
+-    expect(STAFF_CHARACTER_STILLS).toHaveLength(91);
++    expect(STAFF_CHARACTER_STILLS).toHaveLength(99);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
+-    expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(12);
++    expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(0);
++    expect(PEDIATRIC_CHARACTER_STILLS).toHaveLength(12);
+   });
+ 
+   it("admits the twenty manager-approved v6a patients only to their exact sex and age-band pools", () => {
+@@ -275,17 +277,43 @@
+     }
+   });
+ 
+-  it("registers APP and executive art while excluding it from every current staff role and patient pool", () => {
++  it("retains the two original APP looks and keeps executives excluded", () => {
+     const inactive = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "future-roster20-v5" && entry.eligibleStaffRoleDefinitionIds.length === 0);
+-    expect(inactive.map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", "future-roster20-v5.003", "future-roster20-v5.004"]);
++    expect(inactive.map(entry => entry.stillId)).toEqual(["future-roster20-v5.003", "future-roster20-v5.004"]);
+     const roleIds = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.app", "staff.executive"];
+     for (const role of roleIds) for (const entry of inactive) {
+       expect(staffStillEligibleEntries(role)).not.toContainEqual(entry);
+       expect(selectStaffStillId("GS-033-inactive", "new-hire", role, entry.stillId)).not.toBe(entry.stillId);
+     }
+     for (const entry of inactive) expect(patientStillEligibleEntries()).not.toContainEqual(entry);
+-    expect(selectStaffStillId("GS-033-inactive", "APP", "staff.app")).toBeUndefined();
++    expect(staffStillEligibleEntries("staff.app").filter(entry => entry.sourceCohort === "future-roster20-v5").map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
+     expect(selectStaffStillId("GS-033-inactive", "executive", "staff.executive")).toBeUndefined();
++  });
++
++  it("admits all eight v6e looks only to APPs and preserves every compatible current or departing APP selection", () => {
++    const additions = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "app-gapfill-v6e");
++    expect(additions.map(entry => entry.stillId)).toEqual(Array.from({ length: 8 }, (_, i) => `app-gapfill-v6e.${String(i + 1).padStart(3, "0")}`));
++    const pool = staffStillEligibleEntries("staff.app");
++    expect(pool.map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", ...additions.map(entry => entry.stillId)]);
++    const allRoles = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.executive"];
++    for (const entry of additions) {
++      expect(entry.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
++      for (const role of allRoles) expect(staffStillEligibleEntries(role).includes(entry)).toBe(role === "staff.app");
++      expect(patientStillEligibleEntries()).not.toContainEqual(entry);
++      expect(PEDIATRIC_CHARACTER_STILLS.map(child => child.stillId)).not.toContain(entry.stillId);
++    }
++    const occupied = new Set<string>();
++    for (let index = 0; index < pool.length; index++) {
++      const selected = selectStaffStillId("v6e-hires", `app.${index}`, "staff.app", undefined, occupied);
++      expect(selected).toBeDefined(); expect(occupied.has(selected!)).toBe(false); occupied.add(selected!);
++    }
++    expect([...occupied].sort()).toEqual(pool.map(entry => entry.stillId).sort());
++    expect(selectStaffStillId("v6e-hires", "eleventh", "staff.app", undefined, occupied)).toBeUndefined();
++    for (const entry of pool) {
++      const otherCurrentOrDepartingIds = new Set(pool.filter(other => other.stillId !== entry.stillId).map(other => other.stillId));
++      expect(selectStaffStillId("saved-campaign", "current-app", "staff.app", entry.stillId, otherCurrentOrDepartingIds)).toBe(entry.stillId);
++      expect(selectStaffStillId("saved-campaign", "new-hire", "staff.app", undefined, otherCurrentOrDepartingIds)).toBe(entry.stillId);
++    }
+   });
+ 
+   it("reaches all four GS-033 patients using unchanged compatible occupancy and LRU selection", () => {
+@@ -406,7 +434,7 @@
+       expect(reached).toBe(true);
+     }
+     expect(patientStillEligibleEntries("Female", 12)).toEqual([]);
+-    expect(createPatientPixelAppearance("child-seed", "child", { sexLabel: "Female", ageYears: 12 }).stillId).toBeUndefined();
++    expect(createPatientPixelAppearance("child-seed", "child", { sexLabel: "Female", ageYears: 12 }).stillId).toMatch(/^level3-roster-v2\./);
+   });
+ 
+   it("adds six authorized adult Level 3 designs to the existing adult-only pool", () => {
+@@ -452,11 +480,11 @@
+     }
+   });
+ 
+-  it("keeps future pediatric art excluded and retains the enabled radiologist staff pool", () => {
+-    const pediatric = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "pediatric");
++  it("keeps pediatric art separate from adult selection and retains the radiologist staff pool", () => {
++    const pediatric = PEDIATRIC_CHARACTER_STILLS;
+     const radiologists = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "radiologist");
+     expect(pediatric).toHaveLength(12);
+-    expect(pediatric.every((entry) => entry.availability === "excluded-until-future-approved-pediatric-release")).toBe(true);
++    expect(pediatric.every((entry) => entry.minimumAge >= 5 && entry.maximumAge <= 17)).toBe(true);
+     expect(radiologists).toHaveLength(0);
+     expect(patientStillEligibleEntries(undefined, undefined).map((entry) => entry.stillId)).not.toContain("level3-roster-v2.021");
+     expect(staffStillEligibleEntries("staff.radiologist").filter(entry => entry.sourceCohort === "level3-roster-v2").map(entry => entry.stillId)).toEqual([

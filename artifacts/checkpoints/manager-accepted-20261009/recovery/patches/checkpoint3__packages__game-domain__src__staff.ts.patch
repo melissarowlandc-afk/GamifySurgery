@@ -1,0 +1,27 @@
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -18,7 +18,7 @@
+ } from "./spatial";
+ import type { DomainContext, EmployeeState, GameState, GridPoint, PlacedRoom } from "./types";
+ import { getPlacedRoomIdleSpots } from "./employee-idle-spots";
+-import { getAvailableEmployeeHomeRoom, reconcileImagingIdleSeats } from "./room-capacity";
++import { getAvailableEmployeeHomeRoom, getRoomStaffCapacity, reconcileImagingIdleSeats } from "./room-capacity";
+ import { findRouteFromDisplacedLocationToRoom } from "./displaced-routing";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getNextReadingStationLocation, getRadiologistReadingStation, reconcileReadingStations } from "./reading-stations";
+@@ -723,7 +723,14 @@
+     ...openGridPath(offscreenStart, entryApproach),
+     entryDoor,
+   ];
+-  const homes = [getEmployeeHomeLocation(state, employeeRoleId, context)];
++  const homes = employeeRoleId === "staff.app"
++    ? state.rooms.filter((room) => (getRoomStaffCapacity(state, employeeRoleId).slotsByRoomInstanceId[room.id] ?? 0) > 0 &&
++        !state.employees.some((employee) => employee.staffRoleDefinitionId === employeeRoleId && employee.homeRoomInstanceId === room.id))
++        .sort((a, b) => a.id.localeCompare(b.id)).flatMap((room) => {
++          const definition = getRoomDefinition(room.roomDefinitionId, context);
++          return definition ? [{ homeRoomInstanceId: room.id, location: getRoomNavigationAnchor(room, definition, "staff") }] : [];
++        })
++    : [getEmployeeHomeLocation(state, employeeRoleId, context)];
+   for (const home of homes) {
+     const homeRoom = state.rooms.find((room) => room.id === home.homeRoomInstanceId);
+     const homeDefinition = homeRoom

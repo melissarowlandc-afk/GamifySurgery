@@ -1,0 +1,56 @@
+--- a/packages/balance-config/src/diagnostic-timing.ts
++++ b/packages/balance-config/src/diagnostic-timing.ts
+@@ -120,7 +120,7 @@
+ 
+ export type DiagnosticTimingRule =
+   | { readonly family: "bladder_scan" }
+-  | { readonly family: "imaging" }
++  | { readonly family: "imaging"; readonly onsiteReadRequiresLocalAcquisition?: true }
+   | { readonly family: "collected_lab"; readonly specimen: "blood" | "breath" }
+   | { readonly family: "biopsy" }
+   | { readonly family: "endoscopy"; readonly result: "visual" | "pathology" | "by_disposition" }
+@@ -134,6 +134,8 @@
+ 
+ const bladder = { family: "bladder_scan" } as const;
+ const imaging = { family: "imaging" } as const;
++// M0, October 8: a missing scanner retains the full inclusive outside MRI visit.
++const mri = { family: "imaging", onsiteReadRequiresLocalAcquisition: true } as const;
+ const bloodLab = { family: "collected_lab", specimen: "blood" } as const;
+ const breathLab = { family: "collected_lab", specimen: "breath" } as const;
+ const biopsy = { family: "biopsy" } as const;
+@@ -167,7 +169,8 @@
+   "service.esophageal_manometry": specialist,
+   "service.skin_excisional_biopsy": biopsy,
+   "service.dxa": specialist,
+-  "service.mrcp": specialist,
++  "service.mri": mri,
++  "service.mrcp": mri,
+   "service.hepatobiliary_contrast_mrcp": specialist,
+   "service.ambulatory_reflux_monitoring": protocol,
+   "service.tumor_mmr_ihc": tissueMolecular,
+@@ -189,7 +192,7 @@
+   "service.primary_aldosteronism_screen": bloodLab,
+   "service.colonoscopy": endoscopyByDisposition,
+   "service.upper_endoscopy_duodenal_biopsy": endoscopyWithPathology,
+-  "service.extremity_mri": specialist,
++  "service.extremity_mri": mri,
+   // Existing EUS sampling may be one component of a molecular workup; do not
+   // replace that workup's whole external remainder with simple pathology.
+   "service.endoscopy.eus-ercp-sampling": components,
+@@ -229,6 +232,7 @@
+   "timing.test.ultrasound": profile(imaging, "service.ultrasound"),
+   "timing.test.ct": profile(imaging, "service.ct"),
+   "timing.test.mri": profile(specialist),
++  "timing.test.mri_routine": profile(mri, "service.mri"),
+   "timing.test.radiography": profile(imaging, "service.xray"),
+   "timing.test.mammography": profile(specialist, "service.mammography"),
+   "timing.test.biopsy": profile(biopsy),
+@@ -250,7 +254,7 @@
+   "timing.test.four_hour_protocol": profile(protocol),
+   "timing.test.twenty_four_hour_protocol": profile(protocol),
+   "timing.test.dxa": profile(specialist, "service.dxa"),
+-  "timing.test.mrcp": profile(specialist, "service.mrcp"),
++  "timing.test.mrcp": profile(mri, "service.mrcp"),
+   "timing.test.laryngeal_examination": profile(specialist, "service.laryngeal_examination"),
+   "timing.test.contrast_swallow": profile(imaging, "service.contrast_swallow"),
+   "timing.test.vascular_physiology": profile(imaging, "service.resting_abi"),

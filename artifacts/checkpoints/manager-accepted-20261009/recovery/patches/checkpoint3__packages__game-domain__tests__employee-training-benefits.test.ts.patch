@@ -1,0 +1,16 @@
+--- a/packages/game-domain/tests/employee-training-benefits.test.ts
++++ b/packages/game-domain/tests/employee-training-benefits.test.ts
+@@ -646,11 +646,11 @@
+     expect(authorizeRetailOrder(fixture.state, "order.rx.training", "income.pharmacy_pickup", "retail_visitor", "rx.training", 1, fixture.context)).toBe(true);
+     const id = startRetailPurchase(fixture.state, "income.pharmacy_pickup", "retail_visitor", "rx.training", fixture.context, "order.rx.training");
+     expect(id).not.toBeNull();
+-    expect(fixture.state.retailOperations[0]!).toMatchObject({ quoteGross: 25, quoteStockCost: 13.5 });
++    expect(fixture.state.retailOperations[0]!).toMatchObject({ quoteGross: 70, quoteStockCost: 13.5 });
+     fixture.state.employees.forEach((employee) => employee.trainingLevel = 1);
+     const restored = deserializeGameState(serializeGameState(fixture.state), fixture.context);
+     for (let count = 0; !restored.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.pharmacy_pickup") && count < 150; count++) { restored.facilityTick++; advanceRetailOperations(restored, fixture.context); advanceEmployeeMovement(restored, fixture.context); }
+-    expect(restored.serviceIncomeReceipts.find((receipt) => receipt.incomeLineId === "income.pharmacy_pickup")).toMatchObject({ grossAmount: 25, stockCost: 13.5, netCashDelta: 11.5 });
++    expect(restored.serviceIncomeReceipts.find((receipt) => receipt.incomeLineId === "income.pharmacy_pickup")).toMatchObject({ grossAmount: 70, stockCost: 13.5, netCashDelta: 56.5 });
+     expect(restored.retailOperations.find((entry) => entry.incomeLineId === "income.coffee")!.quoteStockCost).toBe(getServiceIncomeLine("income.coffee")!.retail!.stockCost);
+   });
+ 

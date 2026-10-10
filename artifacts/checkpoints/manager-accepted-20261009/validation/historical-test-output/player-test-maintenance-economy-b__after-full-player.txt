@@ -1,0 +1,1203 @@
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads --reporter=verbose
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the saved Level 1 room session duration after upgrade and reload 13ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the saved Level 2 room session duration after upgrade and reload 3ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the saved Level 3 room session duration after upgrade and reload 3ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the saved Level 4 room session duration after upgrade and reload 2ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the saved Level 5 room session duration after upgrade and reload 3ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > keeps a bound walking duration, a legacy active hour, and no unbound promise 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > formats fractional remaining training work without a float tail 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.receptionist 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.imaging_technician 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.periop_nurse 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.endoscopy_nurse 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.endoscopist 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.phlebotomist 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.evs_worker 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.glp1_np 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.laboratory_technician 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.surgeon 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.or_nurse 0ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.pharmacist 0ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.repair_person 0ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > provides concise current and next-step copy for staff.radiologist 0ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > distinguishes the next consultation's total bonus from the one-level increase 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > formats a fractional NP category benefit in cents without rounding skill first 1ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the category's current consult payment and pharmacy stock cost 11ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > exposes training data in the staff list without requiring a new button 2ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > assigns distinct furniture contacts only to seated trainees 4ms
+ ✓ src/session/employeeTrainingViewModels.test.ts > employee training presentation > does not use a historical diagnostic order's nominal due date when another order is selected 17ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > shows neutral complete test timing in both chart choice paths 59ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > uses a static Level 2 endoscopy goal with actionable setup cost guidance 15ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > keeps busy reachable staff ready and gives existing inaccessible setup a repair hint instead of another purchase 5ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > grows shared imaging-technician hiring capacity with each imaging room 5ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > explains GLP-1 two-NP staffing capacity and blocks hiring without a reachable slot 5ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > shows tutorial completion instead of blocked XP and satisfaction goals for the Level 0 graduation exception 2ms
+ ✓ src/session/buildViewModels.test.ts > Build Mode view models > describes upgrade effects and projects valid walls for map interaction 4ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.examination 8ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.waiting 7ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.bathroom 7ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.minor_procedure 6ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.ultrasound 7ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.xray 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.ct 6ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.phlebotomy 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.evs_closet 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.endoscopy 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.periop_recovery 8ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.training 6ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.coffee_kiosk 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.glp1_telehealth_suite 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.ambulatory_or 7ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.laboratory 4ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.pharmacy 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.maintenance_workshop 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.staff_break 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.surgeon_office 4ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.vending 5ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows the complete playable ladder for room.reading 4ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows each room copy's totals and retains Examination capacity and admitted patients 4ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows no purchase or stars for room.front_desk 2ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows no purchase or stars for room.hallway 1ms
+ ✓ src/session/buildViewModels.test.ts > approved room upgrade ladders in player views > shows no purchase or stars for room.imaging_control 1ms
+ × src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer 43ms
+   → expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > labels an onsite EGD route as onsite care while its result is pending 30ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > does not show a placeholder return ETA while a linked local procedure is active 26ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > distinguishes onsite and offsite pending-patient copy 27ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > presents a local test-only collection as onsite work and a Front Desk return 22ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > projects only the frozen endoscopy care interval as a covered-table occupancy 35ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > projects an active reserved endoscopy operation and only its visitor actor 35ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > uses frozen periop phases for the preparation labels and Endoscopy coverage 46ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > formats actual marked maximum Reading work while retaining its raw frozen duration 360ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > projects eight reserved Peri-op visitor beds exactly and removes the support outside a stationary Peri-op phase 4ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > projects persisted bathroom travel ahead of care supports and restores the exact reserved bed after return 30ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > projects a domain-created bathroom route after save and reload 8ms
+ ✓ src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > keeps discharging departure actors visible on their active amenity or retail route 24ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > formats fractional pending time in the actual chart and step without mutating frozen work 7ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > uses each shared total in both answer lists, including distractors and walking 7ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > shows a reached visual result during return while retaining the next-decision care gate 5ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > uses actual visual-only phases instead of a historical route caption that implies pathology 4ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > keeps background pathology visible after visual delivery unlocks the next decision 4ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > does not reveal combined biopsy prose when only the visual milestone is reached 5ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > shows no finite total countdown when a frozen local pathology phase loses capacity 5ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > shows a terminal endoscopy order after an earlier laboratory result has been delivered 7ms
+ ✓ src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > presents the approved reading-room prices, four-reader capacity and functional upgrade benefits 11ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > supersedes low cash with zero cash without a false Handled row, then handles genuine recovery once 10ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > shows only the daily reminder while cash remains low, including legacy renewal-as-resolution history 4ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > attributes current conditions to their source and leaves instructions on the one-click buttons 3ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > does not admit optional setup, goals, low cash, water or trash 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > uses the exact live patient predicate and preserves the saved warning onset 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > orders separate at-risk patients by their actual satisfaction margin 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > merges employee warnings into one posting card with the real cash gap and deadline 3ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > withholds payroll cards with no eligible funding control 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > admits a present accepted local phase with its missing legal staff remedy 2ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > does not admit external accepted work 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > does not admit dependency accepted work 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > does not admit scheduled accepted work 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > does not admit away accepted work 0ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > attributes humor and removes actions/markers from historical patient risk and milestones 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > renders one stable day divider from its persisted snapshot and handles old rollovers honestly 8ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > suppresses an old live cooler warning after usable receptionist coverage is installed 3ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > names the room and quotes its next upgrade; historical resolution is past tense 2ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > removes team-answer receipts and employee-navigation links from old quit events 1ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > keeps setup timestamps stable at Level 3 and preserves the requested construction definition 2ms
+ ✓ src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > places same-tick morning news after the preceding end-of-day divider 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > audits every approved stool crop and preserves every pre-change seat and placement 6ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.examination:0:stool (stool:clinician) with no stool foreground 3ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.examination:270:stool (stool:clinician) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.minor_procedure:0:stool (stool:clinician) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.ultrasound:0:stool (stool:clinician) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.phlebotomy:0:stool (stool:clinician) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.phlebotomy:270:stool (stool:clinician) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.periop_recovery:0:stool1 (recovery:stool-1) with no stool foreground 4ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.periop_recovery:0:stool2 (recovery:stool-2) with no stool foreground 2ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.training:0:stool1 (stool1) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > draws the whole clinician above room.training:0:stool2 (stool2) with no stool foreground 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > reuses the derived minor-procedure stool below the endoscopist in orientation 0 0ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > reuses the derived minor-procedure stool below the endoscopist in orientation 270 0ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > keeps reused ultrasound/phlebotomy idle supports above their own stool without a foreground binding 0ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > removes the 'minor-procedure' back/post and restores only covered body pixels without mutating source art 838ms
+ ✓ src/session/periopStuckOwnerSave.test.ts > Compiled Level-3 presentation of the supplied stranded save shapes > renders the recovered walks, named checks, companion chair and departures, then idle nurses 2273ms
+ ✓ src/session/periopNurseRealVisit.test.ts > Peri-op nurse presentation through ordinary chart commands > shows walking, named checks, short walks, seats and automatic coffee-kiosk trips in the approved Level-2 room 2492ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > removes the 'ultrasound' back/post and restores only covered body pixels without mutating source art 1271ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > creates each derived canvas once with the exact approved source crop and untouched dimensions 3ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > uses the backless texture for room.minor_procedure lighting copies too 0ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > uses the backless texture for room.ultrasound lighting copies too 0ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > keeps the already-backless legacy bitmap and procedural fallback stools at orientation 0 1ms
+ ✓ src/facility/backlessRollingStools.test.ts > backless rolling stools > keeps the already-backless legacy bitmap and procedural fallback stools at orientation 270 0ms
+ ✓ src/session/periopStuckOwnerSave.test.ts > Compiled Level-3 presentation of the supplied stranded save shapes > shows the watchdog reason for blocked companion exits and indefinite service queues 756ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > points arrivals at Waiting and explains automatic founder recovery 6ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > keeps the guided second physical wait within 1–2 minutes at selected 1x (correct=true) 162ms
+ ✓ src/session/periopNurseOwnerSave.test.ts > Owner-save Blake after legacy coverage release > shows paid training, walking to named checks, checking and sitting in the owner's Level-3 room geometry 3964ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > keeps the guided second physical wait within 1–2 minutes at selected 1x (correct=false) 132ms
+ ✓ src/session/proceduralStaffingPresentation.test.ts > opposite-side procedure actor presentation > binds the actual walking endpoints to separate nurse/provider standing supports (surgery=false) 755ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > resumes a saved accelerated wait without changing the plan, speed, pause or learning 156ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > recovers early Build without asking for a hidden chart action 12ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > graduates naturally with honest answer history false 144ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > graduates naturally with honest answer history false 145ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > graduates naturally with honest answer history true 136ms
+ ✓ src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 2 nurses walking/checking/resting in the compiled Level-2 view 1282ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > advances arrival and decision without any coach acknowledgment 10ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > recovers a closed unfinished or answered chart and reloads the same beat 13ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > keeps terminal filing optional-information free (correct=true) 14ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > keeps terminal filing optional-information free (correct=false) 11ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > uses the actual timed plan, feedback, physical return and next decision 124ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > handles an older multistep first encounter without replacing its frozen case 30ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > ignores retired lesson receipts and never creates the operations pause 28ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > advances real room selection; invalid placement does not finish construction 129ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > offers only live priced paid-consult recovery when exam cash is short 122ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > ends advanced legacy guidance at level 1 even without protected records 1ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > ends advanced legacy guidance at level 2 even without protected records 0ms
+ ✓ src/session/tutorialViewModels.test.ts > first shift derived from native state > ends advanced legacy guidance at level 3 even without protected records 0ms
+ ✓ src/session/proceduralStaffingPresentation.test.ts > opposite-side procedure actor presentation > binds the actual walking endpoints to separate nurse/provider standing supports (surgery=true) 1202ms
+ ✓ src/session/proceduralStaffingPresentation.test.ts > opposite-side procedure actor presentation > rotates both Endoscopy sides and their facing with the approved table (0 degrees) 0ms
+ ✓ src/session/proceduralStaffingPresentation.test.ts > opposite-side procedure actor presentation > rotates both Endoscopy sides and their facing with the approved table (270 degrees) 0ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > carries real domain reservations through the player view, including phase and arrival changes 20ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > describes all eight approved crops, scale, floor envelopes and seat-contact offsets 3ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > hides exactly the doorway chair at all 24 wall slots and restores it after removal 1ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > hides the same eight slots for reciprocal openings owned by neighboring rooms 0ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > draws the chairs on low/backed walls, preserves other furniture, and destroys a hidden foreground 4ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > attaches every sitter to its own cushion, facing and foreground on bitmap/fallback actors 9ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > keeps walkers, standing reservations, legacy companions and other phases on the floor 7ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > clears an occupied attachment on doorway, phase and room changes even while paused 2ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > clears a frozen seated actor with no live location without drawing a ghost at the map origin 1ms
+ ✓ src/facility/periopCompanionPresentation.test.ts > peri-op companion chair rendering > keeps all doorway, bed, staff and companion routes clear of visible floor footprints 1394ms
+ ✓ src/session/chartFeedbackPresentation.test.tsx > chart decision feedback > withholds the key before submission and keeps returned findings only in the next current update 286ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric-waiting approved art promotion > pins the approval receipt and exact native bytes/dimensions/preload sources 963ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric-waiting approved art promotion > retains active source placement, contacts, scales and floor while stripping example identities 4ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric-waiting approved art promotion > keeps one-tile doors selectable, fixed orientation, and room absent from the shipped build catalog 1ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric-waiting approved art promotion > hides owned furniture, masks and supports per section; retains backed full-height floor furniture 5ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric waiting supports and exact armrest layers > keeps five ordinary child/parent seats and four child-only under-ten stools 0ms
+ ✓ src/facility/approvedPediatricWaitingRoom.test.ts > pediatric waiting supports and exact armrest layers > retains distinct native east/west masks with matching contacts, owners and actual sitter foreground depth 0ms
+ ✓ src/session/chartFeedbackPresentation.test.tsx > chart decision feedback > acknowledges wrong-answer feedback before a deliberate close without skipping the pending route 708ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > renders every representation from one stable appearance identity 5ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps close-up portrait detail native, bounded, and tied to the same descriptor 3ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > normalizes a legacy appearance deterministically without rerolling 0ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > gives each Level 2 staff role a distinct deterministic uniform 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > renders all 900 founder head and body combinations 891ms
+ ✓ src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 3 nurses walking/checking/resting in the compiled Level-3 view 2636ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > gives every founder head and body option distinct canonical art 33ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps mixed classic and expanded portrait pairs bounded and distinct 39ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the fitted blazer and cardigan distinct from the side and back 2ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > animates the penguin body while walking toward the camera 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the procedural lateral neutral frame at idle geometry 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps authored working and interaction poses distinct, bounded, and map-sized 47ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > retains 30 mix-and-match presets with inclusive human hair and coat variety 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the female identity recognizable in every direction and pose 2ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the cat identity recognizable in every direction and pose 2ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the penguin identity recognizable in every direction and pose 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the robot identity recognizable in every direction and pose 1ms
+ ✓ src/art/characterArt.test.ts > canonical character pixel art > keeps the axolotl identity recognizable in every direction and pose 1ms
+ ✓ src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > calls out a missing operational assignment instead of describing a spare hire as ready 112ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric-exam approved art promotion > pins the approval receipt and exact native bytes/dimensions/preload sources 808ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric-exam approved art promotion > retains active source placement, contacts, scales and floor while stripping example identities 2ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric-exam approved art promotion > keeps one-tile doors selectable, fixed orientation, and room absent from the shipped build catalog 1ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric-exam approved art promotion > hides owned furniture, masks and supports per section; retains backed full-height floor furniture 3ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric examination exact seat and layering contract > retains the east-facing child and a designated same-room west-facing parent 0ms
+ ✓ src/facility/approvedPediatricExaminationRoom.test.ts > pediatric examination exact seat and layering contract > uses one exact approved backless stool and paints the whole clinician above it at every tested zoom 0ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound-ostomy approved art promotion > pins the approval receipt and exact native bytes/dimensions/preload sources 714ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound-ostomy approved art promotion > retains active source placement, contacts, scales and floor while stripping example identities 2ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound-ostomy approved art promotion > keeps one-tile doors selectable, fixed orientation, and room absent from the shipped build catalog 1ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound-ostomy approved art promotion > hides owned furniture, masks and supports per section; retains backed full-height floor furniture 3ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound/ostomy approved upright chair and backless stool > preserves the revised no-leg-rest native frame and measured patient contact without stretching 0ms
+ ✓ src/facility/approvedWoundOstomyRoom.test.ts > wound/ostomy approved upright chair and backless stool > paints the whole west-facing clinician above the single approved backless stool at every tested zoom 0ms
+ ✓ src/session/localCampaignRepository.test.ts > campaign guidance repository metadata > merges only the saved campaign's guidance and preserves another clinic's status and bytes 37ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > returns structured encoder and checksum preparation failures 3ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > distinguishes unavailable, open, upgrade, and blocked opens and closes late success 15ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > awaits transaction abort before closing after a request failure 15ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > awaits transaction abort before closing after a setup failure 15ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > allows one same-campaign concurrent writer and rejects the stale writer 12ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > rolls back changed current, metadata, and populated history after abort 14ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > rejects post-commit valid state when exact intended bytes and metadata differ 5ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > rejects post-commit campaign metadata that differs from the intended summary 4ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > rejects a post-commit revision that differs from the intended revision 3ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > retains the two newest verified priors when a newer prior is corrupt 45ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > recovers a missing current from prior history and saves the next revision 15ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > classifies mixed unrecoverable checksum and envelope errors as validation 8ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > classifies structurally valid snapshots with only bad checksums as checksum failure 16ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > uses the frozen authored contacts and all existing plant silhouettes with unequal tree sizes 25ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > covers the active, legacy and expanded sites with varied density rather than one repeated motif 4ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > has no garden or lawn lattice peaks in placement-density autocorrelation 8ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > crops the same field on site expansion without moving existing identities or partial edge sprites 1ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > keeps identical unique keys through redraw and a module reload without consulting runtime randomness 5ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > uses exact source ratios and uniform subpixel sizes at all zoom tile sizes 172ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > does not overwrite a campaign when every stored envelope is malformed 6ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > aborts before mutating any store when supplied campaign metadata is invalid 8ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > fails closed for malformed or dangling profile metadata 4ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > assembles a profile from a valid prior when current and newer prior envelopes are malformed 22ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > removes full low-zoom plant/shadow envelopes from rooms, hallways, sidewalk and entrance 89ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > removes a whole plant envelope when construction intersects it 0ms
+ ✓ src/facility/exteriorLandscape.test.ts > exterior landscaping > keeps unaffected candidates at their original stable positions 0ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > isolates large and small raw campaign writes 87ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > merges different-campaign concurrent writes without dropping metadata 11ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > round-trips routine-tip state for two campaigns and clears only the saved target 18ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > loads pre-routine IndexedDB metadata with empty compatibility maps 4ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > migrates legacy campaigns with their per-campaign routine progress 13ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > migrates into populated storage, reports interruption, and resumes without source mutation 26ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > reports skipped progress and the failing campaign for a later same-id mismatch 12ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > skips only exact current content and repairs matching recovered content 29ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > reports a post-commit migration as migrated after independent exact verification 7ms
+ ✓ src/session/localCampaignRepository.test.ts > LocalCampaignRepository > does not report migration success when required metadata remains stale 12ms
+ ✓ src/facility/approvedMriRoom.test.ts > mri approved art promotion > pins the approval receipt and exact native bytes/dimensions/preload sources 680ms
+ ✓ src/facility/approvedMriRoom.test.ts > mri approved art promotion > retains active source placement, contacts, scales and floor while stripping example identities 5ms
+ ✓ src/facility/approvedMriRoom.test.ts > mri approved art promotion > keeps one-tile doors selectable, fixed orientation, and room absent from the shipped build catalog 1ms
+ ✓ src/facility/approvedMriRoom.test.ts > mri approved art promotion > hides owned furniture, masks and supports per section; retains backed full-height floor furniture 3ms
+ ✓ src/facility/approvedMriRoom.test.ts > MRI retains north operator, west patient foreground and measured bore-centre clipping 0ms
+ ✓ src/facility/approvedSideChairLayers.test.ts > approved furniture foreground layers > binds every armrest, back and non-south bed band to its exact crop and seat 8ms
+ ✓ src/facility/approvedSideChairLayers.test.ts > approved furniture foreground layers > leaves armless stools/chairs and south-facing beds unsplit 0ms
+ ✓ src/facility/approvedSideChairLayers.test.ts > approved furniture foreground layers > partitions every source pixel into exactly one complementary layer 452ms
+ ✓ src/facility/approvedSideChairLayers.test.ts > approved furniture foreground layers > keeps each recovery bed's leg band below its seat and clear of its monitor 1ms
+ ✓ src/facility/approvedSideChairLayers.test.ts > approved furniture foreground layers > places a foreground fractionally above the deepest current owner only 0ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows both actually hired readers' seated outside work and paid income, retained southeast=false 124ms
+ ✓ src/session/earlyLevelsPresentation.test.ts > September 13 early-level chart presentation > resolves one named age-and-sex presentation and complete timing display for every new node 257ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows both actually hired readers' seated outside work and paid income, retained southeast=true 91ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows separate counts and income for today and the current level, plus current outside work 10ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows the actual acquisition payment with a legacy withheld fee of undefined 3ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows the actual acquisition payment with a legacy withheld fee of 5 2ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > names outside and center study work while preserving break and training labels 1ms
+ ✓ src/session/radiologistReadIncomeViewModels.test.tsx > radiologist read income presentation > shows zeros for legacy save history 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps retained alert history as plain chronological rows 172ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > suppresses every legacy patient-attention alias including an undefined generic wait 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > adds non-attention Level 2 phlebotomy guidance only for the accepted station ID 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > points an inoperable endoscopy setup to its missing Peri-op Recovery Room 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps one post-tutorial progression hint concrete and stable after a trimmed level event 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > renders persisted ambient events from their registry definition 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps flavor and condition guidance anchored to their original occurrence times 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > shows an attention marker only for action-required items 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > provides condition-backed guidance with the correct interface targets 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > distinguishes missing onsite X-ray from an X-ray room without a technician 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > suppresses prior generic patient alerts while retaining their raw history 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > hides the irreversible leaving alert while retaining its raw record 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > suppresses legacy check-in and water aliases without synthesizing live duplicates 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps routine accounting, staff success, correct-XP, GLP-1, litter-spawn, and build audit events out of the player feed 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > hides legacy patient departure rows while retaining their raw records 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps humor visible when more than 80 later raw receipts are suppressed 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > suppresses hired and praised staff rows including first-hire aliases 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > shows one durable litter occurrence only after the continuous delay 8ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps a delayed litter occurrence actionable when cleanup is rejected 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > hides legacy room-upgrade complaint rows below facility level three 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > hides cause-aware walkout reviews while retaining their raw records 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > renders a meaningful retained success from the registry 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > renders persisted event content identically after save and reload 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > retains a resolved facility-condition row at its onset position while clearing attention and clickability 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps an active low-cash marker at its real occurrence time behind newer feed history 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > renders clinic-wide complaint copy and normalizes saved patient-specific complaint history 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps individual patient departure-risk copy patient-specific 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > does not synthesize a low-cash fallback while saved cadence is cooling down 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > gives attention and clickability only to the latest unresolved occurrence of one facility condition 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > does not synthesize a duplicate live row when a durable facility-condition occurrence exists 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > does not expose a chart alert before Front Desk check-in 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > suppresses a legacy overdue unstaffed check-in alert 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps encounter settlement audit events out of Alerts and Events 2ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > hides a legacy decision-ready row without deleting raw history 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > does not describe a 25-percent-full cooler as empty 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > keeps one stable patient risk row only while the exact risk remains actionable 1ms
+ ✓ src/session/alertViewModels.test.ts > createMessageBoardView data-driven alerts > reactivates a stable legacy cash row from live state during its daily cooldown 0ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.front_desk' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.hallway' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.examination' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.waiting' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.bathroom' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.minor_procedure' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.ultrasound' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.xray' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.ct' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.phlebotomy' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.evs_closet' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.endoscopy' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.periop_recovery' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.training' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.coffee_kiosk' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.glp1_telehealth_suite' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.ambulatory_or' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.laboratory' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.pharmacy' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.maintenance_workshop' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.staff_break' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.surgeon_office' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.vending' 1ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.reading' 0ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > only generates new satisfaction guidance for 'room.imaging_control' 0ms
+ ✓ src/session/alertViewModels.test.ts > room-specific upgrade comfort messages > continues to display old recorded revenue-room upgrade requests unchanged 2ms
+ ✓ src/session/briefEarlyLevelsPresentation.test.ts > September 17 brief early-level chart presentation > renders each runtime patient and every choice wait 262ms
+ ✓ src/ui/visualComponents.test.tsx > paper chart presentation > shows the compact patient header, reviewable decisions, and separate encounter rewards 13ms
+ ✓ src/ui/visualComponents.test.tsx > patient chart tabs > shows only the persistent portrait, name, and satisfaction indicator 2ms
+ ✓ src/ui/visualComponents.test.tsx > tutorial controls > offers only optional Skip guidance; native controls own progress 1ms
+ ✓ src/ui/visualComponents.test.tsx > tutorial controls > ignores retired coach action labels and identifiers 0ms
+ ✓ src/ui/visualComponents.test.tsx > tutorial controls > never renders a separate completion action, even for retired metadata 0ms
+ ✓ src/ui/visualComponents.test.tsx > segmented resource HUD > keeps money, learning, satisfaction, time, and controls distinct 2ms
+ ✓ src/ui/visualComponents.test.tsx > segmented resource HUD > uses the facility time cell for compact Build Mode status 1ms
+ ✓ src/ui/visualComponents.test.tsx > segmented resource HUD > uses the facility time cell for locked Management Mode status 1ms
+ ✓ src/ui/visualComponents.test.tsx > character visual QA gallery > renders the selected whole still and uses a neutral placeholder for unknown art 1ms
+ ✓ src/ui/visualComponents.test.tsx > character visual QA gallery > keeps the shared descriptor visible through idle, movement, work, interaction, seating, and portrait representations 148ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > maps all four directions without mirroring 1ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > keeps every walking phase on the same directional standing still 1ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > keeps all 128 identities on directional standing stills even when a walk frame is requested 105ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > uses seated cardinals, founder clipboard South, and uniform 160x320 registration 0ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > uses a known legacy patient identity but leaves unknown art unresolved 0ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > resolves every registry identity to all eight cardinal poses 12ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > prefetches exactly four standing cardinals for a selected live identity 0ms
+ ✓ src/art/characterBitmapArt.test.ts > GS-026 individual character still resolver > caps only oversized identities from standing South and keeps one factor across every pose 1ms
+ ✓ src/session/breadButterPresentation.test.ts > September 17 bread-and-butter chart presentation > renders every admitted profile coherently and displays every node choice wait 242ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > exposes every packaged identity and cardinal still without fallback 57ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders all twenty v6a patients with the exact manager-accepted bytes and authored contacts 5ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders all twenty v6b patients with the exact manager-accepted bytes and authored contacts 4ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders every accepted patient-gapfill-v6c pose with its exact approved hash, URL and authored contact 4ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders every accepted staff-gapfill-v6d pose with its exact approved hash, URL and authored contact 3ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > registers the GS-033 batch with all 160 exact approved pose hashes and authored contacts 3ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders all twenty approved demographic-gap identities with complete unique poses and authored contacts 3ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > renders all twenty approved women identities with age/sex metadata and four authored seated contacts 2ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > keeps optional clipboard and demographic fields explicit 4ms
+ ✓ src/art/characterStillRegistry.test.ts > characterStillRegistry > resolves relative public paths through the configured base path 0ms
+ ✓ src/session/radiologistHiringOrder.test.tsx > radiologist selection through player hiring entry points > Employees hires agree with selection previews and Management/StaffPanel portraits 44ms
+ ✓ src/session/radiologistHiringOrder.test.tsx > radiologist selection through player hiring entry points > Needs you hires agree with selection previews and Management/StaffPanel portraits 20ms
+ ✓ src/session/radiologistHiringOrder.test.tsx > radiologist selection through player hiring entry points > Tip hires agree with selection previews and Management/StaffPanel portraits 20ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen patient structured-field projection > preserves GS-028 feedback and legacy-save behavior (legacy=false) 59ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen patient structured-field projection > preserves GS-028 feedback and legacy-save behavior (legacy=true) 23ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen team discussion structured-field projection > projects table discussions without exposing feedback before submission 2ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen team discussion structured-field projection > projects keyValue discussions without exposing feedback before submission 2ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen team discussion structured-field projection > projects abstract discussions without exposing feedback before submission 1ms
+ ✓ src/session/chartStructuredFields.test.tsx > frozen team discussion structured-field projection > projects legacy discussions without exposing feedback before submission 1ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > moves rooms built to their maximum into a collapsed section 11ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > can omit its inactive trigger when another desk owner is active 0ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > uses explicit, distinct catalog icons for every Level 2 room 1ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > shows money, a named Undo, the problem count and Done / Save in the top bar 6ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > offers one Doors tool and the hallway painter, with Rotate only while placing 10ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > names the room being moved instead of offering rotation 3ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > groups New Rooms by purpose and shows next-level rooms as locked 4ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > groups My Rooms, keeps lettered rooms together and shows stars 6ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode panel > shows the endoscopy setup checklist while placing an endoscopy room 5ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode room menu > shows stars, the benefit and a one-click upgrade with Move, Doors and Sell 2ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode room menu > explains a shortfall and disables the upgrade 2ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode room menu > marks a fully upgraded room without an upgrade button 2ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode room menu > shows no stars, Move or Sell for the protected Front Desk 0ms
+ ✓ src/ui/BuildPanel.test.tsx > Build Mode room menu > tells the player when a room has no access 2ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > keeps Level 3 controls and support status out of earlier levels 19ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > tolerates a legacy in-memory campaign before support defaults are hydrated 4ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > distinguishes an unreachable lab, equipment repair, and a full work queue 12ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > projects a break seat only after the employee reaches the assigned route endpoint 3ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > seats only the surgeon assigned to the in-progress office review 3ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > maps only the active OR phase to the surgeon, nurse, founder, and covered occupancy 8ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > uses active lab and exact idle home anchors without snapping repair work into unsupported rooms 3ms
+ ✓ src/session/level3ControlsViewModels.test.ts > Level 3 control view models > projects maintenance, QI, breaks, wait reasons, and a non-gating secondary objective 3ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > preserves the first required Examination Room tutorial guidance before introductory tip delivery unlocks 11ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > keeps the exact Level-0 Place remedy visible after the gate and suppresses duplicate T38 delivery 11ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > renders T38 from Goals with the concrete room button and removes that action when a condition takes over 4ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > renders an actual metric-only T38 with its remaining XP and no navigation button 9ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > renders the approved copy, speaker, time and action as an ordinary Tip, with no complaint, card or pin 3ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > keeps receipt ID, copy and emission time through render/reload while expiring a resolved action 10ms
+ ✓ src/session/guidanceTipsView.test.tsx > guidance tips in Around the clinic > hides the optional feed in Build Mode without promoting tips to the Needs-you tray 2ms
+ ✓ src/session/answerChoiceTimingPresentation.test.ts > answer-choice timing presentation > uses one neutral label for all tests and an explicit no-test label on mixed nodes 24ms
+ ✓ src/session/answerChoiceTimingPresentation.test.ts > answer-choice timing presentation > shows no timing labels on diagnosis-only nodes 8ms
+ ✓ src/session/answerChoiceTimingPresentation.test.ts > answer-choice timing presentation > normalizes old pilonidal pre-answer prose without mutating the frozen save 4ms
+ ✓ src/session/answerChoiceTimingPresentation.test.ts > answer-choice timing presentation > displays exact known frozen wording repairs without changing saved case data 11ms
+ ✓ src/session/prototypeStorage.test.ts > ambiguous retired tutorial pause migration > preserves the clinic and conservatively retains pause ownership until session reconciliation 20ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > classifies QuotaExceededError without discarding size context 1ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > classifies SecurityError without discarding size context 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > classifies NotAllowedError without discarding size context 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > classifies UnexpectedError without discarding size context 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > reports unavailable storage access distinctly 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > explains a fresh-profile write failure instead of collapsing it to a generic warning 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > clears only legacy campaign keys and leaves other storage untouched 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > does not claim reset success when key removal fails 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > attempts both campaign-key removals when the second removal fails 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > suppresses a page-exit-style write after reset so campaigns cannot return 0ms
+ ✓ src/session/prototypeStorage.test.ts > prototype storage diagnostics and campaign-only reset > keeps the exit-write gate suppressed after a partial reset failure 0ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > starts without a campaign, clinic, or FSRS history 0ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > creates the Level 0 campaign only when the clinic branch is committed 2ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > preserves a historical starter-ID Examination Room without reseeding it 3ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > reloads a new campaign without silently adding an Examination Room 2ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > uses the new-clinic default separately from per-campaign guidance 1ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > round-trips per-campaign operations-tip acknowledgments and pause ownership 2ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > round-trips independent skip/completion and creates a fresh guided replay without archiving 7ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > round-trips an intentional no-active-campaign state with archived campaigns 3ms
+ ✓ src/session/prototypeStorage.test.ts > new-campaign opening storage > keeps a null active campaign after incompatible archived records are skipped 3ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > preserves all 56 pre-change actor contacts and all 64 furniture crops/positions 7ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > covers every runtime east/west chair and bench, distinguishing armless seats 2ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > keeps south-facing beds and exam tables completely below their occupants at every scale 2ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > shows the south-bed leg-band regression before/after at the same source pixel 0ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > puts the entire south-facing recliner below the sitter, including its existing front sprite 0ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > retains covered Endoscopy/OR patients as the approved table variant rather than a second sitter 0ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > shows a previously unsplit side chair's arm/posts over the body while the seat stays behind 26ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > reconciles bitmap/fallback bench occupants, restores empty furniture and isolates room ownership 2ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > carries furniture ownership through an idle staff seat's renamed support ID 1ms
+ ✓ src/facility/furnitureSeatLayering.test.ts > furniture seating layer audit > binds Front Desk arm/back layers to its room and retains the public chair's north-facing art 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > covers the shipped proofs and separately promoted Level 4 art exactly once 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > maps every approved rectangular second view to runtime 270 without changing global rotation semantics 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > gives every image-backed fixture a declared production asset and every floor fixture a contact 2ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > preserves proof-authored collision categories and examination navigation inflation 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > hides a complete owned fixture for a door or backed north segment and restores it otherwise 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > carries approved shell and floor inputs independently of furniture 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > exposes exact CT and per-bay Recovery procedural fixtures 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > resolves exact proof captures for every authored orientation 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > keeps repeated Recovery bay draws individually owned 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > attaches every Peri-op patient support to its exact inward-facing bed foot 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > applies door and backing ownership to one resolved instance at a time 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > hides only the Ultrasound wall print when its exact north segment is backed 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > binds supplemental windows to their exact world wall segment in both authored views 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > keeps proof-local optional plant ownership and grounds in the active physical view 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > projects every proof-authored optional fixture owner into the active physical wall frame 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > uses the approved Front Desk floor-contact centers 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > exposes exact actor furniture supports in each authored orientation 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > keeps proof surface contacts distinct from per-seat depth grounds 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > insets only opted-in south-facing cushion surfaces 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > uses authored care surfaces, grounds, roles, and cardinal facing 2ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > backs every resolved proof draw with a shipped approved atlas 16ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > registers approved state variants as different exact proof draws 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > resolves approved state variants into render-ready records 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > registers the seven Level 3 proofs with their approved footprints and exact draw counts 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > uses live actor supports instead of approved-proof character stand-ins 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > keeps all seven stable Break Room seats on their approved contacts and facings 0ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > hides and restores every Level 3 proof-owned draw for each door and backing owner 1ms
+ ✓ src/facility/approvedRoomPresentation.test.ts > approved GS-015 room presentation contract > switches only the OR table to the approved covered-patient bitmap 0ms
+ ✓ src/session/clinicalServiceLabels.test.ts > clinical service choice labels > uses the same neutral timing label for live routes and configured fallback estimates 35ms
+ ✓ src/session/clinicalServiceLabels.test.ts > clinical service choice labels > does not label answered or pending history as unavailable 13ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > routes the new tip controls to existing guarded commands and leaves training/goals as navigation 1ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > raises only the named employee by the displayed wage step, starts real praise, and rejects stale controls 10ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > enables appointments once, and rechecks completed goals/discussions and missing training 2ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > rechecks the tip's remedy target and quote even when the action kind is unchanged 4ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > hires once at the quoted price and rejects a subsequent stale purchase 2ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > rechecks price and cash without changing the clinic 1ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > buys only the named room's displayed next tier 2ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > sends the founder to refill and collect rather than completing work instantly 4ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > uses the consultation cooldown and does not expose an unavailable money fix 1ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > leaves the founder with an unanswered open chart 1ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > takes just one advertising step and rechecks a stale tier 1ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > keeps room placement a priced navigation intent and rejects unavailable construction 0ms
+ ✓ src/session/clinicAlertActions.test.ts > guarded clinic alert actions > opens a checked-in live chart and rejects a visit that has ended 1ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > keeps dismissed employees visible only as outbound, unseated staff actors 13ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > seats an available founder at an unstaffed Front Desk without seating reserved work 5ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > projects every waiting reservation kind and semantic examination attendance 9ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > only seats the founder after a chair auto-plan arrives 3ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > derives a seated pose only for a stationary patient on a Waiting Room chair 3ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > rotates visible Waiting Room chair positions with the room 1ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > projects care supports only for assigned actors at their service endpoint 6ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > seats an arrived phlebotomy patient and assigned phlebotomist only during collection 2ms
+ ✓ src/session/patientMovementViewModels.test.ts > patient movement presentation > projects an active encounter service path without overriding a Front Desk return 3ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > parses every proof color form without changing opacity 2ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > ports every approved floor algorithm to deterministic paint primitives 26ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > retains the Front Desk's 88px tiles and 44px square floor grid 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > keeps hallway texture phase tied to facility coordinates 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > projects exact CT and Recovery procedural geometry into proof pixels 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > selects the closest authored support without changing the logical actor cell 2ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > filters semantic roles and converts all cardinal furniture facings 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > uses an exact requested support instead of falling through to another Peri-op bed 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > floors only seated actor depth at the owning fixture baseline 1ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > selects occupied presentation only for rooms with an approved covered-patient proof 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > preserves the approved OR table, light, and live-character painter order 0ms
+ ✓ src/facility/approvedRoomRenderer.test.ts > approved room renderer helpers > ports the Level 3 proof floor phases and fixed procedural details 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > uses the semantic approved Front Desk support at the domain staff anchor 3ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > keeps keyed snapshots and gait offsets through real reorder and insertion while paused 4ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > freezes exact motion through repeated paused cycles and resumes after discarding one stale delta 2ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > freezes exact motion through repeated buildMode cycles and resumes after discarding one stale delta 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > starts grounded, hops no higher than seven pixels, and freezes exactly through pause and resume 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > settles a floor stop with a landing squash and drops into seats only after walking 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > does not reuse update delta in callbacks, discards callback pause delta once, then advances the route 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > retains real route tails before founder, chair, and exam destination poses 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > faces every ordinary floor stop south despite founder activity or employee home assignment 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > requests only the four standing cardinals for each live known identity 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > draws a first paused snapshot, removes a genuinely absent key, and never resurrects a completed off-site actor 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > upgrades a paused neutral placeholder when its still loads and then freezes the selected frame 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > retains the loaded same-identity bitmap through a cold or failed turn but not an identity swap 1ms
+ ✓ src/facility/characterPauseArrival.test.ts > FacilityScene character pause and arrival presentation > puts the bordered founder activity box above the actual visible bitmap bounds and hides it at idle 0ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > uses the same actual hourly net and breakdown in the HUD and Management 14ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > keeps the GLP-1 control available until a suite is operationally staffed 5ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > presents the current centralized advertising tier 2ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > projects durable income receipts for display without recalculating their cash 1ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > keeps the complete approved catalog visible while identifying level and capability locks 2ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > projects an outside buyer at the active retail trip without creating an encounter duplicate 2ms
+ ✓ src/session/economyViewModels.test.ts > economy player view models > labels coffee economics and keeps wound supplies locked without either operational outlet 1ms
+ ✓ src/session/level3GoalsViewModels.test.ts > Level 3 operation goal setup > shows exactly the condensed main goals and the existing secondary review 15ms
+ ✓ src/session/level3GoalsViewModels.test.ts > Level 3 operation goal setup > explains missing operation setup with Build/Hire navigation and an optional surgeon 3ms
+ ✓ src/session/level3GoalsViewModels.test.ts > Level 3 operation goal setup > keeps installed setup ready while nurses are busy and does not require a surgeon 5ms
+ ✓ src/session/level3GoalsViewModels.test.ts > Level 3 operation goal setup > explains an existing unreachable setup without prompting duplicate purchases 3ms
+ ✓ src/session/level3GoalsViewModels.test.ts > Level 3 operation goal setup > retains the Level 2 endoscopy checklist without Level 3 setup 2ms
+ ✓ src/session/periopNurseAttentionPresentation.test.tsx > Peri-op nurse attention presentation > shows the delayed nurse check in the chart, patient activity and Services queue without adding a Needs-you card 23ms
+ ✓ src/session/periopNurseAttentionPresentation.test.tsx > Peri-op nurse attention presentation > names the patient during pre_op attention and renders a standing nurse at the actual position 4ms
+ ✓ src/session/periopNurseAttentionPresentation.test.tsx > Peri-op nurse attention presentation > names the patient during post_op attention and renders a standing nurse at the actual position 2ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > collapses the empty zone to one quiet status line (Build tray: false) 6ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > collapses the empty zone to one quiet status line (Build tray: true) 1ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > expands actionable cards inside the same board and restores the slim state on resolution 2ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > shows at most three actionable cards above the time-ordered feed without fillers 1ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > keeps cards visible in the compact Build tray and hides its feed 0ms
+ ✓ src/ui/NeedsYouTray.test.tsx > two-zone clinic board > renders the day summary as a divider with one review and shows real deadlines and failed-action reasons 1ms
+ ✓ src/ui/NeedsYouTray.test.tsx > dire cards and their map locations > shows a live departure card and the named patient's pin, which forwards its chart action 7ms
+ ✓ src/ui/NeedsYouTray.test.tsx > dire cards and their map locations > shows zero cash as one actionable payroll card, with a real deadline and no invented finance pin 6ms
+ ✓ src/ui/NeedsYouTray.test.tsx > dire cards and their map locations > names employees at actual quit risk in the same payroll card and keeps it a global finance action 3ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > preserves Level 0 and hides guidance when Waiting contains a patient or discussion 3ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > offers resume and capacity next steps without promising arrival times 2ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > keeps normal quiet intervals calm even when an arrival attempt is due 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > points a blocked pending visit to Existing Patients without a new test-duration promise 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > names a blocking team discussion without inventing a patient test 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > labels the complete-case review date as real-world eligibility and allows pausing 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > explains unavailable rooms/staff and unavailable level content without an advertising suggestion 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > patient availability guidance > projects the new property without mutating the campaign and preserves Level 0 11ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > empty Waiting folder guidance rendering > renders one static paragraph in Waiting and preserves the Existing Patients empty state 5ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > empty Waiting folder guidance rendering > keeps the original empty text when no guidance is supplied 1ms
+ ✓ src/session/patientAvailabilityViewModel.test.ts > empty Waiting folder guidance rendering > never replaces a waiting chart or discussion with availability guidance 2ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for 0 12ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for -0 2ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for -12.125 2ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for 0.004 3ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for 0.005 3ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for 1234.567 2ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves cash and finance presentation for 1000000.01 1ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves fractional training benefit copy for 0.05 percent 0ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves fractional training benefit copy for 10 percent 0ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves fractional training benefit copy for 10.125 percent 0ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves fractional training benefit copy for 22.5 percent 0ms
+ ✓ src/session/numberFormattingCompatibility.test.ts > reused number formatters > preserves fractional training benefit copy for 40 percent 0ms
+ ✓ src/session/multistepChoiceTiming.test.ts > multistep diagnostic choice timing > shows a facility-time return estimate for every diagnostic choice 25ms
+ ✓ src/session/roomCapacityViewModels.test.ts > room capacity player views > uses room-derived imaging capacity and projects an exact sale token 17ms
+ ✓ src/session/roomCapacityViewModels.test.ts > room capacity player views > keeps departing employees on the facility canvas but out of the roster 2ms
+ ✓ src/session/glp1NursePractitionerPresentation.test.ts > GLP-1 NP workstation presentation > assigns two stationary NPs to their distinct domain workstations 21ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.examination' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.waiting' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.bathroom' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.minor_procedure' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.ultrasound' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.xray' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.ct' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.phlebotomy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.evs_closet' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.endoscopy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.periop_recovery' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.training' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.coffee_kiosk' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.glp1_telehealth_suite' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.ambulatory_or' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.laboratory' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.pharmacy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.maintenance_workshop' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.staff_break' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.surgeon_office' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.vending' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > does not paint upgraded finishes for 'room.reading' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.examination' 3ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.waiting' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.bathroom' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.minor_procedure' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.ultrasound' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.xray' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.ct' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.phlebotomy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.evs_closet' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.endoscopy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.periop_recovery' 3ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.training' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.coffee_kiosk' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.glp1_telehealth_suite' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.ambulatory_or' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.laboratory' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.pharmacy' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.maintenance_workshop' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.staff_break' 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.surgeon_office' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.vending' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > keeps nonempty base fixture draws identical at Level 5 for 'room.reading' 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > also retains the actual fallback composition for room.periop_recovery 1ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > also retains the actual fallback composition for room.glp1_telehealth_suite 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > also retains the actual fallback composition for room.minor_procedure 0ms
+ ✓ src/facility/roomUpgradeAppearance.test.ts > catalog room upgrade appearance in the actual renderer > honors the declared future Founder Office appearance exception without offering a room 0ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > contains the complete, unique, nonempty approved collection 1ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > only selects taglines from the approved collection 12ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > excludes the immediately preceding line whenever alternatives exist 2ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > gives the prior-authorization line a ten-percent branch 0ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > reads and writes the last displayed line without failing when storage is unavailable 1ms
+ ✓ src/content/introTaglines.test.ts > intro tagline content > ignores a stale unapproved value from session storage 0ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > uses unique stable definition and variant IDs 4ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > contains the original ambient clinic lines 1ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > requires positive selection weights and attention markers only for action-required content 2ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > declares safe fallbacks for every placeholder and renders every variant without unresolved tokens 7ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > gates contextual ambient lines by context and keeps eligible humor available at Level 2 0ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > keeps original humor and adds room-specific Level 3 lines without changing cadence 0ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > limits walkout review pools to one- and two-star, cause-specific content 0ms
+ ✓ src/session/prototypeAlertContent.test.ts > PROTOTYPE_ALERT_CONTENT registry contract > keeps patient complaints data-driven while routine audit events stay out of the compact feed 1ms
+ ✓ src/session/ambientPedestrianViewModels.test.ts > ambient pedestrian presentation > projects a passerby as a map actor without adding a patient tab or count 23ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > declares every approved GS-015 atlas without activating the runtime preload set 6ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps the revisioned 50-person patient pack separate from scene core textures 1ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps founder map atlases on their revisioned 128-by-192 grid 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > maps Level 1 furniture to measured, non-uniform transparent source frames 2ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps Level 2 specialty fixtures room-scoped instead of replacing Level 1 art 1ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps stable fixture IDs and native floor anchors 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > uses the procedural fixture unchanged when no fixture pack is registered 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps the authored environment atlas measured, base-path-safe, and non-uniform 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > keeps independent landscaping transparent, measured, and separate from turf 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > registers atlas source rectangles once without assuming a grid 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > selects registered transparent bitmap metadata without changing fallback semantics 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > constructs base-path-safe URLs and character/portrait descriptors 0ms
+ ✓ src/art/bitmapAssetManifest.test.ts > bitmap art asset seam > preloads only authored sources once and safely skips absent sources 0ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > provides 10 classic, 10 female, and 10 non-human choices for both parts 2ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > keeps the original stable IDs and exposes cat and penguin options 0ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > gives every choice a unique descriptive name instead of a numbered placeholder 0ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > uses neutral human-head labels while keeping the saved appearance data intact 0ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > retains the legacy mix-and-match compatibility helper without changing stable variants 13ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > exposes exactly 30 coherent creator identities with paired stable fields 1ms
+ ✓ src/content/founderAppearancePresets.test.ts > founder appearance presets > keeps the original thirty mappings and appends six distinct persisted still choices 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > round-trips both clinics through a new session without changing game or FSRS bytes 15ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > debounces rapid gesture/control changes and writes only the latest camera 1ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > flushes the outgoing clinic before switching and restores each clinic independently 1ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > keeps today's default for missing/legacy camera data, including after facility growth 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: broken JSON 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: null 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: [] 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":2,"camera":{"zoom":1,"panX":0,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":0,"panX":0,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":-1,"panX":0,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":"1","panX":0,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":1,"panX":null,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":1,"panX":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":1e999,"panX":0,"panY":0}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > falls back without rewriting malformed stored data: {"schemaVersion":1,"camera":{"zoom":1,"panX":0,"panY":1e999}} 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > rejects invalid changes and saves copies rather than caller-owned camera objects 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > uses isolated origin-local stores and unambiguous campaign keys 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > continues playing and remembers cameras during the session when storage is blocked 1ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > flushes before the debounce on pagehide and cleans up its listeners/timer 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > flushes before the debounce on beforeunload and cleans up its listeners/timer 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > flushes before the debounce on visibilitychange and cleans up its listeners/timer 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > flushes before the debounce on unmount and cleans up its listeners/timer 0ms
+ ✓ src/session/facilityCameraPreference.test.ts > per-campaign facility camera preferences > discards a pending camera before campaign reset so exit cannot recreate it 0ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart exhibits > renders 'table' teaching data in the story column 6ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart exhibits > renders 'keyValue' teaching data in the story column 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart exhibits > renders 'abstract' teaching data in the story column 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart exhibits > labels multiple visited nodes' datasets with their decision headings 2ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > shows the teaching point followed by why the selected wrong answer does not fit 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > shows the chosen correct answer's rationale without a wrong-pick heading 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > withholds rationales and teaching feedback while an answer is still open 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > falls back to the saved explanation when structured feedback is absent 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > preserves structured feedback on a reopened past decision 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > structured chart feedback > carries structured fields through the employee discussion adapter onto the same sheet 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > all-choices rationale reveals > offers a closed native rationale reveal under each choice only after showing all choices 1ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > all-choices rationale reveals > keeps the compact picked/key rows when other choices are hidden 0ms
+ ✓ src/ui/chartStructuredFeedback.test.tsx > all-choices rationale reveals > shows legacy all-choice rows without empty rationale controls 0ms
+ ✓ src/session/readingRoomRadiologists.test.ts > Reading Room radiologist seating > seats each radiologist standing on their station anchor in that station's chair 18ms
+ ✓ src/session/readingRoomRadiologists.test.ts > Reading Room radiologist seating > provides four seats that interleave with the approved desk-edge layers 1ms
+ ✓ src/session/approvedRoomPatientPose.test.ts > approved room patient pose projection > keeps the Front Desk overflow patient standing while seating the one approved visitor chair 15ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel > shows morale beside its label and keeps Fire away from the salary controls 8ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel > renders role-specific staffing guidance when the role is opened 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > hides every training element until a Training Room is built 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > shows the role's average training and each card's level once built 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > opens a tip's named, priced training confirmation without purchasing before confirmation 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > fills open positions with dashed hire slots and keeps one alert hire target 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > shows the active frozen 36-minute session without rounding it to an hour 1ms
+ ✓ src/ui/StaffPanel.test.tsx > StaffPanel training and layout > keeps queued work neutral about its unbound duration 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > hides training summaries until a Training Room is built 5ms
+ ✓ src/session/managementViewModels.test.ts > management view models > averages the role's training levels and benefits once a Training Room exists 2ms
+ ✓ src/session/managementViewModels.test.ts > management view models > offers Build or Hire only for missing rooms and roles, and pauses placed ones 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > reports since-opening profit, the hourly cost split and cash runway 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > includes patient settlements in opening totals and recent hourly income 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > reads current obligations while keeping no-income runway independent of variable stock 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > labels the early estimate and presents zero without a false positive sign 1ms
+ ✓ src/session/managementViewModels.test.ts > management view models > shows the domain's active outage relief without duplicating its eligibility rule 1ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > reserves the exclamation treatment for explicitly marked items 6ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > shows guidance messages without a visible category token 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > shows success messages without a visible category token 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > shows ambient_flavor messages without a visible category token 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > shows walkout_review messages without a visible category token 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > does not show an exclamation marker on a non-actionable item 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > retains actionable message buttons without a category label 1ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > treats server-rendered or remounted history as existing history 2ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > lets newer flavor move ahead of older actionable rows 1ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > keeps a resolved actionable row in chronological place without an exclamation point 1ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > does not hide flavor while a critical alert is active 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > mixes flavor chronologically with routine clinic messages 0ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > keeps recent messages in the one compact scrolling feed 1ms
+ ✓ src/ui/EventMessageBoard.test.tsx > EventMessageBoard > renders routine updates as an ordinary feed row 0ms
+ ✓ src/session/learningCardFormatting.test.ts > learning-card status formatting > keeps status labels unchanged and reuses one date formatter across reviewed cards and projections 17ms
+ ✓ src/session/frontDeskWaterCooler.test.ts > Front Desk water cooler presentation > keeps the interactive cooler on the rear-right Front Desk tile 13ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > uses the same absolute wall construction at one map zoom for real room footprints 1ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > halves the prior Front Desk 27% foreground height and records foreground occlusion 1ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > keeps every wall closed without live doors and cuts only live slots 1ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > keeps first and last side-door apertures aligned to their floor slots 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > carries a skin identity without allowing it to alter shell structure 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > enumerates every enclosed Level 0-3 room without classifying the hallway 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > keeps common 64px-tile geometry across ordinary and rotated footprints 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > does not use adjacency as an opening and subtracts complete first and last live tiles 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > subtracts one complete tile on every wall and merges adjacent door tiles into one cutout 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > turns backed north tiles into in-footprint short front-wall segments without making an opening 1ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > preserves a live north-door gap inside a backed short segment 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > keeps base north and south metadata while adding doorway-aware structural occlusion 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > centers optional shared side runs on the precise global tile border 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > clips generic north-wall decor to remaining live-door-subtracted wall intervals 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > never clips north-wall decor onto backed short segments 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > requires independent decor to fit one surviving tall wall interval 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > uses exact canonical dimensions for exposed hallway strips and omits internal edges 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > centers hallway caps and supports a door-subtracted short north owner 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > keeps Front Desk and both Examination footprints on the identical tall-corner cap contract 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > limits structural copies to sides and retains south as the only front occluder 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > duplicates each doorway-subtracted side run at structural depth 0ms
+ ✓ src/facility/canonicalRoomShell.test.ts > canonical room shell > leaves backed and north-door corners without shoulders 0ms
+ ✓ src/ui/TutorialCoach.input.test.tsx > tutorial surfaces absorb map gestures > clicking tutorial-coach never issues a founder move 8ms
+ ✓ src/ui/TutorialCoach.input.test.tsx > tutorial surfaces absorb map gestures > clicking tutorial-target-beacon never issues a founder move 2ms
+ ✓ src/ui/TutorialCoach.input.test.tsx > tutorial surfaces absorb map gestures > keeps Skip guidance usable while stopping the parent click 0ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.mri real scene integration > draws every native/reused record and seats actual bitmap/fallback actors with exact native foreground order 5ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.mri real scene integration > hides each owning door's furniture and sitter and restores the same source placement 1ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.pediatric_waiting real scene integration > draws every native/reused record and seats actual bitmap/fallback actors with exact native foreground order 2ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.pediatric_waiting real scene integration > hides each owning door's furniture and sitter and restores the same source placement 0ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.pediatric_examination real scene integration > draws every native/reused record and seats actual bitmap/fallback actors with exact native foreground order 1ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.pediatric_examination real scene integration > hides each owning door's furniture and sitter and restores the same source placement 0ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.wound_ostomy real scene integration > draws every native/reused record and seats actual bitmap/fallback actors with exact native foreground order 1ms
+ ✓ src/facility/level4ApprovedScene.test.ts > room.wound_ostomy real scene integration > hides each owning door's furniture and sitter and restores the same source placement 0ms
+ ✓ src/ui/ChartPanel.test.tsx > ChartPanel current updates > renders the authored update once above the newly active decision 7ms
+ ✓ src/ui/ChartPanel.test.tsx > ChartPanel current updates > keeps the legacy presentation-derived update when no authored update exists 1ms
+ ✓ src/ui/ChartPanel.test.tsx > ChartPanel decision prompt placement > renders the current prompt once immediately before its answer list 1ms
+ ✓ src/ui/ChartPanel.test.tsx > ChartPanel decision prompt placement > keeps the concern and presentation once without visible section labels 1ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > aligns the sole waiting anchor to the southeast visitor chair 1ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > keeps the starter room's sole baseline door as the protected south entrance 5ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > declares the target's isolated baseline room with its southeast visitor chair 1ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > keeps both declarative entrance beds in the rear sidewalk band and out of the front walk lane 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > keeps logical tiles separate from grounded visual contact envelopes 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > keeps target wall decor, actor contacts, and one visual door candidate on every wall 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > keeps deterministic worker-counter-public depth ordering 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > moves only stationary actors at Front Desk anchors into target display positions 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > separates only the stationary adjacent receptionist while the founder is seated at B3 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > uses the seated pose only at the stationary staff anchor 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > does not seat a walking founder, active founder, or public-side patient position 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > uses the same seated pose for a stationary receptionist at the desk 0ms
+ ✓ src/facility/frontDeskPresentation.test.ts > Front Desk founder presentation > shows one empty chair only when the Front Desk staff anchor is vacant 0ms
+ ✓ src/session/employeeDiscussionView.test.tsx > employee discussion presentation > projects frozen employee identity and each saved lifecycle without patient chart fields 7ms
+ ✓ src/session/employeeDiscussionView.test.tsx > employee discussion presentation > puts colleague attention in the existing folders without a satisfaction icon 5ms
+ ✓ src/session/characterActivityPresentation.test.ts > describeFacilityCharacter > names the patient and says what they are waiting for 6ms
+ ✓ src/session/characterActivityPresentation.test.ts > describeFacilityCharacter > turns a pending label into a short wait, keeping acronyms 1ms
+ ✓ src/session/characterActivityPresentation.test.ts > describeFacilityCharacter > describes a bathroom trip 1ms
+ ✓ src/session/characterActivityPresentation.test.ts > describeFacilityCharacter > describes the founder and returns null for someone who left 1ms
+ ✓ src/session/characterActivityPresentation.test.ts > characterRefFromKey > maps scene container keys to characters 0ms
+ ✓ src/ui/MoneyPanel.test.tsx > MoneyPanel > answers earned minus running costs and shows the hourly split and runway 7ms
+ ✓ src/ui/MoneyPanel.test.tsx > MoneyPanel > still shows service totals when finances are absent 1ms
+ ✓ src/ui/MoneyPanel.test.tsx > MoneyPanel > renders an hourly negative independently of since-opening profit 1ms
+ ✓ src/ui/MoneyPanel.test.tsx > MoneyPanel > renders an hourly neutral independently of since-opening profit 1ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > keeps separate authored north-up v3 compositions for both footprints 2ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > maps both unchanged logical footprints to the exact display-only visual cells 1ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > removes named clutter while keeping subordinate utilities in the sink cell 1ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > uses the portrait source with rotations that produce the requested visible bed spans 0ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > binds retained diagnostic and paper-towel units to precise north-wall slots 0ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > suppresses wall art only when its exact north-wall slot is replaced by a door 0ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > suppresses Examination wall art only when one of its own slots is backed 0ms
+ ✓ src/facility/examinationRoomPresentation.test.ts > Examination Room presentation > keeps every floor-contact fixture inside its Examination Room floor envelope 0ms
+ ✓ src/ui/EmployeeDiscussionPanel.test.tsx > EmployeeDiscussionPanel > uses the chart sheet with employee identity and no patient-only fields 6ms
+ ✓ src/ui/EmployeeDiscussionPanel.test.tsx > EmployeeDiscussionPanel > keeps answers available while the founder walks over 1ms
+ ✓ src/ui/EmployeeDiscussionPanel.test.tsx > EmployeeDiscussionPanel > shows feedback beneath the answered choices on the same sheet 1ms
+ ✓ src/ui/EmployeeDiscussionPanel.test.tsx > EmployeeDiscussionPanel > continues instead of filing when another step remains 0ms
+ ✓ src/ui/EmployeeDiscussionPanel.test.tsx > EmployeeDiscussionPanel > files a reopened completed discussion from the chart front 1ms
+ ✓ src/ui/ResourceBarFinance.test.tsx > HUD hourly finances > has a signed positive rate and accessible income/cost expansion 7ms
+ ✓ src/ui/ResourceBarFinance.test.tsx > HUD hourly finances > has a signed negative rate and accessible income/cost expansion 1ms
+ ✓ src/ui/ResourceBarFinance.test.tsx > HUD hourly finances > has a signed neutral rate and accessible income/cost expansion 1ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The water cooler has made another bubble. to Water cooler 1ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes Out of cyan. The printer remains optimistic. to Printer 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The break-room fridge contains one yogurt with tenure. to Break-room fridge 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The waiting-room plant has been promoted. to Waiting-room plant 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The Front Desk phone rang once. to Front Desk phone 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The label maker has labeled the label maker. to Label maker 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The radiologists have dimmed the lights. to Reading Room 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > attributes The Waiting Room has no spare chairs or dignity. to Waiting Room 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > uses actual patient, employee and room identities for their rows 5ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > leaves the instruction on the button for The floor has acquired a backstory. Select the trash to send the founder to clean it. 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > leaves the instruction on the button for The water cooler is empty. It is now a large blue vase. Refill it. 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > leaves the instruction on the button for The suite has no NP coverage. Hire one or restore their room assignment. 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > leaves the instruction on the button for The room is unreachable. Restore operational access. 0ms
+ ✓ src/session/clinicFeedPresentation.test.ts > clinic feed attribution and problem copy > leaves the instruction on the button for Cash is low. Keep operating costs funded. 0ms
+ ✓ src/ui/ServiceIncomePanel.test.tsx > ServiceIncomePanel laboratory work queue > renders the eligible manual laboratory action without a cash shortcut 5ms
+ ✓ src/ui/ServiceIncomePanel.test.tsx > ServiceIncomePanel laboratory work queue > renders a blocked queue action with its domain-projected reason 1ms
+ ✓ src/ui/ServiceIncomePanel.test.tsx > ServiceIncomePanel laboratory work queue > names due, out-of-service, and actively repairing rooms with complete QI and break counts 1ms
+ ✓ src/ui/ServiceIncomePanel.test.tsx > ServiceIncomePanel grouping > groups services, offers setup shortcuts and flags paused income 1ms
+ ✓ src/ui/ServiceIncomePanel.test.tsx > ServiceIncomePanel grouping > marks booked services paused while appointments are off 1ms
+ ✓ src/ui/ClinicalReview.test.tsx > completed chart clinical review > shows source-linked claims only on the available chart back 8ms
+ ✓ src/ui/QuestionReviewFlag.test.tsx > question developer-review flag > shows a compact flag beside every displayed authored question 7ms
+ ✓ src/ui/QuestionReviewFlag.test.tsx > question developer-review flag > renders an already-open flag as a disabled confirmed control 1ms
+ ✓ src/ui/OpeningSequence.test.tsx > combined clinic opening > puts names, appearance, default-on guidance, actual cash and the happy branch in one form 6ms
+ ✓ src/ui/OpeningSequence.test.tsx > combined clinic opening > honors an explicit opening preference without a separate choice screen 1ms
+ ✓ src/ui/GoalsPanel.test.tsx > GoalsPanel secondary objectives > keeps one main goal list and attaches a compact optional review to the advance area 6ms
+ ✓ src/ui/GoalsPanel.test.tsx > GoalsPanel secondary objectives > leaves Advance available with an incomplete optional objective 1ms
+ ✓ src/ui/GoalsPanel.test.tsx > GoalsPanel secondary objectives > keeps the compact review after completing the prototype milestone 0ms
+ ✓ src/ui/GoalsPanel.test.tsx > GoalsPanel secondary objectives > keeps earlier-level progression controls without an optional chip 0ms
+ ✓ src/ui/EmergencyGlp1Panel.test.tsx > EmergencyGlp1Panel > describes the hourly cooldown without a daily usage cap 5ms
+ ✓ src/ui/EmergencyGlp1Panel.test.tsx > EmergencyGlp1Panel > shows cooldown timing only once 1ms
+ ✓ src/ui/EmergencyGlp1Panel.test.tsx > EmergencyGlp1Panel > renders no markup for staffed automation even when the view is visible 0ms
+ ✓ src/facility/ClinicMapPins.test.tsx > live map pin actions > labels a pin with its card action and forwards exactly that card ID 5ms
+ ✓ src/facility/ClinicMapPins.test.tsx > live map pin actions > does not retain resolved or absent cards at stale render positions 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > keeps the approved values 1ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > hops one tile per stride at 1× and 2× and two tiles at 4× 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > gives each character a stable seed and pairs different rhythms 1ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > starts grounded, peaks at 7 px mid-hop and plants the feet on each tile 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > never draws the character moving backward along the route 3ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > shortens only the first hop by the character seed 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > finishes a hop and waits on the ground when the route stalls 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > squashes on landing, stretches mid-air and ramps the first squash in 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > settles a floor stop over 120 ms with a landing squash, then breathes 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > drops into a seat or exam table after walking, but not when already seated 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > keeps the shadow on the floor, lighter and smaller at the peak, and hides it on the exam table 0ms
+ ✓ src/facility/characterHopMotion.test.ts > approved character hop motion > breathes out of step: per-character phase and period 0ms
+ ✓ src/ui/ManagementPanel.test.tsx > ManagementPanel > renders a matched entry trigger only while the desk is otherwise empty 4ms
+ ✓ src/ui/ManagementPanel.test.tsx > ManagementPanel > wraps the complete existing employee UI in a desk-sized mode with Done 3ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > reserves the shared clutter-suppression contract for exactly the five planned rooms 1ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > uses separate north-up Waiting packages rather than rotating perspective furniture 1ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > keeps the Bathroom to a north-west sink/mirror and east-south toilet 0ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > uses only the requested authored fixtures for the three fixed north-up rooms 0ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > suppresses a wall piece only for its exact live north-door cell 0ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > keeps every floor fixture inside its normalized room envelope 1ms
+ ✓ src/facility/fiveRoomPresentation.test.ts > five reference-room presentations > keeps every reserved five-room edge strip clear without treating central furniture as an edge blocker 1ms
+ ✓ src/ui/HelpDialog.test.tsx > compact clinic Help > offers six topics and safe current/new-clinic guidance entry points 6ms
+ ✓ src/ui/HelpDialog.test.tsx > compact clinic Help > keeps chart filing, optional reference, keyboard, pause and origin facts available by topic 1ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > predicts one canonical movement interval and visits every turn 1ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > mounts and reloads at the exact persisted index without rewinding 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > hands a new route off at its shared waypoint without snapping 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > joins a replacement route at its authoritative current index without replaying its historical prefix 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > finishes and reverses only the current known edge when its shared waypoint is behind fractional render progress 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > resets to the authoritative point when routes are disconnected instead of inventing a bridge 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > retains a valid old tail into the successor prefix when rendering is behind the logical route 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > finishes a saved route smoothly after logical movement clears 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > uses the exact shared rate at each supported simulation speed 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > retains a render-only right-facing signal through a horizontal route and stop 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > does not stop between logical ticks when the 1x timer arrives late 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > does not stop between logical ticks when the 2x timer arrives late 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > does not stop between logical ticks when the 4x timer arrives late 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > does not move when paused or while Build Mode supplies zero delta 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > changing speed without elapsed time never repositions a character 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > compacts consumed route history during a long continuous walk 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > does not retain every completed prefix across repeated route handoffs 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > starts a route from a parked standstill even when it is first seen two nodes along 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > parks a finished route where it ended and starts the next route there 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > drops a parked track when the actor is absent or placed elsewhere 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > catches up while trailing the logical position, capped and never past the target 0ms
+ ✓ src/facility/routeMotion.test.ts > route motion interpolation > walks back instead of snapping when a reversed route shares a point behind the lookahead render 1ms
+ ✓ src/facility/exteriorFrontage.test.ts > Option B frontage surfaces > retains a fractional curb band through an integer Canvas buffer without inflating or distorting art 1ms
+ ✓ src/facility/exteriorFrontage.test.ts > Option B frontage surfaces > uses two shallow rows with one half-slab stagger independent of render scale 1ms
+ ✓ src/facility/exteriorFrontage.test.ts > Option B frontage surfaces > preserves the zero-setback walk, flush centered inset and 0.12-tile curb 1ms
+ ✓ src/facility/exteriorFrontage.test.ts > Option B frontage surfaces > uniform curb runs completely cover the site without an extra street strip 0ms
+ ✓ src/facility/exteriorFrontage.test.ts > Option B frontage surfaces > keeps calm broad patches fixed through redraw and site expansion, off paving 2ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > shows the complete rear wall on an exposed northern edge 1ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > identifies backed north segments where another floor touches from the north 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > keeps only genuinely exterior portions of a partially covered wall 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > crops full-width wall artwork instead of rescaling it into an exposed run 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > gives a northmost hallway the same shallow exposed rear wall geometry 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > removes the shared wall between vertically adjacent room and hallway floors 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > draws side-wall runs only where the vertical edge is exterior 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > gives closed vertical partitions one east-side owner and cuts exact door slots 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > leaves hallway-to-hallway vertical circulation open while retaining room-hall partitions 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > makes the south space the only owner of a shared horizontal wall 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > keeps a hallway south of a room as the short-wall owner but opens hall-to-hall 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > adds short side returns only at genuinely exposed north corners 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > does not remove a wall for a diagonal corner touch 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > projects the bonus rear wall outside the fixed floor footprint 0ms
+ ✓ src/facility/roomCutaway.test.ts > room cutaway boundaries > uses the Front Desk-derived wall face regardless of footprint depth 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > rotates grounded fixture positions and spans through 0 and 90 degrees 1ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > defensively renders legacy 180 and 270 degree orientations 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > keeps fixed room furniture in its approved presentation orientation 1ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > passes domain-enabled Front Desk segments through while retaining the fixed south entrance 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > declares all four fixture-clear wall zones for the primary room slice 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > keeps known primary-room furniture conflicts out of door candidate zones 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > declares every advanced room's clear door walls and supported orientations 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > keeps imaging and procedure candidates away from their central equipment approaches 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > keeps wall decor on the exposed world-north wall or suppresses it 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > rotates authored door-clear spans with a supported room orientation 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > does not re-filter domain-enabled approved proof slots through legacy ratio zones 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > keeps at least one fixture-clear candidate on every Examination Room wall in both authored footprints 0ms
+ ✓ src/facility/roomVisualLayout.test.ts > room visual layout > only offers fixed or approved GS-015 placement orientations 0ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > keeps all walls continuous without a live door regardless of adjacency 1ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > subtracts only the exact live door slot on each wall 1ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > uses a shallow foreground lip rather than a room-height slab 0ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > passes backed north runs to the shared short-wall grammar 1ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > uses canonical cap width and tall-corner continuation in both orientations 0ms
+ ✓ src/facility/examinationV3Architecture.test.ts > Examination v3 architecture > faithfully leaves a backed or corner-door side unextended 0ms
+ ✓ src/ui/AdvertisingPanel.test.tsx > AdvertisingPanel > shows only the compact persistent controls and current effects 6ms
+ ✓ src/ui/SaveCloseDialog.test.tsx > SaveFailureRecovery > explains the failed-save category and exposes the first confirmation action 5ms
+ ✓ src/ui/SaveCloseDialog.test.tsx > SaveFailureRecovery > renders the explicit destructive confirmation only after requested 0ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > keeps the full logical five-by-four rectangle as its square-tile floor 1ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > anchors the full visual floor and its south entrance to the logical rectangle 0ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > builds straight, visually closed wall runs when no live door exists 1ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > cuts an aperture only at each supplied live door slot 1ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > uses low in-footprint front art for backed north segments 0ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > foregrounds side walls plus the south lip while keeping north walls base-only 0ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > keeps side structural occluders door-subtracted while north remains base-only 0ms
+ ✓ src/facility/frontDeskV5Architecture.test.ts > Front Desk v5 architecture projection > keeps v5 architecture active when Front Desk shares a designed horizontal opening 0ms
+ ✓ src/styles/clinicPresentation.test.ts > clinic presentation contrast and geometry > protects the day divider from arrival effects and meets AA for all its normal text 2ms
+ ✓ src/styles/clinicPresentation.test.ts > clinic presentation contrast and geometry > reserves the same headline height when empty, showing or expired at any viewport width 0ms
+ ✓ src/styles/clinicPresentation.test.ts > compact Goals and Alerts spacing > packs every level's goal rows to their content without shrinking labels, progress or the optional chip 0ms
+ ✓ src/styles/clinicPresentation.test.ts > compact Goals and Alerts spacing > gives the quiet zone no card-space floor while keeping a readable single line 0ms
+ ✓ src/styles/clinicPresentation.test.ts > compact Goals and Alerts spacing > uses compact feed spacing for both board modes and preserves body/action font sizes and the day divider 0ms
+ ✓ src/styles/clinicPresentation.test.ts > compact Goals and Alerts spacing > allows narrow bylines to wrap while retaining full time labels and 44px touch actions 0ms
+ ✓ src/styles/clinicPresentation.test.ts > compact Goals and Alerts spacing > expands only the inner tray and turns off its transition for reduced motion 0ms
+ ✓ src/art/characterWalkRegistry.test.ts > GS-026 simple cardinal walk registry > opts in the five authorized identities with four authored eight-frame directions 3ms
+ ✓ src/art/characterWalkRegistry.test.ts > GS-026 simple cardinal walk registry > preserves direct owner approvals and records delegated production review separately 0ms
+ ✓ src/art/characterWalkRegistry.test.ts > GS-026 simple cardinal walk registry > normalizes frame indexes and never supplies art for another identity 0ms
+ ✓ src/art/characterWalkRegistry.test.ts > GS-026 simple cardinal walk registry > advances one visible phase every 180 simulation milliseconds 0ms
+ ✓ src/facility/surgeryCenterArchitecture.test.ts > shared surgery-center architecture > derives the normalized cutaway grammar directly from Front Desk v4 measurements 1ms
+ ✓ src/facility/surgeryCenterArchitecture.test.ts > shared surgery-center architecture > gives horizontal and vertical Examination presentations the identical Front Desk wall contract 0ms
+ ✓ src/facility/surgeryCenterArchitecture.test.ts > shared surgery-center architecture > keeps Front Desk source X and Y tile axes independent for component tiling 0ms
+ ✓ src/facility/surgeryCenterArchitecture.test.ts > shared surgery-center architecture > gives every implemented Level 0–2 room and hallway one Front Desk-derived north envelope 1ms
+ ✓ src/facility/roomTouchups.test.ts > room touch-ups > dims imaging rooms only while a scan is in progress, and never CT 1ms
+ ✓ src/facility/roomTouchups.test.ts > room touch-ups > tints from the north wall's real height down to the top of the south wall 1ms
+ ✓ src/facility/roomTouchups.test.ts > room touch-ups > keeps every new item off the walls 0ms
+ ✓ src/facility/roomTouchups.test.ts > room touch-ups > maps base-frame wall segments into the 270-degree view 0ms
+ ✓ src/facility/roomTouchups.test.ts > room touch-ups > offers a door on every wall segment of every approved room (owner rule) 2ms
+ ✓ src/facility/roomTouchups.test.ts > hallway decor > places floor decor against a room-backed north edge but hangs art only on tall walls 0ms
+ ✓ src/facility/roomTouchups.test.ts > hallway decor > keeps doorways, corridor ends and open edges clear 0ms
+ ✓ src/facility/roomTouchups.test.ts > hallway decor > puts side-wall plants in vertical corridors on both sides 0ms
+ ✓ src/facility/roomTouchups.test.ts > hallway decor > lays 4-tile runner rugs with gaps along straight runs, keyed to absolute position 0ms
+ ✓ src/facility/roomTouchups.test.ts > hallway decor > skips junctions, two-wide areas and one-tile scraps 0ms
+ ✓ src/art/frontageBitmapAssets.test.ts > frontage v2 authored kit > ships all eleven standalone native PNGs with base-path-safe descriptors 4ms
+ ✓ src/art/frontageBitmapAssets.test.ts > frontage v2 authored kit > preserves measured prop contacts and exact uniform aspect ratios 0ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > uses the frozen release, case, presentation, profile, and question identity 1ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > keeps a reworded frozen revision as a separate review item 1ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > deduplicates a question revision while retaining occurrences and reopening it 1ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > keeps distinct approved presentation profiles as distinct review items 0ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > round-trips valid local storage and ignores invalid entries 0ms
+ ✓ src/session/questionReviewFlags.test.ts > question review flags > exports open and reviewed flags without changing their snapshots 0ms
+ ✓ src/art/fixtureArt.test.ts > primary room fixture art > covers every primary room with explicit illustrated assets 2ms
+ ✓ src/art/fixtureArt.test.ts > primary room fixture art > keeps ordinary perspective fixtures upright when a room package rotates 0ms
+ ✓ src/art/fixtureArt.test.ts > primary room fixture art > does not retain rejected base-layout fixtures in the primary room branches 1ms
+ ✓ src/art/fixtureArt.test.ts > Level 2 fixture art > keeps Minor Procedure and every Level 2 room on an explicit non-fallback fixture set 0ms
+ ✓ src/art/fixtureArt.test.ts > Level 2 fixture art > keeps every canonical Level 2 room on an explicit non-fallback fixture set 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode room lettering > letters same-type rooms in build order only while two or more exist 1ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode room lettering > closes letters up after a sale 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode room lettering > orders rooms by group, then catalog order 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the used room's satisfaction points with current and next totals 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > starts at Baseline and has no clinic-wide cap 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > omits the next total at maximum level 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.examination 1ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.laboratory 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.reading 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.bathroom 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.coffee_kiosk 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > describes the approved scope for room.staff_break 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > does not offer a benefit for non-purchasable room.front_desk 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > does not offer a benefit for non-purchasable room.hallway 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > does not offer a benefit for non-purchasable room.imaging_control 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > does not offer a benefit for non-purchasable room.founder_office 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode upgrade benefit text > does not offer a benefit for non-purchasable room.unknown 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode undo label > labels the clinic tray's reversible cash changes clearly 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode undo label > names upgrades with the money Undo returns 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode undo label > names sales with the refund Undo takes back 0ms
+ ✓ src/session/buildModePresentation.test.ts > Build Mode undo label > names free door changes without money 0ms
+ ✓ src/facility/staffIdleSupports.test.ts > idle staff supports > draws a pose for exactly the idle spots the game rules can choose 4ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > renders the 24x36 canonical map frame at a crisp 3:2 size 1ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > scales deterministically with the facility camera 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > reduces characters with the map at overview zoom 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > keeps authored founder, patient, and v3 frames on exact integer aspect ratios 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > scales authored bitmap frames without fractional stretching 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > sanitizes invalid authored frame and camera inputs to positive integer metrics 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > limits linear sampling to the character-atlas registration loop 1ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > uses one 160x320 scale whose floor span matches the previous canonical frame 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > places the authored seat contact on the furniture plane without changing scale 0ms
+ ✓ src/facility/characterPresentation.test.ts > facility character presentation > treats only the walking poses as moving 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover wide patient rail 1ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover compact patient rail 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover wide answer list 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover compact answer list 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover wide goals rail 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover compact goals rail 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > does not cover center facility 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > uses an explicit non-pointing dock when a target fills the viewport 1ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > protects a larger chart while aiming at controls inside it 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > keeps the previous side while that placement remains valid 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > abandons a preferred side only when it is no longer usable 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > honors an offset VisualViewport and keeps the card inside it 0ms
+ ✓ src/ui/tutorialPositioning.test.ts > tutorial coach positioning > docks at the edge opposite a target when no strip can fit 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > uses the quoted total while showing overlapping work, queue delays and earlier visual findings 1ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > shows patient walking and an earlier complete result without guessing from a choice label 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > shows frozen work durations without nominal queues or walking when capacity has no return estimate 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > preserves legacy quotes, no-test labels and unavailable estimates 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > shows an actual early result while keeping recovery, pathology and the next-decision gate separate 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > does not reveal biopsy prose at a visual milestone or from an elapsed forecast 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > suppresses a finite full ETA when capacity is missing and retains already-ready results 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > keeps collected background pathology visible after patient care and clinical delivery 0ms
+ ✓ src/session/diagnosticTimingPresentation.test.ts > shared diagnostic timing presentation > shows completed pathology without retaining a pending countdown 0ms
+ ✓ src/ui/animationFrameTask.test.ts > animation-frame task lifecycle > replaces stale work so only the latest deferred action runs 2ms
+ ✓ src/ui/animationFrameTask.test.ts > animation-frame task lifecycle > cancels pending work at the component cleanup boundary 0ms
+ ✓ src/facility/earningsPopupFrameCost.test.ts > earnings popup per-frame cost > only expires popups while the per-tick receipt list is unchanged 2ms
+ ✓ src/facility/earningsPopupFrameCost.test.ts > earnings popup per-frame cost > still resets for a different campaign with the same receipt list 0ms
+ ✓ src/facility/characterMotionPresentation.test.ts > character motion presentation > reprojects a frozen normalized anchor when the camera layout changes 1ms
+ ✓ src/facility/characterMotionPresentation.test.ts > character motion presentation > keeps the rendered frame when paused inputs change or reorder 0ms
+ ✓ src/facility/characterMotionPresentation.test.ts > character motion presentation > faces a stationary floor character south while retaining furniture and moving directions 0ms
+ ✓ src/facility/doorPresentation.test.ts > door presentation runs > merges consecutive source-wall doors only when they enter the same destination room 1ms
+ ✓ src/facility/doorPresentation.test.ts > door presentation runs > keeps consecutive source-wall doors separate when their outside cells enter different destinations 0ms
+ ✓ src/facility/doorPresentation.test.ts > door presentation runs > uses the same destination identity rule for consecutive east-wall door rows 0ms
+ ✓ src/facility/doorPresentation.test.ts > reciprocal door presentation openings > maps north and south source doors to reciprocal south and north target slots 0ms
+ ✓ src/facility/doorPresentation.test.ts > reciprocal door presentation openings > maps east and west source doors to reciprocal west and east target slots 0ms
+ ✓ src/facility/doorPresentation.test.ts > reciprocal door presentation openings > dedupes direct and reciprocal openings, excludes exterior doors, and uses projected dimensions 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > pins a short content-sized chart to the desk's top middle 1ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > centers short charts over a desk narrower than the chart when space permits 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > retains the previous bottom pin and maximum height for 400 px of content 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > retains the previous bottom pin and maximum height for 401 px of content 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > retains the previous bottom pin and maximum height for 1200 px of content 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > retains the previous left-edge preference for a tall chart over a narrow desk 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > clamps a short chart to the play-area edges when centering would overflow 0ms
+ ✓ src/ui/chartPlacement.test.ts > chart placement > can move between top and bottom pins as feedback grows and then collapses 0ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > seeds a loaded campaign from receipt history without replaying cash or markup 1ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > shows simultaneous fresh receipts exactly once for their actual actors 0ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > does not fabricate a customer for remote income, but accepts an explicit future fallback anchor 0ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > anchors a fresh retail receipt to its distinct outside buyer and rejects a zero-dollar popup 0ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > resets its local cursor for a campaign switch and expires finite events after 1.5 real seconds 0ms
+ ✓ src/facility/earningsPopupPresentation.test.ts > earnings popup presentation > places labels above an actor head and vertically stacks simultaneous credits 0ms
+ ✓ src/facility/hallwayPainting.test.ts > rasterizeGridLine > fills every horizontal square crossed by a fast drag 1ms
+ ✓ src/facility/hallwayPainting.test.ts > rasterizeGridLine > fills vertical and diagonal drags without repeating a square 0ms
+ ✓ src/ui/workspaceSplitter.test.ts > workspace splitter > clamps against the map and desk minimums when the workspace can fit them 1ms
+ ✓ src/ui/workspaceSplitter.test.ts > workspace splitter > keeps compact workspaces proportional and derives a pointer share 0ms
+ ✓ src/ui/workspaceSplitter.test.ts > workspace splitter > uses a guarded versioned storage preference 0ms
+ ✓ src/ui/workspaceSplitter.test.ts > workspace splitter > falls back when storage is unavailable or throws 1ms
+ ✓ src/session/newestServiceIncomeReceipts.test.ts > newest service income receipts > matches a stable newest-first sort and slice, including ties 4ms
+ ✓ src/facility/patientPlacement.test.ts > waiting-patient room placement > keeps patients on the sidewalk when no waiting room exists 1ms
+ ✓ src/facility/patientPlacement.test.ts > waiting-patient room placement > assigns stable, non-overlapping positions inside a built waiting room 1ms
+ ✓ src/facility/patientPlacement.test.ts > waiting-patient room placement > leaves waiting-room overflow unmapped instead of overlapping occupants 0ms
+ ✓ src/facility/patientPlacement.test.ts > waiting-patient room placement > derives sidewalk positions only from stable waiting-patient IDs 0ms
+ ✓ src/facility/characterSeatSettle.test.ts > seat settle > glides from the walk's end onto the seat with an ease-out, then holds 2ms
+ ✓ src/facility/characterSeatSettle.test.ts > seat settle > glides off the seat toward a moving walker when standing up 0ms
+ ✓ src/facility/characterSeatSettle.test.ts > seat settle > snaps when nothing jumps, when the pose is unchanged, or when the jump is a relocation 0ms
+ ✓ src/facility/environmentPresentation.test.ts > environment presentation > makes litter, water, and staff map interactions discoverable 2ms
+ ✓ src/facility/environmentPresentation.test.ts > environment presentation > shows restrained wear only below the cleanliness threshold 0ms
+ ✓ src/facility/environmentTilePhase.test.ts > getEnvironmentTileLogicalPhase > keeps uniformly tiny frontage materials anchored without the legacy 0.02 scale floor 1ms
+ ✓ src/facility/environmentTilePhase.test.ts > getEnvironmentTileLogicalPhase > keeps a fixed logical material phase when the camera moves its rendered origin 0ms
+ ✓ src/facility/environmentTilePhase.test.ts > getEnvironmentTileLogicalPhase > uses Phaser's positive TileSprite sample phase with scale-aware rounding 0ms
+ ✓ src/facility/environmentTilePhase.test.ts > getEnvironmentTileLogicalPhase > retains one coherent world phase across distinct adjacent logical rectangles 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > retains an explicit ambiguous owner conservatively and never fabricates an absent owner 1ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > never acquires a new pause for sendout-management 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > never acquires a new pause for sendout-trash 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > never acquires a new pause for sendout-water 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > never acquires a new pause for second-sendout-wait 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > never acquires a new pause for null 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > releases old running ownership idempotently, including an interrupted state write 0ms
+ ✓ src/session/dailyRoutineTutorialPause.test.ts > retired operations pause compatibility > preserves manual pause and defers all releases under Build, Management or Help 0ms
+ ✓ src/session/tutorialGuidance.test.ts > per-campaign guidance compatibility > migrates each campaign independently and treats old receipts as exposure 1ms
+ ✓ src/session/tutorialGuidance.test.ts > per-campaign guidance compatibility > keeps an explicit campaign opt-out separate from the default and another campaign 0ms
+ ✓ src/session/tutorialGuidance.test.ts > per-campaign guidance compatibility > normalizes malformed/future records without losing campaign data or inventing progress 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 0 without changing the runtime quantity 1ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 1 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 59 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 60 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 90 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 120 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 240 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 36 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 54 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 4.5 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 4.275 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 4.2749999999999995 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 3.0000000000000004 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 4.27549 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 4.2755 without changing the runtime quantity 0ms
+ ✓ src/session/facilityDuration.test.ts > facility duration labels > formats 0.0001 without changing the runtime quantity 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > coalesces ordinary facility ticks onto quarter-hour boundaries 1ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > keeps SET_PAUSED write-through between autosaves 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > keeps SET_SIMULATION_SPEED write-through between autosaves 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > keeps OPEN_CHART write-through between autosaves 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > keeps SUBMIT_ANSWER write-through between autosaves 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > keeps PLACE_ROOM write-through between autosaves 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > defers full-profile work to browser idle time when available 0ms
+ ✓ src/session/prototypeAutosave.test.ts > prototype autosave cadence > uses a cancellable zero-delay task when idle callbacks are unavailable 0ms
+ ✓ src/facility/exteriorActorPresentation.test.ts > exterior actor presentation > leaves interior actor baselines unchanged 1ms
+ ✓ src/facility/exteriorActorPresentation.test.ts > exterior actor presentation > eases monotonically through the final entrance-to-sidewalk segment 0ms
+ ✓ src/facility/exteriorActorPresentation.test.ts > exterior actor presentation > grounds the logical sidewalk row on the authored pavement 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > sorts tree/understory contacts inside the landscape band without crossing room floors 1ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > places a character after every fixture on the same baseline 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > uses the floor-contact baseline as the primary order 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > provides deterministic, bounded ordering within one kind 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > keeps locator and build UI in explicit foreground bands 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > keeps small floor interactions above ordinary scene objects but below overlays 0ms
+ ✓ src/facility/renderDepth.test.ts > facility render depth > falls back safely for non-finite renderer input 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > keeps a question-only stem unchanged 1ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > removes a repeated patient vignette from above the answer choices 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > preserves later-step findings as context while isolating the question 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > handles a question clause after a comma 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > repairs only exact known frozen case text with the saved patient name 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > repairs only mapped missing chief complaints 0ms
+ ✓ src/session/clinicalText.test.ts > clinical chart text separation > uses selected profile and node identities before displaying a known repair 0ms
+ ✓ src/facility/doorInteractionGeometry.test.ts > door interaction geometry > extends an exposed north-wall target into the visible cutaway face 1ms
+ ✓ src/facility/doorInteractionGeometry.test.ts > door interaction geometry > keeps an internal north-wall target centered on the floor boundary 0ms
+ ✓ src/facility/doorInteractionGeometry.test.ts > door interaction geometry > creates a vertical hit target for an east-wall door 0ms
+ ✓ src/session/clinicSaveNotices.test.ts > verified autosave recovery notices > clears a retained failure after recovery while preserving other notices 2ms
+ ✓ src/art/treeGapCleanup.test.ts > tree gap cleanup > only classifies opaque near-neutral white as a tree background gap 1ms
+ ✓ src/art/treeGapCleanup.test.ts > tree gap cleanup > cleans only supplied tree-frame pixels and preserves atlas geometry 1ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > keeps legal fractional pan and zoom exactly 1ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > bounds zoom/pan to the rendered site for 0.001 zoom 1ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > bounds zoom/pan to the rendered site for 1 zoom 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > bounds zoom/pan to the rendered site for 1.5 zoom 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > bounds zoom/pan to the rendered site for 999 zoom 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > uses current viewport 900x450 and current grid 64x40 rather than stored bounds 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > uses current viewport 360x220 and current grid 64x40 rather than stored bounds 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > uses current viewport 1440x800 and current grid 96x64 rather than stored bounds 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > uses current viewport 1200x800 and current grid 10x6 rather than stored bounds 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > uses current viewport 360x640 and current grid 5x4 rather than stored bounds 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > handles resized and grown facilities and the no-founder fallback 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data null 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data undefined 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {} 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {"zoom":0,"panX":0,"panY":0} 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {"zoom":-1,"panX":0,"panY":0} 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {"zoom":null,"panX":0,"panY":0} 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {"zoom":1,"panX":null,"panY":0} 0ms
+ ✓ src/facility/facilityCameraBounds.test.ts > restored facility camera clamping > rejects invalid camera data {"zoom":1,"panX":0} 0ms
+ ✓ src/facility/facilityWorldSignature.test.ts > facility static-world signature > does not invalidate for facility time or character-only changes 1ms
+ ✓ src/facility/facilityWorldSignature.test.ts > facility static-world signature > invalidates for static geometry changes 0ms
+ ✓ src/facility/facilityWorldSignature.test.ts > facility static-world signature > invalidates when an Endoscopy room changes its approved covered-table state 0ms
+ ✓ src/art/lateralGaitCycle.test.ts > lateral character gait cycle > uses the same four-beat profile cycle for west travel 1ms
+ ✓ src/art/lateralGaitCycle.test.ts > lateral character gait cycle > uses the same four-beat profile cycle for east travel 0ms
+ ✓ src/art/lateralGaitCycle.test.ts > lateral character gait cycle > freezes into idle when a character is not moving 0ms
+ ✓ src/art/lateralGaitCycle.test.ts > lateral character gait cycle > preserves the approved front and back two-stride cadence 0ms
+ ✓ src/session/founderActivityPresentation.test.ts > getFounderActivityLabel > describes each modeled founder action and distinguishes endoscopy 1ms
+ ✓ src/session/founderActivityPresentation.test.ts > getFounderActivityLabel > describes travel and conversation without narrating truly idle standing or seated states 0ms
+ ✓ src/session/founderActivityPresentation.test.ts > getFounderActivityLabel > lets a live founder retail trip override stale seated activity and hides it after completion 0ms
+ ✓ src/session/founderActivityPresentation.test.ts > getFounderActivityLabel > labels a legacy pending provider endoscopy when no service operation was recorded 0ms
+ ✓ src/facility/fixturePresentation.test.ts > fixture presentation sizing > scales proportionally with the map instead of snapping to integer sprite scales 1ms
+ ✓ src/facility/fixturePresentation.test.ts > fixture presentation sizing > preserves aspect ratio inside the available rectangle 0ms
+ ✓ src/facility/defaultCamera.test.ts > initial facility camera > keeps the complete isolated Level 0 cutaway shell within the viewport 1ms
+ ✓ src/facility/defaultCamera.test.ts > initial facility camera > keeps expanded and later clinics at the normal overview 0ms
+ ✓ src/auth/prototypeAuth.test.ts > prototype access sessions > accepts an unexpired remembered local session 1ms
+ ✓ src/auth/prototypeAuth.test.ts > prototype access sessions > rejects expired, invalid, and absent sessions 0ms
+ ✓ src/facility/worldExteriorLayout.test.ts > world exterior layout > anchors the one-tile sidewalk directly at the grid edge rather than to a viewport 1ms
+ ✓ src/facility/worldExteriorLayout.test.ts > world exterior layout > translates the entire exterior with camera pan 0ms
+ ✓ src/facility/worldExteriorLayout.test.ts > world exterior layout > scales exterior bands with tile size and keeps the actor baseline on pavement 0ms
+ ✓ src/session/tutorialTipsIntegration.test.ts > one guidance source per topic > suppresses matching ordinary rows, preserves real urgent/history/other topics, and does not mutate receipts 1ms
+ ✓ src/facility/presentationOrigin.test.ts > snapPresentationOrigin > keeps existing whole-pixel origins unchanged 1ms
+ ✓ src/facility/presentationOrigin.test.ts > snapPresentationOrigin > quantizes fractional pan presentation after clamping 0ms
+ ✓ src/facility/presentationOrigin.test.ts > snapPresentationOrigin > keeps values within integer clamp boundaries when they were clamped first 0ms
+ ✓ src/facility/frontDeskSeatInteraction.test.ts > Front Desk rendered seating interaction > accepts the displayed counter and secretary-chair envelopes 1ms
+ ✓ src/facility/frontDeskSeatInteraction.test.ts > Front Desk rendered seating interaction > accepts the exact bounds of both approved painted Front Desk targets 0ms
+ ✓ src/facility/frontDeskSeatInteraction.test.ts > Front Desk rendered seating interaction > does not turn unrelated Front Desk floor into a seating click 0ms
+ ✓ src/facility/frontDeskSeatInteraction.test.ts > Front Desk rendered seating interaction > uses the domain-projected chair list instead of treating open floor as a chair 1ms
+ ✓ src/facility/frontDeskSeatInteraction.test.ts > Front Desk rendered seating interaction > dispatches an ordinary chair only after a completed click, never while panning 1ms
+ ✓ src/facility/employeeTrainingPresentation.test.ts > Training Room employee furniture contacts > uses both approved stools with separate north-facing seat and floor contacts 3ms
+ ✓ src/facility/proceduralSurfacePhase.test.ts > getProceduralSurfaceRow > keeps stagger parity fixed to a room when its rendered rectangle pans 1ms
+ ✓ src/facility/proceduralSurfacePhase.test.ts > getProceduralSurfaceRow > advances exactly once for each local procedural spacing 0ms
+ ✓ src/facility/lateralGaitProof.test.ts > static lateral movement proof > glides one west still and one east still through every route phase 2ms
+ ✓ src/facility/lateralGaitProof.test.ts > static lateral movement proof > keeps an archived-walk identity on its standing still in active runtime resolution 0ms
+ ✓ src/content/patientAppearanceCatalog.test.ts > patient appearance catalog expansion seam > honestly exposes the current fifty-person authored adult roster, not a fabricated 150 1ms
+ ✓ src/content/patientAppearanceCatalog.test.ts > patient appearance catalog expansion seam > exposes only chart-compatible adult presentation identities 0ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
+AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+System.Management.Automation.RemoteException
+Expected: "Off-site thyroid fine-needle aspiration"
+Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
+System.Management.Automation.RemoteException
+ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
+     83|     const pending = state.encounters[encounterId]!.pendingResult!;
+     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
+     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
+       |                                                    ^
+     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
+     87|   });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed | 148 passed (149)
+      Tests  1 failed | 1162 passed (1163)
+   Start at  22:01:49
+   Duration  20.34s (transform 6.42s, setup 0ms, import 37.89s, tests 31.18s, environment 8ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --reporter=verbose

@@ -1,0 +1,20 @@
+--- a/apps/player/src/ui/GoalsPanel.tsx
++++ b/apps/player/src/ui/GoalsPanel.tsx
+@@ -28,7 +28,7 @@
+         <span>{view.facilityLevelLabel} goals</span>
+         <small>
+           {view.prototypeComplete
+-            ? "Prototype milestone"
++             ? "Level complete"
+             : view.nextLevelLabel ?? "Current level"}
+         </small>
+       </div>
+@@ -102,7 +102,7 @@
+           ) : null}
+           {view.prototypeComplete ? (
+             <p className="prototype-complete">
+-              {view.facilityLevelLabel} complete. Level 4 is a preview and is not implemented in this prototype.
++               Level 4 complete - Level 5 coming later. Keep playing; the clinic is still open.
+             </p>
+           ) : null}
+         </div>

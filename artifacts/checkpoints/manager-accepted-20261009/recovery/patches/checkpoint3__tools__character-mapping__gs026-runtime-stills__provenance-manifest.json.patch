@@ -1,0 +1,1450 @@
+--- a/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json
++++ b/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json
+@@ -105,17 +105,28 @@
+       "sourceCohort": "staff-gapfill-v6d",
+       "seatContactContractSha256": "4a6707ae8e2ebffeb7502ea38a940d2965de4c7c19fb966715a319fac4fc346b",
+       "derivedAlphaReportSha256": "f46bdc3e34de07ff87bfb5eb2aa6b4420ef5d28a327984272661255ab4f36fe8"
++    },
++    "appGapfillV6e": {
++      "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++      "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607",
++      "reviewStatus": "owner-delegated-manager-approved-local-integration-not-published",
++      "ownerArtApproval": true,
++      "approvedBy": "GamifySurgery manager (Claude Code)",
++      "approvalAuthority": "owner-delegated-manager",
++      "sourceCohort": "app-gapfill-v6e",
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10",
++      "derivedAlphaReportSha256": "12af820e3861c7cf24592fb3c6bfdb259a17aef081ef9b291fb6b3d276269531"
+     }
+   },
+   "registry": {
+     "file": "apps/player/src/art/characterStillRegistry.generated.json",
+-    "sha256": "79447038d5e416ab2b9e3e115a5983a181cc028e5274ec008ff0e8a7ed415c16"
++    "sha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a"
+   },
+   "counts": {
+-    "identities": 318,
+-    "cardinalPoses": 2544,
++    "identities": 326,
++    "cardinalPoses": 2608,
+     "clipboardPoses": 30,
+-    "assets": 2574
++    "assets": 2638
+   },
+   "assets": [
+     {
+@@ -39195,6 +39206,1414 @@
+         "sha256": "88ea19e7421029fb965c9efc41d96d1d7a9395e7e34917d6a56c011a24186135"
+       },
+       "seatContactContractSha256": "4a6707ae8e2ebffeb7502ea38a940d2965de4c7c19fb966715a319fac4fc346b"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-south.png",
++      "sourceSha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-south.png",
++      "outputSha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-east.png",
++      "sourceSha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-east.png",
++      "outputSha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-west.png",
++      "sourceSha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-west.png",
++      "outputSha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-north.png",
++      "sourceSha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-north.png",
++      "outputSha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-south.png",
++      "sourceSha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-south.png",
++      "outputSha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-east.png",
++      "sourceSha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-east.png",
++      "outputSha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-west.png",
++      "sourceSha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-west.png",
++      "outputSha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.001",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-north.png",
++      "sourceSha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-north.png",
++      "outputSha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/source.png",
++        "sha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/001/provenance.json",
++        "sha256": "84b89a5408c5d4ba6f97c2d520cb78b41a5f9ac23e6aa0b76f836de38c429064"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-south.png",
++      "sourceSha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
++      "outputSha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-east.png",
++      "sourceSha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-east.png",
++      "outputSha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-west.png",
++      "sourceSha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-west.png",
++      "outputSha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-north.png",
++      "sourceSha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-north.png",
++      "outputSha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-south.png",
++      "sourceSha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-south.png",
++      "outputSha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-east.png",
++      "sourceSha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
++      "outputSha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-west.png",
++      "sourceSha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-west.png",
++      "outputSha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.002",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-north.png",
++      "sourceSha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-north.png",
++      "outputSha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/source.png",
++        "sha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/002/provenance.json",
++        "sha256": "5feb31a414892cc7eeee4e9f8b8618790d048d88a2688bf126e5ba0f4d2ced71"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-south.png",
++      "sourceSha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-south.png",
++      "outputSha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-east.png",
++      "sourceSha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-east.png",
++      "outputSha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-west.png",
++      "sourceSha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-west.png",
++      "outputSha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-north.png",
++      "sourceSha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-north.png",
++      "outputSha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-south.png",
++      "sourceSha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-south.png",
++      "outputSha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-east.png",
++      "sourceSha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-east.png",
++      "outputSha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-west.png",
++      "sourceSha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-west.png",
++      "outputSha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.003",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-north.png",
++      "sourceSha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-north.png",
++      "outputSha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/source.png",
++        "sha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/003/provenance.json",
++        "sha256": "9994c17d42c4df2bd5c934e6baa61a08db46242aaee83492a205bf5c4d5dc924"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-south.png",
++      "sourceSha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-south.png",
++      "outputSha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-east.png",
++      "sourceSha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-east.png",
++      "outputSha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-west.png",
++      "sourceSha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-west.png",
++      "outputSha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-north.png",
++      "sourceSha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-north.png",
++      "outputSha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-south.png",
++      "sourceSha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-south.png",
++      "outputSha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-east.png",
++      "sourceSha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-east.png",
++      "outputSha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-west.png",
++      "sourceSha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-west.png",
++      "outputSha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.004",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-north.png",
++      "sourceSha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-north.png",
++      "outputSha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/source.png",
++        "sha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/004/provenance.json",
++        "sha256": "bf93b50fdb274d4283c6070ffe31822ba47f3fbe600f3ea4f9e9dd922b7c8541"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-south.png",
++      "sourceSha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-south.png",
++      "outputSha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-east.png",
++      "sourceSha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-east.png",
++      "outputSha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-west.png",
++      "sourceSha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-west.png",
++      "outputSha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-north.png",
++      "sourceSha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-north.png",
++      "outputSha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-south.png",
++      "sourceSha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-south.png",
++      "outputSha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-east.png",
++      "sourceSha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-east.png",
++      "outputSha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-west.png",
++      "sourceSha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-west.png",
++      "outputSha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.005",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-north.png",
++      "sourceSha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-north.png",
++      "outputSha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/source.png",
++        "sha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/005/provenance.json",
++        "sha256": "ce11bc034c73dd44c1b898bc596b8d477c148e938d18d68f8ac5dfa8de651cf3"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-south.png",
++      "sourceSha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-south.png",
++      "outputSha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-east.png",
++      "sourceSha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-east.png",
++      "outputSha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-west.png",
++      "sourceSha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-west.png",
++      "outputSha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-north.png",
++      "sourceSha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-north.png",
++      "outputSha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-south.png",
++      "sourceSha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-south.png",
++      "outputSha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-east.png",
++      "sourceSha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-east.png",
++      "outputSha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-west.png",
++      "sourceSha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-west.png",
++      "outputSha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.006",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-north.png",
++      "sourceSha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-north.png",
++      "outputSha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/source.png",
++        "sha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/006/provenance.json",
++        "sha256": "ddb90608957b700a653afd95f6ada270c867a5836761efffc91c42d6344be8d0"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-south.png",
++      "sourceSha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
++      "outputSha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-east.png",
++      "sourceSha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-east.png",
++      "outputSha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-west.png",
++      "sourceSha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-west.png",
++      "outputSha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-north.png",
++      "sourceSha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-north.png",
++      "outputSha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-south.png",
++      "sourceSha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-south.png",
++      "outputSha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-east.png",
++      "sourceSha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
++      "outputSha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-west.png",
++      "sourceSha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-west.png",
++      "outputSha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.007",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-north.png",
++      "sourceSha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-north.png",
++      "outputSha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/source.png",
++        "sha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/007/provenance.json",
++        "sha256": "8625bfbbfdeb3d75e217a8a69c2ed6893eed67c009faa3e93a2a7bfb70fb1e94"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-south.png",
++      "sourceSha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-south.png",
++      "outputSha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-east.png",
++      "sourceSha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-east.png",
++      "outputSha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-west.png",
++      "sourceSha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-west.png",
++      "outputSha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "stand-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-north.png",
++      "sourceSha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-north.png",
++      "outputSha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-south",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-south.png",
++      "sourceSha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-south.png",
++      "outputSha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-east",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-east.png",
++      "sourceSha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-east.png",
++      "outputSha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-west",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-west.png",
++      "sourceSha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-west.png",
++      "outputSha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
++    },
++    {
++      "identityId": "app-gapfill-v6e.008",
++      "pose": "sit-north",
++      "sourceInput": "appGapfillV6e",
++      "sourceFile": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-north.png",
++      "sourceSha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++      "outputFile": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-north.png",
++      "outputSha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++      "sourceSheet": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/source.png",
++        "sha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b"
++      },
++      "sourceProvenance": {
++        "path": "artifacts/character-statics/app-gapfill-v6e/sources/008/provenance.json",
++        "sha256": "5d8215fbf514fc2e5d7d36db94a52a3bf4e1320f465a3810e8c2b47ee716886f"
++      },
++      "ownerApproval": {
++        "file": "artifacts/character-statics/app-gapfill-v6e/owner-runtime-approval.json",
++        "sha256": "d4689f3df45301396a7f6156014974c0818e9a35694898fbd6576f7e8b2be607"
++      },
++      "seatContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10"
+     }
+   ]
+ }

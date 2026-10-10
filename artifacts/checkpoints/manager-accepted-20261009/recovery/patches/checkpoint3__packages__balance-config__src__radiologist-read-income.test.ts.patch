@@ -1,0 +1,11 @@
+--- a/packages/balance-config/src/radiologist-read-income.test.ts
++++ b/packages/balance-config/src/radiologist-read-income.test.ts
+@@ -8,7 +8,7 @@
+     const room = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(room => room.id === "room.reading")!;
+     const hourlyRevenue = 60 / RADIOLOGIST_READ_INCOME.outsideDurationMinutes * RADIOLOGIST_READ_INCOME.outsideFee;
+     expect(hourlyRevenue).toBe(60);
+-    expect(hourlyRevenue - radiologist.salaryPerExpenseInterval - room.upkeepPerExpenseInterval).toBe(10);
++    expect(hourlyRevenue - radiologist.salaryPerExpenseInterval - room.upkeepPerExpenseInterval).toBe(36);
+     expect(RADIOLOGIST_READ_INCOME.inHouseFee).toBe(5);
+   });
+   it("keeps acquisition prices unchanged alongside the additional $5 local read fee", () => {

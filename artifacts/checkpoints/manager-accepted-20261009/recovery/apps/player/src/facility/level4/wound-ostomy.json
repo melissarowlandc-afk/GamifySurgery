@@ -1,0 +1,1876 @@
+{
+  "proofId": "wound-ostomy",
+  "roomDefinitionId": "room.wound_ostomy",
+  "proofPath": "tools/room-design/level-4/wound-ostomy/proof/index.html",
+  "assets": [
+    {
+      "id": "level4:wound-ostomy:wound-recliner",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/wound-recliner.png"
+    },
+    {
+      "id": "level4:wound-ostomy:exam-lamp",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/exam-lamp.png"
+    },
+    {
+      "id": "level4:wound-ostomy:rolling-stool-backless",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/rolling-stool-backless.png"
+    },
+    {
+      "id": "gs015:minor-procedure:furniture",
+      "relativePath": "art/rooms/gs015-v1/minor-procedure/furniture.webp"
+    },
+    {
+      "id": "level4:wound-ostomy:ostomy-shelf",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/ostomy-shelf.png"
+    },
+    {
+      "id": "level4:wound-ostomy:dressing-cart",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/dressing-cart.png"
+    },
+    {
+      "id": "room-touchup:curtain-bunch",
+      "relativePath": "art/rooms/touchup-v1/curtain-bunch.png"
+    },
+    {
+      "id": "room-touchup:biohazard-bin",
+      "relativePath": "art/rooms/touchup-v1/biohazard-bin.png"
+    },
+    {
+      "id": "level4:wound-ostomy:hygiene-sign",
+      "relativePath": "art/rooms/level4-v1/wound-ostomy/hygiene-sign.png"
+    }
+  ],
+  "orientations": [
+    {
+      "runtimeOrientation": 0,
+      "proofView": "north-up",
+      "footprint": [
+        3,
+        3
+      ]
+    }
+  ],
+  "shell": {
+    "tilePixels": 120,
+    "rearWallHeightPixels": 90,
+    "lowNorthHeightPixels": 29,
+    "sideCapWidthPixels": 14,
+    "southHeightPixels": 29,
+    "floorAlgorithm": "approved-proof",
+    "floorBase": "#e6e8df",
+    "floorPalette": [
+      "#e6e8df"
+    ],
+    "background": "#f3ead3",
+    "rearWall": "#b9c7a5",
+    "baseTrim": "#58735a",
+    "edgeTrim": "#294632",
+    "doorJamb": "#744a29",
+    "doorInsetPixels": 12,
+    "floorPattern": "wound-ostomy approved material",
+    "floorPatternKind": "vinyl",
+    "floorPatternSizePixels": 30,
+    "floorPatternSeed": 17,
+    "floorGrout": "#7a6c5e",
+    "floorAccent": "#000000",
+    "exactProofFloor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 360,
+        "color": "#e6e8df"
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 1,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 73,
+        "y": 1,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 145,
+        "y": 25,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 217,
+        "y": 25,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 289,
+        "y": 49,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 25,
+        "y": 73,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 97,
+        "y": 73,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 169,
+        "y": 97,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 97,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 313,
+        "y": 121,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 49,
+        "y": 145,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 145,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 193,
+        "y": 169,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 265,
+        "y": 169,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 193,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 337,
+        "y": 193,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 73,
+        "y": 217,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 145,
+        "y": 217,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 217,
+        "y": 241,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 289,
+        "y": 241,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 25,
+        "y": 265,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 97,
+        "y": 289,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 169,
+        "y": 289,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 313,
+        "width": 22,
+        "height": 22,
+        "color": "#d8dccf",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 313,
+        "y": 313,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "rect",
+        "x": 49,
+        "y": 337,
+        "width": 22,
+        "height": 22,
+        "color": "#cfd8d6",
+        "alpha": 0.55
+      },
+      {
+        "shape": "line",
+        "x": 24,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 48,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 72,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 96,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 144,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 168,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 192,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 216,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 264,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 288,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 312,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 336,
+        "y": 0,
+        "width": 0,
+        "height": 360,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 24,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 48,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 72,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 96,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 144,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 168,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 192,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 216,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 264,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 312,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 336,
+        "width": 360,
+        "height": 0,
+        "color": "#6f7a72",
+        "alpha": 0.14
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "recliner",
+      "assetId": "level4:wound-ostomy:wound-recliner",
+      "sourceRect": [
+        0,
+        0,
+        624,
+        470
+      ],
+      "renderSizeTiles": [
+        1.3,
+        0.9791666666666666
+      ],
+      "destinationTopLeftTiles": [
+        0.25,
+        0.9854166666666667
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.9,
+        1.95
+      ],
+      "depthKey": 1.95,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        312,
+        463
+      ]
+    },
+    {
+      "id": "lamp",
+      "assetId": "level4:wound-ostomy:exam-lamp",
+      "sourceRect": [
+        0,
+        0,
+        172,
+        652
+      ],
+      "renderSizeTiles": [
+        0.36,
+        1.3646511627906976
+      ],
+      "destinationTopLeftTiles": [
+        1.4400000000000002,
+        -0.1499999999999999
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.62,
+        1.2
+      ],
+      "depthKey": 1.2,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "footprint": {
+        "left": 1.5,
+        "top": 1.08,
+        "width": 0.22,
+        "height": 0.12
+      },
+      "sourceFloorContact": [
+        85.99999999999997,
+        645
+      ]
+    },
+    {
+      "id": "stool",
+      "assetId": "level4:wound-ostomy:rolling-stool-backless",
+      "sourceRect": [
+        0,
+        0,
+        266,
+        427
+      ],
+      "renderSizeTiles": [
+        0.44,
+        0.7063157894736842
+      ],
+      "destinationTopLeftTiles": [
+        1.93,
+        1.1936842105263157
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.15,
+        1.9
+      ],
+      "depthKey": 1.9,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        133,
+        427.00000000000006
+      ]
+    },
+    {
+      "id": "sink",
+      "assetId": "gs015:minor-procedure:furniture",
+      "sourceRect": [
+        8,
+        1569,
+        265,
+        386
+      ],
+      "renderSizeTiles": [
+        0.62,
+        0.9030943396226415
+      ],
+      "destinationTopLeftTiles": [
+        0.14,
+        -0.5830943396226416
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.45,
+        0.32
+      ],
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "backedOwners": [
+        "N1"
+      ],
+      "footprint": {
+        "left": 0.25,
+        "top": 0.18,
+        "width": 0.4,
+        "height": 0.12
+      },
+      "touchupKeepWhenBacked": true,
+      "sourceFloorContact": [
+        132.5,
+        386.00000000000006
+      ]
+    },
+    {
+      "id": "ostomyShelf",
+      "assetId": "level4:wound-ostomy:ostomy-shelf",
+      "sourceRect": [
+        0,
+        0,
+        442,
+        596
+      ],
+      "renderSizeTiles": [
+        0.92,
+        1.2405429864253394
+      ],
+      "destinationTopLeftTiles": [
+        1.5499999999999998,
+        -0.9018099547511311
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.01,
+        0.32
+      ],
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N2",
+        "N3"
+      ],
+      "backedOwners": [
+        "N2",
+        "N3"
+      ],
+      "footprint": {
+        "left": 1.65,
+        "top": 0.18,
+        "width": 0.72,
+        "height": 0.12
+      },
+      "touchupKeepWhenBacked": true,
+      "sourceFloorContact": [
+        220.99999999999997,
+        587
+      ]
+    },
+    {
+      "id": "dressingCart",
+      "assetId": "level4:wound-ostomy:dressing-cart",
+      "sourceRect": [
+        0,
+        0,
+        268,
+        412
+      ],
+      "renderSizeTiles": [
+        0.56,
+        0.8608955223880598
+      ],
+      "destinationTopLeftTiles": [
+        2.34,
+        2.037910447761194
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.62,
+        2.88
+      ],
+      "depthKey": 2.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S3",
+        "EC"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 2.45,
+        "top": 2.76,
+        "width": 0.34,
+        "height": 0.1
+      },
+      "sourceFloorContact": [
+        134.0000000000001,
+        402.99999999999994
+      ]
+    },
+    {
+      "id": "curtain",
+      "assetId": "room-touchup:curtain-bunch",
+      "sourceRect": [
+        0,
+        0,
+        62,
+        211
+      ],
+      "renderSizeTiles": [
+        0.2,
+        0.6806451612903226
+      ],
+      "destinationTopLeftTiles": [
+        0.06,
+        1.6393548387096772
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.16,
+        2.32
+      ],
+      "depthKey": 2.32,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "WC"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 0.08,
+        "top": 2.22,
+        "width": 0.16,
+        "height": 0.1
+      },
+      "sourceFloorContact": [
+        31,
+        211
+      ]
+    },
+    {
+      "id": "bio",
+      "assetId": "room-touchup:biohazard-bin",
+      "sourceRect": [
+        0,
+        0,
+        77,
+        92
+      ],
+      "renderSizeTiles": [
+        0.4,
+        0.47792207792207797
+      ],
+      "destinationTopLeftTiles": [
+        0.14,
+        2.402077922077922
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.34,
+        2.88
+      ],
+      "depthKey": 2.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 0.22,
+        "top": 2.76,
+        "width": 0.24,
+        "height": 0.1
+      },
+      "sourceFloorContact": [
+        38.5,
+        92.00000000000003
+      ]
+    },
+    {
+      "id": "hygieneSign",
+      "assetId": "level4:wound-ostomy:hygiene-sign",
+      "sourceRect": [
+        0,
+        0,
+        144,
+        172
+      ],
+      "renderSizeTiles": [
+        0.3,
+        0.35833333333333334
+      ],
+      "destinationTopLeftTiles": [
+        2.5900000000000003,
+        -0.6525
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N3"
+      ],
+      "backedOwners": [
+        "N3"
+      ]
+    }
+  ],
+  "supports": [
+    {
+      "id": "recliner:patient",
+      "role": "wound-ostomy-patient",
+      "pose": "seated",
+      "facing": "east",
+      "seat": {
+        "x": 0.6288793103448275,
+        "y": 1.4886135057471264
+      },
+      "ground": {
+        "x": 0.62,
+        "y": 1.95
+      },
+      "fixtureGround": {
+        "x": 0.62,
+        "y": 1.95
+      },
+      "supportRecord": "recliner",
+      "painterDepth": 1.9501,
+      "allowedActors": [
+        "patient"
+      ],
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "stool:clinician",
+      "role": "wound-ostomy-clinician",
+      "pose": "seated",
+      "facing": "west",
+      "seat": {
+        "x": 2.15,
+        "y": 1.4169924812030075
+      },
+      "ground": {
+        "x": 2.15,
+        "y": 1.9
+      },
+      "fixtureGround": {
+        "x": 2.15,
+        "y": 1.9
+      },
+      "supportRecord": "stool",
+      "painterDepth": 1.9001,
+      "allowedActors": [
+        "provider"
+      ],
+      "doorOwners": [],
+      "backedOwners": []
+    }
+  ],
+  "solids": [
+    {
+      "id": "recliner",
+      "footprint": {
+        "left": 0.35,
+        "top": 1.55,
+        "width": 1.15,
+        "height": 0.4
+      },
+      "endpoint": true
+    }
+  ],
+  "routeClearances": [
+    {
+      "id": "recliner",
+      "footprint": {
+        "left": 0.4,
+        "top": 1.9333333333333333,
+        "width": 0.5666666666666667,
+        "height": 0.016666666666666607
+      },
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "lamp",
+      "footprint": {
+        "left": 1.5948837209302327,
+        "top": 1.1832558139534883,
+        "width": 0.14441860465116285,
+        "height": 0.016744186046511622
+      },
+      "doorOwners": [],
+      "backedOwners": []
+    },
+    {
+      "id": "ostomyShelf",
+      "footprint": {
+        "left": 1.6499095022624435,
+        "top": 0.30334841628959286,
+        "width": 0.722262443438914,
+        "height": 0.01665158371040726
+      },
+      "doorOwners": [
+        "N2",
+        "N3"
+      ],
+      "backedOwners": []
+    },
+    {
+      "id": "dressingCart",
+      "footprint": {
+        "left": 2.4068656716417913,
+        "top": 2.863283582089552,
+        "width": 0.4179104477611939,
+        "height": 0.016716417910447756
+      },
+      "doorOwners": [
+        "S3",
+        "EC"
+      ],
+      "backedOwners": []
+    },
+    {
+      "id": "stool",
+      "footprint": {
+        "left": 2.111954887218045,
+        "top": 1.8470676691729326,
+        "width": 0.07609022556390999,
+        "height": 0.047969924812029996
+      },
+      "doorOwners": [],
+      "backedOwners": []
+    }
+  ],
+  "approachRoutes": [
+    {
+      "doorSegment": "N1",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1.45,
+          0.2
+        ],
+        [
+          1.45,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          1.65
+        ],
+        [
+          1.9,
+          1.65
+        ],
+        [
+          1.9,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N1",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1.45,
+          0.2
+        ],
+        [
+          1.45,
+          0.5
+        ],
+        [
+          2.65,
+          0.5
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.95,
+          0.2
+        ],
+        [
+          1.95,
+          1.65
+        ],
+        [
+          1.9,
+          1.65
+        ],
+        [
+          1.9,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          2.65,
+          0.2
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.65,
+          0.2
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          2.8,
+          0.5
+        ],
+        [
+          2.8,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          2.8,
+          0.5
+        ],
+        [
+          2.8,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          2.8,
+          1.5
+        ],
+        [
+          2.8,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          2.8,
+          1.5
+        ],
+        [
+          2.8,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          2.8,
+          2.5
+        ],
+        [
+          2.8,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          2.8,
+          2.5
+        ],
+        [
+          2.8,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          0.5,
+          2.8
+        ],
+        [
+          0.5,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          0.5,
+          2.8
+        ],
+        [
+          0.5,
+          2.15
+        ],
+        [
+          1.7,
+          2.15
+        ],
+        [
+          1.7,
+          2.1
+        ],
+        [
+          2.4,
+          2.1
+        ],
+        [
+          2.4,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          1.5,
+          2.8
+        ],
+        [
+          1.5,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          1.5,
+          2.8
+        ],
+        [
+          1.5,
+          2.15
+        ],
+        [
+          1.7,
+          2.15
+        ],
+        [
+          1.7,
+          2.1
+        ],
+        [
+          2.4,
+          2.1
+        ],
+        [
+          2.4,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          2.5,
+          2.8
+        ],
+        [
+          2.5,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          2.5,
+          2.8
+        ],
+        [
+          2.5,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          1.95,
+          0.5
+        ],
+        [
+          1.95,
+          1.65
+        ],
+        [
+          1.9,
+          1.65
+        ],
+        [
+          1.9,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          2.65,
+          0.5
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          1.15,
+          1.5
+        ],
+        [
+          1.15,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          2.65,
+          1.5
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "recliner:patient",
+      "standingApproach": {
+        "x": 0.95,
+        "y": 2.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.2,
+          2.3
+        ],
+        [
+          0.95,
+          2.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "stool:clinician",
+      "standingApproach": {
+        "x": 2.65,
+        "y": 1.75
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.2,
+          2.15
+        ],
+        [
+          1.7,
+          2.15
+        ],
+        [
+          1.7,
+          2.1
+        ],
+        [
+          2.4,
+          2.1
+        ],
+        [
+          2.4,
+          1.75
+        ],
+        [
+          2.65,
+          1.75
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    }
+  ],
+  "procedural": [],
+  "provenance": {
+    "receiptPath": "tools/room-design/level-4/wound-ostomy/approval-2026-10-08.md",
+    "receiptSha256": "76d33e4f952f554ee824314a4daa74e7bb6ba398c62f04bee5c7b4781876a1ea",
+    "designSha256": "cfda4e3bb62caae24decee837ae73253330f059317afe63aded9b4127408d488",
+    "approved": [
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/proof/index.html",
+        "sha256": "ac922c6e112b77797b5ce8ea7187f23fa88d8d424d85b656bd30a930b72a274a"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/dressing-cart.png",
+        "sha256": "c03d3b68d1493b7f32f057ead56695bc462ea091df8706b1cfdbeb0330a4771d"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/exam-lamp.png",
+        "sha256": "465ac4a0d251a7fe6bb14118182b04dc7646f2baacfc968e991dab40d7192e2b"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/hygiene-sign.png",
+        "sha256": "f3b057aa9b1e2bd64b095efc637037dd68a20064881a56c25fe19facf9665f9b"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/ostomy-shelf.png",
+        "sha256": "a4265763867f0c93dd85c095e66950c7c0cc51a67f831eb4ddeb057b8be431b4"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/wound-recliner.png",
+        "sha256": "8b9275db15c012bdced3a0d2e25c689860326a09bab59d0838688ec95bf26fbb"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/processed/metadata.json",
+        "sha256": "60454bb5a45ca51b0e76fde8b4ecf5fc82da132ee75977e28d91940e77e7470f"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/reused/stool-contract.json",
+        "sha256": "de967420a13cd476ad16e279dfdd7d8c691d451f4408aaef3da960f956576890"
+      },
+      {
+        "source": "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+        "sha256": "0532e455112d364b21b1ae6d1fd482593c76357d1a3e73d966c9bd18291c9722"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/reused/backlessRollingStools.ts",
+        "sha256": "4cbccb354965d1c43765f1f2c63106d65ba2697c99a049d59b8c2a2db60991bc"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/assets/reused/rolling-stool-backless.png",
+        "sha256": "a0b7fa6af9ce63ff02a7685afbd959ee02c35737830075113e9d8052d49fbd47"
+      },
+      {
+        "source": "apps/player/public/art/rooms/touchup-v1/curtain-bunch.png",
+        "sha256": "53e59d9aabf0a3104f86384a5cbc3999cc6c148ac9fe8229ee7a68ac55cfa874"
+      },
+      {
+        "source": "apps/player/public/art/rooms/touchup-v1/biohazard-bin.png",
+        "sha256": "17d499d8c12cb65685dd8b5e80e3f344ae3abe7cd208db642507039a6b6c0563"
+      },
+      {
+        "source": "tools/room-design/level-4/wound-ostomy/proof/presentation-contract.json",
+        "sha256": "47f28dcbacbb284f84d449a626d6cd02a79b800912d4261f48584ec6d850666f"
+      }
+    ]
+  }
+}

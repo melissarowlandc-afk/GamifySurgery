@@ -1,0 +1,10 @@
+PASS: exact B room/salary/fee values; all other balance/catalog fields, upgrade prices/effects and training preserved.
+PASS: 8 numerical/source invariants; 20 seeds x 40 measured hours + 10 warmup hours per scenario.
+MATCH L1 baseline: income=149.08, stock=0, costs=45, net=104.08, fourDayNet=4163.25
+MATCH L1 slow: income=73.54, stock=0, costs=45, net=28.54, fourDayNet=1141.5
+MATCH L2 baseline: income=661.11, stock=2.88, costs=259, net=399.23, fourDayNet=15969.25
+MATCH L2 slow: income=370.76, stock=1.52, costs=259, net=110.24, fourDayNet=4409.5
+MATCH L3 baseline: income=965.61, stock=14.88, costs=459, net=491.73, fourDayNet=19669.25
+MATCH L3 slow: income=568.01, stock=7.53, costs=459, net=101.49, fourDayNet=4059.5
+Read-only run; pass --write to refresh the local research results artifact.
+PASS: all six implemented current scenarios equal the frozen audit Option B within $0.005 rounding. Original research artifacts were not overwritten.

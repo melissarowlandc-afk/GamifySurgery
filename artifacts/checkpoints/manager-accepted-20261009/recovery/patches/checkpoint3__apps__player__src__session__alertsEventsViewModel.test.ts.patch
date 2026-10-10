@@ -1,0 +1,72 @@
+--- a/apps/player/src/session/alertsEventsViewModel.test.ts
++++ b/apps/player/src/session/alertsEventsViewModel.test.ts
+@@ -1,11 +1,12 @@
+ import { describe, expect, it } from "vitest";
+ import {
+-  TUTORIAL_ENCOUNTER_ID, createInitialGameState, deserializeGameState, gameReducer,
+-  getRoomDefinition, isRoomOperationalForFacilityWork, serializeGameState,
+-  synchronizeFacilityOperationalAlertOccurrences,
++  PROTOTYPE_DOMAIN_CONTEXT, TUTORIAL_ENCOUNTER_ID, createInitialGameState, deserializeGameState, gameReducer,
++  getFacilityProgressionStatus, getRoomDefinition, getRoomNavigationAnchor, isRoomOperationalForFacilityWork, serializeGameState,
++  projectedNextOperatingPostingCents, synchronizeFacilityOperationalAlertOccurrences,
+   type DiagnosticOrderPlan, type GameState, type PendingResult,
+ } from "@gamify-surgery/game-domain";
+ import { createClinicFeedView, createNeedsYouView } from "./alertsEventsViewModel";
++import { createLevelThreeReadyQaState } from "../../../../tests/fixtures/level-four-progression";
+ 
+ function patient(state: GameState) {
+   const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+@@ -45,6 +46,43 @@
+ }
+ 
+ describe("Alerts & Events admission and history", () => {
++  it.each([1, 2, 3] as const)("keeps only the advancement milestone after Level %i eligibility resolves, including reload", (level) => {
++    const state = createLevelThreeReadyQaState();
++    state.facilityLevel = level;
++    state.clinicalXp = [0, 150, 300, 500][level]!;
++    if (level === 1) {
++      const ultrasound = state.rooms.find((room) => room.id === "room.goal.xray")!;
++      ultrasound.roomDefinitionId = "room.ultrasound";
++      state.rooms.push({ id: "minor", roomDefinitionId: "room.minor_procedure", x: 33, y: 24,
++        orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++      state.doors.push({ id: "minor.west", roomId: "minor", side: "west", offset: 1, exterior: false });
++      const imaging = state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.imaging_technician")!;
++      imaging.homeRoomInstanceId = ultrasound.id;
++      imaging.location = getRoomNavigationAnchor(ultrasound, getRoomDefinition("room.ultrasound")!, "staff");
++      imaging.path = [imaging.location];
++    }
++    if (level === 2) state.serviceIncomeReceipts.push({
++      id: "receipt.endoscopy", transactionKey: "receipt.endoscopy", incomeLineId: "income.endoscopy", catalogVersion: 1,
++      routeId: "route.colonoscopy.in_house", actorKind: "patient", actorId: TUTORIAL_ENCOUNTER_ID,
++      grossAmount: 450, stockCost: 0, netCashDelta: 450, completedAtFacilityTick: 10,
++    });
++    expect(getFacilityProgressionStatus(state).eligible).toBe(true);
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    const eligibilityId = state.environment.facilityConditionOccurrences.find((item) =>
++      item.conditionKey === "progression_eligible" && item.resolvedAtFacilityTick === null)!.id;
++    const advanced = gameReducer(state, { type: "LEVEL_UP", operationId: `advance.${level}` });
++    expect(advanced.facilityLevel).toBe(level + 1);
++    expect(advanced.environment.facilityConditionOccurrences.find((item) => item.id === eligibilityId)!.resolvedAtFacilityTick).not.toBeNull();
++    for (const saved of [advanced, deserializeGameState(serializeGameState(advanced))]) {
++      const feed = createClinicFeedView(saved);
++      expect(feed.some((row) => row.id === eligibilityId)).toBe(false);
++      expect(feed.some((row) => row.message === "Level current complete was resolved.")).toBe(false);
++      expect(feed.filter((row) => row.message === `Facility advanced to Level ${level + 1}.`)).toMatchObject([
++        { rowKind: "milestone", speaker: "Milestone" },
++      ]);
++    }
++  });
++
+   it("supersedes low cash with zero cash without a false Handled row, then handles genuine recovery once", () => {
+     const state = createInitialGameState(); state.cash = 60; state.cashCents = 6000;
+     synchronizeFacilityOperationalAlertOccurrences(state);
+@@ -135,7 +173,8 @@
+     const cards = createNeedsYouView(state);
+     expect(cards).toHaveLength(1);
+     expect(cards[0]).toMatchObject({ id: "need.finance.payroll", targetType: "money", action: { kind: "emergency_consult" }, deadline: { minutesLeft: 5, windowMinutes: 15 } });
+-    expect(cards[0]!.why).toContain("$2.00 is missing");
++    const expectedGapCents = projectedNextOperatingPostingCents(state, PROTOTYPE_DOMAIN_CONTEXT) - state.cashCents;
++    expect(cards[0]!.why).toContain(`$${(expectedGapCents / 100).toFixed(2)} is missing`);
+     expect(cards[0]!.why).toContain(state.employees[0]!.displayName);
+     state.cash = 2; state.cashCents = 200;
+     expect(createNeedsYouView(state)).toEqual([]);

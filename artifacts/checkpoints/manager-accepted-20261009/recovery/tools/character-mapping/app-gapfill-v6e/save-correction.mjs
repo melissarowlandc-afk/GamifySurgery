@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync,copyFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {root,hash} from './build-roster.mjs';
+const [number,nativePath]=process.argv.slice(2);
+assert(/^00[1-8]$/.test(number));
+const dir=resolve(root,'sources',number),args=JSON.parse(readFileSync(resolve(dir,'correction-tool-args.json'),'utf8'));
+const reason=JSON.parse(readFileSync(resolve(dir,'correction-reason.json'),'utf8'));
+assert(args.transparent_background && args.referenced_image_paths.length===2);
+assert.equal(hash(args.referenced_image_paths[1]),reason.rejectedSourceSha256);
+const destination=resolve(dir,'source.png');copyFileSync(nativePath,destination);
+writeFileSync(resolve(dir,'exact-prompt.txt'),args.prompt);writeFileSync(resolve(dir,'tool-args.json'),JSON.stringify(args,null,2)+'\n');
+const sha256=hash(destination);assert.equal(sha256,hash(nativePath));
+writeFileSync(resolve(dir,'provenance.json'),JSON.stringify({status:'candidate_pending_manager_visual_review;not-approved;not-runtime-integrated',toolMode:'built-in-image_gen',stage:2,generation:'targeted-'+reason.slug,reason:reason.reason,nativeOutput:{path:nativePath,sha256},workspaceCopy:{path:'source.png',sha256,copyFidelity:'byte-exact'},references:args.referenced_image_paths.map((path,i)=>({path,sha256:hash(path),role:i===0?'style-layout-pose-reference':'immutable-whole-sheet-edit-target'})),prompt:{path:'exact-prompt.txt',sha256:hash(resolve(dir,'exact-prompt.txt'))}},null,2)+'\n');
+console.log(JSON.stringify({status:'PASS',number,generation:'targeted-'+reason.slug,sha256,copyFidelity:'byte-exact'}));

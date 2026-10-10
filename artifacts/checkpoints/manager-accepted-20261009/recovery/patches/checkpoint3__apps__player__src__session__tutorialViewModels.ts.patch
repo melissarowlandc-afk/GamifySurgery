@@ -1,0 +1,67 @@
+--- a/apps/player/src/session/tutorialViewModels.ts
++++ b/apps/player/src/session/tutorialViewModels.ts
+@@ -9,7 +9,8 @@
+   isRoomOperationalForFacilityWork,
+   type EncounterState,
+   type GameState,
+-} from "@gamify-surgery/game-domain";
++} from "@gamify-surgery/game-domain";
++import { getTutorialClockMultiplier, GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER } from "./tutorialTiming";
+ 
+ export type TutorialActionId =
+   | "open-first-chart"
+@@ -164,10 +165,12 @@
+     if (encounter.checkInStatus !== "checked_in") {
+       return { ...base, id: second ? "second-patient-arriving" : "first-patient-arriving",
+         title: second ? "Another patient. Naturally." : "Incoming paperwork",
+-        body: state.paused ? "Resume when you're ready for the patient to check in."
+-          : "Charts appear in Waiting after check-in. Time runs while you read; Pause is allowed.",
+-        target: state.paused ? "facility-clock" : "facility-entrance",
+-        targetSelector: state.paused ? ".pause-button" : "[data-tutorial-anchor='facility-entrance']",
++        body: state.paused ? "Resume for automatic check-in at the Front Desk. The founder returns if needed; the chart will appear in Waiting."
++          : encounter.checkInStatus === "awaiting_staff"
++            ? "The patient is waiting at the Front Desk. The founder returns after any current task to check them in automatically. Watch Waiting for the chart."
++            : "Check-in happens automatically at the Front Desk. The founder returns if needed; open the chart when it appears in Waiting.",
++        target: state.paused ? "facility-clock" : "waiting-patient",
++        targetSelector: state.paused ? ".pause-button" : ".patient-folder.is-waiting",
+         topicIds: ["patient-folders", "pause-speed"] };
+     }
+     return { ...base, id: second ? "open-second-chart" : "open-first-chart",
+@@ -189,19 +192,24 @@
+       target: "chart-feedback", targetSelector: "[data-tutorial-anchor='decision-feedback-action']",
+       avoidSelector: ".chart-sheet, .chart-panel", topicIds: ["plan-enactment"] };
+   }
+-  if (pending) {
++  if (pending) {
++    const clockMultiplier = getTutorialClockMultiplier(state, input.tutorialsEnabled);
++    const fastForwardNote = clockMultiplier > 1
++      ? `First-shift fast-forward: facility time runs at ${state.simulationSpeed * clockMultiplier}× until the patient returns. Estimates are game time; Pause still works.`
++      : null;
+     // This pointer is a single optional exposure in the existing coach location.
+     // It never captures pause or waits for a read receipt.
+     if (!state.paused && !open && encounter.patientLocation === null && encounter.patientMovement === null &&
+       !(input.exposedTopicIds ?? []).includes("management")) {
+       return { ...base, id: "sendout-management", title: "While they're away",
+-        body: "Management handles staff and income, and pauses the clinic. Apparently overhead needs supervision.",
++        body: "Management handles staff and income, and pauses the clinic. Apparently overhead needs supervision.",
++        ...(fastForwardNote ? { note: fastForwardNote } : {}),
+         target: "management", targetSelector: ".management-mode-trigger", topicIds: ["management"] };
+     }
+     const remaining = Math.max(0, (encounter.pendingResult?.dueTick ?? state.facilityTick) - state.facilityTick);
+     return { ...base, id: second ? "second-sendout-wait" : "off-site-result", title: "Patient away. Chart stays.",
+-      body: state.paused ? "Resume to let the visit continue. The chart stays in Existing Patients."
+-        : "Wait for the return marker in Existing Patients; the next question is still locked. 2× and 4× run the clinic faster.",
++      body: state.paused ? `Resume to let the visit continue. ${fastForwardNote ?? "The chart stays in Existing Patients."}`
++        : fastForwardNote ?? "Wait for the return marker in Existing Patients; the next question is still locked. 2× and 4× run the clinic faster.",
+       note: remaining > 0 ? `${formatMinutes(remaining)} on the current estimate; physical return and check-in still apply.`
+         : "Care, return and check-in must finish before the next decision.",
+       target: "facility-clock", targetSelector: state.paused ? ".pause-button" : ".facility-time-chip",
+@@ -233,7 +241,7 @@
+     return { ...base, id: firstChoice ? (second ? "second-first-decision" : "first-decision")
+         : (second ? "second-follow-up-decision" : "follow-up-decision"),
+       title: firstChoice ? (second ? "This plan takes time" : "Make the decision") : "New findings, next decision",
+-      body: firstChoice ? (second ? "Test choices show game-time estimates. Those are waits, not hints. Choose using the clinical information."
++      body: firstChoice ? (second ? `Test choices show game-time estimates. During this guided wait, facility time runs at ${state.simulationSpeed * GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER}×. Choose using the clinical information.`
+         : "Read the presentation, then choose. The answer is recorded; the chart will explain the result.")
+         : "Read the new update, then choose. Your earlier decision is still there if you need it.",
+       target: "answer-choices", targetSelector: "[data-tutorial-anchor='current-answer-choices']",

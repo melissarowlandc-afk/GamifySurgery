@@ -1,0 +1,20 @@
+--- a/apps/player/src/facility/backlessRollingStools.test.ts
++++ b/apps/player/src/facility/backlessRollingStools.test.ts
+@@ -15,6 +15,7 @@
+ import { resolveStaffIdleSupports } from "./staffIdleSupports";
+ import type { FacilityRoomView } from "./types";
+ import before from "./furnitureSeatLayering.before.fixture.json";
++import { APPROVED_LEVEL4_ROOM_DATA } from "./approvedLevel4RoomData";
+ 
+ vi.mock("phaser", () => ({ default: { Scene: class {} } }));
+ import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
+@@ -76,6 +77,9 @@
+   it("audits every approved stool crop and preserves every pre-change seat and placement", () => {
+     const found: string[] = [];
+     for (const room of APPROVED_ROOM_PRESENTATIONS) for (const view of room.orientations) {
++      // New native Level 4 stools have their own hash/scene tests; this is the
++      // unchanged GS-015 crop/seat baseline, including every legacy binding.
++      if (APPROVED_LEVEL4_ROOM_DATA.has(room.roomDefinitionId)) continue;
+       for (const draw of resolveApprovedRoomDrawRecords(room.roomDefinitionId, view.runtimeOrientation)) {
+         if (!/^stool\d*$/.test(draw.id)) continue;
+         expect(getApprovedRollingStoolSource(draw), room.roomDefinitionId + draw.id).toBeDefined();

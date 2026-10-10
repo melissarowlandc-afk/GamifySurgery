@@ -1,0 +1,47 @@
+--- a/apps/player/src/session/alertViewModels.test.ts
++++ b/apps/player/src/session/alertViewModels.test.ts
+@@ -1,7 +1,8 @@
+-import { describe, expect, it } from "vitest";
++import { afterEach, beforeEach, describe, expect, it } from "vitest";
+ import { ROOM_UPGRADE_CATALOG, renderPrototypeAlert } from "@gamify-surgery/balance-config";
+ import {
+   TUTORIAL_ENCOUNTER_ID,
++  PROTOTYPE_DOMAIN_CONTEXT,
+   SECOND_TUTORIAL_ENCOUNTER_ID,
+   createInitialGameState,
+   deserializeGameState,
+@@ -15,6 +16,7 @@
+   type GameState,
+ } from "@gamify-surgery/game-domain";
+ import { createMessageBoardView } from "./alertViewModels";
++import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
+ 
+ function cloneState(state: GameState): GameState {
+   return JSON.parse(JSON.stringify(state)) as GameState;
+@@ -1698,9 +1700,13 @@
+ });
+ 
+ describe("room-specific upgrade comfort messages", () => {
++  const normalBalance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
++  beforeEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = createLevelFourRoomsQaContext().balanceRelease; });
++  afterEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = normalBalance; });
+   it.each(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future"))(
+     "only generates new satisfaction guidance for $roomDefinitionId", ({ roomDefinitionId }) => {
+-      const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++      const context = getRoomDefinition(roomDefinitionId)!.unlockFacilityLevel === 4 ? createLevelFourRoomsQaContext() : undefined;
++      const state = createInitialGameState(); state.facilityLevel = getRoomDefinition(roomDefinitionId)!.unlockFacilityLevel === 4 ? 4 : 3; state.facilityTick = 120;
+       const room = { id: "room.player.comfort", roomDefinitionId, x: 20, y: 12,
+         orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+       state.rooms.push(room);
+@@ -1710,9 +1716,9 @@
+       encounter.waiting.arrivedAtTick = 0;
+       encounter.patientLocation = getRoomNavigableTiles(room, getRoomDefinition(roomDefinitionId)!, state.doors)[0] ?? null;
+       state.encounters = { [encounter.id]: encounter };
+-      synchronizeFacilityOperationalAlertOccurrences(state);
++      synchronizeFacilityOperationalAlertOccurrences(state, context);
+       const messages = createMessageBoardView(state).filter((item) => item.targetType === "room" && item.targetId === room.id);
+-      expect(messages.length > 0).toBe(["room.waiting", "room.examination", "room.periop_recovery"].includes(roomDefinitionId));
++      expect(messages.length > 0).toBe(["room.waiting", "room.examination", "room.periop_recovery", "room.pediatric_waiting", "room.pediatric_examination"].includes(roomDefinitionId));
+     },
+   );
+ 

@@ -1,0 +1,112 @@
+import { useEffect, useId, useRef, useState } from "react";
+import type { ProcedureSetupRequirementView, ProgressionView } from "./types";
+import "./goalsPanel.css";
+
+interface GoalsPanelProps {
+  view: ProgressionView;
+  onLevelUp: () => void;
+  onProcedureSetupAction: (action: NonNullable<ProcedureSetupRequirementView["action"]>) => void;
+}
+
+export function GoalsPanel({
+  view,
+  onLevelUp,
+  onProcedureSetupAction,
+}: GoalsPanelProps) {
+  const panelRef = useRef<HTMLElement>(null);
+  const [setupOpen, setSetupOpen] = useState(false);
+  const secondaryTooltipId = useId();
+
+  useEffect(() => {
+    panelRef.current?.scrollTo({ top: 0 });
+    setSetupOpen(false);
+  }, [view.facilityLevelLabel]);
+
+  return (
+    <aside className={`panel goals-panel${setupOpen ? " has-procedure-setup" : ""}`} ref={panelRef}>
+      <div className="panel-heading">
+        <span>{view.facilityLevelLabel} goals</span>
+        <small>
+          {view.prototypeComplete
+            ? "Prototype milestone"
+            : view.nextLevelLabel ?? "Current level"}
+        </small>
+      </div>
+      <ul className="goal-list">
+        {view.goals.map((goal) => {
+          const ambulatoryOperation = goal.id === "progression.ambulatory_operation_completion";
+          const setupRequirements = goal.id === "progression.endoscopy_completion"
+            ? view.endoscopySetupRequirements
+            : ambulatoryOperation
+              ? view.ambulatoryOperationSetupRequirements
+              : undefined;
+          return (
+            <li className={goal.complete ? "is-complete" : ""} key={goal.id}>
+              <span aria-hidden="true">{goal.complete ? "■" : "□"}</span>
+              <div className="goal-content">
+                <span className="goal-label">{goal.label}<small>{goal.progressLabel}</small></span>
+                {setupRequirements ? (
+                  <div className="procedure-goal-setup">
+                    <button className="text-button" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((open) => !open)}>
+                      {setupOpen ? "Hide setup requirements" : "View setup requirements"}
+                    </button>
+                    {setupOpen ? (
+                      <>
+                        {ambulatoryOperation ? (
+                          <p>With Scheduled appointments enabled, ambulatory patients arrive when your setup is ready. Finish preparation, the operation, and recovery to complete this goal.</p>
+                        ) : null}
+                        <ul aria-label={ambulatoryOperation ? "Ambulatory operation setup requirements" : "Endoscopy setup requirements"}>
+                          {setupRequirements.map((requirement) => (
+                            <li key={requirement.id}>
+                              <span aria-hidden="true">{requirement.met ? "■" : "□"}</span>{" "}
+                              <span>{requirement.label} <small>{requirement.met ? "Ready" : "Missing"} · {requirement.detail}</small></span>
+                              {requirement.action ? <button className="text-button" type="button" onClick={() => onProcedureSetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      {view.canLevelUp || view.prototypeComplete || Boolean(view.secondaryGoals?.length) ? (
+        <div className="goals-advance-area">
+          {view.secondaryGoals?.map((goal) => (
+            <span
+              className={`goal-secondary-chip${goal.complete ? " is-complete" : ""}`}
+              key={goal.id}
+              tabIndex={0}
+              aria-describedby={`${secondaryTooltipId}.${goal.id}`}
+            >
+              <span className="goal-secondary-label">
+                Optional: {goal.id === "secondary.level_three_first_qi_review" ? "Quality review" : goal.label}
+              </span>
+              <span className="goal-secondary-progress">{goal.progressLabel}{goal.complete ? " ✓" : ""}</span>
+              <span className="goal-secondary-tooltip" role="tooltip" id={`${secondaryTooltipId}.${goal.id}`}>
+                Optional objective: {goal.label}. {goal.progressLabel}{goal.complete ? " — complete." : "."}
+              </span>
+            </span>
+          ))}
+          {view.canLevelUp ? (
+            <button
+              className="button button-primary level-up-button"
+              type="button"
+              onClick={onLevelUp}
+            >
+              Advance to {view.nextLevelLabel}
+            </button>
+          ) : null}
+          {view.prototypeComplete ? (
+            <p className="prototype-complete">
+              {view.facilityLevelLabel} complete. Level 4 is a preview and is not implemented in this prototype.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+    </aside>
+  );
+}

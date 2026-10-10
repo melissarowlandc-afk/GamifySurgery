@@ -1,0 +1,12 @@
+--- a/apps/player/src/ui/ClinicHeadline.tsx
++++ b/apps/player/src/ui/ClinicHeadline.tsx
+@@ -3,7 +3,8 @@
+ 
+ export function clinicHeadlineCandidates(items: MessageBoardItemView[], needs: NeedsYouItemView[]) {
+   return [
+-    ...items.map((item) => ({ id: item.id, text: item.message, tick: item.sortKey ?? 0 })),
++    ...items.filter((item) => item.id !== "event.facility-level-4-complete")
++      .map((item) => ({ id: item.id, text: item.message, tick: item.sortKey ?? 0 })),
+     ...needs.map((item) => ({ id: item.id, text: item.title, tick: item.sortKey })),
+   ].sort((left, right) => right.tick - left.tick);
+ }

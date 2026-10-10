@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "method": "Visually inspected landmarks in untouched built-in imagegen originals; exact pixel rectangles select foregrounds, without repainting.",
+  "chairSeatRiseProofPixels": 45,
+  "assets": {
+    "l1-desk": {"worktop": [768,318]},
+    "l2-desk": {"worktop": [768,376]},
+    "l3-desk": {"worktop": [768,391]},
+    "l4-desk": {"worktop": [768,342]},
+    "l5-desk": {"worktop": [768,307]},
+    "l1-founderChair": {"seat": [607,648], "frontRegions": [[300,495,130,155],[780,495,130,155],[0,700,1214,595]]},
+    "l2-founderChair": {"seat": [612,680], "frontRegions": [[215,460,165,150],[845,460,165,150],[0,758,1225,526]]},
+    "l3-founderChair": {"seat": [656,675], "frontRegions": [[300,450,140,190],[870,450,145,190],[0,772,1312,427]]},
+    "l4-founderChair": {"seat": [604,724], "frontRegions": [[205,490,155,235],[848,490,155,235],[0,805,1208,497]]},
+    "l5-founderChair": {"seat": [512,1070], "frontRegions": [[30,835,240,260],[755,835,245,260],[0,1115,1024,421]]},
+    "l1-visitorChair": {"seat": [701,535], "frontRegions": [[0,0,1402,1122]]},
+    "l2-visitorChair": {"seat": [615,650], "frontRegions": [[0,0,1230,1278]]},
+    "l3-visitorChair": {"seat": [639,650], "frontRegions": [[0,0,1278,1230]]},
+    "l4-visitorChair": {"seat": [660,620], "frontRegions": [[0,0,1320,1192]]},
+    "l5-visitorChair": {"seat": [658,620], "frontRegions": [[0,0,1317,1194]]}
+  },
+  "notes": [
+    "North-facing visitor viewed from south: chair rear/back/arms/legs are all camera-side foreground. Full exact chair pixels are redrawn over the real rear-view adult; head and shoulders remain visible above the compact back.",
+    "Visitor seat point is the concealed cushion plane behind the rear panel; the visible thin strip above the rear panel is not its seated contact. Native assembly guided this correction, with world seat/floor anchors unchanged.",
+    "Founder south chair: armrest rectangles plus lower cushion/front/base, all selected from the original. Founder remains behind desk.",
+    "Raw opaque floor is decoded alpha >=160. Chair uniform scale registers cushion 45 proof pixels above the common floor anchor."
+  ]
+}

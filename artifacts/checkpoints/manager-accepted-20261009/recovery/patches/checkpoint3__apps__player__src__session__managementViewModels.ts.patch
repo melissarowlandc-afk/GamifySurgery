@@ -1,0 +1,129 @@
+--- a/apps/player/src/session/managementViewModels.ts
++++ b/apps/player/src/session/managementViewModels.ts
+@@ -6,12 +6,17 @@
+   getEmployeeRoleTrainingPercent,
+   getEmployeeTrainingRole,
+   getFacilityClock,
++  getOperatingExpensePerFacilityHour,
++  getPatientEncounterIncomeCents,
++  getRollingIncomeSummary,
+   getRoomDefinition,
+   getStaffRoleDefinition,
+   PROTOTYPE_DOMAIN_CONTEXT,
++  ROLLING_INCOME_WINDOW_MINUTES,
+   type DomainContext,
+   type EmployeeState,
+   type GameState,
++  type RollingIncomeSourceId,
+ } from "@gamify-surgery/game-domain";
+ import { employeeTrainingBenefitLabel } from "./employeeTrainingViewModels";
+ import type {
+@@ -93,6 +98,7 @@
+ 
+ /** Plain description of how a catalog line brings money in. */
+ export function serviceArrivalLabel(line: ServiceIncomeLine, retailOutletLabel?: string): string {
++  if (line.retail?.category === "authorized_order") return `Authorized supply orders only at ${retailOutletLabel ?? "the outlet"}`;
+   if (line.retail) return `Walk-up sales at ${retailOutletLabel ?? "the shop"}`;
+   const mode = line.operation?.visitorMode;
+   const chartOrdered = line.eligibleRouteIds.length > 0 || line.operation?.encounterOnly;
+@@ -166,27 +172,55 @@
+   return getFacilityClock({ ...state, facilityTick }).displayLabel;
+ }
+ 
+-/** Since-opening earnings versus running costs, plus the current hourly burn. */
++const INCOME_SOURCE_LABELS: Record<RollingIncomeSourceId, string> = {
++  patient_encounters: "Patient encounters",
++  patient_services: "Patient services",
++  scheduled_services: "Scheduled services",
++  telehealth_automation: "Telehealth automation",
++  manual_telehealth: "Manual telehealth consults",
++  reads: "Radiology reads",
++  retail: "Retail purchases",
++  remote_work: "Remote work",
++  other: "Other settled income",
++};
++
++/** Settled income versus current obligations; opening totals include patients. */
+ export function createManagementFinanceView(
+   state: GameState,
+   totalsCents: { grossCents: number; stockCostCents: number; netCashDeltaCents: number },
+   receiptDisplayName: (incomeLineId: string) => string,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): ManagementFinanceView {
++  const income = getRollingIncomeSummary(state);
++  // Leave all expense rules in the domain. The difference from full room
++  // upkeep is the current domain's relief, not a separate presentation rule.
++  const operatingHourly = -getOperatingExpensePerFacilityHour(state, context);
+   const roomCost = state.rooms.reduce((total, room) => {
+     const definition = getRoomDefinition(room.roomDefinitionId, context);
+     return definition
+-      ? total + definition.upkeepPerExpenseInterval + (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel
++      ? total + definition.upkeepPerExpenseInterval + Math.max(0, room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel
+       : total;
+   }, 0);
+   const staffCost = state.employees.reduce((total, employee) => total + employee.salaryPerExpenseInterval, 0);
+   const advertising = context.balanceRelease.advertising.levels.find((level) => level.level === state.advertisingLevel);
+   const advertisingCost = advertising?.hourlyCost ?? 0;
+-  const hourly = roomCost + staffCost + advertisingCost;
+-  const earned = totalsCents.netCashDeltaCents / 100;
++  const relief = roomCost + staffCost + advertisingCost - operatingHourly;
++  const hourly = operatingHourly + income.stockCostPerHour;
++  const hourlyNet = Math.round((income.incomePerHour - hourly) * 100) / 100 || 0;
++  const encounterIncomeCents = getPatientEncounterIncomeCents(state);
++  const earned = (encounterIncomeCents === 0 ? totalsCents.netCashDeltaCents : totalsCents.netCashDeltaCents + encounterIncomeCents) / 100;
+   const spent = state.totalOperatingExpenses;
+   const profit = Math.round((earned - spent) * 100) / 100;
+-  const runwayHours = hourly > 0 ? Math.floor(state.cash / hourly) : null;
++  const runwayHours = operatingHourly > 0 ? Math.floor(state.cash / operatingHourly) : null;
++  const incomeWindowLabel = income.earlyEstimate
++    ? `Early estimate · since opening (${income.observedMinutes} game minutes)`
++    : income.observedMinutes < ROLLING_INCOME_WINDOW_MINUTES
++      ? `Since opening · ${dollarsFormatter.format(income.averagingHours)} game hour${income.averagingHours === 1 ? "" : "s"}`
++      : `Last ${ROLLING_INCOME_WINDOW_MINUTES / 60} game hours`;
++  const incomeWindowExplanation =
++    `Settled payments from ${facilityTimeLabel(state, income.windowStartFacilityTick)} to ${facilityTimeLabel(state, income.windowEndFacilityTick)}. ` +
++    (income.earlyEstimate ? "Receipts are spread over one game hour until the first hour has elapsed. " : "") +
++    "Stock costs use the same income window. Upkeep, salaries, advertising and relief use current rates. Building, hiring and training are excluded.";
+   const byLine = new Map<string, { displayName: string; net: number; count: number }>();
+   for (const receipt of state.serviceIncomeReceipts) {
+     const displayName = receiptDisplayName(receipt.incomeLineId);
+@@ -198,21 +232,37 @@
+   return {
+     cashLabel: dollars(state.cash),
+     earnedLabel: dollars(earned),
+-    billedLabel: dollars(totalsCents.grossCents / 100),
++    billedLabel: dollars((encounterIncomeCents === 0 ? totalsCents.grossCents : totalsCents.grossCents + encounterIncomeCents) / 100),
+     stockLabel: dollars(totalsCents.stockCostCents / 100),
+     runningCostsLabel: dollars(spent),
+     profitLabel: `${profit < 0 ? "−" : "+"}${dollars(Math.abs(profit))}`,
+     profitPositive: profit >= 0,
++    hourlyIncomeLabel: `${dollars(income.incomePerHour)}/hr`,
++    hourlyNetLabel: `${hourlyNet < 0 ? "−" : hourlyNet > 0 ? "+" : ""}${dollars(Math.abs(hourlyNet))}/hr`,
++    hourlyNetSign: hourlyNet < 0 ? "negative" : hourlyNet > 0 ? "positive" : "neutral",
++    incomeWindowLabel,
++    incomeWindowExplanation,
++    hourlyIncomeSources: income.sources
++      .filter((source) => source.id !== "other" || source.receiptCount > 0)
++      .map((source) => ({
++        id: source.id,
++        label: INCOME_SOURCE_LABELS[source.id],
++        amount: source.grossCents / 100 / income.averagingHours,
++        amountLabel: `${dollars(source.grossCents / 100 / income.averagingHours)}/hr`,
++        count: source.receiptCount,
++      })),
+     hourlyCostLabel: `${dollars(hourly)}/hr`,
+     hourlyCosts: [
+       { id: "staff", label: "Staff salaries", amount: staffCost, amountLabel: `${dollars(staffCost)}/hr` },
+-      { id: "rooms", label: "Room upkeep", amount: roomCost, amountLabel: `${dollars(roomCost)}/hr` },
++      { id: "rooms", label: "Room upkeep before relief", amount: roomCost, amountLabel: `${dollars(roomCost)}/hr` },
+       {
+         id: "advertising",
+         label: `Advertising${advertising ? ` (${advertising.displayName})` : ""}`,
+         amount: advertisingCost,
+         amountLabel: `${dollars(advertisingCost)}/hr`,
+       },
++      { id: "stock", label: "Stock (recent average)", amount: income.stockCostPerHour, amountLabel: `${dollars(income.stockCostPerHour)}/hr` },
++      { id: "relief", label: "Upkeep outage relief", amount: -relief, amountLabel: `${relief > 0 ? "−" : ""}${dollars(Math.abs(relief))}/hr` },
+     ],
+     runwayLabel: runwayHours === null
+       ? "No running costs right now."

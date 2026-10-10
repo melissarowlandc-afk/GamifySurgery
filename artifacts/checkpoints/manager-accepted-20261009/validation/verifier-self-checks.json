@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "bytePatchEdgeCases": 6,
+  "invalidPatchRejections": 3,
+  "unsafePathRejections": 6,
+  "restoreRefusals": [
+    {
+      "target": ".local-dev/manager-backup-20261009/restore-roundtrip",
+      "exitCode": 1,
+      "expectedGuard": "Destination must be empty",
+      "expectedGuardVerified": true
+    },
+    {
+      "target": "artifacts/checkpoints/manager-accepted-20261009/forbidden-restore-test",
+      "exitCode": 1,
+      "expectedGuard": "Destination overlaps archive",
+      "expectedGuardVerified": true
+    }
+  ],
+  "existingRecoveredContentUnchanged": true,
+  "archiveOverlapTargetNotCreated": true,
+  "workingTreeSourceWrites": 0,
+  "gitMutations": 0
+}

@@ -1,0 +1,495 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -23,6 +23,8 @@
+   validateDomainContext,
+ } from "./context";
+ import { selectRoutineClinicalCase } from "./clinical-selection";
++import { ECONOMY_SALARY_VERSION } from "./economy-compatibility";
++import { synchronizeRoomUpkeepOutages } from "./room-upkeep-outages";
+ import { isGuidanceTopicId, recordGuidanceTopicExposure, recordGuidanceTopicUsage } from "./guidance-topics";
+ import {
+   EMPLOYEE_DISCUSSION_FIRST_DELAY_MINUTES,
+@@ -44,6 +46,20 @@
+ } from "./care-room-access";
+ import { getFrozenPatientTravelLocation } from "./patient-travel";
+ import { completePatientDemographics } from "./patientDemographics";
++import { getClinicalCaseEligibilityIssue, getPediatricClinicFamilyContext } from "./clinical-case-eligibility";
++import {
++  advancePediatricPair,
++  applyPediatricRoomSale,
++  commitPediatricPairPlan,
++  createPediatricFamily,
++  pathToPediatricSupport,
++  pediatricFamilyForActor,
++  planPediatricExam,
++  planPediatricPair,
++  planPediatricRoomSale,
++  planPediatricWaiting,
++  reconcilePediatricFamilies,
++} from "./pediatric-family";
+ import {
+   canAdmitPatient,
+   getEligibleServiceRoute,
+@@ -51,6 +67,7 @@
+   getServiceOrderRouteSelection,
+   getEmergencyGlp1Status,
+   getOperationalGlp1AutomationAssignments,
++  getOperatingExpensePerFacilityHour,
+   isEmployeeAssignedToOperationalRoom,
+   isEmployeeOperational,
+   isRoomOperationalForFacilityWork,
+@@ -142,6 +159,7 @@
+   startServiceOperation,
+   interruptServiceOperationsForEmployeeDismissal,
+   interruptServiceOperationsForRoomSale,
++  yieldAppAppointmentRoomForScoredCare,
+ } from "./service-operations";
+ import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+@@ -830,6 +848,11 @@
+   if (!endpoint || !entrance) {
+     return [];
+   }
++  const family = pediatricFamilyForActor(state, "encounter", encounterId);
++  if (family) {
++    const plan = planPediatricPair(state, context, family, null, endpoint);
++    return plan ? commitPediatricPairPlan(family, plan) : [];
++  }
+   if (start.y >= context.balanceRelease.facility.gridHeight) {
+     return straightSidewalkPath(start, endpoint);
+   }
+@@ -929,6 +952,8 @@
+   founderStart: GridPoint,
+   encounterId: string,
+ ): { roomId: string; patientPath: GridPoint[]; founderPath: GridPoint[] } | null {
++  const family = pediatricFamilyForActor(state, "encounter", encounterId);
++  const roomDefinitionId = state.encounters[encounterId]?.frozenCase.pediatricProfile ? "room.pediatric_examination" : "room.examination";
+   const occupiedRoomIds = new Set(
+     Object.values(state.encounters)
+       .flatMap((encounter) => {
+@@ -953,21 +978,25 @@
+   const candidates = state.rooms
+     .filter(
+       (room) =>
+-        room.roomDefinitionId === "room.examination" &&
+-        !occupiedRoomIds.has(room.id),
++        room.roomDefinitionId === roomDefinitionId &&
++        !occupiedRoomIds.has(room.id) &&
++        !state.serviceOperations.some(operation => operation.status !== "completed" && operation.status !== "cancelled" && (
++          operation.reservedRoomInstanceIds.includes(room.id) ||
++          operation.location !== null && pointInsideRoom(operation.location, room, context))),
+     )
+     .sort((left, right) => left.id.localeCompare(right.id))
+     .flatMap((room) => {
+       const definition = getRoomDefinition(room.roomDefinitionId, context);
+       if (!definition) return [];
+-      const patientPath = pathFromLocationToFacilityPoint(
++      const familyPlan = family ? planPediatricExam(state, context, family, room) : null;
++      const patientPath = family ? familyPlan?.movement.childPath ?? [] : pathFromLocationToFacilityPoint(
+         state, context, start, getRoomCareAnchor(room, definition, "patient"), new Set([room.id]),
+       );
+-      const founderPath = pathFromLocationToFacilityPoint(
++      const founderPath = family ? pathToPediatricSupport(state, context, founderStart, room, "stool:clinician") : pathFromLocationToFacilityPoint(
+         state, context, founderStart, getRoomCareAnchor(room, definition, "clinician"), new Set([room.id]),
+       );
+       return patientPath.length > 0 && founderPath.length > 0
+-        ? [{ roomId: room.id, patientPath, founderPath }]
++        ? [{ roomId: room.id, patientPath, founderPath, familyPlan }]
+         : [];
+     })
+     .sort(
+@@ -975,7 +1004,10 @@
+         left.patientPath.length - right.patientPath.length ||
+         left.roomId.localeCompare(right.roomId),
+     );
+-  return candidates[0] ?? null;
++  if (!candidates.length) yieldAppAppointmentRoomForScoredCare(state, context, occupiedRoomIds);
++  const chosen = candidates[0];
++  if (family && chosen?.familyPlan) commitPediatricPairPlan(family, chosen.familyPlan);
++  return chosen ?? null;
+ }
+ 
+ function encounterHasExaminationRoomReservation(
+@@ -991,7 +1023,7 @@
+   return reservedRoomIds.some(
+     (roomId) =>
+       state.rooms.find((room) => room.id === roomId)
+-        ?.roomDefinitionId === "room.examination",
++        ?.roomDefinitionId === (encounter.frozenCase.pediatricProfile ? "room.pediatric_examination" : "room.examination"),
+   );
+ }
+ 
+@@ -1007,7 +1039,7 @@
+     (roomId): roomId is string =>
+       roomId !== null &&
+       state.rooms.find((room) => room.id === roomId)?.roomDefinitionId ===
+-        "room.examination",
++         (encounter.frozenCase.pediatricProfile ? "room.pediatric_examination" : "room.examination"),
+   ) ?? null;
+ }
+ 
+@@ -1089,6 +1121,14 @@
+   path: GridPoint[];
+   reservation: EncounterState["waitingDestination"];
+ } {
++  const family = pediatricFamilyForActor(state, "encounter", encounter.id);
++  if (family) {
++    const plan = planPediatricWaiting(state, context, family);
++    if (!plan?.reservation) return { roomId: null, path: [], reservation: null };
++    const path = commitPediatricPairPlan(family, plan);
++    return { roomId: plan.reservation.roomInstanceId, path, reservation: { roomInstanceId: plan.reservation.roomInstanceId,
++      location: { ...plan.reservation.childLocation }, kind: plan.reservation.childSeatId ? "chair" : "standing" } };
++  }
+   const start = encounter.patientLocation;
+   const entrance = getPublicEntrance(state, context);
+   if (!start || !entrance) {
+@@ -1368,6 +1408,13 @@
+ ): boolean {
+   const routeTouchesRoom = (path: readonly GridPoint[]) =>
+     path.some((point) => pointInsideRoom(point, room, context));
++
++  if (Object.values(state.pediatricFamilies ?? {}).some((family) =>
++    family.phase !== "departed" && (family.reservation?.roomInstanceId === room.id ||
++      routeTouchesRoom(family.movement?.childPath.slice(family.movement.pathIndex) ?? []) ||
++      routeTouchesRoom(family.movement?.parentPath.slice(family.movement.pathIndex) ?? [])))) return true;
++  if (state.retailExternalActors.some((actor) => actor.pediatricFamilyId && actor.location &&
++    pointInsideRoom(actor.location, room, context))) return true;
+ 
+   for (const encounter of Object.values(state.encounters)) {
+     if (encounter.lifecycle === "resolved") {
+@@ -1521,10 +1568,13 @@
+     campaignSeed: state.campaignSeed,
+     encounterId: input.encounterId,
+     demographics: frozenCase.prototypeDemographics,
++    pediatric: Boolean(frozenCase.pediatricProfile),
+   });
+   const patientDemographics = frozenCase.prototypeDemographics;
+   const patientSexLabel = patientDemographics?.sexLabel;
++  const pediatricIdentity = getPediatricClinicFamilyContext(frozenCase);
+   const patientDisplayName =
++    pediatricIdentity?.childName ??
+     input.patientDisplayName ??
+     createPatientDisplayName(
+       state.campaignSeed,
+@@ -1557,7 +1607,7 @@
+     arrivalPath,
+     entrance?.room.id ?? null,
+   );
+-  return {
++  const encounter: EncounterState = {
+     id: input.encounterId,
+     clinicalReleaseId: context.clinicalRelease.id,
+     frozenCase,
+@@ -1637,6 +1687,12 @@
+     terminalFeedback: null,
+     settlementId: null,
+   };
++  if (pediatricIdentity) encounter.patientAppearance.stillId = pediatricIdentity.childStillId;
++  if (frozenCase.pediatricProfile) createPediatricFamily(state, encounter, "encounter", pediatricIdentity ? {
++    displayName: pediatricIdentity.parentName,
++    sexLabel: pediatricIdentity.parentRelationship === "mother" ? "Female" : "Male",
++  } : undefined);
++  return encounter;
+ }
+ 
+ function recordReceipt(
+@@ -1757,6 +1813,26 @@
+       completeStaffedCheckIn(state, encounter, context);
+     }
+   }
++}
++
++function maybeReturnFounderForTutorialCheckIn(
++  state: GameState,
++  context: DomainContext,
++): void {
++  if (state.facilityLevel !== 0 || hasHiredReceptionist(state) ||
++      isFrontDeskStaffed(state, context) ||
++      ![TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].some((id) => {
++        const encounter = state.encounters[id];
++        return encounter?.lifecycle === "waiting_unopened" &&
++          encounter.checkInStatus === "awaiting_staff" && encounter.patientMovement === null;
++      })) return;
++  const activity = state.environment.founderActivity;
++  // Required work finishes normally; optional movement/seating yields to the
++  // two protected arrivals. Later clinic check-in keeps its usual staff rules.
++  if (activity && !["walk_to_point", "sit_in_chair", "wander_facility"].includes(activity.kind)) return;
++  state.environment.founderActivity = null;
++  state.environment.suspendedFounderActivity = null;
++  planFounderAfterEncounter(state, context);
+ }
+ 
+ function maybeApplyUnstaffedCheckInOverdue(
+@@ -3697,8 +3773,10 @@
+             ? getRoomDefinition(room.roomDefinitionId, context)
+             : null;
+           if (!room || !definition) return null;
++          const family = pediatricFamilyForActor(next, "encounter", nextEncounter.id);
++          const familyPlan = family ? planPediatricExam(next, context, family, room) : null;
+           const patientPath = nextEncounter.patientLocation
+-            ? pathFromLocationToFacilityPoint(
++            ? family ? familyPlan?.movement.childPath ?? [] : pathFromLocationToFacilityPoint(
+                 next,
+                 context,
+                 nextEncounter.patientLocation,
+@@ -3706,13 +3784,14 @@
+                 new Set([room.id]),
+               )
+             : [];
+-          const founderPath = pathFromLocationToFacilityPoint(
++          const founderPath = family ? pathToPediatricSupport(next, context, next.environment.founderLocation, room, "stool:clinician") : pathFromLocationToFacilityPoint(
+             next,
+             context,
+             next.environment.founderLocation,
+             getRoomCareAnchor(room, definition, "clinician"),
+             new Set([room.id]),
+           );
++          if (founderPath.length && family && familyPlan) commitPediatricPairPlan(family, familyPlan);
+           return founderPath.length > 0
+             ? {
+                 roomId: room.id,
+@@ -6137,18 +6216,16 @@
+         ),
+       ),
+   );
++  const capabilities = getCurrentCapabilities(state, context);
+   const eligibleCases = context.clinicalRelease.cases
+     .filter(
+       (clinicalCase) =>
+         !isEmployeeDiscussionCase(clinicalCase) &&
+         clinicalCase.routineEligible &&
+-        clinicalCase.earliestFacilityStage <= state.facilityLevel &&
++        getClinicalCaseEligibilityIssue(state, clinicalCase, context, capabilities) === null &&
+         clinicalCase.decisionNodes.every(
+           (node) =>
+             !activeEmployeeDiscussionConceptIds.has(node.primaryConceptId),
+-        ) &&
+-        clinicalCase.requiredCapabilityIds.every((capabilityId) =>
+-          getCurrentCapabilities(state, context).has(capabilityId),
+         ),
+     )
+     .sort((left, right) => left.id.localeCompare(right.id));
+@@ -6186,29 +6263,11 @@
+ function applyOperatingExpenses(
+   state: GameState,
+   context: DomainContext,
++  hourlyExpense: number,
+ ): void {
+-  const hourlyRoomExpense = state.rooms.reduce((total, room) => {
+-    const definition = getRoomDefinition(room.roomDefinitionId, context);
+-    return (
+-      total +
+-      (definition?.upkeepPerExpenseInterval ?? 0) +
+-      (definition?.upkeepPerUpgradeLevel ?? 0) *
+-        Math.max(0, room.upgradeLevel - 1)
+-    );
+-  }, 0);
+-  const hourlyStaffExpense = state.employees.reduce(
+-    (total, employee) => total + employee.salaryPerExpenseInterval,
+-    0,
+-  );
+-  const hourlyAdvertisingExpense =
+-    context.balanceRelease.advertising.levels.find(
+-      (level) => level.level === state.advertisingLevel,
+-    )?.hourlyCost ?? 0;
+-  const hourlyExpense =
+-    hourlyRoomExpense + hourlyStaffExpense + hourlyAdvertisingExpense;
+   // One simulation tick is one minute. Accruing in one-sixtieth-of-a-cent
+   // units keeps the result identical across speed changes, pauses, and reloads.
+-  state.operatingAccrualSixtiethCents += hourlyExpense * 100;
++  state.operatingAccrualSixtiethCents += Math.round(hourlyExpense * 100);
+   if (state.facilityTick < state.nextFinancialPostingTick) {
+     return;
+   }
+@@ -7427,6 +7486,11 @@
+           ? (() => {
+               const room = state.rooms.find((candidate) => candidate.id === roomId);
+               const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
++              const family = pediatricFamilyForActor(state, "encounter", encounter.id);
++              if (room && family) {
++                const plan = planPediatricExam(state, context, family, room);
++                return plan ? commitPediatricPairPlan(family, plan) : [];
++              }
+               return room && definition
+                 ? pathFromLocationToFacilityPoint(
+                     state, context, encounter.patientLocation!,
+@@ -7608,6 +7672,11 @@
+           ? (() => {
+               const room = state.rooms.find((candidate) => candidate.id === roomId);
+               const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
++              const family = pediatricFamilyForActor(state, "encounter", encounter.id);
++              if (room && family) {
++                const plan = planPediatricExam(state, context, family, room);
++                return plan ? commitPediatricPairPlan(family, plan) : [];
++              }
+               return room && definition
+                 ? pathFromLocationToFacilityPoint(
+                     state, context, encounter.patientLocation!,
+@@ -7668,11 +7737,13 @@
+   const definition = room
+     ? getRoomDefinition(room.roomDefinitionId, context)
+     : null;
+-  if (!room || !definition || room.roomDefinitionId !== "room.examination") {
++  if (!room || !definition || room.roomDefinitionId !== (encounter.frozenCase.pediatricProfile ? "room.pediatric_examination" : "room.examination")) {
+     encounter.queuedCareRoomInstanceId = null;
+     return;
+   }
+-  const path = pathFromLocationToFacilityPoint(
++  const family = pediatricFamilyForActor(state, "encounter", encounter.id);
++  const plan = family ? planPediatricExam(state, context, family, room) : null;
++  const path = family ? plan ? commitPediatricPairPlan(family, plan) : [] : pathFromLocationToFacilityPoint(
+     state,
+     context,
+     encounter.patientLocation,
+@@ -7788,7 +7859,8 @@
+       1,
+       state.facilityTick - movement.lastMovedAtFacilityTick,
+     );
+-    movement.pathIndex = Math.min(
++    const family = pediatricFamilyForActor(state, "encounter", encounter.id);
++    movement.pathIndex = family ? advancePediatricPair(state, context, family, movement.path, movement.pathIndex, movement.lastMovedAtFacilityTick) : Math.min(
+       Math.max(0, movement.path.length - 1),
+       movement.pathIndex + elapsedTicks * tilesPerTick,
+     );
+@@ -7809,6 +7881,7 @@
+ ): void {
+   const config = context.balanceRelease.environment;
+   for (const encounter of Object.values(state.encounters)) {
++    if (encounter.pediatricFamilyId) continue;
+     if (
+       activeRetailOperationForActor(state, "encounter", encounter.id) !== null ||
+       hasActivePatientAmenityTrip(state, "encounter", encounter.id) ||
+@@ -8358,6 +8431,10 @@
+       "Facility time remains paused; no tick advanced.",
+     );
+   }
++  synchronizeRoomUpkeepOutages(next, context);
++  // Accrue the minute at its starting rate. The first 60 outage minutes are
++  // fully charged; relief begins with minute 61, never retrospectively.
++  const hourlyExpenseAtMinuteStart = -getOperatingExpensePerFacilityHour(next, context);
+   next.facilityTick += 1;
+   reconcileFrozenPatientTravel(state, next, context);
+   const founderActivity = next.environment.founderActivity;
+@@ -8847,7 +8924,7 @@
+     }
+   }
+ 
+-  applyOperatingExpenses(next, context);
++  applyOperatingExpenses(next, context, hourlyExpenseAtMinuteStart);
+   maybeEmitEmployeeDepartureRiskWarnings(next, context);
+   prioritizeReceptionistPatients(next, context);
+   maybeAssignReceptionistWaterRefill(next, context);
+@@ -8856,6 +8933,7 @@
+     advanceEmployeeMovement(next, context);
+     advanceDepartingEmployees(next, context);
+   advanceFounderActivity(next, context);
++  maybeReturnFounderForTutorialCheckIn(next, context);
+   for (const encounter of Object.values(next.encounters)) {
+     if (encounter.pendingResult) bindPendingResultRoomRevenue(next, context, encounter, encounter.pendingResult);
+   }
+@@ -8926,6 +9004,7 @@
+     advanceGlp1Automation(next, context);
+     maybeApplyCoffeeMorale(next, context);
+   advanceRetailOperations(next, context);
++  reconcilePediatricFamilies(next, context);
+   maybeApplyUnstaffedCheckInOverdue(next, context);
+   maybeCompleteAwaitingCheckIns(next, context);
+   drainWaterCooler(next, context);
+@@ -8957,6 +9036,8 @@
+   retireDepartedEncounters(next, context);
+   retireFinishedServiceHistory(next, context);
+   retireFinishedRetailHistory(next);
++  acknowledgeLevelFourCompletion(next, context);
++  synchronizeRoomUpkeepOutages(next, context);
+   synchronizeFacilityConditionOccurrences(next, context);
+   synchronizeFacilityOperationalAlertOccurrences(next, context, command.advancedAtRealMs ?? next.createdAtRealMs + next.facilityTick * 60_000);
+   if (!advanceGuidanceTips(next, context, command.advancedAtRealMs ?? next.createdAtRealMs + next.facilityTick * 60_000)) maybeEmitAmbientMessage(next, context);
+@@ -9186,6 +9267,7 @@
+       100,
+   );
+   const next = clonePlain(state);
++  const pediatricSalePlans = planPediatricRoomSale(next, context, room.id);
+   reconcileEmployeeRoomSeats(next);
+   const dismissedIds = new Set(salePreview.dismissedEmployees.map((employee) => employee.id));
+   const interruptedOperationIds = interruptServiceOperationsForRoomSale(
+@@ -9388,6 +9470,7 @@
+       encounter.waitingDestination = null;
+     }
+   }
++  applyPediatricRoomSale(next, pediatricSalePlans);
+   adjustCash(next, refund);
+   appendEvent(next, {
+     id: `event.room-sold.${room.id}.${command.operationId}`,
+@@ -9762,24 +9845,8 @@
+       "Employee discussion content cannot be admitted as a patient.",
+     );
+   }
+-  if (clinicalCase.earliestFacilityStage > state.facilityLevel) {
+-    return rejectCommand(
+-      state,
+-      command,
+-      `This patient becomes eligible at Level ${clinicalCase.earliestFacilityStage}.`,
+-    );
+-  }
+-  const capabilities = getCurrentCapabilities(state, context);
+-  const missingCapabilityId = clinicalCase.requiredCapabilityIds.find(
+-    (capabilityId) => !capabilities.has(capabilityId),
+-  );
+-  if (missingCapabilityId) {
+-    return rejectCommand(
+-      state,
+-      command,
+-      `This patient requires unavailable clinic capability ${missingCapabilityId}.`,
+-    );
+-  }
++  const eligibilityIssue = getClinicalCaseEligibilityIssue(state, clinicalCase, context);
++  if (eligibilityIssue) return rejectCommand(state, command, eligibilityIssue);
+   if (command.arrivalClass === "tutorial" && !clinicalCase.tutorialEligible) {
+     return rejectCommand(state, command, "This case is not tutorial eligible.");
+   }
+@@ -10153,6 +10220,20 @@
+   );
+ }
+ 
++/** Earned once; live room/staff checks cannot erase the terminal milestone. */
++function acknowledgeLevelFourCompletion(state: GameState, context: DomainContext): void {
++  const completion = state.levelFourCompletion;
++  if (state.facilityLevel !== 4 || !completion || completion.acknowledgedAtFacilityTick !== null ||
++      !getFacilityProgressionStatus(state, context).terminalComplete) return;
++  completion.acknowledgedAtFacilityTick = state.facilityTick;
++  appendEvent(state, {
++    id: "event.facility-level-4-complete", type: "success_message", facilityTick: state.facilityTick,
++    encounterId: null, message: "Level 4 complete - Level 5 coming later. Keep playing; the clinic is still open.",
++    priority: "informational", definitionId: "alert.progress.level-four-complete",
++    target: { kind: "campaign", id: state.campaignId },
++  });
++}
++
+ function reduceLevelUp(
+   state: GameState,
+   command: Extract<GameCommand, { type: "LEVEL_UP" }>,
+@@ -10725,6 +10806,7 @@
+     },
+     clinicalReleaseId: context.clinicalRelease.id,
+     balanceReleaseId: context.balanceRelease.id,
++    salaryEconomyVersion: ECONOMY_SALARY_VERSION,
+     schedulerPins: createSchedulerPins(
+       context.balanceRelease.learning.parameterSetId,
+     ),
+@@ -11143,6 +11225,8 @@
+   if (next === state) {
+     return next;
+   }
++  reconcilePediatricFamilies(next, context);
++  if (next.operationReceipts[command.operationId]?.status === "applied") acknowledgeLevelFourCompletion(next, context);
+   recordGuidanceTopicUsage(next, command);
+   // Compatibility acknowledgement is automatic after filing both visits or
+   // advancing. Retain every existing deadline/cooldown instead of a new burst.
+@@ -11162,6 +11246,7 @@
+   // Facility conditions can change through paused build/staff commands as
+   // well as through simulation time. Reconcile every applied/rejected clone so
+   // history and attention clear at the exact persisted facility tick.
++  synchronizeRoomUpkeepOutages(next, context);
+   synchronizeFacilityConditionOccurrences(next, context);
+   synchronizeFacilityOperationalAlertOccurrences(next, context);
+   return next;

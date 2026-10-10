@@ -1,0 +1,89 @@
+--- a/apps/player/src/art/characterStillRegistry.test.ts
++++ b/apps/player/src/art/characterStillRegistry.test.ts
+@@ -14,13 +14,14 @@
+ import v6bApproval from "../../../../tools/character-mapping/patient-gapfill-v6b/owner-approval.json";
+ import v6dApproval from "../../../../tools/character-mapping/staff-gapfill-v6d/owner-approval.json";
+ import v6cApproval from "../../../../tools/character-mapping/patient-gapfill-v6c/owner-approval.json";
++import v6eApproval from "../../../../tools/character-mapping/app-gapfill-v6e/owner-approval.json";
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 318, cardinalPoses: 2544, clipboardPoses: 30, assets: 2574 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 326, cardinalPoses: 2608, clipboardPoses: 30, assets: 2638 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(318);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(318);
++    expect(entries).toHaveLength(326);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(326);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+@@ -45,13 +46,15 @@
+                           ? "patient-gapfill-v6c"
+                           : entry.cohort === "staffGapfillV6d"
+                             ? "staff-gapfill-v6d"
+-                            : "gs026-stills-v1";
++                            : entry.cohort === "appGapfillV6e"
++                              ? "app-gapfill-v6e"
++                              : "gs026-stills-v1";
+           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(1272);
++    expect(seatedAssets).toHaveLength(1304);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -164,11 +167,37 @@
+     expect(new Set(hashes).size).toBe(112);
+   });
+ 
++  it("renders every accepted APP v6e pose with its exact approved hash, URL and authored contact", () => {
++    expect(v6eApproval).toMatchObject({ status: "approved", approvedBy: "GamifySurgery manager (Claude Code)", authorizedBy: "owner" });
++    const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "appGapfillV6e");
++    const designs = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "app-gapfill-v6e");
++    expect(entries).toHaveLength(8); expect(designs).toHaveLength(8);
++    expect(entries.map(entry => entry.id)).toEqual(designs.map(entry => entry.stillId));
++    const acceptedPoses = v6eApproval.acceptedPoses as Record<string, Record<string, string>>;
++    const contacts = v6eApproval.acceptedContacts as Record<string, Record<string, number>>;
++    const hashes: string[] = [];
++    for (const entry of entries) {
++      const number = entry.id.split(".").at(-1)!;
++      expect(entry.category).toBe("employee"); expect(entry.clipboard).toBeUndefined();
++      expect(entry.role).toBe("staff.app"); expect(entry.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
++      for (const posture of ["stand", "sit"] as const) for (const direction of CHARACTER_STILL_DIRECTIONS) {
++        const asset = getCharacterStill(entry.id, posture, direction)!;
++        expect(asset.sha256).toBe(acceptedPoses[number]![`${posture}-${direction}`]);
++        expect(asset.anchors).toMatchObject({ bodyAxisX: 80, floorY: 287 });
++        if (posture === "sit") expect(asset.anchors).toMatchObject({ seatContactY: contacts[number]![direction], seatContactStatus: "owner-delegated-manager-approved-authored-contact" });
++        expect(resolveCharacterStillAssetUrl(asset, "/GamifySurgery/")).toBe(`/GamifySurgery/art/characters/app-gapfill-v6e/${entry.id}/${posture}-${direction}.png`);
++        hashes.push(asset.sha256);
++      }
++    }
++    expect(new Set(hashes).size).toBe(64);
++  });
++
+   it("registers the GS-033 batch with all 160 exact approved pose hashes and authored contacts", () => {
+     const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "futureRoster20V5");
+     expect(entries).toHaveLength(20);
+     expect(entries.filter(entry => entry.role === "staff.radiologist")).toHaveLength(12);
+-    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(4);
++    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(2);
++    expect(entries.filter(entry => entry.role === "staff.app").map(entry => entry.id)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
+     expect(entries.filter(entry => entry.category === "patient-or-general-population")).toHaveLength(4);
+     const approvedPoseHashes = ownerApproval.acceptedPoses as Record<string, Record<string, string>>;
+     const hashes: string[] = [];
+@@ -263,9 +292,9 @@
+     });
+     expect(getCharacterStillEntry("level3-roster-v2.021")).toMatchObject({
+       cohort: "level3RosterV2",
+-      category: "future-pediatric-presentation",
++      category: "pediatric-presentation",
+       intendedVisualAge: 6,
+-      currentClinicalEligibility: "excluded-until-future-approved-pediatric-release",
++      intendedSex: "Female", minimumAge: 5, maximumAge: 8,
+     });
+     expect(getCharacterStillEntry("level3-roster-v2.001")).toMatchObject({
+       cohort: "level3RosterV2",

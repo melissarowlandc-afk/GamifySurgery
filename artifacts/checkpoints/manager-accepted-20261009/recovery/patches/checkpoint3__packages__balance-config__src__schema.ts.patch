@@ -1,0 +1,142 @@
+--- a/packages/balance-config/src/schema.ts
++++ b/packages/balance-config/src/schema.ts
+@@ -5,6 +5,32 @@
+   .min(3)
+   .max(120)
+   .regex(/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/, "Use a stable lowercase identifier.");
++
++export const facilityLevelSchema = z.union([
++  z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(4),
++]);
++
++/** Presentation/operational eligibility, never disease-selection weights. */
++export const patientEligibilitySchema = z.discriminatedUnion("population", [
++  z.object({ population: z.literal("adult") }).strict(),
++  z.object({
++    population: z.literal("pediatric"),
++    minimumAgeYears: z.number().int().min(5).max(17),
++    maximumAgeYears: z.number().int().min(5).max(17),
++    requiresParent: z.literal(true),
++    clinicalScope: z.literal("outpatient"),
++  }).strict().superRefine((eligibility, context) => {
++    if (eligibility.minimumAgeYears > eligibility.maximumAgeYears) {
++      context.addIssue({ code: "custom", message: "Patient age eligibility bounds are inverted.", path: ["maximumAgeYears"] });
++    }
++  }),
++]);
++
++/** Binding M0 finish requirements; MRI and Pediatric Waiting are not witnesses. */
++export const facilityCompletionWitnessIdSchema = z.enum([
++  "pediatric_visit_with_parent",
++  "wound_ostomy_care_visit",
++]);
+ 
+ export const roomOrientationSchema = z.union([
+   z.literal(0),
+@@ -74,6 +100,7 @@
+       .nullable()
+       .default(null),
+     patientRemainsOnsite: z.literal(true).optional(),
++    patientEligibility: patientEligibilitySchema.optional(),
+   })
+   .strict()
+   .superRefine((route, context) => {
+@@ -107,6 +134,7 @@
+     id: stableIdSchema,
+     displayName: z.string().min(1).max(160),
+     routes: z.array(serviceRouteDefinitionSchema).min(1),
++    patientEligibility: patientEligibilitySchema.optional(),
+   })
+   .strict()
+   .superRefine((service, context) => {
+@@ -139,7 +167,8 @@
+     id: stableIdSchema,
+     displayName: z.string().min(1).max(160),
+     kind: z.enum(["room", "hallway"]),
+-    unlockFacilityLevel: z.number().int().min(0).max(3),
++    unlockFacilityLevel: facilityLevelSchema,
++    patientEligibility: patientEligibilitySchema.optional(),
+     width: z.number().int().positive(),
+     height: z.number().int().positive(),
+     defaultDoorSide: cardinalDirectionSchema.nullable(),
+@@ -459,7 +488,7 @@
+   .object({
+     id: stableIdSchema,
+     displayName: z.string().min(1).max(160),
+-    unlockFacilityLevel: z.number().int().min(1).max(3),
++    unlockFacilityLevel: z.number().int().min(1).max(4),
+     hiringCost: z.number().int().nonnegative(),
+     salaryPerExpenseInterval: z.number().int().nonnegative(),
+     minimumSalaryPerExpenseInterval: z.number().int().nonnegative(),
+@@ -500,16 +529,23 @@
+ 
+ export const facilityStageDefinitionSchema = z
+   .object({
+-    level: z.number().int().min(0).max(3),
++    level: facilityLevelSchema,
+     displayName: z.string().min(1).max(160),
+     minimumClinicalXp: z.number().int().nonnegative(),
+     minimumCompletedEncounters: z.number().int().nonnegative(),
+     satisfactionMustBeGreaterThan: z.number().int().min(0).max(99),
+     requiredRoomDefinitionIds: z.array(stableIdSchema),
+     requiredStaffRoleIds: z.array(stableIdSchema),
+-    nextFacilityLevel: z.number().int().min(1).max(3).nullable(),
++    requiredCompletionWitnessIds: z.array(facilityCompletionWitnessIdSchema).max(2).optional(),
++    nextFacilityLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).nullable(),
+   })
+-  .strict();
++  .strict()
++  .superRefine((stage, context) => {
++    const witnessIds = stage.requiredCompletionWitnessIds ?? [];
++    if (new Set(witnessIds).size !== witnessIds.length || (witnessIds.length > 0 && stage.level !== 4)) {
++      context.addIssue({ code: "custom", message: "Completion witnesses must be unique Level 4 requirements.", path: ["requiredCompletionWitnessIds"] });
++    }
++  });
+ 
+ export const initialRoomSchema = z
+   .object({
+@@ -539,11 +575,11 @@
+         characterTravelTilesPerTick: z.number().int().positive(),
+         startingCash: z.number().int().nonnegative(),
+         startingSatisfaction: z.number().int().min(0).max(100),
+-        maximumPlayableLevel: z.literal(3),
++        maximumPlayableLevel: z.union([z.literal(3), z.literal(4)]),
+         initialRooms: z.array(initialRoomSchema).min(1),
+         roomDefinitions: z.array(roomDefinitionSchema).min(1),
+         staffRoleDefinitions: z.array(staffRoleDefinitionSchema).min(1),
+-        stageDefinitions: z.array(facilityStageDefinitionSchema).length(4),
++        stageDefinitions: z.array(facilityStageDefinitionSchema).min(4).max(5),
+         tutorialRequiredRoomDefinitionId: stableIdSchema,
+         tutorialMinimumOperatingBuffer: z.number().int().nonnegative(),
+       })
+@@ -1026,6 +1062,10 @@
+     const stagesByLevel = new Map(
+       release.facility.stageDefinitions.map((stage) => [stage.level, stage]),
+     );
++    if (stagesByLevel.size !== release.facility.stageDefinitions.length ||
++        !stagesByLevel.has(release.facility.maximumPlayableLevel)) {
++      context.addIssue({ code: "custom", message: "Facility stages must be unique and include the playable cap.", path: ["facility", "stageDefinitions"] });
++    }
+     if (
+       !stagesByLevel.has(0) ||
+       !stagesByLevel.has(1) ||
+@@ -1038,6 +1078,9 @@
+       });
+     }
+     release.facility.stageDefinitions.forEach((stage, stageIndex) => {
++      if (stage.nextFacilityLevel !== null && !stagesByLevel.has(stage.nextFacilityLevel)) {
++        context.addIssue({ code: "custom", message: "A stage successor must have a stage definition.", path: ["facility", "stageDefinitions", stageIndex, "nextFacilityLevel"] });
++      }
+       stage.requiredRoomDefinitionIds.forEach((requiredId) => {
+         if (!roomDefinitions.has(requiredId)) {
+           context.addIssue({
+@@ -1238,6 +1281,9 @@
+   });
+ 
+ export type ServiceRouteDefinition = z.infer<typeof serviceRouteDefinitionSchema>;
++export type FacilityLevel = z.infer<typeof facilityLevelSchema>;
++export type PatientEligibility = z.infer<typeof patientEligibilitySchema>;
++export type FacilityCompletionWitnessId = z.infer<typeof facilityCompletionWitnessIdSchema>;
+ export type ServiceDefinition = z.infer<typeof serviceDefinitionSchema>;
+ export type RoomDefinition = z.infer<typeof roomDefinitionSchema>;
+ export type StaffRoleDefinition = z.infer<typeof staffRoleDefinitionSchema>;

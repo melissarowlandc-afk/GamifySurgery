@@ -1,0 +1,24 @@
+--- a/apps/player/src/session/diagnosticTimingViewModels.test.ts
++++ b/apps/player/src/session/diagnosticTimingViewModels.test.ts
+@@ -243,10 +243,10 @@
+     const state = createInitialGameState(); state.facilityLevel = 3; state.cash = 10_000; state.cashCents = 1_000_000;
+     let facility = createPrototypePlayerView(state, null, false, null);
+     expect(facility.roomOptions.find((room) => room.id === "room.reading")).toMatchObject({
+-      costLabel: "$1,800", upkeepLabel: "$24 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
++      costLabel: "$1,800", upkeepLabel: "$6 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
+     });
+     expect(facility.staffOptions.find((role) => role.id === "staff.radiologist")).toMatchObject({
+-      costLabel: "$300 hire", salaryLabel: "$26 salary / hr", blockedReason: "Build a Reading Room to add four radiologist positions.",
++      costLabel: "$300 hire", salaryLabel: "$18 salary / hr", blockedReason: "Build a Reading Room to add four radiologist positions.",
+     });
+     state.rooms.push({ id: "reading.presentation", roomDefinitionId: "room.reading", x: 20, y: 12,
+       orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+@@ -267,7 +267,7 @@
+       facility = createPrototypePlayerView(state, null, false, null, true, reading.id);
+       expect(facility.staffRoles.find((role) => role.id === "staff.radiologist")?.maximumCount).toBe(4);
+       expect(facility.roomOptions.find((room) => room.id === "room.reading")).toMatchObject({
+-        costLabel: "$1,800", upkeepLabel: "$24 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
++        costLabel: "$1,800", upkeepLabel: "$6 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
+       });
+       expect(facility.selectedRoomBuild?.benefit?.perUpgradeLabel).toBe("Scan reading takes 10% less time");
+       expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/capacity|fixture|satisfaction/);

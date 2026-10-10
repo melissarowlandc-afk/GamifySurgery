@@ -1,0 +1,21 @@
+--- a/apps/player/src/session/clinicAlertActions.ts
++++ b/apps/player/src/session/clinicAlertActions.ts
+@@ -8,6 +8,7 @@
+   getNextRoomUpgradeCost,
+   getRoomDefinition,
+   getRoomStaffCapacity,
++  staffStillEligibleEntries,
+   getRoutinePatientAvailability,
+   getStaffRoleDefinition,
+   getWaterCoolerApproachLocation,
+@@ -100,6 +101,10 @@
+     case "hire_staff": {
+       const role = getStaffRoleDefinition(action.roleId);
+       if (!role || role.unlockFacilityLevel > state.facilityLevel) return "That role is not unlocked.";
++      if (action.roleId === "staff.app") {
++        const used = new Set([...state.employees, ...(state.departingEmployees ?? [])].map((employee) => employee.appearance.stillId));
++        if (!staffStillEligibleEntries(action.roleId).some((entry) => !used.has(entry.stillId))) return "All approved APP looks are in use; additional APP art is needed.";
++      }
+       if (action.requiresMissingCoverage && state.employees.some((employee) => employee.staffRoleDefinitionId === action.roleId && isEmployeeAssignedToOperationalRoom(state, employee.id))) return "This role already has installed coverage.";
+       const home = getAvailableEmployeeHomeRoom(state, action.roleId);
+       if (!home || !isRoomOperationalForFacilityWork(state, home.id) ||

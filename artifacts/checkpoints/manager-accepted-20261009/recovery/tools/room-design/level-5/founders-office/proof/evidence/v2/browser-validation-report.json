@@ -1,0 +1,171 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/founders-office/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "ad05f4d056356472fe4ace39ef96053549ba38e0ea439b1f668dbc06487ad75f",
+  "checks": [
+    "5 tier / 12 one-tile door / 3 backing buttons; served code and manifest pinned",
+    "Level 1: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 2: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 3: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 4: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 5: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "bulk controls idempotent",
+    "independent backing; only wall art hides",
+    "individual / all real occupants",
+    "tier selection preserves inspection state and seated occupants",
+    "1–5 / arrows / diagnostics / reset / Space and Enter",
+    "rapid tier selection settles on final level",
+    "all five tiers at 320px without horizontal overflow"
+  ],
+  "technical": [
+    {
+      "level": 1,
+      "states": 112,
+      "routes": 576,
+      "assets": [
+        "design:fo:l1-desk",
+        "design:fo:l1-founderChair",
+        "design:fo:l1-founderChair-front",
+        "design:fo:l1-visitorChair",
+        "design:fo:l1-visitorChair-front",
+        "design:fo:l1-shelf",
+        "design:fo:l1-rug",
+        "design:fo:l1-decor"
+      ],
+      "overlaps": [
+        {
+          "id": "founderChair",
+          "pixels": 442,
+          "uncovered": 6783
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 2613,
+          "uncovered": 5935
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 2,
+      "states": 112,
+      "routes": 576,
+      "assets": [
+        "design:fo:l2-desk",
+        "design:fo:l2-founderChair",
+        "design:fo:l2-founderChair-front",
+        "design:fo:l2-visitorChair",
+        "design:fo:l2-visitorChair-front",
+        "design:fo:l2-shelf",
+        "design:fo:l2-rug",
+        "design:fo:l2-decor",
+        "design:fo:l2-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "founderChair",
+          "pixels": 392,
+          "uncovered": 6833
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 2887,
+          "uncovered": 5661
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 3,
+      "states": 112,
+      "routes": 576,
+      "assets": [
+        "design:fo:l3-desk",
+        "design:fo:l3-founderChair",
+        "design:fo:l3-founderChair-front",
+        "design:fo:l3-visitorChair",
+        "design:fo:l3-visitorChair-front",
+        "design:fo:l3-shelf",
+        "design:fo:l3-rug",
+        "design:fo:l3-decor"
+      ],
+      "overlaps": [
+        {
+          "id": "founderChair",
+          "pixels": 591,
+          "uncovered": 6634
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3426,
+          "uncovered": 5122
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 4,
+      "states": 112,
+      "routes": 576,
+      "assets": [
+        "design:fo:l4-desk",
+        "design:fo:l4-founderChair",
+        "design:fo:l4-founderChair-front",
+        "design:fo:l4-visitorChair",
+        "design:fo:l4-visitorChair-front",
+        "design:fo:l4-shelf",
+        "design:fo:l4-rug",
+        "design:fo:l4-decor",
+        "design:fo:l4-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "founderChair",
+          "pixels": 749,
+          "uncovered": 6476
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3361,
+          "uncovered": 5187
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 5,
+      "states": 112,
+      "routes": 576,
+      "assets": [
+        "design:fo:l5-desk",
+        "design:fo:l5-founderChair",
+        "design:fo:l5-founderChair-front",
+        "design:fo:l5-visitorChair",
+        "design:fo:l5-visitorChair-front",
+        "design:fo:l5-shelf",
+        "design:fo:l5-rug",
+        "design:fo:l5-decor",
+        "design:fo:l5-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "founderChair",
+          "pixels": 934,
+          "uncovered": 6291
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3059,
+          "uncovered": 5489
+        }
+      ],
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null,
+  "runtimeIntegrationAuthorized": false
+}

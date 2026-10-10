@@ -1,0 +1,11 @@
+--- a/apps/player/src/facility/roomTouchups.ts
++++ b/apps/player/src/facility/roomTouchups.ts
+@@ -563,7 +563,7 @@
+       depthKey,
+       doorOwners: fix?.doorOwners ? map(fix.doorOwners) : record.doorOwners,
+       backedOwners: fix?.backedOwners ? map(fix.backedOwners) : record.backedOwners,
+-      touchupKeepWhenBacked: touchup?.keepWhenBacked?.includes(record.id) ?? false,
++      touchupKeepWhenBacked: touchup?.keepWhenBacked?.includes(record.id) ?? record.touchupKeepWhenBacked ?? false,
+     };
+   });
+ }

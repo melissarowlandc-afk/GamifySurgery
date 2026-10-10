@@ -1,0 +1,119 @@
+{
+  "status": "SUPERSEDED",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/founders-office/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "733b5d03be84b6906f5d53746f94f9043ede75a24007ae4ad44e89280cbd35a0",
+  "captures": [
+    {
+      "id": "painted",
+      "file": "office-painted.png",
+      "state": {}
+    },
+    {
+      "id": "empty",
+      "file": "office-empty.png",
+      "state": {
+        "actors": false
+      }
+    },
+    {
+      "id": "founder",
+      "file": "office-founder.png",
+      "state": {
+        "visitors": false
+      }
+    },
+    {
+      "id": "visitor",
+      "file": "office-visitor.png",
+      "state": {
+        "founders": false
+      }
+    },
+    {
+      "id": "contacts",
+      "file": "office-contacts.png",
+      "state": {
+        "contacts": true,
+        "bases": true,
+        "grid": true
+      }
+    },
+    {
+      "id": "all-doors",
+      "file": "office-all-doors.png",
+      "state": {
+        "routes": true,
+        "doors": [
+          "N1",
+          "N2",
+          "N3",
+          "N4",
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "WA",
+          "WB",
+          "WC",
+          "WD",
+          "EA",
+          "EB",
+          "EC",
+          "ED"
+        ]
+      }
+    },
+    {
+      "id": "backed",
+      "file": "office-backed.png",
+      "state": {
+        "backed": [
+          "N1",
+          "N2",
+          "N3",
+          "N4"
+        ]
+      }
+    },
+    {
+      "id": "bookcase-door",
+      "file": "office-bookcase-door.png",
+      "state": {
+        "doors": [
+          "N1"
+        ]
+      }
+    },
+    {
+      "id": "plant-door",
+      "file": "office-plant-door.png",
+      "state": {
+        "doors": [
+          "EA"
+        ]
+      }
+    },
+    {
+      "id": "print-door",
+      "file": "office-print-door.png",
+      "state": {
+        "doors": [
+          "N2"
+        ]
+      }
+    }
+  ],
+  "fullPage": [
+    "office-desktop.png",
+    "office-320.png"
+  ],
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null,
+  "previousStatus": "PASS",
+  "appliesTo": "Historical 4x4 base candidate, not current 3x3/five-tier proof",
+  "preservedOriginal": "history/4x4-base-20261008/proof/evidence/capture-report.json",
+  "currentEvidence": "proof/evidence/v2/"
+}

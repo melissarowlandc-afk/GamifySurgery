@@ -1,0 +1,61 @@
+--- a/packages/game-domain/src/appearance.ts
++++ b/packages/game-domain/src/appearance.ts
+@@ -19,6 +19,7 @@
+   isCharacterStillId,
+   legacyPatientStillId,
+   patientStillEligibleEntries,
++  pediatricStillEligibleEntries,
+   staffStillEligibleEntries,
+ } from "./characterStillCatalog";
+ import {
+@@ -445,6 +446,7 @@
+   "phlebotomist",
+   "evs_worker",
+   "glp1_np",
++  "app",
+ ];
+ 
+ function boundedVariant(value: number): 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 {
+@@ -516,10 +518,12 @@
+   currentStillId?: string,
+   legacyIdentityId?: PatientIdentityId,
+ ): CharacterStillId | undefined {
+-  const eligible = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
++  const child = profile.ageYears !== undefined && profile.ageYears < 18;
++  const eligible = child ? pediatricStillEligibleEntries(profile.sexLabel, profile.ageYears)
++    : patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
+   if (isCharacterStillId(currentStillId)) {
+     const catalogEntry = characterStillCatalogEntryById(currentStillId);
+-    if (!catalogEntry || (catalogEntry.category === "patient" && eligible.some((entry) => entry.stillId === currentStillId))) return currentStillId;
++    if ((!child && !catalogEntry) || eligible.some((entry) => entry.stillId === currentStillId)) return currentStillId;
+   }
+   const legacyStill = legacyPatientStillId(legacyIdentityId);
+   if (legacyStill && eligible.some((entry) => entry.stillId === legacyStill)) return legacyStill;
+@@ -539,7 +543,9 @@
+   profile: PatientAppearanceProfile,
+   selectionContext?: PatientAppearanceSelectionContext,
+ ): CharacterStillId | undefined {
+-  const eligible = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
++  const eligible = profile.ageYears !== undefined && profile.ageYears < 18
++    ? pediatricStillEligibleEntries(profile.sexLabel, profile.ageYears)
++    : patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
+   if (eligible.length === 0) return undefined;
+ 
+   const occupiedStillIds = selectionContext?.occupiedStillIds ?? new Set<string>();
+@@ -575,6 +581,7 @@
+   profile: PatientAppearanceProfile,
+   stillId: CharacterStillId | undefined,
+ ): PatientIdentityId | undefined {
++  if (profile.ageYears !== undefined && profile.ageYears < 18) return undefined;
+   if (!stillId) return undefined;
+   const canonicalIdentity = patientRosterEntryById(stillId as PatientIdentityId);
+   if (canonicalIdentity) return canonicalIdentity.id;
+@@ -666,6 +673,8 @@
+       return "evs_worker";
+     case "staff.glp1_np":
+       return "glp1_np";
++    case "staff.app":
++      return "app";
+     default:
+       // Unknown legacy definitions keep the original front-desk treatment.
+       return "receptionist";

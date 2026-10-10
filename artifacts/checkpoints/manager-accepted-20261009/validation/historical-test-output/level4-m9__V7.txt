@@ -1,0 +1,120 @@
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 test
+> vitest run --config vitest.config.ts --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/clinical-context-workbench
+
+
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  05:13:35
+   Duration  2.03s (transform 250ms, setup 0ms, import 778ms, tests 608ms, environment 0ms)
+
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 465ms
+     × ignores the retired concealment flag and preserves the scheduled external service after an answer 49ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
+AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+System.Management.Automation.RemoteException
+Expected: "Off-site thyroid fine-needle aspiration"
+Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
+System.Management.Automation.RemoteException
+ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
+     83|     const pending = state.encounters[encounterId]!.pendingResult!;
+     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
+     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
+       |                                                    ^
+     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
+     87|   });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed | 160 passed (161)
+      Tests  1 failed | 1244 passed (1245)
+   Start at  05:13:38
+   Duration  100.23s (transform 3.42s, setup 0ms, import 37.93s, tests 50.96s, environment 8ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+System.Management.Automation.RemoteException
+
+> @gamify-surgery/balance-config@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/balance-config
+
+
+ Test Files  15 passed (15)
+      Tests  129 passed (129)
+   Start at  05:15:18
+   Duration  2.05s (transform 142ms, setup 0ms, import 910ms, tests 75ms, environment 1ms)
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-authoring
+
+
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  05:15:20
+   Duration  1.08s (transform 105ms, setup 0ms, import 316ms, tests 252ms, environment 0ms)
+
+
+> @gamify-surgery/clinical-content@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
+
+
+ Test Files  84 passed (84)
+      Tests  608 passed (608)
+   Start at  05:15:22
+   Duration  23.79s (transform 1.80s, setup 0ms, import 15.50s, tests 2.39s, environment 5ms)
+
+
+> @gamify-surgery/clinical-research@0.0.1 test
+> vitest run --config vitest.config.ts --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-research
+
+
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  05:15:46
+   Duration  1.82s (transform 168ms, setup 0ms, import 464ms, tests 791ms, environment 0ms)
+
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+
+ Test Files  137 passed | 1 skipped (138)
+      Tests  3764 passed | 2 skipped (3766)
+   Start at  05:15:48
+   Duration  473.01s (transform 2.54s, setup 0ms, import 44.81s, tests 418.75s, environment 6ms)
+

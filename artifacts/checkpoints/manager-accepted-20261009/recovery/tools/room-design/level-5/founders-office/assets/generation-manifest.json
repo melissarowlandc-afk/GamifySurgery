@@ -1,0 +1,779 @@
+{
+  "schemaVersion": 2,
+  "date": "2026-10-08",
+  "status": "generated_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "builtInCalls": 35,
+  "assets": [
+    {
+      "id": "l1-desk",
+      "level": 1,
+      "slot": "desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-desk-02.png",
+      "prompt": "assets/prompts/v2/l1-desk-02.prompt.txt",
+      "receipt": "assets/originals/v2/l1-desk-02.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "bc2fdb43407ad67a3f3042c06e7c5e97ecc4272319a04277f44c95cc67a19d20",
+      "promptSha256": "22d4280cf6876ad6679a8531cd93774c91558422ccd4d8d606958291bba75e4e",
+      "receiptSha256": "c4f80a785a54155ea146529edd79c581cab3dbe185160b68af45fb143c9ae1e1",
+      "sourcePoints": {
+        "worktop": [
+          768,
+          318
+        ]
+      },
+      "rejectedVersions": [
+        {
+          "original": "assets/originals/v2/l1-desk-01.png",
+          "prompt": "assets/prompts/v2/l1-desk-01.prompt.txt",
+          "receipt": "assets/originals/v2/l1-desk-01.receipt.json",
+          "originalSha256": "2077977fe6996631abdc1c0f8171630fd204d011f8427a9f68e7deb57e283fcf",
+          "promptSha256": "d0724007d1a0018b9acbc7f3c3a49e5736b332b97a23134d30d1c496a72b7622",
+          "reason": "First output added unrequested lamp and modesty panel; owner asked for basic table."
+        }
+      ]
+    },
+    {
+      "id": "l1-founderChair",
+      "level": 1,
+      "slot": "founderChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-founderChair-01.png",
+      "prompt": "assets/prompts/v2/l1-founderChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l1-founderChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "82a7a6e7234138f9eb9ffaffa27b475ff8f83d1ba4b597be41537e5f263db193",
+      "promptSha256": "314d59de90d192a3d8516231db379dedf70824e4abf3e8d1352437516f337adc",
+      "receiptSha256": "850dbaa58b58689cfcf3226e5a435c0714cc72992e3c310d49781ddbfbb61e5f",
+      "sourcePoints": {
+        "seat": [
+          607,
+          648
+        ],
+        "frontRegions": [
+          [
+            300,
+            495,
+            130,
+            155
+          ],
+          [
+            780,
+            495,
+            130,
+            155
+          ],
+          [
+            0,
+            700,
+            1214,
+            595
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l1-visitorChair",
+      "level": 1,
+      "slot": "visitorChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/l1-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l1-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "2d1aed2f9d1e0b2bf68d99c5251df1cfbd76fc56d3d04d7a1bdbe3223a9ffb83",
+      "promptSha256": "cb49a89aadf9236af6d01f480692395362eff2f544cb443183576a8a987722f5",
+      "receiptSha256": "11be4ab904bac0eff468380f6b2d7e665b16b47565b25b375589ed9e8dc1ee7a",
+      "sourcePoints": {
+        "seat": [
+          701,
+          535
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1402,
+            1122
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l1-shelf",
+      "level": 1,
+      "slot": "shelf",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-shelf-01.png",
+      "prompt": "assets/prompts/v2/l1-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/l1-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "6b27205a3a51378e758745513c80f65ed65d5a77bf3d27db834bcd090887072b",
+      "promptSha256": "ed4c46d747f669a743c4a1ef4314946cc5da19dc50e1e24eab8193724ca54fe6",
+      "receiptSha256": "d5058c1b06344157ddd68b309e9f1c2304c24e1809e2138e60d8314b65d12d45",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l1-rug",
+      "level": 1,
+      "slot": "rug",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-rug-01.png",
+      "prompt": "assets/prompts/v2/l1-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/l1-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "8534e5945ad6d90bbac322f0dd1cef1f559493affb0aa729ac663c0a02ddc604",
+      "promptSha256": "19a41d62b272d2a3112ef92bdd2eb4801e71302f95ced3cd3d11b121b51467da",
+      "receiptSha256": "7e5b9ed5fed503050e4fcc1e7d5e6c17558d75535725c6d1d008aac133c433ae",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l1-decor",
+      "level": 1,
+      "slot": "decor",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l1-decor-01.png",
+      "prompt": "assets/prompts/v2/l1-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/l1-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "1159da484e06c3fc1a8d7b5d3318ab34a15ee45864b17d4dd7c2fcfb27a7d896",
+      "promptSha256": "d79829e725753817275b8fa2da5d3d73fae7eaea70e32115c8ca026cf45324d5",
+      "receiptSha256": "95f1f0a14f32b29685d44978191553f9b01d273dd0851d16e0f9841987a44529",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l2-desk",
+      "level": 2,
+      "slot": "desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-desk-01.png",
+      "prompt": "assets/prompts/v2/l2-desk-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-desk-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "0b6d8bbc91570c70f9277ddee054eddff09cc8b227daf29882b16e5d0cb21ec1",
+      "promptSha256": "875675a04cb4ae9e0a0424271308eb29b0422c72fc6733d10a3740ca84ca20d2",
+      "receiptSha256": "0fa2babe0fdff20b6c7c12f6c0470cbb252e97d82fa02549c51181161cef15d2",
+      "sourcePoints": {
+        "worktop": [
+          768,
+          376
+        ]
+      }
+    },
+    {
+      "id": "l2-founderChair",
+      "level": 2,
+      "slot": "founderChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-founderChair-01.png",
+      "prompt": "assets/prompts/v2/l2-founderChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-founderChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "621c0ea9866b732f191599d1214804581f88b52fd7830abef212747b01c22f06",
+      "promptSha256": "80b1f5e12d20783876c0e32a30015c04473f19bb45430feb03ecfe7158cf54ac",
+      "receiptSha256": "9801d3ead3a4ba2e386ef829118901cd1a7713ce105f446149fd9fc532b4e77f",
+      "sourcePoints": {
+        "seat": [
+          612,
+          680
+        ],
+        "frontRegions": [
+          [
+            215,
+            460,
+            165,
+            150
+          ],
+          [
+            845,
+            460,
+            165,
+            150
+          ],
+          [
+            0,
+            758,
+            1225,
+            526
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l2-visitorChair",
+      "level": 2,
+      "slot": "visitorChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/l2-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "123652159be975480ff8a33aeef877f415586dd263bcba487f24da112ff3756d",
+      "promptSha256": "0417fc62d7a9fba61bd08384aee650dfa4702550d053602390aa1fc861d82307",
+      "receiptSha256": "8f42f7d8394f22244a68b8436230c7c28529eccaf00d7f668b199a9de2a9089c",
+      "sourcePoints": {
+        "seat": [
+          615,
+          650
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1230,
+            1278
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l2-shelf",
+      "level": 2,
+      "slot": "shelf",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-shelf-01.png",
+      "prompt": "assets/prompts/v2/l2-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "adda3d6d39c3ad7198ca31e84c3a49053c35c8ab4275048fd27c7d0bed2b9990",
+      "promptSha256": "fec922fbd93f0a552bb7136df702d9076352aa0de82bfa092f9529339ed41254",
+      "receiptSha256": "96bc1692934690d891ef506741d07175e41c210efe55d98437697694920fccea",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l2-rug",
+      "level": 2,
+      "slot": "rug",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-rug-01.png",
+      "prompt": "assets/prompts/v2/l2-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "002f1711261f489e3834ea063f5d3cf19a71d35c16354769dfb79ff2be1aa82b",
+      "promptSha256": "74ba838d9fa65d0a992df6fd52e1f50b37bc6dc22c4258f51f9dc6cdc1f396e6",
+      "receiptSha256": "abe143c11d0b6157ab9c132b04f9d0917e2c110ce9b56ad791f0cf5dadd98cd3",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l2-decor",
+      "level": 2,
+      "slot": "decor",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-decor-01.png",
+      "prompt": "assets/prompts/v2/l2-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "394c32cbaf3d1126b8d22ece6460209638f4cde84a5ef0fb830d70cbdbc47825",
+      "promptSha256": "47b1f0a0b5d19d999949a4a4ef2a766403ef8a4677925dfef9d2edf965010891",
+      "receiptSha256": "8d3ff3ccb34c95666258e0924b728de5efea0db4f1c60d0a62c37ced850c3744",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l2-accent",
+      "level": 2,
+      "slot": "accent",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l2-accent-01.png",
+      "prompt": "assets/prompts/v2/l2-accent-01.prompt.txt",
+      "receipt": "assets/originals/v2/l2-accent-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "ca4a24333efccd7f19277cc6c24b90496b44f1656dea7166640416b6288fd95f",
+      "promptSha256": "d6d985f09ecabea4a122e290a9b2c142ea2cd51269b3a1f060fd591eb4e8a5ee",
+      "receiptSha256": "3f0461080cb03e32bcbf93b14cefb10d85c237952a93a16e4fb75229cc0eb6be",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l3-desk",
+      "level": 3,
+      "slot": "desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-desk-01.png",
+      "prompt": "assets/prompts/v2/l3-desk-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-desk-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "c65afda32793f73c6768c1bd237ce5e0e3da7b6b3ddb459a613a145359ce25f7",
+      "promptSha256": "79648dd65c0ff55ba1b715174fc90286c2c0ce13b91c194569f95d0bff8042bb",
+      "receiptSha256": "e7646a211322f9e36b6bc12a4501ad7bcb9be200630261a743cdfddb5834a557",
+      "sourcePoints": {
+        "worktop": [
+          768,
+          391
+        ]
+      }
+    },
+    {
+      "id": "l3-founderChair",
+      "level": 3,
+      "slot": "founderChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-founderChair-01.png",
+      "prompt": "assets/prompts/v2/l3-founderChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-founderChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "3e8d61d8c5cf5892d47fc7f4f4c72346ab2ce62c408d3d7a01e3aa6d2026a7d8",
+      "promptSha256": "6c49fa8892f66f750f2579aaa822cc081032b5a9541e2d8752907051d9afd330",
+      "receiptSha256": "c52b42073467439c3131d1da30403e6cc05b959b27b1334e29ed9342306cd182",
+      "sourcePoints": {
+        "seat": [
+          656,
+          675
+        ],
+        "frontRegions": [
+          [
+            300,
+            450,
+            140,
+            190
+          ],
+          [
+            870,
+            450,
+            145,
+            190
+          ],
+          [
+            0,
+            772,
+            1312,
+            427
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l3-visitorChair",
+      "level": 3,
+      "slot": "visitorChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/l3-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "95a785768a700fa70f7f7136e9598007dc031c0efa1f8714127ac22c62bbc8fb",
+      "promptSha256": "f09af04e9058e55623eb244cf0db01b46605cf8f51a624cdf98ae6265c7635c9",
+      "receiptSha256": "22fa02a08a41b438780c37ec07687b7f0be39bf33ddad7b07735ab8eecaecb10",
+      "sourcePoints": {
+        "seat": [
+          639,
+          650
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1278,
+            1230
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l3-shelf",
+      "level": 3,
+      "slot": "shelf",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-shelf-01.png",
+      "prompt": "assets/prompts/v2/l3-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "9db3ec8ac7840b21a15c7c5479ed386c0820b63898fa325567a9f42cb47799b5",
+      "promptSha256": "efc7f8d5bf0368b68d425ba67e73e369d6bf4c70f6c7e84ae4fea8da323d44e6",
+      "receiptSha256": "016b24a86f7b4dd7e6514b13efd6e58ae6afe4c3df861342d0a8718bbf8a0c35",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l3-rug",
+      "level": 3,
+      "slot": "rug",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-rug-01.png",
+      "prompt": "assets/prompts/v2/l3-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "f2fcae56a1d3730fb24156b07a97abd8e5f1b1bc8dadf5eab365f0b15fdb5516",
+      "promptSha256": "d07bb068f01ca2b40e708b691b97c5abf83e3f6b997640e1b3273f60ac731099",
+      "receiptSha256": "56226545207401cce76803842b5ca124690b8ba0bdf21f2126c0eff187a3937c",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l3-decor",
+      "level": 3,
+      "slot": "decor",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l3-decor-01.png",
+      "prompt": "assets/prompts/v2/l3-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/l3-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "83a9a75cc4dbb3463544da8429c1bf1b90095a0c42d088ee1dcfc0865e87e747",
+      "promptSha256": "595dc2c1b7c29c990e393d038c7907ef208d8809d175233368988d35ab25b454",
+      "receiptSha256": "ab30e63a108570a5d9f8e68daa191ce60527ed3964f040a477ef1f06e7c4574f",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l4-desk",
+      "level": 4,
+      "slot": "desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-desk-01.png",
+      "prompt": "assets/prompts/v2/l4-desk-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-desk-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "22feb353b24b2dfdd6b60958ef0f444e6df876078bc0987dc636a66ce4c1d9f2",
+      "promptSha256": "62561a8277d60246e710cc3f73ce5d92b7a0a736f2b2841e2627c95f23981dba",
+      "receiptSha256": "0b27b9faedeedc1ba91ab261e3fceefea221491b7fd3c6d51d46b46254a6f130",
+      "sourcePoints": {
+        "worktop": [
+          768,
+          342
+        ]
+      }
+    },
+    {
+      "id": "l4-founderChair",
+      "level": 4,
+      "slot": "founderChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-founderChair-01.png",
+      "prompt": "assets/prompts/v2/l4-founderChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-founderChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "90af49b2b8cf6ca7b6ff14119b87336a9d5fbeb69d6aeaa3581abbce331e5187",
+      "promptSha256": "fcb68fc25e68185d8dbaa578d6bb07026e6bb160c4503e776f373330766b91e4",
+      "receiptSha256": "b3a246c79b650bdaf849eb079d83c4f388b78c41f43b47a7ba5669191bfad9c3",
+      "sourcePoints": {
+        "seat": [
+          604,
+          724
+        ],
+        "frontRegions": [
+          [
+            205,
+            490,
+            155,
+            235
+          ],
+          [
+            848,
+            490,
+            155,
+            235
+          ],
+          [
+            0,
+            805,
+            1208,
+            497
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l4-visitorChair",
+      "level": 4,
+      "slot": "visitorChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/l4-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "2f380ae8fabc2851db359fb7cbd399741863984fa6148cf16c9d7163762dd53a",
+      "promptSha256": "0b642575e84584bbca31128c09d2fe13e39e1fe924b1e515f9f063951a002320",
+      "receiptSha256": "2add58ddf20f95eccfe0092d06470e6fdc782c945297bf7d3331a7851df9b975",
+      "sourcePoints": {
+        "seat": [
+          660,
+          620
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1320,
+            1192
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l4-shelf",
+      "level": 4,
+      "slot": "shelf",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-shelf-01.png",
+      "prompt": "assets/prompts/v2/l4-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "7893f378256d5fcfa491909ef4624d9295e7cd82db329baaf5fa7e7baa42e63c",
+      "promptSha256": "e03df0aed9bef10e906fcb9a0a4643d3fe1c45b450e07ed265f5ff7837c1014f",
+      "receiptSha256": "bd74783f66128d83015db7621fa9fea1fa6fe37b4e36c79f64873295f3ade45a",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l4-rug",
+      "level": 4,
+      "slot": "rug",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-rug-01.png",
+      "prompt": "assets/prompts/v2/l4-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "1ffb2bd91ca7bd1655fb76734ea3e03c4bba0e8c2dfb7dcc450894744b7a0a6c",
+      "promptSha256": "705e5e9a1c1af2bf71cc8284d726ac6b7e1784608cfaddc8b4329a7e21b720a7",
+      "receiptSha256": "ee9cbfe25707df71ed2901ab0d081e8bbec0611a20fc532140016f7b0a44a36c",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l4-decor",
+      "level": 4,
+      "slot": "decor",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-decor-01.png",
+      "prompt": "assets/prompts/v2/l4-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "337278faa4b3fadeef21612f882436f5d2d2f0f04c1e14e9461909cedba00103",
+      "promptSha256": "cdd219b7a216e2bc283f684ded7925e47755069e7240b47f5888bd6b32df2313",
+      "receiptSha256": "4ac457400db6e45a09484b1e6642cc3efb02b0409740ba2d5809cca121aec8f2",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l4-accent",
+      "level": 4,
+      "slot": "accent",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l4-accent-01.png",
+      "prompt": "assets/prompts/v2/l4-accent-01.prompt.txt",
+      "receipt": "assets/originals/v2/l4-accent-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "f5a2e4baa1857556a1255e3ada230391a6f15d4009ee199196f22a57756d54cd",
+      "promptSha256": "912ce7fe297385cba7589b1294eb0c8f67dd445e1632d4a9058a737a2df87362",
+      "receiptSha256": "a2e44027439089865912cf7480bcf8ef059255e7c11e4ca3e2aa86044c2e7993",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l5-desk",
+      "level": 5,
+      "slot": "desk",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-desk-01.png",
+      "prompt": "assets/prompts/v2/l5-desk-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-desk-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "e2017320d63fb6c0e856000fd66ecfdb44bf445fd5b30c0706301b895be8481e",
+      "promptSha256": "2f16c319af5b459996ba89d9cbe6b3ed46ea6c4b9bd694fadead6df4346db1bf",
+      "receiptSha256": "5ce4d214a19831aa4771daf72b5b6b62bce28eb33aa4cb99581fad04fc80c483",
+      "sourcePoints": {
+        "worktop": [
+          768,
+          307
+        ]
+      }
+    },
+    {
+      "id": "l5-founderChair",
+      "level": 5,
+      "slot": "founderChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-founderChair-02.png",
+      "prompt": "assets/prompts/v2/l5-founderChair-02.prompt.txt",
+      "receipt": "assets/originals/v2/l5-founderChair-02.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "aacba1563e8a881b5b5c594c14039f43dacb5f9c2add1a53f5532db8c27e1897",
+      "promptSha256": "a9fe0167e9390e0b1ab3f2fff00a9e0e911fd9b13853f1617b2a47c6fd61fe53",
+      "receiptSha256": "43d2823915d4a3c46543dc5cda8ecc6f3b8a2bc680712c624558105365e058b4",
+      "sourcePoints": {
+        "seat": [
+          512,
+          1070
+        ],
+        "frontRegions": [
+          [
+            30,
+            835,
+            240,
+            260
+          ],
+          [
+            755,
+            835,
+            245,
+            260
+          ],
+          [
+            0,
+            1115,
+            1024,
+            421
+          ]
+        ]
+      },
+      "rejectedVersions": [
+        {
+          "original": "assets/originals/v2/l5-founderChair-01.png",
+          "prompt": "assets/prompts/v2/l5-founderChair-01.prompt.txt",
+          "receipt": "assets/originals/v2/l5-founderChair-01.receipt.json",
+          "originalSha256": "a5ce11bd4f88a44fa6980bee621a54d94fcf59e0900e8182b8d1f596e7de5569",
+          "promptSha256": "29de4d3c27dc9774808a3667ca61fb59f4c835f2183fad8f26ac01128b04bda6",
+          "reason": "Raise throne crown above real founder head in native assembly; first version preserved."
+        }
+      ]
+    },
+    {
+      "id": "l5-visitorChair",
+      "level": 5,
+      "slot": "visitorChair",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/l5-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "c20a248f6fc78d2515546f3ff975f7734c04f90dbb33ca1afe3e0428fa744178",
+      "promptSha256": "c189dc454e8c3bf3d9b60b307d9cfe1e64c236338a47bc49632f3ad89b51aadf",
+      "receiptSha256": "be651e15862ca63dd4a07450e6049833ab2d0835d0bad485c58c17b85ea729dd",
+      "sourcePoints": {
+        "seat": [
+          658,
+          620
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1317,
+            1194
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l5-shelf",
+      "level": 5,
+      "slot": "shelf",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-shelf-01.png",
+      "prompt": "assets/prompts/v2/l5-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "75fefc385d10106fe01e606acf56d074092d9c6e635b0b7df4888e626bb00bf5",
+      "promptSha256": "941ec7625fc155128192d9ac6c9186c56ff93c797751596310c52573f99c4218",
+      "receiptSha256": "76e4383359e242ebebb630e63a73b6f1aba8ca68bf64fe826b772e663024ed0c",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l5-rug",
+      "level": 5,
+      "slot": "rug",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-rug-01.png",
+      "prompt": "assets/prompts/v2/l5-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "fc8a518fabc91539a63c0569c52ab93718f7b8b6006d1aa050d2c03638d956bd",
+      "promptSha256": "fd66192edfe04b828099bf03cb587e8fd884ee89f45462b874cbda765234aacd",
+      "receiptSha256": "ef5716c84ab7543835b62a210682bc4b5a83d7ea9bea4095e44246aeff4e8ab3",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l5-decor",
+      "level": 5,
+      "slot": "decor",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-decor-01.png",
+      "prompt": "assets/prompts/v2/l5-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "afbff629c47185d9ffa585c61f3cbd14ee09c703f3294a53ea72f9181f8302ec",
+      "promptSha256": "de8c8cb993370deadeb39aff5cf70caae76aae04f9636820c5c8e022ebf5d9ef",
+      "receiptSha256": "384dd9cc60f28717758e0121037bf168f6f0d9015aae2d502f53631bf08a898a",
+      "sourcePoints": {}
+    },
+    {
+      "id": "l5-accent",
+      "level": 5,
+      "slot": "accent",
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/l5-accent-01.png",
+      "prompt": "assets/prompts/v2/l5-accent-01.prompt.txt",
+      "receipt": "assets/originals/v2/l5-accent-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "43178cc47bf8c2e9218a6c7b6ca7e9f56405a6fbd54ec83c3406a4fae6f8d64e",
+      "promptSha256": "c072ae33a6ea0f2cb6c6b7060584faaabdcbd4d713a2a95b24ff288732e08108",
+      "receiptSha256": "35917c365294faf614bd2118a2718c0bbcebb2c8150378bdf2209bf757c9df96",
+      "sourcePoints": {}
+    }
+  ],
+  "registrationSha256": "6b1b92ef97a039f97cc70a4e966aa639b0cf18ebc897114e3a2f207243904a3b",
+  "notes": [
+    "33 distinct selected assets; five complete six-piece sets plus three accents.",
+    "Rejected L1 desk and L5 throne retained, followed by built-in edits.",
+    "No runtime, morale mechanic, game art, saves, installs or API credits."
+  ]
+}

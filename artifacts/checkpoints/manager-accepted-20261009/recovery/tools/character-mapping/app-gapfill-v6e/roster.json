@@ -1,0 +1,383 @@
+{
+  "schemaVersion": "app-gapfill-v6e-roster/v1",
+  "cohort": "app-gapfill-v6e",
+  "programPlan": "docs/execplans/character-gapfill-v6-20261007.md",
+  "allocation": {
+    "staff.app": 8
+  },
+  "coverageAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f",
+    "use": "Historical staff gap program. Manager Level4 M4 brief adds eight APP looks to the two approved APPs; appearance is visual only."
+  },
+  "identities": [
+    {
+      "number": "001",
+      "stableId": "app-gapfill-v6e.001",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 28,
+      "compatibleSexLabel": "Female",
+      "ageBand": "young_adult",
+      "visualBrief": {
+        "build": "petite compact athletic build with clearly adult facial features",
+        "skin": "warm golden-tan skin",
+        "hair": "short black sculpted curls with a tapered nape and small asymmetric swept fringe, not a bun",
+        "accessory": "no glasses",
+        "outfit": "a hip-length white full-sleeved provider jacket with small notched lapels and two lower square pockets over matching dusty-coral V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/001/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/001/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          },
+          {
+            "path": "sources/001/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "002",
+      "stableId": "app-gapfill-v6e.002",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 38,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "tall lean build within the established compact character proportions",
+        "skin": "fair warm freckled skin",
+        "hair": "straight dark-auburn chin-length blunt bob with a clean center part, no ponytail or bun",
+        "accessory": "no glasses",
+        "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching muted-ochre V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/002/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/002/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          },
+          {
+            "path": "sources/002/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "003",
+      "stableId": "app-gapfill-v6e.003",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 49,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "broad full-figured compact build and a mature face",
+        "skin": "deep warm-brown skin",
+        "hair": "neat black narrow braids gathered in a high angular braided knot with subtle silver threads at the temples",
+        "accessory": "no glasses",
+        "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching subdued russet-orange V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/003/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/003/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          },
+          {
+            "path": "sources/003/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "004",
+      "stableId": "app-gapfill-v6e.004",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 60,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "moderately full compact build, soft older facial lines and a clearly mature face",
+        "skin": "light warm-brown skin",
+        "hair": "smooth straight silver asymmetrical jaw-length bob with a deep side part, no curls or bun",
+        "accessory": "small amber-brown oval glasses",
+        "outfit": "a hip-length white full-sleeved provider jacket with notched lapels and two lower square pockets over matching warm-charcoal V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.002-eight-poses.png",
+            "sha256": "2e9cc60bebaa56e2d05dba0e0673ee04742c88a59fc0aef1bb011534d04c0de4",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.002"
+          },
+          {
+            "path": "sources/004/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "005",
+      "stableId": "app-gapfill-v6e.005",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 31,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "slim straight masculine torso with flat chest and shoulders wider than hips",
+        "skin": "medium olive-tan skin",
+        "hair": "straight black hair in a compact high ponytail over a close undercut, with a short face-framing forelock",
+        "accessory": "a clean-shaven adult face and no glasses",
+        "outfit": "a hip-length white full-sleeved provider jacket with notched lapels and two lower square pockets over matching warm-taupe V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/005/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/005/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          },
+          {
+            "path": "sources/005/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "006",
+      "stableId": "app-gapfill-v6e.006",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 41,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "stocky broad-shouldered build with a straight masculine chest",
+        "skin": "fair pink-toned skin",
+        "hair": "short straight strawberry-blond side-parted crop with close sides",
+        "accessory": "a short neat ginger beard and moustache, no glasses",
+        "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching muted-apricot V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/006/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/006/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          },
+          {
+            "path": "sources/006/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "007",
+      "stableId": "app-gapfill-v6e.007",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 53,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "lean straight masculine torso, narrow hips and mature facial lines",
+        "skin": "deep dark-brown skin",
+        "hair": "a smoothly bald head",
+        "accessory": "a short full salt-and-pepper beard and small black rectangular glasses",
+        "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching muted-cocoa-brown V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/007/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/007/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          },
+          {
+            "path": "sources/007/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "008",
+      "stableId": "app-gapfill-v6e.008",
+      "category": "staff",
+      "eligibleStaffRoleDefinitionIds": [
+        "staff.app"
+      ],
+      "roleLabel": "Advanced practice provider",
+      "intendedAge": 58,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "broad heavyset compact build with straight masculine chest, wider waist and an older square face",
+        "skin": "fair warm skin",
+        "hair": "thick silver wavy hair swept back from a receding widow's peak and close silver sideburns",
+        "accessory": "a clean-shaven mature face and no glasses",
+        "outfit": "a thigh-length white full-sleeved provider coat with notched lapels and two lower square pockets over matching muted-brick-red V-neck scrubs and scrub trousers, and dark-charcoal clinical sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/008/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/008/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/app-gapfill-v6e/references/future-roster20-v5.001-eight-poses.png",
+            "sha256": "0e1e66eed2f3e2b3b0cc5b33cae136a460184cfd0ae0261d8a57352f0ac99e8f",
+            "role": "approved-APP-rounded-pixel-style-proportions-coat-and-pose-reference;avoid-its-cobalt-or-plum-scrub-color",
+            "existingIdentity": "future-roster20-v5.001"
+          },
+          {
+            "path": "sources/008/stage1-standing-cardinals.png",
+            "role": "new-identity-and-outfit-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    }
+  ]
+}

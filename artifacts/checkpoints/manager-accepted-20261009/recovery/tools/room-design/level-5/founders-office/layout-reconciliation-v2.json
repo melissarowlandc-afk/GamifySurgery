@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "phase": "Native art fit after first assembly",
+  "frozenPrepaint": "stand-in/v2/layout-prepaint.json",
+  "changes": [
+    {
+      "slot": "desk",
+      "before": {
+        "id": "desk",
+        "canvas": [
+          648,
+          432
+        ],
+        "size": [
+          1.35,
+          0.9
+        ],
+        "ground": [
+          1.5,
+          1.38
+        ],
+        "footprint": {
+          "left": 0.88,
+          "top": 1.1,
+          "width": 1.24,
+          "height": 0.28
+        },
+        "owners": []
+      },
+      "after": {
+        "id": "desk",
+        "canvas": [
+          648,
+          432
+        ],
+        "size": [
+          1.35,
+          0.9
+        ],
+        "ground": [
+          1.5,
+          1.18
+        ],
+        "footprint": {
+          "left": 0.88,
+          "top": 0.9000000000000001,
+          "width": 1.24,
+          "height": 0.28
+        },
+        "owners": []
+      },
+      "reason": "Native tabletop back edge closer to real founder hands, all tiers share the same northward registration."
+    },
+    {
+      "slot": "founderChair",
+      "reason": "Six extra proof pixels of transparent frame width in every tier allow the taller generated throne without distortion. Floor/cushion anchors and declared footprint unchanged."
+    },
+    {
+      "slot": "decor",
+      "reason": "Move all wall frames slightly up/left to keep the right-hand plant/bust from covering the picture."
+    },
+    {
+      "slot": "visitor approach",
+      "before": [
+        0.95,
+        2.15
+      ],
+      "after": [
+        0.85,
+        2.15
+      ],
+      "reason": "Clear the actual richer chair rear-foot span by the full actor radius."
+    }
+  ],
+  "unchanged": [
+    "3x3 footprint, 12 door sections, door ownership",
+    "Both seat and floor anchors, character sources/uniform scale/direction",
+    "Chair/shelf/accent declared footprints, rug centre/size, founder approach"
+  ],
+  "approval": null,
+  "runtimeIntegrationAuthorized": false
+}

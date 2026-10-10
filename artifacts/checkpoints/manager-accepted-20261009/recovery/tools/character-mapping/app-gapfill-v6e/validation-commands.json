@@ -1,0 +1,9 @@
+[
+  {"name":"roster","executable":"node","args":["tools/character-mapping/app-gapfill-v6e/validate-roster.mjs","--require-complete"]},
+  {"name":"placement","executable":"node","args":["tools/character-mapping/app-gapfill-v6e/validate-placement-qa.mjs","--require-complete"]},
+  {"name":"worker-review","executable":"node","args":["tools/character-mapping/app-gapfill-v6e/validate-worker-review.mjs"]},
+  {"name":"comparisons","executable":"node","args":["tools/character-mapping/app-gapfill-v6e/validate-all-catalog-comparison.mjs"]},
+  {"name":"preservation","executable":"node","args":["tools/character-mapping/app-gapfill-v6e/runtime-baseline.mjs"]},
+  {"name":"syntax","executable":"node","args":["--experimental-vm-modules","tools/character-mapping/app-gapfill-v6e/check-syntax.mjs"]},
+  {"name":"text","executable":"python","args":["tools/character-mapping/app-gapfill-v6e/validate-text.py"]}
+]

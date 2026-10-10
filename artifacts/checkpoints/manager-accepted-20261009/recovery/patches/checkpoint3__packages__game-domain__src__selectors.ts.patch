@@ -1,0 +1,137 @@
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -11,6 +11,9 @@
+   PatientLists,
+   WorkloadSnapshot,
+ } from "./types";
++import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
++import { getRoomStaffCapacity } from "./room-capacity";
++import { MRI_SERVICE_CONTRACTS } from "@gamify-surgery/balance-config";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+   SECOND_TUTORIAL_ENCOUNTER_ID,
+@@ -300,7 +303,7 @@
+       isRoomOperational(state, homeRoom.id, context, access) &&
+       // Imaging staff may be walking between ordinary imaging rooms while
+       // remaining available to the installed service-capability model.
+-      (isEmployeeAwayForTraining(employee) || employee.staffRoleDefinitionId === "staff.imaging_technician" ||
++      (isEmployeeAwayForTraining(employee) || employee.staffRoleDefinitionId === "staff.imaging_technician" || employee.staffRoleDefinitionId === "staff.app" ||
+         isEmployeeOperational(state, employeeId, context)),
+   );
+ }
+@@ -495,7 +498,7 @@
+           candidate.id,
+           context,
+           access,
+-        )) && (!specialistPriority || Boolean(destination && definition && (() => {
++        )) && (!(specialistPriority || candidate.staffRoleDefinitionId === "staff.app") || Boolean(destination && definition && (() => {
+           const targets = usesApprovedProcedureStaffSpots(destination, definition)
+             ? getProcedureStaffStandingSpots(destination, definition, state.doors, "provider").map((spot) => spot.anchor)
+             : [getRoomNavigationAnchor(destination, definition, "staff")];
+@@ -650,6 +653,8 @@
+   if (!service) {
+     return null;
+   }
++  const pediatric = encounterId ? state.encounters[encounterId]?.frozenCase.pediatricProfile : undefined;
++  if (pediatric && pediatricServiceIsUnsupported(service.id)) return null;
+   const capabilities = getCurrentCapabilities(state, context);
+   const allowed =
+     allowedRouteIds === null ? null : new Set(allowedRouteIds);
+@@ -659,6 +664,7 @@
+     ["service.breast_core_needle_biopsy", { onsite: "route.breast_core_needle_biopsy.in_house", outsourced: "route.breast_core_needle_biopsy.outsourced" }],
+     ["service.ct", { onsite: "route.ct.in_house", outsourced: "route.ct.outsourced" }],
+     ["service.basic_labs", { onsite: "route.basic_labs.phlebotomy_sendout", outsourced: "route.basic_labs.outsourced" }],
++    ...MRI_SERVICE_CONTRACTS.map(contract => [contract.serviceId, { onsite: contract.onsite, outsourced: contract.outsourced }] as [string, { onsite: string; outsourced: string }]),
+   ]);
+   const approvedEquivalent = approvedOnsiteEquivalentRoutes.get(serviceId);
+   const isAllowedRoute = (routeId: string) =>
+@@ -743,6 +749,7 @@
+     service.routes
+       .flatMap((candidate) => {
+         if (
++          pediatric && pediatricServiceIsUnsupported(service.id, candidate) ||
+           !isAllowedRoute(candidate.id) ||
+           (candidate.requiredCapabilityId !== null &&
+             !capabilities.has(candidate.requiredCapabilityId)) ||
+@@ -1586,11 +1593,11 @@
+             id: "progression.satisfaction",
+             label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
+             met:
+-              historicalSatisfaction !== null &&
++              (state.facilityLevel === 4 || historicalSatisfaction !== null) &&
+               effectiveSatisfaction >
+               definition.satisfactionMustBeGreaterThan,
+             current:
+-              historicalSatisfaction === null
++              state.facilityLevel !== 4 && historicalSatisfaction === null
+                 ? 0
+                 : effectiveSatisfaction,
+             required: definition.satisfactionMustBeGreaterThan + 1,
+@@ -1599,10 +1606,12 @@
+     ...requiredRooms,
+     ...definition.requiredStaffRoleIds.map((staffRoleDefinitionId) => {
+       const role = getStaffRoleDefinition(staffRoleDefinitionId, context);
+-      const operational = state.facilityLevel === 3
++      const operational = state.facilityLevel >= 3
+         ? state.employees.some(
+             (employee) =>
+               employee.staffRoleDefinitionId === staffRoleDefinitionId &&
++              (state.facilityLevel !== 4 || Boolean(employee.homeRoomInstanceId &&
++                getRoomStaffCapacity(state, staffRoleDefinitionId).slotsByRoomInstanceId[employee.homeRoomInstanceId])) &&
+               isEmployeeAssignedToOperationalRoom(
+                 state,
+                 employee.id,
+@@ -1612,7 +1621,7 @@
+         : hiredRoleTypes.has(staffRoleDefinitionId);
+       return {
+         id: `progression.staff.${staffRoleDefinitionId}`,
+-        label: `Hire ${role?.displayName ?? staffRoleDefinitionId}`,
++        label: state.facilityLevel === 4 ? "Keep an APP assigned to an operational room" : `Hire ${role?.displayName ?? staffRoleDefinitionId}`,
+         met: operational,
+         current: operational ? 1 : 0,
+         required: 1,
+@@ -1620,6 +1629,15 @@
+     }),
+     ...endoscopyCompletionRequirement,
+     ...ambulatoryCompletionRequirement,
++    ...(definition.requiredCompletionWitnessIds ?? []).map((id) => {
++      const pediatric = id === "pediatric_visit_with_parent";
++      const witness = pediatric ? state.levelFourCompletion?.pediatricVisitWithParent : state.levelFourCompletion?.woundOstomyCareVisit;
++      return {
++        id: `progression.witness.${id}`,
++        label: pediatric ? "Complete a pediatric visit with its parent" : "Complete a wound/ostomy care visit",
++        met: Boolean(witness), current: witness ? 1 : 0, required: 1,
++      };
++    }),
+   ];
+   return {
+     facilityLevel: state.facilityLevel,
+@@ -1627,10 +1645,13 @@
+     requirements,
+     eligible:
+       definition.nextFacilityLevel !== null &&
++      definition.nextFacilityLevel <= context.balanceRelease.facility.maximumPlayableLevel &&
+       requirements.every((requirement) => requirement.met),
++    terminalComplete: state.facilityLevel === 4 && definition.nextFacilityLevel === null &&
++      (state.levelFourCompletion?.acknowledgedAtFacilityTick != null || requirements.every((requirement) => requirement.met)),
+     nextFacilityLevel:
+       definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2 ||
+-      definition.nextFacilityLevel === 3
++      definition.nextFacilityLevel === 3 || definition.nextFacilityLevel === 4
+         ? definition.nextFacilityLevel
+         : null,
+     maximumPlayableLevel:
+@@ -2065,6 +2086,13 @@
+     if (!definition) {
+       return total;
+     }
++    // The persisted clock is observed by load/build/staff/tick reconciliation.
++    // After 60 continuous minutes, rent is 20% of base, without tier uplift.
++    if (room.upkeepOutage?.version === "room-upkeep-outage.v1" &&
++        room.upkeepOutage.lastObservedFacilityTick === state.facilityTick &&
++        state.facilityTick - room.upkeepOutage.sinceFacilityTick >= 60) {
++      return total + definition.upkeepPerExpenseInterval / 5;
++    }
+     return (
+       total +
+       definition.upkeepPerExpenseInterval +

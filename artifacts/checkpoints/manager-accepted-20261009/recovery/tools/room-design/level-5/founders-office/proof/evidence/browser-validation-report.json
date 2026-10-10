@@ -1,0 +1,46 @@
+{
+  "status": "SUPERSEDED",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/founders-office/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "733b5d03be84b6906f5d53746f94f9043ede75a24007ae4ad44e89280cbd35a0",
+  "checks": [
+    "actual two existing stills and 16 one-tile door controls",
+    "288 geometry states, decoded native alpha/anchors, actual armrest overlaps, Founder behind desk and full-height north furniture",
+    "every independent door, own-section hiding and exact restoration",
+    "bulk controls, idempotence and backing restoration",
+    "independent backing sections, wall art hides and floor art remains",
+    "individual/all occupancy",
+    "keyboard toggles, reset, Space/Enter activation",
+    "320px layout with no horizontal overflow"
+  ],
+  "technical": {
+    "states": 288,
+    "routes": 1536,
+    "assets": [
+      "design:fo:founder-desk",
+      "design:fo:office-bookcase",
+      "design:fo:office-plant",
+      "design:fo:office-print"
+    ],
+    "overlaps": [
+      {
+        "id": "founderChair",
+        "pixels": 567
+      },
+      {
+        "id": "visitorChair",
+        "pixels": 683
+      }
+    ],
+    "failures": []
+  },
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "previousStatus": "PASS",
+  "appliesTo": "Historical 4x4 base candidate, not current 3x3/five-tier proof",
+  "preservedOriginal": "history/4x4-base-20261008/proof/evidence/browser-validation-report.json",
+  "currentEvidence": "proof/evidence/v2/"
+}

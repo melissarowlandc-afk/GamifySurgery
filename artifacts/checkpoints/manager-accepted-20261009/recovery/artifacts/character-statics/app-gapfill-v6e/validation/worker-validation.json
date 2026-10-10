@@ -1,0 +1,329 @@
+{
+  "schemaVersion": "app-gapfill-v6e-worker-validation/v1",
+  "status": "PASS",
+  "runAt": "2026-10-09T04:05:23.027Z",
+  "browserValidation": "not-run-left-to-manager",
+  "managerAcceptance": "pending",
+  "runtimeReady": false,
+  "results": [
+    {
+      "name": "roster",
+      "command": "node tools/character-mapping/app-gapfill-v6e/validate-roster.mjs --require-complete",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:09.7839212Z",
+      "finishedAt": "2026-10-09T04:05:16.2182003Z",
+      "durationMs": 6434,
+      "stdout": "{\"status\":\"PASS\",\"requireComplete\":true,\"requireRootReview\":false,\"identities\":8,\"poses\":64,\"reportedIssues\":0,\"immutableReviewSnapshots\":16,\"rosterContract\":{\"identities\":8,\"posesPerIdentity\":8,\"totalPoses\":64,\"categoryCounts\":{\"staff\":8,\"patient\":0},\"staffRoleCounts\":{\"staff.app\":8},\"plannedStaffRoleCounts\":{},\"demographicCounts\":{\"Female\":{\"young_adult\":1,\"adult\":1,\"middle_aged\":2,\"older_adult\":0},\"Male\":{\"young_adult\":0,\"adult\":2,\"middle_aged\":2,\"older_adult\":0}}},\"reviewStatus\":\"candidate-review-root-checks-pending\",\"runtimeBaseline\":\"318 prior identities/2574 assets and179 selectable patients preserved; existing art pinned\",\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"reviewStatusPolicy\":\"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them.\"}\n",
+      "stderr": "node.exe : (node:13468) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:13468) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "requireComplete": true,
+          "requireRootReview": false,
+          "identities": 8,
+          "poses": 64,
+          "reportedIssues": 0,
+          "immutableReviewSnapshots": 16,
+          "rosterContract": {
+            "identities": 8,
+            "posesPerIdentity": 8,
+            "totalPoses": 64,
+            "categoryCounts": {
+              "staff": 8,
+              "patient": 0
+            },
+            "staffRoleCounts": {
+              "staff.app": 8
+            },
+            "plannedStaffRoleCounts": {},
+            "demographicCounts": {
+              "Female": {
+                "young_adult": 1,
+                "adult": 1,
+                "middle_aged": 2,
+                "older_adult": 0
+              },
+              "Male": {
+                "young_adult": 0,
+                "adult": 2,
+                "middle_aged": 2,
+                "older_adult": 0
+              }
+            }
+          },
+          "reviewStatus": "candidate-review-root-checks-pending",
+          "runtimeBaseline": "318 prior identities/2574 assets and179 selectable patients preserved; existing art pinned",
+          "runtimeReady": false,
+          "ownerApproval": "pending",
+          "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/roster.stdout.txt",
+          "sha256": "994ddb642b367cfc1d805e7d914c8e65ff3e8a79832c65a64146eb0b03f376d5"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/roster.stderr.txt",
+          "sha256": "f59c5a19bb7f4a65915d2bfa057c0a8e9a482fec8215d9dcb3c9b0b858092111"
+        }
+      ]
+    },
+    {
+      "name": "placement",
+      "command": "node tools/character-mapping/app-gapfill-v6e/validate-placement-qa.mjs --require-complete",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:16.2407506Z",
+      "finishedAt": "2026-10-09T04:05:17.0533867Z",
+      "durationMs": 813,
+      "stdout": "{\"status\":\"PASS\",\"diagnostics\":8,\"requireRootReview\":false,\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"frozenChairEvidenceUnchanged\":true,\"schemaVersion\":\"app-gapfill-v6e-placement-qa/v2\"}\n",
+      "stderr": "node.exe : (node:4536) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:4536) Exp...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "diagnostics": 8,
+          "requireRootReview": false,
+          "runtimeReady": false,
+          "ownerApproval": "pending",
+          "frozenChairEvidenceUnchanged": true,
+          "schemaVersion": "app-gapfill-v6e-placement-qa/v2"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/placement.stdout.txt",
+          "sha256": "f6a22f33ebe657f4f3e29ee6b370ff71ec6549a8d5294230ee513c93a5493aa2"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/placement.stderr.txt",
+          "sha256": "8390ed43046f571b8d02ea26792df6c46ed3951d1cc6e98d8a118a8409f34a56"
+        }
+      ]
+    },
+    {
+      "name": "worker-review",
+      "command": "node tools/character-mapping/app-gapfill-v6e/validate-worker-review.mjs",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:17.0543881Z",
+      "finishedAt": "2026-10-09T04:05:18.6453558Z",
+      "durationMs": 1591,
+      "stdout": "{\"status\":\"PASS\",\"identities\":8,\"poses\":64,\"roles\":1,\"authoredSeatedContacts\":32,\"reviewedChairProofs\":8,\"reviewedRoleSheets\":1,\"reviewedCatalogIdentities\":318,\"reviewedComparisonBoards\":16,\"glassesIdentities\":2,\"regenerations\":0,\"staticGalleryPages\":16,\"mainGalleryImages\":24,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\"}\n",
+      "stderr": "node.exe : (node:21080) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:21080) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "identities": 8,
+          "poses": 64,
+          "roles": 1,
+          "authoredSeatedContacts": 32,
+          "reviewedChairProofs": 8,
+          "reviewedRoleSheets": 1,
+          "reviewedCatalogIdentities": 318,
+          "reviewedComparisonBoards": 16,
+          "glassesIdentities": 2,
+          "regenerations": 0,
+          "staticGalleryPages": 16,
+          "mainGalleryImages": 24,
+          "managerVisualAcceptance": "pending",
+          "browserValidation": "not-run-left-to-manager"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/worker-review.stdout.txt",
+          "sha256": "aa00b09d9815fd7433145342c999679c8eb0f30aae58feb0af09cabed435aff0"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/worker-review.stderr.txt",
+          "sha256": "bb10cd1e0b33929986fbb9fa2108631508055a441fcf8d53fc0f51d642cad7e5"
+        }
+      ]
+    },
+    {
+      "name": "comparisons",
+      "command": "node tools/character-mapping/app-gapfill-v6e/validate-all-catalog-comparison.mjs",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:18.6464170Z",
+      "finishedAt": "2026-10-09T04:05:22.0731847Z",
+      "durationMs": 3427,
+      "stdout": "{\"status\":\"PASS\",\"priorRuntimeIdentities\":318,\"allCatalogIdentities\":318,\"existingRoleLooks\":2,\"independentlyRecomputedCatalogComparisons\":2544,\"independentlyRecomputedSameRoleComparisons\":16,\"withinBatchPairs\":28,\"sameRoleNewPairs\":28,\"perRoleComparisonSheets\":1,\"nearDuplicateFlags\":0,\"minimumCatalogRmse\":56.2489999187717,\"minimumWithinBatchRmse\":60.06573513605653,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"not-run-left-to-manager\"}\n",
+      "stderr": "node.exe : (node:45508) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:45508) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "priorRuntimeIdentities": 318,
+          "allCatalogIdentities": 318,
+          "existingRoleLooks": 2,
+          "independentlyRecomputedCatalogComparisons": 2544,
+          "independentlyRecomputedSameRoleComparisons": 16,
+          "withinBatchPairs": 28,
+          "sameRoleNewPairs": 28,
+          "perRoleComparisonSheets": 1,
+          "nearDuplicateFlags": 0,
+          "minimumCatalogRmse": 56.2489999187717,
+          "minimumWithinBatchRmse": 60.06573513605653,
+          "managerVisualAcceptance": "pending",
+          "browserValidation": "not-run-left-to-manager"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/comparisons.stdout.txt",
+          "sha256": "fe33bb6d42045c660686a6cd0a291999de71224a6e492d8de1ede18bf966e317"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/comparisons.stderr.txt",
+          "sha256": "860c5d9c0cc8923aa6ae5abea951d32c5f17db4ff2a2429a3b814d127fbae3d7"
+        }
+      ]
+    },
+    {
+      "name": "preservation",
+      "command": "node tools/character-mapping/app-gapfill-v6e/runtime-baseline.mjs",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:22.0751851Z",
+      "finishedAt": "2026-10-09T04:05:22.4774254Z",
+      "durationMs": 402,
+      "stdout": "{\"status\":\"PASS\",\"preservedIdentities\":318,\"preservedAssets\":2574,\"priorSelectablePatients\":179,\"protectedFiles\":7,\"pinnedNativeSources\":186,\"currentRuntimeIdentities\":318,\"runtimeReady\":false,\"managerAcceptance\":\"pending\"}\n",
+      "stderr": "node.exe : (node:55264) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:55264) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "preservedIdentities": 318,
+          "preservedAssets": 2574,
+          "priorSelectablePatients": 179,
+          "protectedFiles": 7,
+          "pinnedNativeSources": 186,
+          "currentRuntimeIdentities": 318,
+          "runtimeReady": false,
+          "managerAcceptance": "pending"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/preservation.stdout.txt",
+          "sha256": "aee7db4d80d0bb049bc97790663e8ee88b6df1070df50c15c2fdaec4876ce400"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/preservation.stderr.txt",
+          "sha256": "80b71cd509f5d12ada0833a15524370598e4eba5c51eb3b9074a3edde7068bad"
+        }
+      ]
+    },
+    {
+      "name": "syntax",
+      "command": "node --experimental-vm-modules tools/character-mapping/app-gapfill-v6e/check-syntax.mjs",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:22.4794242Z",
+      "finishedAt": "2026-10-09T04:05:22.5338671Z",
+      "durationMs": 54,
+      "stdout": "{\"status\":\"PASS\",\"syntaxParsedModules\":22}\n",
+      "stderr": "node.exe : (node:23328) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nAt line:11 char:20\n+   $stdoutLines = @(& $executable @arguments 2> $stderrPath)\n+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:23328) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "syntaxParsedModules": 22
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/syntax.stdout.txt",
+          "sha256": "44530bb284e5914f7c322c58a26d8b270d2b10d14e969482de34723e0f91b1e5"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/syntax.stderr.txt",
+          "sha256": "1e4d8ed58f4b9d8050e9965023b486c10d6b53f956dcecb67e02bf39cffe08cc"
+        }
+      ]
+    },
+    {
+      "name": "text",
+      "command": "python tools/character-mapping/app-gapfill-v6e/validate-text.py",
+      "exitCode": 0,
+      "startedAt": "2026-10-09T04:05:22.5359305Z",
+      "finishedAt": "2026-10-09T04:05:22.5958666Z",
+      "durationMs": 60,
+      "stdout": "{\"status\":\"PASS\",\"textFiles\":196,\"issues\":[]}\n",
+      "stderr": "",
+      "records": [
+        {
+          "status": "PASS",
+          "textFiles": 196,
+          "issues": []
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/text.stdout.txt",
+          "sha256": "e6405ab28edba0aaa5da4495e57576833772e94a12acb3b522a78c0f9de78294"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/validation/text.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "receipts": [
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/staging-registry.json",
+      "sha256": "c720f3f19b3efa6e17646ac97d33bb1c70a30761bd9d943e1261d2deb3f1c5a6"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/visual-review.json",
+      "sha256": "3b77bb2d4b9ee0fafd3d8e04faf6f57d4570b6f2b65566c877cfd3e33d5da7d3"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/comparison/manifest.json",
+      "sha256": "ab726773bbfe638598cd98c081f4935e759ab13c53ab94d4891388157ac41285"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/comparison/all-catalog-manifest.json",
+      "sha256": "5b2857e69299c48389e909b19fad01eaa1d20d3ebc4c7867d18662c5224cab8a"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/placement-manifest.json",
+      "sha256": "4bb36601c1744e964979e1e38bde9cd7954669f5307e81a6c5c548ac99338bc0"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/contact-review/contact-review-manifest.json",
+      "sha256": "869e97f2b7e5d621fe39d5a0a4cb7224b3b765f73bb01923f3c506bccff9b5e8"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/alpha-normalization-report.json",
+      "sha256": "12af820e3861c7cf24592fb3c6bfdb259a17aef081ef9b291fb6b3d276269531"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/review/manager/style-review-manifest.json",
+      "sha256": "3042d1ea62bdaee5684cc21a58136c9c2a68b3cf0daaee7c44f4eeb5bf713561"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/review/manager/qa-atlases-manifest.json",
+      "sha256": "30000e969d9be1dcdbc80b4897fe99f5cc008965944684c7659a91ce3e0ee71c"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/roster.json",
+      "sha256": "3786c62b7a7e9aa4fbc36b4e10c87698d438c5a74c600445280db451d557a35a"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/runtime-baseline.json",
+      "sha256": "a9eb8a8df93cf4b59c593a44fee29f4ee795995c4586e580ad766f2612998c8a"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/authored-contacts.json",
+      "sha256": "9832b06b9c095cdb767eadf3ea291bb1e2cd870d98c039416a8aba6fae5393bd"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/review-acceptance.json",
+      "sha256": "73edd019241d5d3cbce58da3a0cdf22c05fe77e8a0be0e3e9de39ac1edf47875"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/worker-review-notes.json",
+      "sha256": "bc8e2122c6a4bef2cf8a84a2f61b5e6a8d6010b46e4fb9ed108d1d8205dd3767"
+    },
+    {
+      "path": "tools/character-mapping/app-gapfill-v6e/validation-commands.json",
+      "sha256": "3268a70c80bf9dc1cd7f8d5ca284ae907e3480e3cbe277468f19253103e96591"
+    }
+  ]
+}

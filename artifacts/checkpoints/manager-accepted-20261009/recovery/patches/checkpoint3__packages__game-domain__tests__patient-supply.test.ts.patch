@@ -1,0 +1,35 @@
+--- a/packages/game-domain/tests/patient-supply.test.ts
++++ b/packages/game-domain/tests/patient-supply.test.ts
+@@ -225,11 +225,12 @@
+ describe("routine patient supply", () => {
+   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
+     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+-    expect(release.concepts).toHaveLength(351);
++    expect(release.concepts).toHaveLength(360);
+     // The current old bank includes the concurrent interpreter pairing:
+-    // 1,008 existing cases plus this batch's 62 new Level-3 cases.
+-    expect(release.cases).toHaveLength(1008 + 62);
+-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1375);
++    // 1,008 existing cases, 62 Level-3 cases and 20 L4 pediatric variants.
++    // The reused midline-recognition concept adds no second concept record.
++    expect(release.cases).toHaveLength(1008 + 62 + 20);
++    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1395);
+ 
+     const noCapabilities = new Set<string>();
+     const everyCapability = new Set(
+@@ -333,6 +334,15 @@
+           "concept.gs028g.postoperative-scapula.spinal-accessory",
+           "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
+           "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
++          "concept.pediatric-clinic.acquired-testis-ascent-referral",
++          "concept.pediatric-clinic.concerning-neck-node-referral",
++          "concept.pediatric-clinic.developmental-assent-discussion",
++          "concept.pediatric-clinic.inguinal-hernia-referral",
++          "concept.pediatric-clinic.limited-pilonidal-conservative-care",
++          "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
++          "concept.pediatric-clinic.reactive-neck-node-observation",
++          "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
++          "concept.pediatric-clinic.true-retractile-testis-surveillance",
+           "concept.quality-improvement.pdsa-act-and-iterate",
+           "concept.statistics-ethics.bias-confounding",
+           "concept.statistics-ethics.chi-square",

@@ -1,0 +1,9 @@
+node.exe : (node:4536) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At line:11 char:20
++   $stdoutLines = @(& $executable @arguments 2> $stderrPath)
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:4536) Exp...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,120 @@
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -1169,7 +1169,8 @@
+ 
+ .footer-bar {
+   z-index: 60;
+-  display: flex;
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+   min-height: 54px;
+   padding: var(--space-2) var(--space-3);
+   border-top: var(--border);
+@@ -1180,12 +1181,44 @@
+   justify-content: flex-end;
+ }
+ 
++.footer-status {
++  display: flex;
++  min-width: 0;
++  flex-wrap: wrap;
++  grid-column: 1;
++  grid-row: 1;
++}
++
++.footer-status > strong {
++  min-width: 0;
++  overflow-wrap: anywhere;
++}
++
++.footer-content-notice {
++  grid-column: 2;
++  grid-row: 1;
++  overflow-wrap: anywhere;
++}
++
+ .footer-actions {
+   display: flex;
+   gap: var(--space-2);
+   align-items: center;
+   flex-wrap: wrap;
+   justify-content: flex-end;
++  grid-column: 3;
++  grid-row: 1;
++}
++
++@media (max-width: 1180px) {
++  .footer-content-notice {
++    grid-column: 1 / -1;
++    grid-row: 2;
++  }
++
++  .footer-actions {
++    grid-column: 2;
++  }
+ }
+ 
+ .tutorial-coach {
+@@ -1244,7 +1277,7 @@
+   background: var(--ink);
+   color: var(--panel);
+   font-size: 1.35rem;
+-  pointer-events: none;
++  pointer-events: auto;
+   place-items: center;
+   animation: tutorial-target-beacon 0.75s steps(2, end) infinite;
+ }
+@@ -7042,12 +7075,11 @@
+ }
+ 
+ /*
+- * Tutorial copy may overlap another control at very narrow widths, but only
+- * the tutorial's own controls should capture input. This keeps guidance from
+- * trapping confirmation dialogs or the real control it is describing.
++ * Tutorial surfaces absorb clicks so their arrows and copy cannot move the
++ * founder through the map underneath. Positioning protects native controls.
+  */
+ .tutorial-coach {
+-  pointer-events: none;
++  pointer-events: auto;
+ }
+ 
+ .tutorial-coach button,
+@@ -7868,9 +7900,8 @@
+   }
+ 
+   .footer-content-notice {
+-    position: absolute;
+-    left: 50%;
+-    max-width: min(42vw, 580px);
++    position: static;
++    max-width: none;
+     margin: 0;
+     color: var(--ink-soft);
+     font-size: 0.62rem;
+@@ -7878,7 +7909,6 @@
+     line-height: 1.1;
+     text-align: center;
+     text-transform: uppercase;
+-    transform: translateX(-50%);
+   }
+ }
+ 
+@@ -8037,7 +8067,7 @@
+ 
+   .footer-bar {
+     box-sizing: border-box;
+-    height: 24px;
++    height: auto;
+     min-height: 24px;
+     padding-block: 1px;
+   }
+@@ -8071,7 +8101,7 @@
+ 
+ @media (min-width: 761px) and (max-width: 1180px) {
+   .footer-bar {
+-    height: 34px;
++    height: auto;
+     min-height: 34px;
+     padding-block: 1px;
+     row-gap: 0;

@@ -1,0 +1,23 @@
+--- a/apps/player/src/session/alertsEventsViewModel.ts
++++ b/apps/player/src/session/alertsEventsViewModel.ts
+@@ -54,8 +54,10 @@
+   if (!definition || definition.unlockFacilityLevel > state.facilityLevel ||
+     state.cash < definition.hiringCost || !home || !isRoomOperationalForFacilityWork(state, home.id) ||
+     state.employees.filter((employee) => employee.staffRoleDefinitionId === roleId).length >= getRoomStaffCapacity(state, roleId).capacity) return null;
++  const action: ClinicAlertAction = { kind: "hire_staff", roleId, expectedCost: definition.hiringCost, requiresMissingCoverage: true };
++  if (getClinicAlertActionProblem(state, action)) return null;
+   return {
+-    action: { kind: "hire_staff", roleId, expectedCost: definition.hiringCost, requiresMissingCoverage: true } as ClinicAlertAction,
++    action,
+     actionLabel: `Hire ${definition.displayName} · ${clinicMoney(definition.hiringCost)} (+${clinicMoney(definition.salaryPerExpenseInterval)}/hour)`,
+     targetType: "staff_role" as const,
+     targetId: roleId,
+@@ -223,6 +225,8 @@
+   const feed = createMessageBoardView(state).flatMap((item): MessageBoardItemView[] => {
+     const event = events.get(item.id);
+     const occurrence = occurrences.get(item.id);
++    // Advancement already has a milestone; eligibility is not a resolved problem.
++    if (occurrence?.conditionKey === "progression_eligible" && occurrence.resolvedAtFacilityTick != null) return [];
+     if (occurrence?.resolvedAtFacilityTick === null && guidanceOwnsCondition(state, occurrence.conditionKey)) return [];
+     if (!occurrence && state.alertHumor.guidanceTips && item.persistent &&
+       (item.category === "guidance" || item.id.startsWith("persistent.environment.") || item.id.startsWith("persistent.progress.")) &&

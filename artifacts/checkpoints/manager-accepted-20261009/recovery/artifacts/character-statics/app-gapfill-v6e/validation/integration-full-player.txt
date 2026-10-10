@@ -1,0 +1,94 @@
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ❯ src/facility/routeMotion.test.ts (23 tests | 1 failed) 17ms
+     × retains the padded family nodes when handing a route off from a parked actor 8ms
+ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 633ms
+     × ignores the retired concealment flag and preserves the scheduled external service after an answer 74ms
+ ❯ src/facility/pediatricRouteMotion.test.ts (1 test | 1 failed) 325ms
+     × samples the real QA fixture through arrivals, care, departure and reload at 4x 322ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/facility/pediatricRouteMotion.test.ts > M5 pediatric route rendering > samples the real QA fixture through arrivals, care, departure and reload at 4x
+TypeError: Cannot read properties of undefined (reading 'x')
+ ❯ sampleRouteMotion src/facility/routeMotion.ts:389:16
+    387|   return {
+    388|     location: {
+    389|       x: start.x + (end.x - start.x) * fraction,
+       |                ^
+    390|       y: start.y + (end.y - start.y) * fraction,
+    391|     },
+ ❯ FacilityScene.getCharacterRoutePresentation src/facility/FacilityScene.ts:6053:20
+ ❯ src/facility/pediatricRouteMotion.test.ts:44:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/facility/routeMotion.test.ts > route motion interpolation > retains the padded family nodes when handing a route off from a parked actor
+AssertionError: expected [ { x: 1, y: 1 }, { x: 2, y: 1 } ] to deeply equal [ Array(4) ]
+
+- Expected
++ Received
+
+@@ -2,17 +2,9 @@
+    {
+      "x": 1,
+      "y": 1,
+    },
+    {
+-     "x": 1,
+-     "y": 1,
+-   },
+-   {
+-     "x": 1,
+-     "y": 1,
+-   },
+-   {
+      "x": 2,
+      "y": 1,
+    },
+  ]
+
+ ❯ src/facility/routeMotion.test.ts:20:24
+     18|     // Each repeated point is a real synchronization interval, not red…
+     19|     // geometry: the shorter family lane waits before the common doorw…
+     20|     expect(track.path).toEqual(path);
+       |                        ^
+     21|     track = advanceRouteMotion(track, 1_000, 8);
+     22|     expect(track.path.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
+AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+
+Expected: "Off-site thyroid fine-needle aspiration"
+Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
+
+ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
+     83|     const pending = state.encounters[encounterId]!.pendingResult!;
+     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
+     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
+       |                                                    ^
+     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
+     87|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 152 passed (155)
+      Tests  3 failed | 1187 passed (1190)
+   Start at  00:42:45
+   Duration  29.97s (transform 9.74s, setup 0ms, import 58.65s, tests 44.62s, environment 11ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads

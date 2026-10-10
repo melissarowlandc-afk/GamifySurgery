@@ -1,0 +1,85 @@
+--- a/packages/clinical-content/src/schema.ts
++++ b/packages/clinical-content/src/schema.ts
+@@ -216,6 +216,24 @@
+   })
+   .strict();
+ 
++/** Owner-approved presentation scope; this marker grants no clinical approval. */
++export const pediatricPatientProfileSchema = z.object({
++  version: z.literal("pediatric-patient-profile.v1"),
++  requiresParent: z.literal(true),
++  clinicalScope: z.literal("outpatient"),
++}).strict();
++
++function validatePediatricDemographics(
++  demographics: { ageYears: number; sexLabel: string } | undefined,
++  context: z.RefinementCtx,
++  path: Array<string | number>,
++): void {
++  if (!demographics || demographics.ageYears < 5 || demographics.ageYears > 17 ||
++      (demographics.sexLabel !== "Female" && demographics.sexLabel !== "Male")) {
++    context.addIssue({ code: "custom", message: "A pediatric profile needs explicit age 5-17 and sex, without adult defaults.", path });
++  }
++}
++
+ /**
+  * One complete, clinician-reviewed presentation profile that may be selected
+  * when a runtime encounter is frozen.
+@@ -227,6 +245,7 @@
+ export const approvedInstantiationProfileSchema = z
+   .object({
+     id: stableIdSchema,
++    pediatricProfile: pediatricPatientProfileSchema.optional(),
+     prototypeDemographics: z
+       .object({
+         ageYears: z.number().int().min(0).max(120),
+@@ -247,7 +266,10 @@
+     chiefComplaint: z.string().min(1).max(160).optional(),
+     presentation: z.string().min(1).max(2_000),
+   })
+-  .strict();
++  .strict()
++  .superRefine((profile, context) => {
++    if (profile.pediatricProfile) validatePediatricDemographics(profile.prototypeDemographics, context, ["prototypeDemographics"]);
++  });
+ 
+ /**
+  * A presentation-only revision is deliberately independent from the approved
+@@ -305,6 +327,7 @@
+ export const syntheticClinicalCaseSchema = z
+   .object({
+     id: stableIdSchema,
++    pediatricProfile: pediatricPatientProfileSchema.optional(),
+     displayName: z.string().min(1).max(160),
+     patientPresentationVariantId: stableIdSchema,
+     /**
+@@ -365,7 +388,7 @@
+     selectedInstantiationProfileId: stableIdSchema.optional(),
+     tutorialEligible: z.boolean(),
+     routineEligible: z.boolean(),
+-    earliestFacilityStage: z.number().int().min(0).max(3),
++    earliestFacilityStage: z.number().int().min(0).max(4),
+     requiredClinicalSetting: z.enum([
+       "clinic",
+       "ambulatory_surgery",
+@@ -381,6 +404,12 @@
+   })
+   .strict()
+   .superRefine((clinicalCase, context) => {
++    if (clinicalCase.pediatricProfile) {
++      validatePediatricDemographics(clinicalCase.prototypeDemographics, context, ["prototypeDemographics"]);
++      clinicalCase.approvedInstantiationProfiles?.forEach((profile, index) => {
++        validatePediatricDemographics(profile.prototypeDemographics ?? clinicalCase.prototypeDemographics, context, ["approvedInstantiationProfiles", index, "prototypeDemographics"]);
++      });
++    }
+     if (
+       clinicalCase.decisionNodes.length === 4 &&
+       clinicalCase.earliestFacilityStage < 3
+@@ -736,6 +765,7 @@
+ export type ApprovedInstantiationProfile = z.infer<
+   typeof approvedInstantiationProfileSchema
+ >;
++export type PediatricPatientProfile = z.infer<typeof pediatricPatientProfileSchema>;
+ export type PatientPresentationRevision = z.infer<
+   typeof patientPresentationRevisionSchema
+ >;

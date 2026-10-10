@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "commands": [
+    {
+      "command": "python artifacts/checkpoints/manager-accepted-20261008/verify_archive.py",
+      "exitCode": 0,
+      "archiveFiles": 2456,
+      "archiveBytes": 333675613,
+      "patchContracts": 60,
+      "forwardReverseReapply": 60
+    },
+    {
+      "command": "python artifacts/checkpoints/manager-accepted-20261008b/verify_archive.py",
+      "exitCode": 0,
+      "archiveFiles": 1018,
+      "archiveBytes": 120427854,
+      "patchContracts": 74,
+      "forwardReverseReapply": 74
+    }
+  ],
+  "bothArchivesByteUnchanged": "validation/source-invariance.json",
+  "gitMutations": 0
+}

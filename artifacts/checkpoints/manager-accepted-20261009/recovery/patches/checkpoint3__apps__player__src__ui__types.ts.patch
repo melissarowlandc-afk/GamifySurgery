@@ -1,0 +1,50 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -61,7 +61,8 @@
+     | "endoscopist"
+     | "phlebotomist"
+     | "evs_worker"
+-    | "glp1_np";
++    | "glp1_np"
++    | "app";
+ }
+ 
+ export interface PatientTabView {
+@@ -269,6 +270,13 @@
+   xpProgressLabel?: string;
+   xpProgressPercent?: number;
+   moneyHourlyDeltaLabel?: string;
++  moneyHourlyNetSign?: "positive" | "negative" | "neutral";
++  moneyHourlyBreakdown?: {
++    incomeLabel: string;
++    costLabel: string;
++    windowLabel: string;
++    explanation: string;
++  };
+   dayTimeLabel?: string;
+   goals?: ProgressionGoalView[];
+   contentNoticeLabel?: string;
+@@ -340,8 +348,14 @@
+   runningCostsLabel: string;
+   profitLabel: string;
+   profitPositive: boolean;
++  hourlyIncomeLabel: string;
++  hourlyNetLabel: string;
++  hourlyNetSign: "positive" | "negative" | "neutral";
++  incomeWindowLabel: string;
++  incomeWindowExplanation: string;
++  hourlyIncomeSources: { id: string; label: string; amount: number; amountLabel: string; count: number }[];
+   hourlyCostLabel: string;
+-  hourlyCosts: { id: "staff" | "rooms" | "advertising"; label: string; amount: number; amountLabel: string }[];
++  hourlyCosts: { id: "staff" | "rooms" | "advertising" | "stock" | "relief"; label: string; amount: number; amountLabel: string }[];
+   runwayLabel: string;
+   recentEarnings: { displayName: string; net: number; netLabel: string; count: number }[];
+   recentEarningsReceiptCount: number;
+@@ -517,6 +531,7 @@
+   id: string;
+   displayName: string;
+   roleDisplayName: string;
++  activityLabel?: string;
+   salaryLabel: string;
+   moraleLabel: string;
+   moralePercent: number;

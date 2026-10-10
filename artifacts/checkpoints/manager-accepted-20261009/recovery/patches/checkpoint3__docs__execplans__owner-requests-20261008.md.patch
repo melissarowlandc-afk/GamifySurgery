@@ -1,0 +1,1923 @@
+--- a/docs/execplans/owner-requests-20261008.md
++++ b/docs/execplans/owner-requests-20261008.md
+@@ -744,7 +744,7 @@
+ other lanes' full-suite failures and the pre-existing pending-label mismatch,
+ rerun the normal-config aggregate checks, inspect the actual shared-tree diff,
+ and update the central handoff/checkpoint only after acceptance. Work remains
+-local only.
++local only.
+ 
+ Existing browser-test follow-up: `tests/e2e/patient-chart-density.spec.ts`
+ currently requires `box.left >= desk.left` whenever there is enough room on
+@@ -753,7 +753,7 @@
+ The manager should make that assertion conditional on natural height and add
+ the new top-center assertion when reviewing its browser test. That e2e file
+ was not edited in this worker lane. Its existing play-area/footer bounds and
+-content-size checks remain applicable.
++content-size checks remain applicable.
+ 
+ ## Worker handoff - training (Item 8, Sol, 2026-10-08)
+ 
+@@ -977,70 +977,70 @@
+ test/browser acceptance, and the owner report. Preserve all other lanes.
+ - 2026-10-08: owner request: exterior frontage (grass, trees/flowers, sidewalk, planters, entrance) redesign proposal; Sol design worker launched (exterior).
+ - 2026-10-08: owner request: remember map zoom/pan per campaign across reloads; Sol worker launched (camera).
+-
+-
+-## Severance radiologists first
+-
+-Sol worker, 2026-10-08. Completed the owner's bounded hiring-order request.
+-Changed only `packages/game-domain/src/characterStillCatalog.ts` (ordered
+-`PREFERRED_STAFF_STILL_IDS_BY_ROLE` data), `packages/game-domain/src/appearance.ts`
+-(staff selection), and two new regression files:
+-`packages/game-domain/tests/radiologist-hiring-order.test.ts` and
+-`apps/player/src/session/radiologistHiringOrder.test.tsx`.
+-
+-New radiologists take the first free `level3-roster-v2.001` through `.004`
+-(Mark, Helly, Irving, Dylan). Current and departing employees reserve their
+-looks. A compatible saved look is retained before checking preferences; once
+-all four are occupied, the original seeded fallback is unchanged. Other roles,
+-art, saves, capacity, and clinical content are unchanged. Firing currently
+-removes an employee immediately and frees their look; room-sale departing
+-actors retain theirs until departure completes. The fifth-hire regression uses
+-a synthetic departing actor to preserve the existing four-reader capacity.
+-
+-Hiring audit: Management > Employees renders StaffPanel; its role and open-slot
+-buttons dispatch the same HIRE_STAFF command. Needs-you and tip hire actions
+-also dispatch HIRE_STAFF through clinicAlertCommand. These surfaces have no
+-pre-hire candidate portraits (open slots are placeholders), so no UI source
+-change was needed. Tests compare selection predictions with actual hires across
+-all three entry points and verify Management/StaffPanel renders the assigned
+-avatar. Existing saved radiologists retain all 16 eligible looks.
+-
+-Validation (all Vitest runs used `--pool=threads --maxWorkers=1`):
+-- Focused domain: **6 files / 72 tests PASS**, including 10 new regressions.
+-- Focused player: **4 files / 26 tests PASS**, including 3 new regressions.
+-- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1`:
+-  **101 files / 3307 tests passed; 4 failures across 3 files** (451.63s).
+-- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1`:
+-  **126 files / 977 tests passed; 1 failure** (54.50s).
+-- Post-suite `npm.cmd run typecheck`: **all seven workspaces PASS** (exit 0).
+-
+-Attribution: domain failures at guidance-tip-predicates.test.ts:56 and
+-approved-room-geometry-migration.test.ts:110 reproduced using intake appearance
+-and catalog snapshots through a read-only Vite loader. The later current-tree
+-rerun of these plus waiting-destination-routing.test.ts passed **73/74**: geometry
+-and both routing failures had resolved during concurrent work; only the tip
+-predicate remained. Player surgeryCenterServicePreviews.test.ts:85 reproduced
+-identically with both intake snapshots (**12 passed / 1 failed**). These failures
+-belong to the shared tree, not this selection delta. No unrelated files were
+-reverted or fixed. The four owned source/test hashes stayed unchanged through
+-validation; baseline-relative source comparison permits only the preference
+-and staff-selection additions.
+-
+-Player commands used the existing command-local
+-`.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload via
+-`NODE_OPTIONS=--import=<file URL>` for Vite's optional Windows `net use` probe.
+-No dependency or config changes. Exact commands/output, source.diff, control
+-configs, intake snapshots and hash/scope evidence are in ignored
+-`artifacts/logs/severance-radiologists-20261008/`.
+-
+-Manager next: inspect the tiny source delta and new tests, retain the two
+-remaining unrelated failures, and check four sequential hires plus one rehire
+-in a synthetic Level-3 Reading Room. This worker used no browser or owner save.
+-Owner pathway remains `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the
+-usual persistent profile; manager QA origins/profiles have separate saves.
+-Local only: no Git commands, installs, art changes, push, deployment or
+-publication. After acceptance, the manager owns the scoped backup checkpoint
+-and the reminder to say **"push to GitHub"**.
++
++
++## Severance radiologists first
++
++Sol worker, 2026-10-08. Completed the owner's bounded hiring-order request.
++Changed only `packages/game-domain/src/characterStillCatalog.ts` (ordered
++`PREFERRED_STAFF_STILL_IDS_BY_ROLE` data), `packages/game-domain/src/appearance.ts`
++(staff selection), and two new regression files:
++`packages/game-domain/tests/radiologist-hiring-order.test.ts` and
++`apps/player/src/session/radiologistHiringOrder.test.tsx`.
++
++New radiologists take the first free `level3-roster-v2.001` through `.004`
++(Mark, Helly, Irving, Dylan). Current and departing employees reserve their
++looks. A compatible saved look is retained before checking preferences; once
++all four are occupied, the original seeded fallback is unchanged. Other roles,
++art, saves, capacity, and clinical content are unchanged. Firing currently
++removes an employee immediately and frees their look; room-sale departing
++actors retain theirs until departure completes. The fifth-hire regression uses
++a synthetic departing actor to preserve the existing four-reader capacity.
++
++Hiring audit: Management > Employees renders StaffPanel; its role and open-slot
++buttons dispatch the same HIRE_STAFF command. Needs-you and tip hire actions
++also dispatch HIRE_STAFF through clinicAlertCommand. These surfaces have no
++pre-hire candidate portraits (open slots are placeholders), so no UI source
++change was needed. Tests compare selection predictions with actual hires across
++all three entry points and verify Management/StaffPanel renders the assigned
++avatar. Existing saved radiologists retain all 16 eligible looks.
++
++Validation (all Vitest runs used `--pool=threads --maxWorkers=1`):
++- Focused domain: **6 files / 72 tests PASS**, including 10 new regressions.
++- Focused player: **4 files / 26 tests PASS**, including 3 new regressions.
++- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1`:
++  **101 files / 3307 tests passed; 4 failures across 3 files** (451.63s).
++- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1`:
++  **126 files / 977 tests passed; 1 failure** (54.50s).
++- Post-suite `npm.cmd run typecheck`: **all seven workspaces PASS** (exit 0).
++
++Attribution: domain failures at guidance-tip-predicates.test.ts:56 and
++approved-room-geometry-migration.test.ts:110 reproduced using intake appearance
++and catalog snapshots through a read-only Vite loader. The later current-tree
++rerun of these plus waiting-destination-routing.test.ts passed **73/74**: geometry
++and both routing failures had resolved during concurrent work; only the tip
++predicate remained. Player surgeryCenterServicePreviews.test.ts:85 reproduced
++identically with both intake snapshots (**12 passed / 1 failed**). These failures
++belong to the shared tree, not this selection delta. No unrelated files were
++reverted or fixed. The four owned source/test hashes stayed unchanged through
++validation; baseline-relative source comparison permits only the preference
++and staff-selection additions.
++
++Player commands used the existing command-local
++`.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload via
++`NODE_OPTIONS=--import=<file URL>` for Vite's optional Windows `net use` probe.
++No dependency or config changes. Exact commands/output, source.diff, control
++configs, intake snapshots and hash/scope evidence are in ignored
++`artifacts/logs/severance-radiologists-20261008/`.
++
++Manager next: inspect the tiny source delta and new tests, retain the two
++remaining unrelated failures, and check four sequential hires plus one rehire
++in a synthetic Level-3 Reading Room. This worker used no browser or owner save.
++Owner pathway remains `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the
++usual persistent profile; manager QA origins/profiles have separate saves.
++Local only: no Git commands, installs, art changes, push, deployment or
++publication. After acceptance, the manager owns the scoped backup checkpoint
++and the reminder to say **"push to GitHub"**.
+ 
+ 
+ ## Layering worker handoff - item 1 (2026-10-08)
+@@ -1625,10 +1625,10 @@
+ owner checkpoint reminder to say **"push to GitHub"**. This worker has no commit,
+ push, release or deployment authorization.
+ 
+-
++
+ - 2026-10-08: Remember map camera ACCEPTED by manager after browser test on QA origin 5183: zoom 110% -> 140% plus drag-pan, reload, Resume: 140% and identical framing (before/after crops match except pause overlay and tutorial coach). FacilityScene.ts untouched.
+ - 2026-10-08: owner request: peri-op nurse attention queue (15 min pre-op + 15 min post-op per patient, queued across nurses, nurse stands at patient, extends phase only when backed up, idle nurses take breaks). Brief written; launches after the companions worker finishes (same peri-op flow).
+-
++
+ ### Companions final validation completion — 2026-10-08
+ 
+ This completes the validation entry above. The final full-domain run used the
+@@ -1717,7 +1717,7 @@
+ preserved. No worker-owned validation failure remains. The lane is handed back
+ for manager diff acceptance, the specified rendering integration and browser
+ matrix, and aggregate radiology validation reconciliation. All work remains local.
+-
++
+ - 2026-10-08: GitHub backup pushed and verified: 76f0fdb8 on origin/beta (archive artifacts/checkpoints/manager-accepted-20261008/).
+ 
+ 
+@@ -2716,7 +2716,7 @@
+ default-forks domain command and typecheck on the stable aggregate. Only this
+ config and appended coordination handoffs belong to this worker. No Git,
+ installs, clinical content, browser, save or playtest-pathway changes. Local-only;
+-manager retains acceptance and the scoped "push to GitHub" checkpoint reminder.
++manager retains acceptance and the scoped "push to GitHub" checkpoint reminder.
+ - 2026-10-08: intermittent domain failures: cause CPU-load timeouts (reproduced with seed 20261008); fix new packages/game-domain/vitest.config.ts maxWorkers: 4 (no assertion/timeout/behaviour change). ACCEPTED; manager default-run confirmation after round-3 workers finish.
+ - 2026-10-08: OWNER DECISION exterior: Option B plus manager recommendations (warm-gray stone beds with white/pink blooms, flush warm-stone entry inset, no canopy/sign, grouped flowers). Build worker queued after the concept worker finishes (plan docs/execplans/exterior-frontage-b-20261008.md).
+ 
+@@ -3090,191 +3090,191 @@
+ - 2026-10-08: Pediatric Exam mockup: manager browser validation PASS, capture PASS; visual review good; decision: 12 one-tile door sections (game model) instead of 16; fix sent. Peri-op nurse owner-feedback fix received (dispatch bias to first employee ID; idle release waited for random actions): accepted pending owner check.
+ - 2026-10-08: OWNER: Pediatric Exam approved conditional on backless rolling stools (clinician drawn on top); same rule applied in game. Launched game-stool and wound-ostomy mockup workers; ped-exam stool revision queued after the 12-door fix.
+ - 2026-10-08: OWNER: peri-op nurses still stand there after the fix. Manager evidence: in the injected L2 clinic the nurse had no task and was frozen mid-path (pathIndex 3/4) for ~650 minutes; fixture had no endoscopy traffic. Sent nurse2 brief (end-to-end endoscopy pipeline test + frozen-path fix).
+-
+-## Backless rolling stools
+-
+-Sol worker, 2026-10-08. Owner-approved bounded game rendering change complete
+-locally; ready for manager diff review and browser acceptance. No agents, Git,
+-installs, commits, push, deployment, browser/save changes or clinical edits.
+-
+-### Files and behavior
+-
+-- New `apps/player/src/facility/backlessRollingStools.ts`: explicit inventory of
+-  seven approved rolling-stool crops and the already-backless legacy bitmap;
+-  versioned `backless-v1` runtime alpha derivations for the two backed stools.
+-  Crop identity, rather than room identity, makes reused art follow the rule.
+-- `apps/player/src/facility/FacilityScene.ts`: exact edits only in the stool
+-  import, cached derivative helper, approved furniture draw, and reused
+-  touch-up sprite draw. Both ordinary and tinted copies use the derivative.
+-  Stools bypass foreground-chair splitting; the whole clinician draws above.
+-- `apps/player/src/facility/approvedRoomPresentation.ts`: align a stool sitter's
+-  rendering-only `fixtureGround` with the stool's actual painter baseline,
+-  including exam, minor-procedure, ultrasound, training, phlebotomy and
+-  fallback support binding. This fixes small bitmap-bottom extensions without
+-  changing seat/ground contacts, positions, facing, dimensions or movement.
+-- New `apps/player/src/facility/backlessRollingStools.test.ts`: 21 tests cover
+-  all ten approved stool draws, both endoscopy orientations, renamed idle
+-  supports, bitmap/procedural occupants, three render scales, empty redraws,
+-  legacy bitmap/procedural stools, derivation preservation/caching and tinting.
+-- Append-only receipts here and in `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
+-
+-The approved source art is never overwritten. Minor Procedure's green stool
+-and Ultrasound's blue stool have backs/posts; Endoscopy reuses the former.
+-Their derivatives retain the full original crop dimensions. Alpha removes the
+-backrest/post; same-row neighboring cushion pixels restore the narrow covered
+-seat strip, and an exposed same-crop column sample restores the short covered
+-column strip. The remaining cushion sides and the lower column/base/casters
+-remain byte-exact. This is deterministic source-derived rendering, not new
+-artwork. Runtime textures are cached once per source/version and shared by
+-room instances and the Endoscopy touch-up.
+-
+-Runtime derivation provenance (existing approved production atlases):
+-
+-| Derivative | Approved source | Crop [x,y,width,height] | Source SHA-256 |
+-| --- | --- | --- | --- |
+-| `backless-v1:minor-procedure` | `gs015:minor-procedure:furniture`, `apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp` | `[8,2448,266,427]` | `0532e455112d364b21b1ae6d1fd482593c76357d1a3e73d966c9bd18291c9722` |
+-| `backless-v1:ultrasound` | `gs015:ultrasound:furniture`, `apps/player/public/art/rooms/gs015-v1/ultrasound/furniture.webp` | `[8,1582,351,516]` | `4598071860b8332bf24fe3ab1d0bde95a60de24cb82d6096576093a19ad07c78` |
+-
+-Audit: Examination 0/270, Minor Procedure 0, Ultrasound 0, Phlebotomy 0/270,
+-both Peri-op/Recovery nurse stools and both Training stools are all bound;
+-Endoscopy 0/270 uses the same derived minor-procedure source. Legacy bitmap
+-and procedural Examination fallbacks are already backless. CT, X-ray and
+-Ambulatory OR have no rolling-stool draw in the current approved presentation.
+-Pharmacy's step stool is a different, already-backless object. Ordinary chairs
+-retain their existing arm/back layering. `approvedSideChairLayers.ts`, approved
+-proof data, frozen before-layering fixture, `roomTouchups.ts` and
+-`staffIdleSupports.ts` remain unchanged from intake. All eight stool-source
+-atlas files retain their intake SHA-256; all edited source/tests are UTF-8
+-without BOM. All four lane source/test hashes stayed unchanged during the final
+-full-player/typecheck and focused runs. Concurrent exterior/radiology/nurse
+-work was preserved; the intake-to-current full FacilityScene diff also contains
+-exterior work that is not this worker's change.
+-
+-### Exact validation output
+-
+-The normal player Vite configuration is unchanged. The ordinary invocation
+-first hit the documented optional Windows `net use` realpath `spawn EPERM`.
+-Using the existing command-local preload let config load; the default forks
+-pool then failed to start all nine requested test-file workers (`spawn EPERM`):
+-
+-```text
+-Test Files  no tests
+-     Tests  no tests
+-    Errors  9 errors
+-  Start at  11:55:34
+-  Duration  10ms (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+-Exit 1; focused-default.log. This is not a test assertion failure.
+-```
+-
+-Final runs used `--pool=threads --maxWorkers=1`, with the existing command-local
+-preload only for Vite's optional Windows probe:
+-
+-```powershell
+-$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
+-npm.cmd run test --workspace @gamify-surgery/player -- src/facility/backlessRollingStools.test.ts src/facility/furnitureSeatLayering.test.ts src/facility/approvedSideChairLayers.test.ts src/facility/approvedRoomPresentation.test.ts src/facility/approvedRoomRenderer.test.ts src/facility/staffIdleSupports.test.ts src/facility/roomTouchups.test.ts src/facility/periopCompanionPresentation.test.ts src/facility/characterPauseArrival.test.ts --pool=threads --maxWorkers=1
+-```
+-
+-```text
+-Test Files  9 passed (9)
+-     Tests  111 passed (111)
+-  Start at  12:01:15
+-  Duration  8.94s (transform 1.70s, setup 0ms, import 4.18s, tests 4.04s, environment 0ms)
+-Exit 0; focused-threads-final.log.
+-```
+-
+-```powershell
+-npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1
+-```
+-
+-```text
+-Test Files  1 failed | 136 passed (137)
+-     Tests  1 failed | 1091 passed (1092)
+-  Start at  11:59:26
+-  Duration  57.86s (transform 3.19s, setup 0ms, import 28.25s, tests 18.72s, environment 7ms)
+-Exit 1; player-full.log.
+-```
+-
+-Only failure: the previously documented
+-`src/session/surgeryCenterServicePreviews.test.ts:85:52`, "ignores the retired
+-concealment flag and preserves the scheduled external service after an
+-answer". Expected pending-label substring `Off-site thyroid fine-needle
+-aspiration`; received `The result is pending. Patient care and return are still
+-in progress...` with stage timings. All facility tests, including all 21 new
+-stool tests, pass. No unrelated chart/clinical correction was attempted.
+-
+-```text
+-npm.cmd run typecheck
+-> gamify-surgery@0.0.1 typecheck
+-> npm run typecheck --workspaces --if-present
+-
+-> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+-
+-> @gamify-surgery/player@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-> @gamify-surgery/balance-config@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-> @gamify-surgery/clinical-content@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-> @gamify-surgery/clinical-research@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-> @gamify-surgery/game-domain@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-Exit 0; typecheck-final.log (4.035409s).
+-```
+-
+-The first typecheck caught a concurrent exterior test's `bloomAccents` property
+-error, which that lane corrected before the final PASS. An initial stool test
+-harness lacked the unrelated Recovery procedural graphics double; that test
+-harness was corrected, and the final focused/full runs above cover Recovery.
+-
+-Actual TypeScript derivation was also executed against decoded approved crop
+-RGBA, then composited onto a neutral background and visually inspected:
+-
+-```text
+-minor-procedure: 266x427; backrest alpha total=0; lower column/base/casters byte-exact=true
+-ultrasound: 351x516; backrest alpha total=0; lower column/base/casters byte-exact=true
+-```
+-
+-Evidence in `.local-dev/backless-rolling-stools/`: UTF-8 test logs, intake
+-copies/hash manifests, reviewed source diffs (including a stool-only
+-FacilityScene hunk extract), original crop inventory/contact sheet, actual
+-TypeScript-derived crop pixels and `actual-runtime-derived-comparison.png`.
+-These pixel previews and Node scene doubles are not a browser pass.
+-
+-### Rooms for manager browser acceptance
+-
+-Use the existing manager-owned disposable QA origin/profile (e.g. exact
+-`http://127.0.0.1:5183`) and a synthetic campaign. Confirm the actual origin
+-before seeding; it has separate saves from the owner's canonical
+-`START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the usual persistent profile.
+-This worker opened no browser and changed no launcher/origin/save pathway.
+-
+-| Room/state | Check |
+-| --- | --- |
+-| Examination, 0 and 270 | Empty and founder/clinician-occupied green stool; original seat/contact stays fixed, whole sitter above the stool, seat edge/column/base visible below. |
+-| Minor Procedure, 0 | Green stool has no back or vertical back post, including when empty. During seated care/arrival settle/redraw the whole clinician stays above; repaired cushion has no central transparent hole. |
+-| Ultrasound, 0 | Same checks for blue stool during care and idle sitting; compare inactive light and active-scan dimming so no tinted copy restores the back. |
++
++## Backless rolling stools
++
++Sol worker, 2026-10-08. Owner-approved bounded game rendering change complete
++locally; ready for manager diff review and browser acceptance. No agents, Git,
++installs, commits, push, deployment, browser/save changes or clinical edits.
++
++### Files and behavior
++
++- New `apps/player/src/facility/backlessRollingStools.ts`: explicit inventory of
++  seven approved rolling-stool crops and the already-backless legacy bitmap;
++  versioned `backless-v1` runtime alpha derivations for the two backed stools.
++  Crop identity, rather than room identity, makes reused art follow the rule.
++- `apps/player/src/facility/FacilityScene.ts`: exact edits only in the stool
++  import, cached derivative helper, approved furniture draw, and reused
++  touch-up sprite draw. Both ordinary and tinted copies use the derivative.
++  Stools bypass foreground-chair splitting; the whole clinician draws above.
++- `apps/player/src/facility/approvedRoomPresentation.ts`: align a stool sitter's
++  rendering-only `fixtureGround` with the stool's actual painter baseline,
++  including exam, minor-procedure, ultrasound, training, phlebotomy and
++  fallback support binding. This fixes small bitmap-bottom extensions without
++  changing seat/ground contacts, positions, facing, dimensions or movement.
++- New `apps/player/src/facility/backlessRollingStools.test.ts`: 21 tests cover
++  all ten approved stool draws, both endoscopy orientations, renamed idle
++  supports, bitmap/procedural occupants, three render scales, empty redraws,
++  legacy bitmap/procedural stools, derivation preservation/caching and tinting.
++- Append-only receipts here and in `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
++
++The approved source art is never overwritten. Minor Procedure's green stool
++and Ultrasound's blue stool have backs/posts; Endoscopy reuses the former.
++Their derivatives retain the full original crop dimensions. Alpha removes the
++backrest/post; same-row neighboring cushion pixels restore the narrow covered
++seat strip, and an exposed same-crop column sample restores the short covered
++column strip. The remaining cushion sides and the lower column/base/casters
++remain byte-exact. This is deterministic source-derived rendering, not new
++artwork. Runtime textures are cached once per source/version and shared by
++room instances and the Endoscopy touch-up.
++
++Runtime derivation provenance (existing approved production atlases):
++
++| Derivative | Approved source | Crop [x,y,width,height] | Source SHA-256 |
++| --- | --- | --- | --- |
++| `backless-v1:minor-procedure` | `gs015:minor-procedure:furniture`, `apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp` | `[8,2448,266,427]` | `0532e455112d364b21b1ae6d1fd482593c76357d1a3e73d966c9bd18291c9722` |
++| `backless-v1:ultrasound` | `gs015:ultrasound:furniture`, `apps/player/public/art/rooms/gs015-v1/ultrasound/furniture.webp` | `[8,1582,351,516]` | `4598071860b8332bf24fe3ab1d0bde95a60de24cb82d6096576093a19ad07c78` |
++
++Audit: Examination 0/270, Minor Procedure 0, Ultrasound 0, Phlebotomy 0/270,
++both Peri-op/Recovery nurse stools and both Training stools are all bound;
++Endoscopy 0/270 uses the same derived minor-procedure source. Legacy bitmap
++and procedural Examination fallbacks are already backless. CT, X-ray and
++Ambulatory OR have no rolling-stool draw in the current approved presentation.
++Pharmacy's step stool is a different, already-backless object. Ordinary chairs
++retain their existing arm/back layering. `approvedSideChairLayers.ts`, approved
++proof data, frozen before-layering fixture, `roomTouchups.ts` and
++`staffIdleSupports.ts` remain unchanged from intake. All eight stool-source
++atlas files retain their intake SHA-256; all edited source/tests are UTF-8
++without BOM. All four lane source/test hashes stayed unchanged during the final
++full-player/typecheck and focused runs. Concurrent exterior/radiology/nurse
++work was preserved; the intake-to-current full FacilityScene diff also contains
++exterior work that is not this worker's change.
++
++### Exact validation output
++
++The normal player Vite configuration is unchanged. The ordinary invocation
++first hit the documented optional Windows `net use` realpath `spawn EPERM`.
++Using the existing command-local preload let config load; the default forks
++pool then failed to start all nine requested test-file workers (`spawn EPERM`):
++
++```text
++Test Files  no tests
++     Tests  no tests
++    Errors  9 errors
++  Start at  11:55:34
++  Duration  10ms (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
++Exit 1; focused-default.log. This is not a test assertion failure.
++```
++
++Final runs used `--pool=threads --maxWorkers=1`, with the existing command-local
++preload only for Vite's optional Windows probe:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- src/facility/backlessRollingStools.test.ts src/facility/furnitureSeatLayering.test.ts src/facility/approvedSideChairLayers.test.ts src/facility/approvedRoomPresentation.test.ts src/facility/approvedRoomRenderer.test.ts src/facility/staffIdleSupports.test.ts src/facility/roomTouchups.test.ts src/facility/periopCompanionPresentation.test.ts src/facility/characterPauseArrival.test.ts --pool=threads --maxWorkers=1
++```
++
++```text
++Test Files  9 passed (9)
++     Tests  111 passed (111)
++  Start at  12:01:15
++  Duration  8.94s (transform 1.70s, setup 0ms, import 4.18s, tests 4.04s, environment 0ms)
++Exit 0; focused-threads-final.log.
++```
++
++```powershell
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1
++```
++
++```text
++Test Files  1 failed | 136 passed (137)
++     Tests  1 failed | 1091 passed (1092)
++  Start at  11:59:26
++  Duration  57.86s (transform 3.19s, setup 0ms, import 28.25s, tests 18.72s, environment 7ms)
++Exit 1; player-full.log.
++```
++
++Only failure: the previously documented
++`src/session/surgeryCenterServicePreviews.test.ts:85:52`, "ignores the retired
++concealment flag and preserves the scheduled external service after an
++answer". Expected pending-label substring `Off-site thyroid fine-needle
++aspiration`; received `The result is pending. Patient care and return are still
++in progress...` with stage timings. All facility tests, including all 21 new
++stool tests, pass. No unrelated chart/clinical correction was attempted.
++
++```text
++npm.cmd run typecheck
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++Exit 0; typecheck-final.log (4.035409s).
++```
++
++The first typecheck caught a concurrent exterior test's `bloomAccents` property
++error, which that lane corrected before the final PASS. An initial stool test
++harness lacked the unrelated Recovery procedural graphics double; that test
++harness was corrected, and the final focused/full runs above cover Recovery.
++
++Actual TypeScript derivation was also executed against decoded approved crop
++RGBA, then composited onto a neutral background and visually inspected:
++
++```text
++minor-procedure: 266x427; backrest alpha total=0; lower column/base/casters byte-exact=true
++ultrasound: 351x516; backrest alpha total=0; lower column/base/casters byte-exact=true
++```
++
++Evidence in `.local-dev/backless-rolling-stools/`: UTF-8 test logs, intake
++copies/hash manifests, reviewed source diffs (including a stool-only
++FacilityScene hunk extract), original crop inventory/contact sheet, actual
++TypeScript-derived crop pixels and `actual-runtime-derived-comparison.png`.
++These pixel previews and Node scene doubles are not a browser pass.
++
++### Rooms for manager browser acceptance
++
++Use the existing manager-owned disposable QA origin/profile (e.g. exact
++`http://127.0.0.1:5183`) and a synthetic campaign. Confirm the actual origin
++before seeding; it has separate saves from the owner's canonical
++`START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the usual persistent profile.
++This worker opened no browser and changed no launcher/origin/save pathway.
++
++| Room/state | Check |
++| --- | --- |
++| Examination, 0 and 270 | Empty and founder/clinician-occupied green stool; original seat/contact stays fixed, whole sitter above the stool, seat edge/column/base visible below. |
++| Minor Procedure, 0 | Green stool has no back or vertical back post, including when empty. During seated care/arrival settle/redraw the whole clinician stays above; repaired cushion has no central transparent hole. |
++| Ultrasound, 0 | Same checks for blue stool during care and idle sitting; compare inactive light and active-scan dimming so no tinted copy restores the back. |
+ | Endoscopy, 0 and 270 | Endoscopist idle stool at existing touch-up coordinates is backless and below the whole sitter. Rotation, pause/resume and empty redraw retain it. |
+-| Phlebotomy, 0 and 270 | Both red clinician stools stay backless/below seated or idle staff; the patient's collection chair still has its existing front-arm treatment. |
+-| Peri-op/Recovery, 0 | Both nurse station stools when occupied/empty; seat, pedestal and casters remain visible, no stool foreground over either nurse. Separate station monitors retain their existing order. |
+-| Training, 0 | Both north-facing trainees sit wholly above their already-backless green stools; no post/back introduced and no seat shift. |
+-| Legacy fallback visual harness | If manager exercises the legacy bitmap/procedural Examination paths, both remain backless with their existing geometry. These are covered by Node tests and are normally superseded by approved room art. |
+-
+-Inspect at default/close zoom with average and larger clinician identities.
+-Allow the existing 180ms arrival settle, then pause; also check leave/reseat,
+-room redraw/rotation and a passing walker. Retain ordinary Waiting/Telehealth/
+-Reading/Surgeon Office/Peri-op companion armrest layers as a visual cross-check.
+-Manager retains actual-browser acceptance and an ordinary-forks rerun in its
+-own environment. No open product decision. State is local only; manager owns
+-integration and the scoped **"push to GitHub"** checkpoint reminder.
++| Phlebotomy, 0 and 270 | Both red clinician stools stay backless/below seated or idle staff; the patient's collection chair still has its existing front-arm treatment. |
++| Peri-op/Recovery, 0 | Both nurse station stools when occupied/empty; seat, pedestal and casters remain visible, no stool foreground over either nurse. Separate station monitors retain their existing order. |
++| Training, 0 | Both north-facing trainees sit wholly above their already-backless green stools; no post/back introduced and no seat shift. |
++| Legacy fallback visual harness | If manager exercises the legacy bitmap/procedural Examination paths, both remain backless with their existing geometry. These are covered by Node tests and are normally superseded by approved room art. |
++
++Inspect at default/close zoom with average and larger clinician identities.
++Allow the existing 180ms arrival settle, then pause; also check leave/reseat,
++room redraw/rotation and a passing walker. Retain ordinary Waiting/Telehealth/
++Reading/Surgeon Office/Peri-op companion armrest layers as a visual cross-check.
++Manager retains actual-browser acceptance and an ordinary-forks rerun in its
++own environment. No open product decision. State is local only; manager owns
++integration and the scoped **"push to GitHub"** checkpoint reminder.
+ - 2026-10-08: Pediatric Exam APPROVED (approval-2026-10-08.md) after backless-stool revision; manager browser validation PASS. Wound/Ostomy mockup ready (browser PASS); game backless stools done (tests PASS), owner to confirm in game.
+ 
+ 
+@@ -4984,3 +4984,1360 @@
+ local; the manager owns the scoped "push to GitHub" reminder after acceptance.
+ - 2026-10-08: owner confirmed the stuck-flow and dispatch fixes work in game. Owner request: room cost/revenue audit so baseline function offsets upkeep; economy audit worker launched (proposal only).
+ - 2026-10-08: OWNER: "Push to GitHub" (second checkpoint) and next focus: get Level 4 ready to launch. Checkpoint-2 archive worker launched.
++- 2026-10-08: GitHub backup 2 pushed and verified: ed638d2c on origin/beta (archive artifacts/checkpoints/manager-accepted-20261008b/).
++- 2026-10-08: OWNER tutorial playtest: second visit gap too long; arrival message invited a map click that moved the founder away from check-in. Founder Office -> 3x3 with five tiers of increasing extravagance; mockups must open inside Claude. Launched tut2 and founder2 resumes.
++- 2026-10-08: OWNER detailed Founder Office tiers (desk faces north/visitor side shown, visitor chair south facing north, folding chair -> velvet armchair, simple chair -> throne, wire rack -> ornate bookcase, L5 rug/bust/gold). Manager stopped founder2 and resumed with founder3 spec.
++- 2026-10-08: OWNER decisions recorded: Founder Office morale = owning the room raises every employee's morale; Level 4 M0 decisions (plan section "M0 owner decisions"); economy option B + salary rebasing + idle-room relief, no bigger emergency consult, fix hourly net display before any spending warning.
++- 2026-10-08: round-5 launched: economy B (then Level 4 M1 chained), finance display fix, pediatric question batch (network enabled for permitted source verification).
++
++## Tutorial: owner playtest fixes (2026-10-08)
++
++Tutorial Sol worker follow-up to item 6 and the owner's two pacing/check-in reports.
++Implementation and worker validation complete; manager browser acceptance remains.
++
++### Files changed and decisions
++
++- `apps/player/src/session/tutorialTiming.ts` (new), `usePrototypeSession.ts`,
++  `tutorialViewModels.ts`, and `tutorialViewModels.test.ts`: state-derived temporary
++  clock pacing and truthful arrival/wait guidance, with save/resume and timing tests.
++- `apps/player/src/ui/TutorialCoach.tsx`, new `TutorialCoach.input.test.tsx`, and
++  `apps/player/src/styles/global.css`: coach, its arrow and target beacon absorb
++  pointer/click gestures. Native Skip guidance remains usable.
++- `apps/player/src/App.tsx`: one import and an exact facility-clock projection
++  override, so drawn route speed follows the faster clock. Saved simulation speed
++  and clinical estimates are not changed.
++- `packages/game-domain/src/reducer.ts`: one bounded check-in recovery helper and
++  one tick hook. New `tests/tutorial-check-in-recovery.test.ts` covers both protected
++  arrivals, physical return, explicit seating, a paused mid-return save, and exclusion
++  of ordinary/later-level arrivals.
++- `tests/e2e/tutorial-owner-playtest.spec.ts` (new): real pointer/check-in recovery
++  and selected-1x pacing with a mid-wait reload, through ordinary clinic commands.
++- This appended plan section and `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
++  Intake copies, readable review diffs and exact command logs are in the ignored
++  `.local-dev/tutorial-owner-playtest-fixes/` directory.
++
++**Exact pacing:** the guided second enacted pending visit runs facility time at
++**2 times the selected speed**: effective 2× at selected 1×, 4× at selected 2×,
++and 8× at selected 4×. The current natural fresh first-shift fixture reaches the
++next decision after **151 facility ticks = 75.5 running real seconds at selected
++1×**, including physical return/check-in, for both correct and corrected plans.
++This is a deterministic tick/scheduler measurement, not a completed browser
++stopwatch playtest. Reading, pauses, background tabs, browser scheduling and
++altered layouts can add elapsed time.
++
++Acceleration applies only with current-campaign guidance on, Level 0, the first
++protected chart filed, and the second protected visit's enacted, undelivered
++pending result. It ends at actual result readiness, on Skip guidance, or on leaving
++Level 0. It uses ordinary one-minute ADVANCE_TICK commands; no developer skip,
++answer, result delivery, income grant or clinical duration rewrite. The selected
++1/2/4 speed is never overwritten, so there is no stored-speed restoration race.
++An old frozen pending plan keeps its own duration and receives the same temporary
++multiplier when eligible; it is not rewritten to today's case or duration.
++
++The coach discloses “First-shift fast-forward,” the effective rate, that estimates
++are game time, and that Pause still works. The optional Management pointer carries
++the same disclosure. Pause, Build, Management, Help and hidden-document behavior
++continue using existing pause ownership. Per-campaign guidance and pending
++encounter state derive pacing again after reload; no new save field/schema or
++cursor was introduced.
++
++Arrival points to the **Waiting folder**, or Resume while paused, and states that
++Front Desk check-in is automatic. It never highlights the entrance/map. Coach,
++coach arrow and beacon intercept pointer down/up and click without preventing
++native button defaults; their CSS no longer passes clicks through. Map clicks on
++ordinary reachable floor still work.
++
++For the two Level-0 protected arrivals, an unstaffed desk causes optional founder
++walking, wandering or seating to yield to the existing physical Front Desk return.
++Required work finishes normally. The founder is not teleported, the normal
++staffed check-in remains authoritative, and later/ordinary check-in rules are
++unchanged. The stock-layout tests check recovery within 10 game minutes, no
++unstaffed penalty, chart access, and reload while the founder is returning.
++
++Protected cases, randomized choices, answer keys, clinical prose, timing balance,
++review status, frozen plans, answers, learning reviews and settlements remain
++intact. New tests compare frozen cases/history and the saved pending plan. Existing
++serialization normalizes incidental idle/retail scheduling fields, so the save
++test asserts the clinical/pacing contract rather than raw whole-state identity.
++
++### Exact validation receipts
++
++Default attempts were made first. Player config loading failed at the sandbox's
++optional Windows realpath/network-drive subprocess (`spawn EPERM`); the domain's
++default forks worker also failed with `spawn EPERM`, executing no tests. Final
++test runs use **default project configuration with `--pool=threads --maxWorkers=1`**.
++Player calls use the existing command-local preload
++`.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` solely for Vite's
++optional `net use` probe; no production config/dependency or sandbox setting changed.
++
++Default attempt commands and exact failure excerpts:
++
++```powershell
++npm.cmd run test --workspace @gamify-surgery/player -- src/session/tutorialViewModels.test.ts src/ui/TutorialCoach.input.test.tsx
++# exit 1; player-default-pool.log:
++# failed to load config from C:\Users\rowla\Projects\GamifySurgery\apps\player\vite.config.ts
++# Error: Build failed with 1 error:
++# [plugin externalize-deps]
++# Error: spawn EPERM
++
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/tutorial-check-in-recovery.test.ts
++# exit 1; domain-default-pool.log:
++# Error: [vitest-pool]: Failed to start forks worker for test files
++# Caused by: Error: spawn EPERM
++# Test Files  no tests
++#      Tests  no tests
++#     Errors  1 error
++```
++
++Player focused, final after all implementation edits; exit 0,
++`player-focused-final.log`:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 src/session/tutorialViewModels.test.ts src/session/tutorialGuidance.test.ts src/session/tutorialTipsIntegration.test.ts src/session/dailyRoutineTutorialPause.test.ts src/session/prototypeStorage.test.ts src/session/localCampaignRepository.test.ts src/session/chartFeedbackPresentation.test.tsx src/ui/TutorialCoach.input.test.tsx src/ui/visualComponents.test.tsx src/ui/tutorialPositioning.test.ts src/ui/HelpDialog.test.tsx src/ui/OpeningSequence.test.tsx
++```
++
++```text
++ Test Files  12 passed (12)
++      Tests  113 passed (113)
++   Start at  20:20:17
++   Duration  7.10s (transform 1.52s, setup 0ms, import 3.66s, tests 2.63s, environment 1ms)
++```
++
++Domain focused, final; exit 0, `domain-focused-final.log`:
++
++```powershell
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 tests/tutorial-check-in-recovery.test.ts tests/founder-map-movement.test.ts tests/founder-seats-and-reseating.test.ts tests/tutorial-guidance-integration.test.ts
++```
++
++```text
++ Test Files  4 passed (4)
++      Tests  33 passed (33)
++   Start at  20:20:17
++   Duration  3.12s (transform 1.20s, setup 0ms, import 2.51s, tests 333ms, environment 0ms)
++```
++
++Full player suite rerun after the App render-clock seam; exit 1,
++`full-player-final.log`:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1
++```
++
++```text
++ Test Files  1 failed | 142 passed (143)
++      Tests  1 failed | 1121 passed (1122)
++   Start at  20:18:19
++   Duration  59.72s (transform 2.69s, setup 0ms, import 26.74s, tests 23.43s, environment 6ms)
++ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
++Expected: "Off-site thyroid fine-needle aspiration"
++Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
++ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
++```
++
++**Failure attribution:** this same pending-label assertion was already recorded
++before this follow-up in the earlier tutorial and peri-op handoffs. No
++surgery-center preview, chart pending-label implementation, balance, or clinical
++content was edited in this follow-up. All seven newly added player tests pass.
++The first full-player run also reported 1121 passes/this one failure (63.06s).
++The manager retains resolution/reassignment of this pre-existing failure.
++
++Full game-domain suite; exit 0, `full-game-domain.log`:
++
++```powershell
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
++```
++
++```text
++ Test Files  117 passed (117)
++      Tests  3513 passed (3513)
++   Start at  20:13:59
++   Duration  274.56s (transform 2.33s, setup 0ms, import 37.48s, tests 229.08s, environment 5ms)
++```
++
++Root typecheck after the final production edit; exit 0,
++`typecheck-final.log`. Exact command/output:
++
++```text
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++Command was `npm.cmd run typecheck`. The research workspace banner above should
++be read from the exact log if package metadata changes concurrently; the recorded
++run used its actual installed workspace version.
++
++Strict e2e-spec compile, exit 0, `e2e-typecheck.log` (empty stdout/stderr):
++
++```powershell
++node_modules/.bin/tsc.cmd --noEmit --module ESNext --moduleResolution Bundler --target ES2023 --lib ES2023,DOM --jsx react-jsx --strict --noUncheckedIndexedAccess --esModuleInterop --skipLibCheck tests/e2e/tutorial-owner-playtest.spec.ts tests/e2e/tutorial-daily-routines.spec.ts tests/e2e/tutorial-positioning.spec.ts tests/e2e/tutorial-completion.spec.ts tests/e2e/tutorial-graduation.spec.ts tests/e2e/fresh-campaign-examination-room.spec.ts
++```
++
++Playwright **discovery only**, exit 0, `e2e-discovery.log`:
++
++```powershell
++node node_modules/@playwright/test/cli.js test tests/e2e/tutorial-owner-playtest.spec.ts tests/e2e/tutorial-daily-routines.spec.ts tests/e2e/tutorial-positioning.spec.ts tests/e2e/tutorial-completion.spec.ts tests/e2e/tutorial-graduation.spec.ts tests/e2e/fresh-campaign-examination-room.spec.ts --list
++```
++
++```text
++Total: 48 tests in 6 files
++```
++
++The two new natural pacing/recovery scenarios execute once on desktop-chrome;
++their other three project instances deliberately skip. Existing positioning
++scenarios cover all four viewport projects. No browser was spawned or browser
++PASS claimed in this worker's sandbox. Full suites are timestamped shared-tree
++receipts; later manager/worker edits require integration validation.
++
++### Manager browser steps and remaining acceptance
++
++Use an already verified manager-owned QA server with current source, for example
++`http://127.0.0.1:5183` **after verifying that server**, and fresh disposable QA
++browser storage. Do not open/replace owner saves for these checks. Owner playtesting
++remains **START_GAME.cmd → exact http://127.0.0.1:4173 in the usual persistent
++profile**. QA origin/profile storage is separate; no launcher or save pathway changed.
++
++1. New Campaign → combine founder/clinic names → leave First-shift guidance on →
++   Open the Clinic. Immediately Pause for the arrival check. Click coach copy,
++   its own arrow and the separate beacon: no founder move should be issued and
++   the founder's location/path should stay unchanged while paused. Resume:
++   the arriving beat highlights Waiting, never the entrance, and explains
++   automatic Front Desk check-in. Clicking the actual available chart still opens it.
++2. In a fresh clinic, click reachable floor away from the Front Desk before the
++   first arrival (Pause immediately after opening to set this up). Resume and
++   watch the founder physically return when the patient waits at the desk;
++   the chart becomes available without a rescue click. Repeat for the second:
++   pause before filing the first chart, file it with its native feedback action,
++   click reachable floor, then Resume. Check the automatic return and second
++   check-in, including a save/reload during that return if practical.
++3. Finish the first visit normally. Open the second chart, select **1×**, inspect
++   the ordinary game-time test estimates, and choose either correct or incorrect.
++   Enact Plan / Enact Corrected Plan, then optionally close the chart. Start a
++   stopwatch at enactment. The coach (including the optional Management pointer)
++   must disclose effective **2× first-shift fast-forward** and game-time estimates.
++   Watch actual departure, return/check-in, and the Existing Patients `!`:
++   target about **75.5 unpaused seconds** in the fresh stock layout, within 1–2
++   running minutes. No answer/feedback action or clinical estimate should be bypassed.
++4. Repeat or pause about 20 seconds into the pending wait. Save and Return to
++   Campaigns, reload the page and Resume that same clinic. The clock remains
++   paused, selected speed stays 1×, the case/answer/estimate/current pending plan
++   remains saved, and the coach offers Resume with 2× disclosure. Resume:
++   only the remaining wait runs (roughly 55.5 seconds after 40 elapsed ticks),
++   then the same patient's next decision becomes available. Check Help Escape,
++   optional Management and Build do not steal manual pause.
++5. During a guided wait, select 2×/4×: coach rates should be 4×/8×. On result
++   readiness the temporary multiplier ends and the selected speed remains.
++   Skip guidance ends the extra multiplier without answering, skipping the
++   clinical plan or changing due ticks. Help → Show guidance here resumes
++   relevant guidance/pacing in this clinic only. A separate guidance-off clinic
++   and ordinary Level-1+ waits use their normal selected speed.
++6. At 1440×1000, 1280×720, 1024×768 and Pixel-7 phone size, check that Waiting,
++   real answer choices, Enact/file/Close, Pause and Skip controls remain usable
++   around the now click-absorbing coach/beacon. Click coach/beacon when their
++   arrows are near the clock/build map too. Check drawn walking matches the
++   accelerated clock, then returns to normal; no unexpected founder map command.
++   Finish both charts and perform the real exam/door/Done/Advance route;
++   guidance ends, and ordinary tips still never pause.
++7. Prototype tools **Add $100** and **Fast-forward 10 min** can set up later
++   disposable build/arrival states quickly. Do not use Fast-forward during the
++   real-time pacing measurement, and do not count developer money as proof of
++   natural tutorial graduation.
++
++Manager-run commands, only after verifying the isolated QA URL:
++
++```powershell
++$tutorialQaUrl = 'http://127.0.0.1:5183'
++$env:GAMIFY_E2E_EXTERNAL_SERVER = '1'
++$env:GAMIFY_E2E_BASE_URL = $tutorialQaUrl
++node node_modules/@playwright/test/cli.js test tests/e2e/tutorial-owner-playtest.spec.ts tests/e2e/tutorial-daily-routines.spec.ts tests/e2e/tutorial-graduation.spec.ts tests/e2e/tutorial-completion.spec.ts tests/e2e/fresh-campaign-examination-room.spec.ts --project=desktop-chrome --workers=1
++node node_modules/@playwright/test/cli.js test tests/e2e/tutorial-positioning.spec.ts --workers=1
++```
++
++No new owner/product decision is requested. Remaining work is manager inspection
++of actual scoped changes, browser/pacing acceptance, and assignment of the known
++unrelated player assertion. UTF-8 without BOM; no Git, installs, browser/owner
++storage access, clinical authoring, agents, external messages, commit, push or
++deployment. This checkpoint is local; the manager owns acceptance and the scoped
++“push to GitHub” backup reminder.
++
++
++## Economy B: approved operating scale, saved salaries and technical-outage rent relief
++
++2026-10-08 - economy B Sol worker handoff to the sole Claude Code
++GamifySurgery manager. Implementation and required package validation complete;
++manager diff review and browser/owner-campaign acceptance remain. No agents,
++Git commands, installs, external messages, browser/storage access or deployment.
++Other workers' shared changes were preserved. No player finance-display edit.
++
++### Implemented contract
++
++- Exact section 5 Option B values for all 24 listed room base/per-tier hourly
++  upkeep entries and all 14 role salaries/shifted bounds. Salary adjustments
++  remain $2 with five morale points per step. Only fees changed: ordinary OR
++  $1,300, extended OR $1,900, authorized prescription pickup $70. Stock costs,
++  construction/hiring/training/upgrade prices, durations/cadences, capacities,
++  unlocks, settlement rewards and benefits are unchanged.
++- Existing marker-less saves rebase each finite salary to new base + (saved
++  salary - pre-B base), clamped to shifted bounds. Invalid/missing salaries use
++  the new base. Saved marker salaryEconomyVersion = "room-economy-b.v1" makes
++  reload idempotent; fresh campaigns carry it immediately. Unknown future
++  salary versions are rejected rather than downgraded. This is independent of
++  save schema 9 and retains the existing release/scheduler identities.
++- Named employees, valid home assignments, morale, attained levels, paid
++  queued/in-progress training and existing operation receipts are retained.
++  No repeat hiring/training charge; already accrued financial units remain
++  untouched. Reload an existing campaign once to apply its old salary scale;
++  a new campaign/restart is unnecessary.
++- Accepted OR/extended-OR and prescription quotes retain their frozen old
++  prices, including old unmarked in-flight work, frozen phases and deadlines.
++  New acceptance receives the new fee. Tests verify an old $25 prescription
++  pays its original $10 net exactly once, versus $70/$15 for new acceptance.
++- Revenue-room upkeepOutage clocks use version "room-upkeep-outage.v1",
++  sinceFacilityTick and lastObservedFacilityTick. Technical inability means
++  inaccessible/incompatible rooms, missing valid required staff assignments,
++  or unavailable equipment (maintenance outage/expired deadline/repair claim).
++  Endoscopy and OR also require accessible recovery and assigned peri-op staff.
++  Cross-coverable assignments remain installed capacity; GLP-1, Pharmacy and
++  Reading require their local assignment. Founder remains the existing
++  procedural-provider fallback.
++- Ordinary queues, occupied recovery beds, staff walking/temporary work,
++  discussions, breaks, paid training, disabled appointments and no patients
++  do not count as technical outages while durable assignments remain valid.
++  Support rooms never receive relief. First 60 continuous facility minutes
++  charge full base + tier rent; starting minute 61, eligible revenue-room rent
++  is 20% of base only (no upgrade uplift), until technical service returns.
++  Payroll/advertising continue. Reconnection/hiring while paused clears the
++  clock immediately; a later outage gets a new clock. Pause/wall time adds no
++  facility minutes. Legacy/invalid/future/gapped clocks start at current load
++  time, never at old maintenance dates. Rebuilds do not inherit removed IDs.
++- Expenses use the domain hourly-cost selector at the minute's starting rate,
++  rounded to integer hourly cents before one-sixtieth-cent accrual. This keeps
++  fractional relief reload-safe, charges all first 60 minutes in full, and
++  never rewrites prior accrual, gives retroactive refunds or catches up old rent.
++- Existing emergency consult remains $50/60-minute cooldown with the existing
++  staffed-automation eligibility restriction. No larger/scaled consult or
++  spending warning was added.
++
++### Files and review evidence
++
++Balance runtime: packages/balance-config/src/prototype-balance.ts and
++service-income-catalog.ts. room-upgrades.ts has no upkeep fields; actual tier
++upkeep lives in prototype-balance.ts, so the upgrade catalog/schema did not need
++an edit. Preserved all purchase ladders and benefits.
++
++Balance regressions: src/option-b-economy.test.ts (new), diagnostic-timing.test.ts,
++prototype-balance.test.ts, radiologist-read-income.test.ts,
++room-upgrades.test.ts and service-income-catalog.test.ts.
++
++Domain runtime: packages/game-domain/src/economy-compatibility.ts (new),
++room-upkeep-outages.ts (new), reducer.ts (expenses/minute-start rate, outage
++observation and fresh marker only), selectors.ts (only the hourly room-expense
++relief branch), persistence.ts (only salary/clock normalization and final
++observation) and types.ts (two additive optional persisted contracts).
++No staff-dispatch, peri-op service/attention, retail runtime or player file edit.
++
++Domain regressions: tests/economy-salary-rebasing.test.ts,
++room-upkeep-outages.test.ts, economy-frozen-fees.test.ts (new);
++employee-training-benefits.test.ts, facility-management.test.ts,
++game-domain.test.ts, retail-operations.test.ts, room-upgrade-revenue.test.ts,
++service-operations.test.ts and timing-encounters.test.ts. Existing edits are
++exact new amount expectations. The tutorial reserve test now asserts the
++retained $176.50 reserve after its short wait and separately sets $159.50 to
++exercise the unchanged $50 emergency fallback.
++
++Before-images, reviewed existing-file diff, exact owned-file list, SHA-256,
++UTF-8 audit, model comparison helper and complete logs are ignored/local under
++.local-dev/economy-b-20261008/. Review owned-existing.diff and owned-files.json;
++24 source/test files are in the lane. This completion record and the current
++thread handoff are append-only. All owned files are UTF-8 without BOM.
++
++### Exact commands and output
++
++Default-pool attempts (both fail before executing tests with spawn EPERM):
++
++~~~powershell
++npm.cmd run test --workspace @gamify-surgery/balance-config -- src/prototype-balance.test.ts
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/facility-management.test.ts
++~~~
++
++Worker fallback is the ordinary package config with --pool=threads; no custom
++Vitest config or plugin omission. Manager should rerun default pools in its
++own unrestricted environment.
++
++Final focused checks:
++
++~~~powershell
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/economy-salary-rebasing.test.ts tests/room-upkeep-outages.test.ts tests/economy-frozen-fees.test.ts tests/facility-management.test.ts tests/employee-training-persistence.test.ts tests/employee-training-benefits.test.ts tests/room-upgrade-revenue.test.ts tests/retail-operations.test.ts --pool=threads --maxWorkers=2
++# Test Files  8 passed (8)
++#      Tests  148 passed (148)
++#   Duration  8.75s
++# exit 0; focused-final.log
++
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/economy-salary-rebasing.test.ts tests/economy-frozen-fees.test.ts tests/room-upkeep-outages.test.ts tests/game-domain.test.ts --pool=threads --maxWorkers=2
++# Test Files  4 passed (4)
++#      Tests  60 passed (60)
++#   Duration  3.18s
++# exit 0; compatibility-final.log
++~~~
++
++Final FULL touched-package suites and root typecheck:
++
++~~~powershell
++npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads --maxWorkers=2
++# Test Files  10 passed (10)
++#      Tests  111 passed (111)
++#   Duration  851ms
++# exit 0; full-balance-verified.log
++
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2
++# Test Files  121 passed (121)
++#      Tests  3569 passed (3569)
++#   Duration  146.83s
++# exit 0; full-domain-verified.log
++
++npm.cmd run typecheck
++# all seven workspaces PASS; exit 0; typecheck-final.log
++# clinical-context-workbench, player, balance-config, clinical-authoring,
++# clinical-content, clinical-research, game-domain
++~~~
++
++Failure attribution: early suites found pre-B amount assertions, all updated
++within this lane. One tutorial assertion also assumed $6/h rent would consume
++its construction reserve after a short wait; lower rent correctly retains it.
++Early new-test failures were fixture construction (duplicate room IDs,
++founder-style helper art, a guarded door removal and founder stock consumption)
++and have been corrected. Initial typecheck also saw concurrent finance-lane
++MoneyPanel.test.tsx missing new view fields and rolling-income.test.ts speed 3;
++that lane fixed them. This worker's two fixture type errors were fixed here.
++All final required checks are green; no unresolved touched-package failure.
++
++Headless audit, read-only:
++
++~~~powershell
++node --disable-warning=ExperimentalWarning tools/economy-audit/run.mjs
++# PASS: 8 numerical/source invariants; 20 seeds x 40 measured hours + 10 warmup hours per scenario.
++# exit 0; audit-implemented.log
++node --check tools/economy-audit/run.mjs
++# exit 0
++node --disable-warning=ExperimentalWarning .local-dev/economy-b-20261008/compare-audit.mjs
++# PASS: exact B room/salary/fee values; all other balance/catalog fields, upgrade prices/effects and training preserved.
++# PASS: 8 numerical/source invariants; 20 seeds x 40 measured hours + 10 warmup hours per scenario.
++# PASS: all six implemented current scenarios equal the frozen audit Option B within $0.005 rounding. Original research artifacts were not overwritten.
++# exit 0; audit-comparison-verified.log
++~~~
++
++The final helper compares the actual entire balance/catalog against intake
++with only the approved fields replaced, checks unchanged upgrades/training,
++then runs the original run.mjs and compares its current scenarios to the
++frozen results-20261008.json strong (B) scenarios. No dated research artifact
++was overwritten. The run's light rows now inherit implemented B payroll;
++they are not a reproduction of the old A proposal. Baseline/slow numerical
++model has fully functioning rooms and does not count new outage relief.
++
++| Level | Gross/h baseline / slow | Stock/h baseline / slow | Operating/h | Net/h baseline / slow | Four-day net baseline / slow |
++| --- | --- | --- | --- | --- | --- |
++| 1 | $149.08 / $73.54 | $0 / $0 | $45 | +$104.08 / +$28.54 | +$4163.25 / +$1141.50 |
++| 2 | $661.11 / $370.76 | $2.88 / $1.52 | $259 | +$399.23 / +$110.24 | +$15969.25 / +$4409.50 |
++| 3 | $965.61 / $568.01 | $14.88 / $7.53 | $459 | +$491.73 / +$101.49 | +$19669.25 / +$4059.50 |
++
++Matches section 5 Option B within rounding. The model's original L3 slow
++cold-start $1,000 reserve still shortfalls in all 20 seeds; profitable mature
++average does not change its $1,440 modeled startup requirement. Runtime relief
++is separately verified by reducer tests, not represented by those model rows.
++
++### Precise manager browser acceptance
++
++No browser was launched or owner save/storage read by this worker. Run checks
++on a disposable copied campaign at exact http://127.0.0.1:5183 (the manager's
++QA origin), verifying location.origin before any injection. QA saves differ
++from the owner origin/profile. For normal owner playtesting use START_GAME.cmd
++and exact http://127.0.0.1:4173 in the usual persistent profile; no launcher,
++host, port, profile or remote-site pathway changed here.
++
++1. Pause a copied pre-B L1/L2/L3 save before first new-code load. Record cash,
++   each employee ID/name/old salary/morale/training/home, pending paid training,
++   operatingAccrualSixtiethCents and accepted quotes. Load once. Compare each
++   salary to new base + old premium clamped to the B bounds; check unchanged
++   other fields/cash/paid requests and the new salaryEconomyVersion. Save and
++   reload twice: salaries/cash/requests stay fixed. Test $2 negotiation gives
++   exactly five morale points, bounds match the B table, and no rehire/course
++   purchase is required. Existing campaign progression/history remain intact.
++2. In a funded disposable minimal L1 clinic with no advertising/other staff,
++   construct accessible Ultrasound without a technician and upgrade it to L5.
++   Pause to record outage start T. Record totalOperatingExpenses/accrual rather
++   than net cash if teaching arrivals exist. Upkeep is $12/h before relief.
++   Advance exactly 59 minutes: still full rent. At T+60 its instantaneous next
++   rate is $1.60/h, but all first 60 minutes remain fully charged. Advance
++   another 15 minutes: this room contributes $0.40 to that quarter's expense,
++   with normal support rent added. No backdated refund or upgrade-rent charge.
++   Domain regression control with only Front Desk+exam+this room is $15 total
++   for the first hour, then $1.15 next quarter ($16.15 cumulative).
++3. Save that outage at T+40 and compare to uninterrupted advancement through
++   T+75; clock and integer accrual must match. Repeat while paused and at 1x/4x,
++   then reload after relief. Wall time while paused/closed must not advance
++   facility clocks, reset valid downtime or charge past minutes. A marker-less
++   old idle room starts at its load tick rather than its old maintenance date.
++4. Hire/assign its technician while paused at T+60 or later: the outage marker
++   disappears immediately; subsequent rent returns to $12/h and new payroll
++   is $18/h (plus existing clinic costs). Reload and confirm no extra hiring
++   charge. Fire/reassign away to start a new missing-assignment outage: full
++   first 60 minutes again. Repeat a maintenance out_of_service/repair-held
++   target and repair it: clock ends, ordinary rent returns. Support rent and
++   all retained staff payroll never receive the revenue-room discount.
++5. With operational Endoscopy/OR, fill recovery beds or queue several cases,
++   walk staff between rooms, train/check/break a staff member, and disable
++   appointments for over an hour. Assigned, accessible departments keep full
++   rent; these do not accrue technical-outage clocks. An inaccessible recovery
++   department or actually missing required peri-op assignment does start the
++   procedural room's clock. Shared imaging technicians can cover modalities;
++   unassigned extra GLP-1/Pharmacy/Reading copies cannot borrow a local slot.
++6. Start an ordinary/extended OR and prescription work from a pre-B copied
++   save. After load, watch their accepted $900/$1,300/$25 prices, frozen room
++   multipliers/timers and once-only receipts remain intact. Newly accepted
++   jobs quote $1,300/$1,900/$70 and retain their existing durations, stock and
++   upgrade benefits. The old prescription still pays gross $25 minus $15 stock
++   (= $10); a new one pays $70 minus $15 (= $55) before retained modifiers.
++7. Inspect the existing emergency consult with/without operational NP coverage:
++   same $50 payout, 60-minute cooldown and existing automation eligibility.
++   Check L1/L2/L3 real ledgers against the stated model assumptions; no paid
++   lab/prescription volume is inferred from constructing the room. Hourly net
++   presentation is the finance worker's separate lane. Run ordinary package
++   configs and inspect page errors/normal save reload before owner acceptance.
++
++No new owner decision requested. Lane released after manager review. This
++validated checkpoint remains local only; manager retains integration,
++owner-facing report/browser acceptance and the scoped "push to GitHub"
++checkpoint reminder. No commit, push, merge, release or publication occurred.
++
++## Finance display: actual rolling income minus current costs (Sol worker, 2026-10-08)
++
++Milestone complete in the assigned finance lane; ready for manager diff review
++and browser acceptance. Owner requested a truthful hourly net in the HUD and
++Management > Money before adding any spending warning. No new product decision
++is requested.
++
++### Findings and implemented calculation
++
++The HUD's old hourlyOperatingDelta was only the negative operating-expense
++selector. Management independently reconstructed full rent and salaries, omitted
++outage relief, and excluded patient encounter settlements from opening earnings.
++
++Both presentations now reuse one finance projection. Actual settled patient
++payments and service receipts are averaged over (facilityTick - 360,
++facilityTick], i.e. the last six operating/game hours. Before six hours, use
++receipts since opening. During the first hour, divide actual receipts by one
++hour and explicitly label the result an early estimate; no receipts means zero
++income. Tick-zero receipts count until the six-hour boundary. Fractional receipt
++times are supported. Pausing, speed selection, day rollover and reload do not
++change the window's meaning.
++
++Sources are patient encounters, patient services, scheduled services, telehealth
++automation, manual telehealth consults, radiology reads, retail, remote work,
++and other retained income when present. Receipt prices are frozen actual amounts,
++not today's catalog prices or queued-job estimates. Duplicate settlement IDs
++and receipt transaction keys do not inflate the rolling selector. No cash-balance
++changes, starting cash, developer money, construction or asset transactions are
++treated as patient/service income.
++
++Average gross income minus average receipt stock costs minus current obligations
++is the hourly NET. Current obligations come from the existing negative
++getOperatingExpensePerFacilityHour selector. Management shows salaries, full room
++upkeep before relief, advertising, recent average stock, and a negative upkeep
++outage-relief row. That row is the difference between full upkeep and the domain's
++current effective expenses; no relief eligibility/threshold/multiplier is copied
++into this lane. Economy B's saved salaries and technical-outage selector changes
++are therefore read directly. Stock is deducted once. The existing no-income
++runway uses current fixed obligations, excluding stock that would require sales.
++
++The HUD cash summary shows the signed net, with existing palette tokens for
++positive, negative and neutral states. Hover gives income/cost/window details;
++native details/summary also provides a keyboard/touch expansion. Management
++opens with income/hr, costs/hr and net/hr, the exact window and early-estimate
++explanation, income by source and cost categories. Opening earned/profit totals
++now include actual patient settlements as well as complete live/retired service
++totals. Existing typography/tokens are reused through one scoped stylesheet.
++No alert, spending warning, cash mutation, posting rule or save schema was added.
++
++Receipt-retention check: existing retirement retains every service receipt from
++the last ten-hour operating day, exceeding this six-hour window. Encounter
++settlements remain available. A high-volume retirement/save/reload regression
++verifies the complete rolling sample is retained.
++
++### Files changed
++
++- packages/game-domain/src/rolling-income.ts (new pure selector/types/constants)
++- packages/game-domain/src/index.ts (one selector export)
++- packages/game-domain/tests/rolling-income.test.ts (new)
++- apps/player/src/session/managementViewModels.ts
++- apps/player/src/session/managementViewModels.test.ts
++- apps/player/src/session/viewModels.ts (exact finance construction/HUD mapping edits)
++- apps/player/src/session/economyViewModels.test.ts
++- apps/player/src/ui/types.ts (finance presentation fields)
++- apps/player/src/ui/ResourceBar.tsx
++- apps/player/src/ui/ResourceBarFinance.test.tsx (new)
++- apps/player/src/ui/MoneyPanel.tsx
++- apps/player/src/ui/MoneyPanel.test.tsx
++- apps/player/src/ui/financePresentation.css (new; no shared global.css/token edit)
++- This append-only handoff and docs/handoffs/CURRENT_THREAD_HANDOFF.md.
++
++All 13 source/test files passed UTF-8-without-BOM checks; source hashes were
++recorded and rechecked unchanged after validation. Existing dirty/concurrent
++work was preserved. No balance, expense posting, persistence, clinical-content
++or art source was edited. Before-images, reviewed source diffs, exact logs and
++hashes are under .local-dev/finance-display/.
++
++### Exact validation output
++
++Default startup was attempted first:
++
++```text
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/retired-service-history.test.ts
++Failed to start forks worker ... Caused by: Error: spawn EPERM
++Test Files no tests; Tests no tests; Errors 1 error; exit 1
++
++npm.cmd run test --workspace @gamify-surgery/player -- src/session/managementViewModels.test.ts src/ui/MoneyPanel.test.tsx
++failed to load config from ... apps/player/vite.config.ts
++[plugin externalize-deps] Error: spawn EPERM; exit 1
++```
++
++Domain uses its ordinary package config with threads. Player needs native config
++loading as well: .local-dev/finance-display/player-vitest.config.mjs preserves
++both application plugins (React and forbidPrivateModules) and the ordinary root;
++only config bundling is bypassed. The native loader's Node module-type warning
++is non-failing. No package/config/dependency installation change was made.
++
++```text
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 tests/rolling-income.test.ts tests/room-upkeep-outages.test.ts tests/retired-service-history.test.ts
++Test Files  3 passed (3)
++Tests       35 passed (35)
++Duration    3.61s
++Exit        0
++
++npm.cmd run test --workspace @gamify-surgery/player -- --config ../../.local-dev/finance-display/player-vitest.config.mjs --configLoader native --pool=threads --maxWorkers=1 src/session/managementViewModels.test.ts src/session/economyViewModels.test.ts src/session/numberFormattingCompatibility.test.ts src/ui/MoneyPanel.test.tsx src/ui/ResourceBarFinance.test.tsx src/ui/ManagementPanel.test.tsx src/ui/visualComponents.test.tsx
++Test Files  7 passed (7)
++Tests       46 passed (46)
++Duration    3.96s
++Exit        0
++
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
++Test Files  121 passed (121)
++Tests       3569 passed (3569)
++Duration    278.00s
++Exit        0
++
++npm.cmd run test --workspace @gamify-surgery/player -- --config ../../.local-dev/finance-display/player-vitest.config.mjs --configLoader native --pool=threads --maxWorkers=1
++Test Files  5 failed | 139 passed (144)
++Tests       5 failed | 1127 passed (1132)
++Duration    63.38s
++Exit        1
++
++npm.cmd run typecheck
++All seven workspace tsc checks completed without diagnostics.
++Exit        0
++```
++
++Full player failures, all outside this lane and reproduced with the saved
++pre-edit viewModels.ts/managementViewModels.ts through a read-only loader:
++
++| File and assertion line | Attribution / exact observed mismatch |
++| --- | --- |
++| src/session/diagnosticTimingViewModels.test.ts:245 | Economy B: old Reading rent expectation $24/hr; current $6/hr. |
++| src/session/buildViewModels.test.ts:259 | Economy B: obsolete examination upgrade improvement "Hourly upkeep +$1."; current improvement list omits it. |
++| src/session/employeeTrainingViewModels.test.ts:154 | Economy B: old prescription $25 / $11.50 contribution; current $70 / $56.50, stock still $13.50 in the trained fixture. |
++| src/session/alertsEventsViewModel.test.ts:138 | Economy B: old posting-gap expectation $2.00; current $0.91. |
++| src/session/surgeryCenterServicePreviews.test.ts:85 | Previously recorded pending-label assertion missing "Off-site thyroid fine-needle aspiration". |
++
++Read-only attribution command:
++
++```text
++npm.cmd run test --workspace @gamify-surgery/player -- --config ../../.local-dev/finance-display/baseline-player-vitest.config.mjs --configLoader native --pool=threads --maxWorkers=1 src/session/surgeryCenterServicePreviews.test.ts src/session/diagnosticTimingViewModels.test.ts src/session/buildViewModels.test.ts src/session/employeeTrainingViewModels.test.ts src/session/alertsEventsViewModel.test.ts
++Test Files  5 failed (5)
++Tests       5 failed | 97 passed (102)
++Duration    4.23s
++Exit        1
++```
++
++The same loader ran the two new substantive patient-income/HUD-net regressions
++against pre-edit finance projections: 2 failed, 13 skipped, 2.47s (exit 1).
++Before: opening earned $54/profit -$46 instead of $954/+$854, and HUD +$0/hr
++instead of actual +$90/hr. Both pass in the final focused/full player runs.
++An initial owned negative-zero formatting compatibility failure was corrected;
++all number-formatting compatibility cases now pass.
++
++The first full domain run encountered one concurrently edited outage test
++(room-upkeep-outages.test.ts:118, undefined versus since tick 0). Economy B's
++update landed during validation. That file subsequently passes 22/22 both with
++and without the new selector export; the final full domain rerun above is green
++and includes the additional frozen-fee cases. No outage code was edited here.
++
++Logs: focused-domain-final.log, focused-player-final.log, full-domain-final.log,
++full-player-final.log, typecheck-final.log, baseline-failures.log,
++baseline-finance-regressions.log and baseline-domain-failure.log (the latter
++is the passing attribution rerun). Earlier attempts are retained separately.
++The manager should inspect scoped-review.diff, before-images and
++validated-source-hashes.json, then rerun ordinary configs in its own environment.
++After confirming accepted B values, update the four stale player price/burn
++assertions in their owning lane and address the known thyroid label assertion;
++rerun the full player suite. No unrelated test/source was changed by this worker.
++
++### Precise manager browser acceptance
++
++Browser checks were not run by this sandboxed worker. Use the manager's already
++verified current-source QA server, e.g. exact http://127.0.0.1:5183, and a fresh
++disposable campaign or copied QA fixture. Verify location.origin before changing
++QA state. QA storage is separate from the owner's campaign. Normal owner opening
++remains START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual persistent
++profile. No launcher, origin, profile, remote URL or save pathway changed here.
++
++1. In a fresh paused clinic, expand the cash readout. Income is $0/hr before
++   payments; net is the negative of current obligations (neutral if zero).
++   The window says Early estimate and explains the one-hour minimum. Complete
++   an available manual telehealth consult before the first hour, then pause:
++   its actual receipt appears under Manual telehealth consults, without being
++   multiplied by 60/elapsed minutes or counted again from its alert event.
++2. In Management > Money, compare all three hourly tiles with the HUD expansion.
++   Net labels/signs must match exactly. Sum the income-source amounts and cost
++   rows, including negative relief; income minus costs must match net within
++   displayed-cent rounding. Patient encounters and patient services are distinct
++   receipt sources; current catalog fees/queued jobs are not earned income.
++3. For deterministic QA, reproduce the accounting fixture in
++   managementViewModels.test.ts's patient-settlement case on a disposable copied
++   clinic, keeping its connected rooms. Pause at tick 600, with patient receipts
++   $300 at tick 100 and $600 at tick 600, and one $60 retail receipt/$6 stock at
++   tick 500. With current fixed obligations C, income is $110/hr, stock $1/hr,
++   total costs C+$1/hr, net +$109/hr-C. Opening earned is $954; with historical
++   running costs $100, opening profit is +$854. The tick-100 income affects
++   opening totals but is outside the six-hour average. These are fictional QA
++   payment fixtures, not an owner campaign or new clinical content.
++4. While paused, change an employee's salary by one allowed adjustment step and
++   change advertising. Income and source counts remain fixed; current costs and
++   net move by the actual obligation changes. Follow economy B's technical-room
++   outage/restoration check: show full rent and a separate negative relief row
++   after the domain activates relief; restoring the room removes that relief.
++   Do not assume ordinary empty-room/queue idleness grants technical relief.
++5. Exercise positive, negative and exact-zero hourly net in disposable QA
++   fixtures. Positive shows + and olive token text, negative shows the minus
++   sign with the existing dark/paper treatment, zero is neutral with no false +
++   or negative-zero. Keep opening profit independent: a lifetime-positive
++   clinic can correctly show a currently negative hourly net.
++6. Pause/save/reload on that same QA origin. Frozen receipts, source counts,
++   window and rates remain the same after current domain obligations reconcile.
++   Resume and observe old receipts leave the sample exactly after six operating
++   hours; game-day rollover must not reset the window. 1x/2x/4x changes wall-time
++   speed only. Developer Add $100 while paused changes cash, not hourly income.
++7. At 1440x1000, 1280x720, 1024x768, 390x844 and 320x568, hover/click/tap the cash
++   summary, then Tab and Enter/Space. The expansion must open/close, fit within
++   the viewport and expose income, costs, net and window without clipping or
++   moving/pausing the founder. Check Money's source/cost rows, scroll and recent
++   service ledger, inherited number/body fonts, and both sign treatments.
++   Toggling the display must not add feed messages, payments or spending warnings.
++
++Finance lane is released after manager review. This checkpoint remains LOCAL
++ONLY; the manager retains integration, browser acceptance, owner report and the
++scoped reminder to say "push to GitHub" after acceptance. One initial read-only
++Git status inspected the shared dirty tree; no Git writes, commits or pushes.
++No agents, installs, external messages, owner/browser-storage access, deployment,
++publication, clinical authoring or source ingestion occurred. UTF-8 without BOM.
++
++
++
++## Level 4 M1: types, schemas and save compatibility (Sol handoff, 2026-10-08)
++
++M1 only, implementing the binding M0 decisions in
++`docs/execplans/level4-launch-plan-20261008.md`. Ready for the sole Claude Code
++GamifySurgery manager's scoped diff review and acceptance after the validation
++receipt below. Economy B runtime values and its salary/outage contracts were
++retained. No next-milestone implementation is included.
++
++### Contract and later-milestone seams
++
++- Balance schemas accept Level 4 room and role unlocks, four or five unique
++  stages, an explicitly configured playable cap of 3 or 4, and a defined Level
++  4 successor. The actual shipped balance still has four stages, cap 3, L3
++  successor null, no APP definition and no new room definitions. Reading and
++  Radiologists remain L3. No numeric economy/catalog/timing/training/upgrade
++  data was changed. Fixture room/APP definitions derive from existing B rows
++  to test schema shape; they are not production room geometry or price choices.
++- Optional `patientEligibility` on rooms, services and routes separates adult
++  scope from a pediatric presentation scope of ages 5-17, explicit parent and
++  outpatient care. It has no disease-selection weights and is not yet a runtime
++  eligibility evaluator. Generic existing resource/timing phase contracts carry
++  MRI acquisition/read and distinct routine wound/ostomy/pediatric services in
++  fixtures. Actual MRI service equivalence, execution and fees remain M6.
++- `facilityStageDefinitionSchema.requiredCompletionWitnessIds` recognizes only
++  `pediatric_visit_with_parent` and `wound_ostomy_care_visit`, unique and L4-only.
++  The M0 stage fixture uses 750 current-level XP, satisfaction >90, APP and those
++  two witnesses. There is no MRI/Pediatric Waiting finish requirement or separate
++  mandatory wound AND ostomy completion. Evaluating operational assigned APP,
++  earned witnesses, terminal completion and acknowledgement belongs to M8.
++- Clinical case schema now accepts stage 4. Optional `pediatricProfile` on cases
++  and exact instantiation profiles uses version `pediatric-patient-profile.v1`,
++  `requiresParent: true` and `clinicalScope: outpatient`. Marked profiles require
++  explicit age 5-17 and Female/Male demographics; a marked case cannot contain
++  an adult alternative. Vital signs remain optional, without inserted values.
++  No new cases/claims/questions, release assembly or review status change.
++- Domain level/progression and necessary alert **types** accept 4. Existing
++  alert lists and eligibility are unchanged. Optional `clinicVisit` freezes
++  unscored visitor kind/demographics/family ID and validates its exact income
++  line. Kinds: adult_appointment, pediatric_consult, wound_care, ostomy_support;
++  version `clinic-visit.v1`. No visit scheduler, staffing or XP/FSRS behavior.
++- Optional `pediatricFamilies` dictionary uses `pediatric-family.v1`, stable
++  family/child/parent IDs, a relationship phase, and a pair reservation with two
++  distinct places in one existing room. Scored children use encounter IDs;
++  unscored children use the **service operation ID** as child.id. The parent is
++  an existing companion actor with `pediatricFamilyId`, separate from the
++  procedural companion contract. The child carrier and parent must bind back
++  to that family; duplicate actors, orphan links and invalid pair places are
++  rejected. This validates serialized structure only; actual paired routing,
++  same-room movement, age-compatible art selection and stool policy are M5.
++- Optional `levelFourCompletion`, version `level-four-completion.v1`, carries
++  nullable pediatricVisitWithParent/woundOstomyCareVisit witnesses and nullable
++  acknowledgedAtFacilityTick. A witness contains completion tick plus a stable
++  operation or encounter ID. Pediatric evidence requires its parent ID and
++  income.pediatric_consult; wound evidence accepts income.wound_care OR
++  income.ostomy_support. Witnesses do not require retained live rooms/actors/
++  receipts, so archival/sale cannot erase them. Future/negative ticks, unsupported
++  versions/lines, partial malformed payloads and unearned/early acknowledgements
++  are rejected. This milestone never earns them or issues completion events.
++- Missing optional root fields remain absent on save/load: absence means no
++  families or earned evidence. This preserves the existing verified-write
++  serialized-byte contract for fresh/old campaigns. Later consumers must use
++  empty/null defaults and initialize versioned records when actually needed.
++  Explicitly present valid empty records round-trip. Save schema remains 9;
++  release IDs, salaryEconomyVersion and scheduler pins are unchanged.
++- Marked pediatric frozen cases are validated **before** legacy demographic
++  completion, and retain the saved child still through cosmetic normalization.
++  Missing demographics/art/family fail instead of receiving adult defaults.
++  Existing adult appearance normalization and frozen diagnostic plans/receipts
++  retain their prior paths. A level-4 save loads only with a balance context
++  whose playable cap is explicitly 4; the stock cap-3 context still rejects it.
++
++### Files and preservation evidence
++
++Six existing files:
++
++- packages/balance-config/src/schema.ts
++- packages/balance-config/src/prototype-alerts.ts (three level type annotations only)
++- packages/clinical-content/src/schema.ts
++- packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
++  (one schema test: retained L3 records, accepts 4, rejects 5; content untouched)
++- packages/game-domain/src/types.ts
++- packages/game-domain/src/persistence.ts (only new optional contracts/normalization)
++
++Three new test files:
++
++- packages/balance-config/src/level-four-schema.test.ts
++- packages/clinical-content/src/level-four-schema.test.ts
++- packages/game-domain/tests/level-four-persistence.test.ts
++
++This section is appended to owner-requests-20261008.md. The manager-owned
++launch plan and CURRENT_THREAD_HANDOFF.md remain unchanged. No reducer,
++selector, capacity/dispatch, catalog, art, gameplay, player or clinical-authoring
++source edit. Shared files were reread before exact edits; unrelated/concurrent
++economy, tutorial, finance and clinical-batch work was preserved.
++
++Ignored/local review evidence: `.local-dev/level4-m1-20261008/` has before/after
++snapshots, `owned-existing-and-new.diff`, `owned-files.json` with SHA-256,
++`review-owned.py`, focused/full/default/typecheck logs and this exact append.
++The captured actual diff was inspected; all nine source/test files decode as
++UTF-8 without BOM. Final manifest/diff were regenerated after the byte-stability
++correction. Manager should inspect them rather than relying on this summary.
++
++### Exact commands, output and failure attribution
++
++Default configs/pools were attempted first:
++
++~~~powershell
++npm.cmd run test --workspace @gamify-surgery/balance-config -- src/prototype-balance.test.ts
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- src/pilot-content.test.ts
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-two-persistence.test.ts
++# each: exit 1; Failed to start forks worker; Caused by: Error: spawn EPERM
++# each: Test Files no tests; Tests no tests; Errors 1 error
++# logs: balance-default.log, content-default.log, domain-default.log
++~~~
++
++Fallback retains the ordinary package configuration with --pool=threads and
++--maxWorkers=1; no custom config, removed plugin or dependency installation.
++
++~~~powershell
++npm.cmd run test --workspace @gamify-surgery/balance-config -- src/level-four-schema.test.ts --pool=threads --maxWorkers=1
++# Test Files 1 passed (1); Tests 5 passed (5); Duration 257ms; exit 0
++# balance-focused.log
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- src/level-four-schema.test.ts --pool=threads --maxWorkers=1
++# Test Files 1 passed (1); Tests 4 passed (4); Duration 1.36s; exit 0
++# content-focused.log
++npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-four-persistence.test.ts tests/guidance-tips.test.ts tests/tutorial-guidance-integration.test.ts tests/diagnostic-timing-persistence.test.ts tests/economy-salary-rebasing.test.ts tests/character-still-persistence.test.ts tests/level-two-persistence.test.ts --pool=threads --maxWorkers=1
++# Test Files 7 passed (7); Tests 90 passed (90); Duration 5.11s; exit 0
++# domain-focused-final.log
++
++npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads --maxWorkers=1
++# Test Files 11 passed (11); Tests 116 passed (116); Duration 2.23s; exit 0
++# balance-full.log
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
++# Test Files 84 passed (84); Tests 608 passed (608); Duration 23.15s; exit 0
++# content-full-verified.log
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
++# Test Files 122 passed (122); Tests 3597 passed (3597); Duration 277.68s; exit 0
++# domain-full-final.log
++npm.cmd run typecheck
++# all seven workspaces PASS; exit 0; typecheck-final.log
++# clinical-context-workbench, player, balance-config, clinical-authoring,
++# clinical-content, clinical-research, game-domain
++~~~
++
++Early failure attribution:
++
++- Initial typecheck errors were this worker's fixture/validator typing: balance
++  package lacks structuredClone globals, numeric successor versus literal-level
++  Map keys, validated reservation spread narrowing, wrong test appearance
++  stream labels and null employee location. All fixed in the owned lane.
++- First FULL content: 83 files/607 tests passed, one failed assertion expecting
++  stage 4 rejection in the old Level 3 schema test. Updated that corresponding
++  schema assertion to accept 4/reject 5 while retaining every actual L3 record.
++- First FULL domain: 120 files/3594 tests passed, three failed assertions in
++  guidance-tips.test.ts and tutorial-guidance-integration.test.ts. Cause: this
++  worker initially injected empty L4 root records on load, breaking exact
++  fresh-save bytes/equality. Corrected normalization to preserve omission;
++  those tests were not edited. Final focused rerun includes all three assertions.
++- No unrelated package failure is labeled green or hidden. FULL player tests
++  were not run because no player package file was edited; root typecheck covers
++  its consumers. Its previously recorded external-thyroid label assertion is
++  outside this lane; no browser/player-test PASS is claimed.
++
++The plan's additional V5 boundary command was attempted:
++
++~~~powershell
++npm.cmd run test:boundaries
++# exit 1: Application boundary verification failed:
++# Could not inspect tracked paths: spawnSync git EPERM
++# boundaries.log
++~~~
++
++The script invokes read-only Git internally. This indirect attempt was blocked
++before execution; no direct Git command or Git mutation was performed. It was
++not retried under this brief's no-Git instruction. The manager must run the
++boundary/launcher aggregate in its authorized environment; the launcher half
++did not execute after that first failure. This is an environment/authorization
++limitation, not a schema/test failure.
++
++### Precise manager browser checks
++
++No browser was launched and no owner storage/save was accessed by this worker.
++Use disposable copied campaigns at exact `http://127.0.0.1:5183`, verify
++`location.origin` before any QA storage operation, and retain the same QA
++context/profile between reloads. QA storage is separate from the owner's
++`START_GAME.cmd` -> exact `http://127.0.0.1:4173` usual persistent profile.
++This milestone changes no launcher, port, host, path, profile or remote origin.
++
++1. Load paused pre-M1 copied L0/L1/L2/L3 saves. Record IDs/names/stills, level,
++   cash/cents/accrual, salaries/morale/homes/paid training, rooms/doors, frozen
++   cases/concept IDs, FSRS reviews, accepted quotes/plans, receipts and operation
++   idempotency keys. Save, return to Campaigns, reload and resume twice. Compare
++   those values after each load; absent pediatricFamilies/levelFourCompletion
++   must remain absent in serialized saves. For a pre-B marker-less save, use
++   the economy-B receipt's expected one-time salary rebasing; M1 adds no rebase.
++2. Fresh disposable campaign: save/return/reload while paused and after a native
++   speed or guidance action. Verify normal verified-save success, continued
++   guidance state, no extra fee/event/reward, no clinical answer synthesis, and
++   no injected pediatric family or completion record. The domain byte-stability
++   regressions cover this exact save-normalization seam.
++3. Mature L3 copied campaign: Goals still shows the L3 terminal preview and has
++   no Advance-to-L4 action. Build/Staff keep the current catalog/unlocks; the
++   four rooms/APP have not been activated. Existing Reading placements, four
++   reader posts, radiologist identities, active/outside jobs, staffing and rent
++   should survive normal reload. Confirm no L5 advancement/completion reward.
++4. Resume a copied in-flight diagnostic plan, especially an old full offsite
++   MRI/MRCP route or accepted split reading payment, and an old accepted service
++   fee. Inspect the frozen route, phases/deadline, actor, quote and once-only
++   receipt before/after reload and at completion. M1 does not opt these old
++   orders into onsite MRI or recalculate their contracts. Existing companion/
++   adult visits remain on their current flow; no new parent should be attached.
++
++Level 4 runtime browser acceptance is deferred to the implementation milestones.
++The new round-trip tests supply an explicitly enabled test balance; injecting a
++level-4 save into the ordinary cap-3 browser is intentionally rejected. Later
++workers should reuse the named contracts, initialize optional records lazily,
++and retain the pediatric marker when freezing a selected exact profile.
++
++No owner/design/clinical decision is requested by M1. Manager retains actual
++diff inspection, ordinary default-pool reruns, browser acceptance, current
++handoff/plan updates and the next bounded dispatch. This checkpoint is LOCAL
++ONLY; after acceptance the manager owns the reminder to say **"push to GitHub"**.
++No agents, installs, external messages, commit/push/merge/release/deployment,
++clinical authoring, proprietary inputs or runtime network/AI calls occurred.
++- 2026-10-08: accepted economy B (audit numbers matched), finance display (pending browser check), Level 4 M1, pediatric batch draft (10 concepts/20 variants, scope review pending). Launched Luna stale-test fix and Level 4 M2 (art promotion).
++## Stale economy test expectations
++- Requested player-suite run (`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`) stopped before test collection: Vite config startup failed with `spawn EPERM`.
++- Therefore no four economy-related failing assertions or exact before/after suite summaries could be established in this environment; no player expectations were changed.
++- Confirmed Option B fees in `packages/balance-config/src/option-b-economy.test.ts`: OR $1,300, extended OR $1,900, prescription pickup $70. The pre-existing thyroid/pending-label assertion remains untouched.
++- Rerun the requested suite in an environment where Vite can spawn its config resolver, then update only failures matching the approved Option B balance values.
++- 2026-10-08: finance display ACCEPTED after browser check (HUD net with expansion; Management Money tab shows average income, costs, net, window and income by source; no page errors).
++
++
++## Level 4 M2: approved art promotion
++
++2026-10-08 - Sol worker lane complete in MRI -> Pediatric Waiting -> Pediatric Examination -> Wound/Ostomy order. Promoted 30 byte-identical approved native PNGs, exact measured-anchor presentations, 17 identity-free supports and 249 checked fine routes. Added native front-mask/backless-stool/MRI layering and owning-door visibility through the existing scene. No definitions, prices, staff, services or gameplay; all four remain absent from Build Mode until M3.
++
++Full files, exact commands/output, five existing player failure details, future movement/support requirements and per-room M3 QA preview steps are in [Level 4 M2: approved art promotion](level4-launch-plan-20261008.md#level-4-m2-approved-art-promotion). Reproducible mapping: `tools/room-design/level-4/runtime-promotion/`; local before-images/UTF-8 logs/68-path inventory: `.local-dev/level4-m2/`.
++
++Final focused player 6 files/59 tests PASS; navigation/spatial 2/32 PASS. FULL domain 123 files/3613 tests PASS (277.60s). FULL player 144 passed files/5 failed, 1158 passed tests/5 failed (68.84s): four already documented stale economy assertions and the known thyroid pending label. Root typecheck passes all seven workspaces. Defaults hit spawn EPERM; used threads/maxWorkers=1, plus a native player config preserving React/private-module plugins with no exclusions. Manager retains default-config reruns and browser acceptance after M3.
++
++QA: disposable explicitly L4-enabled campaign at `http://127.0.0.1:5183`, separate from owner `START_GAME.cmd` -> exact `http://127.0.0.1:4173` and its persistent profile/save. Record `location.origin`; no pathway change or owner storage access occurred. No Git, installs, agents, external messages or publication. LOCAL ONLY: manager owns acceptance/current handoff/owner report and the scoped **"push to GitHub"** checkpoint reminder.
++
++- 2026-10-08: Level 4 M2 done (30 approved sprites promoted byte-identically; rooms not yet buildable). Luna stale-test task blocked by spawn EPERM; manager ran player suite: 4 stale economy expectations + 1 load-sensitive nurse test + known thyroid. Sol stale2 worker launched.
++
++
++## Player test maintenance after economy B
++
++2026-10-08 - Sol worker lane complete. Verified against balance-config's
++`prototype-balance.ts`, `room-upgrades.ts`, `service-income-catalog.ts` and
++`option-b-economy.test.ts` before editing expectations:
++
++- `alertsEventsViewModel.test.ts`: expected cash gap now derives from the fixture's
++  live projected operating posting and cash cents ($0.91 in this fixture).
++- `buildViewModels.test.ts`: exact examination upgrade improvements contain the
++  unchanged +2 satisfaction benefit; B's zero per-tier upkeep adds no label.
++- `diagnosticTimingViewModels.test.ts`: Reading Room upkeep $24 -> $6/hour and
++  radiologist salary $26 -> $18/hour; $1,800 construction and four readers retained.
++- `employeeTrainingViewModels.test.ts`: pharmacy pickup $25 -> $70; trained stock
++  remains $13.50, so contribution is $56.50.
++
++Measured the unchanged Level-3 nurse test at **6387ms in the full run** (5000ms
++timeout failure) and **2234ms alone** (3/3 passed). Added `test.maxWorkers: 4`
++to the existing `apps/player/vite.config.ts`, matching the domain cap; imported
++`defineConfig` from `vitest/config` for its test types. Existing React and
++private-module guard plugins remain. The same full-suite nurse test now passes
++in **2636ms**. Its 520-minute maximum simulation span, timeout and every
++assertion are unchanged; the nurse test file is byte-identical.
++
++Exact commands from the repository root (existing Vite config/default loader;
++no alternate config, exclusions or CLI worker override):
++
++~~~powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --reporter=verbose
++npm.cmd run test --workspace @gamify-surgery/player -- src/session/periopNurseOwnerFeedback.test.ts --pool=threads --reporter=verbose
++# After the five scoped edits:
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --reporter=verbose
++npm.cmd run typecheck
++~~~
++
++Exact full-player before output (exit 1):
++
++~~~text
++ Test Files  6 failed | 143 passed (149)
++      Tests  6 failed | 1157 passed (1163)
++   Start at  22:00:09
++   Duration  13.46s (transform 25.60s, setup 0ms, import 99.85s, tests 72.57s, environment 15ms)
++~~~
++
++Exact full-player after output (exit 1 solely for the untouched known thyroid
++pending-label assertion, `src/session/surgeryCenterServicePreviews.test.ts:85:52`):
++
++~~~text
++ Test Files  1 failed | 148 passed (149)
++      Tests  1 failed | 1162 passed (1163)
++   Start at  22:01:49
++   Duration  20.34s (transform 6.42s, setup 0ms, import 37.89s, tests 31.18s, environment 8ms)
++~~~
++
++`npm.cmd run typecheck` exits **0**; all seven workspace commands
++`tsc --noEmit` pass. Full exact output, isolated nurse timings, before-images,
++SHA-256 preservation evidence and scoped diff:
++`.local-dev/player-test-maintenance-economy-b/{before-full-player.log,before-nurse-alone.log,after-full-player.log,typecheck.log,before-hashes.json,scoped.diff}`.
++29 snapshotted balance/runtime/test paths are unchanged, including the thyroid
++test. These four expectation files and Vite config are the only implementation
++edits. Both documentation records were appended as UTF-8 without BOM.
++No Git, installs, agents, external messages, clinical/source authoring, browser
++or owner-save access, publication or pathway change. Manager retains acceptance
++and default fork-pool rerun; this worker used threads as required by the sandbox.
++
++
++## Level 4 M3: room definitions and ladders
++
++2026-10-08 - Sol worker M3 lane complete; manager review/browser acceptance remains.
++Four registered L4 definitions and current GS-038 ladders, M2 geometry/art, option-B
++upkeep (MRI $8 + $1/tier, Pediatric Waiting $1 + $0, Pediatric Examination $2 + $0,
++Wound/Ostomy $2 + $1) and M0 caps 1/2/4/2. Playable cap and L3 successor stay 3/null;
++no new services, staff roles, patients, progression or clinical content.
++
++Price table, baseline/incremental arithmetic, all 25 owned paths, actual diff/log
++locations, exact commands/output and placement/preview steps: [Level 4 M3: room
++definitions and ladders](level4-launch-plan-20261008.md#level-4-m3-room-definitions-and-ladders).
++Full balance 123/123 PASS; full domain 3625/3625 PASS; full player 1177 passed/1
++existing thyroid pending-label failure (150 files); root seven-workspace typecheck
++PASS. Ordinary configs, threads and the specified ignore-net-use-eperm preload;
++no exclusions. QA entry transform/typecheck and native HTTP checks PASS.
++
++Manager preview: `node tools/qa/level-four-rooms.mjs`, then exact
++**http://127.0.0.1:5184/level4-rooms-qa.html?rooms=placed**. Remove the query for the
++separate empty Build campaign. Dedicated temporary 5184 storage is separate from
++manager QA 5183 and owner START_GAME.cmd -> exact http://127.0.0.1:4173; record
++location.origin and reload through the dedicated entry. Existing 5183 server and
++owner saves/launcher were preserved; no browser/owner storage access occurred.
++UTF-8 without BOM; no Git, installs, agents, external messages or publication.
++LOCAL ONLY: manager retains acceptance/current handoff and the scoped
++**"push to GitHub"** reminder.
++
++## Manager: Level 4 M3 accepted, M4 dispatched (2026-10-08)
++
++Manager browser QA of http://127.0.0.1:5184/level4-rooms-qa.html?rooms=placed: MRI, Pediatric Waiting, Pediatric Exam and Wound/Ostomy render placed with approved art, no page errors. Player suite: only the known thyroid failure. M3 accepted. M4 (APP role, training, appointments in clinic; Minor-Procedure APP coverage; pediatric/wound visits deferred to M5/M6) dispatched to a Sol max worker.
++
++## Level 4 M4: APPs and appointments in clinic (2026-10-08)
++
++Sol max worker completed and validated M4a before implementing M4b. Two approved
++APP identities can be hired into separate exam homes and run additional adult
++unscored appointments concurrently, with home-first reachable cross-cover,
++scored-room priority, training/breaks/payroll, sale/fire rerouting and save/load.
++APP hire $600, default salary $30/hr on Option B, clinic fee $80 every 120 game
++minutes per staffed ordinary-exam home: **$40 - $30 - $2 upkeep = $8/hr** baseline
++margin per home. Training costs $150/$300/$450/$600 and adds 10% revenue per tier
++using its own APP metric. Pediatric/wound visits remain M5/M6; future-home APPs
++show explicit waiting states. The approved stills are `future-roster20-v5.001`
++and `.002`; walking retains their cardinal-still hop identity. A third APP needs
++one additional approved eight-pose provider look; no art was generated or borrowed.
++
++Full balance **125/125 PASS**; full domain **3642/3642 PASS**; full player **1181
++passed / only the expected thyroid pending-label failure**, 152 files. Root
++seven-workspace typecheck and QA transform PASS. Existing configs with threads
++and the specified ignore-net-use-eperm preload; no exclusions. Exact arithmetic,
++39 changed paths, commands/output, art provenance/gaps and manager acceptance
++steps: [Level 4 M4: APPs and appointments in clinic](level4-launch-plan-20261008.md#level-4-m4-apps-and-appointments-in-clinic).
++
++Manager preview: `node tools/qa/level-four-rooms.mjs`, then exact
++**http://127.0.0.1:5184/level4-rooms-qa.html?apps=appointments** in a disposable QA
++profile; press Play. This uses a separate resumable M4 campaign and storage from
++QA 5183 and owner START_GAME.cmd -> exact http://127.0.0.1:4173. Ordinary
++progression stays capped at 3 pending integration. No owner saves/launcher,
++clinical teaching content, approved PNGs, other roles' preferred art, Git,
++installs, agents or publication were changed/used. LOCAL ONLY: manager retains
++browser acceptance, CURRENT_THREAD_HANDOFF and the **"push to GitHub"** reminder.
++
++## Manager: Level 4 M4 accepted; M5 and APP art v6e dispatched (2026-10-08)
++
++Manager default-config rerun: balance-config 125/125, game-domain 3642/3642, player 1181 passed + known thyroid failure, typecheck exit 0. Browser QA (http://127.0.0.1:5184/level4-rooms-qa.html?apps=appointments, 4x for ~6 game hours): both APPs seated with walk-in visitors in separate exam rooms concurrently, ~$80 visits paid, Clinical XP stayed 0, no page errors. M4 accepted. Gap: only 2 approved APP looks, so a third APP cannot be hired; APP art batch v6e (8 identities) dispatched under the owner's 2026-10-07 gap-fill delegation (Sol 01a11ebc-fa1d-77d2-b5b9-7208c473c26e). M5 pediatric families/visits dispatched (Sol 01a11ebc-fa14-7650-bfff-b5d1392ff144); lanes disjoint.
++
++## Level 4 M5: pediatric families and visits (2026-10-09)
++
++Sol max worker completed serial M5a/M5b/M5c: compatible frozen identities for
++ages 5-17 using the twelve existing child stills; one frozen adult parent with
++atomic physical reservations and synchronized room crossings; APP-run unscored
++pediatric appointments through M4's shared per-home demand, dispatch and frozen
++fees. Under-10-only kid stools, overflow, training/access loss, room sale/move,
++reload, results waiting and discharge are covered. Future scored pediatric
++routing is fixture-only; no pediatric content, art, progression or live Level 3
++cap changed. Actual care completion with the parent records M1's durable
++`levelFourCompletion.pediatricVisitWithParent` witness for M8.
++
++Option B: $80 per visit every 90 game minutes per staffed pediatric exam home =
++$53.33/hr; minus $30 APP salary, $2 exam upkeep and the full $1 waiting upkeep
++share leaves **$20.33/hr**. Root typecheck PASS across seven workspaces. Full
++balance **125/125 PASS**; full game-domain **3663/3663 PASS**; full player **1185
++passed / only the expected thyroid pending-label failure**, 154 files. Ordinary
++configs, threads and the specified ignore-net-use-eperm preload; no exclusions.
++
++All **41 changed paths**, the twelve-still review, save compatibility, exact
++commands/output, arithmetic and manager QA steps are in [Level 4 M5: pediatric
++families and visits](level4-launch-plan-20261008.md#level-4-m5-pediatric-families-and-visits).
++Scoped diff and logs: `.local-dev/level4-m5/`.
++
++Manager preview: `node tools/qa/level-four-rooms.mjs`, then exact
++**http://127.0.0.1:5184/level4-rooms-qa.html?apps=pediatrics** in a disposable
++persistent QA profile; select **Level 4 M5 pediatric families** and press Play.
++The child/parent pass through waiting and exam seats together. Reload the same
++full entry URL/profile. `location.origin` must be **http://127.0.0.1:5184**;
++this campaign is separate from M4 QA, QA 5183 and owner **START_GAME.cmd ->
++http://127.0.0.1:4173** storage. The canonical owner pathway is unchanged.
++Browser acceptance and CURRENT_THREAD_HANDOFF remain manager-owned. No Git,
++installs, agents, external messages or publication; APP art v6e lanes preserved.
++**LOCAL ONLY**: after acceptance, remind the owner to say **"push to GitHub"**
++for the manager's audited checkpoint backup.
++
++## Manager: APP art v6e accepted; M5 browser QA blocked (2026-10-09)
++
++v6e APP art visually accepted (gallery validator PASS 32/24); runtime integration dispatched (Sol 01a11eee-c146-78f1-afb2-b82a0a348aa0). M5 browser QA (?apps=pediatrics): $80 pediatric visits pay about every 90 game minutes and XP stays 0, but the Phaser canvas freezes at start: TypeError reading 'x' in sampleRouteMotion via FacilityScene.getCharacterRoutePresentation/drawCharacters. Sent back to the M5 worker (resume 01a11ebc-fa14-7650-bfff-b5d1392ff144) for a root-cause fix plus render-loop robustness. M5 not yet accepted.
++
++
++## APP art v6e runtime integration (2026-10-09)
++
++Sol worker integrated all eight manager-accepted `app-gapfill-v6e.001`-`.008`
++looks and 64 byte-exact public PNGs append-only. APP hiring now has ten looks:
++the two existing provider identities plus eight v6e additions, all APP-only.
++Adult/child patient pools and every other staff role remain unchanged; prior
++identities, image hashes, contacts, frozen selections and save schema are
++preserved. Walking retains the existing cardinal-still hop motion. With eleven
++reachable exam homes, ten distinct hires succeed and the eleventh reports art
++exhaustion without charging cash. M4 variety/view tests reflect the new limit.
++
++The v6e frozen batch validators and v6d-style integration/promotion-rerun checks
++PASS. Final FULL game-domain **3665/3665 PASS**; final FULL player **1207 passed /
++only the known thyroid pending-label failure** (155 files / 1208 tests); root
++typecheck PASS in all seven workspaces. Ordinary configs, threads and the
++specified ignore-net-use-eperm preload; no exclusions. Concurrent M5 renderer
++fixes/tests were preserved and included in the final FULL reruns.
++
++All changed/new files, exact output, immutable intake, preservation guarantees
++and validation receipts: [v6e APP runtime integration - Sol worker handoff,
++2026-10-09](character-gapfill-v6-20261007.md#v6e-app-runtime-integration---sol-worker-handoff-2026-10-09).
++Unabridged evidence: `artifacts/character-statics/app-gapfill-v6e/validation/integration-validation.txt`;
++scoped diff: the same folder's `scoped-source-diff.patch`.
++
++Manager retains diff/HTTP/browser acceptance and CURRENT_THREAD_HANDOFF. No Git,
++installs, agents, external messages, clinical/art generation or publication.
++Owner pathway remains START_GAME.cmd -> exact **http://127.0.0.1:4173** in the
++same persistent profile; existing storage is untouched. **LOCAL ONLY**: after
++acceptance, remind the owner to say **"push to GitHub"** for the audited backup.
++
++## Manager: Level 4 M5 and APP art v6e accepted; M6 dispatched (2026-10-09)
++
++M5 render fix verified in Chrome (?apps=pediatrics): no page errors, canvas updates every capture, child+parent pairs enter Pediatric Waiting together, child on exam table with APP on stool and parent in the room chair, $80 visits pay. Motion-jump replay (retail and l1 scenarios) after the routeMotion change: only the expected founder track-created event, no jumps. v6e integration: 64 PNGs served byte-exact; 10 hireable APP looks. Manager default-config rerun: balance-config 125/125, game-domain 3665/3665, player 1207 passed + known thyroid failure, typecheck exit 0. Both accepted. M6 (MRI + wound/ostomy services) dispatched to Sol.
++
++## Level 4 M6: MRI and wound/ostomy services (2026-10-09)
++
++Sol worker completed M6a MRI, validated it before M6b, then completed APP-run
++unscored wound/ostomy visits. MRI uses exact ordinary adult routes, real
++technician/scanner acquisition and existing local/external reading. Wound care
++and ostomy support reuse APP home demand and frozen fees, and record the durable
++M8 care witness. Wound procedure and automatic visit-to-supply dispensing remain
++deferred; existing authorized supply outlets are preserved.
++
++FULL balance-config **129/129 PASS**, game-domain **3679/3679 PASS**, player
++**1211 passed + only the known thyroid failure**; root typecheck and QA entry
++checks PASS. Ordinary configs with threads and the requested EPERM preload.
++No live Level 3 cap, clinical content, art or M5 route-motion/drawing changes.
++
++Files, $34/hour MRI and $13/hour wound-home direct-cost arithmetic, save notes,
++exact commands/output and browser steps:
++[Level 4 M6: MRI and wound/ostomy services](level4-launch-plan-20261008.md#level-4-m6-mri-and-woundostomy-services).
++Manager retains actual diff/browser acceptance and CURRENT_THREAD_HANDOFF.
++Use QA **http://127.0.0.1:5184/level4-rooms-qa.html?apps=mri** and
++**http://127.0.0.1:5184/level4-rooms-qa.html?apps=wound** in the same disposable
++profile; these campaigns have separate saves from owner START_GAME.cmd /
++**http://127.0.0.1:4173**. No Git, installs, agents or publication. **LOCAL ONLY**:
++after acceptance, remind the owner to say **"push to GitHub"** for a backup.
++
++## Manager: Level 4 M6 accepted; M7 scope accepted and assembly dispatched (2026-10-09)
++
++M6 Chrome QA: ?apps=mri shows patient on the MRI table, technician at the console, radiologist reading with +$5 in-house read fees; ?apps=wound shows an APP (v6e look) on the stool with the patient in the clinic chair; canvas updates every capture, no page errors, Clinical XP 0. Manager default-config rerun: balance-config 129/129, game-domain 3679/3679, player 1211 passed + known thyroid failure, typecheck 0. M6 accepted. M7 manager scope review of the 2026-10-08 pediatric batch: 10 objectives/20 variants, ages 5-17 with named parent, outpatient pediatric-surgery clinic topics, single reviewStatus needs_clinician_review, institutional leaflet approval explicitly not batch approval; ACCEPTED for assembly (editorial gate only, not clinical approval). Assembly worker dispatched.
++
++
++## Level 4 M7: pediatric batch assembly
++
++Sol integration worker assembled all **20 pediatric variants / 10 objectives**
++in the explicitly unapproved prototype, retaining `needs_clinician_review`,
++with nine new concepts and the unchanged reused midline-recognition concept
++deduplicated. Scored charts freeze each authored child/parent identity and
++compatible child still, require Level 4 and an operational Pediatric Examination
++Room, use M5's paired route, and record M5's existing durable pediatric witness
++at completed care with the parent present. No runtime/testing deferrals; all
++twenty variants have no enacted testing choices. Ordinary gameplay stays
++capped at Level 3 pending M8.
++
++**Manager acceptance pending:** full V3 is **607 passed / 1 failed**, because the
++unchanged uniquely-longest-answer guard identifies nine new pediatric variants.
++Clinical meaning/prose and that guard were preserved; exact IDs and character
++counts are recorded for manager/clinician review. Batch **19/19 PASS**, FULL
++game-domain **3,712/3,712 PASS**, FULL player **1,232 passed / only the known
++thyroid failure**, root seven-workspace typecheck and QA transform PASS. Used
++ordinary configs, threads and the requested EPERM preload. An additional
++boundary script was blocked on its internal Git read; no Git operation completed.
++
++All **31 changed paths**, exact commands/output, zero runtime deferrals, nine
++content findings and exact acceptance steps:
++[Level 4 M7: pediatric batch assembly](level4-launch-plan-20261008.md#level-4-m7-pediatric-batch-assembly).
++Actual before/after diff and logs: `.local-dev/level4-m7/`.
++
++Manager preview: `node tools/qa/level-four-rooms.mjs`, then exact
++**http://127.0.0.1:5184/level4-rooms-qa.html?apps=pedcharts** in a disposable
++persistent QA profile; press Play and open Noah Bennett's scored chart. Watch
++Noah (5, Male) with Daniel Bennett in waiting and examination, answer after both
++are seated, then file/resolve and watch their paired departure. Same-URL reload
++resumes this separate M7 campaign; `location.origin` must be 5184. Owner
++START_GAME.cmd -> exact **http://127.0.0.1:4173** and existing saves are unchanged.
++
++Browser acceptance, default-pool reruns, content-finding disposition and
++CURRENT_THREAD_HANDOFF remain manager-owned. No agents, installs, web, art,
++clinical rewriting, owner-save access or publication. **LOCAL ONLY:** after
++acceptance, remind the owner to say **"push to GitHub"** for the manager's audited
++checkpoint backup.
++
++## Manager: Level 4 M7 accepted; M8 dispatched (2026-10-09)
++
++M7 Chrome QA (?apps=pedcharts): Noah Bennett (5, male) and father Daniel walk in together; chart shows name/age/sex, 2-word complaint, named-parent presentation, complete question, 4 randomized parallel options; child on exam table, founder on stool, father in parentChair; correct answer gives +10 Clinical XP; no page errors. Option-length fix: 9 variants rebalanced, keys/IDs/claims/review status unchanged; clinical-content 608/608. Manager note for clinician review: padded distractor labels 'Inguinal canal hernia' / 'Femoral canal hernia' (epigastric variants) read slightly unnatural. M7 accepted (editorial/technical only; all records needs_clinician_review). M8 progression/economy/guidance dispatched.
++
++## Level 4 M8: progression, economy and guidance
++
++Sol worker implemented M8a then M8b. Level 3 now advances to 4 with the unchanged primary gates and XP reset. Level 4 finishes at 750 current-level XP, displayed satisfaction above 90, an operational assigned APP, a historical completed pediatric-with-parent visit and a historical completed wound/ostomy visit. No MRI or Pediatric Waiting gate, no Level 5 advance, no APP/scheduled XP or FSRS, and no repeated completion reward/event. QI stays optional.
++
++Real reducer simulation: MRI +$34/h, Pediatric Exam/Waiting/APP +$20.33/h, Wound/Ostomy/APP +$11.75/h, ordinary Exam/APP +$8/h at baseline demand. The focused early-L4 cluster nets +$31.50/h after real shared payroll/upkeep and retail stock; paired normal-arrival runs admit the same scored encounters with all APP streams on/off. Existing L1-L3 option-B numbers were reproduced by the read-only audit; its loader now supports the already-added L4 imports without overwriting dated results.
++
++Full balance **129/129**, full game-domain **3,736/3,736**, full clinical-content **608/608**, full player **1,236 passed / only the known thyroid failure**. Root seven-workspace typecheck, direct production player build, final 16 durability/economy tests, launcher contract and QA entry typecheck/transform pass. Used checked-in configs, threads and the prescribed EPERM preload. Git-dependent root boundaries/build wrapper remain manager checks under the worker's No Git rule; no claim they passed.
++
++All **45 paths**, actual economy tables, exact new tip/alert copy, save-compatibility notes, exact test/build output and manager QA steps: [Level 4 M8: progression, economy and guidance](level4-launch-plan-20261008.md#level-4-m8-progression-economy-and-guidance). Evidence: `.local-dev/level4-m8/`; real simulation: `tools/economy-audit/level-four-results-20261009.json`.
++
++Manager QA: `node tools/qa/level-four-rooms.mjs`, then **http://127.0.0.1:5184/level4-rooms-qa.html?state=l3ready** to click Advance, and **http://127.0.0.1:5184/level4-rooms-qa.html?state=l4almost** to complete the real wound visit and reload. Disposable origin/profile only; both queries preserve their separate synthetic campaigns on reload. Browser/default-config acceptance and CURRENT_THREAD_HANDOFF remain manager-owned. `routeMotion.ts` is byte-identical; clinical content/review status, art and tutorial behavior are preserved.
++
++Owner effect after landing: **START_GAME.cmd -> exact http://127.0.0.1:4173** in the usual profile. An already-qualified Level 3 save immediately sees **Advance to Level 4**, without replay, rehiring or QI; a save missing an existing gate remains Level 3. Clicking Advance resets XP to 0 and keeps its existing campaign/history. This worker did not read the owner's live browser save and cannot certify that it currently meets every gate. QA/remote saves remain separate. No Git, installs, agents, new clinical content/art, owner-save injection, publishing or deployment. **LOCAL ONLY:** after acceptance, remind the owner to say **"push to GitHub"** for the manager's audited backup.
++
++## Manager: Level 4 M8 review (2026-10-09)
++
++Manager default-config rerun: balance-config 129/129, game-domain 3736/3736, clinical-content 608/608, player 1236 passed + known thyroid failure, typecheck 0. Root test:boundaries failed with `spawnSync git ENOBUFS` (git ls-files -z output 1.55 MB > Node's 1 MB default); manager added `maxBuffer: 64 * 1024 * 1024` in scripts/verify-app-boundaries.mjs; boundaries + launcher contract now pass (14124 tracked paths). Chrome QA: ?state=l3ready shows all four L3 goals met and Advance; click -> Level 4, 0/750, five goals, no Level 5 control, persists on reload; ?state=l4almost completes after the real wound visit, terminal 'Level 4 complete - Level 5 coming later' persists on reload; 390/820 widths no horizontal scroll; no page errors. Presentation defects sent back (resume): completion message shown 4 times incl. a footer toast overlapping the prototype notice; malformed 'Level current complete was resolved.' feed row after advancing. Note: M8 raises the shipped cap to 4, so the owner's live game at http://127.0.0.1:4173 can now advance to Level 4 after reload.
++
++## Manager: Level 4 M8 accepted; M9 dispatched (2026-10-09)
++
++M8 presentation fixes verified in Chrome: completion message only in Goals + one Alerts Milestone row; no footer overlap with the prototype notice; no 'Level current complete was resolved.' row after advancing; one milestone after reload; 390/820 no horizontal scroll; no page errors. Player 1241 passed + known thyroid failure; typecheck 0. M8 accepted. M9 integrated launch QA (tests/fixtures only; defects reported as skipped DEFECT-M9-n tests) dispatched.
++
++
++## Level 4 M9: integrated launch QA
++
++Sol worker completed the test/fixture lane: **31 new active real-engine tests pass**,
++with two deliberately skipped failing reproducers. Scenario 1 (fixture-assisted
++fresh/mature progression), 2 (24-hour mixed clinic), 4 (both real witnesses then
++terminal/sale/reload) and 5 (synthetic pre-M3 save shape) PASS. Scenario 3 exact
++full-state reload is **DEFECT-M9-1** (overdue idle deadlines reset); scenario 6
++case-level fairness is **DEFECT-M9-2** (active-concept pool changes after
++service-dependent walkout timing). Care/fees reload continuity and 24-hour
++scored arrival count/timing pass; those narrower results do not close the defects.
++
++Full balance **129**, game-domain **3764 passed / 2 defect skips**, clinical-content
++**608**, player **1244 passed / only known thyroid failure**, seven-workspace
++typecheck and direct ordinary production player build pass. All-workspace
++aggregate reproduces only thyroid. Checked-in configs, threads/maxWorkers=1 and
++the requested net-use EPERM preload; no runtime/config/clinical/art change.
++Git-dependent root boundaries/aggregate wrapper and browser/default-pool checks
++remain manager-owned. No Git, installs, agents, owner-save access or publication.
++
++Scenario table, precise reports, exact transcripts, fixture limitations and
++manager browser URLs/setup: [Level 4 M9: integrated launch QA](level4-launch-plan-20261008.md#level-4-m9-integrated-launch-qa).
++Raw evidence: `.local-dev/level4-m9/`. Manager acceptance/fixes and
++CURRENT_THREAD_HANDOFF are pending; this is **not** launch clearance.
++Owner START_GAME.cmd -> exact **http://127.0.0.1:4173** remains unchanged;
++manager QA uses **http://127.0.0.1:5184** with separate disposable storage.
++**LOCAL ONLY:** after acceptance, remind the owner to say **"push to GitHub"** for
++the manager's audited checkpoint backup.
++
++## Manager: Level 4 M9 accepted; Level 4 launch-ready (2026-10-09)
++
++Manager reran boundaries/launcher (PASS), balance 129/129, domain 3764 + 2 skipped DEFECT reproducers, content 608/608, player 1244 + known thyroid failure, root build PASS. DEFECT-M9-1 (overdue idle deadline reset on reload) and DEFECT-M9-2 (APP RNG consumption changes scored case identity; counts/times unchanged, no starvation) judged low-priority, non-blocking follow-ups. Level 4 declared launch-ready for local owner play; CURRENT_THREAD_HANDOFF updated.

@@ -1,0 +1,948 @@
+--- a/docs/execplans/character-gapfill-v6-20261007.md
++++ b/docs/execplans/character-gapfill-v6-20261007.md
+@@ -329,314 +329,314 @@
+ - 2026-10-08: manager full-suite rerun after v6a integration: clinical-content 585/585 PASS; typecheck exit 0; game-domain 3156/3159 with 3 failures (diagnostic-orders x2 serial reads, patient-supply inventory) that PASS 17/17 on isolated rerun; attributed to concurrent edits/load from other active workers during the 8-minute run. v6a integration fully accepted.
+ 
+ - 2026-10-08: v6c generation/packaging worker intake: built-in image generation confirmed available; isolated lane `tools/character-mapping/patient-gapfill-v6c/` and `artifacts/character-statics/patient-gapfill-v6c/`. Planned 19 patients /152 poses: F65+ x7, M65+ x8, F30-44 x2, M30-44 x2; four glasses designs (21.1%), straight hair on all glasses designs, one visual-only cane and two hearing aids. Accepted v6a/v6b remain the exact geometry/style anchors. Preservation pins 245 original entries/1990 assets and 320 accepted v6a/v6b poses/80 native inputs; all-catalog checks cover all 285 designs. Concurrent v6b integration and v6d staff lanes are read-only to this worker; no runtime integration, installs, web, or Git mutations. One inadvertent read-only Git status during intake was acknowledged; no further Git commands.
+-
+-
+-## v6b runtime integration - Sol worker handoff, 2026-10-08
+-
+-Process step 3 is complete locally. All 20 manager-accepted adult patients and
+-160 exact accepted pose PNGs are registered and selectable. The owner delegated
+-visual acceptance to the manager ("If they look okay to you, you can implement
+-them into the game"). The **2026-10-08 v6b MANAGER VISUAL ACCEPTANCE** in Progress
+-is the approval: `tools/character-mapping/patient-gapfill-v6b/owner-approval.json`
+-binds the exact owner instruction and manager acceptance statement, the accepted
+-source/pose/contact/alpha/gallery/review hashes, and the allocation. It is copied
+-byte-exactly to `artifacts/character-statics/patient-gapfill-v6b/owner-runtime-approval.json`.
+-Historical worker/root pending labels, review ledgers, receipts, art, authored
+-contacts and proofs are frozen; approval and runtime receipts supersede those
+-labels without rewriting history. This handoff is worker validation, awaiting
+-the manager's integration review and canonical HTTP delivery check.
+-
+-### Counts and preservation
+-
+-| Runtime quantity | Before | After |
+-| --- | ---: | ---: |
+-| Registered identities | 265 | 285 |
+-| Cardinal poses | 2120 | 2280 |
+-| Clipboard poses | 30 | 30 |
+-| Assets / provenance records | 2150 | 2310 |
+-| Selectable adult patient designs | 140 | 160 |
+-| Staff designs | 77 | 77 |
+-| Selectable radiologists | 16 | 16 |
+-
+-| Exact patient pool | Before | Added | After |
+-| --- | ---: | ---: | ---: |
+-| Female 18-29 | 9 | 0 | 9 |
+-| Male 18-29 | 9 | 0 | 9 |
+-| Female 30-44 | 25 | 3 | 28 |
+-| Male 30-44 | 18 | 4 | 22 |
+-| Female 45-64 | 29 | 7 | 36 |
+-| Male 45-64 | 25 | 6 | 31 |
+-| Female 65+ | 13 | 0 | 13 |
+-| Male 65+ | 12 | 0 | 12 |
+-
+-The live integration baseline was captured **before every runtime/test edit** at
+-2026-10-08T04:08:30.563Z: 42 immutable file snapshots, original catalog entries,
+-3588 source/control/art hashes and all 2150 prior public asset hashes/sizes.
+-Authority: `artifacts/character-statics/patient-gapfill-v6b/runtime-integration-baseline/manifest.json`.
+-This is the 265-identity live state, including integrated v6a; the original
+-245-identity generation baseline plus pinned v6a sources/poses remains exact.
+-All prior 265 registry/catalog entries, 2150 image bytes and anchors, every
+-prior provenance record/input claim and compatible saved IDs are preserved.
+-`packages/game-domain/src/appearance.ts` is byte-identical to intake.
+-
+-New stable IDs are `patient-gapfill-v6b.001`-`.020` in the accepted roster order:
+-`.001`-`.007` Female 45-64, `.008`-`.013` Male 45-64, `.014`-`.017` Male 30-44,
+-`.018`-`.020` Female 30-44. They enter only their exact existing
+-`patientStillEligibleEntries` sex/age-band pools. Tests cover both age-band
+-boundaries, pool exhaustion without collisions, every new ID, occupied/free/LRU
+-reuse and saved-ID retention. No selection code, weights or clinical rules change.
+-
+-### Files created or changed
+-
+-New integration tools under `tools/character-mapping/patient-gapfill-v6b/`:
+-
+-- `bind-owner-approval.mjs`, `owner-approval.json`.
+-- `runtime-contract.mjs`, `capture-integration-baseline.mjs`.
+-- `promote-runtime.mjs`, `validate-runtime-integration.mjs`,
+-  `validate-promotion-rerun.mjs` (proven v5/v6a flow; strict preflight and overwrite/drift refusal).
+-- `vitest-player.config.mjs` (full native player suite with threads; shared Vite config untouched).
+-- `audit-scoped-changes.py`, `run-validation.py`, `update-runtime-tests.py`
+-  (filesystem review, exact output/exit/hash capture, guarded count/test additions).
+-
+-Existing implementation paths changed (complete list):
+-
+-- `packages/game-domain/src/characterStillCatalog.ts` and `characterStillCatalog.test.ts`.
+-- `apps/player/src/art/characterStillRegistry.generated.json`,
+-  `characterStillRegistry.ts`, `characterStillRegistry.test.ts`.
+-- `tools/character-mapping/gs026-runtime-stills/provenance-manifest.json`:
+-  one new cohort input and 160 records appended; count/registry fingerprint updates only.
+-
+-Existing v6b tool paths changed (complete list):
+-
+-- `runtime-baseline.mjs`: admits only the authorized, integration-baseline-proven v6b append.
+-- `validate-roster.mjs`, `validate-placement-qa.mjs`: current runtime/approval status is separate from frozen review metadata.
+-- `validate-worker-review.mjs`, `validate-all-catalog-comparison.mjs`: preserve the exact historical comparisons, report the bound manager approval, and support mutation-free `--check-only` preflight.
+-- `README.md`: appends the manager-authorized integration/validation flow.
+-
+-Hard-coded catalog/pool size tests changed (complete list):
+-
+-1. `packages/game-domain/src/characterStillCatalog.test.ts`: catalog/unique IDs
+-   265 -> 285; patients 140 -> 160; v6a's full-pool exhaustion totals increase
+-   Female adult 25 -> 28, Male adult 18 -> 22, Female middle-aged 29 -> 36,
+-   Male middle-aged 25 -> 31. The v6a addition counts remain unchanged. Added
+-   two v6b pool/boundary/occupancy/LRU/saved-ID tests.
+-2. `apps/player/src/art/characterStillRegistry.test.ts`: identities/unique IDs
+-   265 -> 285, cardinal poses 2120 -> 2280, assets 2150 -> 2310, seated poses
+-   1060 -> 1140. Added cohort URL mapping and one exact approved hash/contact test.
+-
+-Created 160 byte-exact PNGs under
+-`apps/player/public/art/characters/patient-gapfill-v6b/patient-gapfill-v6b.NNN/{stand,sit}-{south,east,west,north}.png`.
+-Every runtime URL, SHA-256 and numeric anchor maps to the exact accepted package.
+-Created baseline snapshots, owner/runtime approval and integration receipts,
+-validation logs/reports and this handoff evidence under the v6b artifact root.
+-Only this handoff was appended to the program plan. The manager owns the common
+-`CURRENT_THREAD_HANDOFF.md`; this worker did not edit outside its lane.
+-
+-Actual source diffs were inspected against the pre-edit filesystem snapshots:
+-`validation/scoped-source-diff.patch` and `scoped-change-report.json`.
+-All 12 changed snapshot paths are in the lane. Registry: 3003 added / 3 removed
+-lines; provenance: 3535 added / 4 removed (new entries/input/records and counts/
+-fingerprint only). Of 720 intake domain/player/balance/clinical-content source
+-hashes, only the five intended catalog/registry source/test/data files changed;
+-all 715 other existing hashes remain exact. GS-038 reducer/UI and v6c/v6d lanes
+-were preserved. Source/control/art hashes remain exact after the full suites.
+-
+-### Exact validation commands and output
+-
+-Complete stdout/stderr, commands, timestamps, exit codes, hashes, source inventory,
+-changed paths and open limitations:
+-`artifacts/character-statics/patient-gapfill-v6b/validation/integration-validation-receipt.json`.
+-Adjacent UTF-8 `*.txt` files contain unabridged output. Node's existing
+-`stripTypeScriptTypes` / VM experimental warnings are preserved in those logs.
+-
+-`node tools/character-mapping/patient-gapfill-v6b/bind-owner-approval.mjs` - exit 0:
+-
+-```text
+-{"status":"PASS","approvedIdentities":20,"approvedPoses":160,"approvedAuthoredContacts":80,"approvedBy":"GamifySurgery manager (Claude Code)","ownerDelegated":true,"sourceAndReviewControlsUnchanged":true}
+-```
+-
+-`node tools/character-mapping/patient-gapfill-v6b/capture-integration-baseline.mjs`
+-**before runtime edits** - exit 0:
+-
+-```text
+-{"status":"PASS","identities":265,"assets":2150,"patients":140,"immutableSnapshots":42,"approvedInputHashes":3588}
+-```
+-
+-`node tools/character-mapping/patient-gapfill-v6b/promote-runtime.mjs` - exit 0:
+-
+-```text
+-{"status":"PASS","integrated":20,"poses":160,"runtime":{"identities":285,"cardinalPoses":2280,"clipboardPoses":30,"assets":2310},"patients":160,"ownerDelegatedManagerApproval":true,"published":false}
+-```
+-
+-Full preflight executes `validate-roster.mjs`, `validate-placement-qa.mjs`,
+-`validate-worker-review.mjs` and `validate-all-catalog-comparison.mjs` in-process
+-with `--require-complete --check-only`, before the first runtime write and again
+-on promotion rerun. No fabricated root-review ledger is used; approval is the
+-exact owner-delegated manager receipt. All four validators PASS. Their exact
+-post-integration outputs, from `promotion-rerun.txt`, are:
+-
+-```text
+-{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":20,"poses":160,"reportedIssues":0,"immutableReviewSnapshots":40,"rosterContract":{"identities":20,"posesPerIdentity":8,"totalPoses":160,"categoryCounts":{"staff":0,"patient":20},"staffRoleCounts":{},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":3,"middle_aged":7,"older_adult":0},"Male":{"young_adult":0,"adult":4,"middle_aged":6,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"245 identities/1990 assets and120 selectable patients preserved","runtimeReady":true,"ownerApproval":"approved","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+-{"status":"PASS","diagnostics":20,"requireRootReview":false,"runtimeReady":true,"ownerApproval":"approved","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6b-placement-qa/v2"}
+-{"status":"PASS","identities":20,"poses":160,"authoredSeatedContacts":80,"reviewedChairProofs":20,"existingSameBandIdentities":97,"existingComparisons":500,"withinBatchPairs":45,"nearDuplicateFlags":0,"staticGalleryPages":26,"mainGalleryImages":60,"managerVisualAcceptance":"approved","browserValidation":"manager-accepted-gallery-run-recorded-in-program-plan"}
+-{"status":"PASS","originalCatalogIdentities":245,"acceptedV6aIdentities":20,"allCatalogIdentities":265,"independentlyRecomputedCatalogComparisons":5300,"withinBatchPairs":190,"nearDuplicateFlags":0,"minimumCatalogRmse":45.55298209843013,"minimumWithinBatchRmse":53.2102506088514,"managerVisualAcceptance":"approved","browserValidation":"manager-accepted-gallery-run-recorded-in-program-plan"}
+-```
+-
+-`node tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs` - exit 0:
+-
+-```text
+-{"status":"PASS","preservedIdentities":265,"preservedAssets":2150,"priorSelectablePatients":140,"generationPinnedIdentities":245,"generationPinnedAssets":1990,"protectedFiles":7,"pinnedV6aPoses":160,"pinnedV6aNativeSources":40,"currentRuntimeIdentities":285,"concurrentV6aAppendAllowed":true,"runtimeReady":true,"ownerApproval":"approved"}
+-```
+-
+-`node tools/character-mapping/patient-gapfill-v6b/validate-runtime-integration.mjs`
+-- exit 0 before and after the full suites (`runtime-integration.txt`,
+-`final-runtime-integration.txt`):
+-
+-```text
+-{"status":"PASS","preservedIdentities":265,"preservedAssets":2150,"preservedSourceControlArtHashes":3588,"appendedIdentities":20,"appendedAssets":160,"totalIdentities":285,"totalAssets":2310,"adultPatientDesigns":160,"patientPools":{"Female.young_adult":9,"Female.adult":28,"Female.middle_aged":36,"Female.older_adult":13,"Male.young_adult":9,"Male.adult":22,"Male.middle_aged":31,"Male.older_adult":12},"provenanceRecords":2310,"exactApprovedRuntimeURLs":160,"frozenReviewMetadataUnchanged":true,"ownerDelegatedManagerApproval":true,"selectionSourceByteIdentical":true,"published":false}
+-```
+-
+-`node tools/character-mapping/patient-gapfill-v6b/validate-promotion-rerun.mjs`
+-- exit 0. The entire promoter and strict preflight rerun; all 5983 hashed
+-inputs/tools/snapshots/runtime files, including all 2310 assets, stay exact:
+-
+-```text
+-{"status":"PASS","hashedFilesUnchanged":5983,"runtimeAssetsUnchanged":2310,"registryUnchanged":true,"catalogUnchanged":true,"provenanceUnchanged":true,"integrationReceiptUnchanged":true,"approvalAndReviewEvidenceUnchanged":true}
+-```
+-
+-`node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6b/check-syntax.mjs`
+-- exit 0:
+-
+-```text
+-{"status":"PASS","syntaxParsedModules":29}
+-```
+-
+-`python tools/character-mapping/patient-gapfill-v6b/audit-scoped-changes.py`
+-- exit 0 after all suites:
+-
+-```text
+-{"status": "PASS", "changedSnapshotPaths": 12, "unchangedSourceControlArtHashes": 3588, "suiteSourceDrift": 5}
+-```
+-
+-`npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --configLoader=native`
+-- exit 0 (`domain-full.txt`). Exact full-suite output:
+-
+-```text
+-
+-> @gamify-surgery/game-domain@0.0.1 test
+-> vitest run --pool=threads --maxWorkers=1 --configLoader=native
+-
+-
+- RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+-
+-
+- Test Files  96 passed (96)
+-      Tests  3161 passed (3161)
+-   Start at  00:21:53
+-   Duration  439.14s (transform 3.29s, setup 0ms, import 41.62s, tests 388.46s, environment 6ms)
+-```
+-
+-`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 --config ../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs --configLoader=native`
+-- exit 1 (`player-full.txt`). All integration/rendering tests pass; one proven
+-pre-existing assertion remains. Exact summary:
+-
+-```text
+- Test Files  1 failed | 110 passed (111)
+-      Tests  1 failed | 846 passed (847)
+-   Start at  00:21:53
+-   Duration  48.17s (transform 3.67s, setup 0ms, import 25.18s, tests 12.26s, environment 7ms)
+-```
+-
+-`npm.cmd run typecheck` - exit 0 (`typecheck.txt`). Exact output:
+-
+-```text
+-
+-> gamify-surgery@0.0.1 typecheck
+-> npm run typecheck --workspaces --if-present
+-
+-
+-> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+-
+-
+-> @gamify-surgery/player@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-
+-> @gamify-surgery/balance-config@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-
+-> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-
+-> @gamify-surgery/clinical-content@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-
+-> @gamify-surgery/clinical-research@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-
+-
+-> @gamify-surgery/game-domain@0.0.1 typecheck
+-> tsc --noEmit -p tsconfig.json
+-```
+-
+-### Failure attribution and manager review
+-
+-The player failure is
+-`apps/player/src/session/surgeryCenterServicePreviews.test.ts:85:52`,
+-"ignores the retired concealment flag and preserves the scheduled external
+-service after an answer". It expects the route name in `pendingLabel`; the current
+-view model provides stage-by-stage waiting copy. The same named assertion failed
+-**before any runtime/test edit** (845/846 passed) and after integration (846/847
+-passed), with exactly identical Expected/Received strings. The test,
+-`viewModels.ts`, `reducer.ts` and `appearance.ts` are byte-identical to intake.
+-Evidence: `validation/pre-existing-player-failure-attribution.json`,
+-`pre-integration-player-full.txt`, `player-full.txt` and the intake/final source
+-hash reports. No change was made outside the bounded art lane. Pre-integration
+-full domain: 96 files /3159 tests PASS; after: 96 files /3161 tests PASS.
+-Typecheck passed both before and after. The only additional tests are the two
+-domain and one player integration assertions listed above.
+-
+-`node tools/character-mapping/patient-gapfill-v6b/validate-gallery.mjs` - exit 1
+-**before runtime edits**, `validation/pre-integration-gallery.txt`:
+-
+-```text
+-browserType.launch: spawn EPERM
+-    at C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\patient-gapfill-v6b\validate-gallery.mjs:24:32
+-```
+-
+-No browser launched and no fresh worker browser PASS is claimed. This is the
+-known worker sandbox limitation. The manager's accepted 52-page/viewports run
+-is in the bound October 8 acceptance statement; gallery script, HTML, images,
+-links and all art evidence are unchanged. Manager should inspect the actual
+-diff, rerun acceptance in its environment, and check byte-exact canonical HTTP
+-delivery. There is no open v6b design decision or new integration failure.
+-
+-One initial player command used a repository-relative config path inside the
+-player workspace and failed before tests started. The corrected `../../tools/`
+-command above ran all 111 files; initial stderr is retained in
+-`pre-integration-player-config-path-startup.txt`. This was a worker invocation
+-error, not a product failure.
+-
+-Sol executed directly; no subagents were dispatched. No Git mutations, installs,
+-art edits/regeneration, clinical edits, reducer/UI edits, external messages,
+-deployment or publication. One inadvertent read-only `git status` was run at
+-intake and acknowledged; no subsequent Git commands occurred. All further
+-review used filesystem snapshots and hashes. Concurrent user/Claude work is
+-preserved. This section was appended without rewriting prior plan bytes.
+-
+-The owner pathway stays `START_GAME.cmd` - exactly `http://127.0.0.1:4173` in
+-the same persistent profile. No server, owner browser, origin or campaign
+-storage was changed. This milestone is **LOCAL ONLY**, without a new GitHub
+-backup. Manager owns final acceptance/common handoff and the checkpoint reminder
+-to say **"push to GitHub"**; this worker has no Git authorization. Worker writes
+-are complete.
+-
+-
+-- 2026-10-08: v6c generation/packaging step complete: 19 adult patients (`patient-gapfill-v6c.001`-`.019`), 152 transparent standing/seated S/E/W/N poses, exact F65+ x7 / M65+ x8 / F30-44 x2 / M30-44 x2 allocation. Built-in image generation used 38 initial calls plus one 017 east-profile hair-side correction; native originals and receipts preserved. Same v6a/v6b geometry/style anchor; 4/19 glasses (21.1%), zero gray-curls-plus-glasses combinations, one visual-only cane and two hearing aids. Independent roster/pose/alpha/anchor/hash, 76 authored-contact, 19 chair-proof, 287 same-band and 5,415 all-catalog comparisons (245 original +20 v6a +20 v6b), all 171 within-batch pairs, 25 static gallery pages and 22 module syntax checks PASS; zero near-duplicate flags. Original 245 entries/1,990 assets, seven pipeline/chair sources, and accepted v6a/v6b 320 poses/80 native sources preserved while authorized concurrent v6b append-only integration reached 285 runtime identities. Gallery: `artifacts/character-statics/patient-gapfill-v6c/review/index.html`; overview: `review/owner-overview-stand-south-sit-east.png`; direct style sheet: `review/manager/v6b-top-v6c-bottom.png` under that artifact root. Exact output: `artifacts/character-statics/patient-gapfill-v6c/validation/worker-validation.txt`; per-identity table, regeneration, realized hairstyle differences and style concerns: `tools/character-mapping/patient-gapfill-v6c/HANDOFF.md`. Manager visual/contact/alpha acceptance and browser gallery validation pending; browser validator intentionally left to manager. No runtime integration, subagents, installs, web, external messages or Git mutations; one acknowledged intake read-only Git status and resolved packaging-order issues are documented in `validation/workflow-notes.md`. Worker writes limited to the two new v6c lanes and its own plan notes; v6b/v6d/runtime files untouched. LOCAL ONLY; manager owns common handoff and GitHub checkpoint reminder. Worker generation/packaging complete.
++
++
++## v6b runtime integration - Sol worker handoff, 2026-10-08
++
++Process step 3 is complete locally. All 20 manager-accepted adult patients and
++160 exact accepted pose PNGs are registered and selectable. The owner delegated
++visual acceptance to the manager ("If they look okay to you, you can implement
++them into the game"). The **2026-10-08 v6b MANAGER VISUAL ACCEPTANCE** in Progress
++is the approval: `tools/character-mapping/patient-gapfill-v6b/owner-approval.json`
++binds the exact owner instruction and manager acceptance statement, the accepted
++source/pose/contact/alpha/gallery/review hashes, and the allocation. It is copied
++byte-exactly to `artifacts/character-statics/patient-gapfill-v6b/owner-runtime-approval.json`.
++Historical worker/root pending labels, review ledgers, receipts, art, authored
++contacts and proofs are frozen; approval and runtime receipts supersede those
++labels without rewriting history. This handoff is worker validation, awaiting
++the manager's integration review and canonical HTTP delivery check.
++
++### Counts and preservation
++
++| Runtime quantity | Before | After |
++| --- | ---: | ---: |
++| Registered identities | 265 | 285 |
++| Cardinal poses | 2120 | 2280 |
++| Clipboard poses | 30 | 30 |
++| Assets / provenance records | 2150 | 2310 |
++| Selectable adult patient designs | 140 | 160 |
++| Staff designs | 77 | 77 |
++| Selectable radiologists | 16 | 16 |
++
++| Exact patient pool | Before | Added | After |
++| --- | ---: | ---: | ---: |
++| Female 18-29 | 9 | 0 | 9 |
++| Male 18-29 | 9 | 0 | 9 |
++| Female 30-44 | 25 | 3 | 28 |
++| Male 30-44 | 18 | 4 | 22 |
++| Female 45-64 | 29 | 7 | 36 |
++| Male 45-64 | 25 | 6 | 31 |
++| Female 65+ | 13 | 0 | 13 |
++| Male 65+ | 12 | 0 | 12 |
++
++The live integration baseline was captured **before every runtime/test edit** at
++2026-10-08T04:08:30.563Z: 42 immutable file snapshots, original catalog entries,
++3588 source/control/art hashes and all 2150 prior public asset hashes/sizes.
++Authority: `artifacts/character-statics/patient-gapfill-v6b/runtime-integration-baseline/manifest.json`.
++This is the 265-identity live state, including integrated v6a; the original
++245-identity generation baseline plus pinned v6a sources/poses remains exact.
++All prior 265 registry/catalog entries, 2150 image bytes and anchors, every
++prior provenance record/input claim and compatible saved IDs are preserved.
++`packages/game-domain/src/appearance.ts` is byte-identical to intake.
++
++New stable IDs are `patient-gapfill-v6b.001`-`.020` in the accepted roster order:
++`.001`-`.007` Female 45-64, `.008`-`.013` Male 45-64, `.014`-`.017` Male 30-44,
++`.018`-`.020` Female 30-44. They enter only their exact existing
++`patientStillEligibleEntries` sex/age-band pools. Tests cover both age-band
++boundaries, pool exhaustion without collisions, every new ID, occupied/free/LRU
++reuse and saved-ID retention. No selection code, weights or clinical rules change.
++
++### Files created or changed
++
++New integration tools under `tools/character-mapping/patient-gapfill-v6b/`:
++
++- `bind-owner-approval.mjs`, `owner-approval.json`.
++- `runtime-contract.mjs`, `capture-integration-baseline.mjs`.
++- `promote-runtime.mjs`, `validate-runtime-integration.mjs`,
++  `validate-promotion-rerun.mjs` (proven v5/v6a flow; strict preflight and overwrite/drift refusal).
++- `vitest-player.config.mjs` (full native player suite with threads; shared Vite config untouched).
++- `audit-scoped-changes.py`, `run-validation.py`, `update-runtime-tests.py`
++  (filesystem review, exact output/exit/hash capture, guarded count/test additions).
++
++Existing implementation paths changed (complete list):
++
++- `packages/game-domain/src/characterStillCatalog.ts` and `characterStillCatalog.test.ts`.
++- `apps/player/src/art/characterStillRegistry.generated.json`,
++  `characterStillRegistry.ts`, `characterStillRegistry.test.ts`.
++- `tools/character-mapping/gs026-runtime-stills/provenance-manifest.json`:
++  one new cohort input and 160 records appended; count/registry fingerprint updates only.
++
++Existing v6b tool paths changed (complete list):
++
++- `runtime-baseline.mjs`: admits only the authorized, integration-baseline-proven v6b append.
++- `validate-roster.mjs`, `validate-placement-qa.mjs`: current runtime/approval status is separate from frozen review metadata.
++- `validate-worker-review.mjs`, `validate-all-catalog-comparison.mjs`: preserve the exact historical comparisons, report the bound manager approval, and support mutation-free `--check-only` preflight.
++- `README.md`: appends the manager-authorized integration/validation flow.
++
++Hard-coded catalog/pool size tests changed (complete list):
++
++1. `packages/game-domain/src/characterStillCatalog.test.ts`: catalog/unique IDs
++   265 -> 285; patients 140 -> 160; v6a's full-pool exhaustion totals increase
++   Female adult 25 -> 28, Male adult 18 -> 22, Female middle-aged 29 -> 36,
++   Male middle-aged 25 -> 31. The v6a addition counts remain unchanged. Added
++   two v6b pool/boundary/occupancy/LRU/saved-ID tests.
++2. `apps/player/src/art/characterStillRegistry.test.ts`: identities/unique IDs
++   265 -> 285, cardinal poses 2120 -> 2280, assets 2150 -> 2310, seated poses
++   1060 -> 1140. Added cohort URL mapping and one exact approved hash/contact test.
++
++Created 160 byte-exact PNGs under
++`apps/player/public/art/characters/patient-gapfill-v6b/patient-gapfill-v6b.NNN/{stand,sit}-{south,east,west,north}.png`.
++Every runtime URL, SHA-256 and numeric anchor maps to the exact accepted package.
++Created baseline snapshots, owner/runtime approval and integration receipts,
++validation logs/reports and this handoff evidence under the v6b artifact root.
++Only this handoff was appended to the program plan. The manager owns the common
++`CURRENT_THREAD_HANDOFF.md`; this worker did not edit outside its lane.
++
++Actual source diffs were inspected against the pre-edit filesystem snapshots:
++`validation/scoped-source-diff.patch` and `scoped-change-report.json`.
++All 12 changed snapshot paths are in the lane. Registry: 3003 added / 3 removed
++lines; provenance: 3535 added / 4 removed (new entries/input/records and counts/
++fingerprint only). Of 720 intake domain/player/balance/clinical-content source
++hashes, only the five intended catalog/registry source/test/data files changed;
++all 715 other existing hashes remain exact. GS-038 reducer/UI and v6c/v6d lanes
++were preserved. Source/control/art hashes remain exact after the full suites.
++
++### Exact validation commands and output
++
++Complete stdout/stderr, commands, timestamps, exit codes, hashes, source inventory,
++changed paths and open limitations:
++`artifacts/character-statics/patient-gapfill-v6b/validation/integration-validation-receipt.json`.
++Adjacent UTF-8 `*.txt` files contain unabridged output. Node's existing
++`stripTypeScriptTypes` / VM experimental warnings are preserved in those logs.
++
++`node tools/character-mapping/patient-gapfill-v6b/bind-owner-approval.mjs` - exit 0:
++
++```text
++{"status":"PASS","approvedIdentities":20,"approvedPoses":160,"approvedAuthoredContacts":80,"approvedBy":"GamifySurgery manager (Claude Code)","ownerDelegated":true,"sourceAndReviewControlsUnchanged":true}
++```
++
++`node tools/character-mapping/patient-gapfill-v6b/capture-integration-baseline.mjs`
++**before runtime edits** - exit 0:
++
++```text
++{"status":"PASS","identities":265,"assets":2150,"patients":140,"immutableSnapshots":42,"approvedInputHashes":3588}
++```
++
++`node tools/character-mapping/patient-gapfill-v6b/promote-runtime.mjs` - exit 0:
++
++```text
++{"status":"PASS","integrated":20,"poses":160,"runtime":{"identities":285,"cardinalPoses":2280,"clipboardPoses":30,"assets":2310},"patients":160,"ownerDelegatedManagerApproval":true,"published":false}
++```
++
++Full preflight executes `validate-roster.mjs`, `validate-placement-qa.mjs`,
++`validate-worker-review.mjs` and `validate-all-catalog-comparison.mjs` in-process
++with `--require-complete --check-only`, before the first runtime write and again
++on promotion rerun. No fabricated root-review ledger is used; approval is the
++exact owner-delegated manager receipt. All four validators PASS. Their exact
++post-integration outputs, from `promotion-rerun.txt`, are:
++
++```text
++{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":20,"poses":160,"reportedIssues":0,"immutableReviewSnapshots":40,"rosterContract":{"identities":20,"posesPerIdentity":8,"totalPoses":160,"categoryCounts":{"staff":0,"patient":20},"staffRoleCounts":{},"plannedStaffRoleCounts":{},"demographicCounts":{"Female":{"young_adult":0,"adult":3,"middle_aged":7,"older_adult":0},"Male":{"young_adult":0,"adult":4,"middle_aged":6,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"245 identities/1990 assets and120 selectable patients preserved","runtimeReady":true,"ownerApproval":"approved","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
++{"status":"PASS","diagnostics":20,"requireRootReview":false,"runtimeReady":true,"ownerApproval":"approved","frozenChairEvidenceUnchanged":true,"schemaVersion":"patient-gapfill-v6b-placement-qa/v2"}
++{"status":"PASS","identities":20,"poses":160,"authoredSeatedContacts":80,"reviewedChairProofs":20,"existingSameBandIdentities":97,"existingComparisons":500,"withinBatchPairs":45,"nearDuplicateFlags":0,"staticGalleryPages":26,"mainGalleryImages":60,"managerVisualAcceptance":"approved","browserValidation":"manager-accepted-gallery-run-recorded-in-program-plan"}
++{"status":"PASS","originalCatalogIdentities":245,"acceptedV6aIdentities":20,"allCatalogIdentities":265,"independentlyRecomputedCatalogComparisons":5300,"withinBatchPairs":190,"nearDuplicateFlags":0,"minimumCatalogRmse":45.55298209843013,"minimumWithinBatchRmse":53.2102506088514,"managerVisualAcceptance":"approved","browserValidation":"manager-accepted-gallery-run-recorded-in-program-plan"}
++```
++
++`node tools/character-mapping/patient-gapfill-v6b/runtime-baseline.mjs` - exit 0:
++
++```text
++{"status":"PASS","preservedIdentities":265,"preservedAssets":2150,"priorSelectablePatients":140,"generationPinnedIdentities":245,"generationPinnedAssets":1990,"protectedFiles":7,"pinnedV6aPoses":160,"pinnedV6aNativeSources":40,"currentRuntimeIdentities":285,"concurrentV6aAppendAllowed":true,"runtimeReady":true,"ownerApproval":"approved"}
++```
++
++`node tools/character-mapping/patient-gapfill-v6b/validate-runtime-integration.mjs`
++- exit 0 before and after the full suites (`runtime-integration.txt`,
++`final-runtime-integration.txt`):
++
++```text
++{"status":"PASS","preservedIdentities":265,"preservedAssets":2150,"preservedSourceControlArtHashes":3588,"appendedIdentities":20,"appendedAssets":160,"totalIdentities":285,"totalAssets":2310,"adultPatientDesigns":160,"patientPools":{"Female.young_adult":9,"Female.adult":28,"Female.middle_aged":36,"Female.older_adult":13,"Male.young_adult":9,"Male.adult":22,"Male.middle_aged":31,"Male.older_adult":12},"provenanceRecords":2310,"exactApprovedRuntimeURLs":160,"frozenReviewMetadataUnchanged":true,"ownerDelegatedManagerApproval":true,"selectionSourceByteIdentical":true,"published":false}
++```
++
++`node tools/character-mapping/patient-gapfill-v6b/validate-promotion-rerun.mjs`
++- exit 0. The entire promoter and strict preflight rerun; all 5983 hashed
++inputs/tools/snapshots/runtime files, including all 2310 assets, stay exact:
++
++```text
++{"status":"PASS","hashedFilesUnchanged":5983,"runtimeAssetsUnchanged":2310,"registryUnchanged":true,"catalogUnchanged":true,"provenanceUnchanged":true,"integrationReceiptUnchanged":true,"approvalAndReviewEvidenceUnchanged":true}
++```
++
++`node --experimental-vm-modules tools/character-mapping/patient-gapfill-v6b/check-syntax.mjs`
++- exit 0:
++
++```text
++{"status":"PASS","syntaxParsedModules":29}
++```
++
++`python tools/character-mapping/patient-gapfill-v6b/audit-scoped-changes.py`
++- exit 0 after all suites:
++
++```text
++{"status": "PASS", "changedSnapshotPaths": 12, "unchangedSourceControlArtHashes": 3588, "suiteSourceDrift": 5}
++```
++
++`npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --configLoader=native`
++- exit 0 (`domain-full.txt`). Exact full-suite output:
++
++```text
++
++> @gamify-surgery/game-domain@0.0.1 test
++> vitest run --pool=threads --maxWorkers=1 --configLoader=native
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
++
++
++ Test Files  96 passed (96)
++      Tests  3161 passed (3161)
++   Start at  00:21:53
++   Duration  439.14s (transform 3.29s, setup 0ms, import 41.62s, tests 388.46s, environment 6ms)
++```
++
++`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 --config ../../tools/character-mapping/patient-gapfill-v6b/vitest-player.config.mjs --configLoader=native`
++- exit 1 (`player-full.txt`). All integration/rendering tests pass; one proven
++pre-existing assertion remains. Exact summary:
++
++```text
++ Test Files  1 failed | 110 passed (111)
++      Tests  1 failed | 846 passed (847)
++   Start at  00:21:53
++   Duration  48.17s (transform 3.67s, setup 0ms, import 25.18s, tests 12.26s, environment 7ms)
++```
++
++`npm.cmd run typecheck` - exit 0 (`typecheck.txt`). Exact output:
++
++```text
++
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++
++
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++
++
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++### Failure attribution and manager review
++
++The player failure is
++`apps/player/src/session/surgeryCenterServicePreviews.test.ts:85:52`,
++"ignores the retired concealment flag and preserves the scheduled external
++service after an answer". It expects the route name in `pendingLabel`; the current
++view model provides stage-by-stage waiting copy. The same named assertion failed
++**before any runtime/test edit** (845/846 passed) and after integration (846/847
++passed), with exactly identical Expected/Received strings. The test,
++`viewModels.ts`, `reducer.ts` and `appearance.ts` are byte-identical to intake.
++Evidence: `validation/pre-existing-player-failure-attribution.json`,
++`pre-integration-player-full.txt`, `player-full.txt` and the intake/final source
++hash reports. No change was made outside the bounded art lane. Pre-integration
++full domain: 96 files /3159 tests PASS; after: 96 files /3161 tests PASS.
++Typecheck passed both before and after. The only additional tests are the two
++domain and one player integration assertions listed above.
++
++`node tools/character-mapping/patient-gapfill-v6b/validate-gallery.mjs` - exit 1
++**before runtime edits**, `validation/pre-integration-gallery.txt`:
++
++```text
++browserType.launch: spawn EPERM
++    at C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\patient-gapfill-v6b\validate-gallery.mjs:24:32
++```
++
++No browser launched and no fresh worker browser PASS is claimed. This is the
++known worker sandbox limitation. The manager's accepted 52-page/viewports run
++is in the bound October 8 acceptance statement; gallery script, HTML, images,
++links and all art evidence are unchanged. Manager should inspect the actual
++diff, rerun acceptance in its environment, and check byte-exact canonical HTTP
++delivery. There is no open v6b design decision or new integration failure.
++
++One initial player command used a repository-relative config path inside the
++player workspace and failed before tests started. The corrected `../../tools/`
++command above ran all 111 files; initial stderr is retained in
++`pre-integration-player-config-path-startup.txt`. This was a worker invocation
++error, not a product failure.
++
++Sol executed directly; no subagents were dispatched. No Git mutations, installs,
++art edits/regeneration, clinical edits, reducer/UI edits, external messages,
++deployment or publication. One inadvertent read-only `git status` was run at
++intake and acknowledged; no subsequent Git commands occurred. All further
++review used filesystem snapshots and hashes. Concurrent user/Claude work is
++preserved. This section was appended without rewriting prior plan bytes.
++
++The owner pathway stays `START_GAME.cmd` - exactly `http://127.0.0.1:4173` in
++the same persistent profile. No server, owner browser, origin or campaign
++storage was changed. This milestone is **LOCAL ONLY**, without a new GitHub
++backup. Manager owns final acceptance/common handoff and the checkpoint reminder
++to say **"push to GitHub"**; this worker has no Git authorization. Worker writes
++are complete.
++
++
++- 2026-10-08: v6c generation/packaging step complete: 19 adult patients (`patient-gapfill-v6c.001`-`.019`), 152 transparent standing/seated S/E/W/N poses, exact F65+ x7 / M65+ x8 / F30-44 x2 / M30-44 x2 allocation. Built-in image generation used 38 initial calls plus one 017 east-profile hair-side correction; native originals and receipts preserved. Same v6a/v6b geometry/style anchor; 4/19 glasses (21.1%), zero gray-curls-plus-glasses combinations, one visual-only cane and two hearing aids. Independent roster/pose/alpha/anchor/hash, 76 authored-contact, 19 chair-proof, 287 same-band and 5,415 all-catalog comparisons (245 original +20 v6a +20 v6b), all 171 within-batch pairs, 25 static gallery pages and 22 module syntax checks PASS; zero near-duplicate flags. Original 245 entries/1,990 assets, seven pipeline/chair sources, and accepted v6a/v6b 320 poses/80 native sources preserved while authorized concurrent v6b append-only integration reached 285 runtime identities. Gallery: `artifacts/character-statics/patient-gapfill-v6c/review/index.html`; overview: `review/owner-overview-stand-south-sit-east.png`; direct style sheet: `review/manager/v6b-top-v6c-bottom.png` under that artifact root. Exact output: `artifacts/character-statics/patient-gapfill-v6c/validation/worker-validation.txt`; per-identity table, regeneration, realized hairstyle differences and style concerns: `tools/character-mapping/patient-gapfill-v6c/HANDOFF.md`. Manager visual/contact/alpha acceptance and browser gallery validation pending; browser validator intentionally left to manager. No runtime integration, subagents, installs, web, external messages or Git mutations; one acknowledged intake read-only Git status and resolved packaging-order issues are documented in `validation/workflow-notes.md`. Worker writes limited to the two new v6c lanes and its own plan notes; v6b/v6d/runtime files untouched. LOCAL ONLY; manager owns common handoff and GitHub checkpoint reminder. Worker generation/packaging complete.
+ 
+ 
+ ## Progress continuation - v6d generation/packaging worker handoff
+@@ -646,11 +646,11 @@
+ 
+ 
+ - 2026-10-08: v6d.008 manager-requested navy palette correction complete. Manager accepted the other thirteen identities; surgeon 008 scrubs/cap now match the measured existing level3-roster-v2.006 standing-south uniform median RGB 36/63/118 (#243f76), replacing original 31/75/162. One deterministic derived RGB operation across all eight standing/seated S/E/W/N poses, zero imagegen calls/regenerations. Raw RGBA audit independently remeasures the reference, replays every selected RGB pixel and verifies all alpha/unselected RGB/protected ink/silhouette boundary differences and relative-shading violations are zero (73,821 changed RGB pixels); canvas, anchors, bounds, normalization transforms and S235/E248/W248/N249 contacts unchanged. All 104 other accepted pose PNGs and 56 native source/provenance files are byte-identical; original blue 008 native source remains immutable. Original eight packaged poses, receipts, prior validation/manager browser evidence and prior tool docs are retained under artifacts/character-statics/staff-gapfill-v6d/corrections/008-navy-palette-v1/history/. Rebuilt gallery, overview, seven per-role sheets, style/full-pose/nearest boards, contact overlays and authentic chair proofs; inspected the all-eight original/existing/corrected proof, current surgeon sheet, 008 poses/contacts/chair, overview and nearest boards. Seven final worker CLI validators PASS, exit codes [0,0,0,0,0,0,0]: roster/source replay/alpha/anchors, placement, worker/static gallery review, independently recomputed 3,990 catalog +32 role comparisons/91 within-batch +7 role pairs (zero near-duplicate flags), independent raw palette audit, runtime preservation and 28-module syntax. Current correction handoff: tools/character-mapping/staff-gapfill-v6d/NAVY_CORRECTION_HANDOFF.md; exact outputs and full identity table: HANDOFF.md in that tool lane; logs: artifacts/character-statics/staff-gapfill-v6d/validation/worker-validation.txt. Current proof: corrections/008-navy-palette-v1/before-reference-after.png under that artifact root; rebuilt role sheet: comparison/surgeon-old-and-new.png. Prior manager 44-page/viewports PASS and manager-authored combined role image are preserved historical original-blue evidence; fresh browser validation and verification of the corrected 008 remain manager-owned (validation/browser-revalidation-needed.json). Writes limited to the two v6d lanes and this append, preserving previous plan bytes and concurrent v6b/v6c/runtime work. Sol direct; no subagents, Git, web, installs, external messages, clinical edits or runtime integration. Current runtime285/prior265 identities and2,150 assets preserved; runtimeReady:false. No game pathway/profile/storage changes. LOCAL ONLY; manager owns common handoff, final acceptance/integration and the reminder to say "push to GitHub".
+-
+-
++
++
+ ## Progress continuation - v6c.018 adult regeneration worker handoff
+ 
+-- 2026-10-08: Manager-requested v6c.018 adult regeneration complete, stable ID patient-gapfill-v6c.018 / Male / age33. Built-in image generation used two calls: adult face/build, short black side part, visible jaw/upper-lip stubble and full-length rust chinos; then native row-spacing repair after the unchanged extractor rejected the first adult layout. Original teen-reading source/seed/receipts/package/chair and rejected adult intermediate are preserved in history. Final source SHA-256 4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a. All eight poses retain accepted v6a/v6b style and exact160x320 / axisX80 / floorY287 / standing-south246 geometry; newly authored S236/E240/W241/N246 contacts and authentic55x110 south-chair proof PASS. Rebuilt gallery, overview, v6b-vs-v6c sheet, contact/nearest/all-pose evidence and original-left/revised-right plus game-scale adult-reference sheets; worker inspected all eight revised poses and reports adult reading at game scale, pending manager visual judgment. Other18 accepted identities,144 pose PNGs and686 pinned source/package/contact/chair files remain byte-identical. Seven final worker commands PASS, exit codes [0,0,0,0,0,0,0]: batch roster/source/alpha/anchor/hash, placement, visual/static-gallery review (25 pages/57 main images), independently recomputed5,415 all-catalog comparisons against285 prior looks and171 within-batch pairs (zero near-duplicate flags), runtime preservation, revision preservation and25-module syntax. Batch remains19 identities/152 poses/76 contacts/19 chair proofs/4 glasses. Handoff and full per-identity table: tools/character-mapping/patient-gapfill-v6c/HANDOFF.md; exact output: artifacts/character-statics/patient-gapfill-v6c/validation/worker-validation.txt; new game-scale proof: review/manager/018-adult-before-after-game-scale.png under that artifact root. Manager's prior50-page/viewports browser PASS is preserved historical original-018 evidence; validation/browser-revalidation-needed.json explicitly requires a fresh manager gallery run. Revised018 visual acceptance and fresh browser validation remain manager-owned; runtimeReady:false. Writes confined to the two v6c lanes and this append, preserving prior plan bytes and concurrent v6b/v6d/runtime work. Current runtime285 untouched; no Git commands, subagents, web, installs, external messages, clinical changes or runtime integration in this revision. Owner game pathway/profile/save storage unchanged. LOCAL ONLY; manager owns common handoff, final acceptance/integration and GitHub checkpoint reminder.
++- 2026-10-08: Manager-requested v6c.018 adult regeneration complete, stable ID patient-gapfill-v6c.018 / Male / age33. Built-in image generation used two calls: adult face/build, short black side part, visible jaw/upper-lip stubble and full-length rust chinos; then native row-spacing repair after the unchanged extractor rejected the first adult layout. Original teen-reading source/seed/receipts/package/chair and rejected adult intermediate are preserved in history. Final source SHA-256 4bf3c14e8b4b9965510cea919be7f229a3dc3af5b7a556d4c68cf511717d976a. All eight poses retain accepted v6a/v6b style and exact160x320 / axisX80 / floorY287 / standing-south246 geometry; newly authored S236/E240/W241/N246 contacts and authentic55x110 south-chair proof PASS. Rebuilt gallery, overview, v6b-vs-v6c sheet, contact/nearest/all-pose evidence and original-left/revised-right plus game-scale adult-reference sheets; worker inspected all eight revised poses and reports adult reading at game scale, pending manager visual judgment. Other18 accepted identities,144 pose PNGs and686 pinned source/package/contact/chair files remain byte-identical. Seven final worker commands PASS, exit codes [0,0,0,0,0,0,0]: batch roster/source/alpha/anchor/hash, placement, visual/static-gallery review (25 pages/57 main images), independently recomputed5,415 all-catalog comparisons against285 prior looks and171 within-batch pairs (zero near-duplicate flags), runtime preservation, revision preservation and25-module syntax. Batch remains19 identities/152 poses/76 contacts/19 chair proofs/4 glasses. Handoff and full per-identity table: tools/character-mapping/patient-gapfill-v6c/HANDOFF.md; exact output: artifacts/character-statics/patient-gapfill-v6c/validation/worker-validation.txt; new game-scale proof: review/manager/018-adult-before-after-game-scale.png under that artifact root. Manager's prior50-page/viewports browser PASS is preserved historical original-018 evidence; validation/browser-revalidation-needed.json explicitly requires a fresh manager gallery run. Revised018 visual acceptance and fresh browser validation remain manager-owned; runtimeReady:false. Writes confined to the two v6c lanes and this append, preserving prior plan bytes and concurrent v6b/v6d/runtime work. Current runtime285 untouched; no Git commands, subagents, web, installs, external messages, clinical changes or runtime integration in this revision. Owner game pathway/profile/save storage unchanged. LOCAL ONLY; manager owns common handoff, final acceptance/integration and GitHub checkpoint reminder.
+ - 2026-10-08: v6c (.018 regenerated) and v6d (.008 navy correction) MANAGER ACCEPTED; gallery validators PASS after fixes. Launched combined v6c+v6d append-only runtime integration.
+ 
+ 
+@@ -1025,3 +1025,307 @@
+ after acceptance the manager should issue the repository reminder to say
+ **"push to GitHub"** for an audited checkpoint. Worker writes are complete.
+ - 2026-10-08: PROGRAM COMPLETE. v6c+v6d integration ACCEPTED by manager: role mapping verified in characterStillCatalog.ts; 152+112 PNGs served byte-exact from :4173; worker full game-domain 3167/3167, player 863/864 (known surgeryCenterServicePreviews failure), typecheck 0. Totals: 245 -> 318 identities; adult patient designs 120 -> 179; staff pools imaging 5, phlebotomy 5, lab 4, surgeon 4, OR nurse 4, pharmacist 4, repair 4.
++- 2026-10-09: v6e APP extension generation/packaging complete: eight APP candidates (`app-gapfill-v6e.001`-`.008`), 64 transparent standing/seated S/E/W/N poses at 160x320, four women and four men aged 28-60, two glasses identities. Built-in image generation used 16 initial calls with no corrections; originals and exact receipts preserved. Seven CLI checks PASS: roster/pose/alpha/anchor/hash, 32 authored contacts, eight authentic chair proofs, 2544 all-catalog comparisons against 318 identities, 16 approved-APP comparisons, all 28 within-batch pairs, 16 static gallery pages, 22 module syntax checks and UTF-8/no-BOM/LF. Zero near-duplicate flags. Existing 318 identities/2574 assets/179 patient designs and accepted native art preserved. Gallery: `artifacts/character-statics/app-gapfill-v6e/review/index.html`; two-approved-on-top/new-eight-below sheet: `review/manager/approved-apps-top-new-eight-below.png` under that artifact root. Exact output: `artifacts/character-statics/app-gapfill-v6e/validation/worker-validation.txt`. Handoff and style concerns: `tools/character-mapping/app-gapfill-v6e/HANDOFF.md`. Manager visual/alpha acceptance and browser validation pending; no runtime integration, Git mutations, installs or web access. One inadvertent read-only Git status is disclosed in the handoff. Local-only checkpoint; manager owns the GitHub backup reminder.
++- 2026-10-09: v6e APP MANAGER VISUAL ACCEPTANCE (owner-delegated). Comparison sheet `artifacts/character-statics/app-gapfill-v6e/review/manager/approved-apps-top-new-eight-below.png`: style matches the approved APPs future-roster20-v5.001/.002 (outline, cel shading, proportions, white coat over distinct scrubs); ages read correctly (28-60); 4F/4M, 2 glasses; no near-duplicates. Manager ran `validate-gallery.mjs`: PASS (32 pages/viewports, 24 images). Approved for append-only runtime integration as APP-only stills, scheduled after the concurrent Level 4 M5 worker finishes (shared still-catalog files).
++
++
++## v6e APP runtime integration - Sol worker handoff, 2026-10-09
++
++Process step 3 is complete locally for all eight manager-accepted APP looks,
++`app-gapfill-v6e.001`-`.008`, and all 64 accepted standing/seated S/E/W/N PNGs.
++The October 9 owner-delegated manager acceptance above is bound in
++`tools/character-mapping/app-gapfill-v6e/owner-approval.json`, copied byte-exactly
++to the artifact root's `owner-runtime-approval.json`. Its hashes bind all eight
++sources, 64 poses, 32 authored contacts, alpha report and manager browser PASS.
++Original generation tools, pending candidate labels, review history, accepted
++source/pose bytes, contacts, chair proofs and galleries remain frozen. Separate
++approval/runtime receipts supersede the historical pending labels.
++
++### Runtime behavior and preservation
++
++| Quantity | Before v6e, after M5 | After v6e |
++| --- | ---: | ---: |
++| Registered identities | 318 | 326 |
++| Cardinal poses | 2544 | 2608 |
++| Clipboard poses | 30 | 30 |
++| Assets / provenance records | 2574 | 2638 |
++| Selectable adult patient designs | 179 | 179 |
++| Pediatric designs | 12 | 12 |
++| Registered staff designs | 91 | 99 |
++| Hireable APP looks | 2 | 10 |
++
++The existing `future-roster20-v5.001` and `.002` retain their exact generated
++registry rows, public PNGs and M4 runtime eligibility overlay. Each new v6e row
++has only `eligibleStaffRoleDefinitionIds: ["staff.app"]`, in both catalog and
++registry, and `role: "staff.app"` in the registry. No addition enters adult or
++pediatric patient pools, another staff role, founder selection or executive
++eligibility. Every other role pool and the M5 child catalog/registry overlay are
++preserved. Physical APP capacity remains 31 theoretical posts; approved art is
++a separate ten-look limit.
++
++**Walking retains the existing cardinal-still hop motion.** The existing player
++APP rendering test now iterates all ten looks and verifies that walking keeps
++the selected standing directional asset and seated rendering uses the same
++identity's cardinal pose. No image generation/editing or gait system change.
++
++The immutable intake captured 32 snapshots, all 318 old catalog/registry rows,
++2574 prior asset hashes and 8188 accepted source/control/art hashes before runtime
++or test edits. Authority:
++`artifacts/character-statics/app-gapfill-v6e/runtime-integration-baseline/manifest.json`.
++The earlier filesystem-only 543-file shared-tree intake is under
++`.local-dev/app-gapfill-v6e-integration/before/`; its original
++`character-variety.test.ts` before-image is separately retained in artifact
++validation after the full suite exposed that M4 count assertion.
++
++All old registry/catalog entries, asset bytes/hashes/anchors, provenance records
++and input claims remain exact. Only one cohort input and 64 provenance records
++append, along with permitted aggregate counts/registry fingerprint. Selection,
++`appearance.ts`, persistence and save version remain unchanged. Tests retain
++compatible saved APP selections with all other current/departing looks occupied,
++preserve earlier hires during subsequent hires, and round-trip all ten actual
++employees without rerolling their IDs/appearances.
++
++M4 exhaustion tests now exercise eleven real reachable exam homes and ten
++successful unique hires. Hire eleven rejects for unavailable character art and
++does not charge either cash representation. Both Staff and hiring-option views
++show **All approved APP looks are in use; additional APP art is needed.**
++The old two-home view now correctly reports physical capacity exhaustion.
++The whole-role forward/reverse variety test retains the 31-post capacity and
++stops APP selection at ten without borrowing another role's look.
++
++### Files changed and created
++
++Ten existing implementation/test/data files changed; scoped source diffs were
++reviewed against pre-edit filesystem snapshots without Git:
++
++```text
++packages/game-domain/src/characterStillCatalog.ts
++packages/game-domain/src/characterStillCatalog.test.ts
++packages/game-domain/tests/app-staff.test.ts
++packages/game-domain/tests/character-variety.test.ts
++apps/player/src/art/characterStillRegistry.generated.json
++apps/player/src/art/characterStillRegistry.ts
++apps/player/src/art/characterStillRegistry.test.ts
++apps/player/src/session/appAppointmentsViewModels.test.ts
++apps/player/src/session/viewModels.ts
++tools/character-mapping/gs026-runtime-stills/provenance-manifest.json
++```
++
++The only existing document changes by this worker are this appended section and
++the pointer in `docs/execplans/owner-requests-20261008.md`. The program plan had
++311 pre-existing CRLF line endings; they were normalized to LF as instructed,
++with all preceding text preserved. Both documents were reread immediately before
++appending, preserving the manager's concurrent M5 browser-QA status.
++All owned text is UTF-8 without BOM, LF. The document append/prefix receipt is
++`artifacts/character-statics/app-gapfill-v6e/validation/document-append-receipt.json`.
++
++New files in `tools/character-mapping/app-gapfill-v6e/`:
++`runtime-contract.mjs`, `bind-owner-approval.mjs`, `owner-approval.json`,
++`capture-integration-baseline.mjs`, `integration-validator-hooks.mjs`,
++`validate-approved-batch.mjs`, `promote-runtime.mjs`,
++`validate-runtime-integration.mjs`, `validate-promotion-rerun.mjs`,
++`audit-scoped-changes.py`, `INTEGRATION.md` (11 files, eight MJS modules).
++No existing batch tool or review ledger was edited.
++
++Exactly 64 byte-exact public copies were added at
++`apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.NNN/{stand,sit}-{south,east,west,north}.png`.
++The artifact root gained immutable intake snapshots, approval/runtime receipts
++and validation evidence. Exact changed/new paths and hashes are in
++`artifacts/character-statics/app-gapfill-v6e/validation/worker-file-manifest.json`.
++The code diff and audit are `validation/scoped-source-diff.patch` and
++`validation/scoped-change-report.json`; scratch before-images/logs remain local.
++
++### Validation commands and exact output
++
++The integration tools mirror accepted v6d's preflight, append-only promotion,
++exact-runtime verification and idempotent rerun. The wrapper executes the frozen
++v6e roster, placement, worker-review and independent comparison validators
++in-process. Its process-local loader first validates the complete authorized
++runtime state, then lets the old whole-array assertions compare only their
++unchanged 318-entry historical prefix. All original source/art/contact checks
++remain active. Direct historical generation validators retain their old array
++limits; use the integration wrapper after promotion.
++
++```powershell
++node tools/character-mapping/app-gapfill-v6e/bind-owner-approval.mjs
++node tools/character-mapping/app-gapfill-v6e/capture-integration-baseline.mjs
++node tools/character-mapping/app-gapfill-v6e/validate-approved-batch.mjs
++node tools/character-mapping/app-gapfill-v6e/promote-runtime.mjs
++node tools/character-mapping/app-gapfill-v6e/validate-runtime-integration.mjs
++node tools/character-mapping/app-gapfill-v6e/validate-promotion-rerun.mjs
++python tools/character-mapping/app-gapfill-v6e/audit-scoped-changes.py
++node --experimental-vm-modules tools/character-mapping/app-gapfill-v6e/check-syntax.mjs
++python tools/character-mapping/app-gapfill-v6e/validate-text.py
++```
++
++All commands above exited 0. Exact final stdout lines (full unabridged logs also
++retain Node's experimental TypeScript-stripping/VM warnings):
++
++```text
++{"status":"PASS","approvedIdentities":8,"approvedPoses":64,"approvedAuthoredContacts":32,"approvedBy":"GamifySurgery manager (Claude Code)","ownerDelegated":true,"sourceAndReviewControlsUnchanged":true}
++{"status":"PASS","identities":318,"assets":2574,"patients":179,"staffPools":{"staff.app":2},"immutableSnapshots":32,"approvedInputHashes":8188}
++{"status":"PASS","batch":"app-gapfill-v6e","integrated":8,"poses":64,"runtime":{"identities":326,"cardinalPoses":2608,"clipboardPoses":30,"assets":2638},"patients":179,"staffPools":{"staff.app":10},"alreadyPromoted":false,"ownerDelegatedManagerApproval":true,"published":false}
++{"status":"PASS","batch":"app-gapfill-v6e","validators":["roster","placement-qa","worker-review","all-catalog-comparison"],"historicalValidatorToolsByteIdentical":true,"historicalReviewLabelsFrozen":true,"authorized":true,"ready":true,"ownerApproval":"approved","runtimeIntegrationStatus":"owner-delegated-manager-approved-locally-integrated-not-published"}
++{"status":"PASS","batch":"app-gapfill-v6e","preservedIdentities":318,"preservedAssets":2574,"preservedSourceControlArtHashes":8188,"appendedIdentities":8,"appendedAssets":64,"totalIdentities":326,"totalAssets":2638,"adultPatientDesigns":179,"staffDesigns":99,"patientPools":{"Female.young_adult":9,"Female.adult":30,"Female.middle_aged":36,"Female.older_adult":20,"Male.young_adult":9,"Male.adult":24,"Male.middle_aged":31,"Male.older_adult":20},"staffPools":{"staff.app":10},"provenanceRecords":2638,"exactApprovedRuntimeURLs":64,"frozenReviewMetadataUnchanged":true,"originalBatchToolsByteIdentical":true,"ownerDelegatedManagerApproval":true,"selectionSourceByteIdentical":true,"authorizedSuccessorIntegrated":false,"hireableAppLooks":10,"otherRolePoolsUnchanged":true,"pediatricCatalogUnchanged":true,"published":false}
++{"status":"PASS","batch":"app-gapfill-v6e","hashedFilesUnchanged":8307,"runtimeAssetsUnchanged":2638,"registryUnchanged":true,"catalogUnchanged":true,"provenanceUnchanged":true,"integrationReceiptUnchanged":true,"approvalAndReviewEvidenceUnchanged":true}
++{"status":"PASS","batch":"app-gapfill-v6e","changedSnapshotPaths":10,"unchangedSourceControlArtHashes":8188,"utf8WithoutBomLf":true}
++{"status":"PASS","syntaxParsedModules":30}
++{"status":"PASS","textFiles":273,"issues":[]}
++```
++
++Game tests use the **ordinary repository configs**, `--pool=threads`, and the
++specified preload, with no replacement config, exclusions, timeout change or
++extra worker cap. `npm.cmd` ran through PowerShell:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/game-domain -- src/characterStillCatalog.test.ts tests/app-staff.test.ts tests/app-appointments.test.ts tests/pediatric-identity.test.ts --pool=threads
++npm.cmd run test --workspace @gamify-surgery/player -- src/art/characterStillRegistry.test.ts src/session/appStaffPresentation.test.ts src/session/appAppointmentsViewModels.test.ts --pool=threads
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
++npm.cmd run typecheck
++```
++
++Focused domain and player output, both exit 0:
++
++```text
++ Test Files  4 passed (4)
++      Tests  43 passed (43)
++   Start at  00:42:27
++   Duration  3.42s (transform 4.31s, setup 0ms, import 6.16s, tests 1.68s, environment 0ms)
++
++ Test Files  3 passed (3)
++      Tests  16 passed (16)
++   Start at  00:42:27
++   Duration  2.47s (transform 4.60s, setup 0ms, import 6.43s, tests 313ms, environment 0ms)
++```
++
++Final **FULL game-domain**, exit 0, exact output:
++
++```text
++> @gamify-surgery/game-domain@0.0.1 test
++> vitest run --pool=threads
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
++
++
++ Test Files  129 passed (129)
++      Tests  3665 passed (3665)
++   Start at  00:46:20
++   Duration  95.76s (transform 7.98s, setup 0ms, import 55.22s, tests 316.60s, environment 7ms)
++```
++
++Final **FULL player**, exit 1 solely for the known thyroid failure, exact output:
++
++```text
++> @gamify-surgery/player@0.0.1 test
++> vitest run --pool=threads
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
++
++ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 710ms
++     × ignores the retired concealment flag and preserves the scheduled external service after an answer 77ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
++AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
++
++Expected: "Off-site thyroid fine-needle aspiration"
++Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
++
++ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
++     83|     const pending = state.encounters[encounterId]!.pendingResult!;
++     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
++     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
++       |                                                    ^
++     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
++     87|   });
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
++
++
++ Test Files  1 failed | 154 passed (155)
++      Tests  1 failed | 1207 passed (1208)
++   Start at  00:46:20
++   Duration  32.86s (transform 10.72s, setup 0ms, import 60.69s, tests 54.34s, environment 11ms)
++
++npm error Lifecycle script `test` failed with error:
++npm error code 1
++npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
++npm error workspace @gamify-surgery/player@0.0.1
++npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
++npm error command failed
++npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads
++```
++
++Final **root typecheck**, exit 0 across all seven workspaces, exact output:
++
++```text
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++
++
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++
++
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++Full unabridged logs, command/launcher/cwd/preload/time/exit/SHA-256 receipts and
++initial runs are retained in
++`artifacts/character-statics/app-gapfill-v6e/validation/integration-validation.txt`
++and `integration-validation-receipt.json`, copied from
++`.local-dev/app-gapfill-v6e-integration/`. The initial full domain run exposed
++the old two-look M4 variety assertion; it was corrected within this lane.
++The initial full player run included two concurrently added M5 renderer
++regressions while that worker was implementing its fix. The M5 worker changed
++`routeMotion.ts`, `routeMotion.test.ts`, `FacilityScene.ts` and added
++`pediatricRouteMotion.test.ts`; this worker preserved those edits and reran both
++FULL suites after they landed. Their extra tests explain the higher final
++player count. The final player run has only the unchanged thyroid assertion.
++The scratch Python runner initially could not echo Vitest's Unicode arrow to
++the Windows CP1252 console; logs and process-exit receipts had already been saved
++correctly. Its console output now uses UTF-8. Initial evidence remains intact.
++
++### Manager handoff
++
++Runtime integration and required validation are complete. Manager retains actual
++diff/receipt review, normal-pool rerun and HTTP/browser acceptance. No subagents,
++Git commands, installs, art edits/generation, clinical authoring, external
++messages, deployment/publication or owner-save access occurred. The concurrent
++M5 renderer lane and manager documents were preserved. The manager-owned
++CURRENT_THREAD_HANDOFF was not edited by this worker.
++
++The owner opening pathway remains **START_GAME.cmd -> exact
++http://127.0.0.1:4173** in the same persistent browser profile; no launcher,
++origin, profile, QA pathway or save schema changed. Ordinary gameplay remains
++capped at Level 3. Existing saves/encounters/staff are not rewritten.
++
++This validated checkpoint is **LOCAL ONLY**. No GitHub backup was created.
++After acceptance the manager should remind the owner to say **"push to GitHub"**
++for the scoped audited checkpoint. This worker's bounded lane is complete.

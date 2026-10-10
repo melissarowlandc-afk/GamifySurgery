@@ -1,0 +1,37 @@
+--- a/packages/game-domain/tests/facility-alert-conditions.test.ts
++++ b/packages/game-domain/tests/facility-alert-conditions.test.ts
+@@ -12,6 +12,7 @@
+   serializeGameState,
+   synchronizeFacilityOperationalAlertOccurrences,
+ } from "../src";
++import { createLevelFourRoomsQaContext } from "../../../tests/fixtures/level-four-rooms";
+ 
+ describe("durable operational alert conditions", () => {
+   it("treats low-to-zero cash as an escalation until the cash problem is actually fixed", () => {
+@@ -244,7 +245,9 @@
+ describe("current room satisfaction upgrade guidance", () => {
+   const rooms = ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future");
+   it.each(rooms)("only offers comfort upgrades for the actual satisfaction room $roomDefinitionId", ({ roomDefinitionId }) => {
+-    const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++    const levelFour = getRoomDefinition(roomDefinitionId)!.unlockFacilityLevel === 4;
++    const context = levelFour ? createLevelFourRoomsQaContext() : PROTOTYPE_DOMAIN_CONTEXT;
++    const state = createInitialGameState(context); state.facilityLevel = levelFour ? 4 : 3; state.facilityTick = 120;
+     const room = { id: "room.comfort.alert", roomDefinitionId, x: 20, y: 12,
+       orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+     state.rooms.push(room);
+@@ -254,12 +257,12 @@
+     encounter.waiting.arrivedAtTick = 0;
+     encounter.patientLocation = getRoomNavigableTiles(room, getRoomDefinition(roomDefinitionId)!, state.doors)[0] ?? null;
+     state.encounters = { [encounter.id]: encounter };
+-    const guidance = evaluateFacilityOperationalAlertConditions(state).filter((condition) => condition.conditionKey === "room_upgrade_requested");
+-    if (["room.waiting", "room.examination", "room.periop_recovery"].includes(roomDefinitionId)) {
++    const guidance = evaluateFacilityOperationalAlertConditions(state, context).filter((condition) => condition.conditionKey === "room_upgrade_requested");
++    if (["room.waiting", "room.examination", "room.periop_recovery", "room.pediatric_waiting", "room.pediatric_examination"].includes(roomDefinitionId)) {
+       expect(guidance).toHaveLength(1);
+       expect(guidance[0]?.target).toEqual({ kind: "room", id: room.id });
+       encounter.patientLocation = null;
+-      expect(evaluateFacilityOperationalAlertConditions(state).some((condition) => condition.conditionKey === "room_upgrade_requested")).toBe(false);
++      expect(evaluateFacilityOperationalAlertConditions(state, context).some((condition) => condition.conditionKey === "room_upgrade_requested")).toBe(false);
+     } else {
+       expect(guidance).toEqual([]);
+     }

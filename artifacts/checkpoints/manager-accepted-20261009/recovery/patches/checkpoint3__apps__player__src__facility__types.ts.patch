@@ -1,0 +1,36 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -27,6 +27,14 @@
+   | "minor-procedure-clinician"
+   | "ct-patient"
+   | "ct-operator"
++  | "mri-patient"
++  | "mri-operator"
++  | "pediatric-waiting-seat"
++  | "pediatric-examination-patient"
++  | "pediatric-examination-clinician"
++  | "pediatric-parent-seat"
++  | "wound-ostomy-patient"
++  | "wound-ostomy-clinician"
+   | "phlebotomy-patient"
+   | "phlebotomy-clinician"
+   | "endoscopy-provider"
+@@ -211,6 +219,7 @@
+   supportRole?: FacilityActorSupportRole;
+   /** Exact presentation support when a service room offers several equivalent seats. */
+   supportId?: string;
++  supportRoomInstanceId?: string;
+ }
+ 
+ export interface FacilityRetailExternalActorView {
+@@ -224,6 +233,10 @@
+   moving?: boolean;
+   direction?: "front" | "side" | "back";
+   rightFacing?: boolean;
++  supportRole?: FacilityActorSupportRole;
++  supportId?: string;
++  supportRoomInstanceId?: string;
++  pediatricFamilyId?: string;
+   /** Only phase and the reserved chair/standing endpoint are needed by the renderer. */
+   procedureCompanion?: Pick<ProcedureCompanionState, "phase" | "periopRoomInstanceId" | "waitingReservation">;
+ }

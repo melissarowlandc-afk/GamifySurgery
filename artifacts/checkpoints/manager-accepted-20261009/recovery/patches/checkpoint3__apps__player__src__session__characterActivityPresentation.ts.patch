@@ -1,0 +1,65 @@
+--- a/apps/player/src/session/characterActivityPresentation.ts
++++ b/apps/player/src/session/characterActivityPresentation.ts
+@@ -10,6 +10,7 @@
+   getCurrentPeriopNurseAttention,
+   getPlacedRoomIdleSpotAt,
+   isEmployeeAssignedToOperationalRoom,
++  getAppStandbyLabel,
+   periopNurseAttentionStatus,
+   getStaffRoleDefinition,
+   type EmployeeState,
+@@ -107,6 +108,10 @@
+     case "in_service": return `${name} in progress`;
+     case "walking_between_phases": return "Moving to the next step";
+     case "waiting_for_next_phase": return "Waiting for the next step";
++    case "waiting_for_results": {
++      const read = operation.diagnosticTiming?.phases.find(phase => phase.kind === "interpretation");
++      return read?.mode === "external" ? "Waiting for external MRI interpretation" : "Waiting for MRI interpretation";
++    }
+     case "discharging": return "Getting ready to leave";
+     default: return "Going home";
+   }
+@@ -199,9 +204,11 @@
+     case "perform_imaging": return there ? "Running a scan" : "Walking to a scan";
+     case "perform_service": {
+       const operation = state.serviceOperations.find((candidate) => candidate.id === task.targetId);
++      if (employee.staffRoleDefinitionId === "staff.app" && operation) return `${there ? "Seeing" : "Walking to see"} ${operation.displayName} · ${lineName(operation.incomeLineId)}`;
+       if (operation?.diagnosticPhaseWork?.kind === "interpretation") {
+         const patient = state.encounters[operation.diagnosticPhaseWork.encounterId];
+-        return there ? `Reading a study for ${patient?.patientDisplayName ?? "this center"}` : "Walking to read an in-house study";
++        const visitor = state.serviceOperations.find(row => row.id === operation.diagnosticPhaseWork?.encounterId);
++        return there ? `Reading a study for ${patient?.patientDisplayName ?? visitor?.displayName ?? "this center"}` : "Walking to read an in-house study";
+       }
+       return operation ? `Working on ${lineName(operation.incomeLineId)}` : "Working with a patient";
+     }
+@@ -245,6 +252,7 @@
+     return seat ? "Sitting between patient checks" : "Between patient checks";
+   }
+   if (!arrived(employee.path, employee.pathIndex)) return `Walking to ${theRoom(home, "their station")}`;
++  if (employee.staffRoleDefinitionId === "staff.app") return getAppStandbyLabel(state, employee);
+   if (getActiveOutsideRadiologyReads(state).some((read) => read.employeeId === employee.id)) return "Reading an outside study";
+   if (home?.roomDefinitionId === "room.front_desk") {
+     return Object.values(state.encounters).some((encounter) => encounter.checkInStatus === "awaiting_staff")
+@@ -314,7 +322,8 @@
+       const bathroom = getPatientAmenityTrip(state, "service_visitor", operation.id);
+       const retail = activeRetailOperationForActor(state, "service_visitor", operation.id);
+       return {
+-        name: withRole(operation.displayName, "Visitor"),
++        name: withRole(operation.displayName, operation.clinicVisit
++          ? `${operation.clinicVisit.demographics.ageYears}-year-old ${operation.clinicVisit.demographics.sexLabel.toLowerCase()} · ${operation.clinicVisit.kind === "mri" ? "MRI visitor" : operation.clinicVisit.kind === "pediatric_consult" ? "Pediatric appointment with parent" : operation.clinicVisit.kind === "wound_care" ? "Wound care appointment" : operation.clinicVisit.kind === "ostomy_support" ? "Ostomy support appointment" : "Clinic appointment"}` : "Visitor"),
+         activity: bathroom
+           ? bathroom.status === "using_amenity" ? "In the bathroom" : "Walking to the bathroom"
+           : retail ? describeRetailTrip(state, retail) : describeServiceOperation(operation, state.facilityTick),
+@@ -328,6 +337,12 @@
+         ? state.retailOperations.find((candidate) => candidate.id === actor.activeRetailOperationId)
+         : undefined;
+       const companionOf = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : undefined;
++      if (actor.pediatricFamilyId) {
++        const visit = state.serviceOperations.find(row => row.id === actor.linkedServiceOperationId);
++        const childName = companionOf?.patientDisplayName ?? visit?.displayName ?? "their child";
++        return { name: withRole(actor.displayName, `Parent of ${childName}`), activity: actor.movementWaitReason ??
++          (actor.lifecycle === "departing" ? `Leaving with ${childName}` : actor.lifecycle === "arriving" ? `Arriving with ${childName}` : `Staying with ${childName}`) };
++      }
+       const activity = actor.movementWaitReason ?? (operation && !["completed", "abandoned", "cancelled"].includes(operation.status)
+         ? describeRetailTrip(state, operation)
+         : actor.lifecycle === "arriving"

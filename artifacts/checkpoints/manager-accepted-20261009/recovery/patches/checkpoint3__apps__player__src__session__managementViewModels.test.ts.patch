@@ -1,0 +1,77 @@
+--- a/apps/player/src/session/managementViewModels.test.ts
++++ b/apps/player/src/session/managementViewModels.test.ts
+@@ -1,6 +1,8 @@
+ import { describe, expect, it } from "vitest";
+ import {
+   createInitialGameState,
++  getServiceIncomeTotalsCents,
++  getOperatingExpensePerFacilityHour,
+   type EmployeeState,
+   type GameState,
+ } from "@gamify-surgery/game-domain";
+@@ -97,4 +99,65 @@
+     const hourly = view.hourlyCosts.reduce((total, cost) => total + cost.amount, 0);
+     expect(view.runwayLabel).toContain(`about ${Math.floor(600 / hourly)} hour`);
+   });
++
++  it("includes patient settlements in opening totals and recent hourly income", () => {
++    const state = createInitialGameState();
++    state.rooms = [];
++    state.facilityTick = 600;
++    state.totalOperatingExpenses = 100;
++    state.settlements = [
++      { id: "old", encounterId: "old", completionRevenue: 300, qualityRevenueBonus: 0, incorrectFinancialConsequence: 0, netCashDelta: 300, satisfactionDelta: 0, clinicalXpAwarded: 0, correctAnswers: 0, incorrectAnswers: 0, terminalOutcomeSeverity: null, settledAtFacilityTick: 100 },
++      { id: "recent", encounterId: "recent", completionRevenue: 600, qualityRevenueBonus: 0, incorrectFinancialConsequence: 0, netCashDelta: 600, satisfactionDelta: 0, clinicalXpAwarded: 0, correctAnswers: 0, incorrectAnswers: 0, terminalOutcomeSeverity: null, settledAtFacilityTick: 600 },
++    ];
++    state.serviceIncomeReceipts = [{ id: "retail", transactionKey: "retail", incomeLineId: "income.coffee", catalogVersion: 1, routeId: null, actorKind: "retail_visitor", actorId: "retail", grossAmount: 60, stockCost: 6, netCashDelta: 54, completedAtFacilityTick: 500 }];
++    const view = createManagementFinanceView(state, getServiceIncomeTotalsCents(state), (id) => id);
++    expect(view).toMatchObject({
++      earnedLabel: "$954", billedLabel: "$960", stockLabel: "$6", profitLabel: "+$854",
++      hourlyIncomeLabel: "$110/hr", hourlyCostLabel: "$1/hr", hourlyNetLabel: "+$109/hr",
++      hourlyNetSign: "positive", incomeWindowLabel: "Last 6 game hours",
++    });
++    expect(view.hourlyIncomeSources.find((source) => source.id === "patient_encounters")).toMatchObject({ amount: 100, count: 1 });
++    expect(view.hourlyCosts.find((cost) => cost.id === "stock")?.amountLabel).toBe("$1/hr");
++    expect(view.incomeWindowExplanation).toContain("Stock costs use the same income window");
++  });
++
++  it("reads current obligations while keeping no-income runway independent of variable stock", () => {
++    const state = createInitialGameState();
++    state.facilityTick = 120;
++    state.cash = 600;
++    addEmployee(state, "staff.receptionist", 1, 30);
++    state.advertisingLevel = 1;
++    state.serviceIncomeReceipts = [{ id: "stock", transactionKey: "stock", incomeLineId: "income.coffee", catalogVersion: 1, routeId: null, actorKind: "retail_visitor", actorId: "retail", grossAmount: 60, stockCost: 6, netCashDelta: 54, completedAtFacilityTick: 100 }];
++    const operating = -getOperatingExpensePerFacilityHour(state);
++    const view = createManagementFinanceView(state, getServiceIncomeTotalsCents(state), (id) => id);
++    expect(view.hourlyCosts.reduce((total, cost) => total + cost.amount, 0)).toBeCloseTo(operating + 3);
++    expect(view.runwayLabel).toContain(`about ${Math.floor(600 / operating)} hour`);
++    expect(view.hourlyIncomeLabel).toBe("$30/hr");
++    expect(view.hourlyNetSign).toBe("negative");
++    expect(view.incomeWindowLabel).toBe("Since opening · 2 game hours");
++    state.employees[0]!.salaryPerExpenseInterval += 10;
++    const raised = createManagementFinanceView(state, getServiceIncomeTotalsCents(state), (id) => id);
++    expect(raised.hourlyCosts.find((cost) => cost.id === "staff")!.amount - view.hourlyCosts.find((cost) => cost.id === "staff")!.amount).toBe(10);
++  });
++
++  it("labels the early estimate and presents zero without a false positive sign", () => {
++    const state = createInitialGameState();
++    state.rooms = [];
++    const view = createManagementFinanceView(state, getServiceIncomeTotalsCents(state), (id) => id);
++    expect(view).toMatchObject({ hourlyIncomeLabel: "$0/hr", hourlyNetLabel: "$0/hr", hourlyNetSign: "neutral" });
++    expect(view.incomeWindowLabel).toContain("Early estimate");
++    expect(view.incomeWindowExplanation).toContain("spread over one game hour");
++  });
++
++  it("shows the domain's active outage relief without duplicating its eligibility rule", () => {
++    const state = createInitialGameState();
++    state.facilityTick = 600;
++    state.rooms = [{ ...state.rooms[0]!, id: "outage", roomDefinitionId: "room.ultrasound", upgradeLevel: 3, upkeepOutage: { version: "room-upkeep-outage.v1", sinceFacilityTick: 0, lastObservedFacilityTick: 600 } }];
++    const view = createManagementFinanceView(state, getServiceIncomeTotalsCents(state), (id) => id);
++    const relief = view.hourlyCosts.find((cost) => cost.id === "relief")!;
++    expect(relief.amount).toBeLessThan(0);
++    expect(relief.amountLabel).toMatch(/^−\$/);
++    expect(view.hourlyCosts.reduce((total, cost) => total + cost.amount, 0)).toBeCloseTo(-getOperatingExpensePerFacilityHour(state));
++    expect(view.hourlyCosts.find((cost) => cost.id === "rooms")!.amount).toBeGreaterThan(-getOperatingExpensePerFacilityHour(state));
++  });
+ });

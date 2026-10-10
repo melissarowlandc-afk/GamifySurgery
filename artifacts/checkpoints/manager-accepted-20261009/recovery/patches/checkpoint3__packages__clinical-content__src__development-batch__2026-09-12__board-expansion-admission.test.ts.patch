@@ -1,0 +1,16 @@
+--- a/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
+@@ -5,10 +5,10 @@
+ import { describe, expect, it } from "vitest";
+ import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+ // Keep this historical batch's inventory proof scoped to its original bank.
+-// New level3 admission and complete protected-intake checks live in its own test.
++// Level 3 and pediatric admission/protected-intake checks live in their own tests.
+ const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+-  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")),
+-  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")),
++  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")),
++  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")),
+ };
+ import { syntheticClinicalCaseSchema } from "../../schema";
+ import {

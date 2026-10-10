@@ -1,0 +1,354 @@
+--- a/apps/player/src/facility/routeMotion.test.ts
++++ b/apps/player/src/facility/routeMotion.test.ts
+@@ -2,12 +2,65 @@
+ import {
+   advanceRouteMotion,
+   getRouteTilesPerSecond,
++  parkRouteMotion,
+   routeMotionComplete,
++  routeMotionStepTiles,
+   sampleRouteMotion,
+   syncRouteMotion,
++  type RouteMotionTrack,
+ } from "./routeMotion";
+ 
+ describe("route motion interpolation", () => {
++  it("retains the padded family nodes when handing a route off from a parked actor", () => {
++    const location = { x: 1, y: 1 };
++    const path = [location, location, location, { x: 2, y: 1 }];
++    const parked = syncRouteMotion(undefined, { location })!;
++    let track = syncRouteMotion(parked, { location, path, pathIndex: 0, lookaheadPathNodes: 2 })!;
++    // Each repeated point is a real synchronization interval, not redundant
++    // geometry: the shorter family lane waits before the common doorway.
++    expect(track.path).toEqual(path);
++    track = advanceRouteMotion(track, 1_000, 8);
++    expect(track.path.length).toBeGreaterThan(0);
++    expect(sampleRouteMotion(track).location).toEqual(path.at(-1));
++  });
++
++  it.each([
++    { path: [], pathIndex: 0 },
++    { path: new Array(2), pathIndex: 0 },
++    { path: [{ x: 1, y: 1 }, undefined], pathIndex: 0 },
++    { path: [{ x: NaN, y: 1 }], pathIndex: 0 },
++    { path: [{ x: 1, y: 1 }], pathIndex: NaN },
++    { path: [{ x: 1, y: 1 }], pathIndex: Infinity },
++    { path: [{ x: 1, y: 1 }], pathIndex: -1 },
++    { path: [{ x: 1, y: 1 }], pathIndex: 3 },
++    { path: [{ x: 1, y: 1 }], pathIndex: 0.5 },
++  ])("parks malformed or empty route %j at the actor's current tile", (input) => {
++    const location = { x: 6, y: 5 };
++    const track = syncRouteMotion(undefined, { ...input, location } as Parameters<typeof syncRouteMotion>[1])!;
++    expect(sampleRouteMotion(advanceRouteMotion(track, 1_000, 8, location), location))
++      .toMatchObject({ location, moving: false });
++  });
++
++  it.each([
++    { path: [] },
++    { path: new Array(2) },
++    { path: [{ x: 1, y: Infinity }] },
++    { progress: NaN },
++    { progress: Infinity },
++    { progress: 12, targetIndex: 12 },
++    { targetIndex: 12 },
++    { sourceOffset: NaN },
++  ])("recovers corrupt render track %j without sampling an undefined point", (invalid) => {
++    const location = { x: 6, y: 5 };
++    const valid = syncRouteMotion(undefined, { path: [{ x: 0, y: 1 }, { x: 1, y: 1 }], pathIndex: 0 })!;
++    const corrupt = { ...valid, ...invalid } as RouteMotionTrack;
++    expect(sampleRouteMotion(corrupt, location)).toMatchObject({ location, moving: false });
++    expect(sampleRouteMotion(advanceRouteMotion(corrupt, 1_000, 8, location), location))
++      .toMatchObject({ location, moving: false });
++    expect(sampleRouteMotion(parkRouteMotion(corrupt, location))).toMatchObject({ location, moving: false });
++    expect(sampleRouteMotion(syncRouteMotion(corrupt, { location })!)).toMatchObject({ location, moving: false });
++  });
++
+   it("predicts one canonical movement interval and visits every turn", () => {
+     const path = [
+       { x: 0, y: 0 },
+@@ -70,10 +123,165 @@
+     })!;
+     expect(sampleRouteMotion(track).location).toEqual({ x: 3, y: 0 });
+ 
++    // The waiting route's logical start is one tile ahead of the render, so
++    // it catches up at 1.25x until level, then walks at canonical speed.
+     track = advanceRouteMotion(track, 250, 4);
+-    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 0 });
++    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 0.25 });
+     track = advanceRouteMotion(track, 250, 4);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 1.25 });
++  });
++
++  it("joins a replacement route at its authoritative current index without replaying its historical prefix", () => {
++    const previousPath = [
++      { x: 2, y: 2 },
++      { x: 3, y: 2 },
++      { x: 4, y: 2 },
++    ];
++    const replacementPath = [
++      { x: 8, y: 6 },
++      { x: 7, y: 6 },
++      { x: 6, y: 6 },
++      { x: 5, y: 6 },
++      { x: 4, y: 6 },
++      { x: 4, y: 5 },
++      { x: 4, y: 4 },
++      { x: 4, y: 3 },
++      { x: 4, y: 2 },
++      { x: 4, y: 1 },
++    ];
++    let track = syncRouteMotion(undefined, {
++      location: previousPath[0],
++      path: previousPath,
++      pathIndex: 0,
++      lookaheadPathNodes: 2,
++    })!;
++    track = advanceRouteMotion(track, 1_000, 2);
++    const retainedPreviousPath = track.path.map((point) => ({ ...point }));
++
++    track = syncRouteMotion(track, {
++      location: replacementPath[8],
++      path: replacementPath,
++      pathIndex: 8,
++      lookaheadPathNodes: 1,
++    })!;
++
++    expect(track.path).toEqual([
++      ...retainedPreviousPath,
++      replacementPath[9],
++    ]);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 2 });
++    track = advanceRouteMotion(track, 500, 2);
+     expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 1 });
++  });
++
++  it("finishes and reverses only the current known edge when its shared waypoint is behind fractional render progress", () => {
++    const previousPath = [
++      { x: 0, y: 0 },
++      { x: 1, y: 0 },
++      { x: 2, y: 0 },
++    ];
++    const replacementPath = [
++      { x: 1, y: 0 },
++      { x: 1, y: 1 },
++      { x: 1, y: 2 },
++    ];
++    let track = syncRouteMotion(undefined, {
++      location: previousPath[0],
++      path: previousPath,
++      pathIndex: 0,
++      lookaheadPathNodes: 2,
++    })!;
++    track = advanceRouteMotion(track, 750, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1.5, y: 0 });
++
++    track = syncRouteMotion(track, {
++      location: replacementPath[0],
++      path: replacementPath,
++      pathIndex: 0,
++      lookaheadPathNodes: 1,
++    })!;
++
++    expect(track.path).toEqual([
++      ...previousPath,
++      replacementPath[0],
++      replacementPath[1],
++      replacementPath[2],
++    ]);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1.5, y: 0 });
++    // The replacement's logical start is 1.5 render tiles ahead (to the edge
++    // end and back), so the walk-back runs at catch-up speed.
++    track = advanceRouteMotion(track, 250, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1.75, y: 0 });
++    track = advanceRouteMotion(track, 500, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0.375 });
++  });
++
++  it("resets to the authoritative point when routes are disconnected instead of inventing a bridge", () => {
++    const previousPath = [
++      { x: 1, y: 1 },
++      { x: 2, y: 1 },
++    ];
++    const replacementPath = [
++      { x: 9, y: 9 },
++      { x: 9, y: 8 },
++      { x: 9, y: 7 },
++      { x: 8, y: 7 },
++    ];
++    let track = syncRouteMotion(undefined, {
++      location: previousPath[0],
++      path: previousPath,
++      pathIndex: 0,
++      lookaheadPathNodes: 1,
++    })!;
++    track = advanceRouteMotion(track, 1_000, 1);
++
++    track = syncRouteMotion(track, {
++      location: replacementPath[2],
++      path: replacementPath,
++      pathIndex: 2,
++      lookaheadPathNodes: 1,
++    })!;
++
++    expect(track.path).toEqual(replacementPath);
++    expect(track.progress).toBe(2);
++    expect(sampleRouteMotion(track).location).toEqual(replacementPath[2]);
++  });
++
++  it("retains a valid old tail into the successor prefix when rendering is behind the logical route", () => {
++    const previousPath = [
++      { x: 0, y: 0 },
++      { x: 1, y: 0 },
++      { x: 2, y: 0 },
++    ];
++    const replacementPath = [
++      { x: 2, y: 0 },
++      { x: 2, y: 1 },
++      { x: 2, y: 2 },
++    ];
++    let track = syncRouteMotion(undefined, {
++      location: previousPath[0],
++      path: previousPath,
++      pathIndex: 0,
++      lookaheadPathNodes: 1,
++    })!;
++    track = advanceRouteMotion(track, 500, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0 });
++
++    track = syncRouteMotion(track, {
++      location: replacementPath[2],
++      path: replacementPath,
++      pathIndex: 2,
++      lookaheadPathNodes: 1,
++    })!;
++
++    expect(track.path).toEqual([
++      ...previousPath,
++      replacementPath[1],
++      replacementPath[2],
++    ]);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0 });
++    track = advanceRouteMotion(track, 1_500, 2);
++    expect(sampleRouteMotion(track).location).toEqual(replacementPath[2]);
+   });
+ 
+   it("finishes a saved route smoothly after logical movement clears", () => {
+@@ -243,4 +451,118 @@
+     expect(track!.path.length).toBeLessThanOrEqual(3);
+     expect(sampleRouteMotion(track!).location).toEqual(current);
+   });
++  it("starts a route from a parked standstill even when it is first seen two nodes along", () => {
++    const route = [
++      { x: 5, y: 5 },
++      { x: 6, y: 5 },
++      { x: 7, y: 5 },
++      { x: 8, y: 5 },
++    ];
++    let track = syncRouteMotion(undefined, { location: { x: 5, y: 5 } })!;
++    expect(routeMotionComplete(track)).toBe(true);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 5, y: 5 });
++
++    // Routes are created and advanced in the same tick.
++    track = syncRouteMotion(track, {
++      location: route[2],
++      path: route,
++      pathIndex: 2,
++      lookaheadPathNodes: 2,
++    })!;
++    expect(sampleRouteMotion(track).location).toEqual({ x: 5, y: 5 });
++    track = advanceRouteMotion(track, 100, 2);
++    const first = sampleRouteMotion(track).location;
++    expect(first.y).toBe(5);
++    expect(first.x).toBeGreaterThan(5);
++    expect(first.x).toBeLessThan(5.6);
++  });
++
++  it("parks a finished route where it ended and starts the next route there", () => {
++    const inbound = [
++      { x: 0, y: 0 },
++      { x: 1, y: 0 },
++      { x: 2, y: 0 },
++    ];
++    const outbound = [
++      { x: 2, y: 0 },
++      { x: 2, y: 1 },
++      { x: 2, y: 2 },
++      { x: 2, y: 3 },
++    ];
++    let track = syncRouteMotion(undefined, { location: inbound[0], path: inbound, pathIndex: 0, lookaheadPathNodes: 2 })!;
++    track = syncRouteMotion(track, { location: inbound[2] })!;
++    track = advanceRouteMotion(track, 2_000, 2);
++    expect(routeMotionComplete(track)).toBe(true);
++    track = parkRouteMotion(track);
++    expect(sampleRouteMotion(track)).toMatchObject({ location: { x: 2, y: 0 }, moving: false });
++
++    track = syncRouteMotion(track, { location: outbound[2], path: outbound, pathIndex: 2, lookaheadPathNodes: 2 })!;
++    expect(sampleRouteMotion(track).location).toEqual({ x: 2, y: 0 });
++    track = advanceRouteMotion(track, 250, 2);
++    expect(sampleRouteMotion(track).location.x).toBe(2);
++    expect(sampleRouteMotion(track).location.y).toBeGreaterThan(0.5);
++  });
++
++  it("drops a parked track when the actor is absent or placed elsewhere", () => {
++    const parked = syncRouteMotion(undefined, { location: { x: 3, y: 3 } })!;
++    expect(syncRouteMotion(parked, { location: { x: 3, y: 3 } })).toBe(parked);
++    expect(syncRouteMotion(parked, {})).toBeUndefined();
++    expect(syncRouteMotion(parked, { location: { x: 9, y: 9 } })).toBeUndefined();
++  });
++
++  it("catches up while trailing the logical position, capped and never past the target", () => {
++    const path = Array.from({ length: 21 }, (_, x) => ({ x, y: 0 }));
++    let track = syncRouteMotion(undefined, { location: path[0], path, pathIndex: 0, lookaheadPathNodes: 2 })!;
++    expect(routeMotionStepTiles(track, 500, 2)).toBe(1);
++
++    // Ten lost render frames' worth of ticks: logical is now 8 tiles ahead.
++    track = syncRouteMotion(track, { location: path[8], path, pathIndex: 8, lookaheadPathNodes: 2 })!;
++    expect(routeMotionStepTiles(track, 500, 2)).toBe(2.5);
++    track = advanceRouteMotion(track, 500, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 2.5, y: 0 });
++
++    // Ahead of the logical position (lookahead): canonical speed.
++    const ahead = advanceRouteMotion(
++      syncRouteMotion(undefined, { location: path[0], path, pathIndex: 0, lookaheadPathNodes: 2 })!,
++      600,
++      2,
++    );
++    expect(routeMotionStepTiles(ahead, 500, 2)).toBeCloseTo(1, 10);
++
++    // Never past the predictive target.
++    const near = syncRouteMotion(undefined, { location: path[19], path, pathIndex: 19, lookaheadPathNodes: 2 })!;
++    expect(routeMotionStepTiles(near, 5_000, 2)).toBe(1);
++  });
++
++  it("walks back instead of snapping when a reversed route shares a point behind the lookahead render", () => {
++    const toward = [
++      { x: 0, y: 0 },
++      { x: 1, y: 0 },
++      { x: 2, y: 0 },
++      { x: 3, y: 0 },
++    ];
++    const back = [
++      { x: 0, y: 0 },
++      { x: 0, y: 1 },
++      { x: 0, y: 2 },
++      { x: 0, y: 3 },
++    ];
++    let track = syncRouteMotion(undefined, { location: toward[0], path: toward, pathIndex: 0, lookaheadPathNodes: 2 })!;
++    // Lookahead lets the render run ahead of the logical start.
++    track = advanceRouteMotion(track, 600, 2);
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1.2, y: 0 });
++
++    // The replacement starts at the old logical point and is already one tick along.
++    track = syncRouteMotion(track, { location: back[2], path: back, pathIndex: 2, lookaheadPathNodes: 2 })!;
++    expect(sampleRouteMotion(track).location).toEqual({ x: 1.2, y: 0 });
++    let last = sampleRouteMotion(track).location;
++    for (let frame = 0; frame < 120; frame += 1) {
++      track = advanceRouteMotion(track, 16, 2);
++      const next = sampleRouteMotion(track).location;
++      expect(Math.hypot(next.x - last.x, next.y - last.y)).toBeLessThan(0.1);
++      last = next;
++    }
++    expect(last.x).toBe(0);
++    expect(last.y).toBeGreaterThan(1);
++  });
+ });

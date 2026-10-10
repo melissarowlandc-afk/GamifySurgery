@@ -1,0 +1,27 @@
+
+> @gamify-surgery/player@0.0.1 build
+> vite build
+
+vite v8.1.5 building client environment for production...
+[2Ktransforming...✓ 629 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                        0.54 kB │ gzip:     0.34 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BbWidj28.woff      14.02 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-BK6Glc0m.woff      14.29 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BrHNak5F.woff2     17.20 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-GZI4o3u0.woff2     17.52 kB
+dist/assets/index-CCZuUA74.css                                       162.81 kB │ gzip:    30.23 kB
+dist/assets/index-D53L078H.js                                      8,210.66 kB │ gzip: 1,812.72 kB
+
+[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugins. Here is a breakdown:
+  - forbid-private-clinical-modules (86%)
+  - vite:prepare-out-dir (9%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.40s

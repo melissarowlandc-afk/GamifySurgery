@@ -1,0 +1,1255 @@
+--- a/apps/player/src/art/characterStillRegistry.generated.json
++++ b/apps/player/src/art/characterStillRegistry.generated.json
+@@ -9,10 +9,10 @@
+     "floorY": 287
+   },
+   "counts": {
+-    "identities": 318,
+-    "cardinalPoses": 2544,
++    "identities": 326,
++    "cardinalPoses": 2608,
+     "clipboardPoses": 30,
+-    "assets": 2574
++    "assets": 2638
+   },
+   "characters": [
+     {
+@@ -47336,6 +47336,1238 @@
+           }
+         }
+       }
++    },
++    {
++      "id": "app-gapfill-v6e.001",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 28,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-south.png",
++            "sha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 117,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-east.png",
++            "sha256": "a6317df4cd260827ddead95836182ef384b1ed227b8172cc2f3cd241fbf4c51b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 88,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-west.png",
++            "sha256": "736027c5191042795677cbd45e8beb07ac9850b5817d13689946752604473445",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 88,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/stand-north.png",
++            "sha256": "3343718878797c2fb8e8d87b4c7a1a591eb3309125ada8ae3e9bc1378579fe4a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 43,
++              "width": 116,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-south.png",
++            "sha256": "0a61bc24d090b52cba29eedc115a1dbb88ef563952d77f2429598d26b46d1975",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 93,
++              "width": 100,
++              "height": 194
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-east.png",
++            "sha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 94,
++              "width": 110,
++              "height": 193
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-west.png",
++            "sha256": "d9735b472791209ee03a95d65cba3aa7c6f2b3a44d6ffbfe73086dbd0e36111b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 94,
++              "width": 110,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.001/sit-north.png",
++            "sha256": "7b9835a681df7389c9c44a861214be4899f4da9bb2cc0bb60710d6b0478cfcea",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 97,
++              "width": 100,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.002",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 38,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
++            "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-east.png",
++            "sha256": "84d7f76e7a9342143dbe3e671d64d323b0cdfaa29b2006e28d300b3761a9d9a5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 89,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-west.png",
++            "sha256": "6f9e3764d8607c5b520338f32b5839af93e186099697b5d047ac8a902b301a0b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-north.png",
++            "sha256": "c8fad3196d8d4861f77d4022cd4e18d012630dbaae1f1bdaa6403f559a51b1ba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 117,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-south.png",
++            "sha256": "1ba476309baf6a2cc99c68582726f4020b68ffe5fd79e2c7af99500e1be21ddc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 95,
++              "width": 102,
++              "height": 192
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
++            "sha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 96,
++              "width": 118,
++              "height": 191
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-west.png",
++            "sha256": "a137f83b9ef6f46ce70db5a3b89444f98a1404f16a5cb0f7fb1529762dcb925a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 96,
++              "width": 118,
++              "height": 191
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-north.png",
++            "sha256": "bd5cbd687576ba6bad1d895821ed2e0b90113d4fd415e461fd6a9b4f553ec28e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 251,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 96,
++              "width": 100,
++              "height": 191
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.003",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 49,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-south.png",
++            "sha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-east.png",
++            "sha256": "e8454563094cf889e0d4ed5b3a38a5f24f0d206b5671895e5b18cf46a7453266",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 89,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-west.png",
++            "sha256": "47807abc16a2c1b88dc04337b6ad81d6a5fb77ec8ca1c1949812fe7a1ce61824",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 40,
++              "width": 90,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/stand-north.png",
++            "sha256": "f59971dff54f7db28d479636a0acf526bdf1aac0d8db7dca0744ca8ef038df6e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-south.png",
++            "sha256": "49679238e9e391e9e5908ec2016a13a883b884ac1205542a4e36907a44296299",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-east.png",
++            "sha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 98,
++              "width": 106,
++              "height": 189
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-west.png",
++            "sha256": "7e9080ac40f7b878a7a9956fb7899e9f83da102779124b5867ec9eb060ea5238",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 98,
++              "width": 106,
++              "height": 189
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.003/sit-north.png",
++            "sha256": "257e3fe674c8b635e0511939d5becde73e2afb58d3cf4d10052b53f9d03bcbd6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 98,
++              "width": 96,
++              "height": 189
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.004",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 60,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-south.png",
++            "sha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-east.png",
++            "sha256": "acbc387c08488258b2892e01909ecde710ec4cc4dcd48e7de9b10286e7e9922a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 88,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-west.png",
++            "sha256": "b8feae5f40892bf37719b89fbacaf92db0de7ee2da7f828f3d9cb948d394c49e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 42,
++              "width": 90,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/stand-north.png",
++            "sha256": "e1bb0dc799bde204d16a2825f350780d251941082a05bae452fd31ab11c934d5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 40,
++              "width": 116,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-south.png",
++            "sha256": "38dd254eabe385d278349c3e95e1de54083bc70fe47d84824b4e0befd115639c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 108,
++              "width": 96,
++              "height": 179
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-east.png",
++            "sha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 111,
++              "width": 112,
++              "height": 176
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-west.png",
++            "sha256": "e889e2ea0a267b80cced3683a958ed271789ab302f8fd80728eb0254ae97980c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 111,
++              "width": 112,
++              "height": 176
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.004/sit-north.png",
++            "sha256": "9e2bfc52e2775e3da6349f8ffb008c97513c81f58d73e895f121bd4b80cdb80b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 254,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 110,
++              "width": 94,
++              "height": 177
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.005",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 31,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-south.png",
++            "sha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-east.png",
++            "sha256": "49089760b26508d5f9b0d85ea72bfd040c70fa56a0168ef334c294461ccb9f2a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 89,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-west.png",
++            "sha256": "6e6a229d4f53b55972317b2d3d59f51cf7abfdfb368a4abebb2eea4436c9a99e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 42,
++              "width": 90,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/stand-north.png",
++            "sha256": "a7aec6f0bfcab073fe158d0395ce589fbb992e40f14e6d5bbefc2e6e06419e1e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 110,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-south.png",
++            "sha256": "9cc975fa777464f743f83631bc9e4e91524f10462b9fb0d128af50978eba226e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-east.png",
++            "sha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 95,
++              "width": 114,
++              "height": 192
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-west.png",
++            "sha256": "7f41a2be48235e67ae8fe2138d0dbd5bbd1630e228f6865521863f6153cd31b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 94,
++              "width": 116,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.005/sit-north.png",
++            "sha256": "0570b504281b6829eafb5d881a0c323f8b8d861a9670812708a1229a36236f3c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 97,
++              "width": 94,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.006",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 41,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-south.png",
++            "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-east.png",
++            "sha256": "28c08087b1a659a300723fb6a58e3cecc97c018b14ccc4ca99ea6e7e0eacd94e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 42,
++              "width": 84,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-west.png",
++            "sha256": "b0eed29191c71ff90e8024124aaae43469f3a1bab9434a4e4301f76f834a0f7f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 42,
++              "width": 86,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/stand-north.png",
++            "sha256": "2ff0719bd7bda026907f4c2c025731cf3ca63601b9d9d7156d1ee2b14f6b4b58",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-south.png",
++            "sha256": "0600e4da6e00536af506159ef8b9514bbb56c8df68fa7f01e3bac5d9dacc5277",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 81,
++              "width": 105,
++              "height": 206
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-east.png",
++            "sha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 83,
++              "width": 119,
++              "height": 204
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-west.png",
++            "sha256": "95bebaa3f486a571ce1b071d0dfb112234e294dd433d167d21d8b9a157f16956",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 82,
++              "width": 120,
++              "height": 205
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.006/sit-north.png",
++            "sha256": "5516ae63954b89b9cea91b98e8cf420fe077c7af0b9499cb9600b77788dd07bd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 82,
++              "width": 103,
++              "height": 205
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.007",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 53,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
++            "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-east.png",
++            "sha256": "e267191baf28e1c3307a47ec67127d43f48e2016be642685455aace2f841830e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-west.png",
++            "sha256": "df1ec69a160cfb0545d499e061d824d0e9d0c458bfe6a06f3522e3e078012f38",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-north.png",
++            "sha256": "8ca88924610ffe966e3271995b093d4bb44aa71c2316935115bb2e53a611fbd9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 41,
++              "width": 124,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-south.png",
++            "sha256": "aa8530f9289c7ed47a4dda1db13d5221211cf38c6777809379780b88fb088329",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 87,
++              "width": 106,
++              "height": 200
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
++            "sha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 87,
++              "width": 116,
++              "height": 200
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-west.png",
++            "sha256": "18be594cc3684d7118f1ff244fce5872fb5be18885a7fe18c5dff1d41048ee27",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 87,
++              "width": 115,
++              "height": 200
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-north.png",
++            "sha256": "f776089833346a889776caace773590ffd05d682e6446eda5ffb652eafca3060",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 88,
++              "width": 106,
++              "height": 199
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "app-gapfill-v6e.008",
++      "cohort": "appGapfillV6e",
++      "category": "employee",
++      "role": "staff.app",
++      "eligibleStaffRoleDefinitionIds": [
++        "staff.app"
++      ],
++      "intendedAge": 58,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-south.png",
++            "sha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-east.png",
++            "sha256": "646d8ca86d30f38541a7393dcd44f0802201716199f63056f9b9bef90dc0bb07",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 40,
++              "width": 83,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-west.png",
++            "sha256": "5f0a327c97426f9bfbc92ff3816ea7b9b68362f4b625c582eef4ef3a03120bb6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 39,
++              "width": 84,
++              "height": 248
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/stand-north.png",
++            "sha256": "bdded643e4d5f72e752c431948fbed758a23b60bcbe933d4ad2e06938d27963a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 42,
++              "width": 126,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-south.png",
++            "sha256": "26821f0e6eca4e9f1fb9964e7a9f6682cf69a6df357fe6e599602931b3683b47",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 91,
++              "width": 106,
++              "height": 196
++            }
++          },
++          "east": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-east.png",
++            "sha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 91,
++              "width": 110,
++              "height": 196
++            }
++          },
++          "west": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-west.png",
++            "sha256": "334810c1a075973fc6a21c69f15fa0a09ea513e2de0e5036f6ca84009394bd19",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 91,
++              "width": 111,
++              "height": 196
++            }
++          },
++          "north": {
++            "url": "art/characters/app-gapfill-v6e/app-gapfill-v6e.008/sit-north.png",
++            "sha256": "643afd1df2286a3f668be9001d013dd6d8b9029a7a570127e3022005ca7a7392",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "owner-delegated-manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 92,
++              "width": 106,
++              "height": 195
++            }
++          }
++        }
++      }
+     }
+   ]
+ }

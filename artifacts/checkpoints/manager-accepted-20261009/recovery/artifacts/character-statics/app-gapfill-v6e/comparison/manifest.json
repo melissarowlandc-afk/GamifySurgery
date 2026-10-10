@@ -1,0 +1,689 @@
+{
+  "schemaVersion": "app-gapfill-v6e-comparison/v1",
+  "scope": "Every new staff identity against all existing eligible looks for its assigned role, and every new same-role pair.",
+  "threshold": 8,
+  "algorithm": "RGB RMSE of 64x128 light-background thumbnails fitted to common 112px visible height. Threshold <8 flags possible copies; ranking is a visual-review aid, not identity or style approval.",
+  "existingInventory": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/comparison/existing-inventory.json",
+    "sha256": "9d8da1160408b8c4b2b6aea0ca09cf8a9744babe03864bb0741cc94314f1b47f"
+  },
+  "entries": [
+    {
+      "number": "001",
+      "id": "app-gapfill-v6e.001",
+      "role": "staff.app",
+      "sex": "Female",
+      "ageBand": "young_adult",
+      "sourceSha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-south.png",
+        "sha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 56.2489999187717
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 77.30874339305367
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 56.2489999187717
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 77.30874339305367
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/001-nearest-six.png",
+        "sha256": "b1aae0da0a8ff8ea579cc3c7569f5cb508fb973f67fbf0dd2678124420a5a8f2"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/001-all-same-role.html",
+        "sha256": "46d861ddc4ec74d499c3deb48641a0d120e19b8bfe732036137b3b044e4cf101"
+      }
+    },
+    {
+      "number": "002",
+      "id": "app-gapfill-v6e.002",
+      "role": "staff.app",
+      "sex": "Female",
+      "ageBand": "adult",
+      "sourceSha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-south.png",
+        "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 63.001324997950604
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 85.70154183246026
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 63.001324997950604
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 85.70154183246026
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/002-nearest-six.png",
+        "sha256": "4519bca2b0c16af10b554d73357f408e2e38755df1fd7e63d0543a871210b51c"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/002-all-same-role.html",
+        "sha256": "59322123b86bfdcc1a795c6c612c92440e2326be9d9d8523cc41cd7737cb7238"
+      }
+    },
+    {
+      "number": "003",
+      "id": "app-gapfill-v6e.003",
+      "role": "staff.app",
+      "sex": "Female",
+      "ageBand": "middle_aged",
+      "sourceSha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-south.png",
+        "sha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 63.343964229924694
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 83.93376309277491
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 63.343964229924694
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 83.93376309277491
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/003-nearest-six.png",
+        "sha256": "997f044fd42c13f15f65dfd0cf63f63aecdd14fc6536ee1d98b48d6ed09552c8"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/003-all-same-role.html",
+        "sha256": "3f6211fd9cea812d7f6ba467a0f27cdc04591cc44abd8c7537e7947c7180b21a"
+      }
+    },
+    {
+      "number": "004",
+      "id": "app-gapfill-v6e.004",
+      "role": "staff.app",
+      "sex": "Female",
+      "ageBand": "middle_aged",
+      "sourceSha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-south.png",
+        "sha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 60.86579448385638
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 68.57309507736677
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 60.86579448385638
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 68.57309507736677
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/004-nearest-six.png",
+        "sha256": "59f8f190e8dc3b91d2465a73ed37cf7c35fbf71bb1ff641fd85d149c31325d9c"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/004-all-same-role.html",
+        "sha256": "62ce3c8e7127b21cc62182c3e4ff7f506cf470cce5b0c057a021c63caacac7ca"
+      }
+    },
+    {
+      "number": "005",
+      "id": "app-gapfill-v6e.005",
+      "role": "staff.app",
+      "sex": "Male",
+      "ageBand": "adult",
+      "sourceSha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-south.png",
+        "sha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 61.5540666151472
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 74.60928528572268
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 61.5540666151472
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 74.60928528572268
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/005-nearest-six.png",
+        "sha256": "46960596a749862a3e2d0a68421e7ccb1759018400a37797f676a185d32f2008"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/005-all-same-role.html",
+        "sha256": "33b1915038a41626157b9b38c5874512ff1d50e808f3ffe42e17e7337d9f96d5"
+      }
+    },
+    {
+      "number": "006",
+      "id": "app-gapfill-v6e.006",
+      "role": "staff.app",
+      "sex": "Male",
+      "ageBand": "adult",
+      "sourceSha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-south.png",
+        "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 77.68191330643135
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 81.85377179875276
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 77.68191330643135
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 81.85377179875276
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/006-nearest-six.png",
+        "sha256": "2f5563a360ab08e45f3d3a56fb4d76d665584e342579be883349dc9480a114df"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/006-all-same-role.html",
+        "sha256": "ec87f59c26e3a65ecaf006fbf148a77f3de3907885a158f51ef5304e960adf3e"
+      }
+    },
+    {
+      "number": "007",
+      "id": "app-gapfill-v6e.007",
+      "role": "staff.app",
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "sourceSha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-south.png",
+        "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 65.84286813699117
+        },
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 71.04061315506728
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 65.84286813699117
+        },
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 71.04061315506728
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/007-nearest-six.png",
+        "sha256": "7c95e4e6dcbd7c6f17d2d8c608e1b3d82e872f8714bfe393b0d69a0bb2e94a61"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/007-all-same-role.html",
+        "sha256": "bbee61cbb902750d0d78f00fe71c3c515601440eebfc71d05fd8c51542098847"
+      }
+    },
+    {
+      "number": "008",
+      "id": "app-gapfill-v6e.008",
+      "role": "staff.app",
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "sourceSha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b",
+      "newPose": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-south.png",
+        "sha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 73.32590562599547
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 78.31433385846624
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "future-roster20-v5.002",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+          "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3",
+          "rmse": 73.32590562599547
+        },
+        {
+          "id": "future-roster20-v5.001",
+          "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+          "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd",
+          "rmse": 78.31433385846624
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/008-nearest-six.png",
+        "sha256": "06e5638f82f74f2969c22fc1eb3a40a45f51d1b8a23f1cd9daa8417435d87a94"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/008-all-same-role.html",
+        "sha256": "c1832fddd15f3762ccd1cf3a63a349c57a8adfa3d36a05726a8ee813ce115974"
+      }
+    }
+  ],
+  "withinBatch": [
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.002",
+      "rmse": 60.614958360814974
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.003",
+      "rmse": 64.64530628746375
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.004",
+      "rmse": 67.0644995114894
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.005",
+      "rmse": 60.30280308489675
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.006",
+      "rmse": 67.01898349544717
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 72.10322376932731
+    },
+    {
+      "first": "app-gapfill-v6e.001",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 70.08748950344729
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.003",
+      "rmse": 72.46904309449138
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.004",
+      "rmse": 68.54429898140008
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.005",
+      "rmse": 69.38130426029316
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.006",
+      "rmse": 72.27816867486466
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 81.39550247951806
+    },
+    {
+      "first": "app-gapfill-v6e.002",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 74.53946823139235
+    },
+    {
+      "first": "app-gapfill-v6e.003",
+      "second": "app-gapfill-v6e.004",
+      "rmse": 68.93003268477739
+    },
+    {
+      "first": "app-gapfill-v6e.003",
+      "second": "app-gapfill-v6e.005",
+      "rmse": 70.9363636794084
+    },
+    {
+      "first": "app-gapfill-v6e.003",
+      "second": "app-gapfill-v6e.006",
+      "rmse": 75.15889607911181
+    },
+    {
+      "first": "app-gapfill-v6e.003",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 74.97612548607486
+    },
+    {
+      "first": "app-gapfill-v6e.003",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 73.29612722119089
+    },
+    {
+      "first": "app-gapfill-v6e.004",
+      "second": "app-gapfill-v6e.005",
+      "rmse": 74.43018649132092
+    },
+    {
+      "first": "app-gapfill-v6e.004",
+      "second": "app-gapfill-v6e.006",
+      "rmse": 69.57114433692288
+    },
+    {
+      "first": "app-gapfill-v6e.004",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 67.68181351633078
+    },
+    {
+      "first": "app-gapfill-v6e.004",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 63.174451095034094
+    },
+    {
+      "first": "app-gapfill-v6e.005",
+      "second": "app-gapfill-v6e.006",
+      "rmse": 74.39737851573146
+    },
+    {
+      "first": "app-gapfill-v6e.005",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 74.66983397895909
+    },
+    {
+      "first": "app-gapfill-v6e.005",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 77.5590086383493
+    },
+    {
+      "first": "app-gapfill-v6e.006",
+      "second": "app-gapfill-v6e.007",
+      "rmse": 72.46689932235154
+    },
+    {
+      "first": "app-gapfill-v6e.006",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 61.47225731658432
+    },
+    {
+      "first": "app-gapfill-v6e.007",
+      "second": "app-gapfill-v6e.008",
+      "rmse": 60.06573513605653
+    }
+  ],
+  "flags": [],
+  "totalExistingComparisons": 16,
+  "totalWithinBatchComparisons": 28,
+  "roleBoards": [
+    {
+      "role": "staff.app",
+      "existing": [
+        "future-roster20-v5.001",
+        "future-roster20-v5.002"
+      ],
+      "new": [
+        "app-gapfill-v6e.001",
+        "app-gapfill-v6e.002",
+        "app-gapfill-v6e.003",
+        "app-gapfill-v6e.004",
+        "app-gapfill-v6e.005",
+        "app-gapfill-v6e.006",
+        "app-gapfill-v6e.007",
+        "app-gapfill-v6e.008"
+      ],
+      "inputs": [
+        {
+          "id": "future-roster20-v5.001",
+          "standing": {
+            "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+            "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd"
+          },
+          "seated": {
+            "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/sit-east.png",
+            "sha256": "e6ee488ca9a720eefed105e39ed8605aa146baadcd08d81d6dd1a0c8eecab84d"
+          }
+        },
+        {
+          "id": "future-roster20-v5.002",
+          "standing": {
+            "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+            "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3"
+          },
+          "seated": {
+            "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/sit-east.png",
+            "sha256": "ba9b3040c68debdf2d89b7cf85885b48cee5d5282b300572e7160adf0d78238e"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.001",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/stand-south.png",
+            "sha256": "5e835f69091239d440df9c104b9bf939e8db27a11a92dafd2972e972fb1149eb"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/sit-east.png",
+            "sha256": "da73c6ae83af79b07a0d0e4d7a7367f7e57b4d9c66467a778b426e28ced84709"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/stand-south.png",
+            "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/sit-east.png",
+            "sha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.003",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/stand-south.png",
+            "sha256": "cce6e43ba18389e8089a4d61af4bdf592cfbf4e2a244f449593c2a26a473344e"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/sit-east.png",
+            "sha256": "e117327da123aac69cbde14cb8038576386151a726aeb4a697a7129dec52c090"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.004",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/stand-south.png",
+            "sha256": "01f1585308b343bc664ecc25a489f8d350b9803821324c268489547c4600f080"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/sit-east.png",
+            "sha256": "8b6805bd940e17e8493f8c1de86726dc0a6fcc197e37436a7d7d5fa44cabb9d1"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.005",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/stand-south.png",
+            "sha256": "a55595651a5f28f96f0166bbc0c6707d73889e14fe833122d97e7bd9f2027842"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/sit-east.png",
+            "sha256": "2eabdef216888f68e22b763ece188f8404f528a63faddc3dcbf0e767a508c47e"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.006",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/stand-south.png",
+            "sha256": "32e1d035659faa3ccc15a2c9a9d74b43331b7c1317ed4008e5762acc08e5d7de"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/sit-east.png",
+            "sha256": "a90a923edc7536ce6da5c4e1f207d64e108a7cd48fbca4d16fa14a2910573256"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/stand-south.png",
+            "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/sit-east.png",
+            "sha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.008",
+          "standing": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/stand-south.png",
+            "sha256": "9c3bf668a44c7d22640849116988731863c88acb87c26761132b14f194f49cd2"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/sit-east.png",
+            "sha256": "dc44904a0ae0ff6fa7332f3fa5bc021e11c5805002501f78364d7c78c3d5ceb5"
+          }
+        }
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/app-old-and-new.png",
+        "sha256": "36d10ea599bf5a0c0718640081fa283c08080760053dcbb3b9eee1bc0b3b0f42"
+      }
+    }
+  ],
+  "roleOverview": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/comparison/per-role-old-and-new-overview.png",
+    "sha256": "05a016fa0fb251a481b07ca11c617c02a219d70d46d3075b0586d34b3be446d1"
+  },
+  "managerAcceptance": "pending"
+}

@@ -1,0 +1,469 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -1,6 +1,8 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
+ import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
++import { normalizeSavedSalary, validateSavedSalaryVersion } from "./economy-compatibility";
++import { normalizeRoomUpkeepOutage, synchronizeRoomUpkeepOutages } from "./room-upkeep-outages";
+ import {
+   EMPLOYEE_DISCUSSION_FIRST_DELAY_MINUTES,
+   employeeDiscussionCaseIsRuntimeSafe,
+@@ -28,7 +30,7 @@
+   roleStyleForStaffDefinition,
+   selectStaffStillId,
+ } from "./appearance";
+-import { founderStillIdForPresetIds } from "./characterStillCatalog";
++import { founderStillIdForPresetIds, pediatricStillEligibleEntries } from "./characterStillCatalog";
+ import {
+   RANDOMNESS_CONTRACT_VERSION,
+   RANDOM_STREAMS,
+@@ -51,6 +53,8 @@
+ import { reconcileEmployeeRoomSeats } from "./room-capacity";
+ import { isEmployeeAwayForTraining, normalizeEmployeeTraining, reconcileEmployeeTrainingReservations } from "./employee-training";
+ import { normalizeServiceOperationTraining } from "./employee-training-effects";
++import { normalizeAppAppointmentRevenue } from "./app-appointments";
++import { pediatricRoomAtPoint } from "./pediatric-family";
+ import { normalizePeriopNurseAttention, reconcilePeriopNurseAttentionReservations } from "./periop-nurse-attention";
+ import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+ import { normalizeRoomUpgradeRevenueQuote } from "./room-upgrades";
+@@ -69,6 +73,7 @@
+   AnswerRecord,
+   AlertHumorState,
+   ConceptLearningHistory,
++  ClinicVisitState,
+   DomainContext,
+   DoorState,
+   EmergencyGlp1State,
+@@ -81,10 +86,12 @@
+   FacilityExperienceConditionKey,
+   FounderIdentity,
+   GameState,
++  LevelFourCompletionState,
+   FrozenOffsitePatientTravel,
+   FrozenPatientTravel,
+   PendingResult,
+   PatientMovementState,
++  PediatricFamilyState,
+   PatientAmenityTripState,
+   PatientDissatisfactionCause,
+   PlacedRoom,
+@@ -104,6 +111,172 @@
+ 
+ function isRecord(value: unknown): value is Record<string, unknown> {
+   return typeof value === "object" && value !== null;
++}
++
++function isSpecialtyId(value: unknown): value is string {
++  return typeof value === "string" && value.length > 0 && value.length <= 120;
++}
++
++function hasContractKeys(value: unknown, keys: readonly string[]): value is Record<string, unknown> {
++  return isRecord(value) && !Array.isArray(value) && Object.keys(value).every((key) => keys.includes(key));
++}
++
++function readPediatricFamilyId(value: unknown): string | undefined {
++  if (value === undefined) return undefined;
++  if (!isSpecialtyId(value)) throw new Error("The saved pediatric family ID is invalid.");
++  return value;
++}
++
++function readClinicVisit(value: unknown, operation: Record<string, unknown>): ClinicVisitState | undefined {
++  if (value === undefined) return undefined;
++  const incomeByKind = {
++    adult_appointment: "income.app_consult", pediatric_consult: "income.pediatric_consult",
++    wound_care: "income.wound_care", ostomy_support: "income.ostomy_support", mri: "income.mri",
++  } as const;
++  if (!hasContractKeys(value, ["version", "kind", "demographics", "pediatricFamilyId", "requestedRoomInstanceId"]) ||
++      value.version !== "clinic-visit.v1" || typeof value.kind !== "string" || !(value.kind in incomeByKind) ||
++      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] || operation.actorKind !== "visitor" ||
++      !isPixelAppearance(operation.appearance) ||
++      !hasContractKeys(value.demographics, ["ageYears", "sexLabel"]) ||
++      typeof value.demographics.ageYears !== "number" || !Number.isSafeInteger(value.demographics.ageYears) ||
++      (value.demographics.sexLabel !== "Female" && value.demographics.sexLabel !== "Male")) {
++    throw new Error("The saved clinic visit is invalid.");
++  }
++  const pediatric = value.kind === "pediatric_consult";
++  const age = value.demographics.ageYears;
++  const familyId = readPediatricFamilyId(value.pediatricFamilyId);
++  if (age < (pediatric ? 5 : 18) || age > (pediatric ? 17 : 120) || pediatric !== Boolean(familyId)) {
++    throw new Error("The saved clinic visit has invalid patient eligibility or family linkage.");
++  }
++  if (pediatric && !pediatricStillEligibleEntries(value.demographics.sexLabel, age).some(still => still.stillId === (operation.appearance as { stillId?: string }).stillId)) {
++    throw new Error("The saved pediatric appearance must match the frozen age and sex.");
++  }
++  if (value.requestedRoomInstanceId !== undefined &&
++    (!["adult_appointment", "pediatric_consult", "wound_care", "ostomy_support"].includes(value.kind) || !isSpecialtyId(value.requestedRoomInstanceId))) {
++    throw new Error("The saved clinic appointment home preference is invalid.");
++  }
++  return {
++    version: "clinic-visit.v1", kind: value.kind as ClinicVisitState["kind"],
++    demographics: { ageYears: age, sexLabel: value.demographics.sexLabel },
++    ...(familyId ? { pediatricFamilyId: familyId } : {}),
++    ...(value.requestedRoomInstanceId !== undefined ? { requestedRoomInstanceId: value.requestedRoomInstanceId as string } : {}),
++  };
++}
++
++function readLevelFourCompletion(value: unknown, facilityTick: number): LevelFourCompletionState | undefined {
++  // Omission means no earned evidence and preserves legacy/fresh serialized bytes.
++  if (value === undefined) return undefined;
++  const validTick = (tick: unknown): tick is number => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= 0 && tick <= facilityTick;
++  if (!hasContractKeys(value, ["version", "pediatricVisitWithParent", "woundOstomyCareVisit", "acknowledgedAtFacilityTick"]) ||
++      value.version !== "level-four-completion.v1") throw new Error("The saved Level 4 completion state is invalid.");
++  const readWitness = (raw: unknown, pediatric: boolean) => {
++    if (raw === null) return null;
++    if (!hasContractKeys(raw, ["completedAtFacilityTick", "serviceOperationId", "encounterId", "incomeLineId", ...(pediatric ? ["parentActorId"] : [])]) ||
++        !validTick(raw.completedAtFacilityTick) ||
++        !(raw.serviceOperationId === null || isSpecialtyId(raw.serviceOperationId)) ||
++        !(raw.encounterId === null || isSpecialtyId(raw.encounterId)) ||
++        (raw.serviceOperationId === null && raw.encounterId === null) ||
++        (pediatric ? raw.incomeLineId !== "income.pediatric_consult" || !isSpecialtyId(raw.parentActorId)
++          : raw.incomeLineId !== "income.wound_care" && raw.incomeLineId !== "income.ostomy_support")) {
++      throw new Error("The saved Level 4 completion witness is invalid.");
++    }
++    return { ...raw };
++  };
++  const pediatric = readWitness(value.pediatricVisitWithParent, true);
++  const wound = readWitness(value.woundOstomyCareVisit, false);
++  const acknowledgement = value.acknowledgedAtFacilityTick;
++  if (acknowledgement !== null && (!validTick(acknowledgement) || !pediatric || !wound ||
++      acknowledgement < (pediatric.completedAtFacilityTick as number) || acknowledgement < (wound.completedAtFacilityTick as number))) {
++    throw new Error("The saved Level 4 completion acknowledgement is invalid.");
++  }
++  return { version: "level-four-completion.v1", pediatricVisitWithParent: pediatric,
++    woundOstomyCareVisit: wound, acknowledgedAtFacilityTick: acknowledgement } as LevelFourCompletionState;
++}
++
++function readPediatricFamilies(value: unknown): Record<string, PediatricFamilyState> | undefined {
++  if (value === undefined) return undefined;
++  if (!isRecord(value) || Array.isArray(value)) throw new Error("The saved pediatric families are invalid.");
++  return Object.fromEntries(Object.entries(value).map(([id, family]) => {
++    if (!isSpecialtyId(id) || !hasContractKeys(family, ["version", "id", "child", "parentActorId", "phase", "reservation", "movement"]) ||
++        family.version !== "pediatric-family.v1" || family.id !== id || !isSpecialtyId(family.parentActorId) ||
++        !hasContractKeys(family.child, ["kind", "id"]) || !isSpecialtyId(family.child.id) ||
++        (family.child.kind !== "encounter" && family.child.kind !== "service_visitor") ||
++        !["arriving", "waiting", "in_care", "results_wait", "departing", "departed"].includes(String(family.phase))) {
++      throw new Error("The saved pediatric family is invalid.");
++    }
++    const reservation = family.reservation;
++    if (reservation !== null && (!hasContractKeys(reservation, ["roomInstanceId", "childLocation", "parentLocation", "childSeatId", "parentSeatId"]) ||
++        !isSpecialtyId(reservation.roomInstanceId) || !isGridPoint(reservation.childLocation) || !isGridPoint(reservation.parentLocation) ||
++        (reservation.childSeatId !== null && !isSpecialtyId(reservation.childSeatId)) ||
++        (reservation.parentSeatId !== null && !isSpecialtyId(reservation.parentSeatId)) ||
++        (reservation.childLocation.x === reservation.parentLocation.x && reservation.childLocation.y === reservation.parentLocation.y))) {
++      throw new Error("The saved pediatric pair reservation is invalid.");
++    }
++    const checkedReservation = reservation as PediatricFamilyState["reservation"];
++    const movement = family.movement;
++    if (movement !== undefined && (!hasContractKeys(movement, ["version", "childPath", "parentPath", "pathIndex", "lastMovedAtFacilityTick", "doorIds"]) ||
++      movement.version !== "pediatric-pair-travel.v1" || !Array.isArray(movement.childPath) || !movement.childPath.every(isGridPoint) ||
++      !Array.isArray(movement.parentPath) || !movement.parentPath.every(isGridPoint) || movement.childPath.length !== movement.parentPath.length ||
++      typeof movement.pathIndex !== "number" || !Number.isSafeInteger(movement.pathIndex) || movement.pathIndex < 0 || movement.pathIndex >= movement.childPath.length ||
++      typeof movement.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(movement.lastMovedAtFacilityTick) || movement.lastMovedAtFacilityTick < 0 ||
++      !Array.isArray(movement.doorIds) || !movement.doorIds.every(isSpecialtyId))) throw new Error("The saved pediatric paired travel is invalid.");
++    return [id, { ...family, child: { ...family.child }, reservation: checkedReservation === null ? null : {
++      ...checkedReservation, childLocation: { ...checkedReservation.childLocation }, parentLocation: { ...checkedReservation.parentLocation },
++    } } as PediatricFamilyState];
++  }));
++}
++
++/** Validate frozen links and aligned remaining travel without rerolling actors. */
++function validatePediatricFamilyLinks(state: GameState, context: DomainContext): void {
++  const families = state.pediatricFamilies ?? {};
++  const usedChildren = new Set<string>();
++  const usedParents = new Set<string>();
++  for (const family of Object.values(families)) {
++    const childKey = `${family.child.kind}:${family.child.id}`;
++    if (usedChildren.has(childKey) || usedParents.has(family.parentActorId)) throw new Error("The saved pediatric family duplicates a child or parent.");
++    usedChildren.add(childKey); usedParents.add(family.parentActorId);
++    if (family.phase === "departed") continue;
++    const parent = state.retailExternalActors.find((actor) => actor.id === family.parentActorId);
++    const encounter = family.child.kind === "encounter" ? state.encounters[family.child.id] : undefined;
++    const operation = family.child.kind === "service_visitor" ? state.serviceOperations.find((op) => op.id === family.child.id) : undefined;
++    if (!parent || parent.kind !== "companion" || parent.pediatricFamilyId !== family.id || parent.procedureCompanion || parent.activeRetailOperationId !== null ||
++        (encounter ? encounter.pediatricFamilyId !== family.id || !encounter.frozenCase.pediatricProfile || parent.linkedEncounterId !== encounter.id
++          : !operation || operation.clinicVisit?.kind !== "pediatric_consult" || operation.clinicVisit.pediatricFamilyId !== family.id || parent.linkedServiceOperationId !== operation.id)) {
++      throw new Error("The saved pediatric family has missing or incompatible actors.");
++    }
++    const childLocation = encounter?.patientLocation ?? operation?.location;
++    if (pediatricRoomAtPoint(state, context, childLocation)?.id !== pediatricRoomAtPoint(state, context, parent.location)?.id ||
++      Boolean(childLocation) !== Boolean(parent.location)) throw new Error("The saved pediatric child and parent must stay together.");
++    if (family.movement?.childPath.slice(family.movement.pathIndex).some((point, index) =>
++      pediatricRoomAtPoint(state, context, point)?.id !== pediatricRoomAtPoint(state, context, family.movement!.parentPath[family.movement!.pathIndex + index])?.id)) {
++      throw new Error("The saved pediatric travel must cross rooms together.");
++    }
++    if (family.reservation) {
++      const room = state.rooms.find((candidate) => candidate.id === family.reservation!.roomInstanceId);
++      const definition = room && getRoomDefinition(room.roomDefinitionId, context);
++      const width = room && (room.orientation === 90 || room.orientation === 270 ? definition?.height : definition?.width);
++      const height = room && (room.orientation === 90 || room.orientation === 270 ? definition?.width : definition?.height);
++      if (!room || !width || !height || [family.reservation.childLocation, family.reservation.parentLocation].some((point) =>
++        point.x + .5 < room.x || point.y + .5 < room.y || point.x + .5 >= room.x + width || point.y + .5 >= room.y + height)) {
++        throw new Error("The saved pediatric pair reservation must use one existing room.");
++      }
++    }
++  }
++  for (const encounter of Object.values(state.encounters)) {
++    if (encounter.pediatricFamilyId !== undefined && (families[encounter.pediatricFamilyId]?.child.kind !== "encounter" ||
++        families[encounter.pediatricFamilyId]?.child.id !== encounter.id)) throw new Error("The saved pediatric encounter has an orphan family link.");
++  }
++  for (const operation of state.serviceOperations) {
++    const familyId = operation.clinicVisit?.pediatricFamilyId;
++    if (familyId !== undefined && (families[familyId]?.child.kind !== "service_visitor" || families[familyId]?.child.id !== operation.id)) {
++      throw new Error("The saved pediatric visit has an orphan family link.");
++    }
++  }
++  for (const parent of state.retailExternalActors) {
++    if (parent.pediatricFamilyId !== undefined && families[parent.pediatricFamilyId]?.parentActorId !== parent.id) {
++      throw new Error("The saved pediatric parent has an orphan family link.");
++    }
++  }
+ }
+ 
+ function readDiagnosticTiming(value: unknown, encounterId?: string) {
+@@ -776,7 +949,8 @@
+       value.roleStyle === "endoscopist" ||
+       value.roleStyle === "phlebotomist" ||
+       value.roleStyle === "evs_worker" ||
+-      value.roleStyle === "glp1_np")
++      value.roleStyle === "glp1_np" ||
++      value.roleStyle === "app")
+   );
+ }
+ 
+@@ -787,6 +961,7 @@
+   "in_service",
+   "walking_between_phases",
+   "waiting_for_next_phase",
++  "waiting_for_results",
+   "discharging",
+   "leaving",
+   "completed",
+@@ -799,15 +974,25 @@
+   if (!Array.isArray(candidate)) return [];
+   const activePeriopBeds = new Set<string>();
+   return candidate.flatMap((raw) => {
+-    if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee);
++    const clinicVisit = isRecord(raw) ? readClinicVisit(raw.clinicVisit, raw) : undefined;
++    const appAppointmentRevenue = isRecord(raw) ? normalizeAppAppointmentRevenue(raw.appAppointmentRevenue, clinicVisit, raw.quoteFee) : undefined;
++    if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, appAppointmentRevenue?.baseFee ?? raw.quoteFee);
+     if (isRecord(raw) && raw.roomUpgradeRecovery !== undefined) normalizeRoomUpgradeRecoveryQuote(raw.roomUpgradeRecovery);
+     const diagnosticPhaseWork = isRecord(raw) && raw.diagnosticPhaseWork !== undefined
+       ? normalizeDiagnosticPhaseWork(raw.diagnosticPhaseWork)
+       : undefined;
+     const diagnosticPhysicalWork = isRecord(raw) && raw.diagnosticPhysicalWork !== undefined ? normalizeDiagnosticPhysicalWork(raw.diagnosticPhysicalWork) : undefined;
++    const diagnosticTiming = isRecord(raw) ? readDiagnosticTiming(raw.diagnosticTiming, typeof raw.id === "string" ? raw.id : undefined) : undefined;
++    if (diagnosticTiming && (!isRecord(raw) || raw.actorKind !== "visitor" || raw.actorId !== raw.id ||
++      raw.incomeLineId !== "income.mri" || clinicVisit?.kind !== "mri" || !diagnosticPhysicalWork ||
++      diagnosticPhysicalWork.orderId !== diagnosticTiming.orderId || diagnosticTiming.sources.length !== 1 ||
++      diagnosticTiming.sources[0]?.serviceId !== "service.mri" || diagnosticTiming.sources[0]?.routeId !== "route.mri.in_house" ||
++      diagnosticTiming.phases.filter(phase => phase.patientPresent && phase.requirement).some(phase => phase.requirement?.roomDefinitionId !== "room.mri"))) {
++      throw new Error("The saved MRI appointment plan is invalid.");
++    }
+     const markedDiagnostic = Boolean(diagnosticPhaseWork || diagnosticPhysicalWork);
+     const markedReading = Boolean(diagnosticPhaseWork?.readingUpgradeWork);
+-    if (isRecord(raw) && raw.diagnosticPhysicalWork !== undefined && (!diagnosticPhysicalWork || diagnosticPhaseWork || raw.actorKind !== "encounter" ||
++    if (isRecord(raw) && raw.diagnosticPhysicalWork !== undefined && (!diagnosticPhysicalWork || diagnosticPhaseWork || (raw.actorKind !== "encounter" && !diagnosticTiming) ||
+       raw.actorId !== diagnosticPhysicalWork.encounterId || diagnosticPhysicalWork.billing === "none" && raw.quoteFee !== 0)) {
+       throw new Error("The saved diagnostic physical work marker is invalid.");
+     }
+@@ -839,11 +1024,11 @@
+       typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) ||
+       typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)
+     ) {
+-      if (markedDiagnostic) throw new Error("The saved diagnostic service operation is invalid.");
++      if (markedDiagnostic || clinicVisit) throw new Error("The saved diagnostic or clinic service operation is invalid.");
+       return [];
+     }
+     const line = getServiceIncomeLine(raw.incomeLineId)!;
+-    if (markedDiagnostic && (
++    if ((markedDiagnostic || clinicVisit) && (
+       raw.catalogVersion !== 1 ||
+       !raw.reservedRoomInstanceIds.every((id) => typeof id === "string") || !raw.reservedEmployeeIds.every((id) => typeof id === "string") || !raw.path.every(isGridPoint) ||
+       raw.createdAtFacilityTick < 0 || raw.waitDeadlineFacilityTick < 0 || raw.lastMovedAtFacilityTick < 0 || raw.pathIndex < 0 ||
+@@ -985,7 +1170,7 @@
+     }
+     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
+     const periopNurseAttention = normalizePeriopNurseAttention(raw.periopNurseAttention, frozenOperationPhases);
+-    const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee,
++    const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, appAppointmentRevenue?.baseFee ?? raw.quoteFee,
+       frozenOperationPhases.map((phase) => phase.roomDefinitionId));
+     const roomUpgradeRecovery = normalizeRoomUpgradeRecoveryQuote(raw.roomUpgradeRecovery, frozenOperationPhases);
+     if (roomUpgradeRecovery) {
+@@ -1005,7 +1190,7 @@
+       frozenOperationPhases.some((phase) => phase.roomDefinitionId === "room.periop_recovery" && phase.roomStationId === "periop_recovery");
+     const legacyPeriopWait = !periopNurseAttention && raw.status === "waiting_for_next_phase" && periopPhases && isRecord(raw.periopBedReservation);
+     const phaseFlowVersion = (raw.phaseFlowVersion === 1 || legacyPeriopWait) &&
+-      (diagnosticPhysicalWork || periopPhases)
++      (diagnosticPhysicalWork || periopPhases || ["adult_appointment", "pediatric_consult", "wound_care", "ostomy_support"].includes(clinicVisit?.kind ?? ""))
+         ? 1 as const
+         : undefined;
+     const periopBedFlowVersion = (raw.periopBedFlowVersion === 1 || legacyPeriopWait) &&
+@@ -1052,10 +1237,11 @@
+       (raw.status === "discharging" && (!periopBedFlowVersion || (!periopBedReservation && !rawDepartureItinerary))) ||
+       (!terminalStatus && bedKey !== null && activePeriopBeds.has(bedKey)) ||
+       (raw.status === "waiting_for_next_phase" && phaseFlowVersion !== 1) ||
++      (raw.status === "waiting_for_results" && !diagnosticTiming) ||
+       raw.phaseIndex > phaseCount ||
+-      (raw.phaseIndex === phaseCount && raw.status !== "discharging" && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
++      (raw.phaseIndex === phaseCount && raw.status !== "discharging" && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled" && !(raw.status === "waiting_for_results" && diagnosticTiming))
+     ) {
+-      if (markedDiagnostic) throw new Error("The saved diagnostic service operation phase is invalid.");
++      if (markedDiagnostic || clinicVisit) throw new Error("The saved diagnostic or clinic service operation phase is invalid.");
+       return [];
+     }
+     if (!terminalStatus && bedKey !== null) activePeriopBeds.add(bedKey);
+@@ -1078,6 +1264,8 @@
+       actorId: raw.actorId,
+       displayName: raw.displayName,
+       appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
++      ...(clinicVisit ? { clinicVisit } : {}),
++      ...(appAppointmentRevenue ? { appAppointmentRevenue } : {}),
+       status: raw.status as ServiceOperationState["status"],
+       createdAtFacilityTick: raw.createdAtFacilityTick,
+       waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+@@ -1119,6 +1307,8 @@
+           } }
+         : {}),
+       ...(periopBedReservation ? { periopBedReservation } : {}),
++      ...((["adult_appointment", "pediatric_consult", "wound_care", "ostomy_support"].includes(clinicVisit?.kind ?? "") || diagnosticTiming) && Array.isArray(raw.transitionHeldRoomInstanceIds)
++        ? { transitionHeldRoomInstanceIds: raw.transitionHeldRoomInstanceIds.filter((id): id is string => typeof id === "string") } : {}),
+       ...(periopBedFlowVersion ? {
+         nextPhaseReadyAtFacilityTick:
+           typeof raw.nextPhaseReadyAtFacilityTick === "number" && Number.isSafeInteger(raw.nextPhaseReadyAtFacilityTick)
+@@ -1143,6 +1333,7 @@
+       testChoiceOrder,
+       ...(diagnosticPhaseWork ? { diagnosticPhaseWork } : {}),
+       ...(diagnosticPhysicalWork ? { diagnosticPhysicalWork } : {}),
++      ...(diagnosticTiming ? { diagnosticTiming } : {}),
+       ...(completedCareProvenance ? { completedCareProvenance } : {}),
+     } satisfies ServiceOperationState];
+   });
+@@ -1184,6 +1375,10 @@
+ function normalizeRetailExternalActors(candidate: unknown): RetailExternalActorState[] {
+   if (!Array.isArray(candidate)) return [];
+   return candidate.flatMap((raw) => {
++    const pediatricFamilyId = isRecord(raw) ? readPediatricFamilyId(raw.pediatricFamilyId) : undefined;
++    if (pediatricFamilyId && isRecord(raw) && raw.procedureCompanion !== undefined) {
++      throw new Error("A saved pediatric parent cannot use the procedure-companion contract.");
++    }
+     if (!isRecord(raw) || typeof raw.id !== "string" || (raw.kind !== "retail_visitor" && raw.kind !== "companion") || typeof raw.displayName !== "string" || !isPixelAppearance(raw.appearance) ||
+       (raw.lifecycle !== "arriving" && raw.lifecycle !== "onsite" && raw.lifecycle !== "departing" && raw.lifecycle !== "departed") || !Array.isArray(raw.path) ||
+       typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) || typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)) return [];
+@@ -1194,6 +1389,7 @@
+       path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+       activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null,
+       ...(typeof raw.movementWaitReason === "string" ? { movementWaitReason: raw.movementWaitReason } : {}),
++      ...(pediatricFamilyId ? { pediatricFamilyId } : {}),
+       ...(procedureCompanion ? { procedureCompanion } : {}) } satisfies RetailExternalActorState];
+   });
+ }
+@@ -1321,6 +1517,7 @@
+   parsed: Record<string, unknown>,
+   baseline: GameState,
+   context: DomainContext,
++  facilityTick: number,
+ ): PlacedRoom[] {
+   if (!Array.isArray(parsed.rooms)) {
+     return baseline.rooms;
+@@ -1373,6 +1570,7 @@
+             : [],
+         }
+       : undefined;
++    const upkeepOutage = normalizeRoomUpkeepOutage(candidate.upkeepOutage, facilityTick);
+     return [
+       {
+         id: candidate.id,
+@@ -1388,6 +1586,7 @@
+             ? Math.max(0, Math.min(100, candidate.cleanliness))
+             : 100,
+         ...(maintenance ? { maintenance } : {}),
++        ...(upkeepOutage ? { upkeepOutage } : {}),
+       },
+     ];
+   });
+@@ -2110,6 +2309,15 @@
+   const frozenCase = JSON.parse(
+     JSON.stringify(candidate.frozenCase),
+   ) as Record<string, unknown>;
++  const pediatricFamilyId = readPediatricFamilyId(candidate.pediatricFamilyId);
++  const pediatricProfile = frozenCase.pediatricProfile !== undefined;
++  if (pediatricProfile) {
++    // Validate before legacy demographic completion can insert an adult age/sex.
++    syntheticClinicalCaseSchema.parse(frozenCase);
++    if (!pediatricFamilyId || !isPixelAppearance(candidate.patientAppearance) || !isSpecialtyId(candidate.patientAppearance.stillId)) {
++      throw new Error("The saved pediatric patient needs its frozen appearance and family link.");
++    }
++  }
+   frozenCase.prototypeDemographics = completePatientDemographics({
+     caseId: typeof frozenCase.id === "string" ? frozenCase.id : encounterId,
+     campaignSeed,
+@@ -2638,7 +2846,9 @@
+       : feedAttentionStartedAtTick,
+     patientAppearance:
+       isPixelAppearance(candidate.patientAppearance)
+-        ? normalizePatientAppearanceForSex(
++        ? pediatricProfile
++          ? normalizePixelAppearance(candidate.patientAppearance, "patient")
++          : normalizePatientAppearanceForSex(
+             candidate.patientAppearance,
+             patientSexLabel,
+             patientAgeYears,
+@@ -2848,7 +3058,8 @@
+     (parsed.facilityLevel !== 0 &&
+       parsed.facilityLevel !== 1 &&
+       parsed.facilityLevel !== 2 &&
+-      parsed.facilityLevel !== 3) ||
++      parsed.facilityLevel !== 3 &&
++      !(parsed.facilityLevel === 4 && context.balanceRelease.facility.maximumPlayableLevel === 4)) ||
+     !isRecord(parsed.encounters) ||
+     !isRecord(parsed.learningHistories) ||
+     !Array.isArray(parsed.employees) ||
+@@ -2920,6 +3131,7 @@
+     ...baseline,
+     ...(parsed as unknown as GameState),
+     schemaVersion: 9 as const,
++    salaryEconomyVersion: validateSavedSalaryVersion(parsed.salaryEconomyVersion),
+     approvedRoomNavigationMigration:
+       isRecord(parsed.approvedRoomNavigationMigration) &&
+       parsed.approvedRoomNavigationMigration.version ===
+@@ -2929,6 +3141,8 @@
+     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
+     founder: normalizeFounder(parsed.founder, campaignSeed),
+     facilityTick: parsedFacilityTick,
++    pediatricFamilies: readPediatricFamilies(parsed.pediatricFamilies),
++    levelFourCompletion: readLevelFourCompletion(parsed.levelFourCompletion, parsedFacilityTick),
+     simulationSpeed:
+       parsed.simulationSpeed === 2 || parsed.simulationSpeed === 4
+         ? parsed.simulationSpeed
+@@ -3034,7 +3248,7 @@
+   delete (next as unknown as Record<string, unknown>).satisfaction;
+   delete (next as unknown as Record<string, unknown>)
+     .dailyConfidenceSatisfactionModifier;
+-  next.rooms = normalizeRooms(parsed, baseline, context);
++  next.rooms = normalizeRooms(parsed, baseline, context, parsedFacilityTick);
+   next.patientAmenityTrips = normalizePatientAmenityTrips(
+     parsed.patientAmenityTrips,
+     next.rooms,
+@@ -3324,10 +3538,8 @@
+         typeof candidate.hiredAtFacilityTick === "number"
+           ? candidate.hiredAtFacilityTick
+           : 0,
+-      salaryPerExpenseInterval:
+-        typeof candidate.salaryPerExpenseInterval === "number"
+-          ? candidate.salaryPerExpenseInterval
+-          : (role?.salaryPerExpenseInterval ?? 0),
++      salaryPerExpenseInterval: normalizeSavedSalary(candidate.salaryPerExpenseInterval,
++        candidate.staffRoleDefinitionId, parsed.salaryEconomyVersion, context),
+       morale:
+         typeof candidate.morale === "number"
+           ? candidate.morale
+@@ -4476,6 +4688,8 @@
+     context,
+   );
+   migrated.schemaVersion = 9;
++  validatePediatricFamilyLinks(migrated, context);
++  synchronizeRoomUpkeepOutages(migrated, context);
+   return migrated;
+ }
+ 

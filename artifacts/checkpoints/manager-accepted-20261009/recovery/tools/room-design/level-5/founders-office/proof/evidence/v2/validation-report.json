@@ -1,0 +1,627 @@
+{
+  "status": "PASS",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    3,
+    3
+  ],
+  "tiers": [
+    {
+      "level": 1,
+      "assets": 6,
+      "states": 112,
+      "routes": 576,
+      "layers": [
+        {
+          "id": "founderChair",
+          "opaqueForegroundOverlap": 647,
+          "uncoveredAdultPixels": 6578,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 2852,
+          "uncoveredAdultPixels": 5696,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "assets": 7,
+      "states": 112,
+      "routes": 576,
+      "layers": [
+        {
+          "id": "founderChair",
+          "opaqueForegroundOverlap": 435,
+          "uncoveredAdultPixels": 6790,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 2970,
+          "uncoveredAdultPixels": 5578,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "assets": 6,
+      "states": 112,
+      "routes": 576,
+      "layers": [
+        {
+          "id": "founderChair",
+          "opaqueForegroundOverlap": 768,
+          "uncoveredAdultPixels": 6457,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3537,
+          "uncoveredAdultPixels": 5011,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "assets": 7,
+      "states": 112,
+      "routes": 576,
+      "layers": [
+        {
+          "id": "founderChair",
+          "opaqueForegroundOverlap": 860,
+          "uncoveredAdultPixels": 6365,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3454,
+          "uncoveredAdultPixels": 5094,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "assets": 7,
+      "states": 112,
+      "routes": 576,
+      "layers": [
+        {
+          "id": "founderChair",
+          "opaqueForegroundOverlap": 1013,
+          "uncoveredAdultPixels": 6212,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3148,
+          "uncoveredAdultPixels": 5400,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    }
+  ],
+  "states": 560,
+  "routes": 2880,
+  "radiusClearSamples": 1115024,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 12,
+  "backingSections": 3,
+  "monotonicChecks": 720,
+  "arbitraryDoorCombinationProof": "Each single-door path is safe with all other optional objects present; more doors remove obstacles. Backing never adds floor obstacles.",
+  "assets": 33,
+  "foregrounds": 10,
+  "assetChecks": [
+    {
+      "id": "l1-desk",
+      "canvas": [
+        648,
+        432
+      ],
+      "sha256": "bfc8675f3bdc3c9e5bda1e5c286beabc0a5b2b517ef1db4b5e458befffbb601d",
+      "alphaEdge": 0,
+      "transparentPixels": 214705,
+      "anchor": [
+        324,
+        424
+      ],
+      "worktopRise": 64.54545454545453
+    },
+    {
+      "id": "l1-founderChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "dc6d024bb104e4076cc6ad3efcca67ccada5ef92255ec6eaffe36df396728f0b",
+      "alphaEdge": 0,
+      "transparentPixels": 313656,
+      "anchor": [
+        239.58904109589042,
+        760.7671232876712
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l1-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "42dd955507a3833903b2a31c1d2e1fb19a45373ba1c2999ce94f812486fd875f",
+      "alphaEdge": 0,
+      "transparentPixels": 203816,
+      "anchor": [
+        228,
+        569
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l1-shelf",
+      "canvas": [
+        384,
+        672
+      ],
+      "sha256": "f86ec9ed4d91fdde9fbbc7da34b8bc3b86ac3910b63e5daccd2ad27494171894",
+      "alphaEdge": 0,
+      "transparentPixels": 126256,
+      "anchor": [
+        192,
+        664
+      ]
+    },
+    {
+      "id": "l1-rug",
+      "canvas": [
+        912,
+        672
+      ],
+      "sha256": "043ca9d469520a25b94c2d17616c4e81f20f9198ccdaed4f121b20014377e882",
+      "alphaEdge": 0,
+      "transparentPixels": 220032,
+      "anchor": [
+        456,
+        336
+      ]
+    },
+    {
+      "id": "l1-decor",
+      "canvas": [
+        384,
+        240
+      ],
+      "sha256": "9dd9cc74745246801e257ea52d3e7481ec0d8f0be9df27524808c41d51b0bb19",
+      "alphaEdge": 0,
+      "transparentPixels": 22244,
+      "anchor": [
+        192,
+        46
+      ]
+    },
+    {
+      "id": "l2-desk",
+      "canvas": [
+        648,
+        432
+      ],
+      "sha256": "4d9684f2cafd5ecfff9602d6861a27621875c6d01d0cd5d3fb10dcd6cd68bb83",
+      "alphaEdge": 0,
+      "transparentPixels": 117233,
+      "anchor": [
+        324,
+        426
+      ],
+      "worktopRise": 58.38384679433805
+    },
+    {
+      "id": "l2-founderChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "c7ea8b4e711dfe9083c22c0861d43b7b64aaf36ff302b0b5a886c045af10070a",
+      "alphaEdge": 0,
+      "transparentPixels": 311328,
+      "anchor": [
+        240,
+        760
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l2-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "b0f145a488ab70314e483c2eaff0a34e361848dfe75a99afac00a2ee5986c065",
+      "alphaEdge": 0,
+      "transparentPixels": 176290,
+      "anchor": [
+        227.7443181818182,
+        564.8863636363636
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l2-shelf",
+      "canvas": [
+        384,
+        672
+      ],
+      "sha256": "a7c1ecf971945f37b7495c860d61f4b0a5be724ee9bda13885eb47eb624478df",
+      "alphaEdge": 0,
+      "transparentPixels": 73683,
+      "anchor": [
+        192,
+        665
+      ]
+    },
+    {
+      "id": "l2-rug",
+      "canvas": [
+        912,
+        672
+      ],
+      "sha256": "5908a18f426006e3e5b816b5f5c05a8a347f8e5a48dc9a354a8d3c9b3319c562",
+      "alphaEdge": 0,
+      "transparentPixels": 205743,
+      "anchor": [
+        456,
+        336
+      ]
+    },
+    {
+      "id": "l2-decor",
+      "canvas": [
+        384,
+        240
+      ],
+      "sha256": "6baf73ede372bc1468e451cf5e54401eb297522780af0482a4ff43672c9e8a17",
+      "alphaEdge": 0,
+      "transparentPixels": 10115,
+      "anchor": [
+        192,
+        6
+      ]
+    },
+    {
+      "id": "l2-accent",
+      "canvas": [
+        312,
+        528
+      ],
+      "sha256": "fcc1248012957795ac4b56ab5e0e1aa1d2c29c43aeba64f59d0b96767d4bc125",
+      "alphaEdge": 0,
+      "transparentPixels": 80679,
+      "anchor": [
+        156,
+        520
+      ]
+    },
+    {
+      "id": "l3-desk",
+      "canvas": [
+        648,
+        432
+      ],
+      "sha256": "52f419767cdeac52b21bf5c718295d85958bb2274f7ac9e9fe7ad282440816e4",
+      "alphaEdge": 0,
+      "transparentPixels": 105968,
+      "anchor": [
+        324,
+        424
+      ],
+      "worktopRise": 62.785714285714285
+    },
+    {
+      "id": "l3-founderChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "6b162b0bad6f5c9818f2a248753bee10c6084464962e9f846c82d2ff4498b066",
+      "alphaEdge": 0,
+      "transparentPixels": 287657,
+      "anchor": [
+        239.78971962616822,
+        756.5327102803739
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l3-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "f499b1e13ba0da4a48ce6f6ec692090abe87b145e031650f5f907b350b947ab4",
+      "alphaEdge": 0,
+      "transparentPixels": 152315,
+      "anchor": [
+        227.72809667673718,
+        568.9123867069486
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l3-shelf",
+      "canvas": [
+        384,
+        672
+      ],
+      "sha256": "e3cb5e977bf1500460f109914f76ec76b44f07b1b763109c1cc5538e479598cf",
+      "alphaEdge": 0,
+      "transparentPixels": 36572,
+      "anchor": [
+        192,
+        665
+      ]
+    },
+    {
+      "id": "l3-rug",
+      "canvas": [
+        912,
+        672
+      ],
+      "sha256": "9bd86a8afd4eab55ba6e94993b26720e2dc5dbb284a4bd4ff101d9ba457f6002",
+      "alphaEdge": 0,
+      "transparentPixels": 170735,
+      "anchor": [
+        456,
+        336
+      ]
+    },
+    {
+      "id": "l3-decor",
+      "canvas": [
+        384,
+        240
+      ],
+      "sha256": "761869f861098d7ddeeaa3de737ed9f739f12c3770bfc053aebe079e9dbbdbb6",
+      "alphaEdge": 0,
+      "transparentPixels": 24554,
+      "anchor": [
+        192,
+        52
+      ]
+    },
+    {
+      "id": "l4-desk",
+      "canvas": [
+        648,
+        432
+      ],
+      "sha256": "e177b70caffe1c93428b6124d60f9822c0e85703c907094217af1fa1cb4b49ed",
+      "alphaEdge": 0,
+      "transparentPixels": 105719,
+      "anchor": [
+        324,
+        423
+      ],
+      "worktopRise": 59.679906542056074
+    },
+    {
+      "id": "l4-founderChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "da167adeb98a6bf489e8c37562bf72e66aa92e949b51a725073e7d5af47f0df5",
+      "alphaEdge": 0,
+      "transparentPixels": 288776,
+      "anchor": [
+        240,
+        760.9390962671905
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l4-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "fdebe9ef2787cefd7ed9fa9dddcfdff5bde3870b244ac334a05466561b90f60e",
+      "alphaEdge": 0,
+      "transparentPixels": 162268,
+      "anchor": [
+        227.78571428571428,
+        565.2857142857143
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l4-shelf",
+      "canvas": [
+        384,
+        672
+      ],
+      "sha256": "277d635a08e1581389c190c0bade1fa9a5972cbad431ebdf06925f834434f2b0",
+      "alphaEdge": 0,
+      "transparentPixels": 90459,
+      "anchor": [
+        192,
+        662
+      ]
+    },
+    {
+      "id": "l4-rug",
+      "canvas": [
+        912,
+        672
+      ],
+      "sha256": "1742d916c587268f949d1e5db14846e980c873d8ecc944b229387f3ca827b7e3",
+      "alphaEdge": 0,
+      "transparentPixels": 115268,
+      "anchor": [
+        456,
+        336
+      ]
+    },
+    {
+      "id": "l4-decor",
+      "canvas": [
+        384,
+        240
+      ],
+      "sha256": "ffc91b62f25dfd3fae692eb50b415591c0d56a328d4f3288653cb8ecd3ad4384",
+      "alphaEdge": 0,
+      "transparentPixels": 23943,
+      "anchor": [
+        192,
+        48
+      ]
+    },
+    {
+      "id": "l4-accent",
+      "canvas": [
+        312,
+        528
+      ],
+      "sha256": "8812738b450ddb03db6d4d5361026518bc31d4bf602697bf89138a9d791fa70a",
+      "alphaEdge": 0,
+      "transparentPixels": 100913,
+      "anchor": [
+        156,
+        521
+      ]
+    },
+    {
+      "id": "l5-desk",
+      "canvas": [
+        648,
+        432
+      ],
+      "sha256": "2bf6f2c22503890f4b03646e6b29b39c6c715cdd319ad07b8932b260d52aa4fc",
+      "alphaEdge": 0,
+      "transparentPixels": 122526,
+      "anchor": [
+        324,
+        424
+      ],
+      "worktopRise": 57.69013581129378
+    },
+    {
+      "id": "l5-founderChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "38bbcc296d3f1422efdb5a37447d8b4ecd22a4fa43248c533fdb5b579389e6c9",
+      "alphaEdge": 0,
+      "transparentPixels": 176420,
+      "anchor": [
+        240,
+        755.5359116022099
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l5-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "83d8d4260d69453e8422d7b8cfb78e4222921203f6ed459b35ed530455c76a82",
+      "alphaEdge": 0,
+      "transparentPixels": 169880,
+      "anchor": [
+        227.765625,
+        568.59375
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "l5-shelf",
+      "canvas": [
+        384,
+        672
+      ],
+      "sha256": "1aa8464f2a968eeba81dd452baee4577371777ec1ed103858953a7db9704d47f",
+      "alphaEdge": 0,
+      "transparentPixels": 123119,
+      "anchor": [
+        192,
+        665
+      ]
+    },
+    {
+      "id": "l5-rug",
+      "canvas": [
+        912,
+        672
+      ],
+      "sha256": "c3c8d76e3b0f8a84d1aac62e98f28481de52a456b352542f0a489dbd6cf7b831",
+      "alphaEdge": 0,
+      "transparentPixels": 104371,
+      "anchor": [
+        456,
+        336
+      ]
+    },
+    {
+      "id": "l5-decor",
+      "canvas": [
+        384,
+        240
+      ],
+      "sha256": "98a1185558c93964df0d5242d884e91dd496b7ae331aa789c097813f7ca5c0d9",
+      "alphaEdge": 0,
+      "transparentPixels": 23159,
+      "anchor": [
+        192,
+        6
+      ]
+    },
+    {
+      "id": "l5-accent",
+      "canvas": [
+        312,
+        528
+      ],
+      "sha256": "a033e0d8e8a49bb3d32efc08f80a4fe75c322cb189e5e6adb4cd416aaa41894b",
+      "alphaEdge": 0,
+      "transparentPixels": 89604,
+      "anchor": [
+        156,
+        520
+      ]
+    }
+  ],
+  "realIdentities": [
+    "founder.01",
+    "patient.adult.007"
+  ],
+  "sourceHashes": 25,
+  "concurrentReferenceChanges": [
+    {
+      "path": "tools/room-design/level-4/wound-ostomy/proof/lab.js",
+      "intakeSha256": "c22c9e83a612181309f5b5519fc9e9ea817539af780ba319014645751026b827",
+      "currentSha256": "d0122d4d6c909de72cbf4679acd1ce99954651100a8c3ab5a541117b98f09929"
+    }
+  ],
+  "textFiles": 211,
+  "warnings": [],
+  "browserQA": "pending manager",
+  "proofManifestSha256": "ad05f4d056356472fe4ace39ef96053549ba38e0ea439b1f668dbc06487ad75f"
+}

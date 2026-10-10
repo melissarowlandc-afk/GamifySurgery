@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-10T01:38:51.211072+00:00",
+  "strictInvocation": "python artifacts/checkpoints/manager-accepted-20261009/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+  "patchContracts": 110,
+  "forwardReverseReapply": 110,
+  "recoveredTargets": 1218,
+  "wholeOwnedTargets": 1108,
+  "liveStageSourcesChecked": 5,
+  "liveRecoveryTargetsChecked": 1218,
+  "actualArchiveSizeAndFileCounts": "validation/archive-size.json; final strict command rerun after metadata stabilization",
+  "diskRestoreProof": "validation/restore-roundtrip.json",
+  "guardProof": "validation/verifier-self-checks.json",
+  "earlierArchiveVerification": "validation/prior-archive-verification.json",
+  "gitMutations": 0,
+  "verifierWrites": 0
+}

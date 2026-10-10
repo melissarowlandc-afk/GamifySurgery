@@ -1,0 +1,22 @@
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -1,5 +1,6 @@
+ import { useMemo, useState } from "react";
+ import { AppShell } from "./AppShell";
++import { getTutorialClockMultiplier } from "./session/tutorialTiming";
+ import {
+   appendLocalCampaign,
+   archiveLocalCampaign,
+@@ -71,7 +72,11 @@
+       onAnswerEmployeeDiscussion={session.answerEmployeeDiscussion}
+       onAcknowledgeEmployeeDiscussion={session.acknowledgeEmployeeDiscussion}
+       onFileEmployeeDiscussion={session.fileEmployeeDiscussion}
+-      facility={view.facility}
++      facility={{
++        ...view.facility,
++        realMillisecondsPerFacilityMinuteAt1x: view.facility.realMillisecondsPerFacilityMinuteAt1x /
++          getTutorialClockMultiplier(session.state, session.tutorialsEnabled),
++      }}
+       progression={view.progression}
+       roomOptions={view.roomOptions}
+       ownedRooms={view.ownedRooms}

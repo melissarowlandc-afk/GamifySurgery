@@ -1,0 +1,11 @@
+--- a/packages/game-domain/tests/retail-operations.test.ts
++++ b/packages/game-domain/tests/retail-operations.test.ts
+@@ -345,7 +345,7 @@
+     expect(state.retailExternalActors).toEqual([expect.objectContaining({ id: "rx.customer", lifecycle: "arriving" })]);
+     state = start(state, "income.pharmacy_pickup", "retail_visitor", "rx.customer", "order.rx", context);
+     state = advance(state, 40, context);
+-    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", grossAmount: 25, stockCost: 15, netCashDelta: 10 })]));
++    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", grossAmount: 70, stockCost: 15, netCashDelta: 55 })]));
+     expect(state.retailOrders[0]).toMatchObject({ fulfilledQuantity: 1 });
+     expect(state.rooms.find((room) => room.id === "room.retail.coffee")?.maintenance).toMatchObject({ completedUses: 1, status: "operational" });
+     state = gameReducer(state, { type: "AUTHORIZE_RETAIL_ORDER", operationId: "authorize-supply", orderId: "order.supply", incomeLineId: "income.wound_supply", actorKind: "retail_visitor", actorId: "supply.customer" }, context);

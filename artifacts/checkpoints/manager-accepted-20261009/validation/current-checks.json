@@ -1,0 +1,23 @@
+{
+  "archiveIntegrity": "strict verifier plus disk restore and guard results",
+  "launcher": {
+    "command": "node scripts/verify-launcher-contract.mjs",
+    "exitCode": 0,
+    "result": "Verified launcher health contract gamify-surgery-player protocol 1.",
+    "transcript": "validation/current-launcher.txt"
+  },
+  "boundaries": {
+    "command": "node scripts/verify-app-boundaries.mjs",
+    "exitCode": 1,
+    "cause": "Could not inspect tracked paths: spawnSync git EPERM",
+    "transcript": "validation/current-boundaries.txt",
+    "managerHistoricalAcceptance": "PASS with 14124 tracked paths after maxBuffer fix; preserve as historical, not this worker rerun."
+  },
+  "clinicalAudit": {
+    "command": "node artifacts/checkpoints/manager-accepted-20261009/clinical_review_audit.mjs",
+    "exitCode": 0,
+    "status": "PASS"
+  },
+  "gameSuitesRerunByArchiveWorker": false,
+  "noBrowserOrOwnerStorageAccess": true
+}

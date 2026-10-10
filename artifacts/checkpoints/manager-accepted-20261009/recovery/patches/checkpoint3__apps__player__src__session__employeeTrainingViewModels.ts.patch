@@ -1,0 +1,10 @@
+--- a/apps/player/src/session/employeeTrainingViewModels.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.ts
+@@ -22,6 +22,7 @@
+   "staff.pharmacist": "Cuts supply costs",
+   "staff.repair_person": "Reduces repair time",
+   "staff.radiologist": "Reduces reading time",
++  "staff.app": "Increases APP appointment revenue",
+ };
+ 
+ const trainingMoneyFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });

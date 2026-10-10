@@ -1,0 +1,817 @@
+--- a/packages/game-domain/tests/timing-encounters.test.ts
++++ b/packages/game-domain/tests/timing-encounters.test.ts
+@@ -11,6 +11,7 @@
+   getFacilityClock,
+   getEligibleServiceRoute,
+   getPatientLists,
++  getRoomCareAnchor,
+   serializeGameState,
+   validateFacilityAccess,
+   validateDomainContext,
+@@ -89,6 +90,14 @@
+     createdAtRealMs: 0,
+   });
+   state.facilityLevel = 1;
++  // These custom-routing fixtures predate the stable fresh-campaign starter
++  // room and intentionally author their own Examination Room topology.
++  state.rooms = state.rooms.filter(
++    (room) => room.id !== "room.instance.starter_examination",
++  );
++  state.doors = state.doors.filter(
++    (door) => door.roomId !== "room.instance.starter_examination",
++  );
+   state.encounters = {};
+   state.openChartEncounterId = null;
+   state.attendedEncounterId = null;
+@@ -142,7 +151,7 @@
+     {
+       id: "room.test.examination",
+       roomDefinitionId: "room.examination",
+-      x: 34,
++      x: 29,
+       y: 26,
+       orientation: 0,
+       doorSide: null,
+@@ -152,8 +161,8 @@
+     {
+       id: "room.test.imaging-control",
+       roomDefinitionId: "room.imaging_control",
+-      x: 31,
+-      y: 24,
++      x: 29,
++      y: 23,
+       orientation: 0,
+       doorSide: null,
+       upgradeLevel: 1,
+@@ -169,7 +178,7 @@
+       upgradeLevel: 1,
+       cleanliness: 100,
+     },
+-    ...([26, 27, 28] as const).map((y) => ({
++    ...([23, 24, 25, 26, 27, 28] as const).map((y) => ({
+       id: `room.hall.32.${y}`,
+       roomDefinitionId: "room.hallway",
+       x: 32,
+@@ -179,14 +188,16 @@
+       upgradeLevel: 1 as const,
+       cleanliness: 100,
+     })),
++    ...([30, 31] as const).map((x) => ({
++      id: `room.hall.${x}.25`, roomDefinitionId: "room.hallway", x, y: 25,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++    })),
++    ...([30, 31] as const).map((x) => ({
++      id: `room.hall.${x}.28`, roomDefinitionId: "room.hallway", x, y: 28,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++    })),
+   );
+-  state.doors.push({
+-    id: "door.test.exam-to-xray",
+-    roomId: "room.test.xray",
+-    side: "south",
+-    offset: 2,
+-    exterior: false,
+-  });
++  state.doors.push({ id: "door.test.examination", roomId: "room.test.examination", side: "south", offset: 1, exterior: false });
+   state.doors.push({
+     id: "door.test.imaging-control-to-xray",
+     roomId: "room.test.imaging-control",
+@@ -195,7 +206,7 @@
+     exterior: false,
+   });
+   state.doors.push(
+-    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 1, exterior: false },
++    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 2, exterior: false },
+     { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+   );
+   state.employees.push({
+@@ -208,8 +219,8 @@
+     morale: 75,
+     trainingLevel: 1,
+     homeRoomInstanceId: "room.test.imaging-control",
+-    location: { x: 31, y: 24 },
+-    path: [{ x: 31, y: 24 }],
++    location: { x: 30, y: 24 },
++    path: [{ x: 30, y: 24 }],
+     pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick,
+     lastPraisedAtFacilityTick: null,
+@@ -223,13 +234,13 @@
+ ): void {
+   const roomDefinitionId = service === "ultrasound" ? "room.ultrasound" : "room.ct";
+   const room = service === "ultrasound"
+-    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 1 }
+-    : { x: 33, y: 22, patientOffset: 1, controlOffset: 2 };
++    ? { x: 33, y: 23, controlY: 23, connectionY: 25, serviceDoorOffset: 2 }
++    : { x: 33, y: 22, controlY: 22, connectionY: 24, serviceDoorOffset: 3 };
+   state.rooms.push(
+     {
+       id: "room.test.examination",
+       roomDefinitionId: "room.examination",
+-      x: 34,
++      x: 29,
+       y: 26,
+       orientation: 0,
+       doorSide: null,
+@@ -239,8 +250,8 @@
+     {
+       id: "room.test.imaging-control",
+       roomDefinitionId: "room.imaging_control",
+-      x: 31,
+-      y: service === "ultrasound" ? 24 : 23,
++      x: 29,
++      y: room.controlY,
+       orientation: 0,
+       doorSide: null,
+       upgradeLevel: 1,
+@@ -256,7 +267,7 @@
+       upgradeLevel: 1,
+       cleanliness: 100,
+     },
+-    ...(service === "ct" ? [25, 26, 27, 28] : [26, 27, 28]).map((y) => ({
++    ...([22, 23, 24, 25, 26, 27, 28] as const).map((y) => ({
+       id: `room.hall.32.${y}`,
+       roomDefinitionId: "room.hallway",
+       x: 32,
+@@ -266,10 +277,18 @@
+       upgradeLevel: 1 as const,
+       cleanliness: 100,
+     })),
++    ...([30, 31] as const).map((x) => ({
++      id: `room.hall.${x}.${room.connectionY}`, roomDefinitionId: "room.hallway", x, y: room.connectionY,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++    })),
++    ...([30, 31] as const).map((x) => ({
++      id: `room.hall.${x}.28`, roomDefinitionId: "room.hallway", x, y: 28,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++    })),
+   );
+   state.doors.push(
+-    { id: `door.test.${service}.patient`, roomId: `room.test.${service}`, side: "south", offset: room.patientOffset, exterior: false },
+-    { id: `door.test.${service}.control`, roomId: `room.test.${service}`, side: "west", offset: room.controlOffset, exterior: false },
++    { id: "door.test.examination", roomId: "room.test.examination", side: "south", offset: 1, exterior: false },
++    { id: `door.test.${service}.control`, roomId: `room.test.${service}`, side: "west", offset: room.serviceDoorOffset, exterior: false },
+     { id: "door.test.imaging-control-to-hall", roomId: "room.test.imaging-control", side: "south", offset: 1, exterior: false },
+     { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+   );
+@@ -283,8 +302,8 @@
+     morale: 75,
+     trainingLevel: 1,
+     homeRoomInstanceId: "room.test.imaging-control",
+-    location: { x: 31, y: service === "ultrasound" ? 24 : 23 },
+-    path: [{ x: 31, y: service === "ultrasound" ? 24 : 23 }],
++    location: { x: 30, y: room.controlY + 1 },
++    path: [{ x: 30, y: room.controlY + 1 }],
+     pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick,
+     lastPraisedAtFacilityTick: null,
+@@ -297,8 +316,8 @@
+   state.rooms.push({
+     id: "room.test.phlebotomy",
+     roomDefinitionId: "room.phlebotomy",
+-    x: 29,
+-    y: 27,
++    x: 28,
++    y: 20,
+     orientation: 0,
+     doorSide: null,
+     upgradeLevel: 1,
+@@ -311,6 +330,11 @@
+     offset: 1,
+     exterior: false,
+   });
++  state.rooms.push(
++    { id: "room.test.phlebotomy-hall.31.21", roomDefinitionId: "room.hallway", x: 31, y: 21, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++    { id: "room.test.phlebotomy-hall.32.21", roomDefinitionId: "room.hallway", x: 32, y: 21, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++    { id: "room.test.phlebotomy-hall.32.22", roomDefinitionId: "room.hallway", x: 32, y: 22, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++  );
+   state.employees.push({
+     id: "employee.test.phlebotomist",
+     staffRoleDefinitionId: "staff.phlebotomist",
+@@ -321,8 +345,8 @@
+     morale: 75,
+     trainingLevel: 1,
+     homeRoomInstanceId: "room.test.phlebotomy",
+-    location: { x: 30, y: 28 },
+-    path: [{ x: 30, y: 28 }],
++    location: { x: 29, y: 21 },
++    path: [{ x: 29, y: 21 }],
+     pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick,
+     lastPraisedAtFacilityTick: null,
+@@ -370,9 +394,9 @@
+     {
+       id: "room.test.exam-xray",
+       roomDefinitionId: "room.examination",
+-      x: 31,
+-      y: 28,
+-      orientation: 90,
++      x: 29,
++      y: 23,
++      orientation: 0,
+       doorSide: null,
+       upgradeLevel: 1,
+       cleanliness: 100,
+@@ -397,6 +421,15 @@
+       upgradeLevel: 1,
+       cleanliness: 100,
+     },
++    ...([
++      { x: 30, y: 25 }, { x: 31, y: 25 },
++      { x: 32, y: 25 }, { x: 32, y: 26 }, { x: 32, y: 27 },
++      { x: 32, y: 28 }, { x: 32, y: 29 }, { x: 31, y: 29 },
++    ] as const).map((point) => ({
++      id: `room.test.multi-hall.${point.x}.${point.y}`,
++      roomDefinitionId: "room.hallway", x: point.x, y: point.y,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++    })),
+   );
+   state.doors.push(
+     {
+@@ -409,7 +442,7 @@
+     {
+       id: "door.test.exam-xray-front",
+       roomId: "room.test.exam-xray",
+-      side: "east",
++      side: "south",
+       offset: 1,
+       exterior: false,
+     },
+@@ -427,6 +460,7 @@
+       offset: 1,
+       exterior: false,
+     },
++    { id: "door.test.multi-front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+   );
+   state.employees.push({
+     id: "employee.test.multi-imaging-tech",
+@@ -438,8 +472,8 @@
+     morale: 75,
+     trainingLevel: 1,
+     homeRoomInstanceId: "room.test.multi-imaging-control",
+-    location: { x: 28, y: 27 },
+-    path: [{ x: 28, y: 27 }],
++    location: { x: 29, y: 27 },
++    path: [{ x: 29, y: 27 }],
+     pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick,
+     lastPraisedAtFacilityTick: null,
+@@ -551,7 +585,9 @@
+ 
+     state = tick(state, "expense.quarter");
+     expect(state.facilityTick).toBe(15);
+-    expect(state.cash).toBe(startingCash - 1.5);
++    // A fresh campaign now owns only the Front Desk, whose $1 hourly upkeep
++    // posts as $0.25 at the first quarter-hour boundary.
++    expect(state.cash).toBe(startingCash - 0.25);
+     const restored = deserializeGameState(serializeGameState(state));
+     expect(restored.nextFinancialPostingTick).toBe(30);
+     expect(restored.operatingAccrualSixtiethCents).toBe(
+@@ -763,6 +799,27 @@
+       route: { id: "route.xray.outsourced" },
+       timing: { serviceDurationTicks: 120 },
+     });
++    const decision = state.encounters[encounterId]!.steps[
++      state.encounters[encounterId]!.currentNodeIndex
++    ]!;
++    state = gameReducer(state, {
++      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
++      operationId: "inhouse.ack-preserve-route",
++      encounterId,
++      decisionNodeId: decision.decisionNodeId,
++    });
++    const acknowledged = state.encounters[encounterId]!;
++    const frozenOnsiteTravel = JSON.parse(
++      JSON.stringify(acknowledged.pendingResult!.patientTravel),
++    );
++    expect(acknowledged).toMatchObject({
++      lifecycle: "active_pending_result",
++      assignedRoomInstanceId: null,
++      queuedCareRoomInstanceId: null,
++    });
++    expect(acknowledged.pendingResult!.patientTravel).toEqual(
++      frozenOnsiteTravel,
++    );
+   });
+ 
+   it("uses frozen Level 2 onsite service phases without extending the advertised ETA", () => {
+@@ -838,14 +895,31 @@
+       const pending = state.encounters[encounterId]!.pendingResult!;
+       expect(pending).toMatchObject({
+         routeId: service.onsiteRouteId,
+-        dueTick: pending.scheduledAtTick + service.eta,
+         resourceReservations: [{ roomDefinitionId: expect.any(String), staffRoleDefinitionId: expect.any(String) }],
+       });
+-      expect(pending.timingPhases?.[0]).toMatchObject({
+-        resourceBound: true,
+-        startsAtTick: pending.scheduledAtTick,
+-        endsAtTick: pending.scheduledAtTick + service.resourceEndsAt,
+-      });
++      if (service.serviceId === "service.basic_labs") {
++        expect(pending).toMatchObject({
++          phlebotomyArrivalGatedVersion: 1,
++          phlebotomistId: "employee.test.phlebotomist",
++        });
++        expect(pending.timingPhases).toMatchObject([
++          { resourceBound: true, durationTicks: 15 },
++          { resourceBound: false, durationTicks: 60 },
++        ]);
++        expect(pending.timingPhases![0]!.startsAtTick).toBeGreaterThanOrEqual(
++          pending.patientTravel!.outboundArrivalTick,
++        );
++        expect(pending.timingPhases![0]!.endsAtTick - pending.timingPhases![0]!.startsAtTick).toBe(15);
++        expect(pending.timingPhases![1]!.endsAtTick - pending.timingPhases![1]!.startsAtTick).toBe(60);
++        expect(pending.dueTick).toBe(pending.timingPhases![1]!.endsAtTick);
++      } else {
++        expect(pending.dueTick).toBe(pending.scheduledAtTick + service.eta);
++        expect(pending.timingPhases?.[0]).toMatchObject({
++          resourceBound: true,
++          startsAtTick: pending.scheduledAtTick,
++          endsAtTick: pending.scheduledAtTick + service.resourceEndsAt,
++        });
++      }
+       expect(pending.patientTravel?.outboundArrivalTick).toBeLessThanOrEqual(
+         pending.scheduledAtTick + service.resourceEndsAt,
+       );
+@@ -898,6 +972,12 @@
+     encounter.queuedCareRoomInstanceId = null;
+     state = answerCorrect(state, encounterId, "multi-exam.order");
+ 
++    // Route previews may carry a different compatible Examination Room. The
++    // acknowledgement must rebind the frozen trip to this patient's actual
++    // room rather than relying on that provisional room choice.
++    state.encounters[encounterId]!.pendingResult!.patientTravel!.originRoomInstanceId =
++      "room.test.exam-xray";
++
+     expect(
+       state.encounters[encounterId]!.pendingResult?.patientTravel
+         ?.originRoomInstanceId,
+@@ -935,10 +1015,10 @@
+     expect(
+       restored.encounters[encounterId]!.pendingResult?.patientTravel
+         ?.tilesPerTick,
+-    ).toBe(
+-      PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
+-        .characterTravelTilesPerTick,
+-    );
++    ).toBe(4);
++    expect(
++      restored.encounters[encounterId]!.pendingResult?.patientTravel,
++    ).toEqual(state.encounters[encounterId]!.pendingResult?.patientTravel);
+     expect(
+       restored.encounters[encounterId]!.pendingResult?.dueTick,
+     ).toBe(timingBoundaries.dueTick);
+@@ -951,8 +1031,10 @@
+   });
+ 
+   it("hides the chart until Front Desk check-in, then exposes it immediately while walking to care", () => {
++    const arrivalRouteState = emptyLevelOne("arrival-route");
++    addWaitingAndExaminationRooms(arrivalRouteState);
+     let admitted = admit(
+-      emptyLevelOne("arrival-route"),
++      arrivalRouteState,
+       "encounter.arrival-route",
+     );
+     expect(
+@@ -999,6 +1081,59 @@
+     expect(
+       getCurrentQuestion(ready, "encounter.arrival-route"),
+     ).not.toBeNull();
++  });
++
++  it("redirects a checked-in patient from a waiting route directly to the shared examination anchors", () => {
++    const initial = emptyLevelOne("open-chart-immediate-redirect");
++    addWaitingAndExaminationRooms(initial);
++    let state = admit(initial, "encounter.open-chart-immediate-redirect");
++    for (let minute = 0; minute < 100; minute += 1) {
++      if (state.encounters["encounter.open-chart-immediate-redirect"]!.checkInStatus === "checked_in") break;
++      state = tick(state, `open-chart-immediate-redirect.check-in.${minute}`);
++    }
++    const before = state.encounters["encounter.open-chart-immediate-redirect"]!;
++    expect(before.patientMovement?.kind).toBe("walking_to_waiting");
++    const opened = gameReducer(state, {
++      type: "OPEN_CHART", operationId: "open-chart-immediate-redirect.open",
++      encounterId: before.id,
++    });
++    const after = opened.encounters[before.id]!;
++    const exam = opened.rooms.find((room) => room.id === "room.test.return-examination")!;
++    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
++      .find((room) => room.id === "room.examination")!;
++    expect(getCurrentQuestion(opened, after.id)).not.toBeNull();
++    expect(after.waitingDestination).toBeNull();
++    expect(after.queuedCareRoomInstanceId).toBeNull();
++    expect(after.patientMovement?.kind).toBe("walking_to_care");
++    expect(after.patientMovement?.path[0]).toEqual(before.patientLocation);
++    expect(after.patientMovement?.path.at(-1)).toEqual(getRoomCareAnchor(exam, definition, "patient"));
++    expect(opened.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: after.id });
++    expect(opened.environment.founderActivity?.path.at(-1)).toEqual(getRoomCareAnchor(exam, definition, "clinician"));
++  });
++
++  it("opens the question immediately when no exam is available or the founder is explicitly busy", () => {
++    const state = emptyLevelOne("open-chart-atomic-rejection");
++    const admitted = admit(state, "encounter.open-chart-atomic-rejection");
++    const encounter = admitted.encounters["encounter.open-chart-atomic-rejection"]!;
++    encounter.checkInStatus = "checked_in";
++    encounter.lifecycle = "waiting_unopened";
++    encounter.patientMovement = null;
++    encounter.patientLocation = { ...admitted.environment.founderLocation };
++    encounter.waitingDestination = { roomInstanceId: "room.instance.founder_desk", location: { ...encounter.patientLocation }, kind: "standing" };
++    const noExam = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.no-exam", encounterId: encounter.id });
++    expect(noExam.operationReceipts["atomic.no-exam"]?.status).toBe("applied");
++    expect(noExam.openChartEncounterId).toBe(encounter.id);
++    expect(getCurrentQuestion(noExam, encounter.id)).not.toBeNull();
++    expect(noExam.environment.founderActivity).toBeNull();
++    addWaitingAndExaminationRooms(admitted);
++    admitted.environment.founderActivity = { kind: "collect_litter", targetId: "litter.busy", path: [{ ...admitted.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: admitted.facilityTick, workMinutesRemaining: 5 };
++    const busy = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.busy-founder", encounterId: encounter.id });
++    expect(busy.operationReceipts["atomic.busy-founder"]?.status).toBe("applied");
++    expect(getCurrentQuestion(busy, encounter.id)).not.toBeNull();
++    expect(busy.environment.founderActivity).toMatchObject({
++      kind: "collect_litter",
++      targetId: "litter.busy",
++    });
+   });
+ 
+   it("uses only one Front Desk waiting place before queuing later patients on the sidewalk", () => {
+@@ -1038,8 +1173,8 @@
+           PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridHeight,
+     );
+ 
+-    expect(frontDeskWaiters).toHaveLength(1);
+-    expect(sidewalkWaiters).toHaveLength(1);
++    expect(frontDeskWaiters).toHaveLength(2);
++    expect(sidewalkWaiters).toHaveLength(0);
+   });
+ 
+   it("uses only visible Waiting Room chairs and sends chair overflow outside that room", () => {
+@@ -1106,6 +1241,253 @@
+     expect(overflowKey).not.toBe("32,28");
+   });
+ 
++  it("releases an examination on close from the bed or an approach, while terminal feedback remains reviewable", () => {
++    const encounterId = "encounter.close-disposition";
++    let state = emptyLevelOne("close-disposition");
++    addWaitingAndExaminationRooms(state);
++    state = makeQuestionReady(
++      admit(state, encounterId),
++      encounterId,
++      "close-disposition.ready",
++    );
++
++    // A stationary patient leaving an unfinished chart relinquishes the room
++    // and immediately receives a normal ordered waiting reservation.
++    state = gameReducer(state, {
++      type: "CLOSE_CHART",
++      operationId: "close-disposition.from-bed",
++      encounterId,
++    });
++    expect(state.encounters[encounterId]).toMatchObject({
++      lifecycle: "active_action_required",
++      queuedCareRoomInstanceId: null,
++      feedAttentionKind: "clinical_decision",
++    });
++    expect(state.encounters[encounterId]!.assignedRoomInstanceId).not.toBe(
++      "room.test.return-examination",
++    );
++    expect(
++      state.encounters[encounterId]!.patientMovement?.kind ?? "arrived_waiting",
++    ).toMatch(/walking_to_waiting|arrived_waiting/);
++
++    state = gameReducer(state, {
++      type: "OPEN_CHART",
++      operationId: "close-disposition.reopen-unfinished",
++      encounterId,
++    });
++    expect(state.encounters[encounterId]!.patientMovement).toMatchObject({
++      kind: "walking_to_care",
++      destinationRoomInstanceId: "room.test.return-examination",
++    });
++    expect(state.environment.founderActivity).toMatchObject({
++      kind: "attend_encounter",
++      targetId: encounterId,
++    });
++    state = gameReducer(state, {
++      type: "CLOSE_CHART",
++      operationId: "close-disposition.close-reopened-unfinished",
++      encounterId,
++    });
++
++    // A second checked-in chart can claim that freed room immediately.
++    const secondId = "encounter.close-disposition.reuse";
++    const second = JSON.parse(
++      JSON.stringify(state.encounters[encounterId]),
++    ) as GameState["encounters"][string];
++    second.id = secondId;
++    second.lifecycle = "waiting_unopened";
++    second.patientLocation = { x: 35, y: 31 };
++    second.patientMovement = null;
++    second.waitingDestination = null;
++    second.assignedRoomInstanceId = "room.instance.founder_desk";
++    second.queuedCareRoomInstanceId = null;
++    state.encounters[secondId] = second;
++    state = gameReducer(state, {
++      type: "OPEN_CHART",
++      operationId: "close-disposition.reuse-open",
++      encounterId: secondId,
++    });
++    expect(state.encounters[secondId]!.patientMovement).toMatchObject({
++      kind: "walking_to_care",
++      destinationRoomInstanceId: "room.test.return-examination",
++    });
++
++    // Closing during that approach routes from the current persisted tile,
++    // rather than allowing the stale care leg to finish.
++    state = gameReducer(state, {
++      type: "CLOSE_CHART",
++      operationId: "close-disposition.mid-approach",
++      encounterId: secondId,
++    });
++    expect(state.encounters[secondId]).toMatchObject({
++      assignedRoomInstanceId: null,
++      queuedCareRoomInstanceId: null,
++      patientMovement: { kind: "walking_to_waiting" },
++    });
++
++    let terminal = makeQuestionReady(
++      admit(state, "encounter.close-disposition.terminal"),
++      "encounter.close-disposition.terminal",
++      "close-disposition.terminal-ready",
++    );
++    const terminalEncounter =
++      terminal.encounters["encounter.close-disposition.terminal"]!;
++    terminalEncounter.lifecycle = "resolved_summary_available";
++    terminalEncounter.terminalFeedback = {
++      kind: "completion",
++      outcome: null,
++      consequence: null,
++      correction: null,
++      acknowledged: false,
++    };
++    terminal = gameReducer(terminal, {
++      type: "CLOSE_CHART",
++      operationId: "close-disposition.terminal-unacknowledged",
++      encounterId: "encounter.close-disposition.terminal",
++    });
++    expect(terminal.encounters["encounter.close-disposition.terminal"]).toMatchObject({
++      lifecycle: "resolved_summary_available",
++      terminalFeedback: { acknowledged: false },
++    });
++    expect(
++      terminal.encounters["encounter.close-disposition.terminal"]!
++        .assignedRoomInstanceId,
++    ).not.toBe("room.test.return-examination");
++    expect(
++      terminal.encounters["encounter.close-disposition.terminal"]!
++        .patientMovement?.kind ?? "arrived_waiting",
++    ).toMatch(/walking_to_waiting|arrived_waiting/);
++    terminal = gameReducer(terminal, {
++      type: "OPEN_CHART",
++      operationId: "close-disposition.reopen-terminal-unacknowledged",
++      encounterId: "encounter.close-disposition.terminal",
++    });
++    expect(
++      terminal.encounters["encounter.close-disposition.terminal"]!
++        .patientMovement,
++    ).toMatchObject({ kind: "walking_to_care" });
++    expect(terminal.environment.founderActivity).toMatchObject({
++      kind: "attend_encounter",
++      targetId: "encounter.close-disposition.terminal",
++    });
++  });
++
++  it("releases pending-testing exam signals without mutating the frozen route or manual founder commands", () => {
++    const encounterId = "encounter.pending-mid-approach";
++    const initial = emptyLevelOne("pending-mid-approach");
++    addWaitingAndExaminationRooms(initial);
++    let state = admit(initial, encounterId);
++    for (let minute = 0; minute < 100; minute += 1) {
++      if (state.encounters[encounterId]!.checkInStatus === "checked_in") {
++        break;
++      }
++      state = tick(state, `pending-mid-approach.check-in.${minute}`);
++    }
++    state = gameReducer(state, {
++      type: "OPEN_CHART",
++      operationId: "pending-mid-approach.open",
++      encounterId,
++    });
++    expect(state.encounters[encounterId]!.patientMovement?.kind).toBe(
++      "walking_to_care",
++    );
++    state = answerCorrect(state, encounterId, "pending-mid-approach.answer");
++    const step = state.encounters[encounterId]!.steps[
++      state.encounters[encounterId]!.currentNodeIndex
++    ]!;
++    const beforeAcknowledgement = JSON.parse(JSON.stringify(state));
++    const movementBefore = state.encounters[encounterId]!.patientMovement!;
++    state = gameReducer(state, {
++      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
++      operationId: "pending-mid-approach.ack",
++      encounterId,
++      decisionNodeId: step.decisionNodeId,
++    });
++    const pendingEncounter = state.encounters[encounterId]!;
++    expect(pendingEncounter.patientMovement).toMatchObject({
++      kind: movementBefore.kind,
++      path: movementBefore.path,
++      pathIndex: movementBefore.pathIndex,
++      destinationRoomInstanceId: null,
++    });
++    const frozenOffsite = JSON.parse(
++      JSON.stringify(pendingEncounter.pendingResult!.offsiteTravel),
++    );
++    expect(pendingEncounter).toMatchObject({
++      lifecycle: "active_pending_result",
++      assignedRoomInstanceId: null,
++      queuedCareRoomInstanceId: null,
++    });
++    expect(state.environment.founderActivity?.kind).not.toBe(
++      "attend_encounter",
++    );
++
++    const secondId = "encounter.pending-mid-approach.reuse";
++    const second = JSON.parse(
++      JSON.stringify(pendingEncounter),
++    ) as GameState["encounters"][string];
++    second.id = secondId;
++    second.lifecycle = "waiting_unopened";
++    second.pendingResult = null;
++    second.patientLocation = { x: 35, y: 31 };
++    second.patientMovement = null;
++    second.waitingDestination = null;
++    second.assignedRoomInstanceId = "room.instance.founder_desk";
++    state.encounters[secondId] = second;
++    state = gameReducer(state, {
++      type: "OPEN_CHART",
++      operationId: "pending-mid-approach.reuse-open",
++      encounterId: secondId,
++    });
++    expect(state.encounters[secondId]!.patientMovement).toMatchObject({
++      kind: "walking_to_care",
++      destinationRoomInstanceId: "room.test.return-examination",
++    });
++    expect(state.encounters[encounterId]!.pendingResult!.offsiteTravel).toEqual(
++      frozenOffsite,
++    );
++
++    // This fixture removes the authored service gate after the answer has
++    // been recorded to exercise the reducer's ordinary intermediate branch.
++    // It must keep the chart, room reservation, and escort intact.
++    let intermediate = JSON.parse(
++      JSON.stringify(beforeAcknowledgement),
++    ) as GameState;
++    intermediate.encounters[encounterId]!.pendingResult = null;
++    intermediate = gameReducer(intermediate, {
++      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
++      operationId: "pending-mid-approach.intermediate-no-service",
++      encounterId,
++      decisionNodeId: step.decisionNodeId,
++    });
++    expect(intermediate.openChartEncounterId).toBe(encounterId);
++    expect(intermediate.encounters[encounterId]!.patientMovement).toMatchObject({
++      kind: "walking_to_care",
++      destinationRoomInstanceId: "room.test.return-examination",
++    });
++    expect(intermediate.environment.founderActivity).toBeNull();
++
++    let manual = beforeAcknowledgement as GameState;
++    manual.environment.founderActivity = {
++      kind: "walk_to_point",
++      targetId: "manual.destination",
++      path: [{ ...manual.environment.founderLocation }],
++      pathIndex: 0,
++      lastMovedAtFacilityTick: manual.facilityTick,
++      workMinutesRemaining: 0,
++    };
++    manual = gameReducer(manual, {
++      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
++      operationId: "pending-mid-approach.manual-founder",
++      encounterId,
++      decisionNodeId: step.decisionNodeId,
++    });
++    expect(manual.environment.founderActivity).toMatchObject({
++      kind: "walk_to_point",
++      targetId: "manual.destination",
++    });
++  });
++
+   it("walks out for send-out testing, remains away, and returns before results become actionable", () => {
+     const encounterId = "encounter.offsite-route";
+     const initial = emptyLevelOne("offsite-route");
+@@ -1130,6 +1512,18 @@
+       encounterId,
+       decisionNodeId: step.decisionNodeId,
+     });
++    const acknowledged = state.encounters[encounterId]!;
++    const frozenOffsiteTravel = JSON.parse(
++      JSON.stringify(acknowledged.pendingResult!.offsiteTravel),
++    );
++    expect(acknowledged).toMatchObject({
++      lifecycle: "active_pending_result",
++      assignedRoomInstanceId: null,
++      queuedCareRoomInstanceId: null,
++    });
++    expect(acknowledged.pendingResult!.offsiteTravel).toEqual(
++      frozenOffsiteTravel,
++    );
+ 
+     for (let minute = 0; minute < 100; minute += 1) {
+       if (
+@@ -1142,6 +1536,9 @@
+     }
+     expect(state.encounters[encounterId]!.patientMovement?.kind).toBe(
+       "departing_for_offsite_testing",
++    );
++    expect(state.encounters[encounterId]!.pendingResult!.offsiteTravel).toEqual(
++      frozenOffsiteTravel,
+     );
+     const frozenTravel =
+       state.encounters[encounterId]!.pendingResult!.offsiteTravel!;
+@@ -1175,10 +1572,7 @@
+         expect(
+           state.encounters[encounterId]!.pendingResult!.offsiteTravel
+             ?.tilesPerTick,
+-        ).toBe(
+-          PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
+-            .characterTravelTilesPerTick,
+-        );
++        ).toBe(4);
+         restoredAwayState = true;
+       }
+       sawReturningInside ||=
+@@ -1232,10 +1626,14 @@
+       operationId: "offsite.open-while-walking-to-wait",
+       encounterId,
+     });
+-    expect(
+-      immediateResolution.encounters[encounterId]!
+-        .queuedCareRoomInstanceId,
+-    ).toBe("room.test.return-examination");
++    expect(immediateResolution.encounters[encounterId]).toMatchObject({
++      queuedCareRoomInstanceId: null,
++      waitingDestination: null,
++      patientMovement: {
++        kind: "walking_to_care",
++        destinationRoomInstanceId: "room.test.return-examination",
++      },
++    });
+     immediateResolution = answerCorrect(
+       immediateResolution,
+       encounterId,
+@@ -1253,26 +1651,11 @@
+     });
+     expect(immediateResolution.encounters[encounterId]).toMatchObject({
+       lifecycle: "resolved",
+-      patientMovement: { kind: "walking_to_waiting" },
+-      queuedCareRoomInstanceId: "room.test.return-examination",
+-    });
+-    for (let minute = 0; minute < 100; minute += 1) {
+-      if (
+-        immediateResolution.encounters[encounterId]!.patientMovement
+-          ?.kind === "walking_to_care"
+-      ) {
+-        break;
+-      }
+-      immediateResolution = tick(
+-        immediateResolution,
+-        `offsite.immediate-to-exam.${minute}`,
+-      );
+-    }
+-    expect(
+-      immediateResolution.encounters[encounterId]!.patientMovement,
+-    ).toMatchObject({
+-      kind: "walking_to_care",
+-      destinationRoomInstanceId: "room.test.return-examination",
++      // Once the acknowledged terminal chart closes, departure starts from
++      // the patient's persisted current tile rather than completing the
++      // obsolete approach to the Examination Room.
++      patientMovement: { kind: "leaving_after_resolution" },
++      queuedCareRoomInstanceId: null,
+     });
+     for (let minute = 0; minute < 100; minute += 1) {
+       if (
+@@ -1383,9 +1766,11 @@
+ 
+   it("extends a legacy ten-minute send-out enough for the complete natural-speed round trip", () => {
+     const encounterId = "encounter.ten-minute-sendout";
++    const tenMinuteState = emptyLevelOne("ten-minute-sendout");
++    addWaitingAndExaminationRooms(tenMinuteState);
+     let state = makeQuestionReady(
+       admit(
+-        emptyLevelOne("ten-minute-sendout"),
++        tenMinuteState,
+         encounterId,
+         "case.synthetic.tutorial",
+       ),
+@@ -1433,8 +1818,10 @@
+     const sides = new Set<"left" | "right">();
+     for (let index = 0; index < 16; index += 1) {
+       const encounterId = `encounter.ten-minute-side.${index}`;
++      const sideState = emptyLevelOne("ten-minute-both-sides");
++      addWaitingAndExaminationRooms(sideState);
+       let state = admit(
+-        emptyLevelOne("ten-minute-both-sides"),
++        sideState,
+         encounterId,
+         "case.synthetic.tutorial",
+       );

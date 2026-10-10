@@ -1,0 +1,140 @@
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --config ../../.local-dev/finance-display/player-vitest.config.mjs --configLoader native --pool=threads --maxWorkers=1
+
+(node:12700) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/rowla/Projects/GamifySurgery/scripts/vite/forbid-private-modules.ts?fresh-import-wv9y90dd64l=0,file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/finance-display/player-vitest.config.mjs is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\rowla\Projects\GamifySurgery\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ❯ src/session/diagnosticTimingViewModels.test.ts (10 tests | 1 failed) 400ms
+     × presents the approved reading-room prices, four-reader capacity and functional upgrade benefits 7ms
+ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 359ms
+     × ignores the retired concealment flag and preserves the scheduled external service after an answer 35ms
+ ❯ src/session/buildViewModels.test.ts (32 tests | 1 failed) 167ms
+     × describes upgrade effects and projects valid walls for map interaction 9ms
+ ❯ src/session/employeeTrainingViewModels.test.ts (27 tests | 1 failed) 70ms
+     × shows the category's current consult payment and pharmacy stock cost 13ms
+ ❯ src/session/alertsEventsViewModel.test.ts (20 tests | 1 failed) 48ms
+     × merges employee warnings into one posting card with the real cash gap and deadline 6ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/alertsEventsViewModel.test.ts > Alerts & Events admission and history > merges employee warnings into one posting card with the real cash gap and deadline
+AssertionError: expected '$0.91 is missing. Avery could quit.' to contain '$2.00 is missing'
+System.Management.Automation.RemoteException
+Expected: "$2.00 is missing"
+Received: "$0.91 is missing. Avery could quit."
+System.Management.Automation.RemoteException
+ ❯ src/session/alertsEventsViewModel.test.ts:138:27
+    136|     expect(cards).toHaveLength(1);
+    137|     expect(cards[0]).toMatchObject({ id: "need.finance.payroll", targe…
+    138|     expect(cards[0]!.why).toContain("$2.00 is missing");
+       |                           ^
+    139|     expect(cards[0]!.why).toContain(state.employees[0]!.displayName);
+    140|     state.cash = 2; state.cashCents = 200;
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/buildViewModels.test.ts > Build Mode view models > describes upgrade effects and projects valid walls for map interaction
+AssertionError: expected [ Array(1) ] to deeply equal ArrayContaining{…}
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- ArrayContaining [
++ [
+    "+2 satisfaction points after examination",
+-   "Hourly upkeep +$1.",
+  ]
+System.Management.Automation.RemoteException
+ ❯ src/session/buildViewModels.test.ts:259:57
+    257|       upgradeCostLabel: "$90",
+    258|     });
+    259|     expect(view.selectedRoomBuild?.upgradeImprovements).toEqual(
+       |                                                         ^
+    260|       expect.arrayContaining([
+    261|         "+2 satisfaction points after examination",
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/diagnosticTimingViewModels.test.ts > diagnostic chart and facility presentation > presents the approved reading-room prices, four-reader capacity and functional upgrade benefits
+AssertionError: expected { id: 'room.reading', …(12) } to match object { costLabel: '$1,800', …(2) }
+(10 matching properties omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "costLabel": "$1,800",
+    "footprintLabel": "4 × 4 tiles · 4 reading positions",
+-   "upkeepLabel": "$24 upkeep / hr",
++   "upkeepLabel": "$6 upkeep / hr",
+  }
+System.Management.Automation.RemoteException
+ ❯ src/session/diagnosticTimingViewModels.test.ts:245:77
+    243|     const state = createInitialGameState(); state.facilityLevel = 3; s…
+    244|     let facility = createPrototypePlayerView(state, null, false, null);
+    245|     expect(facility.roomOptions.find((room) => room.id === "room.readi…
+       |                                                                             ^
+    246|       costLabel: "$1,800", upkeepLabel: "$24 upkeep / hr", footprintLa…
+    247|     });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/employeeTrainingViewModels.test.ts > employee training presentation > shows the category's current consult payment and pharmacy stock cost
+AssertionError: expected { group: 'needs', …(13) } to match object { feeLabel: '$25.00', …(2) }
+(11 matching properties omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+-   "contributionLabel": "$11.50",
+-   "feeLabel": "$25.00",
++   "contributionLabel": "$56.50",
++   "feeLabel": "$70.00",
+    "stockCostLabel": "$13.50",
+  }
+System.Management.Automation.RemoteException
+ ❯ src/session/employeeTrainingViewModels.test.ts:154:8
+    152|     expect(view.staffRoles.find((role) => role.id === "staff.glp1_np")…
+    153|     expect(view.serviceIncome.catalogLines.find((line) => line.id === …
+    154|       .toMatchObject({ feeLabel: "$25.00", stockCostLabel: "$13.50", c…
+       |        ^
+    155|   });
+    156|
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+System.Management.Automation.RemoteException
+ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
+AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
+System.Management.Automation.RemoteException
+Expected: "Off-site thyroid fine-needle aspiration"
+Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
+System.Management.Automation.RemoteException
+ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
+     83|     const pending = state.encounters[encounterId]!.pendingResult!;
+     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
+     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
+       |                                                    ^
+     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
+     87|   });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  5 failed | 139 passed (144)
+      Tests  5 failed | 1127 passed (1132)
+   Start at  20:30:45
+   Duration  63.38s (transform 2.99s, setup 0ms, import 27.76s, tests 25.92s, environment 7ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --config ../../.local-dev/finance-display/player-vitest.config.mjs --configLoader native --pool=threads --maxWorkers=1

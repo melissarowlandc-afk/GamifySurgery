@@ -1,0 +1,399 @@
+--- a/apps/player/src/facility/routeMotion.ts
++++ b/apps/player/src/facility/routeMotion.ts
+@@ -37,6 +37,33 @@
+  */
+ const ROUTE_LOOKAHEAD_INTERVALS = 2;
+ 
++function isFinitePoint(point: GridPoint | undefined): point is GridPoint {
++  return Boolean(point && Number.isFinite(point.x) && Number.isFinite(point.y));
++}
++
++function isUsablePath(path: readonly GridPoint[] | undefined): path is GridPoint[] {
++  if (!Array.isArray(path) || path.length === 0) return false;
++  // Unlike Array.every, this also checks sparse/undefined waypoints.
++  for (const point of path) if (!isFinitePoint(point)) return false;
++  return true;
++}
++
++function isUsableTrack(track: RouteMotionTrack): boolean {
++  return (
++    isUsablePath(track.path) && typeof track.signature === "string" &&
++    Number.isFinite(track.progress) && track.progress >= 0 && track.progress <= track.path.length - 1 &&
++    Number.isFinite(track.targetIndex) && track.targetIndex >= 0 && track.targetIndex <= track.path.length - 1 &&
++    Number.isSafeInteger(track.sourceOffset) && Number.isSafeInteger(track.lastObservedPathIndex) &&
++    track.lastObservedPathIndex >= 0 && typeof track.routeActive === "boolean"
++  );
++}
++
++function fallbackLocation(track: RouteMotionTrack, location?: GridPoint): GridPoint {
++  if (isFinitePoint(location)) return { ...location };
++  const point = Array.isArray(track.path) ? track.path.find(isFinitePoint) : undefined;
++  return point ? { ...point } : { x: 0, y: 0 };
++}
++
+ function signature(path: readonly GridPoint[]): string {
+   return path.map((point) => `${point.x},${point.y}`).join("|");
+ }
+@@ -54,7 +81,7 @@
+ }
+ 
+ function clampPathIndex(path: readonly GridPoint[], value: number): number {
+-  return Math.max(0, Math.min(path.length - 1, value));
++  return Math.max(0, Math.min(path.length - 1, Number.isFinite(value) ? value : 0));
+ }
+ 
+ function appendPoint(path: GridPoint[], point: GridPoint): void {
+@@ -73,33 +100,6 @@
+   return start && end && end.x !== start.x ? end.x > start.x : fallback;
+ }
+ 
+-/**
+- * This is only a defensive bridge for malformed or legacy route handoffs.
+- * Normal gameplay routes share an exact cardinal waypoint at their boundary.
+- */
+-function appendCardinalBridge(path: GridPoint[], goal: GridPoint): void {
+-  const last = path.at(-1);
+-  if (!last) {
+-    appendPoint(path, goal);
+-    return;
+-  }
+-  let cursor = { ...last };
+-  while (cursor.x !== goal.x) {
+-    cursor = {
+-      x: cursor.x + Math.sign(goal.x - cursor.x),
+-      y: cursor.y,
+-    };
+-    appendPoint(path, cursor);
+-  }
+-  while (cursor.y !== goal.y) {
+-    cursor = {
+-      x: cursor.x,
+-      y: cursor.y + Math.sign(goal.y - cursor.y),
+-    };
+-    appendPoint(path, cursor);
+-  }
+-}
+-
+ function handoffRouteMotion(
+   previous: RouteMotionTrack,
+   path: readonly GridPoint[],
+@@ -107,44 +107,99 @@
+   logicalIndex: number,
+   predictiveIndex: number,
+ ): RouteMotionTrack {
+-  const first = path[0]!;
++  // The render may run ahead of the previous logical position by the
++  // lookahead buffer. A shared waypoint between that logical position and the
++  // rendered sample is still valid: the character walks back along the known
++  // edge instead of snapping when a replacement route reverses.
+   const searchStart = clampPathIndex(
+     previous.path,
+-    Math.floor(previous.progress),
+-  );
+-  let handoffIndex = -1;
+-  for (
+-    let index = searchStart;
+-    index < previous.path.length;
+-    index += 1
+-  ) {
+-    if (samePoint(previous.path[index], first)) {
+-      handoffIndex = index;
+-      break;
++    Math.min(
++      Math.floor(previous.progress),
++      previous.sourceOffset + previous.lastObservedPathIndex,
++    ),
++  );
++  let previousHandoffIndex = -1;
++  let nextHandoffIndex = -1;
++  const findHandoff = (nextStart: number, nextEnd: number) => {
++    for (
++      let previousIndex = searchStart;
++      previousIndex < previous.path.length;
++      previousIndex += 1
++    ) {
++      for (
++        let nextIndex = nextStart;
++        nextIndex <= nextEnd;
++        nextIndex += 1
++      ) {
++        if (samePoint(previous.path[previousIndex], path[nextIndex])) {
++          return { previousIndex, nextIndex };
++        }
++      }
+     }
+-  }
+-
+-  const combined =
+-    handoffIndex >= 0
+-      ? previous.path
+-          .slice(0, handoffIndex + 1)
+-          .map((point) => ({ ...point }))
+-      : previous.path.map((point) => ({ ...point }));
+-  if (handoffIndex < 0) {
+-    appendCardinalBridge(combined, first);
+-  }
+-  const sourceOffset = Math.max(0, combined.length - 1);
+-  for (const point of path.slice(1)) {
+-    appendPoint(combined, point);
++    return null;
++  };
++  // Prefer the successor's authoritative current/predictive window so a late
++  // projection can never replay a historical prefix. If the renderer is
++  // genuinely behind, a shared prefix waypoint remains a valid catch-up path.
++  const handoff =
++    findHandoff(logicalIndex, predictiveIndex) ??
++    findHandoff(0, logicalIndex - 1);
++  if (handoff) {
++    previousHandoffIndex = handoff.previousIndex;
++    nextHandoffIndex = handoff.nextIndex;
++  }
++
++  if (previousHandoffIndex < 0) {
++    return {
++      path: path.map((point) => ({ ...point })),
++      signature: routeSignature,
++      progress: logicalIndex,
++      targetIndex: predictiveIndex,
++      sourceOffset: 0,
++      lastObservedPathIndex: logicalIndex,
++      routeActive: true,
++      rightFacing: rightFacingAt(path, logicalIndex, previous.rightFacing),
++    };
++  }
++
++  const renderedCurrentEdgeEnd = clampPathIndex(
++    previous.path,
++    Math.ceil(previous.progress),
++  );
++  const retainedEnd = Math.max(previousHandoffIndex, renderedCurrentEdgeEnd);
++  const combined = previous.path
++    .slice(0, retainedEnd + 1)
++    .map((point) => ({ ...point }));
++  // If interpolation already passed the shared point, complete only the
++  // current known edge and walk that same validated edge back. This avoids a
++  // visible snap without finishing an unrelated stale route tail.
++  if (previousHandoffIndex < previous.progress) {
++    for (
++      let index = Math.min(
++        renderedCurrentEdgeEnd - 1,
++        Math.floor(previous.progress),
++      );
++      index >= previousHandoffIndex;
++      index -= 1
++    ) {
++      appendPoint(combined, previous.path[index]!);
++    }
++  }
++  const renderedHandoffIndex = combined.length - 1;
++  const sourceOffset = renderedHandoffIndex - nextHandoffIndex;
++  for (const point of path.slice(nextHandoffIndex + 1)) {
++    // Family lanes intentionally repeat a point to wait for the linked actor.
++    // Keep every successor node: its logical indices include those holds.
++    combined.push({ ...point });
+   }
+ 
+   return {
+     path: combined,
+     signature: routeSignature,
+-    progress: Math.min(previous.progress, sourceOffset),
+-    targetIndex: Math.max(
+-      previous.progress,
+-      sourceOffset + predictiveIndex,
++    progress: Math.min(previous.progress, combined.length - 1),
++    targetIndex: clampPathIndex(
++      combined,
++      Math.max(previous.progress, sourceOffset + predictiveIndex),
+     ),
+     sourceOffset,
+     lastObservedPathIndex: logicalIndex,
+@@ -173,7 +228,17 @@
+   },
+ ): RouteMotionTrack | undefined {
+   const path = input.path;
+-  if (path && path.length > 0) {
++  if (previous && !isUsableTrack(previous)) previous = undefined;
++  if (path !== undefined && (
++    !isUsablePath(path) || input.pathIndex !== undefined && (
++      !Number.isSafeInteger(input.pathIndex) || input.pathIndex < 0 || input.pathIndex >= path.length
++    )
++  )) {
++    return isFinitePoint(input.location)
++      ? parkedRouteMotion(input.location, previous?.rightFacing ?? false)
++      : undefined;
++  }
++  if (isUsablePath(path)) {
+     const routeSignature = signature(path);
+     const logicalIndex = clampPathIndex(
+       path,
+@@ -182,7 +247,7 @@
+     const predictiveIndex = clampPathIndex(
+       path,
+       logicalIndex +
+-        Math.max(0, input.lookaheadPathNodes ?? 0) *
++        Math.max(0, Number.isFinite(input.lookaheadPathNodes) ? input.lookaheadPathNodes! : 0) *
+           ROUTE_LOOKAHEAD_INTERVALS,
+     );
+     const restartedSamePath =
+@@ -216,9 +281,9 @@
+     }
+     return {
+       ...previous,
+-      targetIndex: Math.max(
+-        previous.targetIndex,
+-        previous.sourceOffset + predictiveIndex,
++      targetIndex: clampPathIndex(
++        previous.path,
++        Math.max(previous.targetIndex, previous.sourceOffset + predictiveIndex),
+       ),
+       lastObservedPathIndex: logicalIndex,
+       routeActive: true,
+@@ -226,7 +291,15 @@
+   }
+ 
+   if (!previous) {
+-    return undefined;
++    // A stationary actor is parked where the game placed it, so its first
++    // route starts from where it is drawn. A new route is usually already one
++    // tick (two nodes) along when first observed.
++    return isFinitePoint(input.location) ? parkedRouteMotion(input.location, false) : undefined;
++  }
++  // A parked track only stands in for the persisted location. An absent actor
++  // disappears, and a moved one is drawn at its new location as before.
++  if (isParkedRouteMotion(previous)) {
++    return samePoint(previous.path[0], input.location) ? previous : undefined;
+   }
+ 
+   const finalIndex = previous.path.length - 1;
+@@ -257,18 +330,57 @@
+     : undefined;
+ }
+ 
++/** Catch-up applies only while the render trails the logical position. */
++export const ROUTE_CATCH_UP_START_TILES = 0.5;
++export const ROUTE_CATCH_UP_GAIN_PER_TILE = 0.5;
++export const ROUTE_CATCH_UP_MAX_MULTIPLIER = 2.5;
++
++/**
++ * Route distance the next advance will cover, in render-path tiles.
++ *
++ * Phaser replaces any frame delta over 200 ms with an earlier short delta, so
++ * a main-thread stall loses render time while facility ticks continue. At
++ * exactly canonical speed the character could then never catch up, and a
++ * later route change would snap it forward. While the render trails the
++ * logical position by more than half a tile it walks faster, up to 2.5x.
++ */
++export function routeMotionStepTiles(
++  track: RouteMotionTrack,
++  deltaMilliseconds: number,
++  tilesPerSecond: number,
++): number {
++  if (!isUsableTrack(track) || !Number.isFinite(deltaMilliseconds) || !Number.isFinite(tilesPerSecond)) return 0;
++  const trailingTiles = track.routeActive
++    ? track.sourceOffset + track.lastObservedPathIndex - track.progress
++    : 0;
++  const catchUp = trailingTiles > ROUTE_CATCH_UP_START_TILES
++    ? Math.min(
++        ROUTE_CATCH_UP_MAX_MULTIPLIER,
++        1 + (trailingTiles - ROUTE_CATCH_UP_START_TILES) *
++          ROUTE_CATCH_UP_GAIN_PER_TILE,
++      )
++    : 1;
++  const step =
++    Math.max(0, deltaMilliseconds) *
++    Math.max(0, tilesPerSecond) *
++    catchUp /
++    1_000;
++  return Math.max(0, Math.min(track.targetIndex, track.progress + step) - track.progress);
++}
++
+ export function advanceRouteMotion(
+   track: RouteMotionTrack,
+   deltaMilliseconds: number,
+   tilesPerSecond: number,
++  location?: GridPoint,
+ ): RouteMotionTrack {
+-  const step =
+-    Math.max(0, deltaMilliseconds) *
+-    Math.max(0, tilesPerSecond) /
+-    1_000;
++  if (!isUsableTrack(track)) return parkedRouteMotion(fallbackLocation(track, location), track.rightFacing ?? false);
+   const advanced = {
+     ...track,
+-    progress: Math.min(track.targetIndex, track.progress + step),
++    progress: clampPathIndex(
++      track.path,
++      track.progress + routeMotionStepTiles(track, deltaMilliseconds, tilesPerSecond),
++    ),
+   };
+   advanced.rightFacing = rightFacingAt(
+     advanced.path,
+@@ -279,7 +391,7 @@
+   // a long session. Retain one node behind the current sample for direction
+   // continuity, but discard the consumed prefix so handoffs do not turn the
+   // character's entire walking history into a growing in-memory route.
+-  const consumedPrefix = Math.max(0, Math.floor(advanced.progress) - 1);
++  const consumedPrefix = Math.max(0, Math.min(advanced.path.length - 1, Math.floor(advanced.progress) - 1));
+   if (consumedPrefix === 0) {
+     return advanced;
+   }
+@@ -306,7 +418,16 @@
+ 
+ export function sampleRouteMotion(
+   track: RouteMotionTrack,
++  location?: GridPoint,
+ ): RouteMotionSample {
++  if (!isUsableTrack(track)) {
++    return {
++      location: fallbackLocation(track, location),
++      direction: "front",
++      moving: false,
++      rightFacing: track.rightFacing ?? false,
++    };
++  }
+   const startIndex = Math.max(
+     0,
+     Math.min(track.path.length - 1, Math.floor(track.progress)),
+@@ -338,3 +459,42 @@
+     track.progress >= track.targetIndex
+   );
+ }
++
++const PARKED_SIGNATURE_PREFIX = "parked:";
++
++function isParkedRouteMotion(track: RouteMotionTrack): boolean {
++  return track.signature.startsWith(PARKED_SIGNATURE_PREFIX);
++}
++
++function parkedRouteMotion(
++  location: GridPoint,
++  rightFacing: boolean,
++): RouteMotionTrack {
++  return {
++    path: [{ x: location.x, y: location.y }],
++    signature: `${PARKED_SIGNATURE_PREFIX}${location.x},${location.y}`,
++    progress: 0,
++    targetIndex: 0,
++    sourceOffset: 0,
++    lastObservedPathIndex: 0,
++    routeActive: false,
++    rightFacing,
++  };
++}
++
++/**
++ * Replaces a completed track with a one-point track at its final node.
++ *
++ * Deleting the track made the next route start at its observed logical index.
++ * Routes are created and advanced in the same tick, so that index is usually
++ * two nodes along and the character popped forward. A parked track lets the
++ * next route hand off at its first waypoint instead.
++ */
++export function parkRouteMotion(track: RouteMotionTrack, location?: GridPoint): RouteMotionTrack {
++  if (!isUsableTrack(track)) return parkedRouteMotion(fallbackLocation(track, location), track.rightFacing ?? false);
++  const index = Math.max(
++    0,
++    Math.min(track.path.length - 1, Math.round(track.progress)),
++  );
++  return parkedRouteMotion(track.path[index]!, track.rightFacing);
++}

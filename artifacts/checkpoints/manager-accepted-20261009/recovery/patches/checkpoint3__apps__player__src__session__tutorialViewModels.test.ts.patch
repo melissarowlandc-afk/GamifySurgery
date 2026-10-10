@@ -1,0 +1,99 @@
+--- a/apps/player/src/session/tutorialViewModels.test.ts
++++ b/apps/player/src/session/tutorialViewModels.test.ts
+@@ -17,7 +17,8 @@
+ } from "@gamify-surgery/clinical-content";
+ import { describe, expect, it } from "vitest";
+ import { createTutorialStepView } from "./tutorialViewModels";
+-import { createPrototypePlayerView } from "./viewModels";
++import { createPrototypePlayerView } from "./viewModels";
++import { getTutorialClockMultiplier, getTutorialTickIntervalMs } from "./tutorialTiming";
+ 
+ let sequence = 0;
+ type WithoutOperationId =
+@@ -112,6 +113,86 @@
+ }
+ 
+ describe("first shift derived from native state", () => {
++  it("points arrivals at Waiting and explains automatic founder recovery", () => {
++    const state = createTutorialState();
++    expect(view(state)?.targetSelector).toBe(".patient-folder.is-waiting");
++    expect(view(state)?.body).toContain("automatically at the Front Desk");
++    state.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus = "awaiting_staff";
++    expect(view(state)?.body).toContain("founder returns");
++    expect(view(state)?.target).not.toBe("facility-entrance");
++    state.paused = true;
++    expect(view(state)?.body).toContain("Resume for automatic check-in");
++    expect(view(state)?.targetSelector).toBe(".pause-button");
++  });
++
++  it.each([true, false])("keeps the guided second physical wait within 1–2 minutes at selected 1x (correct=%s)", (correct) => {
++    let state = openedSecond();
++    const question = getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID)!;
++    expect(getTutorialTickIntervalMs(state, true)).toBe(1000);
++    expect(view(state)?.body).toContain("game-time estimates");
++    state = reduce(state, {type: "SUBMIT_ANSWER", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
++      decisionNodeId: question.node.id, answerChoiceId: question.node.answerChoices.find((c) => c.isCorrect === correct)!.id, reviewedAtMs: 2000});
++    expect(getTutorialClockMultiplier(state, true)).toBe(1); // Feedback still needs its native enact action.
++    state = reduce(state, {type: "ACKNOWLEDGE_DECISION_FEEDBACK", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID, decisionNodeId: question.node.id});
++    const frozen = structuredClone(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase);
++    const plan = structuredClone(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult!);
++    const reviews = structuredClone(state.reviewIntents);
++    expect(getTutorialTickIntervalMs(state, true)).toBe(500);
++    expect(getTutorialTickIntervalMs(state, false)).toBe(1000);
++    expect(view(state)?.body).toContain("First-shift fast-forward");
++    expect(view(state)?.body).toContain("2×");
++    let realWaitMs = 0;
++    let ordinaryWaitMs = 0;
++    for (let ticks = 0; !getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID) && ticks < 500; ticks += 1) {
++      realWaitMs += getTutorialTickIntervalMs(state, true);
++      ordinaryWaitMs += getTutorialTickIntervalMs(state, false);
++      state = tick(state);
++    }
++    expect(getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID)).not.toBeNull();
++    expect(realWaitMs).toBeGreaterThanOrEqual(60_000);
++    expect(realWaitMs).toBeLessThanOrEqual(120_000);
++    expect(realWaitMs).toBe(75_500); // Includes physical return/check-in, not just the 150-minute test.
++    expect(ordinaryWaitMs).toBe(realWaitMs * 2);
++    expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.steps[0]!.result?.durationTicks).toBe(plan.durationTicks);
++    expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase).toEqual(frozen);
++    expect(state.reviewIntents).toEqual(reviews);
++    expect(getTutorialClockMultiplier(state, true)).toBe(1);
++    expect(getTutorialTickIntervalMs(state, true)).toBe(1000);
++  });
++
++  it("resumes a saved accelerated wait without changing the plan, speed, pause or learning", () => {
++    let state = answerCorrect(openedSecond(), SECOND_TUTORIAL_ENCOUNTER_ID);
++    state = reduce(state, {type: "ACKNOWLEDGE_DECISION_FEEDBACK", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
++      decisionNodeId: state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.steps[0]!.decisionNodeId});
++    state = reduce(state, {type: "CLOSE_CHART", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID});
++    for (let index = 0; index < 40; index += 1) state = tick(state);
++    state = reduce(state, {type: "SET_SIMULATION_SPEED", speed: 4});
++    state = reduce(state, {type: "SET_PAUSED", paused: true});
++    const restored = deserializeGameState(serializeGameState(state));
++    expect(restored.paused).toBe(state.paused);
++    expect(restored.simulationSpeed).toBe(state.simulationSpeed);
++    expect(restored.facilityTick).toBe(state.facilityTick);
++    expect(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult).toEqual(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult);
++    expect(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.answers).toEqual(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.answers);
++    expect(restored.reviewIntents).toEqual(state.reviewIntents);
++    expect(restored.learningHistories).toEqual(state.learningHistories);
++    expect(view(restored)).toEqual(view(state));
++    expect(view(restored)?.body).toContain("Resume");
++    expect(view(restored)?.body).toContain("8×");
++    expect(getTutorialTickIntervalMs(restored, true)).toBe(125);
++    expect(getTutorialTickIntervalMs(restored, false)).toBe(250);
++    expect(tick(restored).facilityTick).toBe(restored.facilityTick); // A manual pause still wins.
++    state = advanceUntil(reduce(restored, {type: "SET_PAUSED", paused: false}), (s) => getCurrentQuestion(s, SECOND_TUTORIAL_ENCOUNTER_ID) !== null);
++    expect(getTutorialTickIntervalMs(state, true)).toBe(250);
++    expect(state.simulationSpeed).toBe(4);
++    expect(state.reviewIntents).toEqual(restored.reviewIntents);
++    expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase).toEqual(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase);
++    expect(getTutorialClockMultiplier({...restored, facilityLevel: 1}, true)).toBe(1);
++    const firstUnfiled = structuredClone(restored);
++    firstUnfiled.encounters[TUTORIAL_ENCOUNTER_ID]!.lifecycle = "resolved_summary_available";
++    expect(getTutorialClockMultiplier(firstUnfiled, true)).toBe(1);
++  });
++
+   it("recovers early Build without asking for a hidden chart action", () => {
+     const state = openedFirst();
+     expect(view(state, {buildMode: true})?.id).toBe("exit-build-mode");

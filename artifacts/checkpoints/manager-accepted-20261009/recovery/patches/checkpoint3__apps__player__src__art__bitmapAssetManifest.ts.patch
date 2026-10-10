@@ -1,0 +1,17 @@
+--- a/apps/player/src/art/bitmapAssetManifest.ts
++++ b/apps/player/src/art/bitmapAssetManifest.ts
+@@ -1,5 +1,6 @@
+ import type { PixelSpriteAsset } from "./pixelArt";
+ import type { FixtureId } from "./fixtureArt";
++import { APPROVED_LEVEL4_BITMAP_ASSETS } from "./approvedLevel4BitmapAssets";
+ 
+ /**
+  * A transparent, independently rendered bitmap layer that can replace one
+@@ -335,6 +336,7 @@
+ 
+ /** Owner-approved GS-015 atlases used by the active modular room renderer. */
+ export const APPROVED_GS015_ROOM_ATLASES = [
++  ...APPROVED_LEVEL4_BITMAP_ASSETS,
+   levelOneRoomAtlas("gs015:bathroom:furniture", "art/rooms/gs015-v1/bathroom/furniture.webp", 381, 1667),
+   levelOneRoomAtlas("gs015:coffee:furniture", "art/rooms/gs015-v1/coffee/furniture.webp", 2353, 1125),
+   levelOneRoomAtlas("gs015:ct:furniture", "art/rooms/gs015-v1/ct/furniture.webp", 1354, 963),

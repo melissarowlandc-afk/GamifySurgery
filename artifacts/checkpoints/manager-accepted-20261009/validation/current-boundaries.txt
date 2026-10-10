@@ -1,0 +1,9 @@
+file:///C:/Users/rowla/Projects/GamifySurgery/scripts/verify-app-boundaries.mjs:184
+  throw new Error(`Application boundary verification failed:\n- ${failures.join("\n- ")}`);
+        ^
+
+Error: Application boundary verification failed:
+- Could not inspect tracked paths: spawnSync git EPERM
+    at file:///C:/Users/rowla/Projects/GamifySurgery/scripts/verify-app-boundaries.mjs:184:9
+
+Node.js v24.19.0

@@ -1,0 +1,17 @@
+--- a/packages/clinical-content/src/index.ts
++++ b/packages/clinical-content/src/index.ts
+@@ -45,8 +45,14 @@
+ 
+ export * from "./development-batch/2026-09-12/board-expansion-batch";
+ export * from "./development-batch/2026-09-13/early-levels-batch";
++export * from "./development-batch/2026-09-17/brief-early-levels-batch";
++export * from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
+ export * from "./development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
+ export * from "./development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
+ export * from "./development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
+ export * from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+ export * from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
++export * from "./development-batch/2026-10-07-variety/variety-batch";
++export * from "./development-batch/2026-10-07-variety-2/variety-batch";
++export * from "./development-batch/2026-10-07-level3/level3-batch";
++export * from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";

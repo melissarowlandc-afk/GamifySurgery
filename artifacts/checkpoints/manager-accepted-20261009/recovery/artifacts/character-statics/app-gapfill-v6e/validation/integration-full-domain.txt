@@ -1,0 +1,44 @@
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/character-variety.test.ts (26 tests | 1 failed) 48ms
+     × fills configured capacity with unique staff, stopping APPs at the two approved looks in both role orders 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/character-variety.test.ts > staff character variety > fills configured capacity with unique staff, stopping APPs at the two approved looks in both role orders
+AssertionError: expected [ { …(4) }, { …(4) }, { …(4) }, …(7) ] to have a length of 2 but got 10
+
+- Expected
++ Received
+
+- 2
++ 10
+
+ ❯ tests/character-variety.test.ts:178:54
+    176|         if (role.id === "staff.app") {
+    177|           expect(physicalCapacity).toBe(31);
+    178|           expect(staffStillEligibleEntries(role.id)).toHaveLength(2);
+       |                                                      ^
+    179|         }
+    180|         for (let index = 0; index < capacity; index += 1) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 128 passed (129)
+      Tests  1 failed | 3664 passed (3665)
+   Start at  00:42:45
+   Duration  95.92s (transform 7.60s, setup 0ms, import 57.82s, tests 313.76s, environment 8ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads

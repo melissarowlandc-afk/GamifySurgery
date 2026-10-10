@@ -1,0 +1,32 @@
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+

@@ -1,0 +1,26 @@
+--- a/apps/player/src/styles/clinicPresentation.test.ts
++++ b/apps/player/src/styles/clinicPresentation.test.ts
+@@ -36,6 +36,23 @@
+     expect(base["white-space"]).toBe("nowrap"); expect(base.overflow).toBe("hidden");
+     expect(base.visibility).toBe("hidden"); expect(active.visibility).toBe("visible");
+     for (const geometry of ["height", "min-height", "max-height", "padding", "border-top", "margin", "display", "font"]) expect(active[geometry]).toBeUndefined();
++  });
++  it("keeps footer status, the prototype notice and controls in separate tracks with no fixed-height overflow", () => {
++    expect(declarations(".footer-bar")).toMatchObject({ display: "grid", "grid-template-columns": "minmax(0, 1fr) minmax(0, 2fr) auto" });
++    expect(declarations(".footer-status")).toMatchObject({ "min-width": "0", "flex-wrap": "wrap", "grid-column": "1", "grid-row": "1" });
++    expect(declarations(".footer-status > strong")["overflow-wrap"]).toBe("anywhere");
++    expect(declarations(".footer-content-notice")).toMatchObject({ "grid-column": "2", "grid-row": "1", "overflow-wrap": "anywhere" });
++    expect(declarations(".footer-actions")).toMatchObject({ "grid-column": "3", "grid-row": "1" });
++    for (const match of css.matchAll(/\.footer-content-notice\s*\{([^}]+)\}/g)) {
++      expect(match[1]).not.toMatch(/position:\s*absolute|translateX/);
++    }
++    for (const match of css.matchAll(/\.footer-bar\s*\{([^}]+)\}/g)) {
++      const height = match[1]!.match(/(?:^|;)\s*height:\s*([^;]+)/)?.[1]?.trim();
++      if (height) expect(height).toBe("auto");
++    }
++    const narrow = css.match(/@media \(max-width: 1180px\)\s*\{\s*\.footer-content-notice\s*\{[^}]+\}\s*\.footer-actions\s*\{[^}]+\}/)![0];
++    expect(declarations(".footer-content-notice", narrow)).toMatchObject({ "grid-column": "1 / -1", "grid-row": "2" });
++    expect(declarations(".footer-actions", narrow)["grid-column"]).toBe("2");
+   });
+ });
+ 

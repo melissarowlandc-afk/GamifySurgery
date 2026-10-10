@@ -1,0 +1,478 @@
+{
+  "schemaVersion": "app-gapfill-v6e-worker-visual-review/v1",
+  "reviewer": "sol-v6e-worker",
+  "scope": "Generation and packaging only. Inspected both approved APP eight-pose reference sheets and v6d white-coat examples before generation, all sixteen native generation outputs, all sixty-four normalized poses, all thirty-two authored contact overlays, eight authentic south-facing chair proofs, the approved-APP/new-eight manager sheet, the v6d style sheet, all 318 catalog identities and sixteen nearest-comparison boards. Worker visual QA only; manager acceptance pending.",
+  "managerAcceptance": "pending",
+  "browserValidation": "not-run-left-to-manager",
+  "runtimeReady": false,
+  "notes": {
+    "path": "tools/character-mapping/app-gapfill-v6e/worker-review-notes.json",
+    "sha256": "bc8e2122c6a4bef2cf8a84a2f61b5e6a8d6010b46e4fb9ed108d1d8205dd3767"
+  },
+  "preGenerationExamples": [
+    {
+      "id": "future-roster20-v5.001",
+      "pose": {
+        "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.001/stand-south.png",
+        "sha256": "ba48f64f75bc7d042f30b452d98638c5298f7725abb57a4ba1e46c84710fd4dd"
+      }
+    },
+    {
+      "id": "future-roster20-v5.002",
+      "pose": {
+        "path": "apps/player/public/art/characters/future-roster20-v5/future-roster20-v5.002/stand-south.png",
+        "sha256": "f7fccc78799c900433f6e77147fb511b513956fa7b720415f6210fd25e40dcc3"
+      }
+    }
+  ],
+  "existingRoleBoards": [
+    {
+      "role": "staff.app",
+      "identities": [
+        "future-roster20-v5.001",
+        "future-roster20-v5.002"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/app-existing.png",
+        "sha256": "113f6c2d08666ad0ff2660b16b0f4915cef662bc7a65778229ae509d45cfcc83"
+      }
+    }
+  ],
+  "comparisonManifest": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/comparison/manifest.json",
+    "sha256": "ab726773bbfe638598cd98c081f4935e759ab13c53ab94d4891388157ac41285"
+  },
+  "allCatalogComparisonManifest": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/comparison/all-catalog-manifest.json",
+    "sha256": "5b2857e69299c48389e909b19fad01eaa1d20d3ebc4c7867d18662c5224cab8a"
+  },
+  "styleReviewManifest": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/review/manager/style-review-manifest.json",
+    "sha256": "3042d1ea62bdaee5684cc21a58136c9c2a68b3cf0daaee7c44f4eeb5bf713561"
+  },
+  "comparisonAtlasesManifest": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/review/manager/qa-atlases-manifest.json",
+    "sha256": "30000e969d9be1dcdbc80b4897fe99f5cc008965944684c7659a91ce3e0ee71c"
+  },
+  "chairBoards": [
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/chair-review-01.png",
+      "sha256": "9d64e870df08db4f97bfab58b5898f3143c8bfff109322ac1dbc1ec6a9c313aa"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/chair-review-02.png",
+      "sha256": "a30aafffcf7e50101c88bb81a07c25a5526fc1e61fb6e88eef67bce5a5f549f2"
+    }
+  ],
+  "contactBoards": [
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/contact-review/contact-review-01.png",
+      "sha256": "2bff35500036fc85f7f7d9e33f24712258427a2e383eb27be1054737463c2dd8"
+    },
+    {
+      "path": "artifacts/character-statics/app-gapfill-v6e/contact-review/contact-review-02.png",
+      "sha256": "43432a2341b9bb1d5a96809b41bde1de3b9ffedeadd9eb644378534f7390caab"
+    }
+  ],
+  "contactLedger": {
+    "path": "tools/character-mapping/app-gapfill-v6e/review-acceptance.json",
+    "sha256": "73edd019241d5d3cbce58da3a0cdf22c05fe77e8a0be0e3e9de39ac1edf47875"
+  },
+  "authoredContactContractSha256": "d0285efc77eb267f540713d676b384f650440d717220cbada6a9451e493e6e10",
+  "alphaReport": {
+    "path": "artifacts/character-statics/app-gapfill-v6e/alpha-normalization-report.json",
+    "sha256": "12af820e3861c7cf24592fb3c6bfdb259a17aef081ef9b291fb6b3d276269531",
+    "summary": {
+      "identities": 8,
+      "poses": 64,
+      "sourceNonzeroPixelsWithFootprintOutside": 47,
+      "sourcePosesWithFootprintOutside": 4,
+      "maxSourceAlphaWithFootprintOutside": 1,
+      "derivedBorderNonzeroPixels": 7,
+      "derivedPosesWithBorderAlpha": 2,
+      "derivedBorderMaxAlpha": 1,
+      "protectedAlphaClipping": false
+    },
+    "status": "worker-QA-pass-with-alpha1-noise;manager-acceptance-pending"
+  },
+  "identities": [
+    {
+      "number": "001",
+      "id": "app-gapfill-v6e.001",
+      "role": "staff.app",
+      "sex": "Female",
+      "age": 28,
+      "sourceSha256": "001a7eae3d53b3beff6c9a6a11eb49e5b81bbfae12fdae81f13f29532acdb154",
+      "features": "Warm golden-tan young woman, short black curls with tapered nape and asymmetric forelock, coral scrubs and white hip-length provider jacket; no glasses.",
+      "distinction": "Cropped curls, warm tan face, coral uniform and absence of glasses separate her from the approved olive curl-bun/plum APP and every other white-coat identity.",
+      "regenerations": 0,
+      "realizationNote": "Planned petite build renders as a moderately compact adult body; the short curl silhouette and adult face remain distinct.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/full-poses-light.png",
+          "sha256": "9b9aa1f6176007681459018d0aff5d356baca64532b39935b278a76d1a53cdbb"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/001/full-poses-dark.png",
+          "sha256": "ce63a00c5d08d9ffe02a0ffe8fd42e19fb9273d3b585d5659761cc095e87eae8"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/001-nearest-six.png",
+        "sha256": "b1aae0da0a8ff8ea579cc3c7569f5cb508fb973f67fbf0dd2678124420a5a8f2"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/001-all-catalog-nearest-six.png",
+        "sha256": "51b604c53411cfafb4e4b18c3c722cc6f428dc8c5540aed47b6e8846c4e66edb"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/001-front-desk-chair-placement.png",
+        "sha256": "61a2818c57b8be2a5f034221a9aec124c0ddf565c8cde3c507887e25c98bc281"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/001.png",
+        "sha256": "6d09c4a0ab1a326fbd4891b607e997150014c0432bf70bde2700e2a1776c68dd"
+      },
+      "contacts": {
+        "south": 242,
+        "east": 248,
+        "west": 248,
+        "north": 250
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "002",
+      "id": "app-gapfill-v6e.002",
+      "role": "staff.app",
+      "sex": "Female",
+      "age": 38,
+      "sourceSha256": "57627c57a3e65b42a5095227e68bb4b65fd0e46df9abb2fcabf227b100c9e956",
+      "features": "Fair freckled woman with straight auburn chin-length center-part bob, ochre scrubs, white provider coat and dark clinical shoes; no glasses.",
+      "distinction": "Straight auburn bob, subtle freckles, fair face and ochre scrubs differ from both approved APPs and the new black-haired or silver-haired women.",
+      "regenerations": 0,
+      "realizationNote": "The planned lean/tall build renders moderately compact; freckles are subtle at runtime scale.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/full-poses-light.png",
+          "sha256": "7ea90a46165299a155ec702d815bc665e0f1a5f3397eecbcba8bb8275d3ef3b8"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/002/full-poses-dark.png",
+          "sha256": "83f819c0f4f0eb6725f34ddb7ae5719954773696bc7788d3d3d1facccfda9168"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/002-nearest-six.png",
+        "sha256": "4519bca2b0c16af10b554d73357f408e2e38755df1fd7e63d0543a871210b51c"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/002-all-catalog-nearest-six.png",
+        "sha256": "a4b8c9ff2373698d3d4c6670058b1e25ca5674a1258cdcacfcbbac8e783ecb99"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/002-front-desk-chair-placement.png",
+        "sha256": "2d92f26b31a1b9e73053127c70775dcac7531dd91f013ca4bf451feb02bd35dd"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/002.png",
+        "sha256": "228a4de82e3edfa8d7e2bdd92b39501eddc64408020413c89db9c24b2fbe5819"
+      },
+      "contacts": {
+        "south": 242,
+        "east": 248,
+        "west": 248,
+        "north": 251
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "003",
+      "id": "app-gapfill-v6e.003",
+      "role": "staff.app",
+      "sex": "Female",
+      "age": 49,
+      "sourceSha256": "1e4ce8ae83bb69afb9d12e3704ea1c37771046376a2619a9dd85ae5c1c64a860",
+      "features": "Warm brown mature woman, black braided high knot with silver strands, russet scrubs and white provider coat; no glasses or readable badge text.",
+      "distinction": "Braided silver-stranded knot, warm brown face, russet scrubs and no frames distinguish her from the approved curly-bun/plum/glasses APP and prior braided staff.",
+      "regenerations": 0,
+      "realizationNote": "Silver strands are more prominent than planned temple accents and the planned full build renders moderately broad. The pale nose highlight is not eyewear.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/full-poses-light.png",
+          "sha256": "61749b84841eaae12e380bdd1d0a591e919f90363c2a1cc5d7de00a9a70c4bdc"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/003/full-poses-dark.png",
+          "sha256": "351140b0b28bdaf7d4d9913c41e7d07514dac527445cb1305591c22f46eb3aeb"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/003-nearest-six.png",
+        "sha256": "997f044fd42c13f15f65dfd0cf63f63aecdd14fc6536ee1d98b48d6ed09552c8"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/003-all-catalog-nearest-six.png",
+        "sha256": "810fbc1cb7bd994232a36d7c3f6413ced0fcd3cb7735dc4b29d6ec75b54e8e1c"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/003-front-desk-chair-placement.png",
+        "sha256": "881eda123b62df1555499a6459a60c6582f7c4170c33865e6e67171c58ada959"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/003.png",
+        "sha256": "3c7e9f57db204fc1ce6fb8a2617ec0436e5668eed5225bf8f155f9ee6465c2a7"
+      },
+      "contacts": {
+        "south": 243,
+        "east": 249,
+        "west": 249,
+        "north": 252
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "004",
+      "id": "app-gapfill-v6e.004",
+      "role": "staff.app",
+      "sex": "Female",
+      "age": 60,
+      "sourceSha256": "abaa44e19d4e4714ce123a3328a4f5281ce6253198e98fd2d834e1b4ba770985",
+      "features": "Light warm-brown older woman with straight side-part silver bob, amber glasses, charcoal scrubs and white provider jacket; clean adult face with mature cues.",
+      "distinction": "Straight silver bob, amber frames and charcoal uniform differ from the older gray-curl glasses motif and from the v6d brown/silver-bob teal-frame pharmacist.",
+      "regenerations": 0,
+      "realizationNote": "Frames render rounder than the planned oval shape. A tiny unlettered chest rectangle appears only in seated E/W views; manager should assess this pose-consistency detail.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/full-poses-light.png",
+          "sha256": "12d384888ba62f0d1220d2c71fd6f15de4fe321e51371c004771b72d6562b2f6"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/004/full-poses-dark.png",
+          "sha256": "29bd6f30caec3177e48ab3cfd75e2fda7a79a0f611c4672397fdad9d900cd9a0"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/004-nearest-six.png",
+        "sha256": "59f8f190e8dc3b91d2465a73ed37cf7c35fbf71bb1ff641fd85d149c31325d9c"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/004-all-catalog-nearest-six.png",
+        "sha256": "8ac1cfc6f6082f7a67b2ea27d89e474a717904a601b530078101b7e33f6f496b"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/004-front-desk-chair-placement.png",
+        "sha256": "cab214beb60f9cf1f9322c21b9256fe266652e73a1ebd97d928e22887f9cc29b"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/004.png",
+        "sha256": "bfaf4438476300ff62119b9fd11110dfa0b4453577cbe4dce74ab294442c1d73"
+      },
+      "contacts": {
+        "south": 245,
+        "east": 252,
+        "west": 252,
+        "north": 254
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "005",
+      "id": "app-gapfill-v6e.005",
+      "role": "staff.app",
+      "sex": "Male",
+      "age": 31,
+      "sourceSha256": "954ab9a9b4400ddcccf998e89491c24fbf00e2b615fcea7934b7f6b12c54e164",
+      "features": "Medium olive-tan young man, black undercut with high tied ponytail and forelock, clean-shaven straight torso, taupe scrubs and white hip-length provider jacket.",
+      "distinction": "Undercut ponytail, clean-shaven younger face, taupe scrubs and white jacket differ from the nearest older topknot patient and every existing provider look.",
+      "regenerations": 0,
+      "realizationNote": "Masculine flat chest and coherent undercut/tied hair are maintained in all profiles; no inherited rounded female torso issue.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/full-poses-light.png",
+          "sha256": "db498e4abed4c9c4e4c389f9843a6d2860a516b7f4ceab112bb0f9cc476af53b"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/005/full-poses-dark.png",
+          "sha256": "17e479a20dbca8f82305b6d58a34f45bcb431cfe2088eb11427370688c95ef59"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/005-nearest-six.png",
+        "sha256": "46960596a749862a3e2d0a68421e7ccb1759018400a37797f676a185d32f2008"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/005-all-catalog-nearest-six.png",
+        "sha256": "74c80571b4fb331c1b4929d0f2eae8042594cfce3ae217f7eb26a227a28713f0"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/005-front-desk-chair-placement.png",
+        "sha256": "016a150582ef335c1c5f9d323306bd5adf49e732050146a66c9fa1e31e18eaf7"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/005.png",
+        "sha256": "b3cc7525a5c068f295d006e22aeb548a5b2ea2ae45c3709afdad649a9a73944b"
+      },
+      "contacts": {
+        "south": 240,
+        "east": 246,
+        "west": 246,
+        "north": 248
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "006",
+      "id": "app-gapfill-v6e.006",
+      "role": "staff.app",
+      "sex": "Male",
+      "age": 41,
+      "sourceSha256": "4733465d8ca06f1028215a3472e84ba160c0f14f4f90714e7906d96dcbe74419",
+      "features": "Fair pink-toned man with ginger short swept crop, neat ginger beard and moustache, apricot scrubs and white provider coat; no glasses.",
+      "distinction": "Ginger crop and beard, fair pink face and apricot scrubs separate him from the approved dark twist/moustache APP and all other new male providers.",
+      "regenerations": 0,
+      "realizationNote": "Hair is a swept quiff rather than the planned straight crop; scrubs are brighter than muted apricot in the brief. Planned broad build renders moderately compact.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/full-poses-light.png",
+          "sha256": "fcead9886ec5ad7f1735678c8947d3dc151e7eb476b77dfab3c4c5eee8268c99"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/006/full-poses-dark.png",
+          "sha256": "f56995f8a290b6865c33b040cc502a3d37aa385d2485c37110c8208344fcbce0"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/006-nearest-six.png",
+        "sha256": "2f5563a360ab08e45f3d3a56fb4d76d665584e342579be883349dc9480a114df"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/006-all-catalog-nearest-six.png",
+        "sha256": "8861737a1c72422e2506e75b9f0234ac36eaefc58873dc3bf985b46e1256ab66"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/006-front-desk-chair-placement.png",
+        "sha256": "90417ac01edadda68c99a27958a2451eda80f3b9567d4b2dc2e58db1b26ccc25"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/006.png",
+        "sha256": "a89822df3938b9143f34d2c91a54ca753b7ea53d7923cb4442b636517801eb78"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 244,
+        "west": 244,
+        "north": 247
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "007",
+      "id": "app-gapfill-v6e.007",
+      "role": "staff.app",
+      "sex": "Male",
+      "age": 53,
+      "sourceSha256": "d23a43bc4e08342b3beef74d30f0bf3f25835bc9d82ada0403dad4812b46a020",
+      "features": "Deep-brown mature bald man with black rectangular glasses, short full salt-and-pepper beard, cocoa scrubs and white provider coat.",
+      "distinction": "Bald head, rectangular black frames, gray beard, deep skin and cocoa provider uniform distinguish him from existing bald patients and the two approved APPs.",
+      "regenerations": 0,
+      "realizationNote": "Beard is grayer than the written salt-and-pepper brief. Bald head, mature facial cues and frame shape remain consistent across all eight poses.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/full-poses-light.png",
+          "sha256": "50b3b0d2c3bed8819d5e00ddf1a7a8b82e6c0b4d3ded42b93daabee778aa8692"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/007/full-poses-dark.png",
+          "sha256": "d3d9616383d6af02495b32ee00575449cd8ceff0470016e645d2f47e3d192cb0"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/007-nearest-six.png",
+        "sha256": "7c95e4e6dcbd7c6f17d2d8c608e1b3d82e872f8714bfe393b0d69a0bb2e94a61"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/007-all-catalog-nearest-six.png",
+        "sha256": "14e1ed7019aa19e54bf4bb0e3ed80ec2c6d755d0cbb6d0b709ed9edbc4046426"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/007-front-desk-chair-placement.png",
+        "sha256": "e14f47890af39e27609ba81f385f55a5457559ac77014f016de07e46673f3070"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/007.png",
+        "sha256": "125f7629ab370fda3b5e488766937d17caba5b39e49466e88d1ad3de823f87af"
+      },
+      "contacts": {
+        "south": 237,
+        "east": 240,
+        "west": 240,
+        "north": 245
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "008",
+      "id": "app-gapfill-v6e.008",
+      "role": "staff.app",
+      "sex": "Male",
+      "age": 58,
+      "sourceSha256": "f52eca4780fc861349a8003a6829fb424e29ce0b778e735eb0e6495915dea16b",
+      "features": "Fair warm older man with swept silver wavy hair, clean-shaven mature face, brick-red scrubs, white provider coat and moderately stocky waist; no glasses.",
+      "distinction": "Silver wave, clean-shaven older cheeks, brick-red scrub block and fuller waist differ from the older white-moustached capped surgeon and prior silver-haired pharmacists.",
+      "regenerations": 0,
+      "realizationNote": "Planned heavyset build renders moderately stocky; wider waist and cheeks provide visible variation within the established compact character style.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/full-poses-light.png",
+          "sha256": "c0db7a9fa7cb73adeef980346a753831e722b017aab1699c9df691cf309f8a95"
+        },
+        {
+          "path": "artifacts/character-statics/app-gapfill-v6e/packages/008/full-poses-dark.png",
+          "sha256": "2f3f0225dfb42b2492a2e33030d32fd385ac9c12cd02cb09f8607c861c9b3df7"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/008-nearest-six.png",
+        "sha256": "06e5638f82f74f2969c22fc1eb3a40a45f51d1b8a23f1cd9daa8417435d87a94"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/comparison/008-all-catalog-nearest-six.png",
+        "sha256": "30d7c696aa04ddcd6252e5111ba760aa4609a6f9c1153382dc9b5c23476b18c0"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/placement-qa/008-front-desk-chair-placement.png",
+        "sha256": "30ca5fba07a2bac72541604d4126ed43cafac793837095055f02e0856842d2a9"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/app-gapfill-v6e/worker-review/contact-overlays/008.png",
+        "sha256": "21fb24b483fc00aff78dbc30ca1b8ca0d597ed87e833997a28f4b31137abe24f"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 243,
+        "west": 243,
+        "north": 247
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    }
+  ],
+  "styleAssessment": "The eight candidates retain the approved APP and v6d compact adult head/body proportions, dark stepped outline, cel shading, restrained pixel finish, white provider coats or jackets, long scrub trousers and dark clinical shoes. Standing arms-down and chair-free seated profiles are coherent across S/E/W/N. Coral, ochre, russet, charcoal, taupe, apricot, cocoa and brick-red scrub blocks differ from the two approved APPs' cobalt and plum. Hair, faces, facial hair and skin tones distinguish all eight from the existing catalog. Exactly two wear glasses; the older silver-bob woman has straight hair rather than the repeated gray-curls-and-glasses motif. Four women and four men span visual ages 28-60. Appearance has no clinical or gameplay-selection meaning.",
+  "limitations": [
+    "Planned petite, lean, broad and full builds render with subtler variation than the written design rows. The shared compact style is consistent, but the manager should assess whether the degree of body-type variety is sufficient.",
+    "004 has tiny blank white chest rectangles in seated E/W views that are absent from her standing views. They contain no lettering or logo; this is a minor pose-consistency concern for manager review.",
+    "006's apricot scrubs are brighter than the muted written brief. The warm color remains distinct from existing provider signature looks and retains the same shading and outline style.",
+    "003's silver braid strands and 007's gray beard are more prominent than the written briefs. Their appearance and age cues remain coherent across poses.",
+    "Contacts are independently authored worker candidates, not manager/root approval. Four-direction overlays are supplied; chair proofs use only the authentic south-facing Front Desk fixture. No invented chair rotations are presented as runtime fixtures.",
+    "Native extraction retains imperceptible alpha-1 edge noise: four source poses have 47 footprint pixels outside the normalized frame and two derived poses have seven alpha-1 border pixels. No protected alpha clipping occurred. No thresholding, erasing, mirroring or repainting was applied.",
+    "Browser gallery validation remains prepared for the manager and was not run by this worker. The 318-identity/2574-asset runtime remains unchanged. Manager acceptance, runtime integration, publication and GitHub backup are not claimed. No browser profile, game origin or campaign storage was accessed or changed."
+  ]
+}
