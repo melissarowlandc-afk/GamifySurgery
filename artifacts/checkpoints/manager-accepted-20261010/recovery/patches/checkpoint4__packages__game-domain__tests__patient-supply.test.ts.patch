@@ -1,0 +1,107 @@
+--- a/packages/game-domain/tests/patient-supply.test.ts
++++ b/packages/game-domain/tests/patient-supply.test.ts
+@@ -225,12 +225,13 @@
+ describe("routine patient supply", () => {
+   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
+     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+-    expect(release.concepts).toHaveLength(360);
++    expect(release.concepts).toHaveLength(370);
+     // The current old bank includes the concurrent interpreter pairing:
+-    // 1,008 existing cases, 62 Level-3 cases and 20 L4 pediatric variants.
++    // 1,008 existing cases, 62 Level-3 cases, 20 L4 pediatric variants
++    // and 20 Variety-3 adult clinic/outside-plan variants.
+     // The reused midline-recognition concept adds no second concept record.
+-    expect(release.cases).toHaveLength(1008 + 62 + 20);
+-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1395);
++    expect(release.cases).toHaveLength(1008 + 62 + 20 + 20);
++    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1415);
+ 
+     const noCapabilities = new Set<string>();
+     const everyCapability = new Set(
+@@ -358,44 +359,46 @@
+           "concept.statistics-ethics.risk-ratio-odds-ratio",
+           "concept.statistics-ethics.signed-rank",
+           "concept.statistics-ethics.study-design",
++          "concept.variety3.penicillin-label-structured-history",
++          "concept.variety3.surgical-hair-preparation",
+         ],
+         "duplicateConceptRecordIds": [],
+         "stageOne": {
+-          "availableConcepts": 281,
+-          "cases": 874,
+-          "introducedConcepts": 280,
++          "availableConcepts": 285,
++          "cases": 882,
++          "introducedConcepts": 285,
+           "patientBoundaryAcrossSeeds": {
+-            "maximum": 223,
+-            "minimum": 214,
++            "maximum": 228,
++            "minimum": 218,
+           },
+-          "seededPatientsUntilNotDue": 220,
++          "seededPatientsUntilNotDue": 222,
++          "strandedConceptIds": [],
++        },
++        "stageTwoAllCapabilities": {
++          "availableConcepts": 324,
++          "cases": 964,
++          "introducedConcepts": 322,
++          "patientBoundaryAcrossSeeds": {
++            "maximum": 253,
++            "minimum": 241,
++          },
++          "seededPatientsUntilNotDue": 251,
++          "strandedConceptIds": [
++            "concept.breast-cyst.symptomatic-simple-aspiration",
++            "concept.felty-syndrome.splenectomy-for-refractory-infections",
++          ],
++        },
++        "stageTwoExternal": {
++          "availableConcepts": 305,
++          "cases": 926,
++          "introducedConcepts": 303,
++          "patientBoundaryAcrossSeeds": {
++            "maximum": 241,
++            "minimum": 233,
++          },
++          "seededPatientsUntilNotDue": 237,
+           "strandedConceptIds": [
+             "concept.felty-syndrome.splenectomy-for-refractory-infections",
+-          ],
+-        },
+-        "stageTwoAllCapabilities": {
+-          "availableConcepts": 316,
+-          "cases": 948,
+-          "introducedConcepts": 315,
+-          "patientBoundaryAcrossSeeds": {
+-            "maximum": 242,
+-            "minimum": 238,
+-          },
+-          "seededPatientsUntilNotDue": 239,
+-          "strandedConceptIds": [
+-            "concept.breast-cyst.asymptomatic-simple-observation",
+-          ],
+-        },
+-        "stageTwoExternal": {
+-          "availableConcepts": 297,
+-          "cases": 910,
+-          "introducedConcepts": 296,
+-          "patientBoundaryAcrossSeeds": {
+-            "maximum": 233,
+-            "minimum": 226,
+-          },
+-          "seededPatientsUntilNotDue": 230,
+-          "strandedConceptIds": [
+             "concept.fhh.biochemical-evaluation",
+           ],
+         },
+@@ -501,7 +504,7 @@
+         },
+         {
+           "answerCorrectly": false,
+-          "answerCount": 2,
++          "answerCount": 1,
+           "arrivalTick": 4200,
+           "dayNumber": 8,
+           "resolutionReason": "completed",

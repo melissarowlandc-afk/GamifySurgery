@@ -1,0 +1,33 @@
+{
+  "number": 3,
+  "slug": "stitched-heart",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 3,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-f522b344-6133-4575-96c0-a52231b081f6.png",
+  "original_builtin_sha256": "e99d1ba4b300de62aff78c74a10230651a45b6e1fd5f54d6d4c692bab7172b1f",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/03-stitched-heart.png",
+  "raw_copy_sha256": "e99d1ba4b300de62aff78c74a10230651a45b6e1fd5f54d6d4c692bab7172b1f",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:21:33.437358+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/03-stitched-heart.png",
+  "output_sha256": "ea167bd3e317c01ffbee3ea2dbbcb354cf0f25bc73d7cc4fb94d10fdc2d98d61",
+  "preview": "preview-60/03-stitched-heart.png",
+  "preview_sha256": "458fb829ddc5a54eec364a62df5ff45d142e5d317f26472c9bc94a5b63d2c47c",
+  "reference_identity": null
+}

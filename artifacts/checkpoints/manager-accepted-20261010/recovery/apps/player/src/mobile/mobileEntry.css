@@ -1,0 +1,31 @@
+/* Lazy phone entry presentation; removing its flag restores exact desktop CSS. */
+body[data-phone-entry="true"] .opening-screen { width: 100%; min-width: 0; min-height: 100dvh; padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); overflow-wrap: anywhere; align-content: safe center; }
+body[data-phone-entry="true"] .opening-screen * { box-sizing: border-box; min-width: 0; max-width: 100%; }
+body[data-phone-entry="true"] .opening-screen button,
+body[data-phone-entry="true"] .opening-screen summary,
+body[data-phone-entry="true"] .opening-screen input:not([type="checkbox"]) { min-width: 44px; min-height: 44px; height: auto; touch-action: manipulation; font-family: var(--font-read); white-space: normal; }
+body[data-phone-entry="true"] .opening-screen input { font-size: 16px; }
+body[data-phone-entry="true"] .opening-screen summary { display: flex; align-items: center; }
+body[data-phone-entry="true"] .opening-screen .text-button { padding: 8px; }
+body[data-phone-entry="true"] .founder-creator,
+body[data-phone-entry="true"] .auth-gate-card { width: min(100%, 430px); padding: 14px; gap: 10px; box-shadow: none; }
+body[data-phone-entry="true"] .founder-name-field input,
+body[data-phone-entry="true"] .auth-form input { width: 100%; }
+body[data-phone-entry="true"] .auth-mode-links { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; width: 100%; }
+body[data-phone-entry="true"] .auth-form { width: 100%; }
+body[data-phone-entry="true"] .prototype-main-screen { gap: 16px; }
+body[data-phone-entry="true"] .opening-tagline-slot { block-size: auto; min-height: 2.7em; }
+body[data-phone-entry="true"] .opening-tagline { white-space: normal; }
+body[data-phone-entry="true"] .opening-choice { width: 100%; }
+body[data-phone-entry="true"] .founder-preset-row { grid-template-columns: 48px minmax(0, 1fr) 48px; }
+body[data-phone-entry="true"] .auth-signout-button { top: env(safe-area-inset-top, 0px); bottom: auto; right: max(8px, env(safe-area-inset-right, 0px)); min-width: 44px; min-height: 44px; font-size: 13px; padding: 8px 12px; }
+body[data-phone-entry="true"]:has(.auth-signout-button) .opening-screen { padding-top: calc(52px + env(safe-area-inset-top, 0px)); }
+body[data-phone-entry="true"]:has(.auth-signout-button) .mobile-shell { top: calc(48px + env(safe-area-inset-top, 0px)); height: calc(100dvh - 48px - env(safe-area-inset-top, 0px)); padding-top: 0; }
+@media (orientation: landscape) and (max-height: 500px) {
+  body[data-phone-entry="true"] .opening-screen { align-content: start; padding-block: 10px; }
+  body[data-phone-entry="true"] .founder-creator-screen .founder-creator { width: min(100%, 720px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-phone-entry="true"] .founder-creator h1,
+  body[data-phone-entry="true"] .founder-creator .opening-overhead-copy,
+  body[data-phone-entry="true"] .founder-creator .opening-starting-cash { grid-column: 1 / -1; }
+  body[data-phone-entry="true"] .founder-preview-avatar { grid-column: 1; grid-row: 4 / 7; }
+}

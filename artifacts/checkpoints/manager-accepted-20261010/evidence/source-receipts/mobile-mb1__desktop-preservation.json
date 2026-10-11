@@ -1,0 +1,92 @@
+{
+  "capturedAt": "2026-10-10T01:47:01.316Z",
+  "checkedAt": "2026-10-10T02:29:03.976Z",
+  "existingPathsChecked": 764,
+  "existingPathsChanged": [
+    "apps/player/src/App.tsx",
+    "docs/execplans/mobile-version-20261009.md",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md"
+  ],
+  "existingProtectedPathsUnchanged": 761,
+  "appLogicalDiff": [
+    "import AppShell -> import PrototypeShell",
+    "AppShell opening tag -> PrototypeShell"
+  ],
+  "appPropsAndProjectionUnchanged": true,
+  "indexHtmlByteUnchanged": true,
+  "protectedFiles": [
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "sha256": "c96895f4c9127632cfbaacb3c690e0c3ff8daf18f4d7a399a678e889214f0173"
+    },
+    {
+      "path": "apps/player/index.html",
+      "sha256": "22ceddea5aafb64c8f7f1e847e857bafa25e74cff27b183bec0230cb0d156aae"
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "sha256": "187e77690b25c8c9bb8d4716b21d105708c49ea725c05ba5bc301a5a69219642"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "sha256": "53d2acf9319319da0695af7120b9a59bc480f73767a909fb9e5fc3da37236f5f"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "sha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5"
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "sha256": "5c1275f1402cd28f945f096d67f5fc6d2e03f99e6097d852f3d438cf65b05caa"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "sha256": "1f9490a72aac06faddeeace7ff9621ce1aab820c9cf9515bf5e5815a7f81e501"
+    },
+    {
+      "path": "apps/player/vite.config.ts",
+      "sha256": "e25dc6be65a6e37f06be4e599d48be998ea0e4e99cc79b0a394d42cc25f9e69e"
+    }
+  ],
+  "desktopCssIdentical": {
+    "path": "index-C5tFl1dZ.css",
+    "bytes": 163125,
+    "sha256": "b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff"
+  },
+  "mobileJs": {
+    "path": "MobileShell-Dv0VeVol.js",
+    "bytes": 25528,
+    "sha256": "7a2e5fb05d40144441423a4145c64004545c29a72c6307911ab42713ee0c3bdf"
+  },
+  "mobileCss": {
+    "path": "MobileShell-BjIn26iY.css",
+    "bytes": 10441,
+    "sha256": "1cfba7ad5323357054ae09b41581bcbe5b6beada84ba1ee1ddf1ed9d782191b7"
+  },
+  "main": {
+    "path": "index-CcPPc__Z.js",
+    "bytes": 8212430,
+    "sha256": "2c8809efdf5d021242e2a77912950342123c4035398ddad4580f4b0b688ecb0d"
+  },
+  "htmlLoadsOnlyDesktopEntry": true,
+  "dynamicImportPresent": true,
+  "noMobileMarkupInDesktopChunk": true,
+  "newSourceFiles": [
+    "apps/player/src/PrototypeShell.tsx",
+    "apps/player/src/shellContract.ts",
+    "apps/player/src/shellPresentation.ts",
+    "apps/player/src/mobile/desktopPanelAdapters.tsx",
+    "apps/player/src/mobile/MobileSheet.tsx",
+    "apps/player/src/mobile/mobileShell.css",
+    "apps/player/src/mobile/MobileShell.test.tsx",
+    "apps/player/src/mobile/MobileShell.tsx",
+    "apps/player/src/mobile/MobileTopBar.tsx",
+    "apps/player/src/mobile/navigation.test.ts",
+    "apps/player/src/mobile/navigation.ts",
+    "apps/player/src/mobile/shellContinuity.test.tsx",
+    "apps/player/src/mobile/shellSelection.test.ts",
+    "apps/player/src/mobile/testDom.ts"
+  ],
+  "utf8NoBomLf": true,
+  "sharedDocumentsAppendOnly": true
+}

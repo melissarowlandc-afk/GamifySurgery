@@ -1,0 +1,137 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -78,6 +78,9 @@
+ import { clearRecoveredSaveNotices } from "./clinicSaveNotices";
+ import { getCampaignTutorialGuidance } from "./tutorialGuidance";
+ import { getTutorialTickIntervalMs } from "./tutorialTiming";
++import { previewMobileDoor, previewMobileHallway, previewMobilePlacement } from "../mobile/build/buildSession";
++import type { MobileBuildActions } from "../mobile/build/types";
++import { trimMobileBuildHistory } from "../mobile/performance/buildHistory";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -87,12 +90,15 @@
+ }[GameCommand["type"]];
+ 
+ interface ExecuteOptions {
++  /** Only a confirmed phone hallway stroke defers intermediate saves. */
++  deferPersistence?: boolean;
+   announceReceipt?: boolean;
+   announceEvents?: boolean;
+   announcementOverride?: string;
+ }
+ 
+ export interface PrototypeSession {
++  mobileBuildActions: MobileBuildActions;
+   profile: LocalPrototypeProfile;
+   state: GameState;
+   campaigns: CampaignSummary[];
+@@ -308,7 +314,17 @@
+   const [buildExitBlockedIssues, setBuildExitBlockedIssues] =
+     useState<string[]>([]);
+   const buildHistoryRef = useRef<GameState[]>([]);
++  const mobileHallwayBatchRef = useRef(false);
++  const mobileBuildHistoryLimitRef = useRef(false);
+   const buildHistoryLabelsRef = useRef<string[]>([]);
++  const setMobileBuildHistoryLimit = useCallback((enabled: boolean) => {
++    mobileBuildHistoryLimitRef.current = enabled;
++    if (enabled) {
++      trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
++      setBuildUndoCount(buildHistoryRef.current.length);
++      setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
++    }
++  }, []);
+   const cameraPreferencesRef = useRef<FacilityCameraPreferenceSession | null>(null);
+   if (cameraPreferencesRef.current === null) {
+     cameraPreferencesRef.current = createFacilityCameraPreferenceSession();
+@@ -558,7 +574,7 @@
+         // Full localStorage serialization is deliberately deferred away from
+         // the route-extension task so it cannot steal the next movement frame.
+         scheduleActiveStateAutosave(next);
+-      } else if (shouldPersist) {
++      } else if (shouldPersist && options.deferPersistence !== true) {
+         saved = persistActiveState(next);
+       } else {
+         stageActiveState(next);
+@@ -629,7 +645,10 @@
+   const executeBuildCommand = useCallback(
+     (commandInput: GameCommandInput): OperationReceipt["status"] => {
+       const before = stateRef.current;
+-      const status = execute(commandInput);
++      const status = mobileHallwayBatchRef.current
++        ? execute(commandInput, { deferPersistence: true })
++        : execute(commandInput);
++      if (mobileHallwayBatchRef.current) return status;
+       if (status === "applied") {
+         buildHistoryRef.current = [
+           ...buildHistoryRef.current,
+@@ -647,6 +666,7 @@
+           ...buildHistoryLabelsRef.current,
+           undoLabel,
+         ];
++        if (mobileBuildHistoryLimitRef.current) trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
+         setBuildUndoCount(buildHistoryRef.current.length);
+         setBuildUndoLabel(undoLabel);
+         setBuildExitBlockedReason(null);
+@@ -1186,6 +1206,52 @@
+       selectedRoomDefinitionId,
+     ],
+   );
++
++  // This method is exposed only to MobileShell. The desktop placeRoom path above
++  // still executes, saves and snapshots every cell separately.
++  const commitMobileHallway = useCallback((cells: readonly GridPoint[]): boolean => {
++    if (!buildMode || selectedRoomDefinitionId !== "room.hallway" || movingRoomInstanceId || mobileHallwayBatchRef.current) return false;
++    const before = stateRef.current;
++    const preview = previewMobileHallway(before, cells);
++    if (preview.buildCells.length === 0) return false;
++    let applied = 0;
++    mobileHallwayBatchRef.current = true;
++    try {
++      for (const cell of preview.buildCells) {
++        if (!placeRoom(cell.x, cell.y, 0)) break;
++        applied += 1;
++      }
++    } finally {
++      mobileHallwayBatchRef.current = false;
++      if (applied > 0) {
++        const label = describeBuildUndoAction(before, stateRef.current,
++          { type: "PLACE_ROOM", roomDefinitionId: "room.hallway" },
++          id => getRoomDefinition(id)?.displayName ?? id);
++        buildHistoryRef.current = [...buildHistoryRef.current, before];
++        buildHistoryLabelsRef.current = [...buildHistoryLabelsRef.current, label];
++        if (mobileBuildHistoryLimitRef.current) trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
++        setBuildUndoCount(buildHistoryRef.current.length);
++        setBuildUndoLabel(label);
++        setBuildExitBlockedReason(null);
++        setBuildExitBlockedIssues([]);
++        setAnnouncement(`Built ${applied} hallway cell${applied === 1 ? "" : "s"}. Undo reverses this stroke.`);
++        const saved = persistActiveState(stateRef.current);
++        if (!saved && !saveWarningShownRef.current) {
++          saveWarningShownRef.current = true;
++          publishSystemNotice("alert.system.save-failed", lastSaveResultRef.current.ok
++            ? "The browser rejected this save. Keep this tab open and try again."
++            : describePrototypeStorageFailure(lastSaveResultRef.current.failure));
++        }
++      }
++    }
++    return applied > 0;
++  }, [buildMode, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
++
++  const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) =>
++    previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation),
++  [selectedRoomDefinitionId, movingRoomInstanceId, placementOrientation]);
++  const previewMobileHallwayCells = useCallback((cells: readonly GridPoint[]) => previewMobileHallway(stateRef.current, cells), []);
++  const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
+ 
+   const enterBuildMode = useCallback(() => {
+     if (buildMode) {
+@@ -2125,6 +2191,8 @@
+     cancelPlacement,
+     rotatePlacement,
+     placeRoom,
++    mobileBuildActions: { setHistoryLimit: setMobileBuildHistoryLimit, previewPlacement: previewMobileRoom, previewHallway: previewMobileHallwayCells,
++      previewDoor: previewMobileDoorRequest, commitHallway: commitMobileHallway },
+     enterBuildMode,
+     exitBuildMode,
+     enterManagementMode,

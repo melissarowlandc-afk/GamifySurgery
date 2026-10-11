@@ -1,0 +1,48 @@
+/* MB6: exclusively in the phone chunk and explicitly scoped to its shell. */
+.mobile-shell .mobile-top-bar { padding: 4px 8px; }
+.mobile-shell .mobile-resource-row { gap: 6px; }
+.mobile-shell .mobile-clock-row { margin-top: 2px; gap: 4px; }
+.mobile-shell .mobile-xp-ring { width: 40px; height: 40px; }
+.mobile-shell .mobile-xp-ring > span { width: 32px; height: 32px; }
+.mobile-shell .mobile-cash { padding: 2px 6px; }
+.mobile-shell .mobile-cash strong { font-size: 15px; }
+.mobile-shell .mobile-cash small { font-size: 11px; }
+.mobile-shell .mobile-tutorial-coach.is-collapsed { min-height: 48px; max-height: 48px; margin-block: 2px; padding: 0 4px 0 10px; border-radius: 24px; }
+.mobile-shell .mobile-tutorial-coach.is-collapsed .mobile-coach-heading small { display: none; }
+.mobile-shell .mobile-tutorial-coach.is-collapsed .mobile-coach-heading h2 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.mobile-shell .mobile-coach-location { font-weight: 700; }
+.mobile-shell [data-mobile-coach-anchor="true"] { outline: 3px solid var(--focus); outline-offset: -3px; }
+.mobile-shell .dialog-backdrop { position: fixed; padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); align-items: stretch; overflow: hidden; }
+.mobile-shell .dialog-backdrop > .confirm-dialog { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border-radius: 0; padding: 16px; overflow: auto; overscroll-behavior: contain; }
+.mobile-shell .campaign-list { max-height: none; overflow: visible; }
+.mobile-shell .campaign-card-heading { flex-wrap: wrap; }
+.mobile-shell .campaign-card dl > div { min-width: 0; grid-template-columns: minmax(0, 1fr); }
+.mobile-shell .campaign-card dd { min-width: 0; overflow-wrap: anywhere; }
+.mobile-shell .dialog-actions { position: sticky; bottom: -16px; padding-block: 8px; background: var(--paper-raised); }
+.mobile-shell .dialog-actions button { flex: 1 1 140px; }
+.mobile-shell .mobile-prototype-tools .development-copy { padding: 0; }
+.mobile-shell .mobile-prototype-tools .development-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.mobile-shell .mobile-prototype-tools .development-actions > button { flex: 1 1 140px; }
+.mobile-shell .mobile-prototype-tools dl > div { min-width: 0; }
+.mobile-shell .mobile-prototype-tools dd { overflow-wrap: anywhere; }
+.mobile-shell .help-topic-detail { overflow: visible; }
+@media (orientation: landscape) and (min-width: 600px) and (max-height: 500px) {
+  .mobile-shell { grid-template-columns: 76px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "top top" "tabs content"; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .mobile-shell .mobile-top-bar { grid-area: top; display: grid; grid-template-columns: minmax(90px, 1fr) minmax(88px, 1fr) 60px minmax(100px, 1fr) auto 44px auto; align-items: center; gap: 6px; padding-block: 2px; }
+  .mobile-shell .mobile-resource-row,
+  .mobile-shell .mobile-clock-row { display: contents; }
+  .mobile-shell .mobile-clock-lock { grid-column: 1 / -1; margin: 0; }
+  .mobile-shell .mobile-level { gap: 4px; }
+  .mobile-shell .mobile-level small { font-size: 10px; }
+  .mobile-shell .mobile-xp-ring { width: 32px; height: 32px; }
+  .mobile-shell .mobile-xp-ring > span { width: 26px; height: 26px; font-size: 9px; }
+  .mobile-shell .mobile-satisfaction { font-size: 13px; }
+  .mobile-shell .mobile-content { grid-area: content; }
+  .mobile-shell .mobile-tab-bar { grid-area: tabs; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(5, minmax(44px, 1fr)); padding: 2px; border-top: 0; border-right: var(--mobile-border); }
+  .mobile-shell .mobile-tab-bar button { flex-direction: column; gap: 2px; font-size: 11px; }
+  .mobile-shell .mobile-tab-symbol { font-size: 17px; }
+  .mobile-shell .mobile-sheet-heading { min-height: 48px; padding-block: 2px; }
+  .mobile-shell .mobile-chart-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: 4px; }
+  .mobile-shell .mobile-chart-actions > :only-child { grid-column: 1 / -1; }
+  .mobile-shell .mobile-tutorial-coach { max-height: 42%; }
+}

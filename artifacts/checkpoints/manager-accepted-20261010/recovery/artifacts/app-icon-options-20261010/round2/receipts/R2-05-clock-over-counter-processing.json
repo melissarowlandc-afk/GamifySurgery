@@ -1,0 +1,65 @@
+{
+  "id": "R2-05",
+  "raw_original": {
+    "path": "receipts/generated/R2-05-clock-over-counter.png",
+    "sha256": "2fd5b3117bad585afdd6eabde05275aee2c1ed077dae552218e84d5e23a7139b",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "format": "PNG"
+  },
+  "tool_receipt": "receipts/R2-05-clock-over-counter-tool.json",
+  "processing": {
+    "native_grid": 128,
+    "resampling": "nearest-neighbor for native grid, fitted subject, 1024 export and 60 preview",
+    "adaptive_palette_colors": 256,
+    "adaptive_palette_method": "median cut with room material shades",
+    "dithering": "none",
+    "measured_source_background_rgb": [
+      245,
+      232,
+      204
+    ],
+    "flat_export_background_rgb": [
+      244,
+      233,
+      207
+    ],
+    "edge_connected_background_tolerance": 32,
+    "source_foreground_bounds_at_native_grid": [
+      17,
+      14,
+      116,
+      114
+    ],
+    "fitted_subject_size_at_native_grid": [
+      103,
+      104
+    ],
+    "fitted_subject_offset_at_native_grid": [
+      12,
+      12
+    ],
+    "maximum_subject_extent": "81.25% of square; important content inside central approximately 80%"
+  },
+  "final": {
+    "path": "icons/R2-05-clock-over-counter.png",
+    "sha256": "c6522c94bf06b6ddd4099b265e217c2f5337d49d2cdf8b6dbaba63495e4dea87",
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "mode": "RGB"
+  },
+  "preview": {
+    "path": "preview-60/R2-05-clock-over-counter.png",
+    "sha256": "d1711bd9ce326793f6e9dc10029eaa6c371b7bfa2cf51ab8591140c1ea631aaf",
+    "dimensions": [
+      60,
+      60
+    ],
+    "mode": "RGB"
+  }
+}

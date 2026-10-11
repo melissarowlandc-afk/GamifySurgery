@@ -1,0 +1,13 @@
+--- a/packages/game-domain/tests/gs028-20261007-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-batch.test.ts
+@@ -247,8 +247,8 @@
+   state.facilityLevel = stage as 0 | 1 | 2;
+   const capabilities = getCurrentCapabilities(state);
+   const laterCaseIds = new Set(GS028_20261007_VARIETY2_CASES.map((item) => item.id));
+-  // This historical pool delta measures the first October 7 batch; the second has its own full-pool proof.
+-  const admitted = ordinaryPool(state).filter((item) => !laterCaseIds.has(item.id));
++  // Historical first-October-7 delta; later batches retain their own admission proofs.
++  const admitted = ordinaryPool(state).filter((item) => !laterCaseIds.has(item.id) && !item.id.startsWith("case.variety3."));
+   const old = admitted.filter((item) => !item.id.startsWith("case.gs028e."));
+   return { stage, capabilities: [...capabilities].sort(), before: { cases: old.length, concepts: new Set(old.flatMap((item) => item.decisionNodes.map((node) => node.primaryConceptId))).size }, after: { cases: admitted.length, concepts: new Set(admitted.flatMap((item) => item.decisionNodes.map((node) => node.primaryConceptId))).size } };
+ });

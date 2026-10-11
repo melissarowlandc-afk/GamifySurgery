@@ -1,0 +1,28 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -69,6 +69,10 @@
+   id: string;
+   folder: PatientFolder;
+   name: string;
++  /** Frozen encounter facts; absent legacy values stay undefined. */
++  ageLabel?: string;
++  sexLabel?: string;
++  chiefComplaint?: string;
+   subtitle: string;
+   statusLabel: string;
+   actionRequired: boolean;
+@@ -323,10 +327,14 @@
+ 
+ export interface ServiceIncomeOperationView {
+   id: string;
++  /** Optional phone detail grouping; desktop rendering ignores this source identity. */
++  incomeLineId?: string;
+   displayName: string;
+   actorLabel: string;
+   statusLabel: string;
+   quoteFeeLabel: string;
++  /** Optional presentation label of the existing assigned provider/team; desktop ignores it. */
++  providerLabel?: string;
+ }
+ 
+ export interface ServiceIncomeReceiptView {

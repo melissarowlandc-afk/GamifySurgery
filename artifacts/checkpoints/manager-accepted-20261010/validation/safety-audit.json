@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-11T02:20:06.549844+00:00",
+  "logicalRecoveryTargetsScanned": 470,
+  "physicalArchiveFilesScanned": 575,
+  "utf8TextInspections": 713,
+  "strongSecretSignatures": [],
+  "literalCredentialAssignments": [],
+  "personalIdentifiers": [],
+  "forbiddenPayloadPaths": [],
+  "utf8Boms": [],
+  "textEncodingErrors": [],
+  "reviewedBenignLiteralAssignments": [],
+  "preservedSourceOrPatchLineEndings": [
+    {
+      "kind": "recovered",
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "crlf": 55,
+      "bareCr": 0
+    },
+    {
+      "kind": "archive",
+      "path": "recovery/bases/checkpoint4/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "crlf": 55,
+      "bareCr": 0
+    }
+  ],
+  "newMetadataAndNormalizedEvidenceUtf8NoBomLf": true,
+  "saveShapeInspection": {
+    "saveShapedJson": [],
+    "ownerSavePayloads": 0,
+    "campaignExportsIncluded": 0,
+    "syntheticExecutableTestFixture": "tests/fixtures/variety3-charts.ts uses local factories; no serialized campaign payload"
+  },
+  "checkIgnore": {
+    "command": "git check-ignore --no-index -z --stdin",
+    "logicalAndPhysicalPathsChecked": 1045,
+    "ignored": [],
+    "exitCode": 1
+  },
+  "sourceRestrictions": {
+    "proprietaryPdfsReadOrIncluded": 0,
+    "sourceCorpusIncluded": 0,
+    "fullArticlesIncluded": 0,
+    "sourceExcerptsIncluded": 0,
+    "webSourcesFetched": 0,
+    "sourcePolicyMentions": "Exclusion/rights discussions and bibliographic links are retained; they are not restricted source content."
+  },
+  "imagePrivacyReview": {
+    "contactSheetsVisuallyReviewed": [
+      "artifacts/app-icon-options-20261010/contact-sheet.png",
+      "artifacts/app-icon-options-20261010/round2/contact-sheet.png",
+      "artifacts/app-icon-options-20261010/round3/contact-sheet.png"
+    ],
+    "result": "Synthetic pixel-art objects/rooms and one synthetic doctor portrait; no owner chart, save, real person or browser screenshot.",
+    "pngImagesMetadataInspected": 166,
+    "embeddedTextChunksScanned": 0,
+    "exifMetadataRecords": [],
+    "metadataDecodeErrors": []
+  },
+  "clinicalReviewStatus": "PASS",
+  "clinicalApprovalClaimed": false,
+  "ownerSavesAccessed": 0,
+  "ownerBrowserStorageAccessed": 0,
+  "excludedActiveWorkerPath": "tools/room-design/level-5/executive-office/",
+  "activeWorkerContentRead": false,
+  "gitMutations": 0
+}

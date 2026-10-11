@@ -1,0 +1,560 @@
+--- a/docs/handoffs/CURRENT_THREAD_HANDOFF.md
++++ b/docs/handoffs/CURRENT_THREAD_HANDOFF.md
+@@ -1,3 +1,22 @@
++> MANAGER: MOBILE VERSION MB1-MB8 ACCEPTED, READY FOR OWNER REVIEW (2026-10-10).
++> Plan docs/execplans/mobile-version-20261009.md; design docs/design/mobile-
++> version-design-20261009.md. Separate lazy MobileShell over the same session;
++> desktop CSS byte-identical; rules unchanged. Phone pathways: START_PRIVATE_
++> GAME.cmd -> https://melissadesktop.taile197db.ts.net/ (Tailscale, separate
++> saves) or http://127.0.0.1:4173/?layout=phone on the PC (owner's real local
++> campaign in phone layout). LOCAL ONLY since 9b4808ae; remind "push to GitHub".
++
++> MANAGER GITHUB BACKUP 3 VERIFIED (2026-10-09). Owner said "Push to GitHub".
++> Commit 9b4808ae444539062a49068b498d3460d2bc5724 on origin/beta, confirmed
++> with git ls-remote. Recovery archive artifacts/checkpoints/manager-accepted-
++> 20261009/ (1,433 files, ~175 MB, 1,108 whole files + 110 verified patches,
++> verify_archive PASS, safety/clinical-review audit PASS) plus 5 owned docs and
++> the Founder's Office approval record (owner-approved 2026-10-09, all five
++> tiers). Covers Level 4 M1-M9, economy option B + audit, APP art v6e, tutorial/
++> finance fixes since ed638d2c. Excluded: mobile discovery (in progress), owner
++> storage, local settings, 43 MB regenerable histories. Live code stays
++> uncommitted. No merge, release or Pages publication.
++
+ > MANAGER: LEVEL 4 LAUNCH-READY (2026-10-09). M1-M9 of
+ > docs/execplans/level4-launch-plan-20261008.md accepted after manager diff/
+ > handoff review, Chrome QA on the disposable QA origin http://127.0.0.1:5184
+@@ -6450,3 +6469,534 @@
+ Owner pathway remains START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual
+ persistent browser profile. Local owner, disposable 5184 QA and remote playtest
+ saves remain separate. No opening pathway or storage was changed.
++
++
++## MB1: shell foundation — Sol worker handoff, 2026-10-09
++
++MB1 implementation and CLI validation complete; sole Claude Code GamifySurgery
++manager retains actual-diff review, Playwright touch/browser QA and acceptance.
++Full file list, exact commands/output, desktop preservation proof, limitations
++and eight manager checks are appended under "MB1: shell foundation" in
++`docs/execplans/mobile-version-20261009.md`.
++
++One App session/projection remains above the presentation selector. Valid query
++override wins, then per-device preference, then coarse pointer and <=1100px;
++fine pointer never automatically selects mobile. Mobile is a lazy JS/CSS chunk
++with scoped styles, always-visible resource/clock controls, five tab badges,
++guarded browser-Back sheets, map/zoom/Goals/dire Needs-you, More menu and existing
++desktop panel adapters. Chart does not auto-pause; Build/Management use the
++unchanged session actions/guards. Gestures/camera namespace, phone-native
++screens/building, opening/tutorial anchors and mobile performance stay MB2-MB7.
++
++15 owned source/test files (App plus 14 new) and two append-only docs. Exact App
++logical diff: import AppShell -> PrototypeShell and opening JSX tag only; all
++props/session/view/timing unchanged. App uses LF per brief. Index.html has zero
++byte changes; viewport-fit is mobile-only and restored on unmount. 761 protected
++existing baseline paths are byte-unchanged, including AppShell, global.css,
++scene/input/asset loading, existing player tests, session/domain/balance/content.
++Desktop built CSS is byte-identical: 163125 bytes, SHA-256
++`b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff`.
++Desktop-first App test imports no mobile module and retains one session/interval
++through layout/pointer/resize/orientation changes. Baseline/evidence/logs and
++reproducible verifier: `.local-dev/mobile-mb1/` (ignored).
++
++Final focused 4 files / 44 tests PASS (2.35s). FULL player 164 passed files /
++1 failed, 1288 passed tests / 1 failed (31.50s): only the known unchanged thyroid
++pending-label assertion at surgeryCenterServicePreviews.test.ts:85:52. FULL
++domain 137 passed files / 1 skipped, 3764 passed tests / 2 existing DEFECT-M9
++skips (137.82s). Root typecheck passes all seven workspaces. Default project
++configs, threads pool, existing ignore-net-use-eperm NODE_OPTIONS preload;
++no exclusions/config/expectation changes or installs. Build PASS (3.55s):
++MobileShell-Dv0VeVol.js 25.52 kB (gzip 7.63), MobileShell-BjIn26iY.css 10.44 kB
++(gzip 2.51), unchanged desktop CSS 163.12 kB (gzip 30.30), main 8212.43 kB
++(gzip 1813.44). Separate mobile dynamic import; no mobile HTML preload/UI in
++main. Existing large-main warning remains for MB7.
++
++Manager QA: use disposable 5184 origin and Playwright touch emulation, beginning
++`http://127.0.0.1:5184/?layout=phone&prototype-tools=1`; add `&question-review=1`
++for that surface. Test 390x844, 412x915, 360x740, 844x390 and 768x1024 plus 1100
++boundary. Check all panel actions, chart/clock, mode pause restoration and guards,
++sheet Back, More/modal/save recovery, >=44px targets and horizontal overflow.
++Use `?layout=desktop` and fine-pointer 1600x1000 for desktop/network comparison;
++remove only the QA presentation preference for automatic selection. Actual
++geometry, browser network/touch, page errors and physical safe areas remain
++manager checks, not worker claims. Worker did not start a server/browser.
++
++Confirm location.origin. No opening/storage pathway changed: owner remains
++START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual persistent profile.
++QA 5184, remote Pages, private phone HTTPS and other profiles have separate saves.
++Existing phone route remains START_PRIVATE_GAME.cmd ->
++https://melissadesktop.taile197db.ts.net/; it starts its own campaign. No owner
++storage access, Git, agents, installs, external messages, clinical authoring or
++publishing. **LOCAL ONLY**: manager retains acceptance and checkpoint backup/
++"push to GitHub" reminder. Close this bounded worker lane after manager review.
++
++
++## MB2: map touch input — Sol worker handoff, 2026-10-09
++
++Phone-only camera/key, gesture recognition, touch picking and live inspector
++are implemented and CLI-validated. Sole Claude Code GamifySurgery manager
++retains diff/browser review and acceptance. Full files, exact output, desktop
++proof, camera limitation and seven Playwright QA steps (including CDP pinch)
++are appended under "MB2: map touch input" in
++`docs/execplans/mobile-version-20261009.md`.
++
++Explicit mobileInput flag leaves original pointer/wheel/click/render/camera/
++asset paths intact. 763 protected existing paths are byte-unchanged, including
++routeMotion and all desktop expectations. Removing only mobile seams exactly
++reconstructs entire original Scene/Canvas after LF normalization. Desktop CSS
++is byte-identical to MB1 (163125 bytes, SHA-256
++b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff).
++
++Mobile camera uses its own per-campaign phone-facility-camera.v1 key, shared
++validation/debounce/flush helpers, live host measurements and built room/hallway
++bounds plus cutaway/margin. Phone +/-/Recenter/gestures never call the desktop
++session camera callback. Pan, <=250ms taps, midpoint pinch+pan and double-tap
++use stable explicit copies of Phaser's prototype x/y getters; no down-time
++normal commands. Nearest 22 CSS-px picking opens inspector with canonical live
++information and existing guarded praise, walk/seat, patient and room actions.
++Single Build touch replays existing edits on release; second touch/cancel
++discards pending edits and lets pinch/pan work without purchases or painting.
++Build redesign and mobile performance remain MB5/MB7.
++
++**Unresolved before strict framing acceptance:** the brief requires existing
++site pan clamps, which prevent a width-fitting south-edge starter clinic from
++centering vertically in a tall portrait viewport. Current framing enlarges the
++built clinic and centers it wherever legal, using closest legal pan otherwise.
++No desktop or mobile clamp was relaxed. The worker asked whether phone-only
++viewport margin is permitted; no answer was received. Manager must resolve the
++constraint and resume this worker if padding is authorized; strict 390x844
++starter centering is not claimed complete.
++
++19 owned source/test files (15 new) plus append-only handoffs. MobileShell was
++re-read immediately before small wiring edits; MB3 screens/coach/tests were
++preserved. Existing mobile-test additions belong to MB3. Baselines, immediate
++pre-wiring Shell, actual diff, hashes and full logs: `.local-dev/mobile-mb2/`.
++UTF-8 without BOM and LF verified for owned files and appended text.
++
++Validation uses default project configs, threads pool and the specified existing
++ignore-net-use-eperm NODE_OPTIONS preload. Focused: Test Files  9 passed (9) / Tests  91 passed (91).
++Full player: Test Files  1 failed | 175 passed (176) / Tests  1 failed | 1405 passed (1406); only unchanged thyroid pending-label assertion
++at surgeryCenterServicePreviews.test.ts:85:52. Full domain: Test Files  137 passed | 1 skipped (138) / Tests  3764 passed | 2 skipped (3766);
++the two skips are existing DEFECT-M9 reproducers. Root typecheck passes all
++seven workspaces; player build passes. Existing large-main warning remains.
++Manager still runs actual touch/browser/default-pool checks and inspects diff.
++
++No Git, installs, agents, external messages, clinical authoring, browser/server/
++owner-save access, publishing or pathway change. Owner remains START_GAME.cmd
++-> exact http://127.0.0.1:4173 in usual persistent profile; phone remains
++START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/. Manager's
++disposable 5184 QA, other profiles/origins and remote playtest keep separate
++saves. LOCAL ONLY: manager owns acceptance, remaining framing decision and
++checkpoint backup/reminder. Preserve the shared MB3 lane.
++
++
++## MB3: patients, chart, alerts, goals — Sol worker handoff, 2026-10-09
++
++Authorized mobile UI and CLI validation complete; **MB3 acceptance pending the
++patient-row metadata seam and manager browser QA**. Full file list, exact
++commands/output, desktop-preservation evidence, limitation and eight manager
++checks are appended under "MB3: patients, chart, alerts, goals" in
++docs/execplans/mobile-version-20261009.md. Sole Claude Code manager retains
++scope decisions, actual-diff review, integration and acceptance.
++
++Native Patients/chart/discussions, Alerts/feed/end-of-day, Goals/setup/Advance,
++Emergency cash and Advertising sheets are integrated. Chart uses frozen choice
++IDs/order and visible waits/breakdowns, feedback/references, pinned guarded
++actions and working clock controls. Coach is a compact expandable normal-flow
++row above the sibling tab bar, with screen/tab fallback hints and existing
++six-second topic exposure. No desktop/game-rule edit; MB2 map/inspector,
++camera and navigation additions preserved via small exact MobileShell patches.
++
++UNMET DATA REQUIREMENT: PatientTabView currently omits age, sex and chief
++complaint for unopened cards; map/character projections do not supply them.
++Scope question pending: permit the narrow ui/types.ts + session/viewModels.ts
++extension, or manager supplies it. Neither file was changed. Populate optional
++ageLabel/sexLabel/chiefComplaint from each encounter's frozen demographics and
++normalized complaint, retaining missing legacy facts; desktop rendering and
++expectations must stay unchanged. Native cards already consume those optional
++fields and matching open-chart metadata. Do not accept all card criteria until
++the seam is supplied and checked.
++
++Final focused 8 files / 113 tests PASS. FULL player 175 passed files / 1 failed,
++1405 passed tests / 1 failed (32.44s): only known unchanged thyroid label at
++surgeryCenterServicePreviews.test.ts:85:52. Root typecheck all seven workspaces
++PASS. Player build PASS (3.16s), separate mobile JS/CSS; desktop CSS byte-identical
++163125 bytes, SHA-256 b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff.
++Existing default config, threads pool/default worker cap and existing
++ignore-net-use-eperm preload; no exclusions/alternate config/desktop assertion
++edits. Two protected facility seams changed concurrently by MB2; all other 764
++protected pre-existing source/config paths remain byte-identical. Owned 14
++mobile files use UTF-8 without BOM and LF; shared documents append-only.
++Before-images, hashes, logical diffs and full logs: .local-dev/mobile-mb3/.
++Full suite/typecheck/build rerun after MB2's later gesture/scene changes.
++
++Manager next: supply/authorize metadata seam, inspect actual changes, then run
++touch/browser matrix on disposable 5184 QA. Prioritize actual coach/tab geometry,
++clock over chart, all testing distractors' waits, guarded close/file/Back,
++alert/setup navigation, source visibility/safe links, day-summary contrast and
++short-landscape/long-content scrolling. No worker browser checks are claimed.
++
++No opening/storage path change or owner-save access: owner START_GAME.cmd ->
++exact http://127.0.0.1:4173 in the usual persistent profile; existing private
++phone HTTPS, QA 5184 and remote Pages have separate saves. No Git, installs,
++agents, external messages, clinical authoring or publishing. LOCAL ONLY:
++manager retains acceptance and scoped "push to GitHub" checkpoint reminder.
++
++
++## MB3 patient-card fields — authorized follow-up, 2026-10-09
++
++The earlier MB3 patient-list metadata blocker is RESOLVED. Manager authorized
++optional ageLabel/sexLabel/chiefComplaint in PatientTabView and their frozen
++projection in toPatientTab. New/existing/pending/ready-to-file/filed/walked-out
++cards now display those fields directly. Missing legacy facts remain undefined;
++the open-chart fallback was removed so it cannot supply absent row metadata.
++No desktop renderer, game rule, save or clinical content changed. MB2 camera
++padding work preserved. Only the two additive projection seams extend the lane.
++
++New comparison test proves entire desktop patient-row markup is identical with
++or without the fields, including selected/tutorial and resolved rows. All 26
++existing desktop UI test files are byte-unchanged and green. Final focused:
++38 files / 312 tests PASS (5.13s). FULL player: 177 passed files / 1 failed;
++1449 passed tests / 1 failed (38.13s), only known thyroid label failure at
++surgeryCenterServicePreviews.test.ts:85:52. Root typecheck all seven workspaces
++PASS; player build PASS (3.22s). Default config/threads pool/specified preload.
++Desktop CSS byte-identical, SHA-256
++b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff.
++
++Six follow-up source/test files, exact commands/output and updated QA are under
++"MB3 patient-card fields" in the MB3 ExecPlan section. Before-images, diffs,
++logs and current verifier: .local-dev/mobile-mb3/patient-card-fields/. Browser/
++touch QA and acceptance remain with the sole Claude Code manager. No worker
++browser checks or origin changes claimed; no Git/install/push. LOCAL ONLY:
++manager retains the scoped "push to GitHub" backup reminder.
++
++## MB2 centering padding — Sol worker follow-up, 2026-10-09
++
++Manager-authorized 40% visible-map viewport padding is implemented only under
++mobileInput=true. First entry/Recenter now centers the real south-edge starter
++within scene pixel snapping; phone gestures, saved cameras and resize use the
++same padded clamps. Existing lawn-colored background fills the exposed area.
++Original desktop camera/input/rendering code is reconstructibly exact after
++removing only mobile seams; existing desktop tests, routeMotion.ts and desktop
++CSS are unchanged. Eight files changed; no shared-shell/nav edits from MB2.
++Concurrent MB3 metadata + MobileShell edits preserved.
++
++Focused 10 files / 114 tests PASS. Full player 177 passed files / 1 failed,
++1449 passed tests / 1 failed: only known thyroid pending-label assertion at
++surgeryCenterServicePreviews.test.ts:85:52. Root typecheck all seven workspaces
++PASS; player build PASS (4.38s). Default configs, threads + existing EPERM
++NODE_OPTIONS preload; exact commands/output and manager touch QA are under
++"MB2 centering padding" inside the MB2 section of
++docs/execplans/mobile-version-20261009.md. Full logs/diff/pre-padding images:
++.local-dev/mobile-mb2/padding/. Previous full domain result is unchanged; no
++domain code changed or extra domain run in this follow-up.
++
++Manager next: review actual diff, check fresh/recenter 390x844 framing and lawn
++padding, pinch via CDP stable two-touch IDs plus varying distance/midpoint,
++Build suppression, saved phone pan and flag-off desktop restoration. No worker
++browser QA or Git, installs, agents, clinical authoring, server/owner-storage
++access, external messages, publishing or pathway changes. LOCAL ONLY: manager
++retains acceptance and scoped "push to GitHub" checkpoint reminder/backup.
++
++
++
++> MB4 MANAGE: SOL WORKER HANDOFF (2026-10-10). Phone-native Employees /
++> Services / Money implemented using existing projections/session callbacks;
++> real-session pause/restore parity matches desktop for running/paused clinics
++> and Done/header/tab/Back. New files in apps/player/src/mobile/manage/;
++> MobileShell's Manage import/case only, plus the authorized optional active-
++> service provider/team label in ui/types.ts and session/viewModels.ts. Current
++> desktop offers no home-reassignment callback; existing home is displayed.
++> MB5's concurrent Build/App/session/contract/flagged scene edits preserved.
++> 762 protected paths and all 161 existing non-mobile player test files remain
++> byte-unchanged; removing optional labels reconstructs both whole projection
++> files; full desktop Services/Money/Management markup and built desktop CSS
++> match their originals. Focused 140/140 PASS; full player 1513 PASS plus only
++> the known thyroid pending-label failure; final root typecheck (7 workspaces),
++> player build and Level 4 QA entry transform PASS. Default configs, threads
++> pool and specified net-use EPERM preload; no exclusions/expectation edits.
++> Complete files, exact commands/output, evidence and manager QA steps:
++> [MB4: manage](../execplans/mobile-version-20261009.md#mb4-manage).
++> Evidence: .local-dev/mobile-mb4/. Chrome and Edge launch blocked by spawn
++> EPERM; actual target/overflow/touch geometry still needs manager QA. Use
++> disposable http://127.0.0.1:5184/level4-rooms-qa.html?apps=mri&layout=phone
++> (real MRI/Reading/Training staff/services; hire another reader for several
++> staff); confirm location.origin. No browser/server listener/owner storage,
++> clinical/game rules/art/launchers, Git, installs, agents or external messages
++> touched. Owner START_GAME.cmd -> exact http://127.0.0.1:4173 and private phone
++> HTTPS pathways unchanged; QA/local/phone/Pages/profiles have separate saves.
++> LOCAL ONLY: manager retains acceptance and "push to GitHub" checkpoint backup.
++
++
++> MB5 BUILD ON PHONE: SOL WORKER HANDOFF (2026-10-10). Native New Rooms / My
++> Rooms catalog, centered/current-spot ghost preview, one-finger ghost drag,
++> two-finger pan/pinch, explicit Place/Move/Rotate/Cancel, nearest one-tile
++> Doors selection + confirmation, hallway preview + one grouped undo/save,
++> room status/Upgrade/Move/Doors/Sell token confirmation, persistent Undo and
++> guarded Done/access sheet implemented. Hallway Cancel discards the stroke
++> while retaining the paint tool. All new map input is behind mobileInput.
++> Desktop Build behavior/rules, routeMotion, camera padding and preferences
++> remain unchanged; whole Scene/Canvas/session/App reconstruction checks PASS.
++> 758 protected source paths, all 161 existing non-mobile player test files
++> and built desktop CSS are unchanged. MB4 Manage/provider label work preserved.
++> Focused 310/310 PASS; FULL player 1528 PASS plus only the known thyroid
++> failure at surgeryCenterServicePreviews.test.ts:85:52; FULL game-domain
++> 3764 PASS / 2 existing skips; root typecheck all seven workspaces and player
++> build PASS. Default configs, threads pool, specified EPERM preload; no
++> exclusions, installs or desktop expectation edits. Only MB2's two interim
++> buffered Build replay tests were replaced with mobile preview behavior.
++> Detailed files, rules evidence, exact output and manager Playwright touch
++> QA (including CDP ghost drag coordinates/events) are appended at
++> [MB5: build on phone](../execplans/mobile-version-20261009.md#mb5-build-on-phone).
++> Evidence and isolated diff: .local-dev/mobile-mb5/. Manager must inspect
++> the actual diff and rerun default-pool/browser/touch geometry checks before
++> accepting; worker did not run a browser/server. Suggested disposable QA:
++> http://127.0.0.1:5184/?layout=phone&prototype-tools=1&facility-gait-proof;
++> confirm location.origin. No clinical authoring, owner storage, art assets,
++> domain/balance/save schema/launcher/origin changes, Git, agents, installs,
++> external messages, commit/push/deploy/publish. Owner START_GAME.cmd -> exact
++> http://127.0.0.1:4173 and existing private phone HTTPS pathway unchanged;
++> QA/local/phone/Pages/profiles have separate saves. LOCAL ONLY: manager owns
++> QA/acceptance and the scoped "push to GitHub" checkpoint reminder/backup.
++
++
++> MB6 TUTORIAL, ALERTS, HELP, POLISH: SOL WORKER HANDOFF (2026-10-10).
++> Phone-only exhaustive tutorial anchors (all 52 step IDs), Go-tab routing,
++> chart coach pill, alert navigation/map focus, phone Help and full-screen
++> Campaign/Restart styling, satisfaction labels, disclosed Prototype tools,
++> slimmer portrait top bar/landscape rail and mobile-flagged ghost fit/edge pan/
++> hidden desktop Build footer implemented. MB7's concurrent Scene/Canvas/
++> session/performance/tools changes preserved; no desktop expectation edits.
++> **MB6 is not fully complete:** fresh opening/AuthGate needs a phone entry
++> loading seam in App outside the assigned lane. The async scope question had
++> no answer; App/desktop opening/auth remain byte-unchanged. Phone entry module,
++> CSS and three standalone tests are prepared but unwired/unbundled. Manager
++> should authorize/resume the narrow seam or apply/review the not-applied,
++> not-validated `.local-dev/mobile-mb6/entry-integration.proposed.patch`, then
++> rerun continuity/entry/focused/full tests, typecheck, build and browser QA.
++> Focused 479/479 PASS (39 files); FULL player 1678 PASS plus only the known
++> unedited thyroid failure at surgeryCenterServicePreviews.test.ts:85:52 (195
++> files); root typecheck all seven workspaces and player build PASS. Default
++> configs, threads pool and specified net-use EPERM preload. Audit: 761
++> protected paths and all 161 existing non-mobile player test files unchanged;
++> built desktop CSS byte-identical; owned source UTF-8/no BOM/LF; docs appended.
++> Full files, exact commands/output, remaining seam and manager QA:
++> [MB6: tutorial, alerts, help, polish](../execplans/mobile-version-20261009.md#mb6-tutorial-alerts-help-polish).
++> Evidence: `.local-dev/mobile-mb6/` (shared Scene/Shell diff includes preserved
++> MB7 work, not attributed to MB6). No worker browser/server/owner-storage
++> access, clinical authoring, game/domain/balance/save-schema/art changes, Git,
++> agents, installs or external messages. Suggested disposable QA remains
++> http://127.0.0.1:5184/?layout=phone&prototype-tools=1&facility-gait-proof;
++> confirm location.origin; mobile touch/safe-area/keyboard geometry remains
++> manager QA. Owner START_GAME.cmd -> exact http://127.0.0.1:4173 and existing
++> private phone HTTPS/canonical remote pathways unchanged, with separate saves
++> between origins/profiles. LOCAL ONLY: manager retains acceptance, pending
++> entry connection and the scoped "push to GitHub" checkpoint reminder/backup.
++
++
++> MB6 ENTRY SEAM: SOL WORKER FOLLOW-UP (2026-10-10). Manager authorized and
++> worker applied the proposed App-only loading connection. The earlier MB6
++> pending-entry blocker is resolved: existing selector conditionally lazy-loads
++> null MobileEntryPresentation/CSS as a stable AuthGate sibling. AuthGate,
++> OpeningSequence, PrototypeShell, selector, session and existing expectations
++> unchanged; removing only the seam reconstructs the entire original App.
++> Three files: App, the proposed optional getAttribute guard, and new mobile
++> App-entry integration test. MB7 shared work untouched. Actual-App tests prove
++> zero entry/mobile-shell loader invocations on desktop, entry DOM/form state
++> preservation and one session/clock; unchanged shell-continuity test passes.
++> Built entry JS/CSS is lazy and phone-conditional, no static HTML mobile asset
++> tags, desktop CSS byte-identical. Entry 5/5, focused 482/482 PASS; FULL player
++> 1681 PASS plus only known thyroid failure; root typecheck (seven workspaces)
++> and player build PASS. Default configs, threads + specified EPERM preload.
++> Full exact output, narrow diff, audit and remaining manager browser QA:
++> [MB6 entry seam](../execplans/mobile-version-20261009.md#mb6-entry-seam).
++> Evidence `.local-dev/mobile-mb6/entry/`. Native Chrome launch failed with
++> spawn EPERM before opening a browser/server; manager can run browser-proof.mjs
++> for a fresh-context network trace plus prior entry/keyboard/touch QA. Owner
++> START_GAME.cmd -> exact http://127.0.0.1:4173, private phone and canonical
++> remote pathways/saves unchanged. No Git/installs/agents/external messages.
++> LOCAL ONLY: manager retains acceptance and "push to GitHub" backup reminder.
++
++
++> MB7 MOBILE PERFORMANCE: SOL WORKER HANDOFF (2026-10-10). Phone-only map
++> cover/visibility drawing skip + reload-style reveal resync, capped DPR 2
++> backing with unchanged logical pointer/camera units, level/built/visible
++> catalog-scoped shared Image loading and procedural placeholders, last-30
++> whole Build undo cap after MB5 stroke grouping, and confirmed heavy prototype
++> tools implemented. Desktop original eager/render/session bodies reconstruct;
++> 813 protected paths + all 161 existing non-mobile tests unchanged;
++> built desktop CSS identical. Concurrent MB6 changes/App entry seam preserved.
++> Cold source-set measurements: Level 0 37 / 7,739,507 bytes / 83.89 nominal
++> decoded MiB; Level 4 151 / 16,165,389 / 261.88; desktop both 199 / 24,570,993
++> / 350.98. These are file/header/Image-source measurements, not captured
++> browser traffic or RAM. Software DPR sharpness improves 2.79–3.32 dB;
++> 390x600 backing at DPR 2 is 4x pixels, +2.68 MiB. Actual browser/phone frame
++> cost/sharpness/traffic/heap remains manager QA (Chrome/Edge spawn EPERM).
++> Focused 483 PASS + current MB7/entry 34 PASS; first full player 1680 PASS
++> + only known thyroid failure;
++> refreshed full summary below. Full domain 3764 PASS / 2 existing skips;
++> final root typecheck all seven workspaces + player build PASS, main chunk
++> 8,241.89 kB (gzip 1,822.08 kB). No Phaser/clinical split; proposal/analyzer
++> composition recorded. Default configs, threads pool and specified net-use
++> EPERM preload; no exclusions/desktop expectation changes. Detailed files,
++> exact commands/output, preservation, before/after tables and Playwright
++> request-count/body/transfer helper + synthetic fixture QA:
++> [MB7: mobile performance](../execplans/mobile-version-20261009.md#mb7-mobile-performance).
++> Evidence .local-dev/mobile-mb7/. No owner storage/origin/launcher/domain/
++> clinical/art/Git/install/agent/external-message changes. Owner local remains
++> START_GAME.cmd -> exact http://127.0.0.1:4173; phone/private/QA/remote/profiles
++> have separate saves. LOCAL ONLY; manager owns acceptance and the scoped
++> "push to GitHub" backup checkpoint after QA.
++>
++> Refreshed shared player: Test Files  1 failed | 196 passed (197);
++> Tests  1 failed | 1681 passed (1682).
++> Only the known thyroid pending-label failure remains.
++
++
++> MB9 MOBILE OWNER FEEDBACK: SOL WORKER HANDOFF (2026-10-10). Clinic GLP-1
++> consult chip uses existing facility-time cooldown fill; ready tap completes
++> once with original payment/receipts, rapid double tap pays once, cooling taps
++> ignored, Build/staffed-coverage reasons visible. Details remain in More/Alerts.
++> Immediate floor/free-seat/Front Desk movement uses original guarded commands;
++> rejected destinations show brief reasons; character/room/door inspection is
++> immediate. Double-tap zoom and its 300 ms delay, map -/+ and percentage removed;
++> 44px corner Recenter retained. Direct map Praise/litter/water, ready Goals
++> Advance, collapsed tutorial Go to tab/Goals, Add Money and FSRS disclosure;
++> costly/destructive and meaningful multi-step flows retained and audited.
++> Final focused 41 files / 479 tests PASS. Full shared player: 200 files /
++> 1715 tests PASS plus only known thyroid pending-label failure (201 files /
++> 1716 tests total). Root typecheck all seven workspaces + player build PASS.
++> Checked-in configs, threads pool and specified net-use EPERM preload;
++> no exclusions or desktop expectation edits. 761 protected existing paths and
++> all 161 existing non-mobile tests unchanged; isolated Scene reconstructs.
++> Concurrent manager patient-highlight source/Scene seams and two new tests
++> preserved separately; do not claim current whole desktop CSS is unchanged.
++> Files, every changed/kept interaction, exact output, ownership evidence and
++> remaining manager browser/iPhone QA:
++> [MB9: owner feedback round 1](../execplans/mobile-version-20261009.md#mb9-owner-feedback-round-1).
++> Evidence .local-dev/mobile-mb9/. Implementation/CLI validation complete;
++> manager acceptance and physical/browser QA pending. No owner storage,
++> rule/clinical/save/origin/launcher/Git/install/agent/external-message changes.
++> Owner local remains START_GAME.cmd -> exact http://127.0.0.1:4173; private
++> phone START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/;
++> canonical remote https://melissarowlandc-afk.github.io/GamifySurgery/.
++> Disposable QA http://127.0.0.1:5184 and every different origin/profile have
++> separate saves; confirm location.origin. LOCAL ONLY: no MB9 GitHub backup
++> performed; manager retains acceptance and "push to GitHub" checkpoint reminder.
++
++
++> MB9b DOORS, PLAY/PAUSE, PATIENT TAP: SOL WORKER HANDOFF (2026-10-10).
++> Phone-only door taps now immediately use existing add/remove commands and
++> previews; removal shows Door removed · Undo, with persistent Undo retained.
++> No Add/Remove confirmation; auto-Doors after paid room placement retained;
++> Done/catalog/tool exits preserve original Build access guard. Separate 68px
++> wide, >=44px high Pause/Play buttons show the dark active state, keep the
++> speed action and all mode/reference locks. Openable patient map tap opens
++> chart directly; linked pediatric parent opens child; pre-check-in/filed,
++> staff and visitors retain inspection. Session/chart/clock rules unchanged.
++> Final focused 41 files / 493 tests PASS. FULL player 201 files / 1737 tests
++> PASS, plus only known thyroid pending-label failure (202 files / 1738 total).
++> Root typecheck all seven workspaces and player build PASS. Checked-in configs,
++> threads pool and specified net-use EPERM preload; no exclusions/desktop test
++> expectation changes. All 771 protected paths, entire FacilityScene and all
++> 163 existing non-mobile player tests byte-unchanged from supplied MB9b tree.
++> 12 phone source/test files UTF-8 without BOM and LF; shared docs append-only.
++> Actual files/diff, updated interaction audit, exact output and pending manager
++> browser/iPhone (including 360px top bar) QA:
++> [MB9b: doors, play/pause, patient tap](../execplans/mobile-version-20261009.md#mb9b-doors-playpause-patient-tap).
++> Evidence .local-dev/mobile-mb9b/. MB9 and manager highlight work preserved.
++> No owner storage/origin/launcher/clinical/rule/save/Git/install/agent/external
++> changes. Local START_GAME.cmd -> exact http://127.0.0.1:4173; private iPhone
++> START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/; canonical
++> remote https://melissarowlandc-afk.github.io/GamifySurgery/ unchanged.
++> QA http://127.0.0.1:5184 and distinct origins/profiles have separate saves.
++> Implementation/CLI complete; manager acceptance/device QA pending. LOCAL ONLY:
++> manager owns acceptance and the owner's "push to GitHub" backup checkpoint.
++
++
++> MB9c DOOR TAP FIX: SOL WORKER HANDOFF (2026-10-10). Root cause: Phaser
++> Scale.NONE computes pointer bounds/displayScale before the phone DPR
++> listener updates CSS size; ghost→Doors map growth leaves stale touch scaling.
++> Phone-only helper now recalculates input bounds from logical baseSize/CSS
++> bounds after resize; one existing mobile-flagged Scene call supplies scale.
++> Native Phaser resize/pointer + actual Scene geometry + shared-session
++> regression reproduces exam (34,26) above Front Desk and tap (180.5,528.5),
++> fails before, adds after, removes with Door removed · Undo and restores state.
++> Focused 41 files / 494 tests PASS; FULL 201 files / 1738 tests PASS plus
++> only known thyroid failure (202 files / 1739 total); root typecheck all seven
++> workspaces and player build PASS. Default configs, threads and specified
++> net-use EPERM preload; no exclusions/desktop expectations/rule changes.
++> 770 protected paths and 163 existing non-mobile tests byte-unchanged;
++> three owned source/test files UTF-8 no BOM/LF, docs append-only. Exact output,
++> scoped diff/hash evidence and manager Chrome/iPhone recheck steps:
++> [MB9c: door tap fix](../execplans/mobile-version-20261009.md#mb9c-door-tap-fix).
++> Evidence .local-dev/mobile-mb9c/. Worker Chrome spawn EPERM: actual browser
++> replay remains manager acceptance; test is a non-rendering real-scene/input
++> integration. Existing owner origins/launchers/storage unchanged; QA 5184
++> fresh context has separate saves. No Git/install/agent/external actions.
++> LOCAL ONLY; manager owns acceptance and "push to GitHub" checkpoint reminder.
++
++
++> MB10 MOBILE OWNER FEEDBACK ROUND 2: SOL WORKER HANDOFF (2026-10-10).
++> Phone map: GLP-1 consult top-left before operational coverage, completely
++> absent after coverage; Goals top-right; Advertising removed from map and
++> available through Manage → Money. GLP-1 information remains in More/Alerts.
++> Manage uses three-column role/service/money tiles, one compact staff strip,
++> grouped empty/locked roles and nested role/employee/service/finance sheets;
++> existing command arguments, guards and Train/Fire confirmations retained.
++> Browser Back unwinds confirmations/details before original Manage exit.
++> Patients Resolved starts as a count-only disclosure; Waiting/Existing open.
++> **Scope exception:** manual home reassignment has no existing shell/session
++> callback or domain command; home stays automatic/readable. Manager must brief
++> a separate command/callback milestone if required; MB10 is not accepted here.
++> Final focused: 49 files / 554 tests PASS. FULL: 203 files / 1750 tests PASS
++> plus only known thyroid failure (204 files / 1751 total). Root typecheck all
++> seven workspaces and player build PASS; QA bootstrap transform PASS.
++> Default configurations, threads pool and specified net-use EPERM preload;
++> no excluded tests or desktop expectation edits. 780 protected paths and all
++> 163 existing non-mobile tests byte-unchanged; optional service incomeLineId
++> reconstructs both complete projection files when removed. Supplied desktop
++> CSS byte-identical (163503 bytes, SHA-256 a2ce6882f18a40306a9ed0fcce81c518dd0e0099920ca891defc3dc51c381f82).
++> 31 changed/new source/test/QA files UTF-8 without BOM/LF; documents append-only.
++> Exact files/output/diff and pending manager Chrome/iPhone acceptance:
++> [MB10: owner feedback round 2](../execplans/mobile-version-20261009.md#mb10-owner-feedback-round-2).
++> Evidence .local-dev/mobile-mb10/. Staffed QA:
++> http://127.0.0.1:5184/level4-rooms-qa.html?apps=appointments&layout=phone;
++> working NP QA adds &glp1=np-hired (separate .glp1-np-hired campaign suffix).
++> Use fresh disposable contexts; confirm location.origin. No browser geometry
++> or physical-phone PASS is claimed. No Git/install/agent/external message,
++> clinical/rule/save/launcher/origin change or owner-storage action.
++> Owner local remains START_GAME.cmd → exact http://127.0.0.1:4173; private
++> iPhone START_PRIVATE_GAME.cmd → https://melissadesktop.taile197db.ts.net/;
++> canonical remote https://melissarowlandc-afk.github.io/GamifySurgery/ unchanged.
++> QA 5184 and every distinct origin/profile retain separate saves. LOCAL ONLY:
++> manager owns acceptance and the owner's "push to GitHub" backup reminder.
++
++
++> MB10b SERVICES GROUPING: SOL WORKER HANDOFF (2026-10-10).
++> Manager Chrome touch QA passed the reported MB10 flows and accepted automatic
++> homes (superseding the earlier home scope exception). Services now shows only
++> Running/Off tiles plus one Needs setup · N services tile; all missing-setup
++> and future lines open compact rows, then their existing details/actions.
++> Fee hints are single-line first dollar amounts ($600 for routine endoscopy);
++> full fee text and Build/Hire/appointment/Lab callbacks/guards stay unchanged.
++> Back unwinds setup detail → setup list → Services → original Manage exit.
++> Final focused: 50 files / 564 tests PASS. FULL: 204 files / 1760 tests PASS
++> plus only known thyroid failure (205 files / 1761 total). Root typecheck all
++> seven workspaces and player build PASS. Default configs, threads and specified
++> preload; no excluded tests or desktop expectation edits. 783 protected paths
++> and 163 existing non-mobile tests byte-unchanged; desktop CSS byte-identical.
++> Seven mobile files UTF-8 without BOM/LF; shared documents append-only.
++> Files, exact output, diff and manager follow-up QA steps:
++> [MB10b: services grouping](../execplans/mobile-version-20261009.md#mb10b-services-grouping).
++> Evidence .local-dev/mobile-mb10b/. Staffed QA remains
++> http://127.0.0.1:5184/level4-rooms-qa.html?apps=appointments&layout=phone;
++> NP QA adds &glp1=np-hired. Use fresh disposable contexts at the exact origin;
++> QA 5184 has separate saves from owner local/private iPhone/remote playtests.
++> No MB10b browser geometry or physical-phone PASS is claimed. No Git/install/
++> agent/external message, clinical/rule/save/launcher/origin change or owner
++> storage action. Owner pathways stay START_GAME.cmd → http://127.0.0.1:4173,
++> START_PRIVATE_GAME.cmd → https://melissadesktop.taile197db.ts.net/, and remote
++> https://melissarowlandc-afk.github.io/GamifySurgery/. LOCAL ONLY checkpoint:
++> manager owns follow-up acceptance and the owner's "push to GitHub" reminder.

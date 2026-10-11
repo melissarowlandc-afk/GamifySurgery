@@ -1,0 +1,180 @@
+{
+  "status": "PASS",
+  "missingAcceptedChanges": [],
+  "managerAcceptanceRecords": [
+    {
+      "path": "docs/execplans/mobile-version-20261009.md",
+      "bytes": 258149,
+      "sha256": "0eee7e310e46da7a5325a77b1e4c49c5eb0b9598f0c5546a8b3ce80d35e06485"
+    },
+    {
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "bytes": 435758,
+      "sha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc"
+    },
+    {
+      "path": "docs/execplans/level5-launch-plan-20261010.md",
+      "bytes": 77958,
+      "sha256": "c2295093bf1271aea711e7abd33fefad325620f2b2a527883ed03ad40483ed1d"
+    },
+    {
+      "path": "docs/execplans/variety3-batch-20261010.md",
+      "bytes": 6882,
+      "sha256": "957ee3577cdcc6cdfa0d932d640241c89413ae76f4bc390390394b0b8275cd83"
+    },
+    {
+      "path": "docs/execplans/variety3-assembly-20261010.md",
+      "bytes": 7143,
+      "sha256": "7b5a17195ae0e02c102138a654ad987ce039600f2039708d9551a7dd4213ed53"
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "bytes": 479903,
+      "sha256": "961b2dfcb76d210aea45b83db07bb4586bacb64978d949609e31bcdf94fe11a6"
+    }
+  ],
+  "requiredRoots": {
+    "apps/player/src/mobile": {
+      "scope": "MB1-MB10b complete mobile shell, controls, map/build/performance and tests",
+      "files": 100,
+      "bytes": 635472
+    },
+    "apps/player/public/app-icon": {
+      "scope": "Owner-selected R3-04 Late Light runtime app icon",
+      "files": 4,
+      "bytes": 195396
+    },
+    "artifacts/app-icon-options-20261010": {
+      "scope": "Owner icon concepts rounds 1-3, originals and receipts; explicit brief",
+      "files": 296,
+      "bytes": 70196451
+    },
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3": {
+      "scope": "Accepted Variety-3 batch and admission tests; no clinical approval",
+      "files": 13,
+      "bytes": 150171
+    },
+    "tools/qa": {
+      "scope": "Accepted mobile and Variety-3 disposable QA bootstrap changes",
+      "files": 2,
+      "bytes": 8961
+    }
+  },
+  "preMobileIntakeChangedCodePaths": [
+    "apps/player/src/App.tsx",
+    "apps/player/src/AppShell.tsx",
+    "apps/player/src/facility/characterInspect.ts",
+    "apps/player/src/facility/facilityCameraBounds.ts",
+    "apps/player/src/facility/FacilityCanvas.tsx",
+    "apps/player/src/facility/FacilityScene.ts",
+    "apps/player/src/facility/types.ts",
+    "apps/player/src/session/usePrototypeSession.ts",
+    "apps/player/src/session/viewModels.ts",
+    "apps/player/src/styles/global.css",
+    "apps/player/src/ui/PatientLists.tsx",
+    "apps/player/src/ui/types.ts",
+    "packages/game-domain/src/reducer.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+    "packages/clinical-content/src/synthetic-content.ts"
+  ],
+  "allIntakeChangesCaptured": true,
+  "variety3AssemblyRequiredPaths": [
+    "apps/player/src/session/variety3ChartsViewModels.test.ts",
+    "docs/execplans/owner-requests-20261008.md",
+    "docs/execplans/variety3-assembly-20261010.md",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/game-domain/src/reducer.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/game-domain/tests/approved-clinical-admission.test.ts",
+    "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+    "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+    "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+    "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+    "packages/game-domain/tests/patient-supply.test.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/variety3-admission.test.ts",
+    "tests/fixtures/variety3-charts.ts",
+    "tools/qa/level-four-rooms-bootstrap.ts",
+    "tools/qa/level-four-rooms.mjs"
+  ],
+  "allAssemblyReceiptPathsCaptured": true,
+  "explicitRequiredTargets": [
+    "apps/player/index.html",
+    "apps/player/src/App.tsx",
+    "apps/player/src/AppShell.chartHighlight.test.tsx",
+    "apps/player/src/AppShell.tsx",
+    "apps/player/src/PrototypeShell.tsx",
+    "apps/player/src/facility/FacilityCanvas.tsx",
+    "apps/player/src/facility/FacilityScene.ts",
+    "apps/player/src/facility/characterInspect.test.ts",
+    "apps/player/src/facility/characterInspect.ts",
+    "apps/player/src/facility/facilityCameraBounds.ts",
+    "apps/player/src/facility/types.ts",
+    "apps/player/src/session/usePrototypeSession.ts",
+    "apps/player/src/session/viewModels.ts",
+    "apps/player/src/shellContract.ts",
+    "apps/player/src/shellPresentation.ts",
+    "apps/player/src/styles/global.css",
+    "apps/player/src/ui/PatientLists.tsx",
+    "apps/player/src/ui/types.ts",
+    "docs/design/mobile-discovery-20261009.md",
+    "docs/design/mobile-version-design-20261009.md",
+    "docs/execplans/level5-launch-plan-20261010.md",
+    "docs/execplans/mobile-version-20261009.md",
+    "docs/execplans/owner-requests-20261008.md",
+    "docs/execplans/variety3-assembly-20261010.md",
+    "docs/execplans/variety3-batch-20261010.md",
+    "docs/handoffs/CONCEPT_COVERAGE_AUDIT_20261010.md",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "docs/handoffs/VARIETY3_BATCH_SAMPLES.md"
+  ],
+  "allExplicitRequiredTargetsCaptured": true,
+  "mobileMilestones": [
+    "MB1",
+    "MB2",
+    "MB3",
+    "MB4",
+    "MB5",
+    "MB6",
+    "MB7",
+    "MB8 manager QA",
+    "MB9",
+    "MB9b",
+    "MB9c",
+    "MB10",
+    "MB10b"
+  ],
+  "desktopChartHighlight": "Manager acceptance in mobile plan, owner feedback round 1",
+  "level5Plan": "Planning only; section M0 owner decisions (2026-10-10) is binding and supersedes older proposed/pending prose",
+  "executiveOffice": "Active worker lane excluded; metadata-only size inventory, no content read",
+  "clinicalApprovalClaimed": false
+}

@@ -1,0 +1,30 @@
+{
+  "pass": true,
+  "changed": [
+    "apps/player/src/App.tsx",
+    "apps/player/src/mobile/MobileEntryPresentation.tsx",
+    "docs/execplans/mobile-version-20261009.md",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md"
+  ],
+  "protectedChanged": [],
+  "concurrentChanges": [],
+  "entireAppReconstructedAfterRemovingOnlySeam": true,
+  "authOpeningPrototypeShellSelectorSessionAndContinuityByteUnchanged": true,
+  "existingDesktopTestFilesUnchanged": 161,
+  "encodingNoBomLf": true,
+  "docsAppendOnly": true,
+  "desktopCss": {
+    "file": "index-C5tFl1dZ.css",
+    "bytes": 163125,
+    "sha256": "b964593b89741ad63318396efa029db6d590b49ddfcc9e5ad414f44433415cff",
+    "unchanged": true
+  },
+  "productionHtmlStaticMobileAssetTags": 0,
+  "compiledEntryLazyFactory": "var NNe=(0,b.lazy)(()=>P8(()=>import(`./MobileEntryPresentation-3-Mb_rSc.js`),__vite__mapDeps([2,3])))",
+  "lazyEntryDependencies": [
+    "assets/MobileEntryPresentation-3-Mb_rSc.js",
+    "assets/MobileEntryPresentation-D648DPo7.css"
+  ],
+  "compiledPhoneOnlyEntryBranch": "function LNe(){return(0,$.jsxs)($.Fragment,{children:[M8()===`phone`?(0,$.jsx)(b.Suspense,{fallback:null,children:(0,$.jsx)(NNe,{})}):null,(0,$.jsx)(MNe,{children:(0,$.jsx)(INe,{})})]})}",
+  "proof": "Production HTML and desktop CSS eagerly load no phone entry assets; the entry module/CSS preload is contained in the lazy factory used only by the phone branch. Actual-App integration observes zero entry and shell factory invocations on desktop. Browser network trace is separately blocked by sandbox spawn EPERM."
+}

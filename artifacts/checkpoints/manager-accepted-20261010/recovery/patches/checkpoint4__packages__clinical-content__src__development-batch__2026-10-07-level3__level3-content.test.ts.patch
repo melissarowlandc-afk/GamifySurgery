@@ -1,0 +1,11 @@
+--- a/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
+@@ -36,7 +36,7 @@
+  it("preserves the 303/900/1183 intake records outside the concurrent statistics-ethics overhaul",()=>{
+   const pediatricConceptIds=new Set(pediatricAdmission.conceptIds.filter(id=>!pediatricAdmission.reusedConceptIds.includes(id)));
+   const pediatricCaseIds=new Set(pediatricAdmission.variants.map(v=>v.caseId));
+-  const priorRelease={...release,concepts:release.concepts.filter(c=>!pediatricConceptIds.has(c.id)),cases:release.cases.filter(c=>!pediatricCaseIds.has(c.id))};
++  const priorRelease={...release,concepts:release.concepts.filter(c=>!pediatricConceptIds.has(c.id)&&!c.id.startsWith("concept.variety3.")),cases:release.cases.filter(c=>!pediatricCaseIds.has(c.id)&&!c.id.startsWith("case.variety3."))};
+   const old={...priorRelease,concepts:priorRelease.concepts.filter(c=>!ids.has(c.id)),cases:priorRelease.cases.filter(c=>!caseIds.has(c.id))};
+   // The independent native-import intake remains immutable at 331/1012/1295
+   // (SHA 20ec10aa...). Another authoring lane is concurrently rewriting the

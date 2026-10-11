@@ -1,0 +1,10 @@
+--- a/tools/qa/level-four-rooms.mjs
++++ b/tools/qa/level-four-rooms.mjs
+@@ -42,6 +42,7 @@
+ console.log("M5 pediatric families: http://127.0.0.1:5184/level4-rooms-qa.html?apps=pediatrics (press Play; watch child/parent waiting and exam seats)");
+ console.log("M6 MRI: http://127.0.0.1:5184/level4-rooms-qa.html?apps=mri (press Play; watch acquisition, Reading and Services receipts)");
+ console.log("M6 wound/ostomy: http://127.0.0.1:5184/level4-rooms-qa.html?apps=wound (press Play; watch APP visits and Services receipts)");
++console.log("Variety-3 outside-plan review: http://127.0.0.1:5184/level4-rooms-qa.html?apps=variety3 (press Play; open David Parker's chart)");
+ console.log("M8 mature Level 3: http://127.0.0.1:5184/level4-rooms-qa.html?state=l3ready (open Goals; click Advance to Level 4)");
+ console.log("M8 one witness short: http://127.0.0.1:5184/level4-rooms-qa.html?state=l4almost (press Play; finish the wound visit; check Goals and reload)");
+ console.log("Disposable origin; separate saves from START_GAME.cmd / http://127.0.0.1:4173.");

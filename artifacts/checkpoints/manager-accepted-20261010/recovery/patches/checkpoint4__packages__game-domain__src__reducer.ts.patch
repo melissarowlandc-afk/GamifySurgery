@@ -1,0 +1,32 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -1,6 +1,7 @@
+ import {
+   FIRST_TUTORIAL_CASE_ID,
+   SECOND_TUTORIAL_CASE_ID,
++  VARIETY3_ADULT_CONTEXTS,
+   type DecisionNode,
+   type ResultGate,
+   type SyntheticClinicalCase,
+@@ -1573,8 +1574,13 @@
+   const patientDemographics = frozenCase.prototypeDemographics;
+   const patientSexLabel = patientDemographics?.sexLabel;
+   const pediatricIdentity = getPediatricClinicFamilyContext(frozenCase);
++  // This admitted batch has authored, art-matched adult identities, just as
++  // pediatric charts retain their constrained family rather than recombining it.
++  const variety3Identity = VARIETY3_ADULT_CONTEXTS.find(adult =>
++    adult.caseId === frozenCase.id && adult.profileId === frozenCase.selectedInstantiationProfileId);
+   const patientDisplayName =
+     pediatricIdentity?.childName ??
++    variety3Identity?.patientName ??
+     input.patientDisplayName ??
+     createPatientDisplayName(
+       state.campaignSeed,
+@@ -1688,6 +1694,7 @@
+     settlementId: null,
+   };
+   if (pediatricIdentity) encounter.patientAppearance.stillId = pediatricIdentity.childStillId;
++  if (variety3Identity) encounter.patientAppearance.stillId = variety3Identity.patientStillId;
+   if (frozenCase.pediatricProfile) createPediatricFamily(state, encounter, "encounter", pediatricIdentity ? {
+     displayName: pediatricIdentity.parentName,
+     sexLabel: pediatricIdentity.parentRelationship === "mother" ? "Female" : "Male",

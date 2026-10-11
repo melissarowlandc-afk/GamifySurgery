@@ -1,0 +1,22 @@
+{
+  "checkedOn": "2026-10-10",
+  "targeted": {
+    "exit_code": 0,
+    "output": "\n> @gamify-surgery/clinical-content@0.0.1 test\n> vitest run src/development-batch/2026-10-10-variety-3 --pool=threads --maxWorkers=1\n\n\n RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content\n\n\n Test Files  2 passed (2)\n      Tests  17 passed (17)\n   Start at  21:17:56\n   Duration  1.56s (transform 767ms, setup 0ms, import 1.33s, tests 91ms, environment 0ms)\n\n",
+    "stdoutNote": "Exact npm test portion of the completed generation-plus-test command; preceding sample-generation output omitted."
+  },
+  "fullSuite": {
+    "chunk_id": "1012c3",
+    "wall_time_seconds": 2.8e-06,
+    "exit_code": 0,
+    "original_token_count": 44,
+    "output": "\n> @gamify-surgery/clinical-content@0.0.1 test\n> vitest run --pool=threads --maxWorkers=1\n\n\n RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content\n\n\n Test Files  86 passed (86)\n      Tests  625 passed (625)\n   Start at  21:18:21\n   Duration  24.03s (transform 2.05s, setup 0ms, import 15.81s, tests 2.45s, environment 4ms)\n\n"
+  },
+  "typecheck": {
+    "chunk_id": "4a0322",
+    "wall_time_seconds": 4.0134596,
+    "exit_code": 0,
+    "original_token_count": 180,
+    "output": "\n> gamify-surgery@0.0.1 typecheck\n> npm run typecheck --workspaces --if-present\n\n\n> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json\n\n\n> @gamify-surgery/player@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/balance-config@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-authoring@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-content@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-research@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/game-domain@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n"
+  }
+}

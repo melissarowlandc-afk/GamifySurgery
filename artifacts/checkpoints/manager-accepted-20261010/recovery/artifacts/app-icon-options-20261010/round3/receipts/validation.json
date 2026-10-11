@@ -1,0 +1,214 @@
+{
+  "status": "PASS",
+  "validated_at": "2026-10-10T21:35:02.849778+00:00",
+  "check_count": 49,
+  "checks": [
+    {
+      "check": "Five sequential IDs R3-01 through R3-05",
+      "pass": true
+    },
+    {
+      "check": "Exactly five final PNGs",
+      "pass": true
+    },
+    {
+      "check": "Exactly five 60 px previews",
+      "pass": true
+    },
+    {
+      "check": "Five distinct final image hashes",
+      "pass": true
+    },
+    {
+      "check": "Five distinct preview hashes",
+      "pass": true
+    },
+    {
+      "check": "R3-01: PNG, 1024x1024, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-01: exact 4 px grid",
+      "pass": true
+    },
+    {
+      "check": "R3-01: full-bleed square background",
+      "pass": true
+    },
+    {
+      "check": "R3-01: central approximately 80% content",
+      "pass": true
+    },
+    {
+      "check": "R3-01: PNG, 60x60, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-01: preview matches export",
+      "pass": true
+    },
+    {
+      "check": "R3-01: preserved original generation bytes",
+      "pass": true
+    },
+    {
+      "check": "R3-01: full prompt and reference paths in receipt",
+      "pass": true
+    },
+    {
+      "check": "R3-02: PNG, 1024x1024, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-02: exact 4 px grid",
+      "pass": true
+    },
+    {
+      "check": "R3-02: full-bleed square background",
+      "pass": true
+    },
+    {
+      "check": "R3-02: central approximately 80% content",
+      "pass": true
+    },
+    {
+      "check": "R3-02: PNG, 60x60, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-02: preview matches export",
+      "pass": true
+    },
+    {
+      "check": "R3-02: preserved original generation bytes",
+      "pass": true
+    },
+    {
+      "check": "R3-02: full prompt and reference paths in receipt",
+      "pass": true
+    },
+    {
+      "check": "R3-03: PNG, 1024x1024, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-03: exact 4 px grid",
+      "pass": true
+    },
+    {
+      "check": "R3-03: full-bleed square background",
+      "pass": true
+    },
+    {
+      "check": "R3-03: central approximately 80% content",
+      "pass": true
+    },
+    {
+      "check": "R3-03: PNG, 60x60, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-03: preview matches export",
+      "pass": true
+    },
+    {
+      "check": "R3-03: preserved original generation bytes",
+      "pass": true
+    },
+    {
+      "check": "R3-03: full prompt and reference paths in receipt",
+      "pass": true
+    },
+    {
+      "check": "R3-04: PNG, 1024x1024, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-04: exact 4 px grid",
+      "pass": true
+    },
+    {
+      "check": "R3-04: full-bleed square background",
+      "pass": true
+    },
+    {
+      "check": "R3-04: central approximately 80% content",
+      "pass": true
+    },
+    {
+      "check": "R3-04: PNG, 60x60, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-04: preview matches export",
+      "pass": true
+    },
+    {
+      "check": "R3-04: preserved original generation bytes",
+      "pass": true
+    },
+    {
+      "check": "R3-04: full prompt and reference paths in receipt",
+      "pass": true
+    },
+    {
+      "check": "R3-05: PNG, 1024x1024, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-05: exact 4 px grid",
+      "pass": true
+    },
+    {
+      "check": "R3-05: full-bleed square background",
+      "pass": true
+    },
+    {
+      "check": "R3-05: central approximately 80% content",
+      "pass": true
+    },
+    {
+      "check": "R3-05: PNG, 60x60, opaque RGB",
+      "pass": true
+    },
+    {
+      "check": "R3-05: preview matches export",
+      "pass": true
+    },
+    {
+      "check": "R3-05: preserved original generation bytes",
+      "pass": true
+    },
+    {
+      "check": "R3-05: full prompt and reference paths in receipt",
+      "pass": true
+    },
+    {
+      "check": "Contact sheet is opaque RGB PNG at 1400x820",
+      "pass": true
+    },
+    {
+      "check": "All 256 prior-round files preserved",
+      "pass": true
+    },
+    {
+      "check": "All 15 studied game sources unchanged",
+      "pass": true
+    },
+    {
+      "check": "All Round 3 text files are UTF-8 without BOM and LF",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "icons": 5,
+    "previews": 5,
+    "raw_originals_match": 5,
+    "prior_round_files_preserved": 256,
+    "game_sources_unchanged": 15
+  },
+  "changed_prior_paths": [],
+  "changed_game_source_paths": [],
+  "invalid_text_paths": [],
+  "visual_review": "receipts/visual-review.json; manual review of generated scenes and contact sheet required"
+}

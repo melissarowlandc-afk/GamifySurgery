@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "command": "python artifacts/checkpoints/manager-accepted-20261010/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+  "exitCode": 0,
+  "stdout": {
+    "status": "PASS",
+    "manifestedFiles": 574,
+    "archiveFiles": 575,
+    "archiveBytes": 84261974,
+    "patchContracts": 38,
+    "forwardReverseReapply": 38,
+    "recoveredTargets": 470,
+    "wholeOwnedTargets": 432,
+    "stagePaths": 583,
+    "liveStageSourcesChecked": 8,
+    "liveRecoveryTargetsChecked": 470,
+    "gitMutations": 0,
+    "workingTreeWrites": 0
+  },
+  "independentArchiveWorkerVerification": true,
+  "strictLiveStageAndRecoveryChecks": true,
+  "patchProofs": "Every contract independently reconstructed, reversed and reapplied by verify_archive.py.",
+  "diskRoundtrip": "validation/restore-roundtrip.json",
+  "negativeGuardChecks": "validation/verifier-self-checks.json",
+  "safety": "validation/safety-audit.json",
+  "clinicalReview": "validation/clinical-review-audit.json",
+  "priorCommittedArchiveInvariance": "validation/prior-archive-verification.json",
+  "boundaryCheck": "Environment blocked at spawnSync git EPERM; manager must rerun.",
+  "gameplayOrBrowserSuitesRerun": false,
+  "gitMutations": 0,
+  "commitOrPushPerformed": false
+}

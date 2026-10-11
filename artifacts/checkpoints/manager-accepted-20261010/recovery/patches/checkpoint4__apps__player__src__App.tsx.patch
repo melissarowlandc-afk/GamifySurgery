@@ -1,0 +1,54 @@
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -1,5 +1,5 @@
+-import { useMemo, useState } from "react";
+-import { AppShell } from "./AppShell";
++import { lazy, Suspense, useMemo, useState } from "react";
++import { PrototypeShell } from "./PrototypeShell";
+ import { getTutorialClockMultiplier } from "./session/tutorialTiming";
+ import {
+   appendLocalCampaign,
+@@ -17,6 +17,9 @@
+ } from "./session";
+ import { OpeningSequence } from "./ui";
+ import { AuthGate } from "./auth/AuthGate";
++import { usePresentationLayout } from "./shellPresentation";
++
++const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
+ 
+ interface ActivePrototypeGameProps {
+   loadedProfile: LoadedPrototypeProfile;
+@@ -59,7 +62,7 @@
+   );
+ 
+   return (
+-    <AppShell
++    <PrototypeShell
+       resourceBar={view.resourceBar}
+       paused={session.state.paused}
+       simulationSpeed={session.state.simulationSpeed}
+@@ -115,6 +118,7 @@
+       onCancelPlacement={session.cancelPlacement}
+       onRotatePlacement={session.rotatePlacement}
+       onPlaceRoom={session.placeRoom}
++      mobileBuildActions={session.mobileBuildActions}
+       buildMode={session.buildMode}
+       managementMode={session.managementMode}
+       buildUndoCount={session.buildUndoCount}
+@@ -351,9 +355,13 @@
+ }
+ 
+ export function App() {
++  const layout = usePresentationLayout();
+   return (
+-    <AuthGate>
+-      <AuthenticatedPrototype />
+-    </AuthGate>
++    <>
++      {layout === "phone" ? <Suspense fallback={null}><MobileEntryPresentation /></Suspense> : null}
++      <AuthGate>
++        <AuthenticatedPrototype />
++      </AuthGate>
++    </>
+   );
+ }

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "patchBasesBundled": 38,
+  "untrackedCurrentFilesFirstRecoverableAtThisCheckpoint": [
+    {
+      "path": "apps/player/src/facility/characterInspect.ts",
+      "state": "First recoverable current bytes: no HEAD or prior-archive target base exists.",
+      "preMobileIntakeSha256": "53d2dff0261ef53c2400ace3a5928193601fd9fad94203508ad19f47fffe1d1e"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "state": "First recoverable current bytes: no HEAD or prior-archive target base exists.",
+      "preMobileIntakeSha256": "2282385db6216bd4d0fbd49967e30d21a35b3822a3b8f1b56b2206b088af710c"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "state": "First recoverable current bytes: no HEAD or prior-archive target base exists.",
+      "preMobileIntakeSha256": null
+    }
+  ],
+  "limitation": "Older untracked shared targets without a HEAD/prior-archive base are preserved whole. No earlier arbitrary bytes are claimed."
+}

@@ -1,0 +1,59 @@
+{
+  "id": "R3-01",
+  "raw_path": "receipts/generated/R3-01-warm-welcome-raw.png",
+  "raw_sha256": "f8575a2c6c3a495fdb20acef20cb1e1e2afb99b52fe0c55720b2f7081e582c18",
+  "raw_image": {
+    "format": "PNG",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB"
+  },
+  "tool_receipt": "receipts/tool/R3-01.json",
+  "icon_path": "icons/R3-01-warm-welcome.png",
+  "icon_sha256": "6f55312732986ab86f828af169311ed159a938c834a8ee50dd244e0f4da8e4b1",
+  "preview_path": "preview-60/R3-01-warm-welcome.png",
+  "preview_sha256": "63681dcf86c2d532f9979a4ab5fb37b436e8b3a92b61be071290463fca17e5a5",
+  "processing": {
+    "native_grid": [
+      256,
+      256
+    ],
+    "source_edge_background_rgb": [
+      44,
+      142,
+      150
+    ],
+    "final_edge_background_rgb": [
+      56,
+      127,
+      131
+    ],
+    "background_cleanup": "four-connected edge flood; max channel distance 36 from edge median",
+    "background_pixels_flattened_at_native_grid": 18810,
+    "detached_background_speck_pixels_removed": 0,
+    "source_subject_bbox_at_native_grid": [
+      2,
+      20,
+      253,
+      236
+    ],
+    "fitted_content_size_at_native_grid": [
+      208,
+      179
+    ],
+    "fitted_content_position_at_native_grid": [
+      24,
+      38
+    ],
+    "content_bbox_at_1024": [
+      96,
+      152,
+      928,
+      868
+    ],
+    "color_policy": "generated RGB colors preserved on the native grid; no palette reduction or dithering; exact background restored",
+    "resize_filter": "nearest-neighbor"
+  }
+}

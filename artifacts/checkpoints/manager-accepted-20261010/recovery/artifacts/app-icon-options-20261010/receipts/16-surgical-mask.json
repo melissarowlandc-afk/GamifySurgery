@@ -1,0 +1,33 @@
+{
+  "number": 16,
+  "slug": "surgical-mask",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 16,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-ddaa5d7b-b51f-40fe-8a3d-67ed445a47ac.png",
+  "original_builtin_sha256": "36eada1c51b3b85f574ab08ab2bf374f16671aa48acccfdb73ecebe5ee8518eb",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/16-surgical-mask.png",
+  "raw_copy_sha256": "36eada1c51b3b85f574ab08ab2bf374f16671aa48acccfdb73ecebe5ee8518eb",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:28:50.160087+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/16-surgical-mask.png",
+  "output_sha256": "fcbe1ce69fba901d3e6917394dcd2fcfd92d36541503d6170324d93701c5251a",
+  "preview": "preview-60/16-surgical-mask.png",
+  "preview_sha256": "ca295b6a91243f73d37f65061aa25812e9ba13adc1fafab1534db7d92bda187b",
+  "reference_identity": null
+}

@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+  "headStillBaseline": true,
+  "cachedDiffNames": [],
+  "indexMatchesHEAD": true,
+  "priorArchiveManifestsMatchBaselineCommit": [
+    {
+      "path": "artifacts/checkpoints/manager-accepted-20261008/manifest.json",
+      "sha256": "3c21ecf6b0f597bcc77173dabbc7b7957b28a7c4808da91e962dc4a78add51fa",
+      "matchesBaselineCommit": true
+    },
+    {
+      "path": "artifacts/checkpoints/manager-accepted-20261008b/manifest.json",
+      "sha256": "701c4a076f32c0b6c4f8d512fbe59ef789fe9e912e64f0102d486887bee2222a",
+      "matchesBaselineCommit": true
+    },
+    {
+      "path": "artifacts/checkpoints/manager-accepted-20261009/manifest.json",
+      "sha256": "68b141c997b55285dde36be6ee8e7f0bc5b4fe911975de97ffc909dd86ef4ad0",
+      "matchesBaselineCommit": true
+    }
+  ],
+  "workingTreeStatusCountsAtFinalReview": {
+    " M": 249,
+    "??": 1694
+  },
+  "gitCommandsUsed": [
+    "status",
+    "diff",
+    "ls-files",
+    "show",
+    "log",
+    "check-ignore"
+  ],
+  "gitMutations": 0,
+  "commitOrPushPerformed": false
+}

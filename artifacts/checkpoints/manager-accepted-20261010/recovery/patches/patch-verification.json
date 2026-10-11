@@ -1,0 +1,1108 @@
+{
+  "schemaVersion": 1,
+  "method": "Exact Python unified-hunk forward, reverse and reapply; no Git apply",
+  "contracts": [
+    {
+      "id": "checkpoint4__apps__player__index.html",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/index.html",
+      "base": "recovery/bases/checkpoint4/apps/player/index.html",
+      "patch": "recovery/patches/checkpoint4__apps__player__index.html.patch",
+      "baseSha256": "22ceddea5aafb64c8f7f1e847e857bafa25e74cff27b183bec0230cb0d156aae",
+      "patchSha256": "ad93a46fc6bc563690def89cae3c2a2400890df43be4275fa7a82d7555fe6645",
+      "acceptedSha256": "08d828eab27212c42706ee22faa2a09e08fad6a6bc04df8b93469590a077774b",
+      "acceptedBytes": 691,
+      "baselineKind": "HEAD_at_backup3",
+      "baseProvenance": {
+        "kind": "HEAD_at_backup3",
+        "commit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "22ceddea5aafb64c8f7f1e847e857bafa25e74cff27b183bec0230cb0d156aae"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "08d828eab27212c42706ee22faa2a09e08fad6a6bc04df8b93469590a077774b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__App.tsx",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/App.tsx",
+      "base": "recovery/bases/checkpoint4/apps/player/src/App.tsx",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__App.tsx.patch",
+      "baseSha256": "cb17027a87ce54ddb52bd9f4c74e59ae4fec9001c6b01fbccd5f08fb76073a6b",
+      "patchSha256": "ebff2e9dc7660e192303ac3c6d368caccef7bd66c820c38087a3a4dac18fe2fd",
+      "acceptedSha256": "dbac53579eec5db55d4b70729a705142edb850c6d8b06c62e30db9028e8035a3",
+      "acceptedBytes": 12992,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__App.tsx",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "cb17027a87ce54ddb52bd9f4c74e59ae4fec9001c6b01fbccd5f08fb76073a6b"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "dbac53579eec5db55d4b70729a705142edb850c6d8b06c62e30db9028e8035a3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__AppShell.tsx",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/AppShell.tsx",
+      "base": "recovery/bases/checkpoint4/apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__AppShell.tsx.patch",
+      "baseSha256": "c96895f4c9127632cfbaacb3c690e0c3ff8daf18f4d7a399a678e889214f0173",
+      "patchSha256": "709edcbfb805cd5ea6cc534642f7acd3ae2981d6369817e34c7a555001098939",
+      "acceptedSha256": "31f98ce998688d1102da8993172846e45df6cc5878daafb28a98ba7af845959b",
+      "acceptedBytes": 40149,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__AppShell.tsx",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "c96895f4c9127632cfbaacb3c690e0c3ff8daf18f4d7a399a678e889214f0173"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "31f98ce998688d1102da8993172846e45df6cc5878daafb28a98ba7af845959b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__facility__FacilityCanvas.tsx",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "base": "recovery/bases/checkpoint4/apps/player/src/facility/FacilityCanvas.tsx",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__facility__FacilityCanvas.tsx.patch",
+      "baseSha256": "53d2acf9319319da0695af7120b9a59bc480f73767a909fb9e5fc3da37236f5f",
+      "patchSha256": "c7cb9c378c6ee0d2297f28a9877b16151816b9354763d956b93f50f3c08c2010",
+      "acceptedSha256": "1e35740aab514e99a51dc327abc808b7b38e074c6bec2f65a27ba72234a94453",
+      "acceptedBytes": 12211,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__facility__FacilityCanvas.tsx",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "53d2acf9319319da0695af7120b9a59bc480f73767a909fb9e5fc3da37236f5f"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "1e35740aab514e99a51dc327abc808b7b38e074c6bec2f65a27ba72234a94453"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__facility__FacilityScene.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__facility__FacilityScene.ts.patch",
+      "baseSha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5",
+      "patchSha256": "68bd9fe22fa63d37752ceb4144b0ce7310b911db438f14b8bcdf20000e94e97b",
+      "acceptedSha256": "186f2deaa04d2ab5816a79284ba636005441027fec6ba2644964a15a2806d041",
+      "acceptedBytes": 360787,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__FacilityScene.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "c59e162013698997b14d052f180831ca665d2eadc8d8f704283e1f2739314be5"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "186f2deaa04d2ab5816a79284ba636005441027fec6ba2644964a15a2806d041"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__facility__facilityCameraBounds.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/facility/facilityCameraBounds.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/facility/facilityCameraBounds.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__facility__facilityCameraBounds.ts.patch",
+      "baseSha256": "323e3d01f642280f0e6e1f8782a9e6c9aae7c5ad40c38584346bec42baa7c5ea",
+      "patchSha256": "7880334a501451534fb11a141a1bc00e473f69f28d0f807768e7656a75bcce35",
+      "acceptedSha256": "2a7e76b4b3d857a738214cb65ed2d9d7af472e28753a0acad15af8d5c9230278",
+      "acceptedBytes": 3906,
+      "baselineKind": "prior_archive_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "payload": "recovery/apps/player/src/facility/facilityCameraBounds.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "323e3d01f642280f0e6e1f8782a9e6c9aae7c5ad40c38584346bec42baa7c5ea"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "2a7e76b4b3d857a738214cb65ed2d9d7af472e28753a0acad15af8d5c9230278"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__facility__types.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/facility/types.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__facility__types.ts.patch",
+      "baseSha256": "bd966ce25bd49f21cb866c781c3c5d950050ccbedc87301aecfb39ed8500f88e",
+      "patchSha256": "af190e1b48341a811f3c931c4dfaf88111b19e16feffee813c550c827df76754",
+      "acceptedSha256": "e2e5ed83e2969be7bd71f7a41ff40abc9a9ab6faa6d77e88a5f72c8fd5643b76",
+      "acceptedBytes": 13025,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__types.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "bd966ce25bd49f21cb866c781c3c5d950050ccbedc87301aecfb39ed8500f88e"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "e2e5ed83e2969be7bd71f7a41ff40abc9a9ab6faa6d77e88a5f72c8fd5643b76"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__session__usePrototypeSession.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__session__usePrototypeSession.ts.patch",
+      "baseSha256": "1f9490a72aac06faddeeace7ff9621ce1aab820c9cf9515bf5e5815a7f81e501",
+      "patchSha256": "a91f4e941b149fc7b52e45387e1466786d30463efe57ebc1fa8abfd0f2ffb577",
+      "acceptedSha256": "84c4d8eedda70fe4f60faa14c8e4406fbcc312cace231cd14d8997b898d1f1ab",
+      "acceptedBytes": 78669,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__usePrototypeSession.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "1f9490a72aac06faddeeace7ff9621ce1aab820c9cf9515bf5e5815a7f81e501"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "84c4d8eedda70fe4f60faa14c8e4406fbcc312cace231cd14d8997b898d1f1ab"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__session__viewModels.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/session/viewModels.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__session__viewModels.ts.patch",
+      "baseSha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954",
+      "patchSha256": "d1d47dfd82f07ba3b9c23bf866d017134192749860c433a0b35c780f6a5c0b44",
+      "acceptedSha256": "9ffe48b8dbc016359318f08aba4d8f57f27423baa5d6d03d8c529f58fd0571ba",
+      "acceptedBytes": 136775,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__viewModels.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "cff1589b55222b132bc782848bfeb120f9394e7301bd9aca9d934160d3dbf954"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "9ffe48b8dbc016359318f08aba4d8f57f27423baa5d6d03d8c529f58fd0571ba"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__styles__global.css",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/styles/global.css",
+      "base": "recovery/bases/checkpoint4/apps/player/src/styles/global.css",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__styles__global.css.patch",
+      "baseSha256": "187e77690b25c8c9bb8d4716b21d105708c49ea725c05ba5bc301a5a69219642",
+      "patchSha256": "531db956eca72363eddb865ad2b372fbc92e4aff115e30fc2e66377c43c1e197",
+      "acceptedSha256": "f8e6902b50922cbee213b750049f75b5b32846c704e5d03820c47b2e79c1240d",
+      "acceptedBytes": 177289,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__styles__global.css",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "187e77690b25c8c9bb8d4716b21d105708c49ea725c05ba5bc301a5a69219642"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "f8e6902b50922cbee213b750049f75b5b32846c704e5d03820c47b2e79c1240d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__ui__PatientLists.tsx",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/ui/PatientLists.tsx",
+      "base": "recovery/bases/checkpoint4/apps/player/src/ui/PatientLists.tsx",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__ui__PatientLists.tsx.patch",
+      "baseSha256": "70406aaec87e99d70f24dc8a1d61eca235a4225b7f9d25afebca09a4e58b33a8",
+      "patchSha256": "db2f84d4f5d3734b320ef22f088d55729a8aed4aab3e9e7b5e08218b82dce4e7",
+      "acceptedSha256": "33bc844497b6154d3acd853c6c2734a4cb455db8a373d48ff53a5100a332407a",
+      "acceptedBytes": 9914,
+      "baselineKind": "HEAD_at_backup3",
+      "baseProvenance": {
+        "kind": "HEAD_at_backup3",
+        "commit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "70406aaec87e99d70f24dc8a1d61eca235a4225b7f9d25afebca09a4e58b33a8"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "33bc844497b6154d3acd853c6c2734a4cb455db8a373d48ff53a5100a332407a"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__apps__player__src__ui__types.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "apps/player/src/ui/types.ts",
+      "base": "recovery/bases/checkpoint4/apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/checkpoint4__apps__player__src__ui__types.ts.patch",
+      "baseSha256": "cb886f9e869a097b667b466149376406bc979a9df64ff6378cf39f3bd9cb088c",
+      "patchSha256": "6b6a8ee60600ca7358cea0b9804967a0150ae88d1dcc73cff171cec31cee03be",
+      "acceptedSha256": "1265aa89d89677baa70323bda14967e4228768cdd5147ff35c36eda85c49c0f0",
+      "acceptedBytes": 20933,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__ui__types.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "cb886f9e869a097b667b466149376406bc979a9df64ff6378cf39f3bd9cb088c"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "1265aa89d89677baa70323bda14967e4228768cdd5147ff35c36eda85c49c0f0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__docs__execplans__owner-requests-20261008.md",
+      "scope": "Manager-accepted since backup 3",
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "base": "recovery/bases/checkpoint4/docs/execplans/owner-requests-20261008.md",
+      "patch": "recovery/patches/checkpoint4__docs__execplans__owner-requests-20261008.md.patch",
+      "baseSha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46",
+      "patchSha256": "aaac9898a80d6a7316acd01e2c78c9221b08c9c0806f5e526f32e785ee17699d",
+      "acceptedSha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc",
+      "acceptedBytes": 435758,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__docs__execplans__owner-requests-20261008.md",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "d97cc78f2e4d186edc908058d40a198c922aeadb807bcf02d1e69386d8234f46"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt",
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+      "scope": "Manager-accepted since backup 3",
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "base": "recovery/bases/checkpoint4/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "patch": "recovery/patches/checkpoint4__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "baseSha256": "bb571235258bed617a0fd87a111dd3ae029aef0cfc1249c058717b68ac9f71b8",
+      "patchSha256": "7a564542d89d12cbf4bb7ae3a74dcdbe2f04903866515065727c42b36e7937b4",
+      "acceptedSha256": "961b2dfcb76d210aea45b83db07bb4586bacb64978d949609e31bcdf94fe11a6",
+      "acceptedBytes": 479903,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "bb571235258bed617a0fd87a111dd3ae029aef0cfc1249c058717b68ac9f71b8"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit brief / accepted mobile, icon, desktop highlight or acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "961b2dfcb76d210aea45b83db07bb4586bacb64978d949609e31bcdf94fe11a6"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__answer-choice-timing.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/answer-choice-timing.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__answer-choice-timing.ts.patch",
+      "baseSha256": "d6f4082e28baa4f4f1fb054b208ebd41183b571c228849e5f3addc2584288ad9",
+      "patchSha256": "01298e968abadd0f185497213ec063e33990c14e5a0379d7b767eb359a6568ae",
+      "acceptedSha256": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb",
+      "acceptedBytes": 184873,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__answer-choice-timing.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "d6f4082e28baa4f4f1fb054b208ebd41183b571c228849e5f3addc2584288ad9"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts.patch",
+      "baseSha256": "9bf0b988e43dd7c346ee57495d77ac66dde730ac4481ce9dffec3aed377aab9d",
+      "patchSha256": "87d591f2134a5933019d2eb04719699246050603a68ce76066315b7a2070bc97",
+      "acceptedSha256": "c0e6e2186d08ef4a9c2add62f2347da2bf17b236d689e2b6fbabb2caf919cfac",
+      "acceptedBytes": 12493,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "9bf0b988e43dd7c346ee57495d77ac66dde730ac4481ce9dffec3aed377aab9d"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "c0e6e2186d08ef4a9c2add62f2347da2bf17b236d689e2b6fbabb2caf919cfac"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts.patch",
+      "baseSha256": "ca35ac6c6eafe42d83cd96fcd9715ce948229c45115126c421e5f8ba4b73c835",
+      "patchSha256": "1afafe8c851a40613e48b85e9ea1285ebd1cc8d1c517afdfb952aa02e14894ec",
+      "acceptedSha256": "ffac270dd3d272dd096f13a6364b2242b5f14df928190f49ef5aafd0853f2ed4",
+      "acceptedBytes": 7106,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "ca35ac6c6eafe42d83cd96fcd9715ce948229c45115126c421e5f8ba4b73c835"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "ffac270dd3d272dd096f13a6364b2242b5f14df928190f49ef5aafd0853f2ed4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts.patch",
+      "baseSha256": "9c99f2674650bf3a7ccc363d04e736c57ae596bb2cf951eef9d328d485786577",
+      "patchSha256": "1ab156e7dc78b19b731f5e387b79539b7471904a80e17f8d896e58751f97286d",
+      "acceptedSha256": "ba7f7d21e596c122c0f908d70503bcbe6031d179c8c3c77ec799d525784d8967",
+      "acceptedBytes": 7675,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "9c99f2674650bf3a7ccc363d04e736c57ae596bb2cf951eef9d328d485786577"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "ba7f7d21e596c122c0f908d70503bcbe6031d179c8c3c77ec799d525784d8967"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts.patch",
+      "baseSha256": "8f4013d4cb9fb13e2def6bd8550147a2fd2dde6493c120b19c572b86e0943590",
+      "patchSha256": "e355e7595e0d7e25e510b84eac43e191145b0c8285b728f686b99cb790de3ca3",
+      "acceptedSha256": "dd0fd3933a852b798400daa220c9c1a1088b05990814f4e2175252f7f732f2f3",
+      "acceptedBytes": 6772,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "8f4013d4cb9fb13e2def6bd8550147a2fd2dde6493c120b19c572b86e0943590"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "dd0fd3933a852b798400daa220c9c1a1088b05990814f4e2175252f7f732f2f3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts.patch",
+      "baseSha256": "6ff0a70ec9fc13f8623d9fb2df347ca7c959066d13c4b29a833f2c5f08975c87",
+      "patchSha256": "c5cc2f03d9e455366b7a9dcc3927e3edb1de459441b1cd22cbe3f51dd0390316",
+      "acceptedSha256": "c64119921e7a519505f8ea8bc657bb41f25958d47de65799b223ac31857378bc",
+      "acceptedBytes": 7254,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "6ff0a70ec9fc13f8623d9fb2df347ca7c959066d13c4b29a833f2c5f08975c87"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "c64119921e7a519505f8ea8bc657bb41f25958d47de65799b223ac31857378bc"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts.patch",
+      "baseSha256": "885b7caa05b13ebda5d792a6d792306b666c73ce65119ab86599cff228e29ce1",
+      "patchSha256": "054d3eb39f4b7f9abc482aea488c8d8862d9b48f4a880b8a2b4fcb539f0b8c84",
+      "acceptedSha256": "ac9a9eef2bf586c6dee9f51cac7ad44b5cff7c319c08402fdb28e2f69b139cb1",
+      "acceptedBytes": 5607,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "885b7caa05b13ebda5d792a6d792306b666c73ce65119ab86599cff228e29ce1"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "ac9a9eef2bf586c6dee9f51cac7ad44b5cff7c319c08402fdb28e2f69b139cb1"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-level3__level3-content.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-level3__level3-content.test.ts.patch",
+      "baseSha256": "4a32197f2d7f336701570350267a64802cfd8dcbbba2865bfa675b1433f4f571",
+      "patchSha256": "716c4a5ef1942f0e636389ade4557cbf979ccf33f330f9c3a18b32a975cb6120",
+      "acceptedSha256": "c644c713c12a5004c4d497dfeb9417153892f187b29adf4a6ac5030248ec85ba",
+      "acceptedBytes": 8335,
+      "baselineKind": "prior_archive_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "payload": "recovery/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "4a32197f2d7f336701570350267a64802cfd8dcbbba2865bfa675b1433f4f571"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "c644c713c12a5004c4d497dfeb9417153892f187b29adf4a6ac5030248ec85ba"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts.patch",
+      "baseSha256": "1991639f5041cd801d7ca78a47f7055bad6c22884b838a754b8df64f9981ea85",
+      "patchSha256": "d2f1c5177591d5d743cca431e3c72c54d068046c813b6e6a5b6e511f461ac125",
+      "acceptedSha256": "3eeff4f8f217da962b3d6a3afcb20fe8f22c77b1cb79e8b314bdd903773d7ab5",
+      "acceptedBytes": 3855,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-10-07-variety-2__variety-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "1991639f5041cd801d7ca78a47f7055bad6c22884b838a754b8df64f9981ea85"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "3eeff4f8f217da962b3d6a3afcb20fe8f22c77b1cb79e8b314bdd903773d7ab5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts.patch",
+      "baseSha256": "ac3ef8b3b1c7b4e3918675432a8686e128756f748a3a4d6372220f382816664b",
+      "patchSha256": "09c469345d57a385f93f882741d576d3d485aa4cd28598ddde287a1587416c20",
+      "acceptedSha256": "85578b548837573985243a2bde1c8792a87ec4f1fd449f12812ea7a72e9e04b1",
+      "acceptedBytes": 6072,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__development-batch__2026-10-07-variety__variety-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "ac3ef8b3b1c7b4e3918675432a8686e128756f748a3a4d6372220f382816664b"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "85578b548837573985243a2bde1c8792a87ec4f1fd449f12812ea7a72e9e04b1"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__index.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/index.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/index.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__index.ts.patch",
+      "baseSha256": "3a075930e107166d5baa15f3a6d8bb283d8000f8df4b4e8cdedcd9aa2b86d32a",
+      "patchSha256": "689174f5b7c40ff0da380a8b329d6f57bc6f7def7554ebe8701378436af1859b",
+      "acceptedSha256": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223",
+      "acceptedBytes": 4190,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__index.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "3a075930e107166d5baa15f3a6d8bb283d8000f8df4b4e8cdedcd9aa2b86d32a"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__patient-library-wording-repair.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__patient-library-wording-repair.test.ts.patch",
+      "baseSha256": "119202340591779abf9f4d0fa7ec9d4d2ad539d8ca73b7e72ef926906a628d28",
+      "patchSha256": "f8d58e77178959acb0e93c79c8a341f3791f411cd16b9ca2ca618cec6360c323",
+      "acceptedSha256": "e5ef077050cfa703295671e59c3a21045ff3b2f9960490fadb07d9d6284c6d9d",
+      "acceptedBytes": 8039,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__patient-library-wording-repair.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "119202340591779abf9f4d0fa7ec9d4d2ad539d8ca73b7e72ef926906a628d28"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "e5ef077050cfa703295671e59c3a21045ff3b2f9960490fadb07d9d6284c6d9d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__clinical-content__src__synthetic-content.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "base": "recovery/bases/checkpoint4/packages/clinical-content/src/synthetic-content.ts",
+      "patch": "recovery/patches/checkpoint4__packages__clinical-content__src__synthetic-content.ts.patch",
+      "baseSha256": "75d713f5e5b0c8474a1c2689f99c656ecdaa36fc724edc183952025ae422c767",
+      "patchSha256": "cd08f4541d29998519eaab634bc7cb9b7a2e9faf43c563a69ea27d8da9dfe875",
+      "acceptedSha256": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16",
+      "acceptedBytes": 56013,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__clinical-content__src__synthetic-content.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "75d713f5e5b0c8474a1c2689f99c656ecdaa36fc724edc183952025ae422c767"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__src__reducer.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/src/reducer.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/src/reducer.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__src__reducer.ts.patch",
+      "baseSha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba",
+      "patchSha256": "5a50fed90507a47bf1a465c8c885dba138dd9500f5798fe97c878a6ce77e62c5",
+      "acceptedSha256": "eca5ed150c806bbd70409bac6579ec727e0fddb37e4787fdb4556dae4ec01220",
+      "acceptedBytes": 411540,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__reducer.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "1c680ba76445c789a951018e7804da02048c9900aee2975a9fd4611c0da4e8ba"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "eca5ed150c806bbd70409bac6579ec727e0fddb37e4787fdb4556dae4ec01220"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__approved-clinical-admission.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__approved-clinical-admission.test.ts.patch",
+      "baseSha256": "228ad1da3b5c62e8e2644fe2740c755ef706bc201e4c374b4f8449862165d9ce",
+      "patchSha256": "4d1e213a108c1c65233bd4e819591d8d231b83e15435f06a81ca74a75aa78940",
+      "acceptedSha256": "3ec439977b7e31b67c90ba83d8e92846629668669f9d76203597ba066ab9f5dd",
+      "acceptedBytes": 14932,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__approved-clinical-admission.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "228ad1da3b5c62e8e2644fe2740c755ef706bc201e4c374b4f8449862165d9ce"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "3ec439977b7e31b67c90ba83d8e92846629668669f9d76203597ba066ab9f5dd"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__clinical-content-withdrawal.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__clinical-content-withdrawal.test.ts.patch",
+      "baseSha256": "fe3ba6f84f115cd3c96a4aaa19efb9d5a68a14025b3a318bf1ff25fe19a2dbe3",
+      "patchSha256": "a5613bee4b83361b267c46cbf15f74af767c6c2862648c5956597e970b56ba43",
+      "acceptedSha256": "155825789cd64e2d6b5d067c7be13c8b7d7e7f5ae1e906f50ea81e87f2b6a5ea",
+      "acceptedBytes": 7192,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__clinical-content-withdrawal.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "fe3ba6f84f115cd3c96a4aaa19efb9d5a68a14025b3a318bf1ff25fe19a2dbe3"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "155825789cd64e2d6b5d067c7be13c8b7d7e7f5ae1e906f50ea81e87f2b6a5ea"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__diagnostics__patient-supply.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__diagnostics__patient-supply.test.ts.patch",
+      "baseSha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d",
+      "patchSha256": "844d470785e8893401de174affe18e0e377527f9f92acc2565ed549a7a49df01",
+      "acceptedSha256": "b1a003cb2ff129d7babd19e309511e32b5fd355ba6c921255cd1a9fa090dfc97",
+      "acceptedBytes": 20946,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "gs028-M4-M5-tests__packages__game-domain__tests__diagnostics__patient-supply.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "dfd00ecc1eb8bd6b25e1a3dad8d73c21fa8aa6928065ac70e6c4f9facc2baa6d"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "b1a003cb2ff129d7babd19e309511e32b5fd355ba6c921255cd1a9fa090dfc97"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__gs028-20261003-batch.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "baseSha256": "648d89cdfc8f9d945a9f1cf3f992eac44af13caec98805cc6f8d5de709ca983d",
+      "patchSha256": "367906950de32c2909c792ebf4eb6c2dda4e500a423ea6f26f38dc099f899374",
+      "acceptedSha256": "4f92c165d4cd40cdc78824f6f03f5340c338f98e37e7cff65d1ee3991cabed5d",
+      "acceptedBytes": 34062,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__gs028-20261003-batch.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "648d89cdfc8f9d945a9f1cf3f992eac44af13caec98805cc6f8d5de709ca983d"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "4f92c165d4cd40cdc78824f6f03f5340c338f98e37e7cff65d1ee3991cabed5d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__gs028-20261007-batch.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__gs028-20261007-batch.test.ts.patch",
+      "baseSha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245",
+      "patchSha256": "57e6ad840753fac69a6311f515817bf1a4f06d9857860239af4e6f1e7065fa1c",
+      "acceptedSha256": "a073b0e504c62295ce68ef2979bd824cc9dbfbac4743520312853c5fde647c2e",
+      "acceptedBytes": 30950,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "gs028-M4-M5-tests__packages__game-domain__tests__gs028-20261007-batch.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "229e502a7d13c64fcc49ad7e207337d4f45a676dfe7d1afc3052a5c39399a245"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "a073b0e504c62295ce68ef2979bd824cc9dbfbac4743520312853c5fde647c2e"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts.patch",
+      "baseSha256": "daeb7605ba87f0c05d47bffacf7f8ad3f959041de82874126df65e1971551912",
+      "patchSha256": "caba157f25123c41dc81bbb468284907a6fdd9a752e4b051e89500a6cbf72e0b",
+      "acceptedSha256": "02f16f38d953966972ca025e952375b5340e818a98b0abb120b5a2f6fd241545",
+      "acceptedBytes": 45934,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__packages__game-domain__tests__gs028-20261007-variety2-batch.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "daeb7605ba87f0c05d47bffacf7f8ad3f959041de82874126df65e1971551912"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "02f16f38d953966972ca025e952375b5340e818a98b0abb120b5a2f6fd241545"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts.patch",
+      "baseSha256": "cbd896686825b17ee7c0b6a44430dfd62d50883947c79567568493d91cd148a8",
+      "patchSha256": "865717bde0fa097efadd40aae41006e645ffd82458ce6d4344de74a7d5510796",
+      "acceptedSha256": "98c8d53951a299249acfe71698ffc5c6d3ea97b52b9e4f3f34c999f59222a86a",
+      "acceptedBytes": 10639,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "cbd896686825b17ee7c0b6a44430dfd62d50883947c79567568493d91cd148a8"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "98c8d53951a299249acfe71698ffc5c6d3ea97b52b9e4f3f34c999f59222a86a"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__packages__game-domain__tests__patient-supply.test.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "base": "recovery/bases/checkpoint4/packages/game-domain/tests/patient-supply.test.ts",
+      "patch": "recovery/patches/checkpoint4__packages__game-domain__tests__patient-supply.test.ts.patch",
+      "baseSha256": "db6322410ea5da9caac6f5bee3fc21a0d62e5c7f0180674370db674e18e97db9",
+      "patchSha256": "4d63cb18960d642b11233e47388dddca84eaac1fcf8af11d0b36d203b21fcb04",
+      "acceptedSha256": "d6707bd19cf78e61c62e10c2b2beecf6d165529befec1fceb51409cb44f91fc7",
+      "acceptedBytes": 19983,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__patient-supply.test.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "db6322410ea5da9caac6f5bee3fc21a0d62e5c7f0180674370db674e18e97db9"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt"
+        ],
+        "currentAcceptedCaptureSha256": "d6707bd19cf78e61c62e10c2b2beecf6d165529befec1fceb51409cb44f91fc7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__tools__qa__level-four-rooms-bootstrap.ts",
+      "scope": "Manager-accepted since backup 3",
+      "path": "tools/qa/level-four-rooms-bootstrap.ts",
+      "base": "recovery/bases/checkpoint4/tools/qa/level-four-rooms-bootstrap.ts",
+      "patch": "recovery/patches/checkpoint4__tools__qa__level-four-rooms-bootstrap.ts.patch",
+      "baseSha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2",
+      "patchSha256": "15491527a3b44c8d1cbf0795774e98c0f5860057c6c5267cbe83409e10a74be4",
+      "acceptedSha256": "65c7bfef2939edf2f9ce41277a35cec1bde553f7a0897baedfbf56eeabc32d35",
+      "acceptedBytes": 5831,
+      "baselineKind": "prior_archive_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "payload": "recovery/tools/qa/level-four-rooms-bootstrap.ts",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "962186447d905093ea2957bdc8bf1c68aa6de419ba9673da8c46658d611179f2"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt",
+          "Accepted mobile and Variety-3 disposable QA bootstrap changes"
+        ],
+        "currentAcceptedCaptureSha256": "65c7bfef2939edf2f9ce41277a35cec1bde553f7a0897baedfbf56eeabc32d35"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint4__tools__qa__level-four-rooms.mjs",
+      "scope": "Manager-accepted since backup 3",
+      "path": "tools/qa/level-four-rooms.mjs",
+      "base": "recovery/bases/checkpoint4/tools/qa/level-four-rooms.mjs",
+      "patch": "recovery/patches/checkpoint4__tools__qa__level-four-rooms.mjs.patch",
+      "baseSha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897",
+      "patchSha256": "a87ecb72d7e6b93aa380c1756cc5c86a887482c57951b3ca1ace3d42e8f61eea",
+      "acceptedSha256": "6750f2c7542817c5ee62de3d13ffe4b8bb65c83ef76f2d5ec57f3ec30b01f6ac",
+      "acceptedBytes": 3130,
+      "baselineKind": "prior_archive_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "payload": "recovery/tools/qa/level-four-rooms.mjs",
+        "baselineCommit": "9b4808ae444539062a49068b498d3460d2bc5724",
+        "sha256": "4f9b107a672df1a528ed89ea991f3b52746488aec6d5b399354e2f206c9d8897"
+      },
+      "proof": {
+        "acceptance": [
+          "Accepted Variety-3 assembly owned-path receipt",
+          "Accepted mobile and Variety-3 disposable QA bootstrap changes"
+        ],
+        "currentAcceptedCaptureSha256": "6750f2c7542817c5ee62de3d13ffe4b8bb65c83ef76f2d5ec57f3ec30b01f6ac"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    }
+  ],
+  "liveComparisonCheckedAtUtc": "2026-10-11T02:08:06.781917+00:00"
+}

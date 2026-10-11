@@ -1,0 +1,24 @@
+{
+  "task_date": "2026-10-10",
+  "owner_direction": "25 Round-2 concepts, five each for Front Desk / clocks / hearts / hourglasses / coffee; lively bitmap colors; no people.",
+  "write_scope": "artifacts/app-icon-options-20261010/round2/",
+  "status": "concept_only",
+  "tool": "built-in image_gen.imagegen; one call per variant; edits of local reference images",
+  "palette_origin": "Bitmap furniture blue/teal, cabinet/plant greens and corkboard wood; current roomTouchups.ts warm mat/rug/accent values; owner explicitly requested coral/red-orange and gold variations. Exact new backdrop/material shades are art-direction selections, not claims that every hex is an existing pixel.",
+  "source_references": [
+    "apps/player/public/art/rooms/front-desk-v4/front-desk-shell-v4.png",
+    "apps/player/public/art/rooms/front-desk-v3/front-desk-architecture-v3.png",
+    "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+    "apps/player/public/art/rooms/level-1-v1/front-desk-fixtures-v1.png",
+    "apps/player/public/art/rooms/level-1-v1/waiting-fixtures-v1.png",
+    "apps/player/src/art/bitmapAssetManifest.ts",
+    "apps/player/src/facility/frontDeskPresentation.ts",
+    "apps/player/src/facility/roomTouchups.ts",
+    "apps/player/src/facility/FacilityScene.ts",
+    "apps/player/src/ui/OpeningSequence.css",
+    "apps/player/src/styles/tokens.css",
+    "apps/player/src/art/pixelPalette.ts"
+  ],
+  "baseline_protection": "Round 1 is read-only; a hash baseline is recorded for its existing files.",
+  "postprocessing": "User authorized the same resizing/contact-sheet workflow plus composition from real game sprites. Preserve lively generated hues with an adaptive palette; do not apply Round-1 grayscale/olive-only quantization."
+}

@@ -1,0 +1,65 @@
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -312,6 +312,10 @@
+   const [locatedPatientId, setLocatedPatientId] = useState<string | null>(
+     null,
+   );
++  const [chartHighlightRequest, setChartHighlightRequest] = useState<{
++    patientId: string;
++    requestKey: number;
++  } | null>(null);
+   const [praiseCandidateId, setPraiseCandidateId] = useState<
+     string | null
+   >(null);
+@@ -344,7 +348,7 @@
+   const activeCampaignId =
+     campaigns.find((campaign) => campaign.active)?.campaignId ?? null;
+   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
+-  useEffect(() => { setClinicActionFailures({}); }, [activeCampaignId]);
++  useEffect(() => { setClinicActionFailures({}); setChartHighlightRequest(null); }, [activeCampaignId]);
+   const developmentToolPreference = new URLSearchParams(
+     window.location.search,
+   ).get("prototype-tools");
+@@ -376,6 +380,12 @@
+     return () => window.clearTimeout(timer);
+   }, [locatedPatientId]);
+ 
++  useEffect(() => {
++    if (!chartHighlightRequest) return;
++    const timer = window.setTimeout(() => setChartHighlightRequest(null), 2_000);
++    return () => window.clearTimeout(timer);
++  }, [chartHighlightRequest]);
++
+   useEffect(
+     () => () => {
+       cancelScheduledAnimationFrame(messageActionFrameRef);
+@@ -485,6 +495,13 @@
+   const openAndLocatePatient = (patientId: string) => {
+     setLocatedPatientId(patientId);
+     onOpenPatient(patientId);
++  };
++  const highlightPatientChart = (patientId: string) => {
++    if (!patients.some((patient) => patient.id === patientId)) return;
++    setChartHighlightRequest((previous) => ({
++      patientId,
++      requestKey: (previous?.requestKey ?? 0) + 1,
++    }));
+   };
+   const praiseCandidate = praiseCandidateId
+     ? facility.staff.find(
+@@ -715,6 +732,7 @@
+                 discussions={employeeDiscussionRows}
+                 onOpenDiscussion={onOpenEmployeeDiscussion}
+                 onOpen={openAndLocatePatient}
++                chartHighlightRequest={chartHighlightRequest}
+                 tutorialTargetEncounterId={tutorialTargetEncounterId}
+                 availabilityGuidance={patientAvailabilityGuidance}
+               />
+@@ -854,6 +872,7 @@
+                 onSeatFounderAtFrontDesk={onSeatFounderAtFrontDesk}
+                 onSeatFounderInChair={onSeatFounderInChair}
+                 onDescribeCharacter={onDescribeCharacter}
++                onHighlightPatientChart={highlightPatientChart}
+                 onPraiseEmployee={setPraiseCandidateId}
+                 onMoveFounder={onMoveFounder}
+                 onCameraChange={onFacilityCameraChange}

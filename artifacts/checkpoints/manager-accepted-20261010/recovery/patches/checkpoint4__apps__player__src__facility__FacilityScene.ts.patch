@@ -1,0 +1,624 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -267,6 +267,7 @@
+ } from "./exteriorFrontage";
+ import { getProceduralSurfaceRow } from "./proceduralSurfacePhase";
+ import { snapPresentationOrigin } from "./presentationOrigin";
++import { getMobileFacilityCameraPanPadding } from "./facilityCameraBounds";
+ import {
+   getExteriorLandscapeCandidates,
+   getExteriorLandscapeDisplay,
+@@ -302,9 +303,27 @@
+ import { getDoorPresentationOpenings } from "./doorPresentation";
+ import { rasterizeGridLine } from "./hallwayPainting";
+ import { getFacilityWorldSignature } from "./facilityWorldSignature";
+-import { characterRefFromKey, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
++import { characterRefFromKey, patientChartIdForCharacter, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
++import { MapTouchGestures, type MapGesture, type TouchPoint } from "../mobile/map/gestures";
++import { transformPhoneCamera } from "../mobile/map/camera";
++import { nearestTouchTarget, type TouchTarget } from "../mobile/map/picking";
++import { describeMobileCharacter, describeMobileRoom, type MobileMapSelection } from "../mobile/map/selection";
++import type { MobileBuildMapState } from "../mobile/build/types";
++import { PhoneBuildMapInput } from "../mobile/build/mapInput";
++import { framePhoneGhost, phoneGhostEdgePan } from "../mobile/build/ghostCamera";
++import type { MobileMapPresentationPolicy } from "../mobile/performance/presentationPolicy";
++import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets } from "../mobile/performance/roomAssets";
++import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
++import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
+ 
+ export interface FacilitySceneBridge {
++  /** Explicit opt-in; desktop never supplies it. */
++  mobileInput?: boolean;
++  mobilePresentation?: MobileMapPresentationPolicy;
++  mobileFacilityLevel?: number;
++  mobilePreviewRoomIds?: readonly string[];
++  mobileBuild?: MobileBuildMapState | null;
++  onMobileSelection?: (selection: MobileMapSelection | null) => void;
+   viewModel: FacilityViewModel;
+   onPlaceRoom: PlaceRoomRequest;
+   onPlaceDoor?: PlaceDoorRequest;
+@@ -317,6 +336,8 @@
+   onSeatFounderInChair?: SeatFounderInChairRequest;
+   /** Map info box text for a clicked character. */
+   onDescribeCharacter?: DescribeCharacterRequest;
++  /** Desktop map clicks locate a rail row without opening its chart. */
++  onHighlightPatientChart?: (patientId: string) => void;
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
+@@ -613,6 +634,13 @@
+     panY: 0,
+   };
+   private lastRequestedCameraSignature = "";
++  private mobileGestures?: MapTouchGestures;
++  private mobileInputSignature = "";
++  private phoneBuildInput?: PhoneBuildMapInput;
++  private mobileGhostInitialized = false;
++  private mobileGhostKey = "";
++  private mobileGhostFrameKey = "";
++  private mobileBuildDrawSignature = "";
+   private dragStart:
+     | {
+         pointerX: number;
+@@ -634,6 +662,10 @@
+   private landscapingAtlasReady = false;
+   private landscapingTreeCleanupReady = false;
+   private roomFixtureAtlasesReady = false;
++  private mobileAtlasSignature = "";
++  private mobileAtlasModel?: FacilityViewModel;
++  private mobileAtlasLevel?: number;
++  private mobileAtlasPreviews?: readonly string[];
+   private characterStillLoadRequested = false;
+   private readonly pendingCharacterStills = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
+   private readonly failedCharacterStills = new Set<string>();
+@@ -699,6 +731,15 @@
+     this.cameras.main.setBackgroundColor("#7e8476");
+     this.cameras.main.setRoundPixels(true);
+     this.useSmoothDownscaledTextures();
++    if (this.bridge.mobileInput === true && "gameContext" in this.game.renderer) {
++      const resolution = installMobileCanvasResolution(this.game.canvas, this.game.renderer.gameContext, this.scale);
++      const resize = () => resolution.resize(this.scale.width, this.scale.height, window.devicePixelRatio);
++      resize();
++      this.scale.on(Phaser.Scale.Events.RESIZE, resize);
++      this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
++        this.scale.off(Phaser.Scale.Events.RESIZE, resize); resolution.destroy();
++      });
++    }
+ 
+     this.terrainGraphics = this.add
+       .graphics()
+@@ -831,34 +872,7 @@
+       .setDepth(FACILITY_DEPTH_UI)
+       .setVisible(false);
+ 
+-    this.input.on(
+-      "pointermove",
+-      (pointer: Phaser.Input.Pointer) => this.handlePointerMove(pointer),
+-    );
+-    this.input.on(
+-      "pointerdown",
+-      (pointer: Phaser.Input.Pointer) => this.handlePointerDown(pointer),
+-    );
+-    this.input.on(
+-      "pointerup",
+-      (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer),
+-    );
+-    this.input.on(
+-      "wheel",
+-      (
+-        _pointer: Phaser.Input.Pointer,
+-        _objects: Phaser.GameObjects.GameObject[],
+-        _deltaX: number,
+-        deltaY: number,
+-      ) => this.handleWheel(deltaY),
+-    );
+-    this.input.on("gameout", () => {
+-      this.placementGhost = null;
+-      this.dragStart = null;
+-      this.endHallwayPaint();
+-      this.setInteractionHint(null);
+-      this.drawPlacementGhost();
+-    });
++    this.bindInput();
+ 
+     this.ensureEnvironmentAtlas();
+     this.ensureCharacterAtlases();
+@@ -871,6 +885,7 @@
+    * remains visible; a missing file therefore never blanks an active clinic.
+    */
+   private ensureEnvironmentAtlas(): void {
++    if (this.bridge.mobileInput === true) { this.ensureMobileAtlases(); return; }
+     const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
+     if (this.textures.exists(textureKey) && Object.values(FRONTAGE_V2_ASSETS)
+       .every(asset => this.textures.exists(getPhaserTextureKey(asset)))) {
+@@ -915,6 +930,38 @@
+       this.drawWorld();
+     });
+     this.load.start();
++  }
++
++  /** Phone sources are shared with visible catalog previews; desktop uses its original eager loader. */
++  private ensureMobileAtlases(): void {
++    if (typeof Image === "undefined") return;
++    const model = this.bridge.viewModel;
++    const level = this.bridge.mobileFacilityLevel ?? 0;
++    const previews = this.bridge.mobilePreviewRoomIds;
++    if (model === this.mobileAtlasModel && level === this.mobileAtlasLevel && previews === this.mobileAtlasPreviews) return;
++    this.mobileAtlasModel = model; this.mobileAtlasLevel = level; this.mobileAtlasPreviews = previews;
++    const builtRoomIds = [...new Set(model.rooms.map(room => room.definitionId))].sort();
++    const previewRoomIds = [...(previews ?? []), ...(model.placement ? [model.placement.definitionId] : [])];
++    const signature = JSON.stringify([model.campaignId, level, builtRoomIds, previewRoomIds]);
++    if (signature === this.mobileAtlasSignature) return;
++    this.mobileAtlasSignature = signature;
++    const assets = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds })
++      .filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
++    Promise.all(assets.map(async asset => ({ asset, image: await mobileBitmapCache.load(asset,
++      resolvePublicArtAssetUrl(asset.relativePath!)) }))).then(loaded => {
++      if (!this.sys.isActive() || this.bridge.mobileInput !== true) return;
++      for (const { asset, image } of loaded) {
++        const key = getPhaserTextureKey(asset);
++        if (image && !this.textures.exists(key)) this.textures.addImage(key, image);
++      }
++      if (this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1))) {
++        this.registerEnvironmentAtlasFrames(); this.environmentAtlasReady = true;
++      }
++      this.registerLandscapingAtlasFrames();
++      this.landscapingAtlasReady = this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1));
++      this.registerRoomFixtureAtlasFrames();
++      this.refreshLayout(true);
++    });
+   }
+ 
+   /**
+@@ -1062,6 +1109,7 @@
+     ];
+     for (const frame of fixtureFrames) {
+       if (!frame) continue;
++      if (this.bridge.mobileInput === true && !this.textures.exists(`stitchin-time-art:${frame.atlasId}`)) continue;
+       const texture = this.textures.get(
+         getPhaserTextureKey(
+           ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
+@@ -1118,6 +1166,7 @@
+     if (this.textures.exists(rear) && this.textures.exists(foreground)) return { rear, foreground };
+     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === mask.assetId);
+     if (!atlas) return undefined;
++    if (this.bridge.mobileInput === true && !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
+     const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
+     if (!source) return undefined;
+     const [sourceX, sourceY, width, height] = mask.sourceRect;
+@@ -1239,7 +1288,43 @@
+     }));
+   }
+ 
++  /** Same authoritative starting sample as a reload; never replay a covered route tail or old credits. */
++  private resyncMobilePresentation(): void {
++    this.routeMotionTracks.clear();
++    this.characterFacingRight.clear();
++    this.characterMotionSnapshots.clear();
++    this.characterGaitOffsets.clear();
++    this.characterHopStates.clear();
++    this.characterStepBounceStates.clear();
++    this.characterSeatSettles.clear();
++    this.earningsPopupState = undefined;
++    for (const text of this.earningsPopupTexts.values()) text.destroy();
++    this.earningsPopupTexts.clear();
++    this.lastReportedAlertPins = "";
++    this.lastReportedSelectedRoomRect = "";
++  }
++
+   public update(time: number, delta: number): void {
++    let mobileResynced = false;
++    if (this.bridge.mobileInput === true) {
++      this.ensureMobileAtlases();
++      const frame = this.bridge.mobilePresentation?.beginFrame();
++      if (frame && !frame.draw) {
++        this.frameDeltaMilliseconds = 0;
++        this.mobileGestures?.cancel();
++        this.cameras.main.setVisible(false);
++        return;
++      }
++      if (frame?.resync) {
++        this.cameras.main.setVisible(true);
++        this.resyncMobilePresentation();
++        mobileResynced = true;
++      }
++    }
++    if (this.bridge.mobileInput === true) {
++      this.syncMobileInputMode();
++      this.panMobileGhostAtEdge(delta);
++    }
+     const motionFrozen =
+       this.bridge.viewModel.paused ||
+       Boolean(this.bridge.viewModel.buildMode);
+@@ -1248,6 +1333,7 @@
+     // from the exact frozen phase and route sample.
+     const resumedFromFrozen = !motionFrozen && this.characterPresentationWasFrozen;
+     this.frameDeltaMilliseconds = motionFrozen || resumedFromFrozen ? 0 : delta;
++    if (mobileResynced) this.frameDeltaMilliseconds = 0;
+     if (!motionFrozen) {
+       // Keep the older phase for unrelated UI pulses. Hops follow each
+       // character's route distance; breathing follows this real-time clock.
+@@ -1256,7 +1342,9 @@
+     }
+     this.characterPresentationWasFrozen = motionFrozen;
+ 
++    if (mobileResynced) this.refreshLayout(true);
+     this.refreshLayout();
++    if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
+     this.reportSelectedRoomRect();
+     this.drawCharacters();
+     this.reportAlertPinPositions();
+@@ -1267,6 +1355,7 @@
+   }
+ 
+   private refreshLayout(force = false): void {
++    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
+     const width = Math.max(1, Math.floor(this.scale.width));
+     const height = Math.max(1, Math.floor(this.scale.height));
+     const signature = getFacilityWorldSignature(this.bridge.viewModel);
+@@ -1392,10 +1481,17 @@
+     const defaultOriginY = height - worldHeight;
+     const requestedOriginX = defaultOriginX + this.cameraView.panX;
+     const requestedOriginY = defaultOriginY + this.cameraView.panY;
+-    const minimumOriginX = Math.min(0, width - gridWidth);
+-    const maximumOriginX = Math.max(0, width - gridWidth);
+-    const minimumOriginY = Math.min(0, height - worldHeight);
+-    const maximumOriginY = Math.max(0, height - worldHeight);
++    let minimumOriginX = Math.min(0, width - gridWidth);
++    let maximumOriginX = Math.max(0, width - gridWidth);
++    let minimumOriginY = Math.min(0, height - worldHeight);
++    let maximumOriginY = Math.max(0, height - worldHeight);
++    if (this.bridge.mobileInput === true) {
++      const padding = getMobileFacilityCameraPanPadding({ width, height });
++      minimumOriginX -= padding.x;
++      maximumOriginX += padding.x;
++      minimumOriginY -= padding.y;
++      maximumOriginY += padding.y;
++    }
+     const originX = snapPresentationOrigin(Math.max(
+       minimumOriginX,
+       Math.min(maximumOriginX, requestedOriginX),
+@@ -1427,6 +1523,7 @@
+   }
+ 
+   private drawWorld(): void {
++    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
+     const graphics = this.worldGraphics;
+     if (!graphics) {
+       return;
+@@ -1608,7 +1705,7 @@
+     const frame = getRoomBitmapFixtureFrame(roomDefinitionId, id);
+     return Boolean(
+       frame &&
+-      this.roomFixtureAtlasesReady &&
++      (this.bridge.mobileInput === true || this.roomFixtureAtlasesReady) &&
+       this.textures.exists(
+         getPhaserTextureKey(
+           ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
+@@ -5291,6 +5388,9 @@
+   ): boolean {
+     const presentation = getApprovedRoomPresentation(room.definitionId);
+     if (!presentation) return false;
++    // The existing procedural fixtures are the loading/error placeholder.
++    if (this.bridge.mobileInput === true && !mobileRoomArtReady(room.definitionId,
++      asset => this.textures.exists(getPhaserTextureKey(asset)))) return false;
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     const records = this.getTouchupDrawRecords(room);
+     const companionChairs = this.getPeriopCompanionChairs(room);
+@@ -6260,6 +6360,7 @@
+   }
+ 
+   private drawCharacters(): void {
++    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
+     if (this.characterPresentationFrozen()) {
+       // Atlas callbacks may redraw while paused without update() observing the
+       // pause. Mark it so the next update also discards a stale resume delta.
+@@ -6649,6 +6750,10 @@
+     }
+     this.inspectTarget = { kind: "character", key, ref, shownAt: this.time.now };
+     this.inspectLabelCache = null;
++    if (this.bridge.mobileInput !== true) {
++      const patientId = patientChartIdForCharacter(ref, this.bridge.viewModel);
++      if (patientId) this.bridge.onHighlightPatientChart?.(patientId);
++    }
+   }
+ 
+   private showSeatBox(seat: FacilityFounderChairView, label: string): void {
+@@ -7690,6 +7795,7 @@
+         originX + width / 2,
+         originY + this.layout.height + Math.max(7, Math.floor(tileSize * 0.18)),
+       );
++    if (this.bridge.mobileInput === true) this.footerText?.setVisible(false);
+   }
+ 
+   private setInteractionHint(
+@@ -7792,6 +7898,277 @@
+         : null,
+       pointer,
+     );
++  }
++
++  /** Mobile handlers are a separate lane; the original desktop handlers below are intact. */
++  private bindInput(): void {
++    if (this.bridge.mobileInput === true) {
++      this.bindMobileInput();
++      return;
++    }
++    this.input.on(
++      "pointermove",
++      (pointer: Phaser.Input.Pointer) => this.handlePointerMove(pointer),
++    );
++    this.input.on(
++      "pointerdown",
++      (pointer: Phaser.Input.Pointer) => this.handlePointerDown(pointer),
++    );
++    this.input.on(
++      "pointerup",
++      (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer),
++    );
++    this.input.on(
++      "wheel",
++      (
++        _pointer: Phaser.Input.Pointer,
++        _objects: Phaser.GameObjects.GameObject[],
++        _deltaX: number,
++        deltaY: number,
++      ) => this.handleWheel(deltaY),
++    );
++    this.input.on("gameout", () => {
++      this.placementGhost = null;
++      this.dragStart = null;
++      this.endHallwayPaint();
++      this.setInteractionHint(null);
++      this.drawPlacementGhost();
++    });
++  }
++
++  private bindMobileInput(): void {
++    this.mobileGestures = new MapTouchGestures();
++    this.phoneBuildInput = new PhoneBuildMapInput(() => this.bridge.mobileBuild ?? null,
++      () => ({ ...this.layout, columns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
++        rows: positiveGridSize(this.bridge.viewModel.gridRows, 10) }), () => this.bridge.viewModel.placement, () => this.scale);
++    this.input.addPointer(1);
++    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
++      if (pointer.button !== 0) return;
++      this.syncMobileInputMode();
++      this.applyMobileGestures(this.mobileGestures!.down(pointer.id, pointer, this.time.now));
++      if (this.bridge.viewModel.buildMode) {
++        if (this.mobileGestures!.hadMultipleTouches) {
++          this.phoneBuildInput!.cancel();
++        } else this.phoneBuildInput!.down(pointer.id, pointer, this.time.now);
++      }
++    });
++    this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
++      this.syncMobileInputMode();
++      const gestures = this.mobileGestures!.move(pointer.id, pointer);
++      if (this.bridge.viewModel.buildMode && !this.mobileGestures!.hadMultipleTouches) {
++        this.phoneBuildInput!.move(pointer.id, pointer);
++        this.panMobileGhostAtEdge(16);
++        if (!this.phoneBuildInput!.ownsDrag) this.applyMobileGestures(gestures);
++        return;
++      }
++      this.applyMobileGestures(gestures);
++    });
++    this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
++      this.syncMobileInputMode();
++      const wasMultiple = this.mobileGestures!.hadMultipleTouches;
++      const gestures = this.mobileGestures!.up(pointer.id, pointer, this.time.now);
++      if (this.bridge.viewModel.buildMode) {
++        if (!wasMultiple) {
++          const ownsDrag = this.phoneBuildInput!.ownsDrag;
++          const tap = this.phoneBuildInput!.up(pointer.id, pointer, this.time.now);
++          if (tap) this.selectMobileBuildTarget(pointer);
++          if (!ownsDrag) this.applyMobileGestures(gestures);
++        }
++        if (wasMultiple) this.applyMobileGestures(gestures);
++        else this.mobileGestures!.cancel();
++        return;
++      }
++      this.applyMobileGestures(gestures);
++    });
++    this.input.on("wheel", (pointer: Phaser.Input.Pointer, _objects: unknown[], _x: number, deltaY: number) => {
++      const zoom = Math.round((this.cameraView.zoom + (deltaY > 0 ? -0.1 : 0.1)) * 10) / 10;
++      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom));
++    });
++    const cancel = () => {
++      this.mobileGestures!.cancel();
++      this.phoneBuildInput?.cancel();
++      this.placementGhost = null;
++      this.dragStart = null;
++      this.endHallwayPaint();
++      this.setInteractionHint(null);
++      this.drawPlacementGhost();
++    };
++    this.input.on("gameout", cancel);
++    this.input.on("pointerupoutside", cancel);
++    const canvas = this.game.canvas;
++    const preventBrowserGesture = (event: Event) => { if (event.cancelable) event.preventDefault(); };
++    for (const name of ["touchstart", "touchmove", "gesturestart", "gesturechange"]) {
++      canvas.addEventListener(name, preventBrowserGesture, { passive: false });
++    }
++    canvas.addEventListener("touchcancel", cancel);
++    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
++      for (const name of ["touchstart", "touchmove", "gesturestart", "gesturechange"]) canvas.removeEventListener(name, preventBrowserGesture);
++      canvas.removeEventListener("touchcancel", cancel);
++      this.mobileGestures?.cancel();
++    });
++  }
++
++  private syncMobileInputMode(): void {
++    const model = this.bridge.viewModel;
++    const signature = JSON.stringify([model.campaignId, Boolean(model.buildMode), model.buildDoorTool,
++      model.placement?.definitionId, model.placement?.orientation]);
++    if (signature === this.mobileInputSignature) return;
++    this.mobileInputSignature = signature;
++    this.mobileGestures?.cancel();
++    this.phoneBuildInput?.cancel(false);
++    if (!model.placement || this.isHallwayPlacementActive()) this.mobileGhostInitialized = false;
++  }
++
++  private selectMobileBuildTarget(point: TouchPoint): void {
++    const state = this.bridge.mobileBuild;
++    const model = this.bridge.viewModel;
++    if (model.placement) return;
++    if (model.buildDoorTool && state) {
++      const targets = state.doors.flatMap(section => {
++        const room = model.rooms.find(candidate => candidate.instanceId === section.roomId);
++        return room ? [{ value: section.id, bounds: this.getDoorGeometry(room, section.side, section.offset).hitRegion }] : [];
++      });
++      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets) });
++      return;
++    }
++    const room = nearestTouchTarget(point, model.rooms
++      .filter(candidate => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
++      .map(candidate => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
++    if (room) this.bridge.onSelectRoom?.(room.instanceId);
++  }
++
++  private drawMobileBuildPreview(): void {
++    if (this.bridge.mobileInput !== true) return;
++    const graphics = this.ghostGraphics;
++    if (!graphics) return;
++    const model = this.bridge.viewModel;
++    const state = this.bridge.mobileBuild;
++    const placement = model.placement;
++    if (!model.buildMode || !state) {
++      if (this.mobileBuildDrawSignature) graphics.clear();
++      this.mobileBuildDrawSignature = ""; this.mobileGhostInitialized = false; this.mobileGhostKey = ""; this.mobileGhostFrameKey = "";
++      return;
++    }
++    const ghostKey = state.placementKey ?? JSON.stringify([model.campaignId, placement?.definitionId, state.initialGhost]);
++    if (ghostKey !== this.mobileGhostKey) { this.mobileGhostKey = ghostKey; this.mobileGhostInitialized = false; }
++    if (placement && !this.isHallwayPlacementActive() && !state.ghost && !this.mobileGhostInitialized) {
++      this.mobileGhostInitialized = true;
++      state.onIntent({ kind: "ghost", point: state.initialGhost ?? {
++        x: Math.round((this.scale.width / 2 - this.layout.originX) / this.layout.tileSize - placement.width / 2),
++        y: Math.round((this.scale.height / 2 - this.layout.originY) / this.layout.tileSize - placement.height / 2),
++      } });
++    }
++    if (placement && state.ghost && !this.isHallwayPlacementActive()) {
++      const frameKey = JSON.stringify([ghostKey, placement.width, placement.height, this.scale.width, this.scale.height]);
++      if (frameKey !== this.mobileGhostFrameKey) {
++        this.mobileGhostFrameKey = frameKey; // applyCamera redraws synchronously.
++        this.applyCamera(framePhoneGhost(this.cameraView, model, this.scale, state.ghost, placement));
++      }
++    }
++    const signature = JSON.stringify([state.ghost, state.hallway?.cells, state.doors, state.selectedDoorId,
++      placement, this.layout.originX, this.layout.originY, this.layout.tileSize]);
++    if (signature === this.mobileBuildDrawSignature) return;
++    this.mobileBuildDrawSignature = signature;
++    graphics.clear(); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
++    const footprint = (point: GridPoint, width: number, height: number, valid: boolean) => {
++      const rect = this.toPixels({ tileX: point.x, tileY: point.y, width, height });
++      const color = valid ? 0x3d8650 : 0xc94b43;
++      graphics.fillStyle(color, 0.34); graphics.fillRect(rect.x, rect.y, rect.width, rect.height);
++      graphics.lineStyle(3, color, 1); graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
++    };
++    if (state.ghost && placement) footprint(state.ghost, placement.width, placement.height, state.ghost.valid);
++    for (const cell of state.hallway?.cells ?? []) if (cell.status !== "existing") footprint(cell, 1, 1, cell.status === "build");
++    for (const section of state.doors) {
++      const room = model.rooms.find(candidate => candidate.instanceId === section.roomId); if (!room) continue;
++      const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
++      const selected = section.id === state.selectedDoorId;
++      graphics.lineStyle(selected ? 4 : 2, selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
++      graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
++    }
++  }
++
++  private panMobileGhostAtEdge(delta: number): void {
++    if (this.bridge.mobileInput !== true || !this.bridge.viewModel.buildMode || this.mobileGestures?.hadMultipleTouches) return;
++    const drag = this.phoneBuildInput?.ghostDrag;
++    if (!drag) return;
++    const shift = phoneGhostEdgePan(drag.point, this.scale, delta);
++    if (!shift.x && !shift.y) return;
++    this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
++      { x: 0, y: 0 }, shift));
++    this.phoneBuildInput?.move(drag.id, drag.point);
++  }
++
++  private applyMobileGestures(gestures: readonly MapGesture[]): void {
++    for (const gesture of gestures) {
++      if (gesture.kind === "pan" || gesture.kind === "pinch") {
++        this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
++          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom));
++      } else if (!this.bridge.viewModel.buildMode && !this.bridge.viewModel.placement) {
++        this.bridge.onMobileSelection?.(this.mobileSelectionAtPoint(gesture.point));
++      }
++    }
++  }
++
++  private mobileSelectionAtPoint(point: TouchPoint): MobileMapSelection | null {
++    const model = this.bridge.viewModel;
++    const pointer = point as Phaser.Input.Pointer;
++    type Detail = { kind: "character"; key: string } | { kind: "chair"; chair: FacilityFounderChairView } |
++      { kind: "door"; door: FacilityDoorView; room: FacilityRoomView } |
++      { kind: "environment"; selection: Extract<MobileMapSelection, { kind: "environment" }> };
++    const details: TouchTarget<Detail>[] = [];
++    for (const [key, container] of this.characterBitmapContainers) {
++      if (!container.visible || !characterRefFromKey(key)) continue;
++      const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
++      if (!actor?.visible) continue;
++      const bounds = actor.getBounds();
++      if (bounds.width <= 0 || bounds.height <= 0) continue;
++      details.push({ value: { kind: "character", key }, depth: container.depth,
++        bounds: { x: bounds.x + bounds.width * 0.2, y: bounds.y, width: bounds.width * 0.6, height: bounds.height } });
++    }
++    // While character bitmaps load, pick the rendered procedural actor anchor.
++    for (const [key, graphics] of this.characterGraphics) {
++      if (!graphics.visible || this.characterBitmapContainers.get(key)?.visible || !characterRefFromKey(key)) continue;
++      const motion = this.characterMotionSnapshots.get(key);
++      if (!motion) continue;
++      const size = this.layout.tileSize * motion.displayScale;
++      details.push({ value: { kind: "character", key }, depth: graphics.depth,
++        bounds: { x: this.layout.originX + motion.anchorXInTiles * this.layout.tileSize - size * 0.35,
++          y: this.layout.originY + motion.anchorYInTiles * this.layout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
++    }
++    for (const chair of model.founderChairs ?? []) {
++      const seat = this.founderSeatScreenPoint(chair);
++      if (seat) details.push({ value: { kind: "chair", chair }, bounds: { ...seat, width: 0, height: 0 } });
++    }
++    for (const door of model.doors ?? []) {
++      const room = model.rooms.find((candidate) => candidate.instanceId === door.roomInstanceId);
++      if (room) details.push({ value: { kind: "door", door, room }, bounds: this.getDoorGeometry(room, door.side, door.offset).hitRegion });
++    }
++    for (const litter of model.litterItems ?? []) details.push({ value: { kind: "environment", selection: {
++      kind: "environment", action: "collect-litter", id: litter.instanceId, name: "Litter", status: "Collect this litter" } },
++      bounds: this.toPixels({ tileX: litter.location.x, tileY: litter.location.y, width: 1, height: 1 }) });
++    if (model.waterCooler) details.push({ value: { kind: "environment", selection: { kind: "environment", action: "refill-water",
++      name: "Water cooler", status: model.waterCooler.needsRefill ? "Needs refill" : "Water cooler is full" } },
++      bounds: this.toPixels({ tileX: model.waterCooler.location.x, tileY: model.waterCooler.location.y, width: 1, height: 1 }) });
++    const detail = nearestTouchTarget(point, details);
++    if (detail?.kind === "character") {
++      const ref = characterRefFromKey(detail.key);
++      return ref ? describeMobileCharacter(ref, model, this.bridge.onDescribeCharacter, Boolean(this.bridge.onPraiseEmployee)) : null;
++    }
++    if (detail?.kind === "chair") return { kind: "chair", chair: detail.chair, name: "Chair" };
++    if (detail?.kind === "door") return { kind: "door", door: detail.door, room: detail.room };
++    if (detail?.kind === "environment") return detail.selection;
++    if (this.frontDeskSeatInteractionAtPointer(pointer)) {
++      const desk = model.rooms.find((room) => room.definitionId === "room.front_desk");
++      if (desk) return { kind: "front-desk", roomId: desk.instanceId };
++    }
++    const room = nearestTouchTarget(point, model.rooms.filter((candidate) => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
++      .map((candidate) => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
++    const destination = this.walkDestinationAtPointer(pointer);
++    if (room) return { ...describeMobileRoom(room, destination),
++      ...(destination ? { moveAccepted: this.bridge.onMoveFounder?.(destination) ?? false } : {}) };
++    if (destination) return { kind: "floor", destination, accepted: this.bridge.onMoveFounder?.(destination) ?? false };
++    const lawn = this.gridPointAtPointer(pointer);
++    return lawn ? { kind: "floor", destination: lawn, accepted: false } : null;
+   }
+ 
+   private handlePointerMove(pointer: Phaser.Input.Pointer): void {
+@@ -8295,6 +8672,11 @@
+   }
+ 
+   private drawPlacementGhost(): void {
++    if (this.bridge.mobileInput === true && this.bridge.mobileBuild) {
++      this.mobileBuildDrawSignature = "";
++      this.drawMobileBuildPreview();
++      return;
++    }
+     const graphics = this.ghostGraphics;
+     if (!graphics) {
+       return;

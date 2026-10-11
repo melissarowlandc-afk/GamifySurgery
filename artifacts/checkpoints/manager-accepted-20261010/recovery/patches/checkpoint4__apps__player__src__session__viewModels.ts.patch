@@ -1,0 +1,89 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -746,6 +746,8 @@
+   selectedEncounterId: string | null,
+ ): PatientTabView {
+   const encounter = state.encounters[item.encounterId];
++  const frozenCase = encounter?.frozenCase;
++  const demographics = frozenCase?.prototypeDemographics;
+   const arrivalLabel =
+     item.arrivalClass === "tutorial"
+       ? "Tutorial patient"
+@@ -774,6 +776,19 @@
+     id: item.encounterId,
+     folder,
+     name: item.patientDisplayName,
++    ageLabel: demographics?.ageYears == null
++      ? undefined
++      : `${demographics.ageYears} years`,
++    sexLabel: demographics?.sexLabel ?? undefined,
++    // The wording repair map can supply absent complaints; cards must not.
++    chiefComplaint: frozenCase?.chiefComplaint
++      ? normalizeFrozenClinicalText({
++          clinicalCaseId: frozenCase.id,
++          patientDisplayName: item.patientDisplayName,
++          text: frozenCase.chiefComplaint,
++          field: "chiefComplaint",
++        })
++      : undefined,
+     subtitle: arrivalLabel,
+     statusLabel: periopStatus ?? pendingStatus ?? item.statusLabel,
+     actionRequired: item.actionRequired,
+@@ -1609,6 +1624,11 @@
+       ? [employee.facilityTask.targetId]
+       : [],
+   ))];
++  // Presentation of existing assignments only; no resource or staffing decision.
++  const assignedServiceStaffLabel = (employeeIds: readonly string[], founder = false): string => [
++    ...(founder ? [state.founder.displayName] : []),
++    ...[...new Set(employeeIds)].map((id) => state.employees.find((employee) => employee.id === id)?.displayName ?? "Employee unavailable"),
++  ].join(", ") || "Not assigned";
+   const serviceIncome: ServiceIncomeView = {
+     appointmentsEnabled: state.serviceAppointmentsEnabled,
+     periopNurseQueueLength: getPeriopNurseAttentionQueue(state).length,
+@@ -1718,6 +1738,7 @@
+       .filter((operation) => operation.status !== "completed" && operation.status !== "cancelled")
+       .map((operation) => ({
+         id: operation.id,
++        incomeLineId: operation.incomeLineId,
+         displayName: operation.diagnosticPhaseWork?.kind === "interpretation" ? "In-house study read" : SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+         actorLabel: operation.clinicVisit?.kind === "mri"
+           ? `${operation.displayName} · ${operation.clinicVisit.demographics.ageYears}, ${operation.clinicVisit.demographics.sexLabel}`
+@@ -1726,21 +1747,29 @@
+           : operation.diagnosticPhaseWork?.kind === "interpretation" ? state.encounters[operation.diagnosticPhaseWork.encounterId]?.patientDisplayName ?? state.serviceOperations.find(visitor => visitor.id === operation.diagnosticPhaseWork?.encounterId)?.displayName ?? "This center" : operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
+         statusLabel: scheduledMriStatusLabel(state, operation) ?? periopNurseAttentionStatus(operation, state.facilityTick) ?? operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
+         quoteFeeLabel: currency(operation.diagnosticPhaseWork?.readIncomeFee ?? (operation.quoteFee - (operation.diagnosticPhysicalWork?.readIncomeFee ?? 0))),
++        providerLabel: assignedServiceStaffLabel([
++          ...(operation.providerReservation?.kind === "employee" ? [operation.providerReservation.employeeId] : []),
++          ...(operation.reservedEmployeeIds ?? []),
++        ], operation.providerReservation?.kind === "founder"),
+       })),
+       ...getActiveOutsideRadiologyReads(state).map((read) => ({
+         id: `outside-read.${read.sequence}`, displayName: "Outside study read",
+         actorLabel: state.employees.find((employee) => employee.id === read.employeeId)?.displayName ?? "Radiologist",
+         statusLabel: `Reading · ${Math.max(0, Math.ceil(outsideReadEndsAtTick(read) - state.facilityTick))} min remaining`,
+         quoteFeeLabel: currency(read.fee),
++        providerLabel: assignedServiceStaffLabel([read.employeeId]),
+       })),
+       ...state.retailOperations
+         .filter((operation) => !["completed", "abandoned", "cancelled"].includes(operation.status))
+         .map((operation) => ({
+           id: operation.id,
++          incomeLineId: operation.incomeLineId,
+           displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+           actorLabel: operation.displayName,
+           statusLabel: operation.resourceWaitReason ?? serviceOperationStatusLabel(operation.status),
+           quoteFeeLabel: `${currency(operation.quoteGross)} gross · ${currency(operation.quoteStockCost)} stock`,
++          providerLabel: operation.staffRoleDefinitionId === null ? "No staff provider required"
++            : assignedServiceStaffLabel(operation.servingEmployeeId ? [operation.servingEmployeeId] : []),
+         })),
+     ],
+     recentReceipts: newestServiceIncomeReceipts(state.serviceIncomeReceipts, 8)
+@@ -2264,6 +2293,7 @@
+             ...(actor.procedureCompanion ? { procedureCompanion: actor.procedureCompanion } : {}),
+             ...pediatricActorSupport(state, "companion", actor.id, actor.location, actor.pathIndex < actor.path.length - 1),
+             ...(actor.pediatricFamilyId ? { pediatricFamilyId: actor.pediatricFamilyId } : {}),
++            ...(actor.pediatricFamilyId && actor.linkedEncounterId ? { linkedEncounterId: actor.linkedEncounterId } : {}),
+             ...(retailTrip ?? movementPresentation(actor.path, actor.pathIndex)),
+             ...(retailTrip?.location ? { location: retailTrip.location } : actor.location ? { location: actor.location } : {}),
+           };

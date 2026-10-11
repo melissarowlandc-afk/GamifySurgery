@@ -1,0 +1,12 @@
+--- a/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
+@@ -365,7 +365,8 @@
+ }
+ const pools = ([0, 1, 2] as const).map((stage) => {
+   const state = prepared(`pool.${stage}`, stage);
+-  const admitted = ordinaryPool(state);
++  // Historical second-October-7 delta; Variety-3 has its own admission proofs.
++  const admitted = ordinaryPool(state).filter(item => !item.id.startsWith("case.variety3."));
+   const old = admitted.filter((item) => !item.id.startsWith("case.gs028f."));
+   const count = (items: SyntheticClinicalCase[]) => ({ cases: items.length, concepts: new Set(items.flatMap((item) => item.decisionNodes.map((node) => node.primaryConceptId))).size });
+   return { stage, before: count(old), after: count(admitted) };

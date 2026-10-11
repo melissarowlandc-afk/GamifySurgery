@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "command": "node scripts/verify-app-boundaries.mjs",
+      "exitCode": 1,
+      "status": "ENVIRONMENT_BLOCKED",
+      "output": "validation/current-boundaries.txt"
+    },
+    {
+      "command": "node scripts/verify-launcher-contract.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "output": "validation/current-launcher.txt"
+    }
+  ],
+  "historicalGameTestsRerun": false,
+  "managerRequiredRerun": "node scripts/verify-app-boundaries.mjs outside the worker sandbox"
+}

@@ -1,0 +1,18 @@
+--- a/packages/clinical-content/src/answer-choice-timing.ts
++++ b/packages/clinical-content/src/answer-choice-timing.ts
+@@ -13,6 +13,7 @@
+ import { GS028_20261007_VARIETY2_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety-2/variety-batch";
+ import { GS028_20261007_LEVEL3_TIMING_ENTRIES } from "./development-batch/2026-10-07-level3/level3-batch";
+ import { PEDIATRIC_CLINIC_TIMING_ENTRIES } from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
++import { VARIETY3_TIMING_ENTRIES } from "./development-batch/2026-10-10-variety-3/variety3-batch";
+ 
+ /**
+  * Explicit presentation-only timing classifications for every node in the admitted bank.
+@@ -5957,6 +5958,7 @@
+   ...GS028_20261007_VARIETY2_TIMING_ENTRIES,
+   ...GS028_20261007_LEVEL3_TIMING_ENTRIES,
+   ...PEDIATRIC_CLINIC_TIMING_ENTRIES,
++  ...VARIETY3_TIMING_ENTRIES,
+ ];
+ 
+ export const ANSWER_CHOICE_TIMING_REGISTRY = entries.map((entry) =>

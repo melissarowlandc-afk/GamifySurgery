@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-10-10T21:34:11.929Z",
+  "method": "Visual inspection of all five generated images, final exports and contact-sheet concepts at 180 px plus exact 60 px previews on dark and light backgrounds.",
+  "contact_sheet_sha256": "a0d28634328c6a3f37eebcfc35f86295a122a221f5ea5f5101a57e3a02330cb8",
+  "strongest_pick": "R3-04",
+  "strongest_pick_reason": "The warm glowing entrance separates strongly from the deep-green Home Screen background and directs attention to the visible reception desk and computer.",
+  "shared_checks": {
+    "no_people": true,
+    "no_text_in_icons": true,
+    "no_blood_or_gore": true,
+    "no_brands_or_trademarked_medical_symbols": true,
+    "physical_open_door_visible": true,
+    "desk_inside_threshold": true,
+    "clock_cooler_and_plant_present": true,
+    "colors_match_game_palette_families": true,
+    "no_pre_rounded_corners": true
+  },
+  "postprocessing_decisions": [
+    "Preserved generated RGB colors after a trial median-cut palette dulled the small blue cooler.",
+    "Selected a 256 px native grid, enlarged 4x with nearest-neighbor, to preserve outlines and clock hands in these detailed storefronts.",
+    "Flattened only edge-connected background and removed ten detached background speck pixels in R3-04; content fits within the central approximately 80%.",
+    "Exported actual 60 px nearest-neighbor previews and reviewed both contact-sheet rows."
+  ],
+  "variants": [
+    {
+      "id": "R3-01",
+      "icon_path": "icons/R3-01-warm-welcome.png",
+      "icon_sha256": "6f55312732986ab86f828af169311ed159a938c834a8ee50dd244e0f4da8e4b1",
+      "preview_path": "preview-60/R3-01-warm-welcome.png",
+      "preview_sha256": "63681dcf86c2d532f9979a4ab5fb37b436e8b3a92b61be071290463fca17e5a5",
+      "readable_at_60": true,
+      "note": "Straight-on awning and paired low flower beds frame the open door. The warm room, teal counter and dark monitor read clearly at 60 px."
+    },
+    {
+      "id": "R3-02",
+      "icon_path": "icons/R3-02-open-office.png",
+      "icon_sha256": "eeb12da27b8924a3cd14142d9efb1db1911488932a16d69c03af85a2c98dec14",
+      "preview_path": "preview-60/R3-02-open-office.png",
+      "preview_sha256": "7a0aeaf84f2fc506b70d469d75d9396a7d862328cca68fe5e382023b3c4a2a58",
+      "readable_at_60": true,
+      "note": "The close straight-on entrance gives the desk the most width. The open wood door, large clock and blue cooler remain recognizable."
+    },
+    {
+      "id": "R3-03",
+      "icon_path": "icons/R3-03-golden-frontage.png",
+      "icon_sha256": "7d22e4caf1c68c58d221ed0aca8f27151ef8742aef7b0f3ae0ade0e49ee1e032",
+      "preview_path": "preview-60/R3-03-golden-frontage.png",
+      "preview_sha256": "334636b722a4cda8309c853e18848ce438ae801126a7027baccb1aa4fda866c6",
+      "readable_at_60": true,
+      "note": "The slight left-angle return and striped awning communicate a whole small storefront. Golden cream and paired flower beds match the game's frontage materials."
+    },
+    {
+      "id": "R3-04",
+      "icon_path": "icons/R3-04-late-light.png",
+      "icon_sha256": "c15c89a09d4a8088991be0b5bf6c2a42d1fb57d69e34061feb2c8b0bdad482c9",
+      "preview_path": "preview-60/R3-04-late-light.png",
+      "preview_sha256": "7d779a3d9c318d33fb36402f1e115030fbd14a2e8fdce960ac85fb7131cef08e",
+      "readable_at_60": true,
+      "note": "Strongest pick: golden doorway against deep green gives a clear focal point. The open door, desk, monitor, wall clock, blue cooler and plant stay visible."
+    },
+    {
+      "id": "R3-05",
+      "icon_path": "icons/R3-05-teal-threshold.png",
+      "icon_sha256": "c6682644bfd45ce840e41bc81af9d1ab413451c6872cedb302589956fae8278f",
+      "preview_path": "preview-60/R3-05-teal-threshold.png",
+      "preview_sha256": "83fd0e1d064a23f435e455e8c348756ca163084077a22d32076908f1e1baba48",
+      "readable_at_60": true,
+      "note": "The slight right-angle entrance offers an alternate silhouette. Wood door, cream wall, blue cooler and one low flower bed make a colorful teal-background option."
+    }
+  ]
+}

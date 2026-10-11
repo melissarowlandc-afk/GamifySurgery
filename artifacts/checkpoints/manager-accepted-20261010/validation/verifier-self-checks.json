@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "unsafe relative path '../escape'",
+      "status": "PASS",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "check": "unsafe relative path '/absolute'",
+      "status": "PASS",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "check": "unsafe relative path 'C:/absolute'",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Unsafe relative path"
+    },
+    {
+      "check": "unsafe relative path 'x\\\\escape'",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Unsafe relative path"
+    },
+    {
+      "check": "unsafe relative path '.'",
+      "status": "PASS",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "check": "unsafe relative path ''",
+      "status": "PASS",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "check": "wrong patch base",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Hunks are out of order"
+    },
+    {
+      "check": "out-of-bounds hunk",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Hunks are out of order"
+    },
+    {
+      "check": "exact forward/reverse of real first patch",
+      "status": "PASS"
+    },
+    {
+      "check": "same-size payload tamper",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Hash mismatch: .gitattributes"
+    },
+    {
+      "check": "duplicate manifest path",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Duplicate manifest entry"
+    },
+    {
+      "check": "unmanifested payload",
+      "status": "PASS",
+      "rejected": true,
+      "reason": "Unmanifested or missing files: {'unmanifested.txt'}"
+    },
+    {
+      "check": "nonempty restore destination",
+      "status": "PASS",
+      "exitCode": 1,
+      "reason": "Destination must be empty"
+    },
+    {
+      "check": "live repository restore rejected",
+      "status": "PASS",
+      "exitCode": 1,
+      "reason": "Destination must be empty"
+    },
+    {
+      "check": "archive-overlap restore destination",
+      "status": "PASS",
+      "exitCode": 1,
+      "reason": "Destination overlaps archive"
+    }
+  ],
+  "negativeCopiesOnly": true,
+  "liveOrPriorArchiveBytesMutated": false,
+  "liveRepositoryRestoreWrites": 0,
+  "ownerSavesAccessed": 0,
+  "gitMutations": 0
+}

@@ -1,0 +1,174 @@
+{
+  "purpose": "Reference boards only; all final storefront concepts use built-in image generation.",
+  "exterior_note": "The current game frontage comprises wall, doorway, paving, curb and flower-bed assets. A front elevation, outward-open door and optional awning are new concept interpretations requested by the owner.",
+  "interior_note": "Top-down room is copied unchanged from the Round 2 composition of the approved v4 room shell and approved in-game furniture. The model must translate this into a front view through the doorway.",
+  "reference_boards": [
+    {
+      "path": "receipts/references/approved-frontage-materials.png",
+      "sha256": "5a0e3aaa41df1af3e8da201e05d85d6388211c92b38d18bdbf353cef3bd0a44a",
+      "sources": [
+        {
+          "source": "apps/player/public/art/environment/clinic-environment-atlas-v1.png",
+          "crop_xyxy": [
+            91,
+            108,
+            337,
+            273
+          ],
+          "board_box_xywh": [
+            45,
+            35,
+            410,
+            250
+          ],
+          "role": "approved cream wall and deep-green posts"
+        },
+        {
+          "source": "apps/player/public/art/environment/clinic-environment-atlas-v1.png",
+          "crop_xyxy": [
+            88,
+            376,
+            321,
+            577
+          ],
+          "board_box_xywh": [
+            558,
+            25,
+            390,
+            280
+          ],
+          "role": "approved doorway trim"
+        },
+        {
+          "source": "apps/player/public/art/environment/frontage-v2/paving-v2.png",
+          "crop_xyxy": null,
+          "board_box_xywh": [
+            65,
+            318,
+            255,
+            155
+          ],
+          "role": "warm stone sidewalk"
+        },
+        {
+          "source": "apps/player/public/art/environment/frontage-v2/entry-inset-v2.png",
+          "crop_xyxy": null,
+          "board_box_xywh": [
+            385,
+            337,
+            330,
+            115
+          ],
+          "role": "cream entry inset"
+        },
+        {
+          "source": "apps/player/public/art/environment/frontage-v2/curb-a-v2.png",
+          "crop_xyxy": null,
+          "board_box_xywh": [
+            90,
+            486,
+            844,
+            54
+          ],
+          "role": "front curb"
+        },
+        {
+          "source": "apps/player/public/art/environment/frontage-v2/bed-west-v3.png",
+          "crop_xyxy": null,
+          "board_box_xywh": [
+            30,
+            550,
+            470,
+            180
+          ],
+          "role": "approved west flower bed"
+        },
+        {
+          "source": "apps/player/public/art/environment/frontage-v2/bed-east-v3.png",
+          "crop_xyxy": null,
+          "board_box_xywh": [
+            522,
+            550,
+            470,
+            180
+          ],
+          "role": "approved east flower bed"
+        }
+      ]
+    },
+    {
+      "path": "receipts/references/approved-front-desk-interior.png",
+      "sha256": "54eeb28c0bdf9242fe929ad1acbf1db2653faa9f4edfa7949d39da646744fadd",
+      "room_reference": "receipts/references/front-desk-approved-composition.png",
+      "sources": [
+        {
+          "source": "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+          "crop_xyxy": [
+            476,
+            78,
+            996,
+            392
+          ],
+          "board_box_xywh": [
+            155,
+            620,
+            615,
+            340
+          ],
+          "role": "cream-topped deep-teal desk with computer and phone"
+        },
+        {
+          "source": "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+          "crop_xyxy": [
+            1064,
+            184,
+            1215,
+            508
+          ],
+          "board_box_xywh": [
+            812,
+            568,
+            178,
+            400
+          ],
+          "role": "blue water cooler"
+        },
+        {
+          "source": "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+          "crop_xyxy": [
+            48,
+            19,
+            257,
+            393
+          ],
+          "board_box_xywh": [
+            25,
+            360,
+            174,
+            311
+          ],
+          "role": "green cabinet and white plant pot"
+        },
+        {
+          "source": "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+          "crop_xyxy": [
+            651,
+            439,
+            764,
+            542
+          ],
+          "board_box_xywh": [
+            40,
+            756,
+            122,
+            122
+          ],
+          "role": "cream clock with dark rim"
+        }
+      ]
+    }
+  ],
+  "room_composition_recipe": "../round2/receipts/front-desk-composition.json",
+  "room_composition_sha256": "56df46c0d7feea01b8f3be1eb2b31767a43076e674a4c8e78e3c236935ee1e0c",
+  "earlier_concept_inspected": "../icons/04-clinic-facade.png; framing inspiration only, not a palette reference"
+}

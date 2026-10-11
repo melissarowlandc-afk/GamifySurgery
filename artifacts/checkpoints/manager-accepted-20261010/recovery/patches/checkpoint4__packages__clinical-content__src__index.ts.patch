@@ -1,0 +1,24 @@
+--- a/packages/clinical-content/src/index.ts
++++ b/packages/clinical-content/src/index.ts
+@@ -56,3 +56,21 @@
+ export * from "./development-batch/2026-10-07-variety-2/variety-batch";
+ export * from "./development-batch/2026-10-07-level3/level3-batch";
+ export * from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
++export {
++  VARIETY3_AUTHORING_CONCEPTS,
++  VARIETY3_TESTED_CONCEPTS,
++  VARIETY3_QUESTIONS,
++  VARIETY3_CASES,
++  VARIETY3_CASE_REVIEWS,
++  VARIETY3_ADULT_CONTEXTS,
++  VARIETY3_STATEMENT_MAPPINGS,
++  VARIETY3_TIMING_ENTRIES,
++  VARIETY3_SERVICE_CONTRACTS,
++  VARIETY3_CLAIMS,
++  VARIETY3_SOURCES,
++  VARIETY3_SOURCE_LINKS,
++  VARIETY3_BATCH_MANIFEST,
++  WITHHELD_DISAGREEMENTS as VARIETY3_WITHHELD_DISAGREEMENTS,
++  WITHHELD_TOPICS as VARIETY3_WITHHELD_TOPICS,
++  EXCLUDED_SOURCE_CHECKS as VARIETY3_EXCLUDED_SOURCE_CHECKS,
++} from "./development-batch/2026-10-10-variety-3/variety3-batch";

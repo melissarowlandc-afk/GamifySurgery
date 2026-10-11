@@ -1,0 +1,35 @@
+{
+  "clinical": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1",
+    "exit_code": 0,
+    "log": "clinical-final.log"
+  },
+  "domain": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1",
+    "exit_code": 0,
+    "log": "domain-final.log"
+  },
+  "player": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1",
+    "exit_code": 1,
+    "known_failure_only": "src/session/surgeryCenterServicePreviews.test.ts:85",
+    "log": "player-final.log"
+  },
+  "root_typecheck": {
+    "command": "npm.cmd run typecheck",
+    "exit_code": 0,
+    "log": "typecheck-final.log"
+  },
+  "qa_transform": {
+    "command": "node tools/qa/level-four-rooms.mjs --check",
+    "exit_code": 0,
+    "log": "qa-transform.log"
+  },
+  "pool": "threads",
+  "maxWorkers": 1,
+  "checked_in_test_config": true,
+  "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "capture": "PowerShell; final combined native output captured through cmd.exe /d /c with 2>&1 (identical CLI flags/config).",
+  "owner_handoff_append_only": true,
+  "owner_handoff_prefix_sha256": "d50a73e053187f8a1756bc82631622cdfee843e6597677e4118f70a5c8093551"
+}

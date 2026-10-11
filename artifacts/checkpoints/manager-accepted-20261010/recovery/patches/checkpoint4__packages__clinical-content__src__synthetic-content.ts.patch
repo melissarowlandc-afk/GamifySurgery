@@ -1,0 +1,71 @@
+--- a/packages/clinical-content/src/synthetic-content.ts
++++ b/packages/clinical-content/src/synthetic-content.ts
+@@ -91,6 +91,52 @@
+   PEDIATRIC_CLINIC_FAMILY_CONTEXTS,
+   PEDIATRIC_CLINIC_TESTED_CONCEPTS,
+ } from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
++import {
++  VARIETY3_ADULT_CONTEXTS,
++  VARIETY3_BATCH_MANIFEST,
++  VARIETY3_CASES,
++  VARIETY3_TESTED_CONCEPTS,
++} from "./development-batch/2026-10-10-variety-3/variety3-batch";
++
++/** Separate assembly receipt; the standalone draft receipt and clinical status are retained. */
++export const VARIETY3_PROTOTYPE_ADMISSION_MANIFEST = {
++  id: "prototype-admission.2026-10-10.variety-3",
++  batchId: VARIETY3_BATCH_MANIFEST.id,
++  contentVersion: VARIETY3_BATCH_MANIFEST.contentVersion,
++  reviewStatus: "needs_clinician_review",
++  aiAssistedDrafting: true,
++  lastClinicianReview: null,
++  clinicalApproval: false,
++  authorization: "manager_scope_editorial_acceptance",
++  authorizedOn: "2026-10-10",
++  assemblyAuthorized: true,
++  publicReleaseAuthorized: false,
++  publicationStatus: "synthetic_unapproved_prototype",
++  requiredFacilityStages: VARIETY3_BATCH_MANIFEST.requiredFacilityStages,
++  releasePointIds: VARIETY3_BATCH_MANIFEST.releasePointIds,
++  requiredClinicalSetting: "clinic",
++  requiredCapabilityIds: [],
++  executionScope: "clinic_recognition_counseling_outside_plan_review",
++  conceptIds: VARIETY3_TESTED_CONCEPTS.map(concept => concept.id),
++  reusedConceptIds: VARIETY3_BATCH_MANIFEST.reusedConceptIds,
++  variants: VARIETY3_CASES.map(clinicalCase => {
++    const adult = VARIETY3_ADULT_CONTEXTS.find(row => row.caseId === clinicalCase.id)!;
++    return {
++      caseId: clinicalCase.id,
++      questionVariantId: clinicalCase.decisionNodes[0]!.questionVariantId,
++      conceptId: clinicalCase.decisionNodes[0]!.primaryConceptId,
++      earliestFacilityStage: clinicalCase.earliestFacilityStage,
++      releasePointId: clinicalCase.releasePointId,
++      requiredClinicalSetting: clinicalCase.requiredClinicalSetting,
++      adultContextId: adult.id,
++      profileId: adult.profileId,
++      patientStillId: adult.patientStillId,
++    };
++  }),
++  // All twenty variants are supported clinic visits. Test/procedure choices are
++  // outside-plan discussions with presentation estimates, never local execution.
++  deferredVariants: [] as readonly { caseId: string; questionVariantId: string; reason: string }[],
++} as const;
+ 
+ /** Manager scope/editorial acceptance only; the authoring review states are unchanged. */
+ export const PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST = {
+@@ -1254,6 +1300,7 @@
+     ...PEDIATRIC_CLINIC_TESTED_CONCEPTS.filter(concept =>
+       !PEDIATRIC_CLINIC_BATCH_MANIFEST.reusedConceptIds.includes(concept.id),
+     ),
++    ...VARIETY3_TESTED_CONCEPTS,
+   ],
+   cases: [
+     ...applyPatientLibraryWordingRepair(PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES),
+@@ -1269,6 +1316,7 @@
+     ...GS028_20261007_VARIETY2_CASES,
+     ...GS028_20261007_LEVEL3_CASES,
+     ...PEDIATRIC_CLINIC_CASES,
++    ...VARIETY3_CASES,
+   ],
+ });
+ 

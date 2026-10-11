@@ -1,0 +1,30 @@
+{
+  "focused": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/mobile src/ui/ManagementPanel.test.tsx src/ui/StaffPanel.test.tsx src/ui/ServiceIncomePanel.test.tsx src/ui/MoneyPanel.test.tsx src/session/managementViewModels.test.ts src/session/employeeTrainingViewModels.test.ts src/session/level3ControlsViewModels.test.ts src/AppShell.chartHighlight.test.tsx",
+    "exit_code": 0,
+    "elapsed_seconds": 9.76,
+    "config": "checked-in default; tests --pool=threads",
+    "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs"
+  },
+  "full-player": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+    "exit_code": 1,
+    "elapsed_seconds": 36.1,
+    "config": "checked-in default; tests --pool=threads",
+    "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs"
+  },
+  "typecheck": {
+    "command": "npm.cmd run typecheck",
+    "exit_code": 0,
+    "elapsed_seconds": 3.71,
+    "config": "checked-in default; tests --pool=threads",
+    "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs"
+  },
+  "build": {
+    "command": "npm.cmd run build --workspace @gamify-surgery/player",
+    "exit_code": 0,
+    "elapsed_seconds": 2.95,
+    "config": "checked-in default; tests --pool=threads",
+    "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs"
+  }
+}

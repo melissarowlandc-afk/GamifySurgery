@@ -1,0 +1,18 @@
+--- a/packages/game-domain/tests/clinical-content-withdrawal.test.ts
++++ b/packages/game-domain/tests/clinical-content-withdrawal.test.ts
+@@ -34,6 +34,7 @@
+   GS028_20261007_VARIETY2_CASES,
+   GS028_20261007_LEVEL3_CASES,
+   PEDIATRIC_CLINIC_CASES,
++  VARIETY3_CASES,
+ } from "@gamify-surgery/clinical-content";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -115,6 +116,7 @@
+       ...GS028_20261007_VARIETY2_CASES.map((clinicalCase) => clinicalCase.id),
+       ...GS028_20261007_LEVEL3_CASES.map((clinicalCase) => clinicalCase.id),
+       ...PEDIATRIC_CLINIC_CASES.map((clinicalCase) => clinicalCase.id),
++      ...VARIETY3_CASES.map((clinicalCase) => clinicalCase.id),
+     ]);
+   });
+ 

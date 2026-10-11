@@ -1,0 +1,464 @@
+--- a/docs/execplans/owner-requests-20261008.md
++++ b/docs/execplans/owner-requests-20261008.md
+@@ -6341,3 +6341,461 @@
+ ## Manager: Level 4 M9 accepted; Level 4 launch-ready (2026-10-09)
+ 
+ Manager reran boundaries/launcher (PASS), balance 129/129, domain 3764 + 2 skipped DEFECT reproducers, content 608/608, player 1244 + known thyroid failure, root build PASS. DEFECT-M9-1 (overdue idle deadline reset on reload) and DEFECT-M9-2 (APP RNG consumption changes scored case identity; counts/times unchanged, no starvation) judged low-priority, non-blocking follow-ups. Level 4 declared launch-ready for local owner play; CURRENT_THREAD_HANDOFF updated.
++
++## Desktop: click patient highlights chart
++
++Sol worker, 2026-10-10; manager diff/browser acceptance pending. Desktop patient
++clicks scroll the matching Patient Charts row within its rail and highlight it
++for 2 seconds. Re-clicking restarts the pulse/timeout; reduced motion makes it
++static. Pediatric parents use their existing child's encounter link. Waiting
++and Existing Patients are already expanded; filed rows expand the existing
++inline Resolved drawer, with no dialog. Unavailable rows do nothing new.
++Inspection labels and employee second-click Praise remain; no chart is opened
++or replaced and no founder, game-rule, clock, save or mobile behavior is changed.
++
++Files changed: `apps/player/src/AppShell.tsx` (request/timeout/wiring),
++`ui/PatientLists.tsx` (row refs, bounded scrolling, drawer expansion, keyed overlay),
++`styles/global.css` (gold pulse/reduced motion), `facility/FacilityCanvas.tsx`
++(callback bridge), `facility/FacilityScene.ts` (import, bridge field, small
++explicit flag-off locator call after unchanged inspection/Praise),
++`facility/characterInspect.ts` (patient/parent chart identity), `facility/types.ts`
++and `session/viewModels.ts` (read-only existing parent `linkedEncounterId`),
++all under `apps/player/src/`; new `facility/characterInspect.test.ts` (14 tests)
++and `AppShell.chartHighlight.test.tsx` (7 tests), plus this handoff.
++
++Checked-in Vite/Vitest config; tests use `--pool=threads`. Tests/build used:
++`NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs`.
++Exact command/output receipts:
++
++```text
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/facility/characterInspect.test.ts src/AppShell.chartHighlight.test.tsx src/mobile/map/sceneInput.test.ts src/mobile/shellSelection.test.ts src/mobile/MobileShell.test.tsx
++Test Files  5 passed (5)
++     Tests  70 passed (70)
++Duration  2.64s; exit 0
++
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
++Test Files  1 failed | 200 passed (201)
++     Tests  1 failed | 1714 passed (1715)
++Duration  36.89s; exit 1
++Only the known surgeryCenterServicePreviews.test.ts:85 thyroid failure:
++Expected: "Off-site thyroid fine-needle aspiration"
++Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
++
++npm.cmd run typecheck
++All seven workspaces completed tsc --noEmit; exit 0.
++
++npm.cmd run build --workspace @gamify-surgery/player
++vite v8.1.5 building client environment for production...
++681 modules transformed.
++built in 3.87s; exit 0 (existing plugin-timing/chunk-size warnings).
++```
++
++Raw logs, byte-exact pre-edit snapshots, reviewed combined diff, worker-only
++source patch and source hashes: `.local-dev/desktop-chart-highlight-20261010/`.
++FacilityScene was reread immediately before its exact patch. MB9's concurrent
++mobile lawn-selection hunk was preserved and excluded from `worker-source.patch`;
++no mobile file was edited. Source/handoff encoding: UTF-8 without BOM, LF.
++
++Manager browser QA (visual acceptance still required):
++1. Use `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the usual persistent
++   profile. Click Waiting and Existing patients, including an off-screen row in
++   a short window: only the rail scrolls; the right row pulses for about 2 s;
++   founder, clinical desk and clock retain their current behavior.
++2. Keep another chart open; click its character and another patient. Confirm
++   the desk chart/selection stay unchanged. Re-click within 2 s to restart the
++   pulse; emulate reduced motion to verify a static highlight with timed clear.
++3. Click scored child/parent: both locate the child's row. Check a still-visible
++   resolved patient, an absent row, staff first-click/second-click Praise,
++   retail/APP visitors and APP-family parents.
++4. Check the existing phone pathway: patient taps still open charts. For synthetic
++   pediatric QA, run `node tools/qa/level-four-rooms.mjs` and use the existing
++   disposable `http://127.0.0.1:5184/level4-rooms-qa.html?apps=pedcharts` origin;
++   its saves/profile are separate from the owner's 4173 campaign.
++
++Canonical owner pathway is unchanged; no owner save was accessed. No Git,
++installs, agents or publication. CURRENT_THREAD_HANDOFF/browser/default-pool
++acceptance remain manager-owned. LOCAL ONLY: after acceptance, the manager
++should remind the owner to say **"push to GitHub"** for an audited backup.
++
++## Level 5 launch plan (2026-10-10)
++
++Plan: [Level 5 launch plan](level5-launch-plan-20261010.md) - inventory, five room contracts, Executive/end-game options, option B arithmetic and M1-M10 acceptance.
++Manager handoff: eight M0 owner choices are pending; no gameplay/code changes, installs, Git or publication in this planning lane.
++
++## Variety-3 batch (2026-10-10)
++
++Sol content-worker draft: **10 new concepts, 20 adult cases / questions / nodes, 2 variants each; 35 atomic claims, 19 sources, 20 review/context/mapping envelopes and 20 timing entries.** All authored records remain `needs_clinician_review`; no sign-off or runtime registration. L1/L2/L3 concepts: 4/4/2, cases: 8/8/4, all clinic recognition/counseling or outside endoscopy/ASC planning. Existing lanes broaden L4; L5 adds no setting.
++
++Batch: `packages/clinical-content/src/development-batch/2026-10-10-variety-3/` (README, helper, clinic/endoscopy/perioperative families, sources, claims, aggregate/manifest, sample renderer/generator and two test files). Audit: `docs/handoffs/CONCEPT_COVERAGE_AUDIT_20261010.md` (pre-batch runtime/development union 360 concepts, 1,090 cases, 1,395 nodes; level/setting/topic counts, 16 development directories and ten gaps). Review: `docs/handoffs/VARIETY3_BATCH_SAMPLES.md` (all 20 variants, explicit key-first notice, claims/citations/rights). Worker plan: `docs/execplans/variety3-batch-20261010.md`.
++
++Source suffixes below use the stable `source.variety3.` prefix; undated society pages deliberately have no invented year. Complete citations, authors, dates, DOI/official links, access/reuse status and reciprocal claims are in the batch catalog and review artifact.
++
++| New stable concept ID | Lane | Topic | Sources |
++| --- | --- | --- | --- |
++| `concept.variety3.rectus-diastasis-recognition` | L1 | Recognize rectus diastasis | `ehs-diastasis-2021`, `kent-diastasis-2026`, `nhs-hernia-2026` |
++| `concept.variety3.epidermoid-cyst-recognition` | L1 | Recognize an epidermoid cyst | `hoang-epidermoid-2019`, `nhs-skin-cyst-2023` |
++| `concept.variety3.thrombosed-external-hemorrhoid-recognition` | L1 | Recognize an external hemorrhoid clot | `ascrs-hemorrhoids`, `niddk-hemorrhoids-2016` |
++| `concept.variety3.pruritus-ani-gentle-skin-care` | L1 | Counsel gentle care for anal itching | `nhs-itchy-anus-2023`, `ascrs-pruritus-ani` |
++| `concept.variety3.inadequate-bowel-prep-repeat-colonoscopy` | L2 | Complete an inadequately prepared colonoscopy | `esge-bowel-prep-2019`, `acg-prep-summary-2025` |
++| `concept.variety3.small-polyp-cold-snare-selection` | L2 | Choose cold snare for a small colorectal polyp | `esge-polypectomy-2024` |
++| `concept.variety3.nondysplastic-barrett-surveillance` | L2 | Plan surveillance for nondysplastic Barrett | `esge-barrett-2023`, `niddk-barrett-diagnosis-2024` |
++| `concept.variety3.endoscopic-sedation-escort-planning` | L2 | Arrange adult support after endoscopic sedation | `niddk-colonoscopy-2023`, `glos-sedation-2026` |
++| `concept.variety3.penicillin-label-structured-history` | L3 | Clarify a preoperative penicillin label | `cdc-penicillin-allergy-2025`, `sexton-kuruvilla-allergy-2024` |
++| `concept.variety3.surgical-hair-preparation` | L3 | Plan appropriate surgical hair preparation | `shea-ssi-update-2023` |
++
++Twenty-eight test/procedure options use existing wait-estimate hooks, including distractors; eight mixed/test timing entries and twelve no-test entries. No fixed duration prose or executable service/result gate. All options are parallel and comparable; zero new uniquely-longest keys. Local tests append the batch only to copies of both complete releases, apply the identical global guard traversal, and preserve the existing approved exception list.
++
++Validation commands (PowerShell; existing preload, threads pool):
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- src/development-batch/2026-10-10-variety-3 --pool=threads --maxWorkers=1
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
++npm.cmd run typecheck
++```
++
++Exact final batch stdout (exit 0):
++
++```text
++
++> @gamify-surgery/clinical-content@0.0.1 test
++> vitest run src/development-batch/2026-10-10-variety-3 --pool=threads --maxWorkers=1
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
++
++
++ Test Files  2 passed (2)
++      Tests  17 passed (17)
++   Start at  21:17:56
++   Duration  1.56s (transform 767ms, setup 0ms, import 1.33s, tests 91ms, environment 0ms)
++```
++
++Exact final full clinical-content stdout (exit 0; includes batch tests and unchanged pilot guard):
++
++```text
++
++> @gamify-surgery/clinical-content@0.0.1 test
++> vitest run --pool=threads --maxWorkers=1
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
++
++
++ Test Files  86 passed (86)
++      Tests  625 passed (625)
++   Start at  21:18:21
++   Duration  24.03s (transform 2.05s, setup 0ms, import 15.81s, tests 2.45s, environment 4ms)
++```
++
++Root typecheck: exit 0; all seven workspaces completed `tsc --noEmit`. Exact stdout and result metadata: `.local-dev/variety3-20261010/validation-output.json`.
++
++Withheld: Universal soap recommendation for pruritus ani; Mandatory same-day or next-day repeat after inadequate preparation; Universal cefazolin selection from a penicillin label; Thrombosed-hemorrhoid procedural timing; Numerical follow-up and recovery schedules; Genital/scrotal hair preparation; Allergy delabeling and challenge protocols. No selected gap topic needed replacement. Polypectomy and non-genital hair preparation each retain a sole adequate directly read guideline; limited Barrett-ablation and full adult-support corroboration are explicitly scoped. NICE/ASA rights restrictions and inaccessible independent cross-checks are recorded separately from clinical disagreement. No source excerpts, full texts, copied figures/algorithms or restricted corpora were stored.
++
++Preservation/encoding: all 337 pre-existing clinical-content source files match intake hashes; this owner-request section was appended to the latest shared file without altering its prefix. UTF-8 without BOM, LF. No package/global-release/timing/generator/art changes, installs, agents, owner-save access or playtest pathway changes. No Git mutation or backup: one inadvertent read-only `git status --short` occurred at intake and was reported; no later Git command ran.
++
++Manager next action: inspect and accept/return the scoped draft and reviewed validation; separately approve exact-manifest assembly and preserve adult/art profiles plus companion timing. Named clinician review remains required before clinical promotion. CURRENT_THREAD_HANDOFF is manager-owned. **LOCAL ONLY:** after acceptance, remind the owner to say **"push to GitHub"** for an audited checkpoint backup.
++
++
++## Variety-3 assembly (2026-10-10)
++
++Sol integration worker under the manager's **2026-10-10 accepted scope/editorial
++gate**. All **10 new concepts / 20 exact adult variants / 20 decision nodes** are
++assembled into `clinical.synthetic.prototype.v1`, explicitly
++`synthetic_unapproved_prototype`. Current inventory: **370 concepts / 1,110 cases /
++1,415 nodes**. Earliest concepts L1/L2/L3 = **4/4/2**; cases = **8/8/4**, all at
++their authored existing release points and `clinic` setting. Normal progression
++also admits them at L4. **Deferred variants: none.**
++
++This is manager scope/editorial authorization for assembly, not clinical approval. Every authored record
++remains `needs_clinician_review`, with no clinician sign-off. The separate
++`VARIETY3_PROTOTYPE_ADMISSION_MANIFEST` records manager scope acceptance,
++`clinicalApproval: false`, `publicReleaseAuthorized: false`, exact
++case/question/concept/profile/context/still IDs and levels/settings. The original
++standalone authoring manifest remains byte-unchanged, including its historical
++`assemblyAuthorized: false` receipt; README/sample authoring boundaries describe
++that original drafting milestone. No clinical/source/claim/prose change occurred.
++
++All twenty companion timing entries are registered with the cases: eight mixed
++test/procedure nodes, twelve no-test nodes and **28 proposed test/procedure
++choices**, including every distractor, use existing placeholder profiles. No
++fixed wait values were added to clinical prose or timing balance. Endoscopy and
++ASC cases retain their authored **outside-plan review in the clinic**, with no
++local service request or result gate. The QA outside-colonoscopy case travels to
++the ordinary Examination Room and scores through the normal Clinical XP/FSRS
++flow without a local endoscopy/procedure operation.
++
++The existing exact test-choice order registry explicitly binds all **28** timed
++choices (keys and distractors) as `not_executed` / `external_only`. Its existing
++coverage and non-execution guards remain intact; active timed choices increase
++from **1,452 to 1,480**, and terminal correct timed choices from **133 to 139**.
++Existing execution records are preserved exactly. No service, route, appointment,
++result type or wait profile was introduced.
++
++Admission adds a small reducer freeze hook: normal adult
++admission otherwise generates a different name, leaving these literal named
++presentations inconsistent. Exact Variety-3 case/profile matches retain the
++authored adult name, age/sex and admitted art still, including when an admission
++name override is supplied. Existing profiles/name generation and frozen saves
++retain their existing behavior. Runtime answer order is randomized at the
++existing freeze boundary and survives reload. Due review, active-concept
++deduplication, earliest-level admission, availability and identity round trips
++are checked across all twenty variants; existing due reviews retain priority.
++An older serialized save with all ten new histories absent loads new empty cards
++while retaining every prior history and frozen chart.
++
++Historical admission inventories now exclude this later batch from their original
++bank, retaining their original counts and protected SHA goldens. The live supply
++inventory records the expanded bank. Reviewed live snapshots show L1 +8 cases / +4 concepts (882 / 285), L2 external +16 / +8 (926 / 305), and L2 all-capability +16 / +8 (964 / 324); L0 stays 639 / 175. Fixed-seed day-eight selection now has one decision. The sustained diagnostic retains 79 arrivals and zero walkouts, scores 110 answers, completes 78 cases and leaves one pending result. Its code is unchanged outside the snapshot. Legacy multistep objectives displaced in a fixed-seed unseen traversal remain individually eligible; all ten new concepts retain due-review paths. The diagnostic only inventories through L2, so its out-of-scope list includes the two L3 Variety-3 concepts; real admission/availability is separately checked at L3 and L4. No scheduler or arrival rule was changed.
++
++### Files changed
++
++All **34** paths (source/test edits and documentation; scratch evidence is separate):
++
++- `apps/player/src/session/variety3ChartsViewModels.test.ts` (new)
++- `docs/execplans/owner-requests-20261008.md`
++- `docs/execplans/variety3-assembly-20261010.md` (new)
++- `packages/clinical-content/src/answer-choice-timing.ts`
++- `packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts`
++- `packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts`
++- `packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts` (new)
++- `packages/clinical-content/src/index.ts`
++- `packages/clinical-content/src/patient-library-wording-repair.test.ts`
++- `packages/clinical-content/src/synthetic-content.ts`
++- `packages/game-domain/src/reducer.ts`
++- `packages/game-domain/src/test-choice-orders.ts`
++- `packages/game-domain/tests/approved-clinical-admission.test.ts`
++- `packages/game-domain/tests/clinical-content-withdrawal.test.ts`
++- `packages/game-domain/tests/diagnostics/patient-supply.test.ts`
++- `packages/game-domain/tests/gs028-20261003-batch.test.ts`
++- `packages/game-domain/tests/gs028-20261007-batch.test.ts`
++- `packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts`
++- `packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts`
++- `packages/game-domain/tests/patient-supply.test.ts`
++- `packages/game-domain/tests/test-choice-order-inventory.test.ts`
++- `packages/game-domain/tests/variety3-admission.test.ts` (new)
++- `tests/fixtures/variety3-charts.ts` (new)
++- `tools/qa/level-four-rooms-bootstrap.ts`
++- `tools/qa/level-four-rooms.mjs`
++
++Filesystem evidence (no Git): `.local-dev/variety3-assembly-20261010/` contains
++intake hashes/snapshots, scoped diff, changed paths, preservation/encoding audit
++and complete output logs. **1,150 of 1,178 intake paths are byte-unchanged**; all 28 existing changes are in the owned integration/test lane, with five new owned files and this append (34 paths total). Zero unowned intake changes. All **37 approved family modules**, **10 original batch authoring files**, and the **global longest-key guard** are byte-unchanged. Every owned file is UTF-8 without BOM and LF. CURRENT_THREAD_HANDOFF remains untouched and manager-owned.
++
++The read-only runtime preservation check loads the intake snapshots and current
++static exports with production Vite plugins (watcher and optimizer discovery
++disabled; no listener or browser storage). The complete pre-batch release, timing
++entries and execution records match exactly after removing only the additions.
++Prior release SHA-256:
++`e590b21ff0dbfbbae7fba9d36659c5126a3d5dcee2abf12501eedf797a2e3866`.
++The new clinical admission test retains this protected complete-bank fingerprint.
++Evidence: `runtime-preservation.json`, `runtime-preservation.log`,
++`audit-runtime.mjs` and `intake-release.json` in the evidence directory.
++
++### Validation commands and exact output
++
++Used checked-in package configurations with the **threads pool** and the exact
++existing net-use EPERM preload; no alternate configs, exclusions or new
++answer-length exceptions. PowerShell commands from repository root:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
++npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1
++npm.cmd run typecheck
++node tools/qa/level-four-rooms.mjs --check
++```
++
++Full clinical-content output (exit 0; global uniquely-longest-key guard is
++byte-unchanged and green):
++
++```text
++
++> @gamify-surgery/clinical-content@0.0.1 test
++> vitest run --pool=threads --maxWorkers=1
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
++
++
++ Test Files  87 passed (87)
++      Tests  628 passed (628)
++   Start at  21:47:21
++   Duration  26.08s (transform 2.20s, setup 0ms, import 17.21s, tests 2.68s, environment 4ms)
++```
++
++Full game-domain output (exit 0; only the existing skipped file/two tests):
++
++```text
++
++> @gamify-surgery/game-domain@0.0.1 test
++> vitest run --pool=threads --maxWorkers=1
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
++
++
++ Test Files  138 passed | 1 skipped (139)
++      Tests  3818 passed | 2 skipped (3820)
++   Start at  21:45:00
++   Duration  469.50s (transform 2.82s, setup 0ms, import 45.65s, tests 414.33s, environment 7ms)
++```
++
++Full player output (exit 1 solely for the known thyroid pending-label failure;
++all twenty new chart checks pass):
++
++```text
++
++> @gamify-surgery/player@0.0.1 test
++> vitest run --pool=threads --maxWorkers=1
++
++
++ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
++
++ ❯ src/session/surgeryCenterServicePreviews.test.ts (13 tests | 1 failed) 539ms
++     × ignores the retired concealment flag and preserves the scheduled external service after an answer 57ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/session/surgeryCenterServicePreviews.test.ts > surgery-center test timing previews > ignores the retired concealment flag and preserves the scheduled external service after an answer
++AssertionError: expected 'The result is pending. Patient care a…' to contain 'Off-site thyroid fine-needle aspirati…'
++
++Expected: "Off-site thyroid fine-needle aspiration"
++Received: "The result is pending. Patient care and return are still in progress. The next decision waits for care completion. Game time: Travelling to the outside service (onsite): 20 min remaining (20 min walking); Procedure (offsite): 140 min remaining; Pathology (offsite): 200 min remaining; Returning to Front Desk (onsite): 159 min remaining (19 min walking)."
++
++ ❯ src/session/surgeryCenterServicePreviews.test.ts:85:52
++     83|     const pending = state.encounters[encounterId]!.pendingResult!;
++     84|     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needl…
++     85|     expect(chart(state, encounterId).pendingLabel).toContain("Off-site…
++       |                                                    ^
++     86|     expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).t…
++     87|   });
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
++
++
++ Test Files  1 failed | 205 passed (206)
++      Tests  1 failed | 1781 passed (1782)
++   Start at  21:42:54
++   Duration  120.69s (transform 4.24s, setup 0ms, import 51.96s, tests 54.79s, environment 10ms)
++
++npm error Lifecycle script `test` failed with error:
++npm error code 1
++npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
++npm error workspace @gamify-surgery/player@0.0.1
++npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
++npm error command failed
++npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
++```
++
++Root typecheck output (exit 0, all seven workspaces):
++
++```text
++
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++
++
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++
++
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++
++
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++QA entry output (exit 0, no listener or browser storage):
++
++```text
++9:32:04 PM [vite] (client) [optimizer] scanning dependencies...
++QA entry transform PASS: production Vite config/plugins; dedicated bootstrap; no listener or browser storage.
++```
++
++Earlier validation and corrections are retained in the evidence directory: the initial fixture door placement/type errors were corrected; the first full domain run had nine inventory/classification failures, with all 54 new admission checks passing. After exact non-execution registration and scoped inventory corrections, the focused integration run passed 4 files / 71 tests. The two historical pool checks passed with their original counts (the `-t "measures.*ordinary"` filter skipped their other 698 tests in that focused run only). The two live diagnostic/supply files passed 5 tests while refreshing exactly three reviewed snapshots. Final full suites above ran without test filters or `--update`. Complete logs: `clinical-final.log`, `domain-final.log`, `player-final.log`, `typecheck-final.log`, `qa-transform.log`; earlier focused/failed runs are separately named. No guard exceptions or clinical wording changes were introduced.
++
++### Manager browser QA steps
++
++1. Run `node tools/qa/level-four-rooms.mjs`, or reuse/restart the manager's existing
++   server on 5184 after it picks up the bootstrap change. Open exactly
++   **http://127.0.0.1:5184/level4-rooms-qa.html?apps=variety3** in a fresh disposable
++   QA browser profile. This selects **Variety-3 outside-plan review**, campaign
++   `campaign.qa.variety3-charts-20261010`, one actual batch encounter
++   `encounter.qa.variety3-chart`, and an ordinary Examination Room. Fresh profiles
++   seed the fixture; reloads resume the same campaign and do not reseed it.
++2. Confirm Level 2 (the authored earliest level), the unapproved prototype notice
++   and **David Parker, 55 years, Male**, still `patient-demographics20-v4.009`.
++   Press Play (4x is convenient), watch check-in, then open David's waiting chart.
++   Complaint: **Colonoscopy follow-up**. The presentation reviews his outside
++   report; the complete task concerns finishing an inadequately prepared exam.
++   Case: `case.variety3.prep-incomplete-drink`; question:
++   `question.variety3.prep-incomplete-drink.v1`.
++3. Confirm all four choices appear in the frozen randomized order and all four
++   have runtime wait estimates, including the FIT, stool DNA and CT distractors.
++   These are existing game-time estimates for discussed outside plans, not a
++   promise that the clinic will execute them. Observe normal travel/care in the
++   Examination Room; founder and patient should reach their existing supports.
++4. Select **Repeat prepared colonoscopy**. Confirm normal scored feedback,
++   Clinical XP and one review for
++   `concept.variety3.inadequate-bowel-prep-repeat-colonoscopy`. No local endoscopy,
++   sedation, surgery appointment or pending clinical result should be created.
++   Acknowledge feedback and resolve/file the chart with its existing primary
++   action. The actor should depart through the normal flow.
++5. Reload the same complete URL/profile while waiting, in care and after scoring.
++   The exact patient identity, choice order, chart progress and history should
++   persist. After autosave, these disposable-profile console expressions are
++   read-only:
++
++   ```javascript
++   const variety3Profile = JSON.parse(localStorage.getItem("gamify-surgery.prototype.profile.v1"));
++   const variety3Save = JSON.parse(variety3Profile.campaigns.find(c => c.campaignId === "campaign.qa.variety3-charts-20261010").serializedState);
++   variety3Save.learningHistories["concept.variety3.inadequate-bowel-prep-repeat-colonoscopy"].reviews.length;
++   variety3Save.serviceOperations; // no local procedure operations in this fixture
++   location.origin; // "http://127.0.0.1:5184"
++   ```
++
++The existing disposable **5184 QA origin** has separate saves from canonical
++owner **START_GAME.cmd -> exact http://127.0.0.1:4173**, the private phone origin,
++the remote GitHub Pages origin and every other browser profile. Owner launcher,
++origin and storage pathways are unchanged. The hook lives only in the existing
++dedicated QA entry; no normal-UI cheats or owner-save actions were added.
++
++Implementation and CLI validation complete; manager retains actual-diff
++acceptance, browser/default-pool QA and CURRENT_THREAD_HANDOFF update. No browser
++visual PASS is claimed. No Git commands, installs, agents, external messages,
++deployment or publication. **LOCAL ONLY:** no backup was created; after
++acceptance, the manager should remind the owner to say **"push to GitHub"** for
++the scoped checkpoint backup.
++
++## Manager: Variety-3 batch and assembly accepted (2026-10-11)
++
++Manager scope review of the 10-concept/20-variant Variety-3 batch (sample read: named patient with age/sex, short complaint, parallel same-category choices, key not uniquely longest, per-choice rationale, teaching point, allowed open/government/society sources with safe new-tab links): ACCEPTED as editorial/technical only; all records needs_clinician_review. Assembly accepted after Chrome QA (http://127.0.0.1:5184/level4-rooms-qa.html?apps=variety3): David Parker, 55, male, 'Colonoscopy follow-up', four testing choices each with a visible game-time wait estimate, answer recorded with Clinical XP, no page errors. Worker suites: clinical 628, domain 3818 + 2 skips, player 1781 + known thyroid failure, typecheck PASS.

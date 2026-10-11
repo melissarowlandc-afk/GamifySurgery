@@ -1,0 +1,136 @@
+/* Phone-native MB3 screens. No selector applies outside the lazy mobile shell. */
+.mobile-shell .mobile-content { display: flex; flex-direction: column; }
+.mobile-shell .mobile-workspace { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; overflow: hidden; }
+.mobile-shell .mobile-patients h3,
+.mobile-shell .mobile-alerts h3,
+.mobile-shell .mobile-goals h3 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; font-size: 17px; }
+.mobile-shell .mobile-patient-folder + .mobile-patient-folder { margin-top: 22px; }
+.mobile-shell .mobile-count { padding: 2px 8px; border-radius: 12px; background: var(--panel); font-size: 13px; }
+.mobile-shell .mobile-card-stack { display: grid; gap: 10px; }
+.mobile-shell .mobile-patient-card { display: flex; width: 100%; flex-direction: column; gap: 8px; padding: 12px; border: var(--mobile-border); background: var(--paper); text-align: left; box-shadow: 0 2px 0 #23272022; }
+.mobile-shell .mobile-patient-card.is-selected { border: 2px solid var(--ink); }
+.mobile-shell .mobile-patient-card.is-tutorial-target { box-shadow: inset 4px 0 var(--focus); }
+.mobile-shell .mobile-card-identity { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mobile-shell .mobile-card-identity > span { min-width: 0; }
+.mobile-shell .mobile-card-identity > span:nth-child(2) { display: grid; flex: 1; gap: 2px; }
+.mobile-shell .mobile-card-identity strong { font-size: 17px; }
+.mobile-shell .mobile-card-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; }
+.mobile-shell .mobile-attention { display: inline-grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; border-radius: 50%; background: #8c392d; color: #fff; font-weight: 700; }
+.mobile-shell .mobile-patient-complaint { font-weight: 700; }
+.mobile-shell .mobile-patient-status { padding: 6px 8px; border-radius: 6px; background: var(--panel); }
+.mobile-shell .mobile-empty { margin: 0; padding: 12px; border: 1px dashed var(--ink-soft); border-radius: 8px; }
+.mobile-shell .mobile-primary { width: 100%; min-height: 48px !important; border: 1px solid var(--ink); background: var(--focus); color: var(--ink); font-size: 16px; font-weight: 700; }
+.mobile-shell .mobile-sheet-body:has(> .mobile-chart) { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.mobile-shell .mobile-chart { display: flex; width: 100%; height: 100%; min-width: 0; min-height: 0; flex: 1 1 auto; flex-direction: column; }
+.mobile-shell .mobile-chart-scroll { flex: 1 1 auto; min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 12px; }
+.mobile-shell .mobile-chart-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding-bottom: 12px; border-bottom: var(--mobile-border); }
+.mobile-shell .mobile-chart-identity > div { min-width: 0; flex: 1; }
+.mobile-shell .mobile-chart-identity h3 { margin: 0; font-size: 20px; }
+.mobile-shell .mobile-chart-identity p { margin: 2px 0; }
+.mobile-shell .mobile-chart-identity > p { width: 100%; }
+.mobile-shell .mobile-chart-status { padding: 6px 8px; border-radius: 6px; background: var(--panel); font-weight: 700; }
+.mobile-shell .mobile-chart-story { padding-block: 8px; }
+.mobile-shell .mobile-chart-story p,
+.mobile-shell .mobile-question { white-space: pre-line; font-size: 16px; line-height: 1.5; }
+.mobile-shell .mobile-vitals { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.mobile-shell .mobile-vitals > div { display: flex; gap: 6px; }
+.mobile-shell .mobile-vitals dt { font-weight: 700; }
+.mobile-shell .mobile-vitals dd { margin: 0; }
+.mobile-shell .mobile-decision-heading { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.mobile-shell .mobile-decision-heading h3 { flex: 1; margin: 10px 0; font-size: 16px; }
+.mobile-shell .mobile-question-flag { margin-left: auto; font-size: 12px; }
+.mobile-shell .mobile-answers { display: grid; gap: 10px; }
+.mobile-shell .mobile-answer { display: flex; width: 100%; min-height: 48px !important; flex-direction: column; gap: 6px; border: 1px solid var(--ink-soft); background: var(--paper); text-align: left; font-size: 16px; }
+.mobile-shell .mobile-answer:disabled { opacity: 1; color: var(--ink); }
+.mobile-shell .mobile-answer.is-selected { border: 2px solid var(--ink); }
+.mobile-shell .mobile-answer.is-correct { background: #e2e9d4; }
+.mobile-shell .mobile-answer-tag { font-size: 12px; }
+.mobile-shell .mobile-answer-wait { display: grid; gap: 4px; padding-top: 4px; font-size: 13px; line-height: 1.4; }
+.mobile-shell .mobile-answer-wait small { font-size: 12px; }
+.mobile-shell .mobile-choice-rationale summary,
+.mobile-shell .mobile-chart-sources summary,
+.mobile-shell .mobile-decision.is-past > summary { display: flex; align-items: center; padding: 8px; cursor: pointer; font-weight: 700; }
+.mobile-shell .mobile-choice-rationale p { padding: 0 8px; }
+.mobile-shell .mobile-feedback,
+.mobile-shell .mobile-chart-pending,
+.mobile-shell .mobile-chart-result,
+.mobile-shell .mobile-chart-outcome,
+.mobile-shell .mobile-chart-update { margin-block: 12px; padding: 12px; border: var(--mobile-border); border-radius: 8px; background: var(--panel); }
+.mobile-shell .mobile-feedback { background: #e2e9d4; }
+.mobile-shell .mobile-feedback.is-incorrect { background: #f4e1d3; }
+.mobile-shell .mobile-feedback h4 { margin: 0; font-size: 17px; }
+.mobile-shell .mobile-feedback p { line-height: 1.5; white-space: pre-line; }
+.mobile-shell .mobile-chart-phases { display: grid; gap: 10px; margin: 8px 0; padding-left: 20px; }
+.mobile-shell .mobile-chart-phases li > span { display: block; margin-top: 3px; }
+.mobile-shell .mobile-chart-exhibit { margin: 12px 0; padding: 10px; border: var(--mobile-border); }
+.mobile-shell .mobile-chart-exhibit figcaption { font-weight: 700; }
+.mobile-shell .mobile-chart-exhibit dl > div { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+.mobile-shell .mobile-chart-exhibit dd { margin: 0; }
+.mobile-shell .mobile-table-scroll { max-width: 100%; overflow: auto; }
+.mobile-shell .mobile-table-scroll table { border-collapse: collapse; width: 100%; }
+.mobile-shell .mobile-table-scroll td,
+.mobile-shell .mobile-table-scroll th { padding: 8px; border: var(--mobile-border); }
+.mobile-shell .mobile-chart-reward { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: var(--panel); }
+.mobile-shell .mobile-chart-reward strong { width: 100%; }
+.mobile-shell .mobile-chart-sources { margin-block: 12px; border-top: var(--mobile-border); }
+.mobile-shell .mobile-chart-sources ol { padding-left: 20px; }
+.mobile-shell .mobile-chart-sources li { margin-block: 12px; }
+.mobile-shell .mobile-chart-sources li > span,
+.mobile-shell .mobile-chart-sources li > small { display: block; }
+.mobile-shell .mobile-chart-actions { flex: 0 0 auto; display: grid; gap: 6px; padding: 8px 10px; border-top: var(--mobile-border); background: var(--paper-raised); box-shadow: 0 -3px 8px #0002; }
+.mobile-shell .mobile-need-card { margin-bottom: 12px; padding: 12px; border: 2px solid #8c392d; border-radius: 10px; background: #f4e1d3; }
+.mobile-shell .mobile-need-card h4 { margin: 0; font-size: 17px; }
+.mobile-shell .mobile-need-card > button { margin-top: 10px; }
+.mobile-shell .mobile-need-deadline { display: grid; gap: 4px; margin-top: 8px; }
+.mobile-shell .mobile-need-deadline meter { width: 100%; }
+.mobile-shell .mobile-action-failure { font-weight: 700; }
+.mobile-shell .mobile-clinic-feed { margin-top: 22px; }
+.mobile-shell .mobile-clinic-feed h3 small { font-size: 11px; font-weight: 400; }
+.mobile-shell .mobile-feed-row { margin-block: 10px; padding: 12px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); }
+.mobile-shell .mobile-feed-row > p { margin-block: 8px; line-height: 1.5; }
+.mobile-shell .mobile-feed-row > button { width: 100%; text-align: left; font-weight: 700; }
+.mobile-shell .mobile-feed-byline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; font-size: 12px; }
+.mobile-shell .mobile-feed-row.is-day-summary { background: var(--ink); color: #fff; border: 2px solid var(--ink); opacity: 1; }
+.mobile-shell .mobile-feed-row.is-day-summary .mobile-feed-byline,
+.mobile-shell .mobile-feed-row.is-day-summary h4,
+.mobile-shell .mobile-feed-row.is-day-summary p,
+.mobile-shell .mobile-feed-row.is-day-summary time,
+.mobile-shell .mobile-feed-row.is-day-summary small { color: inherit; opacity: 1; }
+.mobile-shell .mobile-feed-row.is-day-summary > button { background: #fff; color: var(--ink); }
+.mobile-shell .mobile-goal-list,
+.mobile-shell .mobile-goal-setup ul { list-style: none; margin: 0; padding: 0; }
+.mobile-shell .mobile-goal-card { padding: 12px; margin-bottom: 12px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); }
+.mobile-shell .mobile-goal-card.is-complete { background: #e2e9d4; }
+.mobile-shell .mobile-goal-card h4 { margin: 0 0 6px; font-size: 16px; }
+.mobile-shell .mobile-goal-progress { margin: 0; font-weight: 700; }
+.mobile-shell .mobile-goal-setup { margin-top: 14px; padding-top: 12px; border-top: var(--mobile-border); }
+.mobile-shell .mobile-goal-setup li { margin-top: 12px; }
+.mobile-shell .mobile-goal-setup p { margin-block: 4px 8px; font-size: 14px; }
+.mobile-shell .mobile-goal-setup button { width: 100%; }
+.mobile-shell .mobile-optional-goals { margin-top: 22px; }
+.mobile-shell .mobile-goals-advance { position: sticky; bottom: -10px; padding: 10px 0; background: var(--paper-raised); }
+.mobile-shell .mobile-level-complete { padding: 12px; border: 2px solid var(--ink); border-radius: 8px; font-weight: 700; }
+.mobile-shell .mobile-advertising-controls { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 10px; }
+.mobile-shell .mobile-advertising-controls > div { display: grid; gap: 4px; text-align: center; }
+.mobile-shell .mobile-advertising-controls > button { min-height: 48px !important; font-size: 22px; }
+.mobile-shell .mobile-quick-control progress { width: 100%; margin-top: 12px; }
+/* The coach takes a bounded row inside the workspace. It cannot overlap either bar. */
+.mobile-shell .mobile-tutorial-coach { position: relative; display: flex; flex: 0 0 auto; min-height: 0; max-height: 38%; flex-direction: column; gap: 4px; margin: 6px 8px; padding: 6px 8px; border: 2px solid var(--ink); border-radius: 10px; background: var(--panel); overflow: hidden; }
+.mobile-shell .mobile-coach-heading { display: flex; flex: 0 0 auto; gap: 8px; align-items: center; }
+.mobile-shell .mobile-coach-heading > div { flex: 1; min-width: 0; }
+.mobile-shell .mobile-coach-heading h2 { margin: 0; font-size: 15px; line-height: 1.2; }
+.mobile-shell .mobile-coach-heading small { font-size: 10px; }
+.mobile-shell .mobile-coach-copy { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; font-size: 13px; }
+.mobile-shell .mobile-coach-copy[hidden] { display: none; }
+.mobile-shell .mobile-coach-copy p { margin-block: 6px; }
+.mobile-shell .mobile-coach-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.mobile-shell .mobile-coach-actions button { font-size: 12px; }
+.mobile-shell .mobile-coach-target { flex: 0 0 auto; width: 100%; background: var(--paper-raised); font-size: 13px; font-weight: 700; }
+.mobile-shell .mobile-coach-heading .mobile-coach-target { flex: 0 1 auto; width: auto; max-width: 45%; font-size: 12px; }
+.mobile-shell .mobile-tab-bar button[data-mobile-tutorial-target="true"] { outline: 3px solid var(--focus); outline-offset: -3px; }
+@media (max-height: 500px) {
+  .mobile-shell .mobile-tutorial-coach { max-height: 42%; margin-block: 2px; padding-block: 2px; }
+  .mobile-shell .mobile-coach-heading small { display: none; }
+  .mobile-shell .mobile-chart-actions { padding-block: 4px; }
+}
+.mobile-shell .mobile-resolved-toggle { display: flex; width: 100%; min-height: 44px; align-items: center; justify-content: space-between; gap: 8px; text-align: left; border: var(--mobile-border); background: var(--panel); font-weight: 700; }

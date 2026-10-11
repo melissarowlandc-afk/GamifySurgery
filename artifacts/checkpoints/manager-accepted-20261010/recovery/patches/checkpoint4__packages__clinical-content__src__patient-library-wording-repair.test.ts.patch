@@ -1,0 +1,11 @@
+--- a/packages/clinical-content/src/patient-library-wording-repair.test.ts
++++ b/packages/clinical-content/src/patient-library-wording-repair.test.ts
+@@ -78,7 +78,7 @@
+       expect(clinicalCase.chiefComplaint, clinicalCase.id).not.toMatch(
+         /^(?:Select|Identify|Level|Clinic|Outpatient)\b|\bv\d+\b/i,
+       );
+-      const name = clinicalCase.pediatricProfile ? clinicalCase.patientDisplayName : "{patientName}";
++      const name = (clinicalCase.pediatricProfile || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
+       expect(clinicalCase.presentation, clinicalCase.id).toContain(name);
+       expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(
+         /^(?:A patient|An adult|Patient with)\b/i,

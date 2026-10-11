@@ -1,0 +1,44 @@
+--- a/apps/player/src/facility/facilityCameraBounds.ts
++++ b/apps/player/src/facility/facilityCameraBounds.ts
+@@ -16,6 +16,14 @@
+   return Math.max(minimum, Math.min(maximum, value));
+ }
+ 
++/** Phone-only space to center edge rooms; use the visible map's CSS dimensions. */
++export function getMobileFacilityCameraPanPadding(viewport: { width: number; height: number }) {
++  return {
++    x: Math.max(1, Math.floor(viewport.width)) * 0.4,
++    y: Math.max(1, Math.floor(viewport.height)) * 0.4,
++  };
++}
++
+ /**
+  * Match FacilityScene.calculateLayout's camera transform without touching its
+  * rendering lane. Pan is a pixel offset from the founder/entrance default, not
+@@ -25,6 +33,7 @@
+   camera: FacilityCameraView,
+   model: Pick<FacilityViewModel, "gridColumns" | "gridRows" | "rooms">,
+   viewport: { width: number; height: number },
++  mobileInput = false,
+ ): FacilityCameraView {
+   const width = Math.max(1, Math.floor(viewport.width));
+   const height = Math.max(1, Math.floor(viewport.height));
+@@ -55,6 +64,18 @@
+   const defaultOriginY = height - worldHeight;
+   const horizontalGap = width - tileSize * columns;
+   const verticalGap = height - worldHeight;
++  if (mobileInput === true) {
++    const padding = getMobileFacilityCameraPanPadding({ width, height });
++    return {
++      zoom,
++      panX: clamp(camera.panX,
++        Math.min(0, horizontalGap) - defaultOriginX - padding.x,
++        Math.max(0, horizontalGap) - defaultOriginX + padding.x),
++      panY: clamp(camera.panY,
++        Math.min(0, verticalGap) - defaultOriginY - padding.y,
++        Math.max(0, verticalGap) - defaultOriginY + padding.y),
++    };
++  }
+   return {
+     zoom,
+     panX: clamp(camera.panX,

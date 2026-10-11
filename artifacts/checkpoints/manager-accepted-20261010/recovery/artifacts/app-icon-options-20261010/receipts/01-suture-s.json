@@ -1,0 +1,33 @@
+{
+  "number": 1,
+  "slug": "suture-s",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 1,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-5ac1c201-37b5-406c-bd15-fd83f528f333.png",
+  "original_builtin_sha256": "d06b2e729def29646ce479b8008f70151a448e520c7059b1eccbca6b5f655cb1",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/01-suture-s.png",
+  "raw_copy_sha256": "d06b2e729def29646ce479b8008f70151a448e520c7059b1eccbca6b5f655cb1",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:21:32.648134+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/01-suture-s.png",
+  "output_sha256": "e32d77d9e85bf8ad5785032b3b5e33267de18a9604cfaf2447a30ed795f07db5",
+  "preview": "preview-60/01-suture-s.png",
+  "preview_sha256": "31bb51208e2c568c88d1067958013fbf4229becc2952faeab70ad77f87a4d994",
+  "reference_identity": null
+}

@@ -1,0 +1,11 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -237,6 +237,8 @@
+   supportId?: string;
+   supportRoomInstanceId?: string;
+   pediatricFamilyId?: string;
++  /** A pediatric parent's linked encounter; APP-only families have no chart. */
++  linkedEncounterId?: string;
+   /** Only phase and the reserved chair/standing endpoint are needed by the renderer. */
+   procedureCompanion?: Pick<ProcedureCompanionState, "phase" | "periopRoomInstanceId" | "waitingReservation">;
+ }

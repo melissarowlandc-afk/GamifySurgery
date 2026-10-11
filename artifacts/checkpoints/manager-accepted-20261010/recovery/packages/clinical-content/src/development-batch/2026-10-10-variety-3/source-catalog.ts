@@ -1,0 +1,228 @@
+import type { AuthoredClinicalRecord, ClinicalSource, EvidenceClaim } from "../../pilot-schema";
+import { CHECKED_ON, NEEDS_REVIEW } from "./batch-helpers";
+
+export const S = {
+  ehsDiastasis: "source.variety3.ehs-diastasis-2021",
+  kentDiastasis: "source.variety3.kent-diastasis-2026",
+  nhsHernia: "source.variety3.nhs-hernia-2026",
+  epidermoidReview: "source.variety3.hoang-epidermoid-2019",
+  nhsCyst: "source.variety3.nhs-skin-cyst-2023",
+  ascrsHemorrhoids: "source.variety3.ascrs-hemorrhoids",
+  niddkHemorrhoids: "source.variety3.niddk-hemorrhoids-2016",
+  nhsItch: "source.variety3.nhs-itchy-anus-2023",
+  ascrsItch: "source.variety3.ascrs-pruritus-ani",
+  esgePrep: "source.variety3.esge-bowel-prep-2019",
+  acgPrepSummary: "source.variety3.acg-prep-summary-2025",
+  esgePolypectomy: "source.variety3.esge-polypectomy-2024",
+  esgeBarrett: "source.variety3.esge-barrett-2023",
+  niddkBarrett: "source.variety3.niddk-barrett-diagnosis-2024",
+  niddkColonoscopy: "source.variety3.niddk-colonoscopy-2023",
+  glosSedation: "source.variety3.glos-sedation-2026",
+  cdcAllergy: "source.variety3.cdc-penicillin-allergy-2025",
+  allergyReview: "source.variety3.sexton-kuruvilla-allergy-2024",
+  sheaSsi: "source.variety3.shea-ssi-update-2023",
+} as const;
+
+type SourceInput = Omit<ClinicalSource, keyof AuthoredClinicalRecord | "accessedOn" | "doi" | "pmid" | "evidenceClaimIds"> & {
+  doi?: string; pmid?: string; licenseUrl?: string; termsUrl?: string;
+  accessMethod: "primary_html_targeted_read" | "primary_guideline_pdf_targeted_read" | "licensed_europe_pmc_xml_targeted_read";
+};
+const targeted = "Targeted verification of underlying facts only. All claims and cases are independently worded; no source prose, excerpts, tables, figures, algorithms or vignettes are retained or reproduced. Copyright is not treated as AI-use permission.";
+const ogl = "Open Government Licence v3.0 where applicable; images, logos and third-party material excluded";
+const oglNotes = `${targeted} Contains public sector information licensed under the Open Government Licence v3.0. The reuse enum is conservative because it has no OGL category.`;
+const federalNotes = `${targeted} Original agency text is generally public domain subject to agency conditions; third-party material and logos are excluded. Agency attribution and links do not imply endorsement.`;
+const rawSources: SourceInput[] = [
+  {
+    id: S.ehsDiastasis, title: "European Hernia Society guidelines on management of rectus diastasis",
+    completeCitation: "Hernández-Granados P, Henriksen NA, Berrevoet F, Cuccurullo D, López-Cano M, Nienhuijs S, Ross D, Montgomery A. European Hernia Society guidelines on management of rectus diastasis. Br J Surg. 2021;108(10):1189-1191. doi:10.1093/bjs/znab128. Accessed 10 October 2026.",
+    organizationOrJournal: "European Hernia Society / British Journal of Surgery",
+    authors: ["P. Hernández-Granados", "N. A. Henriksen", "F. Berrevoet", "D. Cuccurullo", "M. López-Cano", "S. Nienhuijs", "D. Ross", "A. Montgomery"], publicationYear: 2021,
+    doi: "10.1093/bjs/znab128", officialUrl: "https://europeanherniasociety.eu/guidelines-for-management-of-rectus-diastasis/",
+    sourceClass: "professional_society_guideline", licenseLabel: "CC BY-NC 4.0 (article license verified in Europe PMC XML)",
+    reuseStatus: "cc_by_nc_4_0_restricted", reuseNotes: `${targeted} Noncommercial license restrictions are retained; no article adaptation is distributed. Credit all authors and link the original article and license.`,
+    licenseUrl: "https://creativecommons.org/licenses/by-nc/4.0/",
+    authorityAssessment: "EHS guideline, still linked in its guideline catalog at access. KQ1/KQ2 define separation and clinical examination; evidence is limited and many recommendations reflect expert consensus. No size cutoff, surgery selection or exercise regimen is authored.",
+    usageRole: "evidence", accessMethod: "licensed_europe_pmc_xml_targeted_read",
+  },
+  {
+    id: S.kentDiastasis, title: "Diastasis rectus abdominus",
+    completeCitation: "Kent Community Health NHS Foundation Trust. Diastasis rectus abdominus. Patient leaflet 01414; last edited 18 September 2026. Accessed 10 October 2026.",
+    organizationOrJournal: "Kent Community Health NHS Foundation Trust", authors: ["Kent Community Health NHS Foundation Trust"], publicationYear: 2026,
+    publicationDateNote: "The page's last-edited date is 2026-09-18; it is not a research publication date.",
+    officialUrl: "https://www.kentcht.nhs.uk/leaflet/diastasis-rectus-abdominus/", sourceClass: "government_guidance",
+    licenseLabel: "Copyright NHS trust; leaflet explicitly requires permission for reproduction", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted,
+    authorityAssessment: "Current official NHS physiotherapy leaflet corroborating widened midline tissue, doming and occurrence in adults of either sex. Not an independent operative guideline or a diagnostic accuracy study.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.nhsHernia, title: "Hernia",
+    completeCitation: "NHS website editorial team. Hernia. Reviewed 19 May 2026. Accessed 10 October 2026.", organizationOrJournal: "NHS website",
+    authors: ["NHS website editorial team"], publicationYear: 2026, officialUrl: "https://www.nhs.uk/conditions/hernia/", sourceClass: "government_guidance",
+    licenseLabel: ogl, reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: oglNotes,
+    licenseUrl: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", termsUrl: "https://www.nhs.uk/our-policies/terms-and-conditions/",
+    authorityAssessment: "Current national patient information directly supporting the protrusion-through-a-gap/weak-area definition. No copied hernia table or urgency algorithm; no inference that examination excludes every coexisting hernia.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.epidermoidReview, title: "Overview of epidermoid cyst",
+    completeCitation: "Hoang VT, Trinh CT, Nguyen CH, Chansomphou V, Chansomphou V, Tran TTT. Overview of epidermoid cyst. Eur J Radiol Open. 2019;6:291-301. Published 5 September 2019. doi:10.1016/j.ejro.2019.08.003. PMID:31516916. Accessed 10 October 2026.",
+    organizationOrJournal: "European Journal of Radiology Open", authors: ["Van Trung Hoang", "Cong Thao Trinh", "Canh Hung Nguyen", "Vichit Chansomphou", "Vinay Chansomphou", "Thi Tinh Tam Tran"], publicationYear: 2019,
+    doi: "10.1016/j.ejro.2019.08.003", pmid: "31516916", officialUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6732711/", sourceClass: "narrative_review",
+    licenseLabel: "CC BY-NC-ND 4.0", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: `${targeted} This source permits neither commercial reuse nor distribution of adaptations under its license. Only facts were checked, with no article adaptation, illustration or prose distributed.`,
+    licenseUrl: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    authorityAssessment: "Open narrative review: clinical and pathophysiology sections support punctum, slow growth and differential features. Older descriptive evidence, not proof of histology in an individual or an excision policy. License verified on the actual article, not inferred from PMC availability.",
+    usageRole: "evidence", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.nhsCyst, title: "Skin cyst",
+    completeCitation: "NHS website editorial team. Skin cyst. Reviewed 9 May 2023; displayed next review due 9 May 2026. Accessed 10 October 2026.", organizationOrJournal: "NHS website",
+    authors: ["NHS website editorial team"], publicationYear: 2023, publicationDateNote: "The displayed review-due date has passed; no completed 2026 update is assumed.",
+    officialUrl: "https://www.nhs.uk/conditions/skin-cyst/", sourceClass: "government_guidance", licenseLabel: ogl,
+    reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: oglNotes, licenseUrl: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", termsUrl: "https://www.nhs.uk/our-policies/terms-and-conditions/",
+    authorityAssessment: "National patient information corroborating slow growth, a central dark spot and possible inflammation. Broad skin-cyst page, not a definitive epidermoid-versus-pilar diagnostic guideline.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.ascrsHemorrhoids, title: "Hemorrhoids",
+    completeCitation: "American Society of Colon and Rectal Surgeons. Hemorrhoids. Public patient-education page; undated. Accessed 10 October 2026.", organizationOrJournal: "American Society of Colon and Rectal Surgeons",
+    authors: ["American Society of Colon and Rectal Surgeons"], publicationYear: null, publicationDateNote: "No article publication/review date is displayed; site copyright year is not substituted.",
+    officialUrl: "https://www.fascrs.org/Web/Patients/Diseases-and-Conditions/A-Z/Hemorrhoids.aspx", sourceClass: "open_educational_resource",
+    licenseLabel: "Copyright ASCRS; public patient education, no open license", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted,
+    termsUrl: "https://www.fascrs.org/Web/My-ASCRS/ASCRS-Access-to-and-Use-of-Works-Policy.aspx",
+    authorityAssessment: "Specialist society patient education directly supporting an external clot and painful external lump; not represented as the 2024 formal hemorrhoid guideline. Recognition only, with no treatment window or excision rule.",
+    usageRole: "evidence", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.niddkHemorrhoids, title: "Symptoms & Causes of Hemorrhoids",
+    completeCitation: "National Institute of Diabetes and Digestive and Kidney Diseases. Symptoms & Causes of Hemorrhoids. Last reviewed October 2016. Accessed 10 October 2026.", organizationOrJournal: "NIDDK / National Institutes of Health",
+    authors: ["National Institute of Diabetes and Digestive and Kidney Diseases"], publicationYear: 2016,
+    officialUrl: "https://www.niddk.nih.gov/health-information/digestive-diseases/hemorrhoids/symptoms-causes", sourceClass: "government_guidance",
+    licenseLabel: "Original federal text generally public domain; NIDDK exceptions and attribution conditions apply", reuseStatus: "public_domain_conditions_apply", reuseNotes: federalNotes, termsUrl: "https://www.niddk.nih.gov/copyright",
+    authorityAssessment: "Government recognition information: tender anal-margin lumps and the distinction from internal hemorrhoid symptoms. Older review date is explicit. Does not establish that every anal symptom is a hemorrhoid or support a procedural treatment choice.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.nhsItch, title: "Itchy bottom",
+    completeCitation: "NHS website editorial team. Itchy bottom. Reviewed 3 October 2023; displayed next review due 3 October 2026. Accessed 10 October 2026.", organizationOrJournal: "NHS website",
+    authors: ["NHS website editorial team"], publicationYear: 2023, publicationDateNote: "Review-due date has passed; a completed 2026 update is not assumed.",
+    officialUrl: "https://www.nhs.uk/symptoms/itchy-anus/", sourceClass: "government_guidance", licenseLabel: ogl,
+    reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: oglNotes, licenseUrl: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", termsUrl: "https://www.nhs.uk/our-policies/terms-and-conditions/",
+    authorityAssessment: "National patient-care guidance supports gentle cleansing/drying, avoiding irritants and reassessment. Not a specialist diagnostic algorithm or source for a medication regimen.",
+    usageRole: "both", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.ascrsItch, title: "Pruritus Ani",
+    completeCitation: "American Society of Colon and Rectal Surgeons. Pruritus Ani. Public patient-education page; undated. Accessed 10 October 2026.", organizationOrJournal: "American Society of Colon and Rectal Surgeons",
+    authors: ["American Society of Colon and Rectal Surgeons"], publicationYear: null, publicationDateNote: "No article publication/review date displayed.",
+    officialUrl: "https://fascrs.org/Web/Web/Patients/Diseases-and-Conditions/A-Z/Pruritus-Ani.aspx", sourceClass: "open_educational_resource",
+    licenseLabel: "Copyright ASCRS; no open license", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://www.fascrs.org/Web/My-ASCRS/ASCRS-Access-to-and-Use-of-Works-Policy.aspx",
+    authorityAssessment: "Society education corroborates examination, irritant avoidance and gentle water cleansing/drying. Its permissive mention of baby wipes is not generalized to fragranced wipes. No numerical follow-up timetable or steroid regimen is adopted.",
+    usageRole: "both", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.esgePrep, title: "Bowel preparation for colonoscopy: ESGE Guideline - Update 2019",
+    completeCitation: "Hassan C, East J, Radaelli F, et al. Bowel preparation for colonoscopy: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2019. Endoscopy. 2019;51(8):775-794. doi:10.1055/a-0959-0505. Full author list retained in authors. Accessed 10 October 2026.",
+    organizationOrJournal: "ESGE / Endoscopy",
+    authors: ["Cesare Hassan", "James East", "Franco Radaelli", "Cristiano Spada", "Robert Benamouzig", "Raf Bisschops", "Michael Bretthauer", "Evelien Dekker", "Mario Dinis-Ribeiro", "Monika Ferlitsch", "Lorenzo Fuccio", "Halim Awadie", "Ian Gralnek", "Rodrigo Jover", "Michal F. Kaminski", "Maria Pellisé", "Konstantinos Triantafyllou", "Giuseppe Vanella", "Carolina Mangas-Sanjuan", "Leonardo Frazzoni", "Jeanin E. Van Hooft", "Jean-Marc Dumonceau"], publicationYear: 2019,
+    doi: "10.1055/a-0959-0505", officialUrl: "https://www.esge.com/assets/downloads/pdfs/guidelines/2019_a_0959_0505.pdf", sourceClass: "professional_society_guideline",
+    licenseLabel: "Copyright ESGE / Thieme; all rights reserved", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://www.esge.com/privacy-policy",
+    authorityAssessment: "Official guideline's inadequate-preparation section supports repeating an inadequate examination and reviewing reasons for failure. Current society catalog source, corroborated by a 2025 US summary. Same/next-day scheduling evidence is limited/conflicting and is withheld.",
+    usageRole: "evidence", accessMethod: "primary_guideline_pdf_targeted_read",
+  },
+  {
+    id: S.acgPrepSummary, title: "Optimizing Bowel Preparation for Colonoscopy: Insights from the USMSTF Recommendations",
+    completeCitation: "Hagen R, Anderson JC. Optimizing Bowel Preparation for Colonoscopy: Insights from the USMSTF Recommendations. American College of Gastroenterology, Evidence-Based GI. 16 April 2025. Accessed 10 October 2026.", organizationOrJournal: "American College of Gastroenterology / Evidence-Based GI",
+    authors: ["Rachael Hagen", "Joseph C. Anderson"], publicationYear: 2025, officialUrl: "https://gi.org/journals-publications/ebgi/anderson_hagen_apr2025/", sourceClass: "open_educational_resource",
+    licenseLabel: "Copyright ACG; public society summary, no open license", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://gi.org/privacy-policy/",
+    authorityAssessment: "Directly read 2025 society summary of USMSTF consensus; not the underlying full primary guideline. Corroborates repeat examination when preparation cannot support standard screening/surveillance and tailored instructions. Cases exclude an adequate distal examination treated as flexible sigmoidoscopy.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.esgePolypectomy, title: "Colorectal polypectomy and endoscopic mucosal resection: ESGE Guideline - Update 2024",
+    completeCitation: "Ferlitsch M, Hassan C, Bisschops R, et al. Colorectal polypectomy and endoscopic mucosal resection: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2024. Endoscopy. 2024;56(7):516-545. Published online 26 April 2024. doi:10.1055/a-2304-3219. PMID:38670139. Full author list retained in authors. Accessed 10 October 2026.",
+    organizationOrJournal: "ESGE / Endoscopy",
+    authors: ["Monika Ferlitsch", "Cesare Hassan", "Raf Bisschops", "Pradeep Bhandari", "Mário Dinis-Ribeiro", "Mauro Risio", "Gregorios A. Paspatis", "Alan Moss", "Diogo Libânio", "Vincente Lorenzo-Zúñiga", "Andrei M. Voiosu", "Matthew D. Rutter", "Maria Pellisé", "Leon M. G. Moons", "Andreas Probst", "Halim Awadie", "Arnaldo Amato", "Yoji Takeuchi", "Alessandro Repici", "Gabriel Rahmi", "Hugo U. Koecklin", "Eduardo Albéniz", "Lisa-Maria Rockenbauer", "Elisabeth Waldmann", "Helmut Messmann", "Konstantinos Triantafyllou", "Rodrigo Jover", "Ian M. Gralnek", "Evelien Dekker", "Michael J. Bourke"], publicationYear: 2024,
+    doi: "10.1055/a-2304-3219", pmid: "38670139", officialUrl: "https://www.esge.com/assets/downloads/pdfs/guidelines/2024_a-2304-3219.pdf", sourceClass: "professional_society_guideline",
+    licenseLabel: "Copyright ESGE / Thieme; all rights reserved", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://www.esge.com/privacy-policy",
+    authorityAssessment: "Current official guideline, sections 7.1/7.2: preferred cold-snare technique for diminutive/small nonpedunculated polyps and forceps limitations. Sole adequate directly read technique source in this batch; inaccessible independent sources are not counted. No copied resection algorithm, exact margin, complication frequency or antithrombotic rule.",
+    usageRole: "evidence", accessMethod: "primary_guideline_pdf_targeted_read",
+  },
+  {
+    id: S.esgeBarrett, title: "Diagnosis and management of Barrett esophagus: ESGE Guideline",
+    completeCitation: "Weusten BLAM, Bisschops R, Dinis-Ribeiro M, et al. Diagnosis and management of Barrett esophagus: European Society of Gastrointestinal Endoscopy (ESGE) Guideline. Endoscopy. 2023;55(12):1124-1146. Published online 9 October 2023. doi:10.1055/a-2176-2440. PMID:37813356. Full author list retained in authors. Accessed 10 October 2026.",
+    organizationOrJournal: "ESGE / Endoscopy",
+    authors: ["Bas L. A. M. Weusten", "Raf Bisschops", "Mario Dinis-Ribeiro", "Massimiliano di Pietro", "Oliver Pech", "Manon C. W. Spaander", "Francisco Baldaque-Silva", "Maximilien Barret", "Emmanuel Coron", "Glòria Fernández-Esparrach", "Rebecca C. Fitzgerald", "Marnix Jansen", "Manol Jovani", "Ines Marques-de-Sa", "Arti Rattan", "W. Keith Tan", "Eva P. D. Verheij", "Pauline A. Zellenrath", "Konstantinos Triantafyllou", "Roos E. Pouw"], publicationYear: 2023,
+    doi: "10.1055/a-2176-2440", pmid: "37813356", officialUrl: "https://www.esge.com/assets/downloads/pdfs/guidelines/2023_a-2176-2440.pdf", sourceClass: "professional_society_guideline",
+    licenseLabel: "Copyright ESGE / Thieme; all rights reserved", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://www.esge.com/privacy-policy",
+    authorityAssessment: "Official guideline supports surveillance of established Barrett and avoiding prophylactic ablation without dysplasia. Cases exclude an irregular Z-line, visible neoplasia and a patient unsuitable for surveillance/treatment. Independent NIDDK corroborates surveillance; the no-prophylactic-ablation recommendation has this guideline as sole direct source.",
+    usageRole: "evidence", accessMethod: "primary_guideline_pdf_targeted_read",
+  },
+  {
+    id: S.niddkBarrett, title: "Diagnosis of Barrett's Esophagus",
+    completeCitation: "National Institute of Diabetes and Digestive and Kidney Diseases. Diagnosis of Barrett's Esophagus. Last reviewed August 2024. Accessed 10 October 2026.", organizationOrJournal: "NIDDK / National Institutes of Health",
+    authors: ["National Institute of Diabetes and Digestive and Kidney Diseases"], publicationYear: 2024,
+    officialUrl: "https://www.niddk.nih.gov/health-information/digestive-diseases/barretts-esophagus/diagnosis", sourceClass: "government_guidance",
+    licenseLabel: "Original federal text generally public domain; NIDDK exceptions apply", reuseStatus: "public_domain_conditions_apply", reuseNotes: federalNotes, termsUrl: "https://www.niddk.nih.gov/copyright",
+    authorityAssessment: "Current national education independently corroborates repeat endoscopy with biopsy as surveillance, with frequency individualized. Does not independently establish an ablation recommendation or a universal interval.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.niddkColonoscopy, title: "Colonoscopy",
+    completeCitation: "National Institute of Diabetes and Digestive and Kidney Diseases. Colonoscopy. Last reviewed August 2023. Accessed 10 October 2026.", organizationOrJournal: "NIDDK / National Institutes of Health",
+    authors: ["National Institute of Diabetes and Digestive and Kidney Diseases"], publicationYear: 2023,
+    officialUrl: "https://www.niddk.nih.gov/health-information/diagnostic-tests/colonoscopy", sourceClass: "government_guidance",
+    licenseLabel: "Original federal text generally public domain; NIDDK exceptions apply", reuseStatus: "public_domain_conditions_apply", reuseNotes: federalNotes, termsUrl: "https://www.niddk.nih.gov/copyright",
+    authorityAssessment: "Government procedure information supports arranging a ride because sedation/anesthesia impairs immediate driving. Used for the shared transport safety principle, not a fixed duration or a discharge fitness score.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.glosSedation, title: "Discharge advice following a gastroscopy with sedation",
+    completeCitation: "Gloucestershire Hospitals NHS Foundation Trust. Discharge advice following a gastroscopy with sedation. Patient leaflet GHPI1518_03_26, March 2026; review due March 2029. Accessed 10 October 2026.", organizationOrJournal: "Gloucestershire Hospitals NHS Foundation Trust",
+    authors: ["Gloucestershire Hospitals NHS Foundation Trust"], publicationYear: 2026, publicationDateNote: "Date comes from the displayed leaflet code/date, not its future review date.",
+    officialUrl: "https://www.gloshospitals.nhs.uk/your-visit/patient-information-leaflets/discharge-advice-following-a-gastroscopy-with-sedation/", sourceClass: "government_guidance",
+    licenseLabel: "Copyright Gloucestershire Hospitals NHS Foundation Trust; no open license identified", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: targeted, termsUrl: "https://www.gloshospitals.nhs.uk/terms-and-conditions/",
+    authorityAssessment: "Current trust gastroscopy discharge advice: responsible adult collection/support and residual sedation effects. Applies directly to the gastroscopy variants; colonoscopy government material independently supports the transport boundary. No fixed number of hours is authored.",
+    usageRole: "evidence", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.cdcAllergy, title: "Clinical Features of Penicillin Allergy",
+    completeCitation: "Centers for Disease Control and Prevention. Clinical Features of Penicillin Allergy. Antibiotic Prescribing and Use. 25 August 2025. Accessed 10 October 2026.", organizationOrJournal: "CDC / National Center for Emerging and Zoonotic Infectious Diseases",
+    authors: ["Centers for Disease Control and Prevention"], publicationYear: 2025, officialUrl: "https://www.cdc.gov/antibiotic-use/hcp/clinical-signs/index.html", sourceClass: "government_guidance",
+    licenseLabel: "Original federal agency text generally public domain; CDC attribution, exceptions and nonendorsement conditions apply", reuseStatus: "public_domain_conditions_apply", reuseNotes: federalNotes, termsUrl: "https://www.cdc.gov/other/agencymaterials.html",
+    authorityAssessment: "Current government clinician guidance directly supports reaction history and risk assessment before selecting evaluation. No prevalence numbers, oral-challenge protocol, medication choice or universal delabeling rule is authored.",
+    usageRole: "evidence", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.allergyReview, title: "Management of Penicillin Allergy in the Perioperative Setting",
+    completeCitation: "Sexton ME, Kuruvilla ME. Management of Penicillin Allergy in the Perioperative Setting. Antibiotics (Basel). 2024;13(2):157. Published 5 February 2024. doi:10.3390/antibiotics13020157. PMID:38391543. Accessed 10 October 2026.", organizationOrJournal: "Antibiotics (Basel)",
+    authors: ["Mary Elizabeth Sexton", "Merin Elizabeth Kuruvilla"], publicationYear: 2024, doi: "10.3390/antibiotics13020157", pmid: "38391543",
+    officialUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10886174/", sourceClass: "narrative_review", licenseLabel: "CC BY 4.0; separately licensed reproduced third-party figures excluded",
+    reuseStatus: "cc_by_4_0", reuseNotes: `${targeted} Credit authors, DOI and CC BY 4.0. No reproduced third-party figure or algorithm is used; all wording is original.`, licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    authorityAssessment: "Eligible perioperative review corroborating structured preoperative history/risk assessment. Drug-selection guidance has changed across older and newer sources; that contested extension is withheld. This review is not a new standalone practice guideline.",
+    usageRole: "cross_check", accessMethod: "primary_html_targeted_read",
+  },
+  {
+    id: S.sheaSsi, title: "Strategies to prevent surgical site infections in acute-care hospitals: 2022 Update",
+    completeCitation: "Calderwood MS, Anderson DJ, Bratzler DW, Dellinger EP, Garcia-Houchins S, Maragakis LL, Nyquist A-C, Perkins KM, Preas MA, Saiman L, Schaffzin JK, Schweizer M, Yokoe DS, Kaye KS. Strategies to prevent surgical site infections in acute-care hospitals: 2022 Update. Infect Control Hosp Epidemiol. 2023;44(5):695-720. Published 4 May 2023. doi:10.1017/ice.2023.67. PMID:37137483. Accessed 10 October 2026.",
+    organizationOrJournal: "SHEA / IDSA / APIC / Infection Control & Hospital Epidemiology",
+    authors: ["Michael S. Calderwood", "Deverick J. Anderson", "Dale W. Bratzler", "E. Patchen Dellinger", "Sylvia Garcia-Houchins", "Lisa L. Maragakis", "Ann-Christine Nyquist", "Kiran M. Perkins", "Michael Anne Preas", "Lisa Saiman", "Joshua K. Schaffzin", "Marin Schweizer", "Deborah S. Yokoe", "Keith S. Kaye"], publicationYear: 2023,
+    publicationDateNote: "2022 Update is the guideline title; publication year is 2023.", doi: "10.1017/ice.2023.67", pmid: "37137483", officialUrl: "https://stacks.cdc.gov/view/cdc/155079/cdc_155079_DS1.pdf", sourceClass: "professional_society_guideline",
+    licenseLabel: "CC BY 4.0 (article license verified in Europe PMC XML; not public domain merely because CDC hosts a copy)", reuseStatus: "cc_by_4_0", reuseNotes: `${targeted} Credit all authors, DOI and CC BY 4.0. Original wording only; no guideline table, bundle or algorithm reproduced.`, licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    authorityAssessment: "Specialist prevention guideline, hair-preparation recommendation in essential practices section 4.5, moderate evidence. Sole adequate directly read hair-preparation source. Acute-care scope and ambulatory application require clinician review. Genital/scrotal exception is explicitly excluded from the cases.",
+    usageRole: "evidence", accessMethod: "primary_guideline_pdf_targeted_read",
+  },
+];
+
+export function sourcesForClaims(claims: EvidenceClaim[]) {
+  return rawSources.map(source => ({
+    ...NEEDS_REVIEW, ...source, accessedOn: CHECKED_ON, doi: source.doi ?? null, pmid: source.pmid ?? null,
+    evidenceClaimIds: claims.filter(claim => claim.sourceIds.includes(source.id)).map(claim => claim.id),
+  }));
+}
+export const CLINICAL_LINK_POLICY = { target: "_blank", rel: "noopener noreferrer", fetchDuringGameplay: false } as const;
+
+export const EXCLUDED_SOURCE_CHECKS = [
+  { ...NEEDS_REVIEW, id: "exclusion.variety3.nice-asa", topic: "Routine preoperative testing and PONV extensions", reason: "NICE AI-use restriction and ASA permission restriction exclude their material. These topics were not selected; no restricted clinical content was retrieved for this batch." },
+  { ...NEEDS_REVIEW, id: "exclusion.variety3.independent-polypectomy", topic: "Independent polypectomy guideline cross-check", reason: "The attempted ASGE guideline PDF and AGA recommendations page were not accessible as directly readable eligible content. Search snippets are not evidence; ESGE 2024 remains the sole adequate direct source." },
+  { ...NEEDS_REVIEW, id: "exclusion.variety3.independent-hair", topic: "Independent hair-preparation cross-check", reason: "CDC's general SSI page did not expose readable clinical text and the attempted NHS leaflet was inaccessible. Neither is used as evidence. The licensed SHEA/IDSA/APIC guideline remains the sole adequate direct source." },
+] as const;

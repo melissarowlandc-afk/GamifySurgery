@@ -1,0 +1,33 @@
+{
+  "number": 12,
+  "slug": "surgical-spool",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 12,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-f75d391c-6181-4223-814d-0fac0b9ea7c2.png",
+  "original_builtin_sha256": "696acdea8feb6f87aa631a028bd6548f269601ac01b9b049289e9b105e30d701",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/12-surgical-spool.png",
+  "raw_copy_sha256": "696acdea8feb6f87aa631a028bd6548f269601ac01b9b049289e9b105e30d701",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:25:11.492665+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/12-surgical-spool.png",
+  "output_sha256": "79fc66e4d097468a83cd3b5cace336d54df416fa23dc9f126914647f5e6baea9",
+  "preview": "preview-60/12-surgical-spool.png",
+  "preview_sha256": "c98ec3792246d1e801aaca7d0f603a8da2b42fb11457c3c34826eac2f4f8d377",
+  "reference_identity": null
+}

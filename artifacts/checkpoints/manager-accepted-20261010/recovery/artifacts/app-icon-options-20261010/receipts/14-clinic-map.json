@@ -1,0 +1,33 @@
+{
+  "number": 14,
+  "slug": "clinic-map",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 14,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-d225be45-f165-4c4a-b6f0-43ce16b19b21.png",
+  "original_builtin_sha256": "9bb6f752a890396e6fd8a20935b83494d59b9c5955047f5d5186ad03cf78851c",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/14-clinic-map.png",
+  "raw_copy_sha256": "9bb6f752a890396e6fd8a20935b83494d59b9c5955047f5d5186ad03cf78851c",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:28:49.362124+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/14-clinic-map.png",
+  "output_sha256": "b36e6d3ff2ee3812c2fe8eb3e90a52b747323b6f410b8b2ba914a225ac2e7516",
+  "preview": "preview-60/14-clinic-map.png",
+  "preview_sha256": "6c0d9e2ea08458569d0744c309132c7b7467e72f6554fdd78d64c318e709ab6a",
+  "reference_identity": null
+}

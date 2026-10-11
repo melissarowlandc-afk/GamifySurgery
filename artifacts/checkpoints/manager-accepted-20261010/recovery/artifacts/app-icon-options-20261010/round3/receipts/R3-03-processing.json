@@ -1,0 +1,59 @@
+{
+  "id": "R3-03",
+  "raw_path": "receipts/generated/R3-03-golden-frontage-raw.png",
+  "raw_sha256": "15ef31774c720b41be78b57d54625a6ddf89cd04931349102518173bca052846",
+  "raw_image": {
+    "format": "PNG",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB"
+  },
+  "tool_receipt": "receipts/tool/R3-03.json",
+  "icon_path": "icons/R3-03-golden-frontage.png",
+  "icon_sha256": "7d22e4caf1c68c58d221ed0aca8f27151ef8742aef7b0f3ae0ade0e49ee1e032",
+  "preview_path": "preview-60/R3-03-golden-frontage.png",
+  "preview_sha256": "334636b722a4cda8309c853e18848ce438ae801126a7027baccb1aa4fda866c6",
+  "processing": {
+    "native_grid": [
+      256,
+      256
+    ],
+    "source_edge_background_rgb": [
+      247,
+      232,
+      204
+    ],
+    "final_edge_background_rgb": [
+      244,
+      233,
+      207
+    ],
+    "background_cleanup": "four-connected edge flood; max channel distance 36 from edge median",
+    "background_pixels_flattened_at_native_grid": 19847,
+    "detached_background_speck_pixels_removed": 0,
+    "source_subject_bbox_at_native_grid": [
+      4,
+      13,
+      252,
+      231
+    ],
+    "fitted_content_size_at_native_grid": [
+      208,
+      183
+    ],
+    "fitted_content_position_at_native_grid": [
+      24,
+      36
+    ],
+    "content_bbox_at_1024": [
+      96,
+      144,
+      928,
+      876
+    ],
+    "color_policy": "generated RGB colors preserved on the native grid; no palette reduction or dithering; exact background restored",
+    "resize_filter": "nearest-neighbor"
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "status": "original local composition from approved game artwork",
+  "shell": "apps/player/public/art/rooms/front-desk-v4/front-desk-shell-v4.png",
+  "furniture_atlas": "apps/player/public/art/rooms/front-desk-v2/front-desk-components-v2.png",
+  "chair_atlas": "apps/player/public/art/rooms/level-1-v1/waiting-fixtures-v1.png",
+  "source_rects_xyxy": {
+    "frontDesk": [
+      476,
+      78,
+      996,
+      392
+    ],
+    "filingCabinet": [
+      48,
+      19,
+      257,
+      393
+    ],
+    "secretaryChair": [
+      293,
+      56,
+      445,
+      328
+    ],
+    "waterCooler": [
+      1064,
+      184,
+      1215,
+      508
+    ],
+    "wasteBin": [
+      72,
+      420,
+      184,
+      564
+    ],
+    "noticeBoard": [
+      299,
+      401,
+      504,
+      568
+    ],
+    "wallClock": [
+      651,
+      439,
+      764,
+      542
+    ],
+    "visitorChair": [
+      865,
+      681,
+      1097,
+      935
+    ]
+  },
+  "source_floor_xywh": [
+    212,
+    339,
+    832,
+    622
+  ],
+  "floor_fixture_placements": [
+    {
+      "sprite": "filingCabinet",
+      "position": [
+        208,
+        152
+      ],
+      "size": [
+        174,
+        311
+      ]
+    },
+    {
+      "sprite": "waterCooler",
+      "position": [
+        869,
+        286
+      ],
+      "size": [
+        83,
+        177
+      ]
+    },
+    {
+      "sprite": "wasteBin",
+      "position": [
+        967,
+        372
+      ],
+      "size": [
+        71,
+        91
+      ]
+    },
+    {
+      "sprite": "secretaryChair",
+      "position": [
+        503,
+        501
+      ],
+      "size": [
+        83,
+        149
+      ]
+    },
+    {
+      "sprite": "frontDesk",
+      "position": [
+        385,
+        581
+      ],
+      "size": [
+        319,
+        193
+      ]
+    },
+    {
+      "sprite": "visitorChair",
+      "position": [
+        894,
+        778
+      ],
+      "size": [
+        133,
+        146
+      ]
+    }
+  ],
+  "rear_wall_decor": "FRONT_DESK_V4_SHELL_LAYOUT",
+  "entry_mat": "roomTouchups.ts room.front_desk; #5b4a3b; 2.12,3.40,.76,.46 tiles",
+  "visitor_chair": "approved southeast crop mirrored to face into room",
+  "notes": "No people. Blank note/pin blocks replace tiny chart-like marks. Reference only; final icons are generated edits.",
+  "reference_sha256": "56df46c0d7feea01b8f3be1eb2b31767a43076e674a4c8e78e3c236935ee1e0c"
+}

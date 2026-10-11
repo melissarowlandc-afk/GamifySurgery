@@ -1,0 +1,33 @@
+{
+  "number": 5,
+  "slug": "scalpel",
+  "status": "generated_and_postprocessed_concept_only",
+  "tool": "image_gen.imagegen (built-in)",
+  "prompt_file": "receipts/prompts.json",
+  "prompt_number": 5,
+  "original_builtin_path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12704-ff61-72a1-803b-fd9eab538ce1\\exec-d89d0e2f-ce59-4b50-8ad3-e1b9887e395d.png",
+  "original_builtin_sha256": "5b1f2ad88c5a24ecbe74877cde61872a1560eee7a8e35e65894317f1054ff7b8",
+  "original_size": [
+    1254,
+    1254
+  ],
+  "original_mode": "RGB",
+  "raw_copy": "receipts/generated/05-scalpel.png",
+  "raw_copy_sha256": "5b1f2ad88c5a24ecbe74877cde61872a1560eee7a8e35e65894317f1054ff7b8",
+  "raw_copy_note": "Byte-for-byte copy of the built-in generated PNG; original is preserved at the default tool location.",
+  "postprocessed_at_utc": "2026-10-10T18:21:34.305737+00:00",
+  "processing": [
+    "Composite any alpha onto opaque cream; retain full generated image.",
+    "BOX downsample to a 52x52 logical-pixel drawing.",
+    "Map to 16 game colors with no dither (founder: 32 adaptive colors to preserve existing skin/hair).",
+    "Snap near-background colors to the specified solid game backdrop.",
+    "Center at (6,6) on opaque 64x64 canvas.",
+    "Nearest-neighbor enlarge 16x to 1024x1024 RGB PNG.",
+    "Nearest-neighbor downscale the final square to 60x60 RGB PNG."
+  ],
+  "output": "icons/05-scalpel.png",
+  "output_sha256": "ee450bf58a920e2d169b61642bec18be7497274e7187c60cf876754d87a8ce1d",
+  "preview": "preview-60/05-scalpel.png",
+  "preview_sha256": "8c28b028cab778c35006a14943213578f557b300e4bf449533f36d1b39ab9203",
+  "reference_identity": null
+}

@@ -1,0 +1,50 @@
+{
+  "task_date": "2026-10-10",
+  "generation_mode": "built-in image_gen; one call per distinct concept",
+  "status": "concept_only; no app integration or owner approval implied",
+  "write_scope": "artifacts/app-icon-options-20261010/",
+  "no_git_installs_web": true,
+  "references_read": [
+    "apps/player/public/art/README.md",
+    "apps/player/public/art/characters/founders-v4/manifest.json",
+    "apps/player/public/art/characters/founders-v4/founders-portrait-v4.png",
+    "apps/player/public/art/environment/README.md",
+    "apps/player/public/art/environment/clinic-environment-atlas-v1.png",
+    "apps/player/public/art/rooms/level-1-v1/examination-fixtures-v1.png",
+    "apps/player/src/ui/OpeningSequence.tsx",
+    "apps/player/src/ui/OpeningSequence.css",
+    "apps/player/src/styles/tokens.css",
+    "apps/player/src/styles/global.css",
+    "apps/player/src/content/founderAppearancePresets.ts",
+    "AGENTS.md",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md (opening manager status)"
+  ],
+  "palette": [
+    "#232720",
+    "#4c5449",
+    "#7e8476",
+    "#666d60",
+    "#b6b9aa",
+    "#f0eddd",
+    "#faf7e8",
+    "#e0ded0",
+    "#cac8bb",
+    "#999e91"
+  ],
+  "fonts": {
+    "reading": "Atkinson Hyperlegible, Segoe UI",
+    "pixel": "Courier New, Lucida Console"
+  },
+  "founder_reference": {
+    "id": "founder.04",
+    "name": "The Rounds Doctor",
+    "source": "apps/player/public/art/characters/founders-v4/founders-portrait-v4.png",
+    "crop_xyxy": [
+      400,
+      0,
+      512,
+      176
+    ]
+  },
+  "post_processing_authorized": "User explicitly requested post-processing, resizing, previews and contact sheet. Python/Pillow is already installed."
+}
