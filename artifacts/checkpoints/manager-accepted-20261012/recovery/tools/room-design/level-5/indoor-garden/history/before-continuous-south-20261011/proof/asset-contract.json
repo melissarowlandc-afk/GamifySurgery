@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 2,
+  "mode": "painted",
+  "aspectPreserved": true,
+  "sharedFootprints": true,
+  "assets": {
+    "base-north1": {
+      "slot": "north1",
+      "slots": [
+        "north1"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.408
+      ],
+      "ground": [
+        0.5,
+        0.35
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ]
+    },
+    "base-trellis1": {
+      "slot": "trellis1",
+      "slots": [
+        "trellis1"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.96
+      ],
+      "ground": [
+        0.5,
+        -0.75
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N1"
+      ]
+    },
+    "base-north2": {
+      "slot": "north2",
+      "slots": [
+        "north2"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.408
+      ],
+      "ground": [
+        1.5,
+        0.35
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "owners": [
+        "N2"
+      ]
+    },
+    "base-trellis2": {
+      "slot": "trellis2",
+      "slots": [
+        "trellis2"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.96
+      ],
+      "ground": [
+        1.5,
+        -0.75
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N2"
+      ]
+    },
+    "base-north3": {
+      "slot": "north3",
+      "slots": [
+        "north3"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.408
+      ],
+      "ground": [
+        2.5,
+        0.35
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "owners": [
+        "N3"
+      ]
+    },
+    "base-trellis3": {
+      "slot": "trellis3",
+      "slots": [
+        "trellis3"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.96
+      ],
+      "ground": [
+        2.5,
+        -0.75
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    },
+    "base-north4": {
+      "slot": "north4",
+      "slots": [
+        "north4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.408
+      ],
+      "ground": [
+        3.5,
+        0.35
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 3,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "owners": [
+        "N4",
+        "EA"
+      ]
+    },
+    "base-trellis4": {
+      "slot": "trellis4",
+      "slots": [
+        "trellis4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.96
+      ],
+      "ground": [
+        3.5,
+        -0.75
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N4"
+      ]
+    },
+    "base-west": {
+      "slot": "west1",
+      "slots": [
+        "west1",
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.6,
+        1.7
+      ],
+      "ground": [
+        0.28,
+        0.98
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 0.02,
+        "width": 0.48,
+        "height": 0.96
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ]
+    },
+    "base-east": {
+      "slot": "east1",
+      "slots": [
+        "east1",
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.6,
+        1.7
+      ],
+      "ground": [
+        3.72,
+        0.98
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 3.52,
+        "top": 0.02,
+        "width": 0.48,
+        "height": 0.96
+      },
+      "owners": [
+        "N4",
+        "EA"
+      ]
+    },
+    "base-front": {
+      "slot": "frontLeft",
+      "slots": [
+        "frontLeft",
+        "frontRight"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        704,
+        360
+      ],
+      "renderSizeTiles": [
+        1.4666666667,
+        0.75
+      ],
+      "ground": [
+        0.73,
+        3.95
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 3.58,
+        "width": 1.46,
+        "height": 0.37
+      },
+      "owners": [
+        "S1",
+        "S2",
+        "WD"
+      ]
+    },
+    "base-fountain": {
+      "slot": "fountain",
+      "slots": [
+        "fountain"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        864,
+        816
+      ],
+      "renderSizeTiles": [
+        1.8,
+        1.7
+      ],
+      "ground": [
+        2,
+        2.2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1.2,
+        "top": 1.16,
+        "width": 1.6,
+        "height": 1.04
+      },
+      "owners": []
+    },
+    "base-chairEast": {
+      "slot": "leftSeat",
+      "slots": [
+        "leftSeat"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        480,
+        576
+      ],
+      "renderSizeTiles": [
+        1,
+        1.2
+      ],
+      "ground": [
+        1,
+        3.08
+      ],
+      "seat": [
+        1,
+        2.7032740435345906
+      ],
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.64,
+        "top": 2.68,
+        "width": 0.72,
+        "height": 0.4
+      },
+      "owners": []
+    },
+    "base-chairWest": {
+      "slot": "rightSeat",
+      "slots": [
+        "rightSeat"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        480,
+        576
+      ],
+      "renderSizeTiles": [
+        1,
+        1.2
+      ],
+      "ground": [
+        3,
+        3.08
+      ],
+      "seat": [
+        3,
+        2.7122048865197304
+      ],
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.64,
+        "top": 2.68,
+        "width": 0.72,
+        "height": 0.4
+      },
+      "owners": []
+    },
+    "base-path": {
+      "slot": "stonePath",
+      "slots": [
+        "stonePath"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        1088,
+        1088
+      ],
+      "renderSizeTiles": [
+        4.044609665427509,
+        4.044609665427509
+      ],
+      "ground": [
+        2,
+        2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": [
+        2,
+        2
+      ],
+      "footprint": null,
+      "owners": []
+    }
+  }
+}

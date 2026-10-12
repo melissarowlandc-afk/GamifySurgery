@@ -1,0 +1,21 @@
+{
+  "id": "bench",
+  "prompt": "prompts/v1/bench.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e as C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-6210ed19-c2a3-488e-af2f-4d13ab746853.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-6210ed19-c2a3-488e-af2f-4d13ab746853.png",
+  "selected": true,
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction. Asset type: padded staff rest bench derived from this Staff Gym concept, transparent game sprite. Input image is the edit target and exact design source. Extract/redraw ONLY the empty dark teal padded honeywood-frame flat gym bench in the lower-left half. Retain exactly the concept's long north-to-south bench orientation, visible cushion/top, small south/front end toward the camera, honey wood support frame, fine dark raster outlines and elevated-front orthographic camera. Ordinary chair height for an adult seated on the SOUTH/front end facing SOUTH, legs hanging normally. Its front/south cushion seating contact must be clear; a small camera-side wooden crossrail and front legs provide separable foreground occluder pixels below the cushion, while the cushion is unobstructed. No backrest, no legrest, no wheels, no weight bar, no items on the seat, no person. Entire bench including feet unclipped with modest transparent padding, no surrounding floor or cast shadow. Same original exact game raster/pixel-cluster art, no diagonal isometric view, no style change, no text/brands/watermark. True transparent alpha background.",
+    "referenced_image_paths": [
+      "tools/room-design/level-5/staff-gym/concept/staff-gym-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "inputImages": [
+    "concept/staff-gym-concept.png"
+  ],
+  "original": "originals/v1/bench.png",
+  "originalSha256": "eceb9aee1ae658fe5a7f54b9c17d3432604a3146e7614488106f1cfa797fbfc5",
+  "promptSha256": "c44b012530f614b15a32a44d83704939ad3dc3549b6f174bfb669d1e2747cc28"
+}

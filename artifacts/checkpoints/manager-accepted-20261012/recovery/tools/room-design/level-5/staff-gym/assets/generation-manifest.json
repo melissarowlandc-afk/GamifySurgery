@@ -1,0 +1,649 @@
+{
+  "schemaVersion": 2,
+  "room": "staff-gym",
+  "tool": "image_gen.imagegen",
+  "builtInCalls": 12,
+  "concept": {
+    "file": "concept/staff-gym-concept.png",
+    "sha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+    "prompt": "concept/prompt.txt",
+    "promptSha256": "60d89bf04878d18446e5260b61acfc603ab55c1773cf1612924fb376b6094161",
+    "receipt": "concept/generation-receipt.json",
+    "receiptSha256": "0eec00518618e0344c30ad411dc6082c943f91029b4931b880d7daa68913bc74"
+  },
+  "calls": [
+    {
+      "id": "rear",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-68d3bf31-e3b9-49a5-9f4f-75bfeb2c01ec.png",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "bench",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-6210ed19-c2a3-488e-af2f-4d13ab746853.png",
+      "receipt": "assets/originals/v1/bench.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "mirror",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-da495e37-f710-496d-a02b-92c81aa54191.png",
+      "receipt": "assets/originals/v1/mirror.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "west",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-c02a6ff3-1bad-47ba-b319-0f4cbb7290be.png",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "east",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-f90339ac-7084-4381-b9b7-fe2c36bd6747.png",
+      "receipt": "assets/originals/v1/east.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "mat",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-cb00250e-907f-4e51-aee5-46345a4d74d2.png",
+      "receipt": "assets/originals/v1/mat.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "ball",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-5f5d775c-2edf-4b51-82f0-b8dc725aa2fa.png",
+      "receipt": "assets/originals/v1/ball.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "roller",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-5833e269-8898-4f09-a240-ee922a31a066.png",
+      "receipt": "assets/originals/v1/roller.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "front",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-53fcacff-4856-469a-89ee-69635865259a.png",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "floor",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-f8bbdc8a-2803-4f2e-9dde-0f669a4c93ef.png",
+      "receipt": "assets/originals/v1/floor.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "hooks",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-66ebd094-c755-4077-b0d9-81d1f3b6e3ed.png",
+      "receipt": "assets/originals/v1/hooks.receipt.json",
+      "selected": true
+    }
+  ],
+  "assets": [
+    {
+      "id": "base-north1",
+      "slot": "north1",
+      "slots": [
+        "north1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "832e0669c55eab40e2b1ed5ca1046530957cbe17f438f00d22fa7e7eadb37539",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "4eb54e1d28d0d22fd1902567d2db228e85d6f21b5fe00876e672b451aca2c1d1",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "5e9d93725e98a0a8afa883e697c86cf0c93ff0f5bdc10960df75a5f9a1c70431",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "rear",
+      "sourceRegion": [
+        46,
+        0,
+        501,
+        752
+      ],
+      "sourcePoints": {
+        "floor": [
+          250.5,
+          710
+        ]
+      },
+      "uniformScale": 0.998003992015968
+    },
+    {
+      "id": "base-mirror1",
+      "slot": "mirror1",
+      "slots": [
+        "mirror1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/mirror.png",
+      "originalSha256": "18d6182b6f086f3b6213e240448f3799143848199fcf3e46f29d86542cf01f14",
+      "prompt": "assets/prompts/v1/mirror.txt",
+      "promptSha256": "41eba8f144ff04603d2198a91c25f829cd7eb7c35fc05ec143a8a302f9fe28b0",
+      "receipt": "assets/originals/v1/mirror.receipt.json",
+      "receiptSha256": "389eb6abf401144139da578e0efbc8672b2719a9696c0daa1caef57e4708cc7d",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "mirror",
+      "sourceRegion": [
+        149,
+        0,
+        469,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          234.5,
+          168
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-north2",
+      "slot": "north2",
+      "slots": [
+        "north2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "832e0669c55eab40e2b1ed5ca1046530957cbe17f438f00d22fa7e7eadb37539",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "4eb54e1d28d0d22fd1902567d2db228e85d6f21b5fe00876e672b451aca2c1d1",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "5e9d93725e98a0a8afa883e697c86cf0c93ff0f5bdc10960df75a5f9a1c70431",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "rear",
+      "sourceRegion": [
+        547,
+        0,
+        501,
+        752
+      ],
+      "sourcePoints": {
+        "floor": [
+          250.5,
+          710
+        ]
+      },
+      "uniformScale": 0.998003992015968
+    },
+    {
+      "id": "base-mirror2",
+      "slot": "mirror2",
+      "slots": [
+        "mirror2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/mirror.png",
+      "originalSha256": "18d6182b6f086f3b6213e240448f3799143848199fcf3e46f29d86542cf01f14",
+      "prompt": "assets/prompts/v1/mirror.txt",
+      "promptSha256": "41eba8f144ff04603d2198a91c25f829cd7eb7c35fc05ec143a8a302f9fe28b0",
+      "receipt": "assets/originals/v1/mirror.receipt.json",
+      "receiptSha256": "389eb6abf401144139da578e0efbc8672b2719a9696c0daa1caef57e4708cc7d",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "mirror",
+      "sourceRegion": [
+        618,
+        0,
+        469,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          234.5,
+          168
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-north3",
+      "slot": "north3",
+      "slots": [
+        "north3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "832e0669c55eab40e2b1ed5ca1046530957cbe17f438f00d22fa7e7eadb37539",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "4eb54e1d28d0d22fd1902567d2db228e85d6f21b5fe00876e672b451aca2c1d1",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "5e9d93725e98a0a8afa883e697c86cf0c93ff0f5bdc10960df75a5f9a1c70431",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "rear",
+      "sourceRegion": [
+        1048,
+        0,
+        500,
+        752
+      ],
+      "sourcePoints": {
+        "floor": [
+          250,
+          710
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-mirror3",
+      "slot": "mirror3",
+      "slots": [
+        "mirror3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/mirror.png",
+      "originalSha256": "18d6182b6f086f3b6213e240448f3799143848199fcf3e46f29d86542cf01f14",
+      "prompt": "assets/prompts/v1/mirror.txt",
+      "promptSha256": "41eba8f144ff04603d2198a91c25f829cd7eb7c35fc05ec143a8a302f9fe28b0",
+      "receipt": "assets/originals/v1/mirror.receipt.json",
+      "receiptSha256": "389eb6abf401144139da578e0efbc8672b2719a9696c0daa1caef57e4708cc7d",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "mirror",
+      "sourceRegion": [
+        1087,
+        0,
+        469,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          234.5,
+          168
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-north4",
+      "slot": "north4",
+      "slots": [
+        "north4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "832e0669c55eab40e2b1ed5ca1046530957cbe17f438f00d22fa7e7eadb37539",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "4eb54e1d28d0d22fd1902567d2db228e85d6f21b5fe00876e672b451aca2c1d1",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "5e9d93725e98a0a8afa883e697c86cf0c93ff0f5bdc10960df75a5f9a1c70431",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "rear",
+      "sourceRegion": [
+        1548,
+        0,
+        500,
+        752
+      ],
+      "sourcePoints": {
+        "floor": [
+          250,
+          710
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-mirror4",
+      "slot": "mirror4",
+      "slots": [
+        "mirror4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/mirror.png",
+      "originalSha256": "18d6182b6f086f3b6213e240448f3799143848199fcf3e46f29d86542cf01f14",
+      "prompt": "assets/prompts/v1/mirror.txt",
+      "promptSha256": "41eba8f144ff04603d2198a91c25f829cd7eb7c35fc05ec143a8a302f9fe28b0",
+      "receipt": "assets/originals/v1/mirror.receipt.json",
+      "receiptSha256": "389eb6abf401144139da578e0efbc8672b2719a9696c0daa1caef57e4708cc7d",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "mirror",
+      "sourceRegion": [
+        1556,
+        0,
+        469,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          234.5,
+          168
+        ]
+      },
+      "uniformScale": 1
+    },
+    {
+      "id": "base-west",
+      "slot": "west2",
+      "slots": [
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/west.png",
+      "originalSha256": "e9c8a3e7d14aa355d671fda72665cd56e14f7ea5e87c679c0393e854e27575f8",
+      "prompt": "assets/prompts/v1/west.txt",
+      "promptSha256": "921415ce3f8f7099a06359352f433b60fbd46355997f3aedb06f48a453cd9c9b",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "receiptSha256": "be7dbfed289fe417a065e0e96f005cf03934bd0315a28217548cc5d0991ec267",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "west"
+    },
+    {
+      "id": "base-east",
+      "slot": "east2",
+      "slots": [
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/east.png",
+      "originalSha256": "d63631d0281d0dcb0215721696fee806c7c2d9bc595d11c36cfc79ff70cff341",
+      "prompt": "assets/prompts/v1/east.txt",
+      "promptSha256": "83093052b3eaa76244dae0195331d96644b082e97c2f3fe1a3b9b72fab82e1e9",
+      "receipt": "assets/originals/v1/east.receipt.json",
+      "receiptSha256": "41526f8f945c2a94ad71410ee863818a8baea2b8bd32f8e8e9891a4fda204c8c",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "east"
+    },
+    {
+      "id": "base-front1",
+      "slot": "front1",
+      "slots": [
+        "front1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "8318d10e1adef0e037703dedb92c0a32e9ee235428ed6d26f7be02440e5a5cf2",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "38fe9e00eb4474b2a10ebfcf241755725ca548a41209d267bc66946ddc352e26",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "6de1a4c568a761a7fc3ccdb6a14e96290b312219e9a5510ef963e6d830d91cf9",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "front",
+      "sourceRegion": [
+        64,
+        0,
+        511,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          255.5,
+          532
+        ]
+      },
+      "uniformScale": 0.9784735812133072
+    },
+    {
+      "id": "base-front2",
+      "slot": "front2",
+      "slots": [
+        "front2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "8318d10e1adef0e037703dedb92c0a32e9ee235428ed6d26f7be02440e5a5cf2",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "38fe9e00eb4474b2a10ebfcf241755725ca548a41209d267bc66946ddc352e26",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "6de1a4c568a761a7fc3ccdb6a14e96290b312219e9a5510ef963e6d830d91cf9",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "front",
+      "sourceRegion": [
+        575,
+        0,
+        511,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          255.5,
+          532
+        ]
+      },
+      "uniformScale": 0.9784735812133072
+    },
+    {
+      "id": "base-front3",
+      "slot": "front3",
+      "slots": [
+        "front3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "8318d10e1adef0e037703dedb92c0a32e9ee235428ed6d26f7be02440e5a5cf2",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "38fe9e00eb4474b2a10ebfcf241755725ca548a41209d267bc66946ddc352e26",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "6de1a4c568a761a7fc3ccdb6a14e96290b312219e9a5510ef963e6d830d91cf9",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "front",
+      "sourceRegion": [
+        1086,
+        0,
+        511,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          255.5,
+          532
+        ]
+      },
+      "uniformScale": 0.9784735812133072
+    },
+    {
+      "id": "base-front4",
+      "slot": "front4",
+      "slots": [
+        "front4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "8318d10e1adef0e037703dedb92c0a32e9ee235428ed6d26f7be02440e5a5cf2",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "38fe9e00eb4474b2a10ebfcf241755725ca548a41209d267bc66946ddc352e26",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "6de1a4c568a761a7fc3ccdb6a14e96290b312219e9a5510ef963e6d830d91cf9",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "front",
+      "sourceRegion": [
+        1597,
+        0,
+        510,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          255,
+          532
+        ]
+      },
+      "uniformScale": 0.9803921568627451
+    },
+    {
+      "id": "base-bench",
+      "slot": "benchSeat",
+      "slots": [
+        "benchSeat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/bench.png",
+      "originalSha256": "eceb9aee1ae658fe5a7f54b9c17d3432604a3146e7614488106f1cfa797fbfc5",
+      "prompt": "assets/prompts/v1/bench.txt",
+      "promptSha256": "c44b012530f614b15a32a44d83704939ad3dc3549b6f174bfb669d1e2747cc28",
+      "receipt": "assets/originals/v1/bench.receipt.json",
+      "receiptSha256": "a3c74ceb2203eb8a33dd96c2ec4997761705db85d7f74c55c0e6c0d8b6ac33df",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "bench",
+      "sourcePoints": {
+        "seat": [
+          512,
+          1054
+        ],
+        "frontRegions": [
+          [
+            397,
+            1067,
+            230,
+            54
+          ],
+          [
+            318,
+            1112,
+            78,
+            172
+          ],
+          [
+            627,
+            1110,
+            80,
+            174
+          ]
+        ],
+        "seatRisePixels": 33.64084353146853
+      }
+    },
+    {
+      "id": "base-mat",
+      "slot": "stretchMat",
+      "slots": [
+        "stretchMat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/mat.png",
+      "originalSha256": "ec1aadaa4af3cc55465f919510a8d4cac98e00df463bfc55b772cab568a37d1e",
+      "prompt": "assets/prompts/v1/mat.txt",
+      "promptSha256": "40465f1f677ce07880e21980a44a89045b38a553eebd9d43acfbe92cd107fe3c",
+      "receipt": "assets/originals/v1/mat.receipt.json",
+      "receiptSha256": "319045855e39ae42162af51352fa971b16b4e0a72c0ac915a365160539258df8",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "mat"
+    },
+    {
+      "id": "base-ball",
+      "slot": "exerciseBall",
+      "slots": [
+        "exerciseBall"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/ball.png",
+      "originalSha256": "dc4ab569bf8298d1deb981a1d58e01ab8b3e39b74ac382b59c96680a09676962",
+      "prompt": "assets/prompts/v1/ball.txt",
+      "promptSha256": "b44563608fa2915cafad0b26a0201c9f41beb7b525880bbd170b2bf268984a55",
+      "receipt": "assets/originals/v1/ball.receipt.json",
+      "receiptSha256": "c9a91ec8079ae239a72cb0f53e92478a91c3bcf662fbb849e823f60effb02249",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "ball"
+    },
+    {
+      "id": "base-roller",
+      "slot": "foamRoller",
+      "slots": [
+        "foamRoller"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/roller.png",
+      "originalSha256": "218b2dee5d93e83b09c67e1df15571cafb74eb7cfd762e011762e67364ca979b",
+      "prompt": "assets/prompts/v1/roller.txt",
+      "promptSha256": "1a963b6ede8e1e7cdc98c1a411976e0a3b56e0a8c2c814977132efccbbf1f038",
+      "receipt": "assets/originals/v1/roller.receipt.json",
+      "receiptSha256": "e30e431afd181c50168dfa561219cd173954c6a0402bdcf93acb2f4b0442a266",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "roller"
+    },
+    {
+      "id": "base-floor",
+      "slot": "rubberFloor",
+      "slots": [
+        "rubberFloor"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/floor.png",
+      "originalSha256": "9b14525d727485211831d16c5c61442bd59a0b9f53752dc51ce4c37e6c9c46f9",
+      "prompt": "assets/prompts/v1/floor.txt",
+      "promptSha256": "ffe6c3b33d3852ed98faf2279e3e703733ac183734cde074fa758f9218e87bc0",
+      "receipt": "assets/originals/v1/floor.receipt.json",
+      "receiptSha256": "6b208d57cde3a1abec8a08858d4311ea205920b962a5f2df22f08cdf9717b6ba",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "floor",
+      "sourceRegion": [
+        112,
+        110,
+        1032,
+        1032
+      ],
+      "uniformScale": 1
+    },
+    {
+      "id": "base-hooks",
+      "slot": "towelHooks",
+      "slots": [
+        "towelHooks"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/hooks.png",
+      "originalSha256": "30085307bf19e8abee3295da39aec063f31bddf13b55ccff9a03a717be918dae",
+      "prompt": "assets/prompts/v1/hooks.txt",
+      "promptSha256": "554d7f8690361e72cf6edef7d3bc132fdae61dfd296b2a615d9d4b71c770ce09",
+      "receipt": "assets/originals/v1/hooks.receipt.json",
+      "receiptSha256": "d633ce3438baa9e1a15690cea5f4386e17404de0468066908ec25258f2b959fa",
+      "conceptReferenceSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+      "source": "hooks"
+    }
+  ],
+  "ownerCornerRevision": {
+    "designRevision": 2,
+    "newBuiltInCalls": 0,
+    "sourceArtUnchanged": true,
+    "removedRearSideSections": [
+      "west1",
+      "east1"
+    ],
+    "sideDisplayUniformFactor": 0.7462686567164178,
+    "frontSideFloorEdge": 3.72
+  }
+}

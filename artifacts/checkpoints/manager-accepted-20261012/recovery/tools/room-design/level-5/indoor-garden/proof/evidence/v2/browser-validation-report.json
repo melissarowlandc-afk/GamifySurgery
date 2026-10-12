@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/indoor-garden/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "5b7e74a0fb25f9768908bbd55fbd6f7431c9a265a7bfdbf1beccdce72357e01f",
+  "checks": [
+    "Served hashes; concept beside playable; 5 upgrade, 16 one-tile door and 4 backing controls",
+    "All 11040 states / 103680 occupied routes; actual decoded alpha, served sprite/still hashes and seated layers",
+    "Actual door/bulk/upgrade/visitor controls; necessary chairs and fronts retained",
+    "Real focus, Enter, arrows, D/B and Escape keyboard events",
+    "320px layout, stacked concept and usable controls"
+  ],
+  "technical": {
+    "states": 11040,
+    "routes": 103680,
+    "occupiedRoutes": 103680,
+    "failures": [],
+    "assets": [
+      "design:ig:base-north1",
+      "design:ig:base-trellis1",
+      "design:ig:base-north2",
+      "design:ig:base-trellis2",
+      "design:ig:base-north3",
+      "design:ig:base-trellis3",
+      "design:ig:base-north4",
+      "design:ig:base-trellis4",
+      "design:ig:base-west",
+      "design:ig:base-east",
+      "design:ig:base-southLeft",
+      "design:ig:base-southRight",
+      "design:ig:base-fountain",
+      "design:ig:base-chairEast",
+      "design:ig:base-chairEast-front",
+      "design:ig:base-chairWest",
+      "design:ig:base-chairWest-front",
+      "design:ig:base-path"
+    ],
+    "layers": [
+      {
+        "id": "leftSeat",
+        "pose": "sit",
+        "direction": "east",
+        "characterId": "patient.adult.001"
+      },
+      {
+        "id": "rightSeat",
+        "pose": "sit",
+        "direction": "west",
+        "characterId": "patient.adult.007"
+      }
+    ],
+    "origin": "http://127.0.0.1:4191"
+  },
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null
+}

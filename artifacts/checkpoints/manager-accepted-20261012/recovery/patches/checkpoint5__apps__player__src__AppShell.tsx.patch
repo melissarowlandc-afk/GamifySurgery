@@ -1,0 +1,64 @@
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -3,6 +3,7 @@
+ import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
+ import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
+ import { ClinicHeadline } from "./ui/ClinicHeadline";
++import { FinishedGamePage } from "./ui/FinishedGamePage";
+ import type {
+   EmployeeDiscussionTabView,
+   EmployeeDiscussionView,
+@@ -176,6 +177,11 @@
+   onPraiseEmployee: (employeeId: string) => void;
+   onMoveFounder: (destination: GridPoint) => boolean;
+   onLevelUp: () => void;
++  onBookInspection?: () => void;
++  onCancelInspection?: () => void;
++  finishReportOpen?: boolean;
++  onViewFinishReport?: () => void;
++  onCloseFinishReport?: () => void;
+   onFastForward: () => void;
+   onAddMoney: () => void;
+   onRunEmergencyGlp1Consultation: () => void;
+@@ -287,6 +293,11 @@
+   onPraiseEmployee,
+   onMoveFounder,
+   onLevelUp,
++  onBookInspection,
++  onCancelInspection,
++  finishReportOpen,
++  onViewFinishReport,
++  onCloseFinishReport,
+   onFastForward,
+   onAddMoney,
+   onRunEmergencyGlp1Consultation,
+@@ -707,7 +718,7 @@
+         paused={paused}
+         buildMode={buildMode}
+         managementMode={managementMode}
+-        pauseLocked={buildMode || managementMode}
++        pauseLocked={buildMode || managementMode || finishReportOpen}
+         simulationSpeed={simulationSpeed}
+         onTogglePause={onTogglePause}
+         onSimulationSpeedChange={onSimulationSpeedChange}
+@@ -1045,6 +1056,9 @@
+           <GoalsPanel
+             view={progression}
+             onLevelUp={onLevelUp}
++            onBookInspection={onBookInspection}
++            onCancelInspection={onCancelInspection}
++            onViewFinishReport={onViewFinishReport}
+             onProcedureSetupAction={setPendingProcedureSetupAction}
+           />
+ 
+@@ -1119,6 +1133,10 @@
+       {showCharacterQa ? (
+         <CharacterQaGallery facility={facility} />
+       ) : null}
++      {finishReportOpen && progression.inspection?.finish && onCloseFinishReport ? <FinishedGamePage
++        key={progression.inspection.finish.report.runId} view={progression.inspection.finish}
++        bestLabel={progression.inspection.bestLabel} latestLabel={progression.inspection.latestLabel}
++        onKeepPlaying={onCloseFinishReport} onStartNewCampaign={onCreateCampaign} /> : null}
+     </div>
+   );
+ }

@@ -1,0 +1,22 @@
+--- a/apps/player/src/facility/roomUpgradeAppearance.test.ts
++++ b/apps/player/src/facility/roomUpgradeAppearance.test.ts
+@@ -11,7 +11,7 @@
+ import type { FacilityRoomView } from "./types";
+ 
+ const currentRooms = ROOM_UPGRADE_CATALOG.filter((definition) =>
+-  definition.status === "current" && definition.upgradeCosts.length > 0,
++  definition.status === "current" && definition.upgradeCosts.length > 0 && !definition.appearanceChanges,
+ );
+ type Draw = readonly unknown[];
+ 
+@@ -93,8 +93,8 @@
+     },
+   );
+ 
+-  it("honors the declared future Founder Office appearance exception without offering a room", () => {
+-    expect(getRoomDefinition("room.founder_office")).toBeNull();
++  it("honors the Founder Office appearance exception in the Level 5-only catalog", () => {
++    expect(getRoomDefinition("room.founder_office")?.unlockFacilityLevel).toBe(5);
+     const base = roomView("room.founder_office", 1);
+     const first = renderer(base);
+     first.scene.drawRoomUpgradeFinish(first.sink, base, first.rectangle);

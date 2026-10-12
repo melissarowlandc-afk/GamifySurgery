@@ -1,0 +1,768 @@
+{
+  "schemaVersion": 2,
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "mode": "stand-in",
+  "nominalNativePixelsPerTile": 480,
+  "proofPixelsPerTile": 120,
+  "assets": {
+    "base-desk": {
+      "id": "base-desk",
+      "file": "../stand-in/v4/prepared/base-desk.png",
+      "canvas": [
+        696,
+        600
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        348,
+        594
+      ],
+      "source": "stand-in/v4/desk.png",
+      "sourceSize": [
+        696,
+        600
+      ],
+      "sourceSha256": "309fe6e6d6e7c3d472b1768d3e73a490703cc7bcc6418fbcdc8e11e0c19ded45",
+      "sourceCrop": [
+        12,
+        80,
+        672,
+        514
+      ],
+      "transform": {
+        "scale": 1.0178571428571428,
+        "dx": 6,
+        "dy": 70.82142857142856,
+        "dw": 684,
+        "dh": 523.1785714285714
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 689,
+        "top": 71,
+        "bottom": 593,
+        "width": 684,
+        "height": 523,
+        "pixels": 305836
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 689,
+        "top": 71,
+        "bottom": 593,
+        "width": 684,
+        "height": 523,
+        "pixels": 305836
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": true,
+      "outputSha256": "69394c2dd75649e8cf092ef546793cbb1089d98d414083fef6f292cc9685149c",
+      "sourcePoints": {
+        "worktop": [
+          348,
+          220
+        ]
+      },
+      "calibratedPoints": {
+        "worktop": [
+          348,
+          213.32142857142856
+        ]
+      },
+      "prompt": null,
+      "promptSha256": null,
+      "measuredWorktopRisePixels": 95.16964285714286
+    },
+    "base-executiveChair": {
+      "id": "base-executiveChair",
+      "file": "../stand-in/v4/prepared/base-executiveChair.png",
+      "canvas": [
+        480,
+        768
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        240,
+        762
+      ],
+      "source": "stand-in/v4/executiveChair.png",
+      "sourceSize": [
+        480,
+        768
+      ],
+      "sourceSha256": "c76dcb9bc69014f0aae0b0735ee3453d269adb50d82deadf1191eb31350b57ff",
+      "sourceCrop": [
+        70,
+        120,
+        340,
+        642
+      ],
+      "transform": {
+        "scale": 1,
+        "dx": 70,
+        "dy": 120,
+        "dw": 340,
+        "dh": 642
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 70,
+        "right": 409,
+        "top": 120,
+        "bottom": 761,
+        "width": 340,
+        "height": 642,
+        "pixels": 139292
+      },
+      "outputAllAlphaBounds": {
+        "left": 70,
+        "right": 409,
+        "top": 120,
+        "bottom": 761,
+        "width": 340,
+        "height": 642,
+        "pixels": 139292
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "c76dcb9bc69014f0aae0b0735ee3453d269adb50d82deadf1191eb31350b57ff",
+      "sourcePoints": {
+        "seat": [
+          240,
+          582
+        ],
+        "frontRegions": [
+          [
+            60,
+            548,
+            80,
+            62
+          ],
+          [
+            340,
+            548,
+            80,
+            62
+          ],
+          [
+            0,
+            610,
+            480,
+            158
+          ]
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          240,
+          582
+        ]
+      },
+      "prompt": null,
+      "promptSha256": null,
+      "measuredSeatRisePixels": 45,
+      "floorRegistrationErrorPixels": 0
+    },
+    "base-executiveChair-front": {
+      "id": "base-executiveChair-front",
+      "file": "../stand-in/v4/prepared/base-executiveChair-front.png",
+      "canvas": [
+        480,
+        768
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        240,
+        762
+      ],
+      "source": "stand-in/v4/executiveChair.png",
+      "sourceSize": [
+        480,
+        768
+      ],
+      "sourceSha256": "c76dcb9bc69014f0aae0b0735ee3453d269adb50d82deadf1191eb31350b57ff",
+      "sourceCrop": [
+        70,
+        120,
+        340,
+        642
+      ],
+      "transform": {
+        "scale": 1,
+        "dx": 70,
+        "dy": 120,
+        "dw": 340,
+        "dh": 642
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 70,
+        "right": 409,
+        "top": 548,
+        "bottom": 761,
+        "width": 340,
+        "height": 214,
+        "pixels": 16612
+      },
+      "outputAllAlphaBounds": {
+        "left": 70,
+        "right": 409,
+        "top": 548,
+        "bottom": 761,
+        "width": 340,
+        "height": 214,
+        "pixels": 16612
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "cd9a4fd12f2f1e1eb1df83b115778ed9dca52caa27eecd8d29fcd92afc43f3bb",
+      "sourcePoints": {
+        "seat": [
+          240,
+          582
+        ],
+        "frontRegions": [
+          [
+            60,
+            548,
+            80,
+            62
+          ],
+          [
+            340,
+            548,
+            80,
+            62
+          ],
+          [
+            0,
+            610,
+            480,
+            158
+          ]
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          240,
+          582
+        ]
+      },
+      "prompt": null,
+      "promptSha256": null,
+      "measuredSeatRisePixels": 45,
+      "floorRegistrationErrorPixels": 0,
+      "foregroundFor": "base-executiveChair",
+      "foregroundRegions": [
+        [
+          60,
+          548,
+          80,
+          62
+        ],
+        [
+          340,
+          548,
+          80,
+          62
+        ],
+        [
+          0,
+          610,
+          480,
+          158
+        ]
+      ],
+      "derivation": "Exact generated pixels selected by source-space foreground rectangles, then the identical uniform transform."
+    },
+    "base-visitorChair": {
+      "id": "base-visitorChair",
+      "file": "../stand-in/v4/prepared/base-visitorChair.png",
+      "canvas": [
+        456,
+        576
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        228,
+        570
+      ],
+      "source": "stand-in/v4/visitorChair.png",
+      "sourceSize": [
+        456,
+        576
+      ],
+      "sourceSha256": "7b4a3a68fb62629fd5102d31c849cbcf3f3f5d46a026e96d7b628ce314402b63",
+      "sourceCrop": [
+        86,
+        235,
+        284,
+        335
+      ],
+      "transform": {
+        "scale": 1,
+        "dx": 86,
+        "dy": 235,
+        "dw": 284,
+        "dh": 335
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 86,
+        "right": 369,
+        "top": 235,
+        "bottom": 569,
+        "width": 284,
+        "height": 335,
+        "pixels": 62660
+      },
+      "outputAllAlphaBounds": {
+        "left": 86,
+        "right": 369,
+        "top": 235,
+        "bottom": 569,
+        "width": 284,
+        "height": 335,
+        "pixels": 62660
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "7b4a3a68fb62629fd5102d31c849cbcf3f3f5d46a026e96d7b628ce314402b63",
+      "sourcePoints": {
+        "seat": [
+          228,
+          390
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            456,
+            576
+          ]
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          228,
+          390
+        ]
+      },
+      "prompt": null,
+      "promptSha256": null,
+      "measuredSeatRisePixels": 45,
+      "floorRegistrationErrorPixels": 0
+    },
+    "base-visitorChair-front": {
+      "id": "base-visitorChair-front",
+      "file": "../stand-in/v4/prepared/base-visitorChair-front.png",
+      "canvas": [
+        456,
+        576
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        228,
+        570
+      ],
+      "source": "stand-in/v4/visitorChair.png",
+      "sourceSize": [
+        456,
+        576
+      ],
+      "sourceSha256": "7b4a3a68fb62629fd5102d31c849cbcf3f3f5d46a026e96d7b628ce314402b63",
+      "sourceCrop": [
+        86,
+        235,
+        284,
+        335
+      ],
+      "transform": {
+        "scale": 1,
+        "dx": 86,
+        "dy": 235,
+        "dw": 284,
+        "dh": 335
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 86,
+        "right": 369,
+        "top": 235,
+        "bottom": 569,
+        "width": 284,
+        "height": 335,
+        "pixels": 62660
+      },
+      "outputAllAlphaBounds": {
+        "left": 86,
+        "right": 369,
+        "top": 235,
+        "bottom": 569,
+        "width": 284,
+        "height": 335,
+        "pixels": 62660
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "7b4a3a68fb62629fd5102d31c849cbcf3f3f5d46a026e96d7b628ce314402b63",
+      "sourcePoints": {
+        "seat": [
+          228,
+          390
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            456,
+            576
+          ]
+        ]
+      },
+      "calibratedPoints": {
+        "seat": [
+          228,
+          390
+        ]
+      },
+      "prompt": null,
+      "promptSha256": null,
+      "measuredSeatRisePixels": 45,
+      "floorRegistrationErrorPixels": 0,
+      "foregroundFor": "base-visitorChair",
+      "foregroundRegions": [
+        [
+          0,
+          0,
+          456,
+          576
+        ]
+      ],
+      "derivation": "Exact generated pixels selected by source-space foreground rectangles, then the identical uniform transform."
+    },
+    "base-shelf": {
+      "id": "base-shelf",
+      "file": "../stand-in/v4/prepared/base-shelf.png",
+      "canvas": [
+        600,
+        320
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        300,
+        314
+      ],
+      "source": "stand-in/v4/shelf.png",
+      "sourceSize": [
+        720,
+        384
+      ],
+      "sourceSha256": "2040e65aba6bb3d35eb3483a243793b5d16c585b5c88e70f15ed92668119f837",
+      "sourceCrop": [
+        20,
+        15,
+        680,
+        363
+      ],
+      "transform": {
+        "scale": 0.8484848484848485,
+        "dx": 11.515151515151501,
+        "dy": 6,
+        "dw": 576.969696969697,
+        "dh": 308
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 12,
+        "right": 587,
+        "top": 6,
+        "bottom": 313,
+        "width": 576,
+        "height": 308,
+        "pixels": 177408
+      },
+      "outputAllAlphaBounds": {
+        "left": 12,
+        "right": 587,
+        "top": 6,
+        "bottom": 313,
+        "width": 576,
+        "height": 308,
+        "pixels": 177408
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "ca496f7deacd528cf5fb97b074c1da7486f65ea69c94ff0fd4e35d8099cbd3b2",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": null,
+      "promptSha256": null
+    },
+    "base-rug": {
+      "id": "base-rug",
+      "file": "../stand-in/v4/prepared/base-rug.png",
+      "canvas": [
+        1152,
+        624
+      ],
+      "anchorKind": "walkable-rug",
+      "canvasAnchor": [
+        576,
+        312
+      ],
+      "source": "stand-in/v4/rug.png",
+      "sourceSize": [
+        1584,
+        1104
+      ],
+      "sourceSha256": "6c6aca3b32492a61934a61d281f0a0da608886e82ea9c68140fd5df50a20e245",
+      "sourceCrop": [
+        12,
+        12,
+        1560,
+        1080
+      ],
+      "transform": {
+        "scale": 0.5666666666666667,
+        "dx": 134,
+        "dy": 6,
+        "dw": 884,
+        "dh": 612
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 134,
+        "right": 1017,
+        "top": 6,
+        "bottom": 617,
+        "width": 884,
+        "height": 612,
+        "pixels": 541008
+      },
+      "outputAllAlphaBounds": {
+        "left": 134,
+        "right": 1017,
+        "top": 6,
+        "bottom": 617,
+        "width": 884,
+        "height": 612,
+        "pixels": 541008
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "82f5ec0002334ac272dc862100f759eafd65f59f923e7fe5afd8572066045720",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": null,
+      "promptSha256": null
+    },
+    "base-decor": {
+      "id": "base-decor",
+      "file": "../stand-in/v4/prepared/base-decor.png",
+      "canvas": [
+        432,
+        240
+      ],
+      "anchorKind": "wall",
+      "canvasAnchor": [
+        216,
+        8
+      ],
+      "source": "stand-in/v4/decor.png",
+      "sourceSize": [
+        432,
+        240
+      ],
+      "sourceSha256": "1ce9ef2c48e048b34aa937edc51f50e5dedd24512caa484c126846d3ccc0751a",
+      "sourceCrop": [
+        8,
+        8,
+        416,
+        224
+      ],
+      "transform": {
+        "scale": 1.0096153846153846,
+        "dx": 6,
+        "dy": 7.846153846153868,
+        "dw": 420,
+        "dh": 226.15384615384613
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 425,
+        "top": 8,
+        "bottom": 233,
+        "width": 420,
+        "height": 226,
+        "pixels": 94920
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 425,
+        "top": 8,
+        "bottom": 233,
+        "width": 420,
+        "height": 226,
+        "pixels": 94920
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": true,
+      "outputSha256": "67685306cbeb8f8c22acb44d25d90ef4aab8055c359d19b24708b3295b709fd4",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": null,
+      "promptSha256": null
+    },
+    "base-art": {
+      "id": "base-art",
+      "file": "../stand-in/v4/prepared/base-art.png",
+      "canvas": [
+        480,
+        264
+      ],
+      "anchorKind": "wall",
+      "canvasAnchor": [
+        240,
+        51
+      ],
+      "source": "stand-in/v4/art.png",
+      "sourceSize": [
+        576,
+        264
+      ],
+      "sourceSha256": "f10512f6fc3f48694174a4dfd38e8280247f5cf6c0f6dd88371531799af0d11b",
+      "sourceCrop": [
+        8,
+        8,
+        560,
+        248
+      ],
+      "transform": {
+        "scale": 0.8357142857142857,
+        "dx": 6,
+        "dy": 50.74285714285713,
+        "dw": 468,
+        "dh": 207.25714285714287
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 473,
+        "top": 51,
+        "bottom": 257,
+        "width": 468,
+        "height": 207,
+        "pixels": 96876
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 473,
+        "top": 51,
+        "bottom": 257,
+        "width": 468,
+        "height": 207,
+        "pixels": 96876
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "a4d1b1a788fa10de659c4a9d1a944e7800053bd0d5ea408f900a335901c6cf93",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": null,
+      "promptSha256": null
+    },
+    "base-accent": {
+      "id": "base-accent",
+      "file": "../stand-in/v4/prepared/base-accent.png",
+      "canvas": [
+        288,
+        480
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        144,
+        474
+      ],
+      "source": "stand-in/v4/accent.png",
+      "sourceSize": [
+        288,
+        480
+      ],
+      "sourceSha256": "5d3562302697eec77413d7f3327f74522e44f3665f05d83a7aa814fa403b91c0",
+      "sourceCrop": [
+        20,
+        15,
+        248,
+        459
+      ],
+      "transform": {
+        "scale": 1.0196078431372548,
+        "dx": 17.5686274509804,
+        "dy": 6.000000000000057,
+        "dw": 252.8627450980392,
+        "dh": 467.99999999999994
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 0
+      },
+      "outputOpaqueBounds": {
+        "left": 18,
+        "right": 269,
+        "top": 6,
+        "bottom": 473,
+        "width": 252,
+        "height": 468,
+        "pixels": 117936
+      },
+      "outputAllAlphaBounds": {
+        "left": 18,
+        "right": 269,
+        "top": 6,
+        "bottom": 473,
+        "width": 252,
+        "height": 468,
+        "pixels": 117936
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": true,
+      "outputSha256": "6cac58bfc71e9497a79087c56ce94fabe690ea2933da687895d287e584f05d84",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": null,
+      "promptSha256": null
+    }
+  }
+}

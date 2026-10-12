@@ -1,0 +1,1634 @@
+{
+  "schemaVersion": "inspector-v6f-runtime-integration/v1",
+  "status": "locally-integrated-not-published",
+  "prior": {
+    "identities": 326,
+    "cardinalPoses": 2608,
+    "clipboardPoses": 30,
+    "assets": 2638
+  },
+  "appended": {
+    "identities": 10,
+    "poses": 80,
+    "authoredSeatedContacts": 40
+  },
+  "resulting": {
+    "identities": 336,
+    "cardinalPoses": 2688,
+    "clipboardPoses": 30,
+    "assets": 2718
+  },
+  "role": "inspection-agent",
+  "patientPoolDelta": 0,
+  "staffPoolDelta": 0,
+  "registry": {
+    "path": "apps/player/src/art/characterStillRegistry.generated.json",
+    "sha256": "74f5c0ffc08ef3078e148e09fc1d13749c8b62926d731920c0cd944da84d263d"
+  },
+  "approval": {
+    "path": "artifacts/character-statics/inspector-v6f/runtime-approval.json",
+    "sha256": "b65b0c08de7ea243d6d5b411b41cc1d40798762ae5c9ab3bb94d6ccd0ca81468"
+  },
+  "files": [
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/stand-south.png",
+      "sourceSha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046",
+      "outputSha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/stand-east.png",
+      "sourceSha256": "534864ad93ca05250ae9f5100fb3efc25042fb116dffd37bc15d7208990c4bca",
+      "outputSha256": "534864ad93ca05250ae9f5100fb3efc25042fb116dffd37bc15d7208990c4bca",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/stand-west.png",
+      "sourceSha256": "6fb0224c92e606a6126cf3703ad7016dec7a2267281208839cb1616bfdf98826",
+      "outputSha256": "6fb0224c92e606a6126cf3703ad7016dec7a2267281208839cb1616bfdf98826",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/stand-north.png",
+      "sourceSha256": "73a3fc5349a3f9b79e8167f18f690f9bfa061feadd17f2f103440d3eb7c59f3d",
+      "outputSha256": "73a3fc5349a3f9b79e8167f18f690f9bfa061feadd17f2f103440d3eb7c59f3d",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/sit-south.png",
+      "sourceSha256": "fdba4889e43a897bbe9fc4474b7f774e582aebbcc92c91e259c2042c7f7fb201",
+      "outputSha256": "fdba4889e43a897bbe9fc4474b7f774e582aebbcc92c91e259c2042c7f7fb201",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/sit-east.png",
+      "sourceSha256": "cd0e580b0d0aaefeb13150121eb34e860e27d845070f547eec3ec5f099b4b52c",
+      "outputSha256": "cd0e580b0d0aaefeb13150121eb34e860e27d845070f547eec3ec5f099b4b52c",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/sit-west.png",
+      "sourceSha256": "34515e2f70a88f84dda0c94968bb518cc4918ae79a7ad3788e8d54676529b77c",
+      "outputSha256": "34515e2f70a88f84dda0c94968bb518cc4918ae79a7ad3788e8d54676529b77c",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.001",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/001/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.001/sit-north.png",
+      "sourceSha256": "3acd325bd761ff0fbc4a9d1bff3da29da4cb062f6077cbea4878c5faebd1d3ed",
+      "outputSha256": "3acd325bd761ff0fbc4a9d1bff3da29da4cb062f6077cbea4878c5faebd1d3ed",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/provenance.json",
+        "sha256": "91a38595d81dd189d8d9a86f50ded28fe2e62846158a81e2fe0a360f74b5498d"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/stand-south.png",
+      "sourceSha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e",
+      "outputSha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/stand-east.png",
+      "sourceSha256": "fe39e868040d8911ac7e4108f7782cd1b72bd97fb07d0910710bc05f1d9f8f80",
+      "outputSha256": "fe39e868040d8911ac7e4108f7782cd1b72bd97fb07d0910710bc05f1d9f8f80",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/stand-west.png",
+      "sourceSha256": "c9213d413bb85cbfad1ede4d54a51e5debf7244c3cdbac1584610b5bad3b5e62",
+      "outputSha256": "c9213d413bb85cbfad1ede4d54a51e5debf7244c3cdbac1584610b5bad3b5e62",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/stand-north.png",
+      "sourceSha256": "5922033c097347676461f35602a45b9b9c152a6af0820fdea818c551e06fbe61",
+      "outputSha256": "5922033c097347676461f35602a45b9b9c152a6af0820fdea818c551e06fbe61",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/sit-south.png",
+      "sourceSha256": "bd1dfa0d997c53870e5df87db401fdd32e0e82d368ae4ee259fb61b355821849",
+      "outputSha256": "bd1dfa0d997c53870e5df87db401fdd32e0e82d368ae4ee259fb61b355821849",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/sit-east.png",
+      "sourceSha256": "63bfb289465cc8f385f6e90085811039b63c846baf42f123c018d942d9310267",
+      "outputSha256": "63bfb289465cc8f385f6e90085811039b63c846baf42f123c018d942d9310267",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/sit-west.png",
+      "sourceSha256": "f4af329cf45d5de8a5a9f138e83f8f8f8a18f740b4482b48b284b4f7f0058899",
+      "outputSha256": "f4af329cf45d5de8a5a9f138e83f8f8f8a18f740b4482b48b284b4f7f0058899",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.002",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/002/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.002/sit-north.png",
+      "sourceSha256": "cfedafda80abacdb0ceabcffdeccccbdb536cd5952b7b5a75aaf0e7a44ba26d0",
+      "outputSha256": "cfedafda80abacdb0ceabcffdeccccbdb536cd5952b7b5a75aaf0e7a44ba26d0",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/provenance.json",
+        "sha256": "cbd7c004ff982b449006b2cdb54d77d9062c13947fc96c874fe96a655eba98e3"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/stand-south.png",
+      "sourceSha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2",
+      "outputSha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/stand-east.png",
+      "sourceSha256": "46aea3918617ea9494d991681399f060fd19e4b5a609bc74feef3426411d151f",
+      "outputSha256": "46aea3918617ea9494d991681399f060fd19e4b5a609bc74feef3426411d151f",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/stand-west.png",
+      "sourceSha256": "e265eb2289e75ea28c5e21377171f994a28d1513101f28a8d98c2c52598b37b3",
+      "outputSha256": "e265eb2289e75ea28c5e21377171f994a28d1513101f28a8d98c2c52598b37b3",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/stand-north.png",
+      "sourceSha256": "2574edc122e75f1b67759ca56d851ae68dce1bab5d5c59dca3afe5a14250f11e",
+      "outputSha256": "2574edc122e75f1b67759ca56d851ae68dce1bab5d5c59dca3afe5a14250f11e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/sit-south.png",
+      "sourceSha256": "0e22b9ffc9d4dd81546820cb8c1a29ee7c23af4b703142704128ef01d43a0f66",
+      "outputSha256": "0e22b9ffc9d4dd81546820cb8c1a29ee7c23af4b703142704128ef01d43a0f66",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/sit-east.png",
+      "sourceSha256": "059fd550a404f1047b56dbed86e0dd63a0d2c2cfc98f66a12d268b004fae687e",
+      "outputSha256": "059fd550a404f1047b56dbed86e0dd63a0d2c2cfc98f66a12d268b004fae687e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/sit-west.png",
+      "sourceSha256": "8860cc30b2e0635cabe320b09a0abbd3d1170ed9dfb75f6956b75413cbc5071a",
+      "outputSha256": "8860cc30b2e0635cabe320b09a0abbd3d1170ed9dfb75f6956b75413cbc5071a",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.003",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/003/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.003/sit-north.png",
+      "sourceSha256": "9a26a657f6ac7d73dd6e04ec5ad8ccba8489e12301ddb5939875c5439ac760a3",
+      "outputSha256": "9a26a657f6ac7d73dd6e04ec5ad8ccba8489e12301ddb5939875c5439ac760a3",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/provenance.json",
+        "sha256": "fa3adbe7cdf9dc30db1786330d6e999b754fffcda259a6bbd7849025c2552fdd"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/stand-south.png",
+      "sourceSha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d",
+      "outputSha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/stand-east.png",
+      "sourceSha256": "93f1bf914f03b25aecbbfd355df7ba4e23f20305d4e45c79f5564c206179f617",
+      "outputSha256": "93f1bf914f03b25aecbbfd355df7ba4e23f20305d4e45c79f5564c206179f617",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/stand-west.png",
+      "sourceSha256": "e22a59ab7cd9c53381b35aa3230826e4dd15efa8dfc07feaeba2f20a504c75ba",
+      "outputSha256": "e22a59ab7cd9c53381b35aa3230826e4dd15efa8dfc07feaeba2f20a504c75ba",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/stand-north.png",
+      "sourceSha256": "2309fc0b5bb21fb7199bbd2b8f9b0e0945110957501d8c99d851e196643fe6a1",
+      "outputSha256": "2309fc0b5bb21fb7199bbd2b8f9b0e0945110957501d8c99d851e196643fe6a1",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/sit-south.png",
+      "sourceSha256": "a35883028f82f197c714c41fdb9fd2f3183229b3b226901bee459d7d18965f53",
+      "outputSha256": "a35883028f82f197c714c41fdb9fd2f3183229b3b226901bee459d7d18965f53",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/sit-east.png",
+      "sourceSha256": "f5ad0ca691a394953c36bdf77d017878abd98570d14dbdcd8546388b1feb5dbb",
+      "outputSha256": "f5ad0ca691a394953c36bdf77d017878abd98570d14dbdcd8546388b1feb5dbb",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/sit-west.png",
+      "sourceSha256": "0ae6ee5c492c649fa6e98bc527e41b65630cbd351d70297a3a412aafd44dab47",
+      "outputSha256": "0ae6ee5c492c649fa6e98bc527e41b65630cbd351d70297a3a412aafd44dab47",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.004",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/004/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.004/sit-north.png",
+      "sourceSha256": "674d2855d4e30a4d28fdd6d883cd299dec861d38d240775165c54beebda958e6",
+      "outputSha256": "674d2855d4e30a4d28fdd6d883cd299dec861d38d240775165c54beebda958e6",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/provenance.json",
+        "sha256": "fb9d1c45ce9a863bc329b3c357da4a33be2c65d9f04dbe0a6757ab5a8c87289f"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/stand-south.png",
+      "sourceSha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e",
+      "outputSha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/stand-east.png",
+      "sourceSha256": "ba5348f1ea42142bd5d64bd48f6c7e248cf1227ccc35ef9bda46970a2732a3aa",
+      "outputSha256": "ba5348f1ea42142bd5d64bd48f6c7e248cf1227ccc35ef9bda46970a2732a3aa",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/stand-west.png",
+      "sourceSha256": "ef870887a4c842be6e0f4cc13888e51a2d8fd05d9da1f2a3ceb77ac729845165",
+      "outputSha256": "ef870887a4c842be6e0f4cc13888e51a2d8fd05d9da1f2a3ceb77ac729845165",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/stand-north.png",
+      "sourceSha256": "c0328073cef0aaeb4eb16e1dc2b21cccc7cadf157ef67ddc4e5f73dd06808e9e",
+      "outputSha256": "c0328073cef0aaeb4eb16e1dc2b21cccc7cadf157ef67ddc4e5f73dd06808e9e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/sit-south.png",
+      "sourceSha256": "7613232922d64f14991a9833523cfcc33cd64320a51b6135cb61c5b339eae02a",
+      "outputSha256": "7613232922d64f14991a9833523cfcc33cd64320a51b6135cb61c5b339eae02a",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/sit-east.png",
+      "sourceSha256": "028159756f4e84912c4458fdaac8ede766e56908209dd02d1e85bae7fd20f7e8",
+      "outputSha256": "028159756f4e84912c4458fdaac8ede766e56908209dd02d1e85bae7fd20f7e8",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/sit-west.png",
+      "sourceSha256": "65e80d7fa8b92dd4e8aec32101d2d1575368b39148e2a8510eed5ffe5a53c0e6",
+      "outputSha256": "65e80d7fa8b92dd4e8aec32101d2d1575368b39148e2a8510eed5ffe5a53c0e6",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.005",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/005/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.005/sit-north.png",
+      "sourceSha256": "ec0aa0b7126136ba63df13df1f8988fe23f77ba3bdf3768512eed44a56a73d59",
+      "outputSha256": "ec0aa0b7126136ba63df13df1f8988fe23f77ba3bdf3768512eed44a56a73d59",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/provenance.json",
+        "sha256": "1004ec81612d6056b48064d7be5b4b2764212e262107c6a59eefe84139462dcb"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/stand-south.png",
+      "sourceSha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886",
+      "outputSha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/stand-east.png",
+      "sourceSha256": "5efca1cf3ae78681f39317348e4ca311d450aa796b2c207b0002d5e2716e754a",
+      "outputSha256": "5efca1cf3ae78681f39317348e4ca311d450aa796b2c207b0002d5e2716e754a",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/stand-west.png",
+      "sourceSha256": "0b8d9ce256d67a947f6dd0e2d3125bc67fdc1cb989c1280c88f341ecc1255a2b",
+      "outputSha256": "0b8d9ce256d67a947f6dd0e2d3125bc67fdc1cb989c1280c88f341ecc1255a2b",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/stand-north.png",
+      "sourceSha256": "32b4fa7d78756dbb694a52c0c10c917c19ed05193308d7ff9bc8c907e3185e3c",
+      "outputSha256": "32b4fa7d78756dbb694a52c0c10c917c19ed05193308d7ff9bc8c907e3185e3c",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/sit-south.png",
+      "sourceSha256": "5a48353cc116ced5dce5e742dbedb4c9a568d7cc29fbfe9aa14431c1dea5becc",
+      "outputSha256": "5a48353cc116ced5dce5e742dbedb4c9a568d7cc29fbfe9aa14431c1dea5becc",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/sit-east.png",
+      "sourceSha256": "457ead7be71245912192e4e775c9fe3b15605b9882232a5609b2c0af3df0c21f",
+      "outputSha256": "457ead7be71245912192e4e775c9fe3b15605b9882232a5609b2c0af3df0c21f",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/sit-west.png",
+      "sourceSha256": "78ed18d82edcdc4cd443cd742ac064e6e50c64e4ad78653c5fcbfc68c95af4a8",
+      "outputSha256": "78ed18d82edcdc4cd443cd742ac064e6e50c64e4ad78653c5fcbfc68c95af4a8",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.006",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/006/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.006/sit-north.png",
+      "sourceSha256": "6a6e460d6ee484e549623ab02b8a1036e59fb3105a275171cb5204e537e5f53e",
+      "outputSha256": "6a6e460d6ee484e549623ab02b8a1036e59fb3105a275171cb5204e537e5f53e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/provenance.json",
+        "sha256": "2909fa73a6287880cfa971a8830cdb44327e235017dc20642d1f08204a650e89"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/stand-south.png",
+      "sourceSha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd",
+      "outputSha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/stand-east.png",
+      "sourceSha256": "5511f35a998ca31857fd203fae6cf4d8f9cf8c876286cc85ab8a7a436622c501",
+      "outputSha256": "5511f35a998ca31857fd203fae6cf4d8f9cf8c876286cc85ab8a7a436622c501",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/stand-west.png",
+      "sourceSha256": "c192af6369684a4c183e86d62b43c62dd867150d4672365bae7f7e152a379498",
+      "outputSha256": "c192af6369684a4c183e86d62b43c62dd867150d4672365bae7f7e152a379498",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/stand-north.png",
+      "sourceSha256": "3eafa22418dce08cef90f28e6527c880f6ee48b19b1929e1720dd7211611a348",
+      "outputSha256": "3eafa22418dce08cef90f28e6527c880f6ee48b19b1929e1720dd7211611a348",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/sit-south.png",
+      "sourceSha256": "9376a445d2db31423509f49806b070f91ab3ba4c05982bb79487952daee7bdf9",
+      "outputSha256": "9376a445d2db31423509f49806b070f91ab3ba4c05982bb79487952daee7bdf9",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/sit-east.png",
+      "sourceSha256": "d516d9e4367670ce0dd6a419eca16bbc55232ad8ad5e929c25834e65325f0984",
+      "outputSha256": "d516d9e4367670ce0dd6a419eca16bbc55232ad8ad5e929c25834e65325f0984",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/sit-west.png",
+      "sourceSha256": "c7134d659829518b224d413445e770b2f4a6072821cdbf3e165ce7c5c071069b",
+      "outputSha256": "c7134d659829518b224d413445e770b2f4a6072821cdbf3e165ce7c5c071069b",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.007",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/007/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.007/sit-north.png",
+      "sourceSha256": "a8077b7147561d4cb4cfd9b47391379994fab59f90de1a1d820172b9510ff93f",
+      "outputSha256": "a8077b7147561d4cb4cfd9b47391379994fab59f90de1a1d820172b9510ff93f",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/provenance.json",
+        "sha256": "b89fdd6bee0ad19fbf3a2bf00143bf4ab0ecf75521eea2e126ab0f6c987597ee"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/stand-south.png",
+      "sourceSha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74",
+      "outputSha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/stand-east.png",
+      "sourceSha256": "99cd98e7a67a21f5ce8b4d716e62ce11c769abdf412bbef52418dfaaa4a61045",
+      "outputSha256": "99cd98e7a67a21f5ce8b4d716e62ce11c769abdf412bbef52418dfaaa4a61045",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/stand-west.png",
+      "sourceSha256": "f12b66f0d6973adccedbb3312731c9400197fe4da9a8288f3e92bfbff8853d03",
+      "outputSha256": "f12b66f0d6973adccedbb3312731c9400197fe4da9a8288f3e92bfbff8853d03",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/stand-north.png",
+      "sourceSha256": "6a31eeeef8bdfa887e6fc1611c2551a20ef71343f4c4a2a415a44c1f318e9885",
+      "outputSha256": "6a31eeeef8bdfa887e6fc1611c2551a20ef71343f4c4a2a415a44c1f318e9885",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/sit-south.png",
+      "sourceSha256": "2a91e2f0ae4b5c3199cc4d535f6da330a4fd246185470d33108aa694709e05c8",
+      "outputSha256": "2a91e2f0ae4b5c3199cc4d535f6da330a4fd246185470d33108aa694709e05c8",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/sit-east.png",
+      "sourceSha256": "515e716fdaef3f719b0166bb3e1ada9562e6f296c5a6976a1b9ff04270754354",
+      "outputSha256": "515e716fdaef3f719b0166bb3e1ada9562e6f296c5a6976a1b9ff04270754354",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/sit-west.png",
+      "sourceSha256": "ba144cf25ba8775c19efda932cbb02043a9bc0f61782a6aaa664b558bf56e2f8",
+      "outputSha256": "ba144cf25ba8775c19efda932cbb02043a9bc0f61782a6aaa664b558bf56e2f8",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.008",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/008/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.008/sit-north.png",
+      "sourceSha256": "4af056060dfadcf8e9f2fd96ba10899d83ff03238ee24c1cc68f16e9e71013d2",
+      "outputSha256": "4af056060dfadcf8e9f2fd96ba10899d83ff03238ee24c1cc68f16e9e71013d2",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/provenance.json",
+        "sha256": "3afad03435f77423aa6ef574a98fd13313c5427c3c34a4dbed523e03d1a50eef"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/stand-south.png",
+      "sourceSha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e",
+      "outputSha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/stand-east.png",
+      "sourceSha256": "7bd4768fbc712f9df87fef6d0205d6b18824438ae7733420ddba8ae09c3cb8ea",
+      "outputSha256": "7bd4768fbc712f9df87fef6d0205d6b18824438ae7733420ddba8ae09c3cb8ea",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/stand-west.png",
+      "sourceSha256": "8f7c3c34b1e56e0f01379d0a83c9a47f6069d502c68192b2ac50df7f6f5be0f2",
+      "outputSha256": "8f7c3c34b1e56e0f01379d0a83c9a47f6069d502c68192b2ac50df7f6f5be0f2",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/stand-north.png",
+      "sourceSha256": "e2dac4b6d5ba4635c7a12c7fd44089e27c3104ec03c3797cde9ac3b695a1a5a8",
+      "outputSha256": "e2dac4b6d5ba4635c7a12c7fd44089e27c3104ec03c3797cde9ac3b695a1a5a8",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/sit-south.png",
+      "sourceSha256": "3afc646528ea341db1013c90ea33a4717ecfac7aef298f20cad4904ff171e35e",
+      "outputSha256": "3afc646528ea341db1013c90ea33a4717ecfac7aef298f20cad4904ff171e35e",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/sit-east.png",
+      "sourceSha256": "6fdd820a190e0db9bd08c6feb1b5ffa5c3a2c178cdebdc6c2520f934e4f9763d",
+      "outputSha256": "6fdd820a190e0db9bd08c6feb1b5ffa5c3a2c178cdebdc6c2520f934e4f9763d",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/sit-west.png",
+      "sourceSha256": "2e2a98e68e7a0caa429651c45ba951c7516feecf88ef72b6795a28d143adfb08",
+      "outputSha256": "2e2a98e68e7a0caa429651c45ba951c7516feecf88ef72b6795a28d143adfb08",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.009",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/009/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.009/sit-north.png",
+      "sourceSha256": "16f0b689ffbff5df5224945c9505e5b48e7bb5ae6ec8cd1e9c645a1d6efae244",
+      "outputSha256": "16f0b689ffbff5df5224945c9505e5b48e7bb5ae6ec8cd1e9c645a1d6efae244",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/provenance.json",
+        "sha256": "3b2a1672c11334525e7b7add36ffb313727dcbb35552eb91047545bee1513905"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "stand-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/stand-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/stand-south.png",
+      "sourceSha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5",
+      "outputSha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "stand-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/stand-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/stand-east.png",
+      "sourceSha256": "ae51ebaf34d231f7225ae7d9dbd91f8203b4fedfa32a3a61666b8e80f7965ee4",
+      "outputSha256": "ae51ebaf34d231f7225ae7d9dbd91f8203b4fedfa32a3a61666b8e80f7965ee4",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "stand-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/stand-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/stand-west.png",
+      "sourceSha256": "fc2d57c95994a12a4673d3e4652cb496cc480fdaf708b89d4a0909201c5b5cca",
+      "outputSha256": "fc2d57c95994a12a4673d3e4652cb496cc480fdaf708b89d4a0909201c5b5cca",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "stand-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/stand-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/stand-north.png",
+      "sourceSha256": "d1964ca015422e6e2e85d6c7f30a87defff1c549b134ec23de2e61b86855bf57",
+      "outputSha256": "d1964ca015422e6e2e85d6c7f30a87defff1c549b134ec23de2e61b86855bf57",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "sit-south",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/sit-south.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/sit-south.png",
+      "sourceSha256": "13328906e81f8919242a586b7c876252d3fb9a658ed16dbd0165faabc706b01f",
+      "outputSha256": "13328906e81f8919242a586b7c876252d3fb9a658ed16dbd0165faabc706b01f",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "sit-east",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/sit-east.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/sit-east.png",
+      "sourceSha256": "6599d2fad53260773ef7af57a9e984cff7b6bf5ac0d00be3df21365e2869b008",
+      "outputSha256": "6599d2fad53260773ef7af57a9e984cff7b6bf5ac0d00be3df21365e2869b008",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "sit-west",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/sit-west.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/sit-west.png",
+      "sourceSha256": "3712d1d12fea21ff5993f0243a5bda7fabc767dcf05c9e5e4a10ddb296c42aa2",
+      "outputSha256": "3712d1d12fea21ff5993f0243a5bda7fabc767dcf05c9e5e4a10ddb296c42aa2",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    },
+    {
+      "identityId": "inspector-v6f.010",
+      "pose": "sit-north",
+      "sourceFile": "artifacts/character-statics/inspector-v6f/packages/010/sit-north.png",
+      "outputFile": "apps/player/public/art/characters/inspector-v6f/inspector-v6f.010/sit-north.png",
+      "sourceSha256": "42c4c1c989e7ed639186b3705ba8bd2c3e4e790dc2bfafd977cdd3b5c8de4f6c",
+      "outputSha256": "42c4c1c989e7ed639186b3705ba8bd2c3e4e790dc2bfafd977cdd3b5c8de4f6c",
+      "manifest": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "sourceSheet": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/provenance.json",
+        "sha256": "a399117d9871c1b7d79dad540c41097c24d6e279ddb8e663594ff0f7339be439"
+      }
+    }
+  ]
+}

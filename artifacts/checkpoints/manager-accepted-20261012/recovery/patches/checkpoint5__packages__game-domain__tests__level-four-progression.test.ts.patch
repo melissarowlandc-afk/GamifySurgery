@@ -1,0 +1,86 @@
+--- a/packages/game-domain/tests/level-four-progression.test.ts
++++ b/packages/game-domain/tests/level-four-progression.test.ts
+@@ -1,14 +1,15 @@
+ import { describe, expect, it } from "vitest";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT, TUTORIAL_ENCOUNTER_ID, createInitialGameState, deserializeGameState, gameReducer, getDisplayedClinicSatisfaction, getEmployeeTrainingQuote, getFacilityProgressionStatus, getRoomSalePreview,
+-  serializeGameState, type GameState,
++  serializeGameState, type DomainContext, type GameState,
+ } from "../src";
+ import { createLevelFourAlmostQaState, createLevelThreeReadyQaState } from "../../../tests/fixtures/level-four-progression";
++import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
+ 
+-function finishWoundVisit(initial: GameState): GameState {
++function finishWoundVisit(initial: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): GameState {
+   let state = { ...initial, paused: false };
+   for (let i = 0; i < 300 && !state.levelFourCompletion?.woundOstomyCareVisit; i++) {
+-    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `l4.finish.${state.facilityTick}` });
++    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `l4.finish.${state.facilityTick}` }, context);
+   }
+   expect(state.levelFourCompletion?.woundOstomyCareVisit).toBeTruthy();
+   return state;
+@@ -94,28 +95,29 @@
+     expect(getFacilityProgressionStatus(state).requirements.slice(0, 2).every(row => !row.met)).toBe(true);
+   });
+ 
+-  it("resumes a mid-Level-4 visit and earns terminal completion once, with no XP, FSRS, Level 5 or reward", () => {
+-    let state = createLevelFourAlmostQaState();
++  it("retains the historical cap-4 terminal completion and witness/reward contract", () => {
++    const context = createPreLevelFiveLaunchContext();
++    let state = createLevelFourAlmostQaState(context);
+     state.paused = false;
+-    for (let i = 0; i < 25; i++) state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `l4.mid.${i}` });
++    for (let i = 0; i < 25; i++) state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `l4.mid.${i}` }, context);
+     expect(state.levelFourCompletion?.woundOstomyCareVisit).toBeNull();
+-    const restored = deserializeGameState(serializeGameState(state));
++    const restored = deserializeGameState(serializeGameState(state), context);
+     expect(restored.serviceOperations).toEqual(state.serviceOperations);
+-    expect(getFacilityProgressionStatus(restored).terminalComplete).toBe(false);
+-    state = finishWoundVisit(restored);
++    expect(getFacilityProgressionStatus(restored, context).terminalComplete).toBe(false);
++    state = finishWoundVisit(restored, context);
+     expect(state.clinicalXp).toBe(750);
+     expect(state.learningHistories).toEqual(restored.learningHistories);
+     expect(state.reviewIntents).toEqual(restored.reviewIntents);
+-    expect(getFacilityProgressionStatus(state)).toMatchObject({ eligible: false, nextFacilityLevel: null, terminalComplete: true });
++    expect(getFacilityProgressionStatus(state, context)).toMatchObject({ eligible: false, nextFacilityLevel: null, terminalComplete: true });
+     const completed = state.events.filter(event => event.id === "event.facility-level-4-complete");
+     expect(completed).toHaveLength(1);
+     expect(completed[0]?.reward).toBeUndefined();
+     const acknowledgement = state.levelFourCompletion!.acknowledgedAtFacilityTick;
+     expect(acknowledgement).toBe(state.levelFourCompletion!.woundOstomyCareVisit!.completedAtFacilityTick);
+     for (let i = 0; i < 3; i++) {
+-      state = deserializeGameState(serializeGameState(state));
++      state = deserializeGameState(serializeGameState(state), context);
+       const cash = state.cashCents;
+-      state = gameReducer(state, { type: "LEVEL_UP", operationId: `l4.no-five.${i}` });
++      state = gameReducer(state, { type: "LEVEL_UP", operationId: `l4.no-five.${i}` }, context);
+       expect(state.facilityLevel).toBe(4);
+       expect(state.cashCents).toBe(cash);
+       expect(state.levelFourCompletion!.acknowledgedAtFacilityTick).toBe(acknowledgement);
+@@ -123,18 +125,18 @@
+     }
+     state.paused = true;
+     const woundRoomId = state.rooms.find(room => room.roomDefinitionId === "room.wound_ostomy")!.id;
+-    const sale = getRoomSalePreview(state, woundRoomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+-    state = gameReducer(state, { type: "SELL_ROOM", operationId: "l4.completed.sale", roomId: woundRoomId, saleConfirmationToken: sale.confirmationToken });
++    const sale = getRoomSalePreview(state, woundRoomId, context)!;
++    state = gameReducer(state, { type: "SELL_ROOM", operationId: "l4.completed.sale", roomId: woundRoomId, saleConfirmationToken: sale.confirmationToken }, context);
+     expect(state.operationReceipts["l4.completed.sale"]?.status).toBe("applied");
+-    expect(getFacilityProgressionStatus(state).requirements.find(row => row.id === "progression.staff.staff.app")?.met).toBe(false);
+-    expect(getFacilityProgressionStatus(state).requirements.filter(row => row.id.startsWith("progression.witness.")).every(row => row.met)).toBe(true);
++    expect(getFacilityProgressionStatus(state, context).requirements.find(row => row.id === "progression.staff.staff.app")?.met).toBe(false);
++    expect(getFacilityProgressionStatus(state, context).requirements.filter(row => row.id.startsWith("progression.witness.")).every(row => row.met)).toBe(true);
+     // History, actors and sold departments may disappear; earned witnesses remain.
+     state.serviceOperations = []; state.serviceIncomeReceipts = []; state.retailExternalActors = [];
+     state.pediatricFamilies = {}; state.employees = [];
+     state.rooms = state.rooms.filter(room => !["room.wound_ostomy", "room.pediatric_examination", "room.pediatric_waiting"].includes(room.roomDefinitionId));
+     state.doors = state.doors.filter(door => state.rooms.some(room => room.id === door.roomId));
+-    state = deserializeGameState(serializeGameState(state));
+-    expect(getFacilityProgressionStatus(state).terminalComplete).toBe(true);
+-    expect(getFacilityProgressionStatus(state).requirements.filter(row => row.id.startsWith("progression.witness.")).every(row => row.met)).toBe(true);
++    state = deserializeGameState(serializeGameState(state), context);
++    expect(getFacilityProgressionStatus(state, context).terminalComplete).toBe(true);
++    expect(getFacilityProgressionStatus(state, context).requirements.filter(row => row.id.startsWith("progression.witness.")).every(row => row.met)).toBe(true);
+   });
+ });

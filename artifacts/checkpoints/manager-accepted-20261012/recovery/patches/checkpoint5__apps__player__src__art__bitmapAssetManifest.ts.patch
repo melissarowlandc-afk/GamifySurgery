@@ -1,0 +1,10 @@
+--- a/apps/player/src/art/bitmapAssetManifest.ts
++++ b/apps/player/src/art/bitmapAssetManifest.ts
+@@ -1,6 +1,7 @@
+ import type { PixelSpriteAsset } from "./pixelArt";
+ import type { FixtureId } from "./fixtureArt";
+ import { APPROVED_LEVEL4_BITMAP_ASSETS } from "./approvedLevel4BitmapAssets";
++export { APPROVED_LEVEL5_BITMAP_ASSETS } from "./approvedLevel5BitmapAssets";
+ 
+ /**
+  * A transparent, independently rendered bitmap layer that can replace one

@@ -1,0 +1,11 @@
+--- a/packages/game-domain/tests/pediatric-clinic-admission.test.ts
++++ b/packages/game-domain/tests/pediatric-clinic-admission.test.ts
+@@ -123,7 +123,7 @@
+     expect(child.frozenCase.id).toBe(clinicalCase.id);
+     expect(child.patientDisplayName).toBe(clinicalCase.patientDisplayName);
+     expect(pediatricFamilyForActor(advanced, "encounter", child.id)).toBeTruthy();
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.maximumPlayableLevel).toBe(4);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.maximumPlayableLevel).toBe(5);
+     expect(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 3)?.nextFacilityLevel).toBe(4);
+   });
+ 

@@ -1,0 +1,66 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -16,6 +16,13 @@
+ 
+ /** Presentation-only furniture assignment. Gameplay/navigation coordinates remain authoritative. */
+ export type FacilityActorSupportRole =
++  | "founder-office-seat"
++  | "executive-office-seat"
++  | "office-visitor-seat"
++  | "gift-shop-contact"
++  | "garden-visitor-seat"
++  | "gym-rest-contact"
++  | "gym-stretch-contact"
+   | "waiting-seat"
+   | "front-desk-staff"
+   | "front-desk-public"
+@@ -85,6 +92,22 @@
+   direction: "front" | "side" | "back";
+ }
+ 
++/** A cosmetic observer with no patient/staff seat, care contact or reservation. */
++export interface FacilityInspectorActorView {
++  instanceId: string;
++  appearance: PixelAppearanceDescriptor;
++  location: GridPoint;
++  path: GridPoint[];
++  pathIndex: number;
++  moving: boolean;
++  direction: "front" | "side" | "back";
++  observedRoomInstanceId: string | null;
++  observedRoomName: string | null;
++  activity: string;
++  /** A visible stationary fallback is a QA defect, never a scoring input. */
++  routeIssue?: string;
++}
++
+ export interface FacilityRoomView {
+   instanceId: string;
+   definitionId: string;
+@@ -293,6 +316,8 @@
+   /** Only the displayed live Needs-you cards; commands stay in the session. */
+   alertPins?: FacilityAlertPinView[];
+   facilityTitle: string;
++  /** Opt-in Level 5 presentation; absent from all Level 0-4 projections. */
++  levelFiveRoomArt?: true;
+   /** A scene-local receipt cursor resets when this persisted campaign changes. */
+   campaignId?: string;
+   facilityTick: number;
+@@ -307,6 +332,8 @@
+   founder: FacilityFounderView;
+   founderChairs?: FacilityFounderChairView[];
+   ambientPedestrians?: FacilityAmbientPedestrianView[];
++  /** Absent outside a running Level 5 inspection. */
++  inspectors?: FacilityInspectorActorView[];
+   litterItems?: FacilityLitterView[];
+   waterCooler?: FacilityWaterCoolerView;
+   patients?: FacilityPatientView[];
+@@ -373,7 +400,7 @@
+ 
+ /** A character on the map the player clicked to see what they are doing. */
+ export interface FacilityCharacterRef {
+-  kind: "founder" | "staff" | "patient" | "service-visitor" | "retail-visitor" | "companion" | "ambient";
++  kind: "founder" | "staff" | "patient" | "service-visitor" | "retail-visitor" | "companion" | "ambient" | "inspector";
+   id: string;
+ }
+ 

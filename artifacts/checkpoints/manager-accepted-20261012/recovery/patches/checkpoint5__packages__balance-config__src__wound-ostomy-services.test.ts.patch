@@ -1,0 +1,11 @@
+--- a/packages/balance-config/src/wound-ostomy-services.test.ts
++++ b/packages/balance-config/src/wound-ostomy-services.test.ts
+@@ -16,7 +16,7 @@
+     const salary = PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.find(row => row.id === "staff.app")!.salaryPerExpenseInterval;
+     const upkeep = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(row => row.id === "room.wound_ostomy")!.upkeepPerExpenseInterval;
+     expect([grossPerHour, salary, upkeep, grossPerHour - salary - upkeep]).toEqual([45, 30, 2, 13]);
+-    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(4);
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
+   });
+ 
+   it("keeps procedure and supply authorizations separate from ordinary visits", () => {

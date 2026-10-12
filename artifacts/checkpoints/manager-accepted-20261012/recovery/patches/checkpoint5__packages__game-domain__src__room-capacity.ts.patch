@@ -1,0 +1,11 @@
+--- a/packages/game-domain/src/room-capacity.ts
++++ b/packages/game-domain/src/room-capacity.ts
+@@ -5,6 +5,8 @@
+ 
+ const STAFF_SLOTS: Readonly<Record<string, Readonly<Record<string, number>>>> = {
+   "staff.receptionist": { "room.front_desk": 1 },
++  // One physical desk; M4's role also enforces the single-facility hire maximum.
++  "staff.executive": { "room.executive_office": 1 },
+   "staff.imaging_technician": {
+     "room.ultrasound": 1,
+     "room.xray": 1,

@@ -1,0 +1,32 @@
+{
+  "status": "candidate_pending_manager_visual_review;not-approved;not-runtime-integrated",
+  "toolMode": "built-in-image_gen",
+  "stage": 2,
+  "generation": "targeted-seated-rear-lap-v1",
+  "reason": "Seated north clipboard must rest flat on the right lap, naturally torso-occluded; remove upright side carrying. Correct source-generated office shoe inconsistency.",
+  "nativeOutput": {
+    "path": "C:\\Users\\rowla\\.codex\\generated_images\\01a12ae0-d500-7da3-8cac-3b4286c4bcd6\\exec-d60359ac-6bb3-48a8-bfde-a0aa8ae1ca99.png",
+    "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+  },
+  "workspaceCopy": {
+    "path": "source.png",
+    "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248",
+    "copyFidelity": "byte-exact"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\inspector-v6f\\references\\app-gapfill-v6e.007-eight-poses.png",
+      "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+      "role": "style-layout-pose-reference"
+    },
+    {
+      "path": "C:\\Users\\rowla\\Projects\\GamifySurgery\\artifacts\\character-statics\\inspector-v6f\\sources\\010\\history\\seated-rear-lap-v1\\source.png",
+      "sha256": "b1ab71df65d54e49f8d3d035ff227bae64ca10fd13cd1d3a46844b95aea6b4bd",
+      "role": "immutable-whole-sheet-edit-target"
+    }
+  ],
+  "prompt": {
+    "path": "exact-prompt.txt",
+    "sha256": "1036380a8154ba5378bccffdcd22863158271e0fada521cca58df9824ddd19f4"
+  }
+}

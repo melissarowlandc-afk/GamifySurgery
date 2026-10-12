@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 2,
+  "mode": "painted",
+  "aspectPreserved": true,
+  "sharedFootprints": true,
+  "assets": {
+    "base-flowers": {
+      "slot": "flowers",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.6,
+        1.7
+      ],
+      "ground": [
+        0.93,
+        0.95
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.73,
+        "top": 0.72,
+        "width": 0.4,
+        "height": 0.23
+      },
+      "owners": []
+    },
+    "base-plushShelf": {
+      "slot": "plushShelf",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        528,
+        600
+      ],
+      "renderSizeTiles": [
+        1.1,
+        1.25
+      ],
+      "ground": [
+        1.75,
+        0.95
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1.25,
+        "top": 0.72,
+        "width": 1,
+        "height": 0.23
+      },
+      "owners": []
+    },
+    "base-cardRack": {
+      "slot": "cardRack",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        240,
+        552
+      ],
+      "renderSizeTiles": [
+        0.5,
+        1.15
+      ],
+      "ground": [
+        0.93,
+        1.65
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.73,
+        "top": 1.4,
+        "width": 0.4,
+        "height": 0.25
+      },
+      "owners": []
+    },
+    "base-checkout": {
+      "slot": "checkout",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        432
+      ],
+      "renderSizeTiles": [
+        0.6,
+        0.9
+      ],
+      "ground": [
+        2,
+        1.65
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1.75,
+        "top": 1.4,
+        "width": 0.5,
+        "height": 0.25
+      },
+      "owners": []
+    },
+    "base-wallArt": {
+      "slot": "wallArt",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        312,
+        216
+      ],
+      "renderSizeTiles": [
+        0.65,
+        0.45
+      ],
+      "ground": null,
+      "seat": null,
+      "wallTop": [
+        1.5,
+        -0.66
+      ],
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N2"
+      ]
+    },
+    "base-flowerCooler": {
+      "slot": "flowerCooler",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        173,
+        614
+      ],
+      "renderSizeTiles": [
+        0.36,
+        1.28
+      ],
+      "ground": [
+        0.28,
+        1.4
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.165,
+        "top": 0.88,
+        "width": 0.23,
+        "height": 0.52
+      },
+      "owners": [
+        "WB"
+      ]
+    },
+    "base-cardSpinner": {
+      "slot": "cardSpinner",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        230,
+        504
+      ],
+      "renderSizeTiles": [
+        0.48,
+        1.05
+      ],
+      "ground": [
+        0.28,
+        2.88
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.1,
+        "top": 2.7,
+        "width": 0.36,
+        "height": 0.18
+      },
+      "owners": [
+        "S1",
+        "WC"
+      ]
+    },
+    "base-roundTable": {
+      "slot": "roundTable",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        398,
+        408
+      ],
+      "renderSizeTiles": [
+        0.83,
+        0.85
+      ],
+      "ground": [
+        1.68,
+        2.55
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1.405,
+        "top": 2.33,
+        "width": 0.55,
+        "height": 0.22
+      },
+      "owners": [
+        "S2"
+      ]
+    },
+    "base-balloonBucket": {
+      "slot": "balloonBucket",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        226,
+        792
+      ],
+      "renderSizeTiles": [
+        0.47,
+        1.65
+      ],
+      "ground": [
+        2.72,
+        2.78
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.56,
+        "top": 2.54,
+        "width": 0.32,
+        "height": 0.24
+      },
+      "owners": [
+        "S3",
+        "EC"
+      ]
+    },
+    "base-snackShelf": {
+      "slot": "snackShelf",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        163,
+        461
+      ],
+      "renderSizeTiles": [
+        0.34,
+        0.96
+      ],
+      "ground": [
+        2.82,
+        1.2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.705,
+        "top": 0.9,
+        "width": 0.23,
+        "height": 0.3
+      },
+      "owners": [
+        "EB"
+      ]
+    },
+    "base-plushBin": {
+      "slot": "plushBin",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        163,
+        274
+      ],
+      "renderSizeTiles": [
+        0.34,
+        0.57
+      ],
+      "ground": [
+        2.82,
+        0.55
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.705,
+        "top": 0.32,
+        "width": 0.23,
+        "height": 0.23
+      },
+      "owners": [
+        "N3",
+        "EA"
+      ]
+    },
+    "base-mugShelf": {
+      "slot": "mugShelf",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        317,
+        206
+      ],
+      "renderSizeTiles": [
+        0.66,
+        0.43
+      ],
+      "ground": null,
+      "seat": null,
+      "wallTop": [
+        2.57,
+        -0.69
+      ],
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    },
+    "base-checkoutMat": {
+      "slot": "checkoutMat",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        336,
+        264
+      ],
+      "renderSizeTiles": [
+        0.7,
+        0.55
+      ],
+      "ground": null,
+      "seat": null,
+      "wallTop": null,
+      "center": [
+        2,
+        2.02
+      ],
+      "footprint": null,
+      "owners": []
+    }
+  }
+}

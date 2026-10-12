@@ -1,0 +1,20 @@
+--- a/apps/player/src/mobile/mobileScreens.css
++++ b/apps/player/src/mobile/mobileScreens.css
+@@ -110,6 +110,17 @@
+ .mobile-shell .mobile-optional-goals { margin-top: 22px; }
+ .mobile-shell .mobile-goals-advance { position: sticky; bottom: -10px; padding: 10px 0; background: var(--paper-raised); }
+ .mobile-shell .mobile-level-complete { padding: 12px; border: 2px solid var(--ink); border-radius: 8px; font-weight: 700; }
++.mobile-shell .mobile-inspection-goals .mobile-goal-card { padding: 8px; margin-bottom: 6px; }
++.mobile-shell .mobile-inspection-goals .mobile-goal-card h4 { margin-bottom: 4px; font-size: 15px; }
++.mobile-shell .mobile-inspection-goals .mobile-optional-goals { margin-top: 10px; }
++.mobile-shell .mobile-inspection-unlock { display: grid; gap: 5px; padding: 8px; border: var(--mobile-border); border-radius: 8px; overflow-wrap: anywhere; }
++.mobile-shell .mobile-inspection-unlock h3,
++.mobile-shell .mobile-inspection-unlock p { margin: 0; }
++.mobile-shell .mobile-inspection-unlock p { font-size: 14px; }
++.mobile-shell .mobile-inspection-unlock button { min-height: 44px; width: 100%; white-space: normal; }
++.mobile-shell .mobile-inspection-optional { margin-top: 8px; font-size: 14px; }
++.mobile-shell .mobile-inspection-optional summary { display: flex; align-items: center; gap: 6px; cursor: pointer; }
++.mobile-shell .mobile-inspection-optional p { margin: 4px 0; }
+ .mobile-shell .mobile-advertising-controls { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 10px; }
+ .mobile-shell .mobile-advertising-controls > div { display: grid; gap: 4px; text-align: center; }
+ .mobile-shell .mobile-advertising-controls > button { min-height: 48px !important; font-size: 22px; }

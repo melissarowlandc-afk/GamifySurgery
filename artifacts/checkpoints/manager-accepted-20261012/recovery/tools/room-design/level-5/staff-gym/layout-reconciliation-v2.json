@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "status": "PASS",
+  "designRevision": 2,
+  "changes": [
+    {
+      "kind": "owner_corner_correction",
+      "removedRearSideSections": [
+        "west1",
+        "east1"
+      ],
+      "changedSideSections": [
+        "west2",
+        "west3",
+        "west4",
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "basis": "Start side shelves one tile south, uniformly shorten their display to clear rear equipment, and stop front sections at y=3.72 so front trays own the corners."
+    }
+  ],
+  "frozenLayoutSha256": "b3c58551b7136c3f3addaa6b0b317a5c648e60edf479c42e357a778c76c23a8f",
+  "originalConceptLayoutSha256": "7fc663818c04cba1b423b019c525d03ed5d44fada4666d15a3db99bdf6a94e90",
+  "finalLayoutSha256": "b3c58551b7136c3f3addaa6b0b317a5c648e60edf479c42e357a778c76c23a8f",
+  "necessaryFurnitureRetained": true,
+  "necessarySeatedSpotsRetained": true,
+  "necessaryStandingSpotRetained": true,
+  "continuousPerimeterRows": true,
+  "overlappingFloorFootprints": 0,
+  "cornerOwners": {
+    "northwest": "north1",
+    "northeast": "north4",
+    "southwest": "front1",
+    "southeast": "front4"
+  },
+  "sideEdges": [
+    {
+      "side": "west",
+      "firstFootprintTop": 1,
+      "firstPaintTop": 0.7500000000000002,
+      "lastFootprintEnd": 3.72
+    },
+    {
+      "side": "east",
+      "firstFootprintTop": 1,
+      "firstPaintTop": 0.7515547263681595,
+      "lastFootprintEnd": 3.72
+    }
+  ],
+  "unchangedNonSideRecords": 19,
+  "unchangedPreparedPngs": 21,
+  "newBuiltInCalls": 0,
+  "ownerReview": {
+    "date": "2026-10-11",
+    "statement": "Some of the shelves on the side walls look like they are in the same spot as and overlapping the equipment in the back wall. Otherwise this is approved.",
+    "approval": "approved_except_corner_correction",
+    "unchangedElementsApproved": true,
+    "cornerCorrection": "complete_pending_manager_browser_verification",
+    "browserVerificationAssignedTo": "GamifySurgery manager",
+    "newDesignDecisionRequired": false
+  },
+  "benchSeatRisePixels": 33.64084353146853,
+  "benchFloorRegistrationErrorPixels": 0.10373546290662716
+}

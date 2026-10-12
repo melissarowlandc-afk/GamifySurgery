@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "frozenLayoutSha256": "07e584bcb93b8e7b3a452d18da21c64c2de5c33f6b5cbff51f4a8997039c0c6b",
+  "finalLayoutSha256": "07e584bcb93b8e7b3a452d18da21c64c2de5c33f6b5cbff51f4a8997039c0c6b",
+  "changes": [],
+  "necessaryFurnitureRetained": true,
+  "necessarySeatedSpotsRetained": true,
+  "packingNotes": [
+    "No furniture or seated contact moved after the concept layout freeze.",
+    "Four rear sprite crops share the source quarter width, uniform scale, plinth floor point and floor centers. Interior plinths exactly abut at tile edges.",
+    "Rear planter floor points register the stone plinth; trailing foliage extends below that line and is also measured as a blocker.",
+    "Garden chair cushion rises use each unchanged adult source seat/floor anchors at the existing proof source scale. Camera-side front sprites select original generated source pixels with the identical transform.",
+    "Nine-row opaque bands measured for each floor fixture and both seated adults join the declared footprints for route validation.",
+    "The paving is a square crop inside the generated material sheet, uniformly packed and mapped to the entire four-tile floor."
+  ],
+  "preparedFloorAndSeatRegistrations": [
+    {
+      "id": "base-north1",
+      "anchor": [
+        247.71270718232046,
+        658.4051565377532
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 14.287292817679571,
+        "dy": 129.86003683241256,
+        "dw": 483.42541436464086,
+        "dh": 568.1399631675874
+      }
+    },
+    {
+      "id": "base-trellis1",
+      "anchor": [
+        234.3609576427256,
+        94.62615101289134
+      ],
+      "kind": "wall",
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 27.639042357274406,
+        "dy": 101.99263351749539,
+        "dw": 456.7219152854512,
+        "dh": 372.0073664825046
+      }
+    },
+    {
+      "id": "base-north2",
+      "anchor": [
+        256,
+        678.6629834254144
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 6,
+        "dy": 311.2596685082873,
+        "dw": 500,
+        "dh": 386.7403314917127
+      }
+    },
+    {
+      "id": "base-trellis2",
+      "anchor": [
+        256,
+        85.41804788213626
+      ],
+      "kind": "wall",
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 6,
+        "dy": 84.49723756906076,
+        "dw": 500,
+        "dh": 389.50276243093924
+      }
+    },
+    {
+      "id": "base-north3",
+      "anchor": [
+        256,
+        679.5837937384899
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 6,
+        "dy": 325.9926335174954,
+        "dw": 500,
+        "dh": 372.0073664825046
+      }
+    },
+    {
+      "id": "base-trellis3",
+      "anchor": [
+        256,
+        78.05156537753221
+      ],
+      "kind": "wall",
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 6,
+        "dy": 77.13075506445671,
+        "dw": 500,
+        "dh": 396.8692449355433
+      }
+    },
+    {
+      "id": "base-north4",
+      "anchor": [
+        263.82688766114177,
+        657.4843462246777
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 13.826887661141797,
+        "dy": 130.780847145488,
+        "dw": 484.3462246777164,
+        "dh": 567.219152854512
+      }
+    },
+    {
+      "id": "base-trellis4",
+      "anchor": [
+        279.94106813996314,
+        86.3388581952118
+      ],
+      "kind": "wall",
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9208103130755064,
+        "dx": 29.941068139963164,
+        "dy": 97.38858195211787,
+        "dw": 452.1178637200737,
+        "dh": 376.6114180478821
+      }
+    },
+    {
+      "id": "base-west",
+      "anchor": [
+        89,
+        809
+      ],
+      "kind": "floor",
+      "sourcePoints": null,
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.5338491295938105,
+        "dx": 6,
+        "dy": 57.80657640232107,
+        "dw": 276,
+        "dh": 752.1934235976789
+      }
+    },
+    {
+      "id": "base-east",
+      "anchor": [
+        96.5,
+        809
+      ],
+      "kind": "floor",
+      "sourcePoints": null,
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.5045703839122486,
+        "dx": 6,
+        "dy": 130.84826325411336,
+        "dw": 276,
+        "dh": 679.1517367458866
+      }
+    },
+    {
+      "id": "base-front",
+      "anchor": [
+        368.5,
+        353
+      ],
+      "kind": "floor",
+      "sourcePoints": null,
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.40491515506143944,
+        "dx": 6,
+        "dy": 35.736688121708596,
+        "dw": 692,
+        "dh": 318.2633118782914
+      }
+    },
+    {
+      "id": "base-fountain",
+      "anchor": [
+        472,
+        809
+      ],
+      "kind": "floor",
+      "sourcePoints": null,
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.7787934186471663,
+        "dx": 6,
+        "dy": 14.851919561243221,
+        "dw": 852,
+        "dh": 795.1480804387568
+      }
+    },
+    {
+      "id": "base-chairEast",
+      "anchor": [
+        240,
+        568.0680720181261
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "seat": [
+          610,
+          650
+        ],
+        "frontRegions": [
+          [
+            295,
+            611,
+            682,
+            105
+          ],
+          [
+            254,
+            707,
+            100,
+            412
+          ],
+          [
+            878,
+            700,
+            96,
+            426
+          ]
+        ],
+        "seatRisePixels": 45.20711477584916
+      },
+      "seatRise": 45.20711477584916,
+      "floorRegistrationError": 0.017018004531536235,
+      "transform": {
+        "scale": 0.38638559637477915,
+        "dx": 69.99033759509717,
+        "dy": 204.09284023308413,
+        "dw": 340.01932480980565,
+        "dh": 365.90715976691587
+      }
+    },
+    {
+      "id": "base-chairEast-front",
+      "anchor": [
+        240,
+        568.0680720181261
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "seat": [
+          610,
+          650
+        ],
+        "frontRegions": [
+          [
+            295,
+            611,
+            682,
+            105
+          ],
+          [
+            254,
+            707,
+            100,
+            412
+          ],
+          [
+            878,
+            700,
+            96,
+            426
+          ]
+        ],
+        "seatRisePixels": 45.20711477584916
+      },
+      "seatRise": 45.20711477584916,
+      "floorRegistrationError": 0.017018004531536235,
+      "transform": {
+        "scale": 0.38638559637477915,
+        "dx": 69.99033759509717,
+        "dy": 204.09284023308413,
+        "dw": 340.01932480980565,
+        "dh": 365.90715976691587
+      }
+    },
+    {
+      "id": "base-chairWest",
+      "anchor": [
+        250.43866629130724,
+        566.3373100732256
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "seat": [
+          750,
+          650
+        ],
+        "frontRegions": [
+          [
+            420,
+            607,
+            610,
+            89
+          ],
+          [
+            402,
+            690,
+            88,
+            449
+          ],
+          [
+            958,
+            694,
+            90,
+            445
+          ]
+        ],
+        "seatRisePixels": 44.13541361763235
+      },
+      "seatRise": 44.135413617632366,
+      "floorRegistrationError": 0.08432751830639518,
+      "transform": {
+        "scale": 0.3662689926774469,
+        "dx": 79.757315703617,
+        "dy": 209.59131120539223,
+        "dw": 320.485368592766,
+        "dh": 360.40868879460777
+      }
+    },
+    {
+      "id": "base-chairWest-front",
+      "anchor": [
+        250.43866629130724,
+        566.3373100732256
+      ],
+      "kind": "floor",
+      "sourcePoints": {
+        "seat": [
+          750,
+          650
+        ],
+        "frontRegions": [
+          [
+            420,
+            607,
+            610,
+            89
+          ],
+          [
+            402,
+            690,
+            88,
+            449
+          ],
+          [
+            958,
+            694,
+            90,
+            445
+          ]
+        ],
+        "seatRisePixels": 44.13541361763235
+      },
+      "seatRise": 44.135413617632366,
+      "floorRegistrationError": 0.08432751830639518,
+      "transform": {
+        "scale": 0.3662689926774469,
+        "dx": 79.757315703617,
+        "dy": 209.59131120539223,
+        "dw": 320.485368592766,
+        "dh": 360.40868879460777
+      }
+    },
+    {
+      "id": "base-path",
+      "anchor": [
+        544,
+        544
+      ],
+      "kind": "walkable-rug",
+      "sourcePoints": null,
+      "seatRise": null,
+      "floorRegistrationError": null,
+      "transform": {
+        "scale": 0.9944547134935305,
+        "dx": 6,
+        "dy": 6,
+        "dw": 1076,
+        "dh": 1076
+      }
+    }
+  ],
+  "measuredBases": [
+    {
+      "id": "north1:opaque-base",
+      "recordId": "north1",
+      "footprint": {
+        "left": 0.1905745856353591,
+        "top": 0.40918968692449365,
+        "width": 0.032,
+        "height": 0.018
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "north2:opaque-base",
+      "recordId": "north2",
+      "footprint": {
+        "left": 1.4780000000000002,
+        "top": 0.36467403314917135,
+        "width": 0.034,
+        "height": 0.018
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "north3:opaque-base",
+      "recordId": "north3",
+      "footprint": {
+        "left": 2.188,
+        "top": 0.36483241252302034,
+        "width": 0.032,
+        "height": 0.018
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "north4:opaque-base",
+      "recordId": "north4",
+      "footprint": {
+        "left": 3.7243462246777166,
+        "top": 0.4110313075506447,
+        "width": 0.029999999999999995,
+        "height": 0.018
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "west1:opaque-base",
+      "recordId": "west1",
+      "footprint": {
+        "left": 0.2675,
+        "top": 0.9612499999999999,
+        "width": 0.025,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "west2:opaque-base",
+      "recordId": "west2",
+      "footprint": {
+        "left": 0.2675,
+        "top": 1.96125,
+        "width": 0.025,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "west3:opaque-base",
+      "recordId": "west3",
+      "footprint": {
+        "left": 0.2675,
+        "top": 2.96125,
+        "width": 0.025,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "west4:opaque-base",
+      "recordId": "west4",
+      "footprint": {
+        "left": 0.2675,
+        "top": 3.96125,
+        "width": 0.025,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "east1:opaque-base",
+      "recordId": "east1",
+      "footprint": {
+        "left": 3.704375,
+        "top": 0.9612499999999999,
+        "width": 0.03125,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "east2:opaque-base",
+      "recordId": "east2",
+      "footprint": {
+        "left": 3.704375,
+        "top": 1.96125,
+        "width": 0.03125,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "east3:opaque-base",
+      "recordId": "east3",
+      "footprint": {
+        "left": 3.704375,
+        "top": 2.96125,
+        "width": 0.03125,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "east4:opaque-base",
+      "recordId": "east4",
+      "footprint": {
+        "left": 3.704375,
+        "top": 3.96125,
+        "width": 0.03125,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "frontLeft:opaque-base",
+      "recordId": "frontLeft",
+      "footprint": {
+        "left": 0.18104166665419033,
+        "top": 3.93125,
+        "width": 1.0979166666916194,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "frontRight:opaque-base",
+      "recordId": "frontRight",
+      "footprint": {
+        "left": 2.7210416666541897,
+        "top": 3.93125,
+        "width": 1.0979166666916194,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "fountain:opaque-base",
+      "recordId": "fountain",
+      "footprint": {
+        "left": 1.9854166666666666,
+        "top": 2.18125,
+        "width": 0.029166666666666667,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "leftSeat:opaque-base",
+      "recordId": "leftSeat",
+      "footprint": {
+        "left": 0.7125,
+        "top": 3.0611081832955707,
+        "width": 0.5645833333333333,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "rightSeat:opaque-base",
+      "recordId": "rightSeat",
+      "footprint": {
+        "left": 2.7407527785597763,
+        "top": 3.06054727068078,
+        "width": 0.4895833333333333,
+        "height": 0.01875
+      },
+      "basis": "Decoded alpha >=160 in final nine-row floor-contact band."
+    },
+    {
+      "id": "leftSeat:seated-opaque-base",
+      "recordId": "leftSeat",
+      "footprint": {
+        "left": 1.0057212318931068,
+        "top": 3.028508912962038,
+        "width": 0.36043760926573426,
+        "height": 0.05149108703796204
+      },
+      "basis": "Unchanged seated adult alpha >=160 in final nine-row foot band, retained with the necessary chair."
+    },
+    {
+      "id": "rightSeat:seated-opaque-base",
+      "recordId": "rightSeat",
+      "footprint": {
+        "left": 2.6624473183066932,
+        "top": 3.0342301448551448,
+        "width": 0.40620746441058947,
+        "height": 0.05149108703796204
+      },
+      "basis": "Unchanged seated adult alpha >=160 in final nine-row foot band, retained with the necessary chair."
+    }
+  ],
+  "initialPaintedSingleDoorCheck": "PASS",
+  "sourceInspection": "All original corners remain transparent. The first east module is preserved; a targeted built-in edit supplies the selected sharper silhouette. Native alpha inspection confirms a transparent exterior."
+}

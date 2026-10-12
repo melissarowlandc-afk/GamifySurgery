@@ -1,0 +1,55 @@
+{
+  "milestone": "M5 queue fix",
+  "date": "2026-10-12",
+  "pool": "threads",
+  "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "checkedInConfigsUnchanged": true,
+  "checks": [
+    {
+      "name": "Focused domain",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/level-five-gift-retail.test.ts tests/level-five-executive.test.ts tests/retail-operations.test.ts",
+      "exitCode": 0,
+      "log": "domain-focused.log"
+    },
+    {
+      "name": "Focused player / engine",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/facility/levelFiveGiftRouteMotion.test.ts src/session/levelFiveGiftRetailViewModels.test.tsx",
+      "exitCode": 0,
+      "log": "player-focused-final.log"
+    },
+    {
+      "name": "FULL game-domain",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-domain.log"
+    },
+    {
+      "name": "FULL player",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": "full-player.log"
+    },
+    {
+      "name": "Root typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-final.log"
+    },
+    {
+      "name": "Player build",
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": "build.log"
+    },
+    {
+      "name": "QA transform",
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exitCode": 0,
+      "log": "qa-check.log"
+    }
+  ],
+  "allowedPlayerFailure": "src/session/surgeryCenterServicePreviews.test.ts:85:52",
+  "gitActions": false,
+  "installs": false,
+  "managerBrowserRecheck": "pending"
+}

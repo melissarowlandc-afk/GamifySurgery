@@ -1,0 +1,564 @@
+{
+  "status": "PASS",
+  "designRevision": 2,
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    3,
+    3
+  ],
+  "appearanceTiers": 1,
+  "upgradeSelections": 5,
+  "assets": 13,
+  "builtInCalls": 13,
+  "revisionBuiltInCalls": 8,
+  "necessaryFixtures": 4,
+  "optionalDecor": 9,
+  "tiers": [
+    {
+      "level": 1,
+      "states": 640,
+      "routes": 13276,
+      "layers": [
+        {
+          "id": "browse",
+          "fixture": "plushShelf",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 6979,
+          "adultPixels": 11122,
+          "floorRegistered": true
+        },
+        {
+          "id": "pay",
+          "fixture": "checkout",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 5361,
+          "adultPixels": 10101,
+          "floorRegistered": true
+        },
+        {
+          "id": "queue1",
+          "fixture": "cardRack",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 114,
+          "adultPixels": 8576,
+          "floorRegistered": true
+        }
+      ],
+      "fullQueueRoutes": 72
+    },
+    {
+      "level": 2,
+      "states": 640,
+      "routes": 13276,
+      "layers": [
+        {
+          "id": "browse",
+          "fixture": "plushShelf",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 6979,
+          "adultPixels": 11122,
+          "floorRegistered": true
+        },
+        {
+          "id": "pay",
+          "fixture": "checkout",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 5361,
+          "adultPixels": 10101,
+          "floorRegistered": true
+        },
+        {
+          "id": "queue1",
+          "fixture": "cardRack",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 114,
+          "adultPixels": 8576,
+          "floorRegistered": true
+        }
+      ],
+      "fullQueueRoutes": 72
+    },
+    {
+      "level": 3,
+      "states": 640,
+      "routes": 13276,
+      "layers": [
+        {
+          "id": "browse",
+          "fixture": "plushShelf",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 6979,
+          "adultPixels": 11122,
+          "floorRegistered": true
+        },
+        {
+          "id": "pay",
+          "fixture": "checkout",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 5361,
+          "adultPixels": 10101,
+          "floorRegistered": true
+        },
+        {
+          "id": "queue1",
+          "fixture": "cardRack",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 114,
+          "adultPixels": 8576,
+          "floorRegistered": true
+        }
+      ],
+      "fullQueueRoutes": 72
+    },
+    {
+      "level": 4,
+      "states": 640,
+      "routes": 13276,
+      "layers": [
+        {
+          "id": "browse",
+          "fixture": "plushShelf",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 6979,
+          "adultPixels": 11122,
+          "floorRegistered": true
+        },
+        {
+          "id": "pay",
+          "fixture": "checkout",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 5361,
+          "adultPixels": 10101,
+          "floorRegistered": true
+        },
+        {
+          "id": "queue1",
+          "fixture": "cardRack",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 114,
+          "adultPixels": 8576,
+          "floorRegistered": true
+        }
+      ],
+      "fullQueueRoutes": 72
+    },
+    {
+      "level": 5,
+      "states": 640,
+      "routes": 13276,
+      "layers": [
+        {
+          "id": "browse",
+          "fixture": "plushShelf",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 6979,
+          "adultPixels": 11122,
+          "floorRegistered": true
+        },
+        {
+          "id": "pay",
+          "fixture": "checkout",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 5361,
+          "adultPixels": 10101,
+          "floorRegistered": true
+        },
+        {
+          "id": "queue1",
+          "fixture": "cardRack",
+          "order": "floor-contact-sorted fixture → standing adult",
+          "opaqueOverlap": 114,
+          "adultPixels": 8576,
+          "floorRegistered": true
+        }
+      ],
+      "fullQueueRoutes": 72
+    }
+  ],
+  "states": 3200,
+  "routes": 66380,
+  "radiusClearSamples": 32992040,
+  "fullQueueRoutes": 66380,
+  "fullQueueSamples": 40087100,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 12,
+  "backingSections": 3,
+  "standingSpots": 4,
+  "queueCapacity": 2,
+  "visibilityChecks": 140,
+  "pairInvariantChecks": 400,
+  "arbitraryDoorCombinationProof": "Necessary fixtures and four standing/queue spots have no door/backing owners. Opening another door only removes its optional blockers/contacts and never adds one, so each proven single-door route survives every additional door; holds for all 4096 combinations × 8 backing combinations × 5 upgrades. Full queue checked in every enumerated state.",
+  "queueAdvanceRule": "The next standing contact must clear before the waiting shopper advances; held others remain collision obstacles.",
+  "assetChecks": [
+    {
+      "id": "base-flowers",
+      "canvas": [
+        288,
+        816
+      ],
+      "sha256": "baf592248fba491aab119646d72e412d2167ecf27eb361c2d75a86f2beaf9c27",
+      "transparentPixels": 119708,
+      "alphaEdge": 0,
+      "anchor": [
+        144,
+        808
+      ],
+      "scale": 0.5767575322812052
+    },
+    {
+      "id": "base-plushShelf",
+      "canvas": [
+        528,
+        600
+      ],
+      "sha256": "7cd0b49126452faab55f78dee33222fce05becc8208a34e808e5f9b0be09608c",
+      "transparentPixels": 71323,
+      "alphaEdge": 0,
+      "anchor": [
+        264,
+        593
+      ],
+      "scale": 0.5
+    },
+    {
+      "id": "base-cardRack",
+      "canvas": [
+        240,
+        552
+      ],
+      "sha256": "3b44429eed072a060afc4c4ecec68a07bdd5521517201913e986d97c5d5a1b44",
+      "transparentPixels": 41185,
+      "alphaEdge": 0,
+      "anchor": [
+        120,
+        546
+      ],
+      "scale": 0.37623762376237624
+    },
+    {
+      "id": "base-checkout",
+      "canvas": [
+        288,
+        432
+      ],
+      "sha256": "c8f2cc50c474a42aaa6d62210d19128bdfcd38cfe7e102c4710ba521fb9062d2",
+      "transparentPixels": 29003,
+      "alphaEdge": 0,
+      "anchor": [
+        144,
+        426
+      ],
+      "scale": 0.4682274247491639
+    },
+    {
+      "id": "base-wallArt",
+      "canvas": [
+        312,
+        216
+      ],
+      "sha256": "e78ceb02ac1ac217abc65fcdb6ddc7cb56237a80a6434159793c01a42edaf69b",
+      "transparentPixels": 6878,
+      "alphaEdge": 0,
+      "anchor": [
+        156,
+        8
+      ],
+      "scale": 0.24937655860349128
+    },
+    {
+      "id": "base-flowerCooler",
+      "canvas": [
+        173,
+        614
+      ],
+      "sha256": "3d1946632ec19613c58f16c0b91d037fe1cb2455d772ce677b6eec06a44d5c72",
+      "transparentPixels": 28784,
+      "alphaEdge": 0,
+      "anchor": [
+        86.5,
+        608
+      ],
+      "scale": 0.36179775280898874
+    },
+    {
+      "id": "base-cardSpinner",
+      "canvas": [
+        230,
+        504
+      ],
+      "sha256": "49440e36885b91a43444f6722d78e960c7fdbb3f5c25e9e8b76d08f5cf2115bb",
+      "transparentPixels": 37416,
+      "alphaEdge": 0,
+      "anchor": [
+        115,
+        494
+      ],
+      "scale": 0.36577181208053694
+    },
+    {
+      "id": "base-roundTable",
+      "canvas": [
+        398,
+        408
+      ],
+      "sha256": "c24291cdaa79e3c49a1faa8af9b82d1fa1b58b219437528147dc84c018599cb3",
+      "transparentPixels": 74585,
+      "alphaEdge": 0,
+      "anchor": [
+        199,
+        402
+      ],
+      "scale": 0.35707678075855687
+    },
+    {
+      "id": "base-balloonBucket",
+      "canvas": [
+        226,
+        792
+      ],
+      "sha256": "2d110e19f4ef1c4820e8b601ec9864920e2b46016d07b6e20a89d8d9198c2224",
+      "transparentPixels": 120339,
+      "alphaEdge": 0,
+      "anchor": [
+        113,
+        782
+      ],
+      "scale": 0.3338533541341654
+    },
+    {
+      "id": "base-snackShelf",
+      "canvas": [
+        163,
+        461
+      ],
+      "sha256": "34ecea5f49a8a9d5d26822f1461672ca725910cde7d73f353eba4c04261ffaee",
+      "transparentPixels": 41283,
+      "alphaEdge": 0,
+      "anchor": [
+        81.5,
+        455
+      ],
+      "scale": 0.22844175491679275
+    },
+    {
+      "id": "base-plushBin",
+      "canvas": [
+        163,
+        274
+      ],
+      "sha256": "f6cfc36c828c8617e814d23ee9878ba3d25a4c97ec3350e37ea7dd45143223ac",
+      "transparentPixels": 24186,
+      "alphaEdge": 0,
+      "anchor": [
+        81.5,
+        268
+      ],
+      "scale": 0.15423901940755874
+    },
+    {
+      "id": "base-mugShelf",
+      "canvas": [
+        317,
+        206
+      ],
+      "sha256": "0e2d9c052493b1e07f77554e6ba517fac40247a529c6e28a7055976c0cbf6ab5",
+      "transparentPixels": 42065,
+      "alphaEdge": 0,
+      "anchor": [
+        158.5,
+        85
+      ],
+      "scale": 0.21254355400696864
+    },
+    {
+      "id": "base-checkoutMat",
+      "canvas": [
+        336,
+        264
+      ],
+      "sha256": "8d6091462323a836a5bb0ae42728613e833fffbc33d19bd2256851169df08564",
+      "transparentPixels": 27761,
+      "alphaEdge": 0,
+      "anchor": [
+        168,
+        132
+      ],
+      "scale": 0.3793911007025761
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc",
+      "currentSha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc"
+    },
+    {
+      "path": "docs/execplans/level5-launch-plan-20261010.md",
+      "sha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b",
+      "currentSha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b"
+    },
+    {
+      "path": "packages/balance-config/src/room-upgrades.ts",
+      "sha256": "5020f6de7f240ac07a65166832ba3b9886919636699067414a327675ed13e7ef",
+      "currentSha256": "5020f6de7f240ac07a65166832ba3b9886919636699067414a327675ed13e7ef"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "sha256": "72e19074f3cdbfe64ca43080e54e9380f190432dde8ba915c17579c9bd1ff282",
+      "currentSha256": "72e19074f3cdbfe64ca43080e54e9380f190432dde8ba915c17579c9bd1ff282"
+    },
+    {
+      "path": "packages/game-domain/src/spatial.ts",
+      "sha256": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+      "currentSha256": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a",
+      "currentSha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a"
+    },
+    {
+      "path": "apps/player/public/art/rooms/gs015-v1/coffee/furniture.webp",
+      "sha256": "47c373d166babc10d8e4aca935161b1526992ca1c65b7ac3e45e8c43bfea0709",
+      "currentSha256": "47c373d166babc10d8e4aca935161b1526992ca1c65b7ac3e45e8c43bfea0709"
+    },
+    {
+      "path": "apps/player/public/art/rooms/level3-v1/vending/machine.webp",
+      "sha256": "e1aa3911a964f78c9bc7bdc7fbfd9a3a9b8744c87661e80207624441106307e3",
+      "currentSha256": "e1aa3911a964f78c9bc7bdc7fbfd9a3a9b8744c87661e80207624441106307e3"
+    },
+    {
+      "path": "tools/room-design/level-5/founders-office/approval-2026-10-09.md",
+      "sha256": "25871d9ccdf26ecbf7263a2dab26153989543e6e4376e26037d085a99674031c",
+      "currentSha256": "25871d9ccdf26ecbf7263a2dab26153989543e6e4376e26037d085a99674031c"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/layout.json",
+      "sha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e",
+      "currentSha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/lab.js",
+      "sha256": "470465ef2b30d0a01e7a5a3205e3fb1043d9b011a193829a68919292a5211773",
+      "currentSha256": "fe012e2dc9003bc72161e129fb6c33498ad8dfad6abda90a95bd35f8269f1a8c"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/geometry.mjs",
+      "sha256": "d271d3a2fb0388e04dddf3f1f8bc4562aeb53013e1e310dc7a8db73df4906cbb",
+      "currentSha256": "35b92a63399a8c221b2cdcb56d36b6a6e2b8fc9918cbada3e8511a3e4bf83ffd"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/build.mjs",
+      "sha256": "49ff62c219dc61375445d5b09867df8bba93a2865fa5f42ef213f418fb2d8708",
+      "currentSha256": "ed18fb6a3c971ecebf88e33939f69f10a441e42726d1ee4695b0c109433a5a63"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/native-engine.mjs",
+      "sha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+      "currentSha256": "4581b39315421952852d444805bc8f41f86a5a7a0de9671757af1495931cd42e"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate.cjs",
+      "sha256": "4987d514b1940af4f4a8ac4e404f3fb4f7f1b1718866bf15c6d1e8a65603ef51",
+      "currentSha256": "50402de6b834dfd6ea861e84a1a29bbc8520e4094e6b0dd6b0702e1b850b9c31"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-controls.mjs",
+      "sha256": "63ac243dd81e0307844013880eb804705e1b9ec19a5ff2cb1d7df67aa7b9e941",
+      "currentSha256": "1d88bb8802c329543280cdcaa4d02721a80490c3858940f559f28c63e5089b52"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-browser.cjs",
+      "sha256": "29dd1e3f1203aa975f85da01b58766282928c272de436f69f1e4f35048ba023f",
+      "currentSha256": "8eabb906edb05e5d171efa0e58258011dee7134b16030f827797bb023528baf3"
+    },
+    {
+      "path": "tools/room-design/level-4/mri/approval-2026-10-07.md",
+      "sha256": "18e1e32b94d1852ce5deed68ec92f635574e6fc2fb1fe06daa828b9ec6fa241c",
+      "currentSha256": "18e1e32b94d1852ce5deed68ec92f635574e6fc2fb1fe06daa828b9ec6fa241c"
+    },
+    {
+      "path": "tools/room-design/level-4/radiology-reading/approval-2026-10-07.md",
+      "sha256": "986dbae593e6d19de78266e8896c5f707fdf42cc6f7622964e1255e4b1aa1a0c",
+      "currentSha256": "986dbae593e6d19de78266e8896c5f707fdf42cc6f7622964e1255e4b1aa1a0c"
+    },
+    {
+      "path": "tools/room-design/level-4/pediatric-waiting/approval-2026-10-08.md",
+      "sha256": "de79bc0a74407e8582453252480c7b66dd8cf04f80e3074794f23f49d2f639a5",
+      "currentSha256": "de79bc0a74407e8582453252480c7b66dd8cf04f80e3074794f23f49d2f639a5"
+    },
+    {
+      "path": "tools/room-design/level-4/pediatric-exam/approval-2026-10-08.md",
+      "sha256": "9237bfc1cd5f611ae81f8fe2e48072301f7cfab9f4f4397156dc8adfd18ecbe6",
+      "currentSha256": "9237bfc1cd5f611ae81f8fe2e48072301f7cfab9f4f4397156dc8adfd18ecbe6"
+    },
+    {
+      "path": "tools/room-design/level-4/wound-ostomy/approval-2026-10-08.md",
+      "sha256": "76d33e4f952f554ee824314a4daa74e7bb6ba398c62f04bee5c7b4781876a1ea",
+      "currentSha256": "76d33e4f952f554ee824314a4daa74e7bb6ba398c62f04bee5c7b4781876a1ea"
+    },
+    {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "sha256": "30ae01b8cd712b9f72606aab169a276cd7254e6caaa964cf81b6580da06d5cd2",
+      "currentSha256": "30ae01b8cd712b9f72606aab169a276cd7254e6caaa964cf81b6580da06d5cd2"
+    },
+    {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493f37bd75152db23e3d7d1f2394ebabd6737bf95b40f6d2af0cc302adeb6590",
+      "currentSha256": "493f37bd75152db23e3d7d1f2394ebabd6737bf95b40f6d2af0cc302adeb6590"
+    },
+    {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.004/stand-east.png",
+      "sha256": "70f0c16ba858b512a592089fbe9af40929f9c68edc08e5aa6ee41fc55a82859d",
+      "currentSha256": "70f0c16ba858b512a592089fbe9af40929f9c68edc08e5aa6ee41fc55a82859d"
+    },
+    {
+      "path": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.006/stand-east.png",
+      "sha256": "69a899b45be7595402f357992be9c691ebb1200d970aa0ee6e15b046edfccddb",
+      "currentSha256": "69a899b45be7595402f357992be9c691ebb1200d970aa0ee6e15b046edfccddb"
+    }
+  ],
+  "concurrentReferenceChanges": [
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/lab.js",
+      "intakeSha256": "470465ef2b30d0a01e7a5a3205e3fb1043d9b011a193829a68919292a5211773",
+      "currentSha256": "fe012e2dc9003bc72161e129fb6c33498ad8dfad6abda90a95bd35f8269f1a8c"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/geometry.mjs",
+      "intakeSha256": "d271d3a2fb0388e04dddf3f1f8bc4562aeb53013e1e310dc7a8db73df4906cbb",
+      "currentSha256": "35b92a63399a8c221b2cdcb56d36b6a6e2b8fc9918cbada3e8511a3e4bf83ffd"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/build.mjs",
+      "intakeSha256": "49ff62c219dc61375445d5b09867df8bba93a2865fa5f42ef213f418fb2d8708",
+      "currentSha256": "ed18fb6a3c971ecebf88e33939f69f10a441e42726d1ee4695b0c109433a5a63"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/native-engine.mjs",
+      "intakeSha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+      "currentSha256": "4581b39315421952852d444805bc8f41f86a5a7a0de9671757af1495931cd42e"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate.cjs",
+      "intakeSha256": "4987d514b1940af4f4a8ac4e404f3fb4f7f1b1718866bf15c6d1e8a65603ef51",
+      "currentSha256": "50402de6b834dfd6ea861e84a1a29bbc8520e4094e6b0dd6b0702e1b850b9c31"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-controls.mjs",
+      "intakeSha256": "63ac243dd81e0307844013880eb804705e1b9ec19a5ff2cb1d7df67aa7b9e941",
+      "currentSha256": "1d88bb8802c329543280cdcaa4d02721a80490c3858940f559f28c63e5089b52"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-browser.cjs",
+      "intakeSha256": "29dd1e3f1203aa975f85da01b58766282928c272de436f69f1e4f35048ba023f",
+      "currentSha256": "8eabb906edb05e5d171efa0e58258011dee7134b16030f827797bb023528baf3"
+    }
+  ],
+  "textFiles": 126,
+  "warnings": [],
+  "browserQA": "pending manager",
+  "proofManifestSha256": "cf49d4fbb7ba76079665134fd45f7b2633b0c0072fcc5c36f1b65b7e8447a59d"
+}

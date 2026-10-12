@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "room": "executive-office",
+  "facilityLevel": 5,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "appearanceChanges": false,
+  "footprint": [
+    4,
+    3
+  ],
+  "footprintStatus": "proposed_needs_owner_review",
+  "mode": "painted",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "administrationMechanic": "not_simulated",
+  "doorModel": {
+    "count": 14,
+    "perWall": {
+      "N": 4,
+      "S": 4,
+      "W": 3,
+      "E": 3
+    },
+    "spanTiles": 1,
+    "kind": "game-one-tile"
+  },
+  "layoutSha256": "39a55e5c50c9e18f87a3486ae8ba1ccfa90f727bd2b818fb858af6e3b7190355",
+  "prepaintLayoutSha256": "e30ab3b4c9712d71512ce2126846e1bca7fd406c0aff71ffe758089363e4e569",
+  "generationManifestSha256": "4dec7014e40b610989fec53297621ca44abf1d9c62a15d8795cbf7fb58c786fd",
+  "designRoomsSha256": "67a107b0b7b8b9e9c5c90eea5c3d506232cc55bf4942bc2596a565102ac3db2a",
+  "dataSha256": "9db37723a6a890732c88b35d49ec7a590f8b7f4e7b007eba1a2e2adbded5248e",
+  "registrationSha256": "a3931fd9035e981e3e6c74996ba6ab1d728482926491b45d1f577219983485b0",
+  "reconciliationSha256": "7afec4d52bce71fb2622cc9be69893bf20c8da4870930caec6277392d269cd9b",
+  "rendererSha256": "cc6a4a80e5668a15c353ff7b0cfc7047796ebf589b77c1d5da19c12c5f023820",
+  "htmlSha256": "3f78a2d2a87d035b62f88672d17391bbacb026ec00133eb3968f5a56bad6c092",
+  "extensionSha256": "1a9cb06a086ca2f63a222918bd94a6528f60de49bee3b0ae4633437c9da1f135",
+  "geometrySha256": "27b26744ccc3f4f2ced800d0c0663b121f14714b30f22dc29f7ece369bba246a",
+  "newAssets": [
+    "base-desk",
+    "base-executiveChair",
+    "base-visitorChair",
+    "base-shelf",
+    "base-meetingTable",
+    "base-meetingChair",
+    "base-rug",
+    "base-decor",
+    "base-art",
+    "base-accent"
+  ],
+  "notes": [
+    "One fixed corporate appearance; 10 generated assets and 2 exact-pixel chair foregrounds; upgrade Levels 1–5 share art.",
+    "Same footprints/anchors; executive south, visitor north; desk visitor face.",
+    "No administrative mechanic simulated; browser and owner acceptance are separate."
+  ]
+}

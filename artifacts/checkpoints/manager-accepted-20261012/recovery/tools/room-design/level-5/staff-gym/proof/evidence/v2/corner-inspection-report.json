@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "method": "Actual shipped native renderer; before/after plus four cropped corner views. Engineering evidence, not browser screenshots or owner approval.",
+  "captures": [
+    {
+      "id": "northwest",
+      "file": "corner-northwest.png",
+      "sourceRect": [
+        40,
+        270,
+        150,
+        145
+      ],
+      "sha256": "32cb411aeb4f6427139259e88e4d3d69384bd2e636a428ffd4d1abaf54a1765c"
+    },
+    {
+      "id": "northeast",
+      "file": "corner-northeast.png",
+      "sourceRect": [
+        370,
+        270,
+        150,
+        145
+      ],
+      "sha256": "918d5de03b9ad3f15aa0e0c2789c48abf07074398da31ccffbadc9fec36ac77e"
+    },
+    {
+      "id": "southwest",
+      "file": "corner-southwest.png",
+      "sourceRect": [
+        40,
+        575,
+        150,
+        145
+      ],
+      "sha256": "cbcd161e5942d0fe53693a90527e0a0f05a181e63cfee2fba35709358e7d5a37"
+    },
+    {
+      "id": "southeast",
+      "file": "corner-southeast.png",
+      "sourceRect": [
+        370,
+        575,
+        150,
+        145
+      ],
+      "sha256": "2b75012ec809e42fb907b9bb82e41fa1bab610d8d30d53e9b544107d74572829"
+    }
+  ],
+  "comparison": "corner-before-after.png",
+  "warnings": []
+}

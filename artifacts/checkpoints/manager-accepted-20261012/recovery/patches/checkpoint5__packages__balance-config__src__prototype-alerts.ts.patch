@@ -1,0 +1,24 @@
+--- a/packages/balance-config/src/prototype-alerts.ts
++++ b/packages/balance-config/src/prototype-alerts.ts
+@@ -821,10 +821,20 @@
+ 
+ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
+   additionalAlert({
++    id: "alert.progress.inspections-unlocked",
++    trigger: "inspections_unlocked",
++    category: "success",
++    title: "Inspections unlocked",
++    body: "Inspections unlocked. Level 5 goals complete. Inspections are now available.",
++    eligibility: [{ kind: "facility_level", levels: [5] }],
++    tickerEligible: false,
++    oncePerEvent: true,
++  }),
++  additionalAlert({
+     id: "alert.progress.level-four-complete",
+     trigger: "level_four_complete",
+     category: "success",
+-    title: "Level 4 complete - Level 5 coming later",
++    title: "Level 4 goals complete",
+     body: "The goals are complete. The clinic remains open; the next level is still in the planning department.",
+     eligibility: [{ kind: "facility_level", levels: [4] }],
+     tickerEligible: false,

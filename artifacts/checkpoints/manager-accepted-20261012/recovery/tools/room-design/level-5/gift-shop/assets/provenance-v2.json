@@ -1,0 +1,1512 @@
+{
+  "schemaVersion": 1,
+  "designRevision": 2,
+  "date": "2026-10-11",
+  "status": "generated_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "builtInCalls": 13,
+  "revisionBuiltInCalls": 8,
+  "assets": [
+    {
+      "id": "base-flowers",
+      "slot": "flowers",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v1/base-flowers-01.png",
+      "prompt": "assets/prompts/v1/base-flowers-01.prompt.txt",
+      "receipt": "assets/originals/v1/base-flowers-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "d92b07a23c570e4d66acfd1cd05c85191589a874b2729e06fefd31a58007140f",
+      "promptSha256": "58d56a2295fcdc6906ffedd36926e517ffc1eed832c9a2708fbf2196615c9a8a",
+      "receiptSha256": "ff22c633f05f5f60b9542d635ffcd37b53ca0a3cf502410e1ef3fa41ad2e0e26",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-plushShelf",
+      "slot": "plushShelf",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v1/base-plushShelf-01.png",
+      "prompt": "assets/prompts/v1/base-plushShelf-01.prompt.txt",
+      "receipt": "assets/originals/v1/base-plushShelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "ada26a207da35524c2f043c40d621bde8def74ef3975d0fc89c545b343163c3b",
+      "promptSha256": "355ffb9845336f3f34c1192f583fa58f02d51f60363d639d953eb044f778c31a",
+      "receiptSha256": "bc678cf24522da8f3db52943bc5c6adba4e60dd509d8303d6ae4342d216dceef",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-cardRack",
+      "slot": "cardRack",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v1/base-cardRack-01.png",
+      "prompt": "assets/prompts/v1/base-cardRack-01.prompt.txt",
+      "receipt": "assets/originals/v1/base-cardRack-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "5981ec9123540082c9ca25f95491c5dfbd2f741653299aeb5dd0fa98507d2f89",
+      "promptSha256": "ff4ff9265ad9c211e7e5b9dbdb94beee57359d65211bf170dae25e57d6a81d3a",
+      "receiptSha256": "4bddc1048c99ddbf806b4b919c2e2ed4e26b51e43e5de27cf937a42d70dc458c",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-checkout",
+      "slot": "checkout",
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v1/base-checkout-01.png",
+      "prompt": "assets/prompts/v1/base-checkout-01.prompt.txt",
+      "receipt": "assets/originals/v1/base-checkout-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "fe978a48ec4fd6454401111a2c2cfc125115fd2e7b163142a0b04c7f46bef8f1",
+      "promptSha256": "a7f3285999f4a69a370009fc0f84ce289db636a3d48d8b20ad90c3c491916fa6",
+      "receiptSha256": "551f2ab5b99e1957dadf5e2afa5e4a3f43fc0308bbe66972a9dbb9d72e41bc15",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-wallArt",
+      "slot": "wallArt",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v1/base-wallArt-01.png",
+      "prompt": "assets/prompts/v1/base-wallArt-01.prompt.txt",
+      "receipt": "assets/originals/v1/base-wallArt-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "7d2a2ccce23eacc0ef61b2e0d8f89f80a7444f8f4f0929c7746d63c412e24d17",
+      "promptSha256": "ba75ac3df32d92bef45b9f3b7f2bb8dd0b15fd1d608c2a6fad04c90fe25c9ce5",
+      "receiptSha256": "3818d9ea60f39cb086470a6d0e5b7bd95538df9ddf080f478981e3bc5c33ff32",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-flowerCooler",
+      "slot": "flowerCooler",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-flowerCooler-01.png",
+      "prompt": "assets/prompts/v2/base-flowerCooler-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-flowerCooler-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "2ed27ad67b14d974376b2fb3b72d65de45808cc0ca3db0ba4f263047470e8edb",
+      "promptSha256": "b6ac36fc8b97d3ee1380e14656179976a9cf4fbebb2601ac538126180a0ea92d",
+      "receiptSha256": "a0737724dad51e51ca8fe6c5817b248461f33d8f71e1070f96d878f814f76176",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-cardSpinner",
+      "slot": "cardSpinner",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-cardSpinner-01.png",
+      "prompt": "assets/prompts/v2/base-cardSpinner-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-cardSpinner-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "02743568dea8ec023e1cbf3eea6a2f793c36ea120d398cd837b0861b16b1b014",
+      "promptSha256": "811cb8a110829386291da80b7a3e9af55910e967c5197aa73ec1e1a7b5050e94",
+      "receiptSha256": "322b8c90e7a25031df28bbfb29fe0949416303c9db2e6f0be13b8246240ee57b",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-roundTable",
+      "slot": "roundTable",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-roundTable-01.png",
+      "prompt": "assets/prompts/v2/base-roundTable-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-roundTable-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "cda53eb90f3f4c724e441c5c44fff0ea000618d556819cc0d19f981bdacd42fa",
+      "promptSha256": "773ede505fc9a7100610f8eb314f5ab43c839ad0d2a1817c1655107c5ec998d5",
+      "receiptSha256": "8d8e700f284533fb5fea6f8bec3766d3dc932dd80c0d97aa9be3ea674901ece3",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-balloonBucket",
+      "slot": "balloonBucket",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-balloonBucket-01.png",
+      "prompt": "assets/prompts/v2/base-balloonBucket-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-balloonBucket-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "92dc3d98357915c5e934694d59664d5324d03997faa16f53886a4a22e2b6fc41",
+      "promptSha256": "87e78314245c4039bb72e120b851871fb7c4483558862760490452cf8cd4354e",
+      "receiptSha256": "9282f3fe86106855e05d430ddc66d054463ae638262e6e9d64ca6909ae2b2e12",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-snackShelf",
+      "slot": "snackShelf",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-snackShelf-01.png",
+      "prompt": "assets/prompts/v2/base-snackShelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-snackShelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "2ccceeec55d774805f0f46ce0db333e343d1fe180e94ec430223e9b84880614e",
+      "promptSha256": "d99fcdd713bc3aea95b60465e5ede1e174623c80495dc235f1b1f246af9058db",
+      "receiptSha256": "47896692b4a47ca5c3c576b152c86af9cdfc6d8941245c06d0c5f0c640974869",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-plushBin",
+      "slot": "plushBin",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-plushBin-01.png",
+      "prompt": "assets/prompts/v2/base-plushBin-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-plushBin-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "89acb49e7fdb4ec8bb7bfdda523dc7f54ec250193579b16a45b95bbbc18dcd3a",
+      "promptSha256": "d35b600a448d299fdff00264378e67f37b8eb4069f858ea7c700d762de24e6fe",
+      "receiptSha256": "4a9bb1dd80af9dc5fe21723cef8cc23600b628e629bc23e491d997b2ee79e407",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-mugShelf",
+      "slot": "mugShelf",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-mugShelf-01.png",
+      "prompt": "assets/prompts/v2/base-mugShelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-mugShelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "8deec14556e1aed7fda429e99ae357797b6622bad7d623cc2851f1580fdc3f93",
+      "promptSha256": "896e30af37fcb2ad056d2028e519c5bfce0737c656beeac0a9fe34a391139490",
+      "receiptSha256": "d1a0ad172b72638befd9128ce754ee25b08428ae4bee566d63865f37eecb0dbb",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-checkoutMat",
+      "slot": "checkoutMat",
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "appearanceLevel": 1,
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-checkoutMat-01.png",
+      "prompt": "assets/prompts/v2/base-checkoutMat-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-checkoutMat-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI",
+      "transparentBackground": true,
+      "originalSha256": "a642a3da554c8ff34e5ee30e5a06a9dc07f2a1ea8b6e09bcc3f77d24763e88ff",
+      "promptSha256": "c428a1a4a1932156fb6991c6cf0a74ba53763991713f49745dc94894462fe528",
+      "receiptSha256": "668597eca59c6e2a77f75250895f90d68bf33de1470e62ada258df7d9f4b1179",
+      "sourcePoints": {}
+    }
+  ],
+  "preparedAssets": [
+    {
+      "id": "base-flowers",
+      "file": "../assets/processed/v2/base-flowers.png",
+      "canvas": [
+        288,
+        816
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        144,
+        808
+      ],
+      "source": "assets/originals/v1/base-flowers-01.png",
+      "sourceSize": [
+        971,
+        1619
+      ],
+      "sourceSha256": "d92b07a23c570e4d66acfd1cd05c85191589a874b2729e06fefd31a58007140f",
+      "sourceCrop": [
+        306,
+        73,
+        389,
+        1394
+      ],
+      "transform": {
+        "scale": 0.5767575322812052,
+        "dx": 31.820659971305588,
+        "dy": 6,
+        "dw": 224.35868005738882,
+        "dh": 804
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 26218
+      },
+      "outputOpaqueBounds": {
+        "left": 33,
+        "right": 253,
+        "top": 6,
+        "bottom": 807,
+        "width": 221,
+        "height": 802,
+        "pixels": 109681
+      },
+      "outputAllAlphaBounds": {
+        "left": 32,
+        "right": 254,
+        "top": 6,
+        "bottom": 809,
+        "width": 223,
+        "height": 804,
+        "pixels": 115300
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "baf592248fba491aab119646d72e412d2167ecf27eb361c2d75a86f2beaf9c27",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v1/base-flowers-01.prompt.txt",
+      "promptSha256": "58d56a2295fcdc6906ffedd36926e517ffc1eed832c9a2708fbf2196615c9a8a"
+    },
+    {
+      "id": "base-plushShelf",
+      "file": "../assets/processed/v2/base-plushShelf.png",
+      "canvas": [
+        528,
+        600
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        264,
+        593
+      ],
+      "source": "assets/originals/v1/base-plushShelf-01.png",
+      "sourceSize": [
+        1160,
+        1356
+      ],
+      "sourceSha256": "ada26a207da35524c2f043c40d621bde8def74ef3975d0fc89c545b343163c3b",
+      "sourceCrop": [
+        106,
+        97,
+        948,
+        1176
+      ],
+      "transform": {
+        "scale": 0.5,
+        "dx": 27,
+        "dy": 6,
+        "dw": 474,
+        "dh": 588
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 18084
+      },
+      "outputOpaqueBounds": {
+        "left": 28,
+        "right": 500,
+        "top": 7,
+        "bottom": 592,
+        "width": 473,
+        "height": 586,
+        "pixels": 244571
+      },
+      "outputAllAlphaBounds": {
+        "left": 27,
+        "right": 500,
+        "top": 6,
+        "bottom": 593,
+        "width": 474,
+        "height": 588,
+        "pixels": 245477
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "7cd0b49126452faab55f78dee33222fce05becc8208a34e808e5f9b0be09608c",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v1/base-plushShelf-01.prompt.txt",
+      "promptSha256": "355ffb9845336f3f34c1192f583fa58f02d51f60363d639d953eb044f778c31a"
+    },
+    {
+      "id": "base-cardRack",
+      "file": "../assets/processed/v2/base-cardRack.png",
+      "canvas": [
+        240,
+        552
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        120,
+        546
+      ],
+      "source": "assets/originals/v1/base-cardRack-01.png",
+      "sourceSize": [
+        1169,
+        1345
+      ],
+      "sourceSha256": "5981ec9123540082c9ca25f95491c5dfbd2f741653299aeb5dd0fa98507d2f89",
+      "sourceCrop": [
+        282,
+        87,
+        606,
+        1184
+      ],
+      "transform": {
+        "scale": 0.37623762376237624,
+        "dx": 6,
+        "dy": 100.53465346534654,
+        "dw": 228,
+        "dh": 445.46534653465346
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 12474
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "right": 232,
+        "top": 101,
+        "bottom": 545,
+        "width": 226,
+        "height": 445,
+        "pixels": 89153
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 232,
+        "top": 101,
+        "bottom": 545,
+        "width": 227,
+        "height": 445,
+        "pixels": 91295
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "3b44429eed072a060afc4c4ecec68a07bdd5521517201913e986d97c5d5a1b44",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v1/base-cardRack-01.prompt.txt",
+      "promptSha256": "ff4ff9265ad9c211e7e5b9dbdb94beee57359d65211bf170dae25e57d6a81d3a"
+    },
+    {
+      "id": "base-checkout",
+      "file": "../assets/processed/v2/base-checkout.png",
+      "canvas": [
+        288,
+        432
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        144,
+        426
+      ],
+      "source": "assets/originals/v1/base-checkout-01.png",
+      "sourceSize": [
+        1145,
+        1374
+      ],
+      "sourceSha256": "fe978a48ec4fd6454401111a2c2cfc125115fd2e7b163142a0b04c7f46bef8f1",
+      "sourceCrop": [
+        296,
+        266,
+        579,
+        897
+      ],
+      "transform": {
+        "scale": 0.4682274247491639,
+        "dx": 8.44816053511704,
+        "dy": 6,
+        "dw": 271.1036789297659,
+        "dh": 420
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 9352
+      },
+      "outputOpaqueBounds": {
+        "left": 9,
+        "right": 278,
+        "top": 6,
+        "bottom": 425,
+        "width": 270,
+        "height": 420,
+        "pixels": 94553
+      },
+      "outputAllAlphaBounds": {
+        "left": 8,
+        "right": 279,
+        "top": 6,
+        "bottom": 425,
+        "width": 272,
+        "height": 420,
+        "pixels": 95413
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "c8f2cc50c474a42aaa6d62210d19128bdfcd38cfe7e102c4710ba521fb9062d2",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v1/base-checkout-01.prompt.txt",
+      "promptSha256": "a7f3285999f4a69a370009fc0f84ce289db636a3d48d8b20ad90c3c491916fa6"
+    },
+    {
+      "id": "base-wallArt",
+      "file": "../assets/processed/v2/base-wallArt.png",
+      "canvas": [
+        312,
+        216
+      ],
+      "anchorKind": "wall",
+      "canvasAnchor": [
+        156,
+        8
+      ],
+      "source": "assets/originals/v1/base-wallArt-01.png",
+      "sourceSize": [
+        1507,
+        1044
+      ],
+      "sourceSha256": "7d2a2ccce23eacc0ef61b2e0d8f89f80a7444f8f4f0929c7746d63c412e24d17",
+      "sourceCrop": [
+        153,
+        115,
+        1203,
+        811
+      ],
+      "transform": {
+        "scale": 0.24937655860349128,
+        "dx": 6,
+        "dy": 7.755610972568576,
+        "dw": 300,
+        "dh": 202.24438902743142
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 11015
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 304,
+        "top": 9,
+        "bottom": 208,
+        "width": 299,
+        "height": 200,
+        "pixels": 59739
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 305,
+        "top": 8,
+        "bottom": 209,
+        "width": 300,
+        "height": 202,
+        "pixels": 60514
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "e78ceb02ac1ac217abc65fcdb6ddc7cb56237a80a6434159793c01a42edaf69b",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v1/base-wallArt-01.prompt.txt",
+      "promptSha256": "ba75ac3df32d92bef45b9f3b7f2bb8dd0b15fd1d608c2a6fad04c90fe25c9ce5"
+    },
+    {
+      "id": "base-flowerCooler",
+      "file": "../assets/processed/v2/base-flowerCooler.png",
+      "canvas": [
+        173,
+        614
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        86.5,
+        608
+      ],
+      "source": "assets/originals/v2/base-flowerCooler-01.png",
+      "sourceSize": [
+        941,
+        1672
+      ],
+      "sourceSha256": "2ed27ad67b14d974376b2fb3b72d65de45808cc0ca3db0ba4f263047470e8edb",
+      "sourceCrop": [
+        249,
+        143,
+        445,
+        1389
+      ],
+      "transform": {
+        "scale": 0.36179775280898874,
+        "dx": 6,
+        "dy": 105.46292134831464,
+        "dw": 161,
+        "dh": 502.53707865168536
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 10289
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 165,
+        "top": 106,
+        "bottom": 607,
+        "width": 160,
+        "height": 502,
+        "pixels": 76731
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 165,
+        "top": 105,
+        "bottom": 607,
+        "width": 160,
+        "height": 503,
+        "pixels": 77438
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "3d1946632ec19613c58f16c0b91d037fe1cb2455d772ce677b6eec06a44d5c72",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-flowerCooler-01.prompt.txt",
+      "promptSha256": "b6ac36fc8b97d3ee1380e14656179976a9cf4fbebb2601ac538126180a0ea92d"
+    },
+    {
+      "id": "base-cardSpinner",
+      "file": "../assets/processed/v2/base-cardSpinner.png",
+      "canvas": [
+        230,
+        504
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        115,
+        494
+      ],
+      "source": "assets/originals/v2/base-cardSpinner-01.png",
+      "sourceSize": [
+        1230,
+        1278
+      ],
+      "sourceSha256": "02743568dea8ec023e1cbf3eea6a2f793c36ea120d398cd837b0861b16b1b014",
+      "sourceCrop": [
+        317,
+        32,
+        596,
+        1227
+      ],
+      "transform": {
+        "scale": 0.36577181208053694,
+        "dx": 5.999999999999986,
+        "dy": 49.197986577181155,
+        "dw": 218.00000000000003,
+        "dh": 448.80201342281885
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 25227
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 223,
+        "top": 50,
+        "bottom": 493,
+        "width": 218,
+        "height": 444,
+        "pixels": 76825
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 223,
+        "top": 49,
+        "bottom": 497,
+        "width": 218,
+        "height": 449,
+        "pixels": 78504
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "49440e36885b91a43444f6722d78e960c7fdbb3f5c25e9e8b76d08f5cf2115bb",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-cardSpinner-01.prompt.txt",
+      "promptSha256": "811cb8a110829386291da80b7a3e9af55910e967c5197aa73ec1e1a7b5050e94"
+    },
+    {
+      "id": "base-roundTable",
+      "file": "../assets/processed/v2/base-roundTable.png",
+      "canvas": [
+        398,
+        408
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        199,
+        402
+      ],
+      "source": "assets/originals/v2/base-roundTable-01.png",
+      "sourceSize": [
+        1235,
+        1274
+      ],
+      "sourceSha256": "cda53eb90f3f4c724e441c5c44fff0ea000618d556819cc0d19f981bdacd42fa",
+      "sourceCrop": [
+        76,
+        75,
+        1081,
+        1094
+      ],
+      "transform": {
+        "scale": 0.35707678075855687,
+        "dx": 6,
+        "dy": 11.358001850138805,
+        "dw": 386,
+        "dh": 390.6419981498612
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 23625
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "right": 390,
+        "top": 12,
+        "bottom": 401,
+        "width": 384,
+        "height": 390,
+        "pixels": 86618
+      },
+      "outputAllAlphaBounds": {
+        "left": 7,
+        "right": 390,
+        "top": 11,
+        "bottom": 401,
+        "width": 384,
+        "height": 391,
+        "pixels": 87799
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "c24291cdaa79e3c49a1faa8af9b82d1fa1b58b219437528147dc84c018599cb3",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-roundTable-01.prompt.txt",
+      "promptSha256": "773ede505fc9a7100610f8eb314f5ab43c839ad0d2a1817c1655107c5ec998d5"
+    },
+    {
+      "id": "base-balloonBucket",
+      "file": "../assets/processed/v2/base-balloonBucket.png",
+      "canvas": [
+        226,
+        792
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        113,
+        782
+      ],
+      "source": "assets/originals/v2/base-balloonBucket-01.png",
+      "sourceSize": [
+        946,
+        1662
+      ],
+      "sourceSha256": "92dc3d98357915c5e934694d59664d5324d03997faa16f53886a4a22e2b6fc41",
+      "sourceCrop": [
+        161,
+        89,
+        641,
+        1479
+      ],
+      "transform": {
+        "scale": 0.3338533541341654,
+        "dx": 5.999999999999986,
+        "dy": 292.2308892355694,
+        "dw": 214.00000000000003,
+        "dh": 493.7691107644306
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 38233
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 218,
+        "top": 293,
+        "bottom": 781,
+        "width": 213,
+        "height": 489,
+        "pixels": 56597
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 218,
+        "top": 292,
+        "bottom": 785,
+        "width": 213,
+        "height": 494,
+        "pixels": 58653
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "2d110e19f4ef1c4820e8b601ec9864920e2b46016d07b6e20a89d8d9198c2224",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-balloonBucket-01.prompt.txt",
+      "promptSha256": "87e78314245c4039bb72e120b851871fb7c4483558862760490452cf8cd4354e"
+    },
+    {
+      "id": "base-snackShelf",
+      "file": "../assets/processed/v2/base-snackShelf.png",
+      "canvas": [
+        163,
+        461
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        81.5,
+        455
+      ],
+      "source": "assets/originals/v2/base-snackShelf-01.png",
+      "sourceSize": [
+        1145,
+        1374
+      ],
+      "sourceSha256": "2ccceeec55d774805f0f46ce0db333e343d1fe180e94ec430223e9b84880614e",
+      "sourceCrop": [
+        242,
+        173,
+        661,
+        1040
+      ],
+      "transform": {
+        "scale": 0.22844175491679275,
+        "dx": 6,
+        "dy": 217.42057488653555,
+        "dw": 151,
+        "dh": 237.57942511346445
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 10941
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 156,
+        "top": 218,
+        "bottom": 454,
+        "width": 151,
+        "height": 237,
+        "pixels": 33682
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 156,
+        "top": 217,
+        "bottom": 454,
+        "width": 151,
+        "height": 238,
+        "pixels": 33860
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "34ecea5f49a8a9d5d26822f1461672ca725910cde7d73f353eba4c04261ffaee",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-snackShelf-01.prompt.txt",
+      "promptSha256": "d99fcdd713bc3aea95b60465e5ede1e174623c80495dc235f1b1f246af9058db"
+    },
+    {
+      "id": "base-plushBin",
+      "file": "../assets/processed/v2/base-plushBin.png",
+      "canvas": [
+        163,
+        274
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        81.5,
+        268
+      ],
+      "source": "assets/originals/v2/base-plushBin-01.png",
+      "sourceSize": [
+        1181,
+        1332
+      ],
+      "sourceSha256": "89acb49e7fdb4ec8bb7bfdda523dc7f54ec250193579b16a45b95bbbc18dcd3a",
+      "sourceCrop": [
+        113,
+        94,
+        979,
+        1103
+      ],
+      "transform": {
+        "scale": 0.15423901940755874,
+        "dx": 6,
+        "dy": 97.87436159346271,
+        "dw": 151,
+        "dh": 170.1256384065373
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 27299
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 156,
+        "top": 98,
+        "bottom": 267,
+        "width": 151,
+        "height": 170,
+        "pixels": 20280
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 156,
+        "top": 98,
+        "bottom": 267,
+        "width": 151,
+        "height": 170,
+        "pixels": 20476
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "f6cfc36c828c8617e814d23ee9878ba3d25a4c97ec3350e37ea7dd45143223ac",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-plushBin-01.prompt.txt",
+      "promptSha256": "d35b600a448d299fdff00264378e67f37b8eb4069f858ea7c700d762de24e6fe"
+    },
+    {
+      "id": "base-mugShelf",
+      "file": "../assets/processed/v2/base-mugShelf.png",
+      "canvas": [
+        317,
+        206
+      ],
+      "anchorKind": "wall",
+      "canvasAnchor": [
+        158.5,
+        85
+      ],
+      "source": "assets/originals/v2/base-mugShelf-01.png",
+      "sourceSize": [
+        1555,
+        1012
+      ],
+      "sourceSha256": "8deec14556e1aed7fda429e99ae357797b6622bad7d623cc2851f1580fdc3f93",
+      "sourceCrop": [
+        61,
+        252,
+        1435,
+        543
+      ],
+      "transform": {
+        "scale": 0.21254355400696864,
+        "dx": 6,
+        "dy": 84.58885017421602,
+        "dw": 305,
+        "dh": 115.41114982578398
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 16804
+      },
+      "outputOpaqueBounds": {
+        "left": 6,
+        "right": 309,
+        "top": 85,
+        "bottom": 199,
+        "width": 304,
+        "height": 115,
+        "pixels": 22947
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "right": 310,
+        "top": 85,
+        "bottom": 199,
+        "width": 305,
+        "height": 115,
+        "pixels": 23237
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "0e2d9c052493b1e07f77554e6ba517fac40247a529c6e28a7055976c0cbf6ab5",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-mugShelf-01.prompt.txt",
+      "promptSha256": "896e30af37fcb2ad056d2028e519c5bfce0737c656beeac0a9fe34a391139490"
+    },
+    {
+      "id": "base-checkoutMat",
+      "file": "../assets/processed/v2/base-checkoutMat.png",
+      "canvas": [
+        336,
+        264
+      ],
+      "anchorKind": "walkable-rug",
+      "canvasAnchor": [
+        168,
+        132
+      ],
+      "source": "assets/originals/v2/base-checkoutMat-01.png",
+      "sourceSize": [
+        1416,
+        1111
+      ],
+      "sourceSha256": "a642a3da554c8ff34e5ee30e5a06a9dc07f2a1ea8b6e09bcc3f77d24763e88ff",
+      "sourceCrop": [
+        281,
+        322,
+        854,
+        500
+      ],
+      "transform": {
+        "scale": 0.3793911007025761,
+        "dx": 6,
+        "dy": 37.15222482435598,
+        "dw": 324,
+        "dh": 189.69555035128803
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 7520
+      },
+      "outputOpaqueBounds": {
+        "left": 7,
+        "right": 328,
+        "top": 38,
+        "bottom": 225,
+        "width": 322,
+        "height": 188,
+        "pixels": 60264
+      },
+      "outputAllAlphaBounds": {
+        "left": 7,
+        "right": 328,
+        "top": 37,
+        "bottom": 226,
+        "width": 322,
+        "height": 190,
+        "pixels": 60943
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "8d6091462323a836a5bb0ae42728613e833fffbc33d19bd2256851169df08564",
+      "sourcePoints": {},
+      "calibratedPoints": {},
+      "prompt": "assets/prompts/v2/base-checkoutMat-01.prompt.txt",
+      "promptSha256": "c428a1a4a1932156fb6991c6cf0a74ba53763991713f49745dc94894462fe528"
+    }
+  ],
+  "realStills": [
+    {
+      "standingSpot": "browse",
+      "classification": "necessary",
+      "characterId": "patient.adult.007",
+      "pose": "stand",
+      "direction": "north",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-north.png",
+      "sha256": "30ae01b8cd712b9f72606aab169a276cd7254e6caaa964cf81b6580da06d5cd2",
+      "sourceScale": 0.7140097402597404,
+      "floorContactSource": [
+        80,
+        287
+      ]
+    },
+    {
+      "standingSpot": "pay",
+      "classification": "necessary",
+      "characterId": "patient.adult.001",
+      "pose": "stand",
+      "direction": "north",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493f37bd75152db23e3d7d1f2394ebabd6737bf95b40f6d2af0cc302adeb6590",
+      "sourceScale": 0.6865478271728273,
+      "floorContactSource": [
+        80,
+        287
+      ]
+    },
+    {
+      "standingSpot": "queue1",
+      "classification": "necessary",
+      "characterId": "patient.adult.004",
+      "pose": "stand",
+      "direction": "east",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.004/stand-east.png",
+      "sha256": "70f0c16ba858b512a592089fbe9af40929f9c68edc08e5aa6ee41fc55a82859d",
+      "sourceScale": 0.7354032905296952,
+      "floorContactSource": [
+        80,
+        287
+      ]
+    },
+    {
+      "standingSpot": "queue2",
+      "classification": "necessary",
+      "characterId": "patient.adult.006",
+      "pose": "stand",
+      "direction": "east",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.006/stand-east.png",
+      "sha256": "69a899b45be7595402f357992be9c691ebb1200d970aa0ee6e15b046edfccddb",
+      "sourceScale": 0.6865478271728273,
+      "floorContactSource": [
+        80,
+        287
+      ]
+    }
+  ],
+  "itemList": [
+    {
+      "id": "flowers",
+      "label": "Flowers and balloons",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "plushShelf",
+      "label": "Plush toys and boxed gifts",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "cardRack",
+      "label": "Cards, magazines and snacks",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "checkout",
+      "label": "Self-service checkout",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "wallArt",
+      "label": "Cheerful flower print",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "backedOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "flowerCooler",
+      "label": "Flower cooler",
+      "classification": "optional",
+      "doorOwners": [
+        "WB"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "cardSpinner",
+      "label": "Greeting-card spinner",
+      "classification": "optional",
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "roundTable",
+      "label": "Round flowers and teddy display",
+      "classification": "optional",
+      "doorOwners": [
+        "S2"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "balloonBucket",
+      "label": "Entrance balloon bucket",
+      "classification": "optional",
+      "doorOwners": [
+        "S3",
+        "EC"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "snackShelf",
+      "label": "Right-side magazines and snacks",
+      "classification": "optional",
+      "doorOwners": [
+        "EB"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "plushBin",
+      "label": "Small plush bin",
+      "classification": "optional",
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "backedOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "mugShelf",
+      "label": "Wall shelf of mugs and candles",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "backedOwners": [
+        "N3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "checkoutMat",
+      "label": "Checkout floor mat",
+      "classification": "optional",
+      "doorOwners": [],
+      "backedOwners": [],
+      "walkable": true
+    }
+  ],
+  "artOrigin": "Thirteen objects made with built-in image_gen.imagegen: five v1 objects retained byte-identically, eight new objects for the owner density revision. No API/CLI, purchases or external art. Approved internal adult standing stills unchanged.",
+  "rights": "Project-generated objects plus project-owned approved character art; no logos, external commercial corpus, proprietary text, clinical claims or clinical inputs.",
+  "preparation": "Original PNG bytes/alpha retained. Executive native Canvas preparation: uniform crop/downsample only, alpha below 8 removed from prepared copies, nearest-neighbour sampling, transparent padding, measured floor anchors and nine-row opaque bases. No recolouring, semantic repainting, source upscale, character edits or chair masks.",
+  "prepaint": {
+    "layoutSha256": "2c424dd3ebe2f1704e3a14794310ae2725db75362bc5a971a68cf91f5085c904",
+    "neutralSources": 13,
+    "routeReceipt": "stand-in/v2/route-receipt.json",
+    "newArtCallsAfterFreeze": 8,
+    "necessaryGeometryUnchangedAfterGeneration": true,
+    "optionalReconciliation": [
+      {
+        "item": "plushBin",
+        "classification": "optional",
+        "before": {
+          "ground": [
+            2.82,
+            1.97
+          ],
+          "footprintTop": 1.74,
+          "owners": [
+            "EB",
+            "EC"
+          ],
+          "contact": [
+            2.5,
+            1.975
+          ]
+        },
+        "after": {
+          "ground": [
+            2.82,
+            0.55
+          ],
+          "footprintTop": 0.32,
+          "owners": [
+            "N3",
+            "EA"
+          ],
+          "contact": [
+            2.5,
+            0.775
+          ]
+        },
+        "reason": "Move out from behind entrance balloons into upper-right display space; approach clears the measured painted base."
+      },
+      {
+        "item": "mugShelf-contact",
+        "before": [
+          2.5,
+          0.5
+        ],
+        "after": [
+          2.45,
+          0.25
+        ],
+        "reason": "Keep the wall display reachable around the relocated plush bin."
+      }
+    ]
+  },
+  "appearanceDecision": {
+    "appearanceChanges": false,
+    "appearanceLevels": [
+      1
+    ],
+    "upgradeSelections": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "catalogEvidence": "packages/balance-config/src/room-upgrades.ts:51–53,97"
+  },
+  "doorRule": "Necessary furniture isn't removed by doors. Optional decor may hide for its owned door; wall items also hide for north backing. All four standing spots stay.",
+  "validation": {
+    "status": "PASS",
+    "states": 3200,
+    "routes": 66380,
+    "fullQueueRoutes": 66380,
+    "actorRadiusTiles": 0.18,
+    "sampleSpacingTiles": 0.005,
+    "browser": "PENDING_MANAGER"
+  },
+  "concurrentReferenceChanges": [
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/lab.js",
+      "intakeSha256": "470465ef2b30d0a01e7a5a3205e3fb1043d9b011a193829a68919292a5211773",
+      "currentSha256": "fe012e2dc9003bc72161e129fb6c33498ad8dfad6abda90a95bd35f8269f1a8c"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/geometry.mjs",
+      "intakeSha256": "d271d3a2fb0388e04dddf3f1f8bc4562aeb53013e1e310dc7a8db73df4906cbb",
+      "currentSha256": "35b92a63399a8c221b2cdcb56d36b6a6e2b8fc9918cbada3e8511a3e4bf83ffd"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/build.mjs",
+      "intakeSha256": "49ff62c219dc61375445d5b09867df8bba93a2865fa5f42ef213f418fb2d8708",
+      "currentSha256": "ed18fb6a3c971ecebf88e33939f69f10a441e42726d1ee4695b0c109433a5a63"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/native-engine.mjs",
+      "intakeSha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+      "currentSha256": "4581b39315421952852d444805bc8f41f86a5a7a0de9671757af1495931cd42e"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate.cjs",
+      "intakeSha256": "4987d514b1940af4f4a8ac4e404f3fb4f7f1b1718866bf15c6d1e8a65603ef51",
+      "currentSha256": "50402de6b834dfd6ea861e84a1a29bbc8520e4094e6b0dd6b0702e1b850b9c31"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-controls.mjs",
+      "intakeSha256": "63ac243dd81e0307844013880eb804705e1b9ec19a5ff2cb1d7df67aa7b9e941",
+      "currentSha256": "1d88bb8802c329543280cdcaa4d02721a80490c3858940f559f28c63e5089b52"
+    },
+    {
+      "path": "tools/room-design/level-5/executive-office/proof/validate-browser.cjs",
+      "intakeSha256": "29dd1e3f1203aa975f85da01b58766282928c272de436f69f1e4f35048ba023f",
+      "currentSha256": "8eabb906edb05e5d171efa0e58258011dee7134b16030f827797bb023528baf3"
+    }
+  ],
+  "hashes": {
+    "layout.json": "c01b3b5cdca93c0ad65ffeb96b4412c2b4420dd6357ad62994e7a929939b8d61",
+    "stand-in/v2/layout-prepaint.json": "2c424dd3ebe2f1704e3a14794310ae2725db75362bc5a971a68cf91f5085c904",
+    "stand-in/v2/manifest.json": "4eac064149b3c65c06ba31efcc402d9e818ce71136d1ee1fe67801f8156058e8",
+    "stand-in/v2/route-receipt.json": "efcf1226af56eed7ea1b563fb22b2de2012e739dc5b423d0ee649bd6d05ac63c",
+    "assets/generation-manifest.json": "05dac709d21f3d09a577eed29d4a7a1451f8b366c4a548e4fde9f9d63f8ee12f",
+    "assets/registration-v2.json": "a7a7ee9778be3dd535f16e570ef7d541f4947bb0a9cc5d0696aaee8d3fe116ce",
+    "layout-reconciliation-v2.json": "4fdbbcce7ac5051454198e04d1f858ae0025a974a2380c11541e5238462b913c",
+    "proof/native-engine.mjs": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+    "proof/room-touchups.mjs": "c57b7b4f31ed13f9b0e412fbfa21ab629c6d699d672cff6824d7656ac3a73995",
+    "proof/shell-painter.js": "bb9a9d57917ba0b96beb042923d8ba395d01da48c88860700284166270e42e8d",
+    "proof/renderer-base.js": "60c0bc18fae6659d8698231c53615cba6ed413eb5acbf1e63ecb4bee2144dd26",
+    "proof/extension.js": "e06f5c5813b719d80f6a350cb3c9b3be3d35441732490e9bed3ca395ca313a5a",
+    "proof/geometry.mjs": "aaad585ea14ca806a4c88bf75f1adffbc5fdae66b30cc5f86bc86cc4a251ce38",
+    "proof/build.mjs": "8728bbf3e7c47689170c0a4ae6bd7786f9da35f73ca109688e615158857cc856",
+    "proof/validate.cjs": "7fbb91a702eb5e72a2610b3206c3097328b8735da16306899da0970a4ddddd55",
+    "proof/validate-controls.mjs": "b063ae0913eaa13bd115102e4d49627355f14800a2c014520edda48522014502",
+    "proof/validate-browser.cjs": "28c725aa1f8c4237bdc5b6cd8c27bf8c8b4bba4582ec92039f3ab1c876e7b565",
+    "proof/capture.cjs": "e01f0eea834777c50a572e29b4f4460077aaf9ae70b94766153fc95bb9053a27",
+    "proof/browser-errors.cjs": "c150e8356b8ed2220e64badba7b976156dd6428a27ae6e3b96db2c3b79f4cacf",
+    "assets/originals/v1/base-flowers-01.png": "d92b07a23c570e4d66acfd1cd05c85191589a874b2729e06fefd31a58007140f",
+    "assets/prompts/v1/base-flowers-01.prompt.txt": "58d56a2295fcdc6906ffedd36926e517ffc1eed832c9a2708fbf2196615c9a8a",
+    "assets/originals/v1/base-flowers-01.receipt.json": "ff22c633f05f5f60b9542d635ffcd37b53ca0a3cf502410e1ef3fa41ad2e0e26",
+    "assets/originals/v1/base-plushShelf-01.png": "ada26a207da35524c2f043c40d621bde8def74ef3975d0fc89c545b343163c3b",
+    "assets/prompts/v1/base-plushShelf-01.prompt.txt": "355ffb9845336f3f34c1192f583fa58f02d51f60363d639d953eb044f778c31a",
+    "assets/originals/v1/base-plushShelf-01.receipt.json": "bc678cf24522da8f3db52943bc5c6adba4e60dd509d8303d6ae4342d216dceef",
+    "assets/originals/v1/base-cardRack-01.png": "5981ec9123540082c9ca25f95491c5dfbd2f741653299aeb5dd0fa98507d2f89",
+    "assets/prompts/v1/base-cardRack-01.prompt.txt": "ff4ff9265ad9c211e7e5b9dbdb94beee57359d65211bf170dae25e57d6a81d3a",
+    "assets/originals/v1/base-cardRack-01.receipt.json": "4bddc1048c99ddbf806b4b919c2e2ed4e26b51e43e5de27cf937a42d70dc458c",
+    "assets/originals/v1/base-checkout-01.png": "fe978a48ec4fd6454401111a2c2cfc125115fd2e7b163142a0b04c7f46bef8f1",
+    "assets/prompts/v1/base-checkout-01.prompt.txt": "a7f3285999f4a69a370009fc0f84ce289db636a3d48d8b20ad90c3c491916fa6",
+    "assets/originals/v1/base-checkout-01.receipt.json": "551f2ab5b99e1957dadf5e2afa5e4a3f43fc0308bbe66972a9dbb9d72e41bc15",
+    "assets/originals/v1/base-wallArt-01.png": "7d2a2ccce23eacc0ef61b2e0d8f89f80a7444f8f4f0929c7746d63c412e24d17",
+    "assets/prompts/v1/base-wallArt-01.prompt.txt": "ba75ac3df32d92bef45b9f3b7f2bb8dd0b15fd1d608c2a6fad04c90fe25c9ce5",
+    "assets/originals/v1/base-wallArt-01.receipt.json": "3818d9ea60f39cb086470a6d0e5b7bd95538df9ddf080f478981e3bc5c33ff32",
+    "assets/originals/v2/base-flowerCooler-01.png": "2ed27ad67b14d974376b2fb3b72d65de45808cc0ca3db0ba4f263047470e8edb",
+    "assets/prompts/v2/base-flowerCooler-01.prompt.txt": "b6ac36fc8b97d3ee1380e14656179976a9cf4fbebb2601ac538126180a0ea92d",
+    "assets/originals/v2/base-flowerCooler-01.receipt.json": "a0737724dad51e51ca8fe6c5817b248461f33d8f71e1070f96d878f814f76176",
+    "assets/originals/v2/base-cardSpinner-01.png": "02743568dea8ec023e1cbf3eea6a2f793c36ea120d398cd837b0861b16b1b014",
+    "assets/prompts/v2/base-cardSpinner-01.prompt.txt": "811cb8a110829386291da80b7a3e9af55910e967c5197aa73ec1e1a7b5050e94",
+    "assets/originals/v2/base-cardSpinner-01.receipt.json": "322b8c90e7a25031df28bbfb29fe0949416303c9db2e6f0be13b8246240ee57b",
+    "assets/originals/v2/base-roundTable-01.png": "cda53eb90f3f4c724e441c5c44fff0ea000618d556819cc0d19f981bdacd42fa",
+    "assets/prompts/v2/base-roundTable-01.prompt.txt": "773ede505fc9a7100610f8eb314f5ab43c839ad0d2a1817c1655107c5ec998d5",
+    "assets/originals/v2/base-roundTable-01.receipt.json": "8d8e700f284533fb5fea6f8bec3766d3dc932dd80c0d97aa9be3ea674901ece3",
+    "assets/originals/v2/base-balloonBucket-01.png": "92dc3d98357915c5e934694d59664d5324d03997faa16f53886a4a22e2b6fc41",
+    "assets/prompts/v2/base-balloonBucket-01.prompt.txt": "87e78314245c4039bb72e120b851871fb7c4483558862760490452cf8cd4354e",
+    "assets/originals/v2/base-balloonBucket-01.receipt.json": "9282f3fe86106855e05d430ddc66d054463ae638262e6e9d64ca6909ae2b2e12",
+    "assets/originals/v2/base-snackShelf-01.png": "2ccceeec55d774805f0f46ce0db333e343d1fe180e94ec430223e9b84880614e",
+    "assets/prompts/v2/base-snackShelf-01.prompt.txt": "d99fcdd713bc3aea95b60465e5ede1e174623c80495dc235f1b1f246af9058db",
+    "assets/originals/v2/base-snackShelf-01.receipt.json": "47896692b4a47ca5c3c576b152c86af9cdfc6d8941245c06d0c5f0c640974869",
+    "assets/originals/v2/base-plushBin-01.png": "89acb49e7fdb4ec8bb7bfdda523dc7f54ec250193579b16a45b95bbbc18dcd3a",
+    "assets/prompts/v2/base-plushBin-01.prompt.txt": "d35b600a448d299fdff00264378e67f37b8eb4069f858ea7c700d762de24e6fe",
+    "assets/originals/v2/base-plushBin-01.receipt.json": "4a9bb1dd80af9dc5fe21723cef8cc23600b628e629bc23e491d997b2ee79e407",
+    "assets/originals/v2/base-mugShelf-01.png": "8deec14556e1aed7fda429e99ae357797b6622bad7d623cc2851f1580fdc3f93",
+    "assets/prompts/v2/base-mugShelf-01.prompt.txt": "896e30af37fcb2ad056d2028e519c5bfce0737c656beeac0a9fe34a391139490",
+    "assets/originals/v2/base-mugShelf-01.receipt.json": "d1a0ad172b72638befd9128ce754ee25b08428ae4bee566d63865f37eecb0dbb",
+    "assets/originals/v2/base-checkoutMat-01.png": "a642a3da554c8ff34e5ee30e5a06a9dc07f2a1ea8b6e09bcc3f77d24763e88ff",
+    "assets/prompts/v2/base-checkoutMat-01.prompt.txt": "c428a1a4a1932156fb6991c6cf0a74ba53763991713f49745dc94894462fe528",
+    "assets/originals/v2/base-checkoutMat-01.receipt.json": "668597eca59c6e2a77f75250895f90d68bf33de1470e62ada258df7d9f4b1179",
+    "assets/processed/v2/base-flowers.png": "baf592248fba491aab119646d72e412d2167ecf27eb361c2d75a86f2beaf9c27",
+    "assets/processed/v2/base-plushShelf.png": "7cd0b49126452faab55f78dee33222fce05becc8208a34e808e5f9b0be09608c",
+    "assets/processed/v2/base-cardRack.png": "3b44429eed072a060afc4c4ecec68a07bdd5521517201913e986d97c5d5a1b44",
+    "assets/processed/v2/base-checkout.png": "c8f2cc50c474a42aaa6d62210d19128bdfcd38cfe7e102c4710ba521fb9062d2",
+    "assets/processed/v2/base-wallArt.png": "e78ceb02ac1ac217abc65fcdb6ddc7cb56237a80a6434159793c01a42edaf69b",
+    "assets/processed/v2/base-flowerCooler.png": "3d1946632ec19613c58f16c0b91d037fe1cb2455d772ce677b6eec06a44d5c72",
+    "assets/processed/v2/base-cardSpinner.png": "49440e36885b91a43444f6722d78e960c7fdbb3f5c25e9e8b76d08f5cf2115bb",
+    "assets/processed/v2/base-roundTable.png": "c24291cdaa79e3c49a1faa8af9b82d1fa1b58b219437528147dc84c018599cb3",
+    "assets/processed/v2/base-balloonBucket.png": "2d110e19f4ef1c4820e8b601ec9864920e2b46016d07b6e20a89d8d9198c2224",
+    "assets/processed/v2/base-snackShelf.png": "34ecea5f49a8a9d5d26822f1461672ca725910cde7d73f353eba4c04261ffaee",
+    "assets/processed/v2/base-plushBin.png": "f6cfc36c828c8617e814d23ee9878ba3d25a4c97ec3350e37ea7dd45143223ac",
+    "assets/processed/v2/base-mugShelf.png": "0e2d9c052493b1e07f77554e6ba517fac40247a529c6e28a7055976c0cbf6ab5",
+    "assets/processed/v2/base-checkoutMat.png": "8d6091462323a836a5bb0ae42728613e833fffbc33d19bd2256851169df08564",
+    "stand-in/v2/originals/base-flowers.png": "2f18d9d8e8eeaa514bebb825d48b505f28d0af90ced9b08b5fc6cc08d9d36696",
+    "stand-in/v2/originals/base-plushShelf.png": "3e397ada609cb550f909f8de8c5fc3bfd38491bf51e289c7c47c6f527f6e36e3",
+    "stand-in/v2/originals/base-cardRack.png": "3ec7834c46edb5a1f6e04c6350d7c4629e397881c5729ca248f7560b3f89be05",
+    "stand-in/v2/originals/base-checkout.png": "c4f2268cceb8c316cb4119e196e40f55c859a2a3e0dba2ce2d3dd78b626ec225",
+    "stand-in/v2/originals/base-wallArt.png": "821dffe7c87e046d25cd6a6420ebba830233af83f1331c670f000dbde4922d61",
+    "stand-in/v2/originals/base-flowerCooler.png": "20f88004c9c95159be220d29b6031c8934c494ecea85bc22391db5afd6dedaa8",
+    "stand-in/v2/originals/base-cardSpinner.png": "805566c8763e06ea740f367b56434390cad4583741c95e57c1379e34546ee2d2",
+    "stand-in/v2/originals/base-roundTable.png": "fc368a4c0372ab70318a2289e46244ba1d642da6d24ad84eefbde6c73b5773bd",
+    "stand-in/v2/originals/base-balloonBucket.png": "aaad08ea30a6d0a367376e53d38881f1ae811df42be907fb59913f011972c20a",
+    "stand-in/v2/originals/base-snackShelf.png": "3c7278065e5960b9afec0e197788b4fa73eb0c2942ffa1b419cc1b48693a663b",
+    "stand-in/v2/originals/base-plushBin.png": "b8cf80e6beb3da9418521670c75d3d4aded035105a0849fcda1789ef3e1d97e9",
+    "stand-in/v2/originals/base-mugShelf.png": "009ec404826cf670d3470aad85a33c1736e3bb510b3ea1ced77c887a757d265d",
+    "stand-in/v2/originals/base-checkoutMat.png": "5f8344c605701caff000d51dbfff3c4e3f157b7248a28884544e80dff67ce2e0"
+  }
+}

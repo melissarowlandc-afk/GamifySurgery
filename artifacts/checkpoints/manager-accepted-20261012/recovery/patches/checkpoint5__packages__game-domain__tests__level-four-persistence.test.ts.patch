@@ -1,0 +1,11 @@
+--- a/packages/game-domain/tests/level-four-persistence.test.ts
++++ b/packages/game-domain/tests/level-four-persistence.test.ts
+@@ -111,7 +111,7 @@
+     expect(deserializeGameState(serializeGameState(fixture.state)).facilityLevel).toBe(4);
+     expect(deserializeGameState(serializeGameState(fixture.state), fixture.context).facilityLevel).toBe(4);
+     const live = createInitialGameState(); live.facilityLevel = 3;
+-    expect(getFacilityProgressionStatus(live)).toMatchObject({ maximumPlayableLevel: 4, nextFacilityLevel: 4 });
++    expect(getFacilityProgressionStatus(live)).toMatchObject({ maximumPlayableLevel: 5, nextFacilityLevel: 4 });
+   });
+ 
+   it.each(["encounter", "service_visitor"] as const)("round-trips a %s family, explicit demographics, known child still and parent identity twice", (childKind) => {

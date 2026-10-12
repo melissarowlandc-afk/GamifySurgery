@@ -1,0 +1,11 @@
+--- a/packages/game-domain/tests/level-three-goals.test.ts
++++ b/packages/game-domain/tests/level-three-goals.test.ts
+@@ -29,7 +29,7 @@
+     ]);
+     expect(getDisplayedClinicSatisfaction(state)).toBeGreaterThan(90);
+     expect(progression.requirements.filter((requirement) => !requirement.met)).toEqual([]);
+-    expect(progression).toMatchObject({ eligible: true, nextFacilityLevel: 4, maximumPlayableLevel: 4 });
++    expect(progression).toMatchObject({ eligible: true, nextFacilityLevel: 4, maximumPlayableLevel: 5 });
+   });
+ 
+   it("preserves the XP, strict satisfaction, and operational pharmacist requirements", () => {

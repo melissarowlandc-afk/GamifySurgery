@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "test": "restore_nonempty_destination",
+      "status": "PASS",
+      "exitCode": 1,
+      "rejection": "Destination must be empty"
+    },
+    {
+      "test": "unsafe_relative_path:../escape",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": ""
+    },
+    {
+      "test": "unsafe_relative_path:/absolute",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": ""
+    },
+    {
+      "test": "unsafe_relative_path:C:/absolute",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Unsafe relative path"
+    },
+    {
+      "test": "unsafe_relative_path:windows\\path",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Unsafe relative path"
+    },
+    {
+      "test": "unsafe_relative_path:a/../../escape",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": ""
+    },
+    {
+      "test": "malformed_unified_patch",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Invalid unified hunk header"
+    },
+    {
+      "test": "unified_patch_context_mismatch",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Context mismatch at line 1"
+    },
+    {
+      "test": "manifest_hash_tamper",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Hash mismatch: .gitattributes"
+    },
+    {
+      "test": "unmanifested_file",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Unmanifested or missing files: {'unmanifested.txt'}"
+    },
+    {
+      "test": "duplicate_manifest_entry",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Duplicate manifest entry"
+    },
+    {
+      "test": "manifest_path_traversal",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": ""
+    },
+    {
+      "test": "live_stage_source_drift",
+      "status": "PASS",
+      "rejection": "AssertionError",
+      "message": "Live stage source drifted: docs/execplans/level5-launch-plan-20261010.md"
+    },
+    {
+      "test": "restore_archive_overlap",
+      "status": "PASS",
+      "exitCode": 1,
+      "rejection": "Destination overlaps archive"
+    }
+  ],
+  "testCount": 14,
+  "gitMutations": 0,
+  "liveRepositoryOrPayloadModified": false
+}

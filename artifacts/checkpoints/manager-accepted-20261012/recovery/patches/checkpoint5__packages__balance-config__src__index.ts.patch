@@ -1,0 +1,21 @@
+--- a/packages/balance-config/src/index.ts
++++ b/packages/balance-config/src/index.ts
+@@ -4,11 +4,18 @@
+ export * from "./service-income-catalog";
+ export * from "./approved-room-layouts";
+ export * from "./approved-level4-room-layouts";
++export * from "./approved-level5-room-layouts";
+ export * from "./diagnostic-timing";
+ export * from "./mri-services";
+ export * from "./employee-training";
+ export * from "./periop-nurse-attention";
+ export * from "./procedural-staffing";
+ export * from "./room-upgrades";
++export * from "./level-five-support";
++export * from "./level-five-gift-retail";
++export * from "./level-five-executive";
++export * from "./level-five-progression";
++export { default as APPROVED_LEVEL5_SUPPORT_ROUTES } from "./level-five-support-routes.json";
+ export * from "./guidance-tips";
+ export { default as APPROVED_PEDIATRIC_SUPPORT_ROUTES } from "./pediatric-support-routes.json";
++export { FACILITY_INSPECTION_RULES } from "./facility-inspection";

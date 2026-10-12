@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "head": "d9de59327b05ccf853dcf7748a86106e850f9902",
+  "readOnlyCommands": [
+    "git log -1 --format=%H",
+    "git status --porcelain=v1 -z --untracked-files=all",
+    "git ls-files --stage -z",
+    "git show <baseline>:<path>"
+  ],
+  "initialDirtyRecords": 27249,
+  "initialStatusCounts": {
+    " M": 250,
+    "??": 26999
+  },
+  "stagedChangesAtIntake": 0,
+  "gitMutations": 0,
+  "stagingCommitPushReservedForManager": true
+}

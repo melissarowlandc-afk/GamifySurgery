@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 4,
+  "date": "2026-10-11",
+  "ownerDirection": {
+    "date": "2026-10-11",
+    "quote": "The executive's chair needs to stay even if there is a N2 door. Just allow characters to path by it.",
+    "requirement": "Both occupied desk chairs persist for every door; route around their solid footprints."
+  },
+  "sourceLayout": "history/3x2-seat-hiding-20261011/layout.json",
+  "sourceLayoutSha256": "a0b9b9a04894915fe0c0847f4381aade060b4d376f6be7aaa2c94f910adb0ed2",
+  "changes": [
+    {
+      "kind": "retain-occupied-seats",
+      "doorOwnersRemoved": [
+        "executiveChair:N2",
+        "visitorChair:S2"
+      ],
+      "solidFootprintsRetained": true
+    },
+    {
+      "kind": "visitor-clearance",
+      "fromGround": [
+        1.5,
+        1.74
+      ],
+      "toGround": [
+        1.5,
+        1.6
+      ],
+      "deltaTiles": [
+        0,
+        -0.14
+      ],
+      "basis": "Leave a 0.40T south strip for the unchanged 0.18T-radius actor. Executive unchanged."
+    },
+    {
+      "kind": "door-approaches",
+      "insideDistanceTiles": 0.2,
+      "basis": "Start inside the actual portal rather than in the middle of an occupied chair; validate full doorway crossing and all door-to-door paths."
+    }
+  ],
+  "approval": null
+}

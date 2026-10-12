@@ -1,0 +1,44 @@
+--- a/packages/balance-config/src/prototype-balance.ts
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -1,6 +1,9 @@
+ import { validatePrototypeBalanceRelease } from "./schema";
++import { EXECUTIVE_ROLE_DEFINITION } from "./level-five-executive";
+ import { getApprovedRoomNavigation } from "./approved-room-layouts";
+ import { mriOnsiteRoute } from "./mri-services";
++import { LEVEL_FIVE_ROOM_DEFINITIONS } from "./level-five-rooms";
++import { LEVEL_FIVE_STAGE_DEFINITION } from "./level-five-progression";
+ 
+ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+   id: "balance.synthetic.prototype.v1",
+@@ -26,7 +29,7 @@
+     // after the protected tutorial's lowest authored payout.
+     startingCash: 120,
+     startingSatisfaction: 95,
+-    maximumPlayableLevel: 4,
++    maximumPlayableLevel: 5,
+     initialRooms: [
+       {
+         id: "room.instance.founder_desk",
+@@ -701,8 +704,10 @@
+         capabilityIds: ["capability.wound_ostomy_clinic"],
+         navigation: getApprovedRoomNavigation("room.wound_ostomy"),
+       },
++      ...LEVEL_FIVE_ROOM_DEFINITIONS,
+     ],
+     staffRoleDefinitions: [
++      EXECUTIVE_ROLE_DEFINITION,
+       {
+         id: "staff.receptionist",
+         displayName: "Receptionist",
+@@ -1022,8 +1027,9 @@
+         requiredRoomDefinitionIds: [],
+         requiredStaffRoleIds: ["staff.app"],
+         requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],
+-        nextFacilityLevel: null,
+-      },
++        nextFacilityLevel: 5,
++      },
++      LEVEL_FIVE_STAGE_DEFINITION,
+     ],
+     tutorialRequiredRoomDefinitionId: "room.examination",
+     tutorialMinimumOperatingBuffer: 0,

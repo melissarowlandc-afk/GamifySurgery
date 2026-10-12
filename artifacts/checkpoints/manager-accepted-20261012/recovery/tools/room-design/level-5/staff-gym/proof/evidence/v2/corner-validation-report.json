@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "designRevision": 2,
+  "floorFixtures": 17,
+  "states": 11040,
+  "pairChecks": 1107920,
+  "floorFootprintOverlapExceptions": 0,
+  "overlaps": [],
+  "originalCornerPairsRejected": [
+    [
+      "north1",
+      "west1"
+    ],
+    [
+      "north4",
+      "east1"
+    ],
+    [
+      "west4",
+      "front1"
+    ],
+    [
+      "east4",
+      "front4"
+    ]
+  ],
+  "touchingEdgesAllowed": true,
+  "deliberateOverlapRejected": true,
+  "corners": [
+    {
+      "id": "northwest",
+      "owner": "north1",
+      "adjoiningSide": "west2",
+      "opaquePaintOverlap": 0,
+      "sideStartsOneTileSouth": true
+    },
+    {
+      "id": "northeast",
+      "owner": "north4",
+      "adjoiningSide": "east2",
+      "opaquePaintOverlap": 0,
+      "sideStartsOneTileSouth": true
+    },
+    {
+      "id": "southwest",
+      "owner": "front1",
+      "adjoiningSide": "west4",
+      "sharedFloorEdge": 3.72,
+      "frontOpaquePixelsPreserved": 8864,
+      "painterOrder": "west4 → front1",
+      "compositeCheck": "Independent front-over-side RGBA prediction; native RGB tolerance 2 / alpha 1."
+    },
+    {
+      "id": "southeast",
+      "owner": "front4",
+      "adjoiningSide": "east4",
+      "sharedFloorEdge": 3.72,
+      "frontOpaquePixelsPreserved": 8871,
+      "painterOrder": "east4 → front4",
+      "compositeCheck": "Independent front-over-side RGBA prediction; native RGB tolerance 2 / alpha 1."
+    }
+  ],
+  "unchangedNonSideRecords": 19,
+  "unchangedPreparedPngs": 21,
+  "staffContactsAndAisleUnchanged": true,
+  "newBuiltInCalls": 0,
+  "proofManifestSha256": "3994aac9f50853db1ab6322cec7ec76599f22dbe2bea97d2f006d7a51e8f2b2d"
+}

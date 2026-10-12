@@ -1,0 +1,2427 @@
+{
+  "schemaVersion": 2,
+  "room": "Indoor Garden",
+  "facilityLevel": 5,
+  "footprint": [
+    4,
+    4
+  ],
+  "appearanceChanges": false,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeSelections": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "designRevision": 2,
+  "newBuiltInCalls": 0,
+  "ownerReview": {
+    "date": "2026-10-11",
+    "statement": "Have the plants continuous across the bottom front and the middle front is only empty of plants if the player puts a door there. Otherwise I approve the flower garden.",
+    "status": "approved_except_requested_south_row_correction",
+    "requestedChange": "Continuous S1-S4 planting; each south planter hides only for its own south door; preserve all other elements.",
+    "managerBrowserVerification": "pending"
+  },
+  "calls": 11,
+  "conceptCalls": 1,
+  "derivedCalls": 10,
+  "selectedDerivedCalls": 9,
+  "unselectedCalls": [
+    "east"
+  ],
+  "concept": {
+    "file": "concept/indoor-garden-concept.png",
+    "sha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+    "prompt": "concept/prompt.txt",
+    "promptSha256": "83c9bd91ec6ddee52d72ec4e4157bc576821cb0aa4d1bbff9f0decb149c7b5b6",
+    "receipt": "concept/generation-receipt.json",
+    "receiptSha256": "97b629231b5ef530ba8d24ee34612909b4a612343beb22a37999d598c6d172d4"
+  },
+  "callReceipts": [
+    {
+      "id": "rear",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-d4134e7b-21e3-41ef-b035-4e5a46e454f1.png",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "trellis",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-5f5ce0db-f877-4e6b-9b9a-ab6e5efb98d1.png",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "west",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-61f72340-b376-4a8f-bcf6-185665a087eb.png",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "east",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-544ece44-3f88-4116-a475-09771fb7d806.png",
+      "receipt": "assets/originals/v1/east.receipt.json",
+      "selected": false
+    },
+    {
+      "id": "east-clean",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c71b2a22-0147-469d-afb0-13eb3f52cbc7.png",
+      "receipt": "assets/originals/v1/east-clean.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "chairEast",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-da9ab0b0-3f88-4cb5-819c-37c1d30eb5df.png",
+      "receipt": "assets/originals/v1/chairEast.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "chairWest",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c300ed0b-3bf4-4670-a9c5-df5e54deafb5.png",
+      "receipt": "assets/originals/v1/chairWest.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "fountain",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-78aed674-71da-45f9-8103-4d54b193f966.png",
+      "receipt": "assets/originals/v1/fountain.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "front",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-de8fd952-05d4-477d-bedb-ca24e50968c5.png",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "path",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c664fd9b-0f2c-46d5-b67d-5360d514ea29.png",
+      "receipt": "assets/originals/v1/path.receipt.json",
+      "selected": true
+    }
+  ],
+  "outputs": [
+    {
+      "id": "base-west",
+      "slot": "west1",
+      "slots": [
+        "west1",
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/west.png",
+      "originalSha256": "029eb7f0f32f214058d7c30120cedeaef8ab845e61f920ae11c4cef6648943b7",
+      "prompt": "assets/prompts/v1/west.txt",
+      "promptSha256": "a7444f54c24f214671ea9cb1992db7080526dfa74ba6aa757fbecc6113f7fe51",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "receiptSha256": "aeed892687cd88822bf86fe86f855e9f452687a1b00ebf4dc241499082ba4bcc",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "west",
+      "prepared": {
+        "id": "base-west",
+        "file": "../assets/processed/v2/base-west.png",
+        "canvas": [
+          288,
+          816
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          89,
+          809
+        ],
+        "source": "assets/originals/v1/west.png",
+        "sourceSize": [
+          1031,
+          1525
+        ],
+        "originalSize": [
+          1031,
+          1525
+        ],
+        "sourceRegion": null,
+        "sourceSha256": "029eb7f0f32f214058d7c30120cedeaef8ab845e61f920ae11c4cef6648943b7",
+        "sourceCrop": [
+          249,
+          49,
+          517,
+          1409
+        ],
+        "transform": {
+          "scale": 0.5338491295938105,
+          "dx": 6,
+          "dy": 57.80657640232107,
+          "dw": 276,
+          "dh": 752.1934235976789
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 31456
+        },
+        "outputOpaqueBounds": {
+          "left": 7,
+          "right": 280,
+          "top": 58,
+          "bottom": 808,
+          "width": 274,
+          "height": 751,
+          "pixels": 146508
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 281,
+          "top": 58,
+          "bottom": 809,
+          "width": 276,
+          "height": 752,
+          "pixels": 150378
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "fb3f2b8a2daac956dd578bc2e288c4e30b0981b4d3dfeafa00eca9cff2b076c7",
+        "calibratedPoints": {},
+        "prompt": "assets/prompts/v1/west.txt",
+        "promptSha256": "a7444f54c24f214671ea9cb1992db7080526dfa74ba6aa757fbecc6113f7fe51"
+      }
+    },
+    {
+      "id": "base-east",
+      "slot": "east1",
+      "slots": [
+        "east1",
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/east-clean.png",
+      "originalSha256": "a16b6c784bbccea974310a75edb94057550ef45e42315a8ee9d59c999490a5c7",
+      "prompt": "assets/prompts/v1/east-clean.txt",
+      "promptSha256": "e05e66f752e1579eb9c74b0074e3b465ed8d434c21981f8f9dd409e71b23ece3",
+      "receipt": "assets/originals/v1/east-clean.receipt.json",
+      "receiptSha256": "ab8ef39d2bc37c7993b55adcde8a2146d453dc2738877bb046b20d83225b8c12",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "east-clean",
+      "prepared": {
+        "id": "base-east",
+        "file": "../assets/processed/v2/base-east.png",
+        "canvas": [
+          288,
+          816
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          96.5,
+          809
+        ],
+        "source": "assets/originals/v1/east-clean.png",
+        "sourceSize": [
+          1024,
+          1536
+        ],
+        "originalSize": [
+          1024,
+          1536
+        ],
+        "sourceRegion": null,
+        "sourceSha256": "a16b6c784bbccea974310a75edb94057550ef45e42315a8ee9d59c999490a5c7",
+        "sourceCrop": [
+          273,
+          55,
+          547,
+          1346
+        ],
+        "transform": {
+          "scale": 0.5045703839122486,
+          "dx": 6,
+          "dy": 130.84826325411336,
+          "dw": 276,
+          "dh": 679.1517367458866
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 16590
+        },
+        "outputOpaqueBounds": {
+          "left": 7,
+          "right": 280,
+          "top": 131,
+          "bottom": 808,
+          "width": 274,
+          "height": 678,
+          "pixels": 128226
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 281,
+          "top": 131,
+          "bottom": 809,
+          "width": 276,
+          "height": 679,
+          "pixels": 129887
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "eea605e7d3d85e67606981517b6250d8b8ce6b5c4117ddab9e1353b7071069aa",
+        "calibratedPoints": {},
+        "prompt": "assets/prompts/v1/east-clean.txt",
+        "promptSha256": "e05e66f752e1579eb9c74b0074e3b465ed8d434c21981f8f9dd409e71b23ece3"
+      }
+    },
+    {
+      "id": "base-fountain",
+      "slot": "fountain",
+      "slots": [
+        "fountain"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/fountain.png",
+      "originalSha256": "86cce54f387cc1da4573c9e77bae74ded4209b055faf4c0c00bfe823608302e0",
+      "prompt": "assets/prompts/v1/fountain.txt",
+      "promptSha256": "bd875538bf6cf773d86823f81bd47056165d982b0799561155a60319ca534304",
+      "receipt": "assets/originals/v1/fountain.receipt.json",
+      "receiptSha256": "5811637b829aab9fb4643d042bdd32cda73753bd38612fcf54936a44784deb11",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "fountain",
+      "prepared": {
+        "id": "base-fountain",
+        "file": "../assets/processed/v2/base-fountain.png",
+        "canvas": [
+          864,
+          816
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          472,
+          809
+        ],
+        "source": "assets/originals/v1/fountain.png",
+        "sourceSize": [
+          1222,
+          1287
+        ],
+        "originalSize": [
+          1222,
+          1287
+        ],
+        "sourceRegion": null,
+        "sourceSha256": "86cce54f387cc1da4573c9e77bae74ded4209b055faf4c0c00bfe823608302e0",
+        "sourceCrop": [
+          67,
+          109,
+          1094,
+          1021
+        ],
+        "transform": {
+          "scale": 0.7787934186471663,
+          "dx": 6,
+          "dy": 14.851919561243221,
+          "dw": 852,
+          "dh": 795.1480804387568
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 25729
+        },
+        "outputOpaqueBounds": {
+          "left": 7,
+          "right": 856,
+          "top": 16,
+          "bottom": 808,
+          "width": 850,
+          "height": 793,
+          "pixels": 488060
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 857,
+          "top": 15,
+          "bottom": 809,
+          "width": 852,
+          "height": 795,
+          "pixels": 501926
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "6e04bb85c0f2a81764f1aae5c9d775e9b621b986c6bbe7f18a2de03c0bb1cd0f",
+        "calibratedPoints": {},
+        "prompt": "assets/prompts/v1/fountain.txt",
+        "promptSha256": "bd875538bf6cf773d86823f81bd47056165d982b0799561155a60319ca534304"
+      }
+    },
+    {
+      "id": "base-path",
+      "slot": "stonePath",
+      "slots": [
+        "stonePath"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/path.png",
+      "originalSha256": "ca69731888e6d0061a3c387665921cc0b269a9a5fd5bd713cddeecd34b9e0542",
+      "prompt": "assets/prompts/v1/path.txt",
+      "promptSha256": "ac2e236dce2e9ee51069c619e38d8a9850bc04d200410ed6460efdd857e53198",
+      "receipt": "assets/originals/v1/path.receipt.json",
+      "receiptSha256": "1772160ecfb257d9d5e78db5be6461c83eaf9fdbf034ff4e14086fd843b6fb57",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "path",
+      "sourceRegion": [
+        80,
+        85,
+        1082,
+        1082
+      ],
+      "prepared": {
+        "id": "base-path",
+        "file": "../assets/processed/v2/base-path.png",
+        "canvas": [
+          1088,
+          1088
+        ],
+        "anchorKind": "walkable-rug",
+        "canvasAnchor": [
+          544,
+          544
+        ],
+        "source": "assets/originals/v1/path.png",
+        "sourceSize": [
+          1082,
+          1082
+        ],
+        "originalSize": [
+          1254,
+          1254
+        ],
+        "sourceRegion": [
+          80,
+          85,
+          1082,
+          1082
+        ],
+        "sourceSha256": "ca69731888e6d0061a3c387665921cc0b269a9a5fd5bd713cddeecd34b9e0542",
+        "sourceCrop": [
+          0,
+          0,
+          1082,
+          1082
+        ],
+        "transform": {
+          "scale": 0.9944547134935305,
+          "dx": 6,
+          "dy": 6,
+          "dw": 1076,
+          "dh": 1076
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 0
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 1081,
+          "top": 6,
+          "bottom": 1081,
+          "width": 1076,
+          "height": 1076,
+          "pixels": 1157097
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 1081,
+          "top": 6,
+          "bottom": 1081,
+          "width": 1076,
+          "height": 1076,
+          "pixels": 1157776
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "cc592cec597396fb72ee7769dac14ac0022e962927ee3dd832aab6d1a55f94f8",
+        "calibratedPoints": {},
+        "prompt": "assets/prompts/v1/path.txt",
+        "promptSha256": "ac2e236dce2e9ee51069c619e38d8a9850bc04d200410ed6460efdd857e53198"
+      }
+    },
+    {
+      "id": "base-chairEast",
+      "slot": "leftSeat",
+      "slots": [
+        "leftSeat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/chairEast.png",
+      "originalSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2",
+      "prompt": "assets/prompts/v1/chairEast.txt",
+      "promptSha256": "ece750b64cddc22d407caa53046c474e59aff67fe9f1a81ac6a529553fe06c58",
+      "receipt": "assets/originals/v1/chairEast.receipt.json",
+      "receiptSha256": "8a37633b831ad7ea33cbdb01f966e5c118611519650583cc73a1ae670518cb22",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "chairEast",
+      "sourcePoints": {
+        "seat": [
+          610,
+          650
+        ],
+        "frontRegions": [
+          [
+            295,
+            611,
+            682,
+            105
+          ],
+          [
+            254,
+            707,
+            100,
+            412
+          ],
+          [
+            878,
+            700,
+            96,
+            426
+          ]
+        ],
+        "seatRisePixels": 45.20711477584916
+      },
+      "prepared": {
+        "id": "base-chairEast",
+        "file": "../assets/processed/v2/base-chairEast.png",
+        "canvas": [
+          480,
+          576
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          240,
+          568.0680720181261
+        ],
+        "source": "assets/originals/v1/chairEast.png",
+        "sourceSize": [
+          1214,
+          1295
+        ],
+        "originalSize": [
+          1214,
+          1295
+        ],
+        "sourceRegion": null,
+        "sourceSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2",
+        "sourceCrop": [
+          170,
+          176,
+          880,
+          947
+        ],
+        "transform": {
+          "scale": 0.38638559637477915,
+          "dx": 69.99033759509717,
+          "dy": 204.09284023308413,
+          "dw": 340.01932480980565,
+          "dh": 365.90715976691587
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 22430
+        },
+        "outputOpaqueBounds": {
+          "left": 70,
+          "right": 400,
+          "top": 204,
+          "bottom": 567,
+          "width": 331,
+          "height": 364,
+          "pixels": 66546
+        },
+        "outputAllAlphaBounds": {
+          "left": 70,
+          "right": 409,
+          "top": 204,
+          "bottom": 569,
+          "width": 340,
+          "height": 366,
+          "pixels": 67922
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "095dd0fbc9782d33f12e26d2189b3dcff5a75b5e5b9306bbc83948d40841096f",
+        "sourcePoints": {
+          "seat": [
+            610,
+            650
+          ],
+          "frontRegions": [
+            [
+              295,
+              611,
+              682,
+              105
+            ],
+            [
+              254,
+              707,
+              100,
+              412
+            ],
+            [
+              878,
+              700,
+              96,
+              426
+            ]
+          ],
+          "seatRisePixels": 45.20711477584916
+        },
+        "calibratedPoints": {
+          "seat": [
+            240,
+            387.2396129147295
+          ]
+        },
+        "prompt": "assets/prompts/v1/chairEast.txt",
+        "promptSha256": "ece750b64cddc22d407caa53046c474e59aff67fe9f1a81ac6a529553fe06c58",
+        "measuredSeatRisePixels": 45.20711477584916,
+        "floorRegistrationErrorPixels": 0.017018004531536235
+      }
+    },
+    {
+      "id": "base-chairWest",
+      "slot": "rightSeat",
+      "slots": [
+        "rightSeat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/chairWest.png",
+      "originalSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e",
+      "prompt": "assets/prompts/v1/chairWest.txt",
+      "promptSha256": "3a6293be25e9eea555e4c945cbde853dbfc09461be9701345315456e69738524",
+      "receipt": "assets/originals/v1/chairWest.receipt.json",
+      "receiptSha256": "58bdcd2c7c063f5dc29aa587162d963c567e71fdb1e0d7d0764770710934da9c",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "chairWest",
+      "sourcePoints": {
+        "seat": [
+          750,
+          650
+        ],
+        "frontRegions": [
+          [
+            420,
+            607,
+            610,
+            89
+          ],
+          [
+            402,
+            690,
+            88,
+            449
+          ],
+          [
+            958,
+            694,
+            90,
+            445
+          ]
+        ],
+        "seatRisePixels": 44.13541361763235
+      },
+      "prepared": {
+        "id": "base-chairWest",
+        "file": "../assets/processed/v2/base-chairWest.png",
+        "canvas": [
+          480,
+          576
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          250.43866629130724,
+          566.3373100732256
+        ],
+        "source": "assets/originals/v1/chairWest.png",
+        "sourceSize": [
+          1230,
+          1278
+        ],
+        "originalSize": [
+          1230,
+          1278
+        ],
+        "sourceRegion": null,
+        "sourceSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e",
+        "sourceCrop": [
+          284,
+          158,
+          875,
+          984
+        ],
+        "transform": {
+          "scale": 0.3662689926774469,
+          "dx": 79.757315703617,
+          "dy": 209.59131120539223,
+          "dw": 320.485368592766,
+          "dh": 360.40868879460777
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 13142
+        },
+        "outputOpaqueBounds": {
+          "left": 80,
+          "right": 399,
+          "top": 210,
+          "bottom": 565,
+          "width": 320,
+          "height": 356,
+          "pixels": 63248
+        },
+        "outputAllAlphaBounds": {
+          "left": 80,
+          "right": 399,
+          "top": 210,
+          "bottom": 569,
+          "width": 320,
+          "height": 360,
+          "pixels": 64338
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "b20f85bd075c76b0b2241caf39aacd3ae83fd5aed413aac674984882eb7776f8",
+        "sourcePoints": {
+          "seat": [
+            750,
+            650
+          ],
+          "frontRegions": [
+            [
+              420,
+              607,
+              610,
+              89
+            ],
+            [
+              402,
+              690,
+              88,
+              449
+            ],
+            [
+              958,
+              694,
+              90,
+              445
+            ]
+          ],
+          "seatRisePixels": 44.13541361763235
+        },
+        "calibratedPoints": {
+          "seat": [
+            250.43866629130724,
+            389.7956556026961
+          ]
+        },
+        "prompt": "assets/prompts/v1/chairWest.txt",
+        "promptSha256": "3a6293be25e9eea555e4c945cbde853dbfc09461be9701345315456e69738524",
+        "measuredSeatRisePixels": 44.135413617632366,
+        "floorRegistrationErrorPixels": 0.08432751830639518
+      }
+    },
+    {
+      "id": "base-north1",
+      "slot": "north1",
+      "slots": [
+        "north1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-north1",
+        "file": "../assets/processed/v2/base-north1.png",
+        "canvas": [
+          512,
+          704
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          247.71270718232046,
+          658.4051565377532
+        ],
+        "source": "assets/originals/v1/rear.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          0,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+        "sourceCrop": [
+          18,
+          60,
+          525,
+          617
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 14.287292817679571,
+          "dy": 129.86003683241256,
+          "dw": 483.42541436464086,
+          "dh": 568.1399631675874
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 13677
+        },
+        "outputOpaqueBounds": {
+          "left": 16,
+          "right": 497,
+          "top": 133,
+          "bottom": 696,
+          "width": 482,
+          "height": 564,
+          "pixels": 199307
+        },
+        "outputAllAlphaBounds": {
+          "left": 14,
+          "right": 497,
+          "top": 130,
+          "bottom": 697,
+          "width": 484,
+          "height": 568,
+          "pixels": 206937
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "f8af4cb69837f97df9acb29d1df6fb965242028a0da1f75e6195dae52ac6cd3e",
+        "sourcePoints": {
+          "floor": [
+            271.5,
+            634
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            247.71270718232046,
+            658.4051565377532
+          ]
+        },
+        "prompt": "assets/prompts/v1/rear.txt",
+        "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346"
+      }
+    },
+    {
+      "id": "base-trellis1",
+      "slot": "trellis1",
+      "slots": [
+        "trellis1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-trellis1",
+        "file": "../assets/processed/v2/base-trellis1.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "wall",
+        "canvasAnchor": [
+          234.3609576427256,
+          94.62615101289134
+        ],
+        "source": "assets/originals/v1/trellis.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          0,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+        "sourceCrop": [
+          47,
+          158,
+          496,
+          404
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 27.639042357274406,
+          "dy": 101.99263351749539,
+          "dw": 456.7219152854512,
+          "dh": 372.0073664825046
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 25939
+        },
+        "outputOpaqueBounds": {
+          "left": 29,
+          "right": 483,
+          "top": 103,
+          "bottom": 472,
+          "width": 455,
+          "height": 370,
+          "pixels": 124000
+        },
+        "outputAllAlphaBounds": {
+          "left": 28,
+          "right": 483,
+          "top": 102,
+          "bottom": 473,
+          "width": 456,
+          "height": 372,
+          "pixels": 128988
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "50cbee1482088aeb55a7bb2b179d56a22356c5e04b3c71569ad7bb732ddd9281",
+        "sourcePoints": {
+          "wallTop": [
+            271.5,
+            150
+          ]
+        },
+        "calibratedPoints": {
+          "wallTop": [
+            234.3609576427256,
+            94.62615101289134
+          ]
+        },
+        "prompt": "assets/prompts/v1/trellis.txt",
+        "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb"
+      }
+    },
+    {
+      "id": "base-north2",
+      "slot": "north2",
+      "slots": [
+        "north2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-north2",
+        "file": "../assets/processed/v2/base-north2.png",
+        "canvas": [
+          512,
+          704
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          256,
+          678.6629834254144
+        ],
+        "source": "assets/originals/v1/rear.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          543,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+        "sourceCrop": [
+          0,
+          235,
+          543,
+          420
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 6,
+          "dy": 311.2596685082873,
+          "dw": 500,
+          "dh": 386.7403314917127
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 6790
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 313,
+          "bottom": 694,
+          "width": 500,
+          "height": 382,
+          "pixels": 158118
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 311,
+          "bottom": 697,
+          "width": 500,
+          "height": 387,
+          "pixels": 161012
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "0a5482c9a456751f14e30ad507648ca48bb71d318406886326ab43123bb99136",
+        "sourcePoints": {
+          "floor": [
+            271.5,
+            634
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            256,
+            678.6629834254144
+          ]
+        },
+        "prompt": "assets/prompts/v1/rear.txt",
+        "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346"
+      }
+    },
+    {
+      "id": "base-trellis2",
+      "slot": "trellis2",
+      "slots": [
+        "trellis2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-trellis2",
+        "file": "../assets/processed/v2/base-trellis2.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "wall",
+        "canvasAnchor": [
+          256,
+          85.41804788213626
+        ],
+        "source": "assets/originals/v1/trellis.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          543,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+        "sourceCrop": [
+          0,
+          149,
+          543,
+          423
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 6,
+          "dy": 84.49723756906076,
+          "dw": 500,
+          "dh": 389.50276243093924
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 24015
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 85,
+          "bottom": 472,
+          "width": 500,
+          "height": 388,
+          "pixels": 141765
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 84,
+          "bottom": 473,
+          "width": 500,
+          "height": 390,
+          "pixels": 146906
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "5a0eb8d085acc03c6510f89b1f710f6bfb3b8e3fec0ce698e6262e4325b030e4",
+        "sourcePoints": {
+          "wallTop": [
+            271.5,
+            150
+          ]
+        },
+        "calibratedPoints": {
+          "wallTop": [
+            256,
+            85.41804788213626
+          ]
+        },
+        "prompt": "assets/prompts/v1/trellis.txt",
+        "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb"
+      }
+    },
+    {
+      "id": "base-north3",
+      "slot": "north3",
+      "slots": [
+        "north3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-north3",
+        "file": "../assets/processed/v2/base-north3.png",
+        "canvas": [
+          512,
+          704
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          256,
+          679.5837937384899
+        ],
+        "source": "assets/originals/v1/rear.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          1086,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+        "sourceCrop": [
+          0,
+          250,
+          543,
+          404
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 6,
+          "dy": 325.9926335174954,
+          "dw": 500,
+          "dh": 372.0073664825046
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 7010
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 327,
+          "bottom": 695,
+          "width": 500,
+          "height": 369,
+          "pixels": 159663
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 326,
+          "bottom": 697,
+          "width": 500,
+          "height": 372,
+          "pixels": 162465
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "9a512dd3b1516a83a3916e9d6e03754aead66f855f5c0411a5af3f0b6f7d4dbb",
+        "sourcePoints": {
+          "floor": [
+            271.5,
+            634
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            256,
+            679.5837937384899
+          ]
+        },
+        "prompt": "assets/prompts/v1/rear.txt",
+        "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346"
+      }
+    },
+    {
+      "id": "base-trellis3",
+      "slot": "trellis3",
+      "slots": [
+        "trellis3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-trellis3",
+        "file": "../assets/processed/v2/base-trellis3.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "wall",
+        "canvasAnchor": [
+          256,
+          78.05156537753221
+        ],
+        "source": "assets/originals/v1/trellis.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          1086,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+        "sourceCrop": [
+          0,
+          149,
+          543,
+          431
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 6,
+          "dy": 77.13075506445671,
+          "dw": 500,
+          "dh": 396.8692449355433
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 25897
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 78,
+          "bottom": 472,
+          "width": 500,
+          "height": 395,
+          "pixels": 142013
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 77,
+          "bottom": 473,
+          "width": 500,
+          "height": 397,
+          "pixels": 146919
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "2e8cdbe782050f27dff802c1663b11ed72a1b212263f7d8d42d89727fa52fa4f",
+        "sourcePoints": {
+          "wallTop": [
+            271.5,
+            150
+          ]
+        },
+        "calibratedPoints": {
+          "wallTop": [
+            256,
+            78.05156537753221
+          ]
+        },
+        "prompt": "assets/prompts/v1/trellis.txt",
+        "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb"
+      }
+    },
+    {
+      "id": "base-north4",
+      "slot": "north4",
+      "slots": [
+        "north4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-north4",
+        "file": "../assets/processed/v2/base-north4.png",
+        "canvas": [
+          512,
+          704
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          263.82688766114177,
+          657.4843462246777
+        ],
+        "source": "assets/originals/v1/rear.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          1629,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+        "sourceCrop": [
+          0,
+          62,
+          526,
+          616
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 13.826887661141797,
+          "dy": 130.780847145488,
+          "dw": 484.3462246777164,
+          "dh": 567.219152854512
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 13063
+        },
+        "outputOpaqueBounds": {
+          "left": 14,
+          "right": 495,
+          "top": 132,
+          "bottom": 696,
+          "width": 482,
+          "height": 565,
+          "pixels": 197656
+        },
+        "outputAllAlphaBounds": {
+          "left": 14,
+          "right": 497,
+          "top": 131,
+          "bottom": 697,
+          "width": 484,
+          "height": 567,
+          "pixels": 205113
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "6443ce3b70aa0996d0f8d503eee7ec29aa23058d2b600797e849ded709fef074",
+        "sourcePoints": {
+          "floor": [
+            271.5,
+            634
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            263.82688766114177,
+            657.4843462246777
+          ]
+        },
+        "prompt": "assets/prompts/v1/rear.txt",
+        "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346"
+      }
+    },
+    {
+      "id": "base-trellis4",
+      "slot": "trellis4",
+      "slots": [
+        "trellis4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064,
+      "prepared": {
+        "id": "base-trellis4",
+        "file": "../assets/processed/v2/base-trellis4.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "wall",
+        "canvasAnchor": [
+          279.94106813996314,
+          86.3388581952118
+        ],
+        "source": "assets/originals/v1/trellis.png",
+        "sourceSize": [
+          543,
+          724
+        ],
+        "originalSize": [
+          2172,
+          724
+        ],
+        "sourceRegion": [
+          1629,
+          0,
+          543,
+          724
+        ],
+        "sourceSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+        "sourceCrop": [
+          0,
+          162,
+          491,
+          409
+        ],
+        "transform": {
+          "scale": 0.9208103130755064,
+          "dx": 29.941068139963164,
+          "dy": 97.38858195211787,
+          "dw": 452.1178637200737,
+          "dh": 376.6114180478821
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 23734
+        },
+        "outputOpaqueBounds": {
+          "left": 30,
+          "right": 479,
+          "top": 98,
+          "bottom": 472,
+          "width": 450,
+          "height": 375,
+          "pixels": 124265
+        },
+        "outputAllAlphaBounds": {
+          "left": 30,
+          "right": 481,
+          "top": 97,
+          "bottom": 473,
+          "width": 452,
+          "height": 377,
+          "pixels": 129418
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "1becfa6816881d557eb02e98808c44f8ee5717da987f944db59d12a9f009faf6",
+        "sourcePoints": {
+          "wallTop": [
+            271.5,
+            150
+          ]
+        },
+        "calibratedPoints": {
+          "wallTop": [
+            279.94106813996314,
+            86.3388581952118
+          ]
+        },
+        "prompt": "assets/prompts/v1/trellis.txt",
+        "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb"
+      }
+    },
+    {
+      "id": "base-southLeft",
+      "slot": "south1",
+      "slots": [
+        "south1",
+        "south3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "d1dfea22217d8d9a47247829efc6a31e1ca053782e214cfd46e5f191d660f763",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "front",
+      "sourceRegion": [
+        34,
+        0,
+        854,
+        887
+      ],
+      "sourcePoints": {
+        "floor": [
+          427,
+          840
+        ]
+      },
+      "uniformScale": 0.585480093676815,
+      "revisionBasis": "Owner-requested continuous south row. Adjacent halves of the unchanged generated front original share the same source floor line and one-tile display width; no new generation or nonuniform stretch.",
+      "prepared": {
+        "id": "base-southLeft",
+        "file": "../assets/processed/v2/base-southLeft.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          256,
+          474
+        ],
+        "source": "assets/originals/v1/front.png",
+        "sourceSize": [
+          854,
+          887
+        ],
+        "originalSize": [
+          1774,
+          887
+        ],
+        "sourceRegion": [
+          34,
+          0,
+          854,
+          887
+        ],
+        "sourceSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+        "sourceCrop": [
+          0,
+          54,
+          854,
+          786
+        ],
+        "transform": {
+          "scale": 0.585480093676815,
+          "dx": 6,
+          "dy": 13.812646370023458,
+          "dw": 500,
+          "dh": 460.18735362997654
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 17727
+        },
+        "outputOpaqueBounds": {
+          "left": 7,
+          "right": 505,
+          "top": 16,
+          "bottom": 472,
+          "width": 499,
+          "height": 457,
+          "pixels": 176006
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 14,
+          "bottom": 473,
+          "width": 500,
+          "height": 460,
+          "pixels": 179739
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "7f63e02e4c3fcc5469ca83765c3ff4ec77837854d0beafdce7c4df9fe96d0a58",
+        "sourcePoints": {
+          "floor": [
+            427,
+            840
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            256,
+            474
+          ]
+        },
+        "prompt": "assets/prompts/v1/front.txt",
+        "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1"
+      }
+    },
+    {
+      "id": "base-southRight",
+      "slot": "south2",
+      "slots": [
+        "south2",
+        "south4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "d1dfea22217d8d9a47247829efc6a31e1ca053782e214cfd46e5f191d660f763",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "front",
+      "sourceRegion": [
+        888,
+        0,
+        855,
+        887
+      ],
+      "sourcePoints": {
+        "floor": [
+          427.5,
+          840
+        ]
+      },
+      "uniformScale": 0.5847953216374269,
+      "revisionBasis": "Owner-requested continuous south row. Adjacent halves of the unchanged generated front original share the same source floor line and one-tile display width; no new generation or nonuniform stretch.",
+      "prepared": {
+        "id": "base-southRight",
+        "file": "../assets/processed/v2/base-southRight.png",
+        "canvas": [
+          512,
+          480
+        ],
+        "anchorKind": "floor",
+        "canvasAnchor": [
+          256,
+          478.67836257309943
+        ],
+        "source": "assets/originals/v1/front.png",
+        "sourceSize": [
+          855,
+          887
+        ],
+        "originalSize": [
+          1774,
+          887
+        ],
+        "sourceRegion": [
+          888,
+          0,
+          855,
+          887
+        ],
+        "sourceSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+        "sourceCrop": [
+          0,
+          205,
+          855,
+          627
+        ],
+        "transform": {
+          "scale": 0.5847953216374269,
+          "dx": 6,
+          "dy": 107.33333333333337,
+          "dw": 500,
+          "dh": 366.66666666666663
+        },
+        "alphaCleanup": {
+          "threshold": 8,
+          "pixelsRemoved": 16975
+        },
+        "outputOpaqueBounds": {
+          "left": 6,
+          "right": 504,
+          "top": 108,
+          "bottom": 472,
+          "width": 499,
+          "height": 365,
+          "pixels": 149698
+        },
+        "outputAllAlphaBounds": {
+          "left": 6,
+          "right": 505,
+          "top": 107,
+          "bottom": 473,
+          "width": 500,
+          "height": 367,
+          "pixels": 152515
+        },
+        "aspectPreserved": true,
+        "sourceUpscaled": false,
+        "outputSha256": "c116cfdaeeedda84efddb2b250e0db2c77d6aa3674962d331c503cf9f48de3e6",
+        "sourcePoints": {
+          "floor": [
+            427.5,
+            840
+          ]
+        },
+        "calibratedPoints": {
+          "floor": [
+            256,
+            478.67836257309943
+          ]
+        },
+        "prompt": "assets/prompts/v1/front.txt",
+        "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1"
+      }
+    }
+  ],
+  "foregrounds": [
+    {
+      "id": "base-chairEast-front",
+      "file": "../assets/processed/v2/base-chairEast-front.png",
+      "canvas": [
+        480,
+        576
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        240,
+        568.0680720181261
+      ],
+      "source": "assets/originals/v1/chairEast.png",
+      "sourceSize": [
+        1214,
+        1295
+      ],
+      "originalSize": [
+        1214,
+        1295
+      ],
+      "sourceRegion": null,
+      "sourceSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2",
+      "sourceCrop": [
+        170,
+        176,
+        880,
+        947
+      ],
+      "transform": {
+        "scale": 0.38638559637477915,
+        "dx": 69.99033759509717,
+        "dy": 204.09284023308413,
+        "dw": 340.01932480980565,
+        "dh": 365.90715976691587
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 22430
+      },
+      "outputOpaqueBounds": {
+        "left": 102,
+        "right": 381,
+        "top": 372,
+        "bottom": 567,
+        "width": 280,
+        "height": 196,
+        "pixels": 19935
+      },
+      "outputAllAlphaBounds": {
+        "left": 102,
+        "right": 381,
+        "top": 372,
+        "bottom": 569,
+        "width": 280,
+        "height": 198,
+        "pixels": 20502
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "b82759761965b973f51cba81435d50ca8c395d45a6afaafd435efc55f5652bd7",
+      "sourcePoints": {
+        "seat": [
+          610,
+          650
+        ],
+        "frontRegions": [
+          [
+            295,
+            611,
+            682,
+            105
+          ],
+          [
+            254,
+            707,
+            100,
+            412
+          ],
+          [
+            878,
+            700,
+            96,
+            426
+          ]
+        ],
+        "seatRisePixels": 45.20711477584916
+      },
+      "calibratedPoints": {
+        "seat": [
+          240,
+          387.2396129147295
+        ]
+      },
+      "prompt": "assets/prompts/v1/chairEast.txt",
+      "promptSha256": "ece750b64cddc22d407caa53046c474e59aff67fe9f1a81ac6a529553fe06c58",
+      "measuredSeatRisePixels": 45.20711477584916,
+      "floorRegistrationErrorPixels": 0.017018004531536235,
+      "foregroundFor": "base-chairEast",
+      "foregroundRegions": [
+        [
+          295,
+          611,
+          682,
+          105
+        ],
+        [
+          254,
+          707,
+          100,
+          412
+        ],
+        [
+          878,
+          700,
+          96,
+          426
+        ]
+      ],
+      "derivation": "Exact generated pixels selected by source-space foreground rectangles, then the identical uniform transform.",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "approval": null
+    },
+    {
+      "id": "base-chairWest-front",
+      "file": "../assets/processed/v2/base-chairWest-front.png",
+      "canvas": [
+        480,
+        576
+      ],
+      "anchorKind": "floor",
+      "canvasAnchor": [
+        250.43866629130724,
+        566.3373100732256
+      ],
+      "source": "assets/originals/v1/chairWest.png",
+      "sourceSize": [
+        1230,
+        1278
+      ],
+      "originalSize": [
+        1230,
+        1278
+      ],
+      "sourceRegion": null,
+      "sourceSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e",
+      "sourceCrop": [
+        284,
+        158,
+        875,
+        984
+      ],
+      "transform": {
+        "scale": 0.3662689926774469,
+        "dx": 79.757315703617,
+        "dy": 209.59131120539223,
+        "dw": 320.485368592766,
+        "dh": 360.40868879460777
+      },
+      "alphaCleanup": {
+        "threshold": 8,
+        "pixelsRemoved": 13142
+      },
+      "outputOpaqueBounds": {
+        "left": 123,
+        "right": 359,
+        "top": 374,
+        "bottom": 565,
+        "width": 237,
+        "height": 192,
+        "pixels": 16743
+      },
+      "outputAllAlphaBounds": {
+        "left": 123,
+        "right": 359,
+        "top": 374,
+        "bottom": 568,
+        "width": 237,
+        "height": 195,
+        "pixels": 17138
+      },
+      "aspectPreserved": true,
+      "sourceUpscaled": false,
+      "outputSha256": "063b55955a879c4149020fc3c14bd72306fa30998606854396798b4f7eee5835",
+      "sourcePoints": {
+        "seat": [
+          750,
+          650
+        ],
+        "frontRegions": [
+          [
+            420,
+            607,
+            610,
+            89
+          ],
+          [
+            402,
+            690,
+            88,
+            449
+          ],
+          [
+            958,
+            694,
+            90,
+            445
+          ]
+        ],
+        "seatRisePixels": 44.13541361763235
+      },
+      "calibratedPoints": {
+        "seat": [
+          250.43866629130724,
+          389.7956556026961
+        ]
+      },
+      "prompt": "assets/prompts/v1/chairWest.txt",
+      "promptSha256": "3a6293be25e9eea555e4c945cbde853dbfc09461be9701345315456e69738524",
+      "measuredSeatRisePixels": 44.135413617632366,
+      "floorRegistrationErrorPixels": 0.08432751830639518,
+      "foregroundFor": "base-chairWest",
+      "foregroundRegions": [
+        [
+          420,
+          607,
+          610,
+          89
+        ],
+        [
+          402,
+          690,
+          88,
+          449
+        ],
+        [
+          958,
+          694,
+          90,
+          445
+        ]
+      ],
+      "derivation": "Exact generated pixels selected by source-space foreground rectangles, then the identical uniform transform.",
+      "classification": "necessary",
+      "doorOwners": [],
+      "backedOwners": [],
+      "approval": null
+    }
+  ],
+  "stills": [
+    {
+      "id": "patient.adult.001",
+      "pose": "sit",
+      "direction": "east",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/sit-east.png",
+      "sha256": "448463c5ff3a10b8605f9abf69284c6e958966ce4dfc20ed118d38e4fd11c059",
+      "sourceScale": 0.6865478271728273,
+      "seatContactSource": [
+        80,
+        221.153
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "seatRisePixels": 45.20711477584916,
+      "role": "Unchanged approved adult visitor stand-in; no new identity, employee assignment or clinical slot."
+    },
+    {
+      "id": "patient.adult.007",
+      "pose": "sit",
+      "direction": "west",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/sit-west.png",
+      "sha256": "0e8e9acb6d3bdaabdc693ec4af19f2d2b727e27d56fd72f6e0f8f7d4d808f324",
+      "sourceScale": 0.6865478271728273,
+      "seatContactSource": [
+        80,
+        222.71400000000003
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "seatRisePixels": 44.13541361763235,
+      "role": "Unchanged approved adult visitor stand-in; no new identity, employee assignment or clinical slot."
+    }
+  ],
+  "classification": [
+    {
+      "id": "north1",
+      "label": "Rear bed 1 · joined flowers, vines and terracotta palm",
+      "classification": "optional",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "trellis1",
+      "label": "Living green trellis · section 1",
+      "classification": "optional",
+      "doorOwners": [
+        "N1"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north2",
+      "label": "Rear bed 2 · joined flowers, vines",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "trellis2",
+      "label": "Living green trellis · section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north3",
+      "label": "Rear bed 3 · joined flowers, vines",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "trellis3",
+      "label": "Living green trellis · section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north4",
+      "label": "Rear bed 4 · joined flowers, vines and terracotta palm",
+      "classification": "optional",
+      "doorOwners": [
+        "N4",
+        "EA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "trellis4",
+      "label": "Living green trellis · section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "N4"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west1",
+      "label": "Left raised planting run · section 1",
+      "classification": "optional",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west2",
+      "label": "Left raised planting run · section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "WB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west3",
+      "label": "Left raised planting run · section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "WC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west4",
+      "label": "Left raised planting run · section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "S1",
+        "WD"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east1",
+      "label": "Right raised planting run · section 1",
+      "classification": "optional",
+      "doorOwners": [
+        "N4",
+        "EA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east2",
+      "label": "Right raised planting run · section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "EB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east3",
+      "label": "Right raised planting run · section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "EC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east4",
+      "label": "Right raised planting run · section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "S4",
+        "ED"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "south1",
+      "label": "Continuous south planting · section S1",
+      "classification": "optional",
+      "doorOwners": [
+        "S1"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "south2",
+      "label": "Continuous south planting · section S2",
+      "classification": "optional",
+      "doorOwners": [
+        "S2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "south3",
+      "label": "Continuous south planting · section S3",
+      "classification": "optional",
+      "doorOwners": [
+        "S3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "south4",
+      "label": "Continuous south planting · section S4",
+      "classification": "optional",
+      "doorOwners": [
+        "S4"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "fountain",
+      "label": "Planted stone fountain island",
+      "classification": "optional",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "leftSeat",
+      "label": "Left garden chair · faces east",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "rightSeat",
+      "label": "Right garden chair · faces west",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "stonePath",
+      "label": "Stone planting aisle and chair approaches · walkable",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": true
+    }
+  ],
+  "necessarySeatedContacts": [
+    {
+      "id": "leftSeat",
+      "recordId": "leftSeat",
+      "role": "garden-visitor-seat",
+      "pose": "seated",
+      "facing": "east",
+      "ground": {
+        "x": 1,
+        "y": 3.08
+      },
+      "seat": {
+        "x": 1,
+        "y": 2.7032740435345906
+      },
+      "character": "patient.adult.001",
+      "doorOwners": [],
+      "backedOwners": [],
+      "classification": "necessary"
+    },
+    {
+      "id": "rightSeat",
+      "recordId": "rightSeat",
+      "role": "garden-visitor-seat",
+      "pose": "seated",
+      "facing": "west",
+      "ground": {
+        "x": 3,
+        "y": 3.08
+      },
+      "seat": {
+        "x": 3,
+        "y": 2.7122048865197304
+      },
+      "character": "patient.adult.007",
+      "doorOwners": [],
+      "backedOwners": [],
+      "classification": "necessary"
+    }
+  ],
+  "preparation": "Untouched originals; explicit source rectangles, alpha below 8 cleanup in prepared copies, uniform nearest-neighbor packing, no source upscaling. Foregrounds retain exact generated pixels selected by source-space rectangles. Paving uses an interior square crop. No external art or API fallback.",
+  "clinicalContent": "Visual room mockup only. No medical facts, clinical benefit claims, diagnoses, treatment rules, patient records, gameplay effects or clinical slot.",
+  "sourceOwnership": "Original room art generated for this task using built-in image generation. Existing owner-approved game stills are linked and hash-verified unchanged. No third-party source prose, logos or brand characters.",
+  "roomFirst": true,
+  "registrationFile": "assets/registration-v2.json",
+  "reconciliationFile": "layout-reconciliation-v2.json",
+  "proofManifestSha256": "5b7e74a0fb25f9768908bbd55fbd6f7431c9a265a7bfdbf1beccdce72357e01f"
+}

@@ -1,0 +1,987 @@
+{
+  "milestone": "Level 5 M2: rooms in the game",
+  "validatedAtUtc": "2026-10-12T00:43:42.723074+00:00",
+  "scope": "Approved art, presence, placement and physical capacity; ordinary cap 4; room effects/ladders dormant",
+  "testMode": "Checked-in workspace configs; --pool=threads; NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "suiteResults": {
+    "balance": {
+      "passed": 138,
+      "exit": 0
+    },
+    "domain": {
+      "passed": 3929,
+      "skipped": 2,
+      "exit": 0
+    },
+    "clinical": {
+      "passed": 628,
+      "exit": 0
+    },
+    "player": {
+      "passed": 1839,
+      "failed": 1,
+      "exit": 1,
+      "knownFailure": "src/session/surgeryCenterServicePreviews.test.ts:85:52"
+    }
+  },
+  "typecheckExit": 0,
+  "buildExit": 0,
+  "promotionCheckExit": 0,
+  "qaTransformExit": 0,
+  "workerBrowserQa": "Not executed; manager acceptance pending",
+  "protectedIntakePaths": 4958,
+  "changedExistingPaths": 28,
+  "newPaths": 130,
+  "encoding": "UTF-8 no BOM / LF",
+  "appendOnlyPlan": true,
+  "records": [
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-accent.png",
+      "bytes": 118294,
+      "sha256": "bc72443d0f2e48a371f484376305e739c92b1e7aabba81423b9f6cb85dd4226e",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-art.png",
+      "bytes": 91372,
+      "sha256": "c62104c7353b6850a3d3059d3a9b19655a44c565384c473382257e420d211202",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-decor.png",
+      "bytes": 90455,
+      "sha256": "f3da5d2c98a0cbfd1823b5866993b7ee6171ec570516a5da12feaea1e11018d1",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-desk.png",
+      "bytes": 193243,
+      "sha256": "99ca432392611af0c927ecd689caf62bd1c23a0771f17a533e853c1c1a187ce9",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-executiveChair-front.png",
+      "bytes": 52040,
+      "sha256": "58bc9a37aac762adde400b3c15efe4c9e6ec1de0710c8643c08e500c4bd94002",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-executiveChair.png",
+      "bytes": 115291,
+      "sha256": "c4f2d42a26abcb7ef1137ff20a404b4587118e7159e43c66afae985dcdf85f00",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-rug.png",
+      "bytes": 1006229,
+      "sha256": "f13a57d32da58e0e432c5051f66677e596ccabcf19fe99f1ef2037ed91eb77d2",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-shelf.png",
+      "bytes": 121944,
+      "sha256": "fc1e8acf30d032563cc6b0acac6ff98884940e02377dac5b2d44e885ef88b44b",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-visitorChair-front.png",
+      "bytes": 98434,
+      "sha256": "97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/executive-office/base-visitorChair.png",
+      "bytes": 98434,
+      "sha256": "97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-decor.png",
+      "bytes": 106562,
+      "sha256": "9dd9cc74745246801e257ea52d3e7481ec0d8f0be9df27524808c41d51b0bb19",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-desk.png",
+      "bytes": 87041,
+      "sha256": "bfc8675f3bdc3c9e5bda1e5c286beabc0a5b2b517ef1db4b5e458befffbb601d",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-founderChair-front.png",
+      "bytes": 52091,
+      "sha256": "b25154adf91d9035816aa8ccade6fc05c9977036366329078e92689b2dcf32f7",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-founderChair.png",
+      "bytes": 98976,
+      "sha256": "dc6d024bb104e4076cc6ad3efcca67ccada5ef92255ec6eaffe36df396728f0b",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-rug.png",
+      "bytes": 696883,
+      "sha256": "043ca9d469520a25b94c2d17616c4e81f20f9198ccdaed4f121b20014377e882",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-shelf.png",
+      "bytes": 287044,
+      "sha256": "f86ec9ed4d91fdde9fbbc7da34b8bc3b86ac3910b63e5daccd2ad27494171894",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-visitorChair-front.png",
+      "bytes": 105815,
+      "sha256": "42dd955507a3833903b2a31c1d2e1fb19a45373ba1c2999ce94f812486fd875f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l1-visitorChair.png",
+      "bytes": 105815,
+      "sha256": "42dd955507a3833903b2a31c1d2e1fb19a45373ba1c2999ce94f812486fd875f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-accent.png",
+      "bytes": 188713,
+      "sha256": "fcc1248012957795ac4b56ab5e0e1aa1d2c29c43aeba64f59d0b96767d4bc125",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-decor.png",
+      "bytes": 123001,
+      "sha256": "6baf73ede372bc1468e451cf5e54401eb297522780af0482a4ff43672c9e8a17",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-desk.png",
+      "bytes": 200060,
+      "sha256": "4d9684f2cafd5ecfff9602d6861a27621875c6d01d0cd5d3fb10dcd6cd68bb83",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-founderChair-front.png",
+      "bytes": 47013,
+      "sha256": "fec63476b37314223612094e2c9536d89b431347cb76ad043de7cbc935d4e66f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-founderChair.png",
+      "bytes": 105985,
+      "sha256": "c7ea8b4e711dfe9083c22c0861d43b7b64aaf36ff302b0b5a886c045af10070a",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-rug.png",
+      "bytes": 735689,
+      "sha256": "5908a18f426006e3e5b816b5f5c05a8a347f8e5a48dc9a354a8d3c9b3319c562",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-shelf.png",
+      "bytes": 253213,
+      "sha256": "a7c1ecf971945f37b7495c860d61f4b0a5be724ee9bda13885eb47eb624478df",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-visitorChair-front.png",
+      "bytes": 133080,
+      "sha256": "b0f145a488ab70314e483c2eaff0a34e361848dfe75a99afac00a2ee5986c065",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l2-visitorChair.png",
+      "bytes": 133080,
+      "sha256": "b0f145a488ab70314e483c2eaff0a34e361848dfe75a99afac00a2ee5986c065",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-decor.png",
+      "bytes": 141137,
+      "sha256": "761869f861098d7ddeeaa3de737ed9f739f12c3770bfc053aebe079e9dbbdbb6",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-desk.png",
+      "bytes": 234173,
+      "sha256": "52f419767cdeac52b21bf5c718295d85958bb2274f7ac9e9fe7ad282440816e4",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-founderChair-front.png",
+      "bytes": 62775,
+      "sha256": "5d378e449ee32124989028ccefd54dbf4633958c5ca33f3bad25f87a909e030d",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-founderChair.png",
+      "bytes": 158173,
+      "sha256": "6b162b0bad6f5c9818f2a248753bee10c6084464962e9f846c82d2ff4498b066",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-rug.png",
+      "bytes": 998936,
+      "sha256": "9bd86a8afd4eab55ba6e94993b26720e2dc5dbb284a4bd4ff101d9ba457f6002",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-shelf.png",
+      "bytes": 377858,
+      "sha256": "e3cb5e977bf1500460f109914f76ec76b44f07b1b763109c1cc5538e479598cf",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-visitorChair-front.png",
+      "bytes": 232194,
+      "sha256": "f499b1e13ba0da4a48ce6f6ec692090abe87b145e031650f5f907b350b947ab4",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l3-visitorChair.png",
+      "bytes": 232194,
+      "sha256": "f499b1e13ba0da4a48ce6f6ec692090abe87b145e031650f5f907b350b947ab4",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-accent.png",
+      "bytes": 164237,
+      "sha256": "8812738b450ddb03db6d4d5361026518bc31d4bf602697bf89138a9d791fa70a",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-decor.png",
+      "bytes": 158821,
+      "sha256": "ffc91b62f25dfd3fae692eb50b415591c0d56a328d4f3288653cb8ecd3ad4384",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-desk.png",
+      "bytes": 282511,
+      "sha256": "e177b70caffe1c93428b6124d60f9822c0e85703c907094217af1fa1cb4b49ed",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-founderChair-front.png",
+      "bytes": 68873,
+      "sha256": "a73f9f7671239a8493024bae8f30ddcb4b04e24d5f3e39e595e1cc9fd57794eb",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-founderChair.png",
+      "bytes": 177671,
+      "sha256": "da167adeb98a6bf489e8c37562bf72e66aa92e949b51a725073e7d5af47f0df5",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-rug.png",
+      "bytes": 1288190,
+      "sha256": "1742d916c587268f949d1e5db14846e980c873d8ecc944b229387f3ca827b7e3",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-shelf.png",
+      "bytes": 258756,
+      "sha256": "277d635a08e1581389c190c0bade1fa9a5972cbad431ebdf06925f834434f2b0",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-visitorChair-front.png",
+      "bytes": 205314,
+      "sha256": "fdebe9ef2787cefd7ed9fa9dddcfdff5bde3870b244ac334a05466561b90f60e",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l4-visitorChair.png",
+      "bytes": 205314,
+      "sha256": "fdebe9ef2787cefd7ed9fa9dddcfdff5bde3870b244ac334a05466561b90f60e",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-accent.png",
+      "bytes": 182539,
+      "sha256": "a033e0d8e8a49bb3d32efc08f80a4fe75c322cb189e5e6adb4cd416aaa41894b",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-decor.png",
+      "bytes": 189538,
+      "sha256": "98a1185558c93964df0d5242d884e91dd496b7ae331aa789c097813f7ca5c0d9",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-desk.png",
+      "bytes": 284698,
+      "sha256": "2bf6f2c22503890f4b03646e6b29b39c6c715cdd319ad07b8932b260d52aa4fc",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-founderChair-front.png",
+      "bytes": 169618,
+      "sha256": "9af0e8c2bb38108fdf40c65cfbd8c0bffc746f97df7f993eab202fae73e5e2fb",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-founderChair.png",
+      "bytes": 466294,
+      "sha256": "38bbcc296d3f1422efdb5a37447d8b4ecd22a4fa43248c533fdb5b579389e6c9",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-rug.png",
+      "bytes": 1314793,
+      "sha256": "c3c8d76e3b0f8a84d1aac62e98f28481de52a456b352542f0a489dbd6cf7b831",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-shelf.png",
+      "bytes": 289264,
+      "sha256": "1aa8464f2a968eeba81dd452baee4577371777ec1ed103858953a7db9704d47f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-visitorChair-front.png",
+      "bytes": 200106,
+      "sha256": "83d8d4260d69453e8422d7b8cfb78e4222921203f6ed459b35ed530455c76a82",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/founders-office/l5-visitorChair.png",
+      "bytes": 200106,
+      "sha256": "83d8d4260d69453e8422d7b8cfb78e4222921203f6ed459b35ed530455c76a82",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-cooler.png",
+      "bytes": 297161,
+      "sha256": "ee0ec663bb06b42593df80913e4f1c658b857d2336cef255bb53599dfbeb5c72",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-eastRun.png",
+      "bytes": 295465,
+      "sha256": "9dff3a1940ddac24acd1a0a0bfc2e6e1ee534c75370dcc87bd2d6775dcedae1d",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-entry.png",
+      "bytes": 270137,
+      "sha256": "937413ce03ba2b98f0ac6f29dce0783f368df8624fd0d4b121df42d1b08dc102",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-island.png",
+      "bytes": 566730,
+      "sha256": "cf751accad4bb6b1d840f6c17e6ddf9178fcfa4c32a2cf443a04709f948b2522",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-mat.png",
+      "bytes": 65841,
+      "sha256": "aad524ef5fdc03dfbcf8d5efc9665afa781a242fcefbea458719b82d07de3a07",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-northLeft.png",
+      "bytes": 372483,
+      "sha256": "054b322d5828584aa9357a11c55060f2291ceeac728d19fbdd4d2f26131add88",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-northMiddle.png",
+      "bytes": 424701,
+      "sha256": "faae2c58d18ab405c0d06c963a7e1dcdd77755631604ff4884ac03680bb2a725",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-northRight.png",
+      "bytes": 321720,
+      "sha256": "cbecca4599ea2b50b8105aad4383880f52953756afa98d7d125f49c29a4082bb",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/gift-shop/base-westRun.png",
+      "bytes": 403187,
+      "sha256": "e34cea829c01bf63b3c6d7a5900e5d5967f59d7c622a4fd0ebebe15fa6410647",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-chairEast-front.png",
+      "bytes": 46087,
+      "sha256": "b82759761965b973f51cba81435d50ca8c395d45a6afaafd435efc55f5652bd7",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-chairEast.png",
+      "bytes": 143436,
+      "sha256": "095dd0fbc9782d33f12e26d2189b3dcff5a75b5e5b9306bbc83948d40841096f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-chairWest-front.png",
+      "bytes": 40020,
+      "sha256": "063b55955a879c4149020fc3c14bd72306fa30998606854396798b4f7eee5835",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-chairWest.png",
+      "bytes": 147885,
+      "sha256": "b20f85bd075c76b0b2241caf39aacd3ae83fd5aed413aac674984882eb7776f8",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-east.png",
+      "bytes": 353087,
+      "sha256": "eea605e7d3d85e67606981517b6250d8b8ce6b5c4117ddab9e1353b7071069aa",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-fountain.png",
+      "bytes": 1214622,
+      "sha256": "6e04bb85c0f2a81764f1aae5c9d775e9b621b986c6bbe7f18a2de03c0bb1cd0f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-north1.png",
+      "bytes": 511027,
+      "sha256": "f8af4cb69837f97df9acb29d1df6fb965242028a0da1f75e6195dae52ac6cd3e",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-north2.png",
+      "bytes": 366236,
+      "sha256": "0a5482c9a456751f14e30ad507648ca48bb71d318406886326ab43123bb99136",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-north3.png",
+      "bytes": 375098,
+      "sha256": "9a512dd3b1516a83a3916e9d6e03754aead66f855f5c0411a5af3f0b6f7d4dbb",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-north4.png",
+      "bytes": 505254,
+      "sha256": "6443ce3b70aa0996d0f8d503eee7ec29aa23058d2b600797e849ded709fef074",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-path.png",
+      "bytes": 1888708,
+      "sha256": "cc592cec597396fb72ee7769dac14ac0022e962927ee3dd832aab6d1a55f94f8",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-southLeft.png",
+      "bytes": 466155,
+      "sha256": "7f63e02e4c3fcc5469ca83765c3ff4ec77837854d0beafdce7c4df9fe96d0a58",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-southRight.png",
+      "bytes": 399383,
+      "sha256": "c116cfdaeeedda84efddb2b250e0db2c77d6aa3674962d331c503cf9f48de3e6",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-trellis1.png",
+      "bytes": 329181,
+      "sha256": "50cbee1482088aeb55a7bb2b179d56a22356c5e04b3c71569ad7bb732ddd9281",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-trellis2.png",
+      "bytes": 370541,
+      "sha256": "5a0eb8d085acc03c6510f89b1f710f6bfb3b8e3fec0ce698e6262e4325b030e4",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-trellis3.png",
+      "bytes": 371834,
+      "sha256": "2e8cdbe782050f27dff802c1663b11ed72a1b212263f7d8d42d89727fa52fa4f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-trellis4.png",
+      "bytes": 327989,
+      "sha256": "1becfa6816881d557eb02e98808c44f8ee5717da987f944db59d12a9f009faf6",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/indoor-garden/base-west.png",
+      "bytes": 412637,
+      "sha256": "fb3f2b8a2daac956dd578bc2e288c4e30b0981b4d3dfeafa00eca9cff2b076c7",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-ball.png",
+      "bytes": 134592,
+      "sha256": "4095ec0fcf211088bd8adcce1408de5f53369766bf0d19f63698aff63c941774",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-bench-front.png",
+      "bytes": 21790,
+      "sha256": "87be2d255db18a4329ae2418a0f74ced3ee003993cf8d160c827babbb7c88cb5",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-bench.png",
+      "bytes": 149077,
+      "sha256": "de4f5241a2a8420a3c858bbc1b8e83417bed667017ac7b37ddea133afc52c7b3",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-east.png",
+      "bytes": 142521,
+      "sha256": "00bff7551ead3ac29cf05bf8a40a772bb716a89f771fd1ff020c3404c33ab79a",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-floor.png",
+      "bytes": 1650720,
+      "sha256": "c21b97c05c8ed423eae23294d7969ee62862c748f9f36d753f284af1b7cd5270",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-front1.png",
+      "bytes": 217634,
+      "sha256": "43dbfae9bc827c7e07ea160d16b7370b540087427d7593a9e7c67a3efbcacd3c",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-front2.png",
+      "bytes": 228125,
+      "sha256": "a4713288fd4a6ac8b45992f36cb9857475da49a5d8a78161853457678314e83f",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-front3.png",
+      "bytes": 226726,
+      "sha256": "15f938628a2035952b25b46d97b31499dd8272a866dca239509de43b07e0432b",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-front4.png",
+      "bytes": 243868,
+      "sha256": "e1cacc93088be839b2211d0f6b5ce4304077e433da0deca836b16faa5d6a2169",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-hooks.png",
+      "bytes": 74589,
+      "sha256": "7d08e9f08111119f33bf3ebf3a1b61a3aa9dd56b93f61e7ca555e7b0090b1ea8",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-mat.png",
+      "bytes": 742847,
+      "sha256": "e64431998fc63a5a94811d533a6d66686a4e4c72116badc482957275d8258810",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-mirror1.png",
+      "bytes": 139604,
+      "sha256": "6bbc7950b5bf04c8dedb0378b88a1888934b66aba11ef36525c589b2295ed392",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-mirror2.png",
+      "bytes": 129526,
+      "sha256": "4953b63a7aa57fcd276f0853e2194c35199b10a9ce159406db7d99b5bde3d99e",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-mirror3.png",
+      "bytes": 131617,
+      "sha256": "cbe472869d651813b7ded5e7dd26b975320148214a4075b265d4c72ea3a76226",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-mirror4.png",
+      "bytes": 163682,
+      "sha256": "ce7ca29c92c20296981df1131c0b5a1b798244065fb3f5671ffcc9f7c276b154",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-north1.png",
+      "bytes": 334772,
+      "sha256": "5cd650afae39f67741d511453b78c8e8acc163c57c123032a050975f039876dc",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-north2.png",
+      "bytes": 317149,
+      "sha256": "13bde4f7001e6c762f9bb0f6cd7bbb39bb8900a10f77ae1c3ba13720b1ca5ba6",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-north3.png",
+      "bytes": 344431,
+      "sha256": "c347d09b2680518bab836e9f9329f08bf57ec28d86d420ffd6820e3df28af255",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-north4.png",
+      "bytes": 323836,
+      "sha256": "c21691da9a1d8700fc0297b0922b8ae09d3b72cc47146f46b327ee09fe7b86d5",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-roller.png",
+      "bytes": 63069,
+      "sha256": "2be44aefc49bdad24d3d09aa7878862e1bbfbf98ea64564bbc36582fa3957c22",
+      "new": true
+    },
+    {
+      "path": "apps/player/public/art/rooms/level5-v1/staff-gym/base-west.png",
+      "bytes": 150222,
+      "sha256": "8c4729011c4fd04d3bde5e0115409d7fe7f963e311a51fc7734ac69fe8e38d13",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/approvedLevel5BitmapAssets.ts",
+      "bytes": 529,
+      "sha256": "90be3b315c7b9b1aaffd3be6c8bff7858133a670f391e053d9a6fa942ff822ed",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "bytes": 59026,
+      "sha256": "af0db36a02ec9ae9b96cd40c54b85ebcafcbc5f79aba4f9683b02065d1a0fde9",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/art/level5/executive-office.json",
+      "bytes": 4834,
+      "sha256": "0e3a1ab6fd2a095b5bfb6fbbd5719b4a9754bee406b93dd0d0be2d5e4ebcb59c",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/level5/founders-office.json",
+      "bytes": 20323,
+      "sha256": "c471a7654fa5fec311e0da93ffdc0a3f6dcc2d7bc5095e760a7ecfea8b45946a",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/level5/gift-shop.json",
+      "bytes": 4018,
+      "sha256": "db2d97f5737e31474695d2a2d6d742a815fbf1621a2526c7fc3d14a292c0fa12",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/level5/indoor-garden.json",
+      "bytes": 8553,
+      "sha256": "22ef46f4596da41604527b81071c9a147c2f14e5d3823b7caf0f48f07bf9ddfc",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/art/level5/staff-gym.json",
+      "bytes": 9418,
+      "sha256": "2a7128ec9a947495aff0ce51acafc4a1176ac2aae7997aa615e54cc0cd65b069",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "bytes": 362240,
+      "sha256": "143afc44623e443a8a002ac5c508d8c0f3dadd8b07334257c1d673e308ab09fb",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/approvedLevel5RoomData.ts",
+      "bytes": 3512,
+      "sha256": "6cb74e91b58685b239a572ccd13e3a95441294a9f0a9cf602b488631a5ae1f3b",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/approvedLevel5Rooms.test.ts",
+      "bytes": 8112,
+      "sha256": "f8bae10eb1a03fceda4af977bb78d1f9c10d8e247340ce964478b18ff507e878",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "bytes": 36622,
+      "sha256": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "bytes": 85418,
+      "sha256": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "bytes": 11014,
+      "sha256": "4953f1cffab2973013f1042811cfa09bbbc083788f6e79945bd66e93b248e36e",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "bytes": 14794,
+      "sha256": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/level5/executive-office.json",
+      "bytes": 738522,
+      "sha256": "50e72ddbad4f2278ef24e9d36a9ddc5ae1d2e96fc46df8dd218820a90afe67de",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/level5/founders-office.json",
+      "bytes": 2952603,
+      "sha256": "a335f76ac3d24172909fb7b647dd3147dde8fa46cd2a84ebfda3e1fd31195b6f",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/level5/gift-shop.json",
+      "bytes": 4506431,
+      "sha256": "5b6c111100fa3a87f333d9ed94d3e68a7dd4332338e5ea0d136c55df5a738449",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/level5/indoor-garden.json",
+      "bytes": 2454046,
+      "sha256": "384665978c2ec86b4b6874d24695f66a1fe8c938f8b2c9b95ba08488dcfb9cf5",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/level5/staff-gym.json",
+      "bytes": 2454502,
+      "sha256": "14218d69e0d0599a2327f2031d8b471663c8bb994558596bca53fcd508e671de",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/level5ApprovedScene.test.ts",
+      "bytes": 6866,
+      "sha256": "2da00c9edc65107e707916b9ef40c078204740d6cca5486b47aaccf20aee89de",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/facility/roomUpgradeAppearance.test.ts",
+      "bytes": 5296,
+      "sha256": "43add2416df43a9e4be65871a061860f1d9ad4a8b717ec37ae1167003582f255",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/roomVisualLayout.ts",
+      "bytes": 16905,
+      "sha256": "ce74d2c40cbbbfc3bd8401cdfb2c83b6709b4980d795f5030641d186825e59ef",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "bytes": 13308,
+      "sha256": "0db2aa6e1ca3b9836bb5f8d76364ff387c99dde315051416371fa8dace7e355c",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuildCatalog.tsx",
+      "bytes": 6112,
+      "sha256": "a98165468ad1fd05e0c5a0501fd496eccdd4fa4fedd96314582e9822fbd55aef",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuildRoom.tsx",
+      "bytes": 4291,
+      "sha256": "f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/mobile/build/RoomThumbnail.tsx",
+      "bytes": 3592,
+      "sha256": "6c944c17953d1b719171a0eb7bee4e98633c6e8cb3a1ab6f34e9be0508070e5d",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/mobile/build/level5RoomThumbnails.test.tsx",
+      "bytes": 2902,
+      "sha256": "c80bc8e5210ca0f5113efacde3b702598d63a1b6cd047093da56ab37cde1135e",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/mobile/performance/roomAssets.ts",
+      "bytes": 4830,
+      "sha256": "aad43a7e970de73c7ddd6872f0a0851cd14478ad027ef2d8ef2287c081fa57b5",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/session/buildModePresentation.ts",
+      "bytes": 10638,
+      "sha256": "1096c5144fca2b14d947886eec71e4e1ba21ae7a67efc33c72020781a6b5ec7d",
+      "new": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveRoomsViewModels.test.tsx",
+      "bytes": 6288,
+      "sha256": "f617ff0f1625c1c13248b75e34195896d0edc605d059f0d0543da2cc33845244",
+      "new": true
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "bytes": 137180,
+      "sha256": "c3d15f9c20bc3c7d8c6d5e6dec4193e4be5956a06f1b203d03f0a0e39a2fe335",
+      "new": false
+    },
+    {
+      "path": "docs/execplans/level5-launch-plan-20261010.md",
+      "bytes": 182793,
+      "sha256": "22b3bfc5dcdc64a8ca1a8fe9d703079683e664822de869e93f1b05810a44471d",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/approved-level5-room-layouts.ts",
+      "bytes": 1458,
+      "sha256": "a06e67755248b67815fa482b9d1f14e447031eaf27fc18b75846ee307b2c60da",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "bytes": 8173,
+      "sha256": "a0e46e8ab1821817ba7bd5b0e497a33745eefd77549f76a14b9455a6e03bd0ef",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/approved-room-layouts.ts",
+      "bytes": 26975,
+      "sha256": "3f85d6963e0ec6dd9d7299203684619d6e95f984771e760a758adb577e2b2579",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/index.ts",
+      "bytes": 627,
+      "sha256": "ec18c4ba07a874c13896872d46701140777ad2fbe85a36847d5ea139c2de411d",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-rooms.test.ts",
+      "bytes": 2973,
+      "sha256": "983726c45fbde8438e3b047904d3756ebb8e7c22ddcc172dd03c2f494b6e5cb3",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level-five-rooms.ts",
+      "bytes": 1285,
+      "sha256": "ce074cb6aff08436f71d8d51cfadc26cce4512dc006fde8e826d31342c589e50",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level-five-schema.test.ts",
+      "bytes": 3628,
+      "sha256": "5f5f48be7bb70f3dbecd5c4961c38e4f1165c7712ec0f38cd514417217c29f59",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/level5/executive-office.json",
+      "bytes": 2627,
+      "sha256": "605dd7a23574be52af4c4ee50d880dc07f21289feb3858298d8b8cd881a569f4",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level5/founders-office.json",
+      "bytes": 1961,
+      "sha256": "3b580fc120d920e3407a00987d7afa17d3dbf2816b55213e81a8b5f9e88fa62a",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level5/gift-shop.json",
+      "bytes": 4671,
+      "sha256": "dc1e56e917c19ad15a4959fed67e231473b33248af5e5f250059844eb1390b0d",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level5/indoor-garden.json",
+      "bytes": 7070,
+      "sha256": "f767c3a282cbb8becab6ab3a7aed3a4e8bf2636222ecfab882de1341a2833a61",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/level5/staff-gym.json",
+      "bytes": 6637,
+      "sha256": "55ad8c16e3b932f399032fa4fa571a54f56e43e56bfff5fdc25072d2f0bf41d1",
+      "new": true
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "bytes": 95751,
+      "sha256": "2ce078172808ee3b928cc28c8c7810a5acc9cab4dd7b205b2d700591306f2f82",
+      "new": false
+    },
+    {
+      "path": "packages/balance-config/src/room-upgrades.test.ts",
+      "bytes": 12009,
+      "sha256": "3780fb34d6c1b2df880ed93c07c394e9f67d17ff1238f1f8f3413a1b9a4dcd4f",
+      "new": false
+    },
+    {
+      "path": "packages/game-domain/src/guidance-tips.ts",
+      "bytes": 69623,
+      "sha256": "7d364a4b18497f481b33611543f8113ef7ebed6cd388b63ff1cf5478828ddb7f",
+      "new": false
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "bytes": 411767,
+      "sha256": "43d7966ec3b03420c96c348b08b625869558cc8dc0541df586ee6e81bee04468",
+      "new": false
+    },
+    {
+      "path": "packages/game-domain/src/room-capacity.ts",
+      "bytes": 9991,
+      "sha256": "c484b6eb7cd9c88799718264d5b992b510b27e98c98ea786aa1e93e55597fbc4",
+      "new": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-rooms.test.ts",
+      "bytes": 5591,
+      "sha256": "1d96e8abf46955ef1a21eb85a17ed1f1661a6cb9b2e0afbd3882b99861a1674a",
+      "new": true
+    },
+    {
+      "path": "packages/game-domain/tests/level5-approved-navigation.test.ts",
+      "bytes": 5388,
+      "sha256": "d93d9148b84ec86a4e692f477bb7693406a6353732fe6cbe08f16d5fb68b4082",
+      "new": true
+    },
+    {
+      "path": "tests/fixtures/level-five-rooms.ts",
+      "bytes": 2250,
+      "sha256": "39c3ff05f8865923aa9822411a29af573c03483c42a79df827675021cf6dc75f",
+      "new": true
+    },
+    {
+      "path": "tests/fixtures/level-five-state.ts",
+      "bytes": 12854,
+      "sha256": "9819ff71dcc0b513cd72bd2679675093198daff677fadc8135f72c9f7b76458e",
+      "new": false
+    },
+    {
+      "path": "tools/qa/level-five-state-bootstrap.ts",
+      "bytes": 4540,
+      "sha256": "67ad1890fa75cc4ba2d1880045b1cef2471b370f15dcbf0c329b30c05303afe6",
+      "new": false
+    },
+    {
+      "path": "tools/qa/level-four-rooms.mjs",
+      "bytes": 4786,
+      "sha256": "ad56ed801cfa531363dd02fdd6afc9297a9d9ff205dc28031e0ccac681f390f4",
+      "new": false
+    },
+    {
+      "path": "tools/room-design/level-5/runtime-promotion/README.md",
+      "bytes": 1566,
+      "sha256": "17e353e59789c1d8e4f377934694b89089a1f318d32e0166a65111e21c7413a2",
+      "new": true
+    },
+    {
+      "path": "tools/room-design/level-5/runtime-promotion/promote.mjs",
+      "bytes": 12180,
+      "sha256": "15ecd377a69726a7f7a3ae388f5a0517d734884f35fcb1340efd8948790fe841",
+      "new": true
+    }
+  ]
+}

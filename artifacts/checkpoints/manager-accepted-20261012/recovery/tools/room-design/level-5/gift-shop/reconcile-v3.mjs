@@ -1,0 +1,23 @@
+// Measured native paint registration and concept-proportion refinement.
+import fs from 'node:fs'; import path from 'node:path'; import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url'; import * as D from './proof/design-rooms.js'; import * as G from './proof/geometry.mjs';
+const root = path.dirname(fileURLToPath(import.meta.url));
+const save = (p, v) => fs.writeFileSync(path.join(root, p), JSON.stringify(v, null, 2) + '\n');
+const read = p => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
+if (read('layout-reconciliation-v3.json').status === 'PASS') throw Error('Painted reconciliation already frozen.');
+const l = read('stand-in/v3/layout-concept.json'), changes = [];
+function edit(id, fn, reason) { const p = l.pieces.find(p => p.id === id), before = structuredClone(p); fn(p); changes.push({ id, reason, before, after: structuredClone(p) }); }
+for (const id of ['northLeft', 'northMiddle', 'northRight']) { const b = D.DESIGN_TIERS[0].bases.find(b => b.recordId === id); edit(id, p => { const s = 1 / b.footprint.width; p.size = p.size.map(v => v * s); }, 'Uniform world scale derived from decoded opaque plinth width: each adjoining rear bay now fills exactly one tile, with no seam gap or stretching.'); }
+edit('mainIsland', p => { p.size = [1.25, 1.875]; p.ground = [1.4, 1.9]; p.footprint = { left: .85, top: .75, width: 1.1, height: 1.15 }; }, 'Restore the concept’s broad filled central cabinet and integrated display/checkout proportions; retain a loop aisle.');
+for (const id of ['westRear', 'westMiddle']) edit(id, p => { p.ground[0] = .16; p.footprint.width = .38; }, 'Register the left plinth flush with the wall, using the painted side-facing base; adjacent modules overlap upward at one-tile floor intervals.');
+edit('westCooler', p => { p.size = [.65, 1.95]; p.ground[0] = .2; p.footprint.width = .38; }, 'Match the concept’s dense front-left cooler/bouquet endcap; broad overlapping stock rises from the wall fixture footprint.');
+for (const id of ['eastRear', 'eastMiddle']) edit(id, p => { p.footprint.left = 2.75; p.footprint.width = .25; }, 'Use the concept’s shallow continuous right-wall run and measured side-facing floor base; leave the queue in the wider right aisle.');
+edit('entranceEndcap', p => { p.size = [1, 1.1111111111111112]; p.ground = [2.51, 3]; p.footprint = { left: 2.1, top: 2.35, width: .9, height: .65 }; }, 'Fill the front-right corner as in the concept: joined plush bin, flowers and balloons, rather than a small isolated ornament.');
+for (const r of l.room.records) { const p = l.pieces.find(p => p.id === r.id), q = p.ground ?? p.center; r.renderSizeTiles = p.size; r.worldLocalGround = q; r.destinationTopLeftTiles = [q[0] - p.size[0] / 2, q[1] - (p.center ? p.size[1] / 2 : p.size[1])]; r.depthKey = p.center ? -.9 : q[1]; if (p.footprint) r.footprint = p.footprint; r.doorOwners = G.ownersFor(l.room, r); p.owners = [...r.doorOwners]; }
+for (const a of l.presentation.actors) { if (a.supportId === 'browse') a.ground = [.625, 1]; if (a.supportId.startsWith('queue')) a.ground[0] = 2.55; a.painterGround = a.ground[1] + .0001; const s = l.room.supports.find(s => s.id === a.supportId); s.ground = { x: a.ground[0], y: a.ground[1] }; l.presentation.contacts.find(c => c.id === a.supportId).world = a.ground; }
+for (const [id, world] of [['northLeft-contact', [.65, .6]], ['northMiddle-contact', [1.5, .55]], ['westRear-contact', [.625, .95]], ['westMiddle-contact', [.625, 1.65]], ['entranceEndcap-contact', [1.875, 2.6]]]) l.presentation.contacts.find(c => c.id === id).world = world;
+l.navigation.privateProofRouteModel = structuredClone(l.presentation);
+save('layout.json', l);
+const h = p => crypto.createHash('sha256').update(fs.readFileSync(path.join(root, p))).digest('hex');
+save('layout-reconciliation-v3.json', { schemaVersion: 1, designRevision: 3, status: 'PASS', basis: 'Full-room concept followed by painted native floor-base measurement; concept frozen separately, not represented as pre-generation neutral approval.', source: 'stand-in/v3/layout-concept.json', conceptLayoutSha256: h('stand-in/v3/layout-concept.json'), finalLayoutSha256: h('layout.json'), necessaryFurnitureRetained: true, necessaryStandingSpotsRetained: true, changes, standingRefinements: { browse: [.625, 1], pay: [1.4, 2.1], queue1: [2.55, 1.975], queue2: [2.55, 1.05] }, contactRefinements: l.presentation.contacts, rule: "Necessary furniture isn't removed by doors. Optional wall fixture segments may hide; characters walk around every visible footprint." });
+console.log('CONCEPT RECONCILIATION PASS: 10 concept-proportion/plinth refinements; joined rear bays fill one tile each; broad central display/checkout and entrance endcap; four necessary standing spots retained.');

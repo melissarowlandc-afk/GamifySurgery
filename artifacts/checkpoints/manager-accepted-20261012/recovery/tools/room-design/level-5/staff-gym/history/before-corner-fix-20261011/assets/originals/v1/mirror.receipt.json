@@ -1,0 +1,21 @@
+{
+  "id": "mirror",
+  "prompt": "prompts/v1/mirror.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e as C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-da495e37-f710-496d-a02b-92c81aa54191.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-da495e37-f710-496d-a02b-92c81aa54191.png",
+  "selected": true,
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction. Asset type: ONE contiguous four-tile rear-wall mirror-and-poster panel derived from the Staff Gym concept. Input image is the exact edit target/style/design reference. Extract/redraw ONLY the wide honeywood framed wall mirror and the small abstract mountain/sun motivational poster beside it. They form one straight horizontal wall run: mirror occupies the first three quarters, poster occupies the fourth quarter, adjoining without a large empty gap. Same exact elevated-front orthographic hospital game raster/pixel-cluster finish, fine dark outlines, pale blue indistinct reflection and teal/mustard generic mountain/sun poster. No diagonal camera. Preserve opaque painted glass, transparent outside the joined frames, perfectly horizontal top and bottom edges, whole run unclipped with small margin. No reflected person or legible words/digits/logos. No gym machines, floor, bench, mat, walls or other objects. This is one cohesive wall panel, not a set of scattered icons. True transparent alpha background.",
+    "referenced_image_paths": [
+      "tools/room-design/level-5/staff-gym/concept/staff-gym-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "inputImages": [
+    "concept/staff-gym-concept.png"
+  ],
+  "original": "originals/v1/mirror.png",
+  "originalSha256": "18d6182b6f086f3b6213e240448f3799143848199fcf3e46f29d86542cf01f14",
+  "promptSha256": "41eba8f144ff04603d2198a91c25f829cd7eb7c35fc05ec143a8a302f9fe28b0"
+}

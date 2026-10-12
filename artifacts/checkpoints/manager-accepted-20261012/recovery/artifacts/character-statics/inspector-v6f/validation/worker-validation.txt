@@ -1,0 +1,95 @@
+$ node tools/character-mapping/inspector-v6f/validate-roster.mjs --require-complete
+exit=0
+{"status":"PASS","requireComplete":true,"requireRootReview":false,"identities":10,"poses":80,"reportedIssues":0,"immutableReviewSnapshots":30,"rosterContract":{"identities":10,"posesPerIdentity":8,"totalPoses":80,"categoryCounts":{"staff":10,"patient":0},"staffRoleCounts":{},"plannedStaffRoleCounts":{"Inspection agent (level 5; roadmap-only)":10},"demographicCounts":{"Female":{"young_adult":1,"adult":2,"middle_aged":1,"older_adult":1},"Male":{"young_adult":0,"adult":2,"middle_aged":3,"older_adult":0}}},"reviewStatus":"candidate-review-root-checks-pending","runtimeBaseline":"326 prior identities/2638 assets and179 selectable patients preserved; existing art pinned","runtimeReady":false,"ownerApproval":"pending","reviewStatusPolicy":"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."}
+node.exe : (node:50268) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:50268) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/inspector-v6f/validate-placement-qa.mjs --require-complete
+exit=0
+{"status":"PASS","diagnostics":10,"requireRootReview":false,"runtimeReady":false,"ownerApproval":"pending","frozenChairEvidenceUnchanged":true,"schemaVersion":"inspector-v6f-placement-qa/v2"}
+node.exe : (node:36132) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:36132) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/inspector-v6f/validate-worker-review.mjs
+exit=0
+{"status":"PASS","identities":10,"poses":80,"roles":1,"authoredSeatedContacts":40,"reviewedChairProofs":10,"reviewedRoleSheets":1,"reviewedCatalogIdentities":326,"reviewedComparisonBoards":20,"glassesIdentities":2,"regenerations":10,"staticGalleryPages":19,"mainGalleryImages":30,"managerVisualAcceptance":"pending","browserValidation":"blocked-spawn-EPERM-left-to-manager"}
+node.exe : (node:45816) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:45816) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/inspector-v6f/validate-clipboard-review.mjs
+exit=0
+{"status":"PASS","identities":10,"sourceBoundManualPoseObservations":80,"standingRightSide":40,"seatedLap":40,"retainedNativeGenerationOutputs":30,"targetedEdits":10,"automatedAnatomyClassification":false,"managerAcceptance":"pending"}
+node.exe : (node:20796) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:20796) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/inspector-v6f/validate-all-catalog-comparison.mjs
+exit=0
+{"status":"PASS","priorRuntimeIdentities":326,"allCatalogIdentities":326,"existingRoleLooks":2,"independentlyRecomputedCatalogComparisons":3260,"independentlyRecomputedSameRoleComparisons":20,"withinBatchPairs":45,"sameRoleNewPairs":45,"perRoleComparisonSheets":1,"nearDuplicateFlags":0,"minimumCatalogRmse":55.88144996504039,"minimumWithinBatchRmse":59.38237104739872,"managerVisualAcceptance":"pending","browserValidation":"blocked-spawn-EPERM-left-to-manager"}
+node.exe : (node:49300) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:49300) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node tools/character-mapping/inspector-v6f/runtime-baseline.mjs
+exit=0
+{"status":"PASS","preservedIdentities":326,"preservedAssets":2638,"priorSelectablePatients":179,"protectedFiles":7,"pinnedNativeSources":202,"currentRuntimeIdentities":326,"runtimeReady":false,"managerAcceptance":"pending"}
+node.exe : (node:31892) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:31892) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ node --experimental-vm-modules tools/character-mapping/inspector-v6f/check-syntax.mjs
+exit=0
+{"status":"PASS","syntaxParsedModules":26}
+node.exe : (node:35564) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:35564) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ python tools/character-mapping/inspector-v6f/validate-text.py
+exit=0
+{"status":"PASS","textFiles":357,"issues":[]}
+
+

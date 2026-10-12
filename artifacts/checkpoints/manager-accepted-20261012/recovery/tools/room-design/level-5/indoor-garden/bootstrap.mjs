@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root = path.resolve('tools/room-design/level-5/indoor-garden');
+const gift = path.resolve('tools/room-design/level-5/gift-shop');
+export const hash = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+export const save = (p, value) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, typeof value === 'string' || Buffer.isBuffer(value) ? value : JSON.stringify(value, null, 2) + '\n'); };
+for (const dir of ['concept','history','assets/originals/v1','assets/prompts/v1','assets/processed/v1','stand-in/v1','proof/evidence/v1/browser']) fs.mkdirSync(path.join(root, dir), {recursive:true});
+const references = ['proof/renderer-base.js','proof/room-touchups.mjs','proof/shell-painter.js','proof/native-engine.mjs','proof/browser-errors.cjs','proof/check-helpers.cjs'];
+for (const file of references) fs.copyFileSync(path.join(gift,file),path.join(root,file));
+save(path.join(root,'package.json'), {type:'module',private:true});
+const baselinePaths = [...references.map(f=>path.join(gift,f)), path.join(gift,'layout.json'),path.join(gift,'concept/gift-shop-concept.png'),path.join(gift,'approval-2026-10-11.md'),path.resolve('tools/room-design/level-5/executive-office/layout.json'),path.resolve('tools/room-design/level-5/founders-office/layout.json'),path.resolve('AGENTS.md'),path.resolve('docs/execplans/level5-launch-plan-20261010.md')];
+save(path.join(root,'assets/reference-baseline.json'),baselinePaths.map(file=>({file:path.relative(process.cwd(),file).replaceAll('\\','/'),sha256:hash(file)})));
+save(path.join(root,'assets/plan-intake.json'),{file:'docs/execplans/level5-room-design-20261008.md',sha256:hash('docs/execplans/level5-room-design-20261008.md'),bytes:fs.statSync('docs/execplans/level5-room-design-20261008.md').size,scope:'Append Step: Indoor Garden mockup only. Global handoff belongs to manager.'});
+console.log('BOOTSTRAP PASS: isolated lane; approved Gift Shop native renderer/toolchain copies; shared references recorded; no runtime changes.');

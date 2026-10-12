@@ -1,0 +1,91 @@
+{
+  "reviewer": "sol-v6f-worker",
+  "scope": "Art generation and packaging only. Viewed the exact v6e and v6d reference sheets before generation, all 30 built-in native generation outputs during production, all 80 final normalized poses, all 40 authored contact overlays, ten authentic south-facing Front Desk chair proofs, both style comparison sheets, all 326 existing catalog identities and all 20 nearest-reference/catalog comparison boards. Clipboard observations are manual visual QA, bound to the final source and pose hashes; they are not an automated anatomy classifier. Manager acceptance and browser validation remain pending.",
+  "beforeGenerationExamples": ["app-gapfill-v6e.002", "app-gapfill-v6e.007"],
+  "glassesIdentities": ["004", "008"],
+  "totalRegenerations": 10,
+  "styleAssessment": "The ten inspectors retain the v6e/v6d adult cartoon family, dark outline, stepped transparent sprite finish, restrained cel shading and shared 160x320 normalization. Their blazers, cardigans, collared shirts, tailored trousers, office shoes, dark lanyards and blank badges distinguish them from the clinical staff. All use the same tan clipboard, blank cream paper and small metal clip per identity. Standing views retain anatomical right-side carriage: screen-left in S, near side in E, far side in W and screen-right in N. Seated boards rest across the right lap, with the supporting grip naturally partly hidden in W/N. Five women and five men span intended visual ages 28-65; two wear glasses. Hair, facial hair, skin tones and clothing combinations differ from the catalog and from one another. Appearance has no clinical or gameplay-selection meaning.",
+  "clipboardDirectionObservations": {
+    "stand.south": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible.",
+    "stand.east": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored.",
+    "stand.west": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible.",
+    "stand.north": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent.",
+    "sit.south": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board.",
+    "sit.east": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact.",
+    "sit.west": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale.",
+    "sit.north": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+  },
+  "limitations": [
+    "Rear seated clipboards are deliberately mostly occluded. Nine initial sheets had an upright rear clipboard and received built-in targeted edits; 009 already had a lap-level board. Final rear views expose only a thin right-side edge, so clipboard recognition at game scale remains a manager visual acceptance question.",
+    "In seated W views the clipboard is on the far right lap. The near left hand often overlaps the board, so the far right support/grip cannot be independently proven from visible pixels alone. The board edge is especially subtle for 004 and 006. 008 received a second targeted edit to expose a clear flat tan/cream lap board in W.",
+    "The intended petite, lean, broad and full builds render with subtler differences than the written design rows. Some inspectors have slightly slimmer torsos/longer-looking legs than the two v6e provider references, within the same anchored canvas and cel-shaded family. Manager should assess this degree of proportion/build variation.",
+    "004 renders a warmer, lighter golden-brown skin tone and rounder amber frames than her written medium-warm-brown/oval-frame brief. 005's white pixie is somewhat tousled, 006's quiff is fuller and wavier, and 009's silver sides are stronger than planned. All remain coherent across directions.",
+    "Intended ages are design metadata, not exact age recognition from art. Silver hair/moustaches and facial cues distinguish the mature cast, but the established stylized faces remain comparatively youthful.",
+    "Native extraction preserves imperceptible alpha-1 noise: 895 source footprint pixels outside the normalized frame across 16 poses, and 16 derived border pixels across seven poses, all maximum alpha 1. No protected-alpha clipping occurred. No thresholding, erasing, repainting, procedural character drawing or mirrored pose synthesis was applied.",
+    "Forty seated contacts are manually authored worker candidates, not manager approval. Ten chair proofs use the authentic south-facing Front Desk fixture and original runtime geometry; no invented chair rotations are presented as runtime fixtures.",
+    "The requested October 11 M0 owner follow-up was absent from the Level 5 plan version available at intake. The explicit worker brief supplied the binding inspector requirements. This art lane creates no runtime inspector job or hireability rule.",
+    "Browser gallery validation was attempted with an existing Chrome executable and fresh ephemeral file-gallery contexts, but launch failed with browserType.launch: spawn EPERM in the worker sandbox. Exact error logs are retained; the manager must rerun the prepared check. The captured 326-identity/2638-asset runtime baseline is unchanged. This batch is local and art-review-only; manager acceptance, integration, publication and GitHub backup are not claimed. No game origin, persistent browser profile or campaign storage was used."
+  ],
+  "identities": {
+    "001": {
+      "features": "Deep-brown young woman with short black side-swept pixie, petrol-teal blazer, ivory blouse, rust trousers and black office shoes; no glasses.",
+      "distinction": "Compact pixie silhouette, dark face, petrol blazer, rust trousers and clipboard distinguish her from the longer-haired teal radiologist and other existing women.",
+      "regenerations": 1,
+      "realizationNote": "The petite build is modestly compact. Rear seated clipboard was corrected to a low right-lap edge; standing identity and outfit remain consistent."
+    },
+    "002": {
+      "features": "Fair young adult woman with ginger low braid, slate-blue cardigan, peach collared blouse, charcoal trousers and brown loafers; no glasses.",
+      "distinction": "Low single braid, ginger hair, fair face and slate/peach office clothing differ from the auburn-bob provider reference and existing long or double-braided women.",
+      "regenerations": 1,
+      "realizationNote": "Freckles are subtle at game scale. The rear lap clipboard correction preserves the braid and cardigan; the board edge is mostly hidden behind the right elbow."
+    },
+    "003": {
+      "features": "Golden-tan mature woman with straight black chin-length bob, charcoal blazer, burgundy blouse, beige trousers and plum loafers; no glasses.",
+      "distinction": "Straight black bob, burgundy/charcoal tailored outfit and beige trousers separate her from the purple-scrub bob technician and other bob-haired catalog women.",
+      "regenerations": 1,
+      "realizationNote": "Planned sturdier build appears moderately full. Seated W shows a slightly tilted board resting on the lap; rear was corrected to a low small right edge."
+    },
+    "004": {
+      "features": "Warm golden-brown older woman with straight silver low bun, amber glasses, terracotta cardigan, cream blouse, navy trousers and brown shoes.",
+      "distinction": "Smooth silver bun, warm complexion, amber frames and terracotta/navy clothing differ from gray curls with glasses, straight silver bobs and existing provider coats.",
+      "regenerations": 1,
+      "realizationNote": "Skin is lighter/warmer and frames rounder than planned. The W lap board is almost covered by the near hand; the low rear edge is visible beside the right forearm."
+    },
+    "005": {
+      "features": "Fair rosy older woman with side-part white pixie, moss-green blazer, lavender blouse, gray trousers and oxblood office shoes; no glasses.",
+      "distinction": "White pixie without glasses, moss/lavender tailored clothing and oxblood shoes distinguish her from gray-curl glasses motifs and the white-haired biker patient.",
+      "regenerations": 1,
+      "realizationNote": "White pixie is slightly tousled rather than fully straight. Lean build variation is modest; rear lap board remains a small edge after correction."
+    },
+    "006": {
+      "features": "Olive-tan young man with full swept brown quiff, clean-shaven face, cocoa blazer, powder-blue shirt, stone trousers and tan office shoes.",
+      "distinction": "Clean-shaven brown quiff, cocoa/blue/stone tailoring and clipboard differ from ginger-quiff patients, green clinical founders and silver-haired male staff.",
+      "regenerations": 1,
+      "realizationNote": "Quiff is wavier and larger than planned. The W lap board is a narrow edge below overlapping hands, and the corrected rear edge is small; neither indicates a side swap."
+    },
+    "007": {
+      "features": "Warm-tan bald adult man with full neat black beard, plum cardigan, cream shirt, charcoal trousers and black office shoes; no glasses.",
+      "distinction": "Warm-tan bald head, black beard, open cream collar and plum cardigan differ from the bald deep-brown glasses provider and existing gray-bearded bald patients.",
+      "regenerations": 1,
+      "realizationNote": "Broad build reads as a fuller torso. The lap board and its rim are visible in both side views; rear upright carriage was corrected to a low right-lap edge."
+    },
+    "008": {
+      "features": "Golden-brown mature man with short black crop, navy rectangular glasses, black moustache, camel blazer, olive shirt and charcoal trousers.",
+      "distinction": "Camel/olive tailoring, navy frames, black moustache and close black crop distinguish him from the silver-curled green-sweater patient and every existing glasses provider.",
+      "regenerations": 2,
+      "realizationNote": "First correction lowered the rear board and removed pale sneaker bands in favor of black office shoes. A second edit exposed the formerly obscured W lap clipboard. Rear still shows only a tiny right edge."
+    },
+    "009": {
+      "features": "Fair pink-toned older man with ginger flat crop, strong silver sides, ginger moustache, charcoal waistcoat, sage full sleeves and burgundy tie.",
+      "distinction": "Ginger flat crop with silver sides, moustache and charcoal/sage waistcoat-and-tie outfit differ from ginger-beard staff and silver-haired suited administrators.",
+      "regenerations": 0,
+      "realizationNote": "Silver side panels are stronger than planned. The original sheet already had a rear lap-level clipboard edge; no regeneration was required."
+    },
+    "010": {
+      "features": "Deep-brown older man with close silver crew cut, broad silver moustache, indigo blazer, peach shirt, warm-gray trousers and black office shoes.",
+      "distinction": "Close silver crew cut, broad moustache, deep skin and indigo/peach tailoring differ from bald gray-bearded patients, capped surgeons and curly silver-haired staff.",
+      "regenerations": 1,
+      "realizationNote": "Planned full build appears moderately stocky. The correction lowered the rear clipboard and replaced pale sole bands with black office shoes; the lap board is clear in side views."
+    }
+  }
+}

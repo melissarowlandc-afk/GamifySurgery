@@ -1,0 +1,740 @@
+{
+  "schemaVersion": 2,
+  "mode": "painted",
+  "aspectPreserved": true,
+  "sharedFootprints": true,
+  "assets": {
+    "base-north1": {
+      "slot": "north1",
+      "slots": [
+        "north1"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        0.5,
+        0.75
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ]
+    },
+    "base-mirror1": {
+      "slot": "mirror1",
+      "slots": [
+        "mirror1"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        0.5,
+        -0.85
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N1"
+      ]
+    },
+    "base-north2": {
+      "slot": "north2",
+      "slots": [
+        "north2"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        1.5,
+        0.75
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N2"
+      ]
+    },
+    "base-mirror2": {
+      "slot": "mirror2",
+      "slots": [
+        "mirror2"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        1.5,
+        -0.85
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N2"
+      ]
+    },
+    "base-north3": {
+      "slot": "north3",
+      "slots": [
+        "north3"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        2.5,
+        0.75
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N3"
+      ]
+    },
+    "base-mirror3": {
+      "slot": "mirror3",
+      "slots": [
+        "mirror3"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        2.5,
+        -0.85
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    },
+    "base-north4": {
+      "slot": "north4",
+      "slots": [
+        "north4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        3.5,
+        0.75
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 3,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N4",
+        "EA"
+      ]
+    },
+    "base-mirror4": {
+      "slot": "mirror4",
+      "slots": [
+        "mirror4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        3.5,
+        -0.85
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N4"
+      ]
+    },
+    "base-west": {
+      "slot": "west2",
+      "slots": [
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        0.2,
+        2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 1,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "WB"
+      ]
+    },
+    "base-east": {
+      "slot": "east2",
+      "slots": [
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        3.8,
+        2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 3.65,
+        "top": 1,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "EB"
+      ]
+    },
+    "base-front1": {
+      "slot": "front1",
+      "slots": [
+        "front1"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        0.5,
+        4
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S1",
+        "WD"
+      ]
+    },
+    "base-front2": {
+      "slot": "front2",
+      "slots": [
+        "front2"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        1.5,
+        4
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 1,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S2"
+      ]
+    },
+    "base-front3": {
+      "slot": "front3",
+      "slots": [
+        "front3"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        2.5,
+        4
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S3"
+      ]
+    },
+    "base-front4": {
+      "slot": "front4",
+      "slots": [
+        "front4"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        3.5,
+        4
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 3,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S4",
+        "ED"
+      ]
+    },
+    "base-bench": {
+      "slot": "benchSeat",
+      "slots": [
+        "benchSeat"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        768
+      ],
+      "renderSizeTiles": [
+        0.6,
+        1.6
+      ],
+      "ground": [
+        1.2,
+        2.7
+      ],
+      "seat": [
+        1.2,
+        2.4196596372377623
+      ],
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 0.95,
+        "top": 1.6,
+        "width": 0.5,
+        "height": 1.1
+      },
+      "owners": []
+    },
+    "base-mat": {
+      "slot": "stretchMat",
+      "slots": [
+        "stretchMat"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        624,
+        936
+      ],
+      "renderSizeTiles": [
+        1.3,
+        1.95
+      ],
+      "ground": [
+        2.7,
+        2.3
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": [
+        2.7,
+        2.3
+      ],
+      "footprint": null,
+      "owners": []
+    },
+    "base-ball": {
+      "slot": "exerciseBall",
+      "slots": [
+        "exerciseBall"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        360,
+        360
+      ],
+      "renderSizeTiles": [
+        0.75,
+        0.75
+      ],
+      "ground": [
+        2.95,
+        1.9
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.6,
+        "top": 1.5,
+        "width": 0.7,
+        "height": 0.4
+      },
+      "owners": []
+    },
+    "base-roller": {
+      "slot": "foamRoller",
+      "slots": [
+        "foamRoller"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        384,
+        128
+      ],
+      "renderSizeTiles": [
+        0.8,
+        0.26666666666666666
+      ],
+      "ground": [
+        2.7,
+        3.22
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": null,
+      "footprint": {
+        "left": 2.3125,
+        "top": 3.13,
+        "width": 0.775,
+        "height": 0.09
+      },
+      "owners": []
+    },
+    "base-floor": {
+      "slot": "rubberFloor",
+      "slots": [
+        "rubberFloor"
+      ],
+      "classification": "necessary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        1088,
+        1088
+      ],
+      "renderSizeTiles": [
+        4.217054263565892,
+        4.217054263565892
+      ],
+      "ground": [
+        2,
+        2
+      ],
+      "seat": null,
+      "wallTop": null,
+      "center": [
+        2,
+        2
+      ],
+      "footprint": null,
+      "owners": []
+    },
+    "base-hooks": {
+      "slot": "towelHooks",
+      "slots": [
+        "towelHooks"
+      ],
+      "classification": "optional",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canvas": [
+        288,
+        256
+      ],
+      "renderSizeTiles": [
+        0.6,
+        0.5333333333333333
+      ],
+      "ground": [
+        2.5,
+        -0.68
+      ],
+      "seat": null,
+      "wallTop": true,
+      "center": null,
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    }
+  }
+}

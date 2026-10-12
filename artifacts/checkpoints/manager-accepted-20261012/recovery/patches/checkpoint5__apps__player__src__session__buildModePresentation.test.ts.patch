@@ -1,0 +1,11 @@
+--- a/apps/player/src/session/buildModePresentation.test.ts
++++ b/apps/player/src/session/buildModePresentation.test.ts
+@@ -113,7 +113,7 @@
+     });
+   });
+ 
+-  it.each(["room.front_desk", "room.hallway", "room.imaging_control", "room.founder_office", "room.unknown"])(
++  it.each(["room.front_desk", "room.hallway", "room.imaging_control", "room.unknown"])(
+     "does not offer a benefit for non-purchasable %s", (roomDefinitionId) => {
+       expect(describeRoomUpgradeBenefit({ ...base, roomDefinitionId, upgradeLevel: 1 })).toBeUndefined();
+     },

@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "before": [
+    {
+      "id": "base-chairEast-front",
+      "sha256": "ecb83ef14bcffe9d357850a52aa5013efd6e156c540e3a89a8b1f06adaa5889d"
+    },
+    {
+      "id": "base-chairWest-front",
+      "sha256": "8fdc39082c68c6527eede944ff18562236bc7501aa112120589527639933462e"
+    }
+  ],
+  "trigger": "Independent foreground-to-parent pixel check failed at semi-transparent pixels in overlapping source rectangles.",
+  "fix": "Combine source-space foreground rectangles into one union clip and copy the generated chair source once. Overlapping masks cannot accumulate alpha. Final uniform packing remains unchanged.",
+  "unchanged": [
+    "original generated art",
+    "source rectangles",
+    "chair/actor/cushion/floor anchors",
+    "declared and measured geometry"
+  ],
+  "after": [
+    {
+      "id": "base-chairEast-front",
+      "parent": "base-chairEast",
+      "opaqueOriginalPixels": 19552,
+      "identicalTransform": true,
+      "sourceSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2"
+    },
+    {
+      "id": "base-chairWest-front",
+      "parent": "base-chairWest",
+      "opaqueOriginalPixels": 16510,
+      "identicalTransform": true,
+      "sourceSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e"
+    }
+  ]
+}

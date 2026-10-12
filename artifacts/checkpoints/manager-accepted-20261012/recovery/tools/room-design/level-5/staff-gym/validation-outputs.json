@@ -1,0 +1,91 @@
+{
+  "status": "PASS_NATIVE_BROWSER_ASSIGNED_MANAGER",
+  "designRevision": 2,
+  "ownerReview": "Unchanged room approved; corner correction awaits manager browser verification.",
+  "newBuiltInCalls": 0,
+  "commands": [
+    {
+      "command": "node tools/room-design/level-5/staff-gym/reconcile-v2.mjs",
+      "exitCode": 0,
+      "output": "CORNER RECONCILIATION PASS: exclusive four-corner ownership; 0 overlapping fixture footprints; side paint clears rear equipment and front edges abut at y=3.72; 19 non-side records, 21 prepared PNGs, all originals, both staff contacts and aisle unchanged; 0 new calls.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/build.mjs",
+      "exitCode": 0,
+      "output": "BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-corners.cjs",
+      "exitCode": 0,
+      "output": "CORNER VALIDATION PASS: 17 floor fixtures; 11040 door/backing states / 1107920 fixture-pair checks; 0 footprint overlaps or exceptions; all 4 old corner collisions rejected; rear silhouettes separated, front floor edges abut and front faces retained; 19 other records, 21 PNGs, staff contacts and aisle unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate.cjs",
+      "exitCode": 0,
+      "output": "VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 source-pixel bench front; 2 unchanged approved staff stills in scrubs (seated/standing); 11040 door/backing states; 103680 routes / 81568960 radius-clear samples at 0.005T; 103680 occupied routes / 82187600 samples; all 16 doors; permanent stations/aisle, exclusive floor footprints and four corner owners, continuous wall rows, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-south.cjs",
+      "exitCode": 0,
+      "output": "SOUTH VALIDATION PASS: continuous S1-S4 storage / 480 columns; owned-door visibility and necessary equipment across 17920 states; 2880 occupied routes with south closed / 2276640 radius-clear samples; corner sections open only for their selected S/W/E door.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-controls.mjs",
+      "exitCode": 0,
+      "output": "CONTROL VALIDATION PASS: 335 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 staff contacts, keyboard, real-error/performance-warning discrimination; browser separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/stand-in/v2/replay.mjs",
+      "exitCode": 0,
+      "output": "STAND-IN REPLAY PASS: 20 neutral registered geometry frames; 3 actual native replay views; all 16 single-door occupied routes; painted files and frozen layout unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/reproduce.mjs",
+      "exitCode": 0,
+      "output": "BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\nBUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\nREPRODUCIBILITY PASS: 36 delivered files byte-identical across two native rebuilds.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-helpers.cjs",
+      "exitCode": 0,
+      "output": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/inspect-native.mjs",
+      "exitCode": 0,
+      "output": "NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated/standing staff/contacts/routes/all 16 doors/backing; browser QA separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/inspect-composition.mjs",
+      "exitCode": 0,
+      "output": "COMPOSITION INSPECTION PASS: equipment and mat with staff hidden cover 58.0% of the floor view; solid equipment alone 46.1%; concept/empty/two-contact comparison saved.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/inspect-corners.mjs",
+      "exitCode": 0,
+      "output": "CORNER INSPECTION PASS: actual before/after composition plus all 4 corner close-ups; unchanged contacts and approved art; native evidence, browser rerun assigned to manager.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-http.mjs",
+      "exitCode": 0,
+      "output": "HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-http.mjs --phone",
+      "exitCode": 0,
+      "output": "HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4192; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/assets/write-provenance-v2.mjs",
+      "exitCode": 0,
+      "output": "ART PROVENANCE PASS: 12 prior built-in calls / 0 new calls; all originals, prompts, receipts, 21 prepared PNGs and 2 approved scrubs stills unchanged; 19 other records and contacts preserved; geometry-only corner revision; owner-approved remainder retained, manager verification pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/pending-browser-v2.mjs",
+      "exitCode": 0,
+      "output": "BROWSER HANDOFF READY: fresh v2 validation/capture assigned to manager; current manifest pinned; prior evidence archived; no browser PASS claimed.\n"
+    }
+  ],
+  "browserAttemptedInThisCorrection": false,
+  "scope": "Staff Gym lane; correction notes in the existing Staff Gym plan section.",
+  "limitations": "Fresh browser validation/capture belongs to the manager. Current proof has no campaign storage."
+}

@@ -1,0 +1,26 @@
+# Executive Office art provenance — one fixed base look
+
+2026-10-10. Proposed 4×3, owner review pending (`approval: null`); runtime integration false. Facility Level 5, upgrade Levels 1–5, and appearance Level 1 are separate. The catalog has `appearanceChanges=false`.
+
+**10 built-in imagegen calls produced 10 selected objects.** Exact prompts, untouched transparent PNGs, tool receipts, original hashes, source dimensions and landmarks are preserved. Two source-pixel foregrounds reuse the occupied chair images; the rear-facing visitor chair also supplies the empty south meeting chair. No new character is generated. `provenance-v2.json` and `art-provenance.json` contain the machine-readable record.
+
+| Piece | Untouched original | Exact prompt | Prepared sprite | Original SHA-256 | Prepared SHA-256 |
+| --- | --- | --- | --- | --- | --- |
+| base-desk | [PNG](originals/v2/base-desk-01.png) | [prompt](prompts/v2/base-desk-01.prompt.txt) | [PNG](processed/v2/base-desk.png) | `5c3e57344505ce1cfd7a70c822568af3ea0462320c2a91048cab8e11643517f3` | `99ca432392611af0c927ecd689caf62bd1c23a0771f17a533e853c1c1a187ce9` |
+| base-executiveChair | [PNG](originals/v2/base-executiveChair-01.png) | [prompt](prompts/v2/base-executiveChair-01.prompt.txt) | [PNG](processed/v2/base-executiveChair.png) | `f0f94924c812bf5b749bcb49795e1c5610aa591e1b2e90f6d57230d5c2c0db5c` | `c4f2d42a26abcb7ef1137ff20a404b4587118e7159e43c66afae985dcdf85f00` |
+| base-visitorChair | [PNG](originals/v2/base-visitorChair-01.png) | [prompt](prompts/v2/base-visitorChair-01.prompt.txt) | [PNG](processed/v2/base-visitorChair.png) | `eea107c444297c960973c37007ac39faaf28767ca7a86c2e6aa7b3d8321054e7` | `97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463` |
+| base-shelf | [PNG](originals/v2/base-shelf-01.png) | [prompt](prompts/v2/base-shelf-01.prompt.txt) | [PNG](processed/v2/base-shelf.png) | `99d4e3e526ddb9f8f7b5155e680b893e022132759a6373b35fd85330058ce2c7` | `819efb7b2eddd2ff353962540a21c35b85fd9018415dc2bd975b106e5e1d597b` |
+| base-meetingTable | [PNG](originals/v2/base-meetingTable-01.png) | [prompt](prompts/v2/base-meetingTable-01.prompt.txt) | [PNG](processed/v2/base-meetingTable.png) | `811284c366f51e399bbe1aa45bf9c8a2936afcb33e1aee83aac3e5906829c882` | `d46cb74d1a59afdbeb3f5f0b7437fa381d60bee03df3e30f40455762b874b55f` |
+| base-meetingChair | [PNG](originals/v2/base-meetingChair-01.png) | [prompt](prompts/v2/base-meetingChair-01.prompt.txt) | [PNG](processed/v2/base-meetingChair.png) | `69cb22e09bce6eb691fbf16307dd2709ac50e7fc9368f4bd1574916e21be4f8f` | `e6f04fea8e6807458009edc177f99ffb2909488cd81e207b55cc17aad248790d` |
+| base-rug | [PNG](originals/v2/base-rug-01.png) | [prompt](prompts/v2/base-rug-01.prompt.txt) | [PNG](processed/v2/base-rug.png) | `ca03a2a200f5a02e84671320cf50f5a8248a1c66f2b058a6d97ac26d61a04a64` | `811a915ac46bdf95382f642af9995879757ed5f7557a623dc791b6cc0045d90b` |
+| base-decor | [PNG](originals/v2/base-decor-01.png) | [prompt](prompts/v2/base-decor-01.prompt.txt) | [PNG](processed/v2/base-decor.png) | `a87cc6697362799a60d19e6ff530e10e5911b0175e46b9219324ddbee0e4dc08` | `f3da5d2c98a0cbfd1823b5866993b7ee6171ec570516a5da12feaea1e11018d1` |
+| base-art | [PNG](originals/v2/base-art-01.png) | [prompt](prompts/v2/base-art-01.prompt.txt) | [PNG](processed/v2/base-art.png) | `3f4a3ae2c8f0ae0d192ceed0a8131a86cdfb6f750248e0c4c94c3e765a993e7d` | `531d4205adb89ae56960713f6abaf0d4c24cb688fe73810881c9364cb41f73bc` |
+| base-accent | [PNG](originals/v2/base-accent-01.png) | [prompt](prompts/v2/base-accent-01.prompt.txt) | [PNG](processed/v2/base-accent.png) | `a2291cdd3680cb9f7c2a8ce4b401719f5ec759b40db77919e8b198168177f2ed` | `bc72443d0f2e48a371f484376305e739c92b1e7aabba81423b9f6cb85dd4226e` |
+
+Preparation removes alpha below 8, crops transparent margins, uniformly downsamples into padded frames and registers visually inspected cushion/worktop landmarks. Nearest-neighbour packing and fixture rendering retain crisp pixel edges. No stretching, recolouring, semantic repainting or source upscaling. Foreground rectangles select original pixels under the same uniform transform. Rear-view visitor foreground is byte-identical to the full chair.
+
+Frozen prepaint sources, layout and route receipt live under `../stand-in/v2/`. `../layout-reconciliation-v2.json` records the rug native canvas at 400 pixels/tile (instead of 480, avoiding source upscale), a 0.03T westward credenza fit to clear the measured east doorway, and meeting-chair cushion calibration. Both real occupant floor/seat anchors, routes, door ownership and display sizes stay fixed.
+
+Approved `founder.01/sit-south.png` and `patient.adult.007/sit-north.png` remain byte-identical. The founder still is solely an Executive stand-in for this proof. Both posterior contacts meet measured cushions 45 proof pixels above the floor. Front armrests/rear chair backs draw over the real sitter. No stool, footrest, painted person, logo, readable text, number, wound or body detail is introduced. The KPI board has abstract bars/lines only.
+
+Native Canvas views and Node controls/geometry/hash checks pass; Chrome launch is blocked by sandbox `spawn EPERM`. Browser validation and captures remain with the manager. Owner art/footprint approval remains pending; this record does not approve a runtime release.

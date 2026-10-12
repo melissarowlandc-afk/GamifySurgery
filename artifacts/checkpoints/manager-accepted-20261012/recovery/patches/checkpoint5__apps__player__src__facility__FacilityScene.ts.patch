@@ -1,0 +1,174 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -1,4 +1,5 @@
+ import Phaser from "phaser";
++import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
+ import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type {
+   CardinalDirection,
+@@ -132,6 +133,7 @@
+   LEVEL_ONE_BITMAP_FIXTURE_FRAMES,
+   LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES,
+   APPROVED_GS015_ROOM_ATLASES,
++  APPROVED_LEVEL5_BITMAP_ASSETS,
+   ROOM_FIXTURE_ATLASES,
+   getRoomBitmapFixtureFrame,
+   getEnvironmentAtlasFrameKey,
+@@ -609,6 +611,8 @@
+   private frameDeltaMilliseconds = 0;
+   private characterPresentationWasFrozen = false;
+   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
++  private readonly mobileInspectorStills = new Set<string>();
++  private readonly failedInspectorLocations = new Map<string, GridPoint>();
+   /** Last horizontal render orientation survives a stationary frame without
+    * affecting the domain route or persisted character state. */
+   private readonly characterFacingRight = new Map<string, boolean>();
+@@ -663,6 +667,7 @@
+   private landscapingTreeCleanupReady = false;
+   private roomFixtureAtlasesReady = false;
+   private mobileAtlasSignature = "";
++  private levelFiveAtlasLoadRequested = false;
+   private mobileAtlasModel?: FacilityViewModel;
+   private mobileAtlasLevel?: number;
+   private mobileAtlasPreviews?: readonly string[];
+@@ -964,6 +969,18 @@
+     });
+   }
+ 
++  /** Additional approved pack only in Level 5; old eager requests stay exact. */
++  private ensureLevelFiveAtlases(): void {
++    if (!this.bridge.viewModel.levelFiveRoomArt || this.levelFiveAtlasLoadRequested) return;
++    const missing = APPROVED_LEVEL5_BITMAP_ASSETS.filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
++    if (!missing.length) return;
++    // One request per scene. Decode failure keeps the whole room procedural.
++    this.levelFiveAtlasLoadRequested = true;
++    preloadBitmapAssets(this.load, missing);
++    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.drawWorld(); });
++    this.load.start();
++  }
++
+   /**
+    * Room, landscaping and decor sheets are ~1,250-1,450 px bitmaps drawn at a
+    * small fraction of native size, most of all when zoomed out. `pixelArt`
+@@ -1017,6 +1034,20 @@
+   private ensureCharacterStills(
+     assets: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[],
+   ): void {
++    if (this.bridge.mobileInput === true && typeof Image !== "undefined") {
++      for (const asset of assets.filter(isInspectorBitmapAsset)) {
++        const textureKey = getPhaserTextureKey(asset);
++        if (this.textures.exists(textureKey) || this.mobileInspectorStills.has(asset.id)) continue;
++        this.mobileInspectorStills.add(asset.id);
++        loadMobileInspectorBitmap(asset).then(image => {
++          if (!this.sys.isActive()) return;
++          if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey, image);
++          if (!image) this.failedCharacterStills.add(asset.id);
++          this.drawCharacters();
++        });
++      }
++      assets = assets.filter(asset => !isInspectorBitmapAsset(asset));
++    }
+     for (const asset of assets) {
+       const textureKey = getPhaserTextureKey(asset);
+       if (this.textures.exists(textureKey)) {
+@@ -1126,7 +1157,7 @@
+    * per-record: another room pack failing to decode cannot hide this room.
+    */
+   private registerApprovedRoomFrame(record: ApprovedRoomDrawRecord): string | undefined {
+-    const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
++    const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...APPROVED_LEVEL5_BITMAP_ASSETS, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
+     if (!atlas) return undefined;
+     const textureKey = getPhaserTextureKey(atlas);
+     if (!this.textures.exists(textureKey)) return undefined;
+@@ -1305,6 +1336,7 @@
+   }
+ 
+   public update(time: number, delta: number): void {
++    if (this.bridge.mobileInput !== true && this.bridge.viewModel.levelFiveRoomArt) this.ensureLevelFiveAtlases();
+     let mobileResynced = false;
+     if (this.bridge.mobileInput === true) {
+       this.ensureMobileAtlases();
+@@ -3301,7 +3333,7 @@
+       orientation,
+       this.getApprovedBaseWidth(room),
+       [
+-        ...resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room)),
++        ...resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room), room.upgradeLevel),
+         ...this.getPeriopCompanionChairs(room).map((chair) => chair.draw),
+       ],
+     );
+@@ -5391,6 +5423,13 @@
+     // The existing procedural fixtures are the loading/error placeholder.
+     if (this.bridge.mobileInput === true && !mobileRoomArtReady(room.definitionId,
+       asset => this.textures.exists(getPhaserTextureKey(asset)))) return false;
++    if (room.definitionId === "room.founder_office" || room.definitionId === "room.executive_office" ||
++        room.definitionId === "room.gift_shop" || room.definitionId === "room.indoor_garden" || room.definitionId === "room.staff_gym") {
++      if (!presentation.assets.every(asset => {
++        const descriptor = APPROVED_LEVEL5_BITMAP_ASSETS.find(candidate => candidate.id === asset.id);
++        return descriptor && this.textures.exists(getPhaserTextureKey(descriptor));
++      })) return false;
++    }
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     const records = this.getTouchupDrawRecords(room);
+     const companionChairs = this.getPeriopCompanionChairs(room);
+@@ -5403,7 +5442,7 @@
+     for (const record of records) {
+       if (!isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments)) continue;
+       const frame = this.registerApprovedRoomFrame(record);
+-      const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
++      const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...APPROVED_LEVEL5_BITMAP_ASSETS, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
+       if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
+       const stool = getApprovedRollingStoolSource(record);
+       const backlessTexture = stool?.derivation ? this.ensureBacklessRollingStoolTexture(stool) : undefined;
+@@ -6297,7 +6336,7 @@
+         ? resolveStaffIdleSupports(room.definitionId, orientation)
+         : supportRole === "periop-companion-seat"
+           ? this.getPeriopCompanionChairs(room).map((chair) => chair.support)
+-          : resolveApprovedRoomActorSupports(room.definitionId, orientation),
++          : resolveApprovedRoomActorSupports(room.definitionId, orientation, room.upgradeLevel),
+       { x: location.x - room.tileX, y: location.y - room.tileY },
+       supportRole,
+       supportId,
+@@ -6416,6 +6455,9 @@
+         actor.appearance,
+         Boolean(actor.location || actor.path?.length),
+       )),
++      ...(this.bridge.viewModel.inspectors ?? []).flatMap(actor => liveAppearance(
++        `character:inspector:${actor.instanceId}`, actor.appearance, true,
++      )),
+     ];
+     this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
+     representedKeys.add(founderKey);
+@@ -6675,6 +6717,32 @@
+       const presentation = this.getCharacterRoutePresentation(key, actor);
+       this.drawRetailExternalActor({ ...actor, ...(presentation.location ? { location: presentation.location } : { location: undefined }), direction: presentation.direction, moving: presentation.moving, rightFacing: presentation.rightFacing }, index);
+     });
++    this.bridge.viewModel.inspectors?.forEach((actor, index) => {
++      const actorKey = `character:inspector:${actor.instanceId}`;
++      representedKeys.add(actorKey);
++      const artFailed = characterStandingBitmapDescriptors(actor.appearance).some(asset => this.failedCharacterStills.has(asset.id));
++      if (artFailed && !this.failedInspectorLocations.has(actorKey)) this.failedInspectorLocations.set(actorKey, { ...actor.location });
++      const held = this.failedInspectorLocations.get(actorKey);
++      if (held) {
++        this.routeMotionTracks.delete(actorKey); this.characterHopStates.delete(actorKey);
++        this.characterMotionSnapshots.delete(actorKey);
++      }
++      const presentation = this.getCharacterRoutePresentation(actorKey, held
++        ? { location: held, path: [], pathIndex: 0, moving: false, direction: "front" } : actor);
++      const location = presentation.location ?? actor.location;
++      const graphics = this.getCharacterGraphics(actorKey);
++      const baseY = this.drawCharacterPresentation(graphics, actorKey, {
++        centerX: this.layout.originX + (location.x + .5) * this.layout.tileSize,
++        // The cosmetic routes use the exact approved floor coordinate system.
++        baseY: this.layout.originY + (location.y + .5) * this.layout.tileSize,
++        appearance: actor.appearance, direction: presentation.direction,
++        pose: this.characterPose(presentation.moving, presentation.direction, this.characterGaitOffset(actorKey, 300 + index)),
++        rightFacing: presentation.rightFacing, displayScale: 1,
++      }, this.characterGaitOffset(actorKey, 300 + index));
++      graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 32) % 64));
++      graphics.setData("inspection-route-issue", held ? "Inspector art failed; stationary observer." : actor.routeIssue ?? null);
++    });
++    for (const key of this.failedInspectorLocations.keys()) if (!representedKeys.has(key)) this.failedInspectorLocations.delete(key);
+     for (const key of this.routeMotionTracks.keys()) {
+       if (!representedKeys.has(key)) {
+         this.routeMotionTracks.delete(key);

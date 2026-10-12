@@ -1,0 +1,188 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/executive-office/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "313ec85da7b5474132699a817886fa515dc802bfabc4c01f234a3ec6605de730",
+  "checks": [
+    "5 fixed-appearance upgrade / 14 one-tile door / 4 backing buttons; served code and manifest pinned",
+    "Level 1: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 2: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 3: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 4: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "Level 5: all routes, alpha/hashes, seated contacts/foregrounds, full-height backing and every door",
+    "bulk controls idempotent",
+    "independent backing; only wall art hides",
+    "individual / all real occupants",
+    "tier selection preserves inspection state and seated occupants",
+    "1–5 / arrows / diagnostics / reset / Space and Enter",
+    "rapid tier selection settles on final level",
+    "all five tiers at 320px without horizontal overflow"
+  ],
+  "technical": [
+    {
+      "level": 1,
+      "states": 256,
+      "routes": 1344,
+      "assets": [
+        "design:eo:base-desk",
+        "design:eo:base-executiveChair",
+        "design:eo:base-executiveChair-front",
+        "design:eo:base-visitorChair",
+        "design:eo:base-visitorChair-front",
+        "design:eo:base-shelf",
+        "design:eo:base-meetingTable",
+        "design:eo:base-meetingChair",
+        "design:eo:base-rug",
+        "design:eo:base-decor",
+        "design:eo:base-art",
+        "design:eo:base-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "executiveChair",
+          "pixels": 584,
+          "uncovered": 6641
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3068,
+          "uncovered": 5480
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 2,
+      "states": 256,
+      "routes": 1344,
+      "assets": [
+        "design:eo:base-desk",
+        "design:eo:base-executiveChair",
+        "design:eo:base-executiveChair-front",
+        "design:eo:base-visitorChair",
+        "design:eo:base-visitorChair-front",
+        "design:eo:base-shelf",
+        "design:eo:base-meetingTable",
+        "design:eo:base-meetingChair",
+        "design:eo:base-rug",
+        "design:eo:base-decor",
+        "design:eo:base-art",
+        "design:eo:base-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "executiveChair",
+          "pixels": 584,
+          "uncovered": 6641
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3068,
+          "uncovered": 5480
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 3,
+      "states": 256,
+      "routes": 1344,
+      "assets": [
+        "design:eo:base-desk",
+        "design:eo:base-executiveChair",
+        "design:eo:base-executiveChair-front",
+        "design:eo:base-visitorChair",
+        "design:eo:base-visitorChair-front",
+        "design:eo:base-shelf",
+        "design:eo:base-meetingTable",
+        "design:eo:base-meetingChair",
+        "design:eo:base-rug",
+        "design:eo:base-decor",
+        "design:eo:base-art",
+        "design:eo:base-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "executiveChair",
+          "pixels": 584,
+          "uncovered": 6641
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3068,
+          "uncovered": 5480
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 4,
+      "states": 256,
+      "routes": 1344,
+      "assets": [
+        "design:eo:base-desk",
+        "design:eo:base-executiveChair",
+        "design:eo:base-executiveChair-front",
+        "design:eo:base-visitorChair",
+        "design:eo:base-visitorChair-front",
+        "design:eo:base-shelf",
+        "design:eo:base-meetingTable",
+        "design:eo:base-meetingChair",
+        "design:eo:base-rug",
+        "design:eo:base-decor",
+        "design:eo:base-art",
+        "design:eo:base-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "executiveChair",
+          "pixels": 584,
+          "uncovered": 6641
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3068,
+          "uncovered": 5480
+        }
+      ],
+      "failures": []
+    },
+    {
+      "level": 5,
+      "states": 256,
+      "routes": 1344,
+      "assets": [
+        "design:eo:base-desk",
+        "design:eo:base-executiveChair",
+        "design:eo:base-executiveChair-front",
+        "design:eo:base-visitorChair",
+        "design:eo:base-visitorChair-front",
+        "design:eo:base-shelf",
+        "design:eo:base-meetingTable",
+        "design:eo:base-meetingChair",
+        "design:eo:base-rug",
+        "design:eo:base-decor",
+        "design:eo:base-art",
+        "design:eo:base-accent"
+      ],
+      "overlaps": [
+        {
+          "id": "executiveChair",
+          "pixels": 584,
+          "uncovered": 6641
+        },
+        {
+          "id": "visitorChair",
+          "pixels": 3068,
+          "uncovered": 5480
+        }
+      ],
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null,
+  "runtimeIntegrationAuthorized": false
+}

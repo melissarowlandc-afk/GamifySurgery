@@ -1,0 +1,34 @@
+--- a/apps/player/src/ui/ServiceIncomePanel.tsx
++++ b/apps/player/src/ui/ServiceIncomePanel.tsx
+@@ -1,3 +1,6 @@
++import { LevelFiveSupportFacts } from "./LevelFiveSupportFacts";
++import { ExecutiveManagementFacts } from "./ExecutiveManagementFacts";
++import { GiftShopFacts } from "./GiftShopFacts";
+ import { useState, type ReactNode } from "react";
+ import type {
+   ServiceIncomeCatalogLineView,
+@@ -132,6 +135,7 @@
+       </div>
+ 
+       <div className="service-income-scroll">
++        <GiftShopFacts view={serviceIncome.giftShop} />
+         {paused.length > 0 || !serviceIncome.appointmentsEnabled ? (
+           <div className="service-attention" aria-label="Needs attention">
+             {paused.map((line) => (
+@@ -209,6 +213,7 @@
+                   <span className="service-row-price">{operation.quoteFeeLabel}</span>
+                   <span className="service-row-how">{operation.actorLabel}</span>
+                   <span className="service-row-side"><span className="service-status-tag">{operation.statusLabel}</span></span>
++                  {operation.executiveComfortLabel ? <small>{operation.executiveComfortLabel}</small> : null}
+                 </li>
+               ))}
+             </ul>
+@@ -246,6 +251,8 @@
+                 <strong>{support.staffOnBreakCount}</strong>
+               </div>
+             </div>
++            <LevelFiveSupportFacts support={serviceIncome.levelFiveSupport} />
++            <ExecutiveManagementFacts view={serviceIncome.executiveManagement} />
+           </ManagementSection>
+         ) : null}
+       </div>

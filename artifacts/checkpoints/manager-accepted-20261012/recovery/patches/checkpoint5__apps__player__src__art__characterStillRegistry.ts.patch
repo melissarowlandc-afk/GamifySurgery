@@ -1,0 +1,22 @@
+--- a/apps/player/src/art/characterStillRegistry.ts
++++ b/apps/player/src/art/characterStillRegistry.ts
+@@ -7,7 +7,7 @@
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e" | "inspectorV6f";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;
+@@ -80,6 +80,10 @@
+       return { ...current, category: "pediatric-presentation", intendedSex: child.compatibleSexLabel,
+         minimumAge: child.minimumAge, maximumAge: child.maximumAge };
+     }
++    if (entry.id === "future-roster20-v5.003" || entry.id === "future-roster20-v5.004") {
++      const { plannedStaffRole: _planned, ...current } = entry;
++      return { ...current, role: "staff.executive", eligibleStaffRoleDefinitionIds: ["staff.executive"] };
++    }
+     if (entry.id !== "future-roster20-v5.001" && entry.id !== "future-roster20-v5.002") return entry;
+     const { plannedStaffRole: _planned, ...current } = entry;
+     return { ...current, role: "staff.app", eligibleStaffRoleDefinitionIds: ["staff.app"] };

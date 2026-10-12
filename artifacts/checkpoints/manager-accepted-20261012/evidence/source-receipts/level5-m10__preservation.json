@@ -1,0 +1,349 @@
+{
+  "changed": [
+    "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+    "apps/player/src/mobile/MobileGoals.tsx",
+    "apps/player/src/session/levelFiveEconomyQa.test.tsx",
+    "apps/player/src/session/levelFiveExecutiveViewModels.test.tsx",
+    "apps/player/src/session/levelFiveGiftRetailViewModels.test.tsx",
+    "apps/player/src/session/levelFiveIntegration.test.tsx",
+    "apps/player/src/session/levelFiveProgressionViews.test.tsx",
+    "apps/player/src/session/levelFiveReportQa.test.ts",
+    "apps/player/src/session/levelFiveStateQa.test.ts",
+    "apps/player/src/session/levelFourIntegration.test.ts",
+    "apps/player/src/session/levelFourProgressionViews.test.tsx",
+    "apps/player/src/ui/GoalsPanel.tsx",
+    "docs/execplans/level5-launch-plan-20261010.md",
+    "packages/balance-config/src/app-role.test.ts",
+    "packages/balance-config/src/approved-room-layouts.test.ts",
+    "packages/balance-config/src/facility-inspection.test.ts",
+    "packages/balance-config/src/level-five-executive.test.ts",
+    "packages/balance-config/src/level-five-gift-retail.test.ts",
+    "packages/balance-config/src/level-five-progression.test.ts",
+    "packages/balance-config/src/level-five-rooms.test.ts",
+    "packages/balance-config/src/level-five-schema.test.ts",
+    "packages/balance-config/src/level-four-rooms.test.ts",
+    "packages/balance-config/src/level-four-schema.test.ts",
+    "packages/balance-config/src/mri-services.test.ts",
+    "packages/balance-config/src/prototype-balance.test.ts",
+    "packages/balance-config/src/prototype-balance.ts",
+    "packages/balance-config/src/wound-ostomy-services.test.ts",
+    "packages/game-domain/tests/game-domain.test.ts",
+    "packages/game-domain/tests/level-five-gift-retail.test.ts",
+    "packages/game-domain/tests/level-five-integration.test.ts",
+    "packages/game-domain/tests/level-five-progression.test.ts",
+    "packages/game-domain/tests/level-five-rooms.test.ts",
+    "packages/game-domain/tests/level-five-state-persistence.test.ts",
+    "packages/game-domain/tests/level-five-support.test.ts",
+    "packages/game-domain/tests/level-four-integration.test.ts",
+    "packages/game-domain/tests/level-four-persistence.test.ts",
+    "packages/game-domain/tests/level-four-progression.test.ts",
+    "packages/game-domain/tests/level-three-goals.test.ts",
+    "packages/game-domain/tests/level-two-progression.test.ts",
+    "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+    "tests/fixtures/level-five-state.ts",
+    "tools/qa/level-five-state-bootstrap.ts",
+    "tools/qa/level-four-rooms-bootstrap.ts",
+    "tools/qa/level-four-rooms.mjs"
+  ],
+  "added": [
+    "apps/player/src/session/levelFiveLaunch.test.tsx",
+    "packages/game-domain/tests/level-five-launch.test.ts",
+    "tests/fixtures/level-five-launch.ts",
+    "tools/qa/level-five-launch-bootstrap.ts"
+  ],
+  "removed": [],
+  "unchangedCount": 1452,
+  "encoding": [
+    {
+      "path": "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+      "sha256": "6ba7b4349b99babded1d8fda00ff160d333d9ee00d793b8fa37f97a4d2daca0c",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/mobile/MobileGoals.tsx",
+      "sha256": "9582ae05d857dd1c3cfd1d5fe117d9e92324f5b9efd613949b12939eada28eac",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveEconomyQa.test.tsx",
+      "sha256": "23f850eca1bd4c743a72098304014a620e1a1b7b77a41fe880c14a74f7d7da38",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveExecutiveViewModels.test.tsx",
+      "sha256": "943ad588ed254e734f52d548ce658c4b172ab281d4805d86f6b62b59546189ff",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveGiftRetailViewModels.test.tsx",
+      "sha256": "b8f158887e494d30248801199c304ff8b5cad33bf41f65746aaea5ff9e879ed7",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveIntegration.test.tsx",
+      "sha256": "856c942b58856ca3e397eeb5f950878d383a0920a36dcad42daa0b1d9a63d40f",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveProgressionViews.test.tsx",
+      "sha256": "d49161127591fa319bf15727ba5e6255ef32f5440521b5ee635b4cb800cf221e",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveReportQa.test.ts",
+      "sha256": "b2c874fb6b911f87c2d63f39b6fd05af73788b3e8cf9c77788f61b13e37107ad",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveStateQa.test.ts",
+      "sha256": "50003cc5497b22ea8a632d1fadc3b9ebb90be9807bc0a9e0abb224481bbcb899",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFourIntegration.test.ts",
+      "sha256": "5b32957b273fa44be7e5406932053a494d6aa6d1673e073f49f0d10bc8bd9dee",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFourProgressionViews.test.tsx",
+      "sha256": "e33d30d0cfe16876778f0df83efc2c66bc2de5f81b3916fcd41847ef0a84e2d2",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/ui/GoalsPanel.tsx",
+      "sha256": "3e8ac9bd11d2047ad8258fff44f393951f2af664abef8b9279f4ca42e6084856",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "docs/execplans/level5-launch-plan-20261010.md",
+      "sha256": "debd8e47b52ee952e9350b65c09dc1e84226bfc742afe64c29e8436283fa515d",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/app-role.test.ts",
+      "sha256": "2846a1c619efb3889fef1cb560dde862aabc20e4d4241bd285a134b7b55f08e6",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "sha256": "729d29698125224676528403b9271789ce564fff7294f6f790b8a3ed6e9e72ab",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/facility-inspection.test.ts",
+      "sha256": "b85edbdb65431e7b5d7f02996787d3d73663e84607beb646a899f73223315045",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-executive.test.ts",
+      "sha256": "2b67701bd3baac89ce20f6ea018661b75fac1aa194c305f243680465f14f7464",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-gift-retail.test.ts",
+      "sha256": "35c4d6fba3b5e281ace9eceba8b9321e7ce5db67f6ac93abed15e7bd88dc3a42",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-progression.test.ts",
+      "sha256": "ca1814f1c1a8d7db5229d24ea48c99f5ac0fece6c188e9f90c35fd994b3dafe2",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-rooms.test.ts",
+      "sha256": "06f3e43d3150ef52aadbb0a3663b0c072a1891d96304d016805c84e8ea2629eb",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-five-schema.test.ts",
+      "sha256": "5d2250ebd3f8a2fcdf3e98406c37196e9ff049031cc2cf8f592d8d4f678af560",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-four-rooms.test.ts",
+      "sha256": "fcbc3ed9dbca79c31239df9df050bc50576d53650c45cb71aa542717770e7dc2",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/level-four-schema.test.ts",
+      "sha256": "831da8f0e29c79b2fff5c19bf714781b3b5bc0dbc802fb406b5c9d1485ec159c",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/mri-services.test.ts",
+      "sha256": "4c5d92b36817fedf9b8b2fbc60af89bdce3e39c051e3c3c4dd76fb992dbeb6c4",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.test.ts",
+      "sha256": "25a36075d7a2523ce18a3d761291f723ef31ec84420e353a3f8e50d7c6e1ba6e",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "sha256": "6d93b7092e6145ec88180c38d004cd7d5d99206d8c0fe5165b133d9e9ddde186",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/balance-config/src/wound-ostomy-services.test.ts",
+      "sha256": "bedf1a9d162f77d344ec325523c6b17973d17952981c40687b4f59236a001891",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/game-domain.test.ts",
+      "sha256": "5ed24e353624265659b65cdcf7043ff0f51cf117e19036a79561043c2fcd7faa",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-gift-retail.test.ts",
+      "sha256": "b613d8bdf3d709522218da07eee4e822a417efe859694bb946840bc022b025d7",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-integration.test.ts",
+      "sha256": "4ecdd7af27700089168f29ce6b150f11a4df242d8bd053c111879ac6f30e08e8",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-progression.test.ts",
+      "sha256": "8fd7a194e4ec2ca5ec4d6819f7587a30e5fad2c21aac8776e1349095f1c2e652",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-rooms.test.ts",
+      "sha256": "55877fa3a534e236664e6c8997a94446fc579dfe9587f9162c4a87cfeb4972e5",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-state-persistence.test.ts",
+      "sha256": "821dd346f161d3d4227220cc471aeb667b901acd7a996128c5ca9b61dc2ae2f8",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-support.test.ts",
+      "sha256": "adcf4e10e01fe5a30f87b4096b2ddbbbaa1da80a0ea00cd378d1d01829c4ff90",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration.test.ts",
+      "sha256": "052b28c445fbfefb25d033e9b20719953096cf3c67e718fbc092ff53af0c3236",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+      "sha256": "9498a9bc4d27b2db2b24b0520ab202afcba1af5d10c36871303302ff56f6aad6",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-progression.test.ts",
+      "sha256": "e77b460c9e6b5c28421bc5695ace6393599d96e87ff0c71c02f8637c0c60faa3",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-three-goals.test.ts",
+      "sha256": "a00d091f02da74c2260e7e3d83cc1332c9267e9370d156d08e9432134353703c",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-progression.test.ts",
+      "sha256": "a82597e8f828eee6d45b416928f24eb917a257818a034f880a591f899bd3f2f1",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+      "sha256": "7fe11ea72459e8f76e9afbe4f735450832284c312a14b91f508b657a1e6eb4f3",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tests/fixtures/level-five-state.ts",
+      "sha256": "5978e3ebb96481103c6aa23e5664404629dcc536f36049c40ec4e3c44c1ca78a",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tools/qa/level-five-state-bootstrap.ts",
+      "sha256": "fe6cb722e6e15b700cc2816b10f9998de361cb162844e35f436adc3d956fd38b",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tools/qa/level-four-rooms-bootstrap.ts",
+      "sha256": "3b5fad6ccf9ccde4d0024ec66289e449ef71ecfcf0230ea8b3cc0f3be49d4290",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tools/qa/level-four-rooms.mjs",
+      "sha256": "b56ca32e12bb87d9053d4dd0c829d561a65311b4d0f8047ba5b1d3813ec26a17",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "apps/player/src/session/levelFiveLaunch.test.tsx",
+      "sha256": "edbaea8192c59d0b8799c14e7b1245e92d1680dd32ff57721d8b02bed91fc7f0",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-launch.test.ts",
+      "sha256": "2de96292c928ea836d49c506324923f413e34ed7e827608d693591649e40f973",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tests/fixtures/level-five-launch.ts",
+      "sha256": "0fc5996627f37cce8dcc607e4ac8882f3fcfd8259cce48655ae9027fc495166e",
+      "bom": false,
+      "cr": false
+    },
+    {
+      "path": "tools/qa/level-five-launch-bootstrap.ts",
+      "sha256": "6a32952b3b17d7cf80efdf14e930d0be16fcf8c18d7e0297e31bd5675966b79e",
+      "bom": false,
+      "cr": false
+    }
+  ],
+  "planAppendOnly": true,
+  "routeMotionUnchanged": true,
+  "globalHandoffUnchanged": true
+}

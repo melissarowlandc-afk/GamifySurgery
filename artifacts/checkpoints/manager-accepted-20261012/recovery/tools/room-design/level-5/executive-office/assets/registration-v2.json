@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 2,
+  "method": "Visually inspected source landmarks in untouched built-in outputs; exact source-space rectangles select chair foreground pixels without repainting.",
+  "chairSeatRiseProofPixels": 45,
+  "assets": {
+    "base-desk": {"worktop": [674.5,440]},
+    "base-executiveChair": {"seat": [612,724],"frontRegions": [[229,460,128,322],[871,460,128,322],[0,775,1223,511]]},
+    "base-visitorChair": {"seat": [612,650],"frontRegions": [[0,0,1224,1285]]},
+    "base-meetingChair": {"seat": [619,672]}
+  },
+  "notes": [
+    "Executive faces south: front armrests and lower cushion/base draw over the real seated stand-in; back stays behind the sitter.",
+    "North-facing visitor chair is rear-view: redraw the complete generated chair over the rear-facing adult, leaving head/shoulders visible. Concealed posterior cushion plane is at source (612,650).",
+    "Cushions register 45 proof pixels above fixed floor anchors. One rear chair sprite also supplies the empty meeting south chair, without another generation call."
+  ]
+}

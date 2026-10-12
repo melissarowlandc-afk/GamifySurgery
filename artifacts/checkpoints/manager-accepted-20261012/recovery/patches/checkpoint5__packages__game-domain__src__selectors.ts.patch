@@ -1,0 +1,94 @@
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -13,6 +13,8 @@
+ } from "./types";
+ import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+ import { getRoomStaffCapacity } from "./room-capacity";
++import { getActiveExecutiveTerms } from "./executive-management";
++import { getAverageEffectiveStaffMorale } from "./level-five-support";
+ import { MRI_SERVICE_CONTRACTS } from "@gamify-surgery/balance-config";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -1308,6 +1310,7 @@
+     !room ||
+     !definition ||
+     !definition.buildable ||
++    (state.facilityLevel < 5 && ["room.founder_office", "room.executive_office", "room.indoor_garden", "room.staff_gym"].includes(room.roomDefinitionId)) ||
+     !getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.upgradeCosts.length ||
+     room.upgradeLevel >= definition.maximumUpgradeLevel
+   ) {
+@@ -1479,6 +1482,7 @@
+     state,
+     context,
+   );
++  const averageStaffMorale = state.facilityLevel === 5 ? getAverageEffectiveStaffMorale(state) : null;
+   const accessValidation = getFacilityAccessValidation(state, context);
+   const requiredRooms = definition.requiredRoomDefinitionIds.map(
+     (roomDefinitionId) => {
+@@ -1593,16 +1597,25 @@
+             id: "progression.satisfaction",
+             label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
+             met:
+-              (state.facilityLevel === 4 || historicalSatisfaction !== null) &&
++              (state.facilityLevel >= 4 || historicalSatisfaction !== null) &&
+               effectiveSatisfaction >
+               definition.satisfactionMustBeGreaterThan,
+             current:
+-              state.facilityLevel !== 4 && historicalSatisfaction === null
++              state.facilityLevel < 4 && historicalSatisfaction === null
+                 ? 0
+                 : effectiveSatisfaction,
+             required: definition.satisfactionMustBeGreaterThan + 1,
+           },
+         ]),
++    ...(state.facilityLevel === 5 && definition.minimumAverageStaffMorale !== undefined
++      ? [{
++          id: "progression.staff_morale",
++          label: `Average staff morale at least ${definition.minimumAverageStaffMorale}`,
++          met: averageStaffMorale !== null && averageStaffMorale >= definition.minimumAverageStaffMorale,
++          current: averageStaffMorale ?? 0,
++          required: definition.minimumAverageStaffMorale,
++        }]
++      : []),
+     ...requiredRooms,
+     ...definition.requiredStaffRoleIds.map((staffRoleDefinitionId) => {
+       const role = getStaffRoleDefinition(staffRoleDefinitionId, context);
+@@ -1651,7 +1664,8 @@
+       (state.levelFourCompletion?.acknowledgedAtFacilityTick != null || requirements.every((requirement) => requirement.met)),
+     nextFacilityLevel:
+       definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2 ||
+-      definition.nextFacilityLevel === 3 || definition.nextFacilityLevel === 4
++      definition.nextFacilityLevel === 3 || definition.nextFacilityLevel === 4 ||
++      definition.nextFacilityLevel === 5 && context.balanceRelease.facility.maximumPlayableLevel >= 5
+         ? definition.nextFacilityLevel
+         : null,
+     maximumPlayableLevel:
+@@ -2077,11 +2091,11 @@
+     : null;
+ }
+ 
+-export function getOperatingExpensePerFacilityHour(
++export function getRoomUpkeepBeforeSupplierPerFacilityHour(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): number {
+-  const roomExpense = state.rooms.reduce((total, room) => {
++  return state.rooms.reduce((total, room) => {
+     const definition = getRoomDefinition(room.roomDefinitionId, context);
+     if (!definition) {
+       return total;
+@@ -2099,6 +2113,14 @@
+       (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel
+     );
+   }, 0);
++}
++
++export function getSupplierUpkeepSavingsPerFacilityHour(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): number {
++  return getRoomUpkeepBeforeSupplierPerFacilityHour(state, context) * (getActiveExecutiveTerms(state, context)?.effects.supplierReductionPercent ?? 0) / 100;
++}
++
++export function getOperatingExpensePerFacilityHour(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): number {
++  const roomExpense = getRoomUpkeepBeforeSupplierPerFacilityHour(state, context) - getSupplierUpkeepSavingsPerFacilityHour(state, context);
+   const staffExpense = state.employees.reduce(
+     (total, employee) => total + employee.salaryPerExpenseInterval,
+     0,

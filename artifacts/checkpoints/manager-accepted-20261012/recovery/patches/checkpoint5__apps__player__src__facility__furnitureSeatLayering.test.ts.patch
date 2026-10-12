@@ -1,0 +1,25 @@
+--- a/apps/player/src/facility/furnitureSeatLayering.test.ts
++++ b/apps/player/src/facility/furnitureSeatLayering.test.ts
+@@ -16,6 +16,7 @@
+ import { getFacilitySceneDepth } from "./renderDepth";
+ import before from "./furnitureSeatLayering.before.fixture.json";
+ import { APPROVED_LEVEL4_ROOM_DATA } from "./approvedLevel4RoomData";
++import { APPROVED_LEVEL5_ROOM_DATA } from "./approvedLevel5RoomData";
+ 
+ vi.mock("phaser", () => ({ default: { Scene: class {} } }));
+ import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
+@@ -97,6 +98,14 @@
+       if (APPROVED_LEVEL4_ROOM_DATA.has(room.roomDefinitionId)) continue;
+       for (const support of resolveApprovedRoomActorSupports(room.roomDefinitionId, view.runtimeOrientation)) {
+         if (support.pose !== "seated" || !["east", "west"].includes(support.facing) || support.role === "periop-bed-patient") continue;
++        if (APPROVED_LEVEL5_ROOM_DATA.has(room.roomDefinitionId)) {
++          const fronts = resolveApprovedRoomDrawRecords(room.roomDefinitionId, view.runtimeOrientation)
++            .filter(draw => draw.foregroundSupportIds?.includes(support.id));
++          expect(fronts).toHaveLength(1);
++          expect(fronts[0]!.assetId).toMatch(/^level5:/);
++          expect(fronts[0]!.classification).toBe("necessary");
++          continue;
++        }
+         const key = room.roomDefinitionId + ":" + view.runtimeOrientation + ":" + support.id;
+         if (armless.has(key)) expect(support.sideChairLayer, key).toBeUndefined();
+         else expect(support.sideChairLayer, key).toBeDefined();

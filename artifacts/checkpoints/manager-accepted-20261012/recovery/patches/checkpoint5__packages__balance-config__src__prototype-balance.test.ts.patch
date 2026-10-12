@@ -1,0 +1,11 @@
+--- a/packages/balance-config/src/prototype-balance.test.ts
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -125,7 +125,7 @@
+       ),
+     );
+ 
+-    expect(facility.maximumPlayableLevel).toBe(4);
++    expect(facility.maximumPlayableLevel).toBe(5);
+     expect(rooms.map((room) => room.id)).toEqual(LEVEL_TWO_ROOM_DEFINITION_IDS);
+     expect(staff.map((role) => role.id)).toEqual(LEVEL_TWO_STAFF_ROLE_IDS);
+     expect(rooms.every((room) => room.unlockFacilityLevel === 2)).toBe(true);

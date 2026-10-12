@@ -1,0 +1,14 @@
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -155,6 +155,11 @@
+       onPraiseEmployee={session.praiseEmployee}
+       onMoveFounder={session.moveFounder}
+       onLevelUp={session.levelUp}
++      onBookInspection={session.bookInspection}
++      onCancelInspection={session.cancelInspection}
++      finishReportOpen={session.finishReportOpen}
++      onViewFinishReport={session.openFinishReport}
++      onCloseFinishReport={session.closeFinishReport}
+       onFastForward={session.fastForward}
+       onAddMoney={session.addMoney}
+       onRunEmergencyGlp1Consultation={

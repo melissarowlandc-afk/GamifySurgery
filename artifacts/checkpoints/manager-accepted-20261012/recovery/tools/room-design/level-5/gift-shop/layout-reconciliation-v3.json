@@ -1,0 +1,779 @@
+{
+  "schemaVersion": 1,
+  "designRevision": 3,
+  "status": "PASS",
+  "basis": "Full-room concept followed by painted native floor-base measurement; concept frozen separately, not represented as pre-generation neutral approval.",
+  "source": "stand-in/v3/layout-concept.json",
+  "conceptLayoutSha256": "48929722e87156928e944b2c59de5147239f705575925bfb7ca12f34852b21bf",
+  "finalLayoutSha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5",
+  "necessaryFurnitureRetained": true,
+  "necessaryStandingSpotsRetained": true,
+  "changes": [
+    {
+      "id": "northLeft",
+      "reason": "Uniform world scale derived from decoded opaque plinth width: each adjoining rear bay now fills exactly one tile, with no seam gap or stretching.",
+      "before": {
+        "id": "northLeft",
+        "label": "Rear left: balloons, plush, cards and mugs",
+        "spriteSlot": "northLeft",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.06,
+          1.490625
+        ],
+        "ground": [
+          0.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N1",
+          "WA"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "northLeft",
+        "label": "Rear left: balloons, plush, cards and mugs",
+        "spriteSlot": "northLeft",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.0711297071129708,
+          1.5062761506276152
+        ],
+        "ground": [
+          0.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N1",
+          "WA"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "northMiddle",
+      "reason": "Uniform world scale derived from decoded opaque plinth width: each adjoining rear bay now fills exactly one tile, with no seam gap or stretching.",
+      "before": {
+        "id": "northMiddle",
+        "label": "Rear middle: mugs, candles and impulse snacks",
+        "spriteSlot": "northMiddle",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.06,
+          1.490625
+        ],
+        "ground": [
+          1.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N2"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "northMiddle",
+        "label": "Rear middle: mugs, candles and impulse snacks",
+        "spriteSlot": "northMiddle",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.024,
+          1.4400000000000002
+        ],
+        "ground": [
+          1.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N2"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "northRight",
+      "reason": "Uniform world scale derived from decoded opaque plinth width: each adjoining rear bay now fills exactly one tile, with no seam gap or stretching.",
+      "before": {
+        "id": "northRight",
+        "label": "Rear right: magazines, cards and overflowing plush",
+        "spriteSlot": "northRight",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.06,
+          1.490625
+        ],
+        "ground": [
+          2.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N3",
+          "EA"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "northRight",
+        "label": "Rear right: magazines, cards and overflowing plush",
+        "spriteSlot": "northRight",
+        "canvas": [
+          512,
+          720
+        ],
+        "size": [
+          1.0534979423868311,
+          1.4814814814814814
+        ],
+        "ground": [
+          2.5,
+          0.35
+        ],
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "classification": "optional",
+        "owners": [
+          "N3",
+          "EA"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "mainIsland",
+      "reason": "Restore the concept’s broad filled central cabinet and integrated display/checkout proportions; retain a loop aisle.",
+      "before": {
+        "id": "mainIsland",
+        "label": "Joined main display and self-service checkout",
+        "spriteSlot": "island",
+        "canvas": [
+          512,
+          768
+        ],
+        "size": [
+          1.03,
+          1.545
+        ],
+        "ground": [
+          1.4,
+          1.75
+        ],
+        "footprint": {
+          "left": 0.92,
+          "top": 0.8,
+          "width": 0.96,
+          "height": 0.95
+        },
+        "classification": "necessary",
+        "owners": [],
+        "backed": []
+      },
+      "after": {
+        "id": "mainIsland",
+        "label": "Joined main display and self-service checkout",
+        "spriteSlot": "island",
+        "canvas": [
+          512,
+          768
+        ],
+        "size": [
+          1.25,
+          1.875
+        ],
+        "ground": [
+          1.4,
+          1.9
+        ],
+        "footprint": {
+          "left": 0.85,
+          "top": 0.75,
+          "width": 1.1,
+          "height": 1.15
+        },
+        "classification": "necessary",
+        "owners": [],
+        "backed": []
+      }
+    },
+    {
+      "id": "westRear",
+      "reason": "Register the left plinth flush with the wall, using the painted side-facing base; adjacent modules overlap upward at one-tile floor intervals.",
+      "before": {
+        "id": "westRear",
+        "label": "Left rear: joined card rack and flower buckets",
+        "spriteSlot": "westRun",
+        "canvas": [
+          256,
+          1152
+        ],
+        "size": [
+          0.47,
+          2.115
+        ],
+        "ground": [
+          0.215,
+          1
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 0.35,
+          "width": 0.43,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "N1",
+          "WA"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "westRear",
+        "label": "Left rear: joined card rack and flower buckets",
+        "spriteSlot": "westRun",
+        "canvas": [
+          256,
+          1152
+        ],
+        "size": [
+          0.47,
+          2.115
+        ],
+        "ground": [
+          0.16,
+          1
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 0.35,
+          "width": 0.38,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "N1",
+          "WA"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "westMiddle",
+      "reason": "Register the left plinth flush with the wall, using the painted side-facing base; adjacent modules overlap upward at one-tile floor intervals.",
+      "before": {
+        "id": "westMiddle",
+        "label": "Left middle: continuing cards and flowers",
+        "spriteSlot": "westRun",
+        "canvas": [
+          256,
+          1152
+        ],
+        "size": [
+          0.47,
+          2.115
+        ],
+        "ground": [
+          0.215,
+          2
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.43,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "WB"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "westMiddle",
+        "label": "Left middle: continuing cards and flowers",
+        "spriteSlot": "westRun",
+        "canvas": [
+          256,
+          1152
+        ],
+        "size": [
+          0.47,
+          2.115
+        ],
+        "ground": [
+          0.16,
+          2
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.38,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "WB"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "westCooler",
+      "reason": "Match the concept’s dense front-left cooler/bouquet endcap; broad overlapping stock rises from the wall fixture footprint.",
+      "before": {
+        "id": "westCooler",
+        "label": "Left front: flower cooler and bouquet endcap",
+        "spriteSlot": "cooler",
+        "canvas": [
+          288,
+          864
+        ],
+        "size": [
+          0.53,
+          1.59
+        ],
+        "ground": [
+          0.215,
+          3
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.43,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "S1",
+          "WC"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "westCooler",
+        "label": "Left front: flower cooler and bouquet endcap",
+        "spriteSlot": "cooler",
+        "canvas": [
+          288,
+          864
+        ],
+        "size": [
+          0.65,
+          1.95
+        ],
+        "ground": [
+          0.2,
+          3
+        ],
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.38,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "S1",
+          "WC"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "eastRear",
+      "reason": "Use the concept’s shallow continuous right-wall run and measured side-facing floor base; leave the queue in the wider right aisle.",
+      "before": {
+        "id": "eastRear",
+        "label": "Right rear: magazine/snack shelving and plush",
+        "spriteSlot": "eastRun",
+        "canvas": [
+          224,
+          896
+        ],
+        "size": [
+          0.38,
+          1.52
+        ],
+        "ground": [
+          2.85,
+          1
+        ],
+        "footprint": {
+          "left": 2.7,
+          "top": 0.35,
+          "width": 0.3,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "N3",
+          "EA"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "eastRear",
+        "label": "Right rear: magazine/snack shelving and plush",
+        "spriteSlot": "eastRun",
+        "canvas": [
+          224,
+          896
+        ],
+        "size": [
+          0.38,
+          1.52
+        ],
+        "ground": [
+          2.85,
+          1
+        ],
+        "footprint": {
+          "left": 2.75,
+          "top": 0.35,
+          "width": 0.25,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "N3",
+          "EA"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "eastMiddle",
+      "reason": "Use the concept’s shallow continuous right-wall run and measured side-facing floor base; leave the queue in the wider right aisle.",
+      "before": {
+        "id": "eastMiddle",
+        "label": "Right middle: continuing stocked shelves",
+        "spriteSlot": "eastRun",
+        "canvas": [
+          224,
+          896
+        ],
+        "size": [
+          0.38,
+          1.52
+        ],
+        "ground": [
+          2.85,
+          2
+        ],
+        "footprint": {
+          "left": 2.7,
+          "top": 1,
+          "width": 0.3,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "EB"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "eastMiddle",
+        "label": "Right middle: continuing stocked shelves",
+        "spriteSlot": "eastRun",
+        "canvas": [
+          224,
+          896
+        ],
+        "size": [
+          0.38,
+          1.52
+        ],
+        "ground": [
+          2.85,
+          2
+        ],
+        "footprint": {
+          "left": 2.75,
+          "top": 1,
+          "width": 0.25,
+          "height": 1
+        },
+        "classification": "optional",
+        "owners": [
+          "EB"
+        ],
+        "backed": []
+      }
+    },
+    {
+      "id": "entranceEndcap",
+      "reason": "Fill the front-right corner as in the concept: joined plush bin, flowers and balloons, rather than a small isolated ornament.",
+      "before": {
+        "id": "entranceEndcap",
+        "label": "Entrance: joined plush bin, flowers and balloons",
+        "spriteSlot": "entry",
+        "canvas": [
+          432,
+          480
+        ],
+        "size": [
+          0.8,
+          0.8888888888888888
+        ],
+        "ground": [
+          2.65,
+          3
+        ],
+        "footprint": {
+          "left": 2.3,
+          "top": 2.35,
+          "width": 0.7,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "S3",
+          "EC"
+        ],
+        "backed": []
+      },
+      "after": {
+        "id": "entranceEndcap",
+        "label": "Entrance: joined plush bin, flowers and balloons",
+        "spriteSlot": "entry",
+        "canvas": [
+          432,
+          480
+        ],
+        "size": [
+          1,
+          1.1111111111111112
+        ],
+        "ground": [
+          2.51,
+          3
+        ],
+        "footprint": {
+          "left": 2.1,
+          "top": 2.35,
+          "width": 0.9,
+          "height": 0.65
+        },
+        "classification": "optional",
+        "owners": [
+          "S3",
+          "EC"
+        ],
+        "backed": []
+      }
+    }
+  ],
+  "standingRefinements": {
+    "browse": [
+      0.625,
+      1
+    ],
+    "pay": [
+      1.4,
+      2.1
+    ],
+    "queue1": [
+      2.55,
+      1.975
+    ],
+    "queue2": [
+      2.55,
+      1.05
+    ]
+  },
+  "contactRefinements": [
+    {
+      "id": "browse",
+      "label": "Browsing the main display from the left aisle",
+      "world": [
+        0.625,
+        1
+      ],
+      "standingSpotId": "browse",
+      "fixtureId": "mainIsland"
+    },
+    {
+      "id": "pay",
+      "label": "Paying at self-service checkout",
+      "world": [
+        1.4,
+        2.1
+      ],
+      "standingSpotId": "pay",
+      "fixtureId": "mainIsland"
+    },
+    {
+      "id": "queue1",
+      "label": "First queued shopper",
+      "world": [
+        2.55,
+        1.975
+      ],
+      "standingSpotId": "queue1"
+    },
+    {
+      "id": "queue2",
+      "label": "Second queued shopper (optional occupancy proof)",
+      "world": [
+        2.55,
+        1.05
+      ],
+      "standingSpotId": "queue2"
+    },
+    {
+      "id": "northLeft-contact",
+      "label": "Browse rear left: balloons, plush, cards and mugs",
+      "world": [
+        0.65,
+        0.6
+      ],
+      "fixtureId": "northLeft",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "northMiddle-contact",
+      "label": "Browse rear middle: mugs, candles and impulse snacks",
+      "world": [
+        1.5,
+        0.55
+      ],
+      "fixtureId": "northMiddle",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "northRight-contact",
+      "label": "Browse rear right: magazines, cards and overflowing plush",
+      "world": [
+        2.35,
+        0.6
+      ],
+      "fixtureId": "northRight",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "westRear-contact",
+      "label": "Browse left rear: joined card rack and flower buckets",
+      "world": [
+        0.625,
+        0.95
+      ],
+      "fixtureId": "westRear",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "westMiddle-contact",
+      "label": "Browse left middle: continuing cards and flowers",
+      "world": [
+        0.625,
+        1.65
+      ],
+      "fixtureId": "westMiddle",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "westCooler-contact",
+      "label": "Browse left front: flower cooler and bouquet endcap",
+      "world": [
+        0.75,
+        2.5
+      ],
+      "fixtureId": "westCooler",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "eastRear-contact",
+      "label": "Browse right rear: magazine/snack shelving and plush",
+      "world": [
+        2.25,
+        0.7
+      ],
+      "fixtureId": "eastRear",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "eastMiddle-contact",
+      "label": "Browse right middle: continuing stocked shelves",
+      "world": [
+        2.25,
+        1.5
+      ],
+      "fixtureId": "eastMiddle",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    },
+    {
+      "id": "entranceEndcap-contact",
+      "label": "Browse entrance: joined plush bin, flowers and balloons",
+      "world": [
+        1.875,
+        2.6
+      ],
+      "fixtureId": "entranceEndcap",
+      "standingSpotId": "browse",
+      "optionalContact": true
+    }
+  ],
+  "rule": "Necessary furniture isn't removed by doors. Optional wall fixture segments may hide; characters walk around every visible footprint."
+}

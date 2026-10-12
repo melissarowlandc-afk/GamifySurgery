@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 2,
+  "designRevision": 2,
+  "conceptSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+  "nativeRegistrationUnchanged": "assets/registration-v1.json",
+  "nativeRegistrationSha256": "2e11edd7d82a9409910ba415af3760fb9ab6613ae4f6cd8e9f3a35261a1127f6",
+  "newBuiltInCalls": 0,
+  "cornerOwners": {
+    "northwest": "north1",
+    "northeast": "north4",
+    "southwest": "front1",
+    "southeast": "front4"
+  },
+  "sideDisplayUniformFactor": 0.7462686567164178,
+  "bindings": [
+    {
+      "id": "north1",
+      "spriteSlot": "north1",
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        0.5,
+        0.75
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ]
+    },
+    {
+      "id": "mirror1",
+      "spriteSlot": "mirror1",
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        0.5,
+        -0.85
+      ],
+      "footprint": null,
+      "owners": [
+        "N1"
+      ]
+    },
+    {
+      "id": "north2",
+      "spriteSlot": "north2",
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        1.5,
+        0.75
+      ],
+      "footprint": {
+        "left": 1,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N2"
+      ]
+    },
+    {
+      "id": "mirror2",
+      "spriteSlot": "mirror2",
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        1.5,
+        -0.85
+      ],
+      "footprint": null,
+      "owners": [
+        "N2"
+      ]
+    },
+    {
+      "id": "north3",
+      "spriteSlot": "north3",
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        2.5,
+        0.75
+      ],
+      "footprint": {
+        "left": 2,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N3"
+      ]
+    },
+    {
+      "id": "mirror3",
+      "spriteSlot": "mirror3",
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        2.5,
+        -0.85
+      ],
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    },
+    {
+      "id": "north4",
+      "spriteSlot": "north4",
+      "canvas": [
+        512,
+        768
+      ],
+      "renderSizeTiles": [
+        1.024,
+        1.536
+      ],
+      "ground": [
+        3.5,
+        0.75
+      ],
+      "footprint": {
+        "left": 3,
+        "top": 0,
+        "width": 1,
+        "height": 0.75
+      },
+      "owners": [
+        "N4",
+        "EA"
+      ]
+    },
+    {
+      "id": "mirror4",
+      "spriteSlot": "mirror4",
+      "canvas": [
+        512,
+        416
+      ],
+      "renderSizeTiles": [
+        1.091684434968017,
+        0.8869936034115139
+      ],
+      "ground": [
+        3.5,
+        -0.85
+      ],
+      "footprint": null,
+      "owners": [
+        "N4"
+      ]
+    },
+    {
+      "id": "west2",
+      "spriteSlot": "west",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        0.2,
+        2
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 1,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "WB"
+      ]
+    },
+    {
+      "id": "west3",
+      "spriteSlot": "west",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        0.2,
+        3
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 2,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "WC"
+      ]
+    },
+    {
+      "id": "west4",
+      "spriteSlot": "west",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        0.2,
+        3.72
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 3,
+        "width": 0.35,
+        "height": 0.72
+      },
+      "owners": [
+        "S1",
+        "WD"
+      ]
+    },
+    {
+      "id": "east2",
+      "spriteSlot": "east",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        3.8,
+        2
+      ],
+      "footprint": {
+        "left": 3.65,
+        "top": 1,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "EB"
+      ]
+    },
+    {
+      "id": "east3",
+      "spriteSlot": "east",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        3.8,
+        3
+      ],
+      "footprint": {
+        "left": 3.65,
+        "top": 2,
+        "width": 0.35,
+        "height": 1
+      },
+      "owners": [
+        "EC"
+      ]
+    },
+    {
+      "id": "east4",
+      "spriteSlot": "east",
+      "canvas": [
+        288,
+        816
+      ],
+      "renderSizeTiles": [
+        0.4477611940298507,
+        1.2686567164179103
+      ],
+      "ground": [
+        3.8,
+        3.72
+      ],
+      "footprint": {
+        "left": 3.65,
+        "top": 3,
+        "width": 0.35,
+        "height": 0.72
+      },
+      "owners": [
+        "S4",
+        "ED"
+      ]
+    },
+    {
+      "id": "front1",
+      "spriteSlot": "front1",
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        0.5,
+        4
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S1",
+        "WD"
+      ]
+    },
+    {
+      "id": "front2",
+      "spriteSlot": "front2",
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        1.5,
+        4
+      ],
+      "footprint": {
+        "left": 1,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S2"
+      ]
+    },
+    {
+      "id": "front3",
+      "spriteSlot": "front3",
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        2.5,
+        4
+      ],
+      "footprint": {
+        "left": 2,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S3"
+      ]
+    },
+    {
+      "id": "front4",
+      "spriteSlot": "front4",
+      "canvas": [
+        512,
+        360
+      ],
+      "renderSizeTiles": [
+        1.024,
+        0.72
+      ],
+      "ground": [
+        3.5,
+        4
+      ],
+      "footprint": {
+        "left": 3,
+        "top": 3.72,
+        "width": 1,
+        "height": 0.28
+      },
+      "owners": [
+        "S4",
+        "ED"
+      ]
+    },
+    {
+      "id": "benchSeat",
+      "spriteSlot": "bench",
+      "canvas": [
+        288,
+        768
+      ],
+      "renderSizeTiles": [
+        0.6,
+        1.6
+      ],
+      "ground": [
+        1.2,
+        2.7
+      ],
+      "footprint": {
+        "left": 0.95,
+        "top": 1.6,
+        "width": 0.5,
+        "height": 1.1
+      },
+      "owners": []
+    },
+    {
+      "id": "stretchMat",
+      "spriteSlot": "mat",
+      "canvas": [
+        624,
+        936
+      ],
+      "renderSizeTiles": [
+        1.3,
+        1.95
+      ],
+      "ground": [
+        2.7,
+        2.3
+      ],
+      "footprint": null,
+      "owners": []
+    },
+    {
+      "id": "exerciseBall",
+      "spriteSlot": "ball",
+      "canvas": [
+        360,
+        360
+      ],
+      "renderSizeTiles": [
+        0.75,
+        0.75
+      ],
+      "ground": [
+        2.95,
+        1.9
+      ],
+      "footprint": {
+        "left": 2.6,
+        "top": 1.5,
+        "width": 0.7,
+        "height": 0.4
+      },
+      "owners": []
+    },
+    {
+      "id": "foamRoller",
+      "spriteSlot": "roller",
+      "canvas": [
+        384,
+        128
+      ],
+      "renderSizeTiles": [
+        0.8,
+        0.26666666666666666
+      ],
+      "ground": [
+        2.7,
+        3.22
+      ],
+      "footprint": {
+        "left": 2.3125,
+        "top": 3.13,
+        "width": 0.775,
+        "height": 0.09
+      },
+      "owners": []
+    },
+    {
+      "id": "rubberFloor",
+      "spriteSlot": "floor",
+      "canvas": [
+        1088,
+        1088
+      ],
+      "renderSizeTiles": [
+        4.217054263565892,
+        4.217054263565892
+      ],
+      "ground": [
+        2,
+        2
+      ],
+      "footprint": null,
+      "owners": []
+    },
+    {
+      "id": "towelHooks",
+      "spriteSlot": "hooks",
+      "canvas": [
+        288,
+        256
+      ],
+      "renderSizeTiles": [
+        0.6,
+        0.5333333333333333
+      ],
+      "ground": [
+        2.5,
+        -0.68
+      ],
+      "footprint": null,
+      "owners": [
+        "N3"
+      ]
+    }
+  ]
+}

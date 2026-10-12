@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    3,
+    2
+  ],
+  "tiers": [
+    {
+      "level": 1,
+      "assets": 8,
+      "states": 456,
+      "routes": 4080,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 609,
+          "uncoveredAdultPixels": 6625,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3090,
+          "uncoveredAdultPixels": 5437,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "assets": 8,
+      "states": 456,
+      "routes": 4080,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 609,
+          "uncoveredAdultPixels": 6625,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3090,
+          "uncoveredAdultPixels": 5437,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "assets": 8,
+      "states": 456,
+      "routes": 4080,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 609,
+          "uncoveredAdultPixels": 6625,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3090,
+          "uncoveredAdultPixels": 5437,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "assets": 8,
+      "states": 456,
+      "routes": 4080,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 609,
+          "uncoveredAdultPixels": 6625,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3090,
+          "uncoveredAdultPixels": 5437,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "assets": 8,
+      "states": 456,
+      "routes": 4080,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 609,
+          "uncoveredAdultPixels": 6625,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3090,
+          "uncoveredAdultPixels": 5437,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    }
+  ],
+  "states": 2280,
+  "routes": 20400,
+  "radiusClearSamples": 10736360,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 10,
+  "backingSections": 3,
+  "monotonicChecks": 500,
+  "occupiedSeatVisibilityChecks": 60,
+  "exitRoutes": 7200,
+  "retainedOccupiedSeats": [
+    "executiveChair",
+    "visitorChair"
+  ],
+  "arbitraryDoorCombinationProof": "All single-door approaches and every two-door entry/exit pair pass with occupied seats. More doors only remove optional wall-owned props; backing never adds floor obstacles. Retained chairs remain blockers.",
+  "assets": 8,
+  "foregrounds": 2,
+  "assetChecks": [
+    {
+      "id": "base-desk",
+      "canvas": [
+        696,
+        600
+      ],
+      "sha256": "99ca432392611af0c927ecd689caf62bd1c23a0771f17a533e853c1c1a187ce9",
+      "alphaEdge": 0,
+      "transparentPixels": 236353,
+      "anchor": [
+        348,
+        588
+      ],
+      "worktopRise": 67.99059689288634
+    },
+    {
+      "id": "base-executiveChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "c4f2d42a26abcb7ef1137ff20a404b4587118e7159e43c66afae985dcdf85f00",
+      "alphaEdge": 0,
+      "transparentPixels": 293504,
+      "anchor": [
+        240.1848049281314,
+        760.8911704312115
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "base-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463",
+      "alphaEdge": 0,
+      "transparentPixels": 191540,
+      "anchor": [
+        225.3399014778325,
+        569.1133004926108
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "base-shelf",
+      "canvas": [
+        600,
+        320
+      ],
+      "sha256": "fc1e8acf30d032563cc6b0acac6ff98884940e02377dac5b2d44e885ef88b44b",
+      "alphaEdge": 0,
+      "transparentPixels": 74594,
+      "anchor": [
+        300,
+        314
+      ]
+    },
+    {
+      "id": "base-rug",
+      "canvas": [
+        1152,
+        624
+      ],
+      "sha256": "f13a57d32da58e0e432c5051f66677e596ccabcf19fe99f1ef2037ed91eb77d2",
+      "alphaEdge": 0,
+      "transparentPixels": 39584,
+      "anchor": [
+        576,
+        312
+      ]
+    },
+    {
+      "id": "base-decor",
+      "canvas": [
+        432,
+        240
+      ],
+      "sha256": "f3da5d2c98a0cbfd1823b5866993b7ee6171ec570516a5da12feaea1e11018d1",
+      "alphaEdge": 0,
+      "transparentPixels": 16434,
+      "anchor": [
+        216,
+        25
+      ]
+    },
+    {
+      "id": "base-art",
+      "canvas": [
+        480,
+        264
+      ],
+      "sha256": "c62104c7353b6850a3d3059d3a9b19655a44c565384c473382257e420d211202",
+      "alphaEdge": 0,
+      "transparentPixels": 51162,
+      "anchor": [
+        240,
+        90
+      ]
+    },
+    {
+      "id": "base-accent",
+      "canvas": [
+        288,
+        480
+      ],
+      "sha256": "bc72443d0f2e48a371f484376305e739c92b1e7aabba81423b9f6cb85dd4226e",
+      "alphaEdge": 0,
+      "transparentPixels": 70925,
+      "anchor": [
+        144,
+        473
+      ]
+    }
+  ],
+  "realIdentities": [
+    "founder.01",
+    "patient.adult.007"
+  ],
+  "sourceHashes": 43,
+  "concurrentReferenceChanges": [],
+  "textFiles": 275,
+  "warnings": [],
+  "browserQA": "pending manager",
+  "proofManifestSha256": "710cde5eacdc860a128afb94b195cae36dc11893016acffc120820a04ad2db23"
+}

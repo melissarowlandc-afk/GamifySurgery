@@ -1,0 +1,35 @@
+--- a/apps/player/src/session/alertsEventsViewModel.ts
++++ b/apps/player/src/session/alertsEventsViewModel.ts
+@@ -27,6 +27,7 @@
+ import type { ClinicAlertAction, MessageBoardItemView, NeedsYouItemView } from "../ui/types";
+ import { createMessageBoardView } from "./alertViewModels";
+ import { facilityTimeLabel } from "./managementViewModels";
++import { LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID, LEVEL_FIVE_INSPECTION_UNLOCK_TIP } from "@gamify-surgery/balance-config";
+ import { canRecommendAdvertising, getClinicAlertActionProblem, hasInstalledTelehealthCoverage } from "./clinicAlertActions";
+ import { ambientSpeaker, clinicFeedSpeaker, problemOnlyActionCopy, supersededConditionOccurrenceIds } from "./clinicFeedPresentation";
+ export { hasInstalledTelehealthCoverage } from "./clinicAlertActions";
+@@ -241,6 +242,24 @@
+     if (event?.type === "ambient_message") return [{ ...base, rowKind: "humor", speaker: ambientSpeaker(item.message) }];
+     if (event?.type === "staff_quit") return [{ ...base, rowKind: "resolved", speaker: "Handled", actionLabel: undefined, targetType: undefined, targetId: undefined }];
+     if (event?.type === "facility_level_advanced" || event?.type === "success_message") {
++      if (event.id === LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID) {
++        // One persisted event projects a milestone and its stable next-step tip.
++        // This adds no repeat emission, attention item or ordinary-tip cadence change.
++        return [{ ...base, rowKind: "milestone", speaker: "Milestone", actionLabel: undefined, targetType: undefined, targetId: undefined },
++          { ...base, id: `${event.id}.tip`, rowKind: "tip", category: "guidance", speaker: "Goals",
++            title: "Your first inspection", message: LEVEL_FIVE_INSPECTION_UNLOCK_TIP,
++            action: { kind: "show_goals" }, actionLabel: "Show Goals", targetType: undefined, targetId: undefined }];
++      }
++      if (event.id === "event.facility-level-4-complete" && PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.maximumPlayableLevel >= 5) {
++        return [{ ...base, rowKind: "milestone", speaker: "Milestone", title: "Level 4 goals complete",
++          message: "The Level 4 goals were completed. Check Goals to advance.", actionLabel: undefined, targetType: undefined, targetId: undefined }];
++      }
++      if (event.id === "event.facility-level-4-complete") {
++        // Old saved event text stays immutable; present the current terminal
++        // copy without replaying the earned milestone or opening the live cap.
++        return [{ ...base, rowKind: "milestone", speaker: "Milestone", title: "Level 4 goals complete",
++          message: "Level 4 goals complete. Keep playing; the clinic is still open.", actionLabel: undefined, targetType: undefined, targetId: undefined }];
++      }
+       return [{ ...base, rowKind: "milestone", speaker: "Milestone", actionLabel: undefined, targetType: undefined, targetId: undefined }];
+     }
+     if (event?.definitionId === "alert.patient.departure-risk") {

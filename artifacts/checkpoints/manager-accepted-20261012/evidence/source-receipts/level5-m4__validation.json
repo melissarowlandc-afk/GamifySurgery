@@ -1,0 +1,81 @@
+{
+  "pool": "threads",
+  "config": "checked-in default workspace configurations",
+  "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "NO_COLOR": "1",
+  "checks": [
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exit": 0,
+      "log": "full-balance.log",
+      "filesPassed": 18,
+      "testsPassed": 141,
+      "exactSummary": "Test Files  18 passed (18)\n      Tests  141 passed (141)\n   Start at  22:30:15\n   Duration  842ms (transform 1.96s, setup 0ms, import 5.09s, tests 230ms, environment 2ms)"
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exit": 0,
+      "log": "full-domain.log",
+      "filesPassed": 143,
+      "filesSkipped": 1,
+      "testsPassed": 4020,
+      "testsSkipped": 2,
+      "exactSummary": "Test Files  143 passed | 1 skipped (144)\n      Tests  4020 passed | 2 skipped (4022)\n   Start at  22:44:44\n   Duration  144.42s (transform 6.38s, setup 0ms, import 59.54s, tests 505.70s, environment 8ms)"
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exit": 0,
+      "log": "full-clinical.log",
+      "filesPassed": 87,
+      "testsPassed": 628,
+      "exactSummary": "Test Files  87 passed (87)\n      Tests  628 passed (628)\n   Start at  22:30:15\n   Duration  5.57s (transform 15.61s, setup 0ms, import 56.62s, tests 6.74s, environment 9ms)"
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exit": 1,
+      "log": "full-player.log",
+      "filesPassed": 212,
+      "filesFailed": 1,
+      "testsPassed": 1867,
+      "testsFailed": 1,
+      "allowedFailure": "src/session/surgeryCenterServicePreviews.test.ts:85:52",
+      "exactSummary": "Test Files  1 failed | 212 passed (213)\n      Tests  1 failed | 1867 passed (1868)\n   Start at  22:49:47\n   Duration  42.93s (transform 8.61s, setup 0ms, import 80.87s, tests 73.93s, environment 11ms)\n\nnpm error Lifecycle script `test` failed with error:\nnpm error code 1\nnpm error path C:\\Users\\rowla\\Projects\\GamifySurgery\\apps\\player\nnpm error workspace @gamify-surgery/player@0.0.1\nnpm error location C:\\Users\\rowla\\Projects\\GamifySurgery\\apps\\player\nnpm error command failed\nnpm error command C:\\WINDOWS\\system32\\cmd.exe /d /s /c vitest run --pool=threads"
+    },
+    {
+      "command": "npm.cmd run typecheck",
+      "exit": 0,
+      "log": "final-typecheck.log",
+      "workspacesPassed": 7
+    },
+    {
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exit": 0,
+      "log": "final-build.log"
+    },
+    {
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exit": 0,
+      "log": "final-qa-check.log"
+    },
+    {
+      "command": "node scripts/verify-launcher-contract.mjs",
+      "exit": 0,
+      "log": "final-launcher.log"
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/level-five-executive.test.ts",
+      "exit": 0,
+      "log": "quote-before-walk.log",
+      "filesPassed": 1,
+      "testsPassed": 33
+    }
+  ],
+  "httpQa": {
+    "status": 200,
+    "qaBootstrap": true,
+    "origin": "http://127.0.0.1:5184",
+    "url": "http://127.0.0.1:5184/level4-rooms-qa.html?level5=executive&layout=phone",
+    "existingServer": true,
+    "browserAcceptance": "pending manager"
+  }
+}

@@ -1,0 +1,7 @@
+// Reuse, verify and catalogue existing originals; never makes an image call.
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {fileURLToPath} from 'node:url';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url))),read=p=>JSON.parse(fs.readFileSync(path.join(root,p))),hash=p=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,p))).digest('hex'),layout=read('layout.json'),gen=read('history/4x3-20261010/assets/generation-manifest.json');
+for(const a of gen.assets)for(const [file,expected] of [[a.original,a.originalSha256],[a.prompt,a.promptSha256],[a.receipt,a.receiptSha256]])if(hash(file)!==expected)throw Error('Original source changed '+file);
+gen.schemaVersion=3;gen.assets=gen.assets.filter(a=>layout.pieces.some(p=>'base-'+p.id===a.id));gen.revisionDate='2026-10-10';gen.newCallsForRevision=0;gen.originalBuiltInCalls=10;gen.notes=['3×2 owner revision reuses eight of the ten original built-in generated objects; no new generation.','Round table and front meeting chair sources remain preserved in the 4×3 archive and original v2 source library.','Rear visitor chair now only supplies the desk visitor. Two exact-source foregrounds. Fixed appearance.'];
+fs.writeFileSync(path.join(root,'assets/generation-manifest.json'),JSON.stringify(gen,null,2)+'\n');
+console.log('GENERATION REUSE PASS: 8 selected objects from 10 prior built-in calls; 0 new calls; all 10 original/prompt/receipt hashes unchanged; meeting sources preserved.');

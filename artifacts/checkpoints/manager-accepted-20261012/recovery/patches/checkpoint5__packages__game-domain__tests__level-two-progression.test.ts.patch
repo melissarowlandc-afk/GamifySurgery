@@ -1,0 +1,20 @@
+--- a/packages/game-domain/tests/level-two-progression.test.ts
++++ b/packages/game-domain/tests/level-two-progression.test.ts
+@@ -154,7 +154,7 @@
+     const progression = getFacilityProgressionStatus(state);
+     expect(progression).toMatchObject({
+       facilityLevel: 2,
+-      maximumPlayableLevel: 4,
++      maximumPlayableLevel: 5,
+       nextFacilityLevel: 3,
+       eligible: false,
+     });
+@@ -266,7 +266,7 @@
+     expect(objective()).toMatchObject({ met: true, current: 1 });
+     expect(getFacilityProgressionStatus(state)).toMatchObject({
+       facilityLevel: 3,
+-      maximumPlayableLevel: 4,
++      maximumPlayableLevel: 5,
+       nextFacilityLevel: 4,
+       eligible: false,
+     });

@@ -1,0 +1,668 @@
+{
+  "schemaVersion": 3,
+  "designRevision": 3,
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "date": "2026-10-11",
+  "mode": "built-in image_gen.imagegen only; no CLI/API/model purchases",
+  "workflow": [
+    "Step A: edit the approved 3×3 Wound/Ostomy empty room into one cohesive Gift Shop, using Pediatric Waiting as the finish reference.",
+    "Step B: seven transparent built-in extractions/redraws directly reference that saved concept; no independently invented furniture designs.",
+    "Split the one rear shelving run at its upright dividers into three optional bays. Reuse the concept-derived left/right wall modules at adjoining floor intervals.",
+    "Native Canvas: explicit source rectangles, alpha <8 cleanup, uniform fit with no upscale, measured base-centre/floor registration. No semantic pixel editing.",
+    "Uniform world registration makes the three rear plinths exactly one tile wide and abutting. Other stock overlaps upward in floor-depth order."
+  ],
+  "builtInCalls": 8,
+  "conceptCalls": 1,
+  "fixtureEditCalls": 7,
+  "uniquePreparedSprites": 9,
+  "fixtureRecords": 11,
+  "historicalCalls": 13,
+  "concept": {
+    "file": "concept/gift-shop-concept.png",
+    "sha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+    "prompt": "concept/prompt.txt",
+    "promptSha256": "35e1a71802aeeef7f43aa44ee96f9e490e4ee3cccce8f647d8ead32062ec12e5",
+    "receipt": "concept/generation-receipt.json",
+    "receiptSha256": "21aeb2ff6ecde2736b30773c72870f723a3b09de1b5fbff8c27e6f5bd9ee569e",
+    "transparentBackground": false
+  },
+  "calls": [
+    {
+      "key": "island",
+      "original": "assets/originals/v3/island.png",
+      "originalSha256": "58c58cbbb20b68c0daffd4ff82cbf3f048dca6a00203745e9d01627942b5a0be",
+      "prompt": "assets/prompts/v3/island.txt",
+      "promptSha256": "6d23cbc4e08c02dada849f5ac92fa2cd09da11f49ded40ba6ba76dc4deb2f628",
+      "receipt": "assets/originals/v3/island.receipt.json",
+      "receiptSha256": "99e11a4a7c8522b7ed09de0a4b335dae8cb394a37ce6b79072dd96ab954a61ca",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "back",
+      "original": "assets/originals/v3/back.png",
+      "originalSha256": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+      "prompt": "assets/prompts/v3/back.txt",
+      "promptSha256": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "receiptSha256": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "west",
+      "original": "assets/originals/v3/west.png",
+      "originalSha256": "301bd8d065f50011db911765c05233410177d2eea4cd683d1c17d0b59f31694a",
+      "prompt": "assets/prompts/v3/west.txt",
+      "promptSha256": "45a814f6f1b644133673fa53503b1ae858a54be0ad466b339d71d4932abedaab",
+      "receipt": "assets/originals/v3/west.receipt.json",
+      "receiptSha256": "0d179eab267914aad8ecc265276ebd52f39d09984a70a8b5ec4c1b61f384da16",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "cooler",
+      "original": "assets/originals/v3/cooler.png",
+      "originalSha256": "7352d491db30635cebb4d272cdafda7e4824bdd46d68f85e12d4ffd444b09a9f",
+      "prompt": "assets/prompts/v3/cooler.txt",
+      "promptSha256": "5da66806dd6193a3c1f0a2e4f6967ce0ab82bb1dcb93b434d04186d59f267746",
+      "receipt": "assets/originals/v3/cooler.receipt.json",
+      "receiptSha256": "8cb51ac2b5f900d55803b8271fa87b7f85606fe341c545204c4c207b2a5c0219",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "east",
+      "original": "assets/originals/v3/east.png",
+      "originalSha256": "a5e5b18dea8b2ea5b3de474164845749a0ad55cf6f411403d9c9083a9a093ef2",
+      "prompt": "assets/prompts/v3/east.txt",
+      "promptSha256": "cfff7621e75f794b0af7e7dab20177fd8fa98f40a8602acfd5771589eb01c905",
+      "receipt": "assets/originals/v3/east.receipt.json",
+      "receiptSha256": "793b549646fca1ea27ab65e2ec49f3aba34a87f8669de642042d156fc3f020de",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "entry",
+      "original": "assets/originals/v3/entry.png",
+      "originalSha256": "2165e31b4e33be8ea8965f33d4c9447e7b0f68eb9ccebcc236675359b596b422",
+      "prompt": "assets/prompts/v3/entry.txt",
+      "promptSha256": "2a64c1f5fe0ef369107ec70c30892d4e255ace0462c8df201fae1138e99c94f5",
+      "receipt": "assets/originals/v3/entry.receipt.json",
+      "receiptSha256": "557ea692b1de64522f8d23d34a1841155940f8d8485bb6b1b5d5089e3fbe1057",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "mat",
+      "original": "assets/originals/v3/mat.png",
+      "originalSha256": "48303e8c8edd64dd08850dc5f84e164080d9438fb32bff889b650f6e0f53a4e9",
+      "prompt": "assets/prompts/v3/mat.txt",
+      "promptSha256": "8d9bc83e7e09de192d2333cb531080811d29c6fb39b7a8638f6463cbfde41e20",
+      "receipt": "assets/originals/v3/mat.receipt.json",
+      "receiptSha256": "c726941d32284bb8565a5bb44bf33031527cb39ed113559615d78eba62fe4af8",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    }
+  ],
+  "derivations": [
+    {
+      "id": "base-northLeft",
+      "slots": [
+        "northLeft"
+      ],
+      "source": "assets/originals/v3/back.png",
+      "sourceRegion": [
+        68,
+        0,
+        669,
+        764
+      ],
+      "prompt": "assets/prompts/v3/back.txt",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "uniformTransform": {
+        "scale": 0.7716049382716049,
+        "dx": 6,
+        "dy": 209.37037037037038,
+        "dw": 500,
+        "dh": 504.6296296296296
+      },
+      "anchor": [
+        267,
+        713
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-northLeft.png",
+      "outputSha256": "054b322d5828584aa9357a11c55060f2291ceeac728d19fbdd4d2f26131add88"
+    },
+    {
+      "id": "base-northMiddle",
+      "slots": [
+        "northMiddle"
+      ],
+      "source": "assets/originals/v3/back.png",
+      "sourceRegion": [
+        737,
+        0,
+        568,
+        764
+      ],
+      "prompt": "assets/prompts/v3/back.txt",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "uniformTransform": {
+        "scale": 0.8802816901408451,
+        "dx": 6,
+        "dy": 163.82394366197184,
+        "dw": 500,
+        "dh": 550.1760563380282
+      },
+      "anchor": [
+        256,
+        713
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-northMiddle.png",
+      "outputSha256": "faae2c58d18ab405c0d06c963a7e1dcdd77755631604ff4884ac03680bb2a725"
+    },
+    {
+      "id": "base-northRight",
+      "slots": [
+        "northRight"
+      ],
+      "source": "assets/originals/v3/back.png",
+      "sourceRegion": [
+        1305,
+        0,
+        691,
+        764
+      ],
+      "prompt": "assets/prompts/v3/back.txt",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "uniformTransform": {
+        "scale": 0.746268656716418,
+        "dx": 5.999999999999972,
+        "dy": 254.29850746268653,
+        "dw": 500.00000000000006,
+        "dh": 459.70149253731347
+      },
+      "anchor": [
+        249,
+        713
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-northRight.png",
+      "outputSha256": "cbecca4599ea2b50b8105aad4383880f52953756afa98d7d125f49c29a4082bb"
+    },
+    {
+      "id": "base-westRun",
+      "slots": [
+        "westRear",
+        "westMiddle"
+      ],
+      "source": "assets/originals/v3/west.png",
+      "sourceRegion": null,
+      "prompt": "assets/prompts/v3/west.txt",
+      "receipt": "assets/originals/v3/west.receipt.json",
+      "uniformTransform": {
+        "scale": 0.6796657381615598,
+        "dx": 6.000000000000014,
+        "dy": 161.8440111420614,
+        "dw": 243.99999999999997,
+        "dh": 984.1559888579386
+      },
+      "anchor": [
+        108.5,
+        1144
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-westRun.png",
+      "outputSha256": "e34cea829c01bf63b3c6d7a5900e5d5967f59d7c622a4fd0ebebe15fa6410647"
+    },
+    {
+      "id": "base-cooler",
+      "slots": [
+        "westCooler"
+      ],
+      "source": "assets/originals/v3/cooler.png",
+      "sourceRegion": null,
+      "prompt": "assets/prompts/v3/cooler.txt",
+      "receipt": "assets/originals/v3/cooler.receipt.json",
+      "uniformTransform": {
+        "scale": 0.46464646464646464,
+        "dx": 6,
+        "dy": 166.60606060606062,
+        "dw": 276,
+        "dh": 691.3939393939394
+      },
+      "anchor": [
+        101,
+        858
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-cooler.png",
+      "outputSha256": "ee0ec663bb06b42593df80913e4f1c658b857d2336cef255bb53599dfbeb5c72"
+    },
+    {
+      "id": "base-eastRun",
+      "slots": [
+        "eastRear",
+        "eastMiddle"
+      ],
+      "source": "assets/originals/v3/east.png",
+      "sourceRegion": null,
+      "prompt": "assets/prompts/v3/east.txt",
+      "receipt": "assets/originals/v3/east.receipt.json",
+      "uniformTransform": {
+        "scale": 0.5208845208845209,
+        "dx": 6,
+        "dy": 109.19410319410326,
+        "dw": 212,
+        "dh": 780.8058968058967
+      },
+      "anchor": [
+        173.5,
+        889
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-eastRun.png",
+      "outputSha256": "9dff3a1940ddac24acd1a0a0bfc2e6e1ee534c75370dcc87bd2d6775dcedae1d"
+    },
+    {
+      "id": "base-entry",
+      "slots": [
+        "entranceEndcap"
+      ],
+      "source": "assets/originals/v3/entry.png",
+      "sourceRegion": null,
+      "prompt": "assets/prompts/v3/entry.txt",
+      "receipt": "assets/originals/v3/entry.receipt.json",
+      "uniformTransform": {
+        "scale": 0.3787195671776375,
+        "dx": 6,
+        "dy": 33.17042380522997,
+        "dw": 420,
+        "dh": 440.82957619477
+      },
+      "anchor": [
+        223,
+        473
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-entry.png",
+      "outputSha256": "937413ce03ba2b98f0ac6f29dce0783f368df8624fd0d4b121df42d1b08dc102"
+    },
+    {
+      "id": "base-island",
+      "slots": [
+        "mainIsland"
+      ],
+      "source": "assets/originals/v3/island.png",
+      "sourceRegion": null,
+      "prompt": "assets/prompts/v3/island.txt",
+      "receipt": "assets/originals/v3/island.receipt.json",
+      "uniformTransform": {
+        "scale": 0.5834305717619603,
+        "dx": 6,
+        "dy": 90.47141190198363,
+        "dw": 500,
+        "dh": 671.5285880980164
+      },
+      "anchor": [
+        260.5,
+        761
+      ],
+      "anchorKind": "floor",
+      "output": "../assets/processed/v3/base-island.png",
+      "outputSha256": "cf751accad4bb6b1d840f6c17e6ddf9178fcfa4c32a2cf443a04709f948b2522"
+    },
+    {
+      "id": "base-mat",
+      "slots": [
+        "checkoutMat"
+      ],
+      "source": "assets/originals/v3/mat.png",
+      "sourceRegion": [
+        260,
+        230,
+        1260,
+        470
+      ],
+      "prompt": "assets/prompts/v3/mat.txt",
+      "receipt": "assets/originals/v3/mat.receipt.json",
+      "uniformTransform": {
+        "scale": 0.30392156862745096,
+        "dx": 6.000000000000028,
+        "dy": 10.303921568627459,
+        "dw": 371.99999999999994,
+        "dh": 123.39215686274508
+      },
+      "anchor": [
+        192,
+        72
+      ],
+      "anchorKind": "walkable-rug",
+      "output": "../assets/processed/v3/base-mat.png",
+      "outputSha256": "aad524ef5fdc03dfbcf8d5efc9665afa781a242fcefbea458719b82d07de3a07"
+    }
+  ],
+  "classification": [
+    {
+      "id": "northLeft",
+      "label": "Rear left: balloons, plush, cards and mugs",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "walkable": false,
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "northMiddle",
+      "label": "Rear middle: mugs, candles and impulse snacks",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 1,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "walkable": false,
+      "doorOwners": [
+        "N2"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "northRight",
+      "label": "Rear right: magazines, cards and overflowing plush",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 2,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "walkable": false,
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "westRear",
+      "label": "Left rear: joined card rack and flower buckets",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 0,
+        "top": 0.35,
+        "width": 0.38,
+        "height": 0.65
+      },
+      "walkable": false,
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "westMiddle",
+      "label": "Left middle: continuing cards and flowers",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 0,
+        "top": 1,
+        "width": 0.38,
+        "height": 1
+      },
+      "walkable": false,
+      "doorOwners": [
+        "WB"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "westCooler",
+      "label": "Left front: flower cooler and bouquet endcap",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 0,
+        "top": 2,
+        "width": 0.38,
+        "height": 1
+      },
+      "walkable": false,
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "eastRear",
+      "label": "Right rear: magazine/snack shelving and plush",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 2.75,
+        "top": 0.35,
+        "width": 0.25,
+        "height": 0.65
+      },
+      "walkable": false,
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "eastMiddle",
+      "label": "Right middle: continuing stocked shelves",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 2.75,
+        "top": 1,
+        "width": 0.25,
+        "height": 1
+      },
+      "walkable": false,
+      "doorOwners": [
+        "EB"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "entranceEndcap",
+      "label": "Entrance: joined plush bin, flowers and balloons",
+      "classification": "optional",
+      "floorFootprint": {
+        "left": 2.1,
+        "top": 2.35,
+        "width": 0.9,
+        "height": 0.65
+      },
+      "walkable": false,
+      "doorOwners": [
+        "S3",
+        "EC"
+      ],
+      "necessaryFunctions": []
+    },
+    {
+      "id": "mainIsland",
+      "label": "Joined main display and self-service checkout",
+      "classification": "necessary",
+      "floorFootprint": {
+        "left": 0.85,
+        "top": 0.75,
+        "width": 1.1,
+        "height": 1.15
+      },
+      "walkable": false,
+      "doorOwners": [],
+      "necessaryFunctions": [
+        "checkout",
+        "primary flower/plush/card/impulse display"
+      ]
+    },
+    {
+      "id": "checkoutMat",
+      "label": "Checkout mat",
+      "classification": "optional",
+      "floorFootprint": null,
+      "walkable": true,
+      "doorOwners": [],
+      "necessaryFunctions": []
+    }
+  ],
+  "standingSpots": [
+    {
+      "standingSpot": "browse",
+      "characterId": "patient.adult.007",
+      "direction": "east",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.007/stand-east.png",
+      "sha256": "21ac85d4a732c4408394c83a0478643a38460dcbbeb97791dd600cee04f73f43",
+      "sourceScale": 0.7140097402597404,
+      "sourceSize": [
+        160,
+        320
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "altered": false
+    },
+    {
+      "standingSpot": "pay",
+      "characterId": "patient.adult.001",
+      "direction": "north",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.001/stand-north.png",
+      "sha256": "493f37bd75152db23e3d7d1f2394ebabd6737bf95b40f6d2af0cc302adeb6590",
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "altered": false
+    },
+    {
+      "standingSpot": "queue1",
+      "characterId": "patient.adult.004",
+      "direction": "west",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.004/stand-west.png",
+      "sha256": "cd38717c3bf3d359c8754b7158d3e595e123f01a9e4bbd2510e14f47eaeb42da",
+      "sourceScale": 0.7354032905296952,
+      "sourceSize": [
+        160,
+        320
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "altered": false
+    },
+    {
+      "standingSpot": "queue2",
+      "characterId": "patient.adult.006",
+      "direction": "south",
+      "file": "apps/player/public/art/characters/gs026-stills-v1/patient.adult.006/stand-south.png",
+      "sha256": "f2c563bc5ad2669b408b1615ac3ee11808b924c4118895ce3c27c2d9f97dfedc",
+      "sourceScale": 0.6865478271728273,
+      "sourceSize": [
+        160,
+        320
+      ],
+      "floorContactSource": [
+        80,
+        287
+      ],
+      "altered": false
+    }
+  ],
+  "references": [
+    {
+      "path": "tools/room-design/level-4/pediatric-waiting/proof/evidence/native-empty.png",
+      "sha256": "f4d4e20f1c9b7f9bc6f58047b0ac140d7ded6620fe5dba8871e6dddeb4b73911",
+      "role": "Approved room camera/density/finish reference, viewed before the concept edit."
+    },
+    {
+      "path": "tools/room-design/level-4/pediatric-waiting/approval-2026-10-08.md",
+      "sha256": "de79bc0a74407e8582453252480c7b66dd8cf04f80e3074794f23f49d2f639a5",
+      "role": "Owner approval receipt; runtime integration remains separate."
+    },
+    {
+      "path": "tools/room-design/level-4/wound-ostomy/proof/evidence/native-empty.png",
+      "sha256": "032bc8b28ca93c864ffdced1ab9b467691315ee443441fea17103613300a1209",
+      "role": "Approved room camera/density/finish reference, viewed before the concept edit."
+    },
+    {
+      "path": "tools/room-design/level-4/wound-ostomy/approval-2026-10-08.md",
+      "sha256": "76d33e4f952f554ee824314a4daa74e7bb6ba398c62f04bee5c7b4781876a1ea",
+      "role": "Owner approval receipt; runtime integration remains separate."
+    }
+  ],
+  "appearanceDecision": "room.gift_shop appearanceChanges=false: one fixed look at all five upgrade selections.",
+  "priorVersion": {
+    "path": "history/v2",
+    "receipt": "history/v2/ARCHIVE_RECEIPT.json",
+    "files": 417,
+    "overwritten": false
+  },
+  "clinicalContentAdded": false,
+  "runtimeEdits": false,
+  "hashes": {
+    "layout.json": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5",
+    "layout-reconciliation-v3.json": "e57c32a465b193380e182f25a00aa7ef7ef3d9bb4d0048428c52b23e9b73ced4",
+    "assets/generation-manifest.json": "082a09874b31303d59072fefb2550f57f11e6e56392f722a1cd8d038d3be7c34",
+    "assets/registration-v3.json": "e2d176dfadc5ebf697e23233cf13102f40a3d1dc13feb9136f5628421c88c85e",
+    "assets/processed/v3/metadata.json": "7957b0494e241d720bba7e3f4eab2ebb24580be1192f63f8d83524549425b6e3",
+    "stand-in/v3/layout-concept.json": "48929722e87156928e944b2c59de5147239f705575925bfb7ca12f34852b21bf",
+    "proof/index.html": "9077e0227af780de62cc3ef94ddd4a3a3bfc8fac0825e7c0da2d71f6f6755fd0",
+    "proof/lab.js": "57626361b8b7c7e44db424e39cd96b5b903fd57421dce0b15621056b4544fae9",
+    "proof/geometry.mjs": "aaad585ea14ca806a4c88bf75f1adffbc5fdae66b30cc5f86bc86cc4a251ce38",
+    "proof/design-rooms.js": "637e2bb90354e86231fd8403bdfb8c3da3854860adee1a3480ce457445b3e0d7",
+    "proof/proof-manifest.json": "0736f66a8090af937b912077b4d2b6750badf4512d8a10555e43ac9e1c581ed6",
+    "concept/gift-shop-concept.png": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+    "concept/prompt.txt": "35e1a71802aeeef7f43aa44ee96f9e490e4ee3cccce8f647d8ead32062ec12e5",
+    "concept/generation-receipt.json": "21aeb2ff6ecde2736b30773c72870f723a3b09de1b5fbff8c27e6f5bd9ee569e",
+    "assets/originals/v3/island.png": "58c58cbbb20b68c0daffd4ff82cbf3f048dca6a00203745e9d01627942b5a0be",
+    "assets/prompts/v3/island.txt": "6d23cbc4e08c02dada849f5ac92fa2cd09da11f49ded40ba6ba76dc4deb2f628",
+    "assets/originals/v3/island.receipt.json": "99e11a4a7c8522b7ed09de0a4b335dae8cb394a37ce6b79072dd96ab954a61ca",
+    "assets/originals/v3/back.png": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+    "assets/prompts/v3/back.txt": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+    "assets/originals/v3/back.receipt.json": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+    "assets/originals/v3/west.png": "301bd8d065f50011db911765c05233410177d2eea4cd683d1c17d0b59f31694a",
+    "assets/prompts/v3/west.txt": "45a814f6f1b644133673fa53503b1ae858a54be0ad466b339d71d4932abedaab",
+    "assets/originals/v3/west.receipt.json": "0d179eab267914aad8ecc265276ebd52f39d09984a70a8b5ec4c1b61f384da16",
+    "assets/originals/v3/cooler.png": "7352d491db30635cebb4d272cdafda7e4824bdd46d68f85e12d4ffd444b09a9f",
+    "assets/prompts/v3/cooler.txt": "5da66806dd6193a3c1f0a2e4f6967ce0ab82bb1dcb93b434d04186d59f267746",
+    "assets/originals/v3/cooler.receipt.json": "8cb51ac2b5f900d55803b8271fa87b7f85606fe341c545204c4c207b2a5c0219",
+    "assets/originals/v3/east.png": "a5e5b18dea8b2ea5b3de474164845749a0ad55cf6f411403d9c9083a9a093ef2",
+    "assets/prompts/v3/east.txt": "cfff7621e75f794b0af7e7dab20177fd8fa98f40a8602acfd5771589eb01c905",
+    "assets/originals/v3/east.receipt.json": "793b549646fca1ea27ab65e2ec49f3aba34a87f8669de642042d156fc3f020de",
+    "assets/originals/v3/entry.png": "2165e31b4e33be8ea8965f33d4c9447e7b0f68eb9ccebcc236675359b596b422",
+    "assets/prompts/v3/entry.txt": "2a64c1f5fe0ef369107ec70c30892d4e255ace0462c8df201fae1138e99c94f5",
+    "assets/originals/v3/entry.receipt.json": "557ea692b1de64522f8d23d34a1841155940f8d8485bb6b1b5d5089e3fbe1057",
+    "assets/originals/v3/mat.png": "48303e8c8edd64dd08850dc5f84e164080d9438fb32bff889b650f6e0f53a4e9",
+    "assets/prompts/v3/mat.txt": "8d9bc83e7e09de192d2333cb531080811d29c6fb39b7a8638f6463cbfde41e20",
+    "assets/originals/v3/mat.receipt.json": "c726941d32284bb8565a5bb44bf33031527cb39ed113559615d78eba62fe4af8",
+    "assets/processed/v3/base-northLeft.png": "054b322d5828584aa9357a11c55060f2291ceeac728d19fbdd4d2f26131add88",
+    "assets/processed/v3/base-northMiddle.png": "faae2c58d18ab405c0d06c963a7e1dcdd77755631604ff4884ac03680bb2a725",
+    "assets/processed/v3/base-northRight.png": "cbecca4599ea2b50b8105aad4383880f52953756afa98d7d125f49c29a4082bb",
+    "assets/processed/v3/base-westRun.png": "e34cea829c01bf63b3c6d7a5900e5d5967f59d7c622a4fd0ebebe15fa6410647",
+    "assets/processed/v3/base-cooler.png": "ee0ec663bb06b42593df80913e4f1c658b857d2336cef255bb53599dfbeb5c72",
+    "assets/processed/v3/base-eastRun.png": "9dff3a1940ddac24acd1a0a0bfc2e6e1ee534c75370dcc87bd2d6775dcedae1d",
+    "assets/processed/v3/base-entry.png": "937413ce03ba2b98f0ac6f29dce0783f368df8624fd0d4b121df42d1b08dc102",
+    "assets/processed/v3/base-island.png": "cf751accad4bb6b1d840f6c17e6ddf9178fcfa4c32a2cf443a04709f948b2522",
+    "assets/processed/v3/base-mat.png": "aad524ef5fdc03dfbcf8d5efc9665afa781a242fcefbea458719b82d07de3a07"
+  }
+}

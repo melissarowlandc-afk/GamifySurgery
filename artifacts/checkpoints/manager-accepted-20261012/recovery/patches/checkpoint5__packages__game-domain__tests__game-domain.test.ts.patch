@@ -1,0 +1,18 @@
+--- a/packages/game-domain/tests/game-domain.test.ts
++++ b/packages/game-domain/tests/game-domain.test.ts
+@@ -717,6 +717,15 @@
+         requiredRoomDefinitionIds: [],
+         requiredStaffRoleIds: ["staff.app"],
+         requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],
++        nextFacilityLevel: 5,
++      }),
++      expect.objectContaining({
++        level: 5,
++        minimumClinicalXp: 2000,
++        satisfactionMustBeGreaterThan: 90,
++        minimumAverageStaffMorale: 85,
++        requiredRoomDefinitionIds: [],
++        requiredStaffRoleIds: [],
+         nextFacilityLevel: null,
+       }),
+     ]);

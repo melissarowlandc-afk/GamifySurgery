@@ -1,0 +1,78 @@
+--- a/tools/qa/level-four-rooms.mjs
++++ b/tools/qa/level-four-rooms.mjs
+@@ -12,7 +12,11 @@
+ const server = await createServer({
+   root: player,
+   configFile: resolve(player, "vite.config.ts"),
+-  server: { host: "127.0.0.1", port: 5184, strictPort: true, middlewareMode: check },
++  server: { host: "127.0.0.1", port: 5184, strictPort: true, middlewareMode: check,
++    ...(check ? { preTransformRequests: false, ws: false } : {}) },
++  // --check validates only the owned modules. Background discovery/warmup has
++  // no browser to finish its crawl and can strand middleware-only shutdown.
++  ...(check ? { optimizeDeps: { noDiscovery: true, include: [] } } : {}),
+   plugins: [{
+     name: "level-four-rooms-qa-entry",
+     configureServer(vite) {
+@@ -32,8 +36,43 @@
+   try {
+     const entry = await server.transformRequest(bootstrap);
+     if (!entry?.code.includes("Level 4 room QA requires")) throw new Error("QA bootstrap did not transform.");
+-    console.log("QA entry transform PASS: production Vite config/plugins; dedicated bootstrap; no listener or browser storage.");
++    const levelFive = await server.transformRequest(`/@fs/${resolve(repo, "tools/qa/level-five-state-bootstrap.ts").replaceAll("\\", "/")}`);
++    const fixture = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-state.ts").replaceAll("\\", "/")}`);
++    const rooms = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-rooms.ts").replaceAll("\\", "/")}`);
++    const executive = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-executive.ts").replaceAll("\\", "/")}`);
++    const gifts = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-gift-retail.ts").replaceAll("\\", "/")}`);
++    const goals = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-progression.ts").replaceAll("\\", "/")}`);
++    const inspections = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-inspection.ts").replaceAll("\\", "/")}`);
++    const inspectors = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-inspectors.ts").replaceAll("\\", "/")}`);
++    const reportCard = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-report-card.ts").replaceAll("\\", "/")}`);
++    const economy = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-economy-qa.ts").replaceAll("\\", "/")}`);
++    const integration = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-integration-qa.ts").replaceAll("\\", "/")}`);
++    const launch = await server.transformRequest(`/@fs/${resolve(repo, "tools/qa/level-five-launch-bootstrap.ts").replaceAll("\\", "/")}`);
++    const launchFixture = await server.transformRequest(`/@fs/${resolve(repo, "tests/fixtures/level-five-launch.ts").replaceAll("\\", "/")}`);
++    if (!levelFive?.code.includes("bootstrapLevelFiveStateQa") || !fixture?.code.includes("createLevelFiveStateQaState")) throw new Error("Level 5 QA helper/fixture did not transform.");
++    if (!rooms?.code.includes("placeLevelFiveRoomsQaRooms")) throw new Error("Level 5 room fixture did not transform.");
++    if (!executive?.code.includes("prepareLevelFiveExecutiveQaState")) throw new Error("Level 5 Executive fixture did not transform.");
++    if (!gifts?.code.includes("prepareLevelFiveGiftQaState")) throw new Error("Level 5 Gift Shop fixture did not transform.");
++    if (!goals?.code.includes("prepareLevelFiveProgressionQaState")) throw new Error("Level 5 goals fixture did not transform.");
++    if (!inspections?.code.includes("createLevelFiveInspectionQaState")) throw new Error("Level 5 inspection fixture did not transform.");
++    if (!inspectors?.code.includes("createLevelFiveInspectorsQaState")) throw new Error("Level 5 inspector fixture did not transform.");
++    if (!reportCard?.code.includes("createLevelFiveReportQaState")) throw new Error("Level 5 report/finish fixture did not transform.");
++    if (!economy?.code.includes("createLevelFiveEconomyQaState")) throw new Error("Level 5 economy fixture did not transform.");
++    if (!integration?.code.includes("createLevelFiveIntegrationQaState")) throw new Error("Level 5 integration fixture did not transform.");
++    if (!launch?.code.includes("bootstrapLevelFiveLaunchQa") || !launchFixture?.code.includes("createLevelFiveLaunchQaState")) throw new Error("Level 5 ordinary launch fixture did not transform.");
+   } finally { await server.close(); }
++  console.log("QA entry transform PASS: production Vite config/plugins; dedicated bootstrap; no listener or browser storage.");
++  console.log("Level 5 QA transform PASS: opt-in helper and synthetic state fixtures; no listener or browser storage.");
++  console.log("Level 5 M2 rooms transform PASS: real placement/doors; isolated Founder appearance previews; no listener or browser storage.");
++  console.log("Level 5 M4 Executive transform PASS: real hire/training-room fixture; both approved looks; no seeded awards or savings.");
++  console.log("Level 5 M5 Gift Shop transform PASS: real quotes/queue; separate per-facility demand; no seeded paid receipts.");
++  console.log("Level 5 M6 goals transform PASS: QA-only Level 4 Advance; three live goals; durable unlock without booking/scoring.");
++  console.log("Level 5 M7a inspection transform PASS: booking/window/event evidence, final-minute scored and incomplete QA; no listener or browser storage.");
++  console.log("Level 5 M7b inspector transform PASS: actual booking/preparation/travel, all ten accepted looks; no listener or browser storage.");
++  console.log("Level 5 M7c report/finish transform PASS: reducer-earned first report and durable dismissal; no listener or browser storage.");
++  console.log("Level 5 M8 economy transform PASS: funded zero-XP clinic and actual last-minute audit checkpoint; no listener or browser storage.");
++  console.log("Level 5 M9 integration transform PASS: reducer-earned journey checkpoints; no listener or browser storage.");
++  console.log("Level 5 M10 launch transform PASS: ordinary shipped context, ready/unmet Level 4 and Level 5 checkpoints; no listener or browser storage.");
+ } else {
+ await server.listen();
+ console.log("M3 room-only QA: http://127.0.0.1:5184/level4-rooms-qa.html");
+@@ -45,6 +84,17 @@
+ console.log("Variety-3 outside-plan review: http://127.0.0.1:5184/level4-rooms-qa.html?apps=variety3 (press Play; open David Parker's chart)");
+ console.log("M8 mature Level 3: http://127.0.0.1:5184/level4-rooms-qa.html?state=l3ready (open Goals; click Advance to Level 4)");
+ console.log("M8 one witness short: http://127.0.0.1:5184/level4-rooms-qa.html?state=l4almost (press Play; finish the wound visit; check Goals and reload)");
++console.log("M1 Level 5 state QA: http://127.0.0.1:5184/level4-rooms-qa.html?level5=pre-goal&layout=phone (dedicated disposable Level 5 profile; synthetic state only; retain ?level5= on reload)");
++console.log("M2 Level 5 rooms: http://127.0.0.1:5184/level4-rooms-qa.html?level5=rooms&layout=phone (add &founderTier=1..5 for separate appearance campaigns; same URL on reload)");
++console.log("M4 Level 5 Executive: http://127.0.0.1:5184/level4-rooms-qa.html?level5=executive&layout=phone (Play for the real daily round; executive-look2 selects the second approved look; executive-hire starts without a hire)");
++console.log("M5 Gift Shop: http://127.0.0.1:5184/level4-rooms-qa.html?level5=gift&layout=desktop (phone: &layout=phone; gift-queue for three accepted shoppers; gift-suppliers for a real Executive round)");
++console.log("M6 goals: http://127.0.0.1:5184/level4-rooms-qa.html?level5=goals&layout=desktop (phone: &layout=phone; l4-ready for old-save Advance; goals-ready/goal boundaries; goals-unlocked/goals-declined for durable readiness)");
++console.log("M7a inspections: http://127.0.0.1:5184/level4-rooms-qa.html?level5=inspection-ready&layout=desktop (phone: &layout=phone; inspection-executive, inspection-running, inspection-final and inspection-incomplete)");
++console.log("M7b inspectors: http://127.0.0.1:5184/level4-rooms-qa.html?level5=inspectors&layout=desktop (phone: &layout=phone; inspectors-arriving shows the real team arrival; same campaign resumes on reload)");
++console.log("M7c report/finish: http://127.0.0.1:5184/level4-rooms-qa.html?level5=inspection-finish&layout=desktop (phone: &layout=phone; inspection-report-card starts after durable Keep playing; same campaign resumes on reload)");
++console.log("M8 economy: http://127.0.0.1:5184/level4-rooms-qa.html?level5=economy&layout=desktop (phone: &layout=phone; economy-inspection resumes the real audit at 2999/3000; same campaign resumes on reload)");
++console.log("M9 integration: http://127.0.0.1:5184/level4-rooms-qa.html?level5=integration-final&layout=desktop (phone: &layout=phone; integration-l4/build/preparing/running/finish/repeat-final/repeat are real journey checkpoints)");
++console.log("M10 ordinary launch: http://127.0.0.1:5184/level4-rooms-qa.html?level5=launch-ready&layout=desktop (phone: &layout=phone; launch-unmet/build/running/final/finish; ordinary / resumes without a QA balance override)");
+ console.log("Disposable origin; separate saves from START_GAME.cmd / http://127.0.0.1:4173.");
+ console.log("Use only the QA URL for this Level 4 fixture, including reloads. Ctrl+C stops the QA server.");
+ }

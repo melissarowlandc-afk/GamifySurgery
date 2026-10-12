@@ -1,0 +1,81 @@
+{
+  "recordedAt": "2026-10-12T14:25:55.061924+00:00",
+  "configuration": "unchanged checked-in workspace configs; --pool=threads; no exclusions, installs, timeout overrides or alternate configs",
+  "environment": {
+    "NODE_OPTIONS": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "NO_COLOR": "1"
+  },
+  "checks": [
+    {
+      "title": "Full balance",
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exitCode": 0,
+      "log": "balance-full.log"
+    },
+    {
+      "title": "Full game-domain",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": "domain-full.log"
+    },
+    {
+      "title": "Full clinical-content",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exitCode": 0,
+      "log": "content-full.log"
+    },
+    {
+      "title": "Full player",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": "player-full-final.log"
+    },
+    {
+      "title": "Root typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-final.log"
+    },
+    {
+      "title": "Player build",
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": "build-final.log"
+    }
+  ],
+  "focusedPlayer": {
+    "files": 6,
+    "passed": 55,
+    "log": "focused-final.log"
+  },
+  "focusedDomain": {
+    "files": 1,
+    "passed": 6,
+    "log": "domain-focused.log"
+  },
+  "qaTransform": {
+    "command": "node tools/qa/level-four-rooms.mjs --check",
+    "exitCode": 0,
+    "log": "qa-transform.log"
+  },
+  "qaTypecheck": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit -p .local-dev/level5-m7c/qa-tsconfig.json",
+    "exitCode": 0,
+    "output": ""
+  },
+  "qaSmoke": {
+    "command": "node --import ./.local-dev/level5-m6/source-loader.mjs .local-dev/level5-m7c/qa-smoke.mjs",
+    "exitCode": 0,
+    "log": "qa-smoke.log"
+  },
+  "qaHttp": {
+    "command": "node .local-dev/level5-m7c/qa-http.mjs",
+    "exitCode": 0,
+    "evidence": "qa-http.json"
+  },
+  "browser": {
+    "launched": false,
+    "error": "Error: browserType.launch: spawn EPERM\nCall log:\n\u001b[2m  - <launching> C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\rowla\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-m61hCw --remote-debugging-pipe --no-startup-window\u001b[22m\n",
+    "storageAccessed": false
+  }
+}

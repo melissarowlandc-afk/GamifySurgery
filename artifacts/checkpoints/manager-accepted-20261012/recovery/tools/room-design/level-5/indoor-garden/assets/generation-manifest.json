@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 2,
+  "room": "indoor-garden",
+  "tool": "image_gen.imagegen",
+  "builtInCalls": 11,
+  "concept": {
+    "file": "concept/indoor-garden-concept.png",
+    "sha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+    "prompt": "concept/prompt.txt",
+    "promptSha256": "83c9bd91ec6ddee52d72ec4e4157bc576821cb0aa4d1bbff9f0decb149c7b5b6",
+    "receipt": "concept/generation-receipt.json",
+    "receiptSha256": "97b629231b5ef530ba8d24ee34612909b4a612343beb22a37999d598c6d172d4"
+  },
+  "calls": [
+    {
+      "id": "rear",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-d4134e7b-21e3-41ef-b035-4e5a46e454f1.png",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "trellis",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-5f5ce0db-f877-4e6b-9b9a-ab6e5efb98d1.png",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "west",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-61f72340-b376-4a8f-bcf6-185665a087eb.png",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "east",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-544ece44-3f88-4116-a475-09771fb7d806.png",
+      "receipt": "assets/originals/v1/east.receipt.json",
+      "selected": false
+    },
+    {
+      "id": "east-clean",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c71b2a22-0147-469d-afb0-13eb3f52cbc7.png",
+      "receipt": "assets/originals/v1/east-clean.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "chairEast",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-da9ab0b0-3f88-4cb5-819c-37c1d30eb5df.png",
+      "receipt": "assets/originals/v1/chairEast.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "chairWest",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c300ed0b-3bf4-4670-a9c5-df5e54deafb5.png",
+      "receipt": "assets/originals/v1/chairWest.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "fountain",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-78aed674-71da-45f9-8103-4d54b193f966.png",
+      "receipt": "assets/originals/v1/fountain.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "front",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-de8fd952-05d4-477d-bedb-ca24e50968c5.png",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "selected": true
+    },
+    {
+      "id": "path",
+      "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c664fd9b-0f2c-46d5-b67d-5360d514ea29.png",
+      "receipt": "assets/originals/v1/path.receipt.json",
+      "selected": true
+    }
+  ],
+  "assets": [
+    {
+      "id": "base-west",
+      "slot": "west1",
+      "slots": [
+        "west1",
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/west.png",
+      "originalSha256": "029eb7f0f32f214058d7c30120cedeaef8ab845e61f920ae11c4cef6648943b7",
+      "prompt": "assets/prompts/v1/west.txt",
+      "promptSha256": "a7444f54c24f214671ea9cb1992db7080526dfa74ba6aa757fbecc6113f7fe51",
+      "receipt": "assets/originals/v1/west.receipt.json",
+      "receiptSha256": "aeed892687cd88822bf86fe86f855e9f452687a1b00ebf4dc241499082ba4bcc",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "west"
+    },
+    {
+      "id": "base-east",
+      "slot": "east1",
+      "slots": [
+        "east1",
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/east-clean.png",
+      "originalSha256": "a16b6c784bbccea974310a75edb94057550ef45e42315a8ee9d59c999490a5c7",
+      "prompt": "assets/prompts/v1/east-clean.txt",
+      "promptSha256": "e05e66f752e1579eb9c74b0074e3b465ed8d434c21981f8f9dd409e71b23ece3",
+      "receipt": "assets/originals/v1/east-clean.receipt.json",
+      "receiptSha256": "ab8ef39d2bc37c7993b55adcde8a2146d453dc2738877bb046b20d83225b8c12",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "east-clean"
+    },
+    {
+      "id": "base-fountain",
+      "slot": "fountain",
+      "slots": [
+        "fountain"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/fountain.png",
+      "originalSha256": "86cce54f387cc1da4573c9e77bae74ded4209b055faf4c0c00bfe823608302e0",
+      "prompt": "assets/prompts/v1/fountain.txt",
+      "promptSha256": "bd875538bf6cf773d86823f81bd47056165d982b0799561155a60319ca534304",
+      "receipt": "assets/originals/v1/fountain.receipt.json",
+      "receiptSha256": "5811637b829aab9fb4643d042bdd32cda73753bd38612fcf54936a44784deb11",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "fountain"
+    },
+    {
+      "id": "base-path",
+      "slot": "stonePath",
+      "slots": [
+        "stonePath"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/path.png",
+      "originalSha256": "ca69731888e6d0061a3c387665921cc0b269a9a5fd5bd713cddeecd34b9e0542",
+      "prompt": "assets/prompts/v1/path.txt",
+      "promptSha256": "ac2e236dce2e9ee51069c619e38d8a9850bc04d200410ed6460efdd857e53198",
+      "receipt": "assets/originals/v1/path.receipt.json",
+      "receiptSha256": "1772160ecfb257d9d5e78db5be6461c83eaf9fdbf034ff4e14086fd843b6fb57",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "path",
+      "sourceRegion": [
+        80,
+        85,
+        1082,
+        1082
+      ]
+    },
+    {
+      "id": "base-chairEast",
+      "slot": "leftSeat",
+      "slots": [
+        "leftSeat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/chairEast.png",
+      "originalSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2",
+      "prompt": "assets/prompts/v1/chairEast.txt",
+      "promptSha256": "ece750b64cddc22d407caa53046c474e59aff67fe9f1a81ac6a529553fe06c58",
+      "receipt": "assets/originals/v1/chairEast.receipt.json",
+      "receiptSha256": "8a37633b831ad7ea33cbdb01f966e5c118611519650583cc73a1ae670518cb22",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "chairEast",
+      "sourcePoints": {
+        "seat": [
+          610,
+          650
+        ],
+        "frontRegions": [
+          [
+            295,
+            611,
+            682,
+            105
+          ],
+          [
+            254,
+            707,
+            100,
+            412
+          ],
+          [
+            878,
+            700,
+            96,
+            426
+          ]
+        ],
+        "seatRisePixels": 45.20711477584916
+      }
+    },
+    {
+      "id": "base-chairWest",
+      "slot": "rightSeat",
+      "slots": [
+        "rightSeat"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/chairWest.png",
+      "originalSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e",
+      "prompt": "assets/prompts/v1/chairWest.txt",
+      "promptSha256": "3a6293be25e9eea555e4c945cbde853dbfc09461be9701345315456e69738524",
+      "receipt": "assets/originals/v1/chairWest.receipt.json",
+      "receiptSha256": "58bdcd2c7c063f5dc29aa587162d963c567e71fdb1e0d7d0764770710934da9c",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "chairWest",
+      "sourcePoints": {
+        "seat": [
+          750,
+          650
+        ],
+        "frontRegions": [
+          [
+            420,
+            607,
+            610,
+            89
+          ],
+          [
+            402,
+            690,
+            88,
+            449
+          ],
+          [
+            958,
+            694,
+            90,
+            445
+          ]
+        ],
+        "seatRisePixels": 44.13541361763235
+      }
+    },
+    {
+      "id": "base-north1",
+      "slot": "north1",
+      "slots": [
+        "north1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-trellis1",
+      "slot": "trellis1",
+      "slots": [
+        "trellis1"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-north2",
+      "slot": "north2",
+      "slots": [
+        "north2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-trellis2",
+      "slot": "trellis2",
+      "slots": [
+        "trellis2"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-north3",
+      "slot": "north3",
+      "slots": [
+        "north3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-trellis3",
+      "slot": "trellis3",
+      "slots": [
+        "trellis3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-north4",
+      "slot": "north4",
+      "slots": [
+        "north4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/rear.png",
+      "originalSha256": "811fd787b7ecf54bac6f5d4e41f37f6a8f59aa4e1526c3b5dd291c00e5fd05f6",
+      "prompt": "assets/prompts/v1/rear.txt",
+      "promptSha256": "6b41f57e073614301baf7adc368cd6c5e49b54997a33f0ef2988bec485203346",
+      "receipt": "assets/originals/v1/rear.receipt.json",
+      "receiptSha256": "7dd088c3801c5572470fc92d8e75b6022ef851c5aa9cbb11213ec58fa81bbb48",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "rear",
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "floor": [
+          271.5,
+          634
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-trellis4",
+      "slot": "trellis4",
+      "slots": [
+        "trellis4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/trellis.png",
+      "originalSha256": "a8d95af214024a7fede21f976b53a445bdacb0e6ca7e0b3fb7e65e0e4631bd57",
+      "prompt": "assets/prompts/v1/trellis.txt",
+      "promptSha256": "0a6c1026f9b297cc320339f6a6c7e74d4006c8a6af204fdd91b9309fc6eaf1eb",
+      "receipt": "assets/originals/v1/trellis.receipt.json",
+      "receiptSha256": "9431e879ed0eb1ce70f1b4ab36e182a19e02b22bfa3d8f9c3bcc7f68792cab3d",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "trellis",
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "sourcePoints": {
+        "wallTop": [
+          271.5,
+          150
+        ]
+      },
+      "uniformScale": 0.9208103130755064
+    },
+    {
+      "id": "base-southLeft",
+      "slot": "south1",
+      "slots": [
+        "south1",
+        "south3"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "d1dfea22217d8d9a47247829efc6a31e1ca053782e214cfd46e5f191d660f763",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "front",
+      "sourceRegion": [
+        34,
+        0,
+        854,
+        887
+      ],
+      "sourcePoints": {
+        "floor": [
+          427,
+          840
+        ]
+      },
+      "uniformScale": 0.585480093676815,
+      "revisionBasis": "Owner-requested continuous south row. Adjacent halves of the unchanged generated front original share the same source floor line and one-tile display width; no new generation or nonuniform stretch."
+    },
+    {
+      "id": "base-southRight",
+      "slot": "south2",
+      "slots": [
+        "south2",
+        "south4"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "original": "assets/originals/v1/front.png",
+      "originalSha256": "7c5aa2a027cfc63d2172f1938291fbfeb9702a482768fc2b6897b87806e4dcee",
+      "prompt": "assets/prompts/v1/front.txt",
+      "promptSha256": "dd016565964ccdb336df86e4c2bc822354e405d92fafee0398d885444c88dcb1",
+      "receipt": "assets/originals/v1/front.receipt.json",
+      "receiptSha256": "d1dfea22217d8d9a47247829efc6a31e1ca053782e214cfd46e5f191d660f763",
+      "conceptReferenceSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+      "source": "front",
+      "sourceRegion": [
+        888,
+        0,
+        855,
+        887
+      ],
+      "sourcePoints": {
+        "floor": [
+          427.5,
+          840
+        ]
+      },
+      "uniformScale": 0.5847953216374269,
+      "revisionBasis": "Owner-requested continuous south row. Adjacent halves of the unchanged generated front original share the same source floor line and one-tile display width; no new generation or nonuniform stretch."
+    }
+  ],
+  "designRevision": 2,
+  "newBuiltInCalls": 0
+}

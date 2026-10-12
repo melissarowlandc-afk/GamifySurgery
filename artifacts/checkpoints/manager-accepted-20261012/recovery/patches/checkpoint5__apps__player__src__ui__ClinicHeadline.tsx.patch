@@ -1,0 +1,15 @@
+--- a/apps/player/src/ui/ClinicHeadline.tsx
++++ b/apps/player/src/ui/ClinicHeadline.tsx
+@@ -1,9 +1,11 @@
+ import { useEffect, useRef, useState } from "react";
+ import type { MessageBoardItemView, NeedsYouItemView } from "./types";
++import { LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID } from "@gamify-surgery/balance-config";
+ 
+ export function clinicHeadlineCandidates(items: MessageBoardItemView[], needs: NeedsYouItemView[]) {
+   return [
+-    ...items.filter((item) => item.id !== "event.facility-level-4-complete")
++    ...items.filter((item) => item.id !== "event.facility-level-4-complete" &&
++      item.id !== LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID && item.id !== `${LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID}.tip`)
+       .map((item) => ({ id: item.id, text: item.message, tick: item.sortKey ?? 0 })),
+     ...needs.map((item) => ({ id: item.id, text: item.title, tick: item.sortKey })),
+   ].sort((left, right) => right.tick - left.tick);

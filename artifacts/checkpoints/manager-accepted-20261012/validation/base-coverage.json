@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "sharedPatchTargets": 105,
+  "wholeOwnedTargets": 2628,
+  "firstRecoverableStates": [
+    {
+      "path": "packages/game-domain/src/departure-risk-alerts.ts",
+      "intakeSha256": "b206e304aad57e83a2c01b547bf6888b0e6ad2ccc85b18642f23c57f28b62203",
+      "currentSha256": "6972d70f397b2827d94b790a821edb9936173ba3991dd1d4debbbe4f128b62ac",
+      "limitation": "No HEAD/prior-archive target bytes exist; accepted current file is the first recoverable whole state. Earlier missing bytes are not fabricated."
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrade-support.ts",
+      "intakeSha256": "29da1590758afc63f89f9661d804f37e9755a348630f04989025185f445a6b16",
+      "currentSha256": "98d9602cb2a1f54a40b2b06b033d7f06ffc92801ed836b773ab44dff0c190524",
+      "limitation": "No HEAD/prior-archive target bytes exist; accepted current file is the first recoverable whole state. Earlier missing bytes are not fabricated."
+    }
+  ],
+  "baselineResolution": "Latest accepted target from four chronological prior archives, otherwise baseline HEAD. Intake hashes are acceptance evidence, never invented patch bases."
+}

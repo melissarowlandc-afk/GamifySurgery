@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 3,
+  "ownerDirection": {
+    "date": "2026-10-10",
+    "quote": "The executive office should be 3x2 (can't be bigger than the founder [3x3]), but the rest of it looks good.",
+    "footprint": [
+      3,
+      2
+    ],
+    "artDecision": "Reuse the existing corporate assets and fixed base appearance."
+  },
+  "sourceLayout": "history/4x3-20261010/layout.json",
+  "sourceLayoutSha256": "39a55e5c50c9e18f87a3486ae8ba1ccfa90f727bd2b818fb858af6e3b7190355",
+  "changes": [
+    {
+      "kind": "footprint",
+      "from": [
+        4,
+        3
+      ],
+      "to": [
+        3,
+        2
+      ]
+    },
+    {
+      "kind": "remove-meeting-bay",
+      "pieces": [
+        "meetingTable",
+        "meetingChair",
+        "meetingSouth"
+      ]
+    },
+    {
+      "kind": "compact-and-reposition",
+      "pieces": [
+        "desk",
+        "executiveChair",
+        "visitorChair",
+        "shelf",
+        "rug",
+        "decor",
+        "art",
+        "accent"
+      ],
+      "basis": "Owner-authorized footprint reduction; original art and adult scale retained."
+    },
+    {
+      "kind": "door-ownership",
+      "basis": "Recomputed against the unchanged 0.55T depth / 0.12T inset doorway zones; chair foregrounds and sitters follow chair visibility."
+    }
+  ],
+  "layoutSha256": "a0b9b9a04894915fe0c0847f4381aade060b4d376f6be7aaa2c94f910adb0ed2",
+  "approval": null
+}

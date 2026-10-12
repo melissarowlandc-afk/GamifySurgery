@@ -1,0 +1,10 @@
+--- a/apps/player/src/ui/ChartPanel.tsx
++++ b/apps/player/src/ui/ChartPanel.tsx
+@@ -1035,6 +1035,7 @@
+       </header>
+ 
+       <div className="cs-scroll" ref={scrollRef} key={`${chart.id}.${showingBack ? "back" : "front"}`}>
++        {chart.executiveComfortLabel ? <p>{chart.executiveComfortLabel}</p> : null}
+         {showingBack ? (
+           <div className="cs-back">
+             {chart.clinicalReview ? (

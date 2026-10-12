@@ -1,0 +1,95 @@
+--- a/apps/player/src/session/characterActivityPresentation.ts
++++ b/apps/player/src/session/characterActivityPresentation.ts
+@@ -18,6 +18,7 @@
+   type GameState,
+   type GridPoint,
+   type PlacedRoom,
++  type PatientAmenityTripState,
+   type RetailOperationState,
+   type ServiceOperationState,
+ } from "@gamify-surgery/game-domain";
+@@ -27,6 +28,7 @@
+   FacilityCharacterRef,
+ } from "../facility/types";
+ import { getFounderActivityLabel } from "./founderActivityPresentation";
++import { createInspectionActorViews } from "./inspectionActorViewModels";
+ 
+ /*
+  * Short "what are they doing" text for the map info box (owner request,
+@@ -72,6 +74,14 @@
+ }
+ 
+ export function describeRetailTrip(state: GameState, operation: RetailOperationState): string {
++  if (operation.giftCheckout) {
++    if (operation.resourceWaitReason) return operation.resourceWaitReason;
++    if (operation.status === "walking_to_outlet") return operation.giftCheckout.contactId === "pay" ? "Walking to the Gift Shop counter" : "Walking to the Gift Shop queue";
++    if (operation.status === "queued") return "In line at the Gift Shop";
++    if (operation.status === "purchasing") return `Self-service gift checkout · ${Math.max(0, (operation.purchaseEndsAtFacilityTick ?? state.facilityTick) - state.facilityTick)} min remaining`;
++    if (operation.status === "returning") return "Walking back from the Gift Shop";
++    return "Leaving the Gift Shop";
++  }
+   const outlet = roomById(state, operation.outletRoomInstanceId);
+   const place = (outlet && OUTLET_PLACES[outlet.roomDefinitionId]) ?? theRoom(outlet, "the shop");
+   switch (operation.status) {
+@@ -136,9 +146,17 @@
+   });
+ }
+ 
++function describeGardenRest(trip: Extract<PatientAmenityTripState, { amenityKind: "garden" }>, tick: number): string {
++  if (trip.returnBlocked) return "Waiting for a garden exit to reopen";
++  return trip.status === "walking_to_amenity" ? "Walking to the Indoor Garden"
++    : trip.status === "returning" ? "Walking back from the garden"
++    : `Garden rest ? ${Math.max(0, (trip.dwellEndsAtFacilityTick ?? tick) - tick)} min left ? +${trip.gardenSatisfactionPoints} satisfaction on completion`;
++}
++
+ function describePatient(state: GameState, encounter: EncounterState): string {
+   const bathroom = getPatientAmenityTrip(state, "encounter", encounter.id);
+   if (bathroom) {
++    if (bathroom.amenityKind === "garden") return describeGardenRest(bathroom, state.facilityTick);
+     return bathroom.status === "walking_to_amenity"
+       ? "Walking to the bathroom"
+       : bathroom.status === "using_amenity"
+@@ -220,9 +238,12 @@
+       return `${there ? label : `Walking to ${label.toLowerCase()}`} · ${operation?.displayName ?? "patient"}`;
+     }
+     case "participate_qi_discussion": return "In a team discussion";
+-    case "take_break": return there ? "On break" : "Walking to the break room";
++    case "take_break": return target?.roomDefinitionId === "room.staff_gym"
++      ? there ? `Gym break · ${task.workMinutesRemaining} min left · +${task.roomUpgradeBreakBenefit?.moraleGain ?? 5} morale on completion` : "Walking to the Staff Gym"
++      : there ? "On break" : "Walking to the break room";
+     case "repair_room": return there ? `Repairing ${theRoom(target, "a room")}` : `Walking to repair ${theRoom(target, "a room")}`;
+     case "review_ambulatory_qi": return "Reviewing surgery quality";
++    case "daily_management_round": return there ? `Daily management round · ${task.workMinutesRemaining} min left` : "Walking to the daily management round";
+     default: return null;
+   }
+ }
+@@ -296,6 +317,10 @@
+   character: FacilityCharacterRef,
+ ): FacilityCharacterDescription | null {
+   switch (character.kind) {
++    case "inspector": {
++      const actor = createInspectionActorViews(state).find(actor => actor.instanceId === character.id);
++      return actor ? { name: "Inspection agent", activity: actor.activity } : null;
++    }
+     case "founder":
+       return { name: withRole(state.founder.displayName, "Founder"), activity: describeFounder(state) };
+     case "staff": {
+@@ -325,7 +350,7 @@
+         name: withRole(operation.displayName, operation.clinicVisit
+           ? `${operation.clinicVisit.demographics.ageYears}-year-old ${operation.clinicVisit.demographics.sexLabel.toLowerCase()} · ${operation.clinicVisit.kind === "mri" ? "MRI visitor" : operation.clinicVisit.kind === "pediatric_consult" ? "Pediatric appointment with parent" : operation.clinicVisit.kind === "wound_care" ? "Wound care appointment" : operation.clinicVisit.kind === "ostomy_support" ? "Ostomy support appointment" : "Clinic appointment"}` : "Visitor"),
+         activity: bathroom
+-          ? bathroom.status === "using_amenity" ? "In the bathroom" : "Walking to the bathroom"
++          ? bathroom.amenityKind === "garden" ? describeGardenRest(bathroom, state.facilityTick) : bathroom.status === "using_amenity" ? "In the bathroom" : "Walking to the bathroom"
+           : retail ? describeRetailTrip(state, retail) : describeServiceOperation(operation, state.facilityTick),
+       };
+     }
+@@ -352,7 +377,8 @@
+             : companionOf
+               ? `Waiting with ${companionOf.patientDisplayName}`
+               : "Visiting");
+-      return { name: withRole(actor.displayName, character.kind === "companion" ? "Companion" : "Shopper"), activity };
++      return { name: withRole(actor.displayName, actor.giftOnlyVisit ? `Gift shopper · ${actor.giftOnlyVisit.ageYears}, ${actor.giftOnlyVisit.sexLabel}`
++        : character.kind === "companion" ? "Companion" : "Shopper"), activity };
+     }
+     case "ambient":
+       return { name: "Passerby", activity: "Walking by" };

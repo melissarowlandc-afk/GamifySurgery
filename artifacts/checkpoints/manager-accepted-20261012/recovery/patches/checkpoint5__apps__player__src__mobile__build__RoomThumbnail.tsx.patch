@@ -1,0 +1,30 @@
+--- a/apps/player/src/mobile/build/RoomThumbnail.tsx
++++ b/apps/player/src/mobile/build/RoomThumbnail.tsx
+@@ -5,7 +5,7 @@
+ import { mobileBitmapCache, mobileRoomAssets } from "../performance/roomAssets";
+ 
+ /** Small composites of the existing approved art; no new assets or desktop loads. */
+-export function RoomThumbnail({ definitionId, onVisible }: { definitionId: string; onVisible?: (id: string) => void }) {
++export function RoomThumbnail({ definitionId, upgradeLevel = 1, onVisible }: { definitionId: string; upgradeLevel?: number; onVisible?: (id: string) => void }) {
+   const ref = useRef<HTMLCanvasElement>(null);
+   useEffect(() => {
+     const canvas = ref.current;
+@@ -14,7 +14,9 @@
+     if (!context || !definition) return;
+     let current = true;
+     const room = getApprovedRoomPresentation(definitionId);
+-    const records = resolveApprovedRoomDrawRecords(definitionId, 0);
++    const resolved = resolveApprovedRoomDrawRecords(definitionId, 0, undefined, upgradeLevel);
++    const records = resolved[0]?.assetId.startsWith("level5:")
++      ? [...resolved].sort((a, b) => a.depthKey - b.depthKey) : resolved;
+     const scale = Math.min(144 / definition.width, 88 / (definition.height + 0.8));
+     const ox = (160 - definition.width * scale) / 2; const oy = 12 + 0.8 * scale;
+     context.imageSmoothingEnabled = false;
+@@ -50,6 +52,6 @@
+     }, { threshold: 0.01 });
+     if (observer) observer.observe(canvas); else begin();
+     return () => { current = false; observer?.disconnect(); };
+-  }, [definitionId, onVisible]);
++  }, [definitionId, upgradeLevel, onVisible]);
+   return <canvas className="mobile-room-thumbnail" width={160} height={112} role="img" aria-label={`${getRoomDefinition(definitionId)?.displayName ?? "Room"} art`} ref={ref} />;
+ }

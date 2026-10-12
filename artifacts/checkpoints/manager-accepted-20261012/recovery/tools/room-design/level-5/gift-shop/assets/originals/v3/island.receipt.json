@@ -1,0 +1,15 @@
+{
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction.\nAsset type: transparent floor fixture derived directly from the attached Gift Shop room concept.\nExtract and, only where needed, complete the central joined MAIN DISPLAY + SELF-SERVICE CHECKOUT ISLAND from this concept. Keep its exact design, proportions, game camera, honeywood and sage colors, crisp raster edges and outline weight. It is one compact broad cabinet with a filled rectangular base occupying nearly one floor tile, NOT a small object on thin legs. Back half: dense flowers in silver buckets and the teddy-bear cluster with little plush toys overflowing. Front half: south-facing customer screen and plain payment terminal, crowded blank greeting cards and impulse snacks, shelves of mugs and snacks below, keychains on the side. Keep neighbors within this one island overlapping naturally. Show a little top surface with the same elevated orthographic view, horizontal front edge and straight cabinet sides, no isometric rotation.\nRemove everything outside this island: no room, walls, floor, mat, shadow ellipse, other shelves, people or labels. Preserve the entire cabinet down to its continuous plinth, do not crop it. The floor base must be broad and visually filled, roughly as wide as the top. Actual transparent alpha around the complete sprite. No readable text, no brands, no added decorative pieces. Redraw only occluded edges needed for a clean cutout. This must remain recognizably the central island of the supplied ROOM-FIRST concept.",
+    "referenced_image_paths": [
+      "C:/Users/rowla/Projects/GamifySurgery/tools/room-design/level-5/gift-shop/concept/gift-shop-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12af7-aa30-7801-8d00-f057fc9f101c as C:\\Users\\rowla\\.codex\\generated_images\\01a12af7-aa30-7801-8d00-f057fc9f101c\\exec-716db9a2-a758-4fbd-8618-cc2c910b359a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "sourceFile": "C:\\Users\\rowla\\.codex\\generated_images\\01a12af7-aa30-7801-8d00-f057fc9f101c\\exec-716db9a2-a758-4fbd-8618-cc2c910b359a.png",
+  "workspaceCopy": "assets/originals/v3/island.png",
+  "derivation": "Built-in edit of concept/gift-shop-concept.png",
+  "note": "Actual tool call; inline image/base64 omitted."
+}

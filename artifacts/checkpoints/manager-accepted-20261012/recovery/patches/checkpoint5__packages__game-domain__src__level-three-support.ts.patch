@@ -1,0 +1,107 @@
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -1,10 +1,12 @@
+ import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { getExecutiveDeskLocation } from "./executive-management";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getPeriopNurseAttentionQueue } from "./periop-nurse-attention";
+ import { getRadiologistReadingStation } from "./reading-stations";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingWorkMinutes } from "./employee-training-effects";
+ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
++import { findLevelFiveSupportExitPath, findLevelFiveSupportPath, getEmployeeEffectiveMorale, getLevelFiveSupportRoomAt } from "./level-five-support";
+ import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
+ import { getRoomNavigableTiles, getRoomNavigationAnchor } from "./spatial";
+ import { bindRoomUpgradeSupportWork, createEmployeeRoomUpgradeSupportWork, createRoomUpgradeBreakBenefit, createRoomUpgradeSupportWork } from "./room-upgrade-support";
+@@ -47,8 +49,9 @@
+     completedQiReviewCount: reviews.filter((review) => review.status === "completed").length,
+     firstQiReviewCompleted: reviews.some((review) => review.status === "completed"),
+     occupiedBreakSeats: state.employees.flatMap((employee) =>
+-      employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId && employee.facilityTask.seatId
+-        ? [{ roomId: employee.facilityTask.targetId, seatId: employee.facilityTask.seatId, employeeId: employee.id }]
++      employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId && employee.facilityTask.seatId &&
++      employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId !== "room.staff_gym"
++        ? [{ roomId: employee.facilityTask.targetId, seatId: employee.facilityTask.seatId as LevelThreeBreakSeatId, employeeId: employee.id }]
+         : [],
+     ),
+   };
+@@ -159,6 +162,7 @@
+ }
+ 
+ function idle(state: GameState, employee: EmployeeState): boolean {
++  if (state.facilityLevel >= 5 && state.outsideRadiologyReads?.some(read => read.employeeId === employee.id)) return false;
+   return !isEmployeeAwayForTraining(employee) && !employee.facilityTask && employee.pathIndex >= Math.max(0, employee.path.length - 1) &&
+     !state.serviceOperations.some((operation) => operation.status !== "completed" && operation.status !== "cancelled" &&
+       (operation.reservedEmployeeIds.includes(employee.id) || operation.providerReservation?.kind === "employee" && operation.providerReservation.employeeId === employee.id)) &&
+@@ -190,9 +194,17 @@
+     employee.pathIndex = 0;
+     return;
+   }
++  if (getExecutiveDeskLocation(state, employee)) {
++    const route = findLevelFiveSupportPath(state, home, "executiveChair", employee.location, context);
++    employee.path = route?.path ?? [{ ...employee.location }]; employee.pathIndex = 0;
++    employee.lastMovedAtFacilityTick = state.facilityTick;
++    return;
++  }
+   const target = getRadiologistReadingStation(state, employee, context)?.location ?? getRoomNavigationAnchor(home, definition, "staff");
+   const allowedRooms = new Set([home.id]);
+-  const ordinary = findCareAwareFacilityPath(state, context, employee.location, target, allowedRooms);
++  const supportRoom = getLevelFiveSupportRoomAt(state, employee.location);
++  const supportExit = supportRoom ? findLevelFiveSupportExitPath(state, supportRoom, employee.location, target, context, allowedRooms) : [];
++  const ordinary = supportExit.length ? supportExit : findCareAwareFacilityPath(state, context, employee.location, target, allowedRooms);
+   const path = ordinary.length > 0
+     ? ordinary
+     : findRouteFromDisplacedLocationToPoint(state, context, employee.location, target, allowedRooms);
+@@ -222,7 +234,10 @@
+     const task = employee.facilityTask;
+     if (task?.kind !== "take_break") continue;
+     const room = task.targetId ? state.rooms.find((candidate) => candidate.id === task.targetId) : null;
+-    const claim = room?.roomDefinitionId === "room.staff_break" && task.seatId
++    const gym = state.facilityLevel >= 5 && room?.roomDefinitionId === "room.staff_gym" &&
++      (task.seatId === "benchSeat" || task.seatId === "stretchSpot") && task.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" &&
++      state.doors.some(door => door.id === task.supportDoorId && door.roomId === room.id);
++    const claim = (room?.roomDefinitionId === "room.staff_break" || gym) && task.seatId
+       ? `${room.id}:${task.seatId}` : null;
+     if (!claim || !room || !isRoomOperationalForFacilityWork(state, room.id, context) || claimedBreakSeats.has(claim)) {
+       employee.facilityTask = null;
+@@ -402,9 +417,25 @@
+   const founderSeat = getFounderBreakSeatClaim(state);
+   if (founderSeat) occupied.add(`${founderSeat.roomId}:${founderSeat.seatId}`);
+   for (const employee of state.employees) {
+-    if (!idle(state, employee) || employeeHasCareDemand(state, employee) || employee.morale >= 100 ||
++    if (!idle(state, employee) || employeeHasCareDemand(state, employee) || getEmployeeEffectiveMorale(state, employee) >= 100 ||
+         (employee.lastBreakAtFacilityTick != null && state.facilityTick - employee.lastBreakAtFacilityTick < tuning.breakCooldownMinutes)) continue;
+-    for (const room of state.rooms.filter((candidate) => candidate.roomDefinitionId === "room.staff_break" && isRoomOperationalForFacilityWork(state, candidate.id, context))) {
++    const rooms = state.rooms.filter(candidate => (candidate.roomDefinitionId === "room.staff_break" ||
++      state.facilityLevel >= 5 && candidate.roomDefinitionId === "room.staff_gym") && isRoomOperationalForFacilityWork(state, candidate.id, context));
++    // One policy/cooldown; prefer the gym when it has a real free reachable contact.
++    if (state.facilityLevel >= 5) rooms.sort((a, b) => Number(b.roomDefinitionId === "room.staff_gym") - Number(a.roomDefinitionId === "room.staff_gym"));
++    for (const room of rooms) {
++      if (room.roomDefinitionId === "room.staff_gym") {
++        const contact = (["benchSeat", "stretchSpot"] as const).map(id => ({ id, route: occupied.has(`${room.id}:${id}`) ? null : findLevelFiveSupportPath(state, room, id, employee.location, context) })).find(candidate => candidate.route);
++        if (!contact?.route) continue;
++        employee.path = contact.route.path;
++        employee.pathIndex = 0;
++        employee.lastMovedAtFacilityTick = state.facilityTick;
++        employee.facilityTask = { kind: "take_break", targetId: room.id, seatId: contact.id, supportDoorId: contact.route.doorId,
++          startedAtFacilityTick: state.facilityTick, workMinutesRemaining: tuning.breakDurationMinutes,
++          roomUpgradeBreakBenefit: createRoomUpgradeBreakBenefit(room, tuning.breakMoraleGain) };
++        occupied.add(`${room.id}:${contact.id}`);
++        break;
++      }
+       const seat = LEVEL_THREE_BREAK_SEATS.find((candidate) => !occupied.has(`${room.id}:${candidate.id}`));
+       const target = seat ? targetForBreakSeat(state, room, seat.id, context) : null;
+       if (!seat || !target || !routeTask(state, employee, target, room.id, context)) continue;
+@@ -413,6 +444,12 @@
+       occupied.add(`${room.id}:${seat.id}`);
+       break;
+     }
++  }
++}
++
++export function interruptGymBreaksForRoomSale(state: GameState, roomId: string, context: DomainContext): void {
++  for (const employee of state.employees) {
++    if (employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId === roomId && employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym") clearSupportTask(state, employee, context);
+   }
+ }
+ 

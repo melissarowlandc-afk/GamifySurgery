@@ -1,0 +1,23 @@
+--- a/packages/balance-config/src/level-four-rooms.test.ts
++++ b/packages/balance-config/src/level-four-rooms.test.ts
+@@ -25,8 +25,8 @@
+   });
+ 
+   it("makes ordinary Level 4 reachable with APP unlocked at 4, and MRI's cap equal to every other imaging type", () => {
+-    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(4);
+-    expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.map((stage) => stage.level)).toEqual([0, 1, 2, 3, 4]);
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.map((stage) => stage.level)).toEqual([0, 1, 2, 3, 4, 5]);
+     expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.at(-1)?.nextFacilityLevel).toBeNull();
+     expect(PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.find((role) => role.id === "staff.app")?.unlockFacilityLevel).toBe(4);
+     for (const id of ["room.ultrasound", "room.xray", "room.ct"]) expect(room("room.mri").maximumInstances).toBe(room(id).maximumInstances);
+@@ -60,8 +60,6 @@
+       expect([1, 2, 3, 4, 5].map((level) => getRoomUpgradePoints(id, level, kind))).toEqual([0, 2, 4, 6, 8]);
+       expect(room(id).upkeepPerUpgradeLevel).toBe(0);
+     }
+-    expect(ROOM_UPGRADE_CATALOG.filter((entry) => entry.status === "future").map((entry) => entry.roomDefinitionId)).toEqual([
+-      "room.founder_office", "room.executive_office", "room.gift_shop", "room.indoor_garden", "room.staff_gym",
+-    ]);
++    expect(ROOM_UPGRADE_CATALOG.filter((entry) => entry.status === "future").map((entry) => entry.roomDefinitionId)).toEqual([]);
+   });
+ });

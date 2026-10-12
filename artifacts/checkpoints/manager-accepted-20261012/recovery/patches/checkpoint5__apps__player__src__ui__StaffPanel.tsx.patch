@@ -1,0 +1,25 @@
+--- a/apps/player/src/ui/StaffPanel.tsx
++++ b/apps/player/src/ui/StaffPanel.tsx
+@@ -1,5 +1,6 @@
+ import { useEffect, useState } from "react";
+ import { PixelAvatar } from "./PixelAvatar";
++import { ExecutiveManagementFacts } from "./ExecutiveManagementFacts";
+ import { formatFacilityDuration } from "../session/facilityDuration";
+ import type {
+   StaffMemberView,
+@@ -157,6 +158,7 @@
+                       {role.currentCount}/{role.maximumCount}
+                     </span>
+                     <span className="staff-role-meta">
++                      {role.defaultSalaryLabel ? <span>{role.defaultSalaryLabel}</span> : null}
+                       {trainingAvailable && role.trainingSummary ? (
+                         <span className="staff-role-training">
+                           <b>{role.trainingSummary.averageLevelLabel}</b> · {role.trainingSummary.averageBenefitLabel}
+@@ -320,6 +322,7 @@
+         </button>
+       </div>
+ 
++      <ExecutiveManagementFacts view={employee.executiveManagement} />
+       <div className="staff-card-actions">
+         {training && inTrainingFlow ? (
+           <span className="staff-training-status">

@@ -1,0 +1,33 @@
+--- a/docs/handoffs/CURRENT_THREAD_HANDOFF.md
++++ b/docs/handoffs/CURRENT_THREAD_HANDOFF.md
+@@ -1,3 +1,30 @@
++> MANAGER: LEVEL 5 LAUNCHED (2026-10-12). docs/execplans/level5-launch-plan-20261010.md M1-M10
++> accepted; ordinary cap 5; Level 5 is final (goals 2,000 XP / satisfaction >90 / morale >=85
++> unlock inspections; first completed inspection finishes the game; Keep playing / New campaign).
++> Live on http://127.0.0.1:4173 and https://melissadesktop.taile197db.ts.net/ (separate saves).
++> Owner 4173 dev server was restarted detached by the manager on 2026-10-12 (stale Vite deps
++> 504); private server restarted 2026-10-10 for the same reason. Phone mockups: START_ROOM_LAB.cmd ->
++> https://melissadesktop.taile197db.ts.net:8443/tools/room-design/. Remaining known items:
++> DEFECT-M9-1 (Levels 0-4 idle deadline reload), DEFECT-M9-2 (APP RNG affects case identity),
++> thyroid pending-label test. Backup 5 in progress.
++
++> MANAGER: PHONE MOCKUP PATHWAY ADDED (2026-10-11, owner-approved). START_ROOM_LAB.cmd
++> starts tools/room-design/serve_room_lab.py (loopback 127.0.0.1:4192; serves only
++> /tools/room-design/ and /apps/player/public/, blocks history/originals/receipts/
++> prompts) and runs `tailscale serve --bg --https=8443 http://127.0.0.1:4192`.
++> Phone URL (tailnet only, Funnel off): https://melissadesktop.taile197db.ts.net:8443/tools/room-design/
++> The desktop room lab (127.0.0.1:4191, preview "room-lab-4191") is unchanged.
++> Remove with `tailscale serve --https=8443 off`. Mockup pages hold no saves.
++
++> MANAGER GITHUB BACKUP 4 VERIFIED (2026-10-10). Owner said "Push to GitHub".
++> Commit d9de59327b05ccf853dcf7748a86106e850f9902 on origin/beta, confirmed
++> with git ls-remote. Archive artifacts/checkpoints/manager-accepted-20261010/
++> (575 files, ~84 MB, 432 whole + 38 verified patches, verify PASS) plus 8 owned
++> docs. Covers mobile MB1-MB10b + owner feedback rounds, app icon (R3-04),
++> desktop chart highlight, Variety-3 batch + assembly, Level 5 launch plan with
++> M0 owner decisions. Excluded: executive-office mockup (in revision at the
++> time), owner storage, local settings, dist. No merge/release/Pages publish.
++
+ > MANAGER: MOBILE VERSION MB1-MB8 ACCEPTED, READY FOR OWNER REVIEW (2026-10-10).
+ > Plan docs/execplans/mobile-version-20261009.md; design docs/design/mobile-
+ > version-design-20261009.md. Separate lazy MobileShell over the same session;

@@ -1,0 +1,21 @@
+{
+  "id": "west",
+  "prompt": "prompts/v1/west.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e as C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-c02a6ff3-1bad-47ba-b319-0f4cbb7290be.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-c02a6ff3-1bad-47ba-b319-0f4cbb7290be.png",
+  "selected": true,
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction. Asset type: ONE left-wall floor-tile storage section derived from this Staff Gym concept, transparent game sprite. Extract/redraw ONLY a narrow honeywood cubby section from the LEFT wall of the reference: folded white towels in two adjoining open bins, a couple of generic teal/blue water bottles and small foam yoga blocks. The unit has a continuous honeywood side rail, rear rim and shallow solid base; make its floor footprint a filled narrow rectangle one floor tile long north-to-south, with the storage contents extending upward from it. Keep the reference's straight elevated-front game camera, top surfaces visible, horizontal front faces, crisp pixel-cluster shading and dark brown outlines. Viewed from the same camera as the room; the storage runs along the vertical left boundary, not a horizontal back-wall bookcase. Design its north and south ends to ABUT duplicate sections in a continuous wall run, with no ornamental cap gap. One cohesive module, towels and bottles touching/adjoining inside it. Keep only this section: no plant, room, walls, floor, bench, equipment, people, text, brands, broad shadow or glowing halo. Entire module unclipped with small transparent padding. True transparent alpha background.",
+    "referenced_image_paths": [
+      "tools/room-design/level-5/staff-gym/concept/staff-gym-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "inputImages": [
+    "concept/staff-gym-concept.png"
+  ],
+  "original": "originals/v1/west.png",
+  "originalSha256": "e9c8a3e7d14aa355d671fda72665cd56e14f7ea5e87c679c0393e854e27575f8",
+  "promptSha256": "921415ce3f8f7099a06359352f433b60fbd46355997f3aedb06f48a453cd9c9b"
+}

@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 3,
+  "designRevision": 3,
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "tool": "image_gen.imagegen",
+  "builtInCalls": 8,
+  "revisionBuiltInCalls": 8,
+  "historicalBuiltInCalls": 13,
+  "concept": {
+    "file": "concept/gift-shop-concept.png",
+    "sha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+    "prompt": "concept/prompt.txt",
+    "promptSha256": "35e1a71802aeeef7f43aa44ee96f9e490e4ee3cccce8f647d8ead32062ec12e5",
+    "receipt": "concept/generation-receipt.json",
+    "receiptSha256": "21aeb2ff6ecde2736b30773c72870f723a3b09de1b5fbff8c27e6f5bd9ee569e",
+    "transparentBackground": false
+  },
+  "calls": [
+    {
+      "key": "island",
+      "original": "assets/originals/v3/island.png",
+      "originalSha256": "58c58cbbb20b68c0daffd4ff82cbf3f048dca6a00203745e9d01627942b5a0be",
+      "prompt": "assets/prompts/v3/island.txt",
+      "promptSha256": "6d23cbc4e08c02dada849f5ac92fa2cd09da11f49ded40ba6ba76dc4deb2f628",
+      "receipt": "assets/originals/v3/island.receipt.json",
+      "receiptSha256": "99e11a4a7c8522b7ed09de0a4b335dae8cb394a37ce6b79072dd96ab954a61ca",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "back",
+      "original": "assets/originals/v3/back.png",
+      "originalSha256": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+      "prompt": "assets/prompts/v3/back.txt",
+      "promptSha256": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "receiptSha256": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "west",
+      "original": "assets/originals/v3/west.png",
+      "originalSha256": "301bd8d065f50011db911765c05233410177d2eea4cd683d1c17d0b59f31694a",
+      "prompt": "assets/prompts/v3/west.txt",
+      "promptSha256": "45a814f6f1b644133673fa53503b1ae858a54be0ad466b339d71d4932abedaab",
+      "receipt": "assets/originals/v3/west.receipt.json",
+      "receiptSha256": "0d179eab267914aad8ecc265276ebd52f39d09984a70a8b5ec4c1b61f384da16",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "cooler",
+      "original": "assets/originals/v3/cooler.png",
+      "originalSha256": "7352d491db30635cebb4d272cdafda7e4824bdd46d68f85e12d4ffd444b09a9f",
+      "prompt": "assets/prompts/v3/cooler.txt",
+      "promptSha256": "5da66806dd6193a3c1f0a2e4f6967ce0ab82bb1dcb93b434d04186d59f267746",
+      "receipt": "assets/originals/v3/cooler.receipt.json",
+      "receiptSha256": "8cb51ac2b5f900d55803b8271fa87b7f85606fe341c545204c4c207b2a5c0219",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "east",
+      "original": "assets/originals/v3/east.png",
+      "originalSha256": "a5e5b18dea8b2ea5b3de474164845749a0ad55cf6f411403d9c9083a9a093ef2",
+      "prompt": "assets/prompts/v3/east.txt",
+      "promptSha256": "cfff7621e75f794b0af7e7dab20177fd8fa98f40a8602acfd5771589eb01c905",
+      "receipt": "assets/originals/v3/east.receipt.json",
+      "receiptSha256": "793b549646fca1ea27ab65e2ec49f3aba34a87f8669de642042d156fc3f020de",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "entry",
+      "original": "assets/originals/v3/entry.png",
+      "originalSha256": "2165e31b4e33be8ea8965f33d4c9447e7b0f68eb9ccebcc236675359b596b422",
+      "prompt": "assets/prompts/v3/entry.txt",
+      "promptSha256": "2a64c1f5fe0ef369107ec70c30892d4e255ace0462c8df201fae1138e99c94f5",
+      "receipt": "assets/originals/v3/entry.receipt.json",
+      "receiptSha256": "557ea692b1de64522f8d23d34a1841155940f8d8485bb6b1b5d5089e3fbe1057",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "key": "mat",
+      "original": "assets/originals/v3/mat.png",
+      "originalSha256": "48303e8c8edd64dd08850dc5f84e164080d9438fb32bff889b650f6e0f53a4e9",
+      "prompt": "assets/prompts/v3/mat.txt",
+      "promptSha256": "8d9bc83e7e09de192d2333cb531080811d29c6fb39b7a8638f6463cbfde41e20",
+      "receipt": "assets/originals/v3/mat.receipt.json",
+      "receiptSha256": "c726941d32284bb8565a5bb44bf33031527cb39ed113559615d78eba62fe4af8",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    }
+  ],
+  "assets": [
+    {
+      "id": "base-northLeft",
+      "slot": "northLeft",
+      "slots": [
+        "northLeft"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "back",
+      "original": "assets/originals/v3/back.png",
+      "originalSha256": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+      "prompt": "assets/prompts/v3/back.txt",
+      "promptSha256": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "receiptSha256": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "sourceRegion": [
+        68,
+        0,
+        669,
+        764
+      ],
+      "derivation": "Exact rectangular native Canvas crop of the untouched built-in concept-derived original; no recoloring or nonuniform transform."
+    },
+    {
+      "id": "base-northMiddle",
+      "slot": "northMiddle",
+      "slots": [
+        "northMiddle"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "back",
+      "original": "assets/originals/v3/back.png",
+      "originalSha256": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+      "prompt": "assets/prompts/v3/back.txt",
+      "promptSha256": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "receiptSha256": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "sourceRegion": [
+        737,
+        0,
+        568,
+        764
+      ],
+      "derivation": "Exact rectangular native Canvas crop of the untouched built-in concept-derived original; no recoloring or nonuniform transform."
+    },
+    {
+      "id": "base-northRight",
+      "slot": "northRight",
+      "slots": [
+        "northRight"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "back",
+      "original": "assets/originals/v3/back.png",
+      "originalSha256": "3ae21095d142ab88a2c1c489d5ef7948794bea02381165a34b8eb04c11ba1bd5",
+      "prompt": "assets/prompts/v3/back.txt",
+      "promptSha256": "cc0bb69b100e71210deec005b71d6a6a4545de892333b4cceec5b1a176ed4b34",
+      "receipt": "assets/originals/v3/back.receipt.json",
+      "receiptSha256": "cf6eb1dcd70bcae5a9b8bc6c340e489901aeb09d129123318bc510a76449652c",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "sourceRegion": [
+        1305,
+        0,
+        691,
+        764
+      ],
+      "derivation": "Exact rectangular native Canvas crop of the untouched built-in concept-derived original; no recoloring or nonuniform transform."
+    },
+    {
+      "id": "base-westRun",
+      "slot": "westRear",
+      "slots": [
+        "westRear",
+        "westMiddle"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "west",
+      "original": "assets/originals/v3/west.png",
+      "originalSha256": "301bd8d065f50011db911765c05233410177d2eea4cd683d1c17d0b59f31694a",
+      "prompt": "assets/prompts/v3/west.txt",
+      "promptSha256": "45a814f6f1b644133673fa53503b1ae858a54be0ad466b339d71d4932abedaab",
+      "receipt": "assets/originals/v3/west.receipt.json",
+      "receiptSha256": "0d179eab267914aad8ecc265276ebd52f39d09984a70a8b5ec4c1b61f384da16",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "derivation": "Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing."
+    },
+    {
+      "id": "base-cooler",
+      "slot": "westCooler",
+      "slots": [
+        "westCooler"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "cooler",
+      "original": "assets/originals/v3/cooler.png",
+      "originalSha256": "7352d491db30635cebb4d272cdafda7e4824bdd46d68f85e12d4ffd444b09a9f",
+      "prompt": "assets/prompts/v3/cooler.txt",
+      "promptSha256": "5da66806dd6193a3c1f0a2e4f6967ce0ab82bb1dcb93b434d04186d59f267746",
+      "receipt": "assets/originals/v3/cooler.receipt.json",
+      "receiptSha256": "8cb51ac2b5f900d55803b8271fa87b7f85606fe341c545204c4c207b2a5c0219",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "derivation": "Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing."
+    },
+    {
+      "id": "base-eastRun",
+      "slot": "eastRear",
+      "slots": [
+        "eastRear",
+        "eastMiddle"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "east",
+      "original": "assets/originals/v3/east.png",
+      "originalSha256": "a5e5b18dea8b2ea5b3de474164845749a0ad55cf6f411403d9c9083a9a093ef2",
+      "prompt": "assets/prompts/v3/east.txt",
+      "promptSha256": "cfff7621e75f794b0af7e7dab20177fd8fa98f40a8602acfd5771589eb01c905",
+      "receipt": "assets/originals/v3/east.receipt.json",
+      "receiptSha256": "793b549646fca1ea27ab65e2ec49f3aba34a87f8669de642042d156fc3f020de",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "derivation": "Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing."
+    },
+    {
+      "id": "base-entry",
+      "slot": "entranceEndcap",
+      "slots": [
+        "entranceEndcap"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "entry",
+      "original": "assets/originals/v3/entry.png",
+      "originalSha256": "2165e31b4e33be8ea8965f33d4c9447e7b0f68eb9ccebcc236675359b596b422",
+      "prompt": "assets/prompts/v3/entry.txt",
+      "promptSha256": "2a64c1f5fe0ef369107ec70c30892d4e255ace0462c8df201fae1138e99c94f5",
+      "receipt": "assets/originals/v3/entry.receipt.json",
+      "receiptSha256": "557ea692b1de64522f8d23d34a1841155940f8d8485bb6b1b5d5089e3fbe1057",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "derivation": "Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing."
+    },
+    {
+      "id": "base-island",
+      "slot": "mainIsland",
+      "slots": [
+        "mainIsland"
+      ],
+      "classification": "necessary",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "island",
+      "original": "assets/originals/v3/island.png",
+      "originalSha256": "58c58cbbb20b68c0daffd4ff82cbf3f048dca6a00203745e9d01627942b5a0be",
+      "prompt": "assets/prompts/v3/island.txt",
+      "promptSha256": "6d23cbc4e08c02dada849f5ac92fa2cd09da11f49ded40ba6ba76dc4deb2f628",
+      "receipt": "assets/originals/v3/island.receipt.json",
+      "receiptSha256": "99e11a4a7c8522b7ed09de0a4b335dae8cb394a37ce6b79072dd96ab954a61ca",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "derivation": "Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing."
+    },
+    {
+      "id": "base-mat",
+      "slot": "checkoutMat",
+      "slots": [
+        "checkoutMat"
+      ],
+      "classification": "optional",
+      "tool": "image_gen.imagegen",
+      "transparentBackground": true,
+      "key": "mat",
+      "original": "assets/originals/v3/mat.png",
+      "originalSha256": "48303e8c8edd64dd08850dc5f84e164080d9438fb32bff889b650f6e0f53a4e9",
+      "prompt": "assets/prompts/v3/mat.txt",
+      "promptSha256": "8d9bc83e7e09de192d2333cb531080811d29c6fb39b7a8638f6463cbfde41e20",
+      "receipt": "assets/originals/v3/mat.receipt.json",
+      "receiptSha256": "c726941d32284bb8565a5bb44bf33031527cb39ed113559615d78eba62fe4af8",
+      "conceptReferenceSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "sourceRegion": [
+        260,
+        230,
+        1260,
+        470
+      ],
+      "derivation": "Exact rectangular native Canvas crop of the untouched built-in concept-derived original; no recoloring or nonuniform transform."
+    }
+  ]
+}

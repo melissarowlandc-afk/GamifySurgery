@@ -1,0 +1,22 @@
+--- a/packages/balance-config/src/employee-training.test.ts
++++ b/packages/balance-config/src/employee-training.test.ts
+@@ -13,8 +13,9 @@
+       or_nurse: [175, 350, 525, 700], pharmacist: [150, 300, 450, 600],
+       repair_person: [100, 200, 300, 400], radiologist: [75, 150, 225, 300],
+       app: [150, 300, 450, 600],
++      executive: [100, 200, 300, 400],
+     };
+-    expect(EMPLOYEE_TRAINING_ROLES).toHaveLength(15);
++    expect(EMPLOYEE_TRAINING_ROLES).toHaveLength(16);
+     for (const [role, prices] of Object.entries(approved)) {
+       expect([2, 3, 4, 5].map((level) => getEmployeeTrainingCost(`staff.${role}`, level))).toEqual(prices);
+       expect(getEmployeeTrainingCost(`staff.${role}`, 1)).toBeNull();
+@@ -26,7 +27,7 @@
+   it("uses cumulative current-level percentages instead of summing past bonuses", () => {
+     for (const role of EMPLOYEE_TRAINING_ROLES) {
+       const percentages = ([1, 2, 3, 4, 5] as const).map((level) => getEmployeeTrainingPercent(role.staffRoleDefinitionId, level));
+-      expect(percentages).toEqual(role.staffRoleDefinitionId === "staff.pharmacist" ? [0, 5, 10, 15, 20] : [0, 10, 20, 30, 40]);
++      expect(percentages).toEqual(role.staffRoleDefinitionId === "staff.executive" ? [0, 25, 50, 75, 100] : role.staffRoleDefinitionId === "staff.pharmacist" ? [0, 5, 10, 15, 20] : [0, 10, 20, 30, 40]);
+     }
+     expect(EMPLOYEE_TRAINING_SESSION_MINUTES).toBe(60);
+   });

@@ -1,0 +1,362 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1,3 +1,13 @@
++import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
++import { createExecutiveManagementView } from "./executiveViewModels";
++import { createGiftShopView, giftShopFee } from "./giftShopViewModels";
++import { createInspectionUnlockView, levelFiveGoalView } from "./levelFiveProgressionView";
++import { createFacilityInspectionView } from "./inspectionViewModels";
++import { createInspectionActorViews } from "./inspectionActorViewModels";
++import { giftContactAtLocation } from "@gamify-surgery/game-domain";
++import { describeRetailTrip } from "./characterActivityPresentation";
++import { getExecutiveDeskLocation, quoteExecutiveStock } from "@gamify-surgery/game-domain";
++import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
+ import {
+   getProcedureStaffSupportId,
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -95,6 +105,7 @@
+ } from "./diagnosticTimingPresentation";
+ import {
+   createManagementFinanceView,
++  executiveHiringFundingLabel,
+   createRoleTrainingSummary,
+   createRoleAverageAfterTrainingLabel,
+   createServiceSetupState,
+@@ -1267,6 +1278,7 @@
+       field: "chiefComplaint",
+     }),
+     patientSatisfactionLabel: `${Math.round(encounter.patientSatisfaction)}%`,
++    ...(encounter.executiveComfort ? { executiveComfortLabel: `Accepted Executive comfort: +${encounter.executiveComfort.points} points${encounter.executiveComfort.appliedAtFacilityTick === null ? " on completed settlement" : " applied once"}${encounter.executiveComfort.employeeTrainingLevel ? ` · employee tier ${encounter.executiveComfort.employeeTrainingLevel}` : " · no qualified daily terms at acceptance"}.` } : {}),
+     vitals: encounter.frozenCase.prototypeVitalSigns
+       ? [
+           {
+@@ -1482,6 +1494,7 @@
+     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
+   const usedStaffStills = new Set([...state.employees, ...(state.departingEmployees ?? [])].map(employee => employee.appearance.stillId));
+   const appArtAvailable = staffStillEligibleEntries("staff.app").some(entry => !usedStaffStills.has(entry.stillId));
++  const executiveArtAvailable = staffStillEligibleEntries("staff.executive").some(entry => !usedStaffStills.has(entry.stillId));
+   const imagingCapacityRooms = state.facilityLevel >= 4 ? "Ultrasound, X-ray, CT or MRI" : "Ultrasound, X-ray, or CT";
+   const initialRoomInstanceIds = new Set(
+     facilityBalance.initialRooms.map((room) => room.id),
+@@ -1505,12 +1518,13 @@
+   };
+   const roomUpgradeBenefit = (room: GameState["rooms"][number]) => {
+     const definition = getRoomDefinition(room.roomDefinitionId);
+-    return definition && roomUpgradeable(room.roomDefinitionId)
++    return definition && (roomUpgradeable(room.roomDefinitionId) || definition.unlockFacilityLevel === 5)
+       ? describeRoomUpgradeBenefit({
+           roomDefinitionId: room.roomDefinitionId,
+           upgradeLevel: room.upgradeLevel,
+           maxUpgradeLevel: definition.maximumUpgradeLevel,
+           upkeepPerLevel: definition.upkeepPerUpgradeLevel,
++          ...(definition.unlockFacilityLevel === 5 ? { previewOnly: true } : {}),
+         })
+       : undefined;
+   };
+@@ -1556,8 +1570,15 @@
+         operation.actorId === actorId &&
+         !["completed", "abandoned", "cancelled"].includes(operation.status),
+     );
++    const shop = trip?.giftCheckout ? state.rooms.find(room => room.id === trip.outletRoomInstanceId) : undefined;
++    const supportContact = trip?.giftCheckout && ["queued", "purchasing"].includes(trip.status) ? trip.giftCheckout.contactId
++      : trip?.giftCheckout?.aisleWaiting && shop ? giftContactAtLocation(shop, trip.location) : null;
+     return trip
+-      ? { location: trip.location, ...movementPresentation(trip.path, trip.pathIndex) }
++      ? { location: trip.location, ...movementPresentation(trip.giftCheckout?.aisleWaiting ? trip.path.slice(0, trip.pathIndex + 1) : trip.path, trip.pathIndex),
++        ...(supportContact ? {
++          supportRole: "gift-shop-contact" as const, supportId: supportContact, supportRoomInstanceId: trip.outletRoomInstanceId,
++          pose: "standing" as const, seated: false,
++        } : {}) }
+       : null;
+   };
+   const serviceIncomeTotals = getServiceIncomeTotalsCents(state);
+@@ -1630,6 +1651,8 @@
+     ...[...new Set(employeeIds)].map((id) => state.employees.find((employee) => employee.id === id)?.displayName ?? "Employee unavailable"),
+   ].join(", ") || "Not assigned";
+   const serviceIncome: ServiceIncomeView = {
++    ...(state.facilityLevel >= 5 ? { giftShop: createGiftShopView(state) } : {}),
++    ...(state.facilityLevel >= 5 ? { executiveManagement: createExecutiveManagementView(state) } : {}),
+     appointmentsEnabled: state.serviceAppointmentsEnabled,
+     periopNurseQueueLength: getPeriopNurseAttentionQueue(state).length,
+     catalogLines: SERVICE_INCOME_CATALOG.filter((line) => line.showInCatalog !== false).map((line) => {
+@@ -1637,9 +1660,12 @@
+         (capabilityId) => !currentCapabilities.has(capabilityId),
+       );
+       const levelLocked = state.facilityLevel < line.minimumFacilityLevel;
+-      const stockCost = line.retail?.outlets.every((outlet) => outlet.staffRoleDefinitionId === "staff.pharmacist")
++      const giftLine = state.facilityLevel >= 5 && line.retail?.outlets[0]?.roomDefinitionId === "room.gift_shop";
++      const currentGiftFee = giftLine ? giftShopFee(state, line.fee) : line.fee;
++      const baselineStockCost = line.retail?.outlets.every((outlet) => outlet.staffRoleDefinitionId === "staff.pharmacist")
+         ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease")
+         : line.retail?.stockCost;
++      const stockCost = baselineStockCost === undefined ? undefined : (quoteExecutiveStock(state, baselineStockCost, PROTOTYPE_DOMAIN_CONTEXT)?.costCents ?? baselineStockCost * 100) / 100;
+       const retailOutletAvailable = line.retail?.outlets.some((outlet) =>
+         outlet.requiredCapabilityIds.every((capabilityId) => currentCapabilities.has(capabilityId)) &&
+         state.rooms.some((room) => room.roomDefinitionId === outlet.roomDefinitionId && isRoomOperationalForFacilityWork(state, room.id)) &&
+@@ -1697,7 +1723,8 @@
+           missingRoomDefinitionIds: [...missingRooms, ...retailMissingRooms.filter((id) => !state.rooms.some((room) => room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id)))],
+           missingStaffRoleIds: [...missingStaff, ...retailMissingStaff.filter((id) => !state.employees.some((employee) => employee.staffRoleDefinitionId === id && isEmployeeOperational(state, employee.id)))],
+         }),
+-        arrivalLabel: line.id === "income.app_consult" ? "Additional walk-in every 2 hr per staffed exam home · unscored"
++        arrivalLabel: giftLine ? `${line.id === "income.gift_shop" ? "Gift-only adult every 120 min per facility; optional idle adults/staff" : "Optional affordable premium purchases"} · 2 min self-service · 2-person queue · unscored`
++          : line.id === "income.app_consult" ? "Additional walk-in every 2 hr per staffed exam home · unscored"
+           : line.id === "income.pediatric_consult" ? "Child with parent every 90 min per staffed pediatric exam home · unscored"
+           : ["income.wound_care", "income.ostomy_support"].includes(line.id) ? "Every 3 hr per staffed wound/ostomy home · 30 min visit · unscored"
+           : line.id === "income.mri" ? "Every 4 hr · 60 min acquisition + 5 min onsite / 30 min external read · game estimates"
+@@ -1716,7 +1743,7 @@
+         })() : line.id === "income.glp1_telehealth"
+           ? currency(glp1ConsultPayment)
+           : line.scheduledVisitorFee === undefined
+-          ? currency(line.fee)
++          ? currency(currentGiftFee)
+           : `${currency(line.scheduledVisitorFee)} per scheduled visitor · ${currency(line.fee)} question-ordered`,
+         minimumFacilityLevel: line.minimumFacilityLevel,
+         requirementLabel,
+@@ -1731,7 +1758,7 @@
+             : line.retail && !retailOutletAvailable
+               ? `Requires ${retailOutletLabel}`
+             : undefined),
+-        ...(stockCost !== undefined ? { stockCostLabel: currency(stockCost), contributionLabel: currency(line.fee - stockCost) } : {}),
++        ...(stockCost !== undefined ? { stockCostLabel: currency(stockCost), contributionLabel: currency(currentGiftFee - stockCost) } : {}),
+       };
+     }),
+     activeOperations: [...state.serviceOperations
+@@ -1746,6 +1773,7 @@
+           ? `${operation.displayName} · ${operation.clinicVisit.demographics.ageYears}, ${operation.clinicVisit.demographics.sexLabel}${operation.clinicVisit.pediatricFamilyId ? " · With parent" : ""} · ${operation.providerReservation?.kind === "employee" ? state.employees.find(employee => employee.id === (operation.providerReservation?.kind === "employee" ? operation.providerReservation.employeeId : undefined))?.displayName ?? "APP" : "Awaiting APP"}`
+           : operation.diagnosticPhaseWork?.kind === "interpretation" ? state.encounters[operation.diagnosticPhaseWork.encounterId]?.patientDisplayName ?? state.serviceOperations.find(visitor => visitor.id === operation.diagnosticPhaseWork?.encounterId)?.displayName ?? "This center" : operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
+         statusLabel: scheduledMriStatusLabel(state, operation) ?? periopNurseAttentionStatus(operation, state.facilityTick) ?? operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
++        ...(operation.executiveComfort ? { executiveComfortLabel: `Accepted Executive comfort: +${operation.executiveComfort.points} points${operation.executiveComfort.appliedAtFacilityTick === null ? " on completion" : " applied once"}${operation.executiveComfort.employeeTrainingLevel ? ` · tier ${operation.executiveComfort.employeeTrainingLevel}` : " · no terms at acceptance"}. Unscored visit.` } : {}),
+         quoteFeeLabel: currency(operation.diagnosticPhaseWork?.readIncomeFee ?? (operation.quoteFee - (operation.diagnosticPhysicalWork?.readIncomeFee ?? 0))),
+         providerLabel: assignedServiceStaffLabel([
+           ...(operation.providerReservation?.kind === "employee" ? [operation.providerReservation.employeeId] : []),
+@@ -1765,10 +1793,11 @@
+           id: operation.id,
+           incomeLineId: operation.incomeLineId,
+           displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+-          actorLabel: operation.displayName,
+-          statusLabel: operation.resourceWaitReason ?? serviceOperationStatusLabel(operation.status),
+-          quoteFeeLabel: `${currency(operation.quoteGross)} gross · ${currency(operation.quoteStockCost)} stock`,
+-          providerLabel: operation.staffRoleDefinitionId === null ? "No staff provider required"
++          actorLabel: (() => { const visitor = state.retailExternalActors.find(actor => actor.id === operation.actorId)?.giftOnlyVisit;
++            return visitor ? `${operation.displayName} · ${visitor.ageYears}, ${visitor.sexLabel} · Gift shopper` : operation.displayName; })(),
++          statusLabel: operation.giftCheckout ? describeRetailTrip(state, operation) : operation.resourceWaitReason ?? serviceOperationStatusLabel(operation.status),
++          quoteFeeLabel: `${currency(operation.giftCheckout && operation.actorKind === "founder" ? 0 : operation.quoteGross)} gross · ${currency(operation.quoteStockCost)} stock`,
++          providerLabel: operation.giftCheckout ? "Self-service checkout" : operation.staffRoleDefinitionId === null ? "No staff provider required"
+             : assignedServiceStaffLabel(operation.servingEmployeeId ? [operation.servingEmployeeId] : []),
+         })),
+     ],
+@@ -1805,7 +1834,16 @@
+       queuedQiReviewCount: levelThreeSupport.queuedQiReviewCount,
+       inProgressQiReviewCount: levelThreeQiReviews.filter((review) => review.status === "in_progress").length,
+       completedQiReviewCount: levelThreeSupport.completedQiReviewCount,
+-      staffOnBreakCount: levelThreeSupport.occupiedBreakSeats.length,
++      staffOnBreakCount: levelThreeSupport.occupiedBreakSeats.length + (state.facilityLevel >= 5 ? state.employees.filter(employee => employee.facilityTask?.kind === "take_break" && employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym").length : 0),
++    } } : {}),
++    ...(state.facilityLevel === 5 ? { levelFiveSupport: {
++      gymBreakCount: state.employees.filter(employee => employee.facilityTask?.kind === "take_break" && employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym").length,
++      gardenRestCount: state.patientAmenityTrips?.filter(trip => trip.amenityKind === "garden" && trip.status !== "returning").length ?? 0,
++      rooms: state.rooms.filter(room => ["room.founder_office", "room.indoor_garden", "room.staff_gym"].includes(room.roomDefinitionId)).map(room => {
++        const benefit = roomUpgradeBenefit(room)!;
++        return { id: room.id, displayName: getRoomDefinition(room.roomDefinitionId)!.displayName, upgradeLevel: room.upgradeLevel,
++          currentBenefitLabel: benefit.currentLabel, upgradeLabel: benefit.perUpgradeLabel, policyLabel: benefit.note! };
++      }),
+     } } : {}),
+   };
+   const xpRequirement = progressionStatus.requirements.find(
+@@ -1934,7 +1972,8 @@
+         explanation: finances.incomeWindowExplanation,
+       },
+       dayTimeLabel: clock.displayLabel,
+-      goals: progressionStatus.requirements.map((requirement) => ({
++      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
++        ? levelFiveGoalView(state, requirement) : ({
+         id: requirement.id,
+         label: requirement.label,
+         complete: requirement.met,
+@@ -1955,6 +1994,9 @@
+     ),
+     facility: {
+       facilityTitle: progressionStatus.displayName,
++      ...(state.facilityLevel === 5 ? { levelFiveRoomArt: true as const } : {}),
++      ...(state.facilityLevel === 5 && state.levelFive?.inspection.status === "running"
++        ? { inspectors: createInspectionActorViews(state) } : {}),
+       campaignId: state.campaignId,
+       facilityTick: state.facilityTick,
+       endoscopyOccupancy: (() => {
+@@ -2229,6 +2271,7 @@
+               presentationPath,
+               presentationPathIndex,
+             ),
++            ...gardenRestActorSupport(amenityTrip),
+             ...(amenityTrip?.path[amenityTrip.pathIndex]
+               ? { location: amenityTrip.path[amenityTrip.pathIndex] }
+               : retailTrip?.location
+@@ -2275,6 +2318,7 @@
+             ...(amenityTrip
+               ? movementPresentation(amenityTrip.path, amenityTrip.pathIndex)
+               : retailTrip ?? movementPresentation(operation.path, operation.pathIndex)),
++            ...gardenRestActorSupport(amenityTrip),
+             ...(amenityTrip?.path[amenityTrip.pathIndex]
+               ? { location: amenityTrip.path[amenityTrip.pathIndex] }
+               : retailTrip?.location
+@@ -2329,7 +2373,7 @@
+                   getNextRoomUpgradeCost(state, room.id) !== null,
+                 buildLabel:
+                   buildRoomNames.get(room.id) ?? definition.displayName,
+-                upgradeMaxLevel: roomUpgradeable(room.roomDefinitionId)
++                upgradeMaxLevel: roomUpgradeable(room.roomDefinitionId) || definition.unlockFacilityLevel === 5
+                   ? definition.maximumUpgradeLevel
+                   : 1,
+                 upgradeAffordable: (() => {
+@@ -2397,6 +2441,10 @@
+           employee.facilityTask.seatId &&
+           state.rooms.find((candidate) => candidate.id === employee.facilityTask?.targetId)?.roomDefinitionId === "room.staff_break"
+           ? { supportRole: "staff-break-seat" as const, supportId: employee.facilityTask.seatId, supportRoomInstanceId: employee.facilityTask.targetId }
++          : arrivedSupportTask && employee.facilityTask?.kind === "take_break" &&
++            employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" && employee.facilityTask.seatId
++            ? { supportRole: employee.facilityTask.seatId === "benchSeat" ? "gym-rest-contact" as const : "gym-stretch-contact" as const,
++              supportId: employee.facilityTask.seatId, supportRoomInstanceId: employee.facilityTask.targetId }
+           : activeQiReview && homeRoom?.roomDefinitionId === "room.surgeon_office"
+             ? { supportRole: "surgeon-office" as const, supportId: "surgeon", supportRoomInstanceId: homeRoom.id }
+             : undefined;
+@@ -2451,7 +2499,11 @@
+           samePoint(other.location, employee.location))
+           ? { supportRole: "staff-idle" as const, supportId: idleSpot.id, supportRoomInstanceId: homeRoom.id }
+           : undefined;
+-        const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
++        const executiveDesk = !departing && (!employee.training || employee.training.stage === "queued") &&
++          (!employee.facilityTask || employee.facilityTask.kind === "daily_management_round") ? getExecutiveDeskLocation(state, employee) : null;
++        const executiveSupport = executiveDesk && homeRoom && employee.pathIndex >= employee.path.length - 1 && samePoint(employee.location, executiveDesk)
++          ? { supportRole: "executive-office-seat" as const, supportId: "executiveChair", supportRoomInstanceId: homeRoom.id } : undefined;
++        const projectedSupport = trainingSupport ?? taskSupport ?? executiveSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
+         const nurseOperation = employee.facilityTask?.kind === "periop_attention"
+           ? state.serviceOperations.find((operation) => operation.id === employee.facilityTask?.targetId) : undefined;
+         const attention = nurseOperation && getCurrentPeriopNurseAttention(nurseOperation);
+@@ -2473,7 +2525,7 @@
+           appearance: employee.appearance,
+           salaryPerExpenseInterval:
+             employee.salaryPerExpenseInterval,
+-          morale: employee.morale,
++          morale: departing ? employee.morale : getEmployeeEffectiveMorale(state, employee),
+           trainingLevel: employee.trainingLevel,
+           ...(projectedSupport?.supportRole ? { supportRole: projectedSupport.supportRole } : {}),
+           ...(projectedSupport && "supportId" in projectedSupport && projectedSupport.supportId ? { supportId: projectedSupport.supportId } : {}),
+@@ -2514,7 +2566,8 @@
+         progressionStatus.nextFacilityLevel === null
+           ? null
+           : `Level ${progressionStatus.nextFacilityLevel}`,
+-      goals: progressionStatus.requirements.map((requirement) => ({
++      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
++        ? levelFiveGoalView(state, requirement) : ({
+         id: requirement.id,
+         label: requirement.label,
+         complete: requirement.met,
+@@ -2531,6 +2584,7 @@
+       }] } : {}),
+       canLevelUp: progressionStatus.eligible,
+       prototypeComplete: progressionStatus.terminalComplete,
++      ...(state.facilityLevel === 5 ? { inspectionUnlock: createInspectionUnlockView(state), inspection: createFacilityInspectionView(state) } : {}),
+       endoscopySetupRequirements: getProcedureSetupRequirements(state, "endoscopy"),
+       ambulatoryOperationSetupRequirements: getProcedureSetupRequirements(state, "ambulatory_operation"),
+     },
+@@ -2612,13 +2666,13 @@
+           displayName: buildRoomNames.get(room.id) ?? definition.displayName,
+           category: roomBuildCategory(room.roomDefinitionId),
+           upgradeLevel: room.upgradeLevel,
+-          maxUpgradeLevel: upgradeable ? definition.maximumUpgradeLevel : 1,
++          maxUpgradeLevel: upgradeable || definition.unlockFacilityLevel === 5 ? definition.maximumUpgradeLevel : 1,
+           upgradeable,
+           ...(upgradeCost === null
+             ? {}
+             : { nextUpgradeCostLabel: `$${upgradeCost.toLocaleString()}` }),
+           canUpgrade: upgradeCost !== null && state.cash >= upgradeCost,
+-          ...(benefit ? { benefitSummary: benefit.perUpgradeLabel, benefit } : {}),
++          ...(benefit ? { benefitSummary: benefit.note ? `${benefit.currentLabel} · ${benefit.note}` : benefit.perUpgradeLabel, benefit } : {}),
+           accessProblem: buildUnreachableRoomIds.has(room.id),
+         };
+         return [view];
+@@ -2634,6 +2688,7 @@
+         (definition) =>
+           definition.constructionCost > 0 &&
+           definition.buildable &&
++          (definition.unlockFacilityLevel <= 4 || state.facilityLevel === 5) &&
+           definition.unlockFacilityLevel === state.facilityLevel + 1,
+       )
+       .map((definition): LockedRoomBuildView => ({
+@@ -2669,7 +2724,8 @@
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
+-        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
++        const lacksExecutiveArt = role.id === "staff.executive" && !executiveArtAvailable;
++        const blockedReason = lacksExecutiveArt ? "All approved Executive looks are in use, including departing staff." : lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
+           : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+@@ -2707,7 +2763,7 @@
+             !atMaximum &&
+             requirementsMet &&
+             !lacksGlp1StaffingSlot &&
+-            !lacksAppArt &&
++            !lacksAppArt && !lacksExecutiveArt &&
+             affordable,
+           blockedReason,
+         };
+@@ -2730,7 +2786,8 @@
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const lacksAppArt = role.id === "staff.app" && !appArtAvailable;
+-        const blockedReason = lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
++        const lacksExecutiveArt = role.id === "staff.executive" && !executiveArtAvailable;
++        const blockedReason = lacksExecutiveArt ? "All approved Executive looks are in use, including departing staff." : lacksAppArt ? "All approved APP looks are in use; additional APP art is needed."
+           : roomCapacity.capacity === 0
+           ? role.id === "staff.radiologist"
+             ? "Build a Reading Room to add four radiologist positions."
+@@ -2764,14 +2821,16 @@
+           currentCount: employees.length,
+           maximumCount: roomCapacity.capacity,
+           hiringCostLabel: `$${role.hiringCost.toLocaleString()}`,
++          ...(role.id === "staff.executive" ? { defaultSalaryLabel: `$${role.salaryPerExpenseInterval}/hr default` } : {}),
+           employees: employees.map((employee) => ({
++            ...(role.id === "staff.executive" ? { executiveManagement: createExecutiveManagementView(state, employee) } : {}),
+             id: employee.id,
+             displayName: employee.displayName,
+             roleDisplayName: role.displayName,
+             activityLabel: describeFacilityCharacter(state, { kind: "staff", id: employee.id })?.activity,
+             salaryLabel: `$${employee.salaryPerExpenseInterval.toLocaleString()}/hr`,
+-            moraleLabel: `${employee.morale}%`,
+-            moralePercent: employee.morale,
++            moraleLabel: `${getEmployeeEffectiveMorale(state, employee)}%`,
++            moralePercent: getEmployeeEffectiveMorale(state, employee),
+             avatar: employee.appearance,
+             training: createEmployeeTrainingView(state, employee.id),
+             salaryPerHour: employee.salaryPerExpenseInterval,
+@@ -2783,7 +2842,9 @@
+               employee.salaryPerExpenseInterval <
+               role.maximumSalaryPerExpenseInterval,
+           })),
+-          staffingGuidance: role.id === "staff.periop_nurse"
++          staffingGuidance: role.id === "staff.executive"
++            ? `One Executive per facility, automatically assigned to its Executive Office desk. $600 hire; $45/hr default ($35–$65, $2 steps). Four mild daily effects: morale, comfort, preparation and suppliers. ${executiveHiringFundingLabel(state)}`
++            : role.id === "staff.periop_nurse"
+             ? "Each Peri-op/Recovery Room has two peri-op nurse positions."
+             : role.id === "staff.radiologist"
+               ? "Each Reading Room has four radiologist positions. Each operational radiologist has a separate queue and reads one study at a time."
+@@ -2800,7 +2861,7 @@
+             !atMaximum &&
+             requirementsMet &&
+             !lacksGlp1StaffingSlot &&
+-            !lacksAppArt &&
++            !lacksAppArt && !lacksExecutiveArt &&
+             affordable,
+           blockedReason,
+           trainingSummary: createRoleTrainingSummary(state, role.id, employees),
+@@ -2850,7 +2911,7 @@
+         roomDefinitionId: room.roomDefinitionId,
+         displayName: buildRoomNames.get(room.id) ?? definition.displayName,
+         upgradeLevel: room.upgradeLevel,
+-        maxUpgradeLevel: upgradeable ? definition.maximumUpgradeLevel : 1,
++        maxUpgradeLevel: upgradeable || definition.unlockFacilityLevel === 5 ? definition.maximumUpgradeLevel : 1,
+         upgradeable,
+         ...(benefit ? { benefit } : {}),
+         canMove: !protectedRoom,

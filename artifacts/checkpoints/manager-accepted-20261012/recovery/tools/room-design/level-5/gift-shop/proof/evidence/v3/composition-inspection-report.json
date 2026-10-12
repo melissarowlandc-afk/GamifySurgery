@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "previousRevision": 2,
+  "currentRevision": 3,
+  "previous": {
+    "fixturePaintPixelsInsideFloor": 48712,
+    "floorPixels": 129600,
+    "fraction": 0.3758641975308642,
+    "excludes": [
+      "shoppers",
+      "floor paint",
+      "walkable mat"
+    ],
+    "basis": "Actual shipped fixture drawImageRec output alpha >=160 inside the 3×3 floor, including merchandise extending upward."
+  },
+  "current": {
+    "fixturePaintPixelsInsideFloor": 70643,
+    "floorPixels": 129600,
+    "fraction": 0.5450848765432099,
+    "excludes": [
+      "shoppers",
+      "floor paint",
+      "walkable mat"
+    ],
+    "basis": "Actual shipped fixture drawImageRec output alpha >=160 inside the 3×3 floor, including merchandise extending upward."
+  },
+  "percentagePointIncrease": 16.922067901234573,
+  "caveat": "Visual paint coverage is a composition measure, not collision area, art approval or a clinical/runtime claim."
+}

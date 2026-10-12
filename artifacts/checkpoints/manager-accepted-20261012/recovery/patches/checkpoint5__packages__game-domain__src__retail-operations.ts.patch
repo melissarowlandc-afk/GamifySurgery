@@ -1,0 +1,328 @@
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -1,4 +1,6 @@
+-import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { observeInspectionReceipt } from "./facility-inspection";
++import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, isGiftIncomeLineId, LEVEL_FIVE_GIFT_RETAIL, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { giftAisleIsBusy, giftCheckoutContact, giftContactFree, giftContactPath, giftNativeExitPath, releaseGiftCheckout, scheduleGiftRetailDemand } from "./gift-retail";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
+ import { bindRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee } from "./room-upgrades";
+ import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
+@@ -82,7 +84,7 @@
+ function streetArrivalPoint(state: GameState, context: DomainContext, actorId: string): GridPoint | null {
+   const entry = entrance(state, context);
+   if (!entry) return null;
+-  const fromLeft = deterministicInteger(state.campaignSeed, "environment", `${actorId}:street-arrival-side.v1`, 2) === 0;
++  const fromLeft = deterministicInteger(state.campaignSeed, actorId.startsWith("gift-visitor.") ? "gift_retail" : "environment", `${actorId}:street-arrival-side.v1`, 2) === 0;
+   return { x: fromLeft ? -2 : context.balanceRelease.facility.gridWidth + 1, y: entry.outside.y };
+ }
+ 
+@@ -123,7 +125,8 @@
+         const queue = state.retailOperations.filter(operation => !terminal(operation) && operation.outletRoomInstanceId === room.id &&
+           (operation.status === "queued" || operation.status === "walking_to_outlet")).length;
+         const path = origin ? isStreetOrigin(state, context, origin) ? pathFromStreet(state, context, origin, target) : facilityRoute(state, context, origin, target) : [target];
+-        return queue < MAX_OUTLET_QUEUE && path.length ? [{ room, target, queue, distance: path.length }] : [];
++        const roomHasSpace = isGiftIncomeLineId(line.id) ? giftCheckoutContact(state, room) !== null : queue < MAX_OUTLET_QUEUE;
++        return roomHasSpace && path.length ? [{ room, target, queue, distance: path.length }] : [];
+       }).sort((a, b) => a.queue - b.queue || a.distance - b.distance || a.room.id.localeCompare(b.room.id));
+     for (const { room, target } of rooms) {
+       const servingEmployee = contract.staffRoleDefinitionId ? state.employees
+@@ -199,6 +202,10 @@
+ }
+ 
+ function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line: ServiceIncomeLine, context: DomainContext): boolean {
++  if (isGiftIncomeLineId(line.id) && (kind === "encounter" && (state.encounters[id]?.frozenCase.pediatricProfile ||
++    (state.encounters[id]?.frozenCase.prototypeDemographics?.ageYears ?? 18) < 18) || kind === "service_visitor" &&
++    (state.serviceOperations.find(actor => actor.id === id)?.clinicVisit?.demographics.ageYears ?? 18) < 18)) return false;
++  if (state.retailExternalActors.some(actor => actor.id === id && actor.giftOnlyVisit) && !isGiftIncomeLineId(line.id)) return false;
+   if (Object.values(state.pediatricFamilies ?? {}).some(family => kind === "companion" ? family.parentActorId === id :
+     family.child.kind === kind && family.child.id === id)) return false;
+   if (state.retailOperations.some((operation) => !terminal(operation) && operation.actorKind === kind && operation.actorId === id)) return false;
+@@ -224,7 +231,7 @@
+     !actor.procedureCompanion));
+ }
+ 
+-function ledgerAllows(state: GameState, kind: RetailActorKind, id: string, line: ServiceIncomeLine, authorized: boolean): boolean {
++function ledgerAllows(state: GameState, kind: RetailActorKind, id: string, line: ServiceIncomeLine, authorized: boolean, quoteGross = line.fee): boolean {
+   if (authorized) return true;
+   const key = actorKey(kind, id);
+   const dayNumber = Math.floor(state.facilityTick / DAY_MINUTES);
+@@ -241,8 +248,10 @@
+   if (ledger.lastTripAtFacilityTick !== null && state.facilityTick - ledger.lastTripAtFacilityTick < TRIP_COOLDOWN_MINUTES) return false;
+   if (line.retail?.category === "food_drink" && ledger.foodDrinkPurchases >= 2) return false;
+   if (line.retail?.category === "gift_supply" && ledger.giftSupplyPurchases >= 1) return false;
+-  const budget = kind === "employee" || kind === "founder" ? 20 : 30;
+-  return ledger.discretionarySpent + line.fee <= budget;
++  const budget = kind === "employee" || kind === "founder" ? LEVEL_FIVE_GIFT_RETAIL.recurringBudget
++    : state.retailExternalActors.some(actor => actor.id === id && actor.giftOnlyVisit) ? LEVEL_FIVE_GIFT_RETAIL.visitorBudget : LEVEL_FIVE_GIFT_RETAIL.ordinaryVisitorBudget;
++  return isGiftIncomeLineId(line.id) ? Math.round((ledger.discretionarySpent + quoteGross) * 100) <= budget * 100
++    : ledger.discretionarySpent + line.fee <= budget;
+ }
+ 
+ function matchingOrder(state: GameState, orderId: string | undefined, kind: RetailActorKind, actorId: string, lineId: string) {
+@@ -276,6 +285,11 @@
+     .flatMap((line) => {
+       const outlet = outletForLine(state, line, context, location);
+       if (!outlet) return [];
++      if (isGiftIncomeLineId(line.id)) {
++        const quote = createRoomUpgradeRevenueQuote(state, line.fee, [outlet.contract.roomDefinitionId]);
++        bindRoomUpgradeRevenueQuote(quote, outlet.roomId);
++        if (!ledgerAllows(state, kind, actorId, line, false, quote ? getRoomUpgradeQuotedFee(quote) : line.fee)) return [];
++      }
+       const path = kind === "service_visitor"
+         ? pathServiceVisitorFromCurrentLocation(state, context, location, outlet.target)
+         : facilityRoute(state, context, location, outlet.target);
+@@ -307,27 +321,38 @@
+   const identity = actorIdentity(state, kind, actorId);
+   if (!outlet || !location || !identity || (kind === "employee" && outlet.servingEmployeeId === actorId)) return null;
+   const activeAtOutlet = state.retailOperations.filter((operation) => !terminal(operation) && operation.outletRoomInstanceId === outlet.roomId);
+-  if (activeAtOutlet.filter((operation) => operation.status === "queued" || operation.status === "walking_to_outlet").length >= MAX_OUTLET_QUEUE) return null;
+-  const path = kind === "retail_visitor"
++  const giftShop = isGiftIncomeLineId(line.id) && getRoomDefinition(outlet.contract.roomDefinitionId, context)?.width === 3 && getRoomDefinition(outlet.contract.roomDefinitionId, context)?.height === 3
++    ? state.rooms.find(room => room.id === outlet.roomId && room.roomDefinitionId === "room.gift_shop") : undefined;
++  const giftContact = giftShop ? giftCheckoutContact(state, giftShop) : null;
++  if (giftShop ? !giftContact : activeAtOutlet.filter((operation) => operation.status === "queued" || operation.status === "walking_to_outlet").length >= MAX_OUTLET_QUEUE) return null;
++  const routeTo = (target: GridPoint) => kind === "retail_visitor"
+     ? isStreetOrigin(state, context, location)
+-      ? pathFromStreet(state, context, location, outlet.target)
+-      : facilityRoute(state, context, location, outlet.target)
++      ? pathFromStreet(state, context, location, target)
++      : facilityRoute(state, context, location, target)
+     : kind === "service_visitor"
+-      ? pathServiceVisitorFromCurrentLocation(state, context, location, outlet.target)
+-      : facilityRoute(state, context, location, outlet.target);
++      ? pathServiceVisitorFromCurrentLocation(state, context, location, target)
++      : facilityRoute(state, context, location, target);
++  const giftRoute = giftShop && giftContact ? giftContactPath(state, giftShop, giftContact, location, routeTo) : null;
++  const path = giftShop ? giftRoute?.path ?? [] : routeTo(outlet.target);
+   if (!path.length) return null;
+-  const id = `retail-operation.${state.retailOperationSequence++}`;
+   const roomUpgradeRevenue = createRoomUpgradeRevenueQuote(state, line.fee, [outlet.contract.roomDefinitionId]);
+   bindRoomUpgradeRevenueQuote(roomUpgradeRevenue, outlet.roomId);
++  const baselineStock = outlet.contract.staffRoleDefinitionId === "staff.pharmacist"
++    ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease") : line.retail.stockCost;
++  const executiveStock = quoteExecutiveStock(state, baselineStock, context);
++  const quoteGross = roomUpgradeRevenue ? getRoomUpgradeQuotedFee(roomUpgradeRevenue) : line.fee;
++  if (giftShop && (!ledgerAllows(state, kind, actorId, line, Boolean(order), quoteGross) || state.cashCents < (executiveStock?.costCents ?? Math.round(baselineStock * 100)))) return null;
++  const id = `retail-operation.${state.retailOperationSequence++}`;
+   const operation: RetailOperationState = {
++    ...(giftRoute && giftContact ? { giftCheckout: { version: "gift-checkout.v1" as const, contactId: giftContact, doorId: giftRoute.doorId,
++      ...(path.length > 1 ? { aisleWaiting: true as const } : {}) }, resourceWaitReason: null } : {}),
+     id, incomeLineId: line.id, catalogVersion: 1, actorKind: kind, actorId, displayName: identity.displayName, appearance: identity.appearance,
+     linkedServiceOperationId: kind === "service_visitor" ? actorId : kind === "companion" ? state.retailExternalActors.find((actor) => actor.id === actorId)?.linkedServiceOperationId ?? null : null,
+     authorizedOrderId: order?.id ?? null, status: "walking_to_outlet", createdAtFacilityTick: state.facilityTick,
+     waitDeadlineFacilityTick: state.facilityTick + QUEUE_ABANDON_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null,
+-    quoteGross: roomUpgradeRevenue ? getRoomUpgradeQuotedFee(roomUpgradeRevenue) : line.fee, roomUpgradeRevenue,
+-    quoteStockCost: outlet.contract.staffRoleDefinitionId === "staff.pharmacist"
+-      ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease")
+-      : line.retail.stockCost, outletRoomInstanceId: outlet.roomId,
++    quoteGross, roomUpgradeRevenue,
++    quoteStockCost: executiveStock ? executiveStock.costCents / 100 : baselineStock,
++    ...(executiveStock ? { executiveStock } : {}), outletRoomInstanceId: outlet.roomId,
+     outletDurationMinutes: outlet.contract.durationMinutes, staffRoleDefinitionId: outlet.contract.staffRoleDefinitionId ?? null, servingEmployeeId: outlet.servingEmployeeId,
+     location: { ...location }, returnLocation: kind === "retail_visitor" ? null : { ...location }, path, pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick, purchaseEndsAtFacilityTick: null, cancellationReason: null,
+@@ -351,7 +376,7 @@
+   const line = getServiceIncomeLine(lineId);
+   if (!line?.retail || line.retail.category !== "authorized_order" || state.retailOrders.some((order) => order.id === orderId)) return false;
+   if (kind === "retail_visitor" && !state.retailExternalActors.some((actor) => actor.id === actorId)) {
+-    if (!context || state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return false;
++    if (!context || state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && !actor.giftOnlyVisit && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return false;
+     const entry = entrance(state, context);
+     if (!entry) return false;
+     state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, actorId) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+@@ -362,6 +387,10 @@
+ 
+ function cancelTrip(state: GameState, operation: RetailOperationState, reason: string, context?: DomainContext): void {
+   operation.cancellationReason = reason;
++  if (operation.giftCheckout) {
++    releaseGiftCheckout(operation);
++    if (context) { beginReturn(state, operation, context); return; }
++  }
+   const external = state.retailExternalActors.find((actor) => actor.id === operation.actorId);
+   if (external && operation.actorKind === "retail_visitor" && context) {
+     operation.path = pathToExit(state, context, operation.location);
+@@ -426,15 +455,19 @@
+ }
+ 
+ function fulfill(state: GameState, operation: RetailOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
+-  if (state.cashCents < operation.quoteStockCost * 100) return false;
++  if (operation.giftCheckout && state.serviceIncomeReceipts.some(receipt => receipt.transactionKey === `income.retail.${operation.id}.${operation.incomeLineId}`)) return true;
++  if (state.cashCents < (operation.executiveStock?.costCents ?? operation.quoteStockCost * 100)) return false;
+   const transactionKey = `income.retail.${operation.id}.${operation.incomeLineId}`;
+   if (state.serviceIncomeReceipts.some((receipt) => receipt.transactionKey === transactionKey)) return true;
+   const founderConsumption = operation.actorKind === "founder";
+-  const cashDelta = founderConsumption ? -operation.quoteStockCost : operation.quoteGross - operation.quoteStockCost;
++  const rawDelta = founderConsumption ? -operation.quoteStockCost : operation.quoteGross - operation.quoteStockCost;
++  const cashDelta = operation.giftCheckout ? Math.round(rawDelta * 100) / 100 : rawDelta;
+   state.cashCents += Math.round(cashDelta * 100);
+   state.cash = state.cashCents / 100;
+   const receiptActorKind = operation.actorKind === "encounter" ? "patient" : operation.actorKind === "service_visitor" ? "visitor" : operation.actorKind;
++  if (operation.executiveStock && state.levelFive) state.levelFive.management.supplierSavings.stockCents += operation.executiveStock.baselineCostCents - operation.executiveStock.costCents;
+   state.serviceIncomeReceipts.push({ id: `${transactionKey}.${state.nextServiceIncomeReceiptSequence++}`, transactionKey, incomeLineId: operation.incomeLineId, catalogVersion: 1, routeId: null, actorKind: receiptActorKind, actorId: operation.actorId, grossAmount: founderConsumption ? 0 : operation.quoteGross, stockCost: operation.quoteStockCost, netCashDelta: cashDelta, completedAtFacilityTick: state.facilityTick });
++  observeInspectionReceipt(state, state.serviceIncomeReceipts.at(-1)!);
+   recordLevelThreeRoomUse(state, operation.outletRoomInstanceId, `retail:${operation.id}`, context);
+   const order = operation.authorizedOrderId ? state.retailOrders.find((candidate) => candidate.id === operation.authorizedOrderId) : null;
+   if (order) order.fulfilledQuantity += 1;
+@@ -443,6 +476,11 @@
+ }
+ 
+ function beginReturn(state: GameState, operation: RetailOperationState, context: DomainContext): void {
++  const priorPath = operation.path, priorIndex = operation.pathIndex;
++  if (operation.giftCheckout) {
++    operation.giftCheckout.contactId = null;
++    delete operation.giftCheckout.aisleWaiting;
++  }
+   if (operation.departureServiceOperationId) {
+     operation.path = [{ ...operation.location }];
+     operation.pathIndex = 0;
+@@ -455,18 +493,54 @@
+     operation.status = "leaving";
+     if (external) { external.lifecycle = "departing"; external.path = operation.path; external.pathIndex = 0; }
+   } else if (operation.returnLocation) {
+-    operation.path = facilityRoute(state, context, operation.location, operation.returnLocation);
++    // A gift shopper may have left its own care-room home. Permit that exact
++    // original room on return; other protected rooms stay excluded.
++    const returnRoom = operation.giftCheckout ? state.rooms.find(room => {
++      const definition = getRoomDefinition(room.roomDefinitionId, context);
++      // Native care contacts are sub-tile points (for example y=25.3), not
++      // necessarily exact tile centres. Permit only their original footprint.
++      return definition && getOccupiedTiles(room, definition).some(point =>
++        Math.abs(point.x - operation.returnLocation!.x) < .5 && Math.abs(point.y - operation.returnLocation!.y) < .5);
++    }) : undefined;
++    operation.path = facilityRoute(state, context, operation.location, operation.returnLocation, returnRoom ? new Set([returnRoom.id]) : new Set());
++    if (!operation.path.length && operation.giftCheckout && returnRoom &&
++        (!Number.isInteger(operation.returnLocation.x) || !Number.isInteger(operation.returnLocation.y))) {
++      const shop = state.rooms.find(room => room.id === operation.outletRoomInstanceId && room.roomDefinitionId === "room.gift_shop");
++      // The integer facility graph cannot end on a native couch contact. Join
++      // the exact Gift exit to the reversed, already approved care-room exit.
++      // Preserve every native knot and the original accepted return point.
++      if (shop) operation.path = giftNativeExitPath(state, shop, operation.location, outside =>
++        findRouteFromDisplacedLocationToPoint(state, context, operation.returnLocation!, outside, new Set([returnRoom.id])).reverse());
++    }
+     operation.status = "returning";
+   } else operation.status = "completed";
+   operation.pathIndex = 0;
+   operation.lastMovedAtFacilityTick = state.facilityTick;
++  if (operation.giftCheckout && !operation.path.length) {
++    operation.path = priorPath;
++    operation.pathIndex = priorIndex;
++    operation.giftCheckout.returnBlocked = true;
++    operation.resourceWaitReason = "Waiting for a connected Gift Shop exit";
++  } else if (operation.giftCheckout) {
++    delete operation.giftCheckout.returnBlocked;
++    if (operation.path.length > 1) operation.giftCheckout.aisleWaiting = true;
++    operation.resourceWaitReason = null;
++  }
+ }
+ 
+ function advanceMovement(state: GameState, operation: RetailOperationState, context: DomainContext): void {
+   if ((operation.departureServiceOperationId || operation.actorKind === "retail_visitor") && operation.createdAtFacilityTick === state.facilityTick) return;
+   if (operation.pathIndex < operation.path.length - 1) {
+     const elapsed = Math.max(1, state.facilityTick - operation.lastMovedAtFacilityTick);
+-    operation.pathIndex = Math.min(operation.path.length - 1, operation.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
++    const nextIndex = Math.min(operation.path.length - 1, operation.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
++    if (operation.giftCheckout && giftAisleIsBusy(state, operation, nextIndex, context)) {
++      operation.giftCheckout.aisleWaiting = true;
++      operation.resourceWaitReason = "Waiting for the Gift Shop aisle";
++      operation.lastMovedAtFacilityTick = state.facilityTick;
++      return;
++    }
++    if (operation.giftCheckout) { delete operation.giftCheckout.aisleWaiting; operation.resourceWaitReason = null; }
++    operation.pathIndex = nextIndex;
+     operation.lastMovedAtFacilityTick = state.facilityTick;
+     setActorMovement(state, operation);
+   }
+@@ -486,9 +560,9 @@
+ }
+ 
+ function createExternalRetailVisitor(state: GameState, context: DomainContext): void {
+-  if (state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return;
++  if (state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && !actor.giftOnlyVisit && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return;
+   const opportunity = state.externalRetailSequence++;
+-  const candidates = SERVICE_INCOME_CATALOG.filter((line) => line.kind === "retail" && line.retail?.category !== "authorized_order" && state.facilityLevel >= line.minimumFacilityLevel && outletForLine(state, line, context));
++  const candidates = SERVICE_INCOME_CATALOG.filter((line) => !isGiftIncomeLineId(line.id) && line.kind === "retail" && line.retail?.category !== "authorized_order" && state.facilityLevel >= line.minimumFacilityLevel && outletForLine(state, line, context));
+   if (!candidates.length) return;
+   if (deterministicInteger(state.campaignSeed, "environment", `retail-opportunity.${opportunity}`, 2) !== 0) return;
+   const id = `retail-visitor.${opportunity}`;
+@@ -854,13 +928,20 @@
+     state.nextExternalRetailOpportunityTick = state.facilityTick + EXTERNAL_OPPORTUNITY_MINUTES;
+     createExternalRetailVisitor(state, context);
+   }
++  scheduleGiftRetailDemand(state, context, id => streetArrivalPoint(state, context, id),
++    id => startRetailPurchase(state, LEVEL_FIVE_GIFT_RETAIL.normalIncomeLineId, "retail_visitor", id, context));
++  reconcileGiftRetailTrips(state, context);
+   const companionsCreatedThisTick = ensureCompanions(state, context);
+   for (const operation of state.retailOperations) {
+     if (terminal(operation)) continue;
+     const line = getServiceIncomeLine(operation.incomeLineId);
+     if (!line?.retail) { cancelTrip(state, operation, "The product is no longer available.", context); continue; }
+-    if (preempted(state, operation)) { cancelTrip(state, operation, "Required work superseded optional shopping.", context); continue; }
++    if (preempted(state, operation)) { cancelTrip(state, operation, "Required work superseded optional shopping.", operation.giftCheckout ? undefined : context); continue; }
+     if (operation.status === "walking_to_outlet" || operation.status === "returning" || operation.status === "leaving") {
++      if (operation.giftCheckout?.returnBlocked) {
++        beginReturn(state, operation, context);
++        if (operation.giftCheckout.returnBlocked) continue;
++      }
+       if (operation.status === "leaving" && operation.path.length <= 1) {
+         const retry = pathToExit(state, context, operation.location);
+         if (retry.length > 1) {
+@@ -889,6 +970,26 @@
+       continue;
+     }
+     if (operation.status === "queued") {
++      if (operation.giftCheckout && operation.giftCheckout.contactId !== "pay") {
++        if (state.facilityTick >= operation.waitDeadlineFacilityTick) { cancelTrip(state, operation, "The Gift Shop queue took longer than 10 minutes.", context); continue; }
++        const shop = state.rooms.find(room => room.id === operation.outletRoomInstanceId)!;
++        const nextContact = operation.giftCheckout.contactId === "queue2" ? "queue1" : "pay";
++        const ahead = nextContact === "pay" && state.retailOperations.some(candidate => candidate.id !== operation.id && !terminal(candidate) && candidate.outletRoomInstanceId === shop.id &&
++          candidate.giftCheckout?.contactId !== null && (candidate.createdAtFacilityTick < operation.createdAtFacilityTick ||
++            candidate.createdAtFacilityTick === operation.createdAtFacilityTick && candidate.id.localeCompare(operation.id) < 0));
++        if (!ahead && giftContactFree(state, shop, nextContact, operation.id)) {
++          const route = giftContactPath(state, shop, nextContact, operation.location, target => facilityRoute(state, context, operation.location, target));
++          if (!route) { cancelTrip(state, operation, "The Gift Shop counter could not be reached.", context); continue; }
++          operation.giftCheckout.contactId = nextContact;
++          operation.giftCheckout.aisleWaiting = true;
++          operation.giftCheckout.doorId = route.doorId;
++          operation.path = route.path;
++          operation.pathIndex = 0;
++          operation.lastMovedAtFacilityTick = state.facilityTick;
++          operation.status = "walking_to_outlet";
++        }
++        continue;
++      }
+       const outlet = state.rooms.find((room) => room.id === operation.outletRoomInstanceId);
+       const repairAssigned = state.employees.some((employee) =>
+         employee.facilityTask?.kind === "repair_room" && employee.facilityTask.targetId === outlet?.id);
+@@ -917,6 +1018,18 @@
+   advanceCompanions(state, context, companionsCreatedThisTick);
+ }
+ 
++/** Load/access reconciliation releases contacts without dispensing or advancing
++ * any clock. A blocked native return holds its exact cursor until access returns. */
++export function reconcileGiftRetailTrips(state: GameState, context: DomainContext): void {
++  for (const trip of state.retailOperations) {
++    if (!trip.giftCheckout || terminal(trip)) continue;
++    if (["walking_to_outlet", "queued", "purchasing"].includes(trip.status) &&
++      (!isRoomOperationalForFacilityWork(state, trip.outletRoomInstanceId, context) || !state.doors.some(d => d.id === trip.giftCheckout!.doorId))) {
++      cancelTrip(state, trip, "The Gift Shop checkout is no longer accessible.", context);
++    }
++  }
++}
++
+ /** Same chair rule as bathroom returns, for a patient walking back from a shop. */
+ export function redirectRetailReturn(
+   state: GameState,
+@@ -953,6 +1066,7 @@
+ ): void {
+   for (const operation of state.retailOperations) {
+     if (!terminal(operation) && operation.outletRoomInstanceId === roomId) {
++      if (operation.giftCheckout && ["returning", "leaving"].includes(operation.status)) continue;
+       cancelTrip(state, operation, reason, context);
+     }
+   }
+@@ -961,3 +1075,4 @@
+ export function getPhysicallyPresentRetailExternalActors(state: GameState): RetailExternalActorState[] {
+   return state.retailExternalActors.filter((actor) => actor.lifecycle !== "departed" && actor.location !== null);
+ }
++import { quoteExecutiveStock } from "./executive-management";

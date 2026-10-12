@@ -1,0 +1,131 @@
+{
+  "pool": "threads",
+  "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "testConfigsUnchanged": true,
+  "noTestsExcludedByCommand": true,
+  "existingTestDeadlinesUnchanged": true,
+  "commandLineTimeoutOverrides": false,
+  "results": {
+    "balance-full": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/balance-full.log",
+      "sha256": "96b2e5c2d958fe82322e9b6422af9fbea1b3eb6d3c288e6bbeb4c51b855cceb5",
+      "summary": " Test Files  21 passed (21)\n      Tests  149 passed (149)\n   Start at  02:42:39\n   Duration  1.14s (transform 3.41s, setup 0ms, import 9.52s, tests 238ms, environment 2ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "domain-full": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/domain-full.log",
+      "sha256": "8365282109397a32fb79ee108dd7ea97da324e39a738ec2420fc19397ff3c703",
+      "summary": " Test Files  148 passed | 1 skipped (149)\n      Tests  4152 passed | 2 skipped (4154)\n   Start at  02:46:00\n   Duration  170.58s (transform 6.57s, setup 0ms, import 62.05s, tests 607.56s, environment 8ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "content-full": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/content-full.log",
+      "sha256": "dd9ad96e801e9bf7149c4d44adcb62fc8988718f014a6e331f806575b1f0462f",
+      "summary": " Test Files  87 passed (87)\n      Tests  628 passed (628)\n   Start at  02:42:39\n   Duration  5.60s (transform 16.30s, setup 0ms, import 58.61s, tests 6.35s, environment 8ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "player-full": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": ".local-dev/level5-m7a/player-full.log",
+      "sha256": "2439caa14b1912f3309dce00a8376552baf4a94bb89d98efb6af4d139a923e7d",
+      "summary": " Test Files  1 failed | 217 passed (218)\n      Tests  1 failed | 1929 passed (1930)\n   Start at  02:49:52\n   Duration  47.71s (transform 9.37s, setup 0ms, import 86.45s, tests 86.33s, environment 11ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00",
+      "allowedFailure": "Known thyroid pendingLabel assertion, src/session/surgeryCenterServicePreviews.test.ts:85:52"
+    },
+    "typecheck-final": {
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/typecheck-final.log",
+      "sha256": "918ba7f61de41398d6b6878a4f862aa2d19d01fba381d7560b5e41560bacf9b4",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "build-final": {
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/build-final.log",
+      "sha256": "e3a57c2bace8df2e9a64ec0f98d3ef20b6159af68b7af0b4eecb5d6874db8a97",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "focused-domain-final": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/facility-inspection.test.ts tests/facility-inspection-integration.test.ts tests/level-five-progression.test.ts tests/level-five-state-persistence.test.ts",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/focused-domain-final.log",
+      "sha256": "ac48f9b7aa5892a1398ee0fb7cfb7662db995e4e930a1d1192feb36c08848ca4",
+      "summary": " Test Files  4 passed (4)\n      Tests  173 passed (173)\n   Start at  02:41:15\n   Duration  22.50s (transform 5.73s, setup 0ms, import 8.13s, tests 25.75s, environment 0ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "scoring-boundaries": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/facility-inspection.test.ts",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/scoring-boundaries.log",
+      "sha256": "2af58cd2252924dc29d49f741d90122e6ed4f5b6fbc3180493041e5bffc599dc",
+      "summary": " Test Files  1 passed (1)\n      Tests  38 passed (38)\n   Start at  02:45:41\n   Duration  2.35s (transform 1.34s, setup 0ms, import 1.82s, tests 457ms, environment 0ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "focused-player-final": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/inspectionViewModels.test.tsx src/session/levelFiveProgressionViews.test.tsx src/session/levelFiveStateQa.test.ts src/mobile/levelFiveGoals.test.tsx",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/focused-player-final.log",
+      "sha256": "a8af52f9283ca006263cb66cc3396c9f2041e1b42b82ef396ba96db79fdc0580",
+      "summary": " Test Files  4 passed (4)\n      Tests  64 passed (64)\n   Start at  02:41:15\n   Duration  4.20s (transform 8.42s, setup 0ms, import 11.73s, tests 2.32s, environment 0ms)",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "qa-transform": {
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/qa-transform.log",
+      "sha256": "b944869c6f303c87f3de39fa0f5f62fdfcb227b8dc6109de1aca93858d106095",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "qa-typecheck": {
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p .local-dev/level5-m2/qa-tsconfig.json",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/qa-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "launcher": {
+      "command": "node scripts/verify-launcher-contract.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/launcher.log",
+      "sha256": "cc580a83e6d512f09c2d265aeb69895231c62c6fc0658bb88293a22a6b7bad6a",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "qa-smoke": {
+      "command": "node --import ./.local-dev/level5-m6/source-loader.mjs .local-dev/level5-m7a/qa-smoke.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/qa-smoke.log",
+      "sha256": "f04d1702b9d1755ee48eaff37bcd7c60896e3fe819f0e1cbca928d7a3b20d35d",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "qa-http": {
+      "command": "node .local-dev/level5-m7a/qa-http.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/qa-http.log",
+      "sha256": "5a4725beede1d6cfcdcd8e1231548df700569439d1f474e936c59c91cb99c5e7",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    },
+    "build-assets": {
+      "command": "node .local-dev/level5-m7a/build-assets.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7a/build-assets.log",
+      "sha256": "1338f3ef7a1310d7589c0c6001164487a2cfa7b95b18f1523880612bb8fe6568",
+      "summary": "",
+      "modifiedAtUtc": "2026-10-12T07:01:59.788001+00:00"
+    }
+  }
+}

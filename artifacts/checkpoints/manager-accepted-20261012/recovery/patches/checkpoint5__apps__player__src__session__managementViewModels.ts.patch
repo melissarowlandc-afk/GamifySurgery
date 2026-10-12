@@ -1,0 +1,51 @@
+--- a/apps/player/src/session/managementViewModels.ts
++++ b/apps/player/src/session/managementViewModels.ts
+@@ -7,6 +7,7 @@
+   getEmployeeTrainingRole,
+   getFacilityClock,
+   getOperatingExpensePerFacilityHour,
++  getSupplierUpkeepSavingsPerFacilityHour,
+   getPatientEncounterIncomeCents,
+   getRollingIncomeSummary,
+   getRoomDefinition,
+@@ -33,6 +34,14 @@
+   return `$${dollarsFormatter.format(value)}`;
+ }
+ 
++export function executiveHiringFundingLabel(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): string {
++  const income = getRollingIncomeSummary(state);
++  const wage = state.employees.some(employee => employee.staffRoleDefinitionId === "staff.executive") ? 0 :
++    getStaffRoleDefinition("staff.executive", context)?.salaryPerExpenseInterval ?? 45;
++  const current = income.incomePerHour - income.stockCostPerHour + getOperatingExpensePerFacilityHour(state, context);
++  return `${dollars(current)}/hr current clinic net; ${dollars(current - wage)}/hr with the Executive on current income. Supplier terms are only 1–2% of stock/upkeep and do not fund the $45 wage. Existing service/Reading income can fund this optional role. $500 cash reserve is advisory.`;
++}
++
+ export function hasTrainingRoom(state: GameState): boolean {
+   return state.rooms.some((room) => room.roomDefinitionId === "room.training");
+ }
+@@ -204,7 +213,8 @@
+   const staffCost = state.employees.reduce((total, employee) => total + employee.salaryPerExpenseInterval, 0);
+   const advertising = context.balanceRelease.advertising.levels.find((level) => level.level === state.advertisingLevel);
+   const advertisingCost = advertising?.hourlyCost ?? 0;
+-  const relief = roomCost + staffCost + advertisingCost - operatingHourly;
++  const supplierSaving = getSupplierUpkeepSavingsPerFacilityHour(state, context);
++  const relief = roomCost + staffCost + advertisingCost - operatingHourly - supplierSaving;
+   const hourly = operatingHourly + income.stockCostPerHour;
+   const hourlyNet = Math.round((income.incomePerHour - hourly) * 100) / 100 || 0;
+   const encounterIncomeCents = getPatientEncounterIncomeCents(state);
+@@ -231,6 +241,7 @@
+   }
+   return {
+     cashLabel: dollars(state.cash),
++    ...(state.facilityLevel >= 5 ? { supplierSavingsLabel: `Actual posted supplier savings: stock ${dollars((state.levelFive?.management.supplierSavings.stockCents ?? 0) / 100)} · upkeep ${dollars((state.levelFive?.management.supplierSavings.upkeepSixtiethCents ?? 0) / 6000)}. Already included in lower costs; payroll unchanged.` } : {}),
+     earnedLabel: dollars(earned),
+     billedLabel: dollars((encounterIncomeCents === 0 ? totalsCents.grossCents : totalsCents.grossCents + encounterIncomeCents) / 100),
+     stockLabel: dollars(totalsCents.stockCostCents / 100),
+@@ -263,6 +274,7 @@
+       },
+       { id: "stock", label: "Stock (recent average)", amount: income.stockCostPerHour, amountLabel: `${dollars(income.stockCostPerHour)}/hr` },
+       { id: "relief", label: "Upkeep outage relief", amount: -relief, amountLabel: `${relief > 0 ? "−" : ""}${dollars(Math.abs(relief))}/hr` },
++      ...(state.facilityLevel >= 5 ? [{ id: "supplier" as const, label: "Executive supplier upkeep reduction", amount: -supplierSaving, amountLabel: `−${dollars(supplierSaving)}/hr` }] : []),
+     ],
+     runwayLabel: runwayHours === null
+       ? "No running costs right now."

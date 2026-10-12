@@ -1,0 +1,93 @@
+{
+  "designRevision": 3,
+  "date": "2026-10-11",
+  "note": "Exact successful stdout lines from actual command results; complete browser stderr retained in the actual browser/capture report files. No browser PASS claimed.",
+  "commands": [
+    {
+      "command": "node tools/room-design/level-5/gift-shop/archive-v2.mjs",
+      "exitCode": 0,
+      "stdout": "ARCHIVE PASS: 417 version-2 files copied byte-for-byte under history/v2; existing history/v1 preserved.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/compose-v3.mjs",
+      "exitCode": 0,
+      "stdout": "COMPOSITION V3 READY: one full-room concept; 11 fixture records / 9 concept-derived sprites; one necessary joined main display/checkout; 10 optional records; four necessary standing spots.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/reconcile-v3.mjs",
+      "exitCode": 0,
+      "stdout": "CONCEPT RECONCILIATION PASS: 10 concept-proportion/plinth refinements; joined rear bays fill one tile each; broad central display/checkout and entrance endcap; four necessary standing spots retained.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/build.mjs",
+      "exitCode": 0,
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/validate.cjs",
+      "exitCode": 0,
+      "stdout": "VALIDATION PASS: room-first concept; 1 fixed look / 5 upgrades; 9 derived sprites / 11 fixtures; 1 necessary joined checkout/main display / 10 optional records; 4 unchanged approved adult stills; 3200 door/backing states; 63480 routes / 27145760 radius-clear samples at 0.005T; 63480 full-queue routes / 28991560 occupied samples; all 12 doors; necessary furniture and spots retained; tile-filled rear plinths/visibility/layers/alpha/hashes/UTF-8 checked.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/validate-controls.mjs",
+      "exitCode": 0,
+      "stdout": "CONTROL VALIDATION PASS: 230 Node handler checks; 5 fixed-look upgrade buttons, 12 door buttons, 3 backing buttons, 4 bulk buttons, 4 standing shoppers, keyboard, real-error/performance-warning discrimination; browser pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/inspect-native.mjs",
+      "exitCode": 0,
+      "stdout": "NATIVE INSPECTION PASS: 110 actual-render states across 5 fixed-appearance upgrades; default/empty/individual shoppers/full queue/contacts/routes/all 12 doors/backing; browser QA pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/inspect-composition.mjs",
+      "exitCode": 0,
+      "stdout": "COMPOSITION INSPECTION PASS: fixture paint with shoppers hidden fills 54.5% of the visible floor versus 37.6% in v2 (+16.9 points); concept/playable/full-queue comparison saved.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/reproduce.mjs",
+      "exitCode": 0,
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.\nBUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.\nREPRODUCIBILITY PASS: 21 delivered files byte-identical across two native rebuilds.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/check-helpers.cjs",
+      "exitCode": 0,
+      "stdout": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/check-http.mjs",
+      "exitCode": 0,
+      "stdout": "HTTP VALIDATION PASS: 23 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/assets/write-provenance-v3.mjs",
+      "exitCode": 0,
+      "stdout": "ART PROVENANCE PASS: 1 built-in full-room concept + 7 concept-derived transparent edits; 9 prepared sprites / 11 fixture records; prompts/receipts/originals/crops/transforms/hashes recorded; 4 unchanged approved adult stills; complete v2 archive retained.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/validate-browser.cjs",
+      "exitCode": 1,
+      "status": "PENDING_MANAGER",
+      "stderrFirstLine": "browserType.launch: spawn EPERM",
+      "completeStderrReport": "proof/evidence/v3/browser-validation-report.json"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/capture.cjs",
+      "exitCode": 1,
+      "status": "PENDING_MANAGER",
+      "stderrFirstLine": "browserType.launch: spawn EPERM",
+      "completeStderrReport": "proof/evidence/v3/browser/capture-report.json"
+    }
+  ],
+  "priorVersion": "history/v2/ARCHIVE_RECEIPT.json",
+  "archiveFilesVerified": 417,
+  "finalPlanUpdate": {
+    "command": "node tools/room-design/level-5/gift-shop/update-plan-v3.mjs",
+    "exitCode": 0,
+    "stdout": "SCOPED PLAN UPDATE PASS: only Step: Gift Shop mockup replaced; 23455 prefix bytes / 604 suffix bytes preserved exactly, including the manager’s room-first directive.\n"
+  },
+  "finalAudit": {
+    "command": "node tools/room-design/level-5/gift-shop/proof/audit-lane.cjs",
+    "exitCode": 0,
+    "stdout": "LANE AUDIT PASS: 1024 owned files; 19/26 shared hashes unchanged; 7 concurrent read-only reference changes preserved; assigned Gift Shop plan section only; UTF-8/source/secret/privacy checks; Node/native/rebuild/HTTP PASS; browser PENDING_MANAGER.\n"
+  }
+}

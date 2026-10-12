@@ -1,0 +1,657 @@
+{
+  "schemaVersion": "inspector-v6f-roster/v1",
+  "cohort": "inspector-v6f",
+  "programPlan": "docs/execplans/character-gapfill-v6-20261007.md",
+  "allocation": {
+    "inspectionAgents": 10,
+    "women": 5,
+    "men": 5
+  },
+  "coverageAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f",
+    "use": "Historical character gap-fill program/style provenance only. The owner October 11 inspector brief authorizes ten Level5 visitor looks; no gameplay eligibility or appearance-based selection rule."
+  },
+  "identities": [
+    {
+      "number": "001",
+      "stableId": "inspector-v6f.001",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 28,
+      "compatibleSexLabel": "Female",
+      "ageBand": "young_adult",
+      "visualBrief": {
+        "skin": "deep brown skin",
+        "hair": "short black side-swept tapered pixie hair",
+        "accessory": "no glasses",
+        "build": "a petite compact build",
+        "outfit": "a muted petrol-teal blazer over an ivory collared blouse, full-length rust tailored trousers, black oxford shoes"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/001/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/001/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          },
+          {
+            "path": "sources/001/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "002",
+      "stableId": "inspector-v6f.002",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 36,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "skin": "fair freckled skin",
+        "hair": "straight ginger hair in one low braid down the back",
+        "accessory": "no glasses",
+        "build": "an average compact build",
+        "outfit": "a muted slate-blue buttoned cardigan over a peach button-down shirt, full-length charcoal trousers, brown loafers"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/002/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/002/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          },
+          {
+            "path": "sources/002/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "003",
+      "stableId": "inspector-v6f.003",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 44,
+      "compatibleSexLabel": "Female",
+      "ageBand": "adult",
+      "visualBrief": {
+        "skin": "golden-tan skin",
+        "hair": "straight black blunt chin-length bob with a side part",
+        "accessory": "no glasses",
+        "build": "a sturdy wider-waisted build",
+        "outfit": "a charcoal blazer over a muted burgundy collared blouse, full-length warm beige trousers, plum loafers"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/003/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/003/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          },
+          {
+            "path": "sources/003/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "004",
+      "stableId": "inspector-v6f.004",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 56,
+      "compatibleSexLabel": "Female",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "skin": "medium warm-brown skin",
+        "hair": "straight silver hair swept tightly into a low flat bun",
+        "accessory": "thin rectangular amber glasses",
+        "build": "a full rounded build",
+        "outfit": "a muted terracotta cardigan over a cream button-down shirt, full-length navy tailored trousers, dark brown office shoes"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          },
+          {
+            "path": "sources/004/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "005",
+      "stableId": "inspector-v6f.005",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 65,
+      "compatibleSexLabel": "Female",
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "skin": "fair rosy skin",
+        "hair": "short straight white side-swept pixie hair",
+        "accessory": "no glasses, mature cheek and smile-line cues",
+        "build": "a lean compact build",
+        "outfit": "a moss-green blazer over a pale lavender collared blouse, full-length slate-gray trousers, oxblood loafers"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/005/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/005/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.002-eight-poses.png",
+            "sha256": "ced5a5b0f43da790ed20e45974cdef7866d7f47eb1c914c105232e4e9536d8f3",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.002"
+          },
+          {
+            "path": "sources/005/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "006",
+      "stableId": "inspector-v6f.006",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 30,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "skin": "olive-tan skin",
+        "hair": "short dark-brown wavy quiff with neat tapered sides",
+        "accessory": "no glasses, clean-shaven face",
+        "build": "a lean compact build",
+        "outfit": "a cocoa-brown blazer over a pale blue button-down shirt, full-length stone trousers, tan oxford shoes"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/006/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/006/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          },
+          {
+            "path": "sources/006/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "007",
+      "stableId": "inspector-v6f.007",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 39,
+      "compatibleSexLabel": "Male",
+      "ageBand": "adult",
+      "visualBrief": {
+        "skin": "light warm-tan skin",
+        "hair": "a completely shaved bald head",
+        "accessory": "no glasses, neat black jaw beard",
+        "build": "a broad-shouldered compact build",
+        "outfit": "a muted plum buttoned cardigan over a cream collared shirt, full-length dark-gray trousers, black loafers"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/007/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/007/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          },
+          {
+            "path": "sources/007/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "008",
+      "stableId": "inspector-v6f.008",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 48,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "skin": "golden-brown skin",
+        "hair": "short straight black neatly combed hair",
+        "accessory": "small navy rectangular glasses and a neat short black moustache",
+        "build": "a stocky rounded build",
+        "outfit": "a warm camel blazer over a dark olive button-down shirt, full-length charcoal trousers, black oxford shoes"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/008/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/008/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          },
+          {
+            "path": "sources/008/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "009",
+      "stableId": "inspector-v6f.009",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 57,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "skin": "fair pink skin",
+        "hair": "short straight ginger-and-silver flat-topped cropped hair",
+        "accessory": "no glasses, a small neat ginger moustache",
+        "build": "an average compact build",
+        "outfit": "a charcoal waistcoat over a full-sleeved pale sage button-down shirt and a short burgundy necktie, full-length navy trousers, brown office shoes"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/009/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/009/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          },
+          {
+            "path": "sources/009/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "010",
+      "stableId": "inspector-v6f.010",
+      "category": "staff",
+      "artRole": "inspection-agent-art",
+      "roleLabel": "Inspection agent",
+      "eligibleStaffRoleDefinitionIds": [],
+      "plannedStaffRole": {
+        "label": "Inspection agent",
+        "facilityLevel": 5,
+        "status": "roadmap-only",
+        "evidencePaths": [
+          "docs/execplans/level5-launch-plan-20261010.md"
+        ]
+      },
+      "intendedAge": 63,
+      "compatibleSexLabel": "Male",
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "skin": "deep warm-brown skin",
+        "hair": "short silver close-cropped hair",
+        "accessory": "no glasses, a broad neat silver moustache and mature cheek cues",
+        "build": "a full broad-waisted build",
+        "outfit": "a muted indigo blazer over a pale peach button-down shirt, full-length warm-gray trousers, black loafers"
+      },
+      "clipboard": {
+        "hand": "right",
+        "standingPlacement": "own right-front waist",
+        "southSide": "screen-left",
+        "eastSide": "near anatomical right side",
+        "westSide": "far anatomical right side; visible leading corner",
+        "northSide": "screen-right; body occludes most of board",
+        "seatedPlacement": "rests on lap over own right thigh; right hand holds same edge",
+        "board": "warm tan wood; dark brown rim; silver clip; off-white blank paper",
+        "requiredPoses": 8
+      },
+      "stage1": {
+        "prompt": "prompts/010/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/010/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "artifacts/character-statics/inspector-v6f/references/app-gapfill-v6e.007-eight-poses.png",
+            "sha256": "9dbebb6a07d503630b2d26cf89e9ca6b2186a048ceca7d01c6dfe2ec83827992",
+            "role": "v6e-style-proportions-outline-and-cardinal-layout-only;do-not-copy-identity-or-clinical-clothing",
+            "existingIdentity": "app-gapfill-v6e.007"
+          },
+          {
+            "path": "sources/010/stage1-standing-cardinals.png",
+            "role": "new-identity-outfit-and-right-hand-clipboard-reference"
+          }
+        ]
+      },
+      "status": "planned-for-manager-review;not-approved;not-runtime-integrated"
+    }
+  ]
+}

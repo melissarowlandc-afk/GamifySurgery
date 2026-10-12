@@ -1,0 +1,395 @@
+{
+  "schemaVersion": "inspector-v6f-staging/v1",
+  "runtimeReady": false,
+  "ownerApproval": "pending",
+  "status": "candidate-review-root-checks-pending",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false,
+    "ownerApproval": "pending",
+    "status": "art-review-only;not-runtime-integrated"
+  },
+  "baseline": "tools/character-mapping/inspector-v6f/runtime-baseline.json",
+  "target": {
+    "width": 160,
+    "height": 320,
+    "bodyAxisX": 80,
+    "floorY": 287,
+    "standingSouthVisibleHeight": 246
+  },
+  "coverageAudit": {
+    "path": "tools/character-mapping/future-roster20-v5/analysis/coverage-audit.json",
+    "sha256": "12cd31f5b08a89b8e48152a7151e8c0d82ab2c961a5b34482acf60648bf54d5f",
+    "use": "Historical character gap-fill program/style provenance only. The owner October 11 inspector brief authorizes ten Level5 visitor looks; no gameplay eligibility or appearance-based selection rule."
+  },
+  "rosterEvidence": {
+    "path": "tools/character-mapping/inspector-v6f/roster.json",
+    "sha256": "4540c2ac198d301274da0fa54e37bdd7407d5f0b13cf3987a690e0c86ad15af1"
+  },
+  "reviewLedger": {
+    "path": "tools/character-mapping/inspector-v6f/review-acceptance.json",
+    "sha256": "dcee76e7afedaac273d5bd5b1e71254a50eb3aa4916b4b758ca40ebebdd62f77"
+  },
+  "rosterContract": {
+    "identities": 10,
+    "posesPerIdentity": 8,
+    "totalPoses": 80,
+    "categoryCounts": {
+      "staff": 10,
+      "patient": 0
+    },
+    "staffRoleCounts": {},
+    "plannedStaffRoleCounts": {
+      "Inspection agent (level 5; roadmap-only)": 10
+    },
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 1,
+        "adult": 2,
+        "middle_aged": 1,
+        "older_adult": 1
+      },
+      "Male": {
+        "young_adult": 0,
+        "adult": 2,
+        "middle_aged": 3,
+        "older_adult": 0
+      }
+    }
+  },
+  "seatContactContractSha256": "2c52f14ff139320f24c5a19678d864b0d028efb988449bba54613972d3097b8e",
+  "derivedAlphaReport": {
+    "path": "artifacts/character-statics/inspector-v6f/alpha-normalization-report.json",
+    "sha256": "289f383e0b8a5ae46708592f7dbd9afde4a373056af355a4bba614d56197f2c2",
+    "rootWarningAccepted": false
+  },
+  "entries": [
+    {
+      "number": "001",
+      "stableId": "inspector-v6f.001",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+      "sourceSha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 238,
+        "east": 244,
+        "west": 244,
+        "north": 247
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/full-poses-transparent.png",
+          "sha256": "1e1bb2ae0d81b4b91c01deeff19df8b24b07780cb3c53a351fd120cf04636b40"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/full-poses-light.png",
+          "sha256": "475f8cb72a6f4fdabf8449dadb7dc53bc6b9d0a49c6ee47a97db72f9b056745c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/full-poses-dark.png",
+          "sha256": "9228f6541681b20e0fad874c74343ab6628b8f93cbd05b4d30fe85414b7f8619"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/seated-contact-grid-2x.png",
+          "sha256": "a431e2887432518475a61beb28b601f528bc064d957255301b957fdba1739cb0"
+        }
+      }
+    },
+    {
+      "number": "002",
+      "stableId": "inspector-v6f.002",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+      "sourceSha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 240,
+        "east": 245,
+        "west": 245,
+        "north": 249
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/full-poses-transparent.png",
+          "sha256": "6dc1ce6e9794a4fe6881120a9e8bd7b9d6af331d027c8b2c499542a8327904cb"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/full-poses-light.png",
+          "sha256": "4c6a085a6bbf3b23ce3d0ac4246c74c83d87c3e9cf23e481b333282ca4010d6c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/full-poses-dark.png",
+          "sha256": "bc9a663a2cb9563b4734cfd3ecd80176f05dfbc763e31ccf38e579f400fb5d3b"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/seated-contact-grid-2x.png",
+          "sha256": "d838cd4774458347171f5a7c0a19c39c41fe695cb4093b4e2488c61fff7f857b"
+        }
+      }
+    },
+    {
+      "number": "003",
+      "stableId": "inspector-v6f.003",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+      "sourceSha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 238,
+        "east": 241,
+        "west": 241,
+        "north": 246
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/full-poses-transparent.png",
+          "sha256": "b25d857602c0a551630f93b0be8d9a07118595ea2c3193f6bdbfff7e67c93065"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/full-poses-light.png",
+          "sha256": "3542d6cd32ae2dab4e9db82083ee673b7f700f1da30b14b01e5f56c1b0c2be03"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/full-poses-dark.png",
+          "sha256": "e42ff1e5d0d6319962c37bb295c0693f6e677e43ddd9eacd165b97113e0fb5c7"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/seated-contact-grid-2x.png",
+          "sha256": "849976afbc872f4d1392b6a7035192e9029c11aae8bf48c12355a2b7955fa2fa"
+        }
+      }
+    },
+    {
+      "number": "004",
+      "stableId": "inspector-v6f.004",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+      "sourceSha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 242,
+        "east": 247,
+        "west": 247,
+        "north": 251
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/full-poses-transparent.png",
+          "sha256": "e1ec953a8cf7c9351663f4551912994cff29159b3b2036a9ebf0280aebb6c686"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/full-poses-light.png",
+          "sha256": "8334e2ec1cb79ef8a5739a190361da32c30d20edb7882c6d88f4301eeba661cd"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/full-poses-dark.png",
+          "sha256": "1a79f5c2f96e29b2c352f7a3f760ab7a508529fa8999beb409e35bb401f6bd3f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/seated-contact-grid-2x.png",
+          "sha256": "c16d528b571c5541b74cd865390e41ae10a99209cfc8c0bdaf79e4dc24b0ff2e"
+        }
+      }
+    },
+    {
+      "number": "005",
+      "stableId": "inspector-v6f.005",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+      "sourceSha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 244,
+        "east": 246,
+        "west": 246,
+        "north": 252
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/full-poses-transparent.png",
+          "sha256": "bfffddeb8efc3686e4d796e4bac50c3ffe6659f73c87f1f7808ee20f66dea4e4"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/full-poses-light.png",
+          "sha256": "6770c3d5771f2ce62e6e446a053e8b0f8c2c86ce2b96e574951fe0cb58049813"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/full-poses-dark.png",
+          "sha256": "eefbe28705bc19d23d262614600dc762168a245cc9f3f846ae0c3f735100e5ab"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/seated-contact-grid-2x.png",
+          "sha256": "dea24513fbc5a10508e60f276e4d3060aaa8d815f43a6de2208f28676eb68710"
+        }
+      }
+    },
+    {
+      "number": "006",
+      "stableId": "inspector-v6f.006",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+      "sourceSha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 239,
+        "east": 243,
+        "west": 243,
+        "north": 247
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/full-poses-transparent.png",
+          "sha256": "108fd5816b4eea3be5dfe78cb8677acbe35348874e1d6ffde1d8d2f154bdae07"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/full-poses-light.png",
+          "sha256": "b56bd8c4938fe83d019c41380f8053d8a9a759473b0eb2104ffeda833ede267c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/full-poses-dark.png",
+          "sha256": "56a30d79ac075bf35080377fe89aa99d1e0ffa693618e9073ef5370f38a9e349"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/seated-contact-grid-2x.png",
+          "sha256": "97bb8ca268b4b8ddcf778255109b432c27f81ab274fb44ace1ae9f4203790f3c"
+        }
+      }
+    },
+    {
+      "number": "007",
+      "stableId": "inspector-v6f.007",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+      "sourceSha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 238,
+        "west": 238,
+        "north": 243
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/full-poses-transparent.png",
+          "sha256": "9ed054686df94d361d0b71d3768003b3a3f9fe8342fe4e0676d56a3205dfe1cb"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/full-poses-light.png",
+          "sha256": "0b476c96b43cf0b20fb102aeb0cf207edb5265e3cb44b713ddc0bb6b189dcec3"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/full-poses-dark.png",
+          "sha256": "712d3fff32e7c2824991219a2334fe5cc004ec38dcbab21615056b6dcc7fe96f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/seated-contact-grid-2x.png",
+          "sha256": "da51a19a090841eccb6fa81c4acf074ce7edaa83b0e00d183ad1590a4e066321"
+        }
+      }
+    },
+    {
+      "number": "008",
+      "stableId": "inspector-v6f.008",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+      "sourceSha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 237,
+        "east": 240,
+        "west": 240,
+        "north": 244
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/full-poses-transparent.png",
+          "sha256": "f8c167609765dc32cd5c4fec7ad9748fd934dd95595b2e080e35de378508a987"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/full-poses-light.png",
+          "sha256": "0b23e703d2595483e6a6a1152f24f701f76c8d80dfbef7720f7789fa8d6429ce"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/full-poses-dark.png",
+          "sha256": "32cb69f8344fcb67fef6a82f68f42b8a1f4f0b7707268617f7854f39c707abb6"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/seated-contact-grid-2x.png",
+          "sha256": "da91c56e82f6af3ec1ec3f2b729ce9be486a38d91faab2aeebdc8d1b622df8e2"
+        }
+      }
+    },
+    {
+      "number": "009",
+      "stableId": "inspector-v6f.009",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+      "sourceSha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 238,
+        "west": 238,
+        "north": 243
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/full-poses-transparent.png",
+          "sha256": "8066347878659ef4350311a76a7e24e6322f65c3e3296661e90955ee59f75a13"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/full-poses-light.png",
+          "sha256": "7f103a53a8a2cedc88f5c30012c030dbf3f1dfe8a05b4f4fbc55e8a646decb12"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/full-poses-dark.png",
+          "sha256": "6e68aeaf614683d7e86c889e58dbd5cd0a7822a4f07d8365b3fab5696d05914e"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/seated-contact-grid-2x.png",
+          "sha256": "02a83f4cb132aa1c30ff8d40ff1c049580e0b0d4df74d6fa2caeda5472ea671f"
+        }
+      }
+    },
+    {
+      "number": "010",
+      "stableId": "inspector-v6f.010",
+      "manifest": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+      "sourceSha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248",
+      "rootVisualAccepted": false,
+      "contactCoordinates": {
+        "south": 238,
+        "east": 241,
+        "west": 241,
+        "north": 247
+      },
+      "contactDirectionsReviewed": [],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/full-poses-transparent.png",
+          "sha256": "84d4c394419a93b649e4c267efc469a43167006ecbfb0fd26b54525a4b65b046"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/full-poses-light.png",
+          "sha256": "decc74dfd8e4146d099dfdf9e2d1b562a73591919390a5a5aec8166cee95b788"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/full-poses-dark.png",
+          "sha256": "7c1f58d191939f8130473d65ceaddddd46edaab6e0eaac5921791e134439bd0f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/seated-contact-grid-2x.png",
+          "sha256": "5463eeaee3981f1dd8e954838848a266a200c778b77c4e7f29a8a9b4af4f3597"
+        }
+      }
+    }
+  ],
+  "issues": [],
+  "totals": {
+    "expected": 10,
+    "packaged": 10,
+    "poses": 80,
+    "issues": 0
+  }
+}

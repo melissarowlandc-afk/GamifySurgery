@@ -1,0 +1,153 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -216,6 +216,7 @@
+   sexLabel?: string;
+   chiefComplaint?: string;
+   patientSatisfactionLabel?: string;
++  executiveComfortLabel?: string;
+   /** Optional approved vital signs. Omitted values are never invented by UI. */
+   vitals?: Array<{
+     id: string;
+@@ -326,6 +327,7 @@
+ }
+ 
+ export interface ServiceIncomeOperationView {
++  executiveComfortLabel?: string;
+   id: string;
+   /** Optional phone detail grouping; desktop rendering ignores this source identity. */
+   incomeLineId?: string;
+@@ -348,7 +350,14 @@
+ }
+ 
+ /** Since-opening operating picture for Management's Money tab. */
++export interface ExecutiveManagementView {
++  homeLabel: string; statusLabel: string; durationLabel: string; acceptedLabel: string; lastRoundLabel: string;
++  activeLabel: string; preparationLabel: string; savingsLabel: string;
++  effects: { label: string; currentLabel: string; nextLabel: string | null; activeLabel: string }[];
++}
++
+ export interface ManagementFinanceView {
++  supplierSavingsLabel?: string;
+   cashLabel: string;
+   earnedLabel: string;
+   billedLabel: string;
+@@ -363,13 +372,15 @@
+   incomeWindowExplanation: string;
+   hourlyIncomeSources: { id: string; label: string; amount: number; amountLabel: string; count: number }[];
+   hourlyCostLabel: string;
+-  hourlyCosts: { id: "staff" | "rooms" | "advertising" | "stock" | "relief"; label: string; amount: number; amountLabel: string }[];
++  hourlyCosts: { id: "staff" | "rooms" | "advertising" | "stock" | "relief" | "supplier"; label: string; amount: number; amountLabel: string }[];
+   runwayLabel: string;
+   recentEarnings: { displayName: string; net: number; netLabel: string; count: number }[];
+   recentEarningsReceiptCount: number;
+ }
+ 
+ export interface ServiceIncomeView {
++  giftShop?: GiftShopView;
++  executiveManagement?: ExecutiveManagementView;
+   periopNurseQueueLength?: number;
+   appointmentsEnabled: boolean;
+   catalogLines: ServiceIncomeCatalogLineView[];
+@@ -387,6 +398,11 @@
+     statusLabel: string;
+     disabledReason?: string;
+   };
++  levelFiveSupport?: {
++    gymBreakCount: number;
++    gardenRestCount: number;
++    rooms: Array<{ id: string; displayName: string; upgradeLevel: number; currentBenefitLabel: string; upgradeLabel: string; policyLabel: string }>;
++  };
+   levelThreeSupport?: {
+     maintenanceDueRoomNames: string[];
+     maintenanceOutOfServiceRoomNames: string[];
+@@ -397,6 +413,12 @@
+     staffOnBreakCount: number;
+   };
+   finances?: ManagementFinanceView;
++}
++
++export interface GiftShopView {
++  statusLabel: string; demandLabel: string; checkoutLabel: string;
++  normalLabel: string; premiumLabel: string; budgetLabel: string; upgradeLabel: string;
++  receiptWindowLabel: string; purchaseCount: number; grossLabel: string; stockLabel: string; netLabel: string;
+ }
+ 
+ export interface AdvertisingView {
+@@ -536,6 +558,7 @@
+ }
+ 
+ export interface StaffMemberView {
++  executiveManagement?: ExecutiveManagementView;
+   id: string;
+   displayName: string;
+   roleDisplayName: string;
+@@ -555,6 +578,7 @@
+ }
+ 
+ export interface StaffRoleGroupView {
++  defaultSalaryLabel?: string;
+   id: string;
+   displayName: string;
+   currentCount: number;
+@@ -602,6 +626,43 @@
+ 
+ export type EndoscopySetupRequirementView = ProcedureSetupRequirementView;
+ 
++export interface InspectionReportView {
++  runId: string;
++  outcome: "completed" | "incomplete" | "cancelled";
++  totalLabel: string;
++  rawTotalScore: number | null;
++  scoreLabel: string;
++  recognitionLabel: string | null;
++  windowLabel: string;
++  sampleLabel: string;
++  sampleStatusLabel: string;
++  categories: Array<import("@gamify-surgery/game-domain").InspectionCategoryResult & { label: string; scoreLabel: string; pointsLabel: string }>;
++}
++
++export interface FinishedGameView {
++  headline: string;
++  lines: readonly string[];
++  finishedLabel: string;
++  acknowledged: boolean;
++  report: InspectionReportView;
++}
++
++export interface FacilityInspectionView {
++  status: import("@gamify-surgery/game-domain").FacilityInspectionStatus;
++  statusLabel: string;
++  preparationLabel: string;
++  bookingLabel: string;
++  bookingDisabledReason: string | null;
++  canCancel: boolean;
++  sampleLabel: string;
++  provisionalReport?: InspectionReportView;
++  lastReport?: InspectionReportView;
++  latestLabel?: string;
++  bestLabel?: string;
++  firstCompletionRecorded: boolean;
++  finish?: FinishedGameView;
++}
++
+ export interface ProgressionView {
+   facilityLevelLabel: string;
+   nextLevelLabel: string | null;
+@@ -609,6 +670,17 @@
+   secondaryGoals?: ProgressionGoalView[];
+   canLevelUp: boolean;
+   prototypeComplete: boolean;
++  /** Level 5 only; current conditions stay visible after this durable unlock. */
++  inspectionUnlock?: {
++    unlocked: boolean;
++    statusLabel: string;
++    earnedLabel?: string;
++    description: string;
++    bookingLabel: string;
++    bookingDisabledReason: string | null;
++    tip?: string;
++  };
++  inspection?: FacilityInspectionView;
+   endoscopySetupRequirements?: EndoscopySetupRequirementView[];
+   ambulatoryOperationSetupRequirements?: ProcedureSetupRequirementView[];
+ }

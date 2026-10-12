@@ -1,0 +1,1566 @@
+{
+  "schemaVersion": 2,
+  "status": "proposed_4x3_fixed_base_layout",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "appearanceChanges": false,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "catalogEvidence": "packages/balance-config/src/room-upgrades.ts:51–53,96; default appearanceChanges=false. Roadmap lists Executive Office second at facility Level 5 but supplies no footprint.",
+  "pieces": [
+    {
+      "id": "desk",
+      "canvas": [
+        696,
+        600
+      ],
+      "size": [
+        1.45,
+        1.25
+      ],
+      "ground": [
+        1.25,
+        1.18
+      ],
+      "footprint": {
+        "left": 0.63,
+        "top": 0.9,
+        "width": 1.24,
+        "height": 0.28
+      },
+      "owners": []
+    },
+    {
+      "id": "executiveChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "size": [
+        1,
+        1.6
+      ],
+      "ground": [
+        1.25,
+        1
+      ],
+      "seat": [
+        1.25,
+        0.625
+      ],
+      "footprint": {
+        "left": 0.92,
+        "top": 0.7,
+        "width": 0.66,
+        "height": 0.3
+      },
+      "owners": []
+    },
+    {
+      "id": "visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "size": [
+        0.95,
+        1.2
+      ],
+      "ground": [
+        1.25,
+        2.22
+      ],
+      "seat": [
+        1.25,
+        1.845
+      ],
+      "footprint": {
+        "left": 0.9,
+        "top": 1.9,
+        "width": 0.7,
+        "height": 0.32
+      },
+      "owners": []
+    },
+    {
+      "id": "shelf",
+      "canvas": [
+        720,
+        384
+      ],
+      "size": [
+        1.5,
+        0.8
+      ],
+      "ground": [
+        2.72,
+        0.3
+      ],
+      "footprint": {
+        "left": 2.04,
+        "top": 0.14,
+        "width": 1.36,
+        "height": 0.16
+      },
+      "owners": [
+        "N3",
+        "N4"
+      ]
+    },
+    {
+      "id": "meetingTable",
+      "canvas": [
+        480,
+        432
+      ],
+      "size": [
+        1,
+        0.9
+      ],
+      "ground": [
+        2.95,
+        1.68
+      ],
+      "footprint": {
+        "left": 2.61,
+        "top": 1.38,
+        "width": 0.68,
+        "height": 0.3
+      },
+      "owners": []
+    },
+    {
+      "id": "meetingChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "size": [
+        0.95,
+        1.2
+      ],
+      "ground": [
+        2.95,
+        1
+      ],
+      "footprint": {
+        "left": 2.62,
+        "top": 0.75,
+        "width": 0.66,
+        "height": 0.25
+      },
+      "owners": []
+    },
+    {
+      "id": "meetingSouth",
+      "spriteSlot": "visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "size": [
+        0.95,
+        1.2
+      ],
+      "ground": [
+        2.95,
+        2.22
+      ],
+      "footprint": {
+        "left": 2.6,
+        "top": 1.9,
+        "width": 0.7,
+        "height": 0.32
+      },
+      "owners": []
+    },
+    {
+      "id": "rug",
+      "canvas": [
+        1320,
+        920
+      ],
+      "size": [
+        3.3,
+        2.3
+      ],
+      "center": [
+        2,
+        1.65
+      ],
+      "owners": [],
+      "walkable": true
+    },
+    {
+      "id": "decor",
+      "canvas": [
+        432,
+        240
+      ],
+      "size": [
+        0.9,
+        0.5
+      ],
+      "top": [
+        1.25,
+        -0.73
+      ],
+      "owners": [
+        "N1",
+        "N2"
+      ],
+      "backed": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "id": "art",
+      "canvas": [
+        576,
+        264
+      ],
+      "size": [
+        1.2,
+        0.55
+      ],
+      "top": [
+        3,
+        -0.76
+      ],
+      "owners": [
+        "N3",
+        "N4"
+      ],
+      "backed": [
+        "N3",
+        "N4"
+      ]
+    },
+    {
+      "id": "accent",
+      "canvas": [
+        288,
+        480
+      ],
+      "size": [
+        0.6,
+        1
+      ],
+      "ground": [
+        0.38,
+        0.35
+      ],
+      "footprint": {
+        "left": 0.17,
+        "top": 0.14,
+        "width": 0.42,
+        "height": 0.21
+      },
+      "owners": [
+        "N1",
+        "WA"
+      ]
+    }
+  ],
+  "room": {
+    "proofId": "executive-office",
+    "definitionId": "room.executive_office",
+    "name": "Executive Office",
+    "label": "Executive Office",
+    "design": true,
+    "footprint": [
+      4,
+      3
+    ],
+    "shell": {
+      "tilePixels": 120,
+      "rearWallHeightPixels": 90,
+      "lowNorthHeightPixels": 29,
+      "sideCapWidthPixels": 14,
+      "southHeightPixels": 29,
+      "floorAlgorithm": "design",
+      "floorBase": "#d9dbd4",
+      "floorPalette": [
+        "#d9dbd4"
+      ],
+      "background": "#f3ead3",
+      "rearWall": "#a5c3b8",
+      "baseTrim": "#58735a",
+      "edgeTrim": "#294632",
+      "doorJamb": "#744a29",
+      "doorInsetPixels": 12
+    },
+    "records": [
+      {
+        "id": "desk",
+        "assetId": "design:eo:base-desk",
+        "sourceRect": [
+          0,
+          0,
+          696,
+          600
+        ],
+        "renderSizeTiles": [
+          1.45,
+          1.25
+        ],
+        "destinationTopLeftTiles": [
+          0.525,
+          -0.07000000000000006
+        ],
+        "worldLocalGround": [
+          1.25,
+          1.18
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1.18,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.63,
+          "top": 0.9,
+          "width": 1.24,
+          "height": 0.28
+        }
+      },
+      {
+        "id": "executiveChair",
+        "assetId": "design:eo:base-executiveChair",
+        "sourceRect": [
+          0,
+          0,
+          480,
+          768
+        ],
+        "renderSizeTiles": [
+          1,
+          1.6
+        ],
+        "destinationTopLeftTiles": [
+          0.75,
+          -0.6000000000000001
+        ],
+        "worldLocalGround": [
+          1.25,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.92,
+          "top": 0.7,
+          "width": 0.66,
+          "height": 0.3
+        }
+      },
+      {
+        "id": "visitorChair",
+        "assetId": "design:eo:base-visitorChair",
+        "sourceRect": [
+          0,
+          0,
+          456,
+          576
+        ],
+        "renderSizeTiles": [
+          0.95,
+          1.2
+        ],
+        "destinationTopLeftTiles": [
+          0.775,
+          1.0200000000000002
+        ],
+        "worldLocalGround": [
+          1.25,
+          2.22
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2.22,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 0.9,
+          "top": 1.9,
+          "width": 0.7,
+          "height": 0.32
+        }
+      },
+      {
+        "id": "shelf",
+        "assetId": "design:eo:base-shelf",
+        "sourceRect": [
+          0,
+          0,
+          720,
+          384
+        ],
+        "renderSizeTiles": [
+          1.5,
+          0.8
+        ],
+        "destinationTopLeftTiles": [
+          1.9700000000000002,
+          -0.5
+        ],
+        "worldLocalGround": [
+          2.72,
+          0.3
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.3,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3",
+          "N4"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.04,
+          "top": 0.14,
+          "width": 1.36,
+          "height": 0.16
+        }
+      },
+      {
+        "id": "meetingTable",
+        "assetId": "design:eo:base-meetingTable",
+        "sourceRect": [
+          0,
+          0,
+          480,
+          432
+        ],
+        "renderSizeTiles": [
+          1,
+          0.9
+        ],
+        "destinationTopLeftTiles": [
+          2.45,
+          0.7799999999999999
+        ],
+        "worldLocalGround": [
+          2.95,
+          1.68
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1.68,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 2.61,
+          "top": 1.38,
+          "width": 0.68,
+          "height": 0.3
+        }
+      },
+      {
+        "id": "meetingChair",
+        "assetId": "design:eo:base-meetingChair",
+        "sourceRect": [
+          0,
+          0,
+          456,
+          576
+        ],
+        "renderSizeTiles": [
+          0.95,
+          1.2
+        ],
+        "destinationTopLeftTiles": [
+          2.475,
+          -0.19999999999999996
+        ],
+        "worldLocalGround": [
+          2.95,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 2.62,
+          "top": 0.75,
+          "width": 0.66,
+          "height": 0.25
+        }
+      },
+      {
+        "id": "meetingSouth",
+        "assetId": "design:eo:base-visitorChair",
+        "sourceRect": [
+          0,
+          0,
+          456,
+          576
+        ],
+        "renderSizeTiles": [
+          0.95,
+          1.2
+        ],
+        "destinationTopLeftTiles": [
+          2.475,
+          1.0200000000000002
+        ],
+        "worldLocalGround": [
+          2.95,
+          2.22
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2.22,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "footprint": {
+          "left": 2.6,
+          "top": 1.9,
+          "width": 0.7,
+          "height": 0.32
+        }
+      },
+      {
+        "id": "rug",
+        "assetId": "design:eo:base-rug",
+        "sourceRect": [
+          0,
+          0,
+          1320,
+          920
+        ],
+        "renderSizeTiles": [
+          3.3,
+          2.3
+        ],
+        "destinationTopLeftTiles": [
+          0.3500000000000001,
+          0.5
+        ],
+        "worldLocalGround": [
+          2,
+          1.65
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": -0.5,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "walkable": true
+      },
+      {
+        "id": "decor",
+        "assetId": "design:eo:base-decor",
+        "sourceRect": [
+          0,
+          0,
+          432,
+          240
+        ],
+        "renderSizeTiles": [
+          0.9,
+          0.5
+        ],
+        "destinationTopLeftTiles": [
+          0.8,
+          -0.73
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.73,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "N2"
+        ],
+        "backedOwners": [
+          "N1",
+          "N2"
+        ],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "art",
+        "assetId": "design:eo:base-art",
+        "sourceRect": [
+          0,
+          0,
+          576,
+          264
+        ],
+        "renderSizeTiles": [
+          1.2,
+          0.55
+        ],
+        "destinationTopLeftTiles": [
+          2.4,
+          -0.76
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.76,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3",
+          "N4"
+        ],
+        "backedOwners": [
+          "N3",
+          "N4"
+        ],
+        "touchupKeepWhenBacked": false
+      },
+      {
+        "id": "accent",
+        "assetId": "design:eo:base-accent",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          480
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1
+        ],
+        "destinationTopLeftTiles": [
+          0.08000000000000002,
+          -0.65
+        ],
+        "worldLocalGround": [
+          0.38,
+          0.35
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.35,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0.17,
+          "top": 0.14,
+          "width": 0.42,
+          "height": 0.21
+        }
+      },
+      {
+        "id": "executiveChair:front",
+        "assetId": "design:eo:base-executiveChair-front",
+        "sourceRect": [
+          0,
+          0,
+          480,
+          768
+        ],
+        "renderSizeTiles": [
+          1,
+          1.6
+        ],
+        "destinationTopLeftTiles": [
+          0.75,
+          -0.6000000000000001
+        ],
+        "worldLocalGround": [
+          1.25,
+          1
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": 1.0002,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "overlayFor": "executiveChair"
+      },
+      {
+        "id": "visitorChair:front",
+        "assetId": "design:eo:base-visitorChair-front",
+        "sourceRect": [
+          0,
+          0,
+          456,
+          576
+        ],
+        "renderSizeTiles": [
+          0.95,
+          1.2
+        ],
+        "destinationTopLeftTiles": [
+          0.775,
+          1.0200000000000002
+        ],
+        "worldLocalGround": [
+          1.25,
+          2.22
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": 2.2202,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": false,
+        "overlayFor": "visitorChair"
+      }
+    ],
+    "floor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 360,
+        "color": "#d9dbd4"
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 40,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 80,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 160,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 200,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 280,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 320,
+        "width": 480,
+        "height": 0,
+        "color": "#b8bdb6",
+        "alpha": 0.32
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      },
+      {
+        "shape": "line",
+        "x": 400,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#b8bdb6",
+        "alpha": 0.22
+      }
+    ],
+    "procedural": [],
+    "supports": [
+      {
+        "id": "executiveChair",
+        "recordId": "executiveChair",
+        "role": "executive-office-seat",
+        "pose": "seated",
+        "facing": "south",
+        "seat": {
+          "x": 1.25,
+          "y": 0.625
+        },
+        "ground": {
+          "x": 1.25,
+          "y": 1
+        },
+        "character": "founder.01"
+      },
+      {
+        "id": "visitorChair",
+        "recordId": "visitorChair",
+        "role": "visitor-seat",
+        "pose": "seated",
+        "facing": "north",
+        "seat": {
+          "x": 1.25,
+          "y": 1.845
+        },
+        "ground": {
+          "x": 1.25,
+          "y": 2.22
+        },
+        "character": "patient.adult.007"
+      }
+    ],
+    "notes": [
+      "Proposed 4×3: desk bay and two-chair round meeting bay, 14 legal one-tile door sections.",
+      "Fixed base appearance at upgrade Levels 1–5: room.executive_office has appearanceChanges=false.",
+      "Executive is an approved south still stand-in north of the desk; north-facing visitor is south of it. Two meeting chairs remain empty.",
+      "Desk shows visitor-side panel and dual monitor backs. Chair then sitter then foreground arms/back.",
+      "Credenza and plant hide for their owned door sections; window/KPI hide for owned door/backing sections. Floor furniture stays full height on low backing.",
+      "Walkable rug; radius-clear routes stop at standing approaches. No pass-through exception.",
+      "Private art candidate; owner approval pending; no runtime, balance, administrative mechanic or campaign storage."
+    ]
+  },
+  "presentation": {
+    "schemaVersion": 2,
+    "status": "candidate_needs_owner_review",
+    "doorModel": {
+      "count": 14,
+      "perWall": {
+        "N": 4,
+        "S": 4,
+        "W": 3,
+        "E": 3
+      },
+      "spanTiles": 1,
+      "kind": "game-one-tile"
+    },
+    "orientation": "Executive sits north facing south; visitor south facing north; desk shows south visitor-side face and monitor backs.",
+    "actors": [
+      {
+        "supportId": "executiveChair",
+        "recordId": "executiveChair",
+        "characterId": "founder.01",
+        "category": "approved-character-stand-in",
+        "group": "executives",
+        "direction": "south",
+        "seat": [
+          1.25,
+          0.625
+        ],
+        "ground": [
+          1.25,
+          1
+        ],
+        "painterGround": 1.0001,
+        "seatContactSource": [
+          80,
+          241.13389121338912
+        ],
+        "sourceScale": 0.6865478271728273,
+        "basis": "Unchanged approved founder.01 south still used only as Executive seating stand-in; not a role assignment or new character."
+      },
+      {
+        "supportId": "visitorChair",
+        "recordId": "visitorChair",
+        "characterId": "patient.adult.007",
+        "category": "patient",
+        "group": "visitors",
+        "direction": "north",
+        "seat": [
+          1.25,
+          1.845
+        ],
+        "ground": [
+          1.25,
+          2.22
+        ],
+        "painterGround": 2.2201,
+        "seatContactSource": [
+          80,
+          220
+        ],
+        "sourceScale": 0.6865478271728273,
+        "basis": "Unchanged approved north-facing adult visitor with posterior contact and camera-side rear chair foreground."
+      }
+    ],
+    "careApproach": [
+      2.2,
+      1.9
+    ],
+    "approaches": {
+      "executiveChair": [
+        0.85,
+        0.475
+      ],
+      "visitorChair": [
+        0.65,
+        2.15
+      ]
+    }
+  },
+  "navigation": {
+    "solidFixtures": [],
+    "doorThresholdExceptions": [],
+    "privateProofRouteModel": {
+      "schemaVersion": 2,
+      "status": "candidate_needs_owner_review",
+      "doorModel": {
+        "count": 14,
+        "perWall": {
+          "N": 4,
+          "S": 4,
+          "W": 3,
+          "E": 3
+        },
+        "spanTiles": 1,
+        "kind": "game-one-tile"
+      },
+      "orientation": "Executive sits north facing south; visitor south facing north; desk shows south visitor-side face and monitor backs.",
+      "actors": [
+        {
+          "supportId": "executiveChair",
+          "recordId": "executiveChair",
+          "characterId": "founder.01",
+          "category": "approved-character-stand-in",
+          "group": "executives",
+          "direction": "south",
+          "seat": [
+            1.25,
+            0.625
+          ],
+          "ground": [
+            1.25,
+            1
+          ],
+          "painterGround": 1.0001,
+          "seatContactSource": [
+            80,
+            241.13389121338912
+          ],
+          "sourceScale": 0.6865478271728273,
+          "basis": "Unchanged approved founder.01 south still used only as Executive seating stand-in; not a role assignment or new character."
+        },
+        {
+          "supportId": "visitorChair",
+          "recordId": "visitorChair",
+          "characterId": "patient.adult.007",
+          "category": "patient",
+          "group": "visitors",
+          "direction": "north",
+          "seat": [
+            1.25,
+            1.845
+          ],
+          "ground": [
+            1.25,
+            2.22
+          ],
+          "painterGround": 2.2201,
+          "seatContactSource": [
+            80,
+            220
+          ],
+          "sourceScale": 0.6865478271728273,
+          "basis": "Unchanged approved north-facing adult visitor with posterior contact and camera-side rear chair foreground."
+        }
+      ],
+      "careApproach": [
+        2.2,
+        1.9
+      ],
+      "approaches": {
+        "executiveChair": [
+          0.85,
+          0.475
+        ],
+        "visitorChair": [
+          0.65,
+          2.15
+        ]
+      }
+    }
+  },
+  "tiers": [
+    {
+      "level": 1,
+      "name": "Fixed base appearance",
+      "appearanceLevel": 1,
+      "summary": "The same corporate office at every upgrade level: dual-monitor desk, executive chair, visitor chair, round meeting table/two chairs, credenza, abstract KPI board, plant, window and flat rug. Catalog appearanceChanges=false; no gameplay effect simulated."
+    },
+    {
+      "level": 2,
+      "name": "Fixed base appearance",
+      "appearanceLevel": 1,
+      "summary": "The same corporate office at every upgrade level: dual-monitor desk, executive chair, visitor chair, round meeting table/two chairs, credenza, abstract KPI board, plant, window and flat rug. Catalog appearanceChanges=false; no gameplay effect simulated."
+    },
+    {
+      "level": 3,
+      "name": "Fixed base appearance",
+      "appearanceLevel": 1,
+      "summary": "The same corporate office at every upgrade level: dual-monitor desk, executive chair, visitor chair, round meeting table/two chairs, credenza, abstract KPI board, plant, window and flat rug. Catalog appearanceChanges=false; no gameplay effect simulated."
+    },
+    {
+      "level": 4,
+      "name": "Fixed base appearance",
+      "appearanceLevel": 1,
+      "summary": "The same corporate office at every upgrade level: dual-monitor desk, executive chair, visitor chair, round meeting table/two chairs, credenza, abstract KPI board, plant, window and flat rug. Catalog appearanceChanges=false; no gameplay effect simulated."
+    },
+    {
+      "level": 5,
+      "name": "Fixed base appearance",
+      "appearanceLevel": 1,
+      "summary": "The same corporate office at every upgrade level: dual-monitor desk, executive chair, visitor chair, round meeting table/two chairs, credenza, abstract KPI board, plant, window and flat rug. Catalog appearanceChanges=false; no gameplay effect simulated."
+    }
+  ]
+}

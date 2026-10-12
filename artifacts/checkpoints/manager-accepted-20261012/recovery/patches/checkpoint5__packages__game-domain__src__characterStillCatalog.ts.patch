@@ -1,0 +1,49 @@
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -13,6 +13,13 @@
+ export const MAX_CHARACTER_STILL_ID_LENGTH = 128;
+ 
+ export type CharacterStillCatalogEntry =
++  | {
++      /** Inspection art is never eligible for patient, employee or founder selection. */
++      readonly stillId: CharacterStillId;
++      readonly category: "inspector";
++      readonly sourceCohort: "inspector-v6f";
++      readonly presentationRole: "inspection-agent";
++    }
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "pediatric";
+@@ -211,8 +218,8 @@
+ const FUTURE_ROSTER20_V5_STAFF_ROWS = [
+   ["001", ["staff.app"]],
+   ["002", ["staff.app"]],
+-  ["003", []],
+-  ["004", []],
++  ["003", ["staff.executive"]],
++  ["004", ["staff.executive"]],
+   ["005", ["staff.radiologist"]],
+   ["006", ["staff.radiologist"]],
+   ["007", ["staff.radiologist"]],
+@@ -374,6 +381,13 @@
+   sourceCohort: "app-gapfill-v6e" as const, eligibleStaffRoleDefinitionIds: [role],
+ }));
+ 
++/** Manager-accepted v6f cast; only the dedicated inspection presentation uses it. */
++export const INSPECTOR_CHARACTER_STILLS = Array.from({ length: 10 }, (_, index) => ({
++  stillId: id(`inspector-v6f.${String(index + 1).padStart(3, "0")}`),
++  category: "inspector" as const, sourceCohort: "inspector-v6f" as const,
++  presentationRole: "inspection-agent" as const,
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -400,6 +414,7 @@
+   ...PATIENT_GAPFILL_V6C_STILLS,
+   ...STAFF_GAPFILL_V6D_STILLS,
+   ...APP_GAPFILL_V6E_STILLS,
++  ...INSPECTOR_CHARACTER_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");

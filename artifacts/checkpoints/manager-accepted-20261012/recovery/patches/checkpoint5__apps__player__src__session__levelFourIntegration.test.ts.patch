@@ -1,0 +1,37 @@
+--- a/apps/player/src/session/levelFourIntegration.test.ts
++++ b/apps/player/src/session/levelFourIntegration.test.ts
+@@ -1,6 +1,6 @@
+ import { describe, expect, it } from "vitest";
+ import {
+-  deserializeGameState, getFacilityProgressionStatus, getRollingIncomeSummary, serializeGameState,
++  PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, getFacilityProgressionStatus, getRollingIncomeSummary, serializeGameState,
+   type GameState,
+ } from "@gamify-surgery/game-domain";
+ import {
+@@ -10,6 +10,7 @@
+ import { m9PumpChart } from "../../../../tests/fixtures/level-four-integration";
+ import { createPrototypePlayerView } from "./viewModels";
+ import { clinicHeadlineCandidates } from "../ui/ClinicHeadline";
++import { createPreLevelFiveLaunchContext } from "../../../../tests/fixtures/level-five-launch";
+ 
+ const viewOf = (state: GameState) => createPrototypePlayerView(state, state.openChartEncounterId, false, null);
+ 
+@@ -74,7 +75,10 @@
+     expect(state.clinicalXp).toBeGreaterThan(0);
+   }, 30_000);
+ 
+-  it("shows one durable completion milestone from both real service witnesses after room sale and repeated reloads", () => {
++  it("retains the historical cap-4 milestone from real witnesses after sale and repeated reloads", () => {
++    const shipped = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
++    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = createPreLevelFiveLaunchContext().balanceRelease;
++    try {
+     let state = createLevelFourIntegrationState("level-four-m9-player-complete");
+     state.clinicalXp = 750;
+     state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
+@@ -93,5 +97,6 @@
+       expect(view.progression.goals.filter(goal => goal.id.startsWith("progression.witness.")).every(goal => goal.complete)).toBe(true);
+       expect(view.messages.some(row => row.title?.includes("Level current complete was resolved"))).toBe(false);
+     }
++    } finally { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped; }
+   }, 30_000);
+ });

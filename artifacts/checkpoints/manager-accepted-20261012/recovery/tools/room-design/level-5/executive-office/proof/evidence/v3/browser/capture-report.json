@@ -1,0 +1,13 @@
+{
+  "status": "PENDING_MANAGER",
+  "reason": "Capture script syntax/dependency readiness passes; execution left to manager after shared Chrome spawn EPERM.",
+  "attemptReceipt": "../browser-launch-attempt.json",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/executive-office/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "managerCommands": [
+    "node tools/room-design/level-5/executive-office/proof/validate-browser.cjs",
+    "node tools/room-design/level-5/executive-office/proof/capture.cjs"
+  ]
+}

@@ -1,0 +1,1499 @@
+{
+  "room": {
+    "proofId": "staff-gym",
+    "definitionId": "room.staff_gym",
+    "name": "Staff Gym",
+    "label": "Staff Gym",
+    "design": true,
+    "footprint": [
+      4,
+      4
+    ],
+    "shell": {
+      "tilePixels": 120,
+      "rearWallHeightPixels": 90,
+      "lowNorthHeightPixels": 29,
+      "sideCapWidthPixels": 14,
+      "southHeightPixels": 29,
+      "floorAlgorithm": "design",
+      "floorBase": "#3e4e5b",
+      "floorPalette": [
+        "#3e4e5b"
+      ],
+      "background": "#f3ead3",
+      "rearWall": "#dedbc1",
+      "baseTrim": "#8ca986",
+      "edgeTrim": "#294632",
+      "doorJamb": "#744a29",
+      "doorInsetPixels": 12
+    },
+    "floor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 480,
+        "color": "#3e4e5b"
+      }
+    ],
+    "records": [
+      {
+        "id": "north1",
+        "classification": "optional",
+        "assetId": "design:sg:base-north1",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          768
+        ],
+        "renderSizeTiles": [
+          1.024,
+          1.536
+        ],
+        "destinationTopLeftTiles": [
+          -0.01200000000000001,
+          -0.786
+        ],
+        "worldLocalGround": [
+          0.5,
+          0.75
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.75,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        }
+      },
+      {
+        "id": "mirror1",
+        "classification": "optional",
+        "assetId": "design:sg:base-mirror1",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          416
+        ],
+        "renderSizeTiles": [
+          1.091684434968017,
+          0.8869936034115139
+        ],
+        "destinationTopLeftTiles": [
+          -0.04584221748400852,
+          -1.7369936034115139
+        ],
+        "worldLocalGround": [
+          0.5,
+          -0.85
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.85,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1"
+        ],
+        "backedOwners": [
+          "N1"
+        ],
+        "touchupKeepWhenBacked": false,
+        "wallTop": true
+      },
+      {
+        "id": "north2",
+        "classification": "optional",
+        "assetId": "design:sg:base-north2",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          768
+        ],
+        "renderSizeTiles": [
+          1.024,
+          1.536
+        ],
+        "destinationTopLeftTiles": [
+          0.988,
+          -0.786
+        ],
+        "worldLocalGround": [
+          1.5,
+          0.75
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.75,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N2"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        }
+      },
+      {
+        "id": "mirror2",
+        "classification": "optional",
+        "assetId": "design:sg:base-mirror2",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          416
+        ],
+        "renderSizeTiles": [
+          1.091684434968017,
+          0.8869936034115139
+        ],
+        "destinationTopLeftTiles": [
+          0.9541577825159915,
+          -1.7369936034115139
+        ],
+        "worldLocalGround": [
+          1.5,
+          -0.85
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.85,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N2"
+        ],
+        "backedOwners": [
+          "N2"
+        ],
+        "touchupKeepWhenBacked": false,
+        "wallTop": true
+      },
+      {
+        "id": "north3",
+        "classification": "optional",
+        "assetId": "design:sg:base-north3",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          768
+        ],
+        "renderSizeTiles": [
+          1.024,
+          1.536
+        ],
+        "destinationTopLeftTiles": [
+          1.988,
+          -0.786
+        ],
+        "worldLocalGround": [
+          2.5,
+          0.75
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.75,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        }
+      },
+      {
+        "id": "mirror3",
+        "classification": "optional",
+        "assetId": "design:sg:base-mirror3",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          416
+        ],
+        "renderSizeTiles": [
+          1.091684434968017,
+          0.8869936034115139
+        ],
+        "destinationTopLeftTiles": [
+          1.9541577825159915,
+          -1.7369936034115139
+        ],
+        "worldLocalGround": [
+          2.5,
+          -0.85
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.85,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3"
+        ],
+        "backedOwners": [
+          "N3"
+        ],
+        "touchupKeepWhenBacked": false,
+        "wallTop": true
+      },
+      {
+        "id": "north4",
+        "classification": "optional",
+        "assetId": "design:sg:base-north4",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          768
+        ],
+        "renderSizeTiles": [
+          1.024,
+          1.536
+        ],
+        "destinationTopLeftTiles": [
+          2.988,
+          -0.786
+        ],
+        "worldLocalGround": [
+          3.5,
+          0.75
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.75,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N4",
+          "EA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        }
+      },
+      {
+        "id": "mirror4",
+        "classification": "optional",
+        "assetId": "design:sg:base-mirror4",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          416
+        ],
+        "renderSizeTiles": [
+          1.091684434968017,
+          0.8869936034115139
+        ],
+        "destinationTopLeftTiles": [
+          2.9541577825159915,
+          -1.7369936034115139
+        ],
+        "worldLocalGround": [
+          3.5,
+          -0.85
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.85,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N4"
+        ],
+        "backedOwners": [
+          "N4"
+        ],
+        "touchupKeepWhenBacked": false,
+        "wallTop": true
+      },
+      {
+        "id": "west1",
+        "classification": "optional",
+        "assetId": "design:sg:base-west",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          -0.09999999999999998,
+          -0.7
+        ],
+        "worldLocalGround": [
+          0.2,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "west2",
+        "classification": "optional",
+        "assetId": "design:sg:base-west",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          -0.09999999999999998,
+          0.30000000000000004
+        ],
+        "worldLocalGround": [
+          0.2,
+          2
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "WB"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "west3",
+        "classification": "optional",
+        "assetId": "design:sg:base-west",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          -0.09999999999999998,
+          1.3
+        ],
+        "worldLocalGround": [
+          0.2,
+          3
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 3,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "WC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "west4",
+        "classification": "optional",
+        "assetId": "design:sg:base-west",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          -0.09999999999999998,
+          2.3
+        ],
+        "worldLocalGround": [
+          0.2,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S1",
+          "WD"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 3,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "east1",
+        "classification": "optional",
+        "assetId": "design:sg:base-east",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          3.5,
+          -0.7
+        ],
+        "worldLocalGround": [
+          3.8,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N4",
+          "EA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3.65,
+          "top": 0,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "east2",
+        "classification": "optional",
+        "assetId": "design:sg:base-east",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          3.5,
+          0.30000000000000004
+        ],
+        "worldLocalGround": [
+          3.8,
+          2
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "EB"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3.65,
+          "top": 1,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "east3",
+        "classification": "optional",
+        "assetId": "design:sg:base-east",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          3.5,
+          1.3
+        ],
+        "worldLocalGround": [
+          3.8,
+          3
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 3,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "EC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3.65,
+          "top": 2,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "east4",
+        "classification": "optional",
+        "assetId": "design:sg:base-east",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          816
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.7
+        ],
+        "destinationTopLeftTiles": [
+          3.5,
+          2.3
+        ],
+        "worldLocalGround": [
+          3.8,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S4",
+          "ED"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3.65,
+          "top": 3,
+          "width": 0.35,
+          "height": 1
+        }
+      },
+      {
+        "id": "front1",
+        "classification": "optional",
+        "assetId": "design:sg:base-front1",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          360
+        ],
+        "renderSizeTiles": [
+          1.024,
+          0.72
+        ],
+        "destinationTopLeftTiles": [
+          -0.01200000000000001,
+          3.2800000000000002
+        ],
+        "worldLocalGround": [
+          0.5,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S1",
+          "WD"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        }
+      },
+      {
+        "id": "front2",
+        "classification": "optional",
+        "assetId": "design:sg:base-front2",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          360
+        ],
+        "renderSizeTiles": [
+          1.024,
+          0.72
+        ],
+        "destinationTopLeftTiles": [
+          0.988,
+          3.2800000000000002
+        ],
+        "worldLocalGround": [
+          1.5,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S2"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 1,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        }
+      },
+      {
+        "id": "front3",
+        "classification": "optional",
+        "assetId": "design:sg:base-front3",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          360
+        ],
+        "renderSizeTiles": [
+          1.024,
+          0.72
+        ],
+        "destinationTopLeftTiles": [
+          1.988,
+          3.2800000000000002
+        ],
+        "worldLocalGround": [
+          2.5,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S3"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        }
+      },
+      {
+        "id": "front4",
+        "classification": "optional",
+        "assetId": "design:sg:base-front4",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          360
+        ],
+        "renderSizeTiles": [
+          1.024,
+          0.72
+        ],
+        "destinationTopLeftTiles": [
+          2.988,
+          3.2800000000000002
+        ],
+        "worldLocalGround": [
+          3.5,
+          4
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 4,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S4",
+          "ED"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 3,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        }
+      },
+      {
+        "id": "benchSeat",
+        "classification": "necessary",
+        "assetId": "design:sg:base-bench",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          768
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.6
+        ],
+        "destinationTopLeftTiles": [
+          0.8999999999999999,
+          1.1
+        ],
+        "worldLocalGround": [
+          1.2,
+          2.7
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2.7,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0.95,
+          "top": 1.6,
+          "width": 0.5,
+          "height": 1.1
+        }
+      },
+      {
+        "id": "benchSeat-front",
+        "classification": "necessary",
+        "assetId": "design:sg:base-bench-front",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          768
+        ],
+        "renderSizeTiles": [
+          0.6,
+          1.6
+        ],
+        "destinationTopLeftTiles": [
+          0.8999999999999999,
+          1.1
+        ],
+        "worldLocalGround": [
+          1.2,
+          2.7
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": 2.7002,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "overlayFor": "benchSeat"
+      },
+      {
+        "id": "stretchMat",
+        "classification": "necessary",
+        "assetId": "design:sg:base-mat",
+        "sourceRect": [
+          0,
+          0,
+          624,
+          936
+        ],
+        "renderSizeTiles": [
+          1.3,
+          1.95
+        ],
+        "destinationTopLeftTiles": [
+          2.0500000000000003,
+          1.3249999999999997
+        ],
+        "worldLocalGround": [
+          2.7,
+          2.3
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": -10,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "walkable": true
+      },
+      {
+        "id": "exerciseBall",
+        "classification": "necessary",
+        "assetId": "design:sg:base-ball",
+        "sourceRect": [
+          0,
+          0,
+          360,
+          360
+        ],
+        "renderSizeTiles": [
+          0.75,
+          0.75
+        ],
+        "destinationTopLeftTiles": [
+          2.575,
+          1.15
+        ],
+        "worldLocalGround": [
+          2.95,
+          1.9
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1.9,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.6,
+          "top": 1.5,
+          "width": 0.7,
+          "height": 0.4
+        }
+      },
+      {
+        "id": "foamRoller",
+        "classification": "necessary",
+        "assetId": "design:sg:base-roller",
+        "sourceRect": [
+          0,
+          0,
+          384,
+          128
+        ],
+        "renderSizeTiles": [
+          0.8,
+          0.26666666666666666
+        ],
+        "destinationTopLeftTiles": [
+          2.3000000000000003,
+          2.9533333333333336
+        ],
+        "worldLocalGround": [
+          2.7,
+          3.22
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 3.22,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.3125,
+          "top": 3.13,
+          "width": 0.775,
+          "height": 0.09
+        }
+      },
+      {
+        "id": "rubberFloor",
+        "classification": "necessary",
+        "assetId": "design:sg:base-floor",
+        "sourceRect": [
+          0,
+          0,
+          1088,
+          1088
+        ],
+        "renderSizeTiles": [
+          4.217054263565892,
+          4.217054263565892
+        ],
+        "destinationTopLeftTiles": [
+          -0.10852713178294593,
+          -0.10852713178294593
+        ],
+        "worldLocalGround": [
+          2,
+          2
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": -20,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "walkable": true
+      },
+      {
+        "id": "towelHooks",
+        "classification": "optional",
+        "assetId": "design:sg:base-hooks",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          256
+        ],
+        "renderSizeTiles": [
+          0.6,
+          0.5333333333333333
+        ],
+        "destinationTopLeftTiles": [
+          2.2,
+          -1.2133333333333334
+        ],
+        "worldLocalGround": [
+          2.5,
+          -0.68
+        ],
+        "depthPolicy": "wall",
+        "depthKey": -0.68,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3"
+        ],
+        "backedOwners": [
+          "N3"
+        ],
+        "touchupKeepWhenBacked": false,
+        "wallTop": true
+      }
+    ],
+    "procedural": [],
+    "supports": [
+      {
+        "id": "benchSeat",
+        "recordId": "benchSeat",
+        "role": "gym-rest-contact",
+        "pose": "seated",
+        "facing": "south",
+        "ground": {
+          "x": 1.2,
+          "y": 2.7
+        },
+        "seat": {
+          "x": 1.2,
+          "y": 2.4196596372377623
+        },
+        "character": "gs026-employee-001",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      },
+      {
+        "id": "stretchSpot",
+        "recordId": "stretchMat",
+        "role": "gym-stretch-contact",
+        "pose": "standing",
+        "facing": "south",
+        "ground": {
+          "x": 2.7,
+          "y": 2.7
+        },
+        "character": "gs026-employee-004",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      }
+    ],
+    "notes": [
+      "Room-first concept: adjoining cardio, dumbbells and hydration against the rear wall; continuous side and front storage; padded bench and stretch mat frame one connected aisle.",
+      "Two unchanged approved staff stills in scrubs: seated south on the permanent bench, standing south on the permanent stretch mat. No workout rig is needed.",
+      "All sixteen one-tile wall sections accept doors. Necessary bench, mat, ball, roller, staff contacts and rubber aisle never hide. Optional wall-row sections clear only their declared door approaches.",
+      "One fixed look at upgrades 1–5. No employee home, hiring slot, gameplay, morale, health, balance or campaign-storage behavior."
+    ]
+  },
+  "navigation": {
+    "solidFixtures": [],
+    "doorThresholdExceptions": [],
+    "privateProofRouteModel": {
+      "schemaVersion": 1,
+      "status": "candidate_needs_owner_review",
+      "doorModel": {
+        "count": 16,
+        "perWall": {
+          "N": 4,
+          "S": 4,
+          "W": 4,
+          "E": 4
+        },
+        "spanTiles": 1,
+        "kind": "game-one-tile"
+      },
+      "orientation": "One staff member rests seated south on the bench; one stands south on the mat. Both are approved stills in scrubs. Separate clear approaches connect to the rubber aisle; no home/hiring slots.",
+      "actors": [
+        {
+          "supportId": "benchSeat",
+          "recordId": "benchSeat",
+          "characterId": "gs026-employee-001",
+          "category": "approved-staff-seated-stand-in",
+          "group": "benchStaff",
+          "pose": "sit",
+          "direction": "south",
+          "seat": [
+            1.2,
+            2.4196596372377623
+          ],
+          "ground": [
+            1.2,
+            2.7
+          ],
+          "sourceScale": 0.6865478271728273,
+          "seatContactSource": [
+            80,
+            238
+          ],
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 2.7001000000000004,
+          "seatRisePixels": 33.64084353146853,
+          "basis": "Unchanged approved staff sit-south still, exact source cushion/floor anchors and existing room-proof scale."
+        },
+        {
+          "supportId": "stretchSpot",
+          "recordId": "stretchMat",
+          "characterId": "gs026-employee-004",
+          "category": "approved-staff-standing-stand-in",
+          "group": "matStaff",
+          "pose": "stand",
+          "direction": "south",
+          "ground": [
+            2.7,
+            2.7
+          ],
+          "sourceScale": 0.6865478271728273,
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 2.7001,
+          "basis": "Unchanged approved staff stand-south still and exact source floor anchor; static stretch/rest contact, no animated exercise rig."
+        }
+      ],
+      "contacts": [
+        {
+          "id": "gymAisle",
+          "label": "Connected rubber aisle",
+          "world": [
+            2,
+            3.35
+          ],
+          "approach": [
+            2,
+            3.35
+          ],
+          "necessary": true
+        },
+        {
+          "id": "benchSeat",
+          "label": "Bench rest contact",
+          "world": [
+            1.2,
+            2.4196596372377623
+          ],
+          "approach": [
+            1.2,
+            3.05
+          ],
+          "supportId": "benchSeat",
+          "fixtureId": "benchSeat",
+          "pose": "sit",
+          "necessary": true
+        },
+        {
+          "id": "stretchSpot",
+          "label": "Standing stretch contact",
+          "world": [
+            2.7,
+            2.7
+          ],
+          "approach": [
+            2.7,
+            2.7
+          ],
+          "supportId": "stretchSpot",
+          "fixtureId": "stretchMat",
+          "pose": "stand",
+          "necessary": true
+        }
+      ]
+    }
+  },
+  "presentation": {
+    "schemaVersion": 1,
+    "status": "candidate_needs_owner_review",
+    "doorModel": {
+      "count": 16,
+      "perWall": {
+        "N": 4,
+        "S": 4,
+        "W": 4,
+        "E": 4
+      },
+      "spanTiles": 1,
+      "kind": "game-one-tile"
+    },
+    "orientation": "One staff member rests seated south on the bench; one stands south on the mat. Both are approved stills in scrubs. Separate clear approaches connect to the rubber aisle; no home/hiring slots.",
+    "actors": [
+      {
+        "supportId": "benchSeat",
+        "recordId": "benchSeat",
+        "characterId": "gs026-employee-001",
+        "category": "approved-staff-seated-stand-in",
+        "group": "benchStaff",
+        "pose": "sit",
+        "direction": "south",
+        "seat": [
+          1.2,
+          2.4196596372377623
+        ],
+        "ground": [
+          1.2,
+          2.7
+        ],
+        "sourceScale": 0.6865478271728273,
+        "seatContactSource": [
+          80,
+          238
+        ],
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 2.7001000000000004,
+        "seatRisePixels": 33.64084353146853,
+        "basis": "Unchanged approved staff sit-south still, exact source cushion/floor anchors and existing room-proof scale."
+      },
+      {
+        "supportId": "stretchSpot",
+        "recordId": "stretchMat",
+        "characterId": "gs026-employee-004",
+        "category": "approved-staff-standing-stand-in",
+        "group": "matStaff",
+        "pose": "stand",
+        "direction": "south",
+        "ground": [
+          2.7,
+          2.7
+        ],
+        "sourceScale": 0.6865478271728273,
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 2.7001,
+        "basis": "Unchanged approved staff stand-south still and exact source floor anchor; static stretch/rest contact, no animated exercise rig."
+      }
+    ],
+    "contacts": [
+      {
+        "id": "gymAisle",
+        "label": "Connected rubber aisle",
+        "world": [
+          2,
+          3.35
+        ],
+        "approach": [
+          2,
+          3.35
+        ],
+        "necessary": true
+      },
+      {
+        "id": "benchSeat",
+        "label": "Bench rest contact",
+        "world": [
+          1.2,
+          2.4196596372377623
+        ],
+        "approach": [
+          1.2,
+          3.05
+        ],
+        "supportId": "benchSeat",
+        "fixtureId": "benchSeat",
+        "pose": "sit",
+        "necessary": true
+      },
+      {
+        "id": "stretchSpot",
+        "label": "Standing stretch contact",
+        "world": [
+          2.7,
+          2.7
+        ],
+        "approach": [
+          2.7,
+          2.7
+        ],
+        "supportId": "stretchSpot",
+        "fixtureId": "stretchMat",
+        "pose": "stand",
+        "necessary": true
+      }
+    ]
+  }
+}

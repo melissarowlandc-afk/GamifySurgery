@@ -1,0 +1,21 @@
+{
+  "id": "floor",
+  "prompt": "prompts/v1/floor.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e as C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-f8bbdc8a-2803-4f2e-9dde-0f669a4c93ef.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-f8bbdc8a-2803-4f2e-9dde-0f669a4c93ef.png",
+  "selected": true,
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction. Asset type: one square 4 x 4 rubber gym floor surface derived from this Staff Gym concept, transparent game sprite with opaque floor inside. Extract/redraw ONLY the charcoal blue-gray rubber gym flooring, small blue/gray rubber speckles, subtle square tile seams, subdued worn texture. Remove ALL equipment, furnishings, shadows, walls and people. The result is a perfectly unrotated flat square viewed in the game's elevated straight orthographic projection: full square rectangular floor region, exactly four equal square tiles across and four down, no vanishing point or diamond angle. Uniform rubber material covers the complete square edge to edge; small speckles and subtle seams must be consistent. Flat floor no raised plinth or 3D bevel. Match the concept's exact raster/pixel-cluster finish. Small fully transparent margin around the square; inside square floor opaque. NO letters, numbers, text, brands or watermark. True transparent alpha outside the square.",
+    "referenced_image_paths": [
+      "tools/room-design/level-5/staff-gym/concept/staff-gym-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "inputImages": [
+    "concept/staff-gym-concept.png"
+  ],
+  "original": "originals/v1/floor.png",
+  "originalSha256": "9b14525d727485211831d16c5c61442bd59a0b9f53752dc51ce4c37e6c9c46f9",
+  "promptSha256": "ffe6c3b33d3852ed98faf2279e3e703733ac183734cde074fa758f9218e87bc0"
+}

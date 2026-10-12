@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 2,
+  "date": "2026-10-10",
+  "status": "generated_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "builtInCalls": 10,
+  "appearanceChanges": false,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "assets": [
+    {
+      "id": "base-desk",
+      "slot": "desk",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-desk-01.png",
+      "prompt": "assets/prompts/v2/base-desk-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-desk-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "5c3e57344505ce1cfd7a70c822568af3ea0462320c2a91048cab8e11643517f3",
+      "promptSha256": "46f8efddf9cb4a3a376af8a941bca45b6c3bc72ff6f65c431e03f535fc3beb0e",
+      "receiptSha256": "bcc286d9e5dab9b6cd20e88241a8a2b06f01d6eae1f05db6551355abb43eba86",
+      "sourcePoints": {
+        "worktop": [
+          674.5,
+          440
+        ]
+      }
+    },
+    {
+      "id": "base-executiveChair",
+      "slot": "executiveChair",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-executiveChair-01.png",
+      "prompt": "assets/prompts/v2/base-executiveChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-executiveChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "f0f94924c812bf5b749bcb49795e1c5610aa591e1b2e90f6d57230d5c2c0db5c",
+      "promptSha256": "a132c7ba9c7b979ad422aef02400becfa27d1355855e21b782600755ff0ab129",
+      "receiptSha256": "e45318d80c86e5bf3a17ab16747cb2fae793c414a3a348b99f3c7bcf9a8eefe1",
+      "sourcePoints": {
+        "seat": [
+          612,
+          724
+        ],
+        "frontRegions": [
+          [
+            229,
+            460,
+            128,
+            322
+          ],
+          [
+            871,
+            460,
+            128,
+            322
+          ],
+          [
+            0,
+            775,
+            1223,
+            511
+          ]
+        ]
+      }
+    },
+    {
+      "id": "base-visitorChair",
+      "slot": "visitorChair",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-visitorChair-01.png",
+      "prompt": "assets/prompts/v2/base-visitorChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-visitorChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "eea107c444297c960973c37007ac39faaf28767ca7a86c2e6aa7b3d8321054e7",
+      "promptSha256": "79b329ce8837f5c13377cf973581000e46776cc7d7d05d450cbbfdf1ea940239",
+      "receiptSha256": "118cbb0ab9677f1493f47caf1576a35cab1c945066d7002c70b266384d081977",
+      "sourcePoints": {
+        "seat": [
+          612,
+          650
+        ],
+        "frontRegions": [
+          [
+            0,
+            0,
+            1224,
+            1285
+          ]
+        ]
+      }
+    },
+    {
+      "id": "base-shelf",
+      "slot": "shelf",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-shelf-01.png",
+      "prompt": "assets/prompts/v2/base-shelf-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-shelf-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "99d4e3e526ddb9f8f7b5155e680b893e022132759a6373b35fd85330058ce2c7",
+      "promptSha256": "df18a8bb310c21003de284e6e469b5797c978b09fa3a467b003826b2d69ca2f0",
+      "receiptSha256": "cc4d44c2e50a468a3c38623ab9213c4828e6c55253b5f96c839604d645971224",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-meetingTable",
+      "slot": "meetingTable",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-meetingTable-01.png",
+      "prompt": "assets/prompts/v2/base-meetingTable-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-meetingTable-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "811284c366f51e399bbe1aa45bf9c8a2936afcb33e1aee83aac3e5906829c882",
+      "promptSha256": "659aae405a6fa2d1d84b53f1814c01efc633c95223c78d365b8e8370a02a144b",
+      "receiptSha256": "412bb4fe619755f6b1f704ab8f774638db19effb582bf19c0a625f5eb192e735",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-meetingChair",
+      "slot": "meetingChair",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-meetingChair-01.png",
+      "prompt": "assets/prompts/v2/base-meetingChair-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-meetingChair-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "69cb22e09bce6eb691fbf16307dd2709ac50e7fc9368f4bd1574916e21be4f8f",
+      "promptSha256": "1d7b8c360c904bbae153d288a25ebd6f81611af6d0c124b6a58733bd0c30ab10",
+      "receiptSha256": "aa154313e1f99b54c8e1b9bd4ea985156b529077955b049c3424a8292588e322",
+      "sourcePoints": {
+        "seat": [
+          619,
+          672
+        ]
+      }
+    },
+    {
+      "id": "base-rug",
+      "slot": "rug",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-rug-01.png",
+      "prompt": "assets/prompts/v2/base-rug-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-rug-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "ca03a2a200f5a02e84671320cf50f5a8248a1c66f2b058a6d97ac26d61a04a64",
+      "promptSha256": "b1a1bc785b7edfdc32df904ff7163296c1ece9d029615cf6905c271fbcd5b80e",
+      "receiptSha256": "bb6dbc25fae91e9cb8f390c0645a253b8f3b1a3f7b3121bb7b1569161fda7c63",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-decor",
+      "slot": "decor",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-decor-01.png",
+      "prompt": "assets/prompts/v2/base-decor-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-decor-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "a87cc6697362799a60d19e6ff530e10e5911b0175e46b9219324ddbee0e4dc08",
+      "promptSha256": "733f2b6ba04878a138f53cfcc71433b3b64292e74016f2dc964d73b6e66ee9e4",
+      "receiptSha256": "5b88b7eceee1af485aff5e2701dc226bb65b5be75db1e88057b97d620ea816e0",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-art",
+      "slot": "art",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-art-01.png",
+      "prompt": "assets/prompts/v2/base-art-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-art-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "3f4a3ae2c8f0ae0d192ceed0a8131a86cdfb6f750248e0c4c94c3e765a993e7d",
+      "promptSha256": "159d62d60a54f6840f39b7ae10a78d0a2210a6b383a7ea39e5f9ab558797d40d",
+      "receiptSha256": "9886b469b9363fb46f0b31b1fc511d3e260446494dfa11763bfae0dee0bb93f9",
+      "sourcePoints": {}
+    },
+    {
+      "id": "base-accent",
+      "slot": "accent",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "generated_needs_owner_review",
+      "original": "assets/originals/v2/base-accent-01.png",
+      "prompt": "assets/prompts/v2/base-accent-01.prompt.txt",
+      "receipt": "assets/originals/v2/base-accent-01.receipt.json",
+      "tool": "image_gen.imagegen",
+      "model": "Built-in tool selected model; no API/CLI call",
+      "transparentBackground": true,
+      "originalSha256": "a2291cdd3680cb9f7c2a8ce4b401719f5ec759b40db77919e8b198168177f2ed",
+      "promptSha256": "fcbd633f86a0244afdb950e9f9c72e36753aa323582c0bb650646da5d9bbcf69",
+      "receiptSha256": "578690cf7344ad5285b34374dcedb736aa5dd34bb47c3c7a66037988d029bb6c",
+      "sourcePoints": {}
+    }
+  ],
+  "registrationSha256": "a3931fd9035e981e3e6c74996ba6ab1d728482926491b45d1f577219983485b0",
+  "notes": [
+    "10 new built-in generated objects, one fixed corporate appearance at all five upgrade levels.",
+    "One rear guest chair supplies desk visitor and empty meeting south chair.",
+    "2 exact-pixel foreground masks; approved character stills unchanged; no runtime/admin mechanic."
+  ]
+}

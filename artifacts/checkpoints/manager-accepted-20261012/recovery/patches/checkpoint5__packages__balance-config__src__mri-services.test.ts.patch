@@ -1,0 +1,10 @@
+--- a/packages/balance-config/src/mri-services.test.ts
++++ b/packages/balance-config/src/mri-services.test.ts
+@@ -30,6 +30,6 @@
+     expect(tech.requiredAnyRoomDefinitionIds).toEqual(["room.ultrasound", "room.xray", "room.ct", "room.mri"]);
+     expect(tech.maximumEmployees).toBe(4);
+     expect(line.fee * 60 / line.operation!.arrivalCadenceMinutes! - tech.salaryPerExpenseInterval - 8).toBe(34);
+-    expect(facility.maximumPlayableLevel).toBe(4);
++    expect(facility.maximumPlayableLevel).toBe(5);
+   });
+ });

@@ -1,0 +1,78 @@
+--- a/apps/player/src/session/buildModePresentation.ts
++++ b/apps/player/src/session/buildModePresentation.ts
+@@ -1,8 +1,12 @@
+ import {
+   getCurrentRoomUpgradeDefinition,
++  getRoomUpgradeDefinition,
+   getRoomUpgradeLevelBenefit,
+   getRoomUpgradePerPurchaseLabel,
+   getRoomUpgradePurchaseCount,
++  LEVEL_FIVE_SUPPORT_TUNING,
++  getExecutiveOfficeDuration,
++  PROTOTYPE_BALANCE_RELEASE,
+   type RoomUpgradeEffectKind,
+ } from "@gamify-surgery/balance-config";
+ import type {
+@@ -54,10 +58,15 @@
+   ["room.maintenance_workshop", "support", "Home base for repairs."],
+   ["room.staff_break", "support", "Staff rest here between tasks."],
+   ["room.surgeon_office", "support", "Quality reviews happen here."],
++  ["room.founder_office", "support", `Ownership gives every employee +${LEVEL_FIVE_SUPPORT_TUNING.founderOwnershipMorale} morale, plus +2 per upgrade. Five appearance tiers.`],
++  ["room.executive_office", "support", "One Executive home/desk. Daily seated management takes 30/28.5/27/25.5/24 raw minutes, quoted 30/29/27/26/24 at office tiers 1–5. Training strengthens morale, comfort, preparation and suppliers; office upgrades shorten only the round."],
++  ["room.staff_gym", "support", `Completed ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakDurationMinutes}-minute gym breaks give +${LEVEL_FIVE_SUPPORT_TUNING.gymMorale} morale, plus +2 per upgrade. Shares the ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes}-minute break cooldown.`],
++  ["room.indoor_garden", "patient", `Adult visitors earn +${LEVEL_FIVE_SUPPORT_TUNING.gardenSatisfaction} satisfaction after a ${LEVEL_FIVE_SUPPORT_TUNING.gardenRestMinutes}-minute rest, plus +2 per upgrade, once per visit. Care takes priority; pediatric families keep their paired flow.`],
+   ["room.glp1_telehealth_suite", "services", "Remote GLP-1 weight-management visits."],
+   ["room.pharmacy", "services", "Pharmacy sales to patients."],
+   ["room.wound_ostomy", "services", "Routine wound care and ostomy support visits."],
+   ["room.vending", "services", "Snack and drink sales for visitors."],
++  ["room.gift_shop", "services", "Gift sales after stock cost: two-minute self-service checkout, two-person queue and one gift-only adult opportunity every 120 minutes per facility."],
+ ];
+ 
+ const ROOM_BUILD_TYPE_INDEX = new Map(
+@@ -143,6 +152,8 @@
+   upgradeLevel: number;
+   maxUpgradeLevel: number;
+   upkeepPerLevel: number;
++  /** Level 5 owner QA may show dormant state; this never quotes a benefit. */
++  previewOnly?: boolean;
+ }): RoomUpgradeBenefitView | undefined {
+   const {
+     roomDefinitionId,
+@@ -150,6 +161,13 @@
+     maxUpgradeLevel,
+     upkeepPerLevel,
+   } = input;
++  const planned = getRoomUpgradeDefinition(roomDefinitionId);
++  if (input.previewOnly === true && planned?.status === "future" && maxUpgradeLevel > 1) return {
++    perUpgradeLabel: "Upgrades are unavailable in this preview.",
++    currentLabel: planned.appearanceChanges ? `Appearance ${upgradeLevel}` : "Fixed appearance",
++    nextLabel: "Unavailable",
++    note: "Room effects are not active. Upgrade purchases unlock with their room functions.",
++  };
+   const definition = getCurrentRoomUpgradeDefinition(roomDefinitionId);
+   const perUpgradeLabel = getRoomUpgradePerPurchaseLabel(roomDefinitionId);
+   const current = getRoomUpgradeLevelBenefit(roomDefinitionId, upgradeLevel);
+@@ -158,6 +176,9 @@
+   }
+   const atMaximum = upgradeLevel >= maxUpgradeLevel;
+   const next = atMaximum ? null : getRoomUpgradeLevelBenefit(roomDefinitionId, upgradeLevel + 1);
++  const supportBase = roomDefinitionId === "room.founder_office" ? LEVEL_FIVE_SUPPORT_TUNING.founderOwnershipMorale
++    : roomDefinitionId === "room.indoor_garden" ? LEVEL_FIVE_SUPPORT_TUNING.gardenSatisfaction
++    : roomDefinitionId === "room.staff_gym" ? LEVEL_FIVE_SUPPORT_TUNING.gymMorale : 0;
+   const upkeepLabel =
+     upkeepPerLevel > 0
+       ? atMaximum
+@@ -166,9 +187,11 @@
+       : undefined;
+   return {
+     perUpgradeLabel,
+-    currentLabel: roomUpgradeTotalLabel(current.effectKind, current.totalAmount),
+-    ...(next ? { nextLabel: roomUpgradeTotalLabel(next.effectKind, next.totalAmount) } : {}),
++    currentLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel).minutes} min per daily round` : roomUpgradeTotalLabel(current.effectKind, current.totalAmount + supportBase),
++    ...(next ? { nextLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel + 1).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel + 1).minutes} min per daily round` : roomUpgradeTotalLabel(next.effectKind, next.totalAmount + supportBase) } : {}),
+     ...(upkeepLabel ? { upkeepLabel } : {}),
++    ...(roomDefinitionId === "room.gift_shop" ? { note: "Gift sales: each purchase adds 6% of base gross. Stock cost stays fixed unless accepted Executive supplier terms reduce it." }
++      : supportBase || roomDefinitionId === "room.executive_office" ? { note: roomBuildPurpose(roomDefinitionId) } : {}),
+   };
+ }
+ 

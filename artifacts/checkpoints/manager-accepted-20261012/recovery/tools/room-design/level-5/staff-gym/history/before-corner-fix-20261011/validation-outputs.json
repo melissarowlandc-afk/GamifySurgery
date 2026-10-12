@@ -1,0 +1,90 @@
+{
+  "status": "NATIVE_HTTP_PROVENANCE_PASS_BROWSER_PENDING_MANAGER",
+  "commands": [
+    {
+      "command": "node tools/room-design/level-5/staff-gym/reconcile.mjs",
+      "exitCode": 0,
+      "output": "RECONCILIATION PASS: unchanged concept layout; tile-filled rear/front plinths exactly abut; permanent contacts and footprints; bench cushion/floor within one prepared native pixel.\n",
+      "source": "Actual earlier executed output retained in this turn."
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/build.mjs",
+      "exitCode": 0,
+      "output": "BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate.cjs",
+      "exitCode": 0,
+      "output": "VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 source-pixel bench front; 2 unchanged approved staff stills in scrubs (seated/standing); 11040 door/backing states; 103680 routes / 81572560 radius-clear samples at 0.005T; 103680 occupied routes / 82191200 samples; all 16 doors; permanent stations/aisle, continuous wall rows, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-south.cjs",
+      "exitCode": 0,
+      "output": "SOUTH VALIDATION PASS: continuous S1-S4 storage / 480 columns; owned-door visibility and necessary equipment across 17920 states; 2880 occupied routes with south closed / 2276640 radius-clear samples; corner sections open only for their selected S/W/E door.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-controls.mjs",
+      "exitCode": 0,
+      "output": "CONTROL VALIDATION PASS: 335 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 staff contacts, keyboard, real-error/performance-warning discrimination; browser separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/inspect-composition.mjs",
+      "exitCode": 0,
+      "output": "COMPOSITION INSPECTION PASS: equipment and mat with staff hidden cover 60.6% of the floor view; solid equipment alone 48.7%; concept/empty/two-contact comparison saved.\n",
+      "source": "Actual earlier executed output; native rendered pixels remain byte-identical."
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/inspect-native.mjs",
+      "exitCode": 0,
+      "output": "NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated/standing staff/contacts/routes/all 16 doors/backing; browser QA separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/stand-in/v1/replay.mjs",
+      "exitCode": 0,
+      "output": "STAND-IN REPLAY PASS: 20 neutral registered geometry frames; 3 actual native replay views; all 16 single-door occupied routes; painted files and frozen layout unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/reproduce.mjs",
+      "exitCode": 0,
+      "output": "BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\nBUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.\nREPRODUCIBILITY PASS: 33 delivered files byte-identical across two native rebuilds.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-helpers.cjs",
+      "exitCode": 0,
+      "output": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-http.mjs",
+      "exitCode": 0,
+      "output": "HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/check-http.mjs --phone",
+      "exitCode": 0,
+      "output": "HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4192; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/assets/write-provenance-v1.mjs",
+      "exitCode": 0,
+      "output": "ART PROVENANCE PASS: 1 built-in concept + 11 transparent derivations (all selected); 20 sprites + 1 exact-source bench front / 27 records; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved scrubs staff stills; owner approval pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/validate-browser.cjs",
+      "exitCode": 1,
+      "output": "browserType.launch: spawn EPERM\nCall log:\n\u001b[2m  - <launching> C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\rowla\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-2r7ZvC --remote-debugging-pipe --no-startup-window\u001b[22m\n\n    at C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-5\\staff-gym\\proof\\validate-browser.cjs:7:30\n    at Object.<anonymous> (C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-5\\staff-gym\\proof\\validate-browser.cjs:25:35)\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/capture.cjs",
+      "exitCode": 1,
+      "output": "browserType.launch: spawn EPERM\nCall log:\n\u001b[2m  - <launching> C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\rowla\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-Vc4ufp --remote-debugging-pipe --no-startup-window\u001b[22m\n\n    at C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-5\\staff-gym\\proof\\capture.cjs:3:201\n    at Object.<anonymous> (C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\room-design\\level-5\\staff-gym\\proof\\capture.cjs:7:369)\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/staff-gym/proof/record-browser-attempt.mjs",
+      "exitCode": 0,
+      "output": "BROWSER ATTEMPT RECEIPTS SAVED: actual Playwright spawn EPERM and connected-browser sandbox setup failures; no browser PASS or screenshots claimed.\n"
+    }
+  ],
+  "scope": "Owned Staff Gym lane plus the appended Staff Gym plan section; all 58033 existing shared plan bytes preserved exactly. Scope audit PASS is recorded in proof/evidence/v1/lane-audit-report.json.",
+  "approval": null,
+  "browser": "Actual attempts blocked before browser execution; full combined stdout/stderr retained without a browser PASS claim."
+}

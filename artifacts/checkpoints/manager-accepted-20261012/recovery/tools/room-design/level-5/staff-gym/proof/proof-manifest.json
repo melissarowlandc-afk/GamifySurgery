@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "room": "staff-gym",
+  "facilityLevel": 5,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "appearanceChanges": false,
+  "footprint": [
+    4,
+    4
+  ],
+  "footprintStatus": "proposed_contract_needs_owner_review",
+  "designRevision": 2,
+  "ownerReview": {
+    "date": "2026-10-11",
+    "statement": "Some of the shelves on the side walls look like they are in the same spot as and overlapping the equipment in the back wall. Otherwise this is approved.",
+    "approval": "approved_except_corner_correction",
+    "unchangedElementsApproved": true,
+    "cornerCorrection": "complete_pending_manager_browser_verification",
+    "browserVerificationAssignedTo": "GamifySurgery manager",
+    "newDesignDecisionRequired": false
+  },
+  "ownerRevisionLayoutSha256": "b3c58551b7136c3f3addaa6b0b317a5c648e60edf479c42e357a778c76c23a8f",
+  "mode": "painted",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "moraleMechanic": "not_simulated",
+  "employeeHomeSlots": 0,
+  "clinicalWorkloadSlots": 0,
+  "staffContacts": 2,
+  "seatedStaffContacts": 1,
+  "standingStaffContacts": 1,
+  "hiringSlots": 0,
+  "doorModel": {
+    "count": 16,
+    "perWall": {
+      "N": 4,
+      "S": 4,
+      "W": 4,
+      "E": 4
+    },
+    "spanTiles": 1,
+    "kind": "game-one-tile"
+  },
+  "layoutSha256": "b3c58551b7136c3f3addaa6b0b317a5c648e60edf479c42e357a778c76c23a8f",
+  "conceptLayoutSha256": "7fc663818c04cba1b423b019c525d03ed5d44fada4666d15a3db99bdf6a94e90",
+  "conceptSha256": "6b896b6f3d059789b8672d0c620befaac603d6b6e4c704a714c9cafedc20f0d4",
+  "generationManifestSha256": "aaf7209e2e4c47ff0760564ed8c3af43a31cab34a9d8a728eec32b1b0046e582",
+  "designRoomsSha256": "9c2cbaf9f6e51c288ae4517aa07a054d0d596c58e9ad6214a7b91198351237e0",
+  "dataSha256": "4b98fe43afe1874a0e3951afc03980a0194aa716bcfb32ff642c2df235293bd7",
+  "registrationSha256": "81b7bd3d5cb2ae45946d5e6ff24a5cd5f24c2cb55b98cbd4201243feb0b6b814",
+  "reconciliationSha256": "06938087dcc0eaff03dca218656e42932357af705ecfbe6d186bcf3131b8462c",
+  "rendererSha256": "1752a522ad73ae50e97249c98457909b6a13209f661fb4c3bdfda85d154acc61",
+  "htmlSha256": "e90fa27a8bb508cb3bfa82b2198a4d705618c09734c1baed31ae0cdb94e824b7",
+  "extensionSha256": "4415d692cd7660c469aab6026949391a6324b831916fb19368aee83e2ab43acc",
+  "geometrySha256": "842ab1e897cd3cb9f07538c3588654f94df6cf3f55bba17e87a3f666a9e34f53",
+  "fixtureClassification": [
+    {
+      "id": "north1",
+      "label": "Treadmill · rear bay 1",
+      "classification": "optional",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "mirror1",
+      "label": "Wall mirror · section 1",
+      "classification": "optional",
+      "doorOwners": [
+        "N1"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north2",
+      "label": "Exercise bike and adjoining weights · rear bay 2",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "mirror2",
+      "label": "Wall mirror · section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north3",
+      "label": "Dumbbell rack · rear bay 3",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "mirror3",
+      "label": "Wall mirror · section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "north4",
+      "label": "Water cooler, towel cubby and weights · rear bay 4",
+      "classification": "optional",
+      "doorOwners": [
+        "N4",
+        "EA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "mirror4",
+      "label": "Mirror edge and abstract motivational poster",
+      "classification": "optional",
+      "doorOwners": [
+        "N4"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west2",
+      "label": "Towel, bottle and block cubbies · west section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "WB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west3",
+      "label": "Towel, bottle and block cubbies · west section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "WC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "west4",
+      "label": "Towel, bottle and block cubbies · west section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "S1",
+        "WD"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east2",
+      "label": "Rolled-mat and accessory rack · east section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "EB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east3",
+      "label": "Rolled-mat and accessory rack · east section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "EC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "east4",
+      "label": "Rolled-mat and accessory rack · east section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "S4",
+        "ED"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "front1",
+      "label": "Folded towel tray · front section 1",
+      "classification": "optional",
+      "doorOwners": [
+        "S1",
+        "WD"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "front2",
+      "label": "Bottle tray · front section 2",
+      "classification": "optional",
+      "doorOwners": [
+        "S2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "front3",
+      "label": "Dumbbell and yoga-block tray · front section 3",
+      "classification": "optional",
+      "doorOwners": [
+        "S3"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "front4",
+      "label": "Rolled-mat tray · front section 4",
+      "classification": "optional",
+      "doorOwners": [
+        "S4",
+        "ED"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "benchSeat",
+      "label": "Padded rest bench · adult seated south",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "stretchMat",
+      "label": "Stretch mat · standing staff station",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": true
+    },
+    {
+      "id": "exerciseBall",
+      "label": "Exercise ball · stretch station equipment",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "foamRoller",
+      "label": "Foam roller · front of stretch station",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "rubberFloor",
+      "label": "Rubber gym floor and connected aisle · walkable",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": true
+    },
+    {
+      "id": "towelHooks",
+      "label": "Wall towel hooks · above dumbbell bay",
+      "classification": "optional",
+      "doorOwners": [
+        "N3"
+      ],
+      "walkable": false
+    }
+  ],
+  "necessaryStaffSpots": [
+    "benchSeat",
+    "stretchSpot"
+  ],
+  "newAssets": [
+    "base-north1",
+    "base-mirror1",
+    "base-north2",
+    "base-mirror2",
+    "base-north3",
+    "base-mirror3",
+    "base-north4",
+    "base-mirror4",
+    "base-west",
+    "base-east",
+    "base-front1",
+    "base-front2",
+    "base-front3",
+    "base-front4",
+    "base-bench",
+    "base-mat",
+    "base-ball",
+    "base-roller",
+    "base-floor",
+    "base-hooks"
+  ],
+  "reusedAssets": [],
+  "builtInCalls": 12,
+  "notes": [
+    "Room-first full-room concept precedes every concept-derived sprite. Joined cardio/weights/hydration and perimeter storage surround the permanent bench and standing mat.",
+    "Necessary bench, mat, ball, roller, staff contacts and rubber aisle are never removed by doors. Optional wall-row segments clear their owned doors.",
+    "Two unchanged approved staff stills in scrubs: sit-south bench and stand-south mat; original-pixel front rail/legs and measured cushion/floor contacts. No employee or clinical slots, mechanics or campaign storage."
+  ]
+}

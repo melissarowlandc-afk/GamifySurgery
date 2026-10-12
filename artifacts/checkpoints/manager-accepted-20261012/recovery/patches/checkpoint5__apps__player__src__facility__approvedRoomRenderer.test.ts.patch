@@ -1,0 +1,18 @@
+--- a/apps/player/src/facility/approvedRoomRenderer.test.ts
++++ b/apps/player/src/facility/approvedRoomRenderer.test.ts
+@@ -39,7 +39,14 @@
+         height: height * room.shell.tilePixels,
+         color: room.shell.floorBase,
+       });
+-      expect(first.length, room.proofId).toBeGreaterThan(1);
++      if (room.roomDefinitionId === "room.indoor_garden" || room.roomDefinitionId === "room.staff_gym") {
++        // These approved rooms use a native textured floor/path bitmap over
++        // their single exact base primitive; do not invent extra floor marks.
++        expect(first, room.proofId).toEqual(room.shell.exactProofFloor);
++        expect(first).toHaveLength(1);
++        expect(resolveApprovedRoomDrawRecords(room.roomDefinitionId, 0).some(draw =>
++          draw.id === (room.roomDefinitionId === "room.indoor_garden" ? "stonePath" : "rubberFloor"))).toBe(true);
++      } else expect(first.length, room.proofId).toBeGreaterThan(1);
+       expect(first.every((primitive) => [primitive.x, primitive.y, primitive.width, primitive.height].every(Number.isFinite))).toBe(true);
+     }
+   });

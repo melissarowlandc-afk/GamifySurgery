@@ -1,0 +1,73 @@
+--- a/tools/economy-audit/README.md
++++ b/tools/economy-audit/README.md
+@@ -16,3 +16,70 @@
+ After a first cash shortfall, reported margins remain fixed-roster liabilities; the model does not simulate staff quitting or stock-purchase failures. A positive average also does not guarantee enough cash before the first payment. Use startup reserve and idle-runway results alongside profit. It is not a full reducer replay or browser/owner-save validation.
+ 
+ See [room-economy-audit-20261008.md](../../docs/design/room-economy-audit-20261008.md) for complete current values, exact proposals, sources, validation output and manager decisions. Full assumptions and source fingerprints are in the JSON result. Numerical assertions fail if a production input changes during a run.
++
++## Level 5 M8 reducer audit (2026-10-12)
++
++`level-five-simulation.ts` uses the actual reducer, unchanged catalogs and the
++cap-5 QA context. It starts a synthetic funded clinic at zero XP, constructs
++all five prestige rooms, retains normal Level 1-4 rooms/staff, and pays a default
++$45 Executive. It reconciles each command with unique receipts, settlements,
++stock, actual operating postings and separately charged capital. Retired totals,
++reloads, daily rounds, actual garden/gym use, bounded metrics, movement progress
++and the full inspection report are checked independently.
++
++The complete invocation is:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++node --disable-warning=ExperimentalWarning tools/economy-audit/level-five-run.mjs --write
++```
++
++This runs 12 economic scenarios on three paired seeds (4 warmup + 48 measured
++hours each), three 80%-accuracy runs through the actual goals and first full
++inspection, and one 90%-accuracy comparison. Every pacing run continues for
++another operating day after Keep playing. Runtime clinical data and rules are
++unchanged; the response script selects existing correct/incorrect keys and
++performs one chart action per game minute. Passive references suppress scored
++arrivals explicitly. Half-gift is an exogenous opportunity-withholding scenario;
++slow-demand additionally uses the ordinary appointments toggle for alternate
++half-days. These demand sensitivities are separate from normal-default evidence.
++
++The same computation can be split into independent native Node processes:
++
++```powershell
++node --disable-warning=ExperimentalWarning tools/economy-audit/level-five-run.mjs --seed=level-five-m8.01 --write --resume
++node --disable-warning=ExperimentalWarning tools/economy-audit/level-five-run.mjs --seed=level-five-m8.02 --write --resume
++node --disable-warning=ExperimentalWarning tools/economy-audit/level-five-run.mjs --seed=level-five-m8.03 --write --resume
++node --disable-warning=ExperimentalWarning tools/economy-audit/level-five-run.mjs --merge --write
++```
++
++Partial results/cache live only in `.local-dev/level5-m8/audit-parts/`. Resume
++requires an identical source fingerprint, with one explicitly pinned historical
++exception in `level-five-audit-provenance-20261012.json`: completed non-training
++runs retain their actual earlier audit source key after the isolated training
++scheduler correction. Every gameplay/data input and all executed non-training
++code must remain unchanged. Earlier production revisions and old training
++caches are rejected. Merge rejects changed/missing inputs and incomplete
++coverage. `--pacing-only` / `--economy-only` can populate one part's
++cache, followed by its full seed command. `--smoke` runs three economic controls
++read-only. No flag overwrites the Level 4 or October 8 artifacts.
++
++Only the complete `--write` or verified merge publishes
++`level-five-results-20261012.json` and the actual paused 2999/3000 inspection save
++in `tests/fixtures/level-five-economy-checkpoint-20261012.json`. QA on the existing
++5184 server uses `?level5=economy` (funded zero-XP opening) or
++`?level5=economy-inspection` (actual audit checkpoint), with either
++`&layout=desktop` or `&layout=phone`. It runs no browser answer bot, resumes
++existing campaigns, preserves owner storage, and leaves the ordinary cap at 4.
++
++Economic receipt/cost fields cover the 48 measured hours. Effect witnesses and
++minimum cash cover the entire 52-hour run, including warmup. The isolated
++reader-training sensitivity withholds unanswered staff discussions and requests
++as soon as the production quote permits it after normal arrival. It verifies
++60 actual seated minutes and return, and measures genuinely earned tier 2
++afterward. Normal references and pacing retain ordinary staff discussions.
++`executiveComfortUses` counts applied
++frozen comfort quotes, including zero-point unqualified quotes; it must not be
++read as a count of positive bonuses. The handoff records a separate paired
++ten-hour point probe. Per-room upkeep is an accrual allocation; total posted
++expense/cents remain authoritative, so rounding is not a second saving.

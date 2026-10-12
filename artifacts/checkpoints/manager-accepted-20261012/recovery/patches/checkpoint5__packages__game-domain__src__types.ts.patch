@@ -1,0 +1,173 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -1,4 +1,6 @@
+ import type { FacilityLevel, PrototypeBalanceRelease } from "@gamify-surgery/balance-config";
++import type { LevelFiveState } from "./level-five-types";
++export type * from "./level-five-types";
+ import type {
+   DecisionNode,
+   SyntheticClinicalCase,
+@@ -757,6 +759,9 @@
+ }
+ 
+ export interface ServiceOperationState {
++  executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
++  /** Once-only actual garden-rest witness; omitted on older visits. */
++  gardenVisitBenefit?: GardenVisitBenefit;
+   diagnosticPhaseWork?: DiagnosticPhaseWork;
+   diagnosticPhysicalWork?: DiagnosticPhysicalWork;
+   /** Scheduled MRI uses the same frozen acquisition/read plan as chart orders. */
+@@ -881,13 +886,20 @@
+   };
+ }
+ 
+-export interface PatientAmenityTripState {
++export interface GardenVisitBenefit {
++  version: "garden-visit-benefit.v1";
++  roomInstanceId: string;
++  upgradeLevel: RoomUpgradeLevel;
++  seatId: "leftSeat" | "rightSeat";
++  points: number;
++  completedAtFacilityTick: number;
++}
++
++interface PatientAmenityTripBase {
+   version: "patient-amenity-trip.v1";
+   id: string;
+   actorKind: "encounter" | "service_visitor";
+   actorId: string;
+-  amenityKind: "bathroom";
+-  bathroomRoomInstanceId: string;
+   status: "walking_to_amenity" | "using_amenity" | "returning";
+   startedAtFacilityTick: number;
+   dwellEndsAtFacilityTick: number | null;
+@@ -900,10 +912,21 @@
+   linkedServiceOperationId?: string;
+ }
+ 
++export type PatientAmenityTripState = PatientAmenityTripBase & (
++  { amenityKind: "bathroom"; bathroomRoomInstanceId: string } |
++  { amenityKind: "garden"; bathroomRoomInstanceId?: never; gardenRoomInstanceId: string;
++    gardenSeatId: GardenVisitBenefit["seatId"]; gardenUpgradeLevel: RoomUpgradeLevel;
++    gardenSatisfactionPoints: number; gardenRestMinutes: number; supportDoorId: string;
++    /** Contact released; retain the native path/cursor until an exit reopens. */
++    returnBlocked?: true }
++);
++
+ export type RetailActorKind = "employee" | "founder" | "encounter" | "service_visitor" | "retail_visitor" | "companion";
+ export type RetailOperationStatus = "walking_to_outlet" | "queued" | "purchasing" | "returning" | "leaving" | "completed" | "abandoned" | "cancelled";
+ 
+ export interface RetailOperationState {
++  giftCheckout?: GiftCheckoutState;
++  executiveStock?: import("./level-five-types").ExecutiveStockQuote;
+   id: string;
+   incomeLineId: string;
+   catalogVersion: 1;
+@@ -1009,6 +1032,8 @@
+ }
+ 
+ export interface RetailExternalActorState {
++  /** A separate Level 5 adult shopping stream, never a clinical admission. */
++  giftOnlyVisit?: GiftOnlyVisitState;
+   id: string;
+   kind: "retail_visitor" | "companion";
+   displayName: string;
+@@ -1038,6 +1063,29 @@
+   createdAtFacilityTick: number;
+ }
+ 
++export interface GiftRetailDemandState {
++  version: "gift-retail-demand.v1";
++  nextOpportunityAtFacilityTick: number;
++  opportunitySequence: number;
++}
++
++export interface GiftOnlyVisitState {
++  version: "gift-only-visit.v1";
++  opportunitySequence: number;
++  ageYears: number;
++  sexLabel: "Female" | "Male";
++}
++
++export interface GiftCheckoutState {
++  version: "gift-checkout.v1";
++  /** Released on dispense/cancel, including while a blocked exit is retried. */
++  contactId: "pay" | "queue1" | "queue2" | null;
++  doorId: string;
++  returnBlocked?: true;
++  /** Freeze presentation at the actual cursor while another shopper uses the aisle. */
++  aisleWaiting?: true;
++}
++
+ export interface RetailActorLedgerState {
+   dayNumber: number;
+   foodDayNumber: number;
+@@ -1048,6 +1096,9 @@
+ }
+ 
+ export interface EncounterState {
++  executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
++  /** Once-only actual garden-rest witness; omitted on older visits. */
++  gardenVisitBenefit?: GardenVisitBenefit;
+   id: string;
+   pediatricFamilyId?: string;
+   clinicalReleaseId: string;
+@@ -1271,14 +1322,18 @@
+   upgradeLevel: RoomUpgradeLevel;
+   baselineMoraleGain: number;
+   moraleGain: number;
++  /** Omitted on ordinary and legacy break-room quotes. */
++  roomDefinitionId?: "room.staff_gym";
+ }
+ 
+ export interface EmployeeFacilityTaskState {
+-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "periop_attention" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi";
++  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "periop_attention" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi" | "daily_management_round";
+   startedAtFacilityTick: number;
+   workMinutesRemaining: number;
+   targetId?: string;
+-  seatId?: LevelThreeBreakSeatId;
++  seatId?: LevelThreeBreakSeatId | "benchSeat" | "stretchSpot";
++  /** Actual approved gym entrance; closing it interrupts the accepted break. */
++  supportDoorId?: string;
+   /** Frozen on new EVS room jobs; legacy jobs restore their baseline quantity. */
+   cleanlinessRestore?: number;
+   /** Allows fractional remaining work only for strictly marked new support jobs. */
+@@ -1646,6 +1701,8 @@
+   /** Omission means no families or earned witnesses; preserve old save bytes. */
+   pediatricFamilies?: Record<string, PediatricFamilyState>;
+   levelFourCompletion?: LevelFourCompletionState;
++  /** Inert optional foundation. Legacy/fresh saves do not acquire Level 5 evidence. */
++  levelFive?: LevelFiveState;
+   facilityTick: number;
+   paused: boolean;
+   simulationSpeed: SimulationSpeed;
+@@ -1698,6 +1755,8 @@
+   patientAmenityTripSequence?: number;
+   retailOperationSequence: number;
+   retailOperations: RetailOperationState[];
++  /** Lazy and absent from old/ordinary Level 0-4 campaigns. One clock per facility. */
++  giftRetailDemand?: GiftRetailDemandState;
+   retailExternalActors: RetailExternalActorState[];
+   retailOrders: RetailOrderState[];
+   retailActorLedgers: Record<string, RetailActorLedgerState>;
+@@ -1784,6 +1843,9 @@
+ }
+ 
+ export type GameCommand =
++  | (CommandBase & { type: "BOOK_INSPECTION" })
++  | (CommandBase & { type: "CANCEL_INSPECTION" })
++  | (CommandBase & { type: "ACKNOWLEDGE_FINISH_PAGE" })
+   | (CommandBase & {
+       type: "SET_ADVERTISING_LEVEL";
+       level: number;
+@@ -2039,6 +2101,6 @@
+   eligible: boolean;
+   /** Terminal milestone, retained after acknowledgement even if live goals change. */
+   terminalComplete: boolean;
+-  nextFacilityLevel: 1 | 2 | 3 | 4 | null;
+-  maximumPlayableLevel: 3 | 4;
+-}
++  nextFacilityLevel: 1 | 2 | 3 | 4 | 5 | null;
++  maximumPlayableLevel: 3 | 4 | 5;
++}

@@ -1,0 +1,63 @@
+{
+  "config": "checked-in default workspace configurations",
+  "pool": "threads",
+  "preload": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "commands": [
+    {
+      "id": "balance",
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-balance.log",
+      "sha256": "25f5d438bc6efd4e75bbf45cc6b73a4a3307ac7e7811f44e2e060ceb96257d4b"
+    },
+    {
+      "id": "domain",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-domain-final.log",
+      "sha256": "1492f5d41c9092e5d454e55913cdd6699d39a5b41eb332df2e25614a68505ef4"
+    },
+    {
+      "id": "clinical-content",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-clinical.log",
+      "sha256": "68486adc326247695efe01329b800fbcc61b3b6f1409b8f612ba405ec74f97c7"
+    },
+    {
+      "id": "player",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": "full-player-final.log",
+      "sha256": "2867d3e85a388ff7d146c2d3dc36be8cb109852dfcf3acf3fc80e16b29f96a5a"
+    },
+    {
+      "id": "typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": "final-typecheck.log",
+      "sha256": "918ba7f61de41398d6b6878a4f862aa2d19d01fba381d7560b5e41560bacf9b4"
+    },
+    {
+      "id": "build",
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": "final-build.log",
+      "sha256": "0f36f5d4f4545a2d9824a9b9e0c64ba9a7137ba1886051d716badeb005b6186e"
+    },
+    {
+      "id": "QA transform",
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exitCode": 0,
+      "log": "qa-check-final.log",
+      "sha256": "9a9c23f12b2396bda3dbc56122c93b0078657ab2bb891885b5bdece491d5a178"
+    },
+    {
+      "id": "final presentation",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/levelFiveSupportViewModels.test.tsx src/session/levelFiveRoomsViewModels.test.tsx",
+      "exitCode": 0,
+      "log": "presentation-final.log",
+      "sha256": "ae76dfea2cfd28b6f87c64e18b65a709dd0737367850b3945a97281b3b8bfb77"
+    }
+  ]
+}

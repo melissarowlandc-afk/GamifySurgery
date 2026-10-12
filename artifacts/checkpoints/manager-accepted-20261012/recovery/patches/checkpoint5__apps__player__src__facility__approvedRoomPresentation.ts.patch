@@ -1,0 +1,76 @@
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -9,6 +9,7 @@
+ } from "./approvedSideChairLayers";
+ import proofDataJson from "./approvedRoomProofData.json";
+ import { APPROVED_LEVEL4_ROOM_DATA, APPROVED_LEVEL4_ROOM_PRESENTATIONS } from "./approvedLevel4RoomData";
++import { APPROVED_LEVEL5_ROOM_DATA, APPROVED_LEVEL5_ROOM_PRESENTATIONS, getApprovedLevel5RoomTier } from "./approvedLevel5RoomData";
+ import type { ApprovedPaintPrimitive } from "./approvedRoomRenderer";
+ import {
+   APPROVED_LEVEL3_ACTOR_SUPPORTS,
+@@ -136,6 +137,7 @@
+ }
+ 
+ export interface ApprovedRoomDrawRecord {
++  readonly classification?: "necessary" | "optional";
+   readonly id: string;
+   readonly assetId: string;
+   readonly sourceRect: readonly [x: number, y: number, width: number, height: number];
+@@ -257,6 +259,7 @@
+ ];
+ 
+ export const APPROVED_ROOM_PRESENTATIONS = [
++  ...APPROVED_LEVEL5_ROOM_PRESENTATIONS,
+   ...APPROVED_LEVEL4_ROOM_PRESENTATIONS,
+   {
+     proofId: "front-desk", roomDefinitionId: "room.front_desk", proofPath: "tools/room-design/front-desk-layout/front-desk-layout.html",
+@@ -587,7 +590,7 @@
+   orientation: RoomOrientation,
+ ): readonly ApprovedProceduralDrawRecord[] {
+   if (orientation !== 0) return [];
+-  return APPROVED_LEVEL4_ROOM_DATA.get(definitionId)?.procedural ?? APPROVED_PROCEDURAL_DRAWS[definitionId] ?? [];
++  return APPROVED_LEVEL5_ROOM_DATA.get(definitionId)?.procedural ?? APPROVED_LEVEL4_ROOM_DATA.get(definitionId)?.procedural ?? APPROVED_PROCEDURAL_DRAWS[definitionId] ?? [];
+ }
+ 
+ export function isApprovedProceduralDrawVisible(
+@@ -651,15 +654,16 @@
+ export function getApprovedRoomProofCapture(
+   definitionId: string,
+   orientation: RoomOrientation,
++  upgradeLevel = 1,
+ ): ApprovedRoomProofCapture | undefined {
+   const room = getApprovedRoomPresentation(definitionId);
+   if (!room) return undefined;
+-  const level4 = orientation === 0 ? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
++  const level4 = orientation === 0 ? APPROVED_LEVEL5_ROOM_DATA.get(definitionId) ?? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+   if (level4) return {
+     state: "approved-art-promotion", canvasId: `${room.proofId}-art`,
+     dataset: { approvalReceiptSha256: level4.provenance.receiptSha256 },
+     coordinateSpace: { floorOriginPixels: [0, 0], tilePixels: 120 },
+-    drawImages: level4.records.map((record) => ({
++    drawImages: (getApprovedLevel5RoomTier(definitionId, upgradeLevel)?.records ?? level4.records).map((record) => ({
+       canvas: `${room.proofId}-art`, src: { width: record.sourceRect[2], height: record.sourceRect[3], assetId: record.assetId },
+       transform: record.canvasTransform,
+       args: [...record.sourceRect, ...record.destinationTopLeftTiles.map((value) => value * 120), ...record.renderSizeTiles.map((value) => value * 120)],
+@@ -843,7 +847,10 @@
+ export function resolveApprovedRoomActorSupports(
+   definitionId: string,
+   orientation: RoomOrientation,
++  upgradeLevel = 1,
+ ): readonly ApprovedActorSupport[] {
++  const level5 = orientation === 0 ? getApprovedLevel5RoomTier(definitionId, upgradeLevel) : undefined;
++  if (level5) return level5.supports;
+   const level4 = orientation === 0 ? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+   if (level4) return level4.supports;
+   const procedureSpots = APPROVED_PROCEDURE_STAFF_SPOTS[definitionId];
+@@ -1123,7 +1130,10 @@
+   definitionId: string,
+   orientation: RoomOrientation,
+   variant?: ApprovedRoomStateVariant,
++  upgradeLevel = 1,
+ ): readonly ApprovedRoomDrawRecord[] {
++  const level5 = orientation === 0 ? getApprovedLevel5RoomTier(definitionId, upgradeLevel) : undefined;
++  if (level5) return level5.records;
+   const level4 = orientation === 0 ? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+   if (level4) return level4.records;
+   const level3Records = orientation === 0 ? APPROVED_LEVEL3_ROOM_DRAW_RECORDS[definitionId] : undefined;

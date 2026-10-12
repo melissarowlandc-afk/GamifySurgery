@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "inspector-v6f-worker-visual-review/v1",
+  "reviewer": "sol-v6f-worker",
+  "scope": "Art generation and packaging only. Viewed the exact v6e and v6d reference sheets before generation, all 30 built-in native generation outputs during production, all 80 final normalized poses, all 40 authored contact overlays, ten authentic south-facing Front Desk chair proofs, both style comparison sheets, all 326 existing catalog identities and all 20 nearest-reference/catalog comparison boards. Clipboard observations are manual visual QA, bound to the final source and pose hashes; they are not an automated anatomy classifier. Manager acceptance and browser validation remain pending.",
+  "managerAcceptance": "pending",
+  "browserValidation": "blocked-spawn-EPERM-left-to-manager",
+  "runtimeReady": false,
+  "notes": {
+    "path": "tools/character-mapping/inspector-v6f/worker-review-notes.json",
+    "sha256": "1bfeacf46ad9a1bc1cbf8aef6afd8c9c11b350e24cca6b8ee90b57ae322c3129"
+  },
+  "preGenerationExamples": [
+    {
+      "id": "app-gapfill-v6e.002",
+      "pose": {
+        "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+        "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef"
+      }
+    },
+    {
+      "id": "app-gapfill-v6e.007",
+      "pose": {
+        "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+        "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4"
+      }
+    }
+  ],
+  "existingRoleBoards": [
+    {
+      "role": "inspection-agent-art",
+      "identities": [
+        "app-gapfill-v6e.002",
+        "app-gapfill-v6e.007"
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/staff-existing.png",
+        "sha256": "390d6bf5905a0c8b1c8d088d3f9d47d43c9ca34ad10ca49f2eef708a1d299f8a"
+      }
+    }
+  ],
+  "comparisonManifest": {
+    "path": "artifacts/character-statics/inspector-v6f/comparison/manifest.json",
+    "sha256": "e80630261911f44e5455d5baf8781296f909c38930fd0bc6ffe346269e1e84f7"
+  },
+  "allCatalogComparisonManifest": {
+    "path": "artifacts/character-statics/inspector-v6f/comparison/all-catalog-manifest.json",
+    "sha256": "dc42a861ed6fd3f31e6605f769986e76860d0d9e7f8d2e11ea8676e49e563c00"
+  },
+  "styleReviewManifest": {
+    "path": "artifacts/character-statics/inspector-v6f/review/manager/style-review-manifest.json",
+    "sha256": "8e7eb3e0fc7779a99c6873849ef69bee4f5379c51a5c51f42ad0d1de1e25c7f5"
+  },
+  "comparisonAtlasesManifest": {
+    "path": "artifacts/character-statics/inspector-v6f/review/manager/qa-atlases-manifest.json",
+    "sha256": "f9df59bf3cd58bc0954df4404a2b7eef1efe4edfad43648323ae011621067f48"
+  },
+  "clipboardReview": {
+    "path": "artifacts/character-statics/inspector-v6f/worker-review/clipboard-review.json",
+    "sha256": "7d86645bbbb6c7194c09b5c0dd8fbb0b88105955245da073aee998fa8b47db00"
+  },
+  "chairBoards": [
+    {
+      "path": "artifacts/character-statics/inspector-v6f/placement-qa/chair-review-01.png",
+      "sha256": "4b7f79b67a1a61cf6f64ed4cc948988f9306fa2a4b7a3c86b0412d85d172f4b8"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/placement-qa/chair-review-02.png",
+      "sha256": "48b2672be1771d088cdd26b08f66e8dd84a54191e1b6e956becb08a6c06e56b1"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/placement-qa/chair-review-03.png",
+      "sha256": "5171139e5902cb62ab0c64b4daa2b861782306c18da3cb0ad8926c8d72fcb7f7"
+    }
+  ],
+  "contactBoards": [
+    {
+      "path": "artifacts/character-statics/inspector-v6f/contact-review/contact-review-01.png",
+      "sha256": "fc41beecd507415e079a1911d54bf8b9ffe077a9bf6fb5776a3099e99ea5d3dc"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/contact-review/contact-review-02.png",
+      "sha256": "bca85e5030eb83a67029e113c48d63e2c6c6d20832d57257e3cd29f9adaa932a"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/contact-review/contact-review-03.png",
+      "sha256": "ecf0ad12eedeb12485d9b46cf9aff5a5ea296fd422f6abfc9b9ead90db499ba4"
+    }
+  ],
+  "contactLedger": {
+    "path": "tools/character-mapping/inspector-v6f/review-acceptance.json",
+    "sha256": "dcee76e7afedaac273d5bd5b1e71254a50eb3aa4916b4b758ca40ebebdd62f77"
+  },
+  "authoredContactContractSha256": "2c52f14ff139320f24c5a19678d864b0d028efb988449bba54613972d3097b8e",
+  "alphaReport": {
+    "path": "artifacts/character-statics/inspector-v6f/alpha-normalization-report.json",
+    "sha256": "289f383e0b8a5ae46708592f7dbd9afde4a373056af355a4bba614d56197f2c2",
+    "summary": {
+      "identities": 10,
+      "poses": 80,
+      "sourceNonzeroPixelsWithFootprintOutside": 895,
+      "sourcePosesWithFootprintOutside": 16,
+      "maxSourceAlphaWithFootprintOutside": 1,
+      "derivedBorderNonzeroPixels": 16,
+      "derivedPosesWithBorderAlpha": 7,
+      "derivedBorderMaxAlpha": 1,
+      "protectedAlphaClipping": false
+    },
+    "status": "worker-QA-pass-with-alpha1-noise;manager-acceptance-pending"
+  },
+  "identities": [
+    {
+      "number": "001",
+      "id": "inspector-v6f.001",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "age": 28,
+      "sourceSha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579",
+      "features": "Deep-brown young woman with short black side-swept pixie, petrol-teal blazer, ivory blouse, rust trousers and black office shoes; no glasses.",
+      "distinction": "Compact pixie silhouette, dark face, petrol blazer, rust trousers and clipboard distinguish her from the longer-haired teal radiologist and other existing women.",
+      "regenerations": 1,
+      "realizationNote": "The petite build is modestly compact. Rear seated clipboard was corrected to a low right-lap edge; standing identity and outfit remain consistent.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/001/full-poses-light.png",
+          "sha256": "475f8cb72a6f4fdabf8449dadb7dc53bc6b9d0a49c6ee47a97db72f9b056745c"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/001/full-poses-dark.png",
+          "sha256": "9228f6541681b20e0fad874c74343ab6628b8f93cbd05b4d30fe85414b7f8619"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/001-nearest-six.png",
+        "sha256": "b23714d8f484da2f397becb6913749a4418f35d93ed669c40a416fa370fd9480"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/001-all-catalog-nearest-six.png",
+        "sha256": "fb1591143732797b2c7bd36bcf50324adab84808445aa51a674cd16a6f08dd92"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/001-front-desk-chair-placement.png",
+        "sha256": "c1217d981769876bc73f9082c924e7624e727e565e0a93402654c7097c098f63"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/001.png",
+        "sha256": "a517418a8d03d70a63b1a6860e4e3e555a0732aef56bcee2eaf89233542823d1"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 244,
+        "west": 244,
+        "north": 247
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "002",
+      "id": "inspector-v6f.002",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "age": 36,
+      "sourceSha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14",
+      "features": "Fair young adult woman with ginger low braid, slate-blue cardigan, peach collared blouse, charcoal trousers and brown loafers; no glasses.",
+      "distinction": "Low single braid, ginger hair, fair face and slate/peach office clothing differ from the auburn-bob provider reference and existing long or double-braided women.",
+      "regenerations": 1,
+      "realizationNote": "Freckles are subtle at game scale. The rear lap clipboard correction preserves the braid and cardigan; the board edge is mostly hidden behind the right elbow.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/002/full-poses-light.png",
+          "sha256": "4c6a085a6bbf3b23ce3d0ac4246c74c83d87c3e9cf23e481b333282ca4010d6c"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/002/full-poses-dark.png",
+          "sha256": "bc9a663a2cb9563b4734cfd3ecd80176f05dfbc763e31ccf38e579f400fb5d3b"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/002-nearest-six.png",
+        "sha256": "544c4378ac9e713fcbf01b5cdb358fa89b60b9705b15087a3c2edf96e37f9dd4"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/002-all-catalog-nearest-six.png",
+        "sha256": "041c4271837dcb210412f1662881510442da636357d2e97815405aa99195c1c7"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/002-front-desk-chair-placement.png",
+        "sha256": "797519125cf19e3e0808998c80295be058bb73bad7b0c8cc411dbc7443ddac11"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/002.png",
+        "sha256": "ce9606c191f2249122b3a657400fe852b31fc4b5ea9c44e90d206475f7880507"
+      },
+      "contacts": {
+        "south": 240,
+        "east": 245,
+        "west": 245,
+        "north": 249
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "003",
+      "id": "inspector-v6f.003",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "age": 44,
+      "sourceSha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855",
+      "features": "Golden-tan mature woman with straight black chin-length bob, charcoal blazer, burgundy blouse, beige trousers and plum loafers; no glasses.",
+      "distinction": "Straight black bob, burgundy/charcoal tailored outfit and beige trousers separate her from the purple-scrub bob technician and other bob-haired catalog women.",
+      "regenerations": 1,
+      "realizationNote": "Planned sturdier build appears moderately full. Seated W shows a slightly tilted board resting on the lap; rear was corrected to a low small right edge.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/003/full-poses-light.png",
+          "sha256": "3542d6cd32ae2dab4e9db82083ee673b7f700f1da30b14b01e5f56c1b0c2be03"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/003/full-poses-dark.png",
+          "sha256": "e42ff1e5d0d6319962c37bb295c0693f6e677e43ddd9eacd165b97113e0fb5c7"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/003-nearest-six.png",
+        "sha256": "fddd85ecf88bf53920114b8156a0c87c6a2510e56ba57105ae6c3bdc72817910"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/003-all-catalog-nearest-six.png",
+        "sha256": "403d65a2f150e7ef69bd2965134d99ed6a084cbee5b75a49c627119ff9b56537"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/003-front-desk-chair-placement.png",
+        "sha256": "f92f93eff6df9f5697c867360cf0f341f1dbd40f992a138193deb64455f759db"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/003.png",
+        "sha256": "d662635640b09ed2aa660743f0992ad18d54655297d9f240de9d0032874827e4"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 241,
+        "west": 241,
+        "north": 246
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "004",
+      "id": "inspector-v6f.004",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "age": 56,
+      "sourceSha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c",
+      "features": "Warm golden-brown older woman with straight silver low bun, amber glasses, terracotta cardigan, cream blouse, navy trousers and brown shoes.",
+      "distinction": "Smooth silver bun, warm complexion, amber frames and terracotta/navy clothing differ from gray curls with glasses, straight silver bobs and existing provider coats.",
+      "regenerations": 1,
+      "realizationNote": "Skin is lighter/warmer and frames rounder than planned. The W lap board is almost covered by the near hand; the low rear edge is visible beside the right forearm.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/004/full-poses-light.png",
+          "sha256": "8334e2ec1cb79ef8a5739a190361da32c30d20edb7882c6d88f4301eeba661cd"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/004/full-poses-dark.png",
+          "sha256": "1a79f5c2f96e29b2c352f7a3f760ab7a508529fa8999beb409e35bb401f6bd3f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/004-nearest-six.png",
+        "sha256": "b16ee3e0d4d91c5df4266dd4966f135f40e7b207d0b35ad1be349533713504e6"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/004-all-catalog-nearest-six.png",
+        "sha256": "3e72a78846b097c07f3d4cec79bf5258e34fa9b22248789a6d4297fdf30fcd20"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/004-front-desk-chair-placement.png",
+        "sha256": "939d5073c4c379149b3f7a39e22c53b0a53e5ea46bab2279b93cb90cbe553b1d"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/004.png",
+        "sha256": "c1381c078309b16230a5767909a421a3f759309b1219f8c1e9fa2365b84cab9e"
+      },
+      "contacts": {
+        "south": 242,
+        "east": 247,
+        "west": 247,
+        "north": 251
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "005",
+      "id": "inspector-v6f.005",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "age": 65,
+      "sourceSha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99",
+      "features": "Fair rosy older woman with side-part white pixie, moss-green blazer, lavender blouse, gray trousers and oxblood office shoes; no glasses.",
+      "distinction": "White pixie without glasses, moss/lavender tailored clothing and oxblood shoes distinguish her from gray-curl glasses motifs and the white-haired biker patient.",
+      "regenerations": 1,
+      "realizationNote": "White pixie is slightly tousled rather than fully straight. Lean build variation is modest; rear lap board remains a small edge after correction.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/005/full-poses-light.png",
+          "sha256": "6770c3d5771f2ce62e6e446a053e8b0f8c2c86ce2b96e574951fe0cb58049813"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/005/full-poses-dark.png",
+          "sha256": "eefbe28705bc19d23d262614600dc762168a245cc9f3f846ae0c3f735100e5ab"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/005-nearest-six.png",
+        "sha256": "8910430eab7f9434dec3a55b33a471dcead7aa9aebd85eee488951a6f79ea339"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/005-all-catalog-nearest-six.png",
+        "sha256": "015c75541bced83584ce31e60029541ad8817d37c8808c7e68cd022e802c6db6"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/005-front-desk-chair-placement.png",
+        "sha256": "97c7c4b31c22e6df7e7ecedbfaefa0b7f40adf2505cdf7f774b3e1fb4879072b"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/005.png",
+        "sha256": "e10407e32d5765f9b31be6abf6527d7f3a253985aad9d921370c9cce482200ec"
+      },
+      "contacts": {
+        "south": 244,
+        "east": 246,
+        "west": 246,
+        "north": 252
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "006",
+      "id": "inspector-v6f.006",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "age": 30,
+      "sourceSha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362",
+      "features": "Olive-tan young man with full swept brown quiff, clean-shaven face, cocoa blazer, powder-blue shirt, stone trousers and tan office shoes.",
+      "distinction": "Clean-shaven brown quiff, cocoa/blue/stone tailoring and clipboard differ from ginger-quiff patients, green clinical founders and silver-haired male staff.",
+      "regenerations": 1,
+      "realizationNote": "Quiff is wavier and larger than planned. The W lap board is a narrow edge below overlapping hands, and the corrected rear edge is small; neither indicates a side swap.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/006/full-poses-light.png",
+          "sha256": "b56bd8c4938fe83d019c41380f8053d8a9a759473b0eb2104ffeda833ede267c"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/006/full-poses-dark.png",
+          "sha256": "56a30d79ac075bf35080377fe89aa99d1e0ffa693618e9073ef5370f38a9e349"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/006-nearest-six.png",
+        "sha256": "634a25b2f9ffb7682b416e83428c25ad159e5dcfa01233fe2ac2f7ad1247658a"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/006-all-catalog-nearest-six.png",
+        "sha256": "4e8be8bd912a2841a13654d46ac96ee4c296ba64a114e7e79253adb5f7938be4"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/006-front-desk-chair-placement.png",
+        "sha256": "cea0bd01344774c97dddae91fd41d14b975ad7379e35ca1dcd99b068f24e832f"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/006.png",
+        "sha256": "da06ad984554320fecaf1e6e37a99a08e6cf30d12a88db341e2595637548e564"
+      },
+      "contacts": {
+        "south": 239,
+        "east": 243,
+        "west": 243,
+        "north": 247
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "007",
+      "id": "inspector-v6f.007",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "age": 39,
+      "sourceSha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09",
+      "features": "Warm-tan bald adult man with full neat black beard, plum cardigan, cream shirt, charcoal trousers and black office shoes; no glasses.",
+      "distinction": "Warm-tan bald head, black beard, open cream collar and plum cardigan differ from the bald deep-brown glasses provider and existing gray-bearded bald patients.",
+      "regenerations": 1,
+      "realizationNote": "Broad build reads as a fuller torso. The lap board and its rim are visible in both side views; rear upright carriage was corrected to a low right-lap edge.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/007/full-poses-light.png",
+          "sha256": "0b476c96b43cf0b20fb102aeb0cf207edb5265e3cb44b713ddc0bb6b189dcec3"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/007/full-poses-dark.png",
+          "sha256": "712d3fff32e7c2824991219a2334fe5cc004ec38dcbab21615056b6dcc7fe96f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/007-nearest-six.png",
+        "sha256": "bc964acd92e2ad227a3148bd7e2b3f070d17b2c1980ddc5e73bd991db3a227af"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/007-all-catalog-nearest-six.png",
+        "sha256": "ac9c03789ea17ff3b0191aa7fd66e6ce2651e266e12b840bd79db83e540d7f76"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/007-front-desk-chair-placement.png",
+        "sha256": "c9a1531b4593d95c04df69a23846467587495bafa3959e3038cfc00bf60875ef"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/007.png",
+        "sha256": "890f12721c5fa786921e45e869893a45b9be54b4a75e3fef26f5b25debd60ca6"
+      },
+      "contacts": {
+        "south": 234,
+        "east": 238,
+        "west": 238,
+        "north": 243
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "008",
+      "id": "inspector-v6f.008",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "age": 48,
+      "sourceSha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0",
+      "features": "Golden-brown mature man with short black crop, navy rectangular glasses, black moustache, camel blazer, olive shirt and charcoal trousers.",
+      "distinction": "Camel/olive tailoring, navy frames, black moustache and close black crop distinguish him from the silver-curled green-sweater patient and every existing glasses provider.",
+      "regenerations": 2,
+      "realizationNote": "First correction lowered the rear board and removed pale sneaker bands in favor of black office shoes. A second edit exposed the formerly obscured W lap clipboard. Rear still shows only a tiny right edge.",
+      "glasses": true,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/008/full-poses-light.png",
+          "sha256": "0b23e703d2595483e6a6a1152f24f701f76c8d80dfbef7720f7789fa8d6429ce"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/008/full-poses-dark.png",
+          "sha256": "32cb69f8344fcb67fef6a82f68f42b8a1f4f0b7707268617f7854f39c707abb6"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/008-nearest-six.png",
+        "sha256": "709c5289da9575a54db4e68b3579fab3d19a9e9b1f9dcbcf8227904a27fb1c77"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/008-all-catalog-nearest-six.png",
+        "sha256": "450a622f3b04ec3586f2d634fbf95bd4d595e6ce7d29dd0a61e0525488292dda"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/008-front-desk-chair-placement.png",
+        "sha256": "64d1cd53000a52ae99ada5b9a177b2a9859d6fb4879e07d1f6c9a876137aca60"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/008.png",
+        "sha256": "cbdae741099a53844e31fa79e78d71f80b9a66141d218a17a932d6e214fc6d46"
+      },
+      "contacts": {
+        "south": 237,
+        "east": 240,
+        "west": 240,
+        "north": 244
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "009",
+      "id": "inspector-v6f.009",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "age": 57,
+      "sourceSha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666",
+      "features": "Fair pink-toned older man with ginger flat crop, strong silver sides, ginger moustache, charcoal waistcoat, sage full sleeves and burgundy tie.",
+      "distinction": "Ginger flat crop with silver sides, moustache and charcoal/sage waistcoat-and-tie outfit differ from ginger-beard staff and silver-haired suited administrators.",
+      "regenerations": 0,
+      "realizationNote": "Silver side panels are stronger than planned. The original sheet already had a rear lap-level clipboard edge; no regeneration was required.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/009/full-poses-light.png",
+          "sha256": "7f103a53a8a2cedc88f5c30012c030dbf3f1dfe8a05b4f4fbc55e8a646decb12"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/009/full-poses-dark.png",
+          "sha256": "6e68aeaf614683d7e86c889e58dbd5cd0a7822a4f07d8365b3fab5696d05914e"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/009-nearest-six.png",
+        "sha256": "8a8a52abb213582e55f84eeb46ff12e6e5f463d5d1bd547770956d8ed28a1748"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/009-all-catalog-nearest-six.png",
+        "sha256": "f59bfdc84f28ea2a29d066a350ed5f2e358ee2040428cd9fbd0c44c254d51353"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/009-front-desk-chair-placement.png",
+        "sha256": "3d1c6d09c8d6da66cd82cd99dd88128494de7b0d0eea218a450298eb0cabd8ff"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/009.png",
+        "sha256": "930c72ce35dc80b8e684bc8f567c0213156db26b6842854f577077a85e300f5a"
+      },
+      "contacts": {
+        "south": 235,
+        "east": 238,
+        "west": 238,
+        "north": 243
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    },
+    {
+      "number": "010",
+      "id": "inspector-v6f.010",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "age": 63,
+      "sourceSha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248",
+      "features": "Deep-brown older man with close silver crew cut, broad silver moustache, indigo blazer, peach shirt, warm-gray trousers and black office shoes.",
+      "distinction": "Close silver crew cut, broad moustache, deep skin and indigo/peach tailoring differ from bald gray-bearded patients, capped surgeons and curly silver-haired staff.",
+      "regenerations": 1,
+      "realizationNote": "Planned full build appears moderately stocky. The correction lowered the rear clipboard and replaced pale sole bands with black office shoes; the lap board is clear in side views.",
+      "glasses": false,
+      "poseProofs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/010/full-poses-light.png",
+          "sha256": "decc74dfd8e4146d099dfdf9e2d1b562a73591919390a5a5aec8166cee95b788"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/packages/010/full-poses-dark.png",
+          "sha256": "7c1f58d191939f8130473d65ceaddddd46edaab6e0eaac5921791e134439bd0f"
+        }
+      ],
+      "comparisonBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/010-nearest-six.png",
+        "sha256": "5bbab5c5dffcd492195a223d96c93fcdb88ce4e09fa1ec917b437fa3c202c8e6"
+      },
+      "allCatalogBoard": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/010-all-catalog-nearest-six.png",
+        "sha256": "ff9110db6c17ed20e18632fd1b76537c071f9c514ff57702dfcb734cf617139f"
+      },
+      "chairProof": {
+        "path": "artifacts/character-statics/inspector-v6f/placement-qa/010-front-desk-chair-placement.png",
+        "sha256": "8a4a44354b8b9970d0202c05e38d9374f23c9fb3dd42a308035251a200ec1063"
+      },
+      "contactOverlay": {
+        "path": "artifacts/character-statics/inspector-v6f/worker-review/contact-overlays/010.png",
+        "sha256": "5f84bb49a1bd04a7bcf3c67eed73620bcc356eacdea74ab9d12417e70e93e31f"
+      },
+      "contacts": {
+        "south": 238,
+        "east": 241,
+        "west": 241,
+        "north": 247
+      },
+      "status": "worker-visual-QA-pass;manager-acceptance-pending"
+    }
+  ],
+  "styleAssessment": "The ten inspectors retain the v6e/v6d adult cartoon family, dark outline, stepped transparent sprite finish, restrained cel shading and shared 160x320 normalization. Their blazers, cardigans, collared shirts, tailored trousers, office shoes, dark lanyards and blank badges distinguish them from the clinical staff. All use the same tan clipboard, blank cream paper and small metal clip per identity. Standing views retain anatomical right-side carriage: screen-left in S, near side in E, far side in W and screen-right in N. Seated boards rest across the right lap, with the supporting grip naturally partly hidden in W/N. Five women and five men span intended visual ages 28-65; two wear glasses. Hair, facial hair, skin tones and clothing combinations differ from the catalog and from one another. Appearance has no clinical or gameplay-selection meaning.",
+  "limitations": [
+    "Rear seated clipboards are deliberately mostly occluded. Nine initial sheets had an upright rear clipboard and received built-in targeted edits; 009 already had a lap-level board. Final rear views expose only a thin right-side edge, so clipboard recognition at game scale remains a manager visual acceptance question.",
+    "In seated W views the clipboard is on the far right lap. The near left hand often overlaps the board, so the far right support/grip cannot be independently proven from visible pixels alone. The board edge is especially subtle for 004 and 006. 008 received a second targeted edit to expose a clear flat tan/cream lap board in W.",
+    "The intended petite, lean, broad and full builds render with subtler differences than the written design rows. Some inspectors have slightly slimmer torsos/longer-looking legs than the two v6e provider references, within the same anchored canvas and cel-shaded family. Manager should assess this degree of proportion/build variation.",
+    "004 renders a warmer, lighter golden-brown skin tone and rounder amber frames than her written medium-warm-brown/oval-frame brief. 005's white pixie is somewhat tousled, 006's quiff is fuller and wavier, and 009's silver sides are stronger than planned. All remain coherent across directions.",
+    "Intended ages are design metadata, not exact age recognition from art. Silver hair/moustaches and facial cues distinguish the mature cast, but the established stylized faces remain comparatively youthful.",
+    "Native extraction preserves imperceptible alpha-1 noise: 895 source footprint pixels outside the normalized frame across 16 poses, and 16 derived border pixels across seven poses, all maximum alpha 1. No protected-alpha clipping occurred. No thresholding, erasing, repainting, procedural character drawing or mirrored pose synthesis was applied.",
+    "Forty seated contacts are manually authored worker candidates, not manager approval. Ten chair proofs use the authentic south-facing Front Desk fixture and original runtime geometry; no invented chair rotations are presented as runtime fixtures.",
+    "The requested October 11 M0 owner follow-up was absent from the Level 5 plan version available at intake. The explicit worker brief supplied the binding inspector requirements. This art lane creates no runtime inspector job or hireability rule.",
+    "Browser gallery validation was attempted with an existing Chrome executable and fresh ephemeral file-gallery contexts, but launch failed with browserType.launch: spawn EPERM in the worker sandbox. Exact error logs are retained; the manager must rerun the prepared check. The captured 326-identity/2638-asset runtime baseline is unchanged. This batch is local and art-review-only; manager acceptance, integration, publication and GitHub backup are not claimed. No game origin, persistent browser profile or campaign storage was used."
+  ]
+}

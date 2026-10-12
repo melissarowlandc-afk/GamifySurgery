@@ -1,0 +1,359 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -1,3 +1,10 @@
++import { advanceFacilityInspection, bookFacilityInspection, cancelFacilityInspection, observeInspectionQuestions, observeInspectionFirstAnswer, observeInspectionPatientEnd, observeInspectionReceipt, observeInspectionSettlement, observeInspectionExpensePosting } from "./facility-inspection";
++import { advanceInspectionPresentation } from "./inspection-presentation";
++import { getAverageEffectiveStaffMorale, getEmployeeEffectiveMorale } from "./level-five-support";
++import { getDisplayedClinicSatisfaction } from "./selectors";
++import { createLevelFiveState } from "./level-five-state";
++import { interruptGardenRestsForRoomSale } from "./patient-amenities";
++import { interruptGymBreaksForRoomSale } from "./level-three-support";
+ import {
+   FIRST_TUTORIAL_CASE_ID,
+   SECOND_TUTORIAL_CASE_ID,
+@@ -9,9 +16,12 @@
+ import {
+   getServiceIncomeForRoute,
+   getRoomUpgradeCleanlinessDecayMultiplier,
++  getRoomUpgradeDefinition,
+   PROTOTYPE_ALERT_SCHEDULING,
+   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+   PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
++  LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID,
++  LEVEL_FIVE_INSPECTION_UNLOCK_MESSAGE,
+   isPrototypeAlertEligible,
+   renderPrototypeAlert,
+   type PrototypeAlertDefinition,
+@@ -134,6 +144,8 @@
+ import { operatingDayMinutes } from "./alert-cadence";
+ import { advanceGuidanceTips, createGuidanceTipsState } from "./guidance-tips";
+ import { advanceLevelThreeSupport } from "./level-three-support";
++import { advanceExecutiveManagement, reconcileExecutiveManagement, freezeExecutiveComfort, applyExecutiveComfort } from "./executive-management";
++import { getSupplierUpkeepSavingsPerFacilityHour } from "./selectors";
+ import { advanceEmployeeTraining, cancelEmployeeTrainingForDismissal, isEmployeeAwayForTraining, requestEmployeeTraining } from "./employee-training";
+ import {
+   employeeDepartureRiskCadenceGroup,
+@@ -1410,6 +1422,9 @@
+   const routeTouchesRoom = (path: readonly GridPoint[]) =>
+     path.some((point) => pointInsideRoom(point, room, context));
+ 
++  if (state.patientAmenityTrips?.some(trip => trip.amenityKind === "garden" &&
++    (trip.status !== "returning" && trip.gardenRoomInstanceId === room.id || routeTouchesRoom(trip.path.slice(trip.pathIndex))))) return true;
++
+   if (Object.values(state.pediatricFamilies ?? {}).some((family) =>
+     family.phase !== "departed" && (family.reservation?.roomInstanceId === room.id ||
+       routeTouchesRoom(family.movement?.childPath.slice(family.movement.pathIndex) ?? []) ||
+@@ -1907,7 +1922,7 @@
+     const rendered = renderPrototypeAlert(definitionId, {
+       employee_name: employee.displayName,
+       employee_id: employee.id,
+-      morale: String(employee.morale),
++      morale: String(getEmployeeEffectiveMorale(state, employee)),
+     });
+     state.alertHumor.conditionLastEmittedTicks[
+       employeeDepartureRiskCadenceGroup(employee.id)
+@@ -2649,6 +2664,7 @@
+     netCashDelta: pending.serviceIncomeFee,
+     completedAtFacilityTick: state.facilityTick,
+   });
++  observeInspectionReceipt(state, state.serviceIncomeReceipts.at(-1)!);
+   state.nextServiceIncomeReceiptSequence += 1;
+   adjustCash(state, pending.serviceIncomeFee);
+ }
+@@ -2779,6 +2795,7 @@
+   encounter.settlementId = settlementId;
+   state.settlements.push(settlement);
+   adjustCash(state, netCashDelta);
++  observeInspectionSettlement(state, encounter, settlementId, netCashDelta);
+   appendEvent(state, {
+     id: `event.${settlementId}`,
+     type: "encounter_settled",
+@@ -2892,7 +2909,7 @@
+     state.employees.length === 0
+       ? null
+       : state.employees.reduce(
+-          (total, employee) => total + employee.morale,
++          (total, employee) => total + getEmployeeEffectiveMorale(state, employee),
+           0,
+         ) / state.employees.length;
+   const staffModifier =
+@@ -3439,6 +3456,7 @@
+     correctedForward: !choice.isCorrect && !isFinalNode,
+   };
+   nextDiscussion.answers.push(answer);
++  observeInspectionFirstAnswer(next, "employee_discussion", nextDiscussion.id, answer);
+   const step = nextDiscussion.steps[nextDiscussion.currentNodeIndex];
+   if (!step || step.decisionNodeId !== node.id) {
+     throw new Error("Employee discussion history does not match its current node.");
+@@ -3808,6 +3826,7 @@
+             : null;
+         })();
+     if (destination) {
++      freezeExecutiveComfort(next, nextEncounter, context);
+       if (!founderAlreadyAttending) suspendFounderActivityForConsult(next);
+       next.environment.founderActivity = {
+       kind: "attend_encounter",
+@@ -3863,6 +3882,7 @@
+   } else {
+     next.attendedEncounterId = null;
+   }
++  if (amenityTrip?.amenityKind === "garden") requestPatientAmenityReturn(next, "encounter", command.encounterId, context);
+   return recordReceipt(next, command, "applied", "Chart opened.");
+ }
+ 
+@@ -4239,6 +4259,7 @@
+     correctedForward: !choice.isCorrect && !isFinalNode,
+   };
+   nextEncounter.answers.push(answerRecord);
++  observeInspectionFirstAnswer(next, "encounter", nextEncounter.id, answerRecord);
+   const satisfactionConfig = context.balanceRelease.patientSatisfaction;
+   const careSatisfactionDelta = choice.isCorrect
+     ? satisfactionConfig.correctCareRecovery
+@@ -4378,6 +4399,7 @@
+     nextEncounter.resolutionReason = "completed";
+     applyCompletionExperience(next, context, nextEncounter);
+     completeWaitingRoomExperience(nextEncounter, next.facilityTick);
++    applyExecutiveComfort(next, nextEncounter);
+     nextEncounter.finalPatientSatisfaction =
+       nextEncounter.patientSatisfaction;
+     nextEncounter.resolvedAtFacilityTick = next.facilityTick;
+@@ -6271,10 +6293,20 @@
+   state: GameState,
+   context: DomainContext,
+   hourlyExpense: number,
++  supplierSavingsPerHour = 0,
+ ): void {
+   // One simulation tick is one minute. Accruing in one-sixtieth-of-a-cent
+   // units keeps the result identical across speed changes, pauses, and reloads.
+-  state.operatingAccrualSixtiethCents += Math.round(hourlyExpense * 100);
++  const management = state.facilityLevel >= 5 ? state.levelFive?.management : undefined;
++  if (management && (supplierSavingsPerHour > 0 || management.upkeepAccounting)) {
++    const accounting = management.upkeepAccounting ??= { baselineAccrualSixtiethCents: state.operatingAccrualSixtiethCents, fractionalReduction: 0 };
++    const baselineUnits = Math.round((hourlyExpense + supplierSavingsPerHour) * 100);
++    const exactReduction = supplierSavingsPerHour * 100 + accounting.fractionalReduction;
++    const reductionUnits = Math.floor(exactReduction + 1e-9);
++    accounting.fractionalReduction = Math.max(0, exactReduction - reductionUnits);
++    accounting.baselineAccrualSixtiethCents += baselineUnits;
++    state.operatingAccrualSixtiethCents += baselineUnits - reductionUnits;
++  } else state.operatingAccrualSixtiethCents += Math.round(hourlyExpense * 100);
+   if (state.facilityTick < state.nextFinancialPostingTick) {
+     return;
+   }
+@@ -6283,6 +6315,11 @@
+     state.operatingAccrualSixtiethCents / 60,
+   );
+   state.operatingAccrualSixtiethCents %= 60;
++  if (management?.upkeepAccounting) {
++    const accounting = management.upkeepAccounting;
++    management.supplierSavings.upkeepSixtiethCents += (Math.floor(accounting.baselineAccrualSixtiethCents / 60) - postedCents) * 60;
++    accounting.baselineAccrualSixtiethCents %= 60;
++  }
+   const postingInterval =
+     context.balanceRelease.economy.postingIntervalMinutes;
+   while (state.nextFinancialPostingTick <= state.facilityTick) {
+@@ -6297,6 +6334,7 @@
+   state.cash = state.cashCents / 100;
+   const expense = postedCents / 100;
+   state.totalOperatingExpenses += expense;
++  observeInspectionExpensePosting(state, `expense.${state.facilityTick}`, postedCents, paidCents);
+   if (shortfallCents > 0 && state.employees.length > 0) {
+     const moraleDecay =
+       context.balanceRelease.insolvency.moraleDecayPerPosting;
+@@ -6304,7 +6342,7 @@
+       context.balanceRelease.insolvency.employeeQuittingThreshold;
+     const quittingEmployees = state.employees.filter((employee) => {
+       employee.morale = clamp(employee.morale - moraleDecay, 0, 100);
+-      return employee.morale <= quittingThreshold;
++      return getEmployeeEffectiveMorale(state, employee) <= quittingThreshold;
+     });
+     if (quittingEmployees.length > 0) {
+       const quittingIds = new Set(
+@@ -6717,7 +6755,7 @@
+       continue;
+     }
+     // Level-three support owns these work clocks and their completion effects.
+-    if (task.kind === "take_break" || task.kind === "repair_room" || task.kind === "review_ambulatory_qi" || task.kind === "periop_attention") continue;
++    if (task.kind === "take_break" || task.kind === "repair_room" || task.kind === "review_ambulatory_qi" || task.kind === "periop_attention" || task.kind === "daily_management_round") continue;
+     if (
+       (mode === "non_refill" && task.kind === "refill_water") ||
+       (mode === "refill_only" && task.kind !== "refill_water")
+@@ -7039,6 +7077,7 @@
+         netCashDelta: payment,
+         completedAtFacilityTick: state.facilityTick,
+       });
++      observeInspectionReceipt(state, state.serviceIncomeReceipts.at(-1)!);
+         environment.glp1AutomationConsultationsCompleted += 1;
+         adjustCash(state, payment);
+       }
+@@ -7425,6 +7464,7 @@
+   if (encounter.protectedGuaranteeId) {
+     state.criticalGuarantees[encounter.protectedGuaranteeId] = "pending";
+   }
++  observeInspectionPatientEnd(state, encounter);
+   const review = createWalkoutReview(state, encounter);
+   appendEvent(state, {
+     id: `event.left-before-seen.${encounter.id}`,
+@@ -8442,6 +8482,7 @@
+   // Accrue the minute at its starting rate. The first 60 outage minutes are
+   // fully charged; relief begins with minute 61, never retrospectively.
+   const hourlyExpenseAtMinuteStart = -getOperatingExpensePerFacilityHour(next, context);
++  const supplierSavingsAtMinuteStart = getSupplierUpkeepSavingsPerFacilityHour(next, context);
+   next.facilityTick += 1;
+   reconcileFrozenPatientTravel(state, next, context);
+   const founderActivity = next.environment.founderActivity;
+@@ -8931,11 +8972,12 @@
+     }
+   }
+ 
+-  applyOperatingExpenses(next, context, hourlyExpenseAtMinuteStart);
++  applyOperatingExpenses(next, context, hourlyExpenseAtMinuteStart, supplierSavingsAtMinuteStart);
+   maybeEmitEmployeeDepartureRiskWarnings(next, context);
+   prioritizeReceptionistPatients(next, context);
+   maybeAssignReceptionistWaterRefill(next, context);
+   releaseLegacyPeriopCoverage(next);
++  advanceExecutiveManagement(next, context);
+   advanceLevelThreeSupport(next, context);
+     advanceEmployeeMovement(next, context);
+     advanceDepartingEmployees(next, context);
+@@ -9040,10 +9082,14 @@
+   // A receptionist freed by check-in/training this minute can refill now.
+   // The same intake-priority guard still wins over this second assignment pass.
+   maybeAssignReceptionistWaterRefill(next, context);
++  // Observe the settled minute before any detailed evidence can retire.
++  advanceFacilityInspection(next, context);
++  advanceInspectionPresentation(next, context);
+   retireDepartedEncounters(next, context);
+   retireFinishedServiceHistory(next, context);
+   retireFinishedRetailHistory(next);
+   acknowledgeLevelFourCompletion(next, context);
++  acknowledgeLevelFiveGoals(next, context);
+   synchronizeRoomUpkeepOutages(next, context);
+   synchronizeFacilityConditionOccurrences(next, context);
+   synchronizeFacilityOperationalAlertOccurrences(next, context, command.advancedAtRealMs ?? next.createdAtRealMs + next.facilityTick * 60_000);
+@@ -9275,6 +9321,9 @@
+   );
+   const next = clonePlain(state);
+   const pediatricSalePlans = planPediatricRoomSale(next, context, room.id);
++  if (room.roomDefinitionId === "room.gift_shop") cancelRetailOperationsForRoom(next, room.id, "The Gift Shop was sold before the trip finished.", context);
++  interruptGardenRestsForRoomSale(next, room.id, context);
++  interruptGymBreaksForRoomSale(next, room.id, context);
+   reconcileEmployeeRoomSeats(next);
+   const dismissedIds = new Set(salePreview.dismissedEmployees.map((employee) => employee.id));
+   const interruptedOperationIds = interruptServiceOperationsForRoomSale(
+@@ -9510,6 +9559,12 @@
+   if (!definition.buildable) {
+     return rejectCommand(state, command, `${definition.displayName} is legacy space and cannot be upgraded.`);
+   }
++  if (getRoomUpgradeDefinition(room.roomDefinitionId)?.status === "future") {
++    return rejectCommand(state, command, "Upgrade purchases are unavailable until this room's function is active.");
++  }
++  if (state.facilityLevel < 5 && ["room.founder_office", "room.executive_office", "room.indoor_garden", "room.staff_gym"].includes(room.roomDefinitionId)) {
++    return rejectCommand(state, command, "Upgrade purchases are unavailable until this room's function is active.");
++  }
+   if (room.upgradeLevel >= definition.maximumUpgradeLevel) {
+     return rejectCommand(
+       state,
+@@ -9922,6 +9977,7 @@
+   const employeesInRole = state.employees.filter(
+     (employee) => employee.staffRoleDefinitionId === definition.id,
+   );
++  if (definition.id === "staff.executive" && employeesInRole.length >= 1) return rejectCommand(state, command, "Only one Executive can be hired per facility.");
+   const roomCapacity = getRoomStaffCapacity(state, definition.id).capacity;
+   if (employeesInRole.length >= roomCapacity) {
+     return rejectCommand(
+@@ -10235,8 +10291,30 @@
+   completion.acknowledgedAtFacilityTick = state.facilityTick;
+   appendEvent(state, {
+     id: "event.facility-level-4-complete", type: "success_message", facilityTick: state.facilityTick,
+-    encounterId: null, message: "Level 4 complete - Level 5 coming later. Keep playing; the clinic is still open.",
++    encounterId: null, message: "Level 4 goals complete. Keep playing; the clinic is still open.",
+     priority: "informational", definitionId: "alert.progress.level-four-complete",
++    target: { kind: "campaign", id: state.campaignId },
++  });
++}
++
++/** Freeze simultaneous live goals once, independently of any future inspection. */
++function acknowledgeLevelFiveGoals(state: GameState, context: DomainContext): void {
++  if (state.facilityLevel !== 5 || context.balanceRelease.facility.maximumPlayableLevel < 5 ||
++      state.levelFive?.progress.inspectionUnlocked ||
++      !getFacilityProgressionStatus(state, context).requirements.every(requirement => requirement.met)) return;
++  const morale = getAverageEffectiveStaffMorale(state);
++  if (morale === null) return;
++  const levelFive = state.levelFive ??= createLevelFiveState();
++  levelFive.progress.inspectionUnlocked = {
++    version: "level-five-inspection-unlock.v1", earnedAtFacilityTick: state.facilityTick,
++    clinicalXp: state.clinicalXp, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context),
++    averageStaffMorale: morale, employedStaffCount: state.employees.length,
++  };
++  levelFive.inspection.status = "ready";
++  appendEvent(state, {
++    id: LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID, type: "success_message", facilityTick: state.facilityTick,
++    encounterId: null, message: `Inspections unlocked. ${LEVEL_FIVE_INSPECTION_UNLOCK_MESSAGE}`,
++    priority: "informational", definitionId: "alert.progress.inspections-unlocked",
+     target: { kind: "campaign", id: state.campaignId },
+   });
+ }
+@@ -10264,6 +10342,7 @@
+   const next = clonePlain(state);
+   next.facilityLevel = progression.nextFacilityLevel;
+   next.clinicalXp = 0;
++  if (next.facilityLevel === 5) next.levelFive ??= createLevelFiveState();
+   appendEvent(next, {
+     id: `event.facility-level.${next.facilityLevel}`,
+     type: "facility_level_advanced",
+@@ -10323,6 +10402,7 @@
+     netCashDelta: status.payment,
+     completedAtFacilityTick: next.facilityTick,
+   });
++  observeInspectionReceipt(next, next.serviceIncomeReceipts.at(-1)!);
+ 
+   let flavorMessage: string | null = null;
+   if (useNumber >= config.sarcasmStartsAtUse) {
+@@ -11064,6 +11144,26 @@
+       recordGuidanceTopicExposure(next, command.topicIds);
+       return recordReceipt(next, command, "applied", "Guidance exposure saved.");
+     }
++    case "BOOK_INSPECTION": {
++      const next = clonePlain(state);
++      const blocked = bookFacilityInspection(next, context);
++      return blocked ? rejectCommand(state, command, blocked)
++        : recordReceipt(next, command, "applied", "Inspection booked. Preparation continues during ordinary clinic play.");
++    }
++    case "CANCEL_INSPECTION": {
++      const next = clonePlain(state);
++      const blocked = cancelFacilityInspection(next);
++      return blocked ? rejectCommand(state, command, blocked)
++        : recordReceipt(next, command, "applied", "Inspection cancelled. No score or game finish was earned.");
++    }
++    case "ACKNOWLEDGE_FINISH_PAGE": {
++      if (state.facilityLevel !== 5 || !state.levelFive?.progress.gameFinished) {
++        return rejectCommand(state, command, "Complete an inspection before acknowledging the finish report.");
++      }
++      const next = clonePlain(state);
++      next.levelFive!.progress.finishPageAcknowledgedAtFacilityTick ??= next.facilityTick;
++      return recordReceipt(next, command, "applied", "Finish report acknowledged. The clinic stays open for repeat inspections.");
++    }
+     case "SET_PAUSED": {
+       const next = clonePlain(state);
+       next.paused = command.paused;
+@@ -11233,7 +11333,12 @@
+     return next;
+   }
+   reconcilePediatricFamilies(next, context);
+-  if (next.operationReceipts[command.operationId]?.status === "applied") acknowledgeLevelFourCompletion(next, context);
++  if (next.operationReceipts[command.operationId]?.status === "applied") {
++    acknowledgeLevelFourCompletion(next, context);
++    acknowledgeLevelFiveGoals(next, context);
++    observeInspectionQuestions(next);
++    advanceInspectionPresentation(next, context);
++  }
+   recordGuidanceTopicUsage(next, command);
+   // Compatibility acknowledgement is automatic after filing both visits or
+   // advancing. Retain every existing deadline/cooldown instead of a new burst.
+@@ -11256,5 +11361,6 @@
+   synchronizeRoomUpkeepOutages(next, context);
+   synchronizeFacilityConditionOccurrences(next, context);
+   synchronizeFacilityOperationalAlertOccurrences(next, context);
++  reconcileExecutiveManagement(next, context);
+   return next;
+ }

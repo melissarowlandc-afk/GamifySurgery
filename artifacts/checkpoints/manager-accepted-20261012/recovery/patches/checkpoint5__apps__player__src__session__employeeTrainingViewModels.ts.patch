@@ -1,0 +1,18 @@
+--- a/apps/player/src/session/employeeTrainingViewModels.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.ts
+@@ -23,6 +23,7 @@
+   "staff.repair_person": "Reduces repair time",
+   "staff.radiologist": "Reduces reading time",
+   "staff.app": "Increases APP appointment revenue",
++  "staff.executive": "Strengthens all four management effects",
+ };
+ 
+ const trainingMoneyFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+@@ -34,6 +35,7 @@
+   percent: number,
+   baseConsultPayment = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.glp1AutomationPayment,
+ ): string {
++  if (roleId === "staff.executive") return `${(1 + percent / 100).toFixed(2)}× management strength · morale, comfort, preparation and suppliers`;
+   if (percent === 0) return "Base performance";
+   if (roleId === "staff.glp1_np") {
+     const amount = baseConsultPayment * percent / 100;

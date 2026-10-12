@@ -1,0 +1,54 @@
+--- a/packages/game-domain/src/guidance-tips.ts
++++ b/packages/game-domain/src/guidance-tips.ts
+@@ -1,3 +1,4 @@
++import { getEmployeeEffectiveMorale } from "./level-five-support";
+ import {
+   GUIDANCE_TIP_CATALOG, GUIDANCE_TIP_POLICY, SERVICE_INCOME_CATALOG,
+   PROTOTYPE_ALERT_SCHEDULING,
+@@ -293,7 +294,7 @@
+     const role = getStaffRoleDefinition(employee.staffRoleDefinitionId, context);
+     if (!role) continue;
+     const salary = Math.min(role.maximumSalaryPerExpenseInterval, employee.salaryPerExpenseInterval + role.salaryAdjustmentStep);
+-    if (employee.morale <= context.balanceRelease.patientSatisfaction.unhappyStaffMoraleThreshold && salary > employee.salaryPerExpenseInterval &&
++    if (getEmployeeEffectiveMorale(state, employee) <= context.balanceRelease.patientSatisfaction.unhappyStaffMoraleThreshold && salary > employee.salaryPerExpenseInterval &&
+       getEffectiveEmployeeMorale({ ...employee, salaryPerExpenseInterval: salary }, context) > employee.morale &&
+       state.cash >= context.balanceRelease.emergencyGlp1.lowCashAlertThreshold &&
+       !upcomingOperatingPostingIsUnderfunded({ ...state, employees: state.employees.map((other) => other.id === employee.id ? { ...other, salaryPerExpenseInterval: salary } : other) }, context)) {
+@@ -303,7 +304,7 @@
+     const reachable = [{ x: employee.location.x - 1, y: employee.location.y }, { x: employee.location.x + 1, y: employee.location.y },
+       { x: employee.location.x, y: employee.location.y - 1 }, { x: employee.location.x, y: employee.location.y + 1 }].some((point) =>
+       findCareAwareFacilityPath(state, context, state.environment.founderLocation, point, new Set(employee.homeRoomInstanceId ? [employee.homeRoomInstanceId] : [])).length > 0);
+-    if (employee.morale < context.balanceRelease.patientSatisfaction.happyStaffMoraleThreshold && !employee.training && !employee.facilityTask &&
++    if (getEmployeeEffectiveMorale(state, employee) < context.balanceRelease.patientSatisfaction.happyStaffMoraleThreshold && !employee.training && !employee.facilityTask &&
+       (employee.lastPraisedAtFacilityTick === null || state.facilityTick - employee.lastPraisedAtFacilityTick >= context.balanceRelease.environment.praiseCooldownMinutes) && guidanceFounderIsFree(state) && reachable) {
+       add("tip.staff.praise", employee.id, simple({ kind: "praise_employee", employeeId: employee.id }, `Praise ${employee.displayName}`, `employee:${employee.id}`),
+         { speaker: employee.displayName, values: { name: employee.displayName }, priority: 1, optional: true, lastFixTick: employeeWelfareFix(state, employee, context) });
+@@ -445,7 +446,7 @@
+   training("tip.maintenance.training", "staff.repair_person");
+ 
+   // T32–T40: established improvements, quiet arrivals, money, goals and learning.
+-  const unhappy = state.employees.filter((employee) => employee.morale < context.balanceRelease.patientSatisfaction.happyStaffMoraleThreshold && !employee.training && !employee.facilityTask);
++  const unhappy = state.employees.filter((employee) => getEmployeeEffectiveMorale(state, employee) < context.balanceRelease.patientSatisfaction.happyStaffMoraleThreshold && !employee.training && !employee.facilityTask);
+   if (!built("room.staff_break").length && unhappy.some((employee) => employee.lastBreakAtFacilityTick == null || state.facilityTick - employee.lastBreakAtFacilityTick >= context.balanceRelease.environment.levelThreeSupport.breakCooldownMinutes))
+     add("tip.staff.break-room", "room.staff_break", placeRemedy(state, "room.staff_break", context, true), { rootKey: "staff-welfare", priority: 1, optional: true, lastFixTick: newest(...unhappy.map((employee) => employeeWelfareFix(state, employee, context))) });
+   if (!built("room.coffee_kiosk").length && unhappy.length)
+@@ -482,7 +483,7 @@
+   const progression = progressionStatus();
+   if (progression.eligible) add("tip.progression.next-step", `advance:${state.facilityLevel}`, simple({ kind: "level_up" }, "Advance level", "progression"),
+     { priority: 2, speaker: "Goals", values: { guidance: `Advance the clinic to Level ${progression.nextFacilityLevel}.` } });
+-  else if (!progression.terminalComplete && guidanceIntroductoryEncountersComplete(state)) {
++  else if (!progression.terminalComplete && !(state.facilityLevel === 5 && state.levelFive?.progress.inspectionUnlocked) && guidanceIntroductoryEncountersComplete(state)) {
+     const unmet = progression.requirements.filter((entry) => !entry.met);
+     // Requirements are listed metrics-first in Goals. A legal concrete remedy
+     // takes precedence here, in requirement order, even when XP is also unmet.
+@@ -632,7 +633,9 @@
+   // Observe levers even when their advice is ineligible (including turning
+   // appointments off). Their absence from bounded event history is unknown.
+   const watchedRoots = ["advertising", "appointments", "evs", "water", "staff-welfare", ...state.employees.map((employee) => `employee:${employee.id}`),
+-    ...state.rooms.map((room) => `room:${room.id}`), ...context.balanceRelease.facility.roomDefinitions.map((room) => `setup:${room.id}`)];
++    ...state.rooms.map((room) => `room:${room.id}`), ...context.balanceRelease.facility.roomDefinitions
++      .filter((room) => room.unlockFacilityLevel <= 4 || state.facilityLevel === 5)
++      .map((room) => `setup:${room.id}`)];
+   for (const root of watchedRoots) {
+     const signature = rootSignature(state, root);
+     const prior = tips.observations[root];

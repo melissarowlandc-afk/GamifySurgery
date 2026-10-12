@@ -1,0 +1,147 @@
+{
+  "contract": {
+    "roomDefinitionId": "room.executive_office",
+    "width": 3,
+    "height": 2,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "desk",
+        "footprint": {
+          "left": 0.88,
+          "top": 0.72,
+          "width": 1.24,
+          "height": 0.28
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "executiveChair",
+        "footprint": {
+          "left": 1.17,
+          "top": 0.52,
+          "width": 0.66,
+          "height": 0.3
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "visitorChair",
+        "footprint": {
+          "left": 1.15,
+          "top": 1.28,
+          "width": 0.7,
+          "height": 0.32
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "shelf",
+        "footprint": {
+          "left": 1.78,
+          "top": 0.14,
+          "width": 1.16,
+          "height": 0.16
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 1
+          },
+          {
+            "side": "north",
+            "offset": 2
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "accent",
+        "footprint": {
+          "left": 0.14,
+          "top": 0.04,
+          "width": 0.42,
+          "height": 0.21
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      }
+    ],
+    "doorThresholdExceptions": [
+      {
+        "side": "north",
+        "offset": 1
+      },
+      {
+        "side": "south",
+        "offset": 1
+      }
+    ],
+    "primaryAnchor": {
+      "x": 2,
+      "y": 1
+    },
+    "waitingAnchors": [],
+    "staffAnchor": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "supports": [
+    {
+      "id": "aisle",
+      "anchor": {
+        "x": 2,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 2.55,
+        "y": 1.15
+      }
+    },
+    {
+      "id": "executiveChair",
+      "fixtureId": "executiveChair",
+      "anchor": {
+        "x": 0,
+        "y": 0
+      },
+      "standingApproach": {
+        "x": 0.85,
+        "y": 0.45
+      }
+    },
+    {
+      "id": "visitorChair",
+      "fixtureId": "visitorChair",
+      "anchor": {
+        "x": 0,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 0.85,
+        "y": 1.6
+      }
+    }
+  ]
+}

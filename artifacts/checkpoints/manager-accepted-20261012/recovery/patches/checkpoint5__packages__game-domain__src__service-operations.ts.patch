@@ -1,0 +1,143 @@
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -1,3 +1,4 @@
++import { observeInspectionReceipt } from "./facility-inspection";
+ import {
+   PROCEDURAL_SPECIALIST_SHORT_WAIT_MINUTES,
+   SERVICE_INCOME_CATALOG,
+@@ -6,6 +7,7 @@
+   type ServiceOperationPhase,
+ } from "@gamify-surgery/balance-config";
+ import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
++import { releaseGiftCheckout } from "./gift-retail";
+ import { getDoorCells } from "./doors";
+ import {
+   getCurrentCapabilities,
+@@ -20,7 +22,8 @@
+ import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+ import { findCareAwareFacilityPath, pathEntersUnauthorizedProtectedRoom } from "./care-room-access";
+-import { hasActivePatientAmenityTrip } from "./patient-amenities";
++import { getPatientAmenityTrip, hasActivePatientAmenityTrip, requestPatientAmenityReturn } from "./patient-amenities";
++import { findLevelFiveSupportExitPath, getLevelFiveSupportRoomAt } from "./level-five-support";
+ import { getRadiologistReadingStation } from "./reading-stations";
+ import { advanceOutsideRadiologyReads, creditRadiologistRead, prepareRadiologistForInHouseRead, recordRadiologistReadCompletion } from "./radiologist-read-income";
+ import type {
+@@ -929,7 +932,8 @@
+   }
+   const amenityKind = operation.actorKind === "encounter" ? "encounter" : "service_visitor";
+   const amenityId = operation.actorKind === "encounter" ? operation.actorId : operation.id;
+-  if (hasActivePatientAmenityTrip(state, amenityKind, amenityId)) return false;
++  const amenityTrip = getPatientAmenityTrip(state, amenityKind, amenityId);
++  if (amenityTrip && amenityTrip.amenityKind !== "garden") return false;
+   const phases = operationPhases(operation, line);
+   const reservationPhases = operation.phaseFlowVersion === 1
+     ? phases.slice(operation.phaseIndex, operation.phaseIndex + 1)
+@@ -972,6 +976,8 @@
+       ? getProcedureStaffStandingSpots(room, definition, state.doors, "nurse").map(spot => spot.anchor) : [fallback];
+     for (const target of targets) {
+       const allowed = new Set([room.id]);
++      const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, employee.location) : null;
++      if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, employee.location, target, context, allowed);
+       const ordinary = findCareAwareFacilityPath(state, context, employee.location, target, allowed);
+       const path = ordinary.length ? ordinary : findRouteFromDisplacedLocationToPoint(state, context, employee.location, target, allowed);
+       if (path.length) return path;
+@@ -1019,6 +1025,8 @@
+       : [fallback];
+     for (const target of targets) {
+       const roomIds = new Set([room.id]);
++      const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, location) : null;
++      if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, location, target, context, roomIds);
+       const ordinary = findCareAwareFacilityPath(state, context, location, target, roomIds);
+       const path = ordinary.length > 0 ? ordinary : findRouteFromDisplacedLocationToPoint(state, context, location, target, roomIds);
+       if (path.length) return path;
+@@ -1070,15 +1078,16 @@
+       ? getRoomCareAnchor(firstRoom, firstDefinition, "patient")
+       : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary"));
+   let actorPath: GridPoint[] = [];
++  const actorOrigin = amenityTrip?.amenityKind === "garden" ? amenityTrip.returnTarget : operation.location;
+   if (operation.actorKind !== "remote") {
+-    actorPath = familyPlan ? familyPlan.movement.childPath : operation.location
++    actorPath = familyPlan ? familyPlan.movement.childPath : actorOrigin
+       ? (() => {
+           const ordinary = operation.actorKind === "visitor"
+-            ? pathServiceVisitorFromCurrentLocation(state, context, operation.location!, patientTarget, reservedRoomIds)
+-            : findCareAwareFacilityPath(state, context, operation.location!, patientTarget, reservedRoomIds);
++            ? pathServiceVisitorFromCurrentLocation(state, context, actorOrigin, patientTarget, reservedRoomIds)
++            : findCareAwareFacilityPath(state, context, actorOrigin, patientTarget, reservedRoomIds);
+           return ordinary.length > 0
+             ? ordinary
+-            : findRouteFromDisplacedLocationToPoint(state, context, operation.location!, patientTarget, reservedRoomIds);
++            : findRouteFromDisplacedLocationToPoint(state, context, actorOrigin, patientTarget, reservedRoomIds);
+         })()
+       : [];
+     if (actorPath.length === 0) return false;
+@@ -1092,10 +1101,15 @@
+     if (founderPath.length === 0) return false;
+   }
+ 
++  if (amenityTrip?.amenityKind === "garden") {
++    requestPatientAmenityReturn(state, amenityKind, amenityId, context);
++    return false;
++  }
+   operation.reservedRoomInstanceIds = rooms.map((room) => room!.id);
+   if (family && familyPlan) commitPediatricPairPlan(family, familyPlan);
+   operation.reservedEmployeeIds = selectedEmployees;
+   operation.providerReservation = provider;
++  freezeExecutiveComfort(state, operation, context);
+   bindServiceOperationTraining(state, operation, reservationPhases.map((_, index) => operation.phaseFlowVersion === 1 ? operation.phaseIndex : index));
+   operation.path = actorPath;
+   operation.pathIndex = 0;
+@@ -1596,6 +1610,7 @@
+     if (trip.actorKind === "employee" && trip.actorId === employeeId && trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned") {
+       trip.status = "cancelled";
+       trip.cancellationReason = "Required clinical work superseded optional shopping.";
++      releaseGiftCheckout(trip);
+     }
+   }
+ }
+@@ -1914,6 +1929,7 @@
+   // New additive reads leave the complete acquisition quote payable here.
+   const amount = operation.quoteFee - (operation.diagnosticPhysicalWork?.readIncomeFee ?? 0);
+   state.serviceIncomeReceipts.push({ id: `${transactionKey}.${state.nextServiceIncomeReceiptSequence++}`, transactionKey, incomeLineId: operation.incomeLineId, catalogVersion: 1, routeId: null, actorKind: operation.actorKind === "encounter" ? "patient" : operation.actorKind === "visitor" ? "visitor" : "remote", actorId: operation.actorId, ...(displayAnchor ? { displayAnchor } : {}), grossAmount: amount, stockCost: 0, netCashDelta: amount, completedAtFacilityTick: state.facilityTick });
++  observeInspectionReceipt(state, state.serviceIncomeReceipts.at(-1)!);
+   state.cashCents = Math.max(0, state.cashCents + Math.round(amount * 100));
+   state.cash = state.cashCents / 100;
+   if (operation.incomeLineId === "income.image_read") recordRadiologistReadCompletion(state, "in_house", amount, context);
+@@ -2073,6 +2089,7 @@
+   operation.completedAtFacilityTick = state.facilityTick;
+   operation.nextPhaseReadyAtFacilityTick = null;
+   operation.status = "discharging";
++  applyExecutiveComfort(state, operation);
+   if (operation.diagnosticPhysicalWork) return;
+   if (operation.actorKind === "visitor") {
+     const location = operationLocation(state, operation);
+@@ -2153,6 +2170,7 @@
+       return;
+     }
+     operation.completedAtFacilityTick = operation.diagnosticPhaseWork?.readingUpgradeWork ? operation.phaseEndsAtFacilityTick : state.facilityTick;
++    applyExecutiveComfort(state, operation);
+     if (operation.diagnosticPhysicalWork) {
+       operation.status = "completed";
+     } else if (operation.actorKind === "visitor") {
+@@ -2646,6 +2664,7 @@
+       continue;
+     }
+     if (hasActivePatientAmenityTrip(state, amenityKind, amenityId)) {
++      if (getPatientAmenityTrip(state, amenityKind, amenityId)?.amenityKind === "garden" && operation.status === "waiting_for_resources") tryReserve(state, operation, line, context);
+       if (operation.periopBedFlowVersion === 1 && !validateReservedResources(state, operation, context)) {
+         state.patientAmenityTrips = state.patientAmenityTrips?.filter((trip) =>
+           !(trip.actorKind === amenityKind && trip.actorId === amenityId),
+@@ -2688,6 +2707,7 @@
+       releaseClearedTransitionRooms(state, operation, context);
+       if (operation.diagnosticTiming.resultReady.reachedAtTick !== null && operation.diagnosticTiming.careComplete.reachedAtTick !== null) {
+         operation.completedAtFacilityTick = state.facilityTick;
++        applyExecutiveComfort(state, operation);
+         operation.resourceWaitReason = null;
+         operation.status = "leaving";
+         ensureCompleteVisitorDeparture(state, operation, context);
+@@ -2952,3 +2972,4 @@
+   advanceOutsideRadiologyReads(state, context, true);
+   reconcilePediatricFamilies(state, context);
+ }
++import { freezeExecutiveComfort, applyExecutiveComfort } from "./executive-management";

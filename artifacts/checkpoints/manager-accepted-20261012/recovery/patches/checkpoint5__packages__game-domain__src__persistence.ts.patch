@@ -1,0 +1,266 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -1,6 +1,10 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
+ import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
++import { readLevelFiveState } from "./level-five-state";
++import { normalizeExecutiveComfort, normalizeExecutiveStock, validateExecutiveTaskReservations } from "./executive-management";
++import { normalizeGiftCheckout, normalizeGiftOnlyVisit, normalizeGiftRetailDemand, validateGiftRetailReservations } from "./gift-retail";
++import { reconcileGiftRetailTrips } from "./retail-operations";
+ import { normalizeSavedSalary, validateSavedSalaryVersion } from "./economy-compatibility";
+ import { normalizeRoomUpkeepOutage, synchronizeRoomUpkeepOutages } from "./room-upkeep-outages";
+ import {
+@@ -59,6 +63,7 @@
+ import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+ import { normalizeRoomUpgradeRevenueQuote } from "./room-upgrades";
+ import { normalizeRoomUpgradeExperience, normalizeRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
++import { getLevelFiveSupportTarget, normalizeGardenRestTrip, normalizeGardenVisitBenefit, validateSavedGardenRest, validateSavedGymBreakReservations } from "./level-five-support";
+ import { getUnboundRoomUpgradeSupportMinutes, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeBreakBenefit, normalizeRoomUpgradeSupportWork } from "./room-upgrade-support";
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+@@ -843,6 +848,15 @@
+   const actorClaims = new Set<string>();
+   const bathroomClaims = new Set<string>();
+   return value.flatMap((candidate): PatientAmenityTripState[] => {
++    if (isRecord(candidate) && candidate.amenityKind === "garden") {
++      const trip = normalizeGardenRestTrip(candidate);
++      const actorClaim = `${trip.actorKind}:${trip.actorId}`;
++      const seatClaim = `${trip.gardenRoomInstanceId}:${trip.gardenSeatId}`;
++      if (actorClaims.has(actorClaim) || trip.status !== "returning" && bathroomClaims.has(seatClaim)) throw new Error("The saved garden rest has duplicate reservations.");
++      actorClaims.add(actorClaim);
++      if (trip.status !== "returning") bathroomClaims.add(seatClaim);
++      return [trip];
++    }
+     const startedAtFacilityTick = candidate && isRecord(candidate) && typeof candidate.startedAtFacilityTick === "number" ? candidate.startedAtFacilityTick : -1;
+     const dwellEndsAtFacilityTick = candidate && isRecord(candidate) && (candidate.dwellEndsAtFacilityTick === null || typeof candidate.dwellEndsAtFacilityTick === "number") ? candidate.dwellEndsAtFacilityTick : undefined;
+     const pathIndex = candidate && isRecord(candidate) && typeof candidate.pathIndex === "number" ? candidate.pathIndex : -1;
+@@ -970,10 +984,13 @@
+ 
+ function normalizeServiceOperations(
+   candidate: unknown,
++  facilityTick: number,
+ ): ServiceOperationState[] {
+   if (!Array.isArray(candidate)) return [];
+   const activePeriopBeds = new Set<string>();
+   return candidate.flatMap((raw) => {
++    const gardenVisitBenefit = isRecord(raw) ? normalizeGardenVisitBenefit(raw.gardenVisitBenefit, facilityTick) : undefined;
++    const executiveComfort = isRecord(raw) ? normalizeExecutiveComfort(raw.executiveComfort, facilityTick) : undefined;
+     const clinicVisit = isRecord(raw) ? readClinicVisit(raw.clinicVisit, raw) : undefined;
+     const appAppointmentRevenue = isRecord(raw) ? normalizeAppAppointmentRevenue(raw.appAppointmentRevenue, clinicVisit, raw.quoteFee) : undefined;
+     if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, appAppointmentRevenue?.baseFee ?? raw.quoteFee);
+@@ -1265,6 +1282,8 @@
+       displayName: raw.displayName,
+       appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
+       ...(clinicVisit ? { clinicVisit } : {}),
++      ...(gardenVisitBenefit ? { gardenVisitBenefit } : {}),
++      ...(executiveComfort ? { executiveComfort } : {}),
+       ...(appAppointmentRevenue ? { appAppointmentRevenue } : {}),
+       status: raw.status as ServiceOperationState["status"],
+       createdAtFacilityTick: raw.createdAtFacilityTick,
+@@ -1342,9 +1361,10 @@
+ const RETAIL_ACTOR_KINDS = new Set<RetailActorKind>(["employee", "founder", "encounter", "service_visitor", "retail_visitor", "companion"]);
+ const RETAIL_OPERATION_STATUSES = new Set<RetailOperationState["status"]>(["walking_to_outlet", "queued", "purchasing", "returning", "leaving", "completed", "abandoned", "cancelled"]);
+ 
+-function normalizeRetailOperations(candidate: unknown): RetailOperationState[] {
++function normalizeRetailOperations(candidate: unknown, facilityTick: number): RetailOperationState[] {
+   if (!Array.isArray(candidate)) return [];
+   return candidate.flatMap((raw) => {
++    const giftCheckout = isRecord(raw) ? normalizeGiftCheckout(raw.giftCheckout, raw, facilityTick) : undefined;
+     if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteGross);
+     if (!isRecord(raw) || typeof raw.id !== "string" || typeof raw.incomeLineId !== "string" || !getServiceIncomeLine(raw.incomeLineId)?.retail ||
+       typeof raw.actorKind !== "string" || !RETAIL_ACTOR_KINDS.has(raw.actorKind as RetailActorKind) || typeof raw.actorId !== "string" ||
+@@ -1361,9 +1381,11 @@
+     }
+     const tick = (value: unknown) => typeof value === "number" && Number.isSafeInteger(value) ? value : null;
+     return [{ id: raw.id, incomeLineId: raw.incomeLineId, catalogVersion: 1 as const, actorKind: raw.actorKind as RetailActorKind, actorId: raw.actorId, displayName: raw.displayName, appearance: raw.appearance,
++      ...(giftCheckout ? { giftCheckout } : {}),
+       linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null, authorizedOrderId: typeof raw.authorizedOrderId === "string" ? raw.authorizedOrderId : null,
+       status: raw.status as RetailOperationState["status"], createdAtFacilityTick: raw.createdAtFacilityTick, waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+       startedAtFacilityTick: tick(raw.startedAtFacilityTick), completedAtFacilityTick: tick(raw.completedAtFacilityTick), quoteGross: raw.quoteGross, quoteStockCost: raw.quoteStockCost,
++      ...(raw.executiveStock !== undefined ? { executiveStock: normalizeExecutiveStock(raw.executiveStock, facilityTick, raw.quoteStockCost)! } : {}),
+       ...(roomUpgradeRevenue ? { roomUpgradeRevenue } : {}),
+       outletRoomInstanceId: raw.outletRoomInstanceId, outletDurationMinutes: raw.outletDurationMinutes, staffRoleDefinitionId: typeof raw.staffRoleDefinitionId === "string" ? raw.staffRoleDefinitionId : null, servingEmployeeId: typeof raw.servingEmployeeId === "string" ? raw.servingEmployeeId : null,
+       location: { ...raw.location }, returnLocation: isGridPoint(raw.returnLocation) ? { ...raw.returnLocation } : null, path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0,
+@@ -1376,6 +1398,8 @@
+   if (!Array.isArray(candidate)) return [];
+   return candidate.flatMap((raw) => {
+     const pediatricFamilyId = isRecord(raw) ? readPediatricFamilyId(raw.pediatricFamilyId) : undefined;
++    const giftOnlyVisit = isRecord(raw) ? normalizeGiftOnlyVisit(raw.giftOnlyVisit, raw.appearance) : undefined;
++    if (giftOnlyVisit && isRecord(raw) && (raw.kind !== "retail_visitor" || pediatricFamilyId || raw.procedureCompanion !== undefined || raw.linkedEncounterId !== null || raw.linkedServiceOperationId !== null)) throw new Error("A Gift Shop visitor cannot be a clinical companion.");
+     if (pediatricFamilyId && isRecord(raw) && raw.procedureCompanion !== undefined) {
+       throw new Error("A saved pediatric parent cannot use the procedure-companion contract.");
+     }
+@@ -1385,6 +1409,7 @@
+     const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+     const procedureCompanion = raw.kind === "companion" ? normalizeProcedureCompanionState(raw.procedureCompanion) : undefined;
+     return [{ id: raw.id, kind: raw.kind, displayName: raw.displayName, appearance: raw.appearance, linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null,
++      ...(giftOnlyVisit ? { giftOnlyVisit } : {}),
+       linkedEncounterId: typeof raw.linkedEncounterId === "string" ? raw.linkedEncounterId : null, lifecycle: raw.lifecycle, location: isGridPoint(raw.location) ? { ...raw.location } : null,
+       path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+       activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null,
+@@ -2302,6 +2327,7 @@
+   campaignSeed: string,
+   facilityTick: number,
+   context: DomainContext,
++  preserveOverdueIdleClocks = false,
+ ): EncounterState | null {
+   if (!isRecord(candidate.frozenCase)) {
+     return null;
+@@ -2861,6 +2887,8 @@
+           ),
+     patientSatisfaction,
+     roomUpgradeExperience: normalizeRoomUpgradeExperience(candidate.roomUpgradeExperience, facilityTick),
++    ...(candidate.gardenVisitBenefit !== undefined ? { gardenVisitBenefit: normalizeGardenVisitBenefit(candidate.gardenVisitBenefit, facilityTick)! } : {}),
++    ...(candidate.executiveComfort !== undefined ? { executiveComfort: normalizeExecutiveComfort(candidate.executiveComfort, facilityTick)! } : {}),
+     idleWaitingSinceTick: restoresCompletedTerminalLifecycle
+       ? null
+       : idleWaitingSinceTick,
+@@ -2949,7 +2977,7 @@
+     nextIdleActionAtFacilityTick:
+       typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+       Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+-      candidate.nextIdleActionAtFacilityTick >= facilityTick
++      candidate.nextIdleActionAtFacilityTick >= (preserveOverdueIdleClocks ? 0 : facilityTick)
+         ? candidate.nextIdleActionAtFacilityTick
+         : facilityTick +
+           context.balanceRelease.environment.idleActionMinimumMinutes,
+@@ -3059,7 +3087,8 @@
+       parsed.facilityLevel !== 1 &&
+       parsed.facilityLevel !== 2 &&
+       parsed.facilityLevel !== 3 &&
+-      !(parsed.facilityLevel === 4 && context.balanceRelease.facility.maximumPlayableLevel === 4)) ||
++      !(parsed.facilityLevel === 4 && context.balanceRelease.facility.maximumPlayableLevel >= 4) &&
++      !(parsed.facilityLevel === 5 && context.balanceRelease.facility.maximumPlayableLevel === 5)) ||
+     !isRecord(parsed.encounters) ||
+     !isRecord(parsed.learningHistories) ||
+     !Array.isArray(parsed.employees) ||
+@@ -3122,9 +3151,9 @@
+           : [],
+       )
+     : [];
+-  const serviceOperations = normalizeServiceOperations(parsed.serviceOperations);
++  const serviceOperations = normalizeServiceOperations(parsed.serviceOperations, parsedFacilityTick);
+   const patientAmenityTrips: PatientAmenityTripState[] = [];
+-  const retailOperations = normalizeRetailOperations(parsed.retailOperations);
++  const retailOperations = normalizeRetailOperations(parsed.retailOperations, parsedFacilityTick);
+   const retailExternalActors = normalizeRetailExternalActors(parsed.retailExternalActors);
+   const retailOrders = normalizeRetailOrders(parsed.retailOrders);
+   const next: GameState = {
+@@ -3201,6 +3230,7 @@
+     ),
+     retailOperationSequence: Math.max(retailOperations.length, typeof parsed.retailOperationSequence === "number" && Number.isSafeInteger(parsed.retailOperationSequence) && parsed.retailOperationSequence >= 0 ? parsed.retailOperationSequence : 0),
+     retailOperations,
++    ...(parsed.giftRetailDemand !== undefined ? { giftRetailDemand: normalizeGiftRetailDemand(parsed.giftRetailDemand)! } : {}),
+     retailExternalActors,
+     retailOrders,
+     retailActorLedgers: normalizeRetailActorLedgers(parsed.retailActorLedgers),
+@@ -3292,6 +3322,7 @@
+             campaignSeed,
+             next.facilityTick,
+             context,
++            next.facilityLevel === 5,
+           )
+         : null;
+       return normalized ? [[encounterId, normalized]] : [];
+@@ -3344,6 +3375,7 @@
+     throw new Error("The saved outside radiology read sequence is invalid.");
+   }
+   next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
++    if (trip.amenityKind === "garden") return validateSavedGardenRest(next, trip);
+     const operation = next.serviceOperations.find((candidate) =>
+       trip.actorKind === "encounter"
+         ? candidate.actorKind === "encounter" && candidate.actorId === trip.actorId && candidate.status !== "completed" && candidate.status !== "cancelled"
+@@ -3472,6 +3504,11 @@
+     const roomUpgradeWork = supportEffectKind ? normalizeRoomUpgradeSupportWork(rawFacilityTask?.roomUpgradeWork, supportEffectKind) : undefined;
+     if (rawFacilityTask?.roomUpgradeBreakBenefit !== undefined && rawFacilityTask.kind !== "take_break") throw new Error("The saved room upgrade break benefit is invalid.");
+     const roomUpgradeBreakBenefit = normalizeRoomUpgradeBreakBenefit(rawFacilityTask?.roomUpgradeBreakBenefit, rawFacilityTask?.targetId);
++    if (roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" && (!rawFacilityTask ||
++      next.facilityLevel < 5 || (rawFacilityTask.seatId !== "benchSeat" && rawFacilityTask.seatId !== "stretchSpot") ||
++      typeof rawFacilityTask.supportDoorId !== "string" || !rawFacilityTask.supportDoorId ||
++      typeof rawFacilityTask.workMinutesRemaining !== "number" || rawFacilityTask.workMinutesRemaining > context.balanceRelease.environment.levelThreeSupport.breakDurationMinutes ||
++      typeof candidate.lastBreakAtFacilityTick === "number" && candidate.lastBreakAtFacilityTick >= (rawFacilityTask.startedAtFacilityTick as number))) throw new Error("The saved gym break contract is invalid.");
+     if ((roomUpgradeWork || roomUpgradeBreakBenefit) && (!rawFacilityTask ||
+       typeof rawFacilityTask.startedAtFacilityTick !== "number" || !Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) ||
+       rawFacilityTask.startedAtFacilityTick < 0 || rawFacilityTask.startedAtFacilityTick > next.facilityTick ||
+@@ -3499,7 +3536,8 @@
+         rawFacilityTask?.kind === "participate_qi_discussion" ||
+         rawFacilityTask?.kind === "take_break" ||
+         rawFacilityTask?.kind === "repair_room" ||
+-        rawFacilityTask?.kind === "review_ambulatory_qi") &&
++        rawFacilityTask?.kind === "review_ambulatory_qi" ||
++        rawFacilityTask?.kind === "daily_management_round") &&
+       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
+       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
+       rawFacilityTask.startedAtFacilityTick >= 0 &&
+@@ -3515,11 +3553,12 @@
+               legacyRoomCoverage ? Number.MAX_SAFE_INTEGER : typeof rawFacilityTask.workMinutesRemaining === "number" ? rawFacilityTask.workMinutesRemaining : 0,
+             ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
+             ...(roomUpgradeBreakBenefit ? { roomUpgradeBreakBenefit } : {}),
++            ...(roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" || rawFacilityTask.kind === "daily_management_round" ? { supportDoorId: rawFacilityTask.supportDoorId as string } : {}),
+             ...(rawFacilityTask.kind === "clean_room" && typeof rawFacilityTask.cleanlinessRestore === "number" &&
+               Number.isFinite(rawFacilityTask.cleanlinessRestore) && rawFacilityTask.cleanlinessRestore >= 0
+               ? { cleanlinessRestore: rawFacilityTask.cleanlinessRestore } : {}),
+             ...(typeof rawFacilityTask.targetId === "string" ? { targetId: rawFacilityTask.targetId } : {}),
+-            ...((rawFacilityTask.seatId === "massage" || rawFacilityTask.seatId === "largeNorth" || rawFacilityTask.seatId === "largeSouth" || rawFacilityTask.seatId === "largeWest" || rawFacilityTask.seatId === "largeEast" || rawFacilityTask.seatId === "smallNorth" || rawFacilityTask.seatId === "smallSouth") ? { seatId: rawFacilityTask.seatId as NonNullable<EmployeeState["facilityTask"]>["seatId"] } : {}),
++            ...((rawFacilityTask.seatId === "massage" || rawFacilityTask.seatId === "largeNorth" || rawFacilityTask.seatId === "largeSouth" || rawFacilityTask.seatId === "largeWest" || rawFacilityTask.seatId === "largeEast" || rawFacilityTask.seatId === "smallNorth" || rawFacilityTask.seatId === "smallSouth" || roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" && (rawFacilityTask.seatId === "benchSeat" || rawFacilityTask.seatId === "stretchSpot")) ? { seatId: rawFacilityTask.seatId as NonNullable<EmployeeState["facilityTask"]>["seatId"] } : {}),
+           }
+         : null;
+     const normalizedAppearance = isPixelAppearance(candidate.appearance)
+@@ -3582,7 +3621,7 @@
+       nextIdleActionAtFacilityTick:
+         typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+         Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+-        candidate.nextIdleActionAtFacilityTick >= next.facilityTick
++        candidate.nextIdleActionAtFacilityTick >= (next.facilityLevel === 5 ? 0 : next.facilityTick)
+           ? candidate.nextIdleActionAtFacilityTick
+           : next.facilityTick +
+             context.balanceRelease.environment.idleActionMinimumMinutes,
+@@ -3648,11 +3687,17 @@
+     typeof parsed.levelThreeQiReviewSequence === "number" && Number.isSafeInteger(parsed.levelThreeQiReviewSequence) && parsed.levelThreeQiReviewSequence >= 0
+       ? parsed.levelThreeQiReviewSequence : 0,
+   );
++  validateSavedGymBreakReservations(next);
+   for (const employee of next.employees) {
+     const task = employee.facilityTask;
+     if (!task) continue;
+     if (task.kind === "take_break" && (!task.targetId || !task.seatId ||
+-        next.rooms.find((room) => room.id === task.targetId)?.roomDefinitionId !== "room.staff_break")) {
++        (task.roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym"
++          ? next.rooms.find(room => room.id === task.targetId)?.roomDefinitionId !== "room.staff_gym" ||
++            !getLevelFiveSupportTarget(next.rooms.find(room => room.id === task.targetId)!, task.seatId) ||
++            employee.path.at(-1)?.x !== getLevelFiveSupportTarget(next.rooms.find(room => room.id === task.targetId)!, task.seatId)?.x ||
++            employee.path.at(-1)?.y !== getLevelFiveSupportTarget(next.rooms.find(room => room.id === task.targetId)!, task.seatId)?.y
++          : next.rooms.find((room) => room.id === task.targetId)?.roomDefinitionId !== "room.staff_break"))) {
+       employee.facilityTask = null;
+     } else if (task.kind === "repair_room" && (!task.targetId || employee.staffRoleDefinitionId !== "staff.repair_person" ||
+         !next.rooms.find((room) => room.id === task.targetId)?.maintenance ||
+@@ -4438,6 +4483,7 @@
+   next.retailOperations = next.retailOperations.filter((trip) => !trip.departureServiceOperationId ||
+     next.serviceOperations.some((operation) => operation.id === trip.departureServiceOperationId && operation.departureItinerary?.status === "retail" && operation.departureItinerary.linkedTripId === trip.id));
+   if (
++    next.facilityLevel < 5 &&
+     next.openChartEncounterId &&
+     next.encounters[next.openChartEncounterId]
+   ) {
+@@ -4451,6 +4497,9 @@
+   }
+   reconcileServiceOperationFlow(next, context);
+   reconcileProcedureCompanions(next);
++  if (next.giftRetailDemand && next.facilityLevel < 5 || next.retailExternalActors.some(actor => actor.giftOnlyVisit) && next.facilityLevel < 5) throw new Error("Gift Shop demand requires Level 5.");
++  validateGiftRetailReservations(next);
++  reconcileGiftRetailTrips(next, context);
+   return next;
+ }
+ 
+@@ -4673,6 +4722,10 @@
+   context: DomainContext,
+ ): GameState {
+   const migrated = normalizeApprovedRoomOrientations(state, context);
++  if (parsed.levelFive !== undefined) {
++    migrated.levelFive = readLevelFiveState(parsed.levelFive, migrated.facilityTick, migrated.facilityLevel);
++  }
++  validateExecutiveTaskReservations(migrated);
+   if (migrated.employees.some((employee) => isEmployeeAwayForTraining(employee) && employee.facilityTask)) {
+     throw new Error("The saved employee has conflicting training and work assignments.");
+   }

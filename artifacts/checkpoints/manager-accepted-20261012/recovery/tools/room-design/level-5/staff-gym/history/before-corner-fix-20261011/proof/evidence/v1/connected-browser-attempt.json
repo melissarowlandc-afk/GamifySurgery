@@ -1,0 +1,26 @@
+{
+  "status": "PENDING_MANAGER",
+  "tool": "mcp__cua_repl.js",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/staff-gym/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "e54ac25f47dc7854cbeec3b7e6b1db417a2d59b0916da7223d1048172d2ce8f9",
+  "attempts": [
+    {
+      "code": "await cua.createBrowserTab(\"chrome\", url, { sessionName: \"🏋️ Staff Gym\" })",
+      "result": "trusted Node process exited unexpectedly; kernel reset, rerun your request"
+    },
+    {
+      "code": "await cua.createBrowserTab(\"chrome\", url, { sessionName: \"🏋️ Staff Gym\" })",
+      "result": "node_repl kernel exited unexpectedly",
+      "diagnostics": {
+        "kernel_pid": 13700,
+        "kernel_status": "exited(code=1)",
+        "kernel_stderr_tail": "windows sandbox failed: helper_unknown_error: setup refresh had errors",
+        "reason": "stdout_eof",
+        "stream_error": null
+      }
+    }
+  ],
+  "browserExecuted": false,
+  "browserScreenshotsClaimed": false
+}

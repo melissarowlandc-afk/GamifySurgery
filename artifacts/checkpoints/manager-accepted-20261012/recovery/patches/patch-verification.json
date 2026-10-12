@@ -1,0 +1,3000 @@
+{
+  "schemaVersion": 1,
+  "method": "Exact Python unified-hunk forward, reverse and reapply; no Git apply",
+  "contracts": [
+    {
+      "id": "checkpoint5__apps__player__src__App.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/App.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/App.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__App.tsx.patch",
+      "baseSha256": "dbac53579eec5db55d4b70729a705142edb850c6d8b06c62e30db9028e8035a3",
+      "patchSha256": "a86488ebbe915120d898b9f6e305918e5b38efcbb10874edc9a28afc0f6c4a44",
+      "acceptedSha256": "4d2bf44dba9f755f941cdaa3438da33d21c300877db9dc474da7ceb587743a99",
+      "acceptedBytes": 13248,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__App.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "4d2bf44dba9f755f941cdaa3438da33d21c300877db9dc474da7ceb587743a99"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__AppShell.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/AppShell.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__AppShell.tsx.patch",
+      "baseSha256": "31f98ce998688d1102da8993172846e45df6cc5878daafb28a98ba7af845959b",
+      "patchSha256": "5a74ddee31dce4ea598740372151b809384db71f0657715563d57a28bcc170d2",
+      "acceptedSha256": "688b581287f945c369475a8b5407b9302331cba3ac0d653e975a1bc0a0bb0079",
+      "acceptedBytes": 41045,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__AppShell.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "688b581287f945c369475a8b5407b9302331cba3ac0d653e975a1bc0a0bb0079"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__art__bitmapAssetManifest.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/art/bitmapAssetManifest.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__art__bitmapAssetManifest.ts.patch",
+      "baseSha256": "5c1275f1402cd28f945f096d67f5fc6d2e03f99e6097d852f3d438cf65b05caa",
+      "patchSha256": "187386ea882e1ef3f3ed21b186cbf3ed7d5e83c07cc2aa177d1431c80086dec4",
+      "acceptedSha256": "af0db36a02ec9ae9b96cd40c54b85ebcafcbc5f79aba4f9683b02065d1a0fde9",
+      "acceptedBytes": 59026,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__art__bitmapAssetManifest.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "af0db36a02ec9ae9b96cd40c54b85ebcafcbc5f79aba4f9683b02065d1a0fde9"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__art__characterStillRegistry.generated.json",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "base": "recovery/bases/checkpoint5/apps/player/src/art/characterStillRegistry.generated.json",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__art__characterStillRegistry.generated.json.patch",
+      "baseSha256": "d610a64bcee0a9aed850c73690916fae6f83006f32310898e47347e8fdcb9f3a",
+      "patchSha256": "cb59898d79de1b85040248589223925913edb4fcbc1b68a1d16c383ba5122ce5",
+      "acceptedSha256": "74f5c0ffc08ef3078e148e09fc1d13749c8b62926d731920c0cd944da84d263d",
+      "acceptedBytes": 1600199,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__art__characterStillRegistry.generated.json",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "74f5c0ffc08ef3078e148e09fc1d13749c8b62926d731920c0cd944da84d263d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__art__characterStillRegistry.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/art/characterStillRegistry.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__art__characterStillRegistry.test.ts.patch",
+      "baseSha256": "728448899f23bc02ce431037d9b253632ed84c2b763f040ef80317200ba7b8e6",
+      "patchSha256": "741321385aef9fc6e58a83898f32dc28a68b273390119e592490aa3dfd167a18",
+      "acceptedSha256": "660499c83064d1af5bc3c8301368dc2508d8e2100c79f7241841d079a39983ff",
+      "acceptedBytes": 21154,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__art__characterStillRegistry.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "660499c83064d1af5bc3c8301368dc2508d8e2100c79f7241841d079a39983ff"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__art__characterStillRegistry.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/art/characterStillRegistry.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__art__characterStillRegistry.ts.patch",
+      "baseSha256": "9c484736511deaf6070263e1efa9d4ffcf99414e9c643e2bb5e2727d9fdc20b7",
+      "patchSha256": "588678ee6874cf683b860b14d5dffd073ccdb5175c9f0d19eac6fa016ee55bc8",
+      "acceptedSha256": "8b81961a2d42716141cb7134252bf5309fbb9e70b41ab2ddde88b7436be04353",
+      "acceptedBytes": 5265,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__art__characterStillRegistry.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "8b81961a2d42716141cb7134252bf5309fbb9e70b41ab2ddde88b7436be04353"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__FacilityScene.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__FacilityScene.ts.patch",
+      "baseSha256": "186f2deaa04d2ab5816a79284ba636005441027fec6ba2644964a15a2806d041",
+      "patchSha256": "0dc632a43cb883632c30124477553b09782877e72bf3203c834dee0f8dbb4766",
+      "acceptedSha256": "78ffac33d7ca7af016f6458b9122962b57c282cb67c5ca2447c3901dd08c7438",
+      "acceptedBytes": 365368,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__facility__FacilityScene.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "78ffac33d7ca7af016f6458b9122962b57c282cb67c5ca2447c3901dd08c7438"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__approvedRoomPresentation.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__approvedRoomPresentation.test.ts.patch",
+      "baseSha256": "1b1a324e00ceaf1df0b8d099bf5f01dd5b19e65d72a6520455f85863880d1f0f",
+      "patchSha256": "a2431121f355673b7f82eae9325e1d8dcddf24b32b59fdef0c4e0ecd150699bb",
+      "acceptedSha256": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "acceptedBytes": 36622,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__approvedRoomPresentation.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__approvedRoomPresentation.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/approvedRoomPresentation.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__approvedRoomPresentation.ts.patch",
+      "baseSha256": "86cfa665d36576e5f52ee5592c1a44d153331001ac01b82b961523390dc785ff",
+      "patchSha256": "4e07236ce9729d4a3555b3011485e7ce060278e7c3a8498f03e6e557976c9a99",
+      "acceptedSha256": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "acceptedBytes": 85418,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__approvedRoomPresentation.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__approvedRoomRenderer.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__approvedRoomRenderer.test.ts.patch",
+      "baseSha256": "649b9cc7d3ef59f52591028b810981aa3c7e1adf79e6de7805f9f323876aeafa",
+      "patchSha256": "7e46259385a9cf939851541969450ce72ac7713b1ea8add2c02e0803a449b6bc",
+      "acceptedSha256": "4953f1cffab2973013f1042811cfa09bbbc083788f6e79945bd66e93b248e36e",
+      "acceptedBytes": 11014,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "4953f1cffab2973013f1042811cfa09bbbc083788f6e79945bd66e93b248e36e"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__characterInspect.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/characterInspect.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/characterInspect.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__characterInspect.ts.patch",
+      "baseSha256": "a51bdfc553878c4d8fba1d3085d623fbddde6e622de43525fce91dcc5264b730",
+      "patchSha256": "5cb68854007f2221a09190bb1ad8a234a5ad3ef5086fdb0b59ced1142ee47503",
+      "acceptedSha256": "d5074c097443dc62cae5af765f90dbe961bd0a4c5cb1d328ae2f4a45cef8de27",
+      "acceptedBytes": 1397,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "d5074c097443dc62cae5af765f90dbe961bd0a4c5cb1d328ae2f4a45cef8de27"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__furnitureSeatLayering.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__furnitureSeatLayering.test.ts.patch",
+      "baseSha256": "92d96745115f167e8de07c04578f03f480a422789d85b3de52f5d9c5add7cbbe",
+      "patchSha256": "16e03f46e9a1850436b0cb9cf40761f15327d9d6f56e1f615680fc1059f170a6",
+      "acceptedSha256": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "acceptedBytes": 14794,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__furnitureSeatLayering.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__level4ApprovedRoomTestHelpers.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/level4ApprovedRoomTestHelpers.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__level4ApprovedRoomTestHelpers.ts.patch",
+      "baseSha256": "c3bfa778bb60c0db22ac60448ce9afa5cb03bc99936e0044ae17e36198cdf606",
+      "patchSha256": "f951520f9eb75c48e91f52b26eda23d7ffb4521b654a6006285cf32ef4d6d2b8",
+      "acceptedSha256": "6ba7b4349b99babded1d8fda00ff160d333d9ee00d793b8fa37f97a4d2daca0c",
+      "acceptedBytes": 7706,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "6ba7b4349b99babded1d8fda00ff160d333d9ee00d793b8fa37f97a4d2daca0c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__roomUpgradeAppearance.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/roomUpgradeAppearance.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/roomUpgradeAppearance.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__roomUpgradeAppearance.test.ts.patch",
+      "baseSha256": "d37f85ea98c5320e50cecb272488f7ae335c21355fe749c1a9717ea8b2c129d8",
+      "patchSha256": "634fe8d61e85206f67ff6cb79d81b22312b7e94b1a68294213fc38d7e21c9d5e",
+      "acceptedSha256": "de82f546eb894e32377c6af27aca8d60b2613292f25af3461672933c73b3b553",
+      "acceptedBytes": 5329,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "de82f546eb894e32377c6af27aca8d60b2613292f25af3461672933c73b3b553"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__roomVisualLayout.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/roomVisualLayout.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/roomVisualLayout.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__roomVisualLayout.ts.patch",
+      "baseSha256": "186d999fef9af72aea879ec69a7f4d8f63914eda2d05d9e6a836e914bdc62fed",
+      "patchSha256": "b3b77605f8e867b7db34a1a8121bbce18a4cbcb668ad0654833f9890980c02f2",
+      "acceptedSha256": "ce74d2c40cbbbfc3bd8401cdfb2c83b6709b4980d795f5030641d186825e59ef",
+      "acceptedBytes": 16905,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__facility__roomVisualLayout.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "ce74d2c40cbbbfc3bd8401cdfb2c83b6709b4980d795f5030641d186825e59ef"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__facility__types.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/facility/types.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__facility__types.ts.patch",
+      "baseSha256": "e2e5ed83e2969be7bd71f7a41ff40abc9a9ab6faa6d77e88a5f72c8fd5643b76",
+      "patchSha256": "9ac3ebccf7e945e684fd377a2168a31a2083eb4e16584d7878388bd8006b416f",
+      "acceptedSha256": "b32c6f38a91fe9b9ba5c0044a4ae4a88a0d111d86c0a1dd42da46c344441375f",
+      "acceptedBytes": 13938,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__facility__types.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "b32c6f38a91fe9b9ba5c0044a4ae4a88a0d111d86c0a1dd42da46c344441375f"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__MobileChart.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileChart.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileChart.tsx.patch",
+      "baseSha256": "f899732358e8d820e3dd1b15b2bc879fe92d65336e2245c531c15a9b05cb7cec",
+      "patchSha256": "2d64fd2f1cb3eb178d91e26bbfd777c63a440fce15dad303898cfbc1421038e3",
+      "acceptedSha256": "9d35ae9b076f31131f3d5294931acc0310c506793d58fe3d20ecb3ca69aaaa32",
+      "acceptedBytes": 14479,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9d35ae9b076f31131f3d5294931acc0310c506793d58fe3d20ecb3ca69aaaa32"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__MobileGoals.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/MobileGoals.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileGoals.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileGoals.tsx.patch",
+      "baseSha256": "683bb6ca77c63c3396b31a14745c13b9c3fd49244b222482146869ad5808cb3c",
+      "patchSha256": "a2a06273abdded5b51c7fe0f4b107fbc4f006589770632c68a1608d9004bf9c0",
+      "acceptedSha256": "9582ae05d857dd1c3cfd1d5fe117d9e92324f5b9efd613949b12939eada28eac",
+      "acceptedBytes": 6026,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9582ae05d857dd1c3cfd1d5fe117d9e92324f5b9efd613949b12939eada28eac"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__MobileInspectorSheet.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/MobileInspectorSheet.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileInspectorSheet.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileInspectorSheet.tsx.patch",
+      "baseSha256": "25f4ed9f6f96e2f02594ba8c6a4c552ecf64184f2df5d3d9598db29235702f59",
+      "patchSha256": "341f22d5a68791ccb34e3005909787eae4cb90c2a4b58fac699d0318f6b58170",
+      "acceptedSha256": "0354a13582c4a4578acd78e7e118e08cb015071d6dcd3c55088c2da98a81fdd6",
+      "acceptedBytes": 4088,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "0354a13582c4a4578acd78e7e118e08cb015071d6dcd3c55088c2da98a81fdd6"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__MobileScreens.test.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/MobileScreens.test.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileScreens.test.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileScreens.test.tsx.patch",
+      "baseSha256": "ab4b59030a1755a692293ce2cfb0284e61075722c2a25675d25fcd1a0f9130e4",
+      "patchSha256": "ce04b79b6d95cccd6ba7078b06562d4d3ce26b29e35dacba7e4f4d93fc64426d",
+      "acceptedSha256": "a83842af1ce6da892eb7cce7b8ba7fc778b1c6d70851cd9b7dd155271dadd238",
+      "acceptedBytes": 14295,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a83842af1ce6da892eb7cce7b8ba7fc778b1c6d70851cd9b7dd155271dadd238"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__MobileShell.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/MobileShell.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileShell.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileShell.tsx.patch",
+      "baseSha256": "67e61d02d90fd3a9434544d30376f8500ae49af1a8c6df052ca58500f5ad8b60",
+      "patchSha256": "5ed6c817e87091dd709e4a4ed0b1e642b90f3e90cd6a8bc2e4331d360f713f70",
+      "acceptedSha256": "550df4705c464e0c12acaedb80516ea1679a72d88bd8cba0b3335d447224ebc5",
+      "acceptedBytes": 34400,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "550df4705c464e0c12acaedb80516ea1679a72d88bd8cba0b3335d447224ebc5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__build__MobileBuildCatalog.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/build/MobileBuildCatalog.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/build/MobileBuildCatalog.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__build__MobileBuildCatalog.tsx.patch",
+      "baseSha256": "613afb5cd4e41e722e61ea25aab62ef8902e5442e3ac9b50e985875e5a128280",
+      "patchSha256": "427356ef4166a4d3dcdf541f9323c73e4ce1b11be8c92212154f354af37be920",
+      "acceptedSha256": "3c16ef0663e6ed5eafdcfc5a0d6caa6c3447d1f6df28166f2ea10914ecbe1bcf",
+      "acceptedBytes": 8874,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "3c16ef0663e6ed5eafdcfc5a0d6caa6c3447d1f6df28166f2ea10914ecbe1bcf"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__build__MobileBuildRoom.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/build/MobileBuildRoom.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/build/MobileBuildRoom.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__build__MobileBuildRoom.tsx.patch",
+      "baseSha256": "eb15636350b29b3ca9e9fbaaab02ff300954db3719fb3ac13c5b938306e39c4e",
+      "patchSha256": "06a00b314b3beefe70f882e2ef9a141d663365b1e0fda73de1daa000c692e34a",
+      "acceptedSha256": "f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630",
+      "acceptedBytes": 4291,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__build__RoomThumbnail.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/build/RoomThumbnail.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/build/RoomThumbnail.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__build__RoomThumbnail.tsx.patch",
+      "baseSha256": "81e4178d00882991417e5a3cfc4532ab917657a1079b16e795ed31c90384c7f2",
+      "patchSha256": "acf4e52ed3c876975187a4d1e4585cf3a28576a2053e94ace7207dff5122a63a",
+      "acceptedSha256": "6c944c17953d1b719171a0eb7bee4e98633c6e8cb3a1ab6f34e9be0508070e5d",
+      "acceptedBytes": 3592,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "6c944c17953d1b719171a0eb7bee4e98633c6e8cb3a1ab6f34e9be0508070e5d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__build__mobileBuild.css",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/build/mobileBuild.css",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/build/mobileBuild.css",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__build__mobileBuild.css.patch",
+      "baseSha256": "2f3208f4572cda5de1b845f6175c038d47c2548c3f270c741215585747ae3dea",
+      "patchSha256": "d2179bdafa6bb5072f62e8d080cbd338d220a4cc83ef0ff1561c8de1d1251bb3",
+      "acceptedSha256": "8a629453d1b813c44d8c264d64e76b64010b49d59c2e4a5f1ac0123785abb2ef",
+      "acceptedBytes": 4771,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "8a629453d1b813c44d8c264d64e76b64010b49d59c2e4a5f1ac0123785abb2ef"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__manage__MobileEmployees.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/manage/MobileEmployees.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/manage/MobileEmployees.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__manage__MobileEmployees.tsx.patch",
+      "baseSha256": "f802143560b17f791b93ffd47e07ae70bb17c491cbf08b15c7e3f943c89a3ff2",
+      "patchSha256": "5725effbdab7760b5df0cd7e2ef01710e43e0ee3129041f8ce6a93ff857f2b36",
+      "acceptedSha256": "901d1d32600d1fa1b0b914b1a32f2d19fb95e02b26d103cf40bec4a617312084",
+      "acceptedBytes": 17576,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "901d1d32600d1fa1b0b914b1a32f2d19fb95e02b26d103cf40bec4a617312084"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__manage__MobileMoney.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/manage/MobileMoney.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/manage/MobileMoney.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__manage__MobileMoney.tsx.patch",
+      "baseSha256": "c3c75b36aeee7e925e5a085fd1c6eb5e2adc3b7a3878f8510db68182f2a4e544",
+      "patchSha256": "b0b909d31318f28f01ec66788bf79b78f06fb28ea79e1d9031c7fb4f10879680",
+      "acceptedSha256": "30f8a3f6d2d1387c1eba953cc1d1f27b362132cc0c66377e30ce95e677d36e63",
+      "acceptedBytes": 7054,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "30f8a3f6d2d1387c1eba953cc1d1f27b362132cc0c66377e30ce95e677d36e63"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__manage__MobileServices.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/manage/MobileServices.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/manage/MobileServices.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__manage__MobileServices.tsx.patch",
+      "baseSha256": "b4a4935c338a229b69644db9645444e8a75bb8c1974098d5357f65d74549af13",
+      "patchSha256": "2b7f038aa2adb9f09a1668fae235ec1fe4d4aacc6aa24135d721df2eb1cfab50",
+      "acceptedSha256": "b43d5790e6ebf09914c44d6566661e918ff6553ee5c089d396e37bdf1c1c4dc8",
+      "acceptedBytes": 12003,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "b43d5790e6ebf09914c44d6566661e918ff6553ee5c089d396e37bdf1c1c4dc8"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__map__selection.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/map/selection.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/map/selection.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__map__selection.ts.patch",
+      "baseSha256": "b4ef39bf2ac43c06c87890514bb2627ce487b3d11302eda0a1aa1ffce5c864df",
+      "patchSha256": "6de6c67b0aaec1bdf34bb9cdde9595ffbc329fdb54a401e0c0e63a3c913cc3c8",
+      "acceptedSha256": "a4e0988a136a7b84a403560a8b5704a666d0b462324abda35bab216fb52c7e9c",
+      "acceptedBytes": 4786,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a4e0988a136a7b84a403560a8b5704a666d0b462324abda35bab216fb52c7e9c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__mobileScreens.css",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/mobileScreens.css",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/mobileScreens.css",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__mobileScreens.css.patch",
+      "baseSha256": "8ce3b6bd7971647ee8848ba442c847b080a9650989702520abf55c685abf7c04",
+      "patchSha256": "2652d94d96b3f568af080cd8c1e983eb416541dce374b035c113da3da739cb7f",
+      "acceptedSha256": "3f8e827702115446e147b9779ecd294e9f760d1aff4f005d94ef03030cea1091",
+      "acceptedBytes": 13028,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "3f8e827702115446e147b9779ecd294e9f760d1aff4f005d94ef03030cea1091"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__navigation.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/navigation.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/navigation.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__navigation.ts.patch",
+      "baseSha256": "1943114dc4d4a5433be3173b8a05b23ac2ee10674d0d64d39fcb69afa2f186d3",
+      "patchSha256": "be4daeaf7f31c824b0f787fea847fb1a0dc59a3bad3009bad3918c99a47de2df",
+      "acceptedSha256": "0e54f15efb570f8a5758db9ebc1f8d867ec135f91edf68bd61af064370777a2d",
+      "acceptedBytes": 5686,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "0e54f15efb570f8a5758db9ebc1f8d867ec135f91edf68bd61af064370777a2d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__mobile__performance__roomAssets.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/mobile/performance/roomAssets.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/mobile/performance/roomAssets.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__performance__roomAssets.ts.patch",
+      "baseSha256": "be177a8af74aa24307449f0dfd22599b7313087852cee259f8080e487dea1328",
+      "patchSha256": "526e6c981827b29c060f8acb3396f76d9e7785e5d46606f1952d30a78adf5936",
+      "acceptedSha256": "aad43a7e970de73c7ddd6872f0a0851cd14478ad027ef2d8ef2287c081fa57b5",
+      "acceptedBytes": 4830,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "aad43a7e970de73c7ddd6872f0a0851cd14478ad027ef2d8ef2287c081fa57b5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__alertViewModels.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/alertViewModels.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/alertViewModels.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__alertViewModels.ts.patch",
+      "baseSha256": "48ea3c63e29b7137a790cb8d1dd1f5337690ca763f9f8a14a68ca7bc1022c804",
+      "patchSha256": "81858481fd893965478b5934b29c76bf3f6f1541a4bd3175013ff9c0c0f5b331",
+      "acceptedSha256": "0d88be23c9b01b2da17ed7effdae1cc1e7f6d5fa697586ecc2a0d9f752a30da2",
+      "acceptedBytes": 54676,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__session__alertViewModels.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "0d88be23c9b01b2da17ed7effdae1cc1e7f6d5fa697586ecc2a0d9f752a30da2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__alertsEventsViewModel.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/alertsEventsViewModel.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/alertsEventsViewModel.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__alertsEventsViewModel.ts.patch",
+      "baseSha256": "c1320a5858d6eed56b098d8e2b4f1692ccf7eeaa141c2ff285f7d6d85aaa91f1",
+      "patchSha256": "7eff8b025721a6433f222a4019208361a5b306dd0db847ab234c1c566c8106bc",
+      "acceptedSha256": "bbc6c457e36874b05d0c6862c9ae06586d70b82481a606eee293154a46b8fd43",
+      "acceptedBytes": 29466,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__alertsEventsViewModel.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "bbc6c457e36874b05d0c6862c9ae06586d70b82481a606eee293154a46b8fd43"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__buildModePresentation.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/buildModePresentation.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/buildModePresentation.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__buildModePresentation.test.ts.patch",
+      "baseSha256": "aeb8939dea4e8b4255c61ffb07a9dc3b1d6520c7c6d53fc648ae91353885cdb6",
+      "patchSha256": "6ae940d3927b6325bec320bd0356990de6cc44c82cc2c5a665a87a300c16c461",
+      "acceptedSha256": "cf1e992abf5c0ba9e87aee31f3097d556afa2340d25259058a7ee4a34d349488",
+      "acceptedBytes": 6402,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "cf1e992abf5c0ba9e87aee31f3097d556afa2340d25259058a7ee4a34d349488"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__buildModePresentation.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/buildModePresentation.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/buildModePresentation.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__buildModePresentation.ts.patch",
+      "baseSha256": "39f341dde2d87d007a6f70aaddc23a88dfbab48659100b2f1b34a3697f8f757a",
+      "patchSha256": "5d7d5ccf45b068d096cb264d2108ce7ce61750aedede2597b7fdd07803003325",
+      "acceptedSha256": "58c3135f37e0eb8a1b3f3107811ba3bede73f00c3c162096e8b8f4ca648c9036",
+      "acceptedBytes": 12375,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__buildModePresentation.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "58c3135f37e0eb8a1b3f3107811ba3bede73f00c3c162096e8b8f4ca648c9036"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__characterActivityPresentation.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/characterActivityPresentation.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/characterActivityPresentation.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__characterActivityPresentation.ts.patch",
+      "baseSha256": "abe6973ff89410d09b1032587effd0bb6e9eb63c5148cbb07f87578329aa6e63",
+      "patchSha256": "2f9b11d665552856349245be711f929c5988cf38ea6465217dfcebb9e2a18d12",
+      "acceptedSha256": "24c4c19bc1625e751a39392801e91cd2d148aa9c16460758a8ee7727f8dbb54f",
+      "acceptedBytes": 20118,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__characterActivityPresentation.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "24c4c19bc1625e751a39392801e91cd2d148aa9c16460758a8ee7727f8dbb54f"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__employeeTrainingViewModels.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/employeeTrainingViewModels.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/employeeTrainingViewModels.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__employeeTrainingViewModels.ts.patch",
+      "baseSha256": "3f8e3fcfa1b7a131f1f9f7243e1255511059c5e79f64deb0a1f202df6a165a9f",
+      "patchSha256": "a81a1035908ad9ecde8e59816eb8c8083a5198fa506a3a92bae7e1691054dbb2",
+      "acceptedSha256": "47413057881227f6604b4c4a2bf0c9a17505b66d3c615181fb24246b2c77e535",
+      "acceptedBytes": 4017,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__employeeTrainingViewModels.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "47413057881227f6604b4c4a2bf0c9a17505b66d3c615181fb24246b2c77e535"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__levelFourIntegration.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/levelFourIntegration.test.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/levelFourIntegration.test.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__levelFourIntegration.test.ts.patch",
+      "baseSha256": "5021f3a163aa276e9c1e3c705ca7d336c91f2baf3b516b5b22a8b4b3a0a59776",
+      "patchSha256": "3060de1ef03d0594c66c9943c7674db851e2f8a887647f5ea44c45c90aa88b14",
+      "acceptedSha256": "5b32957b273fa44be7e5406932053a494d6aa6d1673e073f49f0d10bc8bd9dee",
+      "acceptedBytes": 6799,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "5b32957b273fa44be7e5406932053a494d6aa6d1673e073f49f0d10bc8bd9dee"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__levelFourProgressionViews.test.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/levelFourProgressionViews.test.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/levelFourProgressionViews.test.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__levelFourProgressionViews.test.tsx.patch",
+      "baseSha256": "483b9816103e82b0716a9e192b2a6e4ed117aa1472d212fa5aed236160ae125e",
+      "patchSha256": "7efe99294b3860908927517845b21201e44b9ab988ad471c73a8d7d81dbf6778",
+      "acceptedSha256": "e33d30d0cfe16876778f0df83efc2c66bc2de5f81b3916fcd41847ef0a84e2d2",
+      "acceptedBytes": 6925,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "e33d30d0cfe16876778f0df83efc2c66bc2de5f81b3916fcd41847ef0a84e2d2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__managementViewModels.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/managementViewModels.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/managementViewModels.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__managementViewModels.ts.patch",
+      "baseSha256": "cd4ae988d934de9f808c04b5baa3ff1148c75a98f499248dc9ceafc75928bfab",
+      "patchSha256": "f38c2e6f978274aa1805346884396e1bf093c3f1356e7023630cc7144dea1287",
+      "acceptedSha256": "bc8bd25e15f0721adf87143deabc3a766b6f02be6f901187d52615010f71a0ef",
+      "acceptedBytes": 15085,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__session__managementViewModels.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "bc8bd25e15f0721adf87143deabc3a766b6f02be6f901187d52615010f71a0ef"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__usePrototypeSession.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__usePrototypeSession.ts.patch",
+      "baseSha256": "84c4d8eedda70fe4f60faa14c8e4406fbcc312cace231cd14d8997b898d1f1ab",
+      "patchSha256": "8f345b6c1b0750ca108237b28c804bad6db2c5e055644dd69134f72c2e4ef8f4",
+      "acceptedSha256": "47af006ef79928f0c80caf7f9f9f0053863611489941af5dcb4c3ca593964a76",
+      "acceptedBytes": 81232,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__session__usePrototypeSession.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "47af006ef79928f0c80caf7f9f9f0053863611489941af5dcb4c3ca593964a76"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__session__viewModels.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/session/viewModels.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__session__viewModels.ts.patch",
+      "baseSha256": "9ffe48b8dbc016359318f08aba4d8f57f27423baa5d6d03d8c529f58fd0571ba",
+      "patchSha256": "68c5504a7ca34c784d759b8734ed89b2a207c91c55fdcfab77e8ecc75730a8bb",
+      "acceptedSha256": "43a08bc3a484cdfa68a82b4c054c0e6cee6b966b2cb6c754e2fedf690ca523d2",
+      "acceptedBytes": 144634,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__session__viewModels.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "43a08bc3a484cdfa68a82b4c054c0e6cee6b966b2cb6c754e2fedf690ca523d2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__ChartPanel.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/ChartPanel.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ChartPanel.tsx.patch",
+      "baseSha256": "8d67a925d3c015be84877a4f2abd101f590f7ecfd0e18a3af19915be2bd3f4d1",
+      "patchSha256": "1b3202cbdff39b5f5c2e48ba0ef99d2b19691ef1d6cc5d0bd2c416ca5471e4d3",
+      "acceptedSha256": "660531dc826395bea84146bebc81ac0f5a389a7d62fb2b560e9799e56f0cf895",
+      "acceptedBytes": 36836,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__ui__ChartPanel.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "660531dc826395bea84146bebc81ac0f5a389a7d62fb2b560e9799e56f0cf895"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__ClinicHeadline.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/ClinicHeadline.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/ClinicHeadline.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ClinicHeadline.tsx.patch",
+      "baseSha256": "b20732283685aad4a978bd1bc0e195f33496c0c32c4d81f20f4b60d714c70074",
+      "patchSha256": "763f71cd35ec0d057a67713bfdd82bd96f7245e7e6066cddb5253c3177fd51b6",
+      "acceptedSha256": "1887db3e4c70eedaba9fde5125084b564db8ee71636fe8d9911275e5ac021cf0",
+      "acceptedBytes": 1834,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__ui__ClinicHeadline.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "1887db3e4c70eedaba9fde5125084b564db8ee71636fe8d9911275e5ac021cf0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__GoalsPanel.test.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/GoalsPanel.test.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/GoalsPanel.test.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__GoalsPanel.test.tsx.patch",
+      "baseSha256": "7eb1f993f8b11a33a38deed76eab345d028437d10304bdc715fac5a0eb06f839",
+      "patchSha256": "8ed556c4bea1e7822fddcbc4d7f28d4f4736b2b6e45372727a950a438fe15117",
+      "acceptedSha256": "dcf80e5175628d149cf78d96d2ccd7dc0e3a43b3c8a356326b21ebda22c13cb2",
+      "acceptedBytes": 2932,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__ui__GoalsPanel.test.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "dcf80e5175628d149cf78d96d2ccd7dc0e3a43b3c8a356326b21ebda22c13cb2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__GoalsPanel.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/GoalsPanel.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/GoalsPanel.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__GoalsPanel.tsx.patch",
+      "baseSha256": "3dbf2b15dc9fad5aeedc14b5347fe9b7098b18392ee5f8b05fddf2d0d1f6ad0a",
+      "patchSha256": "e31098e454d410a959e530ef45fdc68fc0605b775f1cdf397012b32cf19a67b4",
+      "acceptedSha256": "3e8ac9bd11d2047ad8258fff44f393951f2af664abef8b9279f4ca42e6084856",
+      "acceptedBytes": 6139,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__ui__GoalsPanel.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "3e8ac9bd11d2047ad8258fff44f393951f2af664abef8b9279f4ca42e6084856"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__MoneyPanel.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/MoneyPanel.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/MoneyPanel.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__MoneyPanel.tsx.patch",
+      "baseSha256": "a9f264b15389e9c4f89562fe0027ad4c1eed1dea846426b81a32f5eb33adc04f",
+      "patchSha256": "4f500ac8472e4cd5def5114cf9e0dad924e17415512fd8d5d1549e0735888b75",
+      "acceptedSha256": "8ae9edb0ce9b1d9af7ff701b6ed4afc847410a82ab4e98f95ce673f11f9fa522",
+      "acceptedBytes": 7120,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "8ae9edb0ce9b1d9af7ff701b6ed4afc847410a82ab4e98f95ce673f11f9fa522"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__ServiceIncomePanel.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/ServiceIncomePanel.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/ServiceIncomePanel.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ServiceIncomePanel.tsx.patch",
+      "baseSha256": "f7f5b657034feda8a20207bdaa7b714ffcc639e3a3cc78f8bc0b210ad69cb20f",
+      "patchSha256": "a110954eb8101c245a56875432b22f6dc7a146cb4c35737d4570a5dc6cf17ae6",
+      "acceptedSha256": "e1b06749dba0f86f9d8e5a8d6fd0106d32b0a9e70dc69124cf9f4e7e535c8dd0",
+      "acceptedBytes": 12998,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "e1b06749dba0f86f9d8e5a8d6fd0106d32b0a9e70dc69124cf9f4e7e535c8dd0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__StaffPanel.tsx",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/StaffPanel.tsx",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/StaffPanel.tsx",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__StaffPanel.tsx.patch",
+      "baseSha256": "0a7d11cb60ea21b6f82ebbd9efd54fb8d14f04f74912958d12681b8934b6c659",
+      "patchSha256": "cb1bfe1c6f49c300a52d97c90a50a101aa9cea9976b55f566140197731f7cd70",
+      "acceptedSha256": "7291cbb4528c075b5a8541d58fa2b93abe3468a7834343161e0ddf0189ad6947",
+      "acceptedBytes": 17180,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__src__ui__StaffPanel.tsx",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "7291cbb4528c075b5a8541d58fa2b93abe3468a7834343161e0ddf0189ad6947"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__goalsPanel.css",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/goalsPanel.css",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/goalsPanel.css",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__goalsPanel.css.patch",
+      "baseSha256": "7248675c182ff26e9d305f6be80f056f2247a381c54d91d386a2904c5aa7ed07",
+      "patchSha256": "1a9b2c353ba48da69f29f880d0ac02b514d09e719766028b143b93f1874f34a3",
+      "acceptedSha256": "7e84ae2bbb2a8820b94f32c7ef9e1224198389919ce43fc38d899491394ab506",
+      "acceptedBytes": 2519,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "7e84ae2bbb2a8820b94f32c7ef9e1224198389919ce43fc38d899491394ab506"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__apps__player__src__ui__types.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "apps/player/src/ui/types.ts",
+      "base": "recovery/bases/checkpoint5/apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/checkpoint5__apps__player__src__ui__types.ts.patch",
+      "baseSha256": "1265aa89d89677baa70323bda14967e4228768cdd5147ff35c36eda85c49c0f0",
+      "patchSha256": "9c977a0b343bef5972035028dd0987e84e0a2cd8f62c99293d986edbc6146749",
+      "acceptedSha256": "5b4a32ccc572de437a49cbc6689d67373ece88aeddd17f1dd19befd8fef070e0",
+      "acceptedBytes": 23486,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__apps__player__src__ui__types.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "5b4a32ccc572de437a49cbc6689d67373ece88aeddd17f1dd19befd8fef070e0"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__docs__execplans__character-gapfill-v6-20261007.md",
+      "scope": "Manager-accepted since backup 4",
+      "path": "docs/execplans/character-gapfill-v6-20261007.md",
+      "base": "recovery/bases/checkpoint5/docs/execplans/character-gapfill-v6-20261007.md",
+      "patch": "recovery/patches/checkpoint5__docs__execplans__character-gapfill-v6-20261007.md.patch",
+      "baseSha256": "bb16f668007d1d5384319ce8570b587c0b9c1f9f3ececf9f57f074f3561a7ac4",
+      "patchSha256": "fd1d05913b49c0038e67e80806933141b872a2c0fad56abd106ba67d733bc3e7",
+      "acceptedSha256": "441b997b9b2fce0ce370a278e2a64bc07fa6e43f08abd32e0e898f054cee814b",
+      "acceptedBytes": 91490,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__docs__execplans__character-gapfill-v6-20261007.md",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: accepted scope, binding M0 or shared acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "441b997b9b2fce0ce370a278e2a64bc07fa6e43f08abd32e0e898f054cee814b"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__docs__execplans__level5-room-design-20261008.md",
+      "scope": "Manager-accepted since backup 4",
+      "path": "docs/execplans/level5-room-design-20261008.md",
+      "base": "recovery/bases/checkpoint5/docs/execplans/level5-room-design-20261008.md",
+      "patch": "recovery/patches/checkpoint5__docs__execplans__level5-room-design-20261008.md.patch",
+      "baseSha256": "a51a7579639f13255a04bd3d1e0a1cd9966e4ec1b63a6865c3297b2360ee3792",
+      "patchSha256": "d410adadf9a5571eab75471c93e3ce0db861d9a8153a110517a24baa1c2ebef8",
+      "acceptedSha256": "0c9f0e9aff2fd7b70d5658d489347cc5043614c46dcc4324f4a4c88936992ce8",
+      "acceptedBytes": 88957,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: accepted scope, binding M0 or shared acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "0c9f0e9aff2fd7b70d5658d489347cc5043614c46dcc4324f4a4c88936992ce8"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+      "scope": "Manager-accepted since backup 4",
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "base": "recovery/bases/checkpoint5/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "patch": "recovery/patches/checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "baseSha256": "961b2dfcb76d210aea45b83db07bb4586bacb64978d949609e31bcdf94fe11a6",
+      "patchSha256": "c6a70b38b540ec19af189a4adb54e9b69f2293556f1490ecad47049ef31d8536",
+      "acceptedSha256": "bae7c810f4ea39b5c573fdd60457d97fa31cd1265b575917934bba33231b35c5",
+      "acceptedBytes": 481938,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: accepted scope, binding M0 or shared acceptance record"
+        ],
+        "currentAcceptedCaptureSha256": "bae7c810f4ea39b5c573fdd60457d97fa31cd1265b575917934bba33231b35c5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__app-role.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/app-role.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/app-role.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__app-role.test.ts.patch",
+      "baseSha256": "bdbbb1f3664c94f2c5648875219f92aa70c41194091aff10216bbeadab2e48f6",
+      "patchSha256": "c259e61c5a3988268a1ee44d57486105fc9f89b2eb6eaa230ab08af889c0d2f9",
+      "acceptedSha256": "2846a1c619efb3889fef1cb560dde862aabc20e4d4241bd285a134b7b55f08e6",
+      "acceptedBytes": 2141,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "2846a1c619efb3889fef1cb560dde862aabc20e4d4241bd285a134b7b55f08e6"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__approved-room-layouts.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/approved-room-layouts.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__approved-room-layouts.test.ts.patch",
+      "baseSha256": "7d1097c52cffea081dd79c686a337bb8c62ba8b7a0c3d78d35cfd2306a54a739",
+      "patchSha256": "29c2ef9188566927756d2f48fd50eb7e184e24465d680080312fb3e537a6a160",
+      "acceptedSha256": "729d29698125224676528403b9271789ce564fff7294f6f790b8a3ed6e9e72ab",
+      "acceptedBytes": 8188,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__approved-room-layouts.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "729d29698125224676528403b9271789ce564fff7294f6f790b8a3ed6e9e72ab"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__approved-room-layouts.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/approved-room-layouts.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/approved-room-layouts.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__approved-room-layouts.ts.patch",
+      "baseSha256": "68dba37809f04665c29954f352a608493f9998aa399f186a87434aa58934ee46",
+      "patchSha256": "f92e0d76323377e5ae677d2d808077809e591423965bb1e0d91d3a26aa3fce3f",
+      "acceptedSha256": "3f85d6963e0ec6dd9d7299203684619d6e95f984771e760a758adb577e2b2579",
+      "acceptedBytes": 26975,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__approved-room-layouts.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "3f85d6963e0ec6dd9d7299203684619d6e95f984771e760a758adb577e2b2579"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__employee-training.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/employee-training.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/employee-training.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__employee-training.test.ts.patch",
+      "baseSha256": "fe307833f1cabb28f72d9692500b492d317486d237e4cf7c67018bb4f1be4033",
+      "patchSha256": "8965c72864a152d790478ab4283015040b9ed1b64513c6202cf57ee86ea968e3",
+      "acceptedSha256": "258db657d1ef7fd1e019e6fd7f7b40e504833f793ef57ab543ebdc545708c8c7",
+      "acceptedBytes": 3308,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "258db657d1ef7fd1e019e6fd7f7b40e504833f793ef57ab543ebdc545708c8c7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__employee-training.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/employee-training.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/employee-training.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__employee-training.ts.patch",
+      "baseSha256": "dbac4eef4aea90db10f5f12bce4b557040a853e4fb4cfa194bd68485d58a2fe3",
+      "patchSha256": "c503222e889fb609d780f412f53c0fb9b6df271a7a69e5db060410fc32006136",
+      "acceptedSha256": "9daacd4783b15e7fa5ee85c1348a313e6454bae4710e003d5494f3b890d899d5",
+      "acceptedBytes": 5389,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9daacd4783b15e7fa5ee85c1348a313e6454bae4710e003d5494f3b890d899d5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__index.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/index.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/index.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__index.ts.patch",
+      "baseSha256": "842265288488eccfc533f8aaddbc4dc37206581cde9956c3b43baa61914d55fb",
+      "patchSha256": "3ae6e6d0c3cd75377c2ef80d5138b214ca6982aac2d1f1bd603ce9048b415969",
+      "acceptedSha256": "249ea512e15e84f7fbb91f490f2e30372543253a6218a11a37e3f75c889a6d13",
+      "acceptedBytes": 950,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__index.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "249ea512e15e84f7fbb91f490f2e30372543253a6218a11a37e3f75c889a6d13"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__level-four-rooms.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/level-four-rooms.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/level-four-rooms.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__level-four-rooms.test.ts.patch",
+      "baseSha256": "0734860e3c3df7266735f2b7333b84297ad25ac8ee2dc3445d363340e7846373",
+      "patchSha256": "b602fad56dd90aae701c666d3875dedb8ab0d9fe85485d57efb44278f1ab582d",
+      "acceptedSha256": "fcbc3ed9dbca79c31239df9df050bc50576d53650c45cb71aa542717770e7dc2",
+      "acceptedBytes": 4897,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "fcbc3ed9dbca79c31239df9df050bc50576d53650c45cb71aa542717770e7dc2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__level-four-schema.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/level-four-schema.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/level-four-schema.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__level-four-schema.test.ts.patch",
+      "baseSha256": "b5355e92f682af609908c045b0f867d344e937841d32d33de544fb785081f915",
+      "patchSha256": "746499f132fe6fb02ac4f8ce6c23c9657e75770e662c70f3679925b2e9ab6db9",
+      "acceptedSha256": "831da8f0e29c79b2fff5c19bf714781b3b5bc0dbc802fb406b5c9d1485ec159c",
+      "acceptedBytes": 7918,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "831da8f0e29c79b2fff5c19bf714781b3b5bc0dbc802fb406b5c9d1485ec159c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__mri-services.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/mri-services.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/mri-services.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__mri-services.test.ts.patch",
+      "baseSha256": "42c55ee89d97d0585a5f8f67df34117cb6047fc7de2ea4b7fea03b38f99a53ed",
+      "patchSha256": "04b23f083cbb5f6fac97bc14cbbc0fbea2b85518382d3924cbd0456ab676d27c",
+      "acceptedSha256": "4c5d92b36817fedf9b8b2fbc60af89bdce3e39c051e3c3c4dd76fb992dbeb6c4",
+      "acceptedBytes": 2885,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "4c5d92b36817fedf9b8b2fbc60af89bdce3e39c051e3c3c4dd76fb992dbeb6c4"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__prototype-alerts.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/prototype-alerts.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/prototype-alerts.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__prototype-alerts.ts.patch",
+      "baseSha256": "96a13b9f7aaa4347d1070fd97c48a308523ecb4d7feeac91b0b5d4fdf30fbb83",
+      "patchSha256": "dc635c900d60e30eef4b849be18bca1852ad7a876b573658e38900ea3d676c2f",
+      "acceptedSha256": "a8dc47665b7d987fa82142367bdc9bc2660a28ce7e170196d9c4ddc150a07e4d",
+      "acceptedBytes": 49796,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__prototype-alerts.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a8dc47665b7d987fa82142367bdc9bc2660a28ce7e170196d9c4ddc150a07e4d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__prototype-balance.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/prototype-balance.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/prototype-balance.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__prototype-balance.test.ts.patch",
+      "baseSha256": "fd1a15ea7467a1c0154ac260b73c277fbd382050fae71bc2bfe2de494bfe1583",
+      "patchSha256": "c75b637c43b35be69d300e4cfbd7c3e810743a34aa8f545ef723400a1bcecf0b",
+      "acceptedSha256": "25a36075d7a2523ce18a3d761291f723ef31ec84420e353a3f8e50d7c6e1ba6e",
+      "acceptedBytes": 25981,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__prototype-balance.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "25a36075d7a2523ce18a3d761291f723ef31ec84420e353a3f8e50d7c6e1ba6e"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__prototype-balance.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/prototype-balance.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__prototype-balance.ts.patch",
+      "baseSha256": "aab446b44140ce826fa0a65912c235048188aa700eb6b7452765526623b51ee4",
+      "patchSha256": "1d4844ad42491215a0d3a20dd8d3c7ebb633bba90f81c5ce5eb7dd8480241125",
+      "acceptedSha256": "6d93b7092e6145ec88180c38d004cd7d5d99206d8c0fe5165b133d9e9ddde186",
+      "acceptedBytes": 95956,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__prototype-balance.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "6d93b7092e6145ec88180c38d004cd7d5d99206d8c0fe5165b133d9e9ddde186"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__room-upgrades.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/room-upgrades.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/room-upgrades.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__room-upgrades.test.ts.patch",
+      "baseSha256": "c7289b2c2c823a728af07f2df43aeec4b9d49ca8162270ccae85a068f88fb47f",
+      "patchSha256": "0f92b83dfb8a596bb461aa6f36a533973c30b07af3ddd47a194fc788850dbab7",
+      "acceptedSha256": "f07ef040fea1fc271035f27568c8382d078536d9f414677175d104a10712592d",
+      "acceptedBytes": 11991,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "f07ef040fea1fc271035f27568c8382d078536d9f414677175d104a10712592d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__room-upgrades.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/room-upgrades.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/room-upgrades.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__room-upgrades.ts.patch",
+      "baseSha256": "5020f6de7f240ac07a65166832ba3b9886919636699067414a327675ed13e7ef",
+      "patchSha256": "b782fe0a254fd23c93252e18afd3992db5ee08ff61e4927b68fc662d669ae71e",
+      "acceptedSha256": "c8ad82d81330b36690213254c4ecd030bae45035f5b9301a7cc2819d39c3c260",
+      "acceptedBytes": 12124,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "c8ad82d81330b36690213254c4ecd030bae45035f5b9301a7cc2819d39c3c260"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__schema.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/schema.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/schema.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__schema.ts.patch",
+      "baseSha256": "cc6b4ba4532effca5defd6657493c4376bcf426ad535572e58ac89494c76cc23",
+      "patchSha256": "ccff97c321402392fc0df4a74eb49b192befa73bab1058cf060d277a67580730",
+      "acceptedSha256": "2f3732a177017b1ed7a6f29f454ec6f383a97718f144bf41b4474e880acb5713",
+      "acceptedBytes": 49635,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__balance-config__src__schema.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "2f3732a177017b1ed7a6f29f454ec6f383a97718f144bf41b4474e880acb5713"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__balance-config__src__wound-ostomy-services.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/balance-config/src/wound-ostomy-services.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/balance-config/src/wound-ostomy-services.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__balance-config__src__wound-ostomy-services.test.ts.patch",
+      "baseSha256": "ea80b78269308f4fcd16e52c33621f0a03d6c3713a4fd3e5766f0108a09e4ebb",
+      "patchSha256": "08982210563e4075c4132d3dbe96f39d9b11ab57465a651e1f5f59e6f5598d1e",
+      "acceptedSha256": "bedf1a9d162f77d344ec325523c6b17973d17952981c40687b4f59236a001891",
+      "acceptedBytes": 1871,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "bedf1a9d162f77d344ec325523c6b17973d17952981c40687b4f59236a001891"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__appearance.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/appearance.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/appearance.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__appearance.ts.patch",
+      "baseSha256": "4077f44d11622299b57aaaafc20834389d00a8c49b1d339363a80665363e020e",
+      "patchSha256": "bc933ab220657928a4b71c8ad78ce3fc407e8f20d49a6f07cb3db7f385c53821",
+      "acceptedSha256": "26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9",
+      "acceptedBytes": 27721,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__appearance.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__characterStillCatalog.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/characterStillCatalog.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__characterStillCatalog.test.ts.patch",
+      "baseSha256": "9feeefef20872bd3c028a6a3d1bbc5500a3e0cd3100b19d3c1c89b6ae3ebae2b",
+      "patchSha256": "e4357a666aeea3ea2b1e8f735a30c3c82ce24c275763e05ab3e500c422e0faaa",
+      "acceptedSha256": "1536d612d0b9f0563b0c20d9ae3b375350d89ae61d0fa61821ada3a3b3458625",
+      "acceptedBytes": 33272,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__characterStillCatalog.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "1536d612d0b9f0563b0c20d9ae3b375350d89ae61d0fa61821ada3a3b3458625"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__characterStillCatalog.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/characterStillCatalog.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__characterStillCatalog.ts.patch",
+      "baseSha256": "ed24d05932cd7e1ed55b26ea7ec8e136ee8f597155a038dd99f9fa363d8a68d9",
+      "patchSha256": "2215f08e5677968e9ffe82503fbec6887972c46eae7eba30f352a1d9d0058eda",
+      "acceptedSha256": "4fc22cf6b1124e7e79d1418cec02b8d58668d64df0665c2e193771e5cf90aa40",
+      "acceptedBytes": 23509,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__characterStillCatalog.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "4fc22cf6b1124e7e79d1418cec02b8d58668d64df0665c2e193771e5cf90aa40"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__displaced-routing.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/displaced-routing.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/displaced-routing.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__displaced-routing.ts.patch",
+      "baseSha256": "4332d3f2bc962e26c76656a21e1148408ffb6d52b9b0ddc11d29a3a162735011",
+      "patchSha256": "800d911c4cef3a5593efe049ec961f9e8c2d82c609fd4c4fbabc15ea26692177",
+      "acceptedSha256": "d6f410b980d500157fc05ad4e136487349bb7604d0a0edee428173146ff29e93",
+      "acceptedBytes": 8792,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "d6f410b980d500157fc05ad4e136487349bb7604d0a0edee428173146ff29e93"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__employee-training-effects.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/employee-training-effects.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/employee-training-effects.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__employee-training-effects.ts.patch",
+      "baseSha256": "f77f4b799d39a7820cad827310b015fa6613f17f62c8751d9b54277a21227e10",
+      "patchSha256": "5d2007d3f1b06651ec0b7456442c37512dd44b6b53920779cdd62b10ce7f0123",
+      "acceptedSha256": "91f2d18dc35f63aee3202468a703cdcc4df906b0fba98183f4a6c5ab6e6d27f7",
+      "acceptedBytes": 8189,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "91f2d18dc35f63aee3202468a703cdcc4df906b0fba98183f4a6c5ab6e6d27f7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__employee-training.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/employee-training.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/employee-training.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__employee-training.ts.patch",
+      "baseSha256": "79a2a04843edf275ed054926cfbdc7f6d6ef36d267a79178c5b1262b1b759777",
+      "patchSha256": "07d51572f7eea9b71e0c46ac48e048d92e6a5b193fce4d9c88f22567c7864084",
+      "acceptedSha256": "de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5",
+      "acceptedBytes": 34810,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__facility-experience.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/facility-experience.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__facility-experience.ts.patch",
+      "baseSha256": "08a1d706a84219e03372582a78055221304fd9240c0d708955b03d3a1db796ea",
+      "patchSha256": "6d84251339f428a6394c16b149bda7c508eaad88fa891e582c4c2829295043c8",
+      "acceptedSha256": "cd2d849baa5060261d45dc03d26e27cc57788a5d6acb2f8df5e3a951e30009ba",
+      "acceptedBytes": 24679,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008",
+        "contractId": "alerts-events__packages__game-domain__src__facility-experience.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "cd2d849baa5060261d45dc03d26e27cc57788a5d6acb2f8df5e3a951e30009ba"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__guidance-progression.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/guidance-progression.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/guidance-progression.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__guidance-progression.ts.patch",
+      "baseSha256": "56bbc7b5a926128ebf48d9e373e6cf9637fd7d9d38094c778708e31d0543d0f1",
+      "patchSha256": "c5f0328ded3f381f81ed624355efefddb7558721f9e303f6e31b1b95617355d2",
+      "acceptedSha256": "f6c4d618bfb0d9ec162c7954f9b8e5a4bc11ac3d7c98759ff6efc8a46facf9a7",
+      "acceptedBytes": 7849,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__guidance-progression.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "f6c4d618bfb0d9ec162c7954f9b8e5a4bc11ac3d7c98759ff6efc8a46facf9a7"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__guidance-tips.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/guidance-tips.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/guidance-tips.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__guidance-tips.ts.patch",
+      "baseSha256": "a62215bde6ba3825f797acf4d4c61976c7bd4603360d9641dae5300f1bcfb1f3",
+      "patchSha256": "3000e9a72f9af33fc181f18fd0392d2f4ccf7883ab72eb21debd378c78d076d3",
+      "acceptedSha256": "af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915",
+      "acceptedBytes": 69854,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__guidance-tips.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__index.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/index.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/index.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__index.ts.patch",
+      "baseSha256": "22de2d35d3f5bd19a0b89c877a06f3f3ac6e3b808c02573db897fde6769120be",
+      "patchSha256": "7d7217ee7ed66b11702886a3b8ed16f68f150d33abc6b2fc768280b017928f42",
+      "acceptedSha256": "54d11f5d506212abce8ecaf5ba2c9519a5fe59e0b20f8aebcba5169a6c971ed5",
+      "acceptedBytes": 2408,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__index.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "54d11f5d506212abce8ecaf5ba2c9519a5fe59e0b20f8aebcba5169a6c971ed5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__level-three-support.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/level-three-support.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/level-three-support.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__level-three-support.ts.patch",
+      "baseSha256": "76db196a46d038e4af3882343c7326ffb16dca248ae69f3a1723bcdc1df1f9e4",
+      "patchSha256": "c5b9535fa6587e858343a3eb87c8aa14248dff19fe9c74a8dc100e33f00f1f31",
+      "acceptedSha256": "9fc3ad536c6847099f92f19c03b5d7d35e67971cd3fa1c7b4aa25a3100fd7136",
+      "acceptedBytes": 28456,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9fc3ad536c6847099f92f19c03b5d7d35e67971cd3fa1c7b4aa25a3100fd7136"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__patient-amenities.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/patient-amenities.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__patient-amenities.ts.patch",
+      "baseSha256": "b14ca741f032b7f1b578224dd6fc7ca10caa7cf0ccc471c8af987d44b3af5951",
+      "patchSha256": "76b0f90d13912aa619e1da79611e1c36f10e34295b0c7855bbe5c9405659d1a3",
+      "acceptedSha256": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "acceptedBytes": 27776,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__patient-amenities.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__persistence.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/persistence.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/persistence.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__persistence.ts.patch",
+      "baseSha256": "da712aad762ed64957cbfac996487c381fee12dcd1b39117cfd69b5c54f2ef4d",
+      "patchSha256": "b670ea5fdbc53e175d00e25a8d5fdff4ce76b71a408b32ae92658031955e4943",
+      "acceptedSha256": "4c818dc6b813864543c967754905567a8ebc6ba5b01cadec9f887bff15b134bc",
+      "acceptedBytes": 234037,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__persistence.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "4c818dc6b813864543c967754905567a8ebc6ba5b01cadec9f887bff15b134bc"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__radiologist-read-income.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/radiologist-read-income.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/radiologist-read-income.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__radiologist-read-income.ts.patch",
+      "baseSha256": "0aed5d4244566eeccda0a6822bec94e4eacf4dc6d12cff7dfe16786fda7a0f6c",
+      "patchSha256": "437578f0dfa6b425eb61c794641a3ba64ebdafd731d89fba3b9a23d365df00e1",
+      "acceptedSha256": "dfcda3f3c079dc99b780be974c56f007476d7abbb623f36421e9e06717d68671",
+      "acceptedBytes": 14992,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "dfcda3f3c079dc99b780be974c56f007476d7abbb623f36421e9e06717d68671"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__reducer.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/reducer.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/reducer.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__reducer.ts.patch",
+      "baseSha256": "eca5ed150c806bbd70409bac6579ec727e0fddb37e4787fdb4556dae4ec01220",
+      "patchSha256": "4160221a1991f9bcd13288eb98dd844ac1efd555270d9787047e646e25f466b0",
+      "acceptedSha256": "93d5aaed766fd61e9af616d368478669ed98973b577e11a6b28e290b07659bd5",
+      "acceptedBytes": 418871,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__packages__game-domain__src__reducer.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "93d5aaed766fd61e9af616d368478669ed98973b577e11a6b28e290b07659bd5"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__retail-operations.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/retail-operations.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__retail-operations.ts.patch",
+      "baseSha256": "72e19074f3cdbfe64ca43080e54e9380f190432dde8ba915c17579c9bd1ff282",
+      "patchSha256": "3b8fcf4130e3d907a3afa40a11e6019c6b69f310a39892b9fcbfb18b154006b0",
+      "acceptedSha256": "b6d0686be7e077f8dcae425745f8755287cac889d265bb66b15b4fd60f1d4f1c",
+      "acceptedBytes": 70335,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__retail-operations.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "b6d0686be7e077f8dcae425745f8755287cac889d265bb66b15b4fd60f1d4f1c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__room-capacity.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/room-capacity.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/room-capacity.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__room-capacity.ts.patch",
+      "baseSha256": "f5d6e07c2ee6c87bb924a6db4c95900ea7eb95d306fbfe4fee31f1d901f3fc8c",
+      "patchSha256": "f9183ed681f65bd96186c60ac90829d960937cf9be0803b60d30a10f941367e9",
+      "acceptedSha256": "d1ed66c4249b961acbf99ddf26215375a0af05e5901d7efec60815bd189e03fe",
+      "acceptedBytes": 10002,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__room-capacity.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "d1ed66c4249b961acbf99ddf26215375a0af05e5901d7efec60815bd189e03fe"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__room-upkeep-outages.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/room-upkeep-outages.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/room-upkeep-outages.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__room-upkeep-outages.ts.patch",
+      "baseSha256": "87e1efc13333924c7228041c93f2fcdb797c52515819daa9de5f0457976f3f91",
+      "patchSha256": "40b11d0c712ea8fa12c95902ad5d81bd290c1f54e4aa3e308c9d3f696a6fe62f",
+      "acceptedSha256": "e7624ad380532c913aca25a8680100052a3667cb7b04b38c100345233ff92642",
+      "acceptedBytes": 4978,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "e7624ad380532c913aca25a8680100052a3667cb7b04b38c100345233ff92642"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__selectors.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/selectors.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/selectors.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__selectors.ts.patch",
+      "baseSha256": "86cedd867eee57c25a26a0ccf496242dab0a86a78914816114116a3c56ac59fe",
+      "patchSha256": "a43d16056a572d66e4d416fe98d94eff78eb18053a16b30c26ca3cb421171a4c",
+      "acceptedSha256": "b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb",
+      "acceptedBytes": 82347,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__selectors.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__service-operations.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/service-operations.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/service-operations.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__service-operations.ts.patch",
+      "baseSha256": "e4a3c604fa774e1c2b0f026f6a1ce9877c944f4aef70ec4c51ba920c66365115",
+      "patchSha256": "1ad8710e487828e24365d76a4d83abbdd382c1bf371721bb8ccc3e62133864c7",
+      "acceptedSha256": "9b0c8232faccc272ae3d17d3457980d14594cdd2a24cd7ad5ffa090c7db8712e",
+      "acceptedBytes": 162496,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__service-operations.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9b0c8232faccc272ae3d17d3457980d14594cdd2a24cd7ad5ffa090c7db8712e"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__staff.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/staff.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/staff.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__staff.ts.patch",
+      "baseSha256": "1c666cd0829cfc2b0af8418b895912057dc8c67f16f715c917fdf74d55d02d27",
+      "patchSha256": "deff4751dba2b7b492aa2848b29bb02b0eb091d90cf2d5a5c0638867e0f637f0",
+      "acceptedSha256": "01a84bae18dc72b353840a526944e98a72e5ab9a1fe8dc18dcebc6637a1c0260",
+      "acceptedBytes": 31255,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__staff.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "01a84bae18dc72b353840a526944e98a72e5ab9a1fe8dc18dcebc6637a1c0260"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__src__types.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/src/types.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/src/types.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__src__types.ts.patch",
+      "baseSha256": "74ede4a240cc195c41deff5fb3c293e0d2bb0b4b426749050d48c5b91f71699c",
+      "patchSha256": "1a3a9453acbb2c8804d911733a97f879290285ff3ef7ed6e8594b6fcfabf3f26",
+      "acceptedSha256": "452324bbc85ef83005a817f0f2ca748f5c3889b47c14dff598f3b76bb4e5c86e",
+      "acceptedBytes": 70774,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__src__types.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "452324bbc85ef83005a817f0f2ca748f5c3889b47c14dff598f3b76bb4e5c86e"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__game-domain.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/game-domain.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/game-domain.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__game-domain.test.ts.patch",
+      "baseSha256": "ea706e325bde5bbf16e9a6f836c2b853cf8ec0c6bb3d132e87a8f8ff3e3ea84b",
+      "patchSha256": "c863665f9ae6a441fdf2234987fe708aeecf52bf9d65be76f15329866a777d1c",
+      "acceptedSha256": "5ed24e353624265659b65cdcf7043ff0f51cf117e19036a79561043c2fcd7faa",
+      "acceptedBytes": 28885,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__game-domain.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "5ed24e353624265659b65cdcf7043ff0f51cf117e19036a79561043c2fcd7faa"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__level-four-integration.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/level-four-integration.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/level-four-integration.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__level-four-integration.test.ts.patch",
+      "baseSha256": "a24ab0f260d3e399d49fdd188c55d8347fc81d9e49cbc7033e516687195ab146",
+      "patchSha256": "56d85f7b0dad7386e8fb905925cf470179867a952bb0ebfe5720eab3266219ca",
+      "acceptedSha256": "052b28c445fbfefb25d033e9b20719953096cf3c67e718fbc092ff53af0c3236",
+      "acceptedBytes": 26457,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "052b28c445fbfefb25d033e9b20719953096cf3c67e718fbc092ff53af0c3236"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__level-four-persistence.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/level-four-persistence.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/level-four-persistence.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__level-four-persistence.test.ts.patch",
+      "baseSha256": "95a809e8a4777e0da67809a77729c45f1c8e2797ef7d7303ce9d7ea6cd13b071",
+      "patchSha256": "e6a23e8447e2aa30c1a4e04ef060a9c5971005e44a00ecc141297b7b88216cfb",
+      "acceptedSha256": "9498a9bc4d27b2db2b24b0520ab202afcba1af5d10c36871303302ff56f6aad6",
+      "acceptedBytes": 16699,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "9498a9bc4d27b2db2b24b0520ab202afcba1af5d10c36871303302ff56f6aad6"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__level-four-progression.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/level-four-progression.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/level-four-progression.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__level-four-progression.test.ts.patch",
+      "baseSha256": "bd4ddb34a17f1673b758ba64e8057a0bff7994e3d6c96847f02957ba30800c56",
+      "patchSha256": "ff34c5ff4c1063b8a64576308a3fedd731611a687e5f198deb1f0519dca18877",
+      "acceptedSha256": "e77b460c9e6b5c28421bc5695ace6393599d96e87ff0c71c02f8637c0c60faa3",
+      "acceptedBytes": 9958,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "e77b460c9e6b5c28421bc5695ace6393599d96e87ff0c71c02f8637c0c60faa3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__level-three-goals.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/level-three-goals.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/level-three-goals.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__level-three-goals.test.ts.patch",
+      "baseSha256": "832737272f6b77d820134955c2f6bac599dbb23b2fa43087ec133ae1dd4eb925",
+      "patchSha256": "685311f0028ff64ca71bb8aa673142d152395e0fb52d8c49804a3c4b5e469d3e",
+      "acceptedSha256": "a00d091f02da74c2260e7e3d83cc1332c9267e9370d156d08e9432134353703c",
+      "acceptedBytes": 4050,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a00d091f02da74c2260e7e3d83cc1332c9267e9370d156d08e9432134353703c"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__level-two-progression.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/level-two-progression.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/level-two-progression.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__level-two-progression.test.ts.patch",
+      "baseSha256": "e1bad677f7dfc455c350daf0c6f18fccb4308f7656a5d09f745f528f3f003748",
+      "patchSha256": "98bac514d73a9d247fa8fe581df3f6844233c5610fa2d4579a5e13d72da97282",
+      "acceptedSha256": "a82597e8f828eee6d45b416928f24eb917a257818a034f880a591f899bd3f2f1",
+      "acceptedBytes": 15544,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__level-two-progression.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "a82597e8f828eee6d45b416928f24eb917a257818a034f880a591f899bd3f2f1"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__pediatric-clinic-admission.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__pediatric-clinic-admission.test.ts.patch",
+      "baseSha256": "831e593d6a60015f03c124d4fa60107610391a7e718f53836a33c8dc9ef16b91",
+      "patchSha256": "4e0ab6227c30d71944ce7324a30e9d17ae72949eba9b157d25f366f46c830319",
+      "acceptedSha256": "7fe11ea72459e8f76e9afbe4f735450832284c312a14b91f508b657a1e6eb4f3",
+      "acceptedBytes": 18638,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "7fe11ea72459e8f76e9afbe4f735450832284c312a14b91f508b657a1e6eb4f3"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__packages__game-domain__tests__room-upgrade-revenue.test.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "packages/game-domain/tests/room-upgrade-revenue.test.ts",
+      "base": "recovery/bases/checkpoint5/packages/game-domain/tests/room-upgrade-revenue.test.ts",
+      "patch": "recovery/patches/checkpoint5__packages__game-domain__tests__room-upgrade-revenue.test.ts.patch",
+      "baseSha256": "6adf6bf7388524fbfa2ce628aa7d8e2ebdd7eb9e243798688c7e998aaaa8267f",
+      "patchSha256": "15e53a0d34bdcf7a32e58783dcf886d893d81b8f3a7be74307e38f4d9223ef9f",
+      "acceptedSha256": "dd2f651e1a4590d84543ec1251f2e48e4987fb3bd742addce1688373502e2aad",
+      "acceptedBytes": 32859,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__packages__game-domain__tests__room-upgrade-revenue.test.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Manager-accepted Level 5 M1-M10 runtime/test lane and intake delta",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "dd2f651e1a4590d84543ec1251f2e48e4987fb3bd742addce1688373502e2aad"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__tools__character-mapping__gs026-runtime-stills__provenance-manifest.json",
+      "scope": "Manager-accepted since backup 4",
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "base": "recovery/bases/checkpoint5/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "patch": "recovery/patches/checkpoint5__tools__character-mapping__gs026-runtime-stills__provenance-manifest.json.patch",
+      "baseSha256": "7872b275a02ce144373947417d72bd308cb9345366561784515117e5356e04aa",
+      "patchSha256": "a3f4f54a03b0825e158e798ca0e21a8054f91a207397b6619908837d61ecbeb2",
+      "acceptedSha256": "f641201d93c6dfb2df6caf2bef141289a464320f11ac003c190728675dfe1462",
+      "acceptedBytes": 2426074,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__tools__character-mapping__gs026-runtime-stills__provenance-manifest.json",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "f641201d93c6dfb2df6caf2bef141289a464320f11ac003c190728675dfe1462"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__tools__economy-audit__README.md",
+      "scope": "Manager-accepted since backup 4",
+      "path": "tools/economy-audit/README.md",
+      "base": "recovery/bases/checkpoint5/tools/economy-audit/README.md",
+      "patch": "recovery/patches/checkpoint5__tools__economy-audit__README.md.patch",
+      "baseSha256": "e83994b0fec6514908905f4e4e8cb6ea51612a5be2938b9884a91aa02a45462c",
+      "patchSha256": "253d489f1d28e9cfa23365e13433a55ef06e954274cd0c07e0bd2506112eeb20",
+      "acceptedSha256": "861b05f5bfafc71044abc949f82ece0954d510f99eaf14734c98811d87db6ba2",
+      "acceptedBytes": 6065,
+      "baselineKind": "prior_archive_latest_accepted_whole_file",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: tools/economy-audit",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "861b05f5bfafc71044abc949f82ece0954d510f99eaf14734c98811d87db6ba2"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__tools__qa__level-four-rooms-bootstrap.ts",
+      "scope": "Manager-accepted since backup 4",
+      "path": "tools/qa/level-four-rooms-bootstrap.ts",
+      "base": "recovery/bases/checkpoint5/tools/qa/level-four-rooms-bootstrap.ts",
+      "patch": "recovery/patches/checkpoint5__tools__qa__level-four-rooms-bootstrap.ts.patch",
+      "baseSha256": "65c7bfef2939edf2f9ce41277a35cec1bde553f7a0897baedfbf56eeabc32d35",
+      "patchSha256": "b3f04f7c4c5c2034b19a3769ead28f7b2597c388b2d1dce6e52ce45e9fd008f6",
+      "acceptedSha256": "3b5fad6ccf9ccde4d0024ec66289e449ef71ecfcf0230ea8b3cc0f3be49d4290",
+      "acceptedBytes": 6594,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__tools__qa__level-four-rooms-bootstrap.ts",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: tools/qa",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "3b5fad6ccf9ccde4d0024ec66289e449ef71ecfcf0230ea8b3cc0f3be49d4290"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    },
+    {
+      "id": "checkpoint5__tools__qa__level-four-rooms.mjs",
+      "scope": "Manager-accepted since backup 4",
+      "path": "tools/qa/level-four-rooms.mjs",
+      "base": "recovery/bases/checkpoint5/tools/qa/level-four-rooms.mjs",
+      "patch": "recovery/patches/checkpoint5__tools__qa__level-four-rooms.mjs.patch",
+      "baseSha256": "6750f2c7542817c5ee62de3d13ffe4b8bb65c83ef76f2d5ec57f3ec30b01f6ac",
+      "patchSha256": "32ad41b88d317b303772a7c6e91833182407d177fdad39655aa9534d8309be0d",
+      "acceptedSha256": "b56ca32e12bb87d9053d4dd0c829d561a65311b4d0f8047ba5b1d3813ec26a17",
+      "acceptedBytes": 10783,
+      "baselineKind": "prior_archive_latest_accepted_patch_result",
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__tools__qa__level-four-rooms.mjs",
+        "baselineCommit": "d9de59327b05ccf853dcf7748a86106e850f9902"
+      },
+      "proof": {
+        "acceptance": [
+          "Explicit manager brief: tools/qa",
+          "Named Level 5 milestone ownership/source receipt or plan"
+        ],
+        "currentAcceptedCaptureSha256": "b56ca32e12bb87d9053d4dd0c829d561a65311b4d0f8047ba5b1d3813ec26a17"
+      },
+      "forwardExact": true,
+      "reverseExact": true,
+      "reapplyExact": true,
+      "liveMatchesAccepted": true
+    }
+  ],
+  "liveComparisonCheckedAtUtc": "2026-10-12T22:13:56.926134+00:00"
+}

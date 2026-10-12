@@ -1,0 +1,11 @@
+--- a/apps/player/src/ui/GoalsPanel.test.tsx
++++ b/apps/player/src/ui/GoalsPanel.test.tsx
+@@ -41,7 +41,7 @@
+     const markup = render({ facilityLevelLabel: "Level 4", nextLevelLabel: null, prototypeComplete: true, secondaryGoals: [{ ...view.secondaryGoals![0]!, complete: true, progressLabel: "1/1" }] });
+     expect(markup).toContain("goal-secondary-chip is-complete");
+     expect(markup).toContain("1/1 ✓");
+-    expect(markup).toContain("Level 4 complete - Level 5 coming later.");
++    expect(markup).toContain("Level 4 goals complete.");
+     expect(markup).not.toContain("level-up-button");
+     expect(markup.match(/class="goal-list"/g)).toHaveLength(1);
+   });

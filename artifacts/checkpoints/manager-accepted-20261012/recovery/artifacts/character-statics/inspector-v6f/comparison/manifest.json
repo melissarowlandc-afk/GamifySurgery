@@ -1,0 +1,896 @@
+{
+  "schemaVersion": "inspector-v6f-comparison/v1",
+  "scope": "Every new staff identity against all existing eligible looks for its assigned role, and every new same-role pair.",
+  "threshold": 8,
+  "algorithm": "RGB RMSE of 64x128 light-background thumbnails fitted to common 112px visible height. Threshold <8 flags possible copies; ranking is a visual-review aid, not identity or style approval.",
+  "existingInventory": {
+    "path": "artifacts/character-statics/inspector-v6f/comparison/existing-inventory.json",
+    "sha256": "50be84265828e75a4d673be1f051958de09be36887689fb6601e70da2b1c79a1"
+  },
+  "entries": [
+    {
+      "number": "001",
+      "id": "inspector-v6f.001",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "ageBand": "young_adult",
+      "sourceSha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/stand-south.png",
+        "sha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 82.91892238085396
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 92.32681012665857
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 82.91892238085396
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 92.32681012665857
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/001-nearest-six.png",
+        "sha256": "b23714d8f484da2f397becb6913749a4418f35d93ed669c40a416fa370fd9480"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/001-all-same-role.html",
+        "sha256": "8a6292f08b231c34ac6828de7a0d13723021190f5997e0b65dc711707a74e1bc"
+      }
+    },
+    {
+      "number": "002",
+      "id": "inspector-v6f.002",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "ageBand": "adult",
+      "sourceSha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/stand-south.png",
+        "sha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 81.62478539524813
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 83.49935577814108
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 81.62478539524813
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 83.49935577814108
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/002-nearest-six.png",
+        "sha256": "544c4378ac9e713fcbf01b5cdb358fa89b60b9705b15087a3c2edf96e37f9dd4"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/002-all-same-role.html",
+        "sha256": "41c60255604fd8f7bc0115af8e211736d75b4522f5b672e4cf635184cd5933a9"
+      }
+    },
+    {
+      "number": "003",
+      "id": "inspector-v6f.003",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "ageBand": "adult",
+      "sourceSha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/stand-south.png",
+        "sha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 82.02913042896586
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 97.09519979841036
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 82.02913042896586
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 97.09519979841036
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/003-nearest-six.png",
+        "sha256": "fddd85ecf88bf53920114b8156a0c87c6a2510e56ba57105ae6c3bdc72817910"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/003-all-same-role.html",
+        "sha256": "984dc4afba0016275376bde907291f7af7420df35304640551aa3e66d5e01c30"
+      }
+    },
+    {
+      "number": "004",
+      "id": "inspector-v6f.004",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "ageBand": "middle_aged",
+      "sourceSha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/stand-south.png",
+        "sha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 81.55583740148717
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 84.07605267532213
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 81.55583740148717
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 84.07605267532213
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/004-nearest-six.png",
+        "sha256": "b16ee3e0d4d91c5df4266dd4966f135f40e7b207d0b35ad1be349533713504e6"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/004-all-same-role.html",
+        "sha256": "57da258d384c9984791403f4048af28aaced27c3bc42bc7a1e71d7749c5f2485"
+      }
+    },
+    {
+      "number": "005",
+      "id": "inspector-v6f.005",
+      "role": "inspection-agent-art",
+      "sex": "Female",
+      "ageBand": "older_adult",
+      "sourceSha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/stand-south.png",
+        "sha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 87.68613665339531
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 93.98739712687492
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 87.68613665339531
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 93.98739712687492
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/005-nearest-six.png",
+        "sha256": "8910430eab7f9434dec3a55b33a471dcead7aa9aebd85eee488951a6f79ea339"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/005-all-same-role.html",
+        "sha256": "b863e59c6d60484e61dbbf0a0d9bc9a55e743767075fd82988ff487d5aef9a11"
+      }
+    },
+    {
+      "number": "006",
+      "id": "inspector-v6f.006",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "ageBand": "adult",
+      "sourceSha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/stand-south.png",
+        "sha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 87.53150567468312
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 90.60677730763588
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 87.53150567468312
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 90.60677730763588
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/006-nearest-six.png",
+        "sha256": "634a25b2f9ffb7682b416e83428c25ad159e5dcfa01233fe2ac2f7ad1247658a"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/006-all-same-role.html",
+        "sha256": "838cf353500d07ea10a4116fe14969c902e89389abc085d1e49c794b6b871ca8"
+      }
+    },
+    {
+      "number": "007",
+      "id": "inspector-v6f.007",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "ageBand": "adult",
+      "sourceSha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/stand-south.png",
+        "sha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 79.36195912803959
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 94.93894801020208
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 79.36195912803959
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 94.93894801020208
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/007-nearest-six.png",
+        "sha256": "bc964acd92e2ad227a3148bd7e2b3f070d17b2c1980ddc5e73bd991db3a227af"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/007-all-same-role.html",
+        "sha256": "eea2de3c32f474add7a85a68c6dca41c4b798821fee6574db310f60aa7d4ca29"
+      }
+    },
+    {
+      "number": "008",
+      "id": "inspector-v6f.008",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "sourceSha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/stand-south.png",
+        "sha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 72.13180458766381
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 85.71922540387976
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 72.13180458766381
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 85.71922540387976
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/008-nearest-six.png",
+        "sha256": "709c5289da9575a54db4e68b3579fab3d19a9e9b1f9dcbcf8227904a27fb1c77"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/008-all-same-role.html",
+        "sha256": "8d0147a9e358759bb8346541d8e983139f2414704ac5dc877162f87733ff628d"
+      }
+    },
+    {
+      "number": "009",
+      "id": "inspector-v6f.009",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "sourceSha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/stand-south.png",
+        "sha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 80.61367133144262
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 92.66976433203101
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 80.61367133144262
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 92.66976433203101
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/009-nearest-six.png",
+        "sha256": "8a8a52abb213582e55f84eeb46ff12e6e5f463d5d1bd547770956d8ed28a1748"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/009-all-same-role.html",
+        "sha256": "3ee396a5913b18df6dde49f71dbbf3dcb8d1bb3c683c0556f0eb40f55a34167c"
+      }
+    },
+    {
+      "number": "010",
+      "id": "inspector-v6f.010",
+      "role": "inspection-agent-art",
+      "sex": "Male",
+      "ageBand": "middle_aged",
+      "sourceSha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248",
+      "newPose": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/stand-south.png",
+        "sha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5"
+      },
+      "comparedExisting": 2,
+      "comparisons": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 82.51062362549267
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 94.45636432100373
+        }
+      ],
+      "nearestSix": [
+        {
+          "id": "app-gapfill-v6e.007",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+          "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4",
+          "rmse": 82.51062362549267
+        },
+        {
+          "id": "app-gapfill-v6e.002",
+          "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+          "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef",
+          "rmse": 94.45636432100373
+        }
+      ],
+      "board": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/010-nearest-six.png",
+        "sha256": "5bbab5c5dffcd492195a223d96c93fcdb88ce4e09fa1ec917b437fa3c202c8e6"
+      },
+      "allSameRolePage": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/010-all-same-role.html",
+        "sha256": "b55d6621cd2f62c4cf0bc9bfd805561668f89d581ff9a3717e1819fbdd47280f"
+      }
+    }
+  ],
+  "withinBatch": [
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.002",
+      "rmse": 65.11851269022489
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.003",
+      "rmse": 75.57520474511217
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.004",
+      "rmse": 71.32161942083127
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.005",
+      "rmse": 66.41210145788253
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.006",
+      "rmse": 65.10289019581971
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.007",
+      "rmse": 77.84951768618322
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.008",
+      "rmse": 76.94275495906099
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.009",
+      "rmse": 80.9020931845439
+    },
+    {
+      "first": "inspector-v6f.001",
+      "second": "inspector-v6f.010",
+      "rmse": 77.77622277052622
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.003",
+      "rmse": 74.16696301804674
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.004",
+      "rmse": 62.518859133831235
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.005",
+      "rmse": 62.173370136269455
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.006",
+      "rmse": 68.46538773740973
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.007",
+      "rmse": 67.72619976615863
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.008",
+      "rmse": 70.50779186864887
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.009",
+      "rmse": 70.45103222154187
+    },
+    {
+      "first": "inspector-v6f.002",
+      "second": "inspector-v6f.010",
+      "rmse": 73.80734275396345
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.004",
+      "rmse": 73.76915772316298
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.005",
+      "rmse": 77.24003093964484
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.006",
+      "rmse": 71.60143705094484
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.007",
+      "rmse": 80.68821382293015
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.008",
+      "rmse": 78.43713090260104
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.009",
+      "rmse": 83.48726570655101
+    },
+    {
+      "first": "inspector-v6f.003",
+      "second": "inspector-v6f.010",
+      "rmse": 82.01807210620248
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.005",
+      "rmse": 59.38237104739872
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.006",
+      "rmse": 71.8921296956383
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.007",
+      "rmse": 69.19609180505608
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.008",
+      "rmse": 65.6305379607758
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.009",
+      "rmse": 69.44096227163718
+    },
+    {
+      "first": "inspector-v6f.004",
+      "second": "inspector-v6f.010",
+      "rmse": 72.12284769409212
+    },
+    {
+      "first": "inspector-v6f.005",
+      "second": "inspector-v6f.006",
+      "rmse": 70.99532506891299
+    },
+    {
+      "first": "inspector-v6f.005",
+      "second": "inspector-v6f.007",
+      "rmse": 73.36205372061752
+    },
+    {
+      "first": "inspector-v6f.005",
+      "second": "inspector-v6f.008",
+      "rmse": 77.16950622123798
+    },
+    {
+      "first": "inspector-v6f.005",
+      "second": "inspector-v6f.009",
+      "rmse": 73.74282108862784
+    },
+    {
+      "first": "inspector-v6f.005",
+      "second": "inspector-v6f.010",
+      "rmse": 78.09147119065791
+    },
+    {
+      "first": "inspector-v6f.006",
+      "second": "inspector-v6f.007",
+      "rmse": 73.38585978027446
+    },
+    {
+      "first": "inspector-v6f.006",
+      "second": "inspector-v6f.008",
+      "rmse": 71.50957120843378
+    },
+    {
+      "first": "inspector-v6f.006",
+      "second": "inspector-v6f.009",
+      "rmse": 76.67844006350754
+    },
+    {
+      "first": "inspector-v6f.006",
+      "second": "inspector-v6f.010",
+      "rmse": 75.23333035143553
+    },
+    {
+      "first": "inspector-v6f.007",
+      "second": "inspector-v6f.008",
+      "rmse": 61.60373249057912
+    },
+    {
+      "first": "inspector-v6f.007",
+      "second": "inspector-v6f.009",
+      "rmse": 63.2477589487902
+    },
+    {
+      "first": "inspector-v6f.007",
+      "second": "inspector-v6f.010",
+      "rmse": 60.55980103957678
+    },
+    {
+      "first": "inspector-v6f.008",
+      "second": "inspector-v6f.009",
+      "rmse": 59.93294626916487
+    },
+    {
+      "first": "inspector-v6f.008",
+      "second": "inspector-v6f.010",
+      "rmse": 67.63290109034088
+    },
+    {
+      "first": "inspector-v6f.009",
+      "second": "inspector-v6f.010",
+      "rmse": 70.48117239685287
+    }
+  ],
+  "flags": [],
+  "totalExistingComparisons": 20,
+  "totalWithinBatchComparisons": 45,
+  "roleBoards": [
+    {
+      "role": "inspection-agent-art",
+      "existing": [
+        "app-gapfill-v6e.002",
+        "app-gapfill-v6e.007"
+      ],
+      "new": [
+        "inspector-v6f.001",
+        "inspector-v6f.002",
+        "inspector-v6f.003",
+        "inspector-v6f.004",
+        "inspector-v6f.005",
+        "inspector-v6f.006",
+        "inspector-v6f.007",
+        "inspector-v6f.008",
+        "inspector-v6f.009",
+        "inspector-v6f.010"
+      ],
+      "inputs": [
+        {
+          "id": "app-gapfill-v6e.002",
+          "standing": {
+            "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/stand-south.png",
+            "sha256": "e2024a2af88969eb2a5dcf7d2b8618c5c1847f45ebf794cbc842abd305b30fef"
+          },
+          "seated": {
+            "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.002/sit-east.png",
+            "sha256": "34653d6b47dea39a57d6b071abad01a3dfa5110b0c8dbe300cd5caa44eedf47b"
+          }
+        },
+        {
+          "id": "app-gapfill-v6e.007",
+          "standing": {
+            "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/stand-south.png",
+            "sha256": "8311b06fa0f7ab7a02ac6ad5b88f87601603f2cdf9fe488f450f050e41c327d4"
+          },
+          "seated": {
+            "path": "apps/player/public/art/characters/app-gapfill-v6e/app-gapfill-v6e.007/sit-east.png",
+            "sha256": "cf124b7f1058d1ba604f2278c785085d50beedcdd1953bdeec90fa506ef9ab9c"
+          }
+        },
+        {
+          "id": "inspector-v6f.001",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/001/stand-south.png",
+            "sha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/001/sit-east.png",
+            "sha256": "cd0e580b0d0aaefeb13150121eb34e860e27d845070f547eec3ec5f099b4b52c"
+          }
+        },
+        {
+          "id": "inspector-v6f.002",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/002/stand-south.png",
+            "sha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/002/sit-east.png",
+            "sha256": "63bfb289465cc8f385f6e90085811039b63c846baf42f123c018d942d9310267"
+          }
+        },
+        {
+          "id": "inspector-v6f.003",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/003/stand-south.png",
+            "sha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/003/sit-east.png",
+            "sha256": "059fd550a404f1047b56dbed86e0dd63a0d2c2cfc98f66a12d268b004fae687e"
+          }
+        },
+        {
+          "id": "inspector-v6f.004",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/004/stand-south.png",
+            "sha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/004/sit-east.png",
+            "sha256": "f5ad0ca691a394953c36bdf77d017878abd98570d14dbdcd8546388b1feb5dbb"
+          }
+        },
+        {
+          "id": "inspector-v6f.005",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/005/stand-south.png",
+            "sha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/005/sit-east.png",
+            "sha256": "028159756f4e84912c4458fdaac8ede766e56908209dd02d1e85bae7fd20f7e8"
+          }
+        },
+        {
+          "id": "inspector-v6f.006",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/006/stand-south.png",
+            "sha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/006/sit-east.png",
+            "sha256": "457ead7be71245912192e4e775c9fe3b15605b9882232a5609b2c0af3df0c21f"
+          }
+        },
+        {
+          "id": "inspector-v6f.007",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/007/stand-south.png",
+            "sha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/007/sit-east.png",
+            "sha256": "d516d9e4367670ce0dd6a419eca16bbc55232ad8ad5e929c25834e65325f0984"
+          }
+        },
+        {
+          "id": "inspector-v6f.008",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/008/stand-south.png",
+            "sha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/008/sit-east.png",
+            "sha256": "515e716fdaef3f719b0166bb3e1ada9562e6f296c5a6976a1b9ff04270754354"
+          }
+        },
+        {
+          "id": "inspector-v6f.009",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/009/stand-south.png",
+            "sha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/009/sit-east.png",
+            "sha256": "6fdd820a190e0db9bd08c6feb1b5ffa5c3a2c178cdebdc6c2520f934e4f9763d"
+          }
+        },
+        {
+          "id": "inspector-v6f.010",
+          "standing": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/010/stand-south.png",
+            "sha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5"
+          },
+          "seated": {
+            "path": "artifacts/character-statics/inspector-v6f/packages/010/sit-east.png",
+            "sha256": "6599d2fad53260773ef7af57a9e984cff7b6bf5ac0d00be3df21365e2869b008"
+          }
+        }
+      ],
+      "proof": {
+        "path": "artifacts/character-statics/inspector-v6f/comparison/inspection-agent-art-old-and-new.png",
+        "sha256": "de4614a75478ec3fe17068ffcdad6e80aa277695d9e09943eab67a20377bc029"
+      }
+    }
+  ],
+  "roleOverview": {
+    "path": "artifacts/character-statics/inspector-v6f/comparison/per-role-old-and-new-overview.png",
+    "sha256": "f845e876bb8f1ee62b7f12998a1aa52931844ca9263067627cfb33892a0ffc60"
+  },
+  "managerAcceptance": "pending"
+}

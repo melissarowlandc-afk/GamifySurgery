@@ -1,0 +1,19 @@
+--- a/packages/game-domain/src/room-upkeep-outages.ts
++++ b/packages/game-domain/src/room-upkeep-outages.ts
+@@ -14,6 +14,7 @@
+   "room.phlebotomy": ["staff.phlebotomist"],
+   "room.endoscopy": ["staff.endoscopy_nurse", "staff.periop_nurse"],
+   "room.coffee_kiosk": [],
++  "room.gift_shop": [],
+   "room.glp1_telehealth_suite": ["staff.glp1_np"],
+   "room.ambulatory_or": ["staff.or_nurse", "staff.periop_nurse"],
+   "room.laboratory": ["staff.laboratory_technician"],
+@@ -66,7 +67,7 @@
+     return allowedHomes.includes(home.roomDefinitionId);
+   });
+   for (const room of state.rooms) {
+-    const requiredRoles = REVENUE_ROOM_STAFF[room.roomDefinitionId];
++    const requiredRoles = room.roomDefinitionId === "room.gift_shop" && state.facilityLevel < 5 ? undefined : REVENUE_ROOM_STAFF[room.roomDefinitionId];
+     if (!requiredRoles || !getRoomDefinition(room.roomDefinitionId, context)) {
+       delete room.upkeepOutage;
+       continue;

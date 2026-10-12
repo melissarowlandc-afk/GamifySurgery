@@ -1,0 +1,22 @@
+--- a/packages/balance-config/src/level-four-schema.test.ts
++++ b/packages/balance-config/src/level-four-schema.test.ts
+@@ -17,7 +17,7 @@
+ function levelFourBalanceFixture() {
+   const balance = clone(PROTOTYPE_BALANCE_RELEASE);
+   balance.facility.maximumPlayableLevel = 3;
+-  balance.facility.stageDefinitions = balance.facility.stageDefinitions.filter(stage => stage.level !== 4);
++  balance.facility.stageDefinitions = balance.facility.stageDefinitions.filter(stage => stage.level < 4);
+   balance.facility.stageDefinitions.find(stage => stage.level === 3)!.nextFacilityLevel = null;
+   const exam = balance.facility.roomDefinitions.find((room) => room.id === "room.examination")!;
+   const newRooms = ["room.mri", "room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy"]
+@@ -75,8 +75,8 @@
+   it("keeps the shipped cap, progression, roles and economy B while registering only the four L4 rooms", () => {
+     const balance = prototypeBalanceReleaseSchema.parse(PROTOTYPE_BALANCE_RELEASE);
+     expect(balance).toEqual(PROTOTYPE_BALANCE_RELEASE);
+-    expect(balance.facility.maximumPlayableLevel).toBe(4);
+-    expect(balance.facility.stageDefinitions.map((stage) => stage.level)).toEqual([0, 1, 2, 3, 4]);
++    expect(balance.facility.maximumPlayableLevel).toBe(5);
++    expect(balance.facility.stageDefinitions.map((stage) => stage.level)).toEqual([0, 1, 2, 3, 4, 5]);
+     expect(balance.facility.roomDefinitions.filter((room) => room.unlockFacilityLevel === 4).map((room) => room.id)).toEqual([
+       "room.mri", "room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy",
+     ]);

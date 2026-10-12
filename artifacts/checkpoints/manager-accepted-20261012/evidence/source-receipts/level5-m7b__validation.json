@@ -1,0 +1,151 @@
+{
+  "recordedAt": "2026-10-12T08:28:03.022Z",
+  "configuration": "unchanged checked-in configs; --pool=threads; no runner exclusions or changes to existing timeouts",
+  "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "noColor": "1",
+  "receipt": [
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/balance-full.log",
+      "sha256": "ca154b1181cf2562a172055542c56c248417df00ab51334a36125842ec514987",
+      "summary": [
+        " Test Files  21 passed (21)",
+        "      Tests  149 passed (149)",
+        "   Duration  763ms (transform 1.67s, setup 0ms, import 6.18s, tests 207ms, environment 2ms)"
+      ]
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/domain-full-final.log",
+      "sha256": "cb9aee9fdc82268210ff5669e9886cb5e5962e03e471d2636c80854f50fadc44",
+      "summary": [
+        " Test Files  149 passed | 1 skipped (150)",
+        "      Tests  4163 passed | 2 skipped (4165)",
+        "   Duration  177.31s (transform 6.52s, setup 0ms, import 63.50s, tests 632.89s, environment 8ms)"
+      ]
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/content-full.log",
+      "sha256": "e2f5cc8135f783add4794a3df547bdd8ac26b50efd02659831d05f32ba58e7f5",
+      "summary": [
+        " Test Files  87 passed (87)",
+        "      Tests  628 passed (628)",
+        "   Duration  5.14s (transform 14.42s, setup 0ms, import 54.24s, tests 6.34s, environment 9ms)"
+      ]
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": ".local-dev/level5-m7b/player-full-final.log",
+      "sha256": "dd8b995c7fb32956038333aa50a58ea9978cc8f3a81a95a0adb7f672d3bada36",
+      "summary": [
+        " Test Files  1 failed | 220 passed (221)",
+        "      Tests  1 failed | 1940 passed (1941)",
+        "   Duration  50.55s (transform 9.30s, setup 0ms, import 88.40s, tests 95.76s, environment 11ms)"
+      ]
+    },
+    {
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/typecheck-final.log",
+      "sha256": "918ba7f61de41398d6b6878a4f862aa2d19d01fba381d7560b5e41560bacf9b4",
+      "summary": []
+    },
+    {
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/build-final.log",
+      "sha256": "500b7ff938fbf215aafd2d8f1dde273352f2ded74305cb2eba3e1cb67eb2cbe3",
+      "summary": [
+        "✓ built in 4.24s"
+      ]
+    },
+    {
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/qa-transform.log",
+      "sha256": "b6195e0c1639b36bbfa237fa6898e7efef8ebaf0a7e2ab9f7ae33f6b1e24d79e",
+      "summary": [
+        "QA entry transform PASS: production Vite config/plugins; dedicated bootstrap; no listener or browser storage.",
+        "Level 5 QA transform PASS: opt-in helper and synthetic state fixtures; no listener or browser storage.",
+        "Level 5 M2 rooms transform PASS: real placement/doors; isolated Founder appearance previews; no listener or browser storage.",
+        "Level 5 M4 Executive transform PASS: real hire/training-room fixture; both approved looks; no seeded awards or savings.",
+        "Level 5 M5 Gift Shop transform PASS: real quotes/queue; separate per-facility demand; no seeded paid receipts.",
+        "Level 5 M6 goals transform PASS: QA-only Level 4 Advance; three live goals; durable unlock without booking/scoring.",
+        "Level 5 M7a inspection transform PASS: booking/window/event evidence, final-minute scored and incomplete QA; no listener or browser storage.",
+        "Level 5 M7b inspector transform PASS: actual booking/preparation/travel, all ten accepted looks; no listener or browser storage."
+      ]
+    },
+    {
+      "command": "node scripts/verify-launcher-contract.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/launcher.log",
+      "sha256": "cc580a83e6d512f09c2d265aeb69895231c62c6fc0658bb88293a22a6b7bad6a",
+      "summary": []
+    },
+    {
+      "command": "node tools/character-mapping/inspector-v6f/validate-runtime-integration.mjs --dist",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/asset-audit-final.log",
+      "sha256": "d153009dcb9afaecfed05140cddc3a797f9174c98b27246d7b61fa3f6a9ec6fd",
+      "summary": [
+        "{\"status\":\"PASS\",\"readOnly\":true,\"identities\":10,\"exactPngs\":80,\"authoredContacts\":40,\"bytes\":2867232,\"preservedRegistryRows\":326,\"preservedPngs\":2638,\"preservedProvenanceRows\":2638,\"patientPool\":179,\"staffPool\":99,\"inspectorsInPatientOrStaffPools\":0,\"dist\":true}"
+      ]
+    },
+    {
+      "command": "node tools/character-mapping/inspector-v6f/promote-runtime.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/promotion-rerun.log",
+      "sha256": "646c157d22a85907f3d684ef1947502777af603aaedbca72a035d5821682c8d1",
+      "summary": [
+        "{\"status\":\"PASS\",\"mode\":\"idempotent-no-write\",\"identities\":10,\"poses\":80,\"authoredSeatedContacts\":40,\"runtimeIdentities\":336,\"runtimeAssets\":2718,\"pngBytes\":2867232,\"previousRowsPreserved\":326,\"previousProvenancePreserved\":2638,\"published\":false}"
+      ]
+    },
+    {
+      "command": "node --import ./.local-dev/level5-m6/source-loader.mjs .local-dev/level5-m7b/qa-smoke.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/qa-smoke.log",
+      "sha256": "bdbac6df88fcc906f3733d6d4e157582591ab9d19e16e8bd729b10b00194c721",
+      "summary": [
+        "PASS inspectors: ten actors; 80/3000 observed minutes; all nine built rooms reachable; save/reload/resume/cancel exact.",
+        "PASS inspectors-arriving: ten actors; 0/3000 observed minutes; all nine built rooms reachable; save/reload/resume/cancel exact.",
+        "PASS M7b desktop/phone QA factories on strict 5184 origin; no listener or browser storage actions."
+      ]
+    },
+    {
+      "command": "node .local-dev/level5-m7b/qa-http.mjs",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/qa-http.log",
+      "sha256": "2f5c254cc2169bd9b5e3d5e41d197bed45a60b9ded535bea514cf6f6f9b614ed",
+      "summary": [
+        "PASS existing 5184 QA listener: four desktop/phone URLs and 80 byte-exact PNG responses; location.origin=http://127.0.0.1:5184; no listener or browser storage change."
+      ]
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/inspection-presentation.test.ts",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/domain-doors-accepted.log",
+      "sha256": "1e8b6406bd18d56b72c9975768f27231e1e9128cc0c3156bbc91d9b54913069a",
+      "summary": [
+        " Test Files  1 passed (1)",
+        "      Tests  9 passed (9)",
+        "   Duration  9.35s (transform 1.33s, setup 0ms, import 1.76s, tests 7.52s, environment 0ms)"
+      ]
+    },
+    {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/facility/inspectionActors.test.ts src/mobile/map/inspectionActors.test.tsx src/art/inspectorStills.test.ts",
+      "exitCode": 0,
+      "log": ".local-dev/level5-m7b/player-fallback-accepted.log",
+      "sha256": "0aac0eccb7cdb45a9649d4061f36fc3de6009714dc7e8bc0201e7823a2599723",
+      "summary": [
+        " Test Files  3 passed (3)",
+        "      Tests  9 passed (9)",
+        "   Duration  7.14s (transform 6.26s, setup 0ms, import 9.22s, tests 6.47s, environment 0ms)"
+      ]
+    }
+  ]
+}

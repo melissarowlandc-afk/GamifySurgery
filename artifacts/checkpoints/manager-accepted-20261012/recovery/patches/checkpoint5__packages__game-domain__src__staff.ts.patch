@@ -1,0 +1,56 @@
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -23,6 +23,9 @@
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getNextReadingStationLocation, getRadiologistReadingStation, reconcileReadingStations } from "./reading-stations";
+ import { getPeriopNurseAttentionQueue } from "./periop-nurse-attention";
++import { findLevelFiveSupportExitPath, getLevelFiveSupportRoomAt } from "./level-five-support";
++import { findLevelFiveSupportPath } from "./level-five-support";
++import { getExecutiveDeskLocation } from "./executive-management";
+ 
+ function samePoint(left: GridPoint, right: GridPoint): boolean {
+   return left.x === right.x && left.y === right.y;
+@@ -391,6 +394,24 @@
+     }
+     if (employee.facilityTask) {
+       continue;
++    }
++    if (getExecutiveDeskLocation(state, employee)) {
++      const home = state.rooms.find(room => room.id === employee.homeRoomInstanceId)!;
++      const route = findLevelFiveSupportPath(state, home, "executiveChair", employee.location, context);
++      if (route) { employee.path = route.path; employee.pathIndex = 0; employee.lastMovedAtFacilityTick = state.facilityTick; }
++      continue;
++    }
++    if (state.facilityLevel >= 5) {
++      const supportRoom = getLevelFiveSupportRoomAt(state, employee.location);
++      const home = state.rooms.find(room => room.id === employee.homeRoomInstanceId);
++      const definition = home ? getRoomDefinition(home.roomDefinitionId, context) : null;
++      if (supportRoom && home && definition) {
++        const target = getRadiologistReadingStation(state, employee, context)?.location ?? getRoomNavigationAnchor(home, definition, "staff");
++        const path = findLevelFiveSupportExitPath(state, supportRoom, employee.location, target, context, new Set([home.id]));
++        employee.path = path.length ? path : [{ ...employee.location }];
++        employee.pathIndex = 0; employee.lastMovedAtFacilityTick = state.facilityTick;
++        continue;
++      }
+     }
+     // Reading chairs are valid endpoints even when excluded from walking
+     // clearance. A seated reader must not be displaced to the room's first desk.
+@@ -737,7 +758,9 @@
+       ? getRoomDefinition(homeRoom.roomDefinitionId, context)
+       : null;
+     if (!homeRoom || !homeDefinition) continue;
+-    const internalPath = findCareAwareFacilityPath(state, context, entryDoor, homeRoom.id === entryRoom.id ? entryCenter : home.location, new Set([homeRoom.id]));
++    const internalPath = state.facilityLevel >= 5 && employeeRoleId === "staff.executive"
++      ? findLevelFiveSupportPath(state, homeRoom, "executiveChair", entryDoor, context)?.path ?? []
++      : findCareAwareFacilityPath(state, context, entryDoor, homeRoom.id === entryRoom.id ? entryCenter : home.location, new Set([homeRoom.id]));
+     if (internalPath.length === 0) continue;
+     const path = [...exteriorPath, ...internalPath.slice(1)];
+     return {
+@@ -749,6 +772,7 @@
+   return null;
+ }
+ 
++/** Salary normalization target; ownership is deliberately excluded from stored morale. */
+ export function getEffectiveEmployeeMorale(
+   employee: EmployeeState,
+   context: DomainContext,

@@ -1,0 +1,596 @@
+{
+  "status": "PASS",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    4,
+    4
+  ],
+  "appearanceTiers": 1,
+  "upgradeSelections": 5,
+  "assets": 15,
+  "chairForegrounds": 2,
+  "fixtureRecords": 24,
+  "builtInCalls": 11,
+  "selectedDerivedCalls": 9,
+  "seatedVisitorContacts": 2,
+  "employeeHomeSlots": 0,
+  "clinicalWorkloadSlots": 0,
+  "tiers": [
+    {
+      "level": 1,
+      "states": 2208,
+      "routes": 20736,
+      "layers": [
+        {
+          "id": "leftSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 579,
+          "adultPixels": 7349,
+          "headOcclusion": 0,
+          "cushionRise": 45.20711477584916
+        },
+        {
+          "id": "rightSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 556,
+          "adultPixels": 7099,
+          "headOcclusion": 0,
+          "cushionRise": 44.13541361763235
+        }
+      ],
+      "plinths": [
+        {
+          "id": "north2",
+          "left": 1,
+          "width": 1
+        },
+        {
+          "id": "north3",
+          "left": 2,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "states": 2208,
+      "routes": 20736,
+      "layers": [
+        {
+          "id": "leftSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 579,
+          "adultPixels": 7349,
+          "headOcclusion": 0,
+          "cushionRise": 45.20711477584916
+        },
+        {
+          "id": "rightSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 556,
+          "adultPixels": 7099,
+          "headOcclusion": 0,
+          "cushionRise": 44.13541361763235
+        }
+      ],
+      "plinths": [
+        {
+          "id": "north2",
+          "left": 1,
+          "width": 1
+        },
+        {
+          "id": "north3",
+          "left": 2,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "states": 2208,
+      "routes": 20736,
+      "layers": [
+        {
+          "id": "leftSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 579,
+          "adultPixels": 7349,
+          "headOcclusion": 0,
+          "cushionRise": 45.20711477584916
+        },
+        {
+          "id": "rightSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 556,
+          "adultPixels": 7099,
+          "headOcclusion": 0,
+          "cushionRise": 44.13541361763235
+        }
+      ],
+      "plinths": [
+        {
+          "id": "north2",
+          "left": 1,
+          "width": 1
+        },
+        {
+          "id": "north3",
+          "left": 2,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "states": 2208,
+      "routes": 20736,
+      "layers": [
+        {
+          "id": "leftSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 579,
+          "adultPixels": 7349,
+          "headOcclusion": 0,
+          "cushionRise": 45.20711477584916
+        },
+        {
+          "id": "rightSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 556,
+          "adultPixels": 7099,
+          "headOcclusion": 0,
+          "cushionRise": 44.13541361763235
+        }
+      ],
+      "plinths": [
+        {
+          "id": "north2",
+          "left": 1,
+          "width": 1
+        },
+        {
+          "id": "north3",
+          "left": 2,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "states": 2208,
+      "routes": 20736,
+      "layers": [
+        {
+          "id": "leftSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 579,
+          "adultPixels": 7349,
+          "headOcclusion": 0,
+          "cushionRise": 45.20711477584916
+        },
+        {
+          "id": "rightSeat",
+          "painterOrder": "chair → approved seated adult → exact-source front arm/legs",
+          "opaqueFrontOverlap": 556,
+          "adultPixels": 7099,
+          "headOcclusion": 0,
+          "cushionRise": 44.13541361763235
+        }
+      ],
+      "plinths": [
+        {
+          "id": "north2",
+          "left": 1,
+          "width": 1
+        },
+        {
+          "id": "north3",
+          "left": 2,
+          "width": 1
+        }
+      ]
+    }
+  ],
+  "states": 11040,
+  "routes": 103680,
+  "radiusClearSamples": 81654720,
+  "occupiedRoutes": 103680,
+  "occupiedSamples": 81947040,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 16,
+  "backingSections": 4,
+  "visibilityChecks": 180,
+  "monotonicChecks": 690,
+  "arbitraryDoorCombinationProof": "All 65536 door combinations × 16 backing states × 5 fixed upgrades: necessary blockers/contacts are invariant, further doors only remove optional blockers. Singles prove each doorway-to-seat/aisle route; all pairs prove doorway-to-doorway routes. Every entry route is also a safe exit in reverse, with the other visitor retained.",
+  "roomFirst": {
+    "conceptSha256": "aabd0298951223027ce9210559efa9d49fb0320472f78f1331951aa96378d69e",
+    "interiorRearPlinthsFillTilesAndAbut": true,
+    "filledFixtureFootprintAreaTiles": 8.4068,
+    "fullRoomAreaTiles": 16
+  },
+  "assetChecks": [
+    {
+      "id": "base-west",
+      "slots": [
+        "west1",
+        "west2",
+        "west3",
+        "west4"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        288,
+        816
+      ],
+      "sha256": "fb3f2b8a2daac956dd578bc2e288c4e30b0981b4d3dfeafa00eca9cff2b076c7",
+      "alphaEdge": 0,
+      "transparentPixels": 84630,
+      "scale": 0.5338491295938105,
+      "seatRise": null
+    },
+    {
+      "id": "base-east",
+      "slots": [
+        "east1",
+        "east2",
+        "east3",
+        "east4"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        288,
+        816
+      ],
+      "sha256": "eea605e7d3d85e67606981517b6250d8b8ce6b5c4117ddab9e1353b7071069aa",
+      "alphaEdge": 0,
+      "transparentPixels": 105121,
+      "scale": 0.5045703839122486,
+      "seatRise": null
+    },
+    {
+      "id": "base-front",
+      "slots": [
+        "frontLeft",
+        "frontRight"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        704,
+        360
+      ],
+      "sha256": "8e1edc12aa17287735897253cbafda2453ced783f7248d7a79d4b8822c54e6d2",
+      "alphaEdge": 0,
+      "transparentPixels": 94172,
+      "scale": 0.40491515506143944,
+      "seatRise": null
+    },
+    {
+      "id": "base-fountain",
+      "slots": [
+        "fountain"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        864,
+        816
+      ],
+      "sha256": "6e04bb85c0f2a81764f1aae5c9d775e9b621b986c6bbe7f18a2de03c0bb1cd0f",
+      "alphaEdge": 0,
+      "transparentPixels": 203098,
+      "scale": 0.7787934186471663,
+      "seatRise": null
+    },
+    {
+      "id": "base-path",
+      "slots": [
+        "stonePath"
+      ],
+      "sourceRegion": [
+        80,
+        85,
+        1082,
+        1082
+      ],
+      "canvas": [
+        1088,
+        1088
+      ],
+      "sha256": "cc592cec597396fb72ee7769dac14ac0022e962927ee3dd832aab6d1a55f94f8",
+      "alphaEdge": 0,
+      "transparentPixels": 25968,
+      "scale": 0.9944547134935305,
+      "seatRise": null
+    },
+    {
+      "id": "base-chairEast",
+      "slots": [
+        "leftSeat"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        480,
+        576
+      ],
+      "sha256": "095dd0fbc9782d33f12e26d2189b3dcff5a75b5e5b9306bbc83948d40841096f",
+      "alphaEdge": 0,
+      "transparentPixels": 208558,
+      "scale": 0.38638559637477915,
+      "seatRise": 45.20711477584916
+    },
+    {
+      "id": "base-chairWest",
+      "slots": [
+        "rightSeat"
+      ],
+      "sourceRegion": null,
+      "canvas": [
+        480,
+        576
+      ],
+      "sha256": "b20f85bd075c76b0b2241caf39aacd3ae83fd5aed413aac674984882eb7776f8",
+      "alphaEdge": 0,
+      "transparentPixels": 212142,
+      "scale": 0.3662689926774469,
+      "seatRise": 44.135413617632366
+    },
+    {
+      "id": "base-north1",
+      "slots": [
+        "north1"
+      ],
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "sha256": "f8af4cb69837f97df9acb29d1df6fb965242028a0da1f75e6195dae52ac6cd3e",
+      "alphaEdge": 0,
+      "transparentPixels": 153511,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-trellis1",
+      "slots": [
+        "trellis1"
+      ],
+      "sourceRegion": [
+        0,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "sha256": "50cbee1482088aeb55a7bb2b179d56a22356c5e04b3c71569ad7bb732ddd9281",
+      "alphaEdge": 0,
+      "transparentPixels": 116772,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-north2",
+      "slots": [
+        "north2"
+      ],
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "sha256": "0a5482c9a456751f14e30ad507648ca48bb71d318406886326ab43123bb99136",
+      "alphaEdge": 0,
+      "transparentPixels": 199436,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-trellis2",
+      "slots": [
+        "trellis2"
+      ],
+      "sourceRegion": [
+        543,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "sha256": "5a0eb8d085acc03c6510f89b1f710f6bfb3b8e3fec0ce698e6262e4325b030e4",
+      "alphaEdge": 0,
+      "transparentPixels": 98854,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-north3",
+      "slots": [
+        "north3"
+      ],
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "sha256": "9a512dd3b1516a83a3916e9d6e03754aead66f855f5c0411a5af3f0b6f7d4dbb",
+      "alphaEdge": 0,
+      "transparentPixels": 197983,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-trellis3",
+      "slots": [
+        "trellis3"
+      ],
+      "sourceRegion": [
+        1086,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "sha256": "2e8cdbe782050f27dff802c1663b11ed72a1b212263f7d8d42d89727fa52fa4f",
+      "alphaEdge": 0,
+      "transparentPixels": 98841,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-north4",
+      "slots": [
+        "north4"
+      ],
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        704
+      ],
+      "sha256": "6443ce3b70aa0996d0f8d503eee7ec29aa23058d2b600797e849ded709fef074",
+      "alphaEdge": 0,
+      "transparentPixels": 155335,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    },
+    {
+      "id": "base-trellis4",
+      "slots": [
+        "trellis4"
+      ],
+      "sourceRegion": [
+        1629,
+        0,
+        543,
+        724
+      ],
+      "canvas": [
+        512,
+        480
+      ],
+      "sha256": "1becfa6816881d557eb02e98808c44f8ee5717da987f944db59d12a9f009faf6",
+      "alphaEdge": 0,
+      "transparentPixels": 116342,
+      "scale": 0.9208103130755064,
+      "seatRise": null
+    }
+  ],
+  "foregroundChecks": [
+    {
+      "id": "base-chairEast-front",
+      "parent": "base-chairEast",
+      "opaqueOriginalPixels": 19552,
+      "identicalTransform": true,
+      "sourceSha256": "24f73a3e9e075b4bc10a13f9c014d40e8fb3fff64c36cebf933b4f24c142a5b2"
+    },
+    {
+      "id": "base-chairWest-front",
+      "parent": "base-chairWest",
+      "opaqueOriginalPixels": 16510,
+      "identicalTransform": true,
+      "sourceSha256": "e001039ae0de0f871112d186cef879d74edd05594e906a58c1e2971338336a1e"
+    }
+  ],
+  "sourceHashes": [
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/renderer-base.js",
+      "sha256": "60c0bc18fae6659d8698231c53615cba6ed413eb5acbf1e63ecb4bee2144dd26",
+      "currentSha256": "60c0bc18fae6659d8698231c53615cba6ed413eb5acbf1e63ecb4bee2144dd26"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/room-touchups.mjs",
+      "sha256": "c57b7b4f31ed13f9b0e412fbfa21ab629c6d699d672cff6824d7656ac3a73995",
+      "currentSha256": "c57b7b4f31ed13f9b0e412fbfa21ab629c6d699d672cff6824d7656ac3a73995"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/shell-painter.js",
+      "sha256": "bb9a9d57917ba0b96beb042923d8ba395d01da48c88860700284166270e42e8d",
+      "currentSha256": "bb9a9d57917ba0b96beb042923d8ba395d01da48c88860700284166270e42e8d"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/native-engine.mjs",
+      "sha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+      "currentSha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/browser-errors.cjs",
+      "sha256": "c150e8356b8ed2220e64badba7b976156dd6428a27ae6e3b96db2c3b79f4cacf",
+      "currentSha256": "c150e8356b8ed2220e64badba7b976156dd6428a27ae6e3b96db2c3b79f4cacf"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/proof/check-helpers.cjs",
+      "sha256": "1491e9eb7844e578871804c1454dad81212f6b2a2e610421046e6fe8b530890e",
+      "currentSha256": "1491e9eb7844e578871804c1454dad81212f6b2a2e610421046e6fe8b530890e"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/layout.json",
+      "sha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5",
+      "currentSha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/concept/gift-shop-concept.png",
+      "sha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "currentSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/approval-2026-10-11.md",
+      "sha256": "9228cdb020d58dd47d6f74a0cb148511e17357b6d788f2cbfca66e607e28513b",
+      "currentSha256": "9228cdb020d58dd47d6f74a0cb148511e17357b6d788f2cbfca66e607e28513b"
+    },
+    {
+      "file": "tools/room-design/level-5/executive-office/layout.json",
+      "sha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e",
+      "currentSha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e"
+    },
+    {
+      "file": "tools/room-design/level-5/founders-office/layout.json",
+      "sha256": "e8d79f17aef6f1dabecf7f000d5335d2dd6e4fa64447796feb5327d02d68c23d",
+      "currentSha256": "e8d79f17aef6f1dabecf7f000d5335d2dd6e4fa64447796feb5327d02d68c23d"
+    },
+    {
+      "file": "AGENTS.md",
+      "sha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc",
+      "currentSha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc"
+    },
+    {
+      "file": "docs/execplans/level5-launch-plan-20261010.md",
+      "sha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b",
+      "currentSha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b"
+    }
+  ],
+  "concurrentReferenceChanges": [],
+  "textFiles": 101,
+  "warnings": [],
+  "browserQA": "separate",
+  "proofManifestSha256": "0bb2e10984b1ae2fefab3594f96ffcdefa8245d12aaddb65f8606e214f4d38f6"
+}

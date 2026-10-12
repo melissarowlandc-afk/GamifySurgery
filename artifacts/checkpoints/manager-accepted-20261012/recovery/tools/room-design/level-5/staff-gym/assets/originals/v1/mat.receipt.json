@@ -1,0 +1,21 @@
+{
+  "id": "mat",
+  "prompt": "prompts/v1/mat.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e as C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-cb00250e-907f-4e51-aee5-46345a4d74d2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12cb0-48d0-7e40-a96c-cc2a5fc2658e\\exec-cb00250e-907f-4e51-aee5-46345a4d74d2.png",
+  "selected": true,
+  "tool": "image_gen.imagegen",
+  "input": {
+    "prompt": "Use case: background-extraction. Asset type: single flat stretch mat derived from the exact Staff Gym concept, transparent game sprite. Extract ONLY the large plain teal rectangular yoga/stretch mat in the lower-right half, without ball or foam roller. Retain its flat elevated-front orthographic orientation, unrotated rectangle, slightly rounded corners, subtly speckled woven/rubber surface, fine dark raster outline and simple thin edge. This is a generous standing/stretch floor zone, no raised platform. Keep the original exact pixel-cluster game finish; no perspective tilt. Complete clean mat unclipped with small transparent margin. NO props, people, text, numbers, logos, walls, surrounding rubber flooring, cast shadow, glow or halo; every pixel outside the mat must be fully transparent. True transparent alpha background.",
+    "referenced_image_paths": [
+      "tools/room-design/level-5/staff-gym/concept/staff-gym-concept.png"
+    ],
+    "transparent_background": true
+  },
+  "inputImages": [
+    "concept/staff-gym-concept.png"
+  ],
+  "original": "originals/v1/mat.png",
+  "originalSha256": "ec1aadaa4af3cc55465f919510a8d4cac98e00df463bfc55b772cab568a37d1e",
+  "promptSha256": "40465f1f677ce07880e21980a44a89045b38a553eebd9d43acfbe92cd107fe3c"
+}

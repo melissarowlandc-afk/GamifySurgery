@@ -1,0 +1,17 @@
+--- a/apps/player/src/facility/roomVisualLayout.ts
++++ b/apps/player/src/facility/roomVisualLayout.ts
+@@ -1,5 +1,5 @@
+ import type { CardinalDirection, RoomOrientation } from "@gamify-surgery/game-domain";
+-import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
++import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS, APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
+ 
+ /**
+  * Renderer-only room layout metadata.
+@@ -263,6 +263,7 @@
+  * before this presentation check runs, so legacy ratio zones must not remove
+  * a domain-enabled approved segment. */
+ const APPROVED_DYNAMIC_DOOR_ROOM_IDS = new Set([
++  ...Object.keys(APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS),
+   ...Object.keys(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS),
+   "room.front_desk", "room.hallway", "room.waiting", "room.examination",
+   "room.bathroom", "room.minor_procedure", "room.ultrasound", "room.xray",

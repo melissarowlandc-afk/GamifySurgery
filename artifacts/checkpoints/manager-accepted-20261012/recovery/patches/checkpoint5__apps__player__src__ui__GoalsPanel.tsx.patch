@@ -1,0 +1,61 @@
+--- a/apps/player/src/ui/GoalsPanel.tsx
++++ b/apps/player/src/ui/GoalsPanel.tsx
+@@ -1,16 +1,23 @@
+ import { useEffect, useId, useRef, useState } from "react";
+ import type { ProcedureSetupRequirementView, ProgressionView } from "./types";
+ import "./goalsPanel.css";
++import { InspectionControls } from "./InspectionControls";
+ 
+ interface GoalsPanelProps {
+   view: ProgressionView;
+   onLevelUp: () => void;
++  onBookInspection?: () => void;
++  onCancelInspection?: () => void;
++  onViewFinishReport?: () => void;
+   onProcedureSetupAction: (action: NonNullable<ProcedureSetupRequirementView["action"]>) => void;
+ }
+ 
+ export function GoalsPanel({
+   view,
+   onLevelUp,
++  onBookInspection,
++  onCancelInspection,
++  onViewFinishReport,
+   onProcedureSetupAction,
+ }: GoalsPanelProps) {
+   const panelRef = useRef<HTMLElement>(null);
+@@ -29,7 +36,7 @@
+         <small>
+           {view.prototypeComplete
+              ? "Level complete"
+-            : view.nextLevelLabel ?? "Current level"}
++            : view.inspectionUnlock ? `Final level · ${view.inspectionUnlock.statusLabel}` : view.nextLevelLabel ?? "Current level"}
+         </small>
+       </div>
+       <ul className="goal-list">
+@@ -73,6 +80,16 @@
+           );
+         })}
+       </ul>
++      {view.inspectionUnlock ? (
++        <section className="goals-inspection-unlock" aria-label="Inspection unlock">
++          <strong role="status">{view.inspectionUnlock.statusLabel}</strong>
++          {view.inspectionUnlock.earnedLabel ? <small>{view.inspectionUnlock.earnedLabel}</small> : null}
++          <p>{view.inspectionUnlock.description}</p>
++          {view.inspection ? <InspectionControls view={view.inspection} onBook={onBookInspection} onCancel={onCancelInspection} onViewFinish={onViewFinishReport} /> :
++            <button className="button" type="button" disabled title={view.inspectionUnlock.bookingDisabledReason ?? undefined}>{view.inspectionUnlock.bookingLabel}</button>}
++          {view.inspectionUnlock.tip ? <p>{view.inspectionUnlock.tip}</p> : null}
++        </section>
++      ) : null}
+       {view.canLevelUp || view.prototypeComplete || Boolean(view.secondaryGoals?.length) ? (
+         <div className="goals-advance-area">
+           {view.secondaryGoals?.map((goal) => (
+@@ -102,7 +119,7 @@
+           ) : null}
+           {view.prototypeComplete ? (
+             <p className="prototype-complete">
+-               Level 4 complete - Level 5 coming later. Keep playing; the clinic is still open.
++               Level 4 goals complete. Keep playing; the clinic is still open.
+             </p>
+           ) : null}
+         </div>

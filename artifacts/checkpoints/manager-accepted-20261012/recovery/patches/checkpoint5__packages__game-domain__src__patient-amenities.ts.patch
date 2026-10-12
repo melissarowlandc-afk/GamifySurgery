@@ -1,0 +1,158 @@
+--- a/packages/game-domain/src/patient-amenities.ts
++++ b/packages/game-domain/src/patient-amenities.ts
+@@ -10,6 +10,8 @@
+   ServiceOperationState,
+ } from "./types";
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
++import { LEVEL_FIVE_SUPPORT_TUNING } from "@gamify-surgery/balance-config";
++import { findLevelFiveSupportExitPath, findLevelFiveSupportPath, getGardenSatisfactionPoints, getLevelFiveSupportExitDoorId, getLevelFiveSupportRoomAt } from "./level-five-support";
+ 
+ type AmenityActorKind = PatientAmenityTripState["actorKind"];
+ 
+@@ -240,6 +242,37 @@
+   return false;
+ }
+ 
++/** Optional adult comfort, using the same movement/preemption ownership as bathrooms. */
++export function tryStartPatientGardenRest(state: GameState, kind: AmenityActorKind, id: string, context: DomainContext): boolean {
++  if (state.facilityLevel < 5 || getPatientAmenityTrip(state, kind, id) || !actorEligible(state, kind, id)) return false;
++  const encounter = kind === "encounter" ? state.encounters[id] : null;
++  const visitor = kind === "service_visitor" ? state.serviceOperations.find(operation => operation.id === id) : null;
++  if (encounter?.gardenVisitBenefit || visitor?.gardenVisitBenefit || encounter?.frozenCase.pediatricProfile ||
++    visitor?.clinicVisit && visitor.clinicVisit.demographics.ageYears < 18) return false;
++  // Preparation/recovery is accepted care, even when a bathroom exception exists.
++  const operation = activeOperationForActor(state, kind, id);
++  if (operation && operation.status !== "waiting_for_resources") return false;
++  const start = actorLocation(state, kind, id);
++  if (!start) return false;
++  for (const room of state.rooms.filter(room => room.roomDefinitionId === "room.indoor_garden" && isRoomOperationalForFacilityWork(state, room.id, context)).sort((a, b) => a.id.localeCompare(b.id))) {
++    for (const seatId of ["leftSeat", "rightSeat"] as const) {
++      if (state.patientAmenityTrips?.some(trip => trip.amenityKind === "garden" && trip.gardenRoomInstanceId === room.id && trip.gardenSeatId === seatId && trip.status !== "returning")) continue;
++      const outbound = findLevelFiveSupportPath(state, room, seatId, start, context);
++      if (!outbound) continue;
++      state.patientAmenityTrips ??= [];
++      state.patientAmenityTripSequence ??= 0;
++      state.patientAmenityTrips.push({ version: "patient-amenity-trip.v1", id: `patient-amenity-trip.${state.patientAmenityTripSequence++}`,
++        actorKind: kind, actorId: id, amenityKind: "garden", gardenRoomInstanceId: room.id, gardenSeatId: seatId,
++        gardenUpgradeLevel: room.upgradeLevel, gardenSatisfactionPoints: getGardenSatisfactionPoints(room.upgradeLevel),
++        gardenRestMinutes: LEVEL_FIVE_SUPPORT_TUNING.gardenRestMinutes, supportDoorId: outbound.doorId,
++        status: "walking_to_amenity", startedAtFacilityTick: state.facilityTick, dwellEndsAtFacilityTick: null,
++        returnRequested: false, returnTarget: { ...start }, path: outbound.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick });
++      return true;
++    }
++  }
++  return false;
++}
++
+ export function requestPatientAmenityReturn(
+   state: GameState,
+   kind: AmenityActorKind,
+@@ -249,7 +282,7 @@
+   const trip = getPatientAmenityTrip(state, kind, id);
+   if (!trip) return false;
+   trip.returnRequested = true;
+-  if (trip.status === "returning") return true;
++  if (trip.status === "returning" && !(trip.amenityKind === "garden" && trip.returnBlocked)) return true;
+   const current = actorLocation(state, kind, id);
+   if (!current) return true;
+   const authorizedReturnRoom = protectedCareRoomAtPoint(state, context, trip.returnTarget);
+@@ -271,13 +304,27 @@
+       serviceRoomIds.has(authorizedReturnRoom.id))
+     ? new Set([authorizedReturnRoom.id])
+     : new Set<string>();
+-  const returnPath = route(state, context, current, trip.returnTarget, allowedReturnRooms);
+-  if (returnPath.length === 0) return true;
++  const garden = trip.amenityKind === "garden" ? state.rooms.find(room => room.id === trip.gardenRoomInstanceId) : null;
++  const gardenExit = garden ? findLevelFiveSupportExitPath(state, garden, current, trip.returnTarget, context, allowedReturnRooms) : [];
++  const soldGardenEscape = trip.amenityKind === "garden" && !garden && trip.returnBlocked ? trip.path.slice(0, Math.floor(trip.pathIndex) + 1).reverse() : [];
++  const escapedReturn = soldGardenEscape.length ? route(state, context, soldGardenEscape.at(-1)!, trip.returnTarget, allowedReturnRooms) : [];
++  const insideNativeGarden = garden && getLevelFiveSupportRoomAt(state, current)?.id === garden.id &&
++    current.x >= garden.x && current.x < garden.x + 4 && current.y >= garden.y && current.y < garden.y + 4;
++  const returnPath = gardenExit.length ? gardenExit : soldGardenEscape.length && escapedReturn.length ? [...soldGardenEscape, ...escapedReturn] :
++    insideNativeGarden ? [] : route(state, context, current, trip.returnTarget, allowedReturnRooms);
++  if (returnPath.length === 0) {
++    if (trip.amenityKind === "garden") { trip.status = "returning"; trip.returnBlocked = true; trip.dwellEndsAtFacilityTick = null; }
++    return true;
++  }
+   trip.status = "returning";
+   trip.path = returnPath.map((point) => ({ ...point }));
+   trip.pathIndex = 0;
+   trip.lastMovedAtFacilityTick = state.facilityTick;
+   trip.dwellEndsAtFacilityTick = null;
++  if (trip.amenityKind === "garden") {
++    delete trip.returnBlocked;
++    if (garden) trip.supportDoorId = getLevelFiveSupportExitDoorId(state, garden, returnPath) ?? trip.supportDoorId;
++  }
+   return true;
+ }
+ 
+@@ -306,6 +353,7 @@
+ }
+ 
+ function advanceTrip(state: GameState, trip: PatientAmenityTripState, context: DomainContext): boolean {
++  if (trip.amenityKind === "garden") return advanceGardenRest(state, trip, context);
+   const current = actorLocation(state, trip.actorKind, trip.actorId);
+   if (!current) return false;
+   const operation = activeOperationForActor(state, trip.actorKind, trip.actorId);
+@@ -391,6 +439,53 @@
+   return false;
+ }
+ 
++function advanceGardenRest(state: GameState, trip: Extract<PatientAmenityTripState, { amenityKind: "garden" }>, context: DomainContext): boolean {
++  const current = actorLocation(state, trip.actorKind, trip.actorId);
++  const encounter = trip.actorKind === "encounter" ? state.encounters[trip.actorId] : null;
++  const visitor = trip.actorKind === "service_visitor" ? state.serviceOperations.find(operation => operation.id === trip.actorId) : null;
++  if (!current || encounter && !["waiting_unopened", "active_action_required", "active_pending_result"].includes(encounter.lifecycle) ||
++    visitor && ["completed", "cancelled"].includes(visitor.status)) return false;
++  const room = state.rooms.find(room => room.id === trip.gardenRoomInstanceId);
++  const operational = room && isRoomOperationalForFacilityWork(state, room.id, context) && state.doors.some(door => door.id === trip.supportDoorId && door.roomId === room.id);
++  const operation = activeOperationForActor(state, trip.actorKind, trip.actorId);
++  if ((!operational || state.openChartEncounterId === trip.actorId || operation && operation.status !== "waiting_for_resources") && trip.status !== "returning") trip.returnRequested = true;
++  if (trip.status === "returning" && room && getLevelFiveSupportRoomAt(state, current)?.id === room.id &&
++    !state.doors.some(door => door.id === trip.supportDoorId && door.roomId === room.id)) trip.returnBlocked = true;
++  if (trip.returnRequested && (trip.status !== "returning" || trip.returnBlocked)) {
++    requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
++    if (trip.returnBlocked) return true;
++  }
++  if (trip.status === "using_amenity") {
++    if (trip.dwellEndsAtFacilityTick !== null && state.facilityTick >= trip.dwellEndsAtFacilityTick) {
++      const actor = encounter ?? visitor;
++      if (actor && !actor.gardenVisitBenefit) {
++        actor.gardenVisitBenefit = { version: "garden-visit-benefit.v1", roomInstanceId: trip.gardenRoomInstanceId,
++          upgradeLevel: trip.gardenUpgradeLevel, seatId: trip.gardenSeatId, points: trip.gardenSatisfactionPoints, completedAtFacilityTick: state.facilityTick };
++        if (encounter) encounter.patientSatisfaction = Math.max(0, Math.min(100, encounter.patientSatisfaction + trip.gardenSatisfactionPoints));
++      }
++      requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
++    }
++    return true;
++  }
++  const elapsed = Math.max(1, state.facilityTick - trip.lastMovedAtFacilityTick);
++  trip.pathIndex = Math.min(trip.path.length - 1, trip.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
++  trip.lastMovedAtFacilityTick = state.facilityTick;
++  const location = trip.path[Math.floor(trip.pathIndex)];
++  if (location) setActorLocation(state, trip, location);
++  if (trip.pathIndex < trip.path.length - 1) return true;
++  if (trip.status === "returning") return false;
++  trip.status = "using_amenity";
++  trip.dwellEndsAtFacilityTick = state.facilityTick + trip.gardenRestMinutes;
++  return true;
++}
++
++/** Capture real exit routes while the room/doors still exist. No use award on sale. */
++export function interruptGardenRestsForRoomSale(state: GameState, roomId: string, context: DomainContext): void {
++  for (const trip of state.patientAmenityTrips ?? []) {
++    if (trip.amenityKind === "garden" && trip.gardenRoomInstanceId === roomId && trip.status !== "returning") requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
++  }
++}
++
+ export function advancePatientAmenityTrips(state: GameState, context: DomainContext): void {
+   state.patientAmenityTrips ??= [];
+   state.patientAmenityNextOpportunityTicks ??= {};
+@@ -418,6 +513,7 @@
+     }
+     if (due > state.facilityTick || getPatientAmenityTrip(state, actor.kind, actor.id)) continue;
+     state.patientAmenityNextOpportunityTicks[key] = nextOpportunityTick(state, context, key);
++    if (tryStartPatientGardenRest(state, actor.kind, actor.id, context)) continue;
+     const roll = deterministicInteger(
+       state.campaignSeed,
+       RANDOM_STREAMS.environment,

@@ -1,0 +1,13 @@
+{
+  "status": "PENDING_MANAGER",
+  "tool": "mcp__cua_repl.js",
+  "purpose": "Inspect the already-served proof after the native Chrome launch returned spawn EPERM.",
+  "input": "let gardenBrowser = await cua.getBrowser({ url: 'http://127.0.0.1:4191/tools/room-design/level-5/indoor-garden/proof/index.html' });",
+  "attempts": [
+    {"output": "trusted Node process exited unexpectedly; kernel reset, rerun your request"},
+    {"output": "node_repl kernel exited unexpectedly", "diagnostics": {"kernel_pid": 38296, "kernel_status": "exited(code=1)", "kernel_stderr_tail": "windows sandbox failed: helper_unknown_error: setup refresh had errors", "reason": "stdout_eof", "stream_error": null}}
+  ],
+  "browserInspectionCompleted": false,
+  "browserOrProfileChangesClaimed": false,
+  "recovery": "Manager runs proof/validate-browser.cjs and proof/capture.cjs outside the worker sandbox. No dependency, sandbox, server or launcher changes were attempted."
+}

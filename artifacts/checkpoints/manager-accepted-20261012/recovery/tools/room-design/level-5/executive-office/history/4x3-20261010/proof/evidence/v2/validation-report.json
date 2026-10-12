@@ -1,0 +1,288 @@
+{
+  "status": "PASS",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "footprint": [
+    4,
+    3
+  ],
+  "tiers": [
+    {
+      "level": 1,
+      "assets": 10,
+      "states": 256,
+      "routes": 1344,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 584,
+          "uncoveredAdultPixels": 6641,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3068,
+          "uncoveredAdultPixels": 5480,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "assets": 10,
+      "states": 256,
+      "routes": 1344,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 584,
+          "uncoveredAdultPixels": 6641,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3068,
+          "uncoveredAdultPixels": 5480,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "assets": 10,
+      "states": 256,
+      "routes": 1344,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 584,
+          "uncoveredAdultPixels": 6641,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3068,
+          "uncoveredAdultPixels": 5480,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "assets": 10,
+      "states": 256,
+      "routes": 1344,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 584,
+          "uncoveredAdultPixels": 6641,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3068,
+          "uncoveredAdultPixels": 5480,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "assets": 10,
+      "states": 256,
+      "routes": 1344,
+      "layers": [
+        {
+          "id": "executiveChair",
+          "opaqueForegroundOverlap": 584,
+          "uncoveredAdultPixels": 6641,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        },
+        {
+          "id": "visitorChair",
+          "opaqueForegroundOverlap": 3068,
+          "uncoveredAdultPixels": 5480,
+          "order": "chair → real adult → camera-side chair foreground",
+          "seatRegistered": true
+        }
+      ]
+    }
+  ],
+  "states": 1280,
+  "routes": 6720,
+  "radiusClearSamples": 3405120,
+  "sampleSpacingTiles": 0.005,
+  "actorRadiusTiles": 0.18,
+  "doorSections": 14,
+  "backingSections": 4,
+  "monotonicChecks": 980,
+  "arbitraryDoorCombinationProof": "Each single-door path is safe with all other optional objects present; more doors remove obstacles. Backing never adds floor obstacles.",
+  "assets": 10,
+  "foregrounds": 2,
+  "assetChecks": [
+    {
+      "id": "base-desk",
+      "canvas": [
+        696,
+        600
+      ],
+      "sha256": "99ca432392611af0c927ecd689caf62bd1c23a0771f17a533e853c1c1a187ce9",
+      "alphaEdge": 0,
+      "transparentPixels": 236353,
+      "anchor": [
+        348,
+        588
+      ],
+      "worktopRise": 67.99059689288634
+    },
+    {
+      "id": "base-executiveChair",
+      "canvas": [
+        480,
+        768
+      ],
+      "sha256": "c4f2d42a26abcb7ef1137ff20a404b4587118e7159e43c66afae985dcdf85f00",
+      "alphaEdge": 0,
+      "transparentPixels": 293504,
+      "anchor": [
+        240.1848049281314,
+        760.8911704312115
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "base-visitorChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463",
+      "alphaEdge": 0,
+      "transparentPixels": 191540,
+      "anchor": [
+        225.3399014778325,
+        569.1133004926108
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "base-shelf",
+      "canvas": [
+        720,
+        384
+      ],
+      "sha256": "819efb7b2eddd2ff353962540a21c35b85fd9018415dc2bd975b106e5e1d597b",
+      "alphaEdge": 0,
+      "transparentPixels": 105782,
+      "anchor": [
+        360,
+        378
+      ]
+    },
+    {
+      "id": "base-meetingTable",
+      "canvas": [
+        480,
+        432
+      ],
+      "sha256": "d46cb74d1a59afdbeb3f5f0b7437fa381d60bee03df3e30f40455762b874b55f",
+      "alphaEdge": 0,
+      "transparentPixels": 102852,
+      "anchor": [
+        240,
+        426
+      ]
+    },
+    {
+      "id": "base-meetingChair",
+      "canvas": [
+        456,
+        576
+      ],
+      "sha256": "e6f04fea8e6807458009edc177f99ffb2909488cd81e207b55cc17aad248790d",
+      "alphaEdge": 0,
+      "transparentPixels": 176510,
+      "anchor": [
+        226.44059405940592,
+        565.990099009901
+      ],
+      "seatRise": 45
+    },
+    {
+      "id": "base-rug",
+      "canvas": [
+        1320,
+        920
+      ],
+      "sha256": "811a915ac46bdf95382f642af9995879757ed5f7557a623dc791b6cc0045d90b",
+      "alphaEdge": 0,
+      "transparentPixels": 320070,
+      "anchor": [
+        660,
+        460
+      ]
+    },
+    {
+      "id": "base-decor",
+      "canvas": [
+        432,
+        240
+      ],
+      "sha256": "f3da5d2c98a0cbfd1823b5866993b7ee6171ec570516a5da12feaea1e11018d1",
+      "alphaEdge": 0,
+      "transparentPixels": 16434,
+      "anchor": [
+        216,
+        25
+      ]
+    },
+    {
+      "id": "base-art",
+      "canvas": [
+        576,
+        264
+      ],
+      "sha256": "531d4205adb89ae56960713f6abaf0d4c24cb688fe73810881c9364cb41f73bc",
+      "alphaEdge": 0,
+      "transparentPixels": 42083,
+      "anchor": [
+        288,
+        55
+      ]
+    },
+    {
+      "id": "base-accent",
+      "canvas": [
+        288,
+        480
+      ],
+      "sha256": "bc72443d0f2e48a371f484376305e739c92b1e7aabba81423b9f6cb85dd4226e",
+      "alphaEdge": 0,
+      "transparentPixels": 70925,
+      "anchor": [
+        144,
+        473
+      ]
+    }
+  ],
+  "realIdentities": [
+    "founder.01",
+    "patient.adult.007"
+  ],
+  "sourceHashes": 43,
+  "concurrentReferenceChanges": [],
+  "textFiles": 79,
+  "warnings": [],
+  "browserQA": "pending manager",
+  "proofManifestSha256": "313ec85da7b5474132699a817886fa515dc802bfabc4c01f234a3ec6605de730"
+}

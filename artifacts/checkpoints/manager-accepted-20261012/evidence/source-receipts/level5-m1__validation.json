@@ -1,0 +1,70 @@
+{
+  "focused-balance": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads src/level-five-schema.test.ts src/level-four-schema.test.ts",
+    "config": "checked-in default"
+  },
+  "focused-domain-final": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads tests/level-five-state-persistence.test.ts tests/level-four-persistence.test.ts",
+    "config": "checked-in default"
+  },
+  "focused-player": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/levelFiveStateQa.test.ts",
+    "config": "checked-in default"
+  },
+  "full-balance": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+    "config": "checked-in default"
+  },
+  "full-domain": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+    "config": "checked-in default"
+  },
+  "full-clinical": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+    "config": "checked-in default"
+  },
+  "full-player": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 1,
+    "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+    "config": "checked-in default"
+  },
+  "typecheck-accepted": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "npm.cmd run typecheck",
+    "config": "checked-in default"
+  },
+  "qa-typecheck": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "node node_modules/typescript/bin/tsc --noEmit -p .local-dev/level5-m1/qa-tsconfig.json"
+  },
+  "qa-transform-final-accepted": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "node tools/qa/level-four-rooms.mjs --check"
+  },
+  "qa-script-final": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "node --check tools/qa/level-four-rooms.mjs"
+  },
+  "launcher-contract": {
+    "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+    "exitCode": 0,
+    "command": "node scripts/verify-launcher-contract.mjs"
+  }
+}

@@ -1,0 +1,34 @@
+--- a/packages/game-domain/src/facility-experience.ts
++++ b/packages/game-domain/src/facility-experience.ts
+@@ -1,3 +1,4 @@
++import { getEmployeeEffectiveMorale } from "./level-five-support";
+ import { renderPrototypeAlert } from "@gamify-surgery/balance-config";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+@@ -320,7 +321,7 @@
+   const lowMoraleEmployee = state.employees
+     .filter(
+       (employee) =>
+-        employee.morale <=
++        getEmployeeEffectiveMorale(state, employee) <=
+         context.balanceRelease.patientSatisfaction
+           .unhappyStaffMoraleThreshold,
+     )
+@@ -418,7 +419,7 @@
+   const lowMoraleEmployee = state.employees
+     .filter(
+       (employee) =>
+-        employee.morale <=
++        getEmployeeEffectiveMorale(state, employee) <=
+         context.balanceRelease.patientSatisfaction
+           .unhappyStaffMoraleThreshold,
+     )
+@@ -518,7 +519,7 @@
+           definitionId: "alert.staff.morale-low",
+           values: {
+             employee_name: lowMoraleEmployee?.displayName,
+-            morale: lowMoraleEmployee?.morale,
++            morale: lowMoraleEmployee ? getEmployeeEffectiveMorale(state, lowMoraleEmployee) : undefined,
+           },
+           priority: "action_required" as const,
+           target: lowMoraleEmployee

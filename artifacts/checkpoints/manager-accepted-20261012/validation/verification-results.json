@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-12T22:32:04.622871+00:00",
+  "strictArchiveAndLiveVerification": {
+    "status": "PASS",
+    "manifestedFiles": 2898,
+    "archiveFiles": 2899,
+    "archiveBytes": 385404139,
+    "patchContracts": 105,
+    "forwardReverseReapply": 105,
+    "recoveredTargets": 2733,
+    "wholeOwnedTargets": 2628,
+    "stagePaths": 2905,
+    "liveStageSourcesChecked": 6,
+    "liveRecoveryTargetsChecked": 3091,
+    "gitMutations": 0,
+    "workingTreeWrites": 0
+  },
+  "restoreDryRun": {
+    "status": "PASS",
+    "dryRun": true,
+    "recoveredFiles": 2733,
+    "recoveredBytes": 370721727,
+    "gitMutations": 0,
+    "requiresAllFourPriorArchivesAndCompatibleEarlierDependencies": true
+  },
+  "diskRoundTrip": "validation/disk-restore-roundtrip.json",
+  "negativeGuards": "validation/negative-guard-tests.json",
+  "scope": "Recorded run before refreshing only these validation receipts in the final manifest. Rerun strict verification against the refreshed final manifest before staging.",
+  "commands": [
+    "python artifacts/checkpoints/manager-accepted-20261012/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+    "python artifacts/checkpoints/manager-accepted-20261012/restore_recovery.py --dry-run",
+    "python artifacts/checkpoints/manager-accepted-20261012/restore_recovery.py --destination <empty-worker-scratch>"
+  ],
+  "gameplayOrBrowserTestsRerunByArchiveWorker": false,
+  "gitMutations": 0
+}

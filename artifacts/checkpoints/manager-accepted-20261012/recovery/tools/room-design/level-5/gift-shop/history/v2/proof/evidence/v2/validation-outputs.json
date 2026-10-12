@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "designRevision": 2,
+  "commands": [
+    {
+      "command": "node tools/room-design/level-5/gift-shop/assets/write-generation-v2.mjs",
+      "exitCode": 0,
+      "output": "GENERATION V2 MANIFEST PASS: 13 selected assets / 13 built-in calls; 8 new revision calls; transparent originals copied byte-identically; exact prompts, real receipts and registration hashes.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/reproduce.mjs",
+      "exitCode": 0,
+      "output": "BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 13 sprites; shared 3x3; 12 one-tile doors; necessary primary displays/checkout/standing spots; optional decor has door owners; no staff.\nBUILD PASS: painted; 1 fixed look / 5 upgrade selections; 13 sprites; shared 3x3; 12 one-tile doors; necessary primary displays/checkout/standing spots; optional decor has door owners; no staff.\nREPRODUCIBILITY PASS: 20 delivered files byte-identical across two native rebuilds.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/validate.cjs",
+      "output": "VALIDATION PASS: 1 fixed look / 5 upgrade selections; 13 painted assets; 4 necessary fixtures / 9 optional decor; 4 unchanged adult standing stills; 3200 door/backing states; 66380 routes; 32992040 radius-clear samples at 0.005T; 66380 full-queue routes / 40087100 occupied samples; 12 one-tile doors; necessary furniture and standing spots retained; optional visibility/contacts/layers/alpha/hashes/UTF-8 checked.\n",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/validate-controls.mjs",
+      "exitCode": 0,
+      "output": "CONTROL VALIDATION PASS: 265 Node handler checks; 5 fixed-look upgrade buttons, 12 door buttons, 3 backing buttons, 4 bulk buttons, 4 standing shoppers, keyboard, real-error/performance-warning discrimination; browser pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/inspect-native.mjs",
+      "exitCode": 0,
+      "output": "NATIVE INSPECTION PASS: 110 actual-render states across 5 fixed-appearance upgrades; default/empty/individual shoppers/full queue/contacts/routes/all 12 doors/backing; browser QA pending.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/check-helpers.cjs",
+      "exitCode": 0,
+      "output": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/proof/check-http.mjs",
+      "exitCode": 0,
+      "output": "HTTP VALIDATION PASS: 26 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.\n"
+    },
+    {
+      "command": "node tools/room-design/level-5/gift-shop/assets/write-provenance-v2.mjs",
+      "exitCode": 0,
+      "output": "PROVENANCE V2 PASS: 13 built-in objects / 8 new revision calls; originals/prompts/real receipts/prepared hashes; 4 necessary fixtures / 9 optional decor; 4 unchanged adult stills; two recorded optional refinements; owner approval pending.\n"
+    }
+  ],
+  "browserStatus": "PENDING_MANAGER",
+  "browserAttempt": "browser-launch-attempt.json",
+  "constructionRecords": [
+    "../../../stand-in/v2/route-receipt.json",
+    "../../../layout-reconciliation-v2.json"
+  ]
+}

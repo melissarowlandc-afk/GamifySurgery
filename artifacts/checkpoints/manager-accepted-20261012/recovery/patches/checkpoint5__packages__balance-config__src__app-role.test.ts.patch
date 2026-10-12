@@ -1,0 +1,11 @@
+--- a/packages/balance-config/src/app-role.test.ts
++++ b/packages/balance-config/src/app-role.test.ts
+@@ -14,7 +14,7 @@
+     expect(gross).toBe(40);
+     expect(gross - role.salaryPerExpenseInterval - exam.upkeepPerExpenseInterval).toBe(8);
+     expect(PROTOTYPE_BALANCE_RELEASE.emergencyGlp1.payment).toBe(50);
+-    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(4);
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
+   });
+ 
+   it("prices four 10-percent revenue tiers with an APP metric independent of GLP-1", () => {

@@ -1,0 +1,2979 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate_needs_owner_review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "facilityLevel": 5,
+  "appearanceChanges": false,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "catalogEvidence": "packages/balance-config/src/room-upgrades.ts:51–53,97: appearanceChanges defaults false; room.gift_shop does not enable it.",
+  "footprintEvidence": "docs/execplans/level5-launch-plan-20261010.md:334–340: proposed 3x3, self-service contact, two queued shoppers, no shopkeeper.",
+  "pieces": [
+    {
+      "id": "northLeft",
+      "label": "Rear left: balloons, plush, cards and mugs",
+      "spriteSlot": "northLeft",
+      "canvas": [
+        512,
+        720
+      ],
+      "size": [
+        1.06,
+        1.490625
+      ],
+      "ground": [
+        0.5,
+        0.35
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "classification": "optional",
+      "owners": [
+        "N1",
+        "WA"
+      ],
+      "backed": []
+    },
+    {
+      "id": "northMiddle",
+      "label": "Rear middle: mugs, candles and impulse snacks",
+      "spriteSlot": "northMiddle",
+      "canvas": [
+        512,
+        720
+      ],
+      "size": [
+        1.06,
+        1.490625
+      ],
+      "ground": [
+        1.5,
+        0.35
+      ],
+      "footprint": {
+        "left": 1,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "classification": "optional",
+      "owners": [
+        "N2"
+      ],
+      "backed": []
+    },
+    {
+      "id": "northRight",
+      "label": "Rear right: magazines, cards and overflowing plush",
+      "spriteSlot": "northRight",
+      "canvas": [
+        512,
+        720
+      ],
+      "size": [
+        1.06,
+        1.490625
+      ],
+      "ground": [
+        2.5,
+        0.35
+      ],
+      "footprint": {
+        "left": 2,
+        "top": 0,
+        "width": 1,
+        "height": 0.35
+      },
+      "classification": "optional",
+      "owners": [
+        "N3",
+        "EA"
+      ],
+      "backed": []
+    },
+    {
+      "id": "westRear",
+      "label": "Left rear: joined card rack and flower buckets",
+      "spriteSlot": "westRun",
+      "canvas": [
+        256,
+        1152
+      ],
+      "size": [
+        0.47,
+        2.115
+      ],
+      "ground": [
+        0.215,
+        1
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 0.35,
+        "width": 0.43,
+        "height": 0.65
+      },
+      "classification": "optional",
+      "owners": [
+        "N1",
+        "WA"
+      ],
+      "backed": []
+    },
+    {
+      "id": "westMiddle",
+      "label": "Left middle: continuing cards and flowers",
+      "spriteSlot": "westRun",
+      "canvas": [
+        256,
+        1152
+      ],
+      "size": [
+        0.47,
+        2.115
+      ],
+      "ground": [
+        0.215,
+        2
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 1,
+        "width": 0.43,
+        "height": 1
+      },
+      "classification": "optional",
+      "owners": [
+        "WB"
+      ],
+      "backed": []
+    },
+    {
+      "id": "westCooler",
+      "label": "Left front: flower cooler and bouquet endcap",
+      "spriteSlot": "cooler",
+      "canvas": [
+        288,
+        864
+      ],
+      "size": [
+        0.53,
+        1.59
+      ],
+      "ground": [
+        0.215,
+        3
+      ],
+      "footprint": {
+        "left": 0,
+        "top": 2,
+        "width": 0.43,
+        "height": 1
+      },
+      "classification": "optional",
+      "owners": [
+        "S1",
+        "WC"
+      ],
+      "backed": []
+    },
+    {
+      "id": "eastRear",
+      "label": "Right rear: magazine/snack shelving and plush",
+      "spriteSlot": "eastRun",
+      "canvas": [
+        224,
+        896
+      ],
+      "size": [
+        0.38,
+        1.52
+      ],
+      "ground": [
+        2.85,
+        1
+      ],
+      "footprint": {
+        "left": 2.7,
+        "top": 0.35,
+        "width": 0.3,
+        "height": 0.65
+      },
+      "classification": "optional",
+      "owners": [
+        "N3",
+        "EA"
+      ],
+      "backed": []
+    },
+    {
+      "id": "eastMiddle",
+      "label": "Right middle: continuing stocked shelves",
+      "spriteSlot": "eastRun",
+      "canvas": [
+        224,
+        896
+      ],
+      "size": [
+        0.38,
+        1.52
+      ],
+      "ground": [
+        2.85,
+        2
+      ],
+      "footprint": {
+        "left": 2.7,
+        "top": 1,
+        "width": 0.3,
+        "height": 1
+      },
+      "classification": "optional",
+      "owners": [
+        "EB"
+      ],
+      "backed": []
+    },
+    {
+      "id": "entranceEndcap",
+      "label": "Entrance: joined plush bin, flowers and balloons",
+      "spriteSlot": "entry",
+      "canvas": [
+        432,
+        480
+      ],
+      "size": [
+        0.8,
+        0.8888888888888888
+      ],
+      "ground": [
+        2.65,
+        3
+      ],
+      "footprint": {
+        "left": 2.3,
+        "top": 2.35,
+        "width": 0.7,
+        "height": 0.65
+      },
+      "classification": "optional",
+      "owners": [
+        "S3",
+        "EC"
+      ],
+      "backed": []
+    },
+    {
+      "id": "mainIsland",
+      "label": "Joined main display and self-service checkout",
+      "spriteSlot": "island",
+      "canvas": [
+        512,
+        768
+      ],
+      "size": [
+        1.03,
+        1.545
+      ],
+      "ground": [
+        1.4,
+        1.75
+      ],
+      "footprint": {
+        "left": 0.92,
+        "top": 0.8,
+        "width": 0.96,
+        "height": 0.95
+      },
+      "classification": "necessary",
+      "owners": [],
+      "backed": []
+    },
+    {
+      "id": "checkoutMat",
+      "label": "Checkout mat",
+      "spriteSlot": "mat",
+      "canvas": [
+        384,
+        144
+      ],
+      "size": [
+        0.82,
+        0.3075
+      ],
+      "center": [
+        1.4,
+        2.1
+      ],
+      "walkable": true,
+      "classification": "optional",
+      "owners": [],
+      "backed": []
+    }
+  ],
+  "room": {
+    "proofId": "gift-shop",
+    "definitionId": "room.gift_shop",
+    "name": "Gift Shop",
+    "label": "Gift Shop",
+    "design": true,
+    "footprint": [
+      3,
+      3
+    ],
+    "shell": {
+      "tilePixels": 120,
+      "rearWallHeightPixels": 90,
+      "lowNorthHeightPixels": 29,
+      "sideCapWidthPixels": 14,
+      "southHeightPixels": 29,
+      "floorAlgorithm": "design",
+      "floorBase": "#eee5ce",
+      "floorPalette": [
+        "#eee5ce"
+      ],
+      "background": "#f3ead3",
+      "rearWall": "#c6d5b7",
+      "baseTrim": "#8ca986",
+      "edgeTrim": "#294632",
+      "doorJamb": "#744a29",
+      "doorInsetPixels": 12
+    },
+    "floor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 360,
+        "color": "#eee5ce"
+      },
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 40,
+        "height": 40,
+        "color": "#dbe2d1",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 0,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 0,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 320,
+        "y": 40,
+        "width": 40,
+        "height": 40,
+        "color": "#dbe2d1",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 40,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 40,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 200,
+        "y": 80,
+        "width": 40,
+        "height": 40,
+        "color": "#efddb3",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 80,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 80,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 80,
+        "y": 120,
+        "width": 40,
+        "height": 40,
+        "color": "#e5d5c5",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 120,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 120,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 160,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 160,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 280,
+        "y": 200,
+        "width": 40,
+        "height": 40,
+        "color": "#dbe2d1",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 200,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 200,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 160,
+        "y": 240,
+        "width": 40,
+        "height": 40,
+        "color": "#efddb3",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 240,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 240,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "rect",
+        "x": 40,
+        "y": 280,
+        "width": 40,
+        "height": 40,
+        "color": "#e5d5c5",
+        "alpha": 0.5
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 280,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 280,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 40,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 80,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 160,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 200,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 280,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 320,
+        "width": 40,
+        "height": 0,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      },
+      {
+        "shape": "line",
+        "x": 320,
+        "y": 320,
+        "width": 0,
+        "height": 40,
+        "color": "#c7c2b2",
+        "alpha": 0.24
+      }
+    ],
+    "records": [
+      {
+        "id": "northLeft",
+        "classification": "optional",
+        "assetId": "design:gs:base-northLeft",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          720
+        ],
+        "renderSizeTiles": [
+          1.06,
+          1.490625
+        ],
+        "destinationTopLeftTiles": [
+          -0.030000000000000027,
+          -1.140625
+        ],
+        "worldLocalGround": [
+          0.5,
+          0.35
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.35,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        }
+      },
+      {
+        "id": "northMiddle",
+        "classification": "optional",
+        "assetId": "design:gs:base-northMiddle",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          720
+        ],
+        "renderSizeTiles": [
+          1.06,
+          1.490625
+        ],
+        "destinationTopLeftTiles": [
+          0.97,
+          -1.140625
+        ],
+        "worldLocalGround": [
+          1.5,
+          0.35
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.35,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N2"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        }
+      },
+      {
+        "id": "northRight",
+        "classification": "optional",
+        "assetId": "design:gs:base-northRight",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          720
+        ],
+        "renderSizeTiles": [
+          1.06,
+          1.490625
+        ],
+        "destinationTopLeftTiles": [
+          1.97,
+          -1.140625
+        ],
+        "worldLocalGround": [
+          2.5,
+          0.35
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 0.35,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3",
+          "EA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        }
+      },
+      {
+        "id": "westRear",
+        "classification": "optional",
+        "assetId": "design:gs:base-westRun",
+        "sourceRect": [
+          0,
+          0,
+          256,
+          1152
+        ],
+        "renderSizeTiles": [
+          0.47,
+          2.115
+        ],
+        "destinationTopLeftTiles": [
+          -0.01999999999999999,
+          -1.1150000000000002
+        ],
+        "worldLocalGround": [
+          0.215,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 0.35,
+          "width": 0.43,
+          "height": 0.65
+        }
+      },
+      {
+        "id": "westMiddle",
+        "classification": "optional",
+        "assetId": "design:gs:base-westRun",
+        "sourceRect": [
+          0,
+          0,
+          256,
+          1152
+        ],
+        "renderSizeTiles": [
+          0.47,
+          2.115
+        ],
+        "destinationTopLeftTiles": [
+          -0.01999999999999999,
+          -0.11500000000000021
+        ],
+        "worldLocalGround": [
+          0.215,
+          2
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "WB"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.43,
+          "height": 1
+        }
+      },
+      {
+        "id": "westCooler",
+        "classification": "optional",
+        "assetId": "design:gs:base-cooler",
+        "sourceRect": [
+          0,
+          0,
+          288,
+          864
+        ],
+        "renderSizeTiles": [
+          0.53,
+          1.59
+        ],
+        "destinationTopLeftTiles": [
+          -0.05000000000000002,
+          1.41
+        ],
+        "worldLocalGround": [
+          0.215,
+          3
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 3,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S1",
+          "WC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.43,
+          "height": 1
+        }
+      },
+      {
+        "id": "eastRear",
+        "classification": "optional",
+        "assetId": "design:gs:base-eastRun",
+        "sourceRect": [
+          0,
+          0,
+          224,
+          896
+        ],
+        "renderSizeTiles": [
+          0.38,
+          1.52
+        ],
+        "destinationTopLeftTiles": [
+          2.66,
+          -0.52
+        ],
+        "worldLocalGround": [
+          2.85,
+          1
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "N3",
+          "EA"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.7,
+          "top": 0.35,
+          "width": 0.3,
+          "height": 0.65
+        }
+      },
+      {
+        "id": "eastMiddle",
+        "classification": "optional",
+        "assetId": "design:gs:base-eastRun",
+        "sourceRect": [
+          0,
+          0,
+          224,
+          896
+        ],
+        "renderSizeTiles": [
+          0.38,
+          1.52
+        ],
+        "destinationTopLeftTiles": [
+          2.66,
+          0.48
+        ],
+        "worldLocalGround": [
+          2.85,
+          2
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 2,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "EB"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.7,
+          "top": 1,
+          "width": 0.3,
+          "height": 1
+        }
+      },
+      {
+        "id": "entranceEndcap",
+        "classification": "optional",
+        "assetId": "design:gs:base-entry",
+        "sourceRect": [
+          0,
+          0,
+          432,
+          480
+        ],
+        "renderSizeTiles": [
+          0.8,
+          0.8888888888888888
+        ],
+        "destinationTopLeftTiles": [
+          2.25,
+          2.111111111111111
+        ],
+        "worldLocalGround": [
+          2.65,
+          3
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 3,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [
+          "S3",
+          "EC"
+        ],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 2.3,
+          "top": 2.35,
+          "width": 0.7,
+          "height": 0.65
+        }
+      },
+      {
+        "id": "mainIsland",
+        "classification": "necessary",
+        "assetId": "design:gs:base-island",
+        "sourceRect": [
+          0,
+          0,
+          512,
+          768
+        ],
+        "renderSizeTiles": [
+          1.03,
+          1.545
+        ],
+        "destinationTopLeftTiles": [
+          0.8849999999999999,
+          0.20500000000000007
+        ],
+        "worldLocalGround": [
+          1.4,
+          1.75
+        ],
+        "depthPolicy": "ground-contact",
+        "depthKey": 1.75,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "footprint": {
+          "left": 0.92,
+          "top": 0.8,
+          "width": 0.96,
+          "height": 0.95
+        }
+      },
+      {
+        "id": "checkoutMat",
+        "classification": "optional",
+        "assetId": "design:gs:base-mat",
+        "sourceRect": [
+          0,
+          0,
+          384,
+          144
+        ],
+        "renderSizeTiles": [
+          0.82,
+          0.3075
+        ],
+        "destinationTopLeftTiles": [
+          0.99,
+          1.94625
+        ],
+        "worldLocalGround": [
+          1.4,
+          2.1
+        ],
+        "depthPolicy": "authored-layer",
+        "depthKey": -0.9,
+        "canvasTransform": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "attachments": {},
+        "doorOwners": [],
+        "backedOwners": [],
+        "touchupKeepWhenBacked": true,
+        "walkable": true
+      }
+    ],
+    "procedural": [],
+    "supports": [
+      {
+        "id": "browse",
+        "role": "Browsing the main display from the left aisle",
+        "pose": "standing",
+        "facing": "east",
+        "ground": {
+          "x": 0.7,
+          "y": 1
+        },
+        "character": "patient.adult.007",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      },
+      {
+        "id": "pay",
+        "role": "Paying at self-service checkout",
+        "pose": "standing",
+        "facing": "north",
+        "ground": {
+          "x": 1.4,
+          "y": 2.1
+        },
+        "character": "patient.adult.001",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      },
+      {
+        "id": "queue1",
+        "role": "First queued shopper",
+        "pose": "standing",
+        "facing": "west",
+        "ground": {
+          "x": 2.5,
+          "y": 1.975
+        },
+        "character": "patient.adult.004",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      },
+      {
+        "id": "queue2",
+        "role": "Second queued shopper (optional occupancy proof)",
+        "pose": "standing",
+        "facing": "south",
+        "ground": {
+          "x": 2.5,
+          "y": 1.05
+        },
+        "character": "patient.adult.006",
+        "doorOwners": [],
+        "backedOwners": [],
+        "classification": "necessary"
+      }
+    ],
+    "notes": [
+      "Room-first composition: full-room concept beside the playable version; fixtures derived from that concept.",
+      "Proposed 3 × 3; all twelve one-tile wall sections remain legal doors.",
+      "One fixed appearance at upgrades 1–5: room.gift_shop appearanceChanges=false.",
+      "Necessary furniture isn't removed by doors: joined checkout/main display and all four standing/queue spots remain.",
+      "Optional stocked wall bays, side runs and entrance endcap hide for their owned doors; the floor mat is walkable.",
+      "Joined plinths line the walls; stock overlaps by floor depth. One loop aisle connects all doors, displays, checkout and both queue spots.",
+      "Three default unchanged approved adult stills; fourth adult proves the full two-person queue. No staff.",
+      "Isolated owner review only: no runtime, income, balance, clinical or save changes."
+    ]
+  },
+  "presentation": {
+    "schemaVersion": 1,
+    "status": "candidate_needs_owner_review",
+    "doorModel": {
+      "count": 12,
+      "perWall": {
+        "N": 3,
+        "S": 3,
+        "W": 3,
+        "E": 3
+      },
+      "spanTiles": 1,
+      "kind": "game-one-tile"
+    },
+    "orientation": "Back bays face south; joined left fixtures face east, right fixtures face west. Payer faces the integrated checkout; queue bends along the right aisle. Original adult stills and runtime scales are unchanged.",
+    "actors": [
+      {
+        "supportId": "browse",
+        "characterId": "patient.adult.007",
+        "group": "browsers",
+        "direction": "east",
+        "ground": [
+          0.7,
+          1
+        ],
+        "role": "Browsing the main display from the left aisle",
+        "category": "approved-adult-standing-stand-in",
+        "pose": "stand",
+        "sourceScale": 0.7140097402597404,
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 1.0001,
+        "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+      },
+      {
+        "supportId": "pay",
+        "characterId": "patient.adult.001",
+        "group": "payers",
+        "direction": "north",
+        "ground": [
+          1.4,
+          2.1
+        ],
+        "role": "Paying at self-service checkout",
+        "category": "approved-adult-standing-stand-in",
+        "pose": "stand",
+        "sourceScale": 0.6865478271728273,
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 2.1001000000000003,
+        "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+      },
+      {
+        "supportId": "queue1",
+        "characterId": "patient.adult.004",
+        "group": "queueOne",
+        "direction": "west",
+        "ground": [
+          2.5,
+          1.975
+        ],
+        "role": "First queued shopper",
+        "category": "approved-adult-standing-stand-in",
+        "pose": "stand",
+        "sourceScale": 0.7354032905296952,
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 1.9751,
+        "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+      },
+      {
+        "supportId": "queue2",
+        "characterId": "patient.adult.006",
+        "group": "queueTwo",
+        "direction": "south",
+        "ground": [
+          2.5,
+          1.05
+        ],
+        "role": "Second queued shopper (optional occupancy proof)",
+        "category": "approved-adult-standing-stand-in",
+        "pose": "stand",
+        "sourceScale": 0.6865478271728273,
+        "floorContactSource": [
+          80,
+          287
+        ],
+        "painterGround": 1.0501,
+        "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+      }
+    ],
+    "primaryContact": [
+      1.4,
+      2.1
+    ],
+    "queueCapacity": 2,
+    "contacts": [
+      {
+        "id": "browse",
+        "label": "Browsing the main display from the left aisle",
+        "world": [
+          0.7,
+          1
+        ],
+        "standingSpotId": "browse",
+        "fixtureId": "mainIsland"
+      },
+      {
+        "id": "pay",
+        "label": "Paying at self-service checkout",
+        "world": [
+          1.4,
+          2.1
+        ],
+        "standingSpotId": "pay",
+        "fixtureId": "mainIsland"
+      },
+      {
+        "id": "queue1",
+        "label": "First queued shopper",
+        "world": [
+          2.5,
+          1.975
+        ],
+        "standingSpotId": "queue1"
+      },
+      {
+        "id": "queue2",
+        "label": "Second queued shopper (optional occupancy proof)",
+        "world": [
+          2.5,
+          1.05
+        ],
+        "standingSpotId": "queue2"
+      },
+      {
+        "id": "northLeft-contact",
+        "label": "Browse rear left: balloons, plush, cards and mugs",
+        "world": [
+          0.55,
+          0.6
+        ],
+        "fixtureId": "northLeft",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "northMiddle-contact",
+        "label": "Browse rear middle: mugs, candles and impulse snacks",
+        "world": [
+          1.5,
+          0.6
+        ],
+        "fixtureId": "northMiddle",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "northRight-contact",
+        "label": "Browse rear right: magazines, cards and overflowing plush",
+        "world": [
+          2.35,
+          0.6
+        ],
+        "fixtureId": "northRight",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "westRear-contact",
+        "label": "Browse left rear: joined card rack and flower buckets",
+        "world": [
+          0.7,
+          0.95
+        ],
+        "fixtureId": "westRear",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "westMiddle-contact",
+        "label": "Browse left middle: continuing cards and flowers",
+        "world": [
+          0.7,
+          1.65
+        ],
+        "fixtureId": "westMiddle",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "westCooler-contact",
+        "label": "Browse left front: flower cooler and bouquet endcap",
+        "world": [
+          0.75,
+          2.5
+        ],
+        "fixtureId": "westCooler",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "eastRear-contact",
+        "label": "Browse right rear: magazine/snack shelving and plush",
+        "world": [
+          2.25,
+          0.7
+        ],
+        "fixtureId": "eastRear",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "eastMiddle-contact",
+        "label": "Browse right middle: continuing stocked shelves",
+        "world": [
+          2.25,
+          1.5
+        ],
+        "fixtureId": "eastMiddle",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      },
+      {
+        "id": "entranceEndcap-contact",
+        "label": "Browse entrance: joined plush bin, flowers and balloons",
+        "world": [
+          2,
+          2.55
+        ],
+        "fixtureId": "entranceEndcap",
+        "standingSpotId": "browse",
+        "optionalContact": true
+      }
+    ]
+  },
+  "navigation": {
+    "solidFixtures": [],
+    "doorThresholdExceptions": [],
+    "privateProofRouteModel": {
+      "schemaVersion": 1,
+      "status": "candidate_needs_owner_review",
+      "doorModel": {
+        "count": 12,
+        "perWall": {
+          "N": 3,
+          "S": 3,
+          "W": 3,
+          "E": 3
+        },
+        "spanTiles": 1,
+        "kind": "game-one-tile"
+      },
+      "orientation": "Back bays face south; joined left fixtures face east, right fixtures face west. Payer faces the integrated checkout; queue bends along the right aisle. Original adult stills and runtime scales are unchanged.",
+      "actors": [
+        {
+          "supportId": "browse",
+          "characterId": "patient.adult.007",
+          "group": "browsers",
+          "direction": "east",
+          "ground": [
+            0.7,
+            1
+          ],
+          "role": "Browsing the main display from the left aisle",
+          "category": "approved-adult-standing-stand-in",
+          "pose": "stand",
+          "sourceScale": 0.7140097402597404,
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 1.0001,
+          "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+        },
+        {
+          "supportId": "pay",
+          "characterId": "patient.adult.001",
+          "group": "payers",
+          "direction": "north",
+          "ground": [
+            1.4,
+            2.1
+          ],
+          "role": "Paying at self-service checkout",
+          "category": "approved-adult-standing-stand-in",
+          "pose": "stand",
+          "sourceScale": 0.6865478271728273,
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 2.1001000000000003,
+          "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+        },
+        {
+          "supportId": "queue1",
+          "characterId": "patient.adult.004",
+          "group": "queueOne",
+          "direction": "west",
+          "ground": [
+            2.5,
+            1.975
+          ],
+          "role": "First queued shopper",
+          "category": "approved-adult-standing-stand-in",
+          "pose": "stand",
+          "sourceScale": 0.7354032905296952,
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 1.9751,
+          "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+        },
+        {
+          "supportId": "queue2",
+          "characterId": "patient.adult.006",
+          "group": "queueTwo",
+          "direction": "south",
+          "ground": [
+            2.5,
+            1.05
+          ],
+          "role": "Second queued shopper (optional occupancy proof)",
+          "category": "approved-adult-standing-stand-in",
+          "pose": "stand",
+          "sourceScale": 0.6865478271728273,
+          "floorContactSource": [
+            80,
+            287
+          ],
+          "painterGround": 1.0501,
+          "basis": "Unchanged registered adult standing still; approved runtime scale and body-axis/floor anchors. Shopper stand-in, not a staff slot."
+        }
+      ],
+      "primaryContact": [
+        1.4,
+        2.1
+      ],
+      "queueCapacity": 2,
+      "contacts": [
+        {
+          "id": "browse",
+          "label": "Browsing the main display from the left aisle",
+          "world": [
+            0.7,
+            1
+          ],
+          "standingSpotId": "browse",
+          "fixtureId": "mainIsland"
+        },
+        {
+          "id": "pay",
+          "label": "Paying at self-service checkout",
+          "world": [
+            1.4,
+            2.1
+          ],
+          "standingSpotId": "pay",
+          "fixtureId": "mainIsland"
+        },
+        {
+          "id": "queue1",
+          "label": "First queued shopper",
+          "world": [
+            2.5,
+            1.975
+          ],
+          "standingSpotId": "queue1"
+        },
+        {
+          "id": "queue2",
+          "label": "Second queued shopper (optional occupancy proof)",
+          "world": [
+            2.5,
+            1.05
+          ],
+          "standingSpotId": "queue2"
+        },
+        {
+          "id": "northLeft-contact",
+          "label": "Browse rear left: balloons, plush, cards and mugs",
+          "world": [
+            0.55,
+            0.6
+          ],
+          "fixtureId": "northLeft",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "northMiddle-contact",
+          "label": "Browse rear middle: mugs, candles and impulse snacks",
+          "world": [
+            1.5,
+            0.6
+          ],
+          "fixtureId": "northMiddle",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "northRight-contact",
+          "label": "Browse rear right: magazines, cards and overflowing plush",
+          "world": [
+            2.35,
+            0.6
+          ],
+          "fixtureId": "northRight",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "westRear-contact",
+          "label": "Browse left rear: joined card rack and flower buckets",
+          "world": [
+            0.7,
+            0.95
+          ],
+          "fixtureId": "westRear",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "westMiddle-contact",
+          "label": "Browse left middle: continuing cards and flowers",
+          "world": [
+            0.7,
+            1.65
+          ],
+          "fixtureId": "westMiddle",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "westCooler-contact",
+          "label": "Browse left front: flower cooler and bouquet endcap",
+          "world": [
+            0.75,
+            2.5
+          ],
+          "fixtureId": "westCooler",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "eastRear-contact",
+          "label": "Browse right rear: magazine/snack shelving and plush",
+          "world": [
+            2.25,
+            0.7
+          ],
+          "fixtureId": "eastRear",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "eastMiddle-contact",
+          "label": "Browse right middle: continuing stocked shelves",
+          "world": [
+            2.25,
+            1.5
+          ],
+          "fixtureId": "eastMiddle",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        },
+        {
+          "id": "entranceEndcap-contact",
+          "label": "Browse entrance: joined plush bin, flowers and balloons",
+          "world": [
+            2,
+            2.55
+          ],
+          "fixtureId": "entranceEndcap",
+          "standingSpotId": "browse",
+          "optionalContact": true
+        }
+      ]
+    }
+  },
+  "tiers": [
+    {
+      "level": 1,
+      "name": "Fixed gift-shop appearance",
+      "appearanceLevel": 1,
+      "summary": "The same cheerful, stocked self-service shop at every upgrade. Appearance changes are disabled in the catalog; this proof does not simulate gift income."
+    },
+    {
+      "level": 2,
+      "name": "Fixed gift-shop appearance",
+      "appearanceLevel": 1,
+      "summary": "The same cheerful, stocked self-service shop at every upgrade. Appearance changes are disabled in the catalog; this proof does not simulate gift income."
+    },
+    {
+      "level": 3,
+      "name": "Fixed gift-shop appearance",
+      "appearanceLevel": 1,
+      "summary": "The same cheerful, stocked self-service shop at every upgrade. Appearance changes are disabled in the catalog; this proof does not simulate gift income."
+    },
+    {
+      "level": 4,
+      "name": "Fixed gift-shop appearance",
+      "appearanceLevel": 1,
+      "summary": "The same cheerful, stocked self-service shop at every upgrade. Appearance changes are disabled in the catalog; this proof does not simulate gift income."
+    },
+    {
+      "level": 5,
+      "name": "Fixed gift-shop appearance",
+      "appearanceLevel": 1,
+      "summary": "The same cheerful, stocked self-service shop at every upgrade. Appearance changes are disabled in the catalog; this proof does not simulate gift income."
+    }
+  ],
+  "designRevision": 3,
+  "composition": {
+    "method": "room-first",
+    "concept": "concept/gift-shop-concept.png",
+    "conceptSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+    "source": "One full-room concept, then seven built-in concept-derived fixture edits.",
+    "aisle": "Connected loop around the joined main-display/checkout island; wider right lane bends to the front checkout. Optional wall modules clear their door sections.",
+    "history": "history/v2/ARCHIVE_RECEIPT.json"
+  }
+}

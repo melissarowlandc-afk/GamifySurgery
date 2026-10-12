@@ -1,0 +1,110 @@
+{
+  "contract": {
+    "roomDefinitionId": "room.founder_office",
+    "width": 3,
+    "height": 3,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "desk",
+        "footprint": {
+          "left": 0.88,
+          "top": 0.9000000000000001,
+          "width": 1.24,
+          "height": 0.28
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "founderChair",
+        "footprint": {
+          "left": 1.17,
+          "top": 0.7,
+          "width": 0.66,
+          "height": 0.3
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "visitorChair",
+        "footprint": {
+          "left": 1.15,
+          "top": 1.9,
+          "width": 0.7,
+          "height": 0.32
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "shelf",
+        "footprint": {
+          "left": 0.16,
+          "top": 0.14,
+          "width": 0.64,
+          "height": 0.16
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      }
+    ],
+    "primaryAnchor": {
+      "x": 2,
+      "y": 1
+    },
+    "waitingAnchors": [],
+    "staffAnchor": null
+  },
+  "supports": [
+    {
+      "id": "aisle",
+      "anchor": {
+        "x": 2,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 2.4,
+        "y": 1.25
+      }
+    },
+    {
+      "id": "founderChair",
+      "fixtureId": "founderChair",
+      "anchor": {
+        "x": 1,
+        "y": 0
+      },
+      "standingApproach": {
+        "x": 1,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "visitorChair",
+      "fixtureId": "visitorChair",
+      "anchor": {
+        "x": 0,
+        "y": 2
+      },
+      "standingApproach": {
+        "x": 0.85,
+        "y": 2.15
+      }
+    }
+  ]
+}

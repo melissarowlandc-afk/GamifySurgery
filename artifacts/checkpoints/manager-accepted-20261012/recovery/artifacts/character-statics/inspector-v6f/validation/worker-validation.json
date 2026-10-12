@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "inspector-v6f-worker-validation/v1",
+  "status": "PASS",
+  "runAt": "2026-10-11T13:11:24.791Z",
+  "browserValidation": "blocked-spawn-EPERM-left-to-manager",
+  "browserAttempt": {
+    "ownerGameStorage": "not accessed",
+    "exitCode": 1,
+    "requestedStaticGalleryOrigin": "null (file:)",
+    "command": "node tools/character-mapping/inspector-v6f/validate-gallery.mjs",
+    "startedAt": "2026-10-11T13:03:35.8947232Z",
+    "finishedAt": "2026-10-11T13:03:36.5565562Z",
+    "receipt": {
+      "path": "artifacts/character-statics/inspector-v6f/validation/browser-attempt.json",
+      "sha256": "5dd8e85cf159499bdd472ef95c39b79a0d06753488137c97b4ac1569218e1dcf"
+    },
+    "logs": [
+      {
+        "path": "artifacts/character-statics/inspector-v6f/validation/browser.stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/character-statics/inspector-v6f/validation/browser.stderr.txt",
+        "sha256": "81f762d1be3dda34556b029cfb09e4f7061107f57d371a6f46d0344d55931d58"
+      },
+      {
+        "path": "artifacts/character-statics/inspector-v6f/validation/browser.exit.txt",
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      }
+    ]
+  },
+  "managerAcceptance": "pending",
+  "runtimeReady": false,
+  "results": [
+    {
+      "name": "roster",
+      "command": "node tools/character-mapping/inspector-v6f/validate-roster.mjs --require-complete",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:00.4747684Z",
+      "startedAt": "2026-10-11T13:06:52.7171949Z",
+      "durationMs": 7758,
+      "stdout": "{\"status\":\"PASS\",\"requireComplete\":true,\"requireRootReview\":false,\"identities\":10,\"poses\":80,\"reportedIssues\":0,\"immutableReviewSnapshots\":30,\"rosterContract\":{\"identities\":10,\"posesPerIdentity\":8,\"totalPoses\":80,\"categoryCounts\":{\"staff\":10,\"patient\":0},\"staffRoleCounts\":{},\"plannedStaffRoleCounts\":{\"Inspection agent (level 5; roadmap-only)\":10},\"demographicCounts\":{\"Female\":{\"young_adult\":1,\"adult\":2,\"middle_aged\":1,\"older_adult\":1},\"Male\":{\"young_adult\":0,\"adult\":2,\"middle_aged\":3,\"older_adult\":0}}},\"reviewStatus\":\"candidate-review-root-checks-pending\",\"runtimeBaseline\":\"326 prior identities/2638 assets and179 selectable patients preserved; existing art pinned\",\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"reviewStatusPolicy\":\"Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them.\"}\n",
+      "stderr": "node.exe : (node:50268) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:50268) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "requireComplete": true,
+          "requireRootReview": false,
+          "identities": 10,
+          "poses": 80,
+          "reportedIssues": 0,
+          "immutableReviewSnapshots": 30,
+          "rosterContract": {
+            "identities": 10,
+            "posesPerIdentity": 8,
+            "totalPoses": 80,
+            "categoryCounts": {
+              "staff": 10,
+              "patient": 0
+            },
+            "staffRoleCounts": {},
+            "plannedStaffRoleCounts": {
+              "Inspection agent (level 5; roadmap-only)": 10
+            },
+            "demographicCounts": {
+              "Female": {
+                "young_adult": 1,
+                "adult": 2,
+                "middle_aged": 1,
+                "older_adult": 1
+              },
+              "Male": {
+                "young_adult": 0,
+                "adult": 2,
+                "middle_aged": 3,
+                "older_adult": 0
+              }
+            }
+          },
+          "reviewStatus": "candidate-review-root-checks-pending",
+          "runtimeBaseline": "326 prior identities/2638 assets and179 selectable patients preserved; existing art pinned",
+          "runtimeReady": false,
+          "ownerApproval": "pending",
+          "reviewStatusPolicy": "Original art-review labels are frozen evidence; the separate owner approval and runtime-integration receipts supersede them."
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/roster.stdout.txt",
+          "sha256": "dd7a0d94ea0bf31f0181fac0f0baf07c8ea32f555f434c347aa8498165f8ea0f"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/roster.stderr.txt",
+          "sha256": "76f2128ac4b38b7fb06cf50542d3fa7cfed07647e3735cea35d52e25f6791661"
+        }
+      ]
+    },
+    {
+      "name": "placement",
+      "command": "node tools/character-mapping/inspector-v6f/validate-placement-qa.mjs --require-complete",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:01.3583243Z",
+      "startedAt": "2026-10-11T13:07:00.4914712Z",
+      "durationMs": 867,
+      "stdout": "{\"status\":\"PASS\",\"diagnostics\":10,\"requireRootReview\":false,\"runtimeReady\":false,\"ownerApproval\":\"pending\",\"frozenChairEvidenceUnchanged\":true,\"schemaVersion\":\"inspector-v6f-placement-qa/v2\"}\n",
+      "stderr": "node.exe : (node:36132) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:36132) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "diagnostics": 10,
+          "requireRootReview": false,
+          "runtimeReady": false,
+          "ownerApproval": "pending",
+          "frozenChairEvidenceUnchanged": true,
+          "schemaVersion": "inspector-v6f-placement-qa/v2"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/placement.stdout.txt",
+          "sha256": "c793079b554513366857d53cc91b7c0f7a6194776ae8427cf5705ef9a93315a2"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/placement.stderr.txt",
+          "sha256": "c0c273802ddb01cbefc06ed218a2ad9a585f06dabfddda17825b3e3135dbbd28"
+        }
+      ]
+    },
+    {
+      "name": "worker-review",
+      "command": "node tools/character-mapping/inspector-v6f/validate-worker-review.mjs",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:03.2768361Z",
+      "startedAt": "2026-10-11T13:07:01.3583243Z",
+      "durationMs": 1919,
+      "stdout": "{\"status\":\"PASS\",\"identities\":10,\"poses\":80,\"roles\":1,\"authoredSeatedContacts\":40,\"reviewedChairProofs\":10,\"reviewedRoleSheets\":1,\"reviewedCatalogIdentities\":326,\"reviewedComparisonBoards\":20,\"glassesIdentities\":2,\"regenerations\":10,\"staticGalleryPages\":19,\"mainGalleryImages\":30,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"blocked-spawn-EPERM-left-to-manager\"}\n",
+      "stderr": "node.exe : (node:45816) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:45816) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "identities": 10,
+          "poses": 80,
+          "roles": 1,
+          "authoredSeatedContacts": 40,
+          "reviewedChairProofs": 10,
+          "reviewedRoleSheets": 1,
+          "reviewedCatalogIdentities": 326,
+          "reviewedComparisonBoards": 20,
+          "glassesIdentities": 2,
+          "regenerations": 10,
+          "staticGalleryPages": 19,
+          "mainGalleryImages": 30,
+          "managerVisualAcceptance": "pending",
+          "browserValidation": "blocked-spawn-EPERM-left-to-manager"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/worker-review.stdout.txt",
+          "sha256": "c21cf091ad345a09fce5bd99cbf6a98ba627988bd0b04e722fb614976fc5c5ed"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/worker-review.stderr.txt",
+          "sha256": "512db7e8d2ee49bfa6a0c095063964e400c2275c74696508e04b44f4653f99b0"
+        }
+      ]
+    },
+    {
+      "name": "clipboard",
+      "command": "node tools/character-mapping/inspector-v6f/validate-clipboard-review.mjs",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:04.1490161Z",
+      "startedAt": "2026-10-11T13:07:03.2768361Z",
+      "durationMs": 872,
+      "stdout": "{\"status\":\"PASS\",\"identities\":10,\"sourceBoundManualPoseObservations\":80,\"standingRightSide\":40,\"seatedLap\":40,\"retainedNativeGenerationOutputs\":30,\"targetedEdits\":10,\"automatedAnatomyClassification\":false,\"managerAcceptance\":\"pending\"}\n",
+      "stderr": "node.exe : (node:20796) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:20796) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "identities": 10,
+          "sourceBoundManualPoseObservations": 80,
+          "standingRightSide": 40,
+          "seatedLap": 40,
+          "retainedNativeGenerationOutputs": 30,
+          "targetedEdits": 10,
+          "automatedAnatomyClassification": false,
+          "managerAcceptance": "pending"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/clipboard.stdout.txt",
+          "sha256": "364b7644c7bf64e01f26334b5a95ed9e06264beefb4b7981ce30a072ee1b48ba"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/clipboard.stderr.txt",
+          "sha256": "37b20ce8346eddcb0bf4a563b253c9903e6d6870c84f96028a34f0cdbffc3620"
+        }
+      ]
+    },
+    {
+      "name": "comparisons",
+      "command": "node tools/character-mapping/inspector-v6f/validate-all-catalog-comparison.mjs",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:07.7139720Z",
+      "startedAt": "2026-10-11T13:07:04.1490161Z",
+      "durationMs": 3565,
+      "stdout": "{\"status\":\"PASS\",\"priorRuntimeIdentities\":326,\"allCatalogIdentities\":326,\"existingRoleLooks\":2,\"independentlyRecomputedCatalogComparisons\":3260,\"independentlyRecomputedSameRoleComparisons\":20,\"withinBatchPairs\":45,\"sameRoleNewPairs\":45,\"perRoleComparisonSheets\":1,\"nearDuplicateFlags\":0,\"minimumCatalogRmse\":55.88144996504039,\"minimumWithinBatchRmse\":59.38237104739872,\"managerVisualAcceptance\":\"pending\",\"browserValidation\":\"blocked-spawn-EPERM-left-to-manager\"}\n",
+      "stderr": "node.exe : (node:49300) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:49300) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "priorRuntimeIdentities": 326,
+          "allCatalogIdentities": 326,
+          "existingRoleLooks": 2,
+          "independentlyRecomputedCatalogComparisons": 3260,
+          "independentlyRecomputedSameRoleComparisons": 20,
+          "withinBatchPairs": 45,
+          "sameRoleNewPairs": 45,
+          "perRoleComparisonSheets": 1,
+          "nearDuplicateFlags": 0,
+          "minimumCatalogRmse": 55.88144996504039,
+          "minimumWithinBatchRmse": 59.38237104739872,
+          "managerVisualAcceptance": "pending",
+          "browserValidation": "blocked-spawn-EPERM-left-to-manager"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/comparisons.stdout.txt",
+          "sha256": "30d2dfab3ad86a6f074a6a535e567399a43aad9618058dc566c5caf40d98a109"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/comparisons.stderr.txt",
+          "sha256": "1b9eac5d4b7a4db51d5e9bafcfa8e152c87ba1e0136cf79cc620801af265c6f8"
+        }
+      ]
+    },
+    {
+      "name": "preservation",
+      "command": "node tools/character-mapping/inspector-v6f/runtime-baseline.mjs",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:08.1281360Z",
+      "startedAt": "2026-10-11T13:07:07.7139720Z",
+      "durationMs": 414,
+      "stdout": "{\"status\":\"PASS\",\"preservedIdentities\":326,\"preservedAssets\":2638,\"priorSelectablePatients\":179,\"protectedFiles\":7,\"pinnedNativeSources\":202,\"currentRuntimeIdentities\":326,\"runtimeReady\":false,\"managerAcceptance\":\"pending\"}\n",
+      "stderr": "node.exe : (node:31892) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \ntime\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:31892) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "preservedIdentities": 326,
+          "preservedAssets": 2638,
+          "priorSelectablePatients": 179,
+          "protectedFiles": 7,
+          "pinnedNativeSources": 202,
+          "currentRuntimeIdentities": 326,
+          "runtimeReady": false,
+          "managerAcceptance": "pending"
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/preservation.stdout.txt",
+          "sha256": "fcee0d07b601bb866d6c7a0f55c73703d2a75655d63833a3bc52e5710f3cce31"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/preservation.stderr.txt",
+          "sha256": "1ccb955533f0bda147a99929cf1ab84d6c77a0892d70fc18938a7785b33a000f"
+        }
+      ]
+    },
+    {
+      "name": "syntax",
+      "command": "node --experimental-vm-modules tools/character-mapping/inspector-v6f/check-syntax.mjs",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:07:08.1758490Z",
+      "startedAt": "2026-10-11T13:07:08.1281360Z",
+      "durationMs": 48,
+      "stdout": "{\"status\":\"PASS\",\"syntaxParsedModules\":26}\n",
+      "stderr": "node.exe : (node:35564) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nAt C:\\Users\\rowla\\Projects\\GamifySurgery\\tools\\character-mapping\\inspector-v6f\\run-validation.ps1:37 char:31\n+ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ((node:35564) Ex...nge at any time:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "records": [
+        {
+          "status": "PASS",
+          "syntaxParsedModules": 26
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/syntax.stdout.txt",
+          "sha256": "150e934880f68e3a6ce6ae7ca62193248501496892a9e53977ff0dca5244d7f5"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/syntax.stderr.txt",
+          "sha256": "02be0d26343e4f528b0bfe2031478bbe54a34494bd463bc61452dfb9c0461cb3"
+        }
+      ]
+    },
+    {
+      "name": "text",
+      "command": "python tools/character-mapping/inspector-v6f/validate-text.py",
+      "exitCode": 0,
+      "finishedAt": "2026-10-11T13:11:24.0894355Z",
+      "startedAt": "2026-10-11T13:11:24.0060218Z",
+      "durationMs": 83,
+      "stdout": "{\"status\":\"PASS\",\"textFiles\":357,\"issues\":[]}\n",
+      "stderr": "",
+      "records": [
+        {
+          "status": "PASS",
+          "textFiles": 357,
+          "issues": []
+        }
+      ],
+      "logs": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/text.stdout.txt",
+          "sha256": "b4e011c7ff17ac5fa2bea3ecfa140452a2bd58869c13189fca5e792ce672b294"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/validation/text.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "receipts": [
+    {
+      "path": "artifacts/character-statics/inspector-v6f/staging-registry.json",
+      "sha256": "ac03656619857d71b2bf45fa3a5cf25bd1c7cc2265b32301f4d40245dcc19f73"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/worker-review/visual-review.json",
+      "sha256": "fb519380797b87492b3370d7ff234cc529769c3ea849752ef7b58098a7e597b9"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/worker-review/clipboard-review.json",
+      "sha256": "7d86645bbbb6c7194c09b5c0dd8fbb0b88105955245da073aee998fa8b47db00"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/comparison/manifest.json",
+      "sha256": "e80630261911f44e5455d5baf8781296f909c38930fd0bc6ffe346269e1e84f7"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/comparison/all-catalog-manifest.json",
+      "sha256": "dc42a861ed6fd3f31e6605f769986e76860d0d9e7f8d2e11ea8676e49e563c00"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/placement-qa/placement-manifest.json",
+      "sha256": "9c71d045a57d3d2aab375bb1ebdc77a810abbc185db93483f461e57f463b265b"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/contact-review/contact-review-manifest.json",
+      "sha256": "15a33e5db7585c854bfe55373a28c26d43b6845fca019cfc5d005694fea8912c"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/alpha-normalization-report.json",
+      "sha256": "289f383e0b8a5ae46708592f7dbd9afde4a373056af355a4bba614d56197f2c2"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/review/manager/style-review-manifest.json",
+      "sha256": "8e7eb3e0fc7779a99c6873849ef69bee4f5379c51a5c51f42ad0d1de1e25c7f5"
+    },
+    {
+      "path": "artifacts/character-statics/inspector-v6f/review/manager/qa-atlases-manifest.json",
+      "sha256": "f9df59bf3cd58bc0954df4404a2b7eef1efe4edfad43648323ae011621067f48"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/roster.json",
+      "sha256": "4540c2ac198d301274da0fa54e37bdd7407d5f0b13cf3987a690e0c86ad15af1"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/runtime-baseline.json",
+      "sha256": "21120a8e301b91137118264e2997d8d717572e0b3a7c57dfcff5d0e6a889be91"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/authored-contacts.json",
+      "sha256": "d290181e37d86b70b9cbd44cffbc4c85d1074ba55711a8bd6d0b0b33fe6a04a8"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/review-acceptance.json",
+      "sha256": "dcee76e7afedaac273d5bd5b1e71254a50eb3aa4916b4b758ca40ebebdd62f77"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/worker-review-notes.json",
+      "sha256": "1bfeacf46ad9a1bc1cbf8aef6afd8c9c11b350e24cca6b8ee90b57ae322c3129"
+    },
+    {
+      "path": "tools/character-mapping/inspector-v6f/validation-commands.json",
+      "sha256": "f9d362f06d62c5abd14efa33975ce3c2f3169836be072bc6959aa31f7d40f83a"
+    }
+  ]
+}

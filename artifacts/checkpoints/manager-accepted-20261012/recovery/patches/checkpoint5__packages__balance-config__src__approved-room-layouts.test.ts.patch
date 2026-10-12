@@ -1,0 +1,27 @@
+--- a/packages/balance-config/src/approved-room-layouts.test.ts
++++ b/packages/balance-config/src/approved-room-layouts.test.ts
+@@ -7,6 +7,7 @@
+ } from "./approved-room-layouts";
+ import { PROTOTYPE_BALANCE_RELEASE } from "./prototype-balance";
+ import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS } from "./approved-level4-room-layouts";
++import { APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS } from "./approved-level5-room-layouts";
+ 
+ describe("approved proof navigation contract", () => {
+   it("defines eight inward-facing Periop companion armchairs with exact doorway ownership", () => {
+@@ -47,14 +48,14 @@
+   });
+ 
+   it("binds every shipped definition to approved navigation, including playable Level 4", () => {
+-    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(24 + Object.keys(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS).length);
++    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(24 + Object.keys(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS).length + Object.keys(APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS).length);
+     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
+       const definition = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+         (candidate) => candidate.id === contract.roomDefinitionId,
+       );
+       if (APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS[contract.roomDefinitionId]) {
+         expect(definition?.unlockFacilityLevel).toBe(4);
+-        expect(definition?.unlockFacilityLevel).toBe(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
++        expect(definition?.unlockFacilityLevel).toBeLessThanOrEqual(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
+       }
+       expect(definition, contract.roomDefinitionId).toBeDefined();
+       expect([definition!.width, definition!.height]).toEqual([

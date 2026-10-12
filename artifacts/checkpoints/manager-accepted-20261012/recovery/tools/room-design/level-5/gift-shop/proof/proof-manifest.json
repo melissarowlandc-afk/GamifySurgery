@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "room": "gift-shop",
+  "facilityLevel": 5,
+  "appearanceLevels": [
+    1
+  ],
+  "upgradeLevels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "appearanceChanges": false,
+  "footprint": [
+    3,
+    3
+  ],
+  "footprintStatus": "proposed_contract_needs_owner_review",
+  "designRevision": 3,
+  "mode": "painted",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "retailMechanic": "not_simulated",
+  "queueCapacity": 2,
+  "doorModel": {
+    "count": 12,
+    "perWall": {
+      "N": 3,
+      "S": 3,
+      "W": 3,
+      "E": 3
+    },
+    "spanTiles": 1,
+    "kind": "game-one-tile"
+  },
+  "layoutSha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5",
+  "conceptLayoutSha256": "48929722e87156928e944b2c59de5147239f705575925bfb7ca12f34852b21bf",
+  "conceptSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+  "generationManifestSha256": "082a09874b31303d59072fefb2550f57f11e6e56392f722a1cd8d038d3be7c34",
+  "designRoomsSha256": "637e2bb90354e86231fd8403bdfb8c3da3854860adee1a3480ce457445b3e0d7",
+  "dataSha256": "f9588d3588adfcdc8719a40ced7e9bcce5100bcf1f206750c0e57e860b7dac82",
+  "registrationSha256": "e2d176dfadc5ebf697e23233cf13102f40a3d1dc13feb9136f5628421c88c85e",
+  "reconciliationSha256": "e57c32a465b193380e182f25a00aa7ef7ef3d9bb4d0048428c52b23e9b73ced4",
+  "rendererSha256": "57626361b8b7c7e44db424e39cd96b5b903fd57421dce0b15621056b4544fae9",
+  "htmlSha256": "9077e0227af780de62cc3ef94ddd4a3a3bfc8fac0825e7c0da2d71f6f6755fd0",
+  "extensionSha256": "0bd2e078e3175dd1c7b5b3baa901b44e8d2789fdd7c75523c2b755fd2e1e2c9a",
+  "geometrySha256": "aaad585ea14ca806a4c88bf75f1adffbc5fdae66b30cc5f86bc86cc4a251ce38",
+  "fixtureClassification": [
+    {
+      "id": "northLeft",
+      "label": "Rear left: balloons, plush, cards and mugs",
+      "classification": "optional",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "northMiddle",
+      "label": "Rear middle: mugs, candles and impulse snacks",
+      "classification": "optional",
+      "doorOwners": [
+        "N2"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "northRight",
+      "label": "Rear right: magazines, cards and overflowing plush",
+      "classification": "optional",
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "westRear",
+      "label": "Left rear: joined card rack and flower buckets",
+      "classification": "optional",
+      "doorOwners": [
+        "N1",
+        "WA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "westMiddle",
+      "label": "Left middle: continuing cards and flowers",
+      "classification": "optional",
+      "doorOwners": [
+        "WB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "westCooler",
+      "label": "Left front: flower cooler and bouquet endcap",
+      "classification": "optional",
+      "doorOwners": [
+        "S1",
+        "WC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "eastRear",
+      "label": "Right rear: magazine/snack shelving and plush",
+      "classification": "optional",
+      "doorOwners": [
+        "N3",
+        "EA"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "eastMiddle",
+      "label": "Right middle: continuing stocked shelves",
+      "classification": "optional",
+      "doorOwners": [
+        "EB"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "entranceEndcap",
+      "label": "Entrance: joined plush bin, flowers and balloons",
+      "classification": "optional",
+      "doorOwners": [
+        "S3",
+        "EC"
+      ],
+      "walkable": false
+    },
+    {
+      "id": "mainIsland",
+      "label": "Joined main display and self-service checkout",
+      "classification": "necessary",
+      "doorOwners": [],
+      "walkable": false
+    },
+    {
+      "id": "checkoutMat",
+      "label": "Checkout mat",
+      "classification": "optional",
+      "doorOwners": [],
+      "walkable": true
+    }
+  ],
+  "necessaryStandingSpots": [
+    "browse",
+    "pay",
+    "queue1",
+    "queue2"
+  ],
+  "newAssets": [
+    "base-northLeft",
+    "base-northMiddle",
+    "base-northRight",
+    "base-westRun",
+    "base-cooler",
+    "base-eastRun",
+    "base-entry",
+    "base-island",
+    "base-mat"
+  ],
+  "reusedAssets": [],
+  "builtInCalls": 8,
+  "notes": [
+    "Room-first full-room concept, then seven concept-derived built-in fixture edits; nine sprites form eleven joined fixture records.",
+    "Necessary furniture is not removed by doors; optional stocked wall sections clear their doorway.",
+    "Three default adult shoppers; optional fourth proves two queued adults. No shopkeeper or income simulation."
+  ]
+}

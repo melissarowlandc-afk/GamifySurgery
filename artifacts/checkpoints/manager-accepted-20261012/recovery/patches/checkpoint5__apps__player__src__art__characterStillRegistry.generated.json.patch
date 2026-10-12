@@ -1,0 +1,1543 @@
+--- a/apps/player/src/art/characterStillRegistry.generated.json
++++ b/apps/player/src/art/characterStillRegistry.generated.json
+@@ -9,10 +9,10 @@
+     "floorY": 287
+   },
+   "counts": {
+-    "identities": 326,
+-    "cardinalPoses": 2608,
++    "identities": 336,
++    "cardinalPoses": 2688,
+     "clipboardPoses": 30,
+-    "assets": 2638
++    "assets": 2718
+   },
+   "characters": [
+     {
+@@ -48568,6 +48568,1526 @@
+           }
+         }
+       }
++    },
++    {
++      "id": "inspector-v6f.001",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 28,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/stand-south.png",
++            "sha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 110,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/stand-east.png",
++            "sha256": "534864ad93ca05250ae9f5100fb3efc25042fb116dffd37bc15d7208990c4bca",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 87,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/stand-west.png",
++            "sha256": "6fb0224c92e606a6126cf3703ad7016dec7a2267281208839cb1616bfdf98826",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 40,
++              "width": 87,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/stand-north.png",
++            "sha256": "73a3fc5349a3f9b79e8167f18f690f9bfa061feadd17f2f103440d3eb7c59f3d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/sit-south.png",
++            "sha256": "fdba4889e43a897bbe9fc4474b7f774e582aebbcc92c91e259c2042c7f7fb201",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 91,
++              "width": 94,
++              "height": 196
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/sit-east.png",
++            "sha256": "cd0e580b0d0aaefeb13150121eb34e860e27d845070f547eec3ec5f099b4b52c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 92,
++              "width": 106,
++              "height": 195
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/sit-west.png",
++            "sha256": "34515e2f70a88f84dda0c94968bb518cc4918ae79a7ad3788e8d54676529b77c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 92,
++              "width": 106,
++              "height": 195
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.001/sit-north.png",
++            "sha256": "3acd325bd761ff0fbc4a9d1bff3da29da4cb062f6077cbea4878c5faebd1d3ed",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 92,
++              "width": 93,
++              "height": 195
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.002",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 36,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/stand-south.png",
++            "sha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/stand-east.png",
++            "sha256": "fe39e868040d8911ac7e4108f7782cd1b72bd97fb07d0910710bc05f1d9f8f80",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/stand-west.png",
++            "sha256": "c9213d413bb85cbfad1ede4d54a51e5debf7244c3cdbac1584610b5bad3b5e62",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 40,
++              "width": 82,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/stand-north.png",
++            "sha256": "5922033c097347676461f35602a45b9b9c152a6af0820fdea818c551e06fbe61",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 42,
++              "width": 106,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/sit-south.png",
++            "sha256": "bd1dfa0d997c53870e5df87db401fdd32e0e82d368ae4ee259fb61b355821849",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 101,
++              "width": 94,
++              "height": 186
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/sit-east.png",
++            "sha256": "63bfb289465cc8f385f6e90085811039b63c846baf42f123c018d942d9310267",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 102,
++              "width": 98,
++              "height": 185
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/sit-west.png",
++            "sha256": "f4af329cf45d5de8a5a9f138e83f8f8f8a18f740b4482b48b284b4f7f0058899",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 102,
++              "width": 96,
++              "height": 185
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.002/sit-north.png",
++            "sha256": "cfedafda80abacdb0ceabcffdeccccbdb536cd5952b7b5a75aaf0e7a44ba26d0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 102,
++              "width": 94,
++              "height": 185
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.003",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 44,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/stand-south.png",
++            "sha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/stand-east.png",
++            "sha256": "46aea3918617ea9494d991681399f060fd19e4b5a609bc74feef3426411d151f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 39,
++              "width": 90,
++              "height": 248
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/stand-west.png",
++            "sha256": "e265eb2289e75ea28c5e21377171f994a28d1513101f28a8d98c2c52598b37b3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 39,
++              "width": 98,
++              "height": 248
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/stand-north.png",
++            "sha256": "2574edc122e75f1b67759ca56d851ae68dce1bab5d5c59dca3afe5a14250f11e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 40,
++              "width": 112,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/sit-south.png",
++            "sha256": "0e22b9ffc9d4dd81546820cb8c1a29ee7c23af4b703142704128ef01d43a0f66",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 92,
++              "width": 104,
++              "height": 195
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/sit-east.png",
++            "sha256": "059fd550a404f1047b56dbed86e0dd63a0d2c2cfc98f66a12d268b004fae687e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 92,
++              "width": 120,
++              "height": 195
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/sit-west.png",
++            "sha256": "8860cc30b2e0635cabe320b09a0abbd3d1170ed9dfb75f6956b75413cbc5071a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 92,
++              "width": 120,
++              "height": 195
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.003/sit-north.png",
++            "sha256": "9a26a657f6ac7d73dd6e04ec5ad8ccba8489e12301ddb5939875c5439ac760a3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 93,
++              "width": 100,
++              "height": 194
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.004",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 56,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/stand-south.png",
++            "sha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 114,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/stand-east.png",
++            "sha256": "93f1bf914f03b25aecbbfd355df7ba4e23f20305d4e45c79f5564c206179f617",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 42,
++              "width": 88,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/stand-west.png",
++            "sha256": "e22a59ab7cd9c53381b35aa3230826e4dd15efa8dfc07feaeba2f20a504c75ba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 42,
++              "width": 92,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/stand-north.png",
++            "sha256": "2309fc0b5bb21fb7199bbd2b8f9b0e0945110957501d8c99d851e196643fe6a1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 113,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/sit-south.png",
++            "sha256": "a35883028f82f197c714c41fdb9fd2f3183229b3b226901bee459d7d18965f53",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 103,
++              "width": 98,
++              "height": 184
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/sit-east.png",
++            "sha256": "f5ad0ca691a394953c36bdf77d017878abd98570d14dbdcd8546388b1feb5dbb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 104,
++              "width": 110,
++              "height": 183
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/sit-west.png",
++            "sha256": "0ae6ee5c492c649fa6e98bc527e41b65630cbd351d70297a3a412aafd44dab47",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 105,
++              "width": 112,
++              "height": 182
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.004/sit-north.png",
++            "sha256": "674d2855d4e30a4d28fdd6d883cd299dec861d38d240775165c54beebda958e6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 251,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 104,
++              "width": 96,
++              "height": 183
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.005",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 65,
++      "intendedSex": "Female",
++      "displayGender": "Woman",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/stand-south.png",
++            "sha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/stand-east.png",
++            "sha256": "ba5348f1ea42142bd5d64bd48f6c7e248cf1227ccc35ef9bda46970a2732a3aa",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 40,
++              "width": 84,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/stand-west.png",
++            "sha256": "ef870887a4c842be6e0f4cc13888e51a2d8fd05d9da1f2a3ceb77ac729845165",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 41,
++              "width": 88,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/stand-north.png",
++            "sha256": "c0328073cef0aaeb4eb16e1dc2b21cccc7cadf157ef67ddc4e5f73dd06808e9e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 40,
++              "width": 108,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/sit-south.png",
++            "sha256": "7613232922d64f14991a9833523cfcc33cd64320a51b6135cb61c5b339eae02a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 109,
++              "width": 90,
++              "height": 178
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/sit-east.png",
++            "sha256": "028159756f4e84912c4458fdaac8ede766e56908209dd02d1e85bae7fd20f7e8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 108,
++              "width": 99,
++              "height": 179
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/sit-west.png",
++            "sha256": "65e80d7fa8b92dd4e8aec32101d2d1575368b39148e2a8510eed5ffe5a53c0e6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 108,
++              "width": 99,
++              "height": 179
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.005/sit-north.png",
++            "sha256": "ec0aa0b7126136ba63df13df1f8988fe23f77ba3bdf3768512eed44a56a73d59",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 108,
++              "width": 86,
++              "height": 179
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.006",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 30,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/stand-south.png",
++            "sha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 114,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/stand-east.png",
++            "sha256": "5efca1cf3ae78681f39317348e4ca311d450aa796b2c207b0002d5e2716e754a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 37,
++              "width": 78,
++              "height": 250
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/stand-west.png",
++            "sha256": "0b8d9ce256d67a947f6dd0e2d3125bc67fdc1cb989c1280c88f341ecc1255a2b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 37,
++              "width": 78,
++              "height": 250
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/stand-north.png",
++            "sha256": "32b4fa7d78756dbb694a52c0c10c917c19ed05193308d7ff9bc8c907e3185e3c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/sit-south.png",
++            "sha256": "5a48353cc116ced5dce5e742dbedb4c9a568d7cc29fbfe9aa14431c1dea5becc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 239,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 96,
++              "width": 100,
++              "height": 191
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/sit-east.png",
++            "sha256": "457ead7be71245912192e4e775c9fe3b15605b9882232a5609b2c0af3df0c21f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 94,
++              "width": 102,
++              "height": 193
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/sit-west.png",
++            "sha256": "78ed18d82edcdc4cd443cd742ac064e6e50c64e4ad78653c5fcbfc68c95af4a8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 94,
++              "width": 102,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.006/sit-north.png",
++            "sha256": "6a6e460d6ee484e549623ab02b8a1036e59fb3105a275171cb5204e537e5f53e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 97,
++              "width": 101,
++              "height": 190
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.007",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 39,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/stand-south.png",
++            "sha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 122,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/stand-east.png",
++            "sha256": "5511f35a998ca31857fd203fae6cf4d8f9cf8c876286cc85ab8a7a436622c501",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 40,
++              "width": 79,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/stand-west.png",
++            "sha256": "c192af6369684a4c183e86d62b43c62dd867150d4672365bae7f7e152a379498",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 40,
++              "width": 90,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/stand-north.png",
++            "sha256": "3eafa22418dce08cef90f28e6527c880f6ee48b19b1929e1720dd7211611a348",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 40,
++              "width": 121,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/sit-south.png",
++            "sha256": "9376a445d2db31423509f49806b070f91ab3ba4c05982bb79487952daee7bdf9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 234,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 87,
++              "width": 108,
++              "height": 200
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/sit-east.png",
++            "sha256": "d516d9e4367670ce0dd6a419eca16bbc55232ad8ad5e929c25834e65325f0984",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 86,
++              "width": 114,
++              "height": 201
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/sit-west.png",
++            "sha256": "c7134d659829518b224d413445e770b2f4a6072821cdbf3e165ce7c5c071069b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 86,
++              "width": 114,
++              "height": 201
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.007/sit-north.png",
++            "sha256": "a8077b7147561d4cb4cfd9b47391379994fab59f90de1a1d820172b9510ff93f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 86,
++              "width": 106,
++              "height": 201
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.008",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 48,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/stand-south.png",
++            "sha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 122,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/stand-east.png",
++            "sha256": "99cd98e7a67a21f5ce8b4d716e62ce11c769abdf412bbef52418dfaaa4a61045",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 40,
++              "width": 84,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/stand-west.png",
++            "sha256": "f12b66f0d6973adccedbb3312731c9400197fe4da9a8288f3e92bfbff8853d03",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 40,
++              "width": 86,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/stand-north.png",
++            "sha256": "6a31eeeef8bdfa887e6fc1611c2551a20ef71343f4c4a2a415a44c1f318e9885",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 40,
++              "width": 119,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/sit-south.png",
++            "sha256": "2a91e2f0ae4b5c3199cc4d535f6da330a4fd246185470d33108aa694709e05c8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 237,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 94,
++              "width": 108,
++              "height": 193
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/sit-east.png",
++            "sha256": "515e716fdaef3f719b0166bb3e1ada9562e6f296c5a6976a1b9ff04270754354",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 94,
++              "width": 104,
++              "height": 193
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/sit-west.png",
++            "sha256": "ba144cf25ba8775c19efda932cbb02043a9bc0f61782a6aaa664b558bf56e2f8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 94,
++              "width": 104,
++              "height": 193
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.008/sit-north.png",
++            "sha256": "4af056060dfadcf8e9f2fd96ba10899d83ff03238ee24c1cc68f16e9e71013d2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 94,
++              "width": 106,
++              "height": 193
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.009",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 57,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/stand-south.png",
++            "sha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/stand-east.png",
++            "sha256": "7bd4768fbc712f9df87fef6d0205d6b18824438ae7733420ddba8ae09c3cb8ea",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 41,
++              "width": 82,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/stand-west.png",
++            "sha256": "8f7c3c34b1e56e0f01379d0a83c9a47f6069d502c68192b2ac50df7f6f5be0f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/stand-north.png",
++            "sha256": "e2dac4b6d5ba4635c7a12c7fd44089e27c3104ec03c3797cde9ac3b695a1a5a8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/sit-south.png",
++            "sha256": "3afc646528ea341db1013c90ea33a4717ecfac7aef298f20cad4904ff171e35e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 235,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 90,
++              "width": 106,
++              "height": 197
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/sit-east.png",
++            "sha256": "6fdd820a190e0db9bd08c6feb1b5ffa5c3a2c178cdebdc6c2520f934e4f9763d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 90,
++              "width": 107,
++              "height": 197
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/sit-west.png",
++            "sha256": "2e2a98e68e7a0caa429651c45ba951c7516feecf88ef72b6795a28d143adfb08",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 90,
++              "width": 107,
++              "height": 197
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.009/sit-north.png",
++            "sha256": "16f0b689ffbff5df5224945c9505e5b48e7bb5ae6ec8cd1e9c645a1d6efae244",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 91,
++              "width": 106,
++              "height": 196
++            }
++          }
++        }
++      }
++    },
++    {
++      "id": "inspector-v6f.010",
++      "cohort": "inspectorV6f",
++      "category": "inspection-presentation",
++      "role": "inspection-agent",
++      "eligibleStaffRoleDefinitionIds": [],
++      "intendedAge": 63,
++      "intendedSex": "Male",
++      "displayGender": "Man",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/stand-south.png",
++            "sha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 14,
++              "y": 41,
++              "width": 131,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/stand-east.png",
++            "sha256": "ae51ebaf34d231f7225ae7d9dbd91f8203b4fedfa32a3a61666b8e80f7965ee4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 41,
++              "width": 86,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/stand-west.png",
++            "sha256": "fc2d57c95994a12a4673d3e4652cb496cc480fdaf708b89d4a0909201c5b5cca",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 41,
++              "width": 86,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/stand-north.png",
++            "sha256": "d1964ca015422e6e2e85d6c7f30a87defff1c549b134ec23de2e61b86855bf57",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 15,
++              "y": 41,
++              "width": 130,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/sit-south.png",
++            "sha256": "13328906e81f8919242a586b7c876252d3fb9a658ed16dbd0165faabc706b01f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 89,
++              "width": 116,
++              "height": 198
++            }
++          },
++          "east": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/sit-east.png",
++            "sha256": "6599d2fad53260773ef7af57a9e984cff7b6bf5ac0d00be3df21365e2869b008",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 90,
++              "width": 112,
++              "height": 197
++            }
++          },
++          "west": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/sit-west.png",
++            "sha256": "3712d1d12fea21ff5993f0243a5bda7fabc767dcf05c9e5e4a10ddb296c42aa2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 90,
++              "width": 112,
++              "height": 197
++            }
++          },
++          "north": {
++            "url": "art/characters/inspector-v6f/inspector-v6f.010/sit-north.png",
++            "sha256": "42c4c1c989e7ed639186b3705ba8bd2c3e4e790dc2bfafd977cdd3b5c8de4f6c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "manager-approved-authored-contact"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 90,
++              "width": 115,
++              "height": 197
++            }
++          }
++        }
++      }
+     }
+   ]
+ }

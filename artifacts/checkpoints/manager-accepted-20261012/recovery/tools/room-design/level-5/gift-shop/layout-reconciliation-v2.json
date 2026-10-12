@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "designRevision": 2,
+  "status": "PASS",
+  "changes": [
+    {
+      "item": "plushBin",
+      "classification": "optional",
+      "before": {
+        "ground": [
+          2.82,
+          1.97
+        ],
+        "footprintTop": 1.74,
+        "owners": [
+          "EB",
+          "EC"
+        ],
+        "contact": [
+          2.5,
+          1.975
+        ]
+      },
+      "after": {
+        "ground": [
+          2.82,
+          0.55
+        ],
+        "footprintTop": 0.32,
+        "owners": [
+          "N3",
+          "EA"
+        ],
+        "contact": [
+          2.5,
+          0.775
+        ]
+      },
+      "reason": "Move out from behind entrance balloons into upper-right display space; approach clears the measured painted base."
+    },
+    {
+      "item": "mugShelf-contact",
+      "before": [
+        2.5,
+        0.5
+      ],
+      "after": [
+        2.45,
+        0.25
+      ],
+      "reason": "Keep the wall display reachable around the relocated plush bin."
+    }
+  ],
+  "necessaryGeometryUnchanged": true,
+  "noArtEdits": true,
+  "prepaintSnapshot": "stand-in/v2/layout-prepaint.json",
+  "postpaintStates": 640,
+  "postpaintFullQueueRoutes": 13276
+}

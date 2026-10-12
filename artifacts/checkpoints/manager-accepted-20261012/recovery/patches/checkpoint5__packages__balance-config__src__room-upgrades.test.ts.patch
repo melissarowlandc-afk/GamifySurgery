@@ -1,0 +1,48 @@
+--- a/packages/balance-config/src/room-upgrades.test.ts
++++ b/packages/balance-config/src/room-upgrades.test.ts
+@@ -51,16 +51,15 @@
+ };
+ 
+ describe("approved room-upgrade catalog", () => {
+-  it("covers all 29 current/legacy definitions and five inactive future rows exactly once", () => {
++  it("covers the catalog with every implemented Level 5 ladder current", () => {
+     const ids = ROOM_UPGRADE_CATALOG.map((definition) => definition.roomDefinitionId);
+     expect(ids).toHaveLength(34);
+     expect(new Set(ids).size).toBe(ids.length);
+     expect(
+-      ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future")
+-        .map((definition) => definition.roomDefinitionId).sort(),
++      ROOM_UPGRADE_CATALOG.map((definition) => definition.roomDefinitionId).sort(),
+     ).toEqual(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.map((definition) => definition.id).sort());
+-    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "current" && definition.upgradeCosts.length === 4)).toHaveLength(26);
+-    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "future")).toHaveLength(5);
++    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "current" && definition.upgradeCosts.length === 4)).toHaveLength(31);
++    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "future")).toHaveLength(0);
+     expect(ids).not.toContain("room.call_room");
+   });
+ 
+@@ -80,7 +79,11 @@
+   it("rejects invalid purchases and keeps unbuilt or retired room metadata inactive", () => {
+     const currentIds = new Set(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.map((room) => room.id));
+     for (const definition of ROOM_UPGRADE_CATALOG.filter((entry) => entry.status !== "current")) {
+-      if (definition.status === "future") expect(currentIds.has(definition.roomDefinitionId)).toBe(false);
++      if (definition.status === "future") {
++        expect(currentIds.has(definition.roomDefinitionId)).toBe(true);
++        expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(room => room.id === definition.roomDefinitionId)!.unlockFacilityLevel)
++          .toBeGreaterThan(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
++      }
+       expect(getCurrentRoomUpgradeDefinition(definition.roomDefinitionId)).toBeNull();
+       expect(getRoomUpgradeCost(definition.roomDefinitionId, 2)).toBeNull();
+       expect(getRoomUpgradeAmount(definition.roomDefinitionId, 5)).toBe(0);
+@@ -118,9 +121,9 @@
+     });
+   });
+ 
+-  it("records the future Founder's Office as the sole appearance exception", () => {
++  it("records the active Founder's Office as the sole appearance exception", () => {
+     expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.appearanceChanges).map((definition) => definition.roomDefinitionId)).toEqual(["room.founder_office"]);
+-    expect(getRoomUpgradeDefinition("room.founder_office")?.status).toBe("future");
++    expect(getRoomUpgradeDefinition("room.founder_office")?.status).toBe("current");
+     expect(getRoomUpgradePerPurchaseLabel("room.founder_office")).toBe("+2 staff morale points; improved office appearance");
+     expect(getRoomUpgradeLevelBenefit("room.executive_office", 5)?.totalDescription).toBe("Administrative work takes 20% less time");
+   });

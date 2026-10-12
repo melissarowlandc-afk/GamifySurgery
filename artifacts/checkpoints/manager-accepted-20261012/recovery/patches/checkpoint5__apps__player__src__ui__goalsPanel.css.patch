@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/goalsPanel.css
++++ b/apps/player/src/ui/goalsPanel.css
+@@ -104,3 +104,23 @@
+ .goals-panel .goal-secondary-chip:focus .goal-secondary-tooltip {
+   visibility: visible;
+ }
++
++.goals-panel .goals-inspection-unlock {
++  display: grid;
++  gap: 4px;
++  margin: 4px var(--goal-inset-inline) 6px;
++  padding: 6px;
++  border: 1px solid var(--shade-3);
++  overflow-wrap: anywhere;
++}
++
++.goals-panel .goals-inspection-unlock p {
++  margin: 0;
++  font: 13px/1.35 var(--font-read);
++}
++
++.goals-panel .goals-inspection-unlock button {
++  width: 100%;
++  min-height: 44px;
++  white-space: normal;
++}

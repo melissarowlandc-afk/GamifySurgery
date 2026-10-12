@@ -1,0 +1,62 @@
+{
+  "status": "NATIVE_PASS_BROWSER_PENDING_MANAGER",
+  "origin": "http://127.0.0.1:4191",
+  "commands": [
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/build.mjs",
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/validate.cjs",
+      "stdout": "VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 15 derived sprites + 2 source-pixel chair fronts; 2 unchanged approved seated adults; 11040 door/backing states; 103680 routes / 81654720 radius-clear samples at 0.005T; 103680 occupied routes / 81947040 samples; all 16 doors; permanent seats/aisle, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/validate-controls.mjs",
+      "stdout": "CONTROL VALIDATION PASS: 319 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 seated visitors, keyboard, real-error/performance-warning discrimination; browser separate.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/inspect-native.mjs",
+      "stdout": "NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated visitors/contacts/routes/all 16 doors/backing; browser QA separate.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/inspect-composition.mjs",
+      "stdout": "COMPOSITION INSPECTION PASS: planting/furniture paint with visitors hidden covers 49.7% of the floor view; concept/empty/two-seat comparison saved.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/reproduce.mjs",
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.\nBUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.\nREPRODUCIBILITY PASS: 29 delivered files byte-identical across two native rebuilds.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/check-helpers.cjs",
+      "stdout": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/check-http.mjs",
+      "stdout": "HTTP VALIDATION PASS: 29 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/assets/write-provenance-v1.mjs",
+      "stdout": "ART PROVENANCE PASS: 1 built-in concept + 10 transparent derivation/edit calls (9 selected); 15 sprites + 2 exact-source chair fronts; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved seated adults; owner approval pending.",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/validate-browser.cjs",
+      "stdout": "browserType.launch: spawn EPERM\nExit 1; PENDING_MANAGER. Complete stderr in browser-validation-report.json.",
+      "exitCode": 1
+    },
+    {
+      "command": "node tools/room-design/level-5/indoor-garden/proof/capture.cjs",
+      "stdout": "browserType.launch: spawn EPERM\nExit 1; PENDING_MANAGER. Complete stderr in browser/capture-report.json.",
+      "exitCode": 1
+    }
+  ],
+  "note": "Successful output transcribed verbatim from executed commands; the detailed reports retain measured results, source hashes and complete browser failures."
+}

@@ -1,0 +1,1125 @@
+{
+  "schemaVersion": "inspector-v6f-clipboard-review/v1",
+  "reviewer": "sol-v6f-worker",
+  "reviewMethod": "manual visual inspection; source and pose hash binding only",
+  "managerAcceptance": "pending",
+  "runtimeReady": false,
+  "notes": {
+    "path": "tools/character-mapping/inspector-v6f/worker-review-notes.json",
+    "sha256": "1bfeacf46ad9a1bc1cbf8aef6afd8c9c11b350e24cca6b8ee90b57ae322c3129"
+  },
+  "entries": [
+    {
+      "number": "001",
+      "id": "inspector-v6f.001",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+        "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/001/manifest.json",
+        "sha256": "2405b5bfa1793acb4414351771d9d2942f907a3ca2c774851d30bbabbbb68efb"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/001/stage1-standing-cardinals.png",
+        "sha256": "99afe7ec72379b5da3786e7740da1643414396637875fca99d56b1d66df72e68"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/001/history/seated-rear-lap-v1/source.png",
+          "sha256": "e750a377b6645e1eaa17300c615b6fa5fb2cb6eaf16b5a028cd7cc354f197d75"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/001/source.png",
+          "sha256": "1742bf5b7980c52591341c50f0c5eab10eaed884774c134b69fb8e835a4a7579"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "The petite build is modestly compact. Rear seated clipboard was corrected to a low right-lap edge; standing identity and outfit remain consistent.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/stand-south.png",
+          "sha256": "4cd637877b611bc34b73c4443aba53d9302229511802fa97681c8aec8f6f1046",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/stand-east.png",
+          "sha256": "534864ad93ca05250ae9f5100fb3efc25042fb116dffd37bc15d7208990c4bca",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/stand-west.png",
+          "sha256": "6fb0224c92e606a6126cf3703ad7016dec7a2267281208839cb1616bfdf98826",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/stand-north.png",
+          "sha256": "73a3fc5349a3f9b79e8167f18f690f9bfa061feadd17f2f103440d3eb7c59f3d",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/sit-south.png",
+          "sha256": "fdba4889e43a897bbe9fc4474b7f774e582aebbcc92c91e259c2042c7f7fb201",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/sit-east.png",
+          "sha256": "cd0e580b0d0aaefeb13150121eb34e860e27d845070f547eec3ec5f099b4b52c",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/sit-west.png",
+          "sha256": "34515e2f70a88f84dda0c94968bb518cc4918ae79a7ad3788e8d54676529b77c",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/001/sit-north.png",
+          "sha256": "3acd325bd761ff0fbc4a9d1bff3da29da4cb062f6077cbea4878c5faebd1d3ed",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "002",
+      "id": "inspector-v6f.002",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+        "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/002/manifest.json",
+        "sha256": "304356d52d0e8a8dec4ec6f26b2b90438d49ecb3f8a0f20e763abed42cdfa335"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/002/stage1-standing-cardinals.png",
+        "sha256": "3f59382850024cff4c78bda5d81b13ca981f4090ee160a453948c45fb4fd7eb7"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/002/history/seated-rear-lap-v1/source.png",
+          "sha256": "0551694c02d5a48396b49364b3bd83be03e8e9e8c01bedc666ad3eb16b0d6cc8"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/002/source.png",
+          "sha256": "4d03b6314d2f90f9e07bbcd0c47887497511332fdda4e32d0a74247ab4adee14"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Freckles are subtle at game scale. The rear lap clipboard correction preserves the braid and cardigan; the board edge is mostly hidden behind the right elbow.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/stand-south.png",
+          "sha256": "8903a72453e8637706fad32d3c69a2773666219873618ffff4ce4f81feca9b5e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/stand-east.png",
+          "sha256": "fe39e868040d8911ac7e4108f7782cd1b72bd97fb07d0910710bc05f1d9f8f80",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/stand-west.png",
+          "sha256": "c9213d413bb85cbfad1ede4d54a51e5debf7244c3cdbac1584610b5bad3b5e62",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/stand-north.png",
+          "sha256": "5922033c097347676461f35602a45b9b9c152a6af0820fdea818c551e06fbe61",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/sit-south.png",
+          "sha256": "bd1dfa0d997c53870e5df87db401fdd32e0e82d368ae4ee259fb61b355821849",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/sit-east.png",
+          "sha256": "63bfb289465cc8f385f6e90085811039b63c846baf42f123c018d942d9310267",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/sit-west.png",
+          "sha256": "f4af329cf45d5de8a5a9f138e83f8f8f8a18f740b4482b48b284b4f7f0058899",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/002/sit-north.png",
+          "sha256": "cfedafda80abacdb0ceabcffdeccccbdb536cd5952b7b5a75aaf0e7a44ba26d0",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "003",
+      "id": "inspector-v6f.003",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+        "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/003/manifest.json",
+        "sha256": "952fa9f2b67247420003cb4880a819e59356aa3d1ff6c2317af37627ac504758"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/003/stage1-standing-cardinals.png",
+        "sha256": "438f8ef1d96f358ae0e79e5928a5b45f4608552dff1d3294b707ebb0e2e6fdc9"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/003/history/seated-rear-lap-v1/source.png",
+          "sha256": "4fb557925c0b2c7b7bd74b43b2aa9030de36fad03d78acd2d779f5fc17babbdc"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/003/source.png",
+          "sha256": "72cbf30e3cffa25260509cd744cabb5d4144fee6e0a70b3d32c27030816d4855"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Planned sturdier build appears moderately full. Seated W shows a slightly tilted board resting on the lap; rear was corrected to a low small right edge.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/stand-south.png",
+          "sha256": "68636a47bc74c369c20145a9d1c2b7076779298108a0a1445d0400800f5249f2",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/stand-east.png",
+          "sha256": "46aea3918617ea9494d991681399f060fd19e4b5a609bc74feef3426411d151f",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/stand-west.png",
+          "sha256": "e265eb2289e75ea28c5e21377171f994a28d1513101f28a8d98c2c52598b37b3",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/stand-north.png",
+          "sha256": "2574edc122e75f1b67759ca56d851ae68dce1bab5d5c59dca3afe5a14250f11e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/sit-south.png",
+          "sha256": "0e22b9ffc9d4dd81546820cb8c1a29ee7c23af4b703142704128ef01d43a0f66",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/sit-east.png",
+          "sha256": "059fd550a404f1047b56dbed86e0dd63a0d2c2cfc98f66a12d268b004fae687e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/sit-west.png",
+          "sha256": "8860cc30b2e0635cabe320b09a0abbd3d1170ed9dfb75f6956b75413cbc5071a",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/003/sit-north.png",
+          "sha256": "9a26a657f6ac7d73dd6e04ec5ad8ccba8489e12301ddb5939875c5439ac760a3",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "004",
+      "id": "inspector-v6f.004",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+        "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/004/manifest.json",
+        "sha256": "56e4c761c5e5e7600b2309720282f1392a2b0f08fe67e14f91521ea92bef69ac"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/004/stage1-standing-cardinals.png",
+        "sha256": "f2351d4924daa878484e6e3f699effe748ae32ce17b36c3c9a9611cbc23b7753"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/004/history/seated-rear-lap-v1/source.png",
+          "sha256": "a813d81dd7159e7c4373735e87f56d7f22fa9f889a5f11446022922dbb92846f"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/004/source.png",
+          "sha256": "ffb76d1a9dbdc0540d2fa1ebf90a8a4c6f6ecebf383f901b8964f988c508e05c"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Skin is lighter/warmer and frames rounder than planned. The W lap board is almost covered by the near hand; the low rear edge is visible beside the right forearm.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/stand-south.png",
+          "sha256": "a80304261242238de456ef4e746de7d4e9ce0a63960a51d2c1415e4f409fa21d",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/stand-east.png",
+          "sha256": "93f1bf914f03b25aecbbfd355df7ba4e23f20305d4e45c79f5564c206179f617",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/stand-west.png",
+          "sha256": "e22a59ab7cd9c53381b35aa3230826e4dd15efa8dfc07feaeba2f20a504c75ba",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/stand-north.png",
+          "sha256": "2309fc0b5bb21fb7199bbd2b8f9b0e0945110957501d8c99d851e196643fe6a1",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/sit-south.png",
+          "sha256": "a35883028f82f197c714c41fdb9fd2f3183229b3b226901bee459d7d18965f53",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/sit-east.png",
+          "sha256": "f5ad0ca691a394953c36bdf77d017878abd98570d14dbdcd8546388b1feb5dbb",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/sit-west.png",
+          "sha256": "0ae6ee5c492c649fa6e98bc527e41b65630cbd351d70297a3a412aafd44dab47",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/004/sit-north.png",
+          "sha256": "674d2855d4e30a4d28fdd6d883cd299dec861d38d240775165c54beebda958e6",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "005",
+      "id": "inspector-v6f.005",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+        "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/005/manifest.json",
+        "sha256": "871f99869e72cb77cc6a4c99cf4a69099ca321053e97cebe8a6715c1ddae2298"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/005/stage1-standing-cardinals.png",
+        "sha256": "960cee283914397fa26bb559bad270fc0652b479a2536a8e0ea38819aeeec32a"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/005/history/seated-rear-lap-v1/source.png",
+          "sha256": "e98f2392e118850e7be9895574bf08236c0cccdb0ecaecbd7a2220b27c8f9f76"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/005/source.png",
+          "sha256": "8d9390f7de2c0bc09c1a1c08ff26976131cddd9273f40695668ba73cb81edd99"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "White pixie is slightly tousled rather than fully straight. Lean build variation is modest; rear lap board remains a small edge after correction.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/stand-south.png",
+          "sha256": "268c2077e0e730caf321f372370803f3c20e4facfc4a54e8dbe7e8f30624d61e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/stand-east.png",
+          "sha256": "ba5348f1ea42142bd5d64bd48f6c7e248cf1227ccc35ef9bda46970a2732a3aa",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/stand-west.png",
+          "sha256": "ef870887a4c842be6e0f4cc13888e51a2d8fd05d9da1f2a3ceb77ac729845165",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/stand-north.png",
+          "sha256": "c0328073cef0aaeb4eb16e1dc2b21cccc7cadf157ef67ddc4e5f73dd06808e9e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/sit-south.png",
+          "sha256": "7613232922d64f14991a9833523cfcc33cd64320a51b6135cb61c5b339eae02a",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/sit-east.png",
+          "sha256": "028159756f4e84912c4458fdaac8ede766e56908209dd02d1e85bae7fd20f7e8",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/sit-west.png",
+          "sha256": "65e80d7fa8b92dd4e8aec32101d2d1575368b39148e2a8510eed5ffe5a53c0e6",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/005/sit-north.png",
+          "sha256": "ec0aa0b7126136ba63df13df1f8988fe23f77ba3bdf3768512eed44a56a73d59",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "006",
+      "id": "inspector-v6f.006",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+        "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/006/manifest.json",
+        "sha256": "8aaedbcca255c16817bfb6b27767a70e8d8100b82fc4f1c053e69ca282a36189"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/006/stage1-standing-cardinals.png",
+        "sha256": "4a9d3cbab7569242a57ded2538608f60677041f2ee965e8747cfaa12dc40cad0"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/006/history/seated-rear-lap-v1/source.png",
+          "sha256": "d6426e800b0988f28f873e3571e86a42eacc6e97818dc7802f5b9af8585ba34e"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/006/source.png",
+          "sha256": "91f7f4e09a636e629693d7b87c7a7620dda9fb487d5ae28e8b397d9b64e9f362"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Quiff is wavier and larger than planned. The W lap board is a narrow edge below overlapping hands, and the corrected rear edge is small; neither indicates a side swap.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/stand-south.png",
+          "sha256": "04293d9ffea3bd9044b741ee7c3e7fa66e45041b271dde6f16efe2b4209ee886",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/stand-east.png",
+          "sha256": "5efca1cf3ae78681f39317348e4ca311d450aa796b2c207b0002d5e2716e754a",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/stand-west.png",
+          "sha256": "0b8d9ce256d67a947f6dd0e2d3125bc67fdc1cb989c1280c88f341ecc1255a2b",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/stand-north.png",
+          "sha256": "32b4fa7d78756dbb694a52c0c10c917c19ed05193308d7ff9bc8c907e3185e3c",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/sit-south.png",
+          "sha256": "5a48353cc116ced5dce5e742dbedb4c9a568d7cc29fbfe9aa14431c1dea5becc",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/sit-east.png",
+          "sha256": "457ead7be71245912192e4e775c9fe3b15605b9882232a5609b2c0af3df0c21f",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/sit-west.png",
+          "sha256": "78ed18d82edcdc4cd443cd742ac064e6e50c64e4ad78653c5fcbfc68c95af4a8",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/006/sit-north.png",
+          "sha256": "6a6e460d6ee484e549623ab02b8a1036e59fb3105a275171cb5204e537e5f53e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "007",
+      "id": "inspector-v6f.007",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+        "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/007/manifest.json",
+        "sha256": "735c4f3944eee60ac12b08ef0a9042895a945bc0d02950c0875e34f7c63f0842"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/007/stage1-standing-cardinals.png",
+        "sha256": "4b353a2eaf79459977f77ce3eb937489eedcf288a4a2e72184976b286135af43"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/007/history/seated-rear-lap-v1/source.png",
+          "sha256": "24e7207d8e3f5c13be7df9f609ce0041a5e8b22f70174c465fd29153c548c94c"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/007/source.png",
+          "sha256": "e847babdee782312b01c02ae0fcb9c63cb48be0752e1ed80399044798295cd09"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Broad build reads as a fuller torso. The lap board and its rim are visible in both side views; rear upright carriage was corrected to a low right-lap edge.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/stand-south.png",
+          "sha256": "e0206b54f834ba0a4376df0cb3590894c70a688e6ad29e1a1a18ec6a1b9a86dd",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/stand-east.png",
+          "sha256": "5511f35a998ca31857fd203fae6cf4d8f9cf8c876286cc85ab8a7a436622c501",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/stand-west.png",
+          "sha256": "c192af6369684a4c183e86d62b43c62dd867150d4672365bae7f7e152a379498",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/stand-north.png",
+          "sha256": "3eafa22418dce08cef90f28e6527c880f6ee48b19b1929e1720dd7211611a348",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/sit-south.png",
+          "sha256": "9376a445d2db31423509f49806b070f91ab3ba4c05982bb79487952daee7bdf9",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/sit-east.png",
+          "sha256": "d516d9e4367670ce0dd6a419eca16bbc55232ad8ad5e929c25834e65325f0984",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/sit-west.png",
+          "sha256": "c7134d659829518b224d413445e770b2f4a6072821cdbf3e165ce7c5c071069b",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/007/sit-north.png",
+          "sha256": "a8077b7147561d4cb4cfd9b47391379994fab59f90de1a1d820172b9510ff93f",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "008",
+      "id": "inspector-v6f.008",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+        "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/008/manifest.json",
+        "sha256": "10db57210416aa17f42a4f1521dbefefea82c4a0ff3b05a40cb3f469d8dff2a2"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/008/stage1-standing-cardinals.png",
+        "sha256": "609a520afdf3eb0f0de531b302aed0882322f30696e6dc05f5cd5330466edcf0"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/008/history/seated-rear-lap-v1/source.png",
+          "sha256": "6736589fec3c4e5cb2698cc924647212a1c64edfec23a68a7bfdc54bb05e317f"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/008/history/west-lap-visible-v2/source.png",
+          "sha256": "1a5fc3f7c292b9dbcb6f9f366b5039fe0e6a08a26dc5f698d7c645847a50b03f"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/008/source.png",
+          "sha256": "ed913f44aafcf8aba9c3688def25523087869f10e5113e6aff7c144adc98aff0"
+        }
+      ],
+      "regenerations": 2,
+      "identityNote": "First correction lowered the rear board and removed pale sneaker bands in favor of black office shoes. A second edit exposed the formerly obscured W lap clipboard. Rear still shows only a tiny right edge.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/stand-south.png",
+          "sha256": "79ad7804814ecc8ba9b79d02a9da2706066a11f6e536f974d995d730bd3d0f74",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/stand-east.png",
+          "sha256": "99cd98e7a67a21f5ce8b4d716e62ce11c769abdf412bbef52418dfaaa4a61045",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/stand-west.png",
+          "sha256": "f12b66f0d6973adccedbb3312731c9400197fe4da9a8288f3e92bfbff8853d03",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/stand-north.png",
+          "sha256": "6a31eeeef8bdfa887e6fc1611c2551a20ef71343f4c4a2a415a44c1f318e9885",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/sit-south.png",
+          "sha256": "2a91e2f0ae4b5c3199cc4d535f6da330a4fd246185470d33108aa694709e05c8",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/sit-east.png",
+          "sha256": "515e716fdaef3f719b0166bb3e1ada9562e6f296c5a6976a1b9ff04270754354",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/sit-west.png",
+          "sha256": "ba144cf25ba8775c19efda932cbb02043a9bc0f61782a6aaa664b558bf56e2f8",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/008/sit-north.png",
+          "sha256": "4af056060dfadcf8e9f2fd96ba10899d83ff03238ee24c1cc68f16e9e71013d2",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "009",
+      "id": "inspector-v6f.009",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+        "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/009/manifest.json",
+        "sha256": "7d11095dd22cdcb2aa0e5f65587f7ae4f9e9eb133b843e773c86963f99db526c"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/009/stage1-standing-cardinals.png",
+        "sha256": "7fe86fa0df4c14e79ef30c70fb4327d44e49755a6d21a6794197b022131b32b2"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/009/source.png",
+          "sha256": "2c87be740b5fa3b36a966215ec015096e0ae27e6a29d7fbb7bb7312b9d332666"
+        }
+      ],
+      "regenerations": 0,
+      "identityNote": "Silver side panels are stronger than planned. The original sheet already had a rear lap-level clipboard edge; no regeneration was required.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/stand-south.png",
+          "sha256": "507205a5d12e70b1c862472f7f20cc7658c6ec4b8f8b51de20d2d2d967d6dd7e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/stand-east.png",
+          "sha256": "7bd4768fbc712f9df87fef6d0205d6b18824438ae7733420ddba8ae09c3cb8ea",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/stand-west.png",
+          "sha256": "8f7c3c34b1e56e0f01379d0a83c9a47f6069d502c68192b2ac50df7f6f5be0f2",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/stand-north.png",
+          "sha256": "e2dac4b6d5ba4635c7a12c7fd44089e27c3104ec03c3797cde9ac3b695a1a5a8",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/sit-south.png",
+          "sha256": "3afc646528ea341db1013c90ea33a4717ecfac7aef298f20cad4904ff171e35e",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/sit-east.png",
+          "sha256": "6fdd820a190e0db9bd08c6feb1b5ffa5c3a2c178cdebdc6c2520f934e4f9763d",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/sit-west.png",
+          "sha256": "2e2a98e68e7a0caa429651c45ba951c7516feecf88ef72b6795a28d143adfb08",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/009/sit-north.png",
+          "sha256": "16f0b689ffbff5df5224945c9505e5b48e7bb5ae6ec8cd1e9c645a1d6efae244",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    },
+    {
+      "number": "010",
+      "id": "inspector-v6f.010",
+      "source": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+        "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+      },
+      "package": {
+        "path": "artifacts/character-statics/inspector-v6f/packages/010/manifest.json",
+        "sha256": "f0fdf45e69177938ed3729de25fe203671fd87b163713fb8c1cde9fdd9ffbc60"
+      },
+      "initialStandingSource": {
+        "path": "artifacts/character-statics/inspector-v6f/sources/010/stage1-standing-cardinals.png",
+        "sha256": "f55773484f3726b911a5e8cce0872c77cd10d193d86243a73ebb309b737c2cf8"
+      },
+      "retainedEightPoseSources": [
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/010/history/seated-rear-lap-v1/source.png",
+          "sha256": "b1ab71df65d54e49f8d3d035ff227bae64ca10fd13cd1d3a46844b95aea6b4bd"
+        },
+        {
+          "path": "artifacts/character-statics/inspector-v6f/sources/010/source.png",
+          "sha256": "a40d7cff4a261f9cb00b60ba363252a98cbf2daf91e6690dbe0e9e0b197a6248"
+        }
+      ],
+      "regenerations": 1,
+      "identityNote": "Planned full build appears moderately stocky. The correction lowered the rear clipboard and replaced pale sole bands with black office shoes; the lap board is clear in side views.",
+      "poses": [
+        {
+          "pose": "stand",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/stand-south.png",
+          "sha256": "f2d96f6b2713f72e1c2eba7f718e50e42bd48cbedb8404667512f814fe573ea5",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard is upright at the inspector's own right-front waist, on screen-left; right hand grips the same board edge. Cream paper, tan rim and metal clip are visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/stand-east.png",
+          "sha256": "ae51ebaf34d231f7225ae7d9dbd91f8203b4fedfa32a3a61666b8e80f7965ee4",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the near anatomical right side in front of the waist; right forearm and grip are visible. Direction was generated rather than mirrored."
+        },
+        {
+          "pose": "stand",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/stand-west.png",
+          "sha256": "fc2d57c95994a12a4673d3e4652cb496cc480fdaf708b89d4a0909201c5b5cca",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays at the far anatomical right side, with a leading tan/cream edge visible in front of the torso. The right forearm is partly occluded by the body; no side swap is visible."
+        },
+        {
+          "pose": "stand",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/stand-north.png",
+          "sha256": "d1964ca015422e6e2e85d6c7f30a87defff1c549b134ec23de2e61b86855bf57",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "right-front-waist",
+          "observation": "Clipboard stays on the inspector's own right, on screen-right. The rear torso occludes most of the paper and board; the exposed edge and bent right elbow are coherent."
+        },
+        {
+          "pose": "sit",
+          "direction": "south",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/sit-south.png",
+          "sha256": "13328906e81f8919242a586b7c876252d3fb9a658ed16dbd0165faabc706b01f",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies across the own-right lap/thigh on screen-left under the right hand. The other hand may rest beside or support the board; it is not an upright carried board."
+        },
+        {
+          "pose": "sit",
+          "direction": "east",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/sit-east.png",
+          "sha256": "6599d2fad53260773ef7af57a9e984cff7b6bf5ac0d00be3df21365e2869b008",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the lap below the near right hand and forearm. Board/paper edges remain visible and do not determine the authored seat contact."
+        },
+        {
+          "pose": "sit",
+          "direction": "west",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/sit-west.png",
+          "sha256": "3712d1d12fea21ff5993f0243a5bda7fabc767dcf05c9e5e4a10ddb296c42aa2",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard lies on the far right lap with a visible low board or paper edge. The near left hand/forearm may overlap it; the far right grip is partly hidden and requires manager assessment at game scale."
+        },
+        {
+          "pose": "sit",
+          "direction": "north",
+          "file": "artifacts/character-statics/inspector-v6f/packages/010/sit-north.png",
+          "sha256": "42c4c1c989e7ed639186b3705ba8bd2c3e4e790dc2bfafd977cdd3b5c8de4f6c",
+          "manualAssessment": "worker-visual-QA-pass-with-recorded-occlusion-limitations",
+          "clipboardHand": "right",
+          "placement": "lap",
+          "observation": "Clipboard is low on the right lap rather than carried upright. The rear torso and right forearm occlude nearly all of it; only a small tan/cream edge is visible on screen-right. The visible sliver can be hard to read at game scale."
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Rear seated clipboards are deliberately mostly occluded. Nine initial sheets had an upright rear clipboard and received built-in targeted edits; 009 already had a lap-level board. Final rear views expose only a thin right-side edge, so clipboard recognition at game scale remains a manager visual acceptance question.",
+    "In seated W views the clipboard is on the far right lap. The near left hand often overlaps the board, so the far right support/grip cannot be independently proven from visible pixels alone. The board edge is especially subtle for 004 and 006. 008 received a second targeted edit to expose a clear flat tan/cream lap board in W."
+  ],
+  "summary": {
+    "identities": 10,
+    "reviewedPoses": 80,
+    "standingRightSide": 40,
+    "seatedLap": 40,
+    "targetedEdits": 10,
+    "nativeGenerationOutputs": 30
+  }
+}

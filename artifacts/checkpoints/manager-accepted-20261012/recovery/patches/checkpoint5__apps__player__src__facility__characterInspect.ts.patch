@@ -1,0 +1,11 @@
+--- a/apps/player/src/facility/characterInspect.ts
++++ b/apps/player/src/facility/characterInspect.ts
+@@ -7,7 +7,7 @@
+ /** Character container keys → the character the info box describes. */
+ export function characterRefFromKey(key: string): FacilityCharacterRef | null {
+   if (key === "character:founder") return { kind: "founder", id: "founder" };
+-  const match = /^character:(staff|patient|service-visitor|retail-retail_visitor|retail-companion|ambient):(.+)$/.exec(key);
++  const match = /^character:(staff|patient|service-visitor|retail-retail_visitor|retail-companion|ambient|inspector):(.+)$/.exec(key);
+   if (!match) return null;
+   const kind = match[1] === "retail-retail_visitor"
+     ? "retail-visitor"

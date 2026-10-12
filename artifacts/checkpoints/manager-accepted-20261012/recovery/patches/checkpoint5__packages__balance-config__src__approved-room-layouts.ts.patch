@@ -1,0 +1,17 @@
+--- a/packages/balance-config/src/approved-room-layouts.ts
++++ b/packages/balance-config/src/approved-room-layouts.ts
+@@ -1,5 +1,6 @@
+ import { DIAGNOSTIC_READING_WORKSTATIONS } from "./diagnostic-timing";
+ import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS } from "./approved-level4-room-layouts";
++import { APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS } from "./approved-level5-room-layouts";
+ 
+ export interface ApprovedFloorPoint {
+   x: number;
+@@ -117,6 +118,7 @@
+   ApprovedRoomNavigationContract
+ > = {
+   ...APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS,
++  ...APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS,
+   "room.front_desk": {
+     roomDefinitionId: "room.front_desk", width: 5, height: 4, allowedOrientations: [0],
+     solidFixtures: [

@@ -1,0 +1,24 @@
+{
+  "id": "east-clean",
+  "source": "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c71b2a22-0147-469d-afb0-13eb3f52cbc7.png",
+  "prompt": "prompts/v1/east-clean.txt",
+  "output_hint": "Generated images are saved to C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d as C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-c71b2a22-0147-469d-afb0-13eb3f52cbc7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "tool": "image_gen.imagegen",
+  "transparent_background": true,
+  "inputImages": [
+    "assets/originals/v1/east.png",
+    "concept/indoor-garden-concept.png"
+  ],
+  "selected": true,
+  "original": "originals/v1/east-clean.png",
+  "originalSha256": "a16b6c784bbccea974310a75edb94057550ef45e42315a8ee9d59c999490a5c7",
+  "promptSha256": "e05e66f752e1579eb9c74b0074e3b465ed8d434c21981f8f9dd409e71b23ece3",
+  "input": {
+    "prompt": "Use case: precise-object-edit. Asset type: actual-transparent east planting-bed game sprite.\nThe first reference is the previous sprite to correct. The second reference is the authoritative complete Indoor Garden concept. Change ONLY the soft green/background glow around the planting-bed sprite: remove the glow completely, leaving alpha=0 outside the solid plant/stone silhouette. Preserve ALL plant shapes, position, dense leaves/flowers, stone plinth, pixel finish, camera, proportions and colors exactly. No blurred shadow halo or painted background, no new objects. Entire silhouette fits on the transparent canvas with padding. Keep sharp outlined edges; any contact shadow must be only a tiny faint band under the stone base, not a surrounding glow.",
+    "transparent_background": true,
+    "referenced_image_paths": [
+      "C:\\Users\\rowla\\.codex\\generated_images\\01a12c18-c772-7013-aa16-928c81edcb4d\\exec-544ece44-3f88-4116-a475-09771fb7d806.png",
+      "C:/Users/rowla/Projects/GamifySurgery/tools/room-design/level-5/indoor-garden/concept/indoor-garden-concept.png"
+    ]
+  }
+}

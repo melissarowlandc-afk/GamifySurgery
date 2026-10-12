@@ -1,0 +1,374 @@
+{
+  "contract": {
+    "roomDefinitionId": "room.indoor_garden",
+    "width": 4,
+    "height": 4,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "north1",
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "north2",
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "north3",
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "north4",
+        "footprint": {
+          "left": 3,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "west1",
+        "footprint": {
+          "left": 0,
+          "top": 0.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "west2",
+        "footprint": {
+          "left": 0,
+          "top": 1.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "west",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "west3",
+        "footprint": {
+          "left": 0,
+          "top": 2.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "west",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "west4",
+        "footprint": {
+          "left": 0,
+          "top": 3.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "east1",
+        "footprint": {
+          "left": 3.52,
+          "top": 0.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "east2",
+        "footprint": {
+          "left": 3.52,
+          "top": 1.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "east",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "east3",
+        "footprint": {
+          "left": 3.52,
+          "top": 2.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "east",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "east4",
+        "footprint": {
+          "left": 3.52,
+          "top": 3.02,
+          "width": 0.48,
+          "height": 0.96
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "south1",
+        "footprint": {
+          "left": 0,
+          "top": 3.7,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "south2",
+        "footprint": {
+          "left": 1,
+          "top": 3.7,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "south3",
+        "footprint": {
+          "left": 2,
+          "top": 3.7,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "south4",
+        "footprint": {
+          "left": 3,
+          "top": 3.7,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "fountain",
+        "footprint": {
+          "left": 1.2,
+          "top": 1.16,
+          "width": 1.6,
+          "height": 1.04
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "leftSeat",
+        "footprint": {
+          "left": 0.64,
+          "top": 2.68,
+          "width": 0.72,
+          "height": 0.4
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "rightSeat",
+        "footprint": {
+          "left": 2.64,
+          "top": 2.68,
+          "width": 0.72,
+          "height": 0.4
+        },
+        "blockedTiles": []
+      }
+    ],
+    "primaryAnchor": {
+      "x": 2,
+      "y": 3
+    },
+    "waitingAnchors": [],
+    "staffAnchor": null
+  },
+  "supports": [
+    {
+      "id": "plantingAisle",
+      "anchor": {
+        "x": 2,
+        "y": 3
+      },
+      "standingApproach": {
+        "x": 2,
+        "y": 3.3
+      }
+    },
+    {
+      "id": "leftSeat",
+      "fixtureId": "leftSeat",
+      "anchor": {
+        "x": 1,
+        "y": 2
+      },
+      "standingApproach": {
+        "x": 1.6,
+        "y": 2.775
+      }
+    },
+    {
+      "id": "rightSeat",
+      "fixtureId": "rightSeat",
+      "anchor": {
+        "x": 2,
+        "y": 2
+      },
+      "standingApproach": {
+        "x": 2.4,
+        "y": 2.775
+      }
+    }
+  ]
+}

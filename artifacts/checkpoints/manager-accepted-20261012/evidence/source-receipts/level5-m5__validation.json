@@ -1,0 +1,81 @@
+{
+  "worker": "GPT-6.1 Sol",
+  "milestone": "Level 5 M5: Gift Shop sales",
+  "completedOn": "2026-10-12",
+  "pool": "threads",
+  "checkedInConfigsUnchanged": true,
+  "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "domainReportEnvironment": "LEVEL5_M5_REPORT=1",
+  "checks": [
+    {
+      "name": "Balance",
+      "command": "npm.cmd run test --workspace @gamify-surgery/balance-config -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-balance-final.log"
+    },
+    {
+      "name": "Domain",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-domain-final.log"
+    },
+    {
+      "name": "Clinical content",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads",
+      "exitCode": 0,
+      "log": "full-clinical.log"
+    },
+    {
+      "name": "Player",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads",
+      "exitCode": 1,
+      "log": "full-player-final.log"
+    },
+    {
+      "name": "Root typecheck",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-final.log"
+    },
+    {
+      "name": "Player build",
+      "command": "npm.cmd run build --workspace @gamify-surgery/player",
+      "exitCode": 0,
+      "log": "build-final.log"
+    },
+    {
+      "name": "Launcher",
+      "command": "node scripts/verify-launcher-contract.mjs",
+      "exitCode": 0,
+      "log": "launcher-check.log"
+    },
+    {
+      "name": "QA typecheck",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p .local-dev/level5-m2/qa-tsconfig.json",
+      "exitCode": 0,
+      "log": "qa-typecheck.log"
+    },
+    {
+      "name": "QA transform",
+      "command": "node tools/qa/level-four-rooms.mjs --check",
+      "exitCode": 0,
+      "log": "qa-check.log"
+    },
+    {
+      "name": "QA syntax",
+      "command": "node --check tools/qa/level-four-rooms.mjs",
+      "exitCode": 0,
+      "log": "qa-syntax-check.log"
+    },
+    {
+      "name": "Approved room assets",
+      "command": "node tools/room-design/level-5/runtime-promotion/promote.mjs all --check",
+      "exitCode": 0,
+      "log": "approved-assets-check.log"
+    }
+  ],
+  "expectedPlayerFailure": "src/session/surgeryCenterServicePreviews.test.ts:85:52",
+  "gitActions": false,
+  "installs": false,
+  "browserAcceptance": "manager pending"
+}

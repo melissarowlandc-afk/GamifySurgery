@@ -1,0 +1,11 @@
+--- a/apps/player/src/facility/level4ApprovedRoomTestHelpers.ts
++++ b/apps/player/src/facility/level4ApprovedRoomTestHelpers.ts
+@@ -75,7 +75,7 @@
+       expect([definition.width, definition.height]).toEqual(size);
+       expect(definition.buildable).toBe(true);
+       expect(definition.unlockFacilityLevel).toBe(4);
+-      expect(definition.unlockFacilityLevel).toBe(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
++      expect(definition.unlockFacilityLevel).toBeLessThanOrEqual(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
+       for (const side of ["north", "east", "south", "west"] as const) for (let offset = 0; offset < size[0]; offset++) {
+         expect(isRoomVisualDoorSlotClear({ definitionId, orientation: 0, width: size[0], height: size[1], side, offset })).toBe(true);
+       }

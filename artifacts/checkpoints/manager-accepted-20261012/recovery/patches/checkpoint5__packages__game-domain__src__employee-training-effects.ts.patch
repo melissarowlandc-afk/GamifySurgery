@@ -1,0 +1,22 @@
+--- a/packages/game-domain/src/employee-training-effects.ts
++++ b/packages/game-domain/src/employee-training-effects.ts
+@@ -10,7 +10,8 @@
+ }
+ 
+ export function snapshotEmployeeTrainingCategories(state: GameState): EmployeeTrainingCategoryPercents {
+-  return Object.fromEntries(EMPLOYEE_TRAINING_ROLES.map((role) => [role.staffRoleDefinitionId, getEmployeeRoleTrainingPercent(state, role.staffRoleDefinitionId)]));
++  return Object.fromEntries(EMPLOYEE_TRAINING_ROLES.filter(role => role.staffRoleDefinitionId !== "staff.executive" || state.facilityLevel >= 5)
++    .map((role) => [role.staffRoleDefinitionId, getEmployeeRoleTrainingPercent(state, role.staffRoleDefinitionId)]));
+ }
+ 
+ /** Only positive work is rounded; travel/zero-work markers remain independent. */
+@@ -84,7 +85,8 @@
+   const categories = raw.categoryPercents as EmployeeTrainingCategoryPercents;
+   // Pre-APP accepted work omits this category. Preserve that omission and its
+   // frozen phases rather than injecting new keys into verified legacy saves.
+-  const roles = EMPLOYEE_TRAINING_ROLES.filter((role) => role.staffRoleDefinitionId !== "staff.app" || categories["staff.app"] !== undefined);
++  const roles = EMPLOYEE_TRAINING_ROLES.filter((role) =>
++    (role.staffRoleDefinitionId !== "staff.app" && role.staffRoleDefinitionId !== "staff.executive") || categories[role.staffRoleDefinitionId] !== undefined);
+   if (Object.keys(categories).length !== roles.length || roles.some((role) =>
+     !Number.isFinite(categories[role.staffRoleDefinitionId]) || categories[role.staffRoleDefinitionId]! < 0 || categories[role.staffRoleDefinitionId]! > role.percentPerLevel * 4)) return invalid();
+   const accepted = raw.phases.map((entry: unknown, index: number) => {

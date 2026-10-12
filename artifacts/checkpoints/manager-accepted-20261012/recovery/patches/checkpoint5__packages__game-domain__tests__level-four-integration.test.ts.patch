@@ -1,0 +1,49 @@
+--- a/packages/game-domain/tests/level-four-integration.test.ts
++++ b/packages/game-domain/tests/level-four-integration.test.ts
+@@ -1,5 +1,6 @@
+ import { readFileSync, writeFileSync } from "node:fs";
+ import { describe, expect, it } from "vitest";
++import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
+ import {
+   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer,
+   getFacilityProgressionStatus, getRoomResaleValue, getServiceIncomeTotalsCents,
+@@ -289,29 +290,30 @@
+     expect(reservationProblems).toEqual([]); expect(stuck).toEqual([]);
+   }, 120_000);
+ 
+-  it("earns both Level 4 witnesses from real care, then keeps terminal completion through sale/reload without repeats", () => {
+-    let state = createLevelFourIntegrationState("level-four-m9-terminal");
++  it("retains real witnesses and historical terminal completion at explicit legacy cap 4", () => {
++    const context = createPreLevelFiveLaunchContext();
++    let state = createLevelFourIntegrationState("level-four-m9-terminal", context);
+     state.clinicalXp = 750;
+     state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
+-    state = m9Until(state, value => getFacilityProgressionStatus(value).terminalComplete);
++    state = m9Until(state, value => getFacilityProgressionStatus(value, context).terminalComplete, context);
+     expect(state.levelFourCompletion?.pediatricVisitWithParent?.serviceOperationId).toBeTruthy();
+     expect(state.levelFourCompletion?.woundOstomyCareVisit?.serviceOperationId).toBeTruthy();
+     for (const witness of [state.levelFourCompletion!.pediatricVisitWithParent!, state.levelFourCompletion!.woundOstomyCareVisit!])
+       expect(state.serviceOperations.find(op => op.id === witness.serviceOperationId)?.completedAtFacilityTick).toBe(witness.completedAtFacilityTick);
+     const completion = structuredClone(state.levelFourCompletion);
+     const learning = structuredClone(m9Learning(state));
+-    state = m9Apply(state, { type: "SET_SERVICE_APPOINTMENTS_ENABLED", enabled: false }, "m9.terminal.demand-off");
+-    state = m9SellRoom(state, M9_ROOMS.wound, "m9.terminal.sell");
++    state = m9Apply(state, { type: "SET_SERVICE_APPOINTMENTS_ENABLED", enabled: false }, "m9.terminal.demand-off", context);
++    state = m9SellRoom(state, M9_ROOMS.wound, "m9.terminal.sell", context);
+     for (let reload = 0; reload < 3; reload++) {
+-      state = deserializeGameState(serializeGameState(state));
+-      for (let i = 0; i < 20; i++) state = m9Minute(state);
++      state = deserializeGameState(serializeGameState(state), context);
++      for (let i = 0; i < 20; i++) state = m9Minute(state, context);
+       const cash = state.cashCents;
+-      state = gameReducer(state, { type: "LEVEL_UP", operationId: `m9.terminal.no-five.${reload}` });
++      state = gameReducer(state, { type: "LEVEL_UP", operationId: `m9.terminal.no-five.${reload}` }, context);
+       expect(state.cashCents).toBe(cash);
+       expect(state.facilityLevel).toBe(4);
+       expect(state.levelFourCompletion).toEqual(completion);
+       expect(m9Learning(state)).toEqual(learning);
+-      expect(getFacilityProgressionStatus(state)).toMatchObject({ eligible: false, nextFacilityLevel: null, terminalComplete: true });
++      expect(getFacilityProgressionStatus(state, context)).toMatchObject({ eligible: false, nextFacilityLevel: null, terminalComplete: true });
+       expect(state.events.filter(event => event.id === "event.facility-level-4-complete")).toHaveLength(1);
+       expect(state.events.find(event => event.id === "event.facility-level-4-complete")?.reward).toBeUndefined();
+     }

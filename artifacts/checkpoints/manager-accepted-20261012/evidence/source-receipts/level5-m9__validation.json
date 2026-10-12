@@ -1,0 +1,90 @@
+{
+  "commands": [
+    {
+      "check": "balance-config",
+      "exitCode": 0,
+      "log": "full-balance-final.log",
+      "summary": [
+        "\n\n Test Files  21 passed (21)",
+        "      Tests  149 passed (149)",
+        "   Duration  1.23s (transform 3.58s, setup 0ms, import 10.27s, tests 246ms, environment 2ms)"
+      ]
+    },
+    {
+      "check": "game-domain",
+      "exitCode": 0,
+      "log": "full-domain-final.log",
+      "summary": [
+        "\n\n Test Files  155 passed | 1 skipped (156)",
+        "      Tests  4218 passed | 2 skipped (4220)",
+        "   Duration  284.67s (transform 10.34s, setup 0ms, import 81.31s, tests 956.72s, environment 8ms)"
+      ]
+    },
+    {
+      "check": "clinical-content",
+      "exitCode": 0,
+      "log": "full-clinical-final.log",
+      "summary": [
+        "\n\n Test Files  87 passed (87)",
+        "      Tests  628 passed (628)",
+        "   Duration  6.48s (transform 20.64s, setup 0ms, import 69.24s, tests 6.86s, environment 8ms)"
+      ]
+    },
+    {
+      "check": "player",
+      "exitCode": 1,
+      "log": "full-player-final.log",
+      "summary": [
+        "\n\n Test Files  1 failed | 226 passed (227)",
+        "      Tests  1 failed | 1994 passed (1995)",
+        "   Duration  67.02s (transform 11.99s, setup 0ms, import 107.90s, tests 141.24s, environment 14ms)"
+      ]
+    },
+    {
+      "check": "typecheck",
+      "exitCode": 0,
+      "log": "typecheck-accepted.log",
+      "summary": []
+    },
+    {
+      "check": "player-build",
+      "exitCode": 0,
+      "log": "build-final.log",
+      "summary": []
+    },
+    {
+      "check": "QA-transform",
+      "exitCode": 0,
+      "log": "qa-transform-accepted.log",
+      "summary": []
+    },
+    {
+      "check": "e2e-list",
+      "exitCode": 0,
+      "log": "e2e-list-accepted.log",
+      "summary": [
+        "Total: 104 tests in 1 file"
+      ]
+    },
+    {
+      "check": "headless-spec",
+      "exitCode": 1,
+      "log": "headless-spec-attempt.log",
+      "summary": []
+    }
+  ],
+  "vitestConfig": "unchanged checked-in configs; --pool=threads",
+  "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+  "headless": "blocked before page/context by spawn EPERM; no page-error PASS",
+  "protected": [
+    "AGENTS.md",
+    "package.json",
+    "package-lock.json",
+    "playwright.config.ts",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "docs/execplans/level4-launch-plan-20261008.md",
+    "docs/execplans/mobile-version-20261009.md",
+    "apps/player/src/facility/routeMotion.ts",
+    "packages/balance-config/src/prototype-balance.ts"
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/apps/player/src/mobile/build/MobileBuildRoom.tsx
++++ b/apps/player/src/mobile/build/MobileBuildRoom.tsx
+@@ -14,7 +14,7 @@
+   const mapRoom = props.facility.rooms.find(candidate => candidate.instanceId === room.id);
+   useEffect(() => { setSale(null); saleLatch.current = false; }, [room.id]);
+   return <div className="mobile-build-room">
+-    <div className="mobile-build-room-heading"><RoomThumbnail definitionId={room.roomDefinitionId} /><div>
++    <div className="mobile-build-room-heading"><RoomThumbnail definitionId={room.roomDefinitionId} upgradeLevel={room.upgradeLevel} /><div>
+       <p>Tier {room.upgradeLevel}/{room.maxUpgradeLevel ?? 1}</p>
+       <p role="status">{room.accessProblem ? "No access yet. Add a door to a reachable room or hallway." : "Access ready"}</p>
+       {mapRoom?.cleanliness !== undefined ? <p>Cleanliness {mapRoom.cleanliness}%</p> : null}

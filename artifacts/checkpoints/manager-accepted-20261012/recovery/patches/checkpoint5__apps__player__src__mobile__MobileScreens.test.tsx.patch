@@ -1,0 +1,11 @@
+--- a/apps/player/src/mobile/MobileScreens.test.tsx
++++ b/apps/player/src/mobile/MobileScreens.test.tsx
+@@ -102,7 +102,7 @@
+   });
+   it("keeps Advance unavailable until the projection allows it and preserves Level complete copy", () => {
+     const markup = renderToStaticMarkup(<MobileGoals view={{ ...goals, canLevelUp: false, prototypeComplete: true }} onSetupAction={noop} onLevelUp={noop} />);
+-    expect(markup).not.toContain("Advance to Level 3"); expect(markup).toContain("Level 4 complete - Level 5 coming later. Keep playing; the clinic is still open.");
++    expect(markup).not.toContain("Advance to Level 3"); expect(markup).toContain("Level 4 goals complete. Keep playing; the clinic is still open.");
+   });
+   it("retains the ambulatory operation checklist and its scheduled-appointments guidance", () => {
+     const markup = renderToStaticMarkup(<MobileGoals view={{ ...goals, goals: [{ ...goals.goals[0]!, id: "progression.ambulatory_operation_completion" }],

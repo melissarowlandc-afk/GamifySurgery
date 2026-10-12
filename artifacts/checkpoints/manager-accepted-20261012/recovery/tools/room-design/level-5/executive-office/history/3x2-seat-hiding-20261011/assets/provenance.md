@@ -1,0 +1,24 @@
+# Executive Office art provenance — 3×2 revision
+
+Owner direction, 2026-10-10: “The executive office should be 3x2 (can't be bigger than the founder [3x3]), but the rest of it looks good.” Footprint is now three wide by two deep. Compact-layout approval remains null; runtime integration false. Facility Level 5, upgrade Levels 1–5 and appearance Level 1 remain separate.
+
+**Eight reused objects from ten prior built-in imagegen calls; zero new calls.** Untouched transparent originals, exact prompts and real tool receipts remain under `originals/v2/` and `prompts/v2/`. Two foregrounds select the same chair source pixels. The round meeting table and both meeting placements are dropped; their sources and the complete former proof are preserved in `../history/4x3-20261010/`. The compact credenza fits and stays. Machine-readable records: `provenance-v3.json` and `art-provenance.json`.
+
+| Kept object | Untouched original | Exact prompt | Prepared sprite | Original SHA-256 | Prepared SHA-256 |
+| --- | --- | --- | --- | --- | --- |
+| base-desk | [PNG](originals/v2/base-desk-01.png) | [prompt](prompts/v2/base-desk-01.prompt.txt) | [PNG](processed/v3/base-desk.png) | `5c3e57344505ce1cfd7a70c822568af3ea0462320c2a91048cab8e11643517f3` | `99ca432392611af0c927ecd689caf62bd1c23a0771f17a533e853c1c1a187ce9` |
+| base-executiveChair | [PNG](originals/v2/base-executiveChair-01.png) | [prompt](prompts/v2/base-executiveChair-01.prompt.txt) | [PNG](processed/v3/base-executiveChair.png) | `f0f94924c812bf5b749bcb49795e1c5610aa591e1b2e90f6d57230d5c2c0db5c` | `c4f2d42a26abcb7ef1137ff20a404b4587118e7159e43c66afae985dcdf85f00` |
+| base-visitorChair | [PNG](originals/v2/base-visitorChair-01.png) | [prompt](prompts/v2/base-visitorChair-01.prompt.txt) | [PNG](processed/v3/base-visitorChair.png) | `eea107c444297c960973c37007ac39faaf28767ca7a86c2e6aa7b3d8321054e7` | `97e628c74a3089f19396522e63758a244291dfb954139b0ae4bb9576bdee3463` |
+| base-shelf | [PNG](originals/v2/base-shelf-01.png) | [prompt](prompts/v2/base-shelf-01.prompt.txt) | [PNG](processed/v3/base-shelf.png) | `99d4e3e526ddb9f8f7b5155e680b893e022132759a6373b35fd85330058ce2c7` | `fc1e8acf30d032563cc6b0acac6ff98884940e02377dac5b2d44e885ef88b44b` |
+| base-rug | [PNG](originals/v2/base-rug-01.png) | [prompt](prompts/v2/base-rug-01.prompt.txt) | [PNG](processed/v3/base-rug.png) | `ca03a2a200f5a02e84671320cf50f5a8248a1c66f2b058a6d97ac26d61a04a64` | `f13a57d32da58e0e432c5051f66677e596ccabcf19fe99f1ef2037ed91eb77d2` |
+| base-decor | [PNG](originals/v2/base-decor-01.png) | [prompt](prompts/v2/base-decor-01.prompt.txt) | [PNG](processed/v3/base-decor.png) | `a87cc6697362799a60d19e6ff530e10e5911b0175e46b9219324ddbee0e4dc08` | `f3da5d2c98a0cbfd1823b5866993b7ee6171ec570516a5da12feaea1e11018d1` |
+| base-art | [PNG](originals/v2/base-art-01.png) | [prompt](prompts/v2/base-art-01.prompt.txt) | [PNG](processed/v3/base-art.png) | `3f4a3ae2c8f0ae0d192ceed0a8131a86cdfb6f750248e0c4c94c3e765a993e7d` | `c62104c7353b6850a3d3059d3a9b19655a44c565384c473382257e420d211202` |
+| base-accent | [PNG](originals/v2/base-accent-01.png) | [prompt](prompts/v2/base-accent-01.prompt.txt) | [PNG](processed/v3/base-accent.png) | `a2291cdd3680cb9f7c2a8ce4b401719f5ec759b40db77919e8b198168177f2ed` | `bc72443d0f2e48a371f484376305e739c92b1e7aabba81423b9f6cb85dd4226e` |
+
+Preparation uses alpha threshold 8, transparent cropping, uniform downsampling and crisp nearest-neighbour placement. Desk, occupied chairs, KPI and plant retain their original native frames; window, credenza and rug are uniformly repacked into compact frames. No semantic repainting, stretching, recolouring, source upscale or new character. Source-pixel armrest/rear masks use the identical chair transforms.
+
+The revised layout and eight original neutral geometry sources are frozen in `../stand-in/v3/` before repacking reused art. This is a revision freeze, not a claim that fresh art was generated after it. `../layout-reconciliation-v3.json` records the owner-authorized footprint, anchors, compact frames, removed meeting bay and recomputed door ownership.
+
+Executive north faces south; visitor south faces north. Desk presents its south panel and monitor backs. Real approved stills retain the prior source scale and measured contacts; cushions remain 45 proof px above chair floors. Chairs draw behind sitters, then original foreground arms/rear panels draw over them; desk draws in front of the Executive. N2 clears the Executive chair/sitter/foreground; S2 clears the visitor chair/sitter/foreground. Closing restores each. All ten wall sections are legal doors; wall KPI/window hide on owned doors/backing. No furniture pass-through exception.
+
+No readable text, numbers, logo, clinical content, stool, footrest or painted person. The KPI board remains nonverbal. Native/Node geometry, source hashes, controls, contacts and rendering pass; browser validation/captures remain with the manager.

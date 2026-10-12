@@ -1,0 +1,11 @@
+--- a/apps/player/src/mobile/navigation.ts
++++ b/apps/player/src/mobile/navigation.ts
+@@ -2,7 +2,7 @@
+ 
+ export type MobileTab = "clinic" | "patients" | "alerts" | "manage" | "build";
+ export type MobileSheetId = Exclude<MobileTab, "clinic"> | "more" | "goals" | "cash" |
+-  "advertising" | "emergency" | "tools" | "help" | "save" | "chart" | "discussion" | "room" | "inspector";
++  "advertising" | "emergency" | "tools" | "help" | "save" | "chart" | "discussion" | "room" | "inspector" | "inspection";
+ export interface MobileNavigationState {
+   tab: MobileTab;
+   sheets: readonly MobileSheetId[];

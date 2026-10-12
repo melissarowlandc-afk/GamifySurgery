@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "proofManifestSha256": "5b7e74a0fb25f9768908bbd55fbd6f7431c9a265a7bfdbf1beccdce72357e01f",
+  "executed": [
+    {
+      "command": "node reconcile-south-v2.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/reconcile-stdout.txt",
+      "stdout": "SOUTH RECONCILIATION PASS: only S1-S4 planting revised; concept, 22 non-south records, both seated contacts and 16 prepared sprites unchanged; 21 measured floor bands; all 16 single-door routes pass.\n"
+    },
+    {
+      "command": "node proof/build.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/build-stdout.txt",
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.\n"
+    },
+    {
+      "command": "node proof/validate.cjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/validate-stdout.txt",
+      "stdout": "VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 16 reused derived sprites + 2 source-pixel chair fronts; continuous S1-S4 planting; 2 unchanged approved seated adults; 11040 door/backing states; 103680 routes / 81649920 radius-clear samples at 0.005T; 103680 occupied routes / 81942240 samples; all 16 doors; permanent seats/aisle, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.\n"
+    },
+    {
+      "command": "node proof/validate-south.cjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/south-stdout.txt",
+      "stdout": "SOUTH VALIDATION PASS: continuous S1-S4 paint / 480 columns; sole south-door ownership across 17920 states; 2880 occupied routes with south closed / 2237760 radius-clear samples; concept, both seats/sitters, fountain, other walls and 16 sprites unchanged; 0 new image-generation calls.\n"
+    },
+    {
+      "command": "node proof/validate-controls.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/controls-stdout.txt",
+      "stdout": "CONTROL VALIDATION PASS: 383 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 seated visitors, keyboard, real-error/performance-warning discrimination; browser separate.\n"
+    },
+    {
+      "command": "node proof/inspect-native.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/native-stdout.txt",
+      "stdout": "NATIVE INSPECTION PASS: 140 actual-render states across 5 fixed-look upgrades; default/empty/individual seated visitors/contacts/routes/all 16 doors/backing; browser QA separate.\n"
+    },
+    {
+      "command": "node proof/inspect-composition.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/composition-stdout.txt",
+      "stdout": "COMPOSITION INSPECTION PASS: planting/furniture paint with visitors hidden covers 56.5% of the floor view; concept/empty/two-seat comparison saved.\n"
+    },
+    {
+      "command": "node proof/reproduce.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/reproduce-stdout.txt",
+      "stdout": "BUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.\nBUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.\nREPRODUCIBILITY PASS: 30 delivered files byte-identical across two native rebuilds.\n"
+    },
+    {
+      "command": "node proof/check-helpers.cjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/helpers-stdout.txt",
+      "stdout": "BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.\n"
+    },
+    {
+      "command": "node proof/check-http.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/http-stdout.txt",
+      "stdout": "HTTP VALIDATION PASS: 30 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.\n"
+    },
+    {
+      "command": "node assets/write-provenance-v1.mjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/provenance-stdout.txt",
+      "stdout": "ART PROVENANCE PASS: 1 built-in concept + 10 transparent derivation/edit calls (9 selected); 16 reused sprites + 2 exact-source chair fronts; continuous S1-S4 row; 0 new calls; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved seated adults; owner-approved remainder preserved; south correction awaits manager verification.\n"
+    },
+    {
+      "command": "node proof/audit-lane.cjs",
+      "exitCode": 0,
+      "outputFile": "proof/evidence/v2/audit-stdout.txt",
+      "stdout": "LANE AUDIT PASS: 271 prior files archived unchanged; 16 non-south sprites and original concept/art unchanged; 13/13 shared hashes unchanged; 0 concurrent changes preserved; 47629 prefix / 0 suffix plan bytes unchanged; native/control/rebuild/HTTP/source/privacy/UTF-8 PASS; browser assigned to manager.\n"
+    }
+  ],
+  "browser": "Owner assigned fresh browser validation to manager; previous v1 manager PASS retained."
+}

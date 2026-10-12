@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 2,
+  "changes": [
+    {
+      "slot": "rug",
+      "field": "canvas/sourceRect",
+      "before": [
+        1584,
+        1104
+      ],
+      "after": [
+        1320,
+        920
+      ],
+      "reason": "Generated rug opaque crop is 1326×698. Use 400 native pixels/tile so packing uniformly downsamples instead of upscaling. Display size 3.3×2.3, centre, walkability, routes and all chair/floor anchors are unchanged."
+    },
+    {
+      "slot": "shelf",
+      "field": "ground.x / footprint.left / destination.x",
+      "before": {
+        "groundX": 2.75,
+        "footprintLeft": 2.07
+      },
+      "after": {
+        "groundX": 2.72,
+        "footprintLeft": 2.04
+      },
+      "reason": "Measured opaque feet extended to x=3.4625, crossing the east door clearance by 0.0125T. Move credenza 0.03T west; measured right edge becomes 3.4325, without new door ownership or changing either occupant."
+    },
+    {
+      "slot": "meetingChair",
+      "field": "source-point calibration",
+      "before": "Canvas-fit scale, no cushion registration",
+      "after": "Source seat (619,672), 45 proof px above unchanged floor (2.95,1.0)",
+      "reason": "Match empty meeting-chair cushion height/width to the rear-facing visitor chair, using the same uniform source-landmark registration pipeline."
+    }
+  ],
+  "unchanged": [
+    "Both occupant/chair/cushion anchors",
+    "All desk/table/plant/floor anchors except 0.03T credenza fit",
+    "All declared footprint dimensions",
+    "All door/backing ownership",
+    "All actor identities/directions/source scales",
+    "All display sizes"
+  ]
+}

@@ -1,0 +1,21 @@
+--- a/packages/game-domain/tests/room-upgrade-revenue.test.ts
++++ b/packages/game-domain/tests/room-upgrade-revenue.test.ts
+@@ -259,7 +259,7 @@
+     expect(state.serviceIncomeReceipts).toEqual([expect.objectContaining({ incomeLineId: "income.ultrasound", grossAmount: 141.6 })]);
+   });
+ 
+-  it("does not backdate a bonus from a new room and keeps future revenue metadata inert", () => {
++  it("does not backdate a bonus from a new room or invent an earning room for a Gift Shop quote", () => {
+     const result = fixture();
+     const room = result.addRoom("room.ultrasound");
+     room.room.upgradeLevel = 2;
+@@ -267,7 +267,8 @@
+     const newRoom = alternative(result, room.room, 5);
+     bindRoomUpgradeRevenueQuote(quote, newRoom.id);
+     expect(getRoomUpgradeQuotedFee(quote)).toBe(120);
+-    expect(createRoomUpgradeRevenueQuote(result.state, 120, ["room.gift_shop"])).toBeUndefined();
++    expect(createRoomUpgradeRevenueQuote(result.state, 15, ["room.gift_shop"])).toMatchObject({ candidates: [], boundRoom: null, baseFee: 15 });
++    expect(createRoomUpgradeRevenueQuote(result.state, 120, ["room.founder_office"])).toBeUndefined();
+   });
+ 
+   it("preserves markerless queued operation overrides and rejects inconsistent marked saves", () => {

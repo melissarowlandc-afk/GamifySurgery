@@ -1,0 +1,42 @@
+--- a/packages/game-domain/src/characterStillCatalog.test.ts
++++ b/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -24,9 +24,9 @@
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 326 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(326);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(326);
++  it("covers all 336 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(336);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(336);
+     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179);
+     expect(STAFF_CHARACTER_STILLS).toHaveLength(99);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+@@ -277,17 +277,17 @@
+     }
+   });
+ 
+-  it("retains the two original APP looks and keeps executives excluded", () => {
+-    const inactive = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "future-roster20-v5" && entry.eligibleStaffRoleDefinitionIds.length === 0);
+-    expect(inactive.map(entry => entry.stillId)).toEqual(["future-roster20-v5.003", "future-roster20-v5.004"]);
++  it("retains the two original APP looks and admits the two approved Executives only to their role", () => {
++    const executives = staffStillEligibleEntries("staff.executive");
++    expect(executives.map(entry => entry.stillId)).toEqual(["future-roster20-v5.003", "future-roster20-v5.004"]);
+     const roleIds = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.app", "staff.executive"];
+-    for (const role of roleIds) for (const entry of inactive) {
+-      expect(staffStillEligibleEntries(role)).not.toContainEqual(entry);
+-      expect(selectStaffStillId("GS-033-inactive", "new-hire", role, entry.stillId)).not.toBe(entry.stillId);
+-    }
+-    for (const entry of inactive) expect(patientStillEligibleEntries()).not.toContainEqual(entry);
++    for (const role of roleIds) for (const entry of executives) {
++      expect(staffStillEligibleEntries(role).includes(entry)).toBe(role === "staff.executive");
++      if (role !== "staff.executive") expect(selectStaffStillId("GS-033-inactive", "new-hire", role, entry.stillId)).not.toBe(entry.stillId);
++    }
++    for (const entry of executives) expect(patientStillEligibleEntries()).not.toContainEqual(entry);
+     expect(staffStillEligibleEntries("staff.app").filter(entry => entry.sourceCohort === "future-roster20-v5").map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
+-    expect(selectStaffStillId("GS-033-inactive", "executive", "staff.executive")).toBeUndefined();
++    expect(executives.map(entry => entry.stillId)).toContain(selectStaffStillId("GS-033-inactive", "executive", "staff.executive"));
+   });
+ 
+   it("admits all eight v6e looks only to APPs and preserves every compatible current or departing APP selection", () => {

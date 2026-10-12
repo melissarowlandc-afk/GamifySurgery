@@ -1,0 +1,19 @@
+--- a/packages/balance-config/src/room-upgrades.ts
++++ b/packages/balance-config/src/room-upgrades.ts
+@@ -92,11 +92,11 @@
+   upgrade("room.pediatric_waiting", "Pediatric Waiting Room", "waiting_satisfaction_points", 2, [150, 225, 325, 450], "waiting families"),
+   upgrade("room.pediatric_examination", "Pediatric Examination Room", "examination_satisfaction_points", 2, [150, 225, 325, 450], "visits"),
+   upgrade("room.wound_ostomy", "Wound/Ostomy Clinic", "revenue_percent", 6, [250, 375, 550, 750], "clinic service revenue"),
+-  upgrade("room.founder_office", "Founder's Office", "founder_office_morale_points", 2, [300, 500, 750, 1000], "", "future", true),
+-  upgrade("room.executive_office", "Executive Office", "administration_duration_reduction_percent", 5, [500, 750, 1100, 1500], "", "future"),
+-  upgrade("room.gift_shop", "Gift Shop", "revenue_percent", 6, [200, 300, 450, 600], "gift sales revenue", "future"),
+-  upgrade("room.indoor_garden", "Indoor Garden", "garden_satisfaction_points", 2, [200, 300, 450, 600], "", "future"),
+-  upgrade("room.staff_gym", "Staff Gym", "gym_morale_points", 2, [250, 375, 550, 750], "", "future"),
++  upgrade("room.founder_office", "Founder's Office", "founder_office_morale_points", 2, [300, 500, 750, 1000], "", "current", true),
++  upgrade("room.executive_office", "Executive Office", "administration_duration_reduction_percent", 5, [500, 750, 1100, 1500]),
++  upgrade("room.gift_shop", "Gift Shop", "revenue_percent", 6, [200, 300, 450, 600], "gift sales revenue"),
++  upgrade("room.indoor_garden", "Indoor Garden", "garden_satisfaction_points", 2, [200, 300, 450, 600]),
++  upgrade("room.staff_gym", "Staff Gym", "gym_morale_points", 2, [250, 375, 550, 750]),
+ ];
+ 
+ export function getRoomUpgradeDefinition(roomDefinitionId: string): RoomUpgradeDefinition | null {

@@ -1,0 +1,24 @@
+{
+  "status": "PASS_WITH_DOCUMENTED_ENVIRONMENT_LIMITS",
+  "archiveIntegrityOrRecoveryBlocked": false,
+  "restoreDestinationGuidance": "Choose a short empty directory on Windows; deep inspector review-history metadata can exceed the Win32 directory-length limit under a long destination prefix.",
+  "resolvedValidationAttempts": [
+    {
+      "issue": "Python 3.12 tempfile's Windows mode 0700 made the first new scratch directory inaccessible to sandbox child processes.",
+      "resolution": "Created a different owned scratch directory with ordinary inherited workspace permissions. No existing directory ACL, authentication or sandbox policy was changed."
+    },
+    {
+      "issue": "A long temporary destination triggered WinError 206 while creating an inspector review-history directory.",
+      "resolution": "Used a shorter isolated scratch destination; all 2733 targets restored and matched bytes and SHA-256."
+    }
+  ],
+  "scratchCleanup": {
+    "successfulDiskAndNegativeTestTreesRemoved": true,
+    "initialInaccessibleEmptyDirectory": ".local-dev/backup5-worker/archive-guards-pcvft889",
+    "archiveOrStagePayloadInsideThatDirectory": false,
+    "cleanupAttempt": "Path.rmdir and native PowerShell Remove-Item -LiteralPath both returned access denied. No recursive deletion or permission escalation was attempted.",
+    "managerAction": "Optional cleanup of this worker-created empty ignored scratch directory from the manager's normal environment; it is outside the archive and staging list."
+  },
+  "ownerStorageAccessed": false,
+  "gitMutations": 0
+}

@@ -1,0 +1,53 @@
+// Room-first composition: geometry and art derive from the saved full-room concept.
+// This worker owns only the Gift Shop lane; never edits shared runtime data.
+import fs from 'node:fs'; import path from 'node:path'; import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url'; import { createCanvas } from '@napi-rs/canvas';
+import * as G from './proof/geometry.mjs';
+const root = path.dirname(fileURLToPath(import.meta.url));
+const read = p => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
+const hash = p => crypto.createHash('sha256').update(fs.readFileSync(path.join(root, p))).digest('hex');
+const save = (p, v) => { const f = path.join(root, p); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, Buffer.isBuffer(v) || typeof v === 'string' ? v : JSON.stringify(v, null, 2) + '\n'); };
+if (fs.existsSync(path.join(root, 'stand-in/v3/layout-concept.json'))) throw Error('Room-first composition already frozen; preserve it and reconcile separately.');
+const l = read('history/v2/layout.json'); l.designRevision = 3;
+l.composition = { method: 'room-first', concept: 'concept/gift-shop-concept.png', conceptSha256: hash('concept/gift-shop-concept.png'), source: 'One full-room concept, then seven built-in concept-derived fixture edits.', aisle: 'Connected loop around the joined main-display/checkout island; wider right lane bends to the front checkout. Optional wall modules clear their door sections.', history: 'history/v2/ARCHIVE_RECEIPT.json' };
+const f = (id, label, spriteSlot, canvas, size, ground, footprint, classification = 'optional') => ({ id, label, spriteSlot, canvas, size, ground, footprint, classification });
+l.pieces = [
+ f('northLeft', 'Rear left: balloons, plush, cards and mugs', 'northLeft', [512, 720], [1.06, 1.490625], [.5, .35], { left: 0, top: 0, width: 1, height: .35 }),
+ f('northMiddle', 'Rear middle: mugs, candles and impulse snacks', 'northMiddle', [512, 720], [1.06, 1.490625], [1.5, .35], { left: 1, top: 0, width: 1, height: .35 }),
+ f('northRight', 'Rear right: magazines, cards and overflowing plush', 'northRight', [512, 720], [1.06, 1.490625], [2.5, .35], { left: 2, top: 0, width: 1, height: .35 }),
+ f('westRear', 'Left rear: joined card rack and flower buckets', 'westRun', [256, 1152], [.47, 2.115], [.215, 1], { left: 0, top: .35, width: .43, height: .65 }),
+ f('westMiddle', 'Left middle: continuing cards and flowers', 'westRun', [256, 1152], [.47, 2.115], [.215, 2], { left: 0, top: 1, width: .43, height: 1 }),
+ f('westCooler', 'Left front: flower cooler and bouquet endcap', 'cooler', [288, 864], [.53, 1.59], [.215, 3], { left: 0, top: 2, width: .43, height: 1 }),
+ f('eastRear', 'Right rear: magazine/snack shelving and plush', 'eastRun', [224, 896], [.38, 1.52], [2.85, 1], { left: 2.7, top: .35, width: .3, height: .65 }),
+ f('eastMiddle', 'Right middle: continuing stocked shelves', 'eastRun', [224, 896], [.38, 1.52], [2.85, 2], { left: 2.7, top: 1, width: .3, height: 1 }),
+ f('entranceEndcap', 'Entrance: joined plush bin, flowers and balloons', 'entry', [432, 480], [.8, .8888888888888888], [2.65, 3], { left: 2.3, top: 2.35, width: .7, height: .65 }),
+ f('mainIsland', 'Joined main display and self-service checkout', 'island', [512, 768], [1.03, 1.545], [1.4, 1.75], { left: .92, top: .8, width: .96, height: .95 }, 'necessary'),
+ { id: 'checkoutMat', label: 'Checkout mat', spriteSlot: 'mat', canvas: [384, 144], size: [.82, .3075], center: [1.4, 2.1], walkable: true, classification: 'optional' },
+];
+l.room.records = l.pieces.map(p => {
+ const q = p.ground ?? p.center;
+ const r = { id: p.id, classification: p.classification, assetId: 'design:gs:base-' + p.spriteSlot, sourceRect: [0, 0, ...p.canvas], renderSizeTiles: p.size, destinationTopLeftTiles: [q[0] - p.size[0] / 2, q[1] - (p.center ? p.size[1] / 2 : p.size[1])], worldLocalGround: q, depthPolicy: p.center ? 'authored-layer' : 'ground-contact', depthKey: p.center ? -.9 : q[1], canvasTransform: [1, 0, 0, 1, 0, 0], attachments: {}, doorOwners: [], backedOwners: [], touchupKeepWhenBacked: true, ...(p.footprint ? { footprint: p.footprint } : {}), ...(p.walkable ? { walkable: true } : {}) };
+ r.doorOwners = G.ownersFor(l.room, r); p.owners = [...r.doorOwners]; p.backed = [];
+ return r;
+});
+const standing = { browse: { ground: [.7, 1], direction: 'east', role: 'Browsing the main display from the left aisle' }, pay: { ground: [1.4, 2.1], direction: 'north', role: 'Paying at self-service checkout' }, queue1: { ground: [2.5, 1.975], direction: 'west', role: 'First queued shopper' }, queue2: { ground: [2.5, 1.05], direction: 'south', role: 'Second queued shopper (optional occupancy proof)' } };
+for (const a of l.presentation.actors) { const s = standing[a.supportId]; a.ground = s.ground; a.direction = s.direction; a.role = s.role; a.painterGround = s.ground[1] + .0001; }
+for (const s of l.room.supports) { const a = standing[s.id]; s.ground = { x: a.ground[0], y: a.ground[1] }; s.facing = a.direction; s.role = a.role; s.classification = 'necessary'; }
+l.presentation.primaryContact = [1.4, 2.1];
+l.presentation.orientation = 'Back bays face south; joined left fixtures face east, right fixtures face west. Payer faces the integrated checkout; queue bends along the right aisle. Original adult stills and runtime scales are unchanged.';
+l.presentation.contacts = Object.entries(standing).map(([id, s]) => ({ id, label: s.role, world: s.ground, standingSpotId: id, ...(['browse', 'pay'].includes(id) ? { fixtureId: 'mainIsland' } : {}) }));
+for (const [fixtureId, world] of [['northLeft', [.55, .6]], ['northMiddle', [1.5, .6]], ['northRight', [2.35, .6]], ['westRear', [.7, .95]], ['westMiddle', [.7, 1.65]], ['westCooler', [.75, 2.5]], ['eastRear', [2.25, .7]], ['eastMiddle', [2.25, 1.5]], ['entranceEndcap', [2, 2.55]]]) l.presentation.contacts.push({ id: fixtureId + '-contact', label: 'Browse ' + l.pieces.find(p => p.id === fixtureId).label.toLowerCase(), world, fixtureId, standingSpotId: 'browse', optionalContact: true });
+l.navigation = { solidFixtures: [], doorThresholdExceptions: [], privateProofRouteModel: structuredClone(l.presentation) };
+l.room.notes = ['Room-first composition: full-room concept beside the playable version; fixtures derived from that concept.', 'Proposed 3 × 3; all twelve one-tile wall sections remain legal doors.', 'One fixed appearance at upgrades 1–5: room.gift_shop appearanceChanges=false.', "Necessary furniture isn't removed by doors: joined checkout/main display and all four standing/queue spots remain.", 'Optional stocked wall bays, side runs and entrance endcap hide for their owned doors; the floor mat is walkable.', 'Joined plinths line the walls; stock overlaps by floor depth. One loop aisle connects all doors, displays, checkout and both queue spots.', 'Three default unchanged approved adult stills; fourth adult proves the full two-person queue. No staff.', 'Isolated owner review only: no runtime, income, balance, clinical or save changes.'];
+save('layout.json', l); save('stand-in/v3/layout-concept.json', l);
+save('assets/registration-v3.json', { schemaVersion: 1, designRevision: 3, assets: {}, note: 'Standing-only retail. Original adult stills/scales retained; concept-derived fixture cutouts use measured floor bands.' });
+const spec = [ ['northLeft', 'back', [68, 0, 669, 764]], ['northMiddle', 'back', [737, 0, 568, 764]], ['northRight', 'back', [1305, 0, 691, 764]], ['westRun', 'west'], ['cooler', 'cooler'], ['eastRun', 'east'], ['entry', 'entry'], ['island', 'island'], ['mat', 'mat', [260, 230, 1260, 470]] ];
+const generation = { schemaVersion: 3, designRevision: 3, status: 'candidate_needs_owner_review', approval: null, runtimeIntegrationAuthorized: false, tool: 'image_gen.imagegen', builtInCalls: 8, revisionBuiltInCalls: 8, historicalBuiltInCalls: 13, concept: { file: 'concept/gift-shop-concept.png', sha256: hash('concept/gift-shop-concept.png'), prompt: 'concept/prompt.txt', promptSha256: hash('concept/prompt.txt'), receipt: 'concept/generation-receipt.json', receiptSha256: hash('concept/generation-receipt.json'), transparentBackground: false }, calls: [], assets: [] };
+for (const key of ['island', 'back', 'west', 'cooler', 'east', 'entry', 'mat']) generation.calls.push({ key, original: `assets/originals/v3/${key}.png`, originalSha256: hash(`assets/originals/v3/${key}.png`), prompt: `assets/prompts/v3/${key}.txt`, promptSha256: hash(`assets/prompts/v3/${key}.txt`), receipt: `assets/originals/v3/${key}.receipt.json`, receiptSha256: hash(`assets/originals/v3/${key}.receipt.json`), conceptReferenceSha256: generation.concept.sha256 });
+for (const [slot, key, sourceRegion] of spec) { const call = generation.calls.find(a => a.key === key), pieces = l.pieces.filter(p => p.spriteSlot === slot); generation.assets.push({ id: 'base-' + slot, slot: pieces[0].id, slots: pieces.map(p => p.id), classification: pieces[0].classification, tool: 'image_gen.imagegen', transparentBackground: true, ...call, ...(sourceRegion ? { sourceRegion } : {}), derivation: sourceRegion ? 'Exact rectangular native Canvas crop of the untouched built-in concept-derived original; no recoloring or nonuniform transform.' : 'Built-in cutout/redraw directly from the full-room concept, then native aspect-preserving packing.' }); }
+save('assets/generation-manifest.json', generation);
+const neutrals = [];
+for (const p of l.pieces.filter((p, i, a) => a.findIndex(q => q.spriteSlot === p.spriteSlot) === i)) { const [w, h] = p.canvas, c = createCanvas(w, h), g = c.getContext('2d'); g.fillStyle = '#91998c'; g.fillRect(8, 8, w - 16, h - 16); g.strokeStyle = '#294632'; g.lineWidth = 4; g.strokeRect(10, 10, w - 20, h - 20); const file = `stand-in/v3/originals/${p.spriteSlot}.png`; save(file, c.toBuffer('image/png')); neutrals.push({ id: p.spriteSlot, file, sha256: hash(file), sourcePoints: {} }); }
+save('stand-in/v3/manifest.json', { schemaVersion: 1, designRevision: 3, status: 'concept-derived-neutral-layout', note: 'After the full-room concept and fixture edits; not claimed to precede generation.', layoutSha256: hash('stand-in/v3/layout-concept.json'), assets: neutrals });
+save('layout-reconciliation-v3.json', { schemaVersion: 1, designRevision: 3, status: 'PENDING', changes: [], source: 'stand-in/v3/layout-concept.json', note: 'Record any measured-base refinement after painted packing; never alter necessity or remove standing spots.' });
+console.log('COMPOSITION V3 READY: one full-room concept; 11 fixture records / 9 concept-derived sprites; one necessary joined main display/checkout; 10 optional records; four necessary standing spots.');

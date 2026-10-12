@@ -1,0 +1,20 @@
+--- a/packages/game-domain/src/appearance.ts
++++ b/packages/game-domain/src/appearance.ts
+@@ -374,7 +374,7 @@
+       )
+       .map((operation) => operation.appearance),
+     ...state.retailExternalActors
+-      .filter((actor) => actor.lifecycle !== "departed" && actor.location !== null)
++      .filter((actor) => !actor.giftOnlyVisit && actor.lifecycle !== "departed" && actor.location !== null)
+       .map((actor) => actor.appearance),
+     ...state.environment.ambientPedestrians.map(
+       (pedestrian) => pedestrian.appearance,
+@@ -430,7 +430,7 @@
+       .filter((operation) => operation.actorKind === "visitor" && operation.location !== null)
+       .map((operation) => operation.displayName),
+     ...state.retailExternalActors
+-      .filter((actor) => actor.lifecycle !== "departed" && actor.location !== null)
++      .filter((actor) => !actor.giftOnlyVisit && actor.lifecycle !== "departed" && actor.location !== null)
+       .map((actor) => actor.displayName),
+   ];
+ }

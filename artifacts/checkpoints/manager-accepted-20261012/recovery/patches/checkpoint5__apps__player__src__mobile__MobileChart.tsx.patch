@@ -1,0 +1,10 @@
+--- a/apps/player/src/mobile/MobileChart.tsx
++++ b/apps/player/src/mobile/MobileChart.tsx
+@@ -139,6 +139,7 @@
+         <div><h3>{chart.patientName}</h3><p>{demographics}</p>{chart.chiefComplaint ? <strong>{chart.chiefComplaint}</strong> : null}</div>
+         <p className="mobile-chart-status">{chart.statusLabel}{chart.etaLabel ? ` · ${chart.etaLabel}` : ""}</p>
+         {chart.patientSatisfactionLabel ? <p>Satisfaction {chart.patientSatisfactionLabel.replace(/^Satisfaction:?\s*/i, "")}</p> : null}
++        {chart.executiveComfortLabel ? <p>{chart.executiveComfortLabel}</p> : null}
+       </header>
+       {summary ? <section aria-label="Diagnosis and management summary" className="mobile-learning-summary" data-phone-anchor="summary">
+         <h3>{chart.clinicalReview?.diagnosisName ?? "Diagnosis & management"}</h3>

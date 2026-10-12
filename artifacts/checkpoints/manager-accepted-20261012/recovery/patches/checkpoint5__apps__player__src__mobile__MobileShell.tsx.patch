@@ -1,0 +1,67 @@
+--- a/apps/player/src/mobile/MobileShell.tsx
++++ b/apps/player/src/mobile/MobileShell.tsx
+@@ -25,6 +25,7 @@
+ import { MobileChart, MobileTeamDiscussion } from "./MobileChart";
+ import { MobileAlerts } from "./MobileAlerts";
+ import { MobileGoals, MobileGoalsChip } from "./MobileGoals";
++import { MobileInspection, MobileFinishedGamePage } from "./MobileInspection";
+ import { MobileAdvertising, MobileGlp1ConsultChip, MobileGlp1ConsultInfo } from "./MobileQuickControls";
+ import { MobileTutorialCoach } from "./MobileTutorialCoach";
+ import { resolveMobileTutorialTarget, type PhoneMapFocus } from "./tutorialTargets";
+@@ -76,6 +77,8 @@
+   const [requestedTraining, setRequestedTraining] = useState<{ employeeId: string; requestKey: number } | null>(null);
+   const manageDetailBack = useRef<(() => void) | null>(null);
+   const registerManageBack = useCallback((handler: (() => void) | null) => { manageDetailBack.current = handler; }, []);
++  const inspectionDetailBack = useRef<(() => void) | null>(null);
++  const registerInspectionBack = useCallback((handler: (() => void) | null) => { inspectionDetailBack.current = handler; }, []);
+   const [mapHint, setMapHint] = useState<{ text: string } | null>(null);
+   const [roomToOpen, setRoomToOpen] = useState<string | null>(null);
+   const [failures, setFailures] = useState<Record<string, string>>({});
+@@ -115,6 +118,7 @@
+     const nestedDialog = typeof document === "undefined" ? null : document.querySelector<HTMLElement>(".mobile-shell .dialog-backdrop [aria-modal='true']");
+     const cancel = nestedDialog?.querySelector<HTMLButtonElement>(".dialog-actions button");
+     if (cancel) { cancel.click(); return false; }
++    if ((sheet === "goals" || sheet === "inspection") && inspectionDetailBack.current) { inspectionDetailBack.current(); return false; }
+     if (sheet === "chart" && props.chart) { props.onCloseChart(); return false; }
+     if (sheet === "discussion" && props.employeeDiscussion) { props.onCloseEmployeeDiscussion?.(); return false; }
+     if (sheet === "build" && props.buildMode) return true;
+@@ -355,7 +359,11 @@
+         content: <MobileBuildRoom props={props} room={props.selectedRoomBuild}
+           onMove={() => { build.start(); setDoorTool(null); navigator.selectTab("clinic"); props.onBeginMoveSelectedRoom?.(); }}
+           onDoors={() => { props.onCancelPlacement(); navigator.selectTab("clinic"); setDoorTool("place"); }} /> } : null;
+-      case "goals": return { title: "Goals", content: <MobileGoals view={props.progression} onLevelUp={props.onLevelUp} onSetupAction={setSetupAction} /> };
++      case "goals": return { title: "Goals", content: <MobileGoals view={props.progression} onLevelUp={props.onLevelUp} onBookInspection={props.onBookInspection} onCancelInspection={props.onCancelInspection}
++        onViewFinishReport={props.onViewFinishReport} onShowInspection={props.progression.inspection ? () => navigator.open("inspection") : undefined}
++        onDetailBackChange={registerInspectionBack} onSetupAction={setSetupAction} /> };
++      case "inspection": return props.progression.inspection ? { title: "Inspection", content: <MobileInspection view={props.progression.inspection}
++        onBook={props.onBookInspection} onCancel={props.onCancelInspection} onViewFinish={props.onViewFinishReport} onDetailBackChange={registerInspectionBack} /> } : null;
+       case "cash": return { title: "Money", kind: "bottom", content: <MobileCashExplanation view={props.resourceBar} /> };
+       case "advertising": return { title: "Advertising", kind: "bottom", content: <MobileAdvertising view={props.advertising} onLevelChange={props.onAdvertisingLevelChange} /> };
+       case "emergency": return { title: "GLP-1 consult", kind: "bottom", content: <MobileGlp1ConsultInfo view={props.emergencyGlp1} /> };
+@@ -383,6 +391,8 @@
+         <MobileCampaignManager campaigns={props.campaigns} onCreateCampaign={props.onCreateCampaign} onSwitchCampaign={props.onSwitchCampaign} />
+         <MobileRestartDialog paused={props.paused} onTogglePause={props.onTogglePause} onRestart={props.onRestart} onOpenChange={setRestartOpen} />
+         <button type="button" onClick={() => navigator.replaceTop("goals")}>Goals</button>
++        {props.progression.inspection ? <button type="button" onClick={() => navigator.replaceTop("inspection")}>Inspection</button> : null}
++        {props.progression.inspection?.finish && props.onViewFinishReport ? <button type="button" onClick={props.onViewFinishReport}>View finish report</button> : null}
+         <button type="button" onClick={() => navigator.replaceTop("emergency")}>GLP-1 consult info</button>
+         <button type="button" onClick={() => navigator.replaceTop("advertising")}>Advertising</button>
+         <button type="button" onClick={() => navigator.replaceTop("tools")}>Prototype tools</button>
+@@ -408,7 +418,7 @@
+   const mapFocus = top === undefined || top === "inspector" ? tutorialTarget?.mapFocus ?? alertFocus : null;
+ 
+   return <div className="mobile-shell" ref={shellRef}>
+-    <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")} />
++    <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")} />
+     <main className="mobile-content" aria-label="Clinic workspace">
+       <div className="mobile-workspace" style={{ "--mobile-build-control-height": `${build.controlsHeight}px` } as CSSProperties}>
+       <div className="mobile-map" data-phone-anchor="map" ref={hostRef} style={props.buildMode ? { bottom: build.controlsHeight } : undefined}>
+@@ -458,5 +468,8 @@
+         </button>; })}
+     </nav>
+     <p className="screen-reader-only" role="status" aria-live="polite">{props.announcement}</p>
++    {props.finishReportOpen && props.progression.inspection && props.onCloseFinishReport ? <MobileFinishedGamePage
++      key={props.progression.inspection.finish?.report.runId} inspection={props.progression.inspection}
++      onKeepPlaying={props.onCloseFinishReport} onStartNewCampaign={props.onCreateCampaign} /> : null}
+   </div>;
+ }

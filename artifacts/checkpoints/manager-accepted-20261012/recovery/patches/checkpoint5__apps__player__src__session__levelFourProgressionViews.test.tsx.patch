@@ -1,0 +1,48 @@
+--- a/apps/player/src/session/levelFourProgressionViews.test.tsx
++++ b/apps/player/src/session/levelFourProgressionViews.test.tsx
+@@ -1,6 +1,7 @@
+ import { renderToStaticMarkup } from "react-dom/server";
+ import { describe, expect, it, vi } from "vitest";
+-import { deserializeGameState, gameReducer, getRollingIncomeSummary, serializeGameState, staffStillEligibleEntries, type GameState } from "@gamify-surgery/game-domain";
++import { PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, gameReducer, getRollingIncomeSummary, serializeGameState, staffStillEligibleEntries, type GameState } from "@gamify-surgery/game-domain";
++import { createPreLevelFiveLaunchContext } from "../../../../tests/fixtures/level-five-launch";
+ import { createLevelThreeReadyQaState, createLevelFourAlmostQaState } from "../../../../tests/fixtures/level-four-progression";
+ import { createEarlyLevelFourEconomyState } from "../../../../tools/economy-audit/level-four-simulation";
+ import { createPrototypePlayerView } from "./viewModels";
+@@ -28,14 +29,17 @@
+     const view = viewOf(advanced);
+     expect(view.resourceBar.xpProgressLabel).toBe("0/750 XP");
+     expect(view.progression.canLevelUp).toBe(false);
+-    expect(view.progression.nextLevelLabel).toBeNull();
++    expect(view.progression.nextLevelLabel).toBe("Level 5");
+     for (const id of ["room.mri", "room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy"])
+       expect(view.roomOptions.some((room) => room.id === id)).toBe(true);
+     expect(view.staffRoles.some((role) => role.id === "staff.app")).toBe(true);
+     expect(view.serviceIncome.catalogLines.find((line) => line.id === "income.mri")!.group).not.toBe("locked");
+   });
+ 
+-  it("shows exactly the five finishing items, historical witnesses and a durable terminal state", () => {
++  it("retains the historical five-goal terminal presentation at explicit legacy cap 4", () => {
++    const shipped = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
++    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = createPreLevelFiveLaunchContext().balanceRelease;
++    try {
+     const almost = viewOf(createLevelFourAlmostQaState()).progression;
+     expect(almost.goals).toHaveLength(5);
+     expect(almost.goals.filter((goal) => !goal.complete).map((goal) => goal.id)).toEqual(["progression.witness.wound_ostomy_care_visit"]);
+@@ -43,7 +47,7 @@
+     const complete = finishWoundVisit();
+     let state = deserializeGameState(serializeGameState(complete));
+     expect(viewOf(state).progression.prototypeComplete).toBe(true);
+-    expect(goalsMarkup(state)).toContain("Level 4 complete - Level 5 coming later.");
++    expect(goalsMarkup(state)).toContain("Level 4 goals complete.");
+     expect(goalsMarkup(state)).not.toContain("level-up-button");
+     expect(getClinicAlertActionProblem(state, { kind: "level_up" })).toBeTruthy();
+     const milestones = viewOf(state).messages.filter((row) => row.id === "event.facility-level-4-complete");
+@@ -59,6 +63,7 @@
+       expect(viewOf(state).messages.filter((row) => row.id === milestones[0]!.id)).toHaveLength(1);
+       expect(state.levelFourCompletion!.acknowledgedAtFacilityTick).toBe(complete.levelFourCompletion!.acknowledgedAtFacilityTick);
+     }
++    } finally { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped; }
+   });
+ 
+   it("reports APP receipts in Money and the HUD using the same rate, with full payroll and no new XP", () => {

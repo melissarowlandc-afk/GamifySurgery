@@ -1,0 +1,47 @@
+--- a/apps/player/src/mobile/performance/roomAssets.ts
++++ b/apps/player/src/mobile/performance/roomAssets.ts
+@@ -1,6 +1,6 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+ import {
+-  APPROVED_GS015_ROOM_ATLASES, ENVIRONMENT_ATLAS_V1, FRONTAGE_V2_ASSETS,
++  APPROVED_GS015_ROOM_ATLASES, APPROVED_LEVEL5_BITMAP_ASSETS, ENVIRONMENT_ATLAS_V1, FRONTAGE_V2_ASSETS,
+   LANDSCAPING_ATLAS_V1, ROOM_FIXTURE_ATLASES, type BitmapAssetDescriptor,
+ } from "../../art/bitmapAssetManifest";
+ import { getApprovedRoomPresentation, resolveApprovedRoomDrawRecords } from "../../facility/approvedRoomPresentation";
+@@ -12,7 +12,8 @@
+   ENVIRONMENT_ATLAS_V1, LANDSCAPING_ATLAS_V1, ...Object.values(FRONTAGE_V2_ASSETS),
+   ...ROOM_FIXTURE_ATLASES, ...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS,
+ ];
+-const byId = new Map(DESKTOP_FACILITY_ASSETS.map(asset => [asset.id, asset]));
++const allFacilityAssets = [...DESKTOP_FACILITY_ASSETS, ...APPROVED_LEVEL5_BITMAP_ASSETS];
++const byId = new Map(allFacilityAssets.map(asset => [asset.id, asset]));
+ const roomCache = new Map<string, readonly BitmapAssetDescriptor[]>();
+ 
+ // These corridor decorations borrow individual approved crops, not entire
+@@ -45,7 +46,7 @@
+       if (record) ids.add(record.assetId);
+     }
+   }
+-  const assets = DESKTOP_FACILITY_ASSETS.filter(asset => ids.has(asset.id));
++  const assets = allFacilityAssets.filter(asset => ids.has(asset.id));
+   roomCache.set(definitionId, assets);
+   return assets;
+ }
+@@ -53,7 +54,7 @@
+ export function selectFacilityAssets(input: {
+   mobile: boolean; facilityLevel: number; builtRoomIds: readonly string[]; previewRoomIds?: readonly string[];
+ }): readonly BitmapAssetDescriptor[] {
+-  if (!input.mobile) return DESKTOP_FACILITY_ASSETS;
++  if (!input.mobile) return input.facilityLevel >= 5 ? allFacilityAssets : DESKTOP_FACILITY_ASSETS;
+   const rooms = new Set([
+     ...PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
+       .filter(room => room.unlockFacilityLevel <= input.facilityLevel && (room.buildable || room.id === "room.front_desk"))
+@@ -64,7 +65,7 @@
+     ENVIRONMENT_ATLAS_V1.id, LANDSCAPING_ATLAS_V1.id, ...Object.values(FRONTAGE_V2_ASSETS).map(asset => asset.id),
+     ...[...rooms].flatMap(id => mobileRoomAssets(id).map(asset => asset.id)),
+   ]);
+-  return DESKTOP_FACILITY_ASSETS.filter(asset => ids.has(asset.id));
++  return allFacilityAssets.filter(asset => ids.has(asset.id));
+ }
+ 
+ export function mobileRoomArtReady(definitionId: string, hasTexture: (asset: BitmapAssetDescriptor) => boolean): boolean {

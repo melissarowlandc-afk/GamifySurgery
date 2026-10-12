@@ -1,0 +1,537 @@
+import { describe, expect, it } from "vitest";
+import {
+  LEVEL_TWO_ROOM_DEFINITION_IDS,
+  LEVEL_TWO_STAFF_ROLE_IDS,
+  PROTOTYPE_BALANCE_RELEASE,
+} from "./prototype-balance";
+import { serviceRouteDefinitionSchema } from "./schema";
+import { SERVICE_INCOME_CATALOG, getServiceIncomeForRoute } from "./service-income-catalog";
+
+describe("service income catalog", () => {
+  it("has unique durable keys and the approved current-route prices", () => {
+    expect(new Set(SERVICE_INCOME_CATALOG.map((line) => line.id)).size).toBe(
+      SERVICE_INCOME_CATALOG.length,
+    );
+    const routeIds = SERVICE_INCOME_CATALOG.flatMap((line) => line.eligibleRouteIds);
+    expect(new Set(routeIds).size).toBe(routeIds.length);
+    expect(getServiceIncomeForRoute("route.bladder_scan.ultrasound_room")).toMatchObject({
+      id: "income.bladder_scan",
+      fee: 20,
+    });
+    expect(getServiceIncomeForRoute("route.bladder_scan.in_house")).toBeNull();
+    expect(getServiceIncomeForRoute("route.endoscopy.in_house")).toMatchObject({
+      id: "income.endoscopy",
+      fee: 450,
+      paymentStage: "resource_completion",
+    });
+    expect(SERVICE_INCOME_CATALOG.find((line) => line.id === "income.glp1_telehealth")?.fee).toBe(50);
+    expect(SERVICE_INCOME_CATALOG.some((line) => line.id.includes("cafeteria"))).toBe(false);
+  });
+});
+
+describe("row 57 off-site functional-study services", () => {
+  it("keeps every displayed study off-site with equal editorial prototype timing", () => {
+    const services = [
+      "service.hs.heat-damaged-rbc-scintigraphy",
+      "service.hs.sulfur-colloid-scintigraphy",
+      "service.hs.noncontrast-abdominal-ct",
+    ].map((id) =>
+      PROTOTYPE_BALANCE_RELEASE.services.find((service) => service.id === id),
+    );
+
+    expect(services).toHaveLength(3);
+    expect(services.every((service) => Boolean(service?.routes))).toBe(true);
+    expect(
+      services.map((service) => service!.routes[0]!.durationTicks),
+    ).toEqual([120, 120, 120]);
+    expect(
+      services.flatMap((service) => service!.routes).every(
+        (route) => route.requiredCapabilityId === null && route.requiredCapabilityIds.length === 0,
+      ),
+    ).toBe(true);
+  });
+});
+
+describe("Front Desk A1-D5 navigation", () => {
+  it("uses the approved C2/C3 desk and B2/D5 seat blockers", () => {
+    const frontDesk = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+      (definition) => definition.id === "room.front_desk",
+    );
+    expect(frontDesk?.navigation?.blockedTiles).toEqual([
+      { x: 1, y: 2 },
+      { x: 2, y: 2 },
+      { x: 1, y: 1 },
+      { x: 4, y: 3 },
+    ]);
+    expect(frontDesk?.navigation?.primaryAnchor).toEqual({ x: 2, y: 3 });
+    expect(frontDesk?.navigation?.waitingAnchors).toEqual([
+      { x: 4, y: 3 },
+      { x: 3, y: 3 },
+    ]);
+    expect(frontDesk?.navigation?.standingWaitingAnchors).toEqual([
+      { x: 3, y: 3 },
+    ]);
+    expect(frontDesk?.navigation?.staffAnchor).toEqual({ x: 1, y: 1 });
+    expect(frontDesk?.navigation?.endpointOnlyTiles).toEqual([
+      { x: 1, y: 1 },
+      { x: 4, y: 3 },
+    ]);
+  });
+});
+
+describe("fresh campaign construction funding", () => {
+  it("starts with only the Front Desk while retaining the existing examination-room price", () => {
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.initialRooms).toEqual([
+      expect.objectContaining({
+        id: "room.instance.founder_desk",
+        roomDefinitionId: "room.front_desk",
+      }),
+    ]);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+        (definition) => definition.id === "room.examination",
+      )?.constructionCost,
+    ).toBe(160);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.startingCash).toBe(120);
+  });
+});
+
+describe("Level 2 expanded outpatient definitions", () => {
+  it("defines the authored eight-hour Level 2 EUS/ERCP return and equivalent offsite alternatives", () => {
+    const eus = PROTOTYPE_BALANCE_RELEASE.services.find(
+      (service) => service.id === "service.endoscopy.eus-ercp-sampling",
+    )?.routes[0];
+    expect(eus).toMatchObject({ id: "route.endoscopy.eus-ercp-sampling.in_house", durationTicks: 480, requiredCapabilityId: "capability.endoscopy" });
+    expect(eus?.timingPhases).toEqual([
+      { id: "phase.eus-ercp.preparation", durationTicks: 30, resourceBound: true },
+      { id: "phase.eus-ercp.procedure", durationTicks: 45, resourceBound: true },
+      { id: "phase.eus-ercp.recovery", durationTicks: 45, resourceBound: true },
+      { id: "phase.eus-ercp.processing", durationTicks: 360, resourceBound: false },
+    ]);
+    for (const serviceId of ["service.interventional-radiology.percutaneous-transhepatic-biopsy", "service.imaging.pet-ct", "service.imaging.repeat-mri-mrcp", "service.laboratory.repeat-ca19-9"]) {
+      expect(PROTOTYPE_BALANCE_RELEASE.services.find((service) => service.id === serviceId)?.routes[0]?.durationTicks).toBe(480);
+    }
+  });
+  it("preserves Level 2 and unlocks the approved Level 3 facility catalog", () => {
+    const facility = PROTOTYPE_BALANCE_RELEASE.facility;
+    const rooms = facility.roomDefinitions.filter((definition) =>
+      LEVEL_TWO_ROOM_DEFINITION_IDS.includes(
+        definition.id as (typeof LEVEL_TWO_ROOM_DEFINITION_IDS)[number],
+      ),
+    );
+    const staff = facility.staffRoleDefinitions.filter((definition) =>
+      LEVEL_TWO_STAFF_ROLE_IDS.includes(
+        definition.id as (typeof LEVEL_TWO_STAFF_ROLE_IDS)[number],
+      ),
+    );
+
+    expect(facility.maximumPlayableLevel).toBe(4);
+    expect(rooms.map((room) => room.id)).toEqual(LEVEL_TWO_ROOM_DEFINITION_IDS);
+    expect(staff.map((role) => role.id)).toEqual(LEVEL_TWO_STAFF_ROLE_IDS);
+    expect(rooms.every((room) => room.unlockFacilityLevel === 2)).toBe(true);
+    expect(staff.every((role) => role.unlockFacilityLevel === 2)).toBe(true);
+    expect(
+      Object.fromEntries(
+        rooms.map((room) => [
+          room.id,
+          [
+            room.constructionCost,
+            room.upkeepPerExpenseInterval,
+            `${room.width}x${room.height}`,
+          ],
+        ]),
+      ),
+    ).toEqual({
+      "room.xray": [750, 4, "3x3"],
+      "room.ct": [1600, 8, "4x4"],
+      "room.phlebotomy": [550, 2, "3x2"],
+      "room.evs_closet": [475, 1, "2x2"],
+      "room.endoscopy": [1450, 12, "4x3"],
+      "room.periop_recovery": [900, 3, "6x6"],
+      "room.training": [650, 1, "3x3"],
+      "room.coffee_kiosk": [500, 1, "2x2"],
+      "room.glp1_telehealth_suite": [1200, 2, "3x2"],
+    });
+    const recovery = rooms.find((room) => room.id === "room.periop_recovery")!;
+    expect(recovery.workloadLimitContribution).toBe(1);
+    expect(recovery.navigation?.waitingAnchors).toHaveLength(1);
+    expect(
+      Object.fromEntries(
+        staff.map((role) => [
+          role.id,
+          [
+            role.hiringCost,
+            role.salaryPerExpenseInterval,
+            role.maximumEmployees,
+          ],
+        ]),
+      ),
+    ).toEqual({
+      "staff.periop_nurse": [450, 20, 2],
+      "staff.endoscopy_nurse": [500, 24, 2],
+      "staff.endoscopist": [900, 40, 2],
+      "staff.phlebotomist": [350, 18, 2],
+      "staff.evs_worker": [280, 12, 2],
+      "staff.glp1_np": [600, 30, 10],
+    });
+    expect(PROTOTYPE_BALANCE_RELEASE.environment).toMatchObject({
+      glp1AutomationIntervalMinutes: 60,
+      glp1AutomationPayment: 50,
+      glp1AutomationMaximumCapacity: 10,
+    });
+    expect(
+      facility.staffRoleDefinitions.find(
+        (role) => role.id === "staff.imaging_technician",
+      ),
+    ).toMatchObject({
+      hiringCost: 300,
+      salaryPerExpenseInterval: 18,
+      maximumEmployees: 4, // The fourth physical imaging post is the Level-4 MRI.
+    });
+    expect(
+      rooms.find((room) => room.id === "room.endoscopy")?.capabilityIds,
+    ).toEqual([]);
+    expect(
+      rooms.find((room) => room.id === "room.periop_recovery")?.capabilityIds,
+    ).toContain("capability.periop_recovery");
+    for (const id of ["room.xray", "room.ct"]) {
+      expect(
+        rooms.find((room) => room.id === id)?.requiredRoomDefinitionIds,
+      ).toEqual([]);
+    }
+
+    expect(facility.stageDefinitions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ level: 1, nextFacilityLevel: 2 }),
+        expect.objectContaining({
+          level: 2,
+          minimumClinicalXp: 300,
+          satisfactionMustBeGreaterThan: 90,
+          requiredRoomDefinitionIds: [],
+          requiredStaffRoleIds: [],
+          nextFacilityLevel: 3,
+        }),
+        expect.objectContaining({
+          level: 3,
+          minimumClinicalXp: 500,
+          satisfactionMustBeGreaterThan: 90,
+          requiredRoomDefinitionIds: [],
+          requiredStaffRoleIds: ["staff.pharmacist"],
+          nextFacilityLevel: 4,
+        }),
+      ]),
+    );
+    expect(
+      facility.roomDefinitions
+        .filter((room) => room.unlockFacilityLevel === 3)
+        .map((room) => [room.id, room.constructionCost, room.upkeepPerExpenseInterval, room.maximumInstances]),
+    ).toEqual([
+      ["room.ambulatory_or", 2400, 12, 2],
+      ["room.laboratory", 1800, 4, 2],
+      ["room.pharmacy", 1200, 2, 2],
+      ["room.maintenance_workshop", 800, 1, 1],
+      ["room.staff_break", 900, 1, 2],
+      ["room.surgeon_office", 700, 1, 1],
+      ["room.vending", 450, 1, 5],
+      ["room.reading", 1800, 6, 4],
+    ]);
+    expect(
+      facility.staffRoleDefinitions
+        .filter((role) => role.unlockFacilityLevel === 3)
+        .map((role) => [role.id, role.hiringCost, role.salaryPerExpenseInterval, role.maximumEmployees]),
+    ).toEqual([
+      ["staff.laboratory_technician", 500, 20, 2],
+      ["staff.surgeon", 1400, 50, 2],
+      ["staff.or_nurse", 650, 26, 2],
+      ["staff.pharmacist", 600, 24, 2],
+      ["staff.repair_person", 400, 16, 2],
+      ["staff.radiologist", 300, 18, 4],
+    ]);
+    expect(facility.staffRoleDefinitions.find((role) => role.id === "staff.radiologist")?.requiredRoomDefinitionIds).toEqual(["room.reading"]);
+  });
+});
+
+describe("service-route timing invariants", () => {
+  it("rejects frozen phase definitions whose total differs from their ETA", () => {
+    const parsed = serviceRouteDefinitionSchema.safeParse({
+      id: "route.test.mismatched-phases",
+      displayName: "Mismatched route fixture",
+      durationTicks: 120,
+      requiredCapabilityId: null,
+      preference: 0,
+      timingPhases: [
+        { id: "phase.test.one", durationTicks: 30, resourceBound: true },
+        { id: "phase.test.two", durationTicks: 45, resourceBound: false },
+      ],
+    });
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) {
+      expect(parsed.error.issues[0]?.message).toBe(
+        "Nonempty route timing phases must sum exactly to durationTicks.",
+      );
+    }
+  });
+
+  it("keeps legacy travel defaults while rejecting conflicting stationary travel", () => {
+    const legacy = serviceRouteDefinitionSchema.safeParse({
+      id: "route.test.legacy-default",
+      displayName: "Legacy route fixture",
+      durationTicks: 15,
+      requiredCapabilityId: null,
+      preference: 0,
+    });
+    expect(legacy.success).toBe(true);
+    if (legacy.success) {
+      expect(legacy.data.patientRemainsOnsite).toBeUndefined();
+      expect(legacy.data.patientTravel).toBeNull();
+    }
+
+    const conflicting = serviceRouteDefinitionSchema.safeParse({
+      id: "route.test.conflicting-stationary-travel",
+      displayName: "Conflicting route fixture",
+      durationTicks: 15,
+      requiredCapabilityId: null,
+      preference: 0,
+      patientRemainsOnsite: true,
+      patientTravel: {
+        originRoomDefinitionId: "room.examination",
+        destinationRoomDefinitionId: "room.ultrasound",
+        roundTrip: true,
+      },
+    });
+    expect(conflicting.success).toBe(false);
+    if (!conflicting.success) {
+      expect(conflicting.error.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            message:
+              "A stationary onsite route cannot also define patient travel.",
+            path: ["patientRemainsOnsite"],
+          }),
+        ]),
+      );
+    }
+  });
+
+  it("routes the approved bladder scan through the staffed Ultrasound Room", () => {
+    const routes = PROTOTYPE_BALANCE_RELEASE.services.flatMap(
+      (service) => service.routes,
+    );
+    expect(
+      routes.filter((route) => route.id === "route.bladder_scan.ultrasound_room"),
+    ).toEqual([
+      expect.objectContaining({
+        id: "route.bladder_scan.ultrasound_room",
+        durationTicks: 5,
+        patientTravel: expect.objectContaining({ destinationRoomDefinitionId: "room.ultrasound" }),
+      }),
+    ]);
+  });
+});
+
+describe("owner-delegated batch external fallbacks", () => {
+  it("preserves honest external routes with centralized editorial timing", () => {
+    const expected = {
+      "service.colonoscopy": ["route.colonoscopy.outsourced", 300],
+      "service.upper_endoscopy_duodenal_biopsy": ["route.upper_endoscopy_duodenal_biopsy.outsourced", 300],
+      "service.extremity_mri": ["route.extremity_mri.outsourced", 180],
+    } as const;
+    for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      const route = service?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({ id: routeId, durationTicks, requiredCapabilityId: null, requiredCapabilityIds: [] });
+      expect(route?.displayName).toContain("Off-site");
+    }
+  });
+});
+
+describe("surgery-center service contracts", () => {
+  it("keeps external fallbacks and adds the approved onsite procedure routes", () => {
+    const expected = {
+      "service.thyroid_fna": ["route.thyroid_fna.outsourced", 180],
+      "service.anoscopy": ["route.anoscopy.outsourced", 90],
+      "service.esophageal_manometry": ["route.esophageal_manometry.outsourced", 180],
+      "service.skin_excisional_biopsy": ["route.skin_excisional_biopsy.outsourced", 180],
+    } as const;
+    for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      const route = service?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({
+        id: routeId,
+        durationTicks,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        resourceRequirements: [],
+        providerRequirement: null,
+      });
+    }
+    const approvedOnsiteRoutes = [
+      ["service.thyroid_fna", "route.thyroid_fna.in_house", 180, "room.ultrasound", 60],
+      ["service.breast_core_needle_biopsy", "route.breast_core_needle_biopsy.in_house", 180, "room.ultrasound", 60],
+      ["service.anoscopy", "route.anoscopy.in_house", 15, "room.minor_procedure", 15],
+      ["service.skin_excisional_biopsy", "route.skin_excisional_biopsy.in_house", 165, "room.minor_procedure", 45],
+      ["service.cutaneous_lesion_biopsy", "route.cutaneous_lesion_biopsy.in_house", 135, "room.minor_procedure", 15],
+    ] as const;
+    for (const [serviceId, routeId, durationTicks, roomDefinitionId, workTicks] of approvedOnsiteRoutes) {
+      const route = PROTOTYPE_BALANCE_RELEASE.services
+        .find((service) => service.id === serviceId)
+        ?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({
+        id: routeId,
+        durationTicks,
+        preference: 0,
+        resourceRequirements: [{ roomDefinitionId, staffRoleDefinitionId: roomDefinitionId === "room.ultrasound" ? "staff.imaging_technician" : null }],
+        providerRequirement:
+          roomDefinitionId === "room.ultrasound"
+            ? null
+            : { founderEligible: true },
+      });
+      expect(route?.timingPhases[0]).toMatchObject({ durationTicks: workTicks, resourceBound: true });
+    }
+  });
+});
+
+describe("board-expansion external service fallbacks", () => {
+  it("keeps external routes with matching editorial timing profiles", () => {
+    const expected = {
+      "service.dxa": ["route.dxa.outsourced", "timing.test.dxa", 180],
+      "service.mrcp": ["route.mrcp.outsourced", "timing.test.mrcp", 180],
+      "service.laryngeal_examination": ["route.laryngeal_examination.outsourced", "timing.test.laryngeal_examination", 180],
+      "service.contrast_swallow": ["route.contrast_swallow.outsourced", "timing.test.contrast_swallow", 180],
+      "service.resting_abi": ["route.resting_abi.outsourced", "timing.test.vascular_physiology", 90],
+      "service.rectal_response_assessment": ["route.rectal_response_assessment.outsourced", "timing.test.rectal_response_assessment", 240],
+      "service.carotid_cta": ["route.carotid_cta.outsourced", "timing.test.ct_angiography", 180],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      const route = service?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({ id: routeId, durationTicks, requiredCapabilityId: null, requiredCapabilityIds: [], resourceRequirements: [], providerRequirement: null });
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === timingProfileId)).toMatchObject({ durationTicks });
+    }
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.ct_angiography")?.serviceId).toBeNull();
+  });
+});
+
+describe("September 12 board-expansion external service fallbacks", () => {
+  it("keeps external routes with matching dedicated timing profiles", () => {
+    const expected = {
+      "service.genetic_testing": ["route.genetic_testing.outsourced", null, 180],
+      "service.pelvic_mri": ["route.pelvic_mri.outsourced", null, 180],
+      "service.anal_lesion_biopsy_staging": ["route.anal_lesion_biopsy_staging.outsourced", "timing.test.biopsy_staging", 360],
+      "service.venous_duplex": ["route.venous_duplex.outsourced", "timing.test.venous_duplex", 150],
+      "service.hiv_hcv_serology": ["route.hiv_hcv_serology.outsourced", "timing.test.viral_serology", 60],
+      "service.gist_eus_core_molecular": ["route.gist_eus_core_molecular.outsourced", "timing.test.gist_eus_core_molecular", 480],
+      "service.liver_mri": ["route.liver_mri.outsourced", null, 180],
+      "service.mesenteric_cta": ["route.mesenteric_cta.outsourced", "timing.test.mesenteric_cta", 180],
+      "service.primary_aldosteronism_screen": ["route.primary_aldosteronism_screen.outsourced", "timing.test.primary_aldosteronism_screen", 60],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      const route = service?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({
+        id: routeId,
+        durationTicks,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        resourceRequirements: [],
+        providerRequirement: null,
+      });
+      if (timingProfileId !== null) {
+        expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === timingProfileId)).toMatchObject({ serviceId, durationTicks });
+      }
+    }
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.bone_marrow")).toMatchObject({ durationTicks: 180, serviceId: null });
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.adrenal_ct_avs")).toMatchObject({ durationTicks: 300, serviceId: null });
+  });
+});
+
+describe("September 13 early-level service contracts", () => {
+  it("keeps external fallbacks and the approved onsite cutaneous sampling route", () => {
+    const expected = {
+      "service.hepatobiliary_contrast_mrcp": ["route.hepatobiliary_contrast_mrcp.outsourced", "timing.test.hepatobiliary_contrast_mrcp", 180],
+      "service.ambulatory_reflux_monitoring": ["route.ambulatory_reflux_monitoring.outsourced", "timing.test.ambulatory_reflux_monitoring", 180],
+      "service.tumor_mmr_ihc": ["route.tumor_mmr_ihc.outsourced", "timing.test.tumor_mmr_ihc", 120],
+      "service.cutaneous_lesion_biopsy": ["route.cutaneous_lesion_biopsy.outsourced", "timing.test.cutaneous_lesion_biopsy", 180],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service=PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id===serviceId);
+      const route=service?.routes.find((candidate)=>candidate.id===routeId);
+      expect(route).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
+      if(serviceId!=="service.cutaneous_lesion_biopsy") expect(service?.routes).toHaveLength(1);
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId,durationTicks});
+    }
+    expect(PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id==="service.cutaneous_lesion_biopsy")?.routes[0]).toMatchObject({id:"route.cutaneous_lesion_biopsy.in_house",requiredCapabilityId:"capability.minor_procedure",preference:0,resourceRequirements:[{roomDefinitionId:"room.minor_procedure",staffRoleDefinitionId:null}],providerRequirement:{founderEligible:true}});
+    for(const timingProfileId of ["timing.test.ercp","timing.test.therapeutic_ercp","timing.test.bile_leak_ercp","timing.test.pseudocyst_drainage","timing.test.microbiology","timing.test.skin_surgery_histology"]){
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId:null});
+    }
+  });
+});
+
+describe("reviewed onsite test-order routes", () => {
+  it("adds only the exact supported onsite equivalents while preserving outsourced fallbacks", () => {
+    const expected = [
+      ["service.colonoscopy", "route.colonoscopy.in_house", "route.colonoscopy.outsourced"],
+      ["service.upper_endoscopy_duodenal_biopsy", "route.upper_endoscopy_duodenal_biopsy.in_house", "route.upper_endoscopy_duodenal_biopsy.outsourced"],
+      ["service.esophageal_multilevel_biopsy", "route.esophageal_multilevel_biopsy.in_house", "route.esophageal_multilevel_biopsy.outsourced"],
+      ["service.carotid_cta", "route.carotid_cta.in_house", "route.carotid_cta.outsourced"],
+      ["service.mesenteric_cta", "route.mesenteric_cta.in_house", "route.mesenteric_cta.outsourced"],
+      ["service.venous_duplex", "route.venous_duplex.in_house", "route.venous_duplex.outsourced"],
+      ["service.genetic_testing", "route.genetic_testing.phlebotomy_sendout", "route.genetic_testing.outsourced"],
+      ["service.hiv_hcv_serology", "route.hiv_hcv_serology.phlebotomy_sendout", "route.hiv_hcv_serology.outsourced"],
+      ["service.primary_aldosteronism_screen", "route.primary_aldosteronism_screen.phlebotomy_sendout", "route.primary_aldosteronism_screen.outsourced"],
+    ] as const;
+    for (const [serviceId, onsiteRouteId, outsourcedRouteId] of expected) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((candidate) => candidate.id === serviceId);
+      expect(service?.routes.map((route) => route.id)).toEqual(
+        expect.arrayContaining([onsiteRouteId, outsourcedRouteId]),
+      );
+      const onsite = service?.routes.find((route) => route.id === onsiteRouteId);
+      expect(onsite).toMatchObject({ preference: 0 });
+      expect(onsite?.resourceRequirements.length).toBeGreaterThan(0);
+      expect(service?.routes.find((route) => route.id === outsourcedRouteId)).toMatchObject({
+        requiredCapabilityId: null,
+        resourceRequirements: [],
+      });
+    }
+  });
+});
+
+describe("Level 2 diagnostic route defaults", () => {
+  it("keeps acquisition and external interpretation as explicit editorial phases", () => {
+    const route = (serviceId: string, routeId: string) =>
+      PROTOTYPE_BALANCE_RELEASE.services
+        .find((service) => service.id === serviceId)
+        ?.routes.find((candidate) => candidate.id === routeId);
+    expect(route("service.ultrasound", "route.ultrasound.in_house")).toMatchObject({
+      durationTicks: 75,
+      timingPhases: [
+        { id: "phase.ultrasound.acquisition", durationTicks: 45, resourceBound: true },
+        { id: "phase.ultrasound.external_interpretation", durationTicks: 30, resourceBound: false },
+      ],
+    });
+    expect(route("service.ct", "route.ct.in_house")).toMatchObject({
+      durationTicks: 105,
+      timingPhases: [
+        { id: "phase.ct.acquisition", durationTicks: 60, resourceBound: true },
+        { id: "phase.ct.external_interpretation", durationTicks: 45, resourceBound: false },
+      ],
+    });
+    expect(route("service.ultrasound", "route.ultrasound.outsourced")?.durationTicks).toBe(150);
+    expect(route("service.ct", "route.ct.outsourced")?.durationTicks).toBe(180);
+  });
+});
+
+describe("endoscopy return timing", () => {
+  it("reserves clinical resources for the original phases and leaves editorial return/report time non-resource-bound", () => {
+    const route = PROTOTYPE_BALANCE_RELEASE.services
+      .find((service) => service.id === "service.endoscopy")
+      ?.routes.find((candidate) => candidate.id === "route.endoscopy.in_house");
+    expect(route).toMatchObject({ durationTicks: 180, requiredCapabilityId: "capability.endoscopy" });
+    expect(route?.timingPhases).toEqual([
+      { id: "phase.endoscopy.preparation", durationTicks: 30, resourceBound: true },
+      { id: "phase.endoscopy.procedure", durationTicks: 45, resourceBound: true },
+      { id: "phase.endoscopy.recovery", durationTicks: 45, resourceBound: true },
+      { id: "phase.endoscopy.return_and_report", durationTicks: 60, resourceBound: false },
+    ]);
+  });
+});

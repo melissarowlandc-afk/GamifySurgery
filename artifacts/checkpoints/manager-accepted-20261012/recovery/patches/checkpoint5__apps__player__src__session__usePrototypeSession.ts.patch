@@ -1,0 +1,131 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -181,6 +181,11 @@
+   praiseEmployee: (employeeId: string) => void;
+   moveFounder: (destination: GridPoint) => boolean;
+   levelUp: () => void;
++  bookInspection: () => void;
++  cancelInspection: () => void;
++  finishReportOpen: boolean;
++  openFinishReport: () => void;
++  closeFinishReport: () => void;
+   fastForward: () => void;
+   advanceTutorialResult: () => void;
+   addMoney: () => void;
+@@ -304,6 +309,9 @@
+     useState<RoomOrientation>(0);
+   const [buildMode, setBuildMode] = useState(false);
+   const [managementMode, setManagementMode] = useState(false);
++  const [finishReportOpen, setFinishReportOpen] = useState(false);
++  const finishReportOpenRef = useRef(false);
++  const resumeAfterFinishRef = useRef(false);
+   const [referencePauseLocked, setReferencePauseLocked] = useState(false);
+   const [movingRoomInstanceId, setMovingRoomInstanceId] =
+     useState<string | null>(null);
+@@ -779,7 +787,7 @@
+   const tutorialTickIntervalMs = getTutorialTickIntervalMs(state, tutorialsEnabled);
+ 
+   useEffect(() => {
+-    if (!documentVisible || state.paused) {
++    if (!documentVisible || state.paused || finishReportOpen) {
+       return;
+     }
+ 
+@@ -800,7 +808,7 @@
+     return () => {
+       window.clearInterval(timerId);
+     };
+-  }, [documentVisible, execute, state.paused, tutorialTickIntervalMs]);
++  }, [documentVisible, execute, state.paused, finishReportOpen, tutorialTickIntervalMs]);
+ 
+   const exitManagementMode = useCallback(() => {
+     if (!managementMode) {
+@@ -1549,6 +1557,33 @@
+     [execute],
+   );
+ 
++  const bookInspection = useCallback(() => { execute({ type: "BOOK_INSPECTION" }); }, [execute]);
++  const cancelInspection = useCallback(() => { execute({ type: "CANCEL_INSPECTION" }); }, [execute]);
++
++  // Session-owned presentation survives shell changes. Persist only the existing acknowledgment.
++  const openFinishReport = useCallback(() => {
++    if (finishReportOpenRef.current || stateRef.current.facilityLevel !== 5 || !stateRef.current.levelFive?.progress.gameFinished) return;
++    resumeAfterFinishRef.current = !stateRef.current.paused;
++    finishReportOpenRef.current = true;
++    if (!stateRef.current.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
++    setFinishReportOpen(true);
++  }, [execute]);
++  const closeFinishReport = useCallback(() => {
++    if (!finishReportOpenRef.current) return;
++    if (stateRef.current.levelFive?.progress.finishPageAcknowledgedAtFacilityTick === null &&
++        execute({ type: "ACKNOWLEDGE_FINISH_PAGE" }, { announceReceipt: false }) !== "applied") return;
++    finishReportOpenRef.current = false;
++    setFinishReportOpen(false);
++    if (resumeAfterFinishRef.current && stateRef.current.paused && !buildMode && !managementMode) {
++      execute({ type: "SET_PAUSED", paused: false }, { announceReceipt: false });
++    }
++    resumeAfterFinishRef.current = false;
++  }, [execute, buildMode, managementMode]);
++  useEffect(() => {
++    if (state.facilityLevel === 5 && state.levelFive?.progress.gameFinished &&
++        state.levelFive.progress.finishPageAcknowledgedAtFacilityTick === null) openFinishReport();
++  }, [state.campaignId, state.facilityLevel, state.levelFive?.progress.gameFinished, state.levelFive?.progress.finishPageAcknowledgedAtFacilityTick, openFinishReport]);
++
+   const levelUp = useCallback(() => {
+     const status = execute({
+       type: "LEVEL_UP",
+@@ -1559,6 +1594,7 @@
+   }, [execute]);
+ 
+   const fastForward = useCallback(() => {
++    if (finishReportOpenRef.current) return;
+     const status = execute(
+       {
+         type: "DEV_FAST_FORWARD",
+@@ -1673,6 +1709,7 @@
+   }, [execute]);
+ 
+   const togglePause = useCallback(() => {
++    if (finishReportOpenRef.current) { setAnnouncement("Close the finish report before resuming facility time."); return; }
+     if (buildMode || managementMode) {
+       setAnnouncement(
+         buildMode
+@@ -1690,6 +1727,7 @@
+ 
+   const setSimulationSpeed = useCallback(
+     (speed: SimulationSpeed) => {
++      if (finishReportOpenRef.current) return;
+       if (buildMode || managementMode) {
+         setAnnouncement(
+           buildMode
+@@ -1819,6 +1857,9 @@
+     setProfile(nextProfile);
+     stateRef.current = selectedCampaign.state;
+     setState(selectedCampaign.state);
++    finishReportOpenRef.current = false;
++    resumeAfterFinishRef.current = false;
++    setFinishReportOpen(false);
+     setAcknowledgedTutorialStepIds(
+       new Set(
+         (nextProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []).map(
+@@ -1876,7 +1917,7 @@
+       ? state.encounters[tutorialStep.patientEncounterId] ?? null
+       : null;
+   guidanceContextRef.current = { blockedTopicIds: tutorialStep?.topicIds ?? [],
+-    attentionBlocked: referencePauseLocked || buildMode || managementMode || tutorialStep?.target === "answer-choices" || tutorialStep?.target === "chart-feedback" };
++    attentionBlocked: referencePauseLocked || finishReportOpen || buildMode || managementMode || tutorialStep?.target === "answer-choices" || tutorialStep?.target === "chart-feedback" };
+ 
+   const recordTutorialTopicExposure = useCallback((topicIds: readonly string[]) => {
+     const unseen = topicIds.filter((id) => stateRef.current.alertHumor.guidanceTips?.topicActivity?.[id]?.exposedAtTick === undefined);
+@@ -2219,6 +2260,11 @@
+     praiseEmployee,
+     moveFounder,
+     levelUp,
++    bookInspection,
++    cancelInspection,
++    finishReportOpen,
++    openFinishReport,
++    closeFinishReport,
+     fastForward,
+     advanceTutorialResult,
+     addMoney,

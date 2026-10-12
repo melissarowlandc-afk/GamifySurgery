@@ -1,0 +1,613 @@
+{
+  "status": "PASS",
+  "method": "Filesystem SHA-256 comparison against the verified v1 archive; no Git used.",
+  "changedOwnedPaths": [
+    {
+      "file": "ART_BRIEF.md",
+      "beforeSha256": "df0e677ce59502db05672af8dab57755f4d07094411ba032f2b5dd90ef5d6f0f",
+      "currentSha256": "3ebab60c738d00e9d7a0e7f4d2dbbd16a6fdc8f17702f106f4c3726e3fe5004a"
+    },
+    {
+      "file": "assets/art-provenance.json",
+      "beforeSha256": "cdc79682d6ebd2e9e0a1cc63511c1ca8f8d32662fa2ff10ff46912aefd2bf1d2",
+      "currentSha256": "955f805cd6b49ec171751dfc432aec8916867e5f8609e029c47ef1caa6d01faa"
+    },
+    {
+      "file": "assets/generation-manifest.json",
+      "beforeSha256": "459581620144925b195d495c7fb4ad3e0737e3de1a8835d24ad1068a61a8e461",
+      "currentSha256": "aaf7209e2e4c47ff0760564ed8c3af43a31cab34a9d8a728eec32b1b0046e582"
+    },
+    {
+      "file": "assets/provenance.md",
+      "beforeSha256": "87148af660b38bb9d67ed411c6b84fa6295b63527672715155e7bdfdca190b68",
+      "currentSha256": "4daceae038384b7e8deb18798a96827c1025e900993ee5334a42e483b41777c7"
+    },
+    {
+      "file": "assets/write-provenance-v1.mjs",
+      "beforeSha256": "887c47aa52ca5540dd9e550173cbb1c7bdc6e8ab91759a3e460ee57d2c3ae9d4",
+      "currentSha256": "8c7261cd9f1d46b7ba3470884a1484305bdbbc5e84c7cf896fc31fe0b74217d4"
+    },
+    {
+      "file": "history/README.md",
+      "beforeSha256": "10a22803bfcb1c670a91bf45cea3f26ed854514f96b1a802be30f00eb9183918",
+      "currentSha256": "724ed9217b90de0a81b9db44799774df9244970b03ff8db157370a425910bd28"
+    },
+    {
+      "file": "layout.json",
+      "beforeSha256": "7fc663818c04cba1b423b019c525d03ed5d44fada4666d15a3db99bdf6a94e90",
+      "currentSha256": "b3c58551b7136c3f3addaa6b0b317a5c648e60edf479c42e357a778c76c23a8f"
+    },
+    {
+      "file": "proof/asset-contract.json",
+      "beforeSha256": "66e023c4eb704095b17f8a85ce29a9dece31ae6e4b66f15414142fcd7864630c",
+      "currentSha256": "087a1188de47436b2479b0408fd2a586d47d6d1291d35c90d4d8faff5e5957fa"
+    },
+    {
+      "file": "proof/audit-lane.cjs",
+      "beforeSha256": "ea0411bfefeb7886cde62e29564c131585eb49a54fa34a547892b236ed9d6d1a",
+      "currentSha256": "2e852df2458f46ae5f6973286fa0dadabb07195ec565149f9d9bfd7846fd04bc"
+    },
+    {
+      "file": "proof/build.mjs",
+      "beforeSha256": "21102fde5b95c439550fdac8b52cf1077bfb0c4081b56331d76744c900607e27",
+      "currentSha256": "e1ae8692dce4a2d631cbf4aa53479416dbc9df2e9d8234b2274ee6bd61ab2629"
+    },
+    {
+      "file": "proof/capture.cjs",
+      "beforeSha256": "cc14e6d1b0538d233f458e5be77e54787c2a9a359e8d701b5e1796139c12257c",
+      "currentSha256": "2ee6d3d2f60cb89083cb2efd5e0e45ab91c56930c6588c9e3053673646d05464"
+    },
+    {
+      "file": "proof/check-helpers.cjs",
+      "beforeSha256": "3c3e134a0d392a43e72489094f411e8f47487555a6d00286feeaf947afb0e33f",
+      "currentSha256": "bed89e8b21402f8b98fd760e76270aef447bcff6c9537cf170d11e11669415ad"
+    },
+    {
+      "file": "proof/check-http.mjs",
+      "beforeSha256": "08f9080eb7df5bc3c18dde02558aa54fa91878b672579f0ad95db7cfd3017ae6",
+      "currentSha256": "c9229ed46d129731393d449e6bd23ef2f233cd8734fbf1223829f97212638224"
+    },
+    {
+      "file": "proof/data.json",
+      "beforeSha256": "eee22089e81f5c82165edd322fad2f5de3e42fc8a7dd80f3e71c57ff320fc838",
+      "currentSha256": "4b98fe43afe1874a0e3951afc03980a0194aa716bcfb32ff642c2df235293bd7"
+    },
+    {
+      "file": "proof/design-rooms.js",
+      "beforeSha256": "7a4ee4af422af64265e244142dcfb21e452a837228fd689b2c33e6989d7b0c26",
+      "currentSha256": "9c2cbaf9f6e51c288ae4517aa07a054d0d596c58e9ad6214a7b91198351237e0"
+    },
+    {
+      "file": "proof/diagnose-corners-v2.mjs",
+      "beforeSha256": "621d3d1b7c464c2645a0deb5e5420804011f8a4b45dfdace6b0f504f451a3d62",
+      "currentSha256": "0a3da31b9733829c33f00b1d5f1bb56e3831804f10a82e7843c17bc7b53782f0"
+    },
+    {
+      "file": "proof/extension.js",
+      "beforeSha256": "a51f8356f25c65931c1afe4086ff59b71d9741a401376f5b66c33eb0647be0d4",
+      "currentSha256": "4415d692cd7660c469aab6026949391a6324b831916fb19368aee83e2ab43acc"
+    },
+    {
+      "file": "proof/geometry.mjs",
+      "beforeSha256": "cb47733c1f3dad7c28ce6b7250d66b89ed0fa34d762d7aa6b1666d75cf7269c8",
+      "currentSha256": "842ab1e897cd3cb9f07538c3588654f94df6cf3f55bba17e87a3f666a9e34f53"
+    },
+    {
+      "file": "proof/index.html",
+      "beforeSha256": "df4ad77a1584273c2be2d0b52c989e47bbc0f947806373433e48e18ea860ba2b",
+      "currentSha256": "e90fa27a8bb508cb3bfa82b2198a4d705618c09734c1baed31ae0cdb94e824b7"
+    },
+    {
+      "file": "proof/inspect-composition.mjs",
+      "beforeSha256": "a2c3ff11c89fb9dd64197ab89053c831adc87ea528f6856a01c88b76de0905f0",
+      "currentSha256": "7fc5f6fd44114e55ee54a897985b8101ebbafb4a5f1f44ae4d0b7be59441565c"
+    },
+    {
+      "file": "proof/inspect-native.mjs",
+      "beforeSha256": "9f9991ccd0e304e6902f2b6e29577479b9a887d74131661ffb9324079130e6b2",
+      "currentSha256": "f75d3f09c276695a39069c8538583aa750b72a5dda62c1a4e481449fe7f01c33"
+    },
+    {
+      "file": "proof/lab.js",
+      "beforeSha256": "0343b777fa17ac9bb0f9d51b7c22b7478745bdff22d87f2ec296a132e236fc00",
+      "currentSha256": "1752a522ad73ae50e97249c98457909b6a13209f661fb4c3bdfda85d154acc61"
+    },
+    {
+      "file": "proof/layout-baseline.json",
+      "beforeSha256": "1636be7fac46134f9bd703a218a6ba150971e57df6effe3f3220914866dfe4b4",
+      "currentSha256": "41efda8a38308134ea46c93f98be28a5be003453f8ab0af03de410a41a84a9ea"
+    },
+    {
+      "file": "proof/preview.mjs",
+      "beforeSha256": "cab32a8d2955997a674f8f674bf1e096621028bcb9d8d1ccb33d04bd41530b72",
+      "currentSha256": "87f0c4fc9c9eef262a0fe6a595cd844977912ea14472888930886165c1e0dc37"
+    },
+    {
+      "file": "proof/proof-manifest.json",
+      "beforeSha256": "e54ac25f47dc7854cbeec3b7e6b1db417a2d59b0916da7223d1048172d2ce8f9",
+      "currentSha256": "3994aac9f50853db1ab6322cec7ec76599f22dbe2bea97d2f006d7a51e8f2b2d"
+    },
+    {
+      "file": "proof/README.md",
+      "beforeSha256": "349e99b6fb3f9bca8d4b7a74dbaea06ccb5313e26bf698ca378448614f0ed746",
+      "currentSha256": "8053c48949bafc74c67fe29d83f03d4aa50fb0f35a90abfaa64aa80e964620d9"
+    },
+    {
+      "file": "proof/reproduce.mjs",
+      "beforeSha256": "403e03d6cddc93c8d25a0a9af7c8be2cb9cb9dc07708d7e7f0cef5b283385779",
+      "currentSha256": "6fc02c9a4a864d23d0efd4740078444ddfab75bb04df0c59cd4ecf437a9d2344"
+    },
+    {
+      "file": "proof/validate-browser.cjs",
+      "beforeSha256": "55f3d612c66fbb4acb8123a460e58941749b14d8f4b344d2631f791a7d20f949",
+      "currentSha256": "20a545fe712f26a0b9ce0fc22fdca771de34dd3e977a5e8fb558da86d3a491b9"
+    },
+    {
+      "file": "proof/validate-controls.mjs",
+      "beforeSha256": "da8abff13652a898e558a70ed2c2a4247bdd60b472bc19c29d2671b5879b4541",
+      "currentSha256": "3f4493669da6129c2a1824d0365e05c989b04309c5df795dfb6a0b9b3d7919b8"
+    },
+    {
+      "file": "proof/validate-south.cjs",
+      "beforeSha256": "0d1f639ebce86c05bdce327e3e251d87ba6dd5897b0c26b6e02cdd1d82c7bbe5",
+      "currentSha256": "987ae38c5f01f978905140bd2e5bb33a5de2af7faf9733f0b175fe5782162776"
+    },
+    {
+      "file": "proof/validate.cjs",
+      "beforeSha256": "ac08fb7b15d841dd65e011e3cceb7f070b99f62909a293aad080cfadfafdf24e",
+      "currentSha256": "c5845c2afd7cf08807e3806184ac62933d04db09b8488e7c0288965bf0dcb2e8"
+    },
+    {
+      "file": "README.md",
+      "beforeSha256": "ab7cf6711b5d1677674cceff67b9f991c256fb4c40727aa1ea222b002928d71a",
+      "currentSha256": "1ba14ff5a2de827c0b1f4724677ebf8ffa6904417734152c809b9878aea7f751"
+    },
+    {
+      "file": "reconcile.mjs",
+      "beforeSha256": "b6292fb4c5a4f7e07b606ffefa9c196c346f7938e8b1627f34855be0e4cfed6a",
+      "currentSha256": "d0503275736980f3120c6b6653bd99f7c89110d28959c3a37c266947d532be0a"
+    },
+    {
+      "file": "validation-outputs.json",
+      "beforeSha256": "599e2d3e830fa47b2db875f3b94e9f6b3538167b323b1f7def058655f726bb86",
+      "currentSha256": "6d93e0bd83ef1bba9b47029579b4629b5b3a3266847a298f382a7249dde0587b"
+    },
+    {
+      "file": "WORKER_HANDOFF.md",
+      "beforeSha256": "c09388a88dbedf01ef9eee2adf9101ca7d3ad6a10e3561494e31a57c8ce54776",
+      "currentSha256": "9f0ba068aedad18016807ff0792badef5d7e8a12662c055b8832463abef4ac67"
+    },
+    {
+      "file": "write-docs.mjs",
+      "beforeSha256": "8e3adfea9902e5f6c35abd4903fbb3fd7ab1a76edc4439d1866b1a9c9b1d20f0",
+      "currentSha256": "7528c539ed32b833f2f37f20ac387dab42a700e9fea9a13dcd4e3310775645c9"
+    }
+  ],
+  "newOwnedPaths": [
+    "apply-corner-v2.mjs",
+    "assets/corner-preservation-v2.json",
+    "assets/corner-revision-intake-v2.json",
+    "assets/provenance-v2.json",
+    "assets/reference-baseline-v2.json",
+    "assets/registration-v2.json",
+    "assets/write-provenance-v2.mjs",
+    "begin-corner-revision-v2.mjs",
+    "EXECPLAN_CORNER_SECTION.md",
+    "layout-reconciliation-v2.json",
+    "prepare-proof-v2.mjs",
+    "proof/evidence/v2/browser/capture-report.json",
+    "proof/evidence/v2/browser-helper-syntax.json",
+    "proof/evidence/v2/browser-validation-report.json",
+    "proof/evidence/v2/composition-inspection-report.json",
+    "proof/evidence/v2/concept-playable-comparison.png",
+    "proof/evidence/v2/control-validation-report.json",
+    "proof/evidence/v2/corner-before-after.png",
+    "proof/evidence/v2/corner-candidate.png",
+    "proof/evidence/v2/corner-diagnosis.json",
+    "proof/evidence/v2/corner-inspection-report.json",
+    "proof/evidence/v2/corner-northeast.png",
+    "proof/evidence/v2/corner-northwest.png",
+    "proof/evidence/v2/corner-southeast.png",
+    "proof/evidence/v2/corner-southwest.png",
+    "proof/evidence/v2/corner-validation-report.json",
+    "proof/evidence/v2/http-phone-validation-report.json",
+    "proof/evidence/v2/http-validation-report.json",
+    "proof/evidence/v2/native-all-five-levels.png",
+    "proof/evidence/v2/native-inspection-report.json",
+    "proof/evidence/v2/native-level-1-all-doors.png",
+    "proof/evidence/v2/native-level-1-backed.png",
+    "proof/evidence/v2/native-level-1-contacts.png",
+    "proof/evidence/v2/native-level-1-door-EA.png",
+    "proof/evidence/v2/native-level-1-door-EB.png",
+    "proof/evidence/v2/native-level-1-door-EC.png",
+    "proof/evidence/v2/native-level-1-door-ED.png",
+    "proof/evidence/v2/native-level-1-door-N1.png",
+    "proof/evidence/v2/native-level-1-door-N2.png",
+    "proof/evidence/v2/native-level-1-door-N3.png",
+    "proof/evidence/v2/native-level-1-door-N4.png",
+    "proof/evidence/v2/native-level-1-door-S1.png",
+    "proof/evidence/v2/native-level-1-door-S2.png",
+    "proof/evidence/v2/native-level-1-door-S3.png",
+    "proof/evidence/v2/native-level-1-door-S4.png",
+    "proof/evidence/v2/native-level-1-door-WA.png",
+    "proof/evidence/v2/native-level-1-door-WB.png",
+    "proof/evidence/v2/native-level-1-door-WC.png",
+    "proof/evidence/v2/native-level-1-door-WD.png",
+    "proof/evidence/v2/native-level-1-empty.png",
+    "proof/evidence/v2/native-level-1-left-visitor.png",
+    "proof/evidence/v2/native-level-1-painted.png",
+    "proof/evidence/v2/native-level-1-right-visitor.png",
+    "proof/evidence/v2/native-level-1-routes.png",
+    "proof/evidence/v2/native-level-2-all-doors.png",
+    "proof/evidence/v2/native-level-2-backed.png",
+    "proof/evidence/v2/native-level-2-contacts.png",
+    "proof/evidence/v2/native-level-2-door-EA.png",
+    "proof/evidence/v2/native-level-2-door-EB.png",
+    "proof/evidence/v2/native-level-2-door-EC.png",
+    "proof/evidence/v2/native-level-2-door-ED.png",
+    "proof/evidence/v2/native-level-2-door-N1.png",
+    "proof/evidence/v2/native-level-2-door-N2.png",
+    "proof/evidence/v2/native-level-2-door-N3.png",
+    "proof/evidence/v2/native-level-2-door-N4.png",
+    "proof/evidence/v2/native-level-2-door-S1.png",
+    "proof/evidence/v2/native-level-2-door-S2.png",
+    "proof/evidence/v2/native-level-2-door-S3.png",
+    "proof/evidence/v2/native-level-2-door-S4.png",
+    "proof/evidence/v2/native-level-2-door-WA.png",
+    "proof/evidence/v2/native-level-2-door-WB.png",
+    "proof/evidence/v2/native-level-2-door-WC.png",
+    "proof/evidence/v2/native-level-2-door-WD.png",
+    "proof/evidence/v2/native-level-2-empty.png",
+    "proof/evidence/v2/native-level-2-left-visitor.png",
+    "proof/evidence/v2/native-level-2-painted.png",
+    "proof/evidence/v2/native-level-2-right-visitor.png",
+    "proof/evidence/v2/native-level-2-routes.png",
+    "proof/evidence/v2/native-level-3-all-doors.png",
+    "proof/evidence/v2/native-level-3-backed.png",
+    "proof/evidence/v2/native-level-3-contacts.png",
+    "proof/evidence/v2/native-level-3-door-EA.png",
+    "proof/evidence/v2/native-level-3-door-EB.png",
+    "proof/evidence/v2/native-level-3-door-EC.png",
+    "proof/evidence/v2/native-level-3-door-ED.png",
+    "proof/evidence/v2/native-level-3-door-N1.png",
+    "proof/evidence/v2/native-level-3-door-N2.png",
+    "proof/evidence/v2/native-level-3-door-N3.png",
+    "proof/evidence/v2/native-level-3-door-N4.png",
+    "proof/evidence/v2/native-level-3-door-S1.png",
+    "proof/evidence/v2/native-level-3-door-S2.png",
+    "proof/evidence/v2/native-level-3-door-S3.png",
+    "proof/evidence/v2/native-level-3-door-S4.png",
+    "proof/evidence/v2/native-level-3-door-WA.png",
+    "proof/evidence/v2/native-level-3-door-WB.png",
+    "proof/evidence/v2/native-level-3-door-WC.png",
+    "proof/evidence/v2/native-level-3-door-WD.png",
+    "proof/evidence/v2/native-level-3-empty.png",
+    "proof/evidence/v2/native-level-3-left-visitor.png",
+    "proof/evidence/v2/native-level-3-painted.png",
+    "proof/evidence/v2/native-level-3-right-visitor.png",
+    "proof/evidence/v2/native-level-3-routes.png",
+    "proof/evidence/v2/native-level-4-all-doors.png",
+    "proof/evidence/v2/native-level-4-backed.png",
+    "proof/evidence/v2/native-level-4-contacts.png",
+    "proof/evidence/v2/native-level-4-door-EA.png",
+    "proof/evidence/v2/native-level-4-door-EB.png",
+    "proof/evidence/v2/native-level-4-door-EC.png",
+    "proof/evidence/v2/native-level-4-door-ED.png",
+    "proof/evidence/v2/native-level-4-door-N1.png",
+    "proof/evidence/v2/native-level-4-door-N2.png",
+    "proof/evidence/v2/native-level-4-door-N3.png",
+    "proof/evidence/v2/native-level-4-door-N4.png",
+    "proof/evidence/v2/native-level-4-door-S1.png",
+    "proof/evidence/v2/native-level-4-door-S2.png",
+    "proof/evidence/v2/native-level-4-door-S3.png",
+    "proof/evidence/v2/native-level-4-door-S4.png",
+    "proof/evidence/v2/native-level-4-door-WA.png",
+    "proof/evidence/v2/native-level-4-door-WB.png",
+    "proof/evidence/v2/native-level-4-door-WC.png",
+    "proof/evidence/v2/native-level-4-door-WD.png",
+    "proof/evidence/v2/native-level-4-empty.png",
+    "proof/evidence/v2/native-level-4-left-visitor.png",
+    "proof/evidence/v2/native-level-4-painted.png",
+    "proof/evidence/v2/native-level-4-right-visitor.png",
+    "proof/evidence/v2/native-level-4-routes.png",
+    "proof/evidence/v2/native-level-5-all-doors.png",
+    "proof/evidence/v2/native-level-5-backed.png",
+    "proof/evidence/v2/native-level-5-contacts.png",
+    "proof/evidence/v2/native-level-5-door-EA.png",
+    "proof/evidence/v2/native-level-5-door-EB.png",
+    "proof/evidence/v2/native-level-5-door-EC.png",
+    "proof/evidence/v2/native-level-5-door-ED.png",
+    "proof/evidence/v2/native-level-5-door-N1.png",
+    "proof/evidence/v2/native-level-5-door-N2.png",
+    "proof/evidence/v2/native-level-5-door-N3.png",
+    "proof/evidence/v2/native-level-5-door-N4.png",
+    "proof/evidence/v2/native-level-5-door-S1.png",
+    "proof/evidence/v2/native-level-5-door-S2.png",
+    "proof/evidence/v2/native-level-5-door-S3.png",
+    "proof/evidence/v2/native-level-5-door-S4.png",
+    "proof/evidence/v2/native-level-5-door-WA.png",
+    "proof/evidence/v2/native-level-5-door-WB.png",
+    "proof/evidence/v2/native-level-5-door-WC.png",
+    "proof/evidence/v2/native-level-5-door-WD.png",
+    "proof/evidence/v2/native-level-5-empty.png",
+    "proof/evidence/v2/native-level-5-left-visitor.png",
+    "proof/evidence/v2/native-level-5-painted.png",
+    "proof/evidence/v2/native-level-5-right-visitor.png",
+    "proof/evidence/v2/native-level-5-routes.png",
+    "proof/evidence/v2/plan-revision-receipt.json",
+    "proof/evidence/v2/reproducibility-report.json",
+    "proof/evidence/v2/south-validation-report.json",
+    "proof/evidence/v2/validation-report.json",
+    "proof/inspect-corners.mjs",
+    "proof/pending-browser-v2.mjs",
+    "proof/validate-corners.cjs",
+    "reconcile-v2.mjs",
+    "stand-in/v2/assets/base-ball.png",
+    "stand-in/v2/assets/base-bench.png",
+    "stand-in/v2/assets/base-east.png",
+    "stand-in/v2/assets/base-floor.png",
+    "stand-in/v2/assets/base-front1.png",
+    "stand-in/v2/assets/base-front2.png",
+    "stand-in/v2/assets/base-front3.png",
+    "stand-in/v2/assets/base-front4.png",
+    "stand-in/v2/assets/base-hooks.png",
+    "stand-in/v2/assets/base-mat.png",
+    "stand-in/v2/assets/base-mirror1.png",
+    "stand-in/v2/assets/base-mirror2.png",
+    "stand-in/v2/assets/base-mirror3.png",
+    "stand-in/v2/assets/base-mirror4.png",
+    "stand-in/v2/assets/base-north1.png",
+    "stand-in/v2/assets/base-north2.png",
+    "stand-in/v2/assets/base-north3.png",
+    "stand-in/v2/assets/base-north4.png",
+    "stand-in/v2/assets/base-roller.png",
+    "stand-in/v2/assets/base-west.png",
+    "stand-in/v2/layout-owner-revision.json",
+    "stand-in/v2/manifest.json",
+    "stand-in/v2/README.md",
+    "stand-in/v2/replay-empty.png",
+    "stand-in/v2/replay-occupied.png",
+    "stand-in/v2/replay-routes.png",
+    "stand-in/v2/replay.mjs",
+    "stand-in/v2/route-receipt.json",
+    "update-plan-v2.mjs",
+    "validation-outputs-v2.json",
+    "write-docs-v2.mjs"
+  ],
+  "nonSideRecordsUnchanged": 19,
+  "allPreparedPngsUnchanged": 21,
+  "sharedReferences": [
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/audit-lane.cjs",
+      "sha256": "ba23c1f788d3c9d0ba4924a667928b96fd97b02953cea7f76496e16f8798de9e",
+      "currentSha256": "ba23c1f788d3c9d0ba4924a667928b96fd97b02953cea7f76496e16f8798de9e"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/browser-errors.cjs",
+      "sha256": "c150e8356b8ed2220e64badba7b976156dd6428a27ae6e3b96db2c3b79f4cacf",
+      "currentSha256": "c150e8356b8ed2220e64badba7b976156dd6428a27ae6e3b96db2c3b79f4cacf"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/build.mjs",
+      "sha256": "d2c8273c05dee8fddac2c5a4fe54df0d90b7e41d2ef676e8d24bf35a09b4ef46",
+      "currentSha256": "d2c8273c05dee8fddac2c5a4fe54df0d90b7e41d2ef676e8d24bf35a09b4ef46"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/capture.cjs",
+      "sha256": "5037f987ea2b9c9b4a301b76afe1e52dd79c3e0a2a4c64a0a19633399eadddd1",
+      "currentSha256": "5037f987ea2b9c9b4a301b76afe1e52dd79c3e0a2a4c64a0a19633399eadddd1"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/check-helpers.cjs",
+      "sha256": "bed89e8b21402f8b98fd760e76270aef447bcff6c9537cf170d11e11669415ad",
+      "currentSha256": "bed89e8b21402f8b98fd760e76270aef447bcff6c9537cf170d11e11669415ad"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/check-http.mjs",
+      "sha256": "522bf8bd0357fe89387bc31e67a09ffcc929a7e1282ffefde9b2fe722d334725",
+      "currentSha256": "522bf8bd0357fe89387bc31e67a09ffcc929a7e1282ffefde9b2fe722d334725"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/check-http.ps1",
+      "sha256": "3e271b88f203f0417fe30d4223bb7f4293805a77cdc2cfab125e6008a0fab8c8",
+      "currentSha256": "3e271b88f203f0417fe30d4223bb7f4293805a77cdc2cfab125e6008a0fab8c8"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/extension.js",
+      "sha256": "a9663654a5609995c2025304707999fee66669957d73a143e2f681feaca26aa2",
+      "currentSha256": "a9663654a5609995c2025304707999fee66669957d73a143e2f681feaca26aa2"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/geometry.mjs",
+      "sha256": "40b7194e99f7a8885489445737b1204af41bed6400c16b2f1243350a60e10b27",
+      "currentSha256": "40b7194e99f7a8885489445737b1204af41bed6400c16b2f1243350a60e10b27"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/index.html",
+      "sha256": "b6d80bbadb478df98b725f491ad79eac2ed47c665536fa9113e3ef94ea27ce7f",
+      "currentSha256": "b6d80bbadb478df98b725f491ad79eac2ed47c665536fa9113e3ef94ea27ce7f"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/inspect-composition.mjs",
+      "sha256": "07a807db93ad4d0274ca094416f5d2e25310f795b695d2c7eea9377939ffc1d0",
+      "currentSha256": "07a807db93ad4d0274ca094416f5d2e25310f795b695d2c7eea9377939ffc1d0"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/inspect-native.mjs",
+      "sha256": "c56112fd6e4c9e0aa32f03f45e450ea14b75e9db2df20a2707faddda7728af19",
+      "currentSha256": "c56112fd6e4c9e0aa32f03f45e450ea14b75e9db2df20a2707faddda7728af19"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/native-engine.mjs",
+      "sha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb",
+      "currentSha256": "dad91b902793d42bb65a444f3934565f44fd84dbe01b8286baccf672b4bdf6fb"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/renderer-base.js",
+      "sha256": "3da9bce00c39f2b12951e97849c7e6552f027f5616a14126d242fceac59b2e92",
+      "currentSha256": "3da9bce00c39f2b12951e97849c7e6552f027f5616a14126d242fceac59b2e92"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/reproduce.mjs",
+      "sha256": "24db418f601e425a1b98e6c198c5896f92aa9a8d8ac087fa86a14f1d753296cc",
+      "currentSha256": "24db418f601e425a1b98e6c198c5896f92aa9a8d8ac087fa86a14f1d753296cc"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/room-touchups.mjs",
+      "sha256": "c57b7b4f31ed13f9b0e412fbfa21ab629c6d699d672cff6824d7656ac3a73995",
+      "currentSha256": "c57b7b4f31ed13f9b0e412fbfa21ab629c6d699d672cff6824d7656ac3a73995"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/shell-painter.js",
+      "sha256": "bb9a9d57917ba0b96beb042923d8ba395d01da48c88860700284166270e42e8d",
+      "currentSha256": "bb9a9d57917ba0b96beb042923d8ba395d01da48c88860700284166270e42e8d"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/validate-browser.cjs",
+      "sha256": "55e2e8ab12d9860ac45127e727069cec08bffc086b66f6f7c8a518e3f33ce3e3",
+      "currentSha256": "55e2e8ab12d9860ac45127e727069cec08bffc086b66f6f7c8a518e3f33ce3e3"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/validate-controls.mjs",
+      "sha256": "58b087a95515cd322abeb711c940eaaf43fe2a01fbf4346b82270dd5b9658166",
+      "currentSha256": "58b087a95515cd322abeb711c940eaaf43fe2a01fbf4346b82270dd5b9658166"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/validate-south.cjs",
+      "sha256": "62aefada882ac99bc175ad974a7210c0fdf26c3193e08fa16c07e39a267ea595",
+      "currentSha256": "62aefada882ac99bc175ad974a7210c0fdf26c3193e08fa16c07e39a267ea595"
+    },
+    {
+      "file": "tools/room-design/level-5/indoor-garden/proof/validate.cjs",
+      "sha256": "3109326c724d6d43a53b4404f7c93ed1cf62671b1dad156eb269d59090a8637a",
+      "currentSha256": "3109326c724d6d43a53b4404f7c93ed1cf62671b1dad156eb269d59090a8637a"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/layout.json",
+      "sha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5",
+      "currentSha256": "70d9924bbfc90a3a6e17d4922e27300e9f352c62da0141fd59eafb224be228a5"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/concept/gift-shop-concept.png",
+      "sha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5",
+      "currentSha256": "9e18e62af17791e79a31e278a69e8c330e1b4d4ca2ea79f06b59be49cdaf18a5"
+    },
+    {
+      "file": "tools/room-design/level-5/gift-shop/approval-2026-10-11.md",
+      "sha256": "9228cdb020d58dd47d6f74a0cb148511e17357b6d788f2cbfca66e607e28513b",
+      "currentSha256": "9228cdb020d58dd47d6f74a0cb148511e17357b6d788f2cbfca66e607e28513b"
+    },
+    {
+      "file": "AGENTS.md",
+      "sha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc",
+      "currentSha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc"
+    },
+    {
+      "file": "docs/execplans/level5-launch-plan-20261010.md",
+      "sha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b",
+      "currentSha256": "afbcfdba1dc61d48781ae63ee504a7af219f37569c6bf77a15662490782fbcb5"
+    },
+    {
+      "file": "tools/room-design/level-5/executive-office/layout.json",
+      "sha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e",
+      "currentSha256": "129a4c262cb9fb54354884e2995a6e93551ee20f5d77d4d561f243d5aac99c7e"
+    },
+    {
+      "file": "tools/room-design/level-5/founders-office/layout.json",
+      "sha256": "e8d79f17aef6f1dabecf7f000d5335d2dd6e4fa64447796feb5327d02d68c23d",
+      "currentSha256": "e8d79f17aef6f1dabecf7f000d5335d2dd6e4fa64447796feb5327d02d68c23d"
+    },
+    {
+      "file": "tools/room-design/level-4/pediatric-waiting/proof/evidence/native-empty.png",
+      "sha256": "f4d4e20f1c9b7f9bc6f58047b0ac140d7ded6620fe5dba8871e6dddeb4b73911",
+      "currentSha256": "f4d4e20f1c9b7f9bc6f58047b0ac140d7ded6620fe5dba8871e6dddeb4b73911"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-south.png",
+      "sha256": "7979907bac4842d359fa0674e538dcef2630c8edc6d5d5f53158811a5042a037",
+      "currentSha256": "7979907bac4842d359fa0674e538dcef2630c8edc6d5d5f53158811a5042a037"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-east.png",
+      "sha256": "90d36b5a86bfff12c7c9453ede76197132c8f063cabe92172eb536668590f19b",
+      "currentSha256": "90d36b5a86bfff12c7c9453ede76197132c8f063cabe92172eb536668590f19b"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-west.png",
+      "sha256": "597a21c19d7ae801e8f9d2e247d2e83f4784407bb2df76b698b91d9034d7b59c",
+      "currentSha256": "597a21c19d7ae801e8f9d2e247d2e83f4784407bb2df76b698b91d9034d7b59c"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/stand-north.png",
+      "sha256": "26c482846362fc7158fbf9f95a142f9077f98dce11baeecc208f9a9f388198e6",
+      "currentSha256": "26c482846362fc7158fbf9f95a142f9077f98dce11baeecc208f9a9f388198e6"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-south.png",
+      "sha256": "6c078939a735480a6f7a0dde562b7dc91ace912223fabb88839fe11c7d48471f",
+      "currentSha256": "6c078939a735480a6f7a0dde562b7dc91ace912223fabb88839fe11c7d48471f"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-east.png",
+      "sha256": "fa8f098658fed04a49fea3799f9fa9f0fc4b94283a0c162cb629a981f6e2e156",
+      "currentSha256": "fa8f098658fed04a49fea3799f9fa9f0fc4b94283a0c162cb629a981f6e2e156"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-west.png",
+      "sha256": "494f42dfd26a48a357a1ac2343e84ea96b2475a9a3449e38ffca72c6546a5188",
+      "currentSha256": "494f42dfd26a48a357a1ac2343e84ea96b2475a9a3449e38ffca72c6546a5188"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-001/sit-north.png",
+      "sha256": "7a4fcd7721b203774857497f3cd643561b39ff0f6d8c09fae19209b32fc9981a",
+      "currentSha256": "7a4fcd7721b203774857497f3cd643561b39ff0f6d8c09fae19209b32fc9981a"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-south.png",
+      "sha256": "19c084834587c3beef25da0fa20a130f70d56ce9bf20415c2624fdc27d3495b1",
+      "currentSha256": "19c084834587c3beef25da0fa20a130f70d56ce9bf20415c2624fdc27d3495b1"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-east.png",
+      "sha256": "e61d63c4020235f8a04c87b7587ee827356d728e39894d38a7df173636d20e36",
+      "currentSha256": "e61d63c4020235f8a04c87b7587ee827356d728e39894d38a7df173636d20e36"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-west.png",
+      "sha256": "8d7faa05bec8ff6952ca66fb90effd57dfce103ecb0143c1ca5b451dd5f962ef",
+      "currentSha256": "8d7faa05bec8ff6952ca66fb90effd57dfce103ecb0143c1ca5b451dd5f962ef"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/stand-north.png",
+      "sha256": "7bd398c752fec8d27ea9c9fa9f7707dc3904c9281bf4a0250a4fb45ac5e49469",
+      "currentSha256": "7bd398c752fec8d27ea9c9fa9f7707dc3904c9281bf4a0250a4fb45ac5e49469"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-south.png",
+      "sha256": "453829c61944ddbd6b5b97a3aa1ec9f71b440d1536c890e91e043d9feca58a84",
+      "currentSha256": "453829c61944ddbd6b5b97a3aa1ec9f71b440d1536c890e91e043d9feca58a84"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-east.png",
+      "sha256": "a2a0856c7c8ff0ba698586710b7c16cf4107f3c61c0e7e4bfad2a3357e943471",
+      "currentSha256": "a2a0856c7c8ff0ba698586710b7c16cf4107f3c61c0e7e4bfad2a3357e943471"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-west.png",
+      "sha256": "7ef01316988be52bda1c16b5a33b94651821feb14de4bfde510655ef85736033",
+      "currentSha256": "7ef01316988be52bda1c16b5a33b94651821feb14de4bfde510655ef85736033"
+    },
+    {
+      "file": "apps/player/public/art/characters/gs026-employee-expansion-v1/gs026-employee-004/sit-north.png",
+      "sha256": "a3e879680d12fd2e25dcdd74cad4ef040e9e6fabac4039ef19c59d3a203cd7da",
+      "currentSha256": "a3e879680d12fd2e25dcdd74cad4ef040e9e6fabac4039ef19c59d3a203cd7da"
+    }
+  ],
+  "concurrentReadOnlyChangesPreserved": [
+    {
+      "file": "docs/execplans/level5-launch-plan-20261010.md",
+      "sha256": "402b6acaad63c6ab124bb0bb9b26e5d9efc4f2a2acbdc67b1e1884a988546b8b",
+      "currentSha256": "afbcfdba1dc61d48781ae63ee504a7af219f37569c6bf77a15662490782fbcb5"
+    }
+  ]
+}

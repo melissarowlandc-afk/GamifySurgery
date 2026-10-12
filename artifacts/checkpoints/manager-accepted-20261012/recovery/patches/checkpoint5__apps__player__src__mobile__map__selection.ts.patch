@@ -1,0 +1,22 @@
+--- a/apps/player/src/mobile/map/selection.ts
++++ b/apps/player/src/mobile/map/selection.ts
+@@ -24,13 +24,15 @@
+   const description = describe?.(character);
+   const employee = character.kind === "staff" ? model.staff.find((member) => member.instanceId === character.id) : undefined;
+   const patient = character.kind === "patient" ? model.patients?.find((person) => person.instanceId === character.id) : undefined;
+-  if (!description && !employee && !patient && character.kind !== "founder") return null;
++  const inspector = character.kind === "inspector" ? model.inspectors?.find(actor => actor.instanceId === character.id) : undefined;
++  if (character.kind === "inspector" && !inspector) return null;
++  if (!description && !employee && !patient && !inspector && character.kind !== "founder") return null;
+   const role = employee?.roleDisplayName ?? ({ founder: "Founder", patient: "Patient", "service-visitor": "Visitor",
+-    "retail-visitor": "Shopper", companion: "Companion", ambient: "Passerby", staff: "Employee" }[character.kind]);
++    "retail-visitor": "Shopper", companion: "Companion", ambient: "Passerby", staff: "Employee", inspector: "Inspector" }[character.kind]);
+   return {
+     kind: "character", character, role,
+-    name: description?.name ?? employee?.displayName ?? patient?.displayName ?? model.founder.displayName,
+-    activity: description?.activity ?? (character.kind === "founder" ? model.founder.activityLabel ?? "Standing by" : patient?.status ?? ""),
++    name: inspector ? "Inspector" : description?.name ?? employee?.displayName ?? patient?.displayName ?? model.founder.displayName,
++    activity: inspector?.activity ?? description?.activity ?? (character.kind === "founder" ? model.founder.activityLabel ?? "Standing by" : patient?.status ?? ""),
+     patient: patient ? { id: patient.instanceId, name: patient.displayName, status: patient.status } : null,
+     // Matches the desktop action's availability; the session still guards execution.
+     praise: employee ? { employeeId: employee.instanceId, eligible: praiseAvailable } : null,

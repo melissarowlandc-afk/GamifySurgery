@@ -1,0 +1,54 @@
+--- a/packages/balance-config/src/schema.ts
++++ b/packages/balance-config/src/schema.ts
+@@ -7,7 +7,7 @@
+   .regex(/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/, "Use a stable lowercase identifier.");
+ 
+ export const facilityLevelSchema = z.union([
+-  z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(4),
++  z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5),
+ ]);
+ 
+ /** Presentation/operational eligibility, never disease-selection weights. */
+@@ -488,7 +488,7 @@
+   .object({
+     id: stableIdSchema,
+     displayName: z.string().min(1).max(160),
+-    unlockFacilityLevel: z.number().int().min(1).max(4),
++    unlockFacilityLevel: z.number().int().min(1).max(5),
+     hiringCost: z.number().int().nonnegative(),
+     salaryPerExpenseInterval: z.number().int().nonnegative(),
+     minimumSalaryPerExpenseInterval: z.number().int().nonnegative(),
+@@ -534,13 +534,18 @@
+     minimumClinicalXp: z.number().int().nonnegative(),
+     minimumCompletedEncounters: z.number().int().nonnegative(),
+     satisfactionMustBeGreaterThan: z.number().int().min(0).max(99),
++    /** Optional Level 5 goal seam; no earlier stage acquires a morale requirement. */
++    minimumAverageStaffMorale: z.number().min(0).max(100).optional(),
+     requiredRoomDefinitionIds: z.array(stableIdSchema),
+     requiredStaffRoleIds: z.array(stableIdSchema),
+     requiredCompletionWitnessIds: z.array(facilityCompletionWitnessIdSchema).max(2).optional(),
+-    nextFacilityLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).nullable(),
++    nextFacilityLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
+   })
+   .strict()
+   .superRefine((stage, context) => {
++    if (stage.minimumAverageStaffMorale !== undefined && stage.level !== 5) {
++      context.addIssue({ code: "custom", message: "Average staff morale is a Level 5 goal.", path: ["minimumAverageStaffMorale"] });
++    }
+     const witnessIds = stage.requiredCompletionWitnessIds ?? [];
+     if (new Set(witnessIds).size !== witnessIds.length || (witnessIds.length > 0 && stage.level !== 4)) {
+       context.addIssue({ code: "custom", message: "Completion witnesses must be unique Level 4 requirements.", path: ["requiredCompletionWitnessIds"] });
+@@ -575,11 +580,11 @@
+         characterTravelTilesPerTick: z.number().int().positive(),
+         startingCash: z.number().int().nonnegative(),
+         startingSatisfaction: z.number().int().min(0).max(100),
+-        maximumPlayableLevel: z.union([z.literal(3), z.literal(4)]),
++        maximumPlayableLevel: z.union([z.literal(3), z.literal(4), z.literal(5)]),
+         initialRooms: z.array(initialRoomSchema).min(1),
+         roomDefinitions: z.array(roomDefinitionSchema).min(1),
+         staffRoleDefinitions: z.array(staffRoleDefinitionSchema).min(1),
+-        stageDefinitions: z.array(facilityStageDefinitionSchema).min(4).max(5),
++        stageDefinitions: z.array(facilityStageDefinitionSchema).min(4).max(6),
+         tutorialRequiredRoomDefinitionId: stableIdSchema,
+         tutorialMinimumOperatingBuffer: z.number().int().nonnegative(),
+       })

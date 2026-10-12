@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4191/tools/room-design/level-5/staff-gym/proof/index.html",
+  "origin": "http://127.0.0.1:4191",
+  "proofManifestSha256": "e54ac25f47dc7854cbeec3b7e6b1db417a2d59b0916da7223d1048172d2ce8f9",
+  "checks": [
+    "Served hashes; concept beside playable; 5 upgrade, 16 one-tile door and 4 backing controls",
+    "All 11040 states / 103680 occupied routes; actual decoded alpha, served sprite/still hashes and staff layers",
+    "Actual door/bulk/upgrade/staff controls; necessary chairs and fronts retained",
+    "Real focus, Enter, arrows, D/B and Escape keyboard events",
+    "320px layout, stacked concept and usable controls"
+  ],
+  "technical": {
+    "states": 11040,
+    "routes": 103680,
+    "occupiedRoutes": 103680,
+    "failures": [],
+    "assets": [
+      "design:sg:base-north1",
+      "design:sg:base-mirror1",
+      "design:sg:base-north2",
+      "design:sg:base-mirror2",
+      "design:sg:base-north3",
+      "design:sg:base-mirror3",
+      "design:sg:base-north4",
+      "design:sg:base-mirror4",
+      "design:sg:base-west",
+      "design:sg:base-east",
+      "design:sg:base-front1",
+      "design:sg:base-front2",
+      "design:sg:base-front3",
+      "design:sg:base-front4",
+      "design:sg:base-bench",
+      "design:sg:base-bench-front",
+      "design:sg:base-mat",
+      "design:sg:base-ball",
+      "design:sg:base-roller",
+      "design:sg:base-floor",
+      "design:sg:base-hooks"
+    ],
+    "layers": [
+      {
+        "id": "benchSeat",
+        "pose": "sit",
+        "direction": "south",
+        "characterId": "gs026-employee-001"
+      },
+      {
+        "id": "stretchSpot",
+        "pose": "stand",
+        "direction": "south",
+        "characterId": "gs026-employee-004"
+      }
+    ],
+    "origin": "http://127.0.0.1:4191"
+  },
+  "errors": [],
+  "warnings": [],
+  "ignoredCanvasPerformanceWarnings": [],
+  "approval": null
+}

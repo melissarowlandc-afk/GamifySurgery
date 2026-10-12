@@ -1,0 +1,44 @@
+--- a/apps/player/src/mobile/manage/MobileEmployees.tsx
++++ b/apps/player/src/mobile/manage/MobileEmployees.tsx
+@@ -14,6 +14,7 @@
+ 
+ const ROLE_LABELS: Record<string, [string, string]> = {
+   "staff.receptionist": ["Reception", "☎"], "staff.app": ["APP", "⚕"],
++  "staff.executive": ["Executive", "▣"],
+   "staff.glp1_np": ["GLP-1 NP", "✚"], "staff.laboratory_technician": ["Lab tech", "⚗"],
+   "staff.phlebotomist": ["Phlebotomy", "◉"], "staff.imaging_technician": ["Imaging", "▣"],
+   "staff.radiologist": ["Radiology", "▧"], "staff.endoscopy_nurse": ["Endoscopy", "⚕"],
+@@ -101,7 +102,10 @@
+           disabled={!selectedRole.canHire} onClick={() => props.onHireStaff(selectedRole.id)}>Hire {selectedRole.hiringCostLabel}</button></div>
+       {!selectedRole.canHire && selectedRole.blockedReason ? <p className="mobile-manage-blocked" role="note">{selectedRole.blockedReason}</p> : null}
+       <p>{selectedRole.currentCount} staffed · {selectedRole.maximumCount} positions in built rooms.</p>
+-      {selectedRole.staffingGuidance ? <p className="mobile-manage-note">{selectedRole.staffingGuidance}</p> : null}
++      {selectedRole.id === "staff.executive" ? <>
++        <p className="mobile-manage-note">One Executive · $45/hr. Daily morale, comfort, inspection preparation and 1–2% off stock/upkeep. Training strengthens all four.</p>
++        {selectedRole.staffingGuidance ? <details className="mobile-executive-role-details"><summary>Home, pay &amp; funding</summary><p>{selectedRole.staffingGuidance}</p></details> : null}
++      </> : selectedRole.staffingGuidance ? <p className="mobile-manage-note">{selectedRole.staffingGuidance}</p> : null}
+       {props.staffTraining && selectedRole.trainingSummary ? <p>{selectedRole.trainingSummary.averageLevelLabel} · {selectedRole.trainingSummary.averageBenefitLabel}</p> : null}
+     </section>
+     <h3 className="mobile-manage-section-title">Employees · {selectedRole.employees.length}</h3>
+@@ -127,7 +131,7 @@
+     <div className="mobile-manage-grid" aria-label="Employee role tiles">{available.map(role => {
+       const [label, icon] = ROLE_LABELS[role.id] ?? [role.displayName, "⚕"];
+       const status = roleStatus(role);
+-      return <MobileManageTile key={role.id} label={label} icon={icon} badge={`${role.currentCount}/${role.maximumCount}`}
++      return <MobileManageTile key={role.id} label={label} icon={icon} badge={`${role.currentCount}/${role.maximumCount}`} hint={role.defaultSalaryLabel}
+         data-staff-role-id={role.id} aria-label={`Role details for ${role.displayName}`} status={status.status} statusLabel={status.label}
+         onClick={() => openRole(role.id)}>
+         {role.employees[0]?.avatar ? <PixelAvatar avatar={role.employees[0].avatar} label={`${role.displayName} portrait`} size="small" /> : undefined}
+@@ -170,6 +174,7 @@
+         {trainingAvailable && activeTraining ? <p role="status">{training.statusLabel}
+           {training.sessionDurationMinutes !== null ? ` · ${formatFacilityDuration(training.sessionDurationMinutes)} session` : ""}</p> : null}
+       </div> : null}
++      <ExecutiveManagementFacts view={employee.executiveManagement} />
+       <div className="mobile-manage-actions">
+         {trainingAvailable && training && !activeTraining && callbacks.onTrainEmployee ? <button type="button"
+           aria-label={`Train ${employee.displayName}`} disabled={training.status === "max_level"} onClick={() => onConfirmation("train")}>
+@@ -199,3 +204,4 @@
+     </div>
+   </article>;
+ }
++import { ExecutiveManagementFacts } from "../../ui/ExecutiveManagementFacts";

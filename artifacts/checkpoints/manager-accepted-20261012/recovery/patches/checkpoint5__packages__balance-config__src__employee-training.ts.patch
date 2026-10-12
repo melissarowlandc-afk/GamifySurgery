@@ -1,0 +1,36 @@
+--- a/packages/balance-config/src/employee-training.ts
++++ b/packages/balance-config/src/employee-training.ts
+@@ -10,6 +10,7 @@
+   | "cleanliness_restored"
+   | "consult_payment"
+   | "app_appointment_revenue"
++  | "management_strength"
+   | "lab_processing_time"
+   | "or_and_qi_time"
+   | "or_team_time"
+@@ -22,7 +23,7 @@
+   metric: EmployeeTrainingMetric;
+   /** Fixed approved prices, independent of salaries and future hiring prices. */
+   levelPrices: readonly [number, number, number, number];
+-  percentPerLevel: 5 | 10;
++  percentPerLevel: 5 | 10 | 25;
+   shortMetric: string;
+   direction: "reduces" | "increases";
+ }
+@@ -33,7 +34,7 @@
+   basePrice: number,
+   shortMetric: string,
+   direction: EmployeeTrainingRole["direction"] = "reduces",
+-  percentPerLevel: 5 | 10 = 10,
++  percentPerLevel: 5 | 10 | 25 = 10,
+ ): EmployeeTrainingRole {
+   return { staffRoleDefinitionId, metric, levelPrices: [basePrice, basePrice * 2, basePrice * 3, basePrice * 4], percentPerLevel, shortMetric, direction };
+ }
+@@ -49,6 +50,7 @@
+   role("staff.evs_worker", "cleanliness_restored", 75, "cleaning restored", "increases"),
+   role("staff.glp1_np", "consult_payment", 150, "consult payment", "increases"),
+   role("staff.app", "app_appointment_revenue", 150, "APP appointment revenue", "increases"),
++  role("staff.executive", "management_strength", 100, "all four management effects", "increases", 25),
+   role("staff.laboratory_technician", "lab_processing_time", 125, "lab work time"),
+   role("staff.surgeon", "or_and_qi_time", 350, "OR and QI work time"),
+   role("staff.or_nurse", "or_team_time", 175, "OR team time"),

@@ -1,0 +1,42 @@
+--- a/apps/player/src/art/characterStillRegistry.test.ts
++++ b/apps/player/src/art/characterStillRegistry.test.ts
+@@ -18,10 +18,10 @@
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 326, cardinalPoses: 2608, clipboardPoses: 30, assets: 2638 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 336, cardinalPoses: 2688, clipboardPoses: 30, assets: 2718 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(326);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(326);
++    expect(entries).toHaveLength(336);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(336);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+@@ -48,13 +48,13 @@
+                             ? "staff-gapfill-v6d"
+                             : entry.cohort === "appGapfillV6e"
+                               ? "app-gapfill-v6e"
+-                              : "gs026-stills-v1";
++                              : entry.cohort === "inspectorV6f" ? "inspector-v6f" : "gs026-stills-v1";
+           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(1304);
++    expect(seatedAssets).toHaveLength(1344);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -196,7 +196,8 @@
+     const entries = getAllCharacterStillEntries().filter(entry => entry.cohort === "futureRoster20V5");
+     expect(entries).toHaveLength(20);
+     expect(entries.filter(entry => entry.role === "staff.radiologist")).toHaveLength(12);
+-    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(2);
++    expect(entries.filter(entry => entry.plannedStaffRole)).toHaveLength(0);
++    expect(entries.filter(entry => entry.role === "staff.executive").map(entry => entry.id)).toEqual(["future-roster20-v5.003", "future-roster20-v5.004"]);
+     expect(entries.filter(entry => entry.role === "staff.app").map(entry => entry.id)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002"]);
+     expect(entries.filter(entry => entry.category === "patient-or-general-population")).toHaveLength(4);
+     const approvedPoseHashes = ownerApproval.acceptedPoses as Record<string, Record<string, string>>;

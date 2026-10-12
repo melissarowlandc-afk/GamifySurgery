@@ -1,0 +1,25 @@
+--- a/packages/game-domain/src/displaced-routing.ts
++++ b/packages/game-domain/src/displaced-routing.ts
+@@ -2,6 +2,7 @@
+ import { APPROVED_PEDIATRIC_SUPPORT_ROUTES } from "@gamify-surgery/balance-config";
+ import { findDeterministicFacilityPath, getOccupiedTiles, getRoomNavigationAnchor } from "./spatial";
+ import { findCareAwareFacilityPath } from "./care-room-access";
++import { giftNativeExitPath } from "./gift-retail";
+ import type { DomainContext, GameState, GridPoint } from "./types";
+ 
+ const STEPS = [{ x: 0, y: -1 }, { x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }] as const;
+@@ -95,6 +96,14 @@
+       return def && row.orientation === 0 && start.x + .5 >= row.x && start.x + .5 < row.x + def.width &&
+         start.y + .5 >= row.y && start.y + .5 < row.y + def.height;
+     });
++    if (room?.roomDefinitionId === "room.gift_shop" && state.facilityLevel >= 5) {
++      return giftNativeExitPath(state, room, start, outside => findRouteFromDisplacedLocationToPoint(state, context, outside, goal, allowedProtectedRoomInstanceIds));
++    }
++    if (!room && state.retailOperations.some(trip => trip.giftCheckout && !state.rooms.some(row => row.id === trip.outletRoomInstanceId) &&
++      Math.abs(trip.location.x - start.x) < .00001 && Math.abs(trip.location.y - start.y) < .00001)) {
++      const tail = findRouteFromDisplacedLocationToPoint(state, context, { x: Math.round(start.x), y: Math.round(start.y) }, goal, allowedProtectedRoomInstanceIds);
++      return tail.length ? [{ ...start }, ...tail] : [];
++    }
+     const nativeRoutes = room && (APPROVED_PEDIATRIC_SUPPORT_ROUTES as Record<string, Array<{ doorSegment: string; walkingPath: number[][] }>>)[room.roomDefinitionId];
+     if (!room || !nativeRoutes) return [];
+     for (const door of state.doors.filter(row => row.roomId === room.id && !row.exterior)) {

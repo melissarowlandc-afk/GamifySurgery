@@ -1,0 +1,27 @@
+--- a/apps/player/src/ui/MoneyPanel.tsx
++++ b/apps/player/src/ui/MoneyPanel.tsx
+@@ -1,5 +1,6 @@
+ import { useState } from "react";
+ import { ManagementSection } from "./ServiceIncomePanel";
++import { GiftShopFacts } from "./GiftShopFacts";
+ import type { ServiceIncomeView } from "./types";
+ import "./financePresentation.css";
+ 
+@@ -17,6 +18,7 @@
+   advertising: "is-advertising",
+   stock: "is-stock",
+   relief: "is-relief",
++  supplier: "is-relief",
+ } as const;
+ 
+ /** Management Money tab: recent hourly net and since-opening totals. Read-only. */
+@@ -32,7 +34,9 @@
+   return (
+     <section className="money-panel" aria-label="Money">
+       <div className="money-period">{finances?.incomeWindowLabel ?? "Since the clinic opened"}</div>
++      {finances?.supplierSavingsLabel ? <p>{finances.supplierSavingsLabel}</p> : null}
+       <div className="service-income-scroll">
++        {serviceIncome.giftShop ? <details className="money-tile"><summary>Gift Shop · {serviceIncome.giftShop.netLabel} after stock</summary><GiftShopFacts view={serviceIncome.giftShop} /></details> : null}
+         {finances ? (
+           <>
+             <div className="money-tiles" aria-label="Hourly finances">

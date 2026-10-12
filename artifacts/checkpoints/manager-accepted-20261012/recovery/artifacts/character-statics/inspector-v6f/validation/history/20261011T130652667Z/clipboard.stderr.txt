@@ -1,0 +1,9 @@
+node.exe : (node:25512) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any 
+time
+At C:\Users\rowla\Projects\GamifySurgery\tools\character-mapping\inspector-v6f\run-validation.ps1:37 char:31
++ ... utLines = @(& $inspectorExecutable @inspectorArguments 2> $inspectorS ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:25512) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)

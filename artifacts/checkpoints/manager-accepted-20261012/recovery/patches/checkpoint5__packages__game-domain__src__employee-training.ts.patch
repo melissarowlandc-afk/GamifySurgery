@@ -1,0 +1,34 @@
+--- a/packages/game-domain/src/employee-training.ts
++++ b/packages/game-domain/src/employee-training.ts
+@@ -13,6 +13,8 @@
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+ import { getRadiologistReadingStation } from "./reading-stations";
+ import { getGlp1NursePractitionerStation } from "./staff";
++import { getExecutiveDeskLocation } from "./executive-management";
++import { findLevelFiveSupportPath, findLevelFiveSupportExitPath, getLevelFiveSupportRoomAt } from "./level-five-support";
+ import { getRoomDefinition, isRoomAccessibleForFacilityWork, isRoomOperationalForFacilityWork } from "./selectors";
+ import { getOccupiedTiles, getRoomNavigationAnchor, rotateRoomLocalPoint } from "./spatial";
+ import { bindRoomUpgradeSupportWork, createRoomUpgradeSupportWork, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeSupportWork } from "./room-upgrade-support";
+@@ -79,6 +81,13 @@
+ }
+ 
+ function pathTo(state: GameState, employee: EmployeeState, target: GridPoint, context: DomainContext): GridPoint[] {
++  if (state.facilityLevel >= 5 && employee.staffRoleDefinitionId === "staff.executive") {
++    const desk = getExecutiveDeskLocation(state, employee);
++    const home = state.rooms.find(room => room.id === employee.homeRoomInstanceId);
++    if (desk && home && samePoint(desk, target)) return findLevelFiveSupportPath(state, home, "executiveChair", employee.location, context)?.path ?? [];
++    const origin = getLevelFiveSupportRoomAt(state, employee.location);
++    if (origin) return findLevelFiveSupportExitPath(state, origin, employee.location, target, context, allowedRooms(employee));
++  }
+   const allowed = allowedRooms(employee);
+   const normal = findCareAwareFacilityPath(state, context, employee.location, target, allowed);
+   // Prefer public circulation. Training is an assigned staff trip, so a suite
+@@ -296,7 +305,7 @@
+ }
+ 
+ function homeTarget(state: GameState, employee: EmployeeState, context: DomainContext): GridPoint | null {
+-  const fixed = getRadiologistReadingStation(state, employee, context)?.location ?? getGlp1NursePractitionerStation(state, employee, context);
++  const fixed = getExecutiveDeskLocation(state, employee) ?? getRadiologistReadingStation(state, employee, context)?.location ?? getGlp1NursePractitionerStation(state, employee, context);
+   if (fixed) return fixed;
+   const home = state.rooms.find((room) => room.id === employee.homeRoomInstanceId);
+   const definition = home ? getRoomDefinition(home.roomDefinitionId, context) : null;
