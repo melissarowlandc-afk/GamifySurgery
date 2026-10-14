@@ -1,0 +1,10 @@
+--- a/apps/player/src/mobile/desktopPanelAdapters.tsx
++++ b/apps/player/src/mobile/desktopPanelAdapters.tsx
+@@ -53,6 +53,6 @@
+ }
+ export function MobileEmployeeDiscussionPanel(props: ComponentProps<typeof EmployeeDiscussionPanel>) {
+   return <MobileChartPanel chart={employeeDiscussionChartView(props.discussion)}
+-    onClose={props.onClose} onSubmitAnswer={props.onAnswer} onFlagQuestion={() => {}}
++    onClose={props.onClose} onSubmitAnswer={props.onAnswer} onFlagQuestion={props.onFlagQuestion ?? (() => {})}
+     onAcknowledgeTerminalFeedback={props.onAcknowledge} onToggleSummary={() => {}} onFileChart={props.onFile} />;
+ }

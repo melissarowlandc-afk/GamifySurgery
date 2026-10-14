@@ -1,0 +1,160 @@
+--- a/docs/handoffs/CURRENT_THREAD_HANDOFF.md
++++ b/docs/handoffs/CURRENT_THREAD_HANDOFF.md
+@@ -1,3 +1,11 @@
++> MANAGER GITHUB BACKUP 5 VERIFIED (2026-10-12). Owner direction: finish Level 5, open it on
++> desktop and mobile, then push. Commit 10e3c228b361df59b60494b2033678b1ce094eed on origin/beta,
++> confirmed with git ls-remote. Archive artifacts/checkpoints/manager-accepted-20261012/ (2,901 files,
++> ~385 MB, 2,628 whole + 105 verified patches, verify PASS, safety/clinical audit PASS) plus 6 owned
++> docs/approval records. Covers Level 5 M1-M10 launch, four approved Level 5 room mockups, inspector-v6f,
++> phone mockup server. Excluded 1,944 regenerable images (662.8 MB), builds, test reports, owner storage.
++> No merge/release/Pages publication.
++
+ > MANAGER: LEVEL 5 LAUNCHED (2026-10-12). docs/execplans/level5-launch-plan-20261010.md M1-M10
+ > accepted; ordinary cap 5; Level 5 is final (goals 2,000 XP / satisfaction >90 / morale >=85
+ > unlock inspections; first completed inspection finishes the game; Keep playing / New campaign).
+@@ -7027,3 +7035,145 @@
+ > START_PRIVATE_GAME.cmd → https://melissadesktop.taile197db.ts.net/, and remote
+ > https://melissarowlandc-afk.github.io/GamifySurgery/. LOCAL ONLY checkpoint:
+ > manager owns follow-up acceptance and the owner's "push to GitHub" reminder.
++
++
++## Accounts, playtime and release planning worker handoff (2026-10-12)
++
++- Worker: Codex GPT-6.1 Sol, max, planning only for the Claude Code GamifySurgery manager. Manager review and owner decisions remain pending; no implementation/release acceptance is implied.
++- Changed: new [accounts/playtime/release ExecPlan](../execplans/accounts-playtime-release-20261012.md) and this append-only handoff. No code/configuration/clinical content changed.
++- Recommendation: reuse accepted Supabase verified email/password, owner-managed invitations/allowlist, visible + unpaused real-time measurement with a five-minute idle cutoff, time-only reporting, 90-day retention, a private Supabase saved query/CSV, and account-scoped local saves at launch. Cloud campaign sync, Google/passwordless login, optional level/XP telemetry and an in-game owner dashboard are later work.
++- Findings: current auth is a provider shell, invitation wording is not server enforcement, saves remain whole-profile localStorage, IndexedDB is not wired into the live session, and login does not synchronize campaigns. Audit recovery/confirmed-email checks and remembered-local-bypass behavior. Pages lacks explicit hosted build configuration, and the phone draft-content notice currently lives in More. Existing privacy policy prohibits gameplay telemetry; record a narrow owner-approved exception before collection. Draft clinical status stays needs_clinician_review; publication must be explicitly authorized as an unapproved demonstration.
++- Validation command: read-only Python structural/reference/UTF-8/LF checks, then SHA-256 protected-source/config comparison. Exact final document result: PASS; 59,877 bytes; 303 lines; UTF-8 without BOM; LF only; 35 qualified file:line references valid; six owner decisions; all required topic checks pass; errors []. Protected check: 1,306 source/config paths across player, packages, scripts, E2E, workflow and root configuration unchanged from the pre-edit baseline.
++- No application tests, browser checks, live Supabase/RLS tests or current quota/email/terms verification were run in this docs-only offline task. No Git commands, installs, web/service access, agents, owner storage/credentials, commit/push/merge/deploy/publication or external messages. Current Free limits are a preflight gate, not recalled current-price claims.
++- Concurrent work: the manager prepended Backup 5 while this worker was drafting. Append preserves all current handoff bytes, including that update and existing line endings; new text is UTF-8 without BOM/LF. That backup record does not verify a backup of this new plan.
++- Pathways unchanged: owner uses START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual persistent profile; private phone development uses START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/; public invitees would use https://melissarowlandc-afk.github.io/GamifySurgery/. These browser/origin/device campaigns remain separate; the planned account does not carry saves across them.
++- Next: manager reviews the plan and presents its exact six decisions, then briefs M1/M2 after acceptance. Owner creates provider accounts/keys and enters credentials personally. No paid upgrade, open sign-up or publication is authorized. LOCAL ONLY: at an accepted checkpoint, remind the owner to say "push to GitHub" for an audited backup; a main push is a separate publication action.
++
++
++## Accounts/cloud saves/flags plan revision handoff (2026-10-13)
++
++- Worker: Codex GPT-6.1 Sol, max; docs-only revision for the single Claude GamifySurgery manager. Changed the accounts/playtime/release ExecPlan and appended this handoff; no implementation, infrastructure, credential or scheduling action.
++- [Revised plan](../execplans/accounts-playtime-release-20261012.md) preserves the manager's binding 2026-10-13 section byte-for-byte. This revision supersedes the 2026-10-12 local-saves-only/count-only planning recommendations: cloud campaigns are IN launch scope; usage now includes question counts; owner report has only total time and total questions per player.
++- Defined new accepted first-scored-answer counts, right/wrong, one per encounter/discussion decision node, with employee discussions recommended; excludes clicks/retries/imported history/rejected stale branches. Count delta commits atomically with cloud evidence/save, without answer content in analytics.
++- Cloud design: own-account RLS, versioned faithful snapshots/evidence, expected revisions/idempotency, single fenced writer, explicit Continue on this device, short offline grace and one bounded pending-recovery record, checked local-origin import, plain conflict/recovery UX, and no last-write-wins/history merge. Recommended two cloud campaigns/player, current+one prior, <=2 MB normal/3 MB ceiling, 400 MB working allocation against 500 MB, real physical/concurrency/egress tests, and private weekly backup/restore. No unlimited Free storage promise.
++- Measured synthetic fixtures only: Level 5 economy 1,429,974 bytes; integration snapshots 795,214 to 1,805,630 bytes. Gzip estimates are not database-storage measurements. Actual live pg sizing/long-play/25-player tests remain implementation gates.
++- Flag loop: desktop/phone short comments plus exact IDs/version/displayed order/chosen answer in own-account Supabase records; restricted read-only PC feed credential/function -> private triage -> verified native scheduled-task notification to existing manager -> one bounded content worker per flag -> reviewed fix/no-change/owner escalation -> next approved release -> limited status write/player acknowledgement. Read credential cannot update status; separate narrow access is proposed. Owner enters all credentials personally; no service-role key on the PC/public client. AI fixes remain needs_clinician_review until Melissa explicitly approves exact versions. Standing question-fix-only publication approval is optional and not granted.
++- Provider facts are the manager's supplied supabase.com verification dated 2026-10-13, not new worker web/account access: two active Free projects across Owner/Admin orgs, paused excluded; 500 MB/read-only, 50,000 MAU, 5 GB egress, seven-day low-activity pause, built-in email two/hour/org members only, custom SMTP required on Free/default 30/hour adjustable, Pro $25/month. Prefer a separate game project in the existing account; do not touch the ergonomics project or promise that daily reads prevent Free pausing.
++- Exact validation: PASS; 79,932 bytes / 465 lines; UTF-8 without BOM, LF only; 37 qualified file:line references valid; required topic checks pass; exactly five remaining owner decisions; errors []. Binding section SHA-256 unchanged: a7b2259e20350b331ba71f3f6241e51732395900a77d92d6e2446be8fc0f7f56. SHA-256 comparison: all 1,306 protected source/config paths unchanged. No application/browser/database tests were run or claimed.
++- Remaining decisions are only employee-question inclusion, game project/SMTP arrangement, cloud campaign/backup limits, daily PC feed plus limited status access, and per-deploy versus optional standing question-fix-only approval. Existing login/invite/cloud-at-launch/report/playtime/privacy decisions are binding, not reopened. Fourteen bounded M0-M13 lanes specify validation/acceptance.
++- Canonical opening paths unchanged now: START_GAME.cmd -> http://127.0.0.1:4173 in the usual persistent profile; private phone https://melissadesktop.taile197db.ts.net/; public Pages https://melissarowlandc-afk.github.io/GamifySurgery/. Local saves still remain separate TODAY. Planned authenticated same-backend cloud sync and explicit import will bridge campaigns only after implementation/validation; a Pages login cannot read PC loopback storage by itself.
++- No code edits, Git commands, installs, web/service access, actual keys/passwords/env reads, owner saves, agents, external messages, schedules, commit/push/deploy/publication or clinician approvals. Previous handoff bytes preserved; added text is UTF-8/no BOM/LF. LOCAL ONLY: after manager acceptance, remind the owner to say "push to GitHub" for an audited checkpoint; main/Pages publication still needs its own authority.
++
++
++## Beta 1 step 1 - Sol worker handoff (2026-10-13)
++
++- Worker: GPT-6.1 Sol, max, one bounded plan/setup/auth foundation for the Claude Code GamifySurgery manager. Implementation and CLI checks complete; manager actual-diff/browser/email acceptance pending. No sub-agents.
++- Plan re-sequenced: Beta 1 local saves/auth/time/count/two-total report/Supabase comments/notice/deletion/invited Pages; Beta 2 cloud/import; then daily flag automation. Exactly three open Beta 1 owner choices: employee discussions, project/SMTP, release policy. Earlier binding block preserved verbatim as historical evidence with the later owner override explicit.
++- Added [owner setup runbook](../setup/BETA1_SUPABASE_SETUP.md), empty player workspace env template and ignores. Invite-link password setup replaces public signUp; recovery precedence/confirmed-invited server identity/sign-in/out/errors fixed. Account-local campaigns/old cleanup writers/reset/existing local flags isolated, old unowned saves preserved. Auth flows shared by both shells; no cloud/telemetry/hosted flag ingestion/migrations/workflow wiring or gameplay/clinical edits.
++- Final focused: 9 files / 63 tests PASS. FULL player: 231 files / 2042 tests PASS plus only the existing thyroid pending-label failure (232 / 2043 total); no exclusion. FULL domain: 156 files / 4226 tests PASS plus existing 1 file / 2 test skips. Root typecheck all seven workspaces PASS; normal and direct /GamifySurgery/ player builds PASS; Pages verifier: 4 asset references / 3283 public files PASS. Default configs, threads pool and the existing net-use EPERM preload. Root build:pages not run because its boundary wrapper invokes forbidden Git. Existing build size/plugin warnings remain.
++- [Beta 1 step 1 exact files/output/manager QA](../execplans/accounts-playtime-release-20261012.md#beta-1-step-1---sol-worker-handoff-2026-10-13). Evidence: ignored .local-dev/beta1-step1/ includes baseline hash/copies, actual filesystem diff and complete logs. 1206 protected source/config paths outside nine owned preexisting files byte-unchanged; code/new docs/env/edited plan UTF-8/no BOM/LF. This append preserves historical handoff bytes/line endings; new text uses UTF-8/no BOM/LF.
++- Manager must confirm real non-org invite/recovery/15-character provider rules on desktop and real phone; mocks establish no network/email/RLS/browser geometry claim. Step 2 must add fresh admission/revocation and private-data RLS before collection. Owner creates project/SMTP accounts and pastes only public client settings personally; no actual env/keys/passwords or owner storage read/written.
++- Opening paths unchanged: START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile; START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/; remote https://melissarowlandc-afk.github.io/GamifySurgery/. location.origin/profile/device saves remain separate. Unconfigured local/private builds retain today's prototype profile; configured accounts get separate local lists. Login does not move campaigns in Beta 1.
++- No Git, installs, credentials, provisioning, agents, external messages, commit/push/deploy/publication or clinician approval. LOCAL ONLY checkpoint: no backup created. After acceptance manager reminds the owner to say "push to GitHub" for an audited backup. First Beta 1 Pages publication still needs explicit owner approval of its finished tested artifact; remaining Beta 1 features are separate milestones.
++
++
++> BETA 1 STEP 2: SOL WORKER HANDOFF (2026-10-13). Tracker/counts, reviewed
++> usage/flags/admission/deletion SQL, retention and owner hours:minutes/CSV
++> report prepared; manager DB/browser acceptance pending. Plan: docs/execplans/
++> accounts-playtime-release-20261012.md, "Beta 1 step 2"; runbook step 11.
++> Focused 40/40; FULL player 2082 pass + known thyroid failure; FULL domain
++> 4226 pass + 2 existing skips; root typecheck and Pages-base build/verifier PASS
++> (default configs, threads + known net-use EPERM preload). SQL NOT executed.
++> Collection OFF until step 3 full notice acceptance. No clinical/rule/CSS/
++> launcher/origin changes: START_GAME.cmd -> exact http://127.0.0.1:4173; private
++> phone stays https://melissadesktop.taile197db.ts.net/; separate saves.
++> LOCAL ONLY: no Git/installs/publish/backup; manager to remind "push to GitHub"
++> after acceptance. Actual filesystem diff/logs: .local-dev/beta1-step2/.
++
++## Beta 1 step 3 - Sol worker handoff (2026-10-13)
++
++- Implemented shared desktop/phone patient + employee comment composer (optional
++  500 characters), account-only bounded Supabase flag outbox/retries and own
++  open/reviewed/fixed status reads. Historic local flags never auto-upload;
++  unconfigured local comment/export behavior remains. Frozen question-slot and
++  revision digests avoid repeated node IDs/SQL lengths; no concept/FSRS changes.
++- First-sign-in exact usage notice + Accept/Later, entry/Help/More Account & privacy,
++  sign-out and confirmed usage deletion/retry use the step 2 APIs. Deletion stops
++  recording and pending flags immediately, preserves clinics and other accounts.
++  Clinical notice persists on auth/entry/charts/desktop play/phone header/Help.
++  More/Help show 0.1.0-beta.1 with the UTC build date. Pages workflow references
++  owner Actions settings and forces bypass off; no settings entered/publication.
++- FULL player: 2102 passed, ONLY known thyroid failure, 241 files (240 passed/1
++  failed), --pool=threads + documented net-use EPERM preload. FULL game-domain:
++  4226 passed + 2 existing skips. Root all-workspace typecheck, direct Pages-base
++  build + verifier and restored normal local build PASS. No filtered acceptance,
++  network in tests, Git, installs, browser/DB operation or clinical content edits.
++- Manager: inspect .local-dev/beta1-step3/review.diff and raw logs; rerun default
++  config and Git-dependent boundaries in your lane; physical desktop/phone,
++  Supabase/SMTP/RLS/retention/deletion and reconstruction QA remain pending. Known
++  thyroid failure still blocks green release CI. Owner must approve final
++  notice/contact/deletion administration/local-copy procedure and exact published
++  demonstration artifact before inviting testers.
++- Exact changed-file list, outputs, manager QA and the ordered **Beta 1 release
++  checklist** are appended to docs/execplans/accounts-playtime-release-20261012.md.
++  Setup runbook now reflects the implemented controls/manual flag review query.
++- No pathway change: START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended
++  persistent profile; location.origin is http://127.0.0.1:4173. Private phone
++  remains START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/.
++  Normal unconfigured dist was restored after Pages validation. Other hosts,
++  ports, profiles and Pages have separate saves; login does not move campaigns.
++- LOCAL ONLY checkpoint: after manager acceptance, remind the owner to say
++  **"push to GitHub"** for an audited backup. No backup or publication performed.
++
++
++> WORKER HANDOFF: BETA 1 THYROID CI READINESS (2026-10-13). Sol worker; no sub-agents.
++> Stale legacy route-caption assertion updated to current diagnostic phases;
++> frozen FNA route preserved, clinical data/projection unchanged. Full player
++> 2103/2103, game-domain 4226 + 2 existing skips, clinical-content 628/628,
++> balance-config 149/149; all seven workspace suites and typechecks exit 0.
++> Source/dependency boundaries, launcher and isolated Pages build/verifier pass.
++> npm ci / Git tracked-path audit / literal root wrappers were not run under the
++> no-installs/no-Git brief. Exact evidence and manager acceptance/checkpoint next
++> action: docs/execplans/accounts-playtime-release-20261012.md, "Beta 1 CI
++> readiness: thyroid test". Owner build/origins/saves unchanged; LOCAL ONLY.
++
++
++## Sixth recovery archive - Sol worker handoff (2026-10-14)
++
++- Prepared `artifacts/checkpoints/manager-accepted-20261014/` against commit
++  `10e3c228b361df59b60494b2033678b1ce094eed`. The owner's October 14
++  "Push to GitHub" direction applies; manager owns audit/stage/commit/push and
++  remote verification. LOCAL ONLY: this worker did not stage, commit or push.
++- Covers accepted Beta 1 steps 1-3, Supabase migrations/reports/tests, empty
++  player env template, setup/release documents, both-shell notice/account/flag
++  UI and thyroid CI fix. Mobile/icon/Variety-3/Level 5 remain in the five prior
++  layers; mobile/Level 5 plans and Level 5 E2E manager fix are unchanged refs.
++- 43 whole current files + 26 byte-exact shared patches = 69 recovery targets.
++  Forward/reverse/reapply and isolated disk restore PASS; 22 corruption/path/
++  overwrite/fidelity checks PASS. All five prior archives/committed blobs
++  unchanged. Strict live verification: 8,271 targets, 26 historical bases,
++  352 clinical files. Final exact counts/size: validation/archive-size.json.
++- Safety/check-ignore/UTF-8-no-BOM-LF PASS; no real env/credentials, patient or
++  owner storage/save data, machine settings or proprietary source payloads.
++  All env example values empty. Three inherited CRLF base/patch pairs use
++  lossless encoded storage plus readable LF review projections. Draft clinical
++  records, including Variety-3 and pediatric, still needs_clinician_review.
++- About 19.2 MB; largest file about 10.8 MB. Regenerable histories excluded:
++  1,584 room images / 623,769,818 bytes and 360 inspector images / 38,992,911
++  bytes; every image path/size listed. Build/test output and raw local scratch
++  excluded; only small explicitly listed historical evidence receipts captured.
++- STAGE_PATHS lists only the complete archive and three owned docs: accounts
++  release plan, setup runbook, bounded archive task record. Shared live source,
++  .gitignore/workflow, owner plan and this handoff remain recovery-only.
++- Manager: inspect actual scoped bytes, rerun strict verify/safety/clinical
++  scripts after edits, stage only the allowlist, commit/push current branch and
++  verify the remote commit before claiming a backup; then record branch/commit
++  here. No archive-scope decision/new backup approval remains. Live Supabase/
++  SMTP/RLS/physical-phone acceptance still awaits owner setup; release gate only.
++- No production/clinical edits, installs, sub-agents, external services/messages,
++  browser/server operations or publication. Opening paths unchanged:
++  START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended profile;
++  private phone via START_PRIVATE_GAME.cmd ->
++  https://melissadesktop.taile197db.ts.net/; canonical remote remains
++  https://melissarowlandc-afk.github.io/GamifySurgery/. Other origins/profiles/
++  devices retain separate saves. Owner storage was never accessed.

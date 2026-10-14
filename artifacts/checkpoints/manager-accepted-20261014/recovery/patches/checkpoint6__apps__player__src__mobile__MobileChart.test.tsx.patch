@@ -1,0 +1,13 @@
+--- a/apps/player/src/mobile/MobileChart.test.tsx
++++ b/apps/player/src/mobile/MobileChart.test.tsx
+@@ -78,7 +78,9 @@
+       questionPrompt: "Which fixture test is next?", answerChoices: frozenChoices };
+     await env.render(<MobileChart chart={chartFixture({ decisionSteps: [{ ...step, id: "past", current: false }, step] })} {...actions} />);
+     expect(allElements(env.element, (node) => node.attributes["aria-label"] === "Flag this question for developer review")).toHaveLength(1);
+-    await env.click("Flag this question for developer review"); expect(actions.onFlagQuestion).toHaveBeenCalledWith("frozen.decision.2");
++    await env.click("Flag this question for developer review");
++    expect(actions.onFlagQuestion).not.toHaveBeenCalled();
++    await env.click("Submit flag"); expect(actions.onFlagQuestion).toHaveBeenCalledWith("frozen.decision.2");
+     await env.render(<MobileChart chart={chartFixture({ decisionSteps: [{ ...step, flaggedForDeveloperReview: true }] })} {...actions} />);
+     expect(env.button("Question flagged for developer review").attributes.disabled).toBe("");
+   });

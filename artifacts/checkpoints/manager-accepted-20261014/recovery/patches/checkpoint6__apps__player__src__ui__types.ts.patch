@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -1,5 +1,6 @@
+ import type { PixelAppearanceVariant } from "@gamify-surgery/game-domain";
+ import type { CaseExhibit } from "@gamify-surgery/clinical-content";
++import type { QuestionReviewFlagInput } from "../session/questionReviewFlags";
+ 
+ export type PatientFolder = "waiting" | "active" | "resolved";
+ 
+@@ -100,6 +101,8 @@
+   sortKey?: number;
+ }
+ export interface EmployeeDiscussionView {
++  reviewFlagInput?: QuestionReviewFlagInput;
++  flaggedForDeveloperReview?: boolean;
+   id:string; employeeName:string; roleLabel:string; avatar?:PixelAvatarView;
+   /** `traveling` still accepts answers; the founder is walking over. */
+   status:"traveling"|"question"|"feedback"|"summary";
+@@ -137,6 +140,7 @@
+ }
+ 
+ export interface ChartDecisionStepView {
++  reviewFlagInput?: QuestionReviewFlagInput;
+   id: string;
+   /** Stable authored identity used by the non-scoring developer review flag. */
+   questionVariantId?: string;

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "test",
+    "--workspace",
+    "@gamify-surgery/player",
+    "--",
+    "src/session/surgeryCenterServicePreviews.test.ts",
+    "src/session/diagnosticTimingViewModels.test.ts",
+    "src/session/diagnosticTimingPresentation.test.ts",
+    "--pool=threads"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 2.95
+}

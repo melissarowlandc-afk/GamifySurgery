@@ -1,0 +1,43 @@
+--- a/apps/player/src/mobile/MobileChart.tsx
++++ b/apps/player/src/mobile/MobileChart.tsx
+@@ -1,3 +1,5 @@
++import { QuestionFlagControl } from "../ui/QuestionFlagControl";
++import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
+ import { useEffect, useRef } from "react";
+ import { PixelAvatar } from "../ui/PixelAvatar";
+ import { employeeDiscussionChartView } from "../ui/EmployeeDiscussionPanel";
+@@ -7,7 +9,7 @@
+   chart: ChartView;
+   onClose: () => void;
+   onSubmitAnswer: (choiceId: string) => void;
+-  onFlagQuestion: (decisionNodeId: string) => void;
++  onFlagQuestion: SubmitQuestionReviewFlag;
+   onAcknowledgeTerminalFeedback: () => void;
+   onToggleSummary: () => void;
+   onFileChart: () => void;
+@@ -63,11 +65,7 @@
+     </div> : null}
+     {step.exhibit ? <Exhibit exhibit={step.exhibit} /> : null}
+     <div className="mobile-decision-heading"><h3>{step.heading}</h3>{step.statusLabel ? <span>{step.statusLabel}</span> : null}
+-      {step.current && step.questionPrompt && step.questionVariantId ? <button type="button" className="mobile-question-flag"
+-        disabled={step.flaggedForDeveloperReview} onClick={() => onFlagQuestion(step.id)}
+-        aria-label={step.flaggedForDeveloperReview ? "Question flagged for developer review" : "Flag this question for developer review"}>
+-        {step.flaggedForDeveloperReview ? "Flagged" : "Flag for review"}
+-      </button> : null}
++      {step.current && step.questionPrompt && step.questionVariantId ? <QuestionFlagControl key={`${chart.id}.${step.questionVariantId}`} step={step} onSubmit={onFlagQuestion} /> : null}
+     </div>
+     {step.questionPrompt ? <p className="mobile-question">{step.questionPrompt}</p> : null}
+     {step.questionPrompt ? <div className="mobile-answers" data-tutorial-anchor={step.current ? "current-answer-choices" : undefined}>
+@@ -178,9 +176,9 @@
+   </article>;
+ }
+ 
+-export function MobileTeamDiscussion({ discussion, onAnswer, onAcknowledge, onFile, onClose }: {
+-  discussion: EmployeeDiscussionView; onAnswer: (id: string) => void; onAcknowledge: () => void; onFile: () => void; onClose: () => void;
++export function MobileTeamDiscussion({ discussion, onAnswer, onAcknowledge, onFile, onClose, onFlagQuestion = () => {} }: {
++  discussion: EmployeeDiscussionView; onFlagQuestion?: SubmitQuestionReviewFlag; onAnswer: (id: string) => void; onAcknowledge: () => void; onFile: () => void; onClose: () => void;
+ }) {
+   return <MobileChart chart={employeeDiscussionChartView(discussion)} onClose={onClose} onSubmitAnswer={onAnswer}
+-    onFlagQuestion={() => {}} onAcknowledgeTerminalFeedback={onAcknowledge} onToggleSummary={() => {}} onFileChart={onFile} />;
++    onFlagQuestion={onFlagQuestion} onAcknowledgeTerminalFeedback={onAcknowledge} onToggleSummary={() => {}} onFileChart={onFile} />;
+ }

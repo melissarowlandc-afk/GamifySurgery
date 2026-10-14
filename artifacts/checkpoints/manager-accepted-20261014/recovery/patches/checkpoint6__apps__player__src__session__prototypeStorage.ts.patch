@@ -1,0 +1,160 @@
+--- a/apps/player/src/session/prototypeStorage.ts
++++ b/apps/player/src/session/prototypeStorage.ts
+@@ -8,6 +8,8 @@
+ } from "@gamify-surgery/game-domain";
+ import { normalizeTutorialGuidanceRecords, type CampaignTutorialGuidance } from "./tutorialGuidance";
+ import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
++import { accountStorageKey } from "./accountStorageKey";
++import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
+ 
+ export const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
+ export const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
+@@ -38,6 +40,8 @@
+   /** Previous paused value while an operations tip owns the temporary pause. */
+   tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
+   campaigns: LocalCampaignRecord[];
++  /** Atomic staging with a newly scored state; only opaque count receipts. */
++  pendingUsageQuestions?: QuestionUsageReceipt[];
+ }
+ 
+ export interface LoadedPrototypeProfile {
+@@ -95,6 +99,7 @@
+   tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
+   tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
+   campaigns: PersistedCampaignRecord[];
++  pendingUsageQuestions?: QuestionUsageReceipt[];
+ }
+ 
+ function storageFailure(
+@@ -483,6 +488,8 @@
+         : {},
+       tutorialDailyRoutinePauseByCampaign: normalizeRetiredTutorialPauses(candidate.tutorialDailyRoutinePauseByCampaign),
+       campaigns,
++      ...(Array.isArray(candidate.pendingUsageQuestions)
++        ? { pendingUsageQuestions: parseQuestionUsageReceipts(candidate.pendingUsageQuestions) } : {}),
+     },
+     skippedCampaignCount,
+   };
+@@ -533,7 +540,7 @@
+   return activeCampaign;
+ }
+ 
+-export function loadPrototypeProfile(): LoadedPrototypeProfile {
++export function loadPrototypeProfile(accountId: string | null = null): LoadedPrototypeProfile {
+   const storageResult = getBrowserStorage();
+   if (!storageResult.ok) {
+     return {
+@@ -544,7 +551,7 @@
+ 
+   try {
+     const serializedProfile = storageResult.storage.getItem(
+-      PROTOTYPE_PROFILE_KEY,
++      accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId),
+     );
+     if (serializedProfile !== null) {
+       const { profile, skippedCampaignCount } =
+@@ -560,12 +567,14 @@
+       };
+     }
+ 
+-    const legacySave = storageResult.storage.getItem(
+-      LEGACY_PROTOTYPE_SAVE_KEY,
+-    );
++    // Unowned prototype campaigns belong to no authenticated player. Preserve
++    // them for the local fallback and the future explicit Beta 2 import.
++    const legacySave = accountId === null
++      ? storageResult.storage.getItem(LEGACY_PROTOTYPE_SAVE_KEY)
++      : null;
+     if (legacySave !== null) {
+       const profile = migrateLegacySave(legacySave);
+-      const persisted = savePrototypeProfileResult(profile);
++      const persisted = savePrototypeProfileResult(profile, accountId);
+       return {
+         profile,
+         notice: persisted.ok
+@@ -575,7 +584,7 @@
+     }
+ 
+     const profile = createFreshProfile();
+-    const persisted = savePrototypeProfileResult(profile);
++    const persisted = savePrototypeProfileResult(profile, accountId);
+     return {
+       profile,
+       notice: persisted.ok
+@@ -594,12 +603,14 @@
+ 
+ export function savePrototypeProfile(
+   profile: LocalPrototypeProfile,
++  accountId: string | null = null,
+ ): boolean {
+-  return savePrototypeProfileResult(profile).ok;
++  return savePrototypeProfileResult(profile, accountId).ok;
+ }
+ 
+ export function savePrototypeProfileResult(
+   profile: LocalPrototypeProfile,
++  accountId: string | null = null,
+ ): PrototypeSaveResult {
+   const storageResult = getBrowserStorage();
+   if (!storageResult.ok) {
+@@ -629,6 +640,8 @@
+         status: campaign.status,
+         serializedState: serializeGameState(campaign.state),
+       })),
++      ...(accountId !== null && profile.pendingUsageQuestions?.length
++        ? { pendingUsageQuestions: parseQuestionUsageReceipts(profile.pendingUsageQuestions) } : {}),
+     };
+     serialized = JSON.stringify(persistedProfile);
+   } catch (error) {
+@@ -642,7 +655,7 @@
+   }
+ 
+   try {
+-    storageResult.storage.setItem(PROTOTYPE_PROFILE_KEY, serialized);
++    storageResult.storage.setItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId), serialized);
+     return { ok: true, profileCharacters: serialized.length };
+   } catch (error) {
+     return {
+@@ -652,20 +665,20 @@
+   }
+ }
+ 
+-/** Deletes only the legacy prototype campaign keys; unrelated preferences stay intact. */
+-export function clearPrototypeCampaignStorage(): PrototypeResetResult {
++/** Clears only this account's campaigns, or the historical local keys for null. */
++export function clearPrototypeCampaignStorage(accountId: string | null = null): PrototypeResetResult {
+   const storageResult = getBrowserStorage();
+   if (!storageResult.ok) {
+     return storageResult;
+   }
+   let firstFailure: PrototypeStorageFailure | null = null;
+   try {
+-    storageResult.storage.removeItem(PROTOTYPE_PROFILE_KEY);
++    storageResult.storage.removeItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId));
+   } catch (error) {
+     firstFailure = storageFailure(error, "remove");
+   }
+   try {
+-    storageResult.storage.removeItem(LEGACY_PROTOTYPE_SAVE_KEY);
++    if (accountId === null) storageResult.storage.removeItem(LEGACY_PROTOTYPE_SAVE_KEY);
+   } catch (error) {
+     firstFailure ??= storageFailure(error, "remove");
+   }
+@@ -673,7 +686,7 @@
+ }
+ 
+ /** Keeps page-exit/autosave writers from recreating campaigns after reset. */
+-export function createPrototypeCampaignWriteGate(): PrototypeCampaignWriteGate {
++export function createPrototypeCampaignWriteGate(accountId: string | null = null): PrototypeCampaignWriteGate {
+   let suppressed = false;
+   return {
+     save: (profile) => {
+@@ -688,7 +701,7 @@
+           },
+         };
+       }
+-      return savePrototypeProfileResult(profile);
++      return savePrototypeProfileResult(profile, accountId);
+     },
+     suppress: () => {
+       suppressed = true;

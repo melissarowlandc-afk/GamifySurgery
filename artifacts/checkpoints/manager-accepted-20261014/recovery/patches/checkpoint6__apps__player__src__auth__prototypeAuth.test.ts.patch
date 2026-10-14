@@ -1,0 +1,45 @@
+--- a/apps/player/src/auth/prototypeAuth.test.ts
++++ b/apps/player/src/auth/prototypeAuth.test.ts
+@@ -1,8 +1,41 @@
+-import { describe, expect, it } from "vitest";
++import { afterEach, describe, expect, it, vi } from "vitest";
+ import {
+   createLocalPrototypeSession,
+   parsePrototypeAccessSession,
++  hostedAuthConfiguration,
++  localPrototypeBypassEnabled,
+ } from "./prototypeAuth";
++
++afterEach(() => vi.unstubAllEnvs());
++
++describe("hosted configuration and local fallback", () => {
++  it("keeps the unconfigured entry and honors an explicit disabled bypass", () => {
++    vi.stubEnv("VITE_SUPABASE_URL", "");
++    vi.stubEnv("VITE_SUPABASE_ANON_KEY", "");
++    vi.stubEnv("VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS", "");
++    expect(hostedAuthConfiguration()).toBeNull();
++    expect(localPrototypeBypassEnabled()).toBe(true);
++    vi.stubEnv("VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS", "false");
++    expect(localPrototypeBypassEnabled()).toBe(false);
++  });
++
++  it.each(["VITE_SUPABASE_URL", "VITE_SUPABASE_ANON_KEY"])("fails closed with only %s, even with an enabled bypass", key => {
++    vi.stubEnv("VITE_SUPABASE_URL", "");
++    vi.stubEnv("VITE_SUPABASE_ANON_KEY", "");
++    vi.stubEnv(key, "synthetic-config");
++    vi.stubEnv("VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS", "true");
++    expect(hostedAuthConfiguration()).toBeNull();
++    expect(localPrototypeBypassEnabled()).toBe(false);
++  });
++
++  it("trims public config and blocks remembered local entry when hosted", () => {
++    vi.stubEnv("VITE_SUPABASE_URL", " https://synthetic.supabase.co ");
++    vi.stubEnv("VITE_SUPABASE_ANON_KEY", " synthetic-public-key ");
++    vi.stubEnv("VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS", "true");
++    expect(hostedAuthConfiguration()).toEqual({ supabaseUrl: "https://synthetic.supabase.co", supabaseAnonKey: "synthetic-public-key" });
++    expect(localPrototypeBypassEnabled()).toBe(false);
++  });
++});
+ 
+ describe("prototype access sessions", () => {
+   it("accepts an unexpired remembered local session", () => {

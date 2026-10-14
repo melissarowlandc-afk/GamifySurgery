@@ -1,0 +1,92 @@
+--- a/apps/player/src/session/questionReviewFlags.ts
++++ b/apps/player/src/session/questionReviewFlags.ts
+@@ -1,3 +1,5 @@
++import { accountStorageKey } from "./accountStorageKey";
++
+ const QUESTION_REVIEW_FLAGS_STORAGE_KEY =
+   "gamify-surgery.question-review-flags.v1";
+ const QUESTION_REVIEW_FLAGS_SCHEMA_VERSION = 1 as const;
+@@ -19,9 +21,14 @@
+   selectedAnswerChoiceId: string | null;
+   answerWasCorrect: boolean | null;
+   flaggedAtRealMs: number;
++  comment?: string;
++  displayedChoiceOrder?: string[];
+ }
+ 
+ export interface QuestionReviewFlagInput {
++  comment?: string;
++  contentVersion?: string;
++  conceptVersion?: string;
+   campaignId: string;
+   clinicName: string;
+   clinicalReleaseId: string;
+@@ -202,6 +209,8 @@
+     selectedAnswerChoiceId: input.selectedAnswerChoiceId,
+     answerWasCorrect: input.answerWasCorrect,
+     flaggedAtRealMs,
++    comment: input.comment?.slice(0, 500) ?? "",
++    displayedChoiceOrder: input.answerChoices.map((choice) => choice.id),
+   };
+ }
+ 
+@@ -235,6 +244,9 @@
+       answerChoices: input.answerChoices.map((choice) => ({ ...choice })),
+       explanation: input.explanation,
+       sourceLabels: [...input.sourceLabels],
++      comment: input.comment?.slice(0, 500) ?? "",
++      contentVersion: input.contentVersion,
++      conceptVersion: input.conceptVersion,
+       status: "open",
+       lastFlaggedAtRealMs: flaggedAtRealMs,
+       occurrenceCount: existing.occurrenceCount + 1,
+@@ -271,6 +283,9 @@
+     answerChoices: input.answerChoices.map((choice) => ({ ...choice })),
+     explanation: input.explanation,
+     sourceLabels: [...input.sourceLabels],
++    comment: input.comment?.slice(0, 500) ?? "",
++    contentVersion: input.contentVersion,
++    conceptVersion: input.conceptVersion,
+     occurrences: [occurrence],
+   };
+ 
+@@ -332,13 +347,14 @@
+ 
+ export function loadQuestionReviewFlags(
+   storage: StorageLike | null = browserStorage(),
++  accountId: string | null = null,
+ ): QuestionReviewFlag[] {
+   if (!storage) {
+     return [];
+   }
+   try {
+     return parseQuestionReviewFlags(
+-      storage.getItem(QUESTION_REVIEW_FLAGS_STORAGE_KEY),
++      storage.getItem(accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, accountId)),
+     );
+   } catch {
+     return [];
+@@ -348,6 +364,7 @@
+ export function saveQuestionReviewFlags(
+   flags: readonly QuestionReviewFlag[],
+   storage: StorageLike | null = browserStorage(),
++  accountId: string | null = null,
+ ): boolean {
+   if (!storage) {
+     return false;
+@@ -359,7 +376,7 @@
+   };
+   try {
+     storage.setItem(
+-      QUESTION_REVIEW_FLAGS_STORAGE_KEY,
++      accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, accountId),
+       JSON.stringify(envelope),
+     );
+     return true;
+@@ -388,3 +405,6 @@
+   QUESTION_REVIEW_FLAGS_SCHEMA_VERSION,
+   QUESTION_REVIEW_FLAGS_STORAGE_KEY,
+ };
++
++/** Optional parameters keep existing prototype flag callers compatible. */
++export type SubmitQuestionReviewFlag = (decisionNodeId: string, comment?: string, captured?: QuestionReviewFlagInput) => void;

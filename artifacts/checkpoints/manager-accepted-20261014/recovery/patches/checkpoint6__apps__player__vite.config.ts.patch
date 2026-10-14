@@ -1,0 +1,10 @@
+--- a/apps/player/vite.config.ts
++++ b/apps/player/vite.config.ts
+@@ -3,6 +3,7 @@
+ import { forbidPrivateModules } from "../../scripts/vite/forbid-private-modules";
+ 
+ export default defineConfig({
++  define: { __PLAYER_BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
+   plugins: [react(), forbidPrivateModules()],
+   test: {
+     // Minute-by-minute clinic simulations compete for CPU in the full suite.

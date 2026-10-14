@@ -1,0 +1,61 @@
+--- a/apps/player/src/auth/supabaseAuth.ts
++++ b/apps/player/src/auth/supabaseAuth.ts
+@@ -3,6 +3,7 @@
+   type AuthChangeEvent,
+   type Session,
+   type SupabaseClient,
++  type User,
+ } from "@supabase/supabase-js";
+ import {
+   hostedAuthConfiguration,
+@@ -19,17 +20,24 @@
+     return null;
+   }
+   if (client === null) {
+-    client = createClient(
+-      configuration.supabaseUrl,
+-      configuration.supabaseAnonKey,
+-      {
+-        auth: {
+-          persistSession: true,
+-          autoRefreshToken: true,
+-          detectSessionInUrl: true,
++    try {
++      client = createClient(
++        configuration.supabaseUrl,
++        configuration.supabaseAnonKey,
++        {
++          auth: {
++            persistSession: true,
++            autoRefreshToken: true,
++            detectSessionInUrl: true,
++            // Admin email invitations must also open in another browser/device.
++            flowType: "implicit",
++          },
+         },
+-      },
+-    );
++      );
++    } catch {
++      // The gate reports a configuration error without exposing the values.
++      return null;
++    }
+   }
+   return client;
+ }
+@@ -39,9 +47,14 @@
+ ): Promise<Session | null> {
+   const { data, error } = await authClient.auth.getSession();
+   if (error) {
+-    return null;
++    throw error;
+   }
+   return data.session;
++}
++
++/** These are provider-owned fields, never user-editable user_metadata. */
++export function isInvitedVerifiedUser(user: User): boolean {
++  return Boolean(user.email && user.email_confirmed_at && user.invited_at && !user.is_anonymous);
+ }
+ 
+ export function subscribeToHostedAuth(

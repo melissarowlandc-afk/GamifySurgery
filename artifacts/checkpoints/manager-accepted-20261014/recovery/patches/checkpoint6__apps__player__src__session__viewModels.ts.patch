@@ -1,0 +1,42 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1,3 +1,4 @@
++import { questionReviewContext } from "./questionReviewContext";
+ import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
+ import { createExecutiveManagementView } from "./executiveViewModels";
+ import { createGiftShopView, giftShopFee } from "./giftShopViewModels";
+@@ -811,7 +812,7 @@
+   };
+ }
+ 
+-export function employeeDiscussionView(state: GameState): EmployeeDiscussionView | null {
++export function employeeDiscussionView(state: GameState, flags: readonly QuestionReviewFlag[] = []): EmployeeDiscussionView | null {
+   const discussion = state.openEmployeeDiscussionId
+     ? state.employeeDiscussions?.[state.openEmployeeDiscussionId] : undefined;
+   if (!discussion || ["resolved", "cancelled", "waiting_unopened"].includes(discussion.lifecycle)) return null;
+@@ -825,6 +826,8 @@
+     : discussion.lifecycle === "feedback_pending" ? "feedback" : "summary";
+   const answerable = status === "traveling" || status === "question";
+   return {
++    reviewFlagInput: questionReviewContext(state, discussion.id, node.id) ?? undefined,
++    flaggedForDeveloperReview: isQuestionFlagOpen(flags, questionReviewContext(state, discussion.id, node.id)!),
+     id: discussion.id, employeeName: discussion.employeeDisplayName,
+     roleLabel: employee ? getStaffRoleDefinition(employee.staffRoleDefinitionId)?.displayName ?? "Team member" : "Team member",
+     avatar: discussion.employeeAppearance, status,
+@@ -1093,6 +1096,7 @@
+         id: step.decisionNodeId,
+         questionVariantId: step.questionVariantId,
+         primaryConceptId: step.primaryConceptId,
++        reviewFlagInput: questionReviewContext(state, encounter.id, node.id) ?? undefined,
+         flaggedForDeveloperReview: isQuestionFlagOpen(
+           questionReviewFlags,
+           {
+@@ -1885,7 +1889,7 @@
+ 
+   return {
+     employeeDiscussionRows: employeeDiscussionRows(state),
+-    employeeDiscussion: employeeDiscussionView(state),
++    employeeDiscussion: employeeDiscussionView(state, questionReviewFlags),
+     emergencyGlp1: {
+       // A built but inaccessible/unstaffed suite cannot replace the founder.
+       visible: glp1AutomationCapacity === 0,

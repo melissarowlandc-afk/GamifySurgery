@@ -1,0 +1,13 @@
+--- a/.github/workflows/deploy-pages.yml
++++ b/.github/workflows/deploy-pages.yml
+@@ -41,6 +41,10 @@
+         run: npm test
+ 
+       - name: Build and verify Pages artifact
++        env:
++          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
++          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
++          VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS: 'false'
+         run: npm run build:pages
+ 
+       - name: Configure GitHub Pages

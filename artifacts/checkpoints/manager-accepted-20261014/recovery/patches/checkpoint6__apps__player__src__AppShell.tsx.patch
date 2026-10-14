@@ -1,0 +1,25 @@
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -1,3 +1,4 @@
++import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
+ import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
+ import { useEffect, useRef, useState, type CSSProperties } from "react";
+ import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
+@@ -129,7 +130,7 @@
+   onOpenPatient: (patientId: string) => void;
+   onCloseChart: () => void;
+   onSubmitAnswer: (choiceId: string) => void;
+-  onFlagQuestion: (decisionNodeId: string) => void;
++  onFlagQuestion: SubmitQuestionReviewFlag;
+   onQuestionReviewStatusChange: (
+     flagId: string,
+     status: QuestionReviewFlagStatus,
+@@ -1027,7 +1028,7 @@
+               onStartLaboratoryProcessing={onStartLaboratoryProcessing}
+             />
+             {employeeDiscussion ? (
+-              <EmployeeDiscussionPanel discussion={employeeDiscussion}
++              <EmployeeDiscussionPanel discussion={employeeDiscussion} onFlagQuestion={onFlagQuestion}
+                 onClose={onCloseEmployeeDiscussion} onAnswer={onAnswerEmployeeDiscussion}
+                 onAcknowledge={onAcknowledgeEmployeeDiscussion} onFile={onFileEmployeeDiscussion} />
+             ) : chart ? (

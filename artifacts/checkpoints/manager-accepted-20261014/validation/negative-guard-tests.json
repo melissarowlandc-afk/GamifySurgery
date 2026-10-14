@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "test": "Manifest payload corruption",
+      "status": "PASS",
+      "rejection": "Manifest mismatch: recovery/apps/player/.env.example"
+    },
+    {
+      "test": "Duplicate manifest entry",
+      "status": "PASS",
+      "rejection": "Duplicate manifest entry"
+    },
+    {
+      "test": "Unmanifested file",
+      "status": "PASS",
+      "rejection": "Unmanifested or missing archive files"
+    },
+    {
+      "test": "Unsafe relative path: ../escape",
+      "status": "PASS",
+      "rejection": "Unsafe relative path: ../escape"
+    },
+    {
+      "test": "Unsafe relative path: /absolute",
+      "status": "PASS",
+      "rejection": "Unsafe relative path: /absolute"
+    },
+    {
+      "test": "Unsafe relative path: C:/escape",
+      "status": "PASS",
+      "rejection": "Unsafe path syntax"
+    },
+    {
+      "test": "Unsafe relative path: a\\b",
+      "status": "PASS",
+      "rejection": "Unsafe path syntax"
+    },
+    {
+      "test": "Unsafe relative path: .",
+      "status": "PASS",
+      "rejection": "Unsafe relative path: ."
+    },
+    {
+      "test": "Unsafe relative path: a/../b",
+      "status": "PASS",
+      "rejection": "Unsafe relative path: a/../b"
+    },
+    {
+      "test": "Unsafe relative path: a//b",
+      "status": "PASS",
+      "rejection": "Unsafe relative path: a//b"
+    },
+    {
+      "test": "Unsafe relative path: CON",
+      "status": "PASS",
+      "rejection": "Reserved Windows path"
+    },
+    {
+      "test": "Unsafe relative path: a/NUL.txt",
+      "status": "PASS",
+      "rejection": "Reserved Windows path"
+    },
+    {
+      "test": "Unsafe relative path: a/trailing.",
+      "status": "PASS",
+      "rejection": "Unsafe Windows path"
+    },
+    {
+      "test": "Unsafe relative path: a/trailing ",
+      "status": "PASS",
+      "rejection": "Unsafe Windows path"
+    },
+    {
+      "test": "Patch context mismatch",
+      "status": "PASS",
+      "rejection": "Hunks are out of order"
+    },
+    {
+      "test": "Malformed patch",
+      "status": "PASS",
+      "rejection": "Invalid unified hunk header"
+    },
+    {
+      "test": "Incomplete patch hunk",
+      "status": "PASS",
+      "rejection": "Incomplete patch body"
+    },
+    {
+      "test": "Invalid encoded base",
+      "status": "PASS",
+      "rejection": "Only base64 data is allowed"
+    },
+    {
+      "test": "Unknown storage encoding",
+      "status": "PASS",
+      "rejection": "Unknown storage encoding"
+    },
+    {
+      "test": "Final newline and empty-base round-trips",
+      "status": "PASS"
+    },
+    {
+      "test": "Nonempty destination overwrite",
+      "status": "PASS",
+      "rejection": "Destination must be empty"
+    },
+    {
+      "test": "Archive-overlap destination",
+      "status": "PASS",
+      "rejection": "Destination overlaps archive"
+    }
+  ],
+  "count": 22,
+  "command": "python artifacts/checkpoints/manager-accepted-20261014/validation/verify_restore_guards.py --scratch .local-dev/checkpoint6/guard-initial",
+  "liveTargetsWritten": 0,
+  "gitMutations": 0
+}

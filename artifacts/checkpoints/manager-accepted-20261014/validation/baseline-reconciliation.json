@@ -1,0 +1,307 @@
+{
+  "status": "PASS",
+  "baseCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+  "priorAcceptedTargets": 8222,
+  "changedPriorTargets": [
+    {
+      "path": ".gitignore",
+      "baselineSha256": "733109ad7bce7c3801c66e4706654830048df6fbe6bb53512e80575dd7f052ab",
+      "sha256": "3434b6837aca610c1769438115392899fb756970efd95dac051c32fd41dc16e9",
+      "bytes": 580,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "payload": "recovery/.gitignore"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/App.tsx",
+      "baselineSha256": "4d2bf44dba9f755f941cdaa3438da33d21c300877db9dc474da7ceb587743a99",
+      "sha256": "a8b0f8c639af4f4ef8ce5e914c6b36e13d5307409c738c1cc2ca35ef5f227acb",
+      "bytes": 13806,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__App.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/App.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__App.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "baselineSha256": "688b581287f945c369475a8b5407b9302331cba3ac0d653e975a1bc0a0bb0079",
+      "sha256": "191457b669563681271b4017a3f552769d6d34741bca6394f5552ee1e37099b5",
+      "bytes": 41148,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__AppShell.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/AppShell.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__AppShell.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.test.tsx",
+      "baselineSha256": "c3b0d2968166eb18bcec5a04279409bacf208b93674875c63b6b766f74cb811d",
+      "sha256": "4e1bb7d55b60d4fd3429953853858577ac066891131de6aab27b7106adc7281c",
+      "bytes": 12799,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/MobileChart.test.tsx"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "baselineSha256": "9d35ae9b076f31131f3d5294931acc0310c506793d58fe3d20ecb3ca69aaaa32",
+      "sha256": "548ee9f44e51c5a7dcc731f7377de946301171f2cb3ff542dc4b1e66eef1b4e4",
+      "bytes": 14427,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__mobile__MobileChart.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileChart.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileChart.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/mobile/MobileShell.tsx",
+      "baselineSha256": "550df4705c464e0c12acaedb80516ea1679a72d88bd8cba0b3335d447224ebc5",
+      "sha256": "5b2867c6cef841edb8d93690fccffb206b030d071c52120ce964a1659bff0be1",
+      "bytes": 34609,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__mobile__MobileShell.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileShell.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileShell.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/mobile/MobileTopBar.tsx",
+      "baselineSha256": "f5dee37f1aa105b2bcaf41c2b50ae2a35697ea78fc5ecbe1eee8f60e001a9d43",
+      "sha256": "c75b72e99cd757029c4dd3894bce888abe98fdbb7e73278ef1f3824168e85685",
+      "bytes": 4634,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/MobileTopBar.tsx"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/mobile/desktopPanelAdapters.tsx",
+      "baselineSha256": "b9ba7ca13a95bd607b3f942cc4fcf1e4eafa98a21a3f83f096454336cbeb787c",
+      "sha256": "021ec5654e7f8870a28b7f71bbf78168cc55b30fe84a26697b0fa08511126773",
+      "bytes": 3133,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/desktopPanelAdapters.tsx"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/session/prototypeStorage.ts",
+      "baselineSha256": "79f4621f075ad79cb7fba4c223b3a339da04b72ae137b8f879f6c64fec28b0eb",
+      "sha256": "301a5ae0e83180742dec70f14a8b663224cd37079093a37af7220fa1f45fcb82",
+      "bytes": 23544,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__session__prototypeStorage.ts",
+        "base": "recovery/bases/checkpoint2/apps/player/src/session/prototypeStorage.ts",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__session__prototypeStorage.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "baselineSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "sha256": "72386e682465d02325a0dc19e21eabb51db39871f06933d4198c504c4c40e0b5",
+      "bytes": 37265,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts",
+        "base": "recovery/bases/checkpoint2/apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "baselineSha256": "47af006ef79928f0c80caf7f9f9f0053863611489941af5dcb4c3ca593964a76",
+      "sha256": "256f356cb7b62b2b23591bda0761860d8ec764720f4acb683b0c58c09979d1bf",
+      "bytes": 83052,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__session__usePrototypeSession.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/session/usePrototypeSession.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__session__usePrototypeSession.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "baselineSha256": "43a08bc3a484cdfa68a82b4c054c0e6cee6b966b2cb6c754e2fedf690ca523d2",
+      "sha256": "4f00cad4421632e557fdcd1145043f11a214352d41a554b5b545e4490edab7fa",
+      "bytes": 145055,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__session__viewModels.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/session/viewModels.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__session__viewModels.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "baselineSha256": "660531dc826395bea84146bebc81ac0f5a389a7d62fb2b560e9799e56f0cf895",
+      "sha256": "83d9fa574e079a505b49b891943c9671117da3aa197dcdf666098e93dee5084b",
+      "bytes": 36257,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__ui__ChartPanel.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/ui/ChartPanel.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ChartPanel.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+      "baselineSha256": "884dac5bc65df0014d98901d61597de6c3598092e44307a8cd324a51ff50daf6",
+      "sha256": "bf072bb640ebb57f129a298d78a88b83e4d9afa382f55709e0f98ab7c63a06e5",
+      "bytes": 2990,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "payload": "recovery/apps/player/src/ui/EmployeeDiscussionPanel.tsx"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "baselineSha256": "68ad7a502e56b4335a0d9ee9f96cee08bda18f8e83e9b1a49236ea38b6f65a0f",
+      "sha256": "1937191bdfe2a97f72ec70c6234c0fe968665f0a69e47f25659e41dc76af373a",
+      "bytes": 6375,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__ui__HelpDialog.tsx",
+        "base": "recovery/bases/checkpoint2/apps/player/src/ui/HelpDialog.tsx",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__ui__HelpDialog.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx",
+      "baselineSha256": "84c55922428b977ace9e4e004fadb2916c26826836aacffd91259bf7d4e2e7ea",
+      "sha256": "537945bb78aa955fd363d2a4a42123dc6cb5e16fb9d7c12912034c45d852f74e",
+      "bytes": 10665,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__ui__OpeningSequence.tsx",
+        "base": "recovery/bases/checkpoint2/apps/player/src/ui/OpeningSequence.tsx",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__ui__OpeningSequence.tsx.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "baselineSha256": "5b4a32ccc572de437a49cbc6689d67373ece88aeddd17f1dd19befd8fef070e0",
+      "sha256": "d8ed7fa7131138eb5e18d91433909236efc21ada653e708a1572c5dedbbab97f",
+      "bytes": 23694,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__ui__types.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/ui/types.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__ui__types.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "apps/player/vite.config.ts",
+      "baselineSha256": "e25dc6be65a6e37f06be4e599d48be998ea0e4e99cc79b0a394d42cc25f9e69e",
+      "sha256": "4aab2d70e60b0fe978746698fdb976710f59b2cd19308eb33075620ebacdee18",
+      "bytes": 589,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__vite.config.ts",
+        "base": "recovery/bases/checkpoint3/apps/player/vite.config.ts",
+        "patch": "recovery/patches/checkpoint3__apps__player__vite.config.ts.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "baselineSha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc",
+      "sha256": "2bb680e556bbb95dcf2f08174a98fc4592b4a52d5451fc9839a9aee131e35beb",
+      "bytes": 436375,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__docs__execplans__owner-requests-20261008.md",
+        "base": "recovery/bases/checkpoint4/docs/execplans/owner-requests-20261008.md",
+        "patch": "recovery/patches/checkpoint4__docs__execplans__owner-requests-20261008.md.patch"
+      },
+      "capturedInAssignedScope": true
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "baselineSha256": "bae7c810f4ea39b5c573fdd60457d97fa31cd1265b575917934bba33231b35c5",
+      "sha256": "7128d8e7edee4da1295ae3b7ee0b12dd78030e997b78dae63fea6f8008911f95",
+      "bytes": 501346,
+      "baselineProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+        "base": "recovery/bases/checkpoint5/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+        "patch": "recovery/patches/checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch"
+      },
+      "capturedInAssignedScope": true
+    }
+  ],
+  "unchangedPriorTargetCount": 8202,
+  "missingPriorTargets": [],
+  "preBetaIntakeDeltas": [
+    "apps/player/src/App.tsx",
+    "apps/player/src/AppShell.tsx",
+    "apps/player/src/auth/AuthGate.tsx",
+    "apps/player/src/auth/prototypeAuth.test.ts",
+    "apps/player/src/auth/prototypeAuth.ts",
+    "apps/player/src/auth/supabaseAuth.ts",
+    "apps/player/src/mobile/desktopPanelAdapters.tsx",
+    "apps/player/src/mobile/MobileChart.test.tsx",
+    "apps/player/src/mobile/MobileChart.tsx",
+    "apps/player/src/mobile/MobileShell.tsx",
+    "apps/player/src/mobile/MobileTopBar.tsx",
+    "apps/player/src/session/prototypeStorage.ts",
+    "apps/player/src/session/questionReviewFlags.ts",
+    "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+    "apps/player/src/session/usePrototypeSession.ts",
+    "apps/player/src/session/viewModels.ts",
+    "apps/player/src/ui/ChartPanel.tsx",
+    "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+    "apps/player/src/ui/HelpDialog.tsx",
+    "apps/player/src/ui/OpeningSequence.tsx",
+    "apps/player/src/ui/types.ts",
+    ".github/workflows/deploy-pages.yml",
+    ".gitignore",
+    "apps/player/vite.config.ts"
+  ],
+  "outsideAssignedScopeDeltas": [],
+  "unchangedIndex": "validation/unchanged-prior-targets.json"
+}

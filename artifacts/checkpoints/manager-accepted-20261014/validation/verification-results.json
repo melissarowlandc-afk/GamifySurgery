@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "strictVerification": {
+    "status": "PASS",
+    "manifestedFiles": 142,
+    "archiveFiles": 143,
+    "archiveBytes": 19176939,
+    "patchContracts": 26,
+    "forwardReverseReapply": 26,
+    "recoveredTargets": 69,
+    "wholeOwnedTargets": 43,
+    "stagePaths": 146,
+    "liveStageSourcesChecked": 3,
+    "liveRecoveryTargetsChecked": 8271,
+    "priorArchivePayloadsChecked": 8378,
+    "historicalPatchBasesChecked": 26,
+    "liveClinicalSourcesChecked": 352,
+    "gitMutations": 0,
+    "workingTreeWrites": 0
+  },
+  "commands": [
+    "python artifacts/checkpoints/manager-accepted-20261014/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+    "python artifacts/checkpoints/manager-accepted-20261014/restore_recovery.py --dry-run",
+    "python artifacts/checkpoints/manager-accepted-20261014/safety_audit.py",
+    "node artifacts/checkpoints/manager-accepted-20261014/clinical_review_audit.mjs"
+  ],
+  "negativeGuardChecks": 22,
+  "diskRoundtripRecoveredFiles": 69,
+  "gameplayBuildOrDBTestsRerun": false,
+  "note": "Final source capture includes the append-only worker handoff; archive-only hashes were rechecked after writing this receipt."
+}

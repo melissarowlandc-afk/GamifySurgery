@@ -1,0 +1,283 @@
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -1,3 +1,5 @@
++import { questionReviewContext } from "./questionReviewContext";
++import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
+ import {
+   PROTOTYPE_ALERT_DEFINITIONS,
+   isPrototypeEventSuppressedFromPlayerFeed,
+@@ -80,7 +82,11 @@
+ import { getTutorialTickIntervalMs } from "./tutorialTiming";
+ import { previewMobileDoor, previewMobileHallway, previewMobilePlacement } from "../mobile/build/buildSession";
+ import type { MobileBuildActions } from "../mobile/build/types";
++import { useAuthAccountId } from "../auth/AuthAccountContext";
+ import { trimMobileBuildHistory } from "../mobile/performance/buildHistory";
++import { useUsageTracking } from "../playtime/UsageProvider";
++import { isFirstScoredAnswer } from "../playtime/scoredQuestionUsage";
++import { boundUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -133,7 +139,7 @@
+   fileEmployeeDiscussion: () => void;
+   closeChart: () => void;
+   submitAnswer: (choiceId: string) => void;
+-  flagQuestionForReview: (decisionNodeId: string) => void;
++  flagQuestionForReview: SubmitQuestionReviewFlag;
+   setQuestionReviewStatus: (
+     flagId: string,
+     status: QuestionReviewFlagStatus,
+@@ -283,11 +289,15 @@
+ export function usePrototypeSession(
+   initialLoadedProfile?: LoadedPrototypeProfile,
+ ): PrototypeSession {
++  // Captured for this mounted session; old cleanup/autosave writers can never
++  // start saving under another account when AuthGate remounts its provider.
++  const accountId = useRef(useAuthAccountId()).current;
++  const usage = useUsageTracking();
+   const loadedRef = useRef<ReturnType<typeof loadPrototypeProfile> | null>(
+     null,
+   );
+   if (loadedRef.current === null) {
+-    loadedRef.current = initialLoadedProfile ?? loadPrototypeProfile();
++    loadedRef.current = initialLoadedProfile ?? loadPrototypeProfile(accountId);
+   }
+ 
+   const [profile, setProfile] = useState<LocalPrototypeProfile>(
+@@ -396,7 +406,7 @@
+   });
+   const [questionReviewFlags, setQuestionReviewFlags] = useState<
+     QuestionReviewFlag[]
+-  >(() => loadQuestionReviewFlags());
++  >(() => loadQuestionReviewFlags(undefined, accountId));
+   const questionReviewFlagsRef = useRef(questionReviewFlags);
+   const [documentVisible, setDocumentVisible] = useState(
+     () =>
+@@ -413,10 +423,42 @@
+     ok: true,
+     profileCharacters: 0,
+   });
+-  const campaignWriteGateRef = useRef(createPrototypeCampaignWriteGate());
++  const campaignWriteGateRef = useRef(createPrototypeCampaignWriteGate(accountId));
+   const pendingAutosaveProfileRef =
+     useRef<LocalPrototypeProfile | null>(null);
+   const autosaveTaskRef = useRef<PrototypeAutosaveTask | null>(null);
++  const promotingUsageRef = useRef(false);
++  const durableUsageQuestionsRef = useRef<QuestionUsageReceipt[]>(loadedRef.current.profile.pendingUsageQuestions ?? []);
++
++  const promoteCommittedQuestions = useCallback(() => {
++    const receipts = durableUsageQuestionsRef.current;
++    if (!usage || !receipts.length || promotingUsageRef.current) return;
++    promotingUsageRef.current = true;
++    try {
++      if (usage.commitQuestions(receipts)) {
++        // The durable outbox now owns these IDs. A crash before the next profile
++        // write replays the same IDs; trusted ingestion contributes zero twice.
++        durableUsageQuestionsRef.current = [];
++        const promoted = new Set(receipts.map((receipt) => receipt.receipt_id));
++        const strip = (current: LocalPrototypeProfile): LocalPrototypeProfile => ({ ...current,
++          pendingUsageQuestions: current.pendingUsageQuestions?.filter((receipt) => !promoted.has(receipt.receipt_id)) });
++        profileRef.current = strip(profileRef.current);
++        if (pendingAutosaveProfileRef.current) pendingAutosaveProfileRef.current = strip(pendingAutosaveProfileRef.current);
++      }
++    } finally { promotingUsageRef.current = false; }
++  }, [usage]);
++
++  useEffect(() => {
++    // Only the persisted staging field is recovered; old FSRS history is zero.
++    promoteCommittedQuestions();
++    return usage?.subscribe(promoteCommittedQuestions);
++  }, [promoteCommittedQuestions, usage]);
++
++  useEffect(() => {
++    usage?.setGame({ campaignId: state.campaignId, paused: state.paused, finishReportOpen });
++  }, [usage, state.campaignId, state.paused, finishReportOpen]);
++
++  useEffect(() => () => usage?.setGame({ campaignId: null, paused: true, finishReportOpen: false }), [usage]);
+ 
+   const publishSystemNotice = useCallback(
+     (
+@@ -483,6 +525,8 @@
+       lastSaveResultRef.current = result;
+       lastSaveSucceededRef.current = result.ok;
+       if (result.ok) {
++        durableUsageQuestionsRef.current = nextProfile.pendingUsageQuestions ?? [];
++        promoteCommittedQuestions();
+         // A later verified write makes the previous warning stale and allows
+         // a distinct future failure to be reported again.
+         saveWarningShownRef.current = false;
+@@ -490,7 +534,7 @@
+       }
+       return result;
+     },
+-    [],
++    [promoteCommittedQuestions],
+   );
+ 
+   const stageActiveState = useCallback((nextState: GameState) => {
+@@ -570,8 +614,15 @@
+       const previous = stateRef.current;
+       const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
+         guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked });
++      if (usage && isFirstScoredAnswer(previous, next, command)) {
++        usage.activity(); // Accepted scored input is meaningful game activity, too.
++        const receipt = usage.createQuestionReceipt();
++        if (receipt) profileRef.current = { ...profileRef.current, pendingUsageQuestions:
++          boundUsageReceipts([...(profileRef.current.pendingUsageQuestions ?? []), receipt], Date.now()).receipts };
++      }
+       stateRef.current = next;
+       setState(next);
++      usage?.setGame({ campaignId: next.campaignId, paused: next.paused, finishReportOpen: finishReportOpenRef.current });
+ 
+       const shouldPersist = shouldPersistPrototypeCommand(
+         command.type,
+@@ -635,6 +686,7 @@
+       publishSystemNotice,
+       scheduleActiveStateAutosave,
+       stageActiveState,
++      usage,
+     ],
+   );
+ 
+@@ -643,8 +695,10 @@
+       const pendingProfile = pendingAutosaveProfileRef.current;
+       cancelScheduledAutosave();
+       pendingAutosaveProfileRef.current = null;
+-      if (pendingProfile) {
+-        attemptSaveProfile(pendingProfile);
++      if (accountId !== null || pendingProfile) {
++        // Sign-out/account switch also flushes ticks staged since the last
++        // checkpoint, using this session's captured account namespace.
++        attemptSaveProfile(accountId === null ? pendingProfile! : profileRef.current);
+       }
+     },
+     [attemptSaveProfile, cancelScheduledAutosave],
+@@ -983,79 +1037,25 @@
+     [execute],
+   );
+ 
+-  const flagQuestionForReview = useCallback(
+-    (decisionNodeId: string) => {
++  const flagQuestionForReview = useCallback<SubmitQuestionReviewFlag>(
++    (decisionNodeId, comment = "", captured) => {
+       const currentState = stateRef.current;
+-      const encounterId = currentState.openChartEncounterId;
+-      const encounter =
+-        encounterId === null
+-          ? null
+-          : currentState.encounters[encounterId] ?? null;
+-      const node = encounter?.frozenCase.decisionNodes.find(
+-        (candidate) => candidate.id === decisionNodeId,
+-      );
+-      const step = encounter?.steps.find(
+-        (candidate) => candidate.decisionNodeId === decisionNodeId,
+-      );
+-
+-      if (!encounter || !node) {
+-        setAnnouncement(
+-          "This question could not be identified, so no review flag was stored.",
+-        );
++      const subjectId = currentState.openEmployeeDiscussionId ?? currentState.openChartEncounterId;
++      const input = captured ?? (subjectId ? questionReviewContext(currentState, subjectId, decisionNodeId) : null);
++      if (!input || input.decisionNodeId !== decisionNodeId) {
++        setAnnouncement("This question could not be identified, so no review flag was stored.");
+         return;
+       }
+-
+-      const activeCampaign = profileRef.current.campaigns.find(
+-        (campaign) => campaign.campaignId === currentState.campaignId,
+-      );
+-      const now = Date.now();
+-      const result = recordQuestionReviewFlag(
+-        questionReviewFlagsRef.current,
+-        {
+-          campaignId: currentState.campaignId,
+-          clinicName: activeCampaign?.name ?? "Unnamed clinic",
+-          clinicalReleaseId: encounter.clinicalReleaseId,
+-          clinicalCaseId: encounter.frozenCase.id,
+-          clinicalCaseDisplayName: encounter.frozenCase.displayName,
+-          patientPresentationVariantId:
+-            encounter.frozenCase.patientPresentationVariantId,
+-          selectedInstantiationProfileId:
+-            encounter.frozenCase.selectedInstantiationProfileId ?? null,
+-          decisionNodeId: node.id,
+-          questionVariantId: node.questionVariantId,
+-          primaryConceptId: node.primaryConceptId,
+-          releasePointId: encounter.frozenCase.releasePointId ?? null,
+-          patientDisplayName: encounter.patientDisplayName,
+-          patientPresentation: encounter.frozenCase.presentation,
+-          stem: node.stem,
+-          answerChoices: node.answerChoices.map((choice) => ({
+-            id: choice.id,
+-            label: choice.label,
+-            isCorrect: choice.isCorrect,
+-          })),
+-          explanation: node.explanation,
+-          sourceLabels: [
+-            ...new Set([
+-              ...encounter.frozenCase.sourceLabels,
+-              ...node.sourceLabels,
+-            ]),
+-          ],
+-          facilityTick: currentState.facilityTick,
+-          selectedAnswerChoiceId: step?.answer?.answerChoiceId ?? null,
+-          answerWasCorrect: step?.answer?.correct ?? null,
+-        },
+-        now,
+-      );
++      const activeCampaign = profileRef.current.campaigns.find((campaign) => campaign.campaignId === input.campaignId);
++      const result = recordQuestionReviewFlag(questionReviewFlagsRef.current, {
++        ...input, clinicName: activeCampaign?.name ?? input.clinicName, comment: comment.slice(0, 500),
++      }, Date.now());
+       questionReviewFlagsRef.current = result.flags;
+       setQuestionReviewFlags(result.flags);
+-      const persisted = saveQuestionReviewFlags(result.flags);
+-      setAnnouncement(
+-        persisted
+-          ? "Question flagged for developer review."
+-          : "Question flagged for this session, but browser storage was unavailable.",
+-      );
+-    },
+-    [],
++      const persisted = saveQuestionReviewFlags(result.flags, undefined, accountId);
++      setAnnouncement(persisted ? "Question flagged for developer review." : "Question flagged for this session, but browser storage was unavailable.");
++    },
++    [accountId],
+   );
+ 
+   const setQuestionReviewStatus = useCallback(
+@@ -1067,7 +1067,7 @@
+       );
+       questionReviewFlagsRef.current = next;
+       setQuestionReviewFlags(next);
+-      const persisted = saveQuestionReviewFlags(next);
++      const persisted = saveQuestionReviewFlags(next, undefined, accountId);
+       setAnnouncement(
+         persisted
+           ? status === "reviewed"
+@@ -1745,6 +1745,7 @@
+   );
+ 
+   const saveAndPause = useCallback((): PrototypeSaveResult => {
++    usage?.endSession();
+     cameraPreferencesRef.current!.flush();
+     if (!stateRef.current.paused) {
+       execute(
+@@ -1777,7 +1778,7 @@
+         : describePrototypeStorageFailure(result.failure),
+     );
+     return result;
+-  }, [execute, persistActiveState, publishSystemNotice]);
++  }, [execute, persistActiveState, publishSystemNotice, usage]);
+ 
+   const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
+     const problem = getClinicAlertActionProblem(stateRef.current, action);
+@@ -1821,7 +1822,7 @@
+     cameraPreferencesRef.current!.discard();
+     cancelScheduledAutosave();
+     pendingAutosaveProfileRef.current = null;
+-    const result = clearPrototypeCampaignStorage();
++    const result = clearPrototypeCampaignStorage(accountId);
+     if (!result.ok) {
+       publishSystemNotice(
+         "alert.system.save-failed",

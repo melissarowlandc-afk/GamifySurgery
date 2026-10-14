@@ -1,0 +1,522 @@
+{
+  "status": "PASS",
+  "scanned": {
+    "physical": 137,
+    "decoded_base": 26,
+    "decoded_patch": 26,
+    "recovered_current": 69
+  },
+  "secretPrivacyFindings": [],
+  "credentialLiterals": [
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 19,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 37,
+      "valueSha256": "fb63872586eea8086d4136ee772120fbda3dc651ad073703631a8ec3b02ca2d7",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 103,
+      "valueSha256": "390a827445fb0f6f8527da743899ad85c40a84fbf95ad3cc451662560bbdda9c",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 151,
+      "valueSha256": "78da43b516150cfdff8b5f12cad5245e98217116c69ee22e85addc79d18d053b",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 98,
+      "valueSha256": "6b25efd6069e48d7bb6f0a80eed66b98b0d2e930e9cc27769657fae47a31c475",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 98,
+      "valueSha256": "fb63872586eea8086d4136ee772120fbda3dc651ad073703631a8ec3b02ca2d7",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 189,
+      "valueSha256": "d8123f4ad7f55fce9cd5bec5dd4c4d30474f622232de21b920eb237835e9f257",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "physical",
+      "line": 9,
+      "valueSha256": "2782a032f3e6924e58abdaecd170288c829f05e970b79f01c5abda213019cafa",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "physical",
+      "line": 13,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "physical",
+      "line": 29,
+      "valueSha256": "09bccef35dda43310a18187652d55bb2330186249ed97d7a4a9543f0070a7c06",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/auth/AuthGate.tsx",
+      "kind": "physical",
+      "line": 239,
+      "valueSha256": "b8b9f8f23992ebc2617febc03d92ecb1763fba7b77a5d053b69c416bad18a369",
+      "disposition": "HTML_autocomplete_attribute"
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__AuthGate.tsx.patch",
+      "kind": "physical",
+      "line": 426,
+      "valueSha256": "b8b9f8f23992ebc2617febc03d92ecb1763fba7b77a5d053b69c416bad18a369",
+      "disposition": "HTML_autocomplete_attribute"
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__prototypeAuth.test.ts.patch",
+      "kind": "physical",
+      "line": 39,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx:base",
+      "kind": "decoded_base",
+      "line": 239,
+      "valueSha256": "b8b9f8f23992ebc2617febc03d92ecb1763fba7b77a5d053b69c416bad18a369",
+      "disposition": "HTML_autocomplete_attribute"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx:patch",
+      "kind": "decoded_patch",
+      "line": 426,
+      "valueSha256": "b8b9f8f23992ebc2617febc03d92ecb1763fba7b77a5d053b69c416bad18a369",
+      "disposition": "HTML_autocomplete_attribute"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts:patch",
+      "kind": "decoded_patch",
+      "line": 39,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 19,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 37,
+      "valueSha256": "fb63872586eea8086d4136ee772120fbda3dc651ad073703631a8ec3b02ca2d7",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 103,
+      "valueSha256": "390a827445fb0f6f8527da743899ad85c40a84fbf95ad3cc451662560bbdda9c",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 151,
+      "valueSha256": "78da43b516150cfdff8b5f12cad5245e98217116c69ee22e85addc79d18d053b",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx",
+      "kind": "recovered_current",
+      "line": 249,
+      "valueSha256": "b8b9f8f23992ebc2617febc03d92ecb1763fba7b77a5d053b69c416bad18a369",
+      "disposition": "HTML_autocomplete_attribute"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts",
+      "kind": "recovered_current",
+      "line": 35,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 98,
+      "valueSha256": "6b25efd6069e48d7bb6f0a80eed66b98b0d2e930e9cc27769657fae47a31c475",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 98,
+      "valueSha256": "fb63872586eea8086d4136ee772120fbda3dc651ad073703631a8ec3b02ca2d7",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 189,
+      "valueSha256": "d8123f4ad7f55fce9cd5bec5dd4c4d30474f622232de21b920eb237835e9f257",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "recovered_current",
+      "line": 9,
+      "valueSha256": "2782a032f3e6924e58abdaecd170288c829f05e970b79f01c5abda213019cafa",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "recovered_current",
+      "line": 13,
+      "valueSha256": "abebefd9bc1b980c93c12cd032ab3f9a1cbff3ff98e9a0155fdc0fd9c922876f",
+      "disposition": "explicit_synthetic_fixture"
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.test.ts",
+      "kind": "recovered_current",
+      "line": 29,
+      "valueSha256": "09bccef35dda43310a18187652d55bb2330186249ed97d7a4a9543f0070a7c06",
+      "disposition": "explicit_synthetic_fixture"
+    }
+  ],
+  "emailIdentifiers": [
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 141,
+      "valueSha256": "dced4e0a5a37d757358ae5670ca15d245aa2fc2e52c63b36a0e20ce8c9f76669",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 142,
+      "valueSha256": "dced4e0a5a37d757358ae5670ca15d245aa2fc2e52c63b36a0e20ce8c9f76669",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 150,
+      "valueSha256": "333dd92cf8dcb84741aa83487a9871ee8bceaf6f1767d924c9e73cca3f9fcfa2",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 151,
+      "valueSha256": "333dd92cf8dcb84741aa83487a9871ee8bceaf6f1767d924c9e73cca3f9fcfa2",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 99,
+      "valueSha256": "9256a97fed88cef34beee5685723ae9c849ef4c22b4ccc29723e22e29a9f4751",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 153,
+      "valueSha256": "9256a97fed88cef34beee5685723ae9c849ef4c22b4ccc29723e22e29a9f4751",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 9,
+      "valueSha256": "0a03e6627ae820bf97f12a515fd38d9cf201636dd976e365c1177c7ec8b24790",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 10,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 11,
+      "valueSha256": "bff444ada2e059aaba6cc797e93b1d11ddb351a8ef94f4e0666b802d139100fb",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 129,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 130,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 131,
+      "valueSha256": "bff444ada2e059aaba6cc797e93b1d11ddb351a8ef94f4e0666b802d139100fb",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "physical",
+      "line": 176,
+      "valueSha256": "0a03e6627ae820bf97f12a515fd38d9cf201636dd976e365c1177c7ec8b24790",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 141,
+      "valueSha256": "dced4e0a5a37d757358ae5670ca15d245aa2fc2e52c63b36a0e20ce8c9f76669",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 142,
+      "valueSha256": "dced4e0a5a37d757358ae5670ca15d245aa2fc2e52c63b36a0e20ce8c9f76669",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 150,
+      "valueSha256": "333dd92cf8dcb84741aa83487a9871ee8bceaf6f1767d924c9e73cca3f9fcfa2",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 151,
+      "valueSha256": "333dd92cf8dcb84741aa83487a9871ee8bceaf6f1767d924c9e73cca3f9fcfa2",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 99,
+      "valueSha256": "9256a97fed88cef34beee5685723ae9c849ef4c22b4ccc29723e22e29a9f4751",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 153,
+      "valueSha256": "9256a97fed88cef34beee5685723ae9c849ef4c22b4ccc29723e22e29a9f4751",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 9,
+      "valueSha256": "0a03e6627ae820bf97f12a515fd38d9cf201636dd976e365c1177c7ec8b24790",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 10,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 11,
+      "valueSha256": "bff444ada2e059aaba6cc797e93b1d11ddb351a8ef94f4e0666b802d139100fb",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 129,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 130,
+      "valueSha256": "bb2bafb1df62355c4531eec8c50c8e0940971198967f166958bef3501c69cb10",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 131,
+      "valueSha256": "bff444ada2e059aaba6cc797e93b1d11ddb351a8ef94f4e0666b802d139100fb",
+      "disposition": "reserved_synthetic_domain"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "kind": "recovered_current",
+      "line": 176,
+      "valueSha256": "0a03e6627ae820bf97f12a515fd38d9cf201636dd976e365c1177c7ec8b24790",
+      "disposition": "reserved_synthetic_domain"
+    }
+  ],
+  "mockedProjectURLs": [
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "physical",
+      "line": 19,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "physical",
+      "line": 168,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__prototypeAuth.test.ts.patch",
+      "kind": "physical",
+      "line": 36,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__prototypeAuth.test.ts.patch",
+      "kind": "physical",
+      "line": 39,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts:patch",
+      "kind": "decoded_patch",
+      "line": 36,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts:patch",
+      "kind": "decoded_patch",
+      "line": 39,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "recovered_current",
+      "line": 19,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts",
+      "kind": "recovered_current",
+      "line": 32,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts",
+      "kind": "recovered_current",
+      "line": 35,
+      "disposition": "explicit_mock_project_URL"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "kind": "recovered_current",
+      "line": 168,
+      "disposition": "explicit_mock_project_URL"
+    }
+  ],
+  "envExamples": [
+    {
+      "path": "apps/player/.env.example",
+      "variables": [
+        "VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS",
+        "VITE_SUPABASE_ANON_KEY",
+        "VITE_SUPABASE_URL"
+      ],
+      "allValuesEmpty": true
+    }
+  ],
+  "physicalEncoding": "UTF-8 without BOM; LF only",
+  "encodingErrors": [],
+  "losslesslyDecodedHistoricalCRLFBasesOrPatches": [
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx:base",
+      "kind": "decoded_base",
+      "CRLF": 73
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx:patch",
+      "kind": "decoded_patch",
+      "CRLF": 73
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx:base",
+      "kind": "decoded_base",
+      "CRLF": 302
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx:patch",
+      "kind": "decoded_patch",
+      "CRLF": 302
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md:base",
+      "kind": "decoded_base",
+      "CRLF": 55
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md:patch",
+      "kind": "decoded_patch",
+      "CRLF": 55
+    }
+  ],
+  "forbiddenPayloadPaths": [],
+  "includedIgnoredPaths": [],
+  "checkIgnoreProbeCount": 212,
+  "expectedExcludedPaths": [
+    "apps/player/.env",
+    "apps/player/.env.local",
+    "apps/player/.env.production",
+    ".claude/settings.local.json",
+    ".local-dev/checkpoint6/inventory.json",
+    "apps/player/dist/index.html",
+    "test-results/probe",
+    "playwright-report/index.html"
+  ],
+  "expectedExcludedPathsAllIgnored": true,
+  "ownerSavePayloads": 0,
+  "sourceCorpusPayloads": 0,
+  "personalDataScope": "Reserved synthetic fixture identifiers; inherited owner/project coordination names are public repository metadata, not patient data.",
+  "proprietarySourceScope": "Software/plans only; forbidden source names appear in policy/provenance, never source text or PDFs.",
+  "sourceCorpusRead": false,
+  "realEnvRead": false,
+  "ownerStorageAccessed": false,
+  "remoteRequests": 0,
+  "gitMutations": 0
+}

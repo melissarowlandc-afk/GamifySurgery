@@ -1,0 +1,22 @@
+--- a/apps/player/src/session/surgeryCenterServicePreviews.test.ts
++++ b/apps/player/src/session/surgeryCenterServicePreviews.test.ts
+@@ -82,8 +82,17 @@
+     });
+     const pending = state.encounters[encounterId]!.pendingResult!;
+     expect(pending.routeDisplayName).toBe("Off-site thyroid fine-needle aspiration");
+-    expect(chart(state, encounterId).pendingLabel).toContain("Off-site thyroid fine-needle aspiration");
+-    expect(chart(state, encounterId).decisionSteps![0]!.statusLabel).toBe("External service in progress");
++    expect(pending.routeId).toBe("route.thyroid_fna.outsourced");
++    const view = chart(state, encounterId);
++    // Versioned pending copy describes actual phases; the frozen route caption is provenance.
++    expect(view.pendingLabel).toContain("The result is pending.");
++    expect(view.pendingPhases).toEqual(expect.arrayContaining([
++      expect.objectContaining({ label: "Procedure", location: "offsite", complete: false }),
++      expect.objectContaining({ label: "Pathology", location: "offsite", complete: false }),
++    ]));
++    expect(view.pendingLabel).not.toContain(pending.resultNarrative);
++    expect(view.questionPrompt).toBeUndefined();
++    expect(view.decisionSteps![0]!.statusLabel).toBe("External service in progress");
+   });
+ 
+   it("labels an onsite EGD route as onsite care while its result is pending", () => {

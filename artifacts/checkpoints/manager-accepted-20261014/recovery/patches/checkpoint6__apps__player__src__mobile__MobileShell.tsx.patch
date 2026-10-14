@@ -1,0 +1,34 @@
+--- a/apps/player/src/mobile/MobileShell.tsx
++++ b/apps/player/src/mobile/MobileShell.tsx
+@@ -1,3 +1,5 @@
++import { AccountMenu } from "../ui/AccountMenu";
++import { VersionLabel } from "../appVersion";
+ import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+ import type { BuildDoorTool } from "../facility";
+ import { patientChartIdForCharacter } from "../facility/characterInspect";
+@@ -340,7 +342,7 @@
+       case "chart": return props.chart ? { title: "Patient chart", content: <MobileChart chart={props.chart}
+         onClose={props.onCloseChart} onSubmitAnswer={props.onSubmitAnswer} onFlagQuestion={props.onFlagQuestion}
+         onAcknowledgeTerminalFeedback={props.onAcknowledgeTerminalFeedback} onToggleSummary={props.onToggleSummary} onFileChart={props.onFileChart} /> } : null;
+-      case "discussion": return props.employeeDiscussion ? { title: "Team discussion", content: <MobileTeamDiscussion discussion={props.employeeDiscussion}
++      case "discussion": return props.employeeDiscussion ? { title: "Team discussion", content: <MobileTeamDiscussion discussion={props.employeeDiscussion} onFlagQuestion={props.onFlagQuestion}
+         onClose={props.onCloseEmployeeDiscussion ?? (() => {})} onAnswer={props.onAnswerEmployeeDiscussion ?? (() => {})}
+         onAcknowledge={props.onAcknowledgeEmployeeDiscussion ?? (() => {})} onFile={props.onFileEmployeeDiscussion ?? (() => {})} /> } : null;
+       case "alerts": return { title: "Alerts", content: <><MobileAlerts key={campaignId} items={feed} needs={needs} failures={failures}
+@@ -370,6 +372,7 @@
+       case "help": { const topic = HELP_TOPICS.find((topic) => topic.id === helpTopic);
+         return { title: "Help", content: <>
+           <p>The facility is paused while Help is open.</p>
++          <VersionLabel />
+           {topic ? <><MobileHelpTopic topic={topic} /><button type="button" onClick={() => setHelpTopic(null)}>All topics</button></>
+             : <nav className="mobile-menu" aria-label="Help topics">{HELP_TOPICS.map((topic) => <button type="button" key={topic.id} onClick={() => setHelpTopic(topic.id)}>{topic.title}</button>)}</nav>}
+           <button type="button" onClick={() => { navigator.closeTop(); props.onTutorialsEnabledChange(true); }}>Show guidance here</button>
+@@ -388,6 +391,8 @@
+         onTogglePause={props.onTogglePause} onRestart={props.onRestart} onRestartOpenChange={setRestartOpen} onTutorialsEnabledChange={props.onTutorialsEnabledChange} /> : <p>Prototype tools are unavailable in this build.</p> };
+       case "more": return { title: "More", kind: "bottom", content: <div className="mobile-menu">
+         <button type="button" onClick={showHelp}>Help</button>
++        <AccountMenu />
++        <VersionLabel />
+         <MobileCampaignManager campaigns={props.campaigns} onCreateCampaign={props.onCreateCampaign} onSwitchCampaign={props.onSwitchCampaign} />
+         <MobileRestartDialog paused={props.paused} onTogglePause={props.onTogglePause} onRestart={props.onRestart} onOpenChange={setRestartOpen} />
+         <button type="button" onClick={() => navigator.replaceTop("goals")}>Goals</button>

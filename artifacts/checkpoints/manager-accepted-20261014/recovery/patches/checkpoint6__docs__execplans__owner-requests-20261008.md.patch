@@ -1,0 +1,10 @@
+--- a/docs/execplans/owner-requests-20261008.md
++++ b/docs/execplans/owner-requests-20261008.md
+@@ -6799,3 +6799,7 @@
+ ## Manager: Variety-3 batch and assembly accepted (2026-10-11)
+ 
+ Manager scope review of the 10-concept/20-variant Variety-3 batch (sample read: named patient with age/sex, short complaint, parallel same-category choices, key not uniquely longest, per-choice rationale, teaching point, allowed open/government/society sources with safe new-tab links): ACCEPTED as editorial/technical only; all records needs_clinician_review. Assembly accepted after Chrome QA (http://127.0.0.1:5184/level4-rooms-qa.html?apps=variety3): David Parker, 55, male, 'Colonoscopy follow-up', four testing choices each with a visible game-time wait estimate, answer recorded with Clinical XP, no page errors. Worker suites: clinical 628, domain 3818 + 2 skips, player 1781 + known thyroid failure, typecheck PASS.
++
++## Owner decision: Beta 1 first (2026-10-13)
++
++Owner chose phased release: **Beta 1** = invite-only email+password login, playtime (visible/unpaused, 5-min idle cutoff) + questions-answered count per player, owner report (total time + total questions per player), question flag with comment stored in Supabase, privacy notice, invite-only GitHub Pages release (publication still needs the owner's explicit go-ahead). **Beta 2** = cross-device cloud saves (with local-campaign import). **Then** = automated daily flag triage/fix loop. Plan: docs/execplans/accounts-playtime-release-20261012.md (revision in progress).

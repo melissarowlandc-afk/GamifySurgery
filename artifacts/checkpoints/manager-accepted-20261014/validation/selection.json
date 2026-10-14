@@ -1,0 +1,1192 @@
+{
+  "createdAtUtc": "2026-10-14T16:05:36.328319+00:00",
+  "baseCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+  "files": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 1615,
+      "sha256": "1ce896b0d094ea62c231a2f45ef452468d64c9db2edf72f2a3d016c4e6f96ec2",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:.github/workflows/deploy-pages.yml"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 580,
+      "sha256": "3434b6837aca610c1769438115392899fb756970efd95dac051c32fd41dc16e9",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "payload": "recovery/.gitignore"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/.env.example",
+      "bytes": 463,
+      "sha256": "160c69bba8d4e16cb5d12cfc702fe78af15382c372f2bfbe8c70e87b1b2b8ec5",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/App.tsx",
+      "bytes": 13806,
+      "sha256": "a8b0f8c639af4f4ef8ce5e914c6b36e13d5307409c738c1cc2ca35ef5f227acb",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__App.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/App.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__App.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "bytes": 41148,
+      "sha256": "191457b669563681271b4017a3f552769d6d34741bca6394f5552ee1e37099b5",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__AppShell.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/AppShell.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__AppShell.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/appVersion.tsx",
+      "bytes": 404,
+      "sha256": "89faf70669290c3f90c5319f73733dc98544443419362bd504b9dc435c63a2da",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/AuthAccountContext.tsx",
+      "bytes": 599,
+      "sha256": "3ddd89b1d7b607fb77ce1eaa51a88479696c37d5d221937a86cc62bdc4330a2f",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "bytes": 14019,
+      "sha256": "ac132180905d16b299f1538d857d091a4184cdeaf576d81a29198b8a95c2239f",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx",
+      "bytes": 13405,
+      "sha256": "0f48bf760984e4592b06b151eab9bd303d076deb9d4e3e310d6f656da10a59a9",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/AuthGate.tsx"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/authPasswordFlow.test.ts",
+      "bytes": 1498,
+      "sha256": "70aeab7fc4002b5d62756cb1501e27d5ff84521f7438336d9727f958db3e2731",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/authPasswordFlow.ts",
+      "bytes": 2420,
+      "sha256": "fcab2e7d4a36074d4e3e571471dabdd34ff7196efcf00f7f470be0b12e038415",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.test.ts",
+      "bytes": 2367,
+      "sha256": "994733d1d96fad81aa3a3abb77673b877a3491d75edc44556e82b46824aaaba4",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/prototypeAuth.test.ts"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/prototypeAuth.ts",
+      "bytes": 3109,
+      "sha256": "f927e9c66235633498228b17d736452a86da7a3d96b53aa3ae5af4149a34fc64",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/prototypeAuth.ts"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/auth/supabaseAuth.ts",
+      "bytes": 1789,
+      "sha256": "0be61ee34a833dbeb394c1deeb2fe7f770e9f5eb6a484bc4a6a530298c3759b4",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Explicit brief: apps/player/src/auth/**"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/supabaseAuth.ts"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.test.tsx",
+      "bytes": 12799,
+      "sha256": "4e1bb7d55b60d4fd3429953853858577ac066891131de6aab27b7106adc7281c",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/MobileChart.test.tsx"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "bytes": 14427,
+      "sha256": "548ee9f44e51c5a7dcc731f7377de946301171f2cb3ff542dc4b1e66eef1b4e4",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__mobile__MobileChart.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileChart.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileChart.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/mobile/MobileShell.tsx",
+      "bytes": 34609,
+      "sha256": "5b2867c6cef841edb8d93690fccffb206b030d071c52120ce964a1659bff0be1",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__mobile__MobileShell.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileShell.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileShell.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/mobile/MobileTopBar.tsx",
+      "bytes": 4634,
+      "sha256": "c75b72e99cd757029c4dd3894bce888abe98fdbb7e73278ef1f3824168e85685",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/MobileTopBar.tsx"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/mobile/desktopPanelAdapters.tsx",
+      "bytes": 3133,
+      "sha256": "021ec5654e7f8870a28b7f71bbf78168cc55b30fe84a26697b0fa08511126773",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "payload": "recovery/apps/player/src/mobile/desktopPanelAdapters.tsx"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/README.md",
+      "bytes": 7164,
+      "sha256": "3146a661a4ab31e9dbcb5354a14a9903036996498e63fc2ff246082a3603d8e0",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/UsageProvider.test.tsx",
+      "bytes": 2324,
+      "sha256": "1abc14b7b0077188be9d6370afdf69d22e46ce6162c471045096e4dbabc3f49b",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/UsageProvider.tsx",
+      "bytes": 2048,
+      "sha256": "63338de27b31134b6736bd64cf3f526e24f7c315d540cc8fc8efa8e6f47ec556",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "bytes": 21158,
+      "sha256": "6eacf120704a67e75b232a6be9fb3e3dd7041a0a08e8a27ebd4ec57671d761cc",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/browserUsage.test.ts",
+      "bytes": 5373,
+      "sha256": "8f85e1a50374d1366231277a001aa6abbdb289eecd0a06eea6d166ebe53c7942",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/browserUsage.ts",
+      "bytes": 2652,
+      "sha256": "892c6134d287f33567d8329d4788bc44cbddfa1a63b92c9cf063beb283b693c5",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/playtimeTracker.test.ts",
+      "bytes": 13547,
+      "sha256": "5a0ffd5d77e16273500fd543c3ff6f9091006e6bbefa48bab90bdf9e238ad21b",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/playtimeTracker.ts",
+      "bytes": 8447,
+      "sha256": "1d912ffe87fee0c91022010062a615be430f44e001d33cafdde500d5287153f6",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/scoredQuestionUsage.test.ts",
+      "bytes": 6160,
+      "sha256": "812f1ed6ecc9855486b4b4e25fd64fd09c6298289574a74ac4d1190ebbd3ec84",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/scoredQuestionUsage.ts",
+      "bytes": 1360,
+      "sha256": "cb1c02245d95845ff1239965e4e699ebc96a764ec0035438bba21fd5cf122269",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.test.ts",
+      "bytes": 3605,
+      "sha256": "17875cd400610f80e817471cd4daec310ce7ce2464c92fa55869f4fdb260727e",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.ts",
+      "bytes": 2787,
+      "sha256": "38d6f96bc0a432f87cd2aabe9754375bf67c0212c56ead120937a1b58284bdf2",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/usageOutbox.ts",
+      "bytes": 3008,
+      "sha256": "74c72e064ead085a5b23dbd73590f55d1e222b3ab3c500b45058020865310b7e",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/usageSessionIntegration.test.tsx",
+      "bytes": 8282,
+      "sha256": "103130df6b1560d3e582b9e28d385298016f0b4e55f4700873198216aa3641dd",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/usageTestFixtures.ts",
+      "bytes": 1610,
+      "sha256": "8a0bdf53bf2f868bfec57289738b9a06ee7fe475ef54114565074540308dfa61",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/playtime/usageTypes.ts",
+      "bytes": 4391,
+      "sha256": "7023c3d63277cd040b2134e69fa355c29092ad5b92e62f374e2e8a28b5c54e2e",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: apps/player/src/playtime/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/QuestionFlagProvider.tsx",
+      "bytes": 1940,
+      "sha256": "a5fef8e501315cfb7888bfb879db169faf3878abab605407fd86d6f5ba52eb9a",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/accountSessionIntegration.test.tsx",
+      "bytes": 3235,
+      "sha256": "fdbc5bf8fcc0f3f8e88f9259f7acba81c5a28e057334978aa6564c2ce6751abf",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/accountStorage.test.ts",
+      "bytes": 5671,
+      "sha256": "f6aa735da2a2bcb8645c5211109deddb3307aa1d6dd8d8a7187a727fd43bacc2",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/accountStorageKey.ts",
+      "bytes": 270,
+      "sha256": "de578495268e4f5c6ca0c7923a3db305e7575aadb6af67eac30b923051c36b48",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/hostedQuestionFlags.test.ts",
+      "bytes": 7520,
+      "sha256": "4bed454ab58a2df48b8f33cc6d3b86d96dea44eca2c9162c04b8d01d67543e6c",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/hostedQuestionFlags.ts",
+      "bytes": 12601,
+      "sha256": "315ffc8be9ceae1a8c97af9148a9622682ffbbe424b42193403541f38092aaa7",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/prototypeStorage.ts",
+      "bytes": 23544,
+      "sha256": "301a5ae0e83180742dec70f14a8b663224cd37079093a37af7220fa1f45fcb82",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__session__prototypeStorage.ts",
+        "base": "recovery/bases/checkpoint2/apps/player/src/session/prototypeStorage.ts",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__session__prototypeStorage.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/questionReviewContext.ts",
+      "bytes": 2160,
+      "sha256": "fa7331a9bc5bbc5d9beaff22abc66f43073c5c6544a15eb110cc10b13573d537",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/questionReviewFlags.ts",
+      "bytes": 12407,
+      "sha256": "a44833d07baa4293d86f8188cab3123ee2b41d1510d4aefdfb41b2dcafe3245a",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "baseline_HEAD_blob",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+        "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/session/questionReviewFlags.ts"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "bytes": 37265,
+      "sha256": "72386e682465d02325a0dc19e21eabb51db39871f06933d4198c504c4c40e0b5",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts",
+        "base": "recovery/bases/checkpoint2/apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "bytes": 83052,
+      "sha256": "256f356cb7b62b2b23591bda0761860d8ec764720f4acb683b0c58c09979d1bf",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__session__usePrototypeSession.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/session/usePrototypeSession.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__session__usePrototypeSession.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "bytes": 145055,
+      "sha256": "4f00cad4421632e557fdcd1145043f11a214352d41a554b5b545e4490edab7fa",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__session__viewModels.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/session/viewModels.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__session__viewModels.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/AccountMenu.tsx",
+      "bytes": 7131,
+      "sha256": "758a75265c82451bb3bab34b70915d795c329163196405eb38800d0e54095620",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "bytes": 36257,
+      "sha256": "83d9fa574e079a505b49b891943c9671117da3aa197dcdf666098e93dee5084b",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__ui__ChartPanel.tsx",
+        "base": "recovery/bases/checkpoint5/apps/player/src/ui/ChartPanel.tsx",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ChartPanel.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/ClinicalContentNotice.tsx",
+      "bytes": 242,
+      "sha256": "292326a13762e1c68713c3200ee445676ab14035efbf3c667a0b788220439443",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+      "bytes": 2990,
+      "sha256": "bf072bb640ebb57f129a298d78a88b83e4d9afa382f55709e0f98ab7c63a06e5",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "payload": "recovery/apps/player/src/ui/EmployeeDiscussionPanel.tsx"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "bytes": 6375,
+      "sha256": "1937191bdfe2a97f72ec70c6234c0fe968665f0a69e47f25659e41dc76af373a",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__ui__HelpDialog.tsx",
+        "base": "recovery/bases/checkpoint2/apps/player/src/ui/HelpDialog.tsx",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__ui__HelpDialog.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx",
+      "bytes": 10665,
+      "sha256": "537945bb78aa955fd363d2a4a42123dc6cb5e16fb9d7c12912034c45d852f74e",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+        "contractId": "checkpoint2__apps__player__src__ui__OpeningSequence.tsx",
+        "base": "recovery/bases/checkpoint2/apps/player/src/ui/OpeningSequence.tsx",
+        "patch": "recovery/patches/checkpoint2__apps__player__src__ui__OpeningSequence.tsx.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/QuestionFlagControl.test.tsx",
+      "bytes": 4614,
+      "sha256": "1763a4173193dffe4a3a4b7087844737badd1a4c1b54d8e98ce710a8a30db95c",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/QuestionFlagControl.tsx",
+      "bytes": 5456,
+      "sha256": "3e5e161b226e54f099821e56f39d1e81814fd87caa7a363edd065c12d1e67fb3",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/betaAccount.css",
+      "bytes": 2028,
+      "sha256": "dfcc2940857325eb6040045a74bf9293b934d76f9db746ea7336eb5f9681c251",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "bytes": 23694,
+      "sha256": "d8ed7fa7131138eb5e18d91433909236efc21ada653e708a1572c5dedbbab97f",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__apps__player__src__ui__types.ts",
+        "base": "recovery/bases/checkpoint5/apps/player/src/ui/types.ts",
+        "patch": "recovery/patches/checkpoint5__apps__player__src__ui__types.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "apps/player/vite.config.ts",
+      "bytes": 589,
+      "sha256": "4aab2d70e60b0fe978746698fdb976710f59b2cd19308eb33075620ebacdee18",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261009",
+        "contractId": "checkpoint3__apps__player__vite.config.ts",
+        "base": "recovery/bases/checkpoint3/apps/player/vite.config.ts",
+        "patch": "recovery/patches/checkpoint3__apps__player__vite.config.ts.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "docs/execplans/accounts-playtime-release-20261012.md",
+      "bytes": 147293,
+      "sha256": "cfab516ee7fd320a6cb460fe907435e736b5a209a0d238db80bba70844a9f16f",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "docs/execplans/backup6-recovery-20261014.md",
+      "bytes": 5591,
+      "sha256": "fa42d8d402bf0995832aab23b89f1d9ab8137c2c3aff9b4bd8e4cc412fa77808",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "docs/execplans/owner-requests-20261008.md",
+      "bytes": 436375,
+      "sha256": "2bb680e556bbb95dcf2f08174a98fc4592b4a52d5451fc9839a9aee131e35beb",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261010",
+        "contractId": "checkpoint4__docs__execplans__owner-requests-20261008.md",
+        "base": "recovery/bases/checkpoint4/docs/execplans/owner-requests-20261008.md",
+        "patch": "recovery/patches/checkpoint4__docs__execplans__owner-requests-20261008.md.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "bytes": 501346,
+      "sha256": "7128d8e7edee4da1295ae3b7ee0b12dd78030e997b78dae63fea6f8008911f95",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_patch_result",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "contractId": "checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+        "base": "recovery/bases/checkpoint5/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+        "patch": "recovery/patches/checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch"
+      },
+      "method": "patch",
+      "ownership": "shared_accepted_target"
+    },
+    {
+      "path": "docs/setup/BETA1_SUPABASE_SETUP.md",
+      "bytes": 19543,
+      "sha256": "1f900de4904e24c91224c8eeec9ed7748054be166f05d6939c10e6b70043f6a8",
+      "scopes": [
+        "Manager-accepted Beta 1 step 1 ownership list",
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Manager-accepted Beta 1 step 3 ownership list"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/migrations/20261013000100_beta1_usage_and_flags.sql",
+      "bytes": 21844,
+      "sha256": "ea87ff1ccbde71fb5e8f426076add75d3c0e5c80558315a2a04b45b6071bc3af",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/migrations/20261013000200_beta1_retention_schedule.sql",
+      "bytes": 576,
+      "sha256": "28f145dcd222d656f50fb73f94817d2977fd75472c59a480bb15fb46d6e751d4",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/reports/owner_question_flags.sql",
+      "bytes": 716,
+      "sha256": "dc384bf5a907ba8603dfb57f03f4ae6c6d3484bada7a79a7d3e9dfd2964fcf25",
+      "scopes": [
+        "Manager-accepted Beta 1 step 3 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/reports/owner_usage.sql",
+      "bytes": 416,
+      "sha256": "be1e26255b43461b710aab2d887095858f96eedc2d5e02a647c24f6a9203f393",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/tests/README.md",
+      "bytes": 4181,
+      "sha256": "a34ceca05b4ab54505dafc461796e7a4a8ab11a0b7b0a38b471a3138782192d5",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    },
+    {
+      "path": "supabase/tests/beta1_usage_and_flags.sql",
+      "bytes": 15561,
+      "sha256": "b0f53d89207e3e7b007384815a8f3e9991453e1bdd6f55418f728ebf1391315a",
+      "scopes": [
+        "Manager-accepted Beta 1 step 2 ownership list",
+        "Explicit brief: supabase/**"
+      ],
+      "hasBase": false,
+      "baseProvenance": {
+        "kind": "new_to_baseline_HEAD_and_all_five_prior_archives",
+        "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed"
+      },
+      "method": "whole_owned_current_file",
+      "ownership": "wholly_owned_accepted_target"
+    }
+  ],
+  "unchangedAlreadyPreserved": [
+    {
+      "path": "docs/execplans/level5-launch-plan-20261010.md",
+      "bytes": 488350,
+      "sha256": "74fd124d91af2fa6386f9368c5f6f73e3727d5e847b30c60f1328b80f813a856",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "payload": "recovery/docs/execplans/level5-launch-plan-20261010.md"
+      },
+      "method": "unchanged_already_preserved"
+    },
+    {
+      "path": "docs/execplans/mobile-version-20261009.md",
+      "bytes": 258149,
+      "sha256": "0eee7e310e46da7a5325a77b1e4c49c5eb0b9598f0c5546a8b3ce80d35e06485",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "payload": "recovery/docs/execplans/mobile-version-20261009.md"
+      },
+      "method": "unchanged_already_preserved"
+    },
+    {
+      "path": "tests/e2e/level-five.spec.ts",
+      "bytes": 15225,
+      "sha256": "8697e951007e63caa70325c8ef18f19334c1ed8e31543acd4295cb941bb4e459",
+      "scopes": [
+        "Explicit archive brief or worker coordination record"
+      ],
+      "hasBase": true,
+      "baseProvenance": {
+        "kind": "prior_archive_latest_accepted_whole_file",
+        "archive": "artifacts/checkpoints/manager-accepted-20261012",
+        "payload": "recovery/tests/e2e/level-five.spec.ts"
+      },
+      "method": "unchanged_already_preserved"
+    }
+  ]
+}

@@ -1,0 +1,1834 @@
+{
+  "schemaVersion": 1,
+  "archive": "manager-accepted-20261014",
+  "manifestSelfExcluded": true,
+  "sourceScope": "Manager-accepted since 10e3c228: Beta 1 steps 1-3, thyroid CI fix, shared acceptance records and worker archive record; earlier mobile/icon/Variety-3/Level 5 unchanged.",
+  "baseCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+  "gitMutations": 0,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "bytes": 8,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "clinical_review_audit.mjs",
+      "sha256": "b823023a82325d75454c7f28cf5ee6e4e4425b0ca52ef2075878922ef9f98008",
+      "bytes": 5709,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-step1__integrity-final.json",
+      "sha256": "4ea1d3bd53f4943e83dade6b94f5efff58d863e2ff34e1ec43167a68473da590",
+      "bytes": 470,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-step1/integrity-final.json",
+        "sourceSha256": "4ea1d3bd53f4943e83dade6b94f5efff58d863e2ff34e1ec43167a68473da590",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-step3__changed-files.json",
+      "sha256": "387b68c7066864d4bb32f32b40b8611fd52e9980cf7eab3538c6c260232a2f16",
+      "bytes": 1785,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-step3/changed-files.json",
+        "sourceSha256": "387b68c7066864d4bb32f32b40b8611fd52e9980cf7eab3538c6c260232a2f16",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-step3__integrity.json",
+      "sha256": "b9d7dbcca55c5ca3016e8593780fb1bc31799bb426a30daac045534b92821bdc",
+      "bytes": 172,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-step3/integrity.json",
+        "sourceSha256": "b9d7dbcca55c5ca3016e8593780fb1bc31799bb426a30daac045534b92821bdc",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__audit.json",
+      "sha256": "2a1f66c1fd2ec4a0dfa29e9cf3df0bd1026a8d90954f9f53f0adce14698bbfac",
+      "bytes": 404,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/audit.json",
+        "sourceSha256": "2a1f66c1fd2ec4a0dfa29e9cf3df0bd1026a8d90954f9f53f0adce14698bbfac",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__focused.status.json",
+      "sha256": "e13141e635050c2fec3659fbacf0144832c1f9768636ff8cdb2f9af0013a6724",
+      "bytes": 350,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/focused.status.json",
+        "sourceSha256": "e13141e635050c2fec3659fbacf0144832c1f9768636ff8cdb2f9af0013a6724",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__full-workspace-tests.status.json",
+      "sha256": "14c807b85414d118b9ab3366b78a16cb778848d9020ff5587bfd5e2f8f3aece1",
+      "bytes": 177,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/full-workspace-tests.status.json",
+        "sourceSha256": "14c807b85414d118b9ab3366b78a16cb778848d9020ff5587bfd5e2f8f3aece1",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__launcher-contract.status.json",
+      "sha256": "572f971312d3d6326887ff04b110a336341ccda6d5dd2f404470a3883280d018",
+      "bytes": 95,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/launcher-contract.status.json",
+        "sourceSha256": "572f971312d3d6326887ff04b110a336341ccda6d5dd2f404470a3883280d018",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__pages-build.status.json",
+      "sha256": "c080c0cdcc8f0bf10d8798f57a2d71922391357aa28a006794dc9678f4c1be92",
+      "bytes": 339,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/pages-build.status.json",
+        "sourceSha256": "c080c0cdcc8f0bf10d8798f57a2d71922391357aa28a006794dc9678f4c1be92",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__pages-verifier.status.json",
+      "sha256": "05fb918dbb3ba6c0e7fb1bbf3e49ffa155cf485d5f06aac9fc6b62685eb28b91",
+      "bytes": 292,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/pages-verifier.status.json",
+        "sourceSha256": "05fb918dbb3ba6c0e7fb1bbf3e49ffa155cf485d5f06aac9fc6b62685eb28b91",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__runtime-boundaries-no-git.status.json",
+      "sha256": "35722fbd6b2eb74298f94d40b8b0d7b9336bbddc779c26185c0c506358813785",
+      "bytes": 154,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/runtime-boundaries-no-git.status.json",
+        "sourceSha256": "35722fbd6b2eb74298f94d40b8b0d7b9336bbddc779c26185c0c506358813785",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "evidence/source-receipts/beta1-thyroid-ci-readiness__typecheck.status.json",
+      "sha256": "297ef5e5a804802b00fe6c3f555c736af61ddfcc596b660a066fa2b18d7771ed",
+      "bytes": 108,
+      "sourceStatus": {
+        "kind": "historical_small_worker_receipt",
+        "source": ".local-dev/beta1-thyroid-ci-readiness/typecheck.status.json",
+        "sourceSha256": "297ef5e5a804802b00fe6c3f555c736af61ddfcc596b660a066fa2b18d7771ed",
+        "normalizedUTF8NoBOMLF": true,
+        "historicalNotLatestSourceValidation": true
+      }
+    },
+    {
+      "path": "exclusions.json",
+      "sha256": "c59222314b9f9fd98d14b180afb9db86a14a9ae5901385ebd118f54ec95a381a",
+      "bytes": 10825347,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "PROPOSED_COMMIT_MESSAGE.txt",
+      "sha256": "39f29d8a1821578d480140ab7db69efe7b5dea8b507d85f116593930f6b10287",
+      "bytes": 1222,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "README.md",
+      "sha256": "ff71fff90095e992506df7ae067890a300cdcca3e1c8f6e24dc8a67316ecbf7f",
+      "bytes": 10992,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "recovery/aliases.json",
+      "sha256": "6ac91cab38eae269a4e6457275b3b956f615a7df03de4b1ce88f44b8110efc30",
+      "bytes": 18,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "recovery/apps/player/.env.example",
+      "sha256": "160c69bba8d4e16cb5d12cfc702fe78af15382c372f2bfbe8c70e87b1b2b8ec5",
+      "bytes": 463,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/.env.example",
+        "acceptedSha256": "160c69bba8d4e16cb5d12cfc702fe78af15382c372f2bfbe8c70e87b1b2b8ec5",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/appVersion.tsx",
+      "sha256": "89faf70669290c3f90c5319f73733dc98544443419362bd504b9dc435c63a2da",
+      "bytes": 404,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/appVersion.tsx",
+        "acceptedSha256": "89faf70669290c3f90c5319f73733dc98544443419362bd504b9dc435c63a2da",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthAccountContext.tsx",
+      "sha256": "3ddd89b1d7b607fb77ce1eaa51a88479696c37d5d221937a86cc62bdc4330a2f",
+      "bytes": 599,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/auth/AuthAccountContext.tsx",
+        "acceptedSha256": "3ddd89b1d7b607fb77ce1eaa51a88479696c37d5d221937a86cc62bdc4330a2f",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: apps/player/src/auth/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/auth/AuthGate.test.tsx",
+      "sha256": "ac132180905d16b299f1538d857d091a4184cdeaf576d81a29198b8a95c2239f",
+      "bytes": 14019,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/auth/AuthGate.test.tsx",
+        "acceptedSha256": "ac132180905d16b299f1538d857d091a4184cdeaf576d81a29198b8a95c2239f",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Explicit brief: apps/player/src/auth/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/auth/authPasswordFlow.test.ts",
+      "sha256": "70aeab7fc4002b5d62756cb1501e27d5ff84521f7438336d9727f958db3e2731",
+      "bytes": 1498,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/auth/authPasswordFlow.test.ts",
+        "acceptedSha256": "70aeab7fc4002b5d62756cb1501e27d5ff84521f7438336d9727f958db3e2731",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Explicit brief: apps/player/src/auth/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/auth/authPasswordFlow.ts",
+      "sha256": "fcab2e7d4a36074d4e3e571471dabdd34ff7196efcf00f7f470be0b12e038415",
+      "bytes": 2420,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/auth/authPasswordFlow.ts",
+        "acceptedSha256": "fcab2e7d4a36074d4e3e571471dabdd34ff7196efcf00f7f470be0b12e038415",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Explicit brief: apps/player/src/auth/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/beta1Integration.test.tsx",
+      "sha256": "6eacf120704a67e75b232a6be9fb3e3dd7041a0a08e8a27ebd4ec57671d761cc",
+      "bytes": 21158,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/beta1Integration.test.tsx",
+        "acceptedSha256": "6eacf120704a67e75b232a6be9fb3e3dd7041a0a08e8a27ebd4ec57671d761cc",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/browserUsage.test.ts",
+      "sha256": "8f85e1a50374d1366231277a001aa6abbdb289eecd0a06eea6d166ebe53c7942",
+      "bytes": 5373,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/browserUsage.test.ts",
+        "acceptedSha256": "8f85e1a50374d1366231277a001aa6abbdb289eecd0a06eea6d166ebe53c7942",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/browserUsage.ts",
+      "sha256": "892c6134d287f33567d8329d4788bc44cbddfa1a63b92c9cf063beb283b693c5",
+      "bytes": 2652,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/browserUsage.ts",
+        "acceptedSha256": "892c6134d287f33567d8329d4788bc44cbddfa1a63b92c9cf063beb283b693c5",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/playtimeTracker.test.ts",
+      "sha256": "5a0ffd5d77e16273500fd543c3ff6f9091006e6bbefa48bab90bdf9e238ad21b",
+      "bytes": 13547,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/playtimeTracker.test.ts",
+        "acceptedSha256": "5a0ffd5d77e16273500fd543c3ff6f9091006e6bbefa48bab90bdf9e238ad21b",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/playtimeTracker.ts",
+      "sha256": "1d912ffe87fee0c91022010062a615be430f44e001d33cafdde500d5287153f6",
+      "bytes": 8447,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/playtimeTracker.ts",
+        "acceptedSha256": "1d912ffe87fee0c91022010062a615be430f44e001d33cafdde500d5287153f6",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/README.md",
+      "sha256": "3146a661a4ab31e9dbcb5354a14a9903036996498e63fc2ff246082a3603d8e0",
+      "bytes": 7164,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/README.md",
+        "acceptedSha256": "3146a661a4ab31e9dbcb5354a14a9903036996498e63fc2ff246082a3603d8e0",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/scoredQuestionUsage.test.ts",
+      "sha256": "812f1ed6ecc9855486b4b4e25fd64fd09c6298289574a74ac4d1190ebbd3ec84",
+      "bytes": 6160,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/scoredQuestionUsage.test.ts",
+        "acceptedSha256": "812f1ed6ecc9855486b4b4e25fd64fd09c6298289574a74ac4d1190ebbd3ec84",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/scoredQuestionUsage.ts",
+      "sha256": "cb1c02245d95845ff1239965e4e699ebc96a764ec0035438bba21fd5cf122269",
+      "bytes": 1360,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/scoredQuestionUsage.ts",
+        "acceptedSha256": "cb1c02245d95845ff1239965e4e699ebc96a764ec0035438bba21fd5cf122269",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/supabaseUsage.test.ts",
+      "sha256": "17875cd400610f80e817471cd4daec310ce7ce2464c92fa55869f4fdb260727e",
+      "bytes": 3605,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/supabaseUsage.test.ts",
+        "acceptedSha256": "17875cd400610f80e817471cd4daec310ce7ce2464c92fa55869f4fdb260727e",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/supabaseUsage.ts",
+      "sha256": "38d6f96bc0a432f87cd2aabe9754375bf67c0212c56ead120937a1b58284bdf2",
+      "bytes": 2787,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/supabaseUsage.ts",
+        "acceptedSha256": "38d6f96bc0a432f87cd2aabe9754375bf67c0212c56ead120937a1b58284bdf2",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/usageOutbox.ts",
+      "sha256": "74c72e064ead085a5b23dbd73590f55d1e222b3ab3c500b45058020865310b7e",
+      "bytes": 3008,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/usageOutbox.ts",
+        "acceptedSha256": "74c72e064ead085a5b23dbd73590f55d1e222b3ab3c500b45058020865310b7e",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/UsageProvider.test.tsx",
+      "sha256": "1abc14b7b0077188be9d6370afdf69d22e46ce6162c471045096e4dbabc3f49b",
+      "bytes": 2324,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/UsageProvider.test.tsx",
+        "acceptedSha256": "1abc14b7b0077188be9d6370afdf69d22e46ce6162c471045096e4dbabc3f49b",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/UsageProvider.tsx",
+      "sha256": "63338de27b31134b6736bd64cf3f526e24f7c315d540cc8fc8efa8e6f47ec556",
+      "bytes": 2048,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/UsageProvider.tsx",
+        "acceptedSha256": "63338de27b31134b6736bd64cf3f526e24f7c315d540cc8fc8efa8e6f47ec556",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/usageSessionIntegration.test.tsx",
+      "sha256": "103130df6b1560d3e582b9e28d385298016f0b4e55f4700873198216aa3641dd",
+      "bytes": 8282,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/usageSessionIntegration.test.tsx",
+        "acceptedSha256": "103130df6b1560d3e582b9e28d385298016f0b4e55f4700873198216aa3641dd",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/usageTestFixtures.ts",
+      "sha256": "8a0bdf53bf2f868bfec57289738b9a06ee7fe475ef54114565074540308dfa61",
+      "bytes": 1610,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/usageTestFixtures.ts",
+        "acceptedSha256": "8a0bdf53bf2f868bfec57289738b9a06ee7fe475ef54114565074540308dfa61",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/playtime/usageTypes.ts",
+      "sha256": "7023c3d63277cd040b2134e69fa355c29092ad5b92e62f374e2e8a28b5c54e2e",
+      "bytes": 4391,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/playtime/usageTypes.ts",
+        "acceptedSha256": "7023c3d63277cd040b2134e69fa355c29092ad5b92e62f374e2e8a28b5c54e2e",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: apps/player/src/playtime/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/accountSessionIntegration.test.tsx",
+      "sha256": "fdbc5bf8fcc0f3f8e88f9259f7acba81c5a28e057334978aa6564c2ce6751abf",
+      "bytes": 3235,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/accountSessionIntegration.test.tsx",
+        "acceptedSha256": "fdbc5bf8fcc0f3f8e88f9259f7acba81c5a28e057334978aa6564c2ce6751abf",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/accountStorage.test.ts",
+      "sha256": "f6aa735da2a2bcb8645c5211109deddb3307aa1d6dd8d8a7187a727fd43bacc2",
+      "bytes": 5671,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/accountStorage.test.ts",
+        "acceptedSha256": "f6aa735da2a2bcb8645c5211109deddb3307aa1d6dd8d8a7187a727fd43bacc2",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/accountStorageKey.ts",
+      "sha256": "de578495268e4f5c6ca0c7923a3db305e7575aadb6af67eac30b923051c36b48",
+      "bytes": 270,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/accountStorageKey.ts",
+        "acceptedSha256": "de578495268e4f5c6ca0c7923a3db305e7575aadb6af67eac30b923051c36b48",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/hostedQuestionFlags.test.ts",
+      "sha256": "4bed454ab58a2df48b8f33cc6d3b86d96dea44eca2c9162c04b8d01d67543e6c",
+      "bytes": 7520,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/hostedQuestionFlags.test.ts",
+        "acceptedSha256": "4bed454ab58a2df48b8f33cc6d3b86d96dea44eca2c9162c04b8d01d67543e6c",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/hostedQuestionFlags.ts",
+      "sha256": "315ffc8be9ceae1a8c97af9148a9622682ffbbe424b42193403541f38092aaa7",
+      "bytes": 12601,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/hostedQuestionFlags.ts",
+        "acceptedSha256": "315ffc8be9ceae1a8c97af9148a9622682ffbbe424b42193403541f38092aaa7",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/QuestionFlagProvider.tsx",
+      "sha256": "a5fef8e501315cfb7888bfb879db169faf3878abab605407fd86d6f5ba52eb9a",
+      "bytes": 1940,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/QuestionFlagProvider.tsx",
+        "acceptedSha256": "a5fef8e501315cfb7888bfb879db169faf3878abab605407fd86d6f5ba52eb9a",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/session/questionReviewContext.ts",
+      "sha256": "fa7331a9bc5bbc5d9beaff22abc66f43073c5c6544a15eb110cc10b13573d537",
+      "bytes": 2160,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/session/questionReviewContext.ts",
+        "acceptedSha256": "fa7331a9bc5bbc5d9beaff22abc66f43073c5c6544a15eb110cc10b13573d537",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/ui/AccountMenu.tsx",
+      "sha256": "758a75265c82451bb3bab34b70915d795c329163196405eb38800d0e54095620",
+      "bytes": 7131,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/ui/AccountMenu.tsx",
+        "acceptedSha256": "758a75265c82451bb3bab34b70915d795c329163196405eb38800d0e54095620",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/ui/betaAccount.css",
+      "sha256": "dfcc2940857325eb6040045a74bf9293b934d76f9db746ea7336eb5f9681c251",
+      "bytes": 2028,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/ui/betaAccount.css",
+        "acceptedSha256": "dfcc2940857325eb6040045a74bf9293b934d76f9db746ea7336eb5f9681c251",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/ui/ClinicalContentNotice.tsx",
+      "sha256": "292326a13762e1c68713c3200ee445676ab14035efbf3c667a0b788220439443",
+      "bytes": 242,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/ui/ClinicalContentNotice.tsx",
+        "acceptedSha256": "292326a13762e1c68713c3200ee445676ab14035efbf3c667a0b788220439443",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/ui/QuestionFlagControl.test.tsx",
+      "sha256": "1763a4173193dffe4a3a4b7087844737badd1a4c1b54d8e98ce710a8a30db95c",
+      "bytes": 4614,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/ui/QuestionFlagControl.test.tsx",
+        "acceptedSha256": "1763a4173193dffe4a3a4b7087844737badd1a4c1b54d8e98ce710a8a30db95c",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/apps/player/src/ui/QuestionFlagControl.tsx",
+      "sha256": "3e5e161b226e54f099821e56f39d1e81814fd87caa7a363edd065c12d1e67fb3",
+      "bytes": 5456,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "apps/player/src/ui/QuestionFlagControl.tsx",
+        "acceptedSha256": "3e5e161b226e54f099821e56f39d1e81814fd87caa7a363edd065c12d1e67fb3",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/.github/workflows/deploy-pages.yml",
+      "sha256": "675312128f3a4bdf4ee3c9af7c49cfab6c1a6d8ccfb93e82bf3179a06939dff7",
+      "bytes": 1414,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": ".github/workflows/deploy-pages.yml",
+        "baseSha256": "675312128f3a4bdf4ee3c9af7c49cfab6c1a6d8ccfb93e82bf3179a06939dff7",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:.github/workflows/deploy-pages.yml"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/.gitignore",
+      "sha256": "733109ad7bce7c3801c66e4706654830048df6fbe6bb53512e80575dd7f052ab",
+      "bytes": 441,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": ".gitignore",
+        "baseSha256": "733109ad7bce7c3801c66e4706654830048df6fbe6bb53512e80575dd7f052ab",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_whole_file",
+          "archive": "artifacts/checkpoints/manager-accepted-20261009",
+          "payload": "recovery/.gitignore"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/App.tsx",
+      "sha256": "4d2bf44dba9f755f941cdaa3438da33d21c300877db9dc474da7ceb587743a99",
+      "bytes": 13248,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/App.tsx",
+        "baseSha256": "4d2bf44dba9f755f941cdaa3438da33d21c300877db9dc474da7ceb587743a99",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__App.tsx",
+          "base": "recovery/bases/checkpoint5/apps/player/src/App.tsx",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__App.tsx.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/AppShell.tsx",
+      "sha256": "688b581287f945c369475a8b5407b9302331cba3ac0d653e975a1bc0a0bb0079",
+      "bytes": 41045,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/AppShell.tsx",
+        "baseSha256": "688b581287f945c369475a8b5407b9302331cba3ac0d653e975a1bc0a0bb0079",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__AppShell.tsx",
+          "base": "recovery/bases/checkpoint5/apps/player/src/AppShell.tsx",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__AppShell.tsx.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/auth/AuthGate.tsx",
+      "sha256": "f54a75e3d519601c4d36e2938631dd227f0126449d4806b7aa6cc777c867651d",
+      "bytes": 10020,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/auth/AuthGate.tsx",
+        "baseSha256": "f54a75e3d519601c4d36e2938631dd227f0126449d4806b7aa6cc777c867651d",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/AuthGate.tsx"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/auth/prototypeAuth.test.ts",
+      "sha256": "847694be65a87bf0b2d0d97eaf21383c019cc66ced3921001d8add595f7a6d5d",
+      "bytes": 822,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/auth/prototypeAuth.test.ts",
+        "baseSha256": "847694be65a87bf0b2d0d97eaf21383c019cc66ced3921001d8add595f7a6d5d",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/prototypeAuth.test.ts"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/auth/prototypeAuth.ts",
+      "sha256": "097847e6d6376f78bde72e18f4755b5743b59157e87386bbe2f0c65f11a2a8ad",
+      "bytes": 3027,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/auth/prototypeAuth.ts",
+        "baseSha256": "097847e6d6376f78bde72e18f4755b5743b59157e87386bbe2f0c65f11a2a8ad",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/prototypeAuth.ts"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/auth/supabaseAuth.ts",
+      "sha256": "10aaa24e3d6df22da90cc100f04ab8b37802827e756bf0a1ad1616503ea622b9",
+      "bytes": 1276,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/auth/supabaseAuth.ts",
+        "baseSha256": "10aaa24e3d6df22da90cc100f04ab8b37802827e756bf0a1ad1616503ea622b9",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/auth/supabaseAuth.ts"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/mobile/desktopPanelAdapters.tsx",
+      "sha256": "b9ba7ca13a95bd607b3f942cc4fcf1e4eafa98a21a3f83f096454336cbeb787c",
+      "bytes": 3107,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/mobile/desktopPanelAdapters.tsx",
+        "baseSha256": "b9ba7ca13a95bd607b3f942cc4fcf1e4eafa98a21a3f83f096454336cbeb787c",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_whole_file",
+          "archive": "artifacts/checkpoints/manager-accepted-20261010",
+          "payload": "recovery/apps/player/src/mobile/desktopPanelAdapters.tsx"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/mobile/MobileChart.test.tsx",
+      "sha256": "c3b0d2968166eb18bcec5a04279409bacf208b93674875c63b6b766f74cb811d",
+      "bytes": 12704,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/mobile/MobileChart.test.tsx",
+        "baseSha256": "c3b0d2968166eb18bcec5a04279409bacf208b93674875c63b6b766f74cb811d",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_whole_file",
+          "archive": "artifacts/checkpoints/manager-accepted-20261010",
+          "payload": "recovery/apps/player/src/mobile/MobileChart.test.tsx"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/mobile/MobileChart.tsx",
+      "sha256": "9d35ae9b076f31131f3d5294931acc0310c506793d58fe3d20ecb3ca69aaaa32",
+      "bytes": 14479,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/mobile/MobileChart.tsx",
+        "baseSha256": "9d35ae9b076f31131f3d5294931acc0310c506793d58fe3d20ecb3ca69aaaa32",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__mobile__MobileChart.tsx",
+          "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileChart.tsx",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileChart.tsx.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/mobile/MobileShell.tsx",
+      "sha256": "550df4705c464e0c12acaedb80516ea1679a72d88bd8cba0b3335d447224ebc5",
+      "bytes": 34400,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/mobile/MobileShell.tsx",
+        "baseSha256": "550df4705c464e0c12acaedb80516ea1679a72d88bd8cba0b3335d447224ebc5",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__mobile__MobileShell.tsx",
+          "base": "recovery/bases/checkpoint5/apps/player/src/mobile/MobileShell.tsx",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__mobile__MobileShell.tsx.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/mobile/MobileTopBar.tsx",
+      "sha256": "f5dee37f1aa105b2bcaf41c2b50ae2a35697ea78fc5ecbe1eee8f60e001a9d43",
+      "bytes": 4503,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/mobile/MobileTopBar.tsx",
+        "baseSha256": "f5dee37f1aa105b2bcaf41c2b50ae2a35697ea78fc5ecbe1eee8f60e001a9d43",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_whole_file",
+          "archive": "artifacts/checkpoints/manager-accepted-20261010",
+          "payload": "recovery/apps/player/src/mobile/MobileTopBar.tsx"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/session/prototypeStorage.ts",
+      "sha256": "79f4621f075ad79cb7fba4c223b3a339da04b72ae137b8f879f6c64fec28b0eb",
+      "bytes": 22385,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/session/prototypeStorage.ts",
+        "baseSha256": "79f4621f075ad79cb7fba4c223b3a339da04b72ae137b8f879f6c64fec28b0eb",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+          "contractId": "checkpoint2__apps__player__src__session__prototypeStorage.ts",
+          "base": "recovery/bases/checkpoint2/apps/player/src/session/prototypeStorage.ts",
+          "patch": "recovery/patches/checkpoint2__apps__player__src__session__prototypeStorage.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/session/questionReviewFlags.ts",
+      "sha256": "dccdd9bb9aff5ff3053ee923104e7dad418223d3213063d0babb91a7ce2e41cc",
+      "bytes": 11491,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/session/questionReviewFlags.ts",
+        "baseSha256": "dccdd9bb9aff5ff3053ee923104e7dad418223d3213063d0babb91a7ce2e41cc",
+        "provenance": {
+          "kind": "baseline_HEAD_blob",
+          "baselineCommit": "10e3c228b361df59b60494b2033678b1ce094eed",
+          "gitObject": "10e3c228b361df59b60494b2033678b1ce094eed:apps/player/src/session/questionReviewFlags.ts"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "sha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "bytes": 36741,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "baseSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+          "contractId": "checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts",
+          "base": "recovery/bases/checkpoint2/apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+          "patch": "recovery/patches/checkpoint2__apps__player__src__session__surgeryCenterServicePreviews.test.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/session/usePrototypeSession.ts",
+      "sha256": "47af006ef79928f0c80caf7f9f9f0053863611489941af5dcb4c3ca593964a76",
+      "bytes": 81232,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/session/usePrototypeSession.ts",
+        "baseSha256": "47af006ef79928f0c80caf7f9f9f0053863611489941af5dcb4c3ca593964a76",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__session__usePrototypeSession.ts",
+          "base": "recovery/bases/checkpoint5/apps/player/src/session/usePrototypeSession.ts",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__session__usePrototypeSession.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/session/viewModels.ts",
+      "sha256": "43a08bc3a484cdfa68a82b4c054c0e6cee6b966b2cb6c754e2fedf690ca523d2",
+      "bytes": 144634,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/session/viewModels.ts",
+        "baseSha256": "43a08bc3a484cdfa68a82b4c054c0e6cee6b966b2cb6c754e2fedf690ca523d2",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__session__viewModels.ts",
+          "base": "recovery/bases/checkpoint5/apps/player/src/session/viewModels.ts",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__session__viewModels.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/ui/ChartPanel.tsx",
+      "sha256": "660531dc826395bea84146bebc81ac0f5a389a7d62fb2b560e9799e56f0cf895",
+      "bytes": 36836,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/ui/ChartPanel.tsx",
+        "baseSha256": "660531dc826395bea84146bebc81ac0f5a389a7d62fb2b560e9799e56f0cf895",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__ui__ChartPanel.tsx",
+          "base": "recovery/bases/checkpoint5/apps/player/src/ui/ChartPanel.tsx",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__ui__ChartPanel.tsx.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+      "sha256": "884dac5bc65df0014d98901d61597de6c3598092e44307a8cd324a51ff50daf6",
+      "bytes": 2516,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+        "baseSha256": "884dac5bc65df0014d98901d61597de6c3598092e44307a8cd324a51ff50daf6",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_whole_file",
+          "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+          "payload": "recovery/apps/player/src/ui/EmployeeDiscussionPanel.tsx"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/ui/HelpDialog.tsx.base64",
+      "sha256": "9145f7ce73a3f31991f634b558e361e878809aed920979298f62f6383480339b",
+      "bytes": 8289,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/ui/HelpDialog.tsx",
+        "baseSha256": "68ad7a502e56b4335a0d9ee9f96cee08bda18f8e83e9b1a49236ea38b6f65a0f",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+          "contractId": "checkpoint2__apps__player__src__ui__HelpDialog.tsx",
+          "base": "recovery/bases/checkpoint2/apps/player/src/ui/HelpDialog.tsx",
+          "patch": "recovery/patches/checkpoint2__apps__player__src__ui__HelpDialog.tsx.patch"
+        },
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/ui/OpeningSequence.tsx.base64",
+      "sha256": "aef5c5c4f8dea2dc81bc210f790ff8580d9af7a5b5f4a37c648ee93df55c9261",
+      "bytes": 14117,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/ui/OpeningSequence.tsx",
+        "baseSha256": "84c55922428b977ace9e4e004fadb2916c26826836aacffd91259bf7d4e2e7ea",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261008b",
+          "contractId": "checkpoint2__apps__player__src__ui__OpeningSequence.tsx",
+          "base": "recovery/bases/checkpoint2/apps/player/src/ui/OpeningSequence.tsx",
+          "patch": "recovery/patches/checkpoint2__apps__player__src__ui__OpeningSequence.tsx.patch"
+        },
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/src/ui/types.ts",
+      "sha256": "5b4a32ccc572de437a49cbc6689d67373ece88aeddd17f1dd19befd8fef070e0",
+      "bytes": 23486,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/src/ui/types.ts",
+        "baseSha256": "5b4a32ccc572de437a49cbc6689d67373ece88aeddd17f1dd19befd8fef070e0",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__apps__player__src__ui__types.ts",
+          "base": "recovery/bases/checkpoint5/apps/player/src/ui/types.ts",
+          "patch": "recovery/patches/checkpoint5__apps__player__src__ui__types.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/apps/player/vite.config.ts",
+      "sha256": "e25dc6be65a6e37f06be4e599d48be998ea0e4e99cc79b0a394d42cc25f9e69e",
+      "bytes": 497,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "apps/player/vite.config.ts",
+        "baseSha256": "e25dc6be65a6e37f06be4e599d48be998ea0e4e99cc79b0a394d42cc25f9e69e",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261009",
+          "contractId": "checkpoint3__apps__player__vite.config.ts",
+          "base": "recovery/bases/checkpoint3/apps/player/vite.config.ts",
+          "patch": "recovery/patches/checkpoint3__apps__player__vite.config.ts.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/docs/execplans/owner-requests-20261008.md",
+      "sha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc",
+      "bytes": 435758,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "docs/execplans/owner-requests-20261008.md",
+        "baseSha256": "9660979f6a2111b313f5448643d75c8a5f887f3880063ec8fa35208565fb1ddc",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261010",
+          "contractId": "checkpoint4__docs__execplans__owner-requests-20261008.md",
+          "base": "recovery/bases/checkpoint4/docs/execplans/owner-requests-20261008.md",
+          "patch": "recovery/patches/checkpoint4__docs__execplans__owner-requests-20261008.md.patch"
+        },
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/bases/checkpoint6/docs/handoffs/CURRENT_THREAD_HANDOFF.md.base64",
+      "sha256": "8d461f4c6a6616964b9cb923874da3be89a8c078d034fdd78e7e695c6f5fdc37",
+      "bytes": 642585,
+      "sourceStatus": {
+        "kind": "shared_patch_base",
+        "repositoryPath": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+        "baseSha256": "bae7c810f4ea39b5c573fdd60457d97fa31cd1265b575917934bba33231b35c5",
+        "provenance": {
+          "kind": "prior_archive_latest_accepted_patch_result",
+          "archive": "artifacts/checkpoints/manager-accepted-20261012",
+          "contractId": "checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md",
+          "base": "recovery/bases/checkpoint5/docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+          "patch": "recovery/patches/checkpoint5__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch"
+        },
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/docs/execplans/accounts-playtime-release-20261012.md",
+      "sha256": "cfab516ee7fd320a6cb460fe907435e736b5a209a0d238db80bba70844a9f16f",
+      "bytes": 147293,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "docs/execplans/accounts-playtime-release-20261012.md",
+        "acceptedSha256": "cfab516ee7fd320a6cb460fe907435e736b5a209a0d238db80bba70844a9f16f",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/docs/execplans/backup6-recovery-20261014.md",
+      "sha256": "fa42d8d402bf0995832aab23b89f1d9ab8137c2c3aff9b4bd8e4cc412fa77808",
+      "bytes": 5591,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "docs/execplans/backup6-recovery-20261014.md",
+        "acceptedSha256": "fa42d8d402bf0995832aab23b89f1d9ab8137c2c3aff9b4bd8e4cc412fa77808",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Explicit archive brief or worker coordination record"
+        ]
+      }
+    },
+    {
+      "path": "recovery/docs/setup/BETA1_SUPABASE_SETUP.md",
+      "sha256": "1f900de4904e24c91224c8eeec9ed7748054be166f05d6939c10e6b70043f6a8",
+      "bytes": 19543,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "docs/setup/BETA1_SUPABASE_SETUP.md",
+        "acceptedSha256": "1f900de4904e24c91224c8eeec9ed7748054be166f05d6939c10e6b70043f6a8",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 1 ownership list",
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Manager-accepted Beta 1 step 3 ownership list"
+        ]
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__.github__workflows__deploy-pages.yml.patch",
+      "sha256": "e6fc3a74e219ac4de9e44930a7605494dcefc0ec2d81b33850f46def9cf000ba",
+      "bytes": 452,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": ".github/workflows/deploy-pages.yml",
+        "acceptedSha256": "1ce896b0d094ea62c231a2f45ef452468d64c9db2edf72f2a3d016c4e6f96ec2",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__.gitignore.patch",
+      "sha256": "0d7345c490e1d8a34c71e0a3e6b78da277b5dba01a54976c0fc4fa3984720905",
+      "bytes": 277,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": ".gitignore",
+        "acceptedSha256": "3434b6837aca610c1769438115392899fb756970efd95dac051c32fd41dc16e9",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__App.tsx.patch",
+      "sha256": "48500c4cc4e094d5b65d0496b1980ce78ebe5b4b5985f65ed6aad16a984a29c2",
+      "bytes": 3811,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/App.tsx",
+        "acceptedSha256": "a8b0f8c639af4f4ef8ce5e914c6b36e13d5307409c738c1cc2ca35ef5f227acb",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__AppShell.tsx.patch",
+      "sha256": "aa1f137b2c074c01d0046ed55f61959d64b3efd06a7d98cf352bfa4dcaf88645",
+      "bytes": 1269,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/AppShell.tsx",
+        "acceptedSha256": "191457b669563681271b4017a3f552769d6d34741bca6394f5552ee1e37099b5",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__AuthGate.tsx.patch",
+      "sha256": "a2f3c6d323a55f7ffc561caae3793598685a341139fdff5ce1493f32fc5d5c8d",
+      "bytes": 21948,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/auth/AuthGate.tsx",
+        "acceptedSha256": "0f48bf760984e4592b06b151eab9bd303d076deb9d4e3e310d6f656da10a59a9",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__prototypeAuth.test.ts.patch",
+      "sha256": "323ac5eb20f7554969e478c27b32a63995fbab49eff03600e459d030756e03a7",
+      "bytes": 2002,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/auth/prototypeAuth.test.ts",
+        "acceptedSha256": "994733d1d96fad81aa3a3abb77673b877a3491d75edc44556e82b46824aaaba4",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__prototypeAuth.ts.patch",
+      "sha256": "dc221d120f3c137cd53ac75b9d503d7c381c68221dc1424039f7080942a50f03",
+      "bytes": 1369,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/auth/prototypeAuth.ts",
+        "acceptedSha256": "f927e9c66235633498228b17d736452a86da7a3d96b53aa3ae5af4149a34fc64",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__auth__supabaseAuth.ts.patch",
+      "sha256": "5fdc0f76d7cbb99e81a25103969211fe8c27592bf4991049ec8463be86194150",
+      "bytes": 1608,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/auth/supabaseAuth.ts",
+        "acceptedSha256": "0be61ee34a833dbeb394c1deeb2fe7f770e9f5eb6a484bc4a6a530298c3759b4",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__mobile__desktopPanelAdapters.tsx.patch",
+      "sha256": "d967f99c13f6411c97fa383e37a6bf98d6d7bb6c34e38d3b16dd842a7d2e13f2",
+      "bytes": 633,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/mobile/desktopPanelAdapters.tsx",
+        "acceptedSha256": "021ec5654e7f8870a28b7f71bbf78168cc55b30fe84a26697b0fa08511126773",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__mobile__MobileChart.test.tsx.patch",
+      "sha256": "b2fa8129687566a50eb3f955d519e9dd2ff10cae3290225aafca279a5126e113",
+      "bytes": 1106,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/mobile/MobileChart.test.tsx",
+        "acceptedSha256": "4e1bb7d55b60d4fd3429953853858577ac066891131de6aab27b7106adc7281c",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__mobile__MobileChart.tsx.patch",
+      "sha256": "eb3b3c738884d0ef3b5fb4b6669f25cebf362d84c2e763c688de8e13a9032bd2",
+      "bytes": 2827,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/mobile/MobileChart.tsx",
+        "acceptedSha256": "548ee9f44e51c5a7dcc731f7377de946301171f2cb3ff542dc4b1e66eef1b4e4",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__mobile__MobileShell.tsx.patch",
+      "sha256": "9549c86c050e61bae9584c208f14bd4f732930ce3fb13f280b8569fe7aefbc54",
+      "bytes": 3171,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/mobile/MobileShell.tsx",
+        "acceptedSha256": "5b2867c6cef841edb8d93690fccffb206b030d071c52120ce964a1659bff0be1",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__mobile__MobileTopBar.tsx.patch",
+      "sha256": "a31d1ab592f334153f22ec4acd842cc51b5607ce9beb06d78a8cea5c7ddb5022",
+      "bytes": 794,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/mobile/MobileTopBar.tsx",
+        "acceptedSha256": "c75b72e99cd757029c4dd3894bce888abe98fdbb7e73278ef1f3824168e85685",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__session__prototypeStorage.ts.patch",
+      "sha256": "ec875bf9edd4ea9d1bdd8ab6cb16693803ecbbe9736333f873603d2473a96c83",
+      "bytes": 6029,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/session/prototypeStorage.ts",
+        "acceptedSha256": "301a5ae0e83180742dec70f14a8b663224cd37079093a37af7220fa1f45fcb82",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__session__questionReviewFlags.ts.patch",
+      "sha256": "4025a54e9642081fe8a3eabd9e7a8868a4389a428367f09e5a08e35997f2c603",
+      "bytes": 3028,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/session/questionReviewFlags.ts",
+        "acceptedSha256": "a44833d07baa4293d86f8188cab3123ee2b41d1510d4aefdfb41b2dcafe3245a",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__session__surgeryCenterServicePreviews.test.ts.patch",
+      "sha256": "711ff07fbd434b243d6636e7341cd6fa139b220663394c51fcee292e7e765589",
+      "bytes": 1374,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+        "acceptedSha256": "72386e682465d02325a0dc19e21eabb51db39871f06933d4198c504c4c40e0b5",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__session__usePrototypeSession.ts.patch",
+      "sha256": "96a1de33c7e5fbed874dc4e978413933879ae473f29edfc64b1ef45536375b47",
+      "bytes": 12527,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/session/usePrototypeSession.ts",
+        "acceptedSha256": "256f356cb7b62b2b23591bda0761860d8ec764720f4acb683b0c58c09979d1bf",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__session__viewModels.ts.patch",
+      "sha256": "fe28eec50a5dc6cc764b1da4f9719501fac39c394b8a833dec1d446b17fe860b",
+      "bytes": 2252,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/session/viewModels.ts",
+        "acceptedSha256": "4f00cad4421632e557fdcd1145043f11a214352d41a554b5b545e4490edab7fa",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__ui__ChartPanel.tsx.patch",
+      "sha256": "efad1b08c38dc368c3dadb379c82e9d6d5edbe70db56d7f11a57d717e756f6e7",
+      "bytes": 2905,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/ui/ChartPanel.tsx",
+        "acceptedSha256": "83d9fa574e079a505b49b891943c9671117da3aa197dcdf666098e93dee5084b",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__ui__EmployeeDiscussionPanel.tsx.patch",
+      "sha256": "a46786aed2d74d0b35a914274532a534b8f2e8431888dbbb7c935310ee4f527f",
+      "bytes": 2013,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+        "acceptedSha256": "bf072bb640ebb57f129a298d78a88b83e4d9afa382f55709e0f98ab7c63a06e5",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__ui__HelpDialog.tsx.patch",
+      "sha256": "b91f58807711c8dec5740fb89e0407930b5111a48c251c8823a9a40e3fbab5f2",
+      "bytes": 16861,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/ui/HelpDialog.tsx",
+        "acceptedSha256": "1937191bdfe2a97f72ec70c6234c0fe968665f0a69e47f25659e41dc76af373a",
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__ui__OpeningSequence.tsx.patch",
+      "sha256": "773fae9459f40ef2b966bf2c9fe1c78c0140f6833a2dc280b3f8282c0d1f4065",
+      "bytes": 29297,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/ui/OpeningSequence.tsx",
+        "acceptedSha256": "537945bb78aa955fd363d2a4a42123dc6cb5e16fb9d7c12912034c45d852f74e",
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__src__ui__types.ts.patch",
+      "sha256": "01a7afd6cd4d98dfe46c5dac428f5a37731e004c27b02b8a1dcb8d5f7ede8252",
+      "bytes": 999,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/src/ui/types.ts",
+        "acceptedSha256": "d8ed7fa7131138eb5e18d91433909236efc21ada653e708a1572c5dedbbab97f",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__apps__player__vite.config.ts.patch",
+      "sha256": "a51fa970a834643b52d6952ae4ea86cea2820da7322216516348800965145010",
+      "bytes": 428,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "apps/player/vite.config.ts",
+        "acceptedSha256": "4aab2d70e60b0fe978746698fdb976710f59b2cd19308eb33075620ebacdee18",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__docs__execplans__owner-requests-20261008.md.patch",
+      "sha256": "8f8288bff8c46b0b63763a9a09178ef0404682b0074bac132fd82995eb053859",
+      "bytes": 1531,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "docs/execplans/owner-requests-20261008.md",
+        "acceptedSha256": "2bb680e556bbb95dcf2f08174a98fc4592b4a52d5451fc9839a9aee131e35beb",
+        "storageEncoding": "literal"
+      }
+    },
+    {
+      "path": "recovery/patches/checkpoint6__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "sha256": "b56e9de8ca32850fe7f732102fd3adbf3f59ce82a45699c501ba5404ad5b7218",
+      "bytes": 38597,
+      "sourceStatus": {
+        "kind": "shared_accepted_patch",
+        "repositoryPath": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+        "acceptedSha256": "7128d8e7edee4da1295ae3b7ee0b12dd78030e997b78dae63fea6f8008911f95",
+        "storageEncoding": "base64"
+      }
+    },
+    {
+      "path": "recovery/patches/patch-verification.json",
+      "sha256": "060b9bba3a50f60ca435a92b84ccfddc990f95b7c7dc1e7d04c71ce9fce1d4d6",
+      "bytes": 40233,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "recovery/supabase/migrations/20261013000100_beta1_usage_and_flags.sql",
+      "sha256": "ea87ff1ccbde71fb5e8f426076add75d3c0e5c80558315a2a04b45b6071bc3af",
+      "bytes": 21844,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/migrations/20261013000100_beta1_usage_and_flags.sql",
+        "acceptedSha256": "ea87ff1ccbde71fb5e8f426076add75d3c0e5c80558315a2a04b45b6071bc3af",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/supabase/migrations/20261013000200_beta1_retention_schedule.sql",
+      "sha256": "28f145dcd222d656f50fb73f94817d2977fd75472c59a480bb15fb46d6e751d4",
+      "bytes": 576,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/migrations/20261013000200_beta1_retention_schedule.sql",
+        "acceptedSha256": "28f145dcd222d656f50fb73f94817d2977fd75472c59a480bb15fb46d6e751d4",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/supabase/reports/owner_question_flags.sql",
+      "sha256": "dc384bf5a907ba8603dfb57f03f4ae6c6d3484bada7a79a7d3e9dfd2964fcf25",
+      "bytes": 716,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/reports/owner_question_flags.sql",
+        "acceptedSha256": "dc384bf5a907ba8603dfb57f03f4ae6c6d3484bada7a79a7d3e9dfd2964fcf25",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 3 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/supabase/reports/owner_usage.sql",
+      "sha256": "be1e26255b43461b710aab2d887095858f96eedc2d5e02a647c24f6a9203f393",
+      "bytes": 416,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/reports/owner_usage.sql",
+        "acceptedSha256": "be1e26255b43461b710aab2d887095858f96eedc2d5e02a647c24f6a9203f393",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/supabase/tests/beta1_usage_and_flags.sql",
+      "sha256": "b0f53d89207e3e7b007384815a8f3e9991453e1bdd6f55418f728ebf1391315a",
+      "bytes": 15561,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/tests/beta1_usage_and_flags.sql",
+        "acceptedSha256": "b0f53d89207e3e7b007384815a8f3e9991453e1bdd6f55418f728ebf1391315a",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "recovery/supabase/tests/README.md",
+      "sha256": "a34ceca05b4ab54505dafc461796e7a4a8ab11a0b7b0a38b471a3138782192d5",
+      "bytes": 4181,
+      "sourceStatus": {
+        "kind": "whole_owned_accepted_file",
+        "repositoryPath": "supabase/tests/README.md",
+        "acceptedSha256": "a34ceca05b4ab54505dafc461796e7a4a8ab11a0b7b0a38b471a3138782192d5",
+        "ownership": "wholly_owned_accepted_target",
+        "proof": [
+          "Manager-accepted Beta 1 step 2 ownership list",
+          "Explicit brief: supabase/**"
+        ]
+      }
+    },
+    {
+      "path": "restore_recovery.py",
+      "sha256": "e09ba3c6787543cdee5d43a6cf09d8769939f7806156277ed1b7ac93cd60d505",
+      "bytes": 1764,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "safety_audit.py",
+      "sha256": "f7cdb205a753fd5e6cd054ac6d3f283846582d1ab50184e760a94d378ce045f6",
+      "bytes": 9735,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "STAGE_PATHS.txt",
+      "sha256": "676f779dcdc9fe052901135e6ab483990bda7c4a2052d540628d38e9d597c1ab",
+      "bytes": 15092,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/archive-size.json",
+      "sha256": "35ab3a8cbcf2823e9dc4086740aa07d99f92d26dcfb5a6fad32005b7d7916f79",
+      "bytes": 223,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/base-coverage.json",
+      "sha256": "0f73365aa3977eda408d10f09acaf50de1ed61594b9cdc30c8cf7907b2d37b81",
+      "bytes": 296,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/baseline-reconciliation.json",
+      "sha256": "8ea688fe00d080e856a7963df308c9f7bea0669e66f7c3daab0ae6f6da57148b",
+      "bytes": 15126,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/clinical-review-audit.json",
+      "sha256": "02bf811b79f379b4ffd3e1729b994fa36511c5ba9aab884c0bdbefc36b9068b7",
+      "bytes": 33568,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/clinical-source-invariance.json",
+      "sha256": "d4b865fefd4ed2cfb4100b023d647efd9de365c119c02a583e2fca8837ecc067",
+      "bytes": 180803,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/disk-restore-roundtrip.json",
+      "sha256": "91d6a83ab7b141cfcb7b3ad89a3598cfa3fb3522a5f6769fb9bbc0f62813cdc3",
+      "bytes": 378,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/environment-notes.json",
+      "sha256": "c93a2f05732d6e52809caf9fd041a6e0c6afa8fa9f83475ec0f9596431141420",
+      "bytes": 628,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/evidence-receipts.json",
+      "sha256": "59721a8f30705cd5165643ce96f1c711fb6141f77f2f1e8a27d57b03b449ba79",
+      "bytes": 4713,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/exclusion-summary.json",
+      "sha256": "8745b30aee58b9b380c19f860acc07fc34d77aae9fd7f7232618e5940fa5a455",
+      "bytes": 9206,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/git-read-only-receipt.json",
+      "sha256": "944947b5081dde879bc508c936e92eaa327c3bcf16e2d07050c61eeb1154021c",
+      "bytes": 337,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/negative-guard-tests.json",
+      "sha256": "4f8fcae1fa2229964a56c6686babb38fef8f0a3a5d883a1e9551cddb2ce80643",
+      "bytes": 3055,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/patch-reviews/checkpoint6__apps__player__src__ui__HelpDialog.tsx.patch",
+      "sha256": "b16e41cfeace135f09c9c5293ea139f532fc6981d9eaed96dfccc09d48d70a1b",
+      "bytes": 1115,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/patch-reviews/checkpoint6__apps__player__src__ui__OpeningSequence.tsx.patch",
+      "sha256": "02ff5ef6fb72e2b330a34c6fd4f01eca9a722a12748ca1c39aea1263910cd792",
+      "bytes": 1643,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/patch-reviews/checkpoint6__docs__handoffs__CURRENT_THREAD_HANDOFF.md.patch",
+      "sha256": "cb9d55848c433f4d0df12e7c444350af8a406c43302d2d950f1700e90291b360",
+      "bytes": 20280,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/prior-archive-integrity.json",
+      "sha256": "e1ee4d53bab850036083c2cbc3d707dc5b46211fa63472a475a21e42d47e7758",
+      "bytes": 1612,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/regenerable-image-histories.json",
+      "sha256": "9e34958db6e7c73a3229523eda665a0a0654b26e51dd4a0dab072ea520b2abb5",
+      "bytes": 795004,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/requirement-coverage.json",
+      "sha256": "acc3d1e2a1e789aff4f98b5af630bcafd95f3476bc868ca65d51856d3b66f78b",
+      "bytes": 45009,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/safety-audit.json",
+      "sha256": "8aac0b1219f8d9bf8202707f21fbed06f98c723629c61acd548053a4532c1291",
+      "bytes": 18464,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/selection.json",
+      "sha256": "4587a95fdc2e77b18dd45a1ec852267f97164e08b1415da9f45bbef1e06c2dde",
+      "bytes": 46307,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/stage-sources.json",
+      "sha256": "d5656eee1020342df1753aa1e6e15755796d79cc02367fb1ba16710a0607b7f4",
+      "bytes": 1118,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/unchanged-prior-targets.json",
+      "sha256": "cbd1e1dfc316c1b2980cacfdcba282b0b42f6975281c055e0b788617ca0f83f9",
+      "bytes": 4837663,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/verification-results.json",
+      "sha256": "ad096bfe12bb1ed5e01f9b4c1c9572235faee66f30e5eaf07f1564a39a73a1c5",
+      "bytes": 1194,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/verify_restore_guards.py",
+      "sha256": "2220af6da5c555f0363a409a8c0b2a64cdf0a29decb07ffe7fc8f46c376ef541",
+      "bytes": 5269,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/worker-handoff.md",
+      "sha256": "9a382f32b74b4e47ea4cfbfd4e74d247677767bddbeca2512a45dcea94d10311",
+      "bytes": 4088,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "validation/worker-write-scope.json",
+      "sha256": "0142b305788e2ed01fd8cbd56277a7648e5542576e1bfe35ef8e6d6c9b2e83c1",
+      "bytes": 652,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    },
+    {
+      "path": "verify_archive.py",
+      "sha256": "246ed41981e84169a82037789dab3de350a7473361cc8860b942adb46cb3ffa8",
+      "bytes": 14446,
+      "sourceStatus": {
+        "kind": "worker_archive_metadata_or_verification_tool",
+        "scope": "Bounded sixth recovery archive"
+      }
+    }
+  ]
+}

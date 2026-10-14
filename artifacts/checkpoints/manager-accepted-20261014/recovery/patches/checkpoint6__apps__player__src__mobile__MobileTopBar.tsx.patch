@@ -1,0 +1,18 @@
+--- a/apps/player/src/mobile/MobileTopBar.tsx
++++ b/apps/player/src/mobile/MobileTopBar.tsx
+@@ -1,5 +1,7 @@
+ import { useEffect, useRef, type CSSProperties } from "react";
+ import type { PrototypeShellProps } from "../shellContract";
++import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
++import "../ui/betaAccount.css";
+ 
+ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, buildMode, managementMode,
+   onTogglePause, onSimulationSpeedChange, referenceLocked = false, onCash, onMore,
+@@ -50,6 +52,7 @@
+       <button type="button" onClick={onMore} aria-label="More clinic options">More</button>
+     </div>
+     {locked ? <small className="mobile-clock-lock" role="status">{lockReason}</small> : null}
++    <ClinicalContentNotice />
+   </header>;
+ }
+ 

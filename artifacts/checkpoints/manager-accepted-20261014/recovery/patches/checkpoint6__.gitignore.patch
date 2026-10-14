@@ -1,0 +1,13 @@
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,6 +8,10 @@
+ .env
+ .env.*
+ !.env.example
++# Vite reads player workspace env files, not the root workbench env example.
++apps/player/.env
++apps/player/.env.*
++!apps/player/.env.example
+ npm-debug.log*
+ .local-dev/
+ .private-clinical-data/
