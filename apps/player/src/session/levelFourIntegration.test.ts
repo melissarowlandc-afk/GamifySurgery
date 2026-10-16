@@ -11,6 +11,8 @@ import { m9PumpChart } from "../../../../tests/fixtures/level-four-integration";
 import { createPrototypePlayerView } from "./viewModels";
 import { clinicHeadlineCandidates } from "../ui/ClinicHeadline";
 import { createPreLevelFiveLaunchContext } from "../../../../tests/fixtures/level-five-launch";
+// Hosted CI runners run these full-campaign checks up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const viewOf = (state: GameState) => createPrototypePlayerView(state, state.openChartEncounterId, false, null);
 
@@ -53,7 +55,7 @@ describe("Level 4 M9 real-engine player integration", () => {
     for (const line of ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support", "income.mri"])
       expect(seen.has(line), line).toBe(true);
     expect(state.clinicalXp).toBe(0);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("keeps a real pediatric scored chart and its parent presentation intact during waiting, exam and departure reloads", () => {
     let state = createPediatricChartsQaState();
@@ -73,7 +75,7 @@ describe("Level 4 M9 real-engine player integration", () => {
     for (const phase of ["waiting", "in_care", "departing", "departed"]) expect(seen.has(phase), phase).toBe(true);
     expect(state.encounters[PEDIATRIC_CHARTS_QA_ENCOUNTER_ID]!.resolutionReason).toBe("completed");
     expect(state.clinicalXp).toBeGreaterThan(0);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("retains the historical cap-4 milestone from real witnesses after sale and repeated reloads", () => {
     const shipped = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
@@ -98,5 +100,5 @@ describe("Level 4 M9 real-engine player integration", () => {
       expect(view.messages.some(row => row.title?.includes("Level current complete was resolved"))).toBe(false);
     }
     } finally { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped; }
-  }, 30_000);
+  }, hostedTime(30_000));
 });

@@ -9,6 +9,8 @@ import {
   type ConceptReviewEvidence,
   type GameState,
 } from "../src";
+// Hosted CI runners run these full-campaign checks up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const OPERATING_MINUTES_PER_DAY = 10 * 60;
 const FIXED_REAL_TIME_MS = 10_000;
@@ -417,7 +419,7 @@ describe("routine patient supply", () => {
         },
       }
     `);
-  }, 10_000);
+  }, hostedTime(10_000));
 
   it("does not let an ineligible multistep case strand other eligible content", () => {
     const cases = routineCasesAtStage(1, new Set());
@@ -513,5 +515,5 @@ describe("routine patient supply", () => {
     `);
     expect(observations.every((item) => item.answerCount > 0)).toBe(true);
     expect(observations.every((item) => item.resolutionReason === "completed")).toBe(true);
-  }, 30_000);
+  }, hostedTime(30_000));
 });

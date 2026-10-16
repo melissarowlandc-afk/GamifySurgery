@@ -11,6 +11,8 @@ import {
   createLevelFourIntegrationState, M9_PEDIATRIC_CASE_ID, M9_ROOMS, m9Apply, m9Learning,
   m9Minute, m9PumpChart, m9SellRoom, m9ShortChartContext, m9Until, m9DeferAppDemand,
 } from "../../../tests/fixtures/level-four-integration";
+// Hosted CI runners run these full-campaign checks up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const scratch = new URL("../../../.local-dev/level4-m9/", import.meta.url);
 function report(name: string, value: unknown) {
@@ -288,7 +290,7 @@ describe("Level 4 M9 integrated launch", () => {
       expect(receiptCounts[line], line).toBeGreaterThan(0);
     expect(scheduledLearningChanges).toBe(0);
     expect(reservationProblems).toEqual([]); expect(stuck).toEqual([]);
-  }, 120_000);
+  }, hostedTime(120_000));
 
   it("retains real witnesses and historical terminal completion at explicit legacy cap 4", () => {
     const context = createPreLevelFiveLaunchContext();
@@ -318,7 +320,7 @@ describe("Level 4 M9 integrated launch", () => {
       expect(state.events.find(event => event.id === "event.facility-level-4-complete")?.reward).toBeUndefined();
     }
     report("terminal", { completion, roomSold: M9_ROOMS.wound, reloads: 3, closingTick: state.facilityTick });
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("preserves scored arrival count/times for 24 hours with APPs on/off (case identity: DEFECT-M9-2)", () => {
     let on = createLevelFourIntegrationState("level-four-m9-fairness");
@@ -346,5 +348,5 @@ describe("Level 4 M9 integrated launch", () => {
     expect(off.serviceIncomeReceipts.some(receipt => ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support"].includes(receipt.incomeLineId))).toBe(false);
     expect(on.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === "income.mri")).toBe(true);
     expect(off.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === "income.mri")).toBe(true);
-  }, 120_000);
+  }, hostedTime(120_000));
 });

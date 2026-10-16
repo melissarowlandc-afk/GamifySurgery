@@ -10,6 +10,8 @@ import { createLevelFiveIntegrationQaState, LEVEL_FIVE_INTEGRATION_QA_SCENARIOS 
 import { LevelFiveIntegrationJourney, integrationReviewTime } from "../../../tests/fixtures/level-five-integration";
 import legacy from "../../../tests/fixtures/level-five-legacy-behavior-20261012.json";
 import checkpoints from "../../../tests/fixtures/level-five-integration-checkpoints-20261012.json";
+// Hosted CI runners run these full-campaign checks up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = PROTOTYPE_DOMAIN_CONTEXT;
 const stateOf = (scenario: typeof LEVEL_FIVE_INTEGRATION_QA_SCENARIOS[number]) => createLevelFiveIntegrationQaState(scenario, context);
@@ -136,7 +138,7 @@ describe("M9 connected Level 5 reducer journey", () => {
       expect(deserializeGameState(serializeGameState(resumed.state), context), `minute ${minute}`)
         .toEqual(deserializeGameState(serializeGameState(control.state), context));
     }
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("continues normal operations, completes a genuinely lower retry and retains the higher best and first finish", () => {
     const opening = stateOf("integration-repeat"), first = structuredClone(opening.levelFive!.progress.gameFinished);
@@ -160,7 +162,7 @@ describe("M9 connected Level 5 reducer journey", () => {
     // another one or remove the durable first-completed record.
     expect(newFinishNotices).toBe(0);
     expect(journey.state.retiredServiceHistory!.retiredReceiptCount).toBeGreaterThan(opening.retiredServiceHistory!.retiredReceiptCount);
-  }, 300_000);
+  }, hostedTime(300_000));
 
   it("cancels real preparation and running checkpoints without a report, finish or prestige", () => {
     for (const scenario of ["integration-preparing", "integration-running"] as const) {
