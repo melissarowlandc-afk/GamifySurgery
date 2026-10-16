@@ -126,6 +126,104 @@ export function getRoomCareAnchor(
     : getRoomNavigationAnchor(room, definition, kind === "clinician" ? "staff" : "primary");
 }
 
+export interface RoomCareStation {
+  id: string;
+  kind: "periop_bed";
+  patientAnchor: GridPoint;
+  facing: CardinalDirection;
+}
+
+function roomFixtureHiddenByDoor(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  fixtureId: string,
+  doors: readonly DoorState[],
+  rooms: readonly PlacedRoom[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): boolean {
+  const owner = definition.navigation?.dynamicBlockers?.find(
+    (candidate) => candidate.fixtureId === fixtureId,
+  );
+  if (!owner) return false;
+  return owner.doorSlots.some((slot) => {
+    const localInside = slot.side === "north"
+      ? { x: slot.offset, y: 0 }
+      : slot.side === "south"
+        ? { x: slot.offset, y: definition.height - 1 }
+        : slot.side === "west"
+          ? { x: 0, y: slot.offset }
+          : { x: definition.width - 1, y: slot.offset };
+    const inside = roomLocalToGlobal(room, definition, localInside);
+    const side = rotateDirection(slot.side, room.orientation);
+    const step = side === "north" ? { x: 0, y: -1 }
+      : side === "east" ? { x: 1, y: 0 }
+        : side === "south" ? { x: 0, y: 1 }
+          : { x: -1, y: 0 };
+    const expected = physicalDoorKey(inside, { x: inside.x + step.x, y: inside.y + step.y });
+    return doors.some((door) => {
+      const placed = rooms.find((candidate) => candidate.id === door.roomId);
+      const placedDefinition = placed ? getDefinition(placed.roomDefinitionId) : null;
+      const cells = placed && placedDefinition
+        ? getDoorCellsForSpatial(door, placed, placedDefinition)
+        : null;
+      return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
+    });
+  });
+}
+
+export function getRoomCareStations(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  doors: readonly DoorState[] = [],
+  rooms: readonly PlacedRoom[] = [room],
+  getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
+    definitionId === definition.id ? definition : null,
+): RoomCareStation[] {
+  return (definition.navigation?.careStations ?? []).flatMap((station) =>
+    roomFixtureHiddenByDoor(room, definition, station.id, doors, rooms, getDefinition)
+      ? []
+      : [{
+          id: station.id,
+          kind: station.kind,
+          patientAnchor: roomLocalToGlobal(room, definition, station.patientAnchor),
+          facing: rotateDirection(station.facing, room.orientation),
+        }],
+  );
+}
+
+export function getRoomSharedStaffAnchor(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+): GridPoint {
+  const configured = definition.navigation?.sharedStaffAnchor;
+  return configured
+    ? roomLocalToGlobal(room, definition, configured)
+    : getRoomNavigationAnchor(room, definition, "staff");
+}
+
+export interface RoomCompanionSeat {
+  id: string;
+  kind: "armchair";
+  anchor: GridPoint;
+  facing: CardinalDirection;
+}
+
+/** Door-owned seats disappear on either side of the same physical opening. */
+export function getRoomCompanionSeats(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  doors: readonly DoorState[] = [],
+  rooms: readonly PlacedRoom[] = [room],
+  getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
+    definitionId === definition.id ? definition : null,
+): RoomCompanionSeat[] {
+  return (definition.navigation?.companionSeats ?? []).flatMap((seat) =>
+    roomFixtureHiddenByDoor(room, definition, seat.id, doors, rooms, getDefinition)
+      ? []
+      : [{ id: seat.id, kind: seat.kind, anchor: roomLocalToGlobal(room, definition, seat.anchor), facing: rotateDirection(seat.facing, room.orientation) }],
+  );
+}
+
 export function getRoomWaitingAnchors(
   room: PlacedRoom,
   definition: RoomDefinition,
@@ -159,40 +257,10 @@ function getRoomBlockedTileKeys(
   );
   const dynamic = definition.navigation?.dynamicBlockers ?? [];
   const hiddenByFixture = new Map<string, boolean>();
-  for (const owner of dynamic) {
-    const hidden = owner.doorSlots.some((slot) => {
-      const localInside =
-        slot.side === "north"
-          ? { x: slot.offset, y: 0 }
-          : slot.side === "south"
-            ? { x: slot.offset, y: definition.height - 1 }
-            : slot.side === "west"
-              ? { x: 0, y: slot.offset }
-              : { x: definition.width - 1, y: slot.offset };
-      const inside = roomLocalToGlobal(room, definition, localInside);
-      const side = rotateDirection(slot.side, room.orientation);
-      const step =
-        side === "north" ? { x: 0, y: -1 }
-          : side === "east" ? { x: 1, y: 0 }
-            : side === "south" ? { x: 0, y: 1 }
-              : { x: -1, y: 0 };
-      const expected = physicalDoorKey(inside, {
-        x: inside.x + step.x,
-        y: inside.y + step.y,
-      });
-      return doors.some((door) => {
-        const placed = rooms.find((candidate) => candidate.id === door.roomId);
-        const placedDefinition = placed
-          ? getDefinition(placed.roomDefinitionId)
-          : null;
-        const cells = placed && placedDefinition
-          ? getDoorCellsForSpatial(door, placed, placedDefinition)
-          : null;
-        return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
-      });
-    });
-    hiddenByFixture.set(owner.fixtureId, hidden);
-  }
+  for (const owner of dynamic) hiddenByFixture.set(
+    owner.fixtureId,
+    roomFixtureHiddenByDoor(room, definition, owner.fixtureId, doors, rooms, getDefinition),
+  );
   const ownersByTile = new Map<string, string[]>();
   for (const owner of dynamic) {
     for (const point of owner.tiles) {
@@ -863,6 +931,98 @@ function tileAdjacencyForFacility(
         connectNodes(adjacency, insideKey, outsideKey);
       }
     }
+
+    // The paired corner armchairs leave a sub-tile diagonal aisle behind
+    // them. At a corner doorway, preserve that approach without allowing
+    // ordinary walking through either solid chair. This also keeps existing
+    // corner doors and legacy Recovery placement valid after seats are added.
+    for (const room of rooms) {
+      const definition = getDefinition(room.roomDefinitionId);
+      if (room.roomDefinitionId !== "room.periop_recovery" || !definition?.navigation?.companionSeats?.length) continue;
+      const footprint = getRotatedFootprint(definition, room.orientation);
+      for (const local of [
+        { x: 0, y: 0 }, { x: footprint.width - 1, y: 0 },
+        { x: 0, y: footprint.height - 1 }, { x: footprint.width - 1, y: footprint.height - 1 },
+      ]) {
+        const corner = { x: room.x + local.x, y: room.y + local.y };
+        const inside = {
+          x: corner.x + (local.x === 0 ? 1 : -1),
+          y: corner.y + (local.y === 0 ? 1 : -1),
+        };
+        const cornerKey = pointKey(corner);
+        const insideKey = pointKey(inside);
+        if (forcedOpenDoorTiles.has(cornerKey) && roomTiles.get(cornerKey)?.room.id === room.id &&
+          roomTiles.get(insideKey)?.room.id === room.id) connectNodes(adjacency, cornerKey, insideKey);
+      }
+    }
+
+    // Endpoint-only fixture contacts are legal destinations, but a coarse
+    // four-neighbor grid can leave their clear support area disconnected from
+    // an otherwise valid door approach.  The authored Waiting Room is the
+    // concrete case: its bench/side-chair support area and an east-0 door are
+    // separated by a one-cell diagonal around fixed furniture.  When a route
+    // explicitly starts or ends at one of those contacts, bridge only that
+    // endpoint component to the room's door component across a clear diagonal.
+    // This preserves every blocked fixture tile and does not make the bridge
+    // available to unrelated transit through the room.
+    for (const room of rooms) {
+      const definition = getDefinition(room.roomDefinitionId);
+      if (!definition || room.roomDefinitionId !== "room.waiting") continue;
+      const roomEndpointKeys = [...endpointOnlyTiles].filter(
+        (key) => roomTiles.get(key)?.room.id === room.id,
+      );
+      if (roomEndpointKeys.length === 0) continue;
+      const doorKeys = doors
+        .filter((door) => door.roomId === room.id && !door.exterior)
+        .flatMap((door) => {
+          const cells = getDoorCellsForSpatial(door, room, definition);
+          return cells && adjacency.has(pointKey(cells.inside))
+            ? [pointKey(cells.inside)]
+            : [];
+        });
+      if (doorKeys.length === 0) continue;
+
+      const componentFrom = (originKey: string): Set<string> => {
+        const component = new Set<string>();
+        const queue = [originKey];
+        while (queue.length > 0) {
+          const key = queue.shift()!;
+          if (component.has(key) || roomTiles.get(key)?.room.id !== room.id) continue;
+          component.add(key);
+          for (const neighbor of adjacency.get(key) ?? []) {
+            if (!component.has(neighbor) && roomTiles.get(neighbor)?.room.id === room.id) {
+              queue.push(neighbor);
+            }
+          }
+        }
+        return component;
+      };
+      const doorComponent = new Set(
+        doorKeys.flatMap((key) => [...componentFrom(key)]),
+      );
+      for (const endpointKey of roomEndpointKeys.sort()) {
+        const endpointComponent = componentFrom(endpointKey);
+        if ([...endpointComponent].some((key) => doorComponent.has(key))) continue;
+        const bridge = [...endpointComponent]
+          .flatMap((leftKey) => {
+            const left = parsePointKey(leftKey);
+            return [...doorComponent].flatMap((rightKey) => {
+              const right = parsePointKey(rightKey);
+              return Math.abs(left.x - right.x) === 1 &&
+                Math.abs(left.y - right.y) === 1
+                ? [{ leftKey, rightKey, left, right }]
+                : [];
+            });
+          })
+          .sort((left, right) =>
+            left.left.y - right.left.y ||
+            left.left.x - right.left.x ||
+            left.right.y - right.right.y ||
+            left.right.x - right.right.x,
+          )[0];
+        if (bridge) connectNodes(adjacency, bridge.leftKey, bridge.rightKey);
+      }
+    }
   } else {
     // Embedded-door compatibility for historical fixtures and old tests.
     for (const room of rooms) {
@@ -921,6 +1081,13 @@ function findDeterministicAdjacencyPath(
         queue.push(next);
       }
     }
+    for (const nextKey of [...(neighbors ?? [])].sort()) {
+      if (parent.has(nextKey)) continue;
+      const next = parsePointKey(nextKey);
+      if (Math.abs(next.x - current.x) + Math.abs(next.y - current.y) === 1) continue;
+      parent.set(nextKey, currentKey);
+      queue.push(next);
+    }
   }
   return [];
 }
@@ -975,6 +1142,9 @@ export function findDeterministicFacilityPath(
   rooms: readonly PlacedRoom[],
   doors: readonly DoorState[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
+  options: {
+    blockedRoomInstanceIds?: ReadonlySet<string>;
+  } = {},
 ): GridPoint[] {
   const requestedEndpointKeys = new Set<string>();
   for (const room of rooms) {
@@ -993,6 +1163,25 @@ export function findDeterministicFacilityPath(
     requestedEndpointKeys,
   );
   const startKey = pointKey(start);
+  const containingStartRoomId = rooms.find((room) => {
+    const definition = getDefinition(room.roomDefinitionId);
+    return definition
+      ? getOccupiedTiles(room, definition).some((point) => pointKey(point) === startKey)
+      : false;
+  })?.id ?? null;
+  for (const room of rooms) {
+    if (!options.blockedRoomInstanceIds?.has(room.id) || room.id === containingStartRoomId) continue;
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition) continue;
+    for (const point of getOccupiedTiles(room, definition)) {
+      const blockedKey = pointKey(point);
+      const neighbors = adjacency.get(blockedKey);
+      if (neighbors) {
+        for (const neighbor of neighbors) adjacency.get(neighbor)?.delete(blockedKey);
+      }
+      adjacency.delete(blockedKey);
+    }
+  }
   if (!adjacency.has(startKey)) {
     const containingRoom = rooms.find((room) => {
       const definition = getDefinition(room.roomDefinitionId);

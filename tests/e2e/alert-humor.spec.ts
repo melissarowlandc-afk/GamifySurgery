@@ -6,7 +6,7 @@ import {
   startClinic,
 } from "./helpers";
 
-const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
+const SCREENSHOT_DIRECTORY = ".local-dev/alerts-ui-results";
 
 interface MutableAlertFixtureState {
   campaignId: string;
@@ -102,13 +102,19 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
 
   patient.lifecycle = "waiting_unopened";
   patient.resolutionReason = null;
-  patient.patientSatisfaction = 86;
+  const walkoutThreshold =
+    typeof patient.walkoutThreshold === "number"
+      ? patient.walkoutThreshold
+      : 50;
+  patient.patientSatisfaction = walkoutThreshold + 10;
   patient.finalPatientSatisfaction = null;
   patient.patientMovement = null;
   patient.patientLocation = { x: 34, y: 30 };
   patient.idleWaitingSinceTick = 39;
   patient.feedAttentionKind = "checked_in";
   patient.feedAttentionStartedAtTick = 39;
+  patient.checkInStatus = "checked_in";
+  patient.departureRiskWarningAtTick = 42;
   patient.waiting = {
     ...(patient.waiting as Record<string, unknown>),
     arrivedAtTick: 39,
@@ -214,6 +220,21 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
       target: {
         kind: "campaign",
         id: state.campaignId,
+      },
+    },
+    {
+      id: "event.e2e.departure-risk",
+      type: "patience_warning",
+      facilityTick: 42,
+      encounterId: String(patient.id),
+      message:
+        "Casey Morgan is close to leaving. Open the chart before patience runs out.",
+      priority: "action_required",
+      definitionId: "alert.patient.departure-risk",
+      alertCategory: "action_required",
+      target: {
+        kind: "encounter",
+        id: String(patient.id),
       },
     },
     {
@@ -358,7 +379,6 @@ test("mixed alert categories preserve attention markers and focus the receptioni
     "guidance",
     "success",
     "ambient_flavor",
-    "walkout_review",
   ]) {
     await expect(
       board.locator(
@@ -373,6 +393,7 @@ test("mixed alert categories preserve attention markers and focus the receptioni
     "Waiting Room opened.",
     "Trash removed. The floor has been returned to the floor.",
     "Water cooler refilled. Hydration has resumed normal operations.",
+    "The plant was attentive.",
   ]) {
     await expect(board).not.toContainText(suppressedCopy);
   }
@@ -433,12 +454,13 @@ test("mixed alert categories preserve attention markers and focus the receptioni
   await expectFeedFitsViewport(page);
   await expect(board.locator(".message-board-history")).toHaveCount(0);
   const feed = board.locator(".message-board-feed");
+  await expect(board.locator(".is-new-message")).toHaveCount(0);
+  await expect(board.locator(".message-board-new-indicator")).toHaveCount(0);
   for (const category of [
     "action_required",
     "guidance",
     "success",
     "ambient_flavor",
-    "walkout_review",
   ]) {
     await expect(
       feed.locator(`[data-message-category="${category}"]`),
@@ -450,6 +472,10 @@ test("mixed alert categories preserve attention markers and focus the receptioni
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/alert-humor-feed-desktop.png`,
     fullPage: true,
+    animations: "disabled",
+  });
+  await board.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/alert-humor-board-desktop.png`,
     animations: "disabled",
   });
 });
@@ -467,9 +493,15 @@ test("alert text wraps without horizontal overflow at phone width", async ({
   const board = page.locator(".event-message-board");
   await expect(
     board.locator(
-      '.message-board-item[data-message-category="walkout_review"]',
+      '.message-board-item[data-message-category="action_required"]',
     ),
-  ).toContainText("The plant was attentive");
+  ).toContainText("close to leaving");
+  await expect(
+    board.locator(
+      '.message-board-item[data-message-category="action_required"] .message-board-compact-action-label',
+    ),
+  ).toHaveText("Open chart");
+  await expect(board).not.toContainText("The plant was attentive");
   await expect(
     board.locator(
       '.message-board-item[data-message-category="ambient_flavor"]',

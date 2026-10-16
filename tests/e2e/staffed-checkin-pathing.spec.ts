@@ -227,7 +227,7 @@ test("staffed check-in makes the chart immediate and coordinates the shared exam
   const chartTab = await waitForFirstPatientReady(page);
 
   await chartTab.click();
-  await expect(page.locator(".chart-panel")).toBeVisible();
+  await expect(page.locator(".chart-sheet")).toBeVisible();
   await waitForDecisionChoices(page);
   await page.screenshot({
     path: `${SCREENSHOTS}/staffed-checkin-chart-route-desktop.png`,

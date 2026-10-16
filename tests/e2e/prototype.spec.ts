@@ -1,5 +1,8 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
+import { FOUNDER_AVATAR_CHOICES, createFounderAvatarAppearance } from "../../apps/player/src/content/founderAppearancePresets";
+import { SECOND_TUTORIAL_ENCOUNTER_ID } from "@gamify-surgery/game-domain";
+import { chooseTutorialAnswer, enactTutorialPlan, expectNoMandatoryCoachClicks, fileTutorialChart, openReturnedTutorialChart, resumeFacility, tutorialState } from "./tutorial-helpers";
 import {
   ACCESS_KEY,
   PROFILE_KEY,
@@ -96,9 +99,7 @@ test("the rich-and-happy branch creates no clinic campaign", async ({
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
   await page.getByLabel("Founder name").fill("Happy Founder");
-  await page.getByRole("button", { name: "Next head" }).click();
-  await page.getByRole("button", { name: "Next body" }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByRole("button", { name: "Next founder" }).click();
   await page.getByRole("button", { name: "Be Rich and Happy" }).click();
 
   await expect(page.getByText("You are rich and happy.")).toBeVisible();
@@ -133,20 +134,8 @@ test("clinic initialization is one-time, named, and reload safe", async ({
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
   await page.getByLabel("Founder name").fill("Clinic Founder");
-  await page.getByRole("button", { name: "Next head" }).click();
-  await page.getByRole("button", { name: "Next body" }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByRole("button", { name: "Next founder" }).click();
 
-  const clinicChoice = page.getByRole("button", {
-    name: "Build a Surgery Clinic",
-  });
-  await clinicChoice.evaluate((button) => {
-    (button as HTMLButtonElement).click();
-    (button as HTMLButtonElement).click();
-  });
-  await expect(
-    page.getByRole("heading", { name: "Name Your Clinic" }),
-  ).toBeVisible();
   await page.getByLabel("Clinic name").fill("One-Time Surgery");
   const openClinic = page.getByRole("button", {
     name: "Open the Clinic",
@@ -162,8 +151,9 @@ test("clinic initialization is one-time, named, and reload safe", async ({
   expect(firstProfile.campaigns[0]?.name).toBe("One-Time Surgery");
   const firstState = await getActiveState(page);
   expect(firstState.founder.displayName).toBe("Clinic Founder");
-  expect(firstState.founder.headId).toBe("head.02");
-  expect(firstState.founder.bodyId).toBe("body.02");
+  expect(firstState.founder.headId).toBe(FOUNDER_AVATAR_CHOICES[1]!.head.id);
+  expect(firstState.founder.bodyId).toBe(FOUNDER_AVATAR_CHOICES[1]!.body.id);
+  expect(firstState.founder.appearance).toEqual(createFounderAvatarAppearance(1));
   expect(firstState.rooms).toHaveLength(1);
   expect(firstState.doors).toHaveLength(1);
   expect(firstState.cash).not.toBe(1_000_000);
@@ -214,10 +204,7 @@ test("multiple named clinics stay independent and normalized duplicates are reje
     .getByRole("button", { name: "Create fresh campaign" })
     .click();
   await page.getByLabel("Founder name").fill("Duplicate Founder");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page
-    .getByRole("button", { name: "Build a Surgery Clinic" })
-    .click();
+
   await page.getByLabel("Clinic name").fill("  alpha   surgery  ");
   await expect(
     page.getByText("That clinic name already exists in town."),
@@ -243,7 +230,7 @@ test("restart archives the selected campaign and returns to a fresh founder flow
     .getByRole("button", { name: "Archive and restart" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Create Your Founder" }),
+    page.getByRole("heading", { name: "Open Your Clinic" }),
   ).toBeVisible();
   const archivedProfile = await getProfile(page);
   expect(
@@ -269,259 +256,43 @@ test("restart archives the selected campaign and returns to a fresh founder flow
   ).toBe(true);
 });
 
-test("movement, sequential feedback, off-site return, and settlement are visible", async ({
-  page,
-}, testInfo) => {
-  testInfo.setTimeout(120_000);
-  test.skip(
-    testInfo.project.name !== "desktop-chrome",
-    "The complete clinical walkthrough runs once at the primary desktop size.",
-  );
-  await startClinic(
-    page,
-    "Movement Founder",
-    "Movement Surgical Clinic",
-  );
+test("movement, sequential feedback, off-site return, and settlement are visible without tutorial acknowledgements", async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "The natural clinical walkthrough runs once at desktop width.");
+  testInfo.setTimeout(180_000);
+  await startClinic(page, "Movement Founder", "Movement Surgical Clinic");
   await setFastFacilitySpeed(page);
-
-  await expect(
-    page.getByRole("heading", {
-      name: "Your first patient is entering the clinic",
-    }),
-  ).toBeVisible();
-  const firstPatient = await waitForFirstPatientReady(page);
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Open your first patient chart" }),
-  ).toBeVisible();
-  await firstPatient.click();
-  await expect(page.locator(".chart-panel")).toBeVisible();
-  await expect(
-    page.locator(".chart-title-status"),
-  ).toBeVisible();
-  // At 4x, a busy parallel browser run may complete the short exam-room
-  // route between the tab click and this assertion. Both labels represent
-  // the same valid forward-only transition; the earlier check-in tutorial
-  // heading already proves that visible movement began.
-  await expect(page.locator(".chart-title-status")).toHaveText(
-    /Walking to Examination|Action required/,
-  );
-  await expect(
-    page.getByRole("heading", {
-      name: "Read across the chart, then choose",
-    }),
-  ).toBeVisible();
+  await resumeFacility(page);
+  const first = await waitForFirstPatientReady(page);
+  await expectNoMandatoryCoachClicks(page);
+  await first.click();
+  await expect(page.locator(".chart-sheet")).toBeVisible();
   const choices = await waitForDecisionChoices(page);
   await expect(choices).toHaveCount(4);
-  await page.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/july28-tutorial-desktop.png`,
-    fullPage: false,
-    animations: "disabled",
-  });
-  await page.getByRole("button", { name: "Got It" }).click();
+  await chooseTutorialAnswer(page, true);
+  await expect(page.locator(".cs-step.is-current .cs-feedback")).toContainText("Correct");
+  await expect(page.locator(".cs-reward")).toContainText("Decisions Correct: 1/1");
+  await expect(page.locator(".cs-reward")).toContainText("Encounter Payment: +$75");
+  await fileTutorialChart(page);
 
-  const firstDecisionState = await getActiveState(page);
-  const firstDecisionEncounter =
-    firstDecisionState.encounters[
-      firstDecisionState.openChartEncounterId!
-    ]!;
-  const firstDecisionNode =
-    firstDecisionEncounter.frozenCase.decisionNodes[
-      firstDecisionEncounter.currentNodeIndex
-    ]!;
-  const firstCorrectChoice = firstDecisionNode.answerChoices.find(
-    (choice) => choice.isCorrect,
-  )!;
-  await page
-    .getByRole("button", {
-      name: firstCorrectChoice.label,
-      exact: true,
-    })
-    .click();
-  await expect(page.locator(".chart-step-feedback")).toContainText(
-    "Correct",
-  );
-  await expect(page.locator(".chart-step-feedback")).toContainText(
-    "Decision XP: +20",
-  );
-  await expect(xpValue(page)).toHaveText("20");
-  await expect(
-    page.getByRole("heading", { name: "Review the decision result" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Decisions Correct: 1/1",
-  );
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Encounter Payment: +$75",
-  );
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Encounter XP: +20",
-  );
-  await expect(
-    page.getByRole("heading", { name: "Review the encounter summary" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Flip for More Disease Information",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await page
-    .getByRole("button", { name: "Flip for More Disease Information" })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "Resolve Completed Chart" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await page
-    .getByRole("button", { name: "Resolve Completed Chart" })
-    .click();
-
-  await expect(
-    page.getByRole("heading", {
-      name: "Use quiet moments around the clinic",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  const secondArrivalCoach = page
-    .locator(".tutorial-coach")
-    .filter({ hasText: "Second patient" });
-  const secondArrivalHeading = secondArrivalCoach.getByRole("heading");
-  await expect(secondArrivalHeading).toBeVisible({ timeout: 15_000 });
-  const secondPatientName = (
-    (await secondArrivalHeading.textContent()) ?? ""
-  ).replace(/ is entering the clinic$/, "");
-  expect(secondPatientName).not.toBe("");
-  await page.getByRole("button", { name: "Got It" }).click();
-  const secondPatient = page
-    .locator(".patient-folder.is-waiting .patient-tab")
-    .filter({ hasText: secondPatientName });
-  await expect(secondPatient).toBeVisible({ timeout: 15_000 });
-  await expect(
-    page.getByRole("heading", { name: "Open the second patient chart" }),
-  ).toBeVisible();
-  await secondPatient.click();
-  await expect(
-    page.getByRole("heading", { name: "Choose the first plan" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  const secondDecisionState = await getActiveState(page);
-  const secondDecisionEncounter =
-    secondDecisionState.encounters[
-      secondDecisionState.openChartEncounterId!
-    ]!;
-  const secondDecisionNode =
-    secondDecisionEncounter.frozenCase.decisionNodes[
-      secondDecisionEncounter.currentNodeIndex
-    ]!;
-  const secondCorrectChoice = secondDecisionNode.answerChoices.find(
-    (choice) => choice.isCorrect,
-  )!;
-  await page
-    .getByRole("button", {
-      name: new RegExp(
-        `^${secondCorrectChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-      ),
-    })
-    .click();
-  await expect(page.locator(".chart-step-feedback")).toContainText(
-    "Decision XP: +10",
-  );
-  await expect(
-    page.getByRole("heading", {
-      name: "Review the answer before care begins",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await page.getByRole("button", { name: "Enact Plan" }).click();
-  const returnToClinic = page.getByRole("button", {
-    name: "Return to clinic",
-  });
-  if (await returnToClinic.isVisible({ timeout: 2_000 })) {
-    await returnToClinic.click();
-  }
-  const existingPatient = page
-    .locator(".patient-folder.is-active .patient-tab")
-    .filter({ hasText: secondPatientName });
-  const sendoutCoach = page.getByRole("heading", {
-    name: "The patient is away for the timed service",
-  });
-  if (await sendoutCoach.isVisible({ timeout: 5_000 })) {
-    await page.getByRole("button", { name: "Got It" }).click();
-  }
-  await expect(existingPatient).toHaveAccessibleName(/Action required/, {
-    timeout: 60_000,
-  });
-  await expect(
-    page.getByRole("heading", {
-      name: "The returning patient is ready",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await existingPatient.click();
-  await expect(
-    page.getByRole("heading", {
-      name: "The result unlocked the next decision",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.locator(".chart-completed-decision"),
-  ).toHaveCount(1);
-  await expect(
-    page.getByText("Decision 2 of 2", { exact: true }),
-  ).toBeVisible();
-  await page.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/july28-multistep-desktop.png`,
-    fullPage: false,
-    animations: "disabled",
-  });
-  const finalDecisionState = await getActiveState(page);
-  const finalDecisionEncounter =
-    finalDecisionState.encounters[
-      finalDecisionState.openChartEncounterId!
-    ]!;
-  const finalDecisionNode =
-    finalDecisionEncounter.frozenCase.decisionNodes[
-      finalDecisionEncounter.currentNodeIndex
-    ]!;
-  const finalCorrectChoice = finalDecisionNode.answerChoices.find(
-    (choice) => choice.isCorrect,
-  )!;
-  await page
-    .getByRole("button", {
-      name: new RegExp(
-        `^${finalCorrectChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-      ),
-    })
-    .click();
-  const finalFeedback = page.locator(
-    ".chart-step-column.is-current .chart-step-feedback",
-  );
-  await expect(finalFeedback).toBeVisible();
-  await expect(finalFeedback).toContainText("Correct");
-  await expect(finalFeedback).toContainText("Decision XP: +10");
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Decisions Correct: 2/2",
-  );
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Encounter Payment: +$135",
-  );
-  await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Encounter XP: +20",
-  );
-  await expect(
-    page.getByRole("button", {
-      name: "Flip for more disease information",
-    }),
-  ).toBeVisible();
-  await page.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/clinical-feedback-desktop.png`,
-    fullPage: false,
-    animations: "disabled",
-  });
+  const second = page.locator(".patient-folder.is-waiting .patient-tab").first();
+  await expect(second).toBeVisible({timeout: 30_000});
+  await second.click();
+  await chooseTutorialAnswer(page, true);
+  await expect(page.getByRole("button", {name: "Enact Plan", exact: true})).toBeVisible();
+  await enactTutorialPlan(page, true);
+  const pending = await tutorialState(page);
+  expect(pending.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult).not.toBeNull();
+  expect(pending.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.answers).toHaveLength(1);
+  expect(pending.paused).toBe(false);
+  await openReturnedTutorialChart(page);
+  await expect(page.locator(".cs-past")).toHaveCount(1);
+  await chooseTutorialAnswer(page, true);
+  await expect(page.locator(".cs-step.is-current .cs-feedback")).toContainText("Correct");
+  await expect(page.locator(".cs-reward")).toContainText("Decisions Correct: 2/2");
+  await expect(page.locator(".cs-reward")).toContainText("Encounter Payment: +$135");
+  await expectNoMandatoryCoachClicks(page);
+  await fileTutorialChart(page);
+  expect((await tutorialState(page)).settlements).toHaveLength(2);
 });
 
 test("pause freezes the GLP-1 cooldown and facility time advances it", async ({

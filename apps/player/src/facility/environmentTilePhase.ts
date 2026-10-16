@@ -11,8 +11,9 @@ export function getEnvironmentTileLogicalPhase(
   originX: number,
   originY: number,
   tileScale: number,
+  minimumScale = 0.02,
 ): Readonly<{ x: number; y: number }> {
-  const safeScale = Math.max(0.02, tileScale);
+  const safeScale = Math.max(minimumScale, tileScale);
   const phase = (coordinate: number, origin: number): number => {
     const rounded = Math.round((coordinate - origin) / safeScale);
     return Object.is(rounded, -0) ? 0 : rounded;

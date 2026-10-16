@@ -8,6 +8,10 @@ test-results/
 .env
 .env.*
 !.env.example
+# Vite reads player workspace env files, not the root workbench env example.
+apps/player/.env
+apps/player/.env.*
+!apps/player/.env.example
 npm-debug.log*
 .local-dev/
 .private-clinical-data/
@@ -22,3 +26,6 @@ artifacts/logs/
 artifacts/screenshots/tmp-*.png
 .DS_Store
 Thumbs.db
+
+# Machine-specific Claude Code permissions
+.claude/settings.local.json

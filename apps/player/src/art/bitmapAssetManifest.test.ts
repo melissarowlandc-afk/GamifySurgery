@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { APPROVED_LEVEL4_BITMAP_ASSETS } from "./approvedLevel4BitmapAssets";
 import { FIXTURE_SPRITES } from "./fixtureArt";
 import {
   AUTHORED_BITMAP_ASSET_MANIFEST,
@@ -42,10 +43,12 @@ import {
 
 describe("bitmap art asset seam", () => {
   it("declares every approved GS-015 atlas without activating the runtime preload set", () => {
-    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(29);
-    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(29);
+    // 111 plus the five owner-approved Radiology Reading Room pieces (2026-10-07).
+    const total = 116 + APPROVED_LEVEL4_BITMAP_ASSETS.length;
+    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(total);
+    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(total);
     for (const asset of APPROVED_GS015_ROOM_ATLASES) {
-      expect(asset.relativePath).toMatch(/^art\/rooms\/gs015-v1\/.+\.webp$/);
+      expect(asset.relativePath).toMatch(/^art\/rooms\/(?:(?:gs015-v1|level3-v1)\/.+\.webp|level4-v1\/.+\.png)$/);
       expect(asset.nativeWidth).toBeGreaterThan(0);
       expect(asset.nativeHeight).toBeGreaterThan(0);
       expect(ROOM_FIXTURE_ATLASES).not.toContain(asset);
@@ -296,3 +299,4 @@ describe("bitmap art asset seam", () => {
     await expect(cache.preload([noSource])).resolves.toEqual([]);
   });
 });
+

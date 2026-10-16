@@ -5,9 +5,20 @@ import {
   FACILITY_DEPTH_LOCATOR,
   FACILITY_DEPTH_UI,
   getFacilitySceneDepth,
+  getExteriorLandscapeDepth,
 } from "./renderDepth";
 
 describe("facility render depth", () => {
+  it("sorts tree/understory contacts inside the landscape band without crossing room floors", () => {
+    const contacts = [-10000,-4,0,10,64,10000];
+    const depths = contacts.map(getExteriorLandscapeDepth);
+    for (let index=0;index<depths.length;index+=1) {
+      expect(depths[index]).toBeGreaterThan(-10);
+      expect(depths[index]).toBeLessThan(0);
+      if (index>0) expect(depths[index]).toBeGreaterThan(depths[index-1]!);
+    }
+    expect(getExteriorLandscapeDepth(Number.NaN)).toBe(getExteriorLandscapeDepth(0));
+  });
   it("places a character after every fixture on the same baseline", () => {
     const lastFixture = getFacilitySceneDepth(120, "fixture", 63);
     const firstCharacter = getFacilitySceneDepth(120, "character", 0);

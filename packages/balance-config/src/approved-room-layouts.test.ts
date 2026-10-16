@@ -2,11 +2,31 @@ import { describe, expect, it } from "vitest";
 
 import {
   APPROVED_ROOM_NAVIGATION_CONTRACTS,
+  PERIOP_COMPANION_SEATS,
   getApprovedRoomNavigation,
 } from "./approved-room-layouts";
 import { PROTOTYPE_BALANCE_RELEASE } from "./prototype-balance";
+import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS } from "./approved-level4-room-layouts";
+import { APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS } from "./approved-level5-room-layouts";
 
 describe("approved proof navigation contract", () => {
+  it("defines eight inward-facing Periop companion armchairs with exact doorway ownership", () => {
+    const recovery = APPROVED_ROOM_NAVIGATION_CONTRACTS["room.periop_recovery"]!;
+    expect(recovery.companionSeats).toEqual(PERIOP_COMPANION_SEATS);
+    expect(recovery.companionSeats).toHaveLength(8);
+    expect(recovery.companionSeats!.map((seat) => [seat.anchor.x, seat.anchor.y, seat.facing])).toEqual([
+      [1, 0, "south"], [0, 1, "east"], [4, 0, "south"], [5, 1, "west"],
+      [0, 4, "east"], [1, 5, "north"], [5, 4, "west"], [4, 5, "north"],
+    ]);
+    for (const seat of recovery.companionSeats!) {
+      const fixture = recovery.solidFixtures.find((candidate) => candidate.id === seat.id)!;
+      expect(fixture.blockedTiles).toEqual([seat.anchor]);
+      expect(fixture.endpointOnlyContacts).toEqual([seat.anchor]);
+      expect(fixture.hiddenByDoorSlots).toHaveLength(1);
+      expect(recovery.careStations!.some((bed) => bed.patientAnchor.x === seat.anchor.x && bed.patientAnchor.y === seat.anchor.y)).toBe(false);
+    }
+  });
+
   it("preserves two Front Desk waiting slots with one proof chair and one standing overflow", () => {
     const front = APPROVED_ROOM_NAVIGATION_CONTRACTS["room.front_desk"]!;
     expect(front.waitingAnchors).toEqual([{ x: 4, y: 3 }, { x: 3, y: 3 }]);
@@ -27,12 +47,16 @@ describe("approved proof navigation contract", () => {
     }
   });
 
-  it("covers all sixteen approved rooms and resolves the same navigation used by balance", () => {
-    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(16);
+  it("binds every shipped definition to approved navigation, including playable Level 4", () => {
+    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(24 + Object.keys(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS).length + Object.keys(APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS).length);
     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
       const definition = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
         (candidate) => candidate.id === contract.roomDefinitionId,
       );
+      if (APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS[contract.roomDefinitionId]) {
+        expect(definition?.unlockFacilityLevel).toBe(4);
+        expect(definition?.unlockFacilityLevel).toBeLessThanOrEqual(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel);
+      }
       expect(definition, contract.roomDefinitionId).toBeDefined();
       expect([definition!.width, definition!.height]).toEqual([
         contract.width,
@@ -48,6 +72,30 @@ describe("approved proof navigation contract", () => {
         expect(blocked.has(`${endpoint.x},${endpoint.y}`)).toBe(true);
       }
     }
+  });
+
+  it("publishes the approved Level 3 dimensions and pass-through office contract", () => {
+    expect(Object.fromEntries(
+      ["room.ambulatory_or", "room.laboratory", "room.pharmacy", "room.maintenance_workshop", "room.staff_break", "room.surgeon_office", "room.vending", "room.reading"]
+        .map((id) => {
+          const contract = APPROVED_ROOM_NAVIGATION_CONTRACTS[id]!;
+          return [id, `${contract.width}x${contract.height}`];
+        }),
+    )).toEqual({
+      "room.ambulatory_or": "4x4",
+      "room.laboratory": "3x3",
+      "room.pharmacy": "3x3",
+      "room.maintenance_workshop": "3x3",
+      "room.staff_break": "4x4",
+      "room.surgeon_office": "2x2",
+      "room.vending": "2x2",
+      "room.reading": "4x4",
+    });
+    expect(
+      APPROVED_ROOM_NAVIGATION_CONTRACTS["room.surgeon_office"]!.solidFixtures.flatMap(
+        (fixture) => fixture.blockedTiles,
+      ),
+    ).toEqual([]);
   });
 
   it("preserves canonical proof collision and clearance metadata", () => {
@@ -82,6 +130,25 @@ describe("approved proof navigation contract", () => {
     expect(
       APPROVED_ROOM_NAVIGATION_CONTRACTS["room.periop_recovery"]!.allowedOrientations,
     ).toEqual([0]);
+  });
+
+  it("publishes eight unique Periop bed endpoints and a separate central nurse post", () => {
+    const recovery = APPROVED_ROOM_NAVIGATION_CONTRACTS["room.periop_recovery"]!;
+    expect(recovery.careStations).toEqual([
+      { id: "N3", kind: "periop_bed", patientAnchor: { x: 2, y: 2 }, facing: "south" },
+      { id: "N4", kind: "periop_bed", patientAnchor: { x: 3, y: 2 }, facing: "south" },
+      { id: "S3", kind: "periop_bed", patientAnchor: { x: 2, y: 4 }, facing: "north" },
+      { id: "S4", kind: "periop_bed", patientAnchor: { x: 3, y: 4 }, facing: "north" },
+      { id: "WC", kind: "periop_bed", patientAnchor: { x: 1, y: 2 }, facing: "east" },
+      { id: "WD", kind: "periop_bed", patientAnchor: { x: 1, y: 3 }, facing: "east" },
+      { id: "EC", kind: "periop_bed", patientAnchor: { x: 4, y: 2 }, facing: "west" },
+      { id: "ED", kind: "periop_bed", patientAnchor: { x: 4, y: 3 }, facing: "west" },
+    ]);
+    expect(new Set(recovery.careStations!.map((station) => `${station.patientAnchor.x},${station.patientAnchor.y}`)).size).toBe(8);
+    expect(recovery.sharedStaffAnchor).toEqual({ x: 3, y: 3 });
+    expect(recovery.careStations!.some((station) =>
+      station.patientAnchor.x === recovery.sharedStaffAnchor!.x && station.patientAnchor.y === recovery.sharedStaffAnchor!.y,
+    )).toBe(false);
   });
 
   it("keeps dynamic solid ownership disjoint and records no solid backing-owned fixtures", () => {

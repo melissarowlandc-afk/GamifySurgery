@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
+import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type {
   CardinalDirection,
   GridPoint,
@@ -24,10 +26,39 @@ import type {
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
   SeatFounderAtFrontDeskRequest,
+  SeatFounderInChairRequest,
   RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
+  DescribeCharacterRequest,
+  FacilityCharacterRef,
+  FacilityFounderChairView,
 } from "./types";
+import {
+  ROOM_TOUCHUP_DECOR_ASSETS,
+  TOUCHUP_CORRIDOR,
+  TOUCHUP_SPRITES,
+  TOUCHUP_TILE_PIXELS,
+  applyRoomTouchupsToRecords,
+  getRoomTouchup,
+  getTouchupCorridorDecor,
+  getTouchupCorridorFloorPrimitives,
+  getTouchupCorridorRunnerPrimitives,
+  getTouchupFloorPrimitives,
+  getTouchupGlassPartitionPrimitives,
+  getTouchupLighting,
+  getTouchupNorthWallBands,
+  getTouchupTintTopAt,
+  getTouchupRecordFloorLine,
+  getVisibleTouchupDecor,
+  isTouchupFileSprite,
+  isTouchupRecordFloorSortedOnLowWall,
+  isTouchupRecordVisible,
+  type TouchupDrawRecord,
+  type TouchupLighting,
+  type TouchupPrimitive,
+  type TouchupSprite,
+} from "./roomTouchups";
 import {
   formatEarningsPopupAmount,
   getEarningsPopupLabelY,
@@ -38,6 +69,16 @@ import {
   alignCharacterStillSeatToWorld,
   getCharacterStillPresentationMetrics,
 } from "./characterPresentation";
+import {
+  advanceCharacterHop,
+  CHARACTER_HOP,
+  characterDrawMotion,
+  characterHopOffsetTiles,
+  characterMotionSeed,
+  RESTING_CHARACTER_MOTION,
+  type CharacterDrawMotion,
+  type CharacterHopState,
+} from "./characterHopMotion";
 import {
   getBackedHorizontalBoundaryRuns,
   getExposedHorizontalBoundaryRuns,
@@ -59,11 +100,9 @@ import {
   characterBitmapLayers,
   characterBitmapRegistration,
   characterStandingBitmapDescriptors,
-  characterWalkingBitmapDescriptors,
   characterStillScaleForAppearance,
   characterAtlasFrameKey,
 } from "../art/characterBitmapArt";
-import { characterWalkFrameAt } from "../art/characterWalkRegistry";
 import {
   captureCharacterMotionPresentation,
   replayCharacterMotionPresentation,
@@ -81,6 +120,7 @@ import {
 import {
   ENVIRONMENT_ATLAS_V1,
   ENVIRONMENT_ATLAS_V1_FRAMES,
+  FRONTAGE_V2_ASSETS,
   FRONT_DESK_V2_ART_FRAMES,
   FRONT_DESK_V2_FIXTURE_OVERRIDES,
   FRONT_DESK_V3_ARCHITECTURE_FRAMES,
@@ -93,29 +133,37 @@ import {
   LEVEL_ONE_BITMAP_FIXTURE_FRAMES,
   LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES,
   APPROVED_GS015_ROOM_ATLASES,
+  APPROVED_LEVEL5_BITMAP_ASSETS,
   ROOM_FIXTURE_ATLASES,
   getRoomBitmapFixtureFrame,
   getEnvironmentAtlasFrameKey,
   type EnvironmentAtlasFrameId,
+  type FrontageAssetId,
   type FrontDeskV2ArtId,
   type FrontDeskV3ArchitectureId,
   type FrontDeskV4ArchitectureId,
   type LandscapingAtlasFrameId,
 } from "../art/bitmapAssetManifest";
 import {
+  getApprovedRoomOrientation,
   getApprovedRoomPresentation,
   getApprovedRoomProofCapture,
   isApprovedProceduralDrawVisible,
+  isApprovedActorSupportVisible,
   resolveApprovedRoomActorSupports,
   resolveApprovedRoomDrawRecords,
   resolveApprovedRoomProceduralDrawRecords,
   type ApprovedRoomDrawRecord,
   type ApprovedRoomShellPresentation,
+  type ApprovedRoomStateVariant,
   type ApprovedWallSegment,
 } from "./approvedRoomPresentation";
 import {
   getApprovedFloorPrimitives,
+  getApprovedDrawPainterGround,
+  getApprovedDrawClipWidth,
   getApprovedProceduralScreenRect,
+  getApprovedRoomStateVariant,
   getApprovedSupportFacing,
   getApprovedSupportPainterGround,
   getNearestApprovedActorSupport,
@@ -126,8 +174,18 @@ import {
   getApprovedSideChairForegroundDepth,
   getApprovedSideChairMaskForDraw,
   partitionApprovedSideChairPixels,
+  type ApprovedSideChairLayerBinding,
   type ApprovedSideChairMaskDefinition,
 } from "./approvedSideChairLayers";
+import {
+  BACKLESS_ROLLING_STOOL_VERSION,
+  deriveBacklessRollingStoolPixels,
+  getApprovedRollingStoolSource,
+  type ApprovedRollingStoolSource,
+} from "./backlessRollingStools";
+import { resolveStaffIdleSupports } from "./staffIdleSupports";
+import { getPeriopCompanionChairForActor, resolvePeriopCompanionChairs } from "./periopCompanionPresentation";
+import { advanceSeatSettle, type SeatSettleState } from "./characterSeatSettle";
 import {
   getPhaserTextureKey,
   preloadBitmapAssets,
@@ -153,14 +211,18 @@ import {
   FACILITY_DEPTH_LOCATOR,
   FACILITY_DEPTH_UI,
   FACILITY_DEPTH_WORLD,
+  getExteriorLandscapeDepth,
   getFacilitySceneDepth,
 } from "./renderDepth";
 import {
   advanceRouteMotion,
   getRouteTilesPerSecond,
+  parkRouteMotion,
   routeMotionComplete,
+  routeMotionStepTiles,
   sampleRouteMotion,
   syncRouteMotion,
+  type RouteMotionSample,
   type RouteMotionTrack,
 } from "./routeMotion";
 import {
@@ -201,10 +263,17 @@ import {
 } from "./surgeryCenterArchitecture";
 import { getFixturePresentationSize } from "./fixturePresentation";
 import { getEnvironmentTileLogicalPhase } from "./environmentTilePhase";
+import {
+  getExteriorLawnPatches, getExteriorPavingJoints,
+  getFrontageCurbRuns, getFrontageEntryInset, getFrontageTileBuffer,
+} from "./exteriorFrontage";
 import { getProceduralSurfaceRow } from "./proceduralSurfacePhase";
 import { snapPresentationOrigin } from "./presentationOrigin";
+import { getMobileFacilityCameraPanPadding } from "./facilityCameraBounds";
 import {
   getExteriorLandscapeCandidates,
+  getExteriorLandscapeDisplay,
+  getExteriorConstructionEnvelope,
   getVisibleExteriorLandscape,
   type ExteriorRectangle,
 } from "./exteriorLandscape";
@@ -236,8 +305,27 @@ import {
 import { getDoorPresentationOpenings } from "./doorPresentation";
 import { rasterizeGridLine } from "./hallwayPainting";
 import { getFacilityWorldSignature } from "./facilityWorldSignature";
+import { characterRefFromKey, patientChartIdForCharacter, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
+import { MapTouchGestures, type MapGesture, type TouchPoint } from "../mobile/map/gestures";
+import { transformPhoneCamera } from "../mobile/map/camera";
+import { nearestTouchTarget, type TouchTarget } from "../mobile/map/picking";
+import { describeMobileCharacter, describeMobileRoom, type MobileMapSelection } from "../mobile/map/selection";
+import type { MobileBuildMapState } from "../mobile/build/types";
+import { PhoneBuildMapInput } from "../mobile/build/mapInput";
+import { framePhoneGhost, phoneGhostEdgePan } from "../mobile/build/ghostCamera";
+import type { MobileMapPresentationPolicy } from "../mobile/performance/presentationPolicy";
+import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets } from "../mobile/performance/roomAssets";
+import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
+import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
 
 export interface FacilitySceneBridge {
+  /** Explicit opt-in; desktop never supplies it. */
+  mobileInput?: boolean;
+  mobilePresentation?: MobileMapPresentationPolicy;
+  mobileFacilityLevel?: number;
+  mobilePreviewRoomIds?: readonly string[];
+  mobileBuild?: MobileBuildMapState | null;
+  onMobileSelection?: (selection: MobileMapSelection | null) => void;
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
   onPlaceDoor?: PlaceDoorRequest;
@@ -247,10 +335,38 @@ export interface FacilitySceneBridge {
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
   onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
+  onSeatFounderInChair?: SeatFounderInChairRequest;
+  /** Map info box text for a clicked character. */
+  onDescribeCharacter?: DescribeCharacterRequest;
+  /** Desktop map clicks locate a rail row without opening its chart. */
+  onHighlightPatientChart?: (patientId: string) => void;
   onPraiseEmployee?: PraiseEmployeeRequest;
   onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
+  /** Build Mode room menu anchor, in canvas pixels; null when nothing is selected. */
+  onSelectedRoomRectChange?: (rect: FacilityScreenRect | null) => void;
+  onAlertPinPositionsChange?: (positions: import("./types").FacilityAlertPinPosition[]) => void;
 }
+
+export interface FacilityScreenRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+// 7x7 pixel star used under Build Mode room labels (owner-approved ink stars).
+const BUILD_LABEL_STAR_ROWS = [
+  "...#...",
+  "..###..",
+  "#######",
+  ".#####.",
+  "..###..",
+  ".##.##.",
+  ".#...#.",
+] as const;
+const BUILD_LABEL_UPGRADE_READY_COLOR = 0x3f6b3a;
+const BUILD_LABEL_STAR_EMPTY_COLOR = 0xb6b9aa;
 
 interface GridLayout {
   originX: number;
@@ -452,9 +568,22 @@ export class FacilityScene extends Phaser.Scene {
   private ghostDoorText?: Phaser.GameObjects.Text;
   private interactionHintText?: Phaser.GameObjects.Text;
   private founderActivityText?: Phaser.GameObjects.Text;
+  private founderActivityBox?: Phaser.GameObjects.Graphics;
+  /** Click-to-inspect info box above a character or seat (owner request, 2026-10-07). */
+  private inspectText?: Phaser.GameObjects.Text;
+  private inspectBox?: Phaser.GameObjects.Graphics;
+  private inspectTarget:
+    | { kind: "character"; key: string; ref: FacilityCharacterRef; shownAt: number }
+    | { kind: "seat"; seat: FacilityFounderChairView; label: string; shownAt: number }
+    | null = null;
+  private inspectLabelCache: { key: string; viewModel: FacilityViewModel; label: string | null } | null = null;
+  private pointerDownCharacterKey: string | null = null;
   private waterCoolerLabelText?: Phaser.GameObjects.Text;
   private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
+  private roomStarGraphics: Phaser.GameObjects.Graphics | undefined;
+  private lastReportedSelectedRoomRect = "";
+  private lastReportedAlertPins = "";
   /** Local-only receipt cursor; it never participates in simulation state. */
   private earningsPopupState: EarningsPopupState | undefined;
   private readonly earningsPopupTexts = new Map<
@@ -477,10 +606,13 @@ export class FacilityScene extends Phaser.Scene {
 
   private placementGhost: PlacementGhost | null = null;
   private characterPhase = 0;
-  private characterWalkMilliseconds = 0;
+  /** Real milliseconds of unpaused play; drives breathing, not game speed. */
+  private characterRestClockMilliseconds = 0;
   private frameDeltaMilliseconds = 0;
   private characterPresentationWasFrozen = false;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
+  private readonly mobileInspectorStills = new Set<string>();
+  private readonly failedInspectorLocations = new Map<string, GridPoint>();
   /** Last horizontal render orientation survives a stationary frame without
    * affecting the domain route or persisted character state. */
   private readonly characterFacingRight = new Map<string, boolean>();
@@ -490,6 +622,12 @@ export class FacilityScene extends Phaser.Scene {
     CharacterMotionPresentation<PixelAppearanceDescriptor>
   >();
   private readonly characterGaitOffsets = new Map<string, number>();
+  /** Hop phase per character, advanced by the distance its route moved. */
+  private readonly characterHopStates = new Map<string, CharacterHopState>();
+  /** Last drawn motion per character; a frozen redraw reuses it exactly. */
+  private readonly characterStepBounceStates = new Map<string, CharacterDrawMotion>();
+  /** Glide onto and off seats per character (presentation only). */
+  private readonly characterSeatSettles = new Map<string, SeatSettleState>();
   private readonly characterRenderCache = new WeakMap<
     Phaser.GameObjects.Graphics,
     { signature: string; width: number; height: number }
@@ -500,6 +638,13 @@ export class FacilityScene extends Phaser.Scene {
     panY: 0,
   };
   private lastRequestedCameraSignature = "";
+  private mobileGestures?: MapTouchGestures;
+  private mobileInputSignature = "";
+  private phoneBuildInput?: PhoneBuildMapInput;
+  private mobileGhostInitialized = false;
+  private mobileGhostKey = "";
+  private mobileGhostFrameKey = "";
+  private mobileBuildDrawSignature = "";
   private dragStart:
     | {
         pointerX: number;
@@ -521,6 +666,11 @@ export class FacilityScene extends Phaser.Scene {
   private landscapingAtlasReady = false;
   private landscapingTreeCleanupReady = false;
   private roomFixtureAtlasesReady = false;
+  private mobileAtlasSignature = "";
+  private levelFiveAtlasLoadRequested = false;
+  private mobileAtlasModel?: FacilityViewModel;
+  private mobileAtlasLevel?: number;
+  private mobileAtlasPreviews?: readonly string[];
   private characterStillLoadRequested = false;
   private readonly pendingCharacterStills = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
   private readonly failedCharacterStills = new Set<string>();
@@ -545,6 +695,10 @@ export class FacilityScene extends Phaser.Scene {
     displayWidth: number | undefined;
     displayHeight: number | undefined;
     originY: number | undefined;
+    groundY: number;
+    actorLocalY: number | undefined;
+    visualLift: number;
+    angle: number;
     supportRole: FacilityActorSupportRole | undefined;
     supportId: string | undefined;
     supportRoomInstanceId: string | undefined;
@@ -564,6 +718,10 @@ export class FacilityScene extends Phaser.Scene {
         displayWidth: actor?.displayWidth,
         displayHeight: actor?.displayHeight,
         originY: actor?.originY,
+        groundY: container.y,
+        actorLocalY: actor?.y,
+        visualLift: actor ? -actor.y : 0,
+        angle: actor?.angle ?? 0,
         supportRole: (container.getData("actor-support-role") as FacilityActorSupportRole | null | undefined) ?? undefined,
         supportId: (container.getData("actor-support-id") as string | null | undefined) ?? undefined,
         supportRoomInstanceId: (container.getData("actor-support-room-instance-id") as string | null | undefined) ?? undefined,
@@ -577,6 +735,16 @@ export class FacilityScene extends Phaser.Scene {
   public create(): void {
     this.cameras.main.setBackgroundColor("#7e8476");
     this.cameras.main.setRoundPixels(true);
+    this.useSmoothDownscaledTextures();
+    if (this.bridge.mobileInput === true && "gameContext" in this.game.renderer) {
+      const resolution = installMobileCanvasResolution(this.game.canvas, this.game.renderer.gameContext, this.scale);
+      const resize = () => resolution.resize(this.scale.width, this.scale.height, window.devicePixelRatio);
+      resize();
+      this.scale.on(Phaser.Scale.Events.RESIZE, resize);
+      this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+        this.scale.off(Phaser.Scale.Events.RESIZE, resize); resolution.destroy();
+      });
+    }
 
     this.terrainGraphics = this.add
       .graphics()
@@ -599,7 +767,7 @@ export class FacilityScene extends Phaser.Scene {
 
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: "#232720",
-      fontFamily: '"Courier New", Courier, monospace',
+      fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
       fontSize: "14px",
       fontStyle: "bold",
       resolution: 2,
@@ -657,13 +825,30 @@ export class FacilityScene extends Phaser.Scene {
       .text(0, 0, "", {
         ...textStyle,
         align: "center",
-        backgroundColor: "#f0f0ea",
         color: "#20282a",
         fontSize: "10px",
-        padding: { x: 4, y: 2 },
+        padding: { x: 2, y: 1 },
       })
       .setOrigin(0.5, 1)
       .setDepth(FACILITY_DEPTH_UI)
+      .setVisible(false);
+    this.founderActivityBox = this.add.graphics()
+      .setDepth(FACILITY_DEPTH_UI - 0.01)
+      .setVisible(false);
+    this.inspectText = this.add
+      .text(0, 0, "", {
+        ...textStyle,
+        align: "center",
+        color: "#20282a",
+        fontSize: "10px",
+        lineSpacing: 1,
+        padding: { x: 2, y: 1 },
+      })
+      .setOrigin(0.5, 1)
+      .setDepth(FACILITY_DEPTH_UI + 0.02)
+      .setVisible(false);
+    this.inspectBox = this.add.graphics()
+      .setDepth(FACILITY_DEPTH_UI + 0.01)
       .setVisible(false);
 
     this.waterCoolerLabelText = this.add
@@ -692,34 +877,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(FACILITY_DEPTH_UI)
       .setVisible(false);
 
-    this.input.on(
-      "pointermove",
-      (pointer: Phaser.Input.Pointer) => this.handlePointerMove(pointer),
-    );
-    this.input.on(
-      "pointerdown",
-      (pointer: Phaser.Input.Pointer) => this.handlePointerDown(pointer),
-    );
-    this.input.on(
-      "pointerup",
-      (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer),
-    );
-    this.input.on(
-      "wheel",
-      (
-        _pointer: Phaser.Input.Pointer,
-        _objects: Phaser.GameObjects.GameObject[],
-        _deltaX: number,
-        deltaY: number,
-      ) => this.handleWheel(deltaY),
-    );
-    this.input.on("gameout", () => {
-      this.placementGhost = null;
-      this.dragStart = null;
-      this.endHallwayPaint();
-      this.setInteractionHint(null);
-      this.drawPlacementGhost();
-    });
+    this.bindInput();
 
     this.ensureEnvironmentAtlas();
     this.ensureCharacterAtlases();
@@ -732,8 +890,10 @@ export class FacilityScene extends Phaser.Scene {
    * remains visible; a missing file therefore never blanks an active clinic.
    */
   private ensureEnvironmentAtlas(): void {
+    if (this.bridge.mobileInput === true) { this.ensureMobileAtlases(); return; }
     const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
-    if (this.textures.exists(textureKey)) {
+    if (this.textures.exists(textureKey) && Object.values(FRONTAGE_V2_ASSETS)
+      .every(asset => this.textures.exists(getPhaserTextureKey(asset)))) {
       this.registerEnvironmentAtlasFrames();
       this.registerLandscapingAtlasFrames();
       this.environmentAtlasReady = true;
@@ -751,9 +911,11 @@ export class FacilityScene extends Phaser.Scene {
     preloadBitmapAssets(this.load, [
       ENVIRONMENT_ATLAS_V1,
       LANDSCAPING_ATLAS_V1,
+      ...Object.values(FRONTAGE_V2_ASSETS),
       ...ROOM_FIXTURE_ATLASES,
       ...APPROVED_GS015_ROOM_ATLASES,
-    ]);
+      ...ROOM_TOUCHUP_DECOR_ASSETS,
+    ].filter(asset => !this.textures.exists(getPhaserTextureKey(asset))));
     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
       this.environmentAtlasLoadRequested = false;
       if (!this.textures.exists(textureKey)) {
@@ -773,6 +935,82 @@ export class FacilityScene extends Phaser.Scene {
       this.drawWorld();
     });
     this.load.start();
+  }
+
+  /** Phone sources are shared with visible catalog previews; desktop uses its original eager loader. */
+  private ensureMobileAtlases(): void {
+    if (typeof Image === "undefined") return;
+    const model = this.bridge.viewModel;
+    const level = this.bridge.mobileFacilityLevel ?? 0;
+    const previews = this.bridge.mobilePreviewRoomIds;
+    if (model === this.mobileAtlasModel && level === this.mobileAtlasLevel && previews === this.mobileAtlasPreviews) return;
+    this.mobileAtlasModel = model; this.mobileAtlasLevel = level; this.mobileAtlasPreviews = previews;
+    const builtRoomIds = [...new Set(model.rooms.map(room => room.definitionId))].sort();
+    const previewRoomIds = [...(previews ?? []), ...(model.placement ? [model.placement.definitionId] : [])];
+    const signature = JSON.stringify([model.campaignId, level, builtRoomIds, previewRoomIds]);
+    if (signature === this.mobileAtlasSignature) return;
+    this.mobileAtlasSignature = signature;
+    const assets = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds })
+      .filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
+    Promise.all(assets.map(async asset => ({ asset, image: await mobileBitmapCache.load(asset,
+      resolvePublicArtAssetUrl(asset.relativePath!)) }))).then(loaded => {
+      if (!this.sys.isActive() || this.bridge.mobileInput !== true) return;
+      for (const { asset, image } of loaded) {
+        const key = getPhaserTextureKey(asset);
+        if (image && !this.textures.exists(key)) this.textures.addImage(key, image);
+      }
+      if (this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1))) {
+        this.registerEnvironmentAtlasFrames(); this.environmentAtlasReady = true;
+      }
+      this.registerLandscapingAtlasFrames();
+      this.landscapingAtlasReady = this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1));
+      this.registerRoomFixtureAtlasFrames();
+      this.refreshLayout(true);
+    });
+  }
+
+  /** Additional approved pack only in Level 5; old eager requests stay exact. */
+  private ensureLevelFiveAtlases(): void {
+    if (!this.bridge.viewModel.levelFiveRoomArt || this.levelFiveAtlasLoadRequested) return;
+    const missing = APPROVED_LEVEL5_BITMAP_ASSETS.filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
+    if (!missing.length) return;
+    // One request per scene. Decode failure keeps the whole room procedural.
+    this.levelFiveAtlasLoadRequested = true;
+    preloadBitmapAssets(this.load, missing);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.drawWorld(); });
+    this.load.start();
+  }
+
+  /**
+   * Room, landscaping and decor sheets are ~1,250-1,450 px bitmaps drawn at a
+   * small fraction of native size, most of all when zoomed out. `pixelArt`
+   * defaults textures to NEAREST, which keeps one source pixel in 5-14 and
+   * speckles trees and furniture. Every texture here is smoothed (characters
+   * already were), and the canvas uses its high-quality mipmapped downscale.
+   * Canvas resizes reset context state, so the quality is reapplied per frame.
+   */
+  private useSmoothDownscaledTextures(): void {
+    const smooth = (texture: Phaser.Textures.Texture): void => {
+      texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+    };
+    for (const key of this.textures.getTextureKeys()) {
+      smooth(this.textures.get(key));
+    }
+    const onTextureAdded = (_key: string, texture: Phaser.Textures.Texture): void => {
+      smooth(texture);
+    };
+    this.textures.on(Phaser.Textures.Events.ADD, onTextureAdded);
+    const renderer = this.game.renderer;
+    const useHighQualitySmoothing = (): void => {
+      if ("gameContext" in renderer) {
+        renderer.gameContext.imageSmoothingQuality = "high";
+      }
+    };
+    renderer.on(Phaser.Renderer.Events.PRE_RENDER, useHighQualitySmoothing);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.textures.off(Phaser.Textures.Events.ADD, onTextureAdded);
+      renderer.off(Phaser.Renderer.Events.PRE_RENDER, useHighQualitySmoothing);
+    });
   }
 
   /** Character art is selected per live actor and loaded lazily. */
@@ -796,6 +1034,20 @@ export class FacilityScene extends Phaser.Scene {
   private ensureCharacterStills(
     assets: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[],
   ): void {
+    if (this.bridge.mobileInput === true && typeof Image !== "undefined") {
+      for (const asset of assets.filter(isInspectorBitmapAsset)) {
+        const textureKey = getPhaserTextureKey(asset);
+        if (this.textures.exists(textureKey) || this.mobileInspectorStills.has(asset.id)) continue;
+        this.mobileInspectorStills.add(asset.id);
+        loadMobileInspectorBitmap(asset).then(image => {
+          if (!this.sys.isActive()) return;
+          if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey, image);
+          if (!image) this.failedCharacterStills.add(asset.id);
+          this.drawCharacters();
+        });
+      }
+      assets = assets.filter(asset => !isInspectorBitmapAsset(asset));
+    }
     for (const asset of assets) {
       const textureKey = getPhaserTextureKey(asset);
       if (this.textures.exists(textureKey)) {
@@ -888,6 +1140,7 @@ export class FacilityScene extends Phaser.Scene {
     ];
     for (const frame of fixtureFrames) {
       if (!frame) continue;
+      if (this.bridge.mobileInput === true && !this.textures.exists(`stitchin-time-art:${frame.atlasId}`)) continue;
       const texture = this.textures.get(
         getPhaserTextureKey(
           ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
@@ -904,7 +1157,7 @@ export class FacilityScene extends Phaser.Scene {
    * per-record: another room pack failing to decode cannot hide this room.
    */
   private registerApprovedRoomFrame(record: ApprovedRoomDrawRecord): string | undefined {
-    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+    const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...APPROVED_LEVEL5_BITMAP_ASSETS, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
     if (!atlas) return undefined;
     const textureKey = getPhaserTextureKey(atlas);
     if (!this.textures.exists(textureKey)) return undefined;
@@ -916,6 +1169,26 @@ export class FacilityScene extends Phaser.Scene {
     return frameId;
   }
 
+  /** Cached, same-size derivative; the approved atlas and seat/ground contacts stay intact. */
+  private ensureBacklessRollingStoolTexture(stool: ApprovedRollingStoolSource): string | undefined {
+    if (!stool.derivation) return undefined;
+    const key = `approved-stool:${BACKLESS_ROLLING_STOOL_VERSION}:${stool.id}`;
+    if (this.textures.exists(key)) return key;
+    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === stool.assetId);
+    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
+    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
+    if (!source) return undefined;
+    const [x, y, width, height] = stool.sourceRect;
+    const texture = this.textures.createCanvas(key, width, height);
+    if (!texture) return undefined;
+    texture.context.drawImage(source as CanvasImageSource, x, y, width, height, 0, 0, width, height);
+    const pixels = texture.getData(0, 0, width, height);
+    pixels.data.set(deriveBacklessRollingStoolPixels(pixels.data, width, height, stool.derivation));
+    texture.putData(pixels, 0, 0);
+    texture.refresh();
+    return key;
+  }
+
   private ensureApprovedSideChairTextures(
     mask: ApprovedSideChairMaskDefinition,
   ): Readonly<{ rear: string; foreground: string }> | undefined {
@@ -924,6 +1197,7 @@ export class FacilityScene extends Phaser.Scene {
     if (this.textures.exists(rear) && this.textures.exists(foreground)) return { rear, foreground };
     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === mask.assetId);
     if (!atlas) return undefined;
+    if (this.bridge.mobileInput === true && !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
     const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
     if (!source) return undefined;
     const [sourceX, sourceY, width, height] = mask.sourceRect;
@@ -956,6 +1230,7 @@ export class FacilityScene extends Phaser.Scene {
       width,
       height,
       mask.southArmPolygon,
+      mask.additionalForegroundPolygons,
     );
     rearTexture.putData(rearPixels, 0, 0);
     foregroundTexture.putData(foregroundPixels, 0, 0);
@@ -981,16 +1256,18 @@ export class FacilityScene extends Phaser.Scene {
       const roomInstanceId = rendered.getData("actor-support-room-instance-id") as string | null | undefined;
       const supportId = rendered.getData("actor-support-id") as string | null | undefined;
       if (!roomInstanceId || !supportId) continue;
-      const bindingKey = `${roomInstanceId}:${supportId}`;
+      const maskId = rendered.getData("actor-seat-mask-id") as string | null | undefined;
+      const bindingKey = `${roomInstanceId}:${maskId ? `mask:${maskId}` : supportId}`;
       const depths = actorDepths.get(bindingKey) ?? [];
       depths.push(rendered.depth);
       actorDepths.set(bindingKey, depths);
     }
 
     for (const runtime of this.approvedSideChairRuntimes.values()) {
-      const depths = runtime.supportIds.flatMap((supportId) =>
-        actorDepths.get(`${runtime.roomInstanceId}:${supportId}`) ?? [],
-      );
+      const depths = [
+        ...(actorDepths.get(`${runtime.roomInstanceId}:mask:${runtime.mask.id}`) ?? []),
+        ...runtime.supportIds.flatMap((supportId) => actorDepths.get(`${runtime.roomInstanceId}:${supportId}`) ?? []),
+      ];
       const foregroundDepth = getApprovedSideChairForegroundDepth(depths);
       const occupied = foregroundDepth !== undefined;
       runtime.baseImage
@@ -1009,6 +1286,16 @@ export class FacilityScene extends Phaser.Scene {
         .setData("approved-chair-support-ids", runtime.supportIds)
         .setData("approved-chair-draw-id", runtime.drawId)
         .setData("approved-chair-occupied", occupied);
+    }
+    // Promoted native masks keep their exact source pixels; only their depth
+    // follows the actual sitter, including same-baseline/low-zoom rounding.
+    for (const key of this.activeFixtureBitmapImages) {
+      const mask = this.fixtureBitmapImages.get(key);
+      const ids = mask?.getData("approved-front-support-ids") as readonly string[] | null;
+      if (!mask || !ids) continue;
+      const roomId = mask.getData("approved-front-room-id") as string;
+      const depths = ids.flatMap((id) => actorDepths.get(`${roomId}:${id}`) ?? []);
+      mask.setDepth(getApprovedSideChairForegroundDepth(depths) ?? mask.getData("approved-front-base-depth") as number);
     }
   }
 
@@ -1032,7 +1319,44 @@ export class FacilityScene extends Phaser.Scene {
     }));
   }
 
+  /** Same authoritative starting sample as a reload; never replay a covered route tail or old credits. */
+  private resyncMobilePresentation(): void {
+    this.routeMotionTracks.clear();
+    this.characterFacingRight.clear();
+    this.characterMotionSnapshots.clear();
+    this.characterGaitOffsets.clear();
+    this.characterHopStates.clear();
+    this.characterStepBounceStates.clear();
+    this.characterSeatSettles.clear();
+    this.earningsPopupState = undefined;
+    for (const text of this.earningsPopupTexts.values()) text.destroy();
+    this.earningsPopupTexts.clear();
+    this.lastReportedAlertPins = "";
+    this.lastReportedSelectedRoomRect = "";
+  }
+
   public update(time: number, delta: number): void {
+    if (this.bridge.mobileInput !== true && this.bridge.viewModel.levelFiveRoomArt) this.ensureLevelFiveAtlases();
+    let mobileResynced = false;
+    if (this.bridge.mobileInput === true) {
+      this.ensureMobileAtlases();
+      const frame = this.bridge.mobilePresentation?.beginFrame();
+      if (frame && !frame.draw) {
+        this.frameDeltaMilliseconds = 0;
+        this.mobileGestures?.cancel();
+        this.cameras.main.setVisible(false);
+        return;
+      }
+      if (frame?.resync) {
+        this.cameras.main.setVisible(true);
+        this.resyncMobilePresentation();
+        mobileResynced = true;
+      }
+    }
+    if (this.bridge.mobileInput === true) {
+      this.syncMobileInputMode();
+      this.panMobileGhostAtEdge(delta);
+    }
     const motionFrozen =
       this.bridge.viewModel.paused ||
       Boolean(this.bridge.viewModel.buildMode);
@@ -1041,17 +1365,21 @@ export class FacilityScene extends Phaser.Scene {
     // from the exact frozen phase and route sample.
     const resumedFromFrozen = !motionFrozen && this.characterPresentationWasFrozen;
     this.frameDeltaMilliseconds = motionFrozen || resumedFromFrozen ? 0 : delta;
+    if (mobileResynced) this.frameDeltaMilliseconds = 0;
     if (!motionFrozen) {
-      // Preserve the existing beat duration. Side travel uses those beats for
-      // a stride/neutral/stride/neutral cycle; front/back remain two-frame.
+      // Keep the older phase for unrelated UI pulses. Hops follow each
+      // character's route distance; breathing follows this real-time clock.
       this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
-      this.characterWalkMilliseconds +=
-        this.frameDeltaMilliseconds * this.bridge.viewModel.simulationSpeed;
+      this.characterRestClockMilliseconds += this.frameDeltaMilliseconds;
     }
     this.characterPresentationWasFrozen = motionFrozen;
 
+    if (mobileResynced) this.refreshLayout(true);
     this.refreshLayout();
+    if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
+    this.reportSelectedRoomRect();
     this.drawCharacters();
+    this.reportAlertPinPositions();
     this.drawEarningsPopups(time);
     // Atlas completion callbacks can redraw outside update(). Delta belongs to
     // this update only, never to a later event-driven redraw.
@@ -1059,6 +1387,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private refreshLayout(force = false): void {
+    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     const width = Math.max(1, Math.floor(this.scale.width));
     const height = Math.max(1, Math.floor(this.scale.height));
     const signature = getFacilityWorldSignature(this.bridge.viewModel);
@@ -1184,10 +1513,17 @@ export class FacilityScene extends Phaser.Scene {
     const defaultOriginY = height - worldHeight;
     const requestedOriginX = defaultOriginX + this.cameraView.panX;
     const requestedOriginY = defaultOriginY + this.cameraView.panY;
-    const minimumOriginX = Math.min(0, width - gridWidth);
-    const maximumOriginX = Math.max(0, width - gridWidth);
-    const minimumOriginY = Math.min(0, height - worldHeight);
-    const maximumOriginY = Math.max(0, height - worldHeight);
+    let minimumOriginX = Math.min(0, width - gridWidth);
+    let maximumOriginX = Math.max(0, width - gridWidth);
+    let minimumOriginY = Math.min(0, height - worldHeight);
+    let maximumOriginY = Math.max(0, height - worldHeight);
+    if (this.bridge.mobileInput === true) {
+      const padding = getMobileFacilityCameraPanPadding({ width, height });
+      minimumOriginX -= padding.x;
+      maximumOriginX += padding.x;
+      minimumOriginY -= padding.y;
+      maximumOriginY += padding.y;
+    }
     const originX = snapPresentationOrigin(Math.max(
       minimumOriginX,
       Math.min(maximumOriginX, requestedOriginX),
@@ -1219,6 +1555,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawWorld(): void {
+    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     const graphics = this.worldGraphics;
     if (!graphics) {
       return;
@@ -1304,24 +1641,15 @@ export class FacilityScene extends Phaser.Scene {
     const height = exterior.sidewalkTop - top;
     graphics.fillStyle(0x9ba187, 1);
     graphics.fillRect(left, top, width, height);
-    const firstRow = Math.floor(top / 7);
-    const lastRow = Math.ceil((top + height) / 7);
-    const firstColumn = Math.floor(left / 9);
-    const lastColumn = Math.ceil((left + width) / 9);
-    for (let row = firstRow; row < lastRow; row += 1) {
-      for (let column = firstColumn; column < lastColumn; column += 1) {
-        // A tiny stable integer hash provides varied grass flecks without
-        // per-frame RNG, visible checker cells, or persisted decoration.
-        const hash = ((column * 1103515245) ^ (row * 12345)) >>> 0;
-        const x = column * 9 + ((hash >>> 4) % 6);
-        const y = row * 7 + ((hash >>> 10) % 5);
-        if (x < left || x >= left + width || y < top || y >= top + height) continue;
-        graphics.fillStyle((hash & 1) === 0 ? 0xb5baa0 : 0x74805f, 0.34);
-        graphics.fillRect(x, y, 1 + ((hash >>> 16) % 2), 1);
-        if ((hash & 31) === 0) {
-          graphics.fillRect(x + 2, y - 1, 1, 2);
-        }
-      }
+    for (const patch of getExteriorLawnPatches(
+      positiveGridSize(this.bridge.viewModel.gridColumns, 16),
+      positiveGridSize(this.bridge.viewModel.gridRows, 10),
+    )) {
+      this.drawFrontageImage(patch.key, patch.assetId,
+        left + patch.x * this.layout.tileSize, top + patch.y * this.layout.tileSize,
+        patch.width * this.layout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
+      this.landscapingBitmapImages.get(patch.key)
+        ?.setRotation(patch.rotation).setFlip(patch.flipX, patch.flipY);
     }
   }
 
@@ -1409,7 +1737,7 @@ export class FacilityScene extends Phaser.Scene {
     const frame = getRoomBitmapFixtureFrame(roomDefinitionId, id);
     return Boolean(
       frame &&
-      this.roomFixtureAtlasesReady &&
+      (this.bridge.mobileInput === true || this.roomFixtureAtlasesReady) &&
       this.textures.exists(
         getPhaserTextureKey(
           ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
@@ -1707,13 +2035,11 @@ export class FacilityScene extends Phaser.Scene {
     const dark = parseApprovedCssColor(shell.edgeTrim).color;
     const wood = parseApprovedCssColor(shell.doorJamb).color;
     const light = 0x789173;
-    const cream = 0xefe1bd;
     const openings = this.getRoomDoorOpenings(room);
     const expanded = (runs: readonly { offset: number; length: number }[]) => new Set(
       runs.flatMap((run) => Array.from({ length: run.length }, (_, index) => run.offset + index)),
     );
     const north = expanded(this.exposedBoundaryRuns(room, "north"));
-    const south = expanded(this.exposedBoundaryRuns(room, "south"));
     const west = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "west"));
     const east = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "east"));
     const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, openings));
@@ -1725,6 +2051,16 @@ export class FacilityScene extends Phaser.Scene {
       const height = isLow ? low : rear;
       const top = rectangle.y - height;
       const paint = (x: number, width: number) => {
+        if (!isLow) {
+          // Owner-approved house wall for the corridor's tall north wall.
+          for (const [above, bandHeight, color] of getTouchupNorthWallBands(TOUCHUP_CORRIDOR.accent, shell.rearWallHeightPixels)) {
+            graphics.fillStyle(parseApprovedCssColor(color).color, 1);
+            graphics.fillRect(x, rectangle.y - px(above), width, px(bandHeight));
+          }
+          graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), top - px(9), width + px(2), px(9));
+          graphics.fillStyle(light, 1); graphics.fillRect(x - px(1), top - px(9), width + px(2), px(3));
+          return;
+        }
         graphics.fillStyle(wall, 1); graphics.fillRect(x, top, width, height);
         graphics.fillStyle(sage, 1); graphics.fillRect(x, rectangle.y - px(24), width, px(24));
         graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(9));
@@ -1755,21 +2091,62 @@ export class FacilityScene extends Phaser.Scene {
         graphics.fillRect(left - px(2), top + this.layout.tileSize - inset - px(2), cap + px(4), px(5));
       }
     }
-    for (const offset of south) {
-      const left = rectangle.x + offset * this.layout.tileSize;
-      const top = rectangle.y + rectangle.height;
-      const paint = (x: number, width: number) => {
-        graphics.fillStyle(cream, 1); graphics.fillRect(x, top, width, low);
-        graphics.fillStyle(sage, 1); graphics.fillRect(x, top + px(21), width, px(8));
-        graphics.fillStyle(dark, 1); graphics.fillRect(x, top - px(6), width, px(8));
-        graphics.fillStyle(light, 1); graphics.fillRect(x, top - px(6), width, px(3));
-      };
-      if (!openingAt("south", offset)) { paint(left, this.layout.tileSize); continue; }
-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
-      graphics.fillStyle(wood, 1);
-      graphics.fillRect(left + inset - px(5), top - px(6), px(5), low + px(6));
-      graphics.fillRect(left + this.layout.tileSize - inset, top - px(6), px(5), low + px(6));
+  }
+
+  /**
+   * The hallway's short south wall where nothing is built to the south. It
+   * is drawn on a depth-sorted foreground layer, exactly like every room's
+   * south lip, so the sidewalk and landscaping cannot paint over it.
+   */
+  private drawApprovedHallwaySouthForeground(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
+  ): void {
+    const south = this.exposedBoundaryRuns(room, "south");
+    if (south.length === 0) return;
+    const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `hallway-south:${room.instanceId}`);
+    const scale = this.layout.tileSize / shell.tilePixels;
+    const px = (value: number) => value * scale;
+    const low = px(shell.southHeightPixels);
+    const cap = px(shell.sideCapWidthPixels);
+    const inset = px(shell.doorInsetPixels);
+    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
+    const trim = parseApprovedCssColor(shell.baseTrim).color;
+    const dark = parseApprovedCssColor(shell.edgeTrim).color;
+    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
+    const wood = parseApprovedCssColor(shell.doorJamb).color;
+    const southY = rectangle.y + rectangle.height;
+    const openings = this.getRoomDoorOpenings(room);
+    const paint = (x: number, width: number) => {
+      graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
+      graphics.fillStyle(trim, 1); graphics.fillRect(x, southY + low - px(8), width, px(8));
+      graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), width, px(8));
+      graphics.fillStyle(light, 1); graphics.fillRect(x, southY - px(6), width, px(3));
+    };
+    for (const run of south) {
+      for (let offset = run.offset; offset < run.offset + run.length; offset += 1) {
+        const left = rectangle.x + offset * this.layout.tileSize;
+        const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+        if (!opening) { paint(left, this.layout.tileSize); continue; }
+        paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+        graphics.fillStyle(wood, 1);
+        graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+      }
     }
+    // Exposed side walls run down over the short wall's face, as on rooms.
+    const lastRow = orientedSize(room).height - 1;
+    for (const side of ["west", "east"] as const) {
+      const edgeOffset = side === "west" ? 0 : orientedSize(room).width - 1;
+      if (!south.some((run) => edgeOffset >= run.offset && edgeOffset < run.offset + run.length)) continue;
+      if (!getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, side)
+        .some((run) => lastRow >= run.offset && lastRow < run.offset + run.length)) continue;
+      const x = side === "west" ? rectangle.x - cap : rectangle.x + rectangle.width;
+      graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), cap, low + px(6));
+      graphics.fillStyle(light, 1); graphics.fillRect(x + (side === "east" ? 0 : cap - px(3)), southY - px(6), px(3), low + px(6));
+    }
+    graphics.setDepth(getFacilitySceneDepth(southY + low, "fixture", 63));
   }
 
   private getGroupedHallwayHorizontalRuns(
@@ -2150,12 +2527,12 @@ export class FacilityScene extends Phaser.Scene {
         landscapingTextureKey,
         getEnvironmentAtlasFrameKey(frame),
       )
-      .setPosition(Math.round(centerX), Math.round(baseY))
+      .setPosition(centerX, baseY)
       .setOrigin(
         frame.anchor.x / Math.max(1, frame.nativeWidth),
         frame.anchor.y / Math.max(1, frame.nativeHeight),
       )
-      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setScale(Math.min(width / frame.nativeWidth, height / frame.nativeHeight))
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
@@ -2243,21 +2620,67 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawAuthoredEnvironmentSurface(): void {
-    if (!this.canRenderAuthoredEnvironment()) return;
     // The ground below is deliberately a single continuous procedural turf
     // field. The source grass swatch is useful as a material reference, but
     // tiling its dark edge pixels at live scale looked like a construction
     // grid. Logical build cells are overlaid separately only in Build Mode.
-    this.drawEnvironmentTile(
+    this.drawFrontageTile(
       "environment:sidewalk",
-      "environment:sidewalk",
+      "frontage:paving-v2",
       this.layout.originX,
       this.layout.sidewalkTop,
       this.layout.width,
       this.layout.sidewalkHeight,
       FACILITY_DEPTH_WORLD + 5,
-      Math.max(0.04, this.layout.tileSize / 145),
+      this.layout.tileSize / 128,
     );
+  }
+
+  /** Uniform independent frontage props/decals, sharing exterior cleanup. */
+  private drawFrontageImage(
+    key: string, id: FrontageAssetId, x: number, y: number,
+    width: number, depth: number, alpha = 1,
+  ): boolean {
+    const asset = FRONTAGE_V2_ASSETS[id];
+    const textureKey = getPhaserTextureKey(asset);
+    if (!this.textures.exists(textureKey)) return false;
+    let image = this.landscapingBitmapImages.get(key);
+    if (!image) {
+      image = this.add.image(x, y, textureKey);
+      this.landscapingBitmapImages.set(key, image);
+    }
+    image.setTexture(textureKey).setPosition(x, y)
+      .setOrigin(asset.anchor.x / asset.nativeWidth, asset.anchor.y / asset.nativeHeight)
+      .setScale(width / asset.nativeWidth).setDepth(depth).setAlpha(alpha).setVisible(true);
+    this.activeLandscapingBitmapImages.add(key);
+    return true;
+  }
+
+  private drawFrontageTile(
+    key: string, id: FrontageAssetId, x: number, y: number,
+    width: number, height: number, depth: number, tileScale: number,
+  ): boolean {
+    const textureKey = getPhaserTextureKey(FRONTAGE_V2_ASSETS[id]);
+    if (!this.textures.exists(textureKey)) return false;
+    const buffer = getFrontageTileBuffer(width,height,tileScale);
+    let sprite = this.environmentSprites.get(key);
+    if (!sprite) {
+      sprite = this.add.tileSprite(x, y, buffer.bufferWidth, buffer.bufferHeight, textureKey).setOrigin(0, 0);
+      this.environmentSprites.set(key, sprite);
+    }
+    // A <1px curb still uses a 1px offscreen buffer, then scales back to its
+    // exact world band. Compensated material scales retain the PNG proportions.
+    sprite.setTexture(textureKey).setPosition(x, y).setSize(buffer.bufferWidth, buffer.bufferHeight)
+      .setDisplaySize(width,height).setTileScale(buffer.tileScaleX,buffer.tileScaleY)
+      .setDepth(depth).setVisible(true);
+    // The curb's cap starts at its own world band, not a wrapped turf Y phase.
+    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.layout.originY;
+    const phase = getEnvironmentTileLogicalPhase(x, y,
+      this.layout.originX, materialOriginY, tileScale, 0.000001);
+    sprite.tilePositionX = phase.x;
+    sprite.tilePositionY = phase.y;
+    this.activeEnvironmentSprites.add(key);
+    return true;
   }
 
   private roomEnvironmentFloorFrame(
@@ -2301,11 +2724,11 @@ export class FacilityScene extends Phaser.Scene {
     const columns = positiveGridSize(model.gridColumns, 16);
     const rows = positiveGridSize(model.gridRows, 10);
     const alpha = model.buildMode || model.placement ? 0.38 : 1;
-    const exclusions: ExteriorRectangle[] = model.rooms.map((room) => ({
+    const exclusions: ExteriorRectangle[] = model.rooms.map((room) => getExteriorConstructionEnvelope({
       x: room.tileX,
       y: room.tileY,
       ...orientedSize(room),
-    }));
+    }, room.definitionId === "room.hallway"));
     const founder = this.getFounderRoom();
     if (founder) {
       const size = orientedSize(founder);
@@ -2320,35 +2743,42 @@ export class FacilityScene extends Phaser.Scene {
     }
     // Candidates are contact-anchored above the slab sidewalk. This catches
     // tall crowns and their shadows rather than relying on room occlusion.
-    exclusions.push({ x: -4, y: rows + 0.84, width: columns + 8, height: 4 });
+    exclusions.push({ x: -4, y: rows, width: columns + 8, height: 4 });
     const visible = getVisibleExteriorLandscape(
       getExteriorLandscapeCandidates(columns, rows),
       exclusions,
       0.12,
+      this.layout.tileSize,
     );
     for (const candidate of visible) {
       const isTree = candidate.frameId.startsWith("landscape:tree");
-      const width = Math.max(22, candidate.width * this.layout.tileSize);
-      const height = Math.max(14, candidate.height * this.layout.tileSize);
-      const x = this.layout.originX + candidate.x * this.layout.tileSize;
-      const y = this.layout.originY + candidate.y * this.layout.tileSize;
-      if (!this.drawAuthoredLandscaping(
+      const display = getExteriorLandscapeDisplay(candidate, this.layout.tileSize,
+        this.layout.originX, this.layout.originY);
+      const { x, y, width, height } = display;
+      const depth = getExteriorLandscapeDepth(candidate.y);
+      const painted = candidate.frameId.startsWith("frontage:")
+        ? this.drawFrontageImage(`landscape:${candidate.key}`,
+          candidate.frameId as FrontageAssetId, x, y, width, depth, alpha)
+        : this.drawAuthoredLandscaping(
         `landscape:${candidate.key}`,
-        candidate.frameId,
+        candidate.frameId as LandscapingAtlasFrameId,
         x,
         y,
         width,
         height,
         alpha,
-        FACILITY_DEPTH_WORLD - 5,
-      )) {
+        depth,
+      );
+      if (!painted) {
+        const fallback = this.getSortableGraphics(this.fixtureGraphics,
+          this.activeFixtureGraphics, `landscape-fallback:${candidate.key}`).setDepth(depth);
         this.drawFixture(
-          graphics,
+          fallback,
           isTree ? "shadeTree" : "bushCluster",
           x,
           y,
           width,
-          Math.max(12, height * (isTree ? 0.42 : 0.56)),
+          height * (isTree ? 0.42 : 0.56),
           alpha,
         );
       }
@@ -2375,24 +2805,21 @@ export class FacilityScene extends Phaser.Scene {
       // across this tile from concealing it. The logical grid location and
       // pointer hit test remain unchanged.
       litterGraphics.setDepth(FACILITY_DEPTH_FLOOR_INTERACTION);
+      // Litter scales with the tile like the furniture around it; a fixed
+      // pixel minimum made it oversized when zoomed out. Clicking stays
+      // tile-based, so a small drawing does not shrink the target.
       this.drawFixture(
         litterGraphics,
         "litter",
         x,
         y,
-        Math.max(12, this.layout.tileSize * 0.36),
-        Math.max(8, this.layout.tileSize * 0.24),
+        this.layout.tileSize * 0.36,
+        this.layout.tileSize * 0.24,
       );
       if (litter.highlighted) {
         const outlineWidth = Math.max(2, pixel);
-        const highlightWidth = Math.max(
-          18,
-          this.layout.tileSize * 0.54,
-        );
-        const highlightHeight = Math.max(
-          14,
-          this.layout.tileSize * 0.42,
-        );
+        const highlightWidth = this.layout.tileSize * 0.54;
+        const highlightHeight = this.layout.tileSize * 0.42;
         litterGraphics.lineStyle(
           outlineWidth,
           PIXEL_PALETTE_NUMBER.highlight,
@@ -2658,7 +3085,10 @@ export class FacilityScene extends Phaser.Scene {
       const approvedHallway = getApprovedRoomPresentation(room.definitionId);
       if (approvedHallway) {
         this.drawApprovedHallwaySurface(graphics, room, rectangle, approvedHallway.shell);
+        this.drawTouchupCorridor(graphics, room, rectangle, "floor");
         this.drawApprovedHallwayExposedEdges(graphics, room, rectangle, approvedHallway.shell);
+        this.drawTouchupCorridor(graphics, room, rectangle, "decor");
+        this.drawApprovedHallwaySouthForeground(room, rectangle, approvedHallway.shell);
         return;
       }
       // Corridors remain open circulation floors. Only real exterior edges
@@ -2834,7 +3264,108 @@ export class FacilityScene extends Phaser.Scene {
       this.layout.tileSize / shell.tilePixels,
     );
     this.drawCleanlinessWear(graphics, room, rectangle);
+    if (getRoomTouchup(room.definitionId)) {
+      // Owner-approved touch-ups: wall-base shadow, rugs/mats and furniture
+      // contact shadows sit on the floor, below the walls and furniture.
+      const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
+      const visible = this.getTouchupDrawRecords(room).filter((record) =>
+        isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments));
+      this.drawTouchupPrimitives(
+        graphics,
+        getTouchupFloorPrimitives(room.definitionId, orientation, [dimensions.width, dimensions.height], this.getApprovedBaseWidth(room), openDoorSegments, visible),
+        rectangle.x,
+        rectangle.y,
+        this.layout.tileSize / TOUCHUP_TILE_PIXELS,
+      );
+    }
     this.drawApprovedRoomCaps(graphics, room, rectangle, shell);
+  }
+
+  private isHallwayTileAt(x: number, y: number): boolean {
+    return this.bridge.viewModel.rooms.some((candidate) => {
+      if (candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway") return false;
+      const size = orientedSize(candidate);
+      return x >= candidate.tileX && x < candidate.tileX + size.width && y >= candidate.tileY && y < candidate.tileY + size.height;
+    });
+  }
+
+  /** Door openings and low (backed) north segments in the active view's frame. */
+  private getApprovedSegmentState(room: FacilityRoomView): Readonly<{
+    openDoorSegments: Set<ApprovedWallSegment>;
+    backedNorthSegments: Set<ApprovedWallSegment>;
+  }> {
+    const openDoorSegments = new Set<ApprovedWallSegment>();
+    for (const opening of this.getRoomDoorOpenings(room)) {
+      const index = opening.offset + 1;
+      if (opening.side === "north") openDoorSegments.add(`N${index}`);
+      else if (opening.side === "south") openDoorSegments.add(`S${index}`);
+      else {
+        const letter = String.fromCharCode(64 + index);
+        openDoorSegments.add(`${opening.side === "west" ? "W" : "E"}${letter}`);
+      }
+    }
+    const backedNorthSegments = new Set<ApprovedWallSegment>();
+    for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
+      for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
+    }
+    return { openDoorSegments, backedNorthSegments };
+  }
+
+  private getApprovedRoomVariant(room: FacilityRoomView): ApprovedRoomStateVariant | undefined {
+    const occupied = (room.definitionId === "room.endoscopy" || room.definitionId === "room.ambulatory_or") &&
+      this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
+    return getApprovedRoomStateVariant(
+      room.definitionId,
+      occupied === true,
+      (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0,
+    );
+  }
+
+  private getApprovedBaseWidth(room: FacilityRoomView): number {
+    return getApprovedRoomOrientation(room.definitionId, 0)?.footprint[0] ?? orientedSize(room).width;
+  }
+
+  /** Approved draw records with the owner-approved touch-up rules applied. */
+  private getTouchupDrawRecords(room: FacilityRoomView): readonly TouchupDrawRecord[] {
+    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+    return applyRoomTouchupsToRecords(
+      room.definitionId,
+      orientation,
+      this.getApprovedBaseWidth(room),
+      [
+        ...resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room), room.upgradeLevel),
+        ...this.getPeriopCompanionChairs(room).map((chair) => chair.draw),
+      ],
+    );
+  }
+
+  private getPeriopCompanionChairs(room: FacilityRoomView) {
+    return resolvePeriopCompanionChairs(room, this.bridge.viewModel.doors ?? [], this.bridge.viewModel.rooms);
+  }
+
+  /** Paints touch-up primitives authored at 120 px per tile. */
+  private drawTouchupPrimitives(
+    graphics: Phaser.GameObjects.Graphics,
+    primitives: readonly TouchupPrimitive[],
+    originX: number,
+    originY: number,
+    scale: number,
+  ): void {
+    for (const primitive of primitives) {
+      const { color, alpha } = parseApprovedCssColor(primitive.color);
+      const x = originX + primitive.x * scale, y = originY + primitive.y * scale;
+      const width = primitive.width * scale, height = primitive.height * scale;
+      if (width <= 0 || height <= 0) continue;
+      if (primitive.stroke) {
+        graphics.lineStyle(Math.max(.5, primitive.stroke * scale), color, alpha * primitive.alpha);
+        graphics.strokeRoundedRect(x, y, width, height, Math.min((primitive.radius ?? 0) * scale, width / 2, height / 2));
+        continue;
+      }
+      graphics.fillStyle(color, alpha * primitive.alpha);
+      if (primitive.shape === "ellipse") graphics.fillEllipse(x + width / 2, y + height / 2, width, height);
+      else if (primitive.shape === "roundRect") graphics.fillRoundedRect(x, y, width, height, Math.min((primitive.radius ?? 0) * scale, width / 2, height / 2));
+      else graphics.fillRect(x, y, width, height);
+    }
   }
 
   private drawApprovedPaintPrimitives(
@@ -2885,8 +3416,8 @@ export class FacilityScene extends Phaser.Scene {
     const wall = parseApprovedCssColor(shell.rearWall).color;
     const trim = parseApprovedCssColor(shell.baseTrim).color;
     const dark = parseApprovedCssColor(shell.edgeTrim).color;
-    const light = 0x789173;
-    const cream = 0xefe1bd;
+    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
+    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
     const wood = parseApprovedCssColor(shell.doorJamb).color;
     const openings = this.getRoomDoorOpenings(room);
     const backed = this.getBackedHorizontalOffsets(room, "north");
@@ -2894,6 +3425,7 @@ export class FacilityScene extends Phaser.Scene {
     const dimensions = orientedSize(room);
     const inset = px(shell.doorInsetPixels);
     const northBaseHeight = px(room.definitionId === "room.front_desk" ? 23 : 23);
+    const touchupAccent = getRoomTouchup(room.definitionId)?.accent;
     for (let offset = 0; offset < dimensions.width; offset += 1) {
       const left = rectangle.x + offset * this.layout.tileSize;
       const isBacked = backed.has(offset);
@@ -2902,6 +3434,24 @@ export class FacilityScene extends Phaser.Scene {
       const opening = openings.some((door) => door.side === "north" && door.offset === offset);
       const paintRun = (x: number, width: number) => {
         if (width <= 0) return;
+        if (isBacked && touchupAccent && this.isHallwayTileAt(room.tileX + offset, room.tileY - 1)) {
+          // Owner revision: the hallway's own south wall. Same short-wall look
+          // as every room's south lip: dark cap, cream face, green base.
+          graphics.fillStyle(cream, 1); graphics.fillRect(x, top, width, height);
+          graphics.fillStyle(trim, 1); graphics.fillRect(x, rectangle.y - px(8), width, px(8));
+          graphics.fillStyle(dark, 1); graphics.fillRect(x, top, width, px(8));
+          graphics.fillStyle(light, 1); graphics.fillRect(x, top, width, px(3));
+          return;
+        }
+        if (!isBacked && touchupAccent) {
+          // House wall: cream upper, deep-green rail, room accent below, green base.
+          for (const [above, bandHeight, color] of getTouchupNorthWallBands(touchupAccent, shell.rearWallHeightPixels)) {
+            graphics.fillStyle(parseApprovedCssColor(color).color, 1);
+            graphics.fillRect(x, rectangle.y - px(above), width, px(bandHeight));
+          }
+          graphics.fillStyle(dark, 1); graphics.fillRect(x, rectangle.y - px(7), width, px(7));
+          return;
+        }
         graphics.fillStyle(isBacked && room.definitionId !== "room.front_desk" ? trim : wall, 1);
         graphics.fillRect(x, top, width, height);
         if (!isBacked) {
@@ -3012,10 +3562,10 @@ export class FacilityScene extends Phaser.Scene {
     const px = (value: number) => value * scale;
     const low = px(shell.southHeightPixels);
     const inset = px(shell.doorInsetPixels);
-    const cream = 0xefe1bd;
+    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
     const trim = parseApprovedCssColor(shell.baseTrim).color;
     const dark = parseApprovedCssColor(shell.edgeTrim).color;
-    const light = 0x789173;
+    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
     const wood = parseApprovedCssColor(shell.doorJamb).color;
     const southY = rectangle.y + rectangle.height;
     const openings = this.getRoomDoorOpenings(room);
@@ -3042,7 +3592,11 @@ export class FacilityScene extends Phaser.Scene {
     }
     if (room.definitionId === "room.front_desk") {
       const entryLeft = rectangle.x + this.layout.tileSize * 2;
-      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+      // The entrance threshold is floor, not wall: keep it under everyone
+      // walking through the front door (above only the sidewalk edge line).
+      const threshold = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `front-desk-threshold:${room.instanceId}`);
+      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+      threshold.setDepth(FACILITY_DEPTH_WORLD + 31);
       for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
@@ -3137,7 +3691,7 @@ export class FacilityScene extends Phaser.Scene {
     rectangle: { x: number; y: number; width: number; height: number },
   ): void {
     const tier = Math.max(1, Math.min(5, room.upgradeLevel ?? 1));
-    if (tier < 2) {
+    if (tier < 2 || !getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges) {
       return;
     }
     const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
@@ -3272,39 +3826,54 @@ export class FacilityScene extends Phaser.Scene {
       return [];
     }
     if (model.buildDoorTool === "place") {
-      return (
-        model.buildDoorSlots ??
-        model.eligibleDoorSlots ??
-        []
-      ).flatMap((slot) => {
-        if (slot.enabled === false) {
-          return [];
-        }
-        const room = model.rooms.find(
-          (candidate) => candidate.instanceId === slot.roomInstanceId,
-        );
-        return room && isRoomVisualDoorSlotClear({
-          definitionId: room.definitionId,
-          orientation: room.orientation,
-          width: room.width,
-          height: room.height,
-          side: slot.side,
-          offset: slot.offset,
-        })
-          ? [
-              {
-                kind: "place" as const,
-                slot,
-                geometry: this.getDoorGeometry(
-                  room,
-                  slot.side,
-                  slot.offset,
-                ),
-              },
-            ]
-          : [];
-      });
+      // Owner-approved single Doors tool: empty wall slots add a door and
+      // existing interior doors remove one, without switching modes.
+      return [
+        ...this.getBuildDoorPlaceTargets(),
+        ...this.getBuildDoorRemoveTargets(),
+      ];
     }
+    return this.getBuildDoorRemoveTargets();
+  }
+
+  private getBuildDoorPlaceTargets(): FacilityDoorInteractionTarget[] {
+    const model = this.bridge.viewModel;
+    return (
+      model.buildDoorSlots ??
+      model.eligibleDoorSlots ??
+      []
+    ).flatMap((slot) => {
+      if (slot.enabled === false) {
+        return [];
+      }
+      const room = model.rooms.find(
+        (candidate) => candidate.instanceId === slot.roomInstanceId,
+      );
+      return room && isRoomVisualDoorSlotClear({
+        definitionId: room.definitionId,
+        orientation: room.orientation,
+        width: room.width,
+        height: room.height,
+        side: slot.side,
+        offset: slot.offset,
+      })
+        ? [
+            {
+              kind: "place" as const,
+              slot,
+              geometry: this.getDoorGeometry(
+                room,
+                slot.side,
+                slot.offset,
+              ),
+            },
+          ]
+        : [];
+    });
+  }
+
+  private getBuildDoorRemoveTargets(): FacilityDoorInteractionTarget[] {
+    const model = this.bridge.viewModel;
     return (model.doors ?? []).flatMap((door) => {
       // The public entrance is immutable in the domain and never becomes a
       // pointer target, even while the remove tool is active.
@@ -4070,32 +4639,41 @@ export class FacilityScene extends Phaser.Scene {
   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
     const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.layout;
     const sidewalkBottom = sidewalkTop + sidewalkHeight;
-    if (!this.canRenderAuthoredEnvironment()) {
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
+    if (!this.textures.exists(getPhaserTextureKey(FRONTAGE_V2_ASSETS["frontage:paving-v2"]))) {
+      graphics.fillStyle(0xc9c6bb, 1);
       graphics.fillRect(originX, sidewalkTop, width, sidewalkHeight);
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.38);
-      for (let y = sidewalkTop + 5; y < sidewalkBottom; y += 9) {
-        graphics.fillRect(originX, y, width, 1);
+    }
+    const columns = positiveGridSize(this.bridge.viewModel.gridColumns, 16);
+    const curbHeight = tileSize * WORLD_EXTERIOR_BANDS.curbTiles;
+    // This is the only slab-joint system; the material has no baked seams.
+    graphics.lineStyle(Math.max(0.35, tileSize * 0.018), 0x8f9086, 0.45);
+    graphics.lineBetween(originX, sidewalkTop, originX + width, sidewalkTop);
+    for (const joint of getExteriorPavingJoints(columns)) {
+      graphics.lineBetween(originX + joint.x1 * tileSize, sidewalkTop + joint.y1 * tileSize,
+        originX + joint.x2 * tileSize, sidewalkTop + joint.y2 * tileSize);
+    }
+    for (const run of getFrontageCurbRuns(columns)) {
+      if (!this.drawFrontageTile(run.key, run.assetId, originX + run.x * tileSize,
+        sidewalkBottom-curbHeight, run.width * tileSize, curbHeight,
+        FACILITY_DEPTH_WORLD + 6, curbHeight / 16)) {
+        graphics.fillStyle(0x9e9e94, 1);
+        graphics.fillRect(originX + run.x * tileSize, sidewalkBottom-curbHeight, run.width*tileSize, curbHeight);
+        graphics.fillStyle(0xc8c7bb, 1);
+        graphics.fillRect(originX + run.x * tileSize, sidewalkBottom-curbHeight, run.width*tileSize, curbHeight*0.3);
       }
     }
-    // Broad paving slabs, joints, and curb are all site/world-coordinate art.
-    graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 0.85);
-    graphics.lineBetween(originX, sidewalkTop, originX + width, sidewalkTop);
-    graphics.lineBetween(originX, sidewalkBottom, originX + width, sidewalkBottom);
-    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.warmGray, 0.4);
-    const slabWidth = Math.max(32, Math.round(tileSize * 1.25));
-    // Sidewalk joints are relative to the semantic site edge, never the
-    // screen's current coordinate system, so they move with the pavement.
-    const firstSlab = originX;
-    for (let x = firstSlab; x <= originX + width; x += slabWidth) {
-      graphics.lineBetween(x, sidewalkTop + 2, x, sidewalkBottom - 2);
-    }
-    graphics.lineStyle(Math.max(1, Math.floor(tileSize * 0.06)), PIXEL_PALETTE_NUMBER.charcoal, 0.55);
-    graphics.lineBetween(originX, sidewalkBottom - Math.max(2, tileSize * 0.12), originX + width, sidewalkBottom - Math.max(2, tileSize * 0.12));
 
     const founder = this.getFounderRoom();
     if (!founder) return;
     const founderPixels = this.toPixels({ tileX: founder.tileX, tileY: founder.tileY, ...orientedSize(founder) });
+    const entryInset = getFrontageEntryInset(founder.tileX, positiveGridSize(this.bridge.viewModel.gridRows, 10));
+    // Above ground joints, far below sortable actors; outside the existing
+    // threshold and interior mat. It has no vertical face or crossing shadow.
+    if (!this.drawFrontageImage("frontage:entry-inset", "frontage:entry-inset-v2",
+      originX + entryInset.x * tileSize, sidewalkTop, tileSize, FACILITY_DEPTH_WORLD + 31)) {
+      graphics.fillStyle(0xddcfaf, 1);
+      graphics.fillRect(originX + entryInset.x * tileSize, sidewalkTop, tileSize, tileSize*entryInset.height);
+    }
     // The Front Desk's south shell already omits its protected exterior door
     // tile. Do not paint a threshold, shadow, or jamb here: the room floor
     // must meet the sidewalk directly at the opening.
@@ -4106,34 +4684,17 @@ export class FacilityScene extends Phaser.Scene {
     for (const [planterIndex, planter] of FRONT_DESK_PRESENTATION.entrancePlanters.entries()) {
       const planterBaseY =
         sidewalkTop + planter.baseYInSidewalk * tileSize;
-      this.drawAuthoredLandscaping(
+      this.drawFrontageImage(
         `landscape:front-desk-entrance-bed:${planter.side}`,
-        "landscape:entrance-planter",
+        planter.assetId,
         founderPixels.x + planter.centerXInTiles * tileSize,
         planterBaseY,
         planter.widthInTiles * tileSize,
-        planter.heightInTiles * tileSize,
-        1,
         // Their rear-side contact is outside the south wall, while actors in
         // the lower sidewalk lane have later baselines and pass in front.
         getFacilitySceneDepth(planterBaseY, "fixture", planterIndex),
+        this.bridge.viewModel.buildMode || this.bridge.viewModel.placement ? 0.38 : 1,
       );
-      planter.bloomAccents.forEach((accent, accentIndex) => {
-        this.drawAuthoredLandscaping(
-          `landscape:front-desk-entrance-bloom:${planterIndex}:${accentIndex}`,
-          accent.id,
-          founderPixels.x + accent.centerXInTiles * tileSize,
-          sidewalkTop + accent.baseYInSidewalk * tileSize,
-          accent.widthInTiles * tileSize,
-          accent.heightInTiles * tileSize,
-          accent.alpha,
-          getFacilitySceneDepth(
-            sidewalkTop + accent.baseYInSidewalk * tileSize,
-            "fixture",
-            planterIndex * 4 + accentIndex + 2,
-          ),
-        );
-      });
     }
   }
 
@@ -4771,10 +5332,9 @@ export class FacilityScene extends Phaser.Scene {
         place("visitorChair", 0.68, 0.62, 0.25, 0.3);
     }
 
-    const visualTier = Math.max(
-      1,
-      Math.min(5, room.upgradeLevel ?? 1),
-    );
+    const visualTier = getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges
+      ? Math.max(1, Math.min(5, room.upgradeLevel ?? 1))
+      : 1;
     if (visualTier >= 2 && !isFiveReferenceRoomDefinition(room.definitionId)) {
       switch (room.definitionId) {
         case "room.front_desk":
@@ -4860,66 +5420,76 @@ export class FacilityScene extends Phaser.Scene {
   ): boolean {
     const presentation = getApprovedRoomPresentation(room.definitionId);
     if (!presentation) return false;
+    // The existing procedural fixtures are the loading/error placeholder.
+    if (this.bridge.mobileInput === true && !mobileRoomArtReady(room.definitionId,
+      asset => this.textures.exists(getPhaserTextureKey(asset)))) return false;
+    if (room.definitionId === "room.founder_office" || room.definitionId === "room.executive_office" ||
+        room.definitionId === "room.gift_shop" || room.definitionId === "room.indoor_garden" || room.definitionId === "room.staff_gym") {
+      if (!presentation.assets.every(asset => {
+        const descriptor = APPROVED_LEVEL5_BITMAP_ASSETS.find(candidate => candidate.id === asset.id);
+        return descriptor && this.textures.exists(getPhaserTextureKey(descriptor));
+      })) return false;
+    }
     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
-    const occupied = room.definitionId === "room.endoscopy" &&
-      this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
-    const variant = occupied
-      ? "occupiedCovered" as const
-      : room.definitionId === "room.front_desk" && (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0
-        ? "emptyWater" as const
-        : undefined;
-    const records = resolveApprovedRoomDrawRecords(
-      room.definitionId,
-      orientation,
-      variant,
-    );
-    const openDoorSegments = new Set<ApprovedWallSegment>();
-    for (const opening of this.getRoomDoorOpenings(room)) {
-      const index = opening.offset + 1;
-      if (opening.side === "north") openDoorSegments.add(`N${index}`);
-      else if (opening.side === "south") openDoorSegments.add(`S${index}`);
-      else {
-        const letter = String.fromCharCode(64 + index);
-        openDoorSegments.add(`${opening.side === "west" ? "W" : "E"}${letter}`);
-      }
-    }
-    const backedNorthSegments = new Set<ApprovedWallSegment>();
-    for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
-      for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
-    }
+    const records = this.getTouchupDrawRecords(room);
+    const companionChairs = this.getPeriopCompanionChairs(room);
+    const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
+    const lighting = this.getTouchupRoomLighting(room, presentation.shell, openDoorSegments, backedNorthSegments);
+    const tintTopY = (centerXTiles: number) => lighting
+      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.layout.tileSize / TOUCHUP_TILE_PIXELS
+      : undefined;
     let order = 0;
     for (const record of records) {
-      if (record.doorOwners.some((owner) => openDoorSegments.has(owner)) || record.backedOwners.some((owner) => backedNorthSegments.has(owner))) continue;
+      if (!isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments)) continue;
       const frame = this.registerApprovedRoomFrame(record);
-      const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+      const atlas = [...APPROVED_GS015_ROOM_ATLASES, ...APPROVED_LEVEL5_BITMAP_ASSETS, ...ROOM_TOUCHUP_DECOR_ASSETS].find((candidate) => candidate.id === record.assetId);
       if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
+      const stool = getApprovedRollingStoolSource(record);
+      const backlessTexture = stool?.derivation ? this.ensureBacklessRollingStoolTexture(stool) : undefined;
+      if (stool?.derivation && !backlessTexture) continue;
+      const textureKey = backlessTexture ?? getPhaserTextureKey(atlas);
+      const renderFrame = backlessTexture ? undefined : frame;
       const [leftTiles, topTiles] = record.destinationTopLeftTiles;
       const [widthTiles, heightTiles] = record.renderSizeTiles;
       const left = rectangle.x + leftTiles * this.layout.tileSize;
       const top = rectangle.y + topTiles * this.layout.tileSize;
       const width = Math.max(1, widthTiles * this.layout.tileSize);
       const height = Math.max(1, heightTiles * this.layout.tileSize);
-      const contactY = record.worldLocalGround
-        ? rectangle.y + record.worldLocalGround[1] * this.layout.tileSize
-        : top + height;
+      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.layout.tileSize;
       const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
       let image = this.fixtureBitmapImages.get(key);
       if (!image) {
-        image = this.add.image(left, top, getPhaserTextureKey(atlas), frame);
+        image = this.add.image(left, top, textureKey, renderFrame);
         this.fixtureBitmapImages.set(key, image);
       }
-      const recordDepth = record.depthPolicy === "wall"
+      // North-wall floor furniture kept on a low wall sorts by its own floor
+      // line, so corridor walkers and anything else north of it draw behind.
+      const recordDepth = isTouchupRecordFloorSortedOnLowWall(record, backedNorthSegments)
+        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.layout.tileSize, "fixture", order % 64)
+        : record.depthPolicy === "wall"
           ? FACILITY_DEPTH_WORLD + 19
           : getFacilitySceneDepth(contactY, "fixture", order % 64);
-      image.setTexture(getPhaserTextureKey(atlas), frame)
+      image.setTexture(textureKey, renderFrame)
         .setOrigin(0, 0)
         .setPosition(Math.round(left), Math.round(top))
         .setDisplaySize(Math.round(width), Math.round(height))
         .setDepth(recordDepth)
         .setVisible(true)
-        .setData("approved-draw-id", record.id);
+        .setData("approved-draw-id", record.id)
+        .setData("approved-backless-stool-source", stool?.id ?? null)
+        .setData("approved-front-support-ids", record.foregroundSupportIds ?? null)
+        .setData("approved-front-room-id", room.instanceId)
+        .setData("approved-front-base-depth", recordDepth);
+      const clipWidth = getApprovedDrawClipWidth(record);
+      if (clipWidth !== undefined) image.setCrop(0, 0, clipWidth, record.sourceRect[3]);
+      else if (image.isCropped) image.setCrop();
       this.activeFixtureBitmapImages.add(key);
-      const chairMask = getApprovedSideChairMaskForDraw(room.definitionId, orientation, record);
+      if (lighting) {
+        this.drawTouchupTintedTop(`${key}:tint`, textureKey, renderFrame, left, top, width, height,
+          tintTopY(leftTiles + widthTiles / 2)!, lighting.color, recordDepth);
+      }
+      const chairMask = stool ? undefined : getApprovedSideChairMaskForDraw(room.definitionId, orientation, record) ??
+        companionChairs.find((chair) => chair.draw.id === record.id)?.mask;
       if (chairMask) {
         const textures = this.ensureApprovedSideChairTextures(chairMask);
         if (textures) {
@@ -4977,7 +5547,18 @@ export class FacilityScene extends Phaser.Scene {
       const top = rectangle.y + proofRect.top * scale;
       const width = proofRect.width * scale;
       const height = proofRect.height * scale;
-      if (procedural.style.kind === "ct-observation-partition") {
+      if (procedural.style.kind === "approved-glass" ||
+        (procedural.style.kind === "ct-observation-partition" && getRoomTouchup(room.definitionId)?.glassPartition)) {
+        // Owner-approved framed glass observation window.
+        const k = TOUCHUP_TILE_PIXELS / presentation.shell.tilePixels;
+        this.drawTouchupPrimitives(
+          graphics,
+          getTouchupGlassPartitionPrimitives({ left: proofRect.left * k, top: proofRect.top * k, width: proofRect.width * k, height: proofRect.height * k }),
+          rectangle.x,
+          rectangle.y,
+          this.layout.tileSize / TOUCHUP_TILE_PIXELS,
+        );
+      } else if (procedural.style.kind === "ct-observation-partition") {
         graphics.fillStyle(parseApprovedCssColor(procedural.style.body).color, 1);
         graphics.fillRect(left, top, width, height);
         graphics.fillStyle(parseApprovedCssColor(procedural.style.topHighlight).color, 1);
@@ -5010,7 +5591,230 @@ export class FacilityScene extends Phaser.Scene {
           : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 32);
       graphics.setDepth(depth);
     }
+    for (const item of getVisibleTouchupDecor(room.definitionId, orientation, this.getApprovedBaseWidth(room), openDoorSegments, backedNorthSegments)) {
+      const key = `touchup:${room.instanceId}:${orientation}:${item.id}`;
+      const placed = this.drawTouchupSprite(
+        key,
+        TOUCHUP_SPRITES[item.sprite],
+        rectangle.x + item.x * this.layout.tileSize,
+        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.layout.tileSize : rectangle.y + (item.y ?? 0) * this.layout.tileSize,
+        item.widthTiles,
+        item.kind,
+      );
+      if (placed && lighting) {
+        this.drawTouchupTintedTop(`${key}:tint`, placed.textureKey, placed.frame, placed.left, placed.top, placed.width, placed.height,
+          tintTopY(item.x)!, lighting.color, placed.depth);
+      }
+    }
+    if (lighting) this.drawTouchupLighting(room, rectangle, presentation.shell, lighting);
     return true;
+  }
+
+  /** The room's current lighting; imaging rooms only while a scan is running. */
+  private getTouchupRoomLighting(
+    room: FacilityRoomView,
+    shell: ApprovedRoomShellPresentation,
+    openDoorSegments: ReadonlySet<string>,
+    backedNorthSegments: ReadonlySet<string>,
+  ): TouchupLighting | undefined {
+    const dimensions = orientedSize(room);
+    return getTouchupLighting(
+      room.definitionId,
+      [dimensions.width, dimensions.height],
+      shell,
+      openDoorSegments,
+      backedNorthSegments,
+      this.bridge.viewModel.imagingActiveRoomInstanceIds?.includes(room.instanceId) ?? false,
+    );
+  }
+
+  /**
+   * Back-wall furniture in a tinted room is tinted in full: a tinted copy of
+   * the part of the sprite above the tinted region (e.g. above a low wall),
+   * cropped and stacked just above the original.
+   */
+  private drawTouchupTintedTop(
+    key: string,
+    textureKey: string,
+    frame: string | undefined,
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+    cutY: number,
+    color: string,
+    depth: number,
+  ): void {
+    if (cutY <= top + .5) return;
+    const tintedKey = this.getTouchupTintedTexture(textureKey, frame, color);
+    if (!tintedKey) return;
+    const source = this.textures.get(tintedKey).getSourceImage() as { width: number; height: number };
+    const rows = Math.min(source.height, Math.ceil(((cutY - top) / height) * source.height));
+    let image = this.fixtureBitmapImages.get(key);
+    if (!image) {
+      image = this.add.image(left, top, tintedKey);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    image.setTexture(tintedKey)
+      .setOrigin(0, 0)
+      .setPosition(Math.round(left), Math.round(top))
+      .setDisplaySize(Math.round(width), Math.round(height))
+      .setCrop(0, 0, source.width, rows)
+      .setDepth(depth + .5)
+      .setVisible(true);
+    this.activeFixtureBitmapImages.add(key);
+  }
+
+  /** A multiplied copy of one frame, alpha-masked to the original silhouette. */
+  private getTouchupTintedTexture(textureKey: string, frame: string | undefined, color: string): string | undefined {
+    const key = `room-touchup-tint:${textureKey}:${frame ?? "__BASE"}:${color}`;
+    if (this.textures.exists(key)) return key;
+    if (!this.textures.exists(textureKey)) return undefined;
+    const texture = this.textures.get(textureKey);
+    const sourceFrame = texture.get(frame);
+    const image = texture.getSourceImage() as CanvasImageSource;
+    const canvas = this.textures.createCanvas(key, sourceFrame.cutWidth, sourceFrame.cutHeight);
+    if (!canvas) return undefined;
+    const context = canvas.getContext();
+    const draw = () => context.drawImage(image, sourceFrame.cutX, sourceFrame.cutY, sourceFrame.cutWidth, sourceFrame.cutHeight, 0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
+    draw();
+    context.globalCompositeOperation = "multiply";
+    context.fillStyle = color;
+    context.fillRect(0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
+    context.globalCompositeOperation = "destination-in";
+    draw();
+    context.globalCompositeOperation = "source-over";
+    canvas.refresh();
+    return key;
+  }
+
+  /**
+   * One touch-up decor image. Floor items stand on `y` and depth-sort with
+   * furniture and people; wall items hang from `y` on the wall layer.
+   */
+  private drawTouchupSprite(
+    key: string,
+    sprite: TouchupSprite,
+    centerX: number,
+    y: number,
+    widthTiles: number,
+    kind: "floor" | "wall",
+  ): Readonly<{ textureKey: string; frame: string | undefined; left: number; top: number; width: number; height: number; depth: number }> | undefined {
+    let textureKey: string | undefined, frame: string | undefined, sourceWidth: number, sourceHeight: number;
+    if (isTouchupFileSprite(sprite)) {
+      const asset = ROOM_TOUCHUP_DECOR_ASSETS.find((candidate) => candidate.id === `room-touchup:${sprite.file}`);
+      if (!asset) return undefined;
+      textureKey = getPhaserTextureKey(asset);
+      if (!this.textures.exists(textureKey)) return undefined;
+      sourceWidth = sprite.nativeWidth;
+      sourceHeight = sprite.nativeHeight;
+    } else {
+      const record = resolveApprovedRoomDrawRecords(sprite.definitionId, 0).find((candidate) => candidate.id === sprite.recordId);
+      const atlas = record ? APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId) : undefined;
+      frame = record ? this.registerApprovedRoomFrame(record) : undefined;
+      if (!record || !atlas || !frame) return undefined;
+      textureKey = getPhaserTextureKey(atlas);
+      sourceWidth = record.sourceRect[2];
+      sourceHeight = record.sourceRect[3];
+      const stool = getApprovedRollingStoolSource(record);
+      if (stool?.derivation) {
+        textureKey = this.ensureBacklessRollingStoolTexture(stool);
+        if (!textureKey) return undefined;
+        frame = undefined;
+      }
+    }
+    const width = widthTiles * this.layout.tileSize;
+    const height = width * sourceHeight / sourceWidth;
+    const top = kind === "wall" ? y : y - height;
+    let image = this.fixtureBitmapImages.get(key);
+    if (!image) {
+      image = this.add.image(centerX, top, textureKey, frame);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    const depth = kind === "wall" ? FACILITY_DEPTH_WORLD + 19 : getFacilitySceneDepth(y, "fixture", 40);
+    image.setTexture(textureKey, frame)
+      .setOrigin(0, 0)
+      .setPosition(Math.round(centerX - width / 2), Math.round(top))
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setVisible(true)
+      .setData("touchup-decor", key);
+    this.activeFixtureBitmapImages.add(key);
+    return { textureKey, frame, left: centerX - width / 2, top, width, height, depth };
+  }
+
+  /**
+   * Imaging-room dimming (only while a scan runs) and warm/cool tints.
+   * MULTIPLY from the north wall's real height down to the top of the south
+   * wall, then SCREEN glows. The layer
+   * sits just above this room's south lip, so people in the room are tinted
+   * while people and furniture in the room to the south are not.
+   */
+  private drawTouchupLighting(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
+    lighting: TouchupLighting,
+  ): void {
+    const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
+    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.layout.tileSize / shell.tilePixels;
+    const tint = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-light:${room.instanceId}`);
+    tint.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    this.drawTouchupPrimitives(tint, lighting.regions, rectangle.x, rectangle.y, scale);
+    tint.setDepth(getFacilitySceneDepth(southEdge, "character", 63));
+    const glow = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-glow:${room.instanceId}`);
+    glow.setBlendMode(Phaser.BlendModes.SCREEN);
+    this.drawTouchupPrimitives(glow, lighting.glows, rectangle.x, rectangle.y, scale);
+    glow.setDepth(getFacilitySceneDepth(southEdge, "character", 63) + .5);
+  }
+
+  /** Corridor touch-ups: stripe and wall shadow on the floor, then decor. */
+  private drawTouchupCorridor(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    phase: "floor" | "decor",
+  ): void {
+    const rooms = this.bridge.viewModel.rooms;
+    const isCorridor = (x: number, y: number) => rooms.some((candidate) =>
+      (candidate.kind === "hallway" || candidate.definitionId === "room.hallway") &&
+      x >= candidate.tileX && x < candidate.tileX + orientedSize(candidate).width &&
+      y >= candidate.tileY && y < candidate.tileY + orientedSize(candidate).height);
+    const openings = this.getRoomDoorOpenings(room);
+    const exposedNorth = this.exposedBoundaryRuns(room, "north").some((run) => run.offset === 0);
+    const lowNorth = getOwnedBackedNorthBoundaryRuns(room, rooms, openings).some((run) => run.offset === 0);
+    const hasNorthWall = exposedNorth && !lowNorth;
+    const tile = { x: room.tileX, y: room.tileY };
+    if (phase === "floor") {
+      const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
+      this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, scale);
+      this.drawTouchupPrimitives(graphics, getTouchupCorridorRunnerPrimitives(tile, isCorridor), rectangle.x, rectangle.y, scale);
+      return;
+    }
+    // Decor also stands against walls shared with rooms (owner, 2026-10-07);
+    // only an outdoor-facing tall north wall carries art.
+    const items = getTouchupCorridorDecor(
+      tile,
+      isCorridor,
+      {
+        north: hasNorthWall ? "tall" : isCorridor(tile.x, tile.y - 1) ? null : "backed",
+        west: !isCorridor(tile.x - 1, tile.y),
+        east: !isCorridor(tile.x + 1, tile.y),
+      },
+      {
+        north: openings.some((opening) => opening.side === "north"),
+        west: openings.some((opening) => opening.side === "west"),
+        east: openings.some((opening) => opening.side === "east"),
+      },
+    );
+    items.forEach((item, index) => this.drawTouchupSprite(
+      `touchup-corridor:${room.instanceId}:${index}`,
+      TOUCHUP_SPRITES[item.sprite],
+      rectangle.x + (item.x - room.tileX) * this.layout.tileSize,
+      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.layout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.layout.tileSize,
+      item.widthTiles,
+      item.kind,
+    ));
   }
 
   private drawFixture(
@@ -5079,12 +5883,6 @@ export class FacilityScene extends Phaser.Scene {
     return moving ? "walk-neutral" : "idle";
   }
 
-  private characterWalkFrame(pose: CharacterPose): number | undefined {
-    return pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b"
-      ? characterWalkFrameAt(this.characterWalkMilliseconds)
-      : undefined;
-  }
-
   private characterPresentationFrozen(): boolean {
     return this.bridge.viewModel.paused || Boolean(this.bridge.viewModel.buildMode);
   }
@@ -5094,6 +5892,68 @@ export class FacilityScene extends Phaser.Scene {
     if (existing !== undefined) return existing;
     this.characterGaitOffsets.set(key, initialOffset);
     return initialOffset;
+  }
+
+  private characterStepMotion(
+    key: string,
+    pose: CharacterPose,
+    frozen: boolean,
+  ): CharacterDrawMotion {
+    const previous = this.characterStepBounceStates.get(key);
+    if (frozen) return previous ?? RESTING_CHARACTER_MOTION;
+    const motion = characterDrawMotion(this.characterHopStates.get(key), pose, {
+      seed: characterMotionSeed(`${key}:breath`),
+      clockMilliseconds: this.characterRestClockMilliseconds,
+    });
+    this.characterStepBounceStates.set(key, motion);
+    return motion;
+  }
+
+  private advanceCharacterHopState(
+    key: string,
+    moving: boolean,
+    travelledTiles: number,
+    tilesPerSecond: number,
+    sample?: RouteMotionSample,
+  ): CharacterHopState | undefined {
+    const previous = this.characterHopStates.get(key);
+    const travel = sample?.moving
+      ? {
+          x: sample.direction === "side" ? (sample.rightFacing ? 1 : -1) : 0,
+          y: sample.direction === "side" ? 0 : sample.direction === "back" ? -1 : 1,
+        }
+      : { x: previous?.travelX ?? 0, y: previous?.travelY ?? 0 };
+    const next = advanceCharacterHop(previous, {
+      moving,
+      travelledTiles,
+      tilesPerSecond,
+      realMilliseconds: this.frameDeltaMilliseconds,
+      gameMilliseconds: this.frameDeltaMilliseconds * this.bridge.viewModel.simulationSpeed,
+      seed: characterMotionSeed(key),
+      travelX: travel.x,
+      travelY: travel.y,
+    });
+    if (next) this.characterHopStates.set(key, next);
+    else this.characterHopStates.delete(key);
+    return next;
+  }
+
+  /** After a stop, the remaining hop offset eases out along the last travel
+   * direction, so the character lands exactly where the game placed it. */
+  private characterHopSettleLocation(
+    location: GridPoint | undefined,
+    hop: CharacterHopState | undefined,
+  ): GridPoint | undefined {
+    const offset = characterHopOffsetTiles(hop);
+    if (!location || !hop || hop.moving || offset === 0) return location;
+    return {
+      x: location.x - hop.travelX * offset,
+      y: location.y - hop.travelY * offset,
+    };
+  }
+
+  private characterStepBounceDisplayLift(key: string): number {
+    return (this.characterStepBounceStates.get(key)?.lift ?? 0) * this.cameraView.zoom;
   }
 
   private drawCharacterPresentation(
@@ -5111,6 +5971,7 @@ export class FacilityScene extends Phaser.Scene {
       { ...candidate, displayScale: candidate.displayScale * identityScale },
       this.layout,
     );
+    const motion = this.characterStepMotion(key, resolved.pose, Boolean(frozen));
     const drawn = this.drawPixelPerson(
       graphics,
       resolved.centerX,
@@ -5125,8 +5986,27 @@ export class FacilityScene extends Phaser.Scene {
       resolved.representation,
       Boolean(frozen),
       resolved.alignSeatContact ?? false,
+      { ...motion, lift: motion.lift * this.cameraView.zoom },
     );
     if (!frozen) {
+      // Glide onto and off seats and furniture posts instead of snapping.
+      // Depth and the returned baseline stay at the destination.
+      const target = { x: Math.round(resolved.centerX), y: Math.round(drawn.baseY) };
+      const settle = advanceSeatSettle(
+        this.characterSeatSettles.get(key),
+        target,
+        resolved.pose,
+        this.frameDeltaMilliseconds,
+        this.layout.tileSize,
+      );
+      this.characterSeatSettles.set(key, settle.state);
+      const dx = Math.round(settle.point.x) - target.x;
+      const dy = Math.round(settle.point.y) - target.y;
+      if (dx !== 0 || dy !== 0) {
+        const container = this.characterBitmapContainers.get(key);
+        const shown = container?.visible ? container : graphics;
+        shown.setPosition(shown.x + dx, shown.y + dy);
+      }
       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
         { ...resolved, baseY: drawn.baseY },
         this.layout,
@@ -5154,6 +6034,46 @@ export class FacilityScene extends Phaser.Scene {
     )
       ? "seated"
       : "idle";
+  }
+
+  /** Keeps the founder's task label attached to the actual rendered sprite. */
+  private renderFounderActivityBox(
+    founderKey: string,
+    label: string | undefined,
+    fallbackCenterX: number,
+    fallbackBaseY: number,
+  ): void {
+    const text = this.founderActivityText;
+    const box = this.founderActivityBox;
+    const inspected = this.inspectTarget?.kind === "character" && this.inspectTarget.key === founderKey;
+    if (!text || !box || !label || inspected) {
+      text?.setVisible(false);
+      box?.setVisible(false);
+      return;
+    }
+    const container = this.characterBitmapContainers.get(founderKey);
+    const actor = container?.getByName("actor") as Phaser.GameObjects.Image | null | undefined;
+    // Bitmap actors are normally visible. Their own bounds give the label a
+    // stable head anchor across support fixtures, camera zoom and frozen poses.
+    const bitmapBounds = container?.visible && actor?.visible ? actor.getBounds() : undefined;
+    const bounds = bitmapBounds && bitmapBounds.width > 0 && bitmapBounds.height > 0
+      ? bitmapBounds
+      : undefined;
+    // Procedural Graphics has no reliable Phaser bounds contract. Its known
+    // presentation metrics below are the safe fallback when a bitmap is
+    // loading, absent, or intentionally hidden.
+    const centerX = bounds ? bounds.centerX : fallbackCenterX;
+    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.layout.tileSize * 0.88);
+    text.setText(label).setPosition(centerX, topY - 4).setVisible(true);
+    const textBounds = text.getBounds();
+    const insetX = 3;
+    const insetY = 2;
+    box.clear();
+    box.fillStyle(0xf0f0ea, 0.97);
+    box.fillRect(textBounds.x - insetX, textBounds.y - insetY, textBounds.width + insetX * 2, textBounds.height + insetY * 2);
+    box.lineStyle(1, 0x20282a, 1);
+    box.strokeRect(textBounds.x - insetX + 0.5, textBounds.y - insetY + 0.5, textBounds.width + insetX * 2 - 1, textBounds.height + insetY * 2 - 1);
+    box.setVisible(true);
   }
 
   private staffPose(
@@ -5197,6 +6117,26 @@ export class FacilityScene extends Phaser.Scene {
     moving: boolean;
     rightFacing: boolean;
   } {
+    try {
+      return this.getCharacterRouteMotionPresentation(key, input);
+    } catch {
+      // Isolate a bad actor's transient render track. The rest of the canvas
+      // must continue drawing even if an unexpected route/hop handoff fails.
+      this.routeMotionTracks.delete(key);
+      this.characterHopStates.delete(key);
+      return {
+        location: input.location,
+        direction: input.direction ?? "front",
+        moving: false,
+        rightFacing: this.characterFacingRight.get(key) ?? false,
+      };
+    }
+  }
+
+  private getCharacterRouteMotionPresentation(
+    key: string,
+    input: Parameters<FacilityScene["getCharacterRoutePresentation"]>[1],
+  ): ReturnType<FacilityScene["getCharacterRoutePresentation"]> {
     // A paused redraw must never sync, hand off, prune, or advance a route.
     // The final visual state is selected by drawCharacterPresentation below.
     if (this.characterPresentationFrozen()) {
@@ -5233,10 +6173,11 @@ export class FacilityScene extends Phaser.Scene {
     });
     if (!track) {
       this.routeMotionTracks.delete(key);
+      const hop = this.advanceCharacterHopState(key, false, 0, 0);
       return {
-        location: input.location,
+        location: this.characterHopSettleLocation(input.location, hop),
         direction: input.direction ?? "front",
-        moving: input.moving ?? false,
+        moving: false,
         rightFacing: this.characterFacingRight.get(key) ?? false,
       };
     }
@@ -5250,25 +6191,52 @@ export class FacilityScene extends Phaser.Scene {
       millisecondsPerMinute,
       this.bridge.viewModel.simulationSpeed,
     );
-    track = advanceRouteMotion(
+    // A first-seen stationary actor is parked by syncRouteMotion; keep the
+    // facing it was last drawn with.
+    if (!previous && !track.routeActive) {
+      track = { ...track, rightFacing: this.characterFacingRight.get(key) ?? track.rightFacing };
+    }
+    // Route distance this frame, measured before advancing because the
+    // advance may compact the path and renumber its indices. It includes any
+    // catch-up, so hop steps keep pace with the drawn movement.
+    const travelledTiles = routeMotionStepTiles(
       track,
       this.frameDeltaMilliseconds,
       tilesPerSecond,
     );
-    const sample = sampleRouteMotion(track);
+    track = advanceRouteMotion(
+      track,
+      this.frameDeltaMilliseconds,
+      tilesPerSecond,
+      input.location,
+    );
+    const sample = sampleRouteMotion(track, input.location);
     this.characterFacingRight.set(key, sample.rightFacing);
-    if (routeMotionComplete(track)) {
-      this.routeMotionTracks.delete(key);
-    } else {
-      this.routeMotionTracks.set(key, track);
-    }
+    // A finished route stays parked at its last node, so the next route
+    // starts from where the character stands instead of popping forward.
+    this.routeMotionTracks.set(
+      key,
+      routeMotionComplete(track) ? parkRouteMotion(track, input.location) : track,
+    );
+    const moving = sample.moving || (track.routeActive && (input.moving ?? false));
+    const hop = this.advanceCharacterHopState(key, moving, travelledTiles, tilesPerSecond, sample);
+    // Hop steps: draw the character slightly behind or ahead of its logical
+    // route position (zero at every landing), sampled along the real path.
+    const shown = hop?.moving
+      ? sampleRouteMotion({
+          ...track,
+          progress: Math.max(0, Math.min(track.targetIndex, track.progress - characterHopOffsetTiles(hop))),
+        }, input.location)
+      : sample;
     return {
-      location: sample.location,
+      location: hop?.moving
+        ? shown.location
+        : this.characterHopSettleLocation(sample.location, hop),
       direction: sample.moving
-        ? sample.direction
+        ? shown.direction
         : (input.direction ?? sample.direction),
-      moving: sample.moving || (input.moving ?? false),
-      rightFacing: sample.rightFacing,
+      moving,
+      rightFacing: shown.rightFacing,
     };
   }
 
@@ -5292,7 +6260,7 @@ export class FacilityScene extends Phaser.Scene {
     location: GridPoint | undefined,
     moving: boolean,
     anchor: "staff" | "public",
-  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; pose?: CharacterPose; direction?: CharacterDirection; rightFacing?: boolean }> | undefined {
+  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose?: CharacterPose; direction?: CharacterDirection; rightFacing?: boolean }> | undefined {
     const approvedRoom = this.bridge.viewModel.rooms.find((candidate) => candidate.definitionId === "room.front_desk");
     const approvedBounds = approvedRoom ? orientedSize(approvedRoom) : undefined;
     const insideApprovedRoom = Boolean(location && approvedRoom && approvedBounds && !moving &&
@@ -5314,6 +6282,8 @@ export class FacilityScene extends Phaser.Scene {
           seatTarget: true,
           supportRole: support.role,
           supportId: support.id,
+          supportRoomInstanceId: approvedRoom.instanceId,
+          sideChairLayer: support.sideChairLayer,
           pose: support.pose === "standing" ? "idle" : support.pose,
           ...facing,
         };
@@ -5348,10 +6318,13 @@ export class FacilityScene extends Phaser.Scene {
     location: GridPoint | undefined,
     moving: boolean,
     supportRole: FacilityActorSupportRole | undefined,
-  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
+    supportId?: string,
+    supportRoomInstanceId?: string,
+  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; hidden?: boolean; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; sideChairLayer?: ApprovedSideChairLayerBinding; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
     if (!location || moving || !supportRole) return undefined;
     const room = this.bridge.viewModel.rooms.find((candidate) => {
       if (!getApprovedRoomPresentation(candidate.definitionId) || candidate.definitionId === "room.front_desk") return false;
+      if (supportRoomInstanceId !== undefined) return candidate.instanceId === supportRoomInstanceId;
       const size = orientedSize(candidate);
       return location.x >= candidate.tileX && location.x < candidate.tileX + size.width &&
         location.y >= candidate.tileY && location.y < candidate.tileY + size.height;
@@ -5359,11 +6332,18 @@ export class FacilityScene extends Phaser.Scene {
     if (!room) return undefined;
     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
     const support = getNearestApprovedActorSupport(
-      resolveApprovedRoomActorSupports(room.definitionId, orientation),
+      supportRole === "staff-idle"
+        ? resolveStaffIdleSupports(room.definitionId, orientation)
+        : supportRole === "periop-companion-seat"
+          ? this.getPeriopCompanionChairs(room).map((chair) => chair.support)
+          : resolveApprovedRoomActorSupports(room.definitionId, orientation, room.upgradeLevel),
       { x: location.x - room.tileX, y: location.y - room.tileY },
       supportRole,
+      supportId,
     );
     if (!support) return undefined;
+    const segmentState = this.getApprovedSegmentState(room);
+    const hidden = !isApprovedActorSupportVisible(support, segmentState.openDoorSegments, segmentState.backedNorthSegments);
     const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
     const facing = getApprovedSupportFacing(support.facing);
     const painterGround = getApprovedSupportPainterGround(support);
@@ -5373,9 +6353,11 @@ export class FacilityScene extends Phaser.Scene {
       depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
       scale: 1,
       seatTarget: support.pose !== "standing",
+      hidden,
       supportRole: support.role,
       supportId: support.id,
       supportRoomInstanceId: room.instanceId,
+      sideChairLayer: support.sideChairLayer,
       pose: support.pose === "standing" ? "idle" : support.pose,
       ...facing,
     };
@@ -5384,7 +6366,7 @@ export class FacilityScene extends Phaser.Scene {
   private setCharacterSupportPresentation(
     key: string,
     graphics: Phaser.GameObjects.Graphics,
-    support: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string }> | undefined,
+    support: Readonly<{ depthBaseY: number; hidden?: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string; sideChairLayer?: ApprovedSideChairLayerBinding }> | undefined,
     order: number,
   ): void {
     const depthY = support?.depthBaseY;
@@ -5394,9 +6376,11 @@ export class FacilityScene extends Phaser.Scene {
       this.characterBitmapContainers.get(key)?.setDepth(depth);
     }
     for (const target of [graphics, this.characterBitmapContainers.get(key)]) {
+      if (support?.hidden) target?.setVisible(false);
       target?.setData("actor-support-role", support?.supportRole ?? null);
       target?.setData("actor-support-id", support?.supportId ?? null);
       target?.setData("actor-support-room-instance-id", support?.supportRoomInstanceId ?? null);
+      target?.setData("actor-seat-mask-id", support?.sideChairLayer?.maskId ?? null);
     }
   }
 
@@ -5415,6 +6399,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawCharacters(): void {
+    if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     if (this.characterPresentationFrozen()) {
       // Atlas callbacks may redraw while paused without update() observing the
       // pause. Mark it so the next update also discards a stale resume delta.
@@ -5470,6 +6455,9 @@ export class FacilityScene extends Phaser.Scene {
         actor.appearance,
         Boolean(actor.location || actor.path?.length),
       )),
+      ...(this.bridge.viewModel.inspectors ?? []).flatMap(actor => liveAppearance(
+        `character:inspector:${actor.instanceId}`, actor.appearance, true,
+      )),
     ];
     this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
     representedKeys.add(founderKey);
@@ -5493,16 +6481,19 @@ export class FacilityScene extends Phaser.Scene {
       let resolvedFounderPose = this.bridge.viewModel.founder.seated && !founderPresentation.moving
         ? "seated"
         : founderPose;
-      const founderDisplay = this.bridge.viewModel.founder.supportRole === "front-desk-staff"
+      const founderSupportRole = this.bridge.viewModel.founder.supportRole;
+      const founderDisplay = founderSupportRole === "front-desk-staff" || founderSupportRole === "front-desk-public"
         ? this.getFrontDeskV5ActorDisplayPosition(
             candidateFounderLocation,
             founderPresentation.moving,
-            "staff",
+            founderSupportRole === "front-desk-staff" ? "staff" : "public",
           )
         : this.getApprovedActorSupportDisplayPosition(
             candidateFounderLocation,
             founderPresentation.moving,
-            this.bridge.viewModel.founder.supportRole,
+            founderSupportRole,
+            this.bridge.viewModel.founder.supportId,
+            this.bridge.viewModel.founder.supportRoomInstanceId,
           );
       resolvedFounderPose = founderDisplay?.pose ?? resolvedFounderPose;
       const founderAtFrontDesk = founderDisplay?.supportRole === "front-desk-staff";
@@ -5533,21 +6524,18 @@ export class FacilityScene extends Phaser.Scene {
       );
       this.setCharacterSupportPresentation(founderKey, graphics, founderDisplay, 0);
       const activityLabel = this.bridge.viewModel.founder.activityLabel;
-      const founderLabelPosition = frozenFounder
-        ? replayCharacterMotionPresentation(frozenFounder, this.layout)
-        : undefined;
-      this.founderActivityText
-        ?.setText(activityLabel ?? "")
-        .setPosition(
-          founderLabelPosition?.centerX ?? founderCenterX,
-          founderBaseY - Math.max(22, this.layout.tileSize * 0.88),
-        )
-        .setVisible(Boolean(activityLabel));
+      this.renderFounderActivityBox(
+        founderKey,
+        activityLabel,
+        founderCenterX,
+        founderBaseY,
+      );
     } else {
       // A normal off-site update is a genuine disappearance once any route
       // tail has finished; do not let a later pause resurrect this actor.
       this.characterMotionSnapshots.delete(founderKey);
       this.founderActivityText?.setVisible(false);
+      this.founderActivityBox?.setVisible(false);
     }
 
     this.bridge.viewModel.staff.forEach((employee, index) => {
@@ -5587,6 +6575,8 @@ export class FacilityScene extends Phaser.Scene {
             employeeLocation,
             employeePresentation.moving,
             employee.supportRole,
+            employee.supportId,
+            employee.supportRoomInstanceId,
           );
       employeePose = employeeDisplay?.pose ?? employeePose;
       const founderSeatedAdjacentReceptionist =
@@ -5634,6 +6624,15 @@ export class FacilityScene extends Phaser.Scene {
         ),
       );
       this.setCharacterSupportPresentation(key, graphics, employeeDisplay, index + 1);
+      if (employee.discussionActionRequired) {
+        const unit = this.layout.tileSize / 32;
+        const markerY = employeeBaseY - 36 * unit;
+        graphics.fillStyle(0xf7cf52, 1);
+        graphics.fillCircle(employeeCenterX, markerY, 6 * unit);
+        graphics.fillStyle(0x352e24, 1);
+        graphics.fillRect(employeeCenterX - unit, markerY - 4 * unit, 2 * unit, 5 * unit);
+        graphics.fillRect(employeeCenterX - unit, markerY + 2 * unit, 2 * unit, 2 * unit);
+      }
     });
     this.bridge.viewModel.ambientPedestrians?.forEach(
       (pedestrian, index) => {
@@ -5718,6 +6717,32 @@ export class FacilityScene extends Phaser.Scene {
       const presentation = this.getCharacterRoutePresentation(key, actor);
       this.drawRetailExternalActor({ ...actor, ...(presentation.location ? { location: presentation.location } : { location: undefined }), direction: presentation.direction, moving: presentation.moving, rightFacing: presentation.rightFacing }, index);
     });
+    this.bridge.viewModel.inspectors?.forEach((actor, index) => {
+      const actorKey = `character:inspector:${actor.instanceId}`;
+      representedKeys.add(actorKey);
+      const artFailed = characterStandingBitmapDescriptors(actor.appearance).some(asset => this.failedCharacterStills.has(asset.id));
+      if (artFailed && !this.failedInspectorLocations.has(actorKey)) this.failedInspectorLocations.set(actorKey, { ...actor.location });
+      const held = this.failedInspectorLocations.get(actorKey);
+      if (held) {
+        this.routeMotionTracks.delete(actorKey); this.characterHopStates.delete(actorKey);
+        this.characterMotionSnapshots.delete(actorKey);
+      }
+      const presentation = this.getCharacterRoutePresentation(actorKey, held
+        ? { location: held, path: [], pathIndex: 0, moving: false, direction: "front" } : actor);
+      const location = presentation.location ?? actor.location;
+      const graphics = this.getCharacterGraphics(actorKey);
+      const baseY = this.drawCharacterPresentation(graphics, actorKey, {
+        centerX: this.layout.originX + (location.x + .5) * this.layout.tileSize,
+        // The cosmetic routes use the exact approved floor coordinate system.
+        baseY: this.layout.originY + (location.y + .5) * this.layout.tileSize,
+        appearance: actor.appearance, direction: presentation.direction,
+        pose: this.characterPose(presentation.moving, presentation.direction, this.characterGaitOffset(actorKey, 300 + index)),
+        rightFacing: presentation.rightFacing, displayScale: 1,
+      }, this.characterGaitOffset(actorKey, 300 + index));
+      graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 32) % 64));
+      graphics.setData("inspection-route-issue", held ? "Inspector art failed; stationary observer." : actor.routeIssue ?? null);
+    });
+    for (const key of this.failedInspectorLocations.keys()) if (!representedKeys.has(key)) this.failedInspectorLocations.delete(key);
     for (const key of this.routeMotionTracks.keys()) {
       if (!representedKeys.has(key)) {
         this.routeMotionTracks.delete(key);
@@ -5738,12 +6763,175 @@ export class FacilityScene extends Phaser.Scene {
         this.characterGaitOffsets.delete(key);
       }
     }
+    for (const key of this.characterStepBounceStates.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterStepBounceStates.delete(key);
+      }
+    }
+    for (const key of this.characterHopStates.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterHopStates.delete(key);
+      }
+    }
+    for (const key of this.characterSeatSettles.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterSeatSettles.delete(key);
+      }
+    }
     this.removeInactiveGraphics(
       this.characterGraphics,
       this.activeCharacterGraphics,
     );
     this.removeInactiveCharacterBitmapContainers();
     this.reconcileApprovedSideChairLayers();
+    this.renderInspectBox();
+  }
+
+  /** Bitmap actor under the pointer; the front-most (highest depth) wins. */
+  private characterAtPointer(pointer: Phaser.Input.Pointer): string | null {
+    let best: { key: string; depth: number } | null = null;
+    for (const [key, container] of this.characterBitmapContainers) {
+      if (!container.visible || !characterRefFromKey(key)) continue;
+      const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
+      if (!actor?.visible) continue;
+      const bounds = actor.getBounds();
+      if (bounds.width <= 0 || bounds.height <= 0) continue;
+      // Sprite cells carry side margins; a narrower box avoids picking a neighbour.
+      const insetX = bounds.width * 0.2;
+      if (pointer.x < bounds.left + insetX || pointer.x > bounds.right - insetX ||
+        pointer.y < bounds.top || pointer.y > bounds.bottom) continue;
+      if (!best || container.depth > best.depth) best = { key, depth: container.depth };
+    }
+    return best?.key ?? null;
+  }
+
+  private handleCharacterClick(key: string): void {
+    const ref = characterRefFromKey(key);
+    if (!ref) return;
+    const alreadyShown = this.inspectTarget?.kind === "character" && this.inspectTarget.key === key;
+    // Owner rule: the first click on an employee shows the box; a second
+    // click while it is up opens Praise.
+    if (ref.kind === "staff" && alreadyShown && this.bridge.onPraiseEmployee) {
+      this.inspectTarget = null;
+      this.bridge.onPraiseEmployee(ref.id);
+      return;
+    }
+    this.inspectTarget = { kind: "character", key, ref, shownAt: this.time.now };
+    this.inspectLabelCache = null;
+    if (this.bridge.mobileInput !== true) {
+      const patientId = patientChartIdForCharacter(ref, this.bridge.viewModel);
+      if (patientId) this.bridge.onHighlightPatientChart?.(patientId);
+    }
+  }
+
+  private showSeatBox(seat: FacilityFounderChairView, label: string): void {
+    this.inspectTarget = { kind: "seat", seat, label, shownAt: this.time.now };
+  }
+
+  private inspectCharacterLabel(key: string, ref: FacilityCharacterRef): string | null {
+    const viewModel = this.bridge.viewModel;
+    if (this.inspectLabelCache?.key === key && this.inspectLabelCache.viewModel === viewModel) {
+      return this.inspectLabelCache.label;
+    }
+    const description = this.bridge.onDescribeCharacter?.(ref) ?? null;
+    const label = description ? `${description.name}\n${description.activity}` : null;
+    this.inspectLabelCache = { key, viewModel, label };
+    return label;
+  }
+
+  /** Seat contact point in canvas pixels, for seat hit tests and the seat box. */
+  private founderSeatScreenPoint(seat: FacilityFounderChairView): { x: number; y: number } | null {
+    const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === seat.roomInstanceId);
+    if (!room) return null;
+    const role: FacilityActorSupportRole = seat.kind === "front_desk_public"
+      ? "front-desk-public"
+      : seat.kind === "break" ? "staff-break-seat" : "waiting-seat";
+    const orientation: RoomOrientation = seat.kind === "front_desk_public" || room.orientation !== 270 ? 0 : 270;
+    const support = getNearestApprovedActorSupport(
+      resolveApprovedRoomActorSupports(room.definitionId, orientation).filter((candidate) => candidate.role === role),
+      { x: seat.location.x - room.tileX, y: seat.location.y - room.tileY },
+      role,
+      seat.seatId,
+    );
+    if (!support) {
+      return {
+        x: this.layout.originX + (seat.location.x + 0.5) * this.layout.tileSize,
+        y: this.layout.originY + (seat.location.y + 0.5) * this.layout.tileSize,
+      };
+    }
+    const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+    return {
+      x: bounds.x + support.seat.x * this.layout.tileSize,
+      y: bounds.y + support.seat.y * this.layout.tileSize,
+    };
+  }
+
+  /** Light box with a small pointer, matching the founder activity box. */
+  private renderInspectBox(): void {
+    const text = this.inspectText;
+    const box = this.inspectBox;
+    if (!text || !box) return;
+    const target = this.inspectTarget;
+    const age = target ? this.time.now - target.shownAt : 0;
+    const hide = () => {
+      text.setVisible(false);
+      box.setVisible(false);
+    };
+    if (!target || age > INSPECT_BOX_VISIBLE_MS || this.bridge.viewModel.buildMode) {
+      this.inspectTarget = null;
+      hide();
+      return;
+    }
+    let anchorX: number;
+    let anchorY: number;
+    let label: string | null;
+    if (target.kind === "character") {
+      const container = this.characterBitmapContainers.get(target.key);
+      const actor = container?.getByName("actor") as Phaser.GameObjects.Image | null | undefined;
+      const bounds = container?.visible && actor?.visible ? actor.getBounds() : undefined;
+      label = bounds && bounds.height > 0 ? this.inspectCharacterLabel(target.key, target.ref) : null;
+      if (!bounds || !label) {
+        // The character left the map (went home, off-site) — close the box.
+        this.inspectTarget = null;
+        hide();
+        return;
+      }
+      anchorX = bounds.centerX;
+      anchorY = bounds.top;
+    } else {
+      const point = this.founderSeatScreenPoint(target.seat);
+      if (!point) {
+        this.inspectTarget = null;
+        hide();
+        return;
+      }
+      anchorX = point.x;
+      anchorY = point.y - this.layout.tileSize * 0.55;
+      label = target.label;
+    }
+    const pointerSize = 3;
+    const fade = Math.min(1, Math.max(0, (INSPECT_BOX_VISIBLE_MS - age) / INSPECT_BOX_FADE_MS));
+    text.setText(label)
+      .setPosition(anchorX, anchorY - pointerSize - 4)
+      .setAlpha(fade)
+      .setVisible(true);
+    const textBounds = text.getBounds();
+    const insetX = 3;
+    const insetY = 2;
+    const left = textBounds.x - insetX;
+    const top = textBounds.y - insetY;
+    const width = textBounds.width + insetX * 2;
+    const height = textBounds.height + insetY * 2;
+    box.clear();
+    box.setAlpha(fade);
+    box.fillStyle(0xf0f0ea, 0.97);
+    box.fillRect(left, top, width, height);
+    box.fillTriangle(anchorX - pointerSize, top + height, anchorX + pointerSize, top + height, anchorX, top + height + pointerSize);
+    box.lineStyle(1, 0x20282a, 1);
+    box.strokeRect(left + 0.5, top + 0.5, width - 1, height - 1);
+    box.lineBetween(anchorX - pointerSize, top + height, anchorX, top + height + pointerSize);
+    box.lineBetween(anchorX + pointerSize, top + height, anchorX, top + height + pointerSize);
+    box.setVisible(true);
   }
 
   /**
@@ -5753,7 +6941,8 @@ export class FacilityScene extends Phaser.Scene {
    */
   private drawEarningsPopups(nowMilliseconds: number): void {
     const model = this.bridge.viewModel;
-    const actorAnchors = {
+    // Collected lazily: only a new per-tick receipt list needs actor anchors.
+    const actorAnchors = () => ({
       patient: Object.fromEntries(
         (model.patients ?? [])
           .filter((patient) => this.getEarningsPopupPosition("patient", patient.instanceId))
@@ -5779,7 +6968,7 @@ export class FacilityScene extends Phaser.Scene {
       ),
       retail_visitor: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "retail_visitor" && this.getEarningsPopupPosition("retail_visitor", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
       companion: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "companion" && this.getEarningsPopupPosition("companion", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
-    };
+    });
     this.earningsPopupState = reconcileEarningsPopups(
       this.earningsPopupState,
       {
@@ -5806,7 +6995,7 @@ export class FacilityScene extends Phaser.Scene {
         text = this.add
           .text(0, 0, "", {
             color: "#2a9d4b",
-            fontFamily: '"Courier New", Courier, monospace',
+            fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
             fontSize: "14px",
             fontStyle: "bold",
             stroke: "#f7f3df",
@@ -5880,7 +7069,7 @@ export class FacilityScene extends Phaser.Scene {
     const position = replayCharacterMotionPresentation(snapshot, this.layout);
     return {
       x: position.centerX,
-      y: this.getEarningsPopupHeadY(snapshot, position.baseY),
+      y: this.getEarningsPopupHeadY(snapshot, position.baseY, key),
     };
   }
 
@@ -5888,22 +7077,23 @@ export class FacilityScene extends Phaser.Scene {
   private getEarningsPopupHeadY(
     snapshot: CharacterMotionPresentation<PixelAppearanceDescriptor>,
     baseY: number,
+    key: string,
   ): number {
     const layers = characterBitmapLayers(
       snapshot.appearance,
       snapshot.direction,
       snapshot.pose,
       snapshot.rightFacing,
-      undefined,
-      this.characterWalkFrame(snapshot.pose),
     );
     if (layers) {
       const registration = characterBitmapRegistration(layers);
       const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale);
       const pixelScale = metrics.height / registration.cell.height;
-      return baseY - (registration.floorY - registration.visibleBounds.y) * pixelScale;
+      return baseY - this.characterStepBounceDisplayLift(key) -
+        (registration.floorY - registration.visibleBounds.y) * pixelScale;
     }
-    return baseY - getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale).height * 0.72;
+    return baseY - this.characterStepBounceDisplayLift(key) -
+      getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale).height * 0.72;
   }
 
   private getCharacterBitmapContainer(
@@ -5913,14 +7103,50 @@ export class FacilityScene extends Phaser.Scene {
     if (!container) {
       container = this.add.container(0, 0);
       container.setData("character-key", key);
+      const shadow = this.add.image(0, 1, this.ensureCharacterContactShadowTexture());
+      shadow.setName("shadow");
       const actor = this.add.image(0, 0, "__DEFAULT");
       actor.setName("actor");
-      container.add(actor);
+      container.add([shadow, actor]);
       this.characterBitmapContainers.set(key, container);
     }
     container.setVisible(true);
     this.activeCharacterBitmapContainers.add(key);
     return container;
+  }
+
+  /** One soft oval shared by every character's contact shadow. */
+  private ensureCharacterContactShadowTexture(): string {
+    const key = "character-contact-shadow";
+    if (this.textures.exists(key)) return key;
+    const size = 64;
+    const texture = this.textures.createCanvas(key, size, size);
+    const context = texture?.getContext();
+    if (texture && context) {
+      const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      gradient.addColorStop(0, "rgba(28, 44, 38, 1)");
+      gradient.addColorStop(0.65, "rgba(28, 44, 38, 0.75)");
+      gradient.addColorStop(1, "rgba(28, 44, 38, 0)");
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, size, size);
+      texture.refresh();
+    }
+    return key;
+  }
+
+  /** The shadow stays on the floor; only the actor image lifts. */
+  private updateCharacterContactShadow(
+    container: Phaser.GameObjects.Container,
+    stillWidth: number,
+    motion: CharacterDrawMotion,
+  ): void {
+    const shadow = container.getByName("shadow") as Phaser.GameObjects.Image | null;
+    if (!shadow) return;
+    const width = Math.max(1, stillWidth * CHARACTER_HOP.shadowWidthRatio * motion.shadowScale);
+    shadow.setPosition(0, 1)
+      .setDisplaySize(width, Math.max(1, width * CHARACTER_HOP.shadowHeightRatio))
+      .setAlpha(motion.shadowAlpha)
+      .setVisible(motion.shadowAlpha > 0);
   }
 
   private removeInactiveCharacterBitmapContainers(): void {
@@ -5978,7 +7204,7 @@ export class FacilityScene extends Phaser.Scene {
       ? this.getFrontDeskV5ActorDisplayPosition(location, Boolean(patient.moving), "public")
       : undefined;
     const approvedSupportDisplay = frontDeskDisplay ??
-      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole);
+      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole, patient.supportId);
     pose = approvedSupportDisplay?.pose ?? pose;
     const renderedDirection = approvedSupportDisplay?.direction ??
       stationaryFloorDirection(moving, direction, destinationPose !== undefined);
@@ -6029,7 +7255,7 @@ export class FacilityScene extends Phaser.Scene {
     const graphics = this.getCharacterGraphics(key);
     const moving = Boolean(visitor.moving);
     const direction = visitor.direction ?? "front";
-    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole);
+    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId, visitor.supportRoomInstanceId);
     const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
@@ -6050,19 +7276,46 @@ export class FacilityScene extends Phaser.Scene {
   private drawRetailExternalActor(actor: FacilityRetailExternalActorView, index: number): void {
     const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
     const frozen = this.characterPresentationFrozen() ? this.characterMotionSnapshots.get(key) : undefined;
-    if (!actor.location && !frozen) { this.characterMotionSnapshots.delete(key); return; }
+    if (!actor.location && (!frozen || frozen.alignSeatContact)) {
+      this.characterMotionSnapshots.delete(key);
+      this.characterSeatSettles.delete(key);
+      const previous = this.characterGraphics.get(key);
+      if (previous) this.setCharacterSupportPresentation(key, previous, undefined, index + 40);
+      previous?.setVisible(false);
+      this.characterBitmapContainers.get(key)?.setVisible(false);
+      return;
+    }
     const location = actor.location ?? { x: 0, y: 0 };
     const moving = Boolean(actor.moving);
     const direction = actor.direction ?? "front";
     const graphics = this.getCharacterGraphics(key);
+    const room = this.bridge.viewModel.rooms.find((candidate) =>
+      candidate.instanceId === actor.procedureCompanion?.waitingReservation?.roomInstanceId);
+    const chair = room ? getPeriopCompanionChairForActor(actor, this.getPeriopCompanionChairs(room)) : undefined;
+    const supportDisplay = actor.supportRole ? this.getApprovedActorSupportDisplayPosition(
+      location, moving, actor.supportRole, actor.supportId, actor.supportRoomInstanceId,
+    ) : chair ? this.getApprovedActorSupportDisplayPosition(
+      location, moving, chair.support.role, chair.support.id, chair.roomInstanceId,
+    ) : undefined;
+    // A paused/build redraw must not replay an attachment to a removed chair or
+    // a different reservation. Ordinary frozen floor actors retain their snapshot.
+    if (frozen && (
+      (graphics.getData("actor-support-id") ?? null) !== (supportDisplay?.supportId ?? null) ||
+      (graphics.getData("actor-support-room-instance-id") ?? null) !== (supportDisplay?.supportRoomInstanceId ?? null)
+    )) {
+      this.characterMotionSnapshots.delete(key);
+      this.characterSeatSettles.delete(key);
+    }
     const baseY = this.drawCharacterPresentation(graphics, key, {
-      centerX: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
-      baseY: this.actorBaseY(location.y), appearance: actor.appearance,
-      direction: stationaryFloorDirection(moving, direction, false),
-      pose: this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
-      rightFacing: actor.rightFacing ?? false, displayScale: 1,
+      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.layout.tileSize,
+      baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y), appearance: actor.appearance,
+      direction: supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false),
+      pose: supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
+      rightFacing: supportDisplay?.rightFacing ?? actor.rightFacing ?? false, displayScale: 1,
+      alignSeatContact: supportDisplay?.seatTarget ?? false,
     }, this.characterGaitOffset(key, 400 + index));
     graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 40) % 64));
+    this.setCharacterSupportPresentation(key, graphics, supportDisplay, index + 40);
   }
 
   private drawPatientLocator(
@@ -6094,14 +7347,15 @@ export class FacilityScene extends Phaser.Scene {
       direction,
       pose,
       rightFacing,
-      undefined,
-      this.characterWalkFrame(pose),
     );
     const registration = characterBitmapRegistration(layers);
     const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
+    const visualLift = this.characterStepBounceDisplayLift(
+      `character:patient:${patient.instanceId}`,
+    );
     const visibleTop = layers
-      ? baseY - (registration.floorY - registration.visibleBounds.y) * (metrics.height / registration.cell.height)
-      : baseY - metrics.height * 0.72;
+      ? baseY - visualLift - (registration.floorY - registration.visibleBounds.y) * (metrics.height / registration.cell.height)
+      : baseY - visualLift - metrics.height * 0.72;
     const arrowY = visibleTop - pixel * 4 - pulse;
     graphics.fillStyle(0x111111, 1);
     graphics.fillTriangle(
@@ -6137,20 +7391,17 @@ export class FacilityScene extends Phaser.Scene {
     _frozenRepresentation?: CharacterRenderRepresentation,
     baseIsAdjusted = false,
     alignSeatContact = false,
+    /** Hop, squash, breathing and shadow; `lift` is in display pixels. */
+    motion: CharacterDrawMotion = RESTING_CHARACTER_MOTION,
   ): Readonly<{ baseY: number; representation: CharacterRenderRepresentation }> {
+    const visualLift = motion.lift;
     const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
     const key = graphics.getData("character-key") as string | undefined;
-    const walkFrame = this.characterWalkFrame(pose);
-    if (walkFrame !== undefined) {
-      this.ensureCharacterStills(characterWalkingBitmapDescriptors(resolvedAppearance));
-    }
     const authoredLayers = characterBitmapLayers(
       resolvedAppearance,
       direction,
       pose,
       movingRight,
-      undefined,
-      walkFrame,
     );
     const registration = characterBitmapRegistration(authoredLayers);
     const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
@@ -6170,7 +7421,9 @@ export class FacilityScene extends Phaser.Scene {
           existing.setVisible(true)
             .setPosition(Math.round(centerX), Math.round(adjustedBaseY))
             .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
-          actor.setDisplaySize(metrics.width, metrics.height);
+          actor.setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY);
+          actor.y = -visualLift;
+          this.updateCharacterContactShadow(existing, metrics.width, motion);
           graphics.clear();
           graphics.setVisible(false);
           return { baseY: adjustedBaseY, representation: "bitmap" };
@@ -6179,9 +7432,13 @@ export class FacilityScene extends Phaser.Scene {
       } else {
         const container = this.getCharacterBitmapContainer(key);
         const actor = container.getByName("actor") as Phaser.GameObjects.Image;
-        actor.setTexture(textureKey).setDisplaySize(metrics.width, metrics.height).setPosition(0, 0)
+        // Origin at the feet, so squash, stretch and breathing keep them planted.
+        actor.setTexture(textureKey)
+          .setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY)
+          .setPosition(0, -visualLift)
           .setOrigin(0.5, registration.floorAnchorY)
           .setFlipX(false);
+        this.updateCharacterContactShadow(container, metrics.width, motion);
         actor.setData({
           "gait-atlas-id": authoredLayers.actor.atlas.id,
           "gait-frame": characterAtlasFrameKey(authoredLayers.actor),
@@ -6199,10 +7456,12 @@ export class FacilityScene extends Phaser.Scene {
     }
     this.characterBitmapContainers.get(key ?? "")?.setVisible(false);
     graphics.clear();
+    const width = metrics.width * motion.scaleX;
+    const height = metrics.height * motion.scaleY;
     graphics.fillStyle(0x8b9088, 0.9);
-    graphics.fillCircle(0, -metrics.height * 0.64, Math.max(2, metrics.width * 0.16));
-    graphics.fillRoundedRect(-metrics.width * 0.18, -metrics.height * 0.48, metrics.width * 0.36, metrics.height * 0.42, Math.max(2, metrics.width * 0.08));
-    graphics.setPosition(Math.round(centerX), Math.round(adjustedBaseY));
+    graphics.fillCircle(0, -height * 0.64, Math.max(2, width * 0.16));
+    graphics.fillRoundedRect(-width * 0.18, -height * 0.48, width * 0.36, height * 0.42, Math.max(2, width * 0.08));
+    graphics.setPosition(Math.round(centerX), Math.round(adjustedBaseY - visualLift));
     graphics.setVisible(true);
     return { baseY: adjustedBaseY, representation: "neutral" };
   }
@@ -6384,18 +7643,148 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
+  /** Draws filled/empty stars (and the affordable up arrow) under a room label. */
+  private drawBuildLabelStars(
+    graphics: Phaser.GameObjects.Graphics,
+    centerX: number,
+    top: number,
+    level: number,
+    maxLevel: number,
+    upgradeAffordable: boolean,
+    pixel: number,
+  ): number {
+    const starSize = BUILD_LABEL_STAR_ROWS.length * pixel;
+    const gap = pixel;
+    const padding = pixel + 1;
+    const readyWidth =
+      upgradeAffordable && level < maxLevel ? gap * 2 + starSize : 0;
+    const stripWidth =
+      maxLevel * starSize + (maxLevel - 1) * gap + readyWidth;
+    const plateWidth = stripWidth + padding * 2;
+    const plateHeight = starSize + padding * 2;
+    const left = Math.round(centerX - plateWidth / 2);
+    const plateTop = Math.round(top);
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
+    graphics.fillRect(left, plateTop, plateWidth, plateHeight);
+    for (let index = 0; index < maxLevel; index += 1) {
+      const starLeft = left + padding + index * (starSize + gap);
+      graphics.fillStyle(
+        index < level
+          ? PIXEL_PALETTE_NUMBER.ink
+          : BUILD_LABEL_STAR_EMPTY_COLOR,
+        1,
+      );
+      BUILD_LABEL_STAR_ROWS.forEach((row, rowIndex) => {
+        for (let column = 0; column < row.length; column += 1) {
+          if (row[column] === "#") {
+            graphics.fillRect(
+              starLeft + column * pixel,
+              plateTop + padding + rowIndex * pixel,
+              pixel,
+              pixel,
+            );
+          }
+        }
+      });
+    }
+    if (readyWidth > 0) {
+      const chipLeft = left + padding + maxLevel * (starSize + gap) + gap;
+      const chipTop = plateTop + padding;
+      graphics.fillStyle(BUILD_LABEL_UPGRADE_READY_COLOR, 1);
+      graphics.fillRect(chipLeft, chipTop, starSize, starSize);
+      // Up arrow: an upgrade the clinic can pay for right now.
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
+      for (let row = 1; row <= 4; row += 1) {
+        const half = row - 1;
+        graphics.fillRect(
+          chipLeft + (3 - half) * pixel,
+          chipTop + row * pixel,
+          (half * 2 + 1) * pixel,
+          pixel,
+        );
+      }
+    }
+    return plateTop + plateHeight;
+  }
+
+  /** Keeps the React room menu attached to the selected room while the camera moves. */
+  private reportSelectedRoomRect(): void {
+    const model = this.bridge.viewModel;
+    const room =
+      model.buildMode && model.selectedRoomInstanceId && this.layout
+        ? model.rooms.find(
+            (candidate) =>
+              candidate.instanceId === model.selectedRoomInstanceId,
+          )
+        : undefined;
+    const rect = room
+      ? this.toPixels({
+          tileX: room.tileX,
+          tileY: room.tileY,
+          ...orientedSize(room),
+        })
+      : null;
+    const key = rect
+      ? `${Math.round(rect.x)},${Math.round(rect.y)},${Math.round(rect.width)},${Math.round(rect.height)},${this.scale.width},${this.scale.height}`
+      : "";
+    if (key === this.lastReportedSelectedRoomRect) {
+      return;
+    }
+    this.lastReportedSelectedRoomRect = key;
+    this.bridge.onSelectedRoomRectChange?.(
+      rect
+        ? {
+            x: Math.round(rect.x),
+            y: Math.round(rect.y),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          }
+        : null,
+    );
+  }
+
+  private reportAlertPinPositions(): void {
+    const positions = (this.bridge.viewModel.alertPins ?? []).flatMap((pin) => {
+      if (pin.target.kind === "room") {
+        const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === pin.target.id);
+        if (!room) return [];
+        const rect = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+        return [{ id: pin.id, x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + Math.min(rect.height / 2, this.layout.tileSize)) }];
+      }
+      const key = `character:${pin.target.kind === "patient" ? "patient" : "service-visitor"}:${pin.target.id}`;
+      const actor = this.characterMotionSnapshots.get(key);
+      if (!actor || !this.activeCharacterGraphics.has(key)) return [];
+      return [{ id: pin.id, x: Math.round(this.layout.originX + actor.anchorXInTiles * this.layout.tileSize),
+        y: Math.round(this.layout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.layout.tileSize) }];
+    }).filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
+    const signature = JSON.stringify(positions);
+    if (signature === this.lastReportedAlertPins) return;
+    this.lastReportedAlertPins = signature;
+    this.bridge.onAlertPinPositionsChange?.(positions);
+  }
+
   private positionText(): void {
     const { originX, originY, width, tileSize } = this.layout;
     const model = this.bridge.viewModel;
     const compact = this.scale.width < 520;
 
     this.roomTexts.forEach((text) => text.destroy());
-    this.roomTexts = model.rooms
+    this.roomTexts = [];
+    this.roomStarGraphics ??= this.add
+      .graphics()
+      .setDepth(FACILITY_DEPTH_UI);
+    const starGraphics = this.roomStarGraphics;
+    starGraphics.clear();
+    starGraphics.setVisible(Boolean(model.buildMode));
+    const fontSize = Math.max(8, Math.min(12, Math.floor(tileSize * 0.26)));
+    // Stars grow with zoom in whole pixels so they stay crisp.
+    const starPixel = Math.max(1, Math.min(3, Math.round(tileSize / 26)));
+    model.rooms
       .filter(
         (room) =>
           room.kind !== "hallway" && room.definitionId !== "room.hallway",
       )
-      .map((room) => {
+      .forEach((room) => {
         const pixels = this.toPixels({
           tileX: room.tileX,
           tileY: room.tileY,
@@ -6405,15 +7794,12 @@ export class FacilityScene extends Phaser.Scene {
           .text(
             pixels.x + pixels.width / 2,
             pixels.y + Math.max(5, Math.floor(tileSize * 0.16)),
-            room.displayName,
+            room.buildLabel ?? room.displayName,
             {
               color: "#232720",
               backgroundColor: "#e0ded0",
-              fontFamily: '"Courier New", Courier, monospace',
-              fontSize: `${Math.max(
-                8,
-                Math.min(10, Math.floor(tileSize * 0.26)),
-              )}px`,
+              fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
+              fontSize: `${fontSize}px`,
               fontStyle: "bold",
               align: "center",
               resolution: 2,
@@ -6433,7 +7819,37 @@ export class FacilityScene extends Phaser.Scene {
         // on the illustrated room itself instead of covering the rear wall
         // with debug-like labels.
         label.setVisible(Boolean(model.buildMode));
-        return label;
+        this.roomTexts.push(label);
+
+        let nextTop = label.y + label.displayHeight;
+        const maxLevel = room.upgradeMaxLevel ?? 1;
+        if (model.buildMode && maxLevel > 1) {
+          nextTop = this.drawBuildLabelStars(
+            starGraphics,
+            label.x,
+            nextTop,
+            Math.max(1, Math.min(maxLevel, room.upgradeLevel ?? 1)),
+            maxLevel,
+            Boolean(room.upgradeAffordable),
+            starPixel,
+          );
+        }
+        if (room.accessProblem) {
+          const problem = this.add
+            .text(label.x, nextTop + 2, "! NO ACCESS", {
+              color: "#f0eddd",
+              backgroundColor: "#9b3b25",
+              fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
+              fontSize: `${Math.max(8, fontSize - 1)}px`,
+              fontStyle: "bold",
+              resolution: 2,
+              padding: { x: 3, y: 1 },
+            })
+            .setOrigin(0.5, 0)
+            .setDepth(FACILITY_DEPTH_UI)
+            .setVisible(Boolean(model.buildMode));
+          this.roomTexts.push(problem);
+        }
       });
 
     this.footerText
@@ -6447,6 +7863,7 @@ export class FacilityScene extends Phaser.Scene {
         originX + width / 2,
         originY + this.layout.height + Math.max(7, Math.floor(tileSize * 0.18)),
       );
+    if (this.bridge.mobileInput === true) this.footerText?.setVisible(false);
   }
 
   private setInteractionHint(
@@ -6487,6 +7904,13 @@ export class FacilityScene extends Phaser.Scene {
           target.kind === "place" ? "PLACE DOOR" : "REMOVE DOOR",
           pointer,
         );
+      } else if (
+        !activeDoorTool &&
+        !this.bridge.viewModel.placement &&
+        this.roomAtPointer(pointer)
+      ) {
+        // Rooms open the Build Mode room menu (upgrade, move, doors, sell).
+        this.setInteractionHint("MANAGE ROOM", pointer);
       } else {
         this.setInteractionHint(null);
         if (activeDoorTool && this.game?.canvas) {
@@ -6495,16 +7919,46 @@ export class FacilityScene extends Phaser.Scene {
       }
       return;
     }
+    const characterKey = this.characterAtPointer(pointer);
+    if (characterKey) {
+      const ref = characterRefFromKey(characterKey);
+      const shown = this.inspectTarget?.kind === "character" && this.inspectTarget.key === characterKey;
+      const employee = ref?.kind === "staff"
+        ? this.bridge.viewModel.staff.find((candidate) => candidate.instanceId === ref.id)
+        : undefined;
+      this.setInteractionHint(
+        shown && employee
+          ? `CLICK TO PRAISE ${employee.displayName.toUpperCase()}`
+          : "CLICK TO SEE ACTIVITY",
+        pointer,
+      );
+      return;
+    }
     const point = this.gridPointAtPointer(pointer);
     if (point) {
       const interaction = getEnvironmentalInteraction(
         this.bridge.viewModel,
         point,
       );
-      if (interaction) {
+      // Employees are clicked by their sprite above (box first, then praise).
+      if (interaction && interaction.kind !== "employee") {
         this.setInteractionHint(interaction.label, pointer);
         return;
       }
+    }
+    if (
+      this.frontDeskSeatInteractionAtPointer(pointer) &&
+      !this.bridge.viewModel.staff.some(
+        (member) => member.staffRoleDefinitionId === "staff.receptionist",
+      )
+    ) {
+      this.setInteractionHint("Sit here to check in patients", pointer);
+      return;
+    }
+    const hoveredChair = this.ordinaryChairAtPointer(pointer);
+    if (hoveredChair) {
+      this.setInteractionHint(hoveredChair.occupied ? "SEAT OCCUPIED" : "SIT HERE", pointer);
+      return;
     }
     this.setInteractionHint(
       this.walkDestinationAtPointer(pointer)
@@ -6512,6 +7966,277 @@ export class FacilityScene extends Phaser.Scene {
         : null,
       pointer,
     );
+  }
+
+  /** Mobile handlers are a separate lane; the original desktop handlers below are intact. */
+  private bindInput(): void {
+    if (this.bridge.mobileInput === true) {
+      this.bindMobileInput();
+      return;
+    }
+    this.input.on(
+      "pointermove",
+      (pointer: Phaser.Input.Pointer) => this.handlePointerMove(pointer),
+    );
+    this.input.on(
+      "pointerdown",
+      (pointer: Phaser.Input.Pointer) => this.handlePointerDown(pointer),
+    );
+    this.input.on(
+      "pointerup",
+      (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer),
+    );
+    this.input.on(
+      "wheel",
+      (
+        _pointer: Phaser.Input.Pointer,
+        _objects: Phaser.GameObjects.GameObject[],
+        _deltaX: number,
+        deltaY: number,
+      ) => this.handleWheel(deltaY),
+    );
+    this.input.on("gameout", () => {
+      this.placementGhost = null;
+      this.dragStart = null;
+      this.endHallwayPaint();
+      this.setInteractionHint(null);
+      this.drawPlacementGhost();
+    });
+  }
+
+  private bindMobileInput(): void {
+    this.mobileGestures = new MapTouchGestures();
+    this.phoneBuildInput = new PhoneBuildMapInput(() => this.bridge.mobileBuild ?? null,
+      () => ({ ...this.layout, columns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
+        rows: positiveGridSize(this.bridge.viewModel.gridRows, 10) }), () => this.bridge.viewModel.placement, () => this.scale);
+    this.input.addPointer(1);
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      if (pointer.button !== 0) return;
+      this.syncMobileInputMode();
+      this.applyMobileGestures(this.mobileGestures!.down(pointer.id, pointer, this.time.now));
+      if (this.bridge.viewModel.buildMode) {
+        if (this.mobileGestures!.hadMultipleTouches) {
+          this.phoneBuildInput!.cancel();
+        } else this.phoneBuildInput!.down(pointer.id, pointer, this.time.now);
+      }
+    });
+    this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
+      this.syncMobileInputMode();
+      const gestures = this.mobileGestures!.move(pointer.id, pointer);
+      if (this.bridge.viewModel.buildMode && !this.mobileGestures!.hadMultipleTouches) {
+        this.phoneBuildInput!.move(pointer.id, pointer);
+        this.panMobileGhostAtEdge(16);
+        if (!this.phoneBuildInput!.ownsDrag) this.applyMobileGestures(gestures);
+        return;
+      }
+      this.applyMobileGestures(gestures);
+    });
+    this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+      this.syncMobileInputMode();
+      const wasMultiple = this.mobileGestures!.hadMultipleTouches;
+      const gestures = this.mobileGestures!.up(pointer.id, pointer, this.time.now);
+      if (this.bridge.viewModel.buildMode) {
+        if (!wasMultiple) {
+          const ownsDrag = this.phoneBuildInput!.ownsDrag;
+          const tap = this.phoneBuildInput!.up(pointer.id, pointer, this.time.now);
+          if (tap) this.selectMobileBuildTarget(pointer);
+          if (!ownsDrag) this.applyMobileGestures(gestures);
+        }
+        if (wasMultiple) this.applyMobileGestures(gestures);
+        else this.mobileGestures!.cancel();
+        return;
+      }
+      this.applyMobileGestures(gestures);
+    });
+    this.input.on("wheel", (pointer: Phaser.Input.Pointer, _objects: unknown[], _x: number, deltaY: number) => {
+      const zoom = Math.round((this.cameraView.zoom + (deltaY > 0 ? -0.1 : 0.1)) * 10) / 10;
+      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom));
+    });
+    const cancel = () => {
+      this.mobileGestures!.cancel();
+      this.phoneBuildInput?.cancel();
+      this.placementGhost = null;
+      this.dragStart = null;
+      this.endHallwayPaint();
+      this.setInteractionHint(null);
+      this.drawPlacementGhost();
+    };
+    this.input.on("gameout", cancel);
+    this.input.on("pointerupoutside", cancel);
+    const canvas = this.game.canvas;
+    const preventBrowserGesture = (event: Event) => { if (event.cancelable) event.preventDefault(); };
+    for (const name of ["touchstart", "touchmove", "gesturestart", "gesturechange"]) {
+      canvas.addEventListener(name, preventBrowserGesture, { passive: false });
+    }
+    canvas.addEventListener("touchcancel", cancel);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      for (const name of ["touchstart", "touchmove", "gesturestart", "gesturechange"]) canvas.removeEventListener(name, preventBrowserGesture);
+      canvas.removeEventListener("touchcancel", cancel);
+      this.mobileGestures?.cancel();
+    });
+  }
+
+  private syncMobileInputMode(): void {
+    const model = this.bridge.viewModel;
+    const signature = JSON.stringify([model.campaignId, Boolean(model.buildMode), model.buildDoorTool,
+      model.placement?.definitionId, model.placement?.orientation]);
+    if (signature === this.mobileInputSignature) return;
+    this.mobileInputSignature = signature;
+    this.mobileGestures?.cancel();
+    this.phoneBuildInput?.cancel(false);
+    if (!model.placement || this.isHallwayPlacementActive()) this.mobileGhostInitialized = false;
+  }
+
+  private selectMobileBuildTarget(point: TouchPoint): void {
+    const state = this.bridge.mobileBuild;
+    const model = this.bridge.viewModel;
+    if (model.placement) return;
+    if (model.buildDoorTool && state) {
+      const targets = state.doors.flatMap(section => {
+        const room = model.rooms.find(candidate => candidate.instanceId === section.roomId);
+        return room ? [{ value: section.id, bounds: this.getDoorGeometry(room, section.side, section.offset).hitRegion }] : [];
+      });
+      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets) });
+      return;
+    }
+    const room = nearestTouchTarget(point, model.rooms
+      .filter(candidate => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
+      .map(candidate => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
+    if (room) this.bridge.onSelectRoom?.(room.instanceId);
+  }
+
+  private drawMobileBuildPreview(): void {
+    if (this.bridge.mobileInput !== true) return;
+    const graphics = this.ghostGraphics;
+    if (!graphics) return;
+    const model = this.bridge.viewModel;
+    const state = this.bridge.mobileBuild;
+    const placement = model.placement;
+    if (!model.buildMode || !state) {
+      if (this.mobileBuildDrawSignature) graphics.clear();
+      this.mobileBuildDrawSignature = ""; this.mobileGhostInitialized = false; this.mobileGhostKey = ""; this.mobileGhostFrameKey = "";
+      return;
+    }
+    const ghostKey = state.placementKey ?? JSON.stringify([model.campaignId, placement?.definitionId, state.initialGhost]);
+    if (ghostKey !== this.mobileGhostKey) { this.mobileGhostKey = ghostKey; this.mobileGhostInitialized = false; }
+    if (placement && !this.isHallwayPlacementActive() && !state.ghost && !this.mobileGhostInitialized) {
+      this.mobileGhostInitialized = true;
+      state.onIntent({ kind: "ghost", point: state.initialGhost ?? {
+        x: Math.round((this.scale.width / 2 - this.layout.originX) / this.layout.tileSize - placement.width / 2),
+        y: Math.round((this.scale.height / 2 - this.layout.originY) / this.layout.tileSize - placement.height / 2),
+      } });
+    }
+    if (placement && state.ghost && !this.isHallwayPlacementActive()) {
+      const frameKey = JSON.stringify([ghostKey, placement.width, placement.height, this.scale.width, this.scale.height]);
+      if (frameKey !== this.mobileGhostFrameKey) {
+        this.mobileGhostFrameKey = frameKey; // applyCamera redraws synchronously.
+        this.applyCamera(framePhoneGhost(this.cameraView, model, this.scale, state.ghost, placement));
+      }
+    }
+    const signature = JSON.stringify([state.ghost, state.hallway?.cells, state.doors, state.selectedDoorId,
+      placement, this.layout.originX, this.layout.originY, this.layout.tileSize]);
+    if (signature === this.mobileBuildDrawSignature) return;
+    this.mobileBuildDrawSignature = signature;
+    graphics.clear(); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
+    const footprint = (point: GridPoint, width: number, height: number, valid: boolean) => {
+      const rect = this.toPixels({ tileX: point.x, tileY: point.y, width, height });
+      const color = valid ? 0x3d8650 : 0xc94b43;
+      graphics.fillStyle(color, 0.34); graphics.fillRect(rect.x, rect.y, rect.width, rect.height);
+      graphics.lineStyle(3, color, 1); graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    };
+    if (state.ghost && placement) footprint(state.ghost, placement.width, placement.height, state.ghost.valid);
+    for (const cell of state.hallway?.cells ?? []) if (cell.status !== "existing") footprint(cell, 1, 1, cell.status === "build");
+    for (const section of state.doors) {
+      const room = model.rooms.find(candidate => candidate.instanceId === section.roomId); if (!room) continue;
+      const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
+      const selected = section.id === state.selectedDoorId;
+      graphics.lineStyle(selected ? 4 : 2, selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
+      graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    }
+  }
+
+  private panMobileGhostAtEdge(delta: number): void {
+    if (this.bridge.mobileInput !== true || !this.bridge.viewModel.buildMode || this.mobileGestures?.hadMultipleTouches) return;
+    const drag = this.phoneBuildInput?.ghostDrag;
+    if (!drag) return;
+    const shift = phoneGhostEdgePan(drag.point, this.scale, delta);
+    if (!shift.x && !shift.y) return;
+    this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
+      { x: 0, y: 0 }, shift));
+    this.phoneBuildInput?.move(drag.id, drag.point);
+  }
+
+  private applyMobileGestures(gestures: readonly MapGesture[]): void {
+    for (const gesture of gestures) {
+      if (gesture.kind === "pan" || gesture.kind === "pinch") {
+        this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
+          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom));
+      } else if (!this.bridge.viewModel.buildMode && !this.bridge.viewModel.placement) {
+        this.bridge.onMobileSelection?.(this.mobileSelectionAtPoint(gesture.point));
+      }
+    }
+  }
+
+  private mobileSelectionAtPoint(point: TouchPoint): MobileMapSelection | null {
+    const model = this.bridge.viewModel;
+    const pointer = point as Phaser.Input.Pointer;
+    type Detail = { kind: "character"; key: string } | { kind: "chair"; chair: FacilityFounderChairView } |
+      { kind: "door"; door: FacilityDoorView; room: FacilityRoomView } |
+      { kind: "environment"; selection: Extract<MobileMapSelection, { kind: "environment" }> };
+    const details: TouchTarget<Detail>[] = [];
+    for (const [key, container] of this.characterBitmapContainers) {
+      if (!container.visible || !characterRefFromKey(key)) continue;
+      const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
+      if (!actor?.visible) continue;
+      const bounds = actor.getBounds();
+      if (bounds.width <= 0 || bounds.height <= 0) continue;
+      details.push({ value: { kind: "character", key }, depth: container.depth,
+        bounds: { x: bounds.x + bounds.width * 0.2, y: bounds.y, width: bounds.width * 0.6, height: bounds.height } });
+    }
+    // While character bitmaps load, pick the rendered procedural actor anchor.
+    for (const [key, graphics] of this.characterGraphics) {
+      if (!graphics.visible || this.characterBitmapContainers.get(key)?.visible || !characterRefFromKey(key)) continue;
+      const motion = this.characterMotionSnapshots.get(key);
+      if (!motion) continue;
+      const size = this.layout.tileSize * motion.displayScale;
+      details.push({ value: { kind: "character", key }, depth: graphics.depth,
+        bounds: { x: this.layout.originX + motion.anchorXInTiles * this.layout.tileSize - size * 0.35,
+          y: this.layout.originY + motion.anchorYInTiles * this.layout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
+    }
+    for (const chair of model.founderChairs ?? []) {
+      const seat = this.founderSeatScreenPoint(chair);
+      if (seat) details.push({ value: { kind: "chair", chair }, bounds: { ...seat, width: 0, height: 0 } });
+    }
+    for (const door of model.doors ?? []) {
+      const room = model.rooms.find((candidate) => candidate.instanceId === door.roomInstanceId);
+      if (room) details.push({ value: { kind: "door", door, room }, bounds: this.getDoorGeometry(room, door.side, door.offset).hitRegion });
+    }
+    for (const litter of model.litterItems ?? []) details.push({ value: { kind: "environment", selection: {
+      kind: "environment", action: "collect-litter", id: litter.instanceId, name: "Litter", status: "Collect this litter" } },
+      bounds: this.toPixels({ tileX: litter.location.x, tileY: litter.location.y, width: 1, height: 1 }) });
+    if (model.waterCooler) details.push({ value: { kind: "environment", selection: { kind: "environment", action: "refill-water",
+      name: "Water cooler", status: model.waterCooler.needsRefill ? "Needs refill" : "Water cooler is full" } },
+      bounds: this.toPixels({ tileX: model.waterCooler.location.x, tileY: model.waterCooler.location.y, width: 1, height: 1 }) });
+    const detail = nearestTouchTarget(point, details);
+    if (detail?.kind === "character") {
+      const ref = characterRefFromKey(detail.key);
+      return ref ? describeMobileCharacter(ref, model, this.bridge.onDescribeCharacter, Boolean(this.bridge.onPraiseEmployee)) : null;
+    }
+    if (detail?.kind === "chair") return { kind: "chair", chair: detail.chair, name: "Chair" };
+    if (detail?.kind === "door") return { kind: "door", door: detail.door, room: detail.room };
+    if (detail?.kind === "environment") return detail.selection;
+    if (this.frontDeskSeatInteractionAtPointer(pointer)) {
+      const desk = model.rooms.find((room) => room.definitionId === "room.front_desk");
+      if (desk) return { kind: "front-desk", roomId: desk.instanceId };
+    }
+    const room = nearestTouchTarget(point, model.rooms.filter((candidate) => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
+      .map((candidate) => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
+    const destination = this.walkDestinationAtPointer(pointer);
+    if (room) return { ...describeMobileRoom(room, destination),
+      ...(destination ? { moveAccepted: this.bridge.onMoveFounder?.(destination) ?? false } : {}) };
+    if (destination) return { kind: "floor", destination, accepted: this.bridge.onMoveFounder?.(destination) ?? false };
+    const lawn = this.gridPointAtPointer(pointer);
+    return lawn ? { kind: "floor", destination: lawn, accepted: false } : null;
   }
 
   private handlePointerMove(pointer: Phaser.Input.Pointer): void {
@@ -6640,6 +8365,32 @@ export class FacilityScene extends Phaser.Scene {
     ) {
       return;
     }
+    const characterKey = this.pointerDownCharacterKey;
+    this.pointerDownCharacterKey = null;
+    if (characterKey) {
+      this.handleCharacterClick(characterKey);
+      // The box replaces the hover hint until the pointer moves again.
+      this.setInteractionHint(null);
+      return;
+    }
+    // Clicking anywhere else closes an open info box.
+    this.inspectTarget = null;
+    const chair = this.ordinaryChairAtPointer(pointer);
+    if (chair && this.bridge.onSeatFounderInChair) {
+      if (chair.occupied) {
+        this.showSeatBox(chair, "Seat occupied");
+        return;
+      }
+      const accepted = chair.seatId
+        ? this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location, chair.seatId)
+        : this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location);
+      if (!accepted) this.showSeatBox(chair, "Seat unavailable");
+      this.setInteractionHint(
+        accepted ? "FOUNDER WALKING TO CHAIR" : "CHAIR UNAVAILABLE",
+        pointer,
+      );
+      return;
+    }
     const destination = this.walkDestinationAtPointer(pointer);
     if (!destination || !this.bridge.onMoveFounder) {
       return;
@@ -6723,7 +8474,12 @@ export class FacilityScene extends Phaser.Scene {
       return;
     }
 
-    if (!this.bridge.viewModel.buildMode) {
+    this.pointerDownCharacterKey = null;
+    const characterKey = this.bridge.viewModel.buildMode ? null : this.characterAtPointer(pointer);
+    if (characterKey) {
+      // Resolved on pointer-up so a drag that starts on a person still pans.
+      this.pointerDownCharacterKey = characterKey;
+    } else if (!this.bridge.viewModel.buildMode) {
       const point = this.gridPointAtPointer(pointer);
       if (point) {
         const litter = (this.bridge.viewModel.litterItems ?? []).find(
@@ -6750,17 +8506,11 @@ export class FacilityScene extends Phaser.Scene {
           this.bridge.onRefillWaterCooler?.();
           return;
         }
-        const employee = this.bridge.viewModel.staff.find(
-          (candidate) =>
-            candidate.location?.x === point.x &&
-            candidate.location?.y === point.y,
-        );
-        if (employee) {
-          this.bridge.onPraiseEmployee?.(employee.instanceId);
-          return;
-        }
       }
+      // The patient-side Front Desk chair sits beside the counter; let the
+      // pointer-up seat flow own it instead of the desk.
       if (
+        this.ordinaryChairAtPointer(pointer)?.kind !== "front_desk_public" &&
         this.frontDeskSeatInteractionAtPointer(pointer) &&
         this.bridge.onSeatFounderAtFrontDesk
       ) {
@@ -6990,6 +8740,11 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawPlacementGhost(): void {
+    if (this.bridge.mobileInput === true && this.bridge.mobileBuild) {
+      this.mobileBuildDrawSignature = "";
+      this.drawMobileBuildPreview();
+      return;
+    }
     const graphics = this.ghostGraphics;
     if (!graphics) {
       return;
@@ -7245,6 +9000,20 @@ export class FacilityScene extends Phaser.Scene {
       (candidate) => candidate.definitionId === "room.front_desk",
     );
     if (!room) return false;
+    if (this.canRenderFrontDeskV5Architecture()) {
+      const renderedTargets = [...this.fixtureBitmapImages.entries()]
+        .filter(([key, image]) => {
+          if (!key.startsWith(`approved:${room.instanceId}:`) || !image.visible) return false;
+          const drawId = image.getData("approved-draw-id") as string | undefined;
+          return drawId === "desk" || drawId === "receptionist-chair" ||
+            key.includes(":desk:") || key.includes("receptionist-chair");
+        })
+        .map(([, image]) => image.getBounds());
+      if (renderedTargets.some((bounds) =>
+        pointer.x >= bounds.left && pointer.x <= bounds.right &&
+        pointer.y >= bounds.top && pointer.y <= bounds.bottom
+      )) return true;
+    }
     const rectangle = this.toPixels({
       tileX: room.tileX,
       tileY: room.tileY,
@@ -7270,6 +9039,76 @@ export class FacilityScene extends Phaser.Scene {
           pointer.y <= contactY
         );
       });
+  }
+
+  private ordinaryChairAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): FacilityFounderChairView | null {
+    for (const room of this.bridge.viewModel.rooms) {
+      if (room.definitionId !== "room.waiting") continue;
+      const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+      const supports = resolveApprovedRoomActorSupports(room.definitionId, orientation)
+        .filter((support) => support.role === "waiting-seat");
+      if (supports.length === 0) continue;
+      const bounds = this.toPixels({
+        tileX: room.tileX,
+        tileY: room.tileY,
+        ...orientedSize(room),
+      });
+      const mapped = (this.bridge.viewModel.founderChairs ?? [])
+        .filter((chair) => chair.roomInstanceId === room.instanceId)
+        .flatMap((chair) => {
+          const support = getNearestApprovedActorSupport(
+            supports,
+            {
+              x: chair.location.x - room.tileX,
+              y: chair.location.y - room.tileY,
+            },
+            "waiting-seat",
+          );
+          return support ? [{ chair, support }] : [];
+        });
+      for (const [key, image] of this.fixtureBitmapImages) {
+        if (!key.startsWith(`approved:${room.instanceId}:`) || !image.visible) continue;
+        const drawId = image.getData("approved-draw-id") as string | undefined;
+        const fixtureId = drawId?.split(".").at(-1);
+        if (!fixtureId) continue;
+        const candidates = mapped.filter(({ support }) =>
+          support.id.startsWith(`${fixtureId}:`),
+        );
+        if (candidates.length === 0) continue;
+        const imageBounds = image.getBounds();
+        if (pointer.x < imageBounds.left || pointer.x > imageBounds.right ||
+          pointer.y < imageBounds.top || pointer.y > imageBounds.bottom) continue;
+        return candidates
+          .map(({ chair, support }) => ({
+            chair,
+            distance:
+              (pointer.x - (bounds.x + support.seat.x * this.layout.tileSize)) ** 2 +
+              (pointer.y - (bounds.y + support.seat.y * this.layout.tileSize)) ** 2,
+          }))
+          .sort((left, right) => left.distance - right.distance)[0]!.chair;
+      }
+    }
+    // Front Desk public chair and Break Room seats: nearest seat contact
+    // within half a tile (break seats can share one logical tile).
+    const reach = this.layout.tileSize * 0.5;
+    const nearby = (this.bridge.viewModel.founderChairs ?? [])
+      .filter((chair) => chair.kind === "front_desk_public" || chair.kind === "break")
+      .flatMap((chair) => {
+        const seat = this.founderSeatScreenPoint(chair);
+        if (!seat) return [];
+        // The seat contact is at hip height; accept clicks on the seat back above it too.
+        const distance = Math.hypot(pointer.x - seat.x, Math.max(0, Math.abs(pointer.y - (seat.y - reach * 0.4)) - reach * 0.4));
+        return distance <= reach ? [{ chair, distance }] : [];
+      })
+      .sort((left, right) => left.distance - right.distance)[0];
+    if (nearby) return nearby.chair;
+    const point = this.gridPointAtPointer(pointer);
+    return this.bridge.viewModel.founderChairs?.find((chair) =>
+      chair.kind !== "break" &&
+      chair.location.x === point?.x && chair.location.y === point?.y,
+    ) ?? null;
   }
 
   private toPixels(rectangle: TileRectangle): {

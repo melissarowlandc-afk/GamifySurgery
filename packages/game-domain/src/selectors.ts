@@ -11,6 +11,11 @@ import type {
   PatientLists,
   WorkloadSnapshot,
 } from "./types";
+import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+import { getRoomStaffCapacity } from "./room-capacity";
+import { getActiveExecutiveTerms } from "./executive-management";
+import { getAverageEffectiveStaffMorale } from "./level-five-support";
+import { MRI_SERVICE_CONTRACTS } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
@@ -27,20 +32,84 @@ import {
   createFrozenServiceRouteTiming,
   getFrozenPatientTravelLocation,
 } from "./patient-travel";
-import {
-  validateFacilityAccess,
-  type FacilityAccessValidation,
-} from "./doors";
+import type { FacilityAccessValidation } from "./doors";
 import { evaluateFacilityExperienceConditions } from "./facility-experience";
+import { getCachedFacilityAccessValidation } from "./facility-access-cache";
+import {
+  encounterHasDeliveredInHouseEndoscopy,
+  getRetiredCompletedEncounterCount,
+  getRetiredEndedSatisfactionSamples,
+} from "./retired-encounters";
+import {
+  isAmbulatoryOperationReceipt,
+  isCompletedAmbulatoryOperation,
+  isCompletedEndoscopyOperation,
+  isEndoscopyCompletionReceipt,
+} from "./retired-service-history";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
-import { getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
+import { PROCEDURAL_SPECIALIST_SHORT_WAIT_MINUTES, getCurrentRoomUpgradeDefinition, getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
 import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
+import { isEmployeeAwayForTraining } from "./employee-training";
+import { findCareAwareFacilityPath } from "./care-room-access";
+import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+import { getProcedureStaffStandingSpots, getProceduralSpecialistReadyAt, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
+import { compareStaffHomePreference, hasQueuedHomeRoomWork } from "./staff-dispatch";
+import { forecastDiagnosticOrderPlan, getDiagnosticOrderPlans } from "./diagnostic-timing";
+import {
+  getEmployeeDiscussionBasicBlockedReason,
+  getEmployeeDiscussions,
+} from "./employee-discussions";
 
 const CAPACITY_LIFECYCLES = new Set([
   "waiting_unopened",
   "active_action_required",
   "active_pending_result",
 ]);
+
+export function getEmployeeDiscussionBlockedReason(
+  state: GameState,
+  discussionId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): string | null {
+  const basic = getEmployeeDiscussionBasicBlockedReason(state, discussionId);
+  if (basic) return basic;
+  const discussion = getEmployeeDiscussions(state)[discussionId];
+  if (!discussion || discussion.lifecycle !== "waiting_unopened") return null;
+  const employee = state.employees.find(
+    (candidate) => candidate.id === discussion.employeeId,
+  );
+  if (!employee) return `${discussion.employeeDisplayName} is no longer available.`;
+  if (isEmployeeAwayForTraining(employee)) return `${employee.displayName} is away for training.`;
+  if (!isEmployeeAssignedToOperationalRoom(state, employee.id, context)) {
+    return `${employee.displayName}'s department is unavailable.`;
+  }
+  const hasActiveRetailTrip = state.retailOperations.some(
+    (operation) =>
+      operation.actorKind === "employee" &&
+      operation.actorId === employee.id &&
+      operation.status !== "completed" &&
+      operation.status !== "abandoned" &&
+      operation.status !== "cancelled",
+  );
+  if (hasActiveRetailTrip) return `${employee.displayName} is away from the workstation.`;
+  const reachable = [
+    { x: employee.location.x, y: employee.location.y - 1 },
+    { x: employee.location.x + 1, y: employee.location.y },
+    { x: employee.location.x, y: employee.location.y + 1 },
+    { x: employee.location.x - 1, y: employee.location.y },
+  ].some(
+    (destination) =>
+      findDeterministicFacilityPath(
+        state.environment.founderLocation,
+        destination,
+        state.rooms,
+        state.doors,
+        (definitionId) => getRoomDefinition(definitionId, context),
+      ).length > 0,
+  );
+  return reachable ? null : `The founder cannot reach ${employee.displayName}.`;
+}
 
 export function getFacilityDayNumber(
   state: GameState,
@@ -177,6 +246,7 @@ export function isEmployeeOperational(
     : false;
   return Boolean(
     employee &&
+      !isEmployeeAwayForTraining(employee) &&
       homeRoom &&
       definition &&
       (preemptibleRetailTrip || getOccupiedTiles(homeRoom, definition).some(
@@ -187,7 +257,7 @@ export function isEmployeeOperational(
   );
 }
 
-function isRoomOperational(
+function isRoomAccessible(
   state: GameState,
   roomId: string,
   context: DomainContext,
@@ -207,6 +277,17 @@ function isRoomOperational(
   );
 }
 
+function isRoomOperational(
+  state: GameState,
+  roomId: string,
+  context: DomainContext,
+  access: FacilityAccessValidation,
+): boolean {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  return Boolean(room?.maintenance?.status !== "out_of_service" &&
+    isRoomAccessible(state, roomId, context, access));
+}
+
 function isEmployeeOperationalInAccessibleRoom(
   state: GameState,
   employeeId: string,
@@ -224,7 +305,7 @@ function isEmployeeOperationalInAccessibleRoom(
       isRoomOperational(state, homeRoom.id, context, access) &&
       // Imaging staff may be walking between ordinary imaging rooms while
       // remaining available to the installed service-capability model.
-      (employee.staffRoleDefinitionId === "staff.imaging_technician" ||
+      (isEmployeeAwayForTraining(employee) || employee.staffRoleDefinitionId === "staff.imaging_technician" || employee.staffRoleDefinitionId === "staff.app" ||
         isEmployeeOperational(state, employeeId, context)),
   );
 }
@@ -254,6 +335,28 @@ export function isRoomOperationalForFacilityWork(
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): boolean {
   return isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context));
+}
+
+/** Capacity acquisition excludes overdue equipment and rooms already claimed for repair. */
+export function isRoomAvailableForNewFacilityWork(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): boolean {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  if (!room || !isRoomOperationalForFacilityWork(state, roomId, context)) return false;
+  if (state.employees.some((employee) => employee.facilityTask?.kind === "repair_room" && employee.facilityTask.targetId === roomId)) return false;
+  return room.maintenance?.status !== "due" || room.maintenance.outOfServiceAtFacilityTick === null ||
+    state.facilityTick < room.maintenance.outOfServiceAtFacilityTick;
+}
+
+/** Geometry-only access used to let already-reserved work finish safely. */
+export function isRoomAccessibleForFacilityWork(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): boolean {
+  return isRoomAccessible(state, roomId, context, getFacilityAccessValidation(state, context));
 }
 
 export function getCurrentCapabilities(
@@ -376,31 +479,39 @@ function selectProviderReservation(
   context: DomainContext,
   access: FacilityAccessValidation,
   encounterId: string | null,
+  destinationRoomId: string | null,
 ) {
   const requirement = route.providerRequirement;
   if (!requirement) {
     return null;
   }
   const activeProviders = getActiveProviderReservations(state);
-  const employee = state.employees
+  const specialistPriority = isProceduralSpecialistRole(requirement.preferredEmployeeStaffRoleDefinitionId);
+  const destination = state.rooms.find((room) => room.id === destinationRoomId);
+  const definition = destination ? getRoomDefinition(destination.roomDefinitionId, context) : null;
+  const candidates = state.employees
     .filter(
       (candidate) =>
         candidate.staffRoleDefinitionId ===
           requirement.preferredEmployeeStaffRoleDefinitionId &&
-        candidate.facilityTask == null &&
-        isEmployeeOperationalInAccessibleRoom(
+        !isEmployeeAwayForTraining(candidate) &&
+        (specialistPriority ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isEmployeeOperationalInAccessibleRoom(
           state,
           candidate.id,
           context,
           access,
-        ) &&
-        !activeProviders.some(
-          (provider) =>
-            provider.kind === "employee" &&
-            provider.employeeId === candidate.id,
-        ),
+        )) && (!(specialistPriority || candidate.staffRoleDefinitionId === "staff.app") || Boolean(destination && definition && (() => {
+          const targets = usesApprovedProcedureStaffSpots(destination, definition)
+            ? getProcedureStaffStandingSpots(destination, definition, state.doors, "provider").map((spot) => spot.anchor)
+            : [getRoomNavigationAnchor(destination, definition, "staff")];
+          const allowed = new Set([destination.id]);
+          return targets.some((target) => findCareAwareFacilityPath(state, context, candidate.location, target, allowed).length > 0 ||
+            findRouteFromDisplacedLocationToPoint(state, context, candidate.location, target, allowed).length > 0);
+        })())),
     )
-    .sort((left, right) => left.id.localeCompare(right.id))[0];
+    .sort((left, right) => (destinationRoomId ? compareStaffHomePreference(left, right, destinationRoomId) : 0) || left.id.localeCompare(right.id));
+  const employee = candidates.find((candidate) => candidate.facilityTask == null && !activeProviders.some((provider) => provider.kind === "employee" && provider.employeeId === candidate.id) &&
+    (candidate.homeRoomInstanceId === destinationRoomId || !hasQueuedHomeRoomWork(state, candidate)));
   if (employee) {
     return {
       kind: "employee" as const,
@@ -408,6 +519,7 @@ function selectProviderReservation(
       staffRoleDefinitionId: employee.staffRoleDefinitionId,
     };
   }
+  if (specialistPriority && candidates.some((candidate) => getProceduralSpecialistReadyAt(state, candidate, context) <= state.facilityTick + PROCEDURAL_SPECIALIST_SHORT_WAIT_MINUTES)) return undefined;
   if (
     requirement.founderEligible &&
     (state.environment.founderActivity === null ||
@@ -460,6 +572,7 @@ function selectReachableIdleImagingTechnician(
         (employee) =>
       employee.staffRoleDefinitionId === "staff.imaging_technician" &&
       !employee.facilityTask &&
+      !isEmployeeAwayForTraining(employee) &&
           !reservedEmployeeIds.has(employee.id) &&
           isEmployeeOperationalInAccessibleRoom(
             state,
@@ -468,7 +581,7 @@ function selectReachableIdleImagingTechnician(
             access,
           ),
       )
-      .sort((left, right) => left.id.localeCompare(right.id))
+      .sort((left, right) => compareStaffHomePreference(left, right, destinationRoomId) || left.id.localeCompare(right.id))
       .find((employee) => {
         const path = findDeterministicFacilityPath(
           employee.location,
@@ -481,7 +594,8 @@ function selectReachableIdleImagingTechnician(
           Math.max(0, path.length - 1) /
             context.balanceRelease.facility.characterTravelTilesPerTick,
         );
-        return path.length > 0 && travelTicks <= maximumTravelTicks;
+        return path.length > 0 && travelTicks <= maximumTravelTicks &&
+          (employee.homeRoomInstanceId === destinationRoomId || !hasQueuedHomeRoomWork(state, employee));
       })?.id ?? null
   );
 }
@@ -513,17 +627,18 @@ function selectReachableIdlePhlebotomist(
     .filter((employee) =>
       employee.staffRoleDefinitionId === "staff.phlebotomist" &&
       !employee.facilityTask &&
+      !isEmployeeAwayForTraining(employee) &&
       !reservedEmployeeIds.has(employee.id) &&
       isEmployeeOperationalInAccessibleRoom(state, employee.id, context, access),
     )
-    .sort((left, right) => left.id.localeCompare(right.id))
+    .sort((left, right) => compareStaffHomePreference(left, right, destinationRoomId) || left.id.localeCompare(right.id))
     .find((employee) => findDeterministicFacilityPath(
       employee.location,
       target,
       state.rooms,
       state.doors,
       (definitionId) => getRoomDefinition(definitionId, context),
-    ).length > 0)?.id ?? null;
+    ).length > 0 && (employee.homeRoomInstanceId === destinationRoomId || !hasQueuedHomeRoomWork(state, employee)))?.id ?? null;
 }
 
 export function getEligibleServiceRoute(
@@ -532,6 +647,7 @@ export function getEligibleServiceRoute(
   allowedRouteIds: readonly string[] | null = null,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
   encounterId: string | null = null,
+  allowOnsiteEquivalents = true,
 ) {
   const service = context.balanceRelease.services.find(
     (candidate) => candidate.id === serviceId,
@@ -539,6 +655,8 @@ export function getEligibleServiceRoute(
   if (!service) {
     return null;
   }
+  const pediatric = encounterId ? state.encounters[encounterId]?.frozenCase.pediatricProfile : undefined;
+  if (pediatric && pediatricServiceIsUnsupported(service.id)) return null;
   const capabilities = getCurrentCapabilities(state, context);
   const allowed =
     allowedRouteIds === null ? null : new Set(allowedRouteIds);
@@ -548,6 +666,7 @@ export function getEligibleServiceRoute(
     ["service.breast_core_needle_biopsy", { onsite: "route.breast_core_needle_biopsy.in_house", outsourced: "route.breast_core_needle_biopsy.outsourced" }],
     ["service.ct", { onsite: "route.ct.in_house", outsourced: "route.ct.outsourced" }],
     ["service.basic_labs", { onsite: "route.basic_labs.phlebotomy_sendout", outsourced: "route.basic_labs.outsourced" }],
+    ...MRI_SERVICE_CONTRACTS.map(contract => [contract.serviceId, { onsite: contract.onsite, outsourced: contract.outsourced }] as [string, { onsite: string; outsourced: string }]),
   ]);
   const approvedEquivalent = approvedOnsiteEquivalentRoutes.get(serviceId);
   const isAllowedRoute = (routeId: string) =>
@@ -556,10 +675,12 @@ export function getEligibleServiceRoute(
     // Some approved clinical gates intentionally name the generic off-site
     // ultrasound route. Once the clinic has a real onsite ultrasound service,
     // it is the same ordered service capability, not a clinical substitution.
-    (serviceId === "service.ultrasound" &&
+    (allowOnsiteEquivalents &&
+      serviceId === "service.ultrasound" &&
       routeId === "route.ultrasound.in_house" &&
       allowed.has("route.ultrasound.outsourced")) ||
-    (approvedEquivalent?.onsite === routeId &&
+    (allowOnsiteEquivalents &&
+      approvedEquivalent?.onsite === routeId &&
       allowed.has(approvedEquivalent.outsourced));
   const access = getFacilityAccessValidation(state, context);
   const activeResourceUses = Object.values(state.encounters).flatMap(
@@ -630,6 +751,7 @@ export function getEligibleServiceRoute(
     service.routes
       .flatMap((candidate) => {
         if (
+          pediatric && pediatricServiceIsUnsupported(service.id, candidate) ||
           !isAllowedRoute(candidate.id) ||
           (candidate.requiredCapabilityId !== null &&
             !capabilities.has(candidate.requiredCapabilityId)) ||
@@ -686,71 +808,78 @@ export function getEligibleServiceRoute(
                 .map((room) => room.id),
             )
           : null;
-        const timing = createFrozenServiceRouteTiming(
-          state,
-          context,
-          candidate,
-          allowedDestinationRoomIds,
-          APPROVED_ONSITE_PROCEDURE_ROUTE_IDS.has(candidate.id),
-        );
-        if (!timing) {
-          return [];
-        }
-        const imagingRequirement = candidate.resourceRequirements.find(
-          (resource) =>
-            resource.staffRoleDefinitionId === "staff.imaging_technician",
-        );
-        let imagingTechnicianId: string | null = null;
-        if (imagingRequirement) {
-          const destinationRoomId =
-            timing.patientTravel?.destinationRoomInstanceId ?? null;
-          let elapsed = 0;
-          let resourceWindowTicks = candidate.timingPhases.length > 0
-            ? 0
-            : candidate.durationTicks;
-          for (const phase of candidate.timingPhases) {
-            elapsed += phase.durationTicks;
-            if (phase.resourceBound) resourceWindowTicks = elapsed;
+        const destinationChoices = allowedDestinationRoomIds?.size
+          ? [...allowedDestinationRoomIds].map(id => new Set([id])) : [allowedDestinationRoomIds];
+        return destinationChoices.flatMap(destinationIds => {
+          const timing = createFrozenServiceRouteTiming(
+            state,
+            context,
+            candidate,
+            destinationIds,
+            APPROVED_ONSITE_PROCEDURE_ROUTE_IDS.has(candidate.id),
+          );
+          if (!timing) {
+            return [];
           }
-          imagingTechnicianId = destinationRoomId
-            ? selectReachableIdleImagingTechnician(
-                state,
-                destinationRoomId,
-                APPROVED_ONSITE_PROCEDURE_ROUTE_IDS.has(candidate.id)
-                  ? Number.POSITIVE_INFINITY
-                  : resourceWindowTicks,
-                context,
-                access,
-              )
+          const imagingRequirement = candidate.resourceRequirements.find(
+            (resource) =>
+              resource.staffRoleDefinitionId === "staff.imaging_technician",
+          );
+          let imagingTechnicianId: string | null = null;
+          if (imagingRequirement) {
+            const destinationRoomId =
+              timing.patientTravel?.destinationRoomInstanceId ?? null;
+            let elapsed = 0;
+            let resourceWindowTicks = candidate.timingPhases.length > 0
+              ? 0
+              : candidate.durationTicks;
+            for (const phase of candidate.timingPhases) {
+              elapsed += phase.durationTicks;
+              if (phase.resourceBound) resourceWindowTicks = elapsed;
+            }
+            imagingTechnicianId = destinationRoomId
+              ? selectReachableIdleImagingTechnician(
+                  state,
+                  destinationRoomId,
+                  APPROVED_ONSITE_PROCEDURE_ROUTE_IDS.has(candidate.id)
+                    ? Number.POSITIVE_INFINITY
+                    : resourceWindowTicks,
+                  context,
+                  access,
+                )
+              : null;
+            if (!imagingTechnicianId) return [];
+          }
+          const phlebotomyRequirement = candidate.resourceRequirements.find(
+            (resource) => resource.roomDefinitionId === "room.phlebotomy" && resource.staffRoleDefinitionId === "staff.phlebotomist",
+          );
+          const phlebotomistId = phlebotomyRequirement
+            ? timing.patientTravel?.destinationRoomInstanceId
+              ? selectReachableIdlePhlebotomist(state, timing.patientTravel.destinationRoomInstanceId, context, access)
+              : null
             : null;
-          if (!imagingTechnicianId) return [];
-        }
-        const phlebotomyRequirement = candidate.resourceRequirements.find(
-          (resource) => resource.roomDefinitionId === "room.phlebotomy" && resource.staffRoleDefinitionId === "staff.phlebotomist",
-        );
-        const phlebotomistId = phlebotomyRequirement
-          ? timing.patientTravel?.destinationRoomInstanceId
-            ? selectReachableIdlePhlebotomist(state, timing.patientTravel.destinationRoomInstanceId, context, access)
-            : null
-          : null;
-        if (phlebotomyRequirement && !phlebotomistId) return [];
-        const providerReservation = selectProviderReservation(
-          state,
-          candidate,
-          context,
-          access,
-          encounterId,
-        );
-        if (candidate.providerRequirement && !providerReservation) {
-          return [];
-        }
-        return [{ route: candidate, timing, providerReservation, imagingTechnicianId, phlebotomistId }];
+          if (phlebotomyRequirement && !phlebotomistId) return [];
+          const providerReservation = selectProviderReservation(
+            state,
+            candidate,
+            context,
+            access,
+            encounterId,
+            timing.patientTravel?.destinationRoomInstanceId ?? null,
+          );
+          if (candidate.providerRequirement && !providerReservation) {
+            return [];
+          }
+          return [{ route: candidate, timing, providerReservation, imagingTechnicianId, phlebotomistId }];
+        });
       })
       .sort(
         (left, right) =>
           left.route.preference - right.route.preference ||
           left.timing.durationTicks - right.timing.durationTicks ||
-          left.route.id.localeCompare(right.route.id),
+          left.route.id.localeCompare(right.route.id) ||
+          (left.timing.patientTravel?.outboundPath.length ?? 0) - (right.timing.patientTravel?.outboundPath.length ?? 0) ||
+          (left.timing.patientTravel?.destinationRoomInstanceId ?? "").localeCompare(right.timing.patientTravel?.destinationRoomInstanceId ?? ""),
       )[0] ?? null;
   return route
     ? {
@@ -776,6 +905,7 @@ export function getQueueableOnsiteServiceRoute(
   allowedRouteIds: readonly string[] | null = null,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
   encounterId: string | null = null,
+  allowOnsiteEquivalents = true,
 ) {
   const availabilityProbe: GameState = {
     ...state,
@@ -806,6 +936,7 @@ export function getQueueableOnsiteServiceRoute(
     allowedRouteIds,
     context,
     encounterId,
+    allowOnsiteEquivalents,
   );
   return selected?.route.patientTravel ? selected : null;
 }
@@ -816,12 +947,13 @@ export function getServiceOrderRouteSelection(
   allowedRouteIds: readonly string[] | null = null,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
   encounterId: string | null = null,
+  allowOnsiteEquivalents = true,
 ) {
   const available = getEligibleServiceRoute(
-    state, serviceId, allowedRouteIds, context, encounterId,
+    state, serviceId, allowedRouteIds, context, encounterId, allowOnsiteEquivalents,
   );
   const queueable = getQueueableOnsiteServiceRoute(
-    state, serviceId, allowedRouteIds, context, encounterId,
+    state, serviceId, allowedRouteIds, context, encounterId, allowOnsiteEquivalents,
   );
   const waitingForResources = Boolean(
     queueable &&
@@ -848,6 +980,25 @@ export function getAnswerChoiceServicePreview(
   );
   if (!question || !encounter || !choice) {
     return null;
+  }
+  const diagnostic = getDiagnosticChoicePlanning(state, encounter, question.node, choice.id, context);
+  if (diagnostic) {
+    const plan = diagnostic.quote.kind === "planned" ? diagnostic.quote.plan : null;
+    const forecast = plan ? forecastDiagnosticOrderPlan(state, plan, context) : null;
+    const source = plan?.sources[0];
+    return {
+      kind: "test" as const,
+      answerChoiceId,
+      serviceId: diagnostic.serviceId,
+      serviceDisplayName: diagnostic.serviceDisplayName,
+      routeId: source?.routeId ?? null,
+      routeDisplayName: source?.routeDisplayName ?? null,
+      durationTicks: forecast
+        ? forecast.blockedPhaseIds.length ? null : Math.max(...forecast.plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick
+        : diagnostic.quote.kind === "unavailable" ? diagnostic.quote.estimateMinutes : null,
+      timingProfileId: diagnostic.timingProfileId,
+      diagnosticTiming: forecast?.plan ?? plan,
+    };
   }
   const operationalOrder = getExactTestChoiceOrderRecord(
     encounter,
@@ -934,6 +1085,18 @@ export function getAnswerChoiceServicePreview(
   if (!timingProfile) {
     return null;
   }
+  if (operationalOrder?.disposition.kind === "not_executed") {
+    return {
+      kind: "test" as const,
+      answerChoiceId,
+      serviceId: choice.serviceRequest?.serviceId ?? timingProfile.serviceId,
+      serviceDisplayName: timingProfile.displayName,
+      routeId: null,
+      routeDisplayName: null,
+      durationTicks: timingProfile.durationTicks,
+      timingProfileId: timingProfile.id,
+    };
+  }
   if (operationalOrder?.disposition.kind === "staged_result_gate") {
     const availableComponents = operationalOrder.disposition.components
       .map((component) =>
@@ -981,7 +1144,15 @@ export function getAnswerChoiceServicePreview(
   const selected = serviceId === null
     ? null
     : getServiceOrderRouteSelection(
-        state, serviceId, allowedRouteIds, context, encounter.id,
+        state,
+        serviceId,
+        allowedRouteIds,
+        context,
+        encounter.id,
+        (operationalOrder?.disposition.kind === "terminal_service" ||
+          operationalOrder?.disposition.kind === "result_gate_route_override")
+          ? operationalOrder.disposition.allowOnsiteEquivalents ?? true
+          : true,
       ).selection;
   if (!selected) {
     return {
@@ -1138,6 +1309,9 @@ export function getNextRoomUpgradeCost(
   if (
     !room ||
     !definition ||
+    !definition.buildable ||
+    (state.facilityLevel < 5 && ["room.founder_office", "room.executive_office", "room.indoor_garden", "room.staff_gym"].includes(room.roomDefinitionId)) ||
+    !getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.upgradeCosts.length ||
     room.upgradeLevel >= definition.maximumUpgradeLevel
   ) {
     return null;
@@ -1202,7 +1376,7 @@ export function getBestServiceDurationReductionPercent(
 }
 
 export function getCompletedEncounterCount(state: GameState): number {
-  return Object.values(state.encounters).filter(
+  return getRetiredCompletedEncounterCount(state) + Object.values(state.encounters).filter(
     (encounter) => encounter.resolutionReason === "completed",
   ).length;
 }
@@ -1211,14 +1385,16 @@ export function getClinicSatisfaction(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): number | null {
-  const completed = Object.values(state.encounters)
-    .filter(
+  const completed = [
+    ...Object.values(state.encounters).filter(
       (encounter) =>
         encounter.finalPatientSatisfaction !== null &&
         encounter.resolvedAtFacilityTick !== null &&
         (encounter.resolutionReason === "completed" ||
           encounter.resolutionReason === "walkout"),
-    )
+    ),
+    ...getRetiredEndedSatisfactionSamples(state),
+  ]
     .sort(
       (left, right) =>
         (right.resolvedAtFacilityTick ?? 0) -
@@ -1276,15 +1452,7 @@ export function getFacilityAccessValidation(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): FacilityAccessValidation {
-  const facility = context.balanceRelease.facility;
-  return validateFacilityAccess(
-    state.rooms,
-    state.doors,
-    (definitionId) => getRoomDefinition(definitionId, context),
-    facility.gridWidth,
-    facility.gridHeight,
-    new Set(facility.protectedRoomDefinitionIds),
-  );
+  return getCachedFacilityAccessValidation(state, context);
 }
 
 export function getFacilityProgressionStatus(
@@ -1314,6 +1482,7 @@ export function getFacilityProgressionStatus(
     state,
     context,
   );
+  const averageStaffMorale = state.facilityLevel === 5 ? getAverageEffectiveStaffMorale(state) : null;
   const accessValidation = getFacilityAccessValidation(state, context);
   const requiredRooms = definition.requiredRoomDefinitionIds.map(
     (roomDefinitionId) => {
@@ -1355,6 +1524,39 @@ export function getFacilityProgressionStatus(
     state.facilityLevel === 0 &&
     completedProtectedTutorials === 2 &&
     hasFunctionalTutorialExaminationRoom;
+  const retiredService = state.retiredServiceHistory;
+  const hasCompletedEndoscopyOperation =
+    retiredService?.endoscopyOperationCompleted === true ||
+    state.serviceOperations.some(isCompletedEndoscopyOperation);
+  const hasCompletedFrozenEndoscopy =
+    retiredService?.endoscopyReceipt === true ||
+    state.serviceIncomeReceipts.some(isEndoscopyCompletionReceipt) ||
+    state.retiredEncounterSummary?.inHouseEndoscopyCompleted === true ||
+    Object.values(state.encounters).some(encounterHasDeliveredInHouseEndoscopy);
+  const hasCompletedEndoscopy = hasCompletedEndoscopyOperation || hasCompletedFrozenEndoscopy;
+  const endoscopyCompletionRequirement = state.facilityLevel === 2
+    ? [{
+        id: "progression.endoscopy_completion",
+        label: "Complete your first endoscopy",
+        met: hasCompletedEndoscopy,
+        current: hasCompletedEndoscopy ? 1 : 0,
+        required: 1,
+      }]
+    : [];
+  const hasCompletedAmbulatoryOperation =
+    retiredService?.ambulatoryOperationCompleted === true ||
+    retiredService?.ambulatoryOperationReceipt === true ||
+    state.serviceOperations.some(isCompletedAmbulatoryOperation) ||
+    state.serviceIncomeReceipts.some(isAmbulatoryOperationReceipt);
+  const ambulatoryCompletionRequirement = state.facilityLevel === 3
+    ? [{
+        id: "progression.ambulatory_operation_completion",
+        label: "Complete your first ambulatory operation",
+        met: hasCompletedAmbulatoryOperation,
+        current: hasCompletedAmbulatoryOperation ? 1 : 0,
+        required: 1,
+      }]
+    : [];
   const requirements = [
     ...(tutorialGraduationEligible
       ? [
@@ -1395,25 +1597,58 @@ export function getFacilityProgressionStatus(
             id: "progression.satisfaction",
             label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
             met:
-              historicalSatisfaction !== null &&
+              (state.facilityLevel >= 4 || historicalSatisfaction !== null) &&
               effectiveSatisfaction >
               definition.satisfactionMustBeGreaterThan,
             current:
-              historicalSatisfaction === null
+              state.facilityLevel < 4 && historicalSatisfaction === null
                 ? 0
                 : effectiveSatisfaction,
             required: definition.satisfactionMustBeGreaterThan + 1,
           },
         ]),
+    ...(state.facilityLevel === 5 && definition.minimumAverageStaffMorale !== undefined
+      ? [{
+          id: "progression.staff_morale",
+          label: `Average staff morale at least ${definition.minimumAverageStaffMorale}`,
+          met: averageStaffMorale !== null && averageStaffMorale >= definition.minimumAverageStaffMorale,
+          current: averageStaffMorale ?? 0,
+          required: definition.minimumAverageStaffMorale,
+        }]
+      : []),
     ...requiredRooms,
     ...definition.requiredStaffRoleIds.map((staffRoleDefinitionId) => {
       const role = getStaffRoleDefinition(staffRoleDefinitionId, context);
+      const operational = state.facilityLevel >= 3
+        ? state.employees.some(
+            (employee) =>
+              employee.staffRoleDefinitionId === staffRoleDefinitionId &&
+              (state.facilityLevel !== 4 || Boolean(employee.homeRoomInstanceId &&
+                getRoomStaffCapacity(state, staffRoleDefinitionId).slotsByRoomInstanceId[employee.homeRoomInstanceId])) &&
+              isEmployeeAssignedToOperationalRoom(
+                state,
+                employee.id,
+                context,
+              ),
+          )
+        : hiredRoleTypes.has(staffRoleDefinitionId);
       return {
         id: `progression.staff.${staffRoleDefinitionId}`,
-        label: `Hire ${role?.displayName ?? staffRoleDefinitionId}`,
-        met: hiredRoleTypes.has(staffRoleDefinitionId),
-        current: hiredRoleTypes.has(staffRoleDefinitionId) ? 1 : 0,
+        label: state.facilityLevel === 4 ? "Keep an APP assigned to an operational room" : `Hire ${role?.displayName ?? staffRoleDefinitionId}`,
+        met: operational,
+        current: operational ? 1 : 0,
         required: 1,
+      };
+    }),
+    ...endoscopyCompletionRequirement,
+    ...ambulatoryCompletionRequirement,
+    ...(definition.requiredCompletionWitnessIds ?? []).map((id) => {
+      const pediatric = id === "pediatric_visit_with_parent";
+      const witness = pediatric ? state.levelFourCompletion?.pediatricVisitWithParent : state.levelFourCompletion?.woundOstomyCareVisit;
+      return {
+        id: `progression.witness.${id}`,
+        label: pediatric ? "Complete a pediatric visit with its parent" : "Complete a wound/ostomy care visit",
+        met: Boolean(witness), current: witness ? 1 : 0, required: 1,
       };
     }),
   ];
@@ -1423,9 +1658,14 @@ export function getFacilityProgressionStatus(
     requirements,
     eligible:
       definition.nextFacilityLevel !== null &&
+      definition.nextFacilityLevel <= context.balanceRelease.facility.maximumPlayableLevel &&
       requirements.every((requirement) => requirement.met),
+    terminalComplete: state.facilityLevel === 4 && definition.nextFacilityLevel === null &&
+      (state.levelFourCompletion?.acknowledgedAtFacilityTick != null || requirements.every((requirement) => requirement.met)),
     nextFacilityLevel:
-      definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2
+      definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2 ||
+      definition.nextFacilityLevel === 3 || definition.nextFacilityLevel === 4 ||
+      definition.nextFacilityLevel === 5 && context.balanceRelease.facility.maximumPlayableLevel >= 5
         ? definition.nextFacilityLevel
         : null,
     maximumPlayableLevel:
@@ -1532,32 +1772,65 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
   };
 }
 
+interface ResolutionTickIndex {
+  settledAtFacilityTickBySettlementId: ReadonlyMap<string, number>;
+  latestResolutionEventTickByEncounterId: ReadonlyMap<string, number>;
+}
+
+/**
+ * Indexes settlements and resolution events once per patient-list build. The
+ * resolved-list sort previously searched both histories inside its comparator,
+ * which made every render quadratic in the number of filed charts.
+ */
+function createResolutionTickIndex(state: GameState): ResolutionTickIndex {
+  const settledAtFacilityTickBySettlementId = new Map<string, number>();
+  for (const settlement of state.settlements) {
+    if (!settledAtFacilityTickBySettlementId.has(settlement.id)) {
+      settledAtFacilityTickBySettlementId.set(
+        settlement.id,
+        settlement.settledAtFacilityTick,
+      );
+    }
+  }
+  const latestResolutionEventTickByEncounterId = new Map<string, number>();
+  for (const event of state.events) {
+    if (
+      event.encounterId !== null &&
+      (event.type === "encounter_settled" ||
+        event.type === "left_before_seen")
+    ) {
+      const previous = latestResolutionEventTickByEncounterId.get(
+        event.encounterId,
+      );
+      if (previous === undefined || event.facilityTick > previous) {
+        latestResolutionEventTickByEncounterId.set(
+          event.encounterId,
+          event.facilityTick,
+        );
+      }
+    }
+  }
+  return {
+    settledAtFacilityTickBySettlementId,
+    latestResolutionEventTickByEncounterId,
+  };
+}
+
 function getResolutionTick(
-  state: GameState,
+  index: ResolutionTickIndex,
   encounter: EncounterState,
 ): number {
   if (encounter.settlementId !== null) {
-    const settlement = state.settlements.find(
-      (candidate) => candidate.id === encounter.settlementId,
-    );
-    if (settlement) {
-      return settlement.settledAtFacilityTick;
+    const settledAtFacilityTick =
+      index.settledAtFacilityTickBySettlementId.get(encounter.settlementId);
+    if (settledAtFacilityTick !== undefined) {
+      return settledAtFacilityTick;
     }
   }
 
-  let resolutionEventTick: number | null = null;
-  for (const event of state.events) {
-    if (
-      event.encounterId === encounter.id &&
-      (event.type === "encounter_settled" ||
-        event.type === "left_before_seen") &&
-      (resolutionEventTick === null ||
-        event.facilityTick > resolutionEventTick)
-    ) {
-      resolutionEventTick = event.facilityTick;
-    }
-  }
-  if (resolutionEventTick !== null) {
+  const resolutionEventTick =
+    index.latestResolutionEventTickByEncounterId.get(encounter.id);
+  if (resolutionEventTick !== undefined) {
     return resolutionEventTick;
   }
 
@@ -1579,11 +1852,21 @@ export function getPatientLists(state: GameState): PatientLists {
   const byArrivalThenId = (left: EncounterState, right: EncounterState) =>
     left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
     left.id.localeCompare(right.id);
+  const resolutionTickIndex = createResolutionTickIndex(state);
+  const resolutionTicks = new Map<string, number>();
+  const resolutionTick = (encounter: EncounterState): number => {
+    let tick = resolutionTicks.get(encounter.id);
+    if (tick === undefined) {
+      tick = getResolutionTick(resolutionTickIndex, encounter);
+      resolutionTicks.set(encounter.id, tick);
+    }
+    return tick;
+  };
   const byNewestResolution = (
     left: EncounterState,
     right: EncounterState,
   ) =>
-    getResolutionTick(state, right) - getResolutionTick(state, left) ||
+    resolutionTick(right) - resolutionTick(left) ||
     right.waiting.arrivedAtTick - left.waiting.arrivedAtTick ||
     left.id.localeCompare(right.id);
   const encounters = Object.values(state.encounters).sort(byArrivalThenId);
@@ -1650,15 +1933,57 @@ export function getCurrentQuestion(
   };
 }
 
+export function getDiagnosticOrderTiming(state: GameState, encounterId: string, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT) {
+  const encounter = state.encounters[encounterId];
+  const plans = getDiagnosticOrderPlans(state).filter((plan) => plan.encounterId === encounterId);
+  const currentOrderId = encounter?.terminalTestOrder?.diagnosticTiming?.orderId ??
+    (encounter?.pendingResult?.deliveredAtTick === null ? encounter.pendingResult.diagnosticTiming?.orderId : undefined);
+  const selected = plans.find((plan) => plan.orderId === currentOrderId) ??
+    plans.filter((plan) => plan.phases.some((phase) => phase.status !== "completed" && phase.status !== "cancelled")).at(-1) ?? plans.at(-1);
+  if (!selected) return null;
+  const forecast = forecastDiagnosticOrderPlan(state, selected, context);
+  const plan = forecast.plan;
+  const remaining = (atTick: number) => Math.max(0, atTick - state.facilityTick);
+  const labels = { collection: "Collection", acquisition: "Image acquisition", preparation: "Preparation", procedure: "Procedure", recovery: "Recovery",
+    interpretation: "Interpretation", laboratory_processing: "Laboratory processing", pathology: "Pathology", retained: "Remaining outside work",
+    patient_departure: "Travelling to the outside service", patient_return: "Returning to Front Desk" } as const;
+  return {
+    orderId: plan.orderId, blocked: forecast.blockedPhaseIds.length > 0,
+    totalRemainingTicks: forecast.blockedPhaseIds.length ? null : remaining(Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick))),
+    resultReady: plan.resultReady.reachedAtTick !== null,
+    resultRemainingTicks: plan.resultReady.reachedAtTick !== null ? 0 : plan.resultReady.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.resultReady.forecastAtTick),
+    visualResultReady: plan.visualResultReady?.reachedAtTick !== null && plan.visualResultReady?.reachedAtTick !== undefined,
+    visualResultRemainingTicks: !plan.visualResultReady ? null : plan.visualResultReady.reachedAtTick !== null ? 0 :
+      plan.visualResultReady.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.visualResultReady.forecastAtTick),
+    careComplete: plan.careComplete.reachedAtTick !== null,
+    careRemainingTicks: plan.careComplete.reachedAtTick !== null ? 0 : plan.careComplete.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.careComplete.forecastAtTick),
+    phases: plan.phases.map((phase) => ({ id: phase.id, kind: phase.kind, label: labels[phase.kind], mode: phase.mode, durationMinutes: phase.durationMinutes,
+      status: phase.status, queueMinutes: phase.forecast.queueMinutes, walkingMinutes: phase.forecast.walkingMinutes,
+      remainingTicks: forecast.blockedPhaseIds.includes(phase.id) ? null : phase.status === "completed" ? 0 : remaining(phase.forecast.endsAtTick) })),
+  };
+}
+
 export function getPendingResultEta(
   state: GameState,
   encounterId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): number | null {
   const pendingResult = state.encounters[encounterId]?.pendingResult;
   if (!pendingResult || pendingResult.deliveredAtTick !== null) {
     return null;
   }
+  if (pendingResult.diagnosticTiming) {
+    const forecast = forecastDiagnosticOrderPlan(state, pendingResult.diagnosticTiming, context);
+    if (forecast.blockedPhaseIds.length) return null;
+    return Math.max(0, Math.max(forecast.plan.resultReady.forecastAtTick, forecast.plan.careComplete.forecastAtTick) - state.facilityTick);
+  }
   if (pendingResult.resourceQueue?.status === "waiting_for_resources") {
+    return null;
+  }
+  if (
+    pendingResult.localServiceOperation &&
+    pendingResult.localServiceOperation.status !== "external_processing"
+  ) {
     return null;
   }
   return Math.max(0, pendingResult.dueTick - state.facilityTick);
@@ -1669,6 +1994,9 @@ export function getPendingPatientLocation(
   encounterId: string,
 ) {
   const pending = state.encounters[encounterId]?.pendingResult;
+  if (!pending || pending.deliveredAtTick !== null) {
+    return null;
+  }
   const travel = pending?.patientTravel;
   if (
     pending?.onsiteReturn?.serviceCompletedAtTick !== null &&
@@ -1716,13 +2044,15 @@ export function getPendingPatientRoutePresentation(
   state: GameState,
   encounterId: string,
 ): { path: GridPoint[]; pathIndex: number } | null {
-  const travel =
-    state.encounters[encounterId]?.pendingResult?.patientTravel;
+  const pending = state.encounters[encounterId]?.pendingResult;
+  if (!pending || pending.deliveredAtTick !== null) {
+    return null;
+  }
+  const travel = pending.patientTravel;
   if (!travel) {
     return null;
   }
-  const onsiteReturn =
-    state.encounters[encounterId]?.pendingResult?.onsiteReturn;
+  const onsiteReturn = pending.onsiteReturn;
   if (
     onsiteReturn?.serviceCompletedAtTick !== null &&
     onsiteReturn?.serviceCompletedAtTick !== undefined &&
@@ -1761,14 +2091,21 @@ export function getEncounterSettlement(
     : null;
 }
 
-export function getOperatingExpensePerFacilityHour(
+export function getRoomUpkeepBeforeSupplierPerFacilityHour(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): number {
-  const roomExpense = state.rooms.reduce((total, room) => {
+  return state.rooms.reduce((total, room) => {
     const definition = getRoomDefinition(room.roomDefinitionId, context);
     if (!definition) {
       return total;
+    }
+    // The persisted clock is observed by load/build/staff/tick reconciliation.
+    // After 60 continuous minutes, rent is 20% of base, without tier uplift.
+    if (room.upkeepOutage?.version === "room-upkeep-outage.v1" &&
+        room.upkeepOutage.lastObservedFacilityTick === state.facilityTick &&
+        state.facilityTick - room.upkeepOutage.sinceFacilityTick >= 60) {
+      return total + definition.upkeepPerExpenseInterval / 5;
     }
     return (
       total +
@@ -1776,6 +2113,14 @@ export function getOperatingExpensePerFacilityHour(
       (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel
     );
   }, 0);
+}
+
+export function getSupplierUpkeepSavingsPerFacilityHour(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): number {
+  return getRoomUpkeepBeforeSupplierPerFacilityHour(state, context) * (getActiveExecutiveTerms(state, context)?.effects.supplierReductionPercent ?? 0) / 100;
+}
+
+export function getOperatingExpensePerFacilityHour(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): number {
+  const roomExpense = getRoomUpkeepBeforeSupplierPerFacilityHour(state, context) - getSupplierUpkeepSavingsPerFacilityHour(state, context);
   const staffExpense = state.employees.reduce(
     (total, employee) => total + employee.salaryPerExpenseInterval,
     0,

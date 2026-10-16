@@ -6,9 +6,15 @@ import {
   normalizePixelAppearance,
   serializeGameState,
   withExplicitAdditionalAvatarStill,
+  selectStaffStillId,
 } from "../src";
 
 describe("character still persistence", () => {
+  it("keeps a unique future staff ID and chooses a different authored ID when occupied", () => {
+    expect(selectStaffStillId("seed", "future", "staff.evs_worker", "future.staff.v1")).toBe("future.staff.v1");
+    const first = selectStaffStillId("seed", "one", "staff.evs_worker");
+    expect(selectStaffStillId("seed", "two", "staff.evs_worker", undefined, new Set([first]))).not.toBe(first);
+  });
   it("preserves valid unknown still IDs without changing clinical identity or case data", () => {
     const state = createInitialGameState(undefined, { campaignId: "still-persistence", campaignSeed: "still-persistence", createdAtRealMs: 0 });
     const encounter = Object.values(state.encounters)[0]!;

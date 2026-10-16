@@ -1,13 +1,17 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PixelAvatar } from "./PixelAvatar";
 import { PixelIcon } from "./PixelIcon";
-import type { PatientFolder, PatientTabView } from "./types";
+import type { EmployeeDiscussionTabView, PatientFolder, PatientTabView } from "./types";
 
 interface PatientListsProps {
   patients: PatientTabView[];
+  discussions?: EmployeeDiscussionTabView[];
+  onOpenDiscussion?: (discussionId: string) => void;
   onOpen: (patientId: string) => void;
+  chartHighlightRequest?: { patientId: string; requestKey: number } | null;
   tutorialTargetEncounterId?: string | null;
   showTutorialCallout?: boolean;
+  availabilityGuidance?: string | null;
 }
 
 const ACTIVE_FOLDERS: Array<{ id: PatientFolder; label: string }> = [
@@ -17,11 +21,48 @@ const ACTIVE_FOLDERS: Array<{ id: PatientFolder; label: string }> = [
 
 export function PatientLists({
   patients,
+  discussions = [],
+  onOpenDiscussion,
   onOpen,
+  chartHighlightRequest = null,
   tutorialTargetEncounterId = null,
   showTutorialCallout = false,
+  availabilityGuidance = null,
 }: PatientListsProps) {
   const [resolvedOpen, setResolvedOpen] = useState(false);
+  const patientRows = useRef(new Map<string, HTMLButtonElement>());
+  const liveFoldersRef = useRef<HTMLDivElement>(null);
+  const resolvedDrawerRef = useRef<HTMLDivElement>(null);
+  const highlightedFolder = patients.find((patient) => patient.id === chartHighlightRequest?.patientId)?.folder;
+  useEffect(() => {
+    if (!chartHighlightRequest || !highlightedFolder) return;
+    if (highlightedFolder === "resolved" && !resolvedOpen) {
+      setResolvedOpen(true);
+      return;
+    }
+    const row = patientRows.current.get(chartHighlightRequest.patientId);
+    const scroller = highlightedFolder === "resolved" ? resolvedDrawerRef.current : liveFoldersRef.current;
+    if (!row || !scroller) return;
+    // Confine scrolling to the rail; never move the desk/page or keyboard focus.
+    const rowBounds = row.getBoundingClientRect();
+    const railBounds = scroller.getBoundingClientRect();
+    if (rowBounds.top < railBounds.top) scroller.scrollTop += rowBounds.top - railBounds.top;
+    else if (rowBounds.bottom > railBounds.bottom) scroller.scrollTop += rowBounds.bottom - railBounds.bottom;
+  }, [chartHighlightRequest, highlightedFolder, resolvedOpen]);
+  const renderDiscussion = (discussion: EmployeeDiscussionTabView) => (
+    <button type="button" key={discussion.id}
+      className={`patient-tab patient-tab-slide employee-discussion-tab${discussion.selected ? " is-selected" : ""}`}
+      onClick={() => onOpenDiscussion?.(discussion.id)}
+      disabled={discussion.folder === "resolved"}
+      aria-current={discussion.selected ? "page" : undefined}
+      title={discussion.blockedReason ?? discussion.statusLabel}>
+      {discussion.actionRequired ? <strong className="action-marker patient-tab-action-marker" aria-label="Action required">!</strong> : null}
+      <span className="patient-tab-row">
+        <PixelAvatar avatar={discussion.avatar} label={`${discussion.name} portrait`} size="small" />
+        <span className="patient-tab-copy"><span className="patient-tab-name">{discussion.name}</span><small>Team discussion · {discussion.roleLabel}</small><small>{discussion.blockedReason ?? discussion.statusLabel}</small></span>
+      </span>
+    </button>
+  );
   const resolvedPatients = useMemo(
     () =>
       patients
@@ -69,10 +110,18 @@ export function PatientLists({
         }`}
         type="button"
         key={patient.id}
+        ref={(row) => {
+          if (row) patientRows.current.set(patient.id, row);
+          else patientRows.current.delete(patient.id);
+        }}
+        data-patient-chart-id={patient.id}
         onClick={() => onOpen(patient.id)}
         aria-current={patient.selected ? "page" : undefined}
         aria-describedby={tutorialCallout ? calloutId : undefined}
       >
+        {chartHighlightRequest?.patientId === patient.id ? (
+          <span key={chartHighlightRequest.requestKey} className="patient-chart-highlight" aria-hidden="true" />
+        ) : null}
         <span className="patient-tab-notch" aria-hidden="true" />
         {patient.actionRequired || patient.folder === "waiting" ? (
           <strong
@@ -115,38 +164,44 @@ export function PatientLists({
         <span>Patient charts</span>
         <small>
           {
-            patients.filter((patient) => patient.folder !== "resolved")
-              .length
+            patients.filter((patient) => patient.folder !== "resolved").length + discussions.filter((item) => item.folder !== "resolved").length
           }{" "}
           open
         </small>
       </div>
 
-      <div className="patient-live-folders">
+      <div className="patient-live-folders" ref={liveFoldersRef}>
         {ACTIVE_FOLDERS.map((folder) => {
           const folderPatients = patients.filter(
             (patient) => patient.folder === folder.id,
           );
+          const folderDiscussions = discussions.filter((item) => item.folder === folder.id);
+          const folderCount = folderPatients.length + folderDiscussions.length;
           return (
             <section
               className={`patient-folder is-${folder.id}${
-                folderPatients.length === 0 ? " is-empty" : ""
+                folderCount === 0 ? " is-empty" : ""
               }`}
               key={folder.id}
             >
               <h2>
                 {folder.label}
-                <span aria-label={`${folderPatients.length} charts`}>
-                  {folderPatients.length}
+                <span aria-label={`${folderCount} charts`}>
+                  {folderCount}
                 </span>
               </h2>
-              {folderPatients.length === 0 ? (
-                <p className="empty-state">No charts</p>
+              {folderCount === 0 ? (
+                <p className={`empty-state${folder.id === "waiting" && availabilityGuidance ? " patient-availability-guidance" : ""}`}>
+                  {folder.id === "waiting" && availabilityGuidance
+                    ? availabilityGuidance
+                    : "No charts"}
+                </p>
               ) : (
                 <div className="patient-tab-stack">
                   {folderPatients.map((patient) =>
                     renderPatientTab(patient),
                   )}
+                  {folderDiscussions.map(renderDiscussion)}
                 </div>
               )}
             </section>
@@ -168,13 +223,14 @@ export function PatientLists({
           </span>
           <span>
             <strong>Resolved</strong>
-            <small>{resolvedPatients.length} filed charts</small>
+            <small>{resolvedPatients.length + discussions.filter((item) => item.folder === "resolved").length} filed charts</small>
           </span>
           <span aria-hidden="true">{resolvedOpen ? "Close" : "Open"}</span>
         </button>
 
         <div
           className="resolved-chart-drawer"
+          ref={resolvedDrawerRef}
           id="resolved-chart-drawer"
           hidden={!resolvedOpen}
         >
@@ -191,6 +247,7 @@ export function PatientLists({
               )}
             </div>
           )}
+          {discussions.filter((item) => item.folder === "resolved").map(renderDiscussion)}
         </div>
       </section>
     </nav>

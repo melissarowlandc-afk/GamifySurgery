@@ -1,0 +1,96 @@
+{
+  "seed": "level-four-economy-m8",
+  "warmupHours": 4,
+  "measuredHours": 48,
+  "rows": [
+    {
+      "name": "MRI (external read)",
+      "visits": 12,
+      "visitsPerHour": 0.25,
+      "grossPerHour": 60,
+      "stockPerHour": 0,
+      "upkeepPerHour": 8,
+      "salaryPerHour": 18,
+      "netPerHour": 34
+    },
+    {
+      "name": "Pediatric Exam + Waiting + APP",
+      "visits": 32,
+      "visitsPerHour": 0.6666666666666666,
+      "grossPerHour": 53.333333333333336,
+      "stockPerHour": 0,
+      "upkeepPerHour": 3,
+      "salaryPerHour": 30,
+      "netPerHour": 20.333333333333336
+    },
+    {
+      "name": "Wound/Ostomy + APP",
+      "visits": 31,
+      "visitsPerHour": 0.6458333333333334,
+      "grossPerHour": 43.75,
+      "stockPerHour": 0,
+      "upkeepPerHour": 2,
+      "salaryPerHour": 30,
+      "netPerHour": 11.75
+    },
+    {
+      "name": "Ordinary Exam + APP",
+      "visits": 24,
+      "visitsPerHour": 0.5,
+      "grossPerHour": 40,
+      "stockPerHour": 0,
+      "upkeepPerHour": 2,
+      "salaryPerHour": 30,
+      "netPerHour": 8
+    }
+  ],
+  "byLine": {
+    "income.pediatric_consult": {
+      "count": 32,
+      "gross": 2560,
+      "stock": 0
+    },
+    "income.coffee": {
+      "count": 32,
+      "gross": 145,
+      "stock": 32
+    },
+    "income.ostomy_support": {
+      "count": 16,
+      "gross": 1200,
+      "stock": 0
+    },
+    "income.app_consult": {
+      "count": 24,
+      "gross": 1920,
+      "stock": 0
+    },
+    "income.kiosk_drink": {
+      "count": 28,
+      "gross": 81,
+      "stock": 28
+    },
+    "income.mri": {
+      "count": 12,
+      "gross": 2880,
+      "stock": 0
+    },
+    "income.kiosk_snack": {
+      "count": 33,
+      "gross": 112,
+      "stock": 66
+    },
+    "income.wound_care": {
+      "count": 15,
+      "gross": 900,
+      "stock": 0
+    }
+  },
+  "totals": {
+    "grossPerHour": 204.125,
+    "stockPerHour": 2.625,
+    "operatingPerHour": 170,
+    "netPerHour": 31.5,
+    "closingOperatingQuote": 170
+  }
+}

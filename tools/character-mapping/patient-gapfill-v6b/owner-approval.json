@@ -1,0 +1,398 @@
+{
+  "schemaVersion": "patient-gapfill-v6b-owner-runtime-approval/v1",
+  "status": "approved",
+  "approvedBy": "GamifySurgery manager (Claude Code)",
+  "authorizedBy": "owner",
+  "date": "2026-10-08",
+  "ownerInstruction": "use codex to design characters to fill in all the gaps, make sure the style of these characters is matching the style of all the previously generated characters. If they look okay to you, you can implement them into the game.",
+  "managerAcceptance": {
+    "path": "docs/execplans/character-gapfill-v6-20261007.md",
+    "statement": "- 2026-10-08: v6b MANAGER VISUAL ACCEPTANCE (owner-delegated). Style matches v6a (`artifacts/character-statics/patient-gapfill-v6b/review/manager/v6a-top-v6b-bottom.png`); ages read correctly; gallery validator PASS (52 pages/viewports). Notes for v6c/v6d: glasses are over-represented (~half of v6b) and gray-curly-hair-plus-glasses repeats across 003/007/017; keep glasses <= 30% and avoid that combination. Launched v6b integration, v6c (19 patients) and v6d (14 staff) generation.",
+    "sha256": "e73f2b4bfda9856a9d8a95524dcca7a7112e75a23448f61beb92c6a8616f8d99"
+  },
+  "scope": "Manager accepted v6b under owner-delegated visual approval. Only these 20 adult patients, 160 exact packaged poses and 80 authored contacts; append-only local runtime integration. No Git or publication authorization.",
+  "allocation": {
+    "Female": {
+      "middle_aged": 7,
+      "adult": 3
+    },
+    "Male": {
+      "middle_aged": 6,
+      "adult": 4
+    }
+  },
+  "selectability": "existing exact sex/age-band patientStillEligibleEntries pools and unchanged occupancy/LRU selection",
+  "roster": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/roster.json",
+    "sha256": "e58f4cb1ba0d2aaecb3f6bcc118e38bd20579cb2462b3fd404d7935800de1bf7"
+  },
+  "reviewAcceptance": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/review-acceptance.json",
+    "sha256": "2d17314b8aa14b269425abdc9518869514babdfa776c4fc1e5ae441448bdc700"
+  },
+  "reviewGallery": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/review/index.html",
+    "sha256": "bec0102314bc81fb32815d0e77a9f47cb9b85b78aab8b3a8d3360dae63b909a4"
+  },
+  "overview": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/review/manager/v6a-top-v6b-bottom.png",
+    "sha256": "5e4fac15ad056f61dd6ade9716fc29656ca219edaa694c573bd8b766c2329386"
+  },
+  "workerReview": {
+    "path": "artifacts/character-statics/patient-gapfill-v6b/worker-review/visual-review.json",
+    "sha256": "a036dcf6d5928bf6143825c3a7a5d97bde8c4fcb58d4664cd40d2fed58578a22"
+  },
+  "authoredContacts": {
+    "path": "tools/character-mapping/patient-gapfill-v6b/authored-contacts.json",
+    "sha256": "ff7536becf7a7069c017e8d22b0a0abd469bc90866f707889cefe30dffedc73c"
+  },
+  "acceptedSources": {
+    "001": "cf367141f842d6fdea4ea5afbc520ea99bf00de222dd1934e0c083f4213d884e",
+    "002": "f9081b607d0dc332f209ab27ea06cac9ab961e5e8432b1bbee2e4409b433259f",
+    "003": "f142090f09d3a793d9a6bdc7fa49dfe168c033bbea671b79e9f8c660664a73b7",
+    "004": "6c08ec0f1d5bd48a0ab521264d3803c630044aac58f4650118b7b16594e1ee4b",
+    "005": "ff6d2691e293cf56168b988df371d85f13aa234da84b99c8b4698c935c2de6de",
+    "006": "bde66d79a2a2bf20a3a3d506bde7c9465df4c803ef0a7f866112da022d3437c9",
+    "007": "45ea4fcfd098b47a9ce866c34317553a4df4f7fe468eb2336abd637cae5027f9",
+    "008": "a73db96c03b8a5956b3d7d4927d34718488167b235e0f12a5ca17f598a6b3f79",
+    "009": "9170306a641dddef0af8b71f966f95443c22844b936a3078a3f36976dfc0a699",
+    "010": "a1f9d8a6a49ea2c66c9ca9bbf0143c79c209a13157c94e7afce7aed7d5eed16b",
+    "011": "2096075ece9d0ea4fb032e4266934c2af90757580c5972214810d9de1b6a08da",
+    "012": "770ab1a9a4f416e251547a1f01adf8d48b34fc9b330a6342ec886d9a8d398777",
+    "013": "b663ca5dedc9a1225a2f68308fb816d3b62441adb97d8521d9e41869c7291b4b",
+    "014": "fddfaa9aed214659fb909c7c6f19fdbdff67e5e9b096f9ab42c2a0ae942a3a97",
+    "015": "0566adc63073a06dd144b0c368f0bf84beda3c3a5af5532ff8e31507ce72d12c",
+    "016": "bd169acef8e195ff4397625c0fb3ac45bbb753beef24e75064c95cb93310a213",
+    "017": "6f60492d5eeab958093b9f32edf9b406729880f58009b36d296e55393afe514b",
+    "018": "f7067a197607e005f12a04e8163e09b181ef7a331a4bb71db60905697f11bf95",
+    "019": "1ab02f51e7af9f330dba7ff25bec70fc5864a3defe18385ee4fc2e893b25f78a",
+    "020": "04c8f70e59f4297f5c2a31fdd477c793fd2d84a1333c0ade5ba871e92c7f0ed9"
+  },
+  "acceptedPoses": {
+    "001": {
+      "stand-south": "d2277d74eb38cec1f1ed9768f0d1f00dd872d0f8a9414312a32411e37acfd6ae",
+      "stand-east": "d68f605acf4d49920299da62f9a9f8d2edd01a263752ec615ee180453e6bce36",
+      "stand-west": "589d7f2fb71976f61f939a39519aad93a85669ca98a8c897e2433e110bb4b7b9",
+      "stand-north": "839f7194bcacae95b18b7cf300ecfc9881a96af58ccc004828016c114699f8c2",
+      "sit-south": "c47bc96078a6df409d1e248f4bed673c0dc6bdb1b1d7d6f57a98fdcafa2beea2",
+      "sit-east": "dcec42b38a0c81a122ea9f16d8eef1258af54724f9b0b9509af1e3065aeb80cc",
+      "sit-west": "91abf1e5295e06c7625f81db317e314f29132ab21bbff0d70d81f7bd56e5ae44",
+      "sit-north": "037ed045939ba4b33fd330caffd758539ad7a4868f6c44c9c017d25a26198e46"
+    },
+    "002": {
+      "stand-south": "493ca1c66fd75a76256711f4d61ed9e294b5a5dbd0f05758a409fc305d4242a0",
+      "stand-east": "8c59a1a499b81d928055ff746261dbb62880cb9341de9f3db538358c3618323c",
+      "stand-west": "36928917f7461b1a02905c0c6e135fd55148824de859da44675027c9adb3c338",
+      "stand-north": "23b0a9259b4c9631405ff3ef164506346d57f2d1332808e4f7f77bb32192f091",
+      "sit-south": "618d0b4d40d02625eb521f2d263c60318e3654a3b1d9fc5612e83dbaf3deb8e5",
+      "sit-east": "231b4779c672c03133326c3b121ed94587e354a2729cb20d92da4afbd56db5f1",
+      "sit-west": "bf5caef1ce3f1803552a8333747cdf30d28f6859911b5b99e17b304cdc5b9451",
+      "sit-north": "18309f2abc4b4ea5f25bb65144374650c346eead426106daa8bfdecf336235e2"
+    },
+    "003": {
+      "stand-south": "bb06748cd80d13c7defbb381f6b99ead9e84d92ce50d9ecb42149319fbee559c",
+      "stand-east": "ea21caf5c559e0258d358e61647582a09f483d47388c0deba47c1f6ae5e3a340",
+      "stand-west": "3947601a4ecab8738bbe948d048448e64dad66983ea6f7c39e1c713b9f082eb8",
+      "stand-north": "80e9e5cb1676964fb66104a3f456cfbed0538c15033cd336ca7b2980945dd6d4",
+      "sit-south": "2fbf180c172f39f2c9262af8e27b3edda2fe4d7f926524545d8e2421fabe3cd6",
+      "sit-east": "421a41b036f6c236eb5e7c50f4217b5ec35e56e88431f55d909bd56489d65dac",
+      "sit-west": "ffa7af151950b51272ecf03b21227f7d4d71053743733c96e2017a926849694a",
+      "sit-north": "c0b0e112e362499ac217832645b492ec002efd00135f25276112661b12a66b8b"
+    },
+    "004": {
+      "stand-south": "a5d62f9ab0d503f6680f2ba4d632665539f7ff00a4da41bfff59916cdc2d51e9",
+      "stand-east": "15d450954a38738a7a4bf2ee4ae3cb0605ada0a98ec74bbee36243141d86d595",
+      "stand-west": "0798189fad37b0405169c9978dbd64846c80db8df254a21c3029c4cc7479c562",
+      "stand-north": "f57edd806cf942bcbe7ea0faf2a649fb309aec2635a7a13e2b891a8138a7f1d2",
+      "sit-south": "aee99381d8471dcb6442f0570967de01a472313842e7c8a19b4d5a667d8143d7",
+      "sit-east": "f6e2162e76de058d0add2d13cf3942c4dc45f0f16d0c1118ce9ccf738921d0a8",
+      "sit-west": "0442a0ffacaf7efb02ff63fa94e03ecb593add774d6dcbea3fd304e6031b1cfe",
+      "sit-north": "a456cd1216d0a92576269f8d0804b8aa0fe8c5fb0eb3f932e7c6400ac2f9834d"
+    },
+    "005": {
+      "stand-south": "cd4bf826739700bfc61ebd554890b98a5c5b1c04ca5ca525a1cc9516a027352d",
+      "stand-east": "4782b99af96fb0af93c9dbca5b1d73bf0f26ebd22dac2ee32cc889a2a86e0636",
+      "stand-west": "211a8d18de330754d98d705e18765896dea5d3ecf667407a0c2d67ffda826027",
+      "stand-north": "858f19e4a1f14fa0cc9e3dd2d106cccc1e91cca64cd545e77f70303fdf6ddf60",
+      "sit-south": "b37d204254d10e33496931495f533007b9995b692b2cbdedc017ad7df19d5585",
+      "sit-east": "7f83a4fc7e3e29e70f4ccb5ba0245fea7ebf5980d7b0d5f359f3098005e660cf",
+      "sit-west": "921d9d3ced893785eb145fad9928324302f5493ebc6b0f10a1437ccebaf7d9ba",
+      "sit-north": "921c1e643b1e38029c29326c622be21fc34ec182139c3d4bc2aa64f46586d1c5"
+    },
+    "006": {
+      "stand-south": "1fad7d0e9d7286f1c82fbf78afed00ac42096f9fd49171267fabb71135342dea",
+      "stand-east": "7a966dc238387e7d66dbd33ba711ebce3758b456b2be93d65c8556e9d30d8a74",
+      "stand-west": "275d77e55a7168e53d36aed3240ff4e887592684ec7d87345ebc8dcc1340f87f",
+      "stand-north": "ff31aa00292a9682f444c3c9c4a812cb8fbced2659efdaa0ea0bf93925738560",
+      "sit-south": "a256a7e88857fbef7bb18acfdf28e3f833d0f0f0c407aeaef33084e70d7d0594",
+      "sit-east": "e61a6147e9fb1337333c4181f600dbbfa2c3bcd840d060d39dfd0dcba38501d1",
+      "sit-west": "dcd197263f3d855850f02deb022f29276bcfc9cc11ab7550d369371301b084a0",
+      "sit-north": "365569964cfd92ea15df612b3250f822c240d4167dc1c3900004fb16b585af71"
+    },
+    "007": {
+      "stand-south": "e69bb9e31695d57b4f10ef0658b9d9fc927ebaa8530912a970cb48306d4990f4",
+      "stand-east": "1a619ecd3d812af8b8a53584db4db2eb4ed043e1671d9f8b503b5a9cae37fb89",
+      "stand-west": "4a962538327e5e4dc68cdbe1e9e72b3ae7a0ea2769256da5f6cd57a518a696ea",
+      "stand-north": "ea68749a13dc24ab8b43e0e182c7fc7bb980d39ebb8aa65dac82c9977d0123b1",
+      "sit-south": "f5b2284c0a84691716734b860c488cbf27b5c2698124668b0c808ea519fbfb7f",
+      "sit-east": "16dc25b8d9e6f98847b0a1df8aebf53a6b98485a65e11d2715330ccc2b0a9bd9",
+      "sit-west": "97fa86415e5c28ae057c517bbb1ce5f3a7c8334189713e05f94d1b5e1e3eaaf0",
+      "sit-north": "3de09c51a0274a9a9085125760035029899597c0b375cb677d6e75d498e94443"
+    },
+    "008": {
+      "stand-south": "66d14633036764ef58674db13be8383f24b1e6afd37c85c246fb77338ae98d47",
+      "stand-east": "d0032c946648597bc6178a13a4bed3244a6acc5fcd4ff1fbe27e0ea946932b36",
+      "stand-west": "eefd809b21083d6c4955398c3fffd0b9d370e1be1c0f2b821e998c07f8698139",
+      "stand-north": "89e343e67de5302ba1a5138dc22733e646cced96c75a41fbef175f7461206843",
+      "sit-south": "bf9b0464e11a7a408e52de7ebd568fc376b4582feb587a9e9e58ad3415db9e76",
+      "sit-east": "6cab7ecf1a7c3d7a90d5bbfb6b96a9e417ea591631e10e54ed42092f56dacc76",
+      "sit-west": "8f627759fb7b7f2a2d7eb8b3be56a24afe523407e11914772e736a549a9647d3",
+      "sit-north": "13d2b9545c727f067e1df4f45c2798f26e547a74acadf8fd32a0c202725a38aa"
+    },
+    "009": {
+      "stand-south": "be819de4c0bde60938969352027b5161ddbd3c3d824abc5762aad57155573920",
+      "stand-east": "2359f4eab6ac13e89ca5021500e00f9d51af2e933f0315697e87cb151ee30e99",
+      "stand-west": "1a59312ada13ae9b3a7e2d86d3c82950089f4cf47b8ac6db2afdd39f08b57f0b",
+      "stand-north": "3434f4d9f9e2674d6b809eb633c97ccd9885ab701b348412a761870a1985e7b5",
+      "sit-south": "a6f74391859d974e38356fca7824db4c082c2a70e3addf132b63e0f4b17a44b0",
+      "sit-east": "104482c181444f0487d3b011cebc6c1f9028ae93406653fea8d0687354cb6b4c",
+      "sit-west": "00464a668c567a82083b7f4c32c10d0758ce0c1869c424d0d55185d157f6277c",
+      "sit-north": "9d40773c365ff291028353c923bc58a10427f5e7cbea690ef6e1f537e595cab0"
+    },
+    "010": {
+      "stand-south": "e4297b4b442e9a86e195cd653cc134e67b4ffa5781408ccab86bdc72b0549aab",
+      "stand-east": "d0ae9f6ed48d7c3ce019da5a441fc9fd695cc474ce2b5a015febbef048b39870",
+      "stand-west": "bbb3ebe70c6643367cb148aec862a4fd27724ada9e088e706279fc0271a87e7a",
+      "stand-north": "0ed394888a9fe8484f7ff809d0d3eeb0ec642e8ec611fad33c127cdbb71dfaf1",
+      "sit-south": "2a0634ad50c6706b6a80300e290fe0ffcfb856102cd2de25b09e74d80417e827",
+      "sit-east": "9866b4cff79c5909805939a5fc8a9efcb2b12a1a6121dbd23ffa44ac460aed56",
+      "sit-west": "fe4c90ccc43191186ad71b7e971ea73068785186baf3fdaee2169bfd75e76368",
+      "sit-north": "9890f0687c848f410f3c49f925044a3ca740fa49900d4b128626e43fa787f96d"
+    },
+    "011": {
+      "stand-south": "37bc680ac21caf1da09ade8d50d5edb9f8e83e5e81722a9507633184972ada55",
+      "stand-east": "9113779d0c66a7a17148b9fefdb63bddf1f2736bc8d8fb7f0d0befceb0c32d53",
+      "stand-west": "c198dac1d60b12df2da3d2ff3817b04d414a580da33e4ef373eddcb165513fc4",
+      "stand-north": "1d003507ce3be9fdd029a49af9c9ee71d4c50c3448c7981b34023c0b6f99c7ff",
+      "sit-south": "6fe1826060347d9b072d3a36d515fb8bc8f42197c56a372cb0801bf07ce11cfb",
+      "sit-east": "00df56bb8a43979c6f72b45b49fc90476442c0e2f62d48b629c57467a8169ccf",
+      "sit-west": "006f82eb0a23af9d631a3dea8bed4de9290dddbf0d9c5c039836f3ba87b7584d",
+      "sit-north": "203fb19273ff1a9b6931f7f0d9ed3656593b7a19e0d8924bd64120cba9d37d33"
+    },
+    "012": {
+      "stand-south": "f4642082fe809a30320afe6aba61b250d15f01ddec0ee5371907dc76ef6ae279",
+      "stand-east": "80e5532b667b2e151dfe88fe6b513fde09f3cd29a14e653afd8d836947a3108e",
+      "stand-west": "54c3bdd3cfdd8f55b28c8169a88986287c78ea649c326ed32e0dde68ce993cb5",
+      "stand-north": "97f15b54287399728b52b7225e59f4b4945dc2fb56f673381776a59bde2d1d19",
+      "sit-south": "f64f29adc244d2a26b7c2a9d007df0ad4cf901d1c72a4e0f1a5e73f12f729d76",
+      "sit-east": "10a98d7eb1fd16dd1e948ae99a890b670eed2dc6c6ff35dbf98bebf096482a89",
+      "sit-west": "0decb75a1be0a38c903327d0b0514a058a718999f2940d3428cacae26caf4754",
+      "sit-north": "36f1f52aa0bdb93a323fe66a87677ce808a889adb63b41ae08d7f245875ac627"
+    },
+    "013": {
+      "stand-south": "bf703cd69009524f79289a63d83f0b1f305c5c4348c11eda756b11d0fe182e43",
+      "stand-east": "73484ec41c327fac479dc856585238a9ad569ae12d61feaca72cc6c63a3019bb",
+      "stand-west": "dfca35a861f1f4856298cd339abff223a7e2a7ab2f8f128d9c5a423b12a5c299",
+      "stand-north": "e2e26723e2da71bfc2de86433fd3a57812bb60109ddf586b446e21dce686dd71",
+      "sit-south": "bf8cfdae3a3a37fa71725e4609332502517db5a82c5cb38486347bb0f01717dc",
+      "sit-east": "61f5107888e0c810f2d21edcec839e1bf68bc8666d1280c9f351913c05ee33ae",
+      "sit-west": "513a1c2877b9e43e4bd26389e9b124b86bf79c1d12ec0723e19573b2767498e5",
+      "sit-north": "0861e947410f5697fd53abbb3efea2c2aa05442f7cb2edb2a9c17d805fc9257f"
+    },
+    "014": {
+      "stand-south": "29262b533889d86aa97bd10f2f9d143a2bd56387d2c16626a3c1bdbd5f680d95",
+      "stand-east": "22c45fcf2330c49ec83c864dd95fc76d70a6f96100277d91b01f2e16e84bec5f",
+      "stand-west": "2dead496b0ea82a7842a7c48fd8c7cf344dad9476f307ac69208e23f5f6b807a",
+      "stand-north": "84d4f817cd0b535d13150b5b2cc6ce5c820a27071112d78d7f9aed4135086c1d",
+      "sit-south": "afc17cff2febb2e187e0273d8b07e5fcad5115bcca9ded2a0bb3c8580ce222a2",
+      "sit-east": "d64dcb680262a7d124351e8fc7709fe2a5cf69798ec9056564029a5bdb8b7dc7",
+      "sit-west": "d4cb836a8ebc7158fb49b355907294739f06553f74a78a56b7b11fdcc5926997",
+      "sit-north": "a7b0985a28ba9d71102f44593a1abcf555ec1b2523ac0970963669e686afbfe1"
+    },
+    "015": {
+      "stand-south": "0183ea42adeaaeb611b3dc67c4dc0f30a3e556af1cdc37aa6cb4fe1a6a597bd3",
+      "stand-east": "febe47e68445145d90b1d9961e7d3436dff85723b4d4421ce71a2f3a19ea34a1",
+      "stand-west": "bf9a1edc72d3b4b7ad57e8aa37e95c7712303fb0da9d870ead9e5e1213a313b5",
+      "stand-north": "37c16c8f90a8bf7c3af721ec2c9e10ad3936aedead69df50431d5b0d05487029",
+      "sit-south": "e3533453ce459de7c417a15947604852669c09e84a9ccdd36b28d8b3fd4883b1",
+      "sit-east": "bb03d995e6e55884f7515bd9707484b99ed74c185f5cb6bf66ab2f94434c5e43",
+      "sit-west": "b1934289c302fa59bcda998160b8b526089418b3a7eaa188b4ea7af7834c53f3",
+      "sit-north": "39648bf06028383e48e8694ef5064e687d274783f0b7eabfd125ad40e3ff3597"
+    },
+    "016": {
+      "stand-south": "0ba63e3cb4fb0567e1680ae48a33a75c7502024bcf5e6a32eea71977d635aa11",
+      "stand-east": "0db086febe80dc6f3e2d44bba6f3e88c7228e2be564c3ede2f1105882864eca9",
+      "stand-west": "60ee98f53fa83d7553bffb6e84e38c0bf24515558f002d8a2ac8d51534354071",
+      "stand-north": "0154d943c539e86649366af05853d5f10da9d98deb14a025a0ee2e4fd235d0bd",
+      "sit-south": "0a5a944fafb804ee1617579c88bff96e2ff7fe5873fa7784d4ba96a6bfc75967",
+      "sit-east": "9538583a7ae7a047c4262d5f8f83506c394b6536c61178ad1991d21c2c1576f1",
+      "sit-west": "b281dcc81e2f548d9e4f8e6d6eee9cd0386a9466672bcfe1d7bdc1be148b4073",
+      "sit-north": "b58dd66df92d6afac276fbd74e73a35521e13dd7fc82db6a11a3a8ea6d977b39"
+    },
+    "017": {
+      "stand-south": "400aa037b3276282cd9264736f52c59493f9b784532d98c8605de09df55b034d",
+      "stand-east": "8b66a792f332f5ade2a881d291566c9746035ce9b39a90809861fd5395358c65",
+      "stand-west": "cd6b43d23f51cd4f4a5852ad7640da70488c13244b3c84fe7df750a6cb6ffe8a",
+      "stand-north": "e2f2014e3340eb06d638946678ad3b30fe9646db13e83307fbd80e17e91d4586",
+      "sit-south": "16caf8f0ecdd289b85fdfcc17cb36b8fb17b59be7cebc7b499e5d21534d0b9e2",
+      "sit-east": "5fc46547cd60c7938883912fcfc9aa0c7d22ccd970a7ad96519fbaf9ebfaa24a",
+      "sit-west": "5c350ac29765c2c80de962062084e2f5c393b2e874010c26727f3aac6a557f45",
+      "sit-north": "16c66cbf8a5fed603c42351be8d6209e483394be9720daff22e3b728a1981fe5"
+    },
+    "018": {
+      "stand-south": "f3e345ba162e425c6934afcae916c8a6a718fb8b53d00bb8e3d7064b55c7c90b",
+      "stand-east": "9ea89286d1bda1e588bf9bbfd448a8edca361df90ca8e750b050035afcff888c",
+      "stand-west": "d34050458998e43faf967fbe4d4fc3802b46513a7b3244840b21c226ad72f7b9",
+      "stand-north": "f389fa7a424015678c0e611c386addb8ee6897bada4634b42948009c9e93c05f",
+      "sit-south": "9e4e57b365f9062b39343f2b80cd14f1d0ffe55f4c0c81ba378f5c257fd09f79",
+      "sit-east": "02f94b096371b598ff514de7468f879e8e822adcf552d7c88f117a0ce6f721b6",
+      "sit-west": "cf8e7c78304eae18bddd66977d38337da798a59c84878d01595811c1710f0b0c",
+      "sit-north": "1f305d4024b1473ffe532ff15a3c1d6c1980e84be49364c6b7dc011e937ac61a"
+    },
+    "019": {
+      "stand-south": "6275ce172cd993179590a45cc9f7b582e176a0e8d6ac438b4f38de69d3e007be",
+      "stand-east": "10ab5b23b07152a6726a14398d20bbb0e51899315ea0303c22c5a10bb0ed11e2",
+      "stand-west": "cfa736d24b82ee5a8b68e303f2f2f517dff88027d3cb04f9cb20d60f0091d376",
+      "stand-north": "42b08a9025b67de9d74290ad24eb9dcf99e9cacb81b47e5373f395ff288830cb",
+      "sit-south": "522b1a88397ee88b84f07930cb5bb8dbaa1dc725e80d0f6997a3367202a48a22",
+      "sit-east": "04c2bb7e5c40ed216d6bb808d264d6bd4e20be834aaa2514395a7e422cb1ab47",
+      "sit-west": "241279f70f581df1445092ad342442ccb622b4f6348f97dec73a69be9d667306",
+      "sit-north": "23b49c460a8ab02cdff77db52f6eaa97ad431f040927a8a9c55274263052425f"
+    },
+    "020": {
+      "stand-south": "de0c78005ded6630e8b18c532d894aa434df5c977ee6ed08896b9fd145458954",
+      "stand-east": "7987f50cb654f85dc814ed5212d4301b16ad1f3f2a8aaa1e0103f8d0f4fec3e0",
+      "stand-west": "426df1a39345b37846f7da04243832e2670dd5f8a08b093307b4f9e4c4f096cc",
+      "stand-north": "1f41a9f5531f089fca19f665032f4ce4cbf849b7ead0d916ed158b624e58be89",
+      "sit-south": "b01b9a0e7f7b4fccabb083307f91b8930f397562bfe179c6b173b4d7d3b17009",
+      "sit-east": "bc8644487bdfa8e421e92fb5d06d3aaae70d041088086cb33c1845d0dbe284fa",
+      "sit-west": "a5bae9f38d2e54bcc491ddb82cec64dfa97aa4fdfd9e10ba3217b4bd4a995ab5",
+      "sit-north": "00f4afd4dac2096679cda1a4cc608800fff56de3fef681d0fa854e2384259de5"
+    }
+  },
+  "acceptedContacts": {
+    "001": {
+      "south": 232,
+      "east": 237,
+      "west": 237,
+      "north": 238
+    },
+    "002": {
+      "south": 237,
+      "east": 250,
+      "west": 250,
+      "north": 253
+    },
+    "003": {
+      "south": 233,
+      "east": 247,
+      "west": 247,
+      "north": 250
+    },
+    "004": {
+      "south": 233,
+      "east": 238,
+      "west": 238,
+      "north": 241
+    },
+    "005": {
+      "south": 232,
+      "east": 242,
+      "west": 242,
+      "north": 245
+    },
+    "006": {
+      "south": 234,
+      "east": 240,
+      "west": 240,
+      "north": 244
+    },
+    "007": {
+      "south": 235,
+      "east": 238,
+      "west": 238,
+      "north": 240
+    },
+    "008": {
+      "south": 234,
+      "east": 244,
+      "west": 244,
+      "north": 249
+    },
+    "009": {
+      "south": 239,
+      "east": 250,
+      "west": 250,
+      "north": 253
+    },
+    "010": {
+      "south": 234,
+      "east": 237,
+      "west": 237,
+      "north": 240
+    },
+    "011": {
+      "south": 233,
+      "east": 239,
+      "west": 239,
+      "north": 241
+    },
+    "012": {
+      "south": 234,
+      "east": 239,
+      "west": 239,
+      "north": 242
+    },
+    "013": {
+      "south": 235,
+      "east": 247,
+      "west": 247,
+      "north": 249
+    },
+    "014": {
+      "south": 235,
+      "east": 245,
+      "west": 245,
+      "north": 248
+    },
+    "015": {
+      "south": 233,
+      "east": 237,
+      "west": 237,
+      "north": 240
+    },
+    "016": {
+      "south": 233,
+      "east": 242,
+      "west": 242,
+      "north": 242
+    },
+    "017": {
+      "south": 235,
+      "east": 250,
+      "west": 250,
+      "north": 251
+    },
+    "018": {
+      "south": 233,
+      "east": 243,
+      "west": 243,
+      "north": 246
+    },
+    "019": {
+      "south": 233,
+      "east": 239,
+      "west": 239,
+      "north": 241
+    },
+    "020": {
+      "south": 236,
+      "east": 240,
+      "west": 240,
+      "north": 241
+    }
+  },
+  "seatContactContractSha256": "b277a1323acb02dac3812a4ed6baaf47e7f3347ad7923d8003cca9cc1b1100ef",
+  "derivedAlphaReportSha256": "9884bfedecb1f895b33caf39d3b976277523ff574fe2e042b75658b3c89cf52e",
+  "historicalReviewPolicy": "Worker/root pending labels remain frozen history. Manager acceptance above supersedes those labels without rewriting source, art, proof, contact or review evidence."
+}

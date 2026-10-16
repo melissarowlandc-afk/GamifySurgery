@@ -11,6 +11,11 @@ export interface CharacterPresentationMetrics {
   height: number;
 }
 
+/** Hop, squash, breathing and shadow motion live in characterHopMotion.ts. */
+export function isCharacterMovingPose(pose: string): boolean {
+  return pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b";
+}
+
 /** One scale for every GS-026 standing and seated 160x320 frame. The factor
  * preserves the previous 128px source's 181px floor span at tile*1.35. */
 export const CHARACTER_STILL_WIDTH_IN_TILES = 1.35 * (181 / 128) * (160 / 287);

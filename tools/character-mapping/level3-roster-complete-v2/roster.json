@@ -1,0 +1,687 @@
+{
+  "schemaVersion": "level3-roster-complete-v2/v2",
+  "cohort": "level3RosterCompleteV2",
+  "referenceManifest": "artifacts/character-statics/level3-and-radiologists-20-v1/design-manifest.json",
+  "sourceSidecars": {
+    "exactPrompt": "exact-prompt.txt",
+    "toolArguments": "tool-args.json",
+    "provenance": "provenance.json",
+    "contract": "one selected PNG plus these exact sidecars in sources/NNN; no placeholder paths or alternate suffixes"
+  },
+  "targets": {
+    "adult": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 246,
+      "editorialScaleStatus": "accepted-adult-target"
+    },
+    "younger-child": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 184,
+      "editorialScaleStatus": "accepted-younger-child-editorial-target;not-a-clinical-height-claim"
+    },
+    "older-child": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 211,
+      "editorialScaleStatus": "accepted-older-child-editorial-target;not-a-clinical-height-claim"
+    },
+    "teen": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 234,
+      "editorialScaleStatus": "accepted-teen-editorial-target;not-a-clinical-height-claim"
+    }
+  },
+  "seatContacts": {
+    "001": {
+      "south": 250,
+      "east": 248,
+      "west": 248,
+      "north": 250,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "002": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 240,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "003": {
+      "south": 248,
+      "east": 245,
+      "west": 245,
+      "north": 246,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "004": {
+      "south": 250,
+      "east": 241,
+      "west": 241,
+      "north": 241,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "005": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "006": {
+      "south": 248,
+      "east": 242,
+      "west": 242,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "007": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "008": {
+      "south": 243,
+      "east": 238,
+      "west": 238,
+      "north": 240,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "009": {
+      "south": 246,
+      "east": 243,
+      "west": 243,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "010": {
+      "south": 243,
+      "east": 241,
+      "west": 241,
+      "north": 241,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "011": {
+      "south": 247,
+      "east": 242,
+      "west": 242,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "012": {
+      "south": 248,
+      "east": 242,
+      "west": 242,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "013": {
+      "south": 246,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "014": {
+      "south": 249,
+      "east": 243,
+      "west": 243,
+      "north": 245,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "016": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "021": {
+      "south": 242,
+      "east": 252,
+      "west": 251,
+      "north": 250,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "022": {
+      "south": 243,
+      "east": 253,
+      "west": 252,
+      "north": 251,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "023": {
+      "south": 245,
+      "east": 255,
+      "west": 254,
+      "north": 253,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "024": {
+      "south": 243,
+      "east": 248,
+      "west": 248,
+      "north": 248,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "015": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "017": {
+      "south": 246,
+      "east": 241,
+      "west": 241,
+      "north": 243,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "018": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "019": {
+      "south": 246,
+      "east": 241,
+      "west": 241,
+      "north": 243,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "020": {
+      "south": 245,
+      "east": 240,
+      "west": 240,
+      "north": 242,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "025": {
+      "south": 246,
+      "east": 247,
+      "west": 246,
+      "north": 245,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "026": {
+      "south": 245,
+      "east": 246,
+      "west": 245,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "027": {
+      "south": 246,
+      "east": 247,
+      "west": 246,
+      "north": 245,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "028": {
+      "south": 245,
+      "east": 246,
+      "west": 245,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "029": {
+      "south": 245,
+      "east": 244,
+      "west": 245,
+      "north": 244,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "030": {
+      "south": 249,
+      "east": 247,
+      "west": 247,
+      "north": 247,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "031": {
+      "south": 247,
+      "east": 246,
+      "west": 246,
+      "north": 246,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    },
+    "032": {
+      "south": 247,
+      "east": 246,
+      "west": 246,
+      "north": 246,
+      "approvedDirections": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "status": "root-reviewed-all-cardinals-candidate;no-runtime-promotion"
+    }
+  },
+  "identities": [
+    {
+      "number": "001",
+      "stableId": "level3-roster-v2.001",
+      "category": "radiologist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "002",
+      "stableId": "level3-roster-v2.002",
+      "category": "radiologist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "003",
+      "stableId": "level3-roster-v2.003",
+      "category": "radiologist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "004",
+      "stableId": "level3-roster-v2.004",
+      "category": "radiologist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "005",
+      "stableId": "level3-roster-v2.005",
+      "category": "surgeon",
+      "targetKey": "adult"
+    },
+    {
+      "number": "006",
+      "stableId": "level3-roster-v2.006",
+      "category": "surgeon",
+      "targetKey": "adult"
+    },
+    {
+      "number": "007",
+      "stableId": "level3-roster-v2.007",
+      "category": "or-nurse",
+      "targetKey": "adult"
+    },
+    {
+      "number": "008",
+      "stableId": "level3-roster-v2.008",
+      "category": "or-nurse",
+      "targetKey": "adult"
+    },
+    {
+      "number": "009",
+      "stableId": "level3-roster-v2.009",
+      "category": "laboratory-technician",
+      "targetKey": "adult"
+    },
+    {
+      "number": "010",
+      "stableId": "level3-roster-v2.010",
+      "category": "laboratory-technician",
+      "targetKey": "adult"
+    },
+    {
+      "number": "011",
+      "stableId": "level3-roster-v2.011",
+      "category": "pharmacist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "012",
+      "stableId": "level3-roster-v2.012",
+      "category": "pharmacist",
+      "targetKey": "adult"
+    },
+    {
+      "number": "013",
+      "stableId": "level3-roster-v2.013",
+      "category": "repair-person",
+      "targetKey": "adult"
+    },
+    {
+      "number": "014",
+      "stableId": "level3-roster-v2.014",
+      "category": "repair-person",
+      "targetKey": "adult"
+    },
+    {
+      "number": "015",
+      "stableId": "level3-roster-v2.015",
+      "category": "patient",
+      "age": 19,
+      "targetKey": "adult"
+    },
+    {
+      "number": "016",
+      "stableId": "level3-roster-v2.016",
+      "category": "patient",
+      "age": 24,
+      "targetKey": "adult"
+    },
+    {
+      "number": "017",
+      "stableId": "level3-roster-v2.017",
+      "category": "patient",
+      "age": 28,
+      "targetKey": "adult"
+    },
+    {
+      "number": "018",
+      "stableId": "level3-roster-v2.018",
+      "category": "patient",
+      "age": 21,
+      "targetKey": "adult"
+    },
+    {
+      "number": "019",
+      "stableId": "level3-roster-v2.019",
+      "category": "patient",
+      "age": 26,
+      "targetKey": "adult"
+    },
+    {
+      "number": "020",
+      "stableId": "level3-roster-v2.020",
+      "category": "patient",
+      "age": 38,
+      "targetKey": "adult"
+    },
+    {
+      "number": "021",
+      "stableId": "level3-roster-v2.021",
+      "category": "future-pediatric-presentation",
+      "targetKey": "younger-child",
+      "visualAge": 6,
+      "brief": "girl6, deepbrown skin, two short puff ponytails, coral cardigan/cream shirt, indigo trousers, cream shoes"
+    },
+    {
+      "number": "022",
+      "stableId": "level3-roster-v2.022",
+      "category": "future-pediatric-presentation",
+      "targetKey": "younger-child",
+      "visualAge": 5,
+      "brief": "boy5, fair skin, sandy tousled hair, leafgreen hoodie, navy trousers, white-and-gray shoes"
+    },
+    {
+      "number": "023",
+      "stableId": "level3-roster-v2.023",
+      "category": "future-pediatric-presentation",
+      "targetKey": "younger-child",
+      "visualAge": 7,
+      "brief": "girl7, lightolive skin, shoulderlength wavy darkbrown hair, lavender sweatshirt, charcoal leggings, teal shoes"
+    },
+    {
+      "number": "024",
+      "stableId": "level3-roster-v2.024",
+      "category": "future-pediatric-presentation",
+      "targetKey": "younger-child",
+      "visualAge": 6,
+      "brief": "boy6, mediumbrown skin, short black curls, cobalt pullover, tan trousers, dark sneakers"
+    },
+    {
+      "number": "025",
+      "stableId": "level3-roster-v2.025",
+      "category": "future-pediatric-presentation",
+      "targetKey": "older-child",
+      "visualAge": 9,
+      "brief": "girl9, mediumbrown skin, single dark braid, mint zip jacket, darkblue jeans, cream sneakers"
+    },
+    {
+      "number": "026",
+      "stableId": "level3-roster-v2.026",
+      "category": "future-pediatric-presentation",
+      "targetKey": "older-child",
+      "visualAge": 10,
+      "brief": "boy10, fair freckled skin, ginger short wavy hair, rust overshirt/cream tee, slate trousers, navy sneakers"
+    },
+    {
+      "number": "027",
+      "stableId": "level3-roster-v2.027",
+      "category": "future-pediatric-presentation",
+      "targetKey": "older-child",
+      "visualAge": 11,
+      "brief": "girl11, fair skin, straight black bob, mustard cardigan/navy tee, charcoal jeans, plum shoes"
+    },
+    {
+      "number": "028",
+      "stableId": "level3-roster-v2.028",
+      "category": "future-pediatric-presentation",
+      "targetKey": "older-child",
+      "visualAge": 12,
+      "brief": "boy12, deepbrown skin, short twists, plum hoodie, gray trousers, white sneakers"
+    },
+    {
+      "number": "029",
+      "stableId": "level3-roster-v2.029",
+      "category": "future-pediatric-presentation",
+      "targetKey": "teen",
+      "visualAge": 14,
+      "brief": "girl14, fair skin, auburn curls to shoulders, navy zip jacket/rose tee, darkblue jeans, gray sneakers"
+    },
+    {
+      "number": "030",
+      "stableId": "level3-roster-v2.030",
+      "category": "future-pediatric-presentation",
+      "targetKey": "teen",
+      "visualAge": 14,
+      "brief": "boy14, lightolive skin, curly black hair, teal overshirt/cream tee, dark trousers, tan sneakers"
+    },
+    {
+      "number": "031",
+      "stableId": "level3-roster-v2.031",
+      "category": "future-pediatric-presentation",
+      "targetKey": "teen",
+      "visualAge": 16,
+      "brief": "girl16, deepbrown skin, long braids, maroon sweatshirt, charcoal jeans, cream sneakers"
+    },
+    {
+      "number": "032",
+      "stableId": "level3-roster-v2.032",
+      "category": "future-pediatric-presentation",
+      "targetKey": "teen",
+      "visualAge": 17,
+      "brief": "boy17, medium skin, sandybrown swept hair, beige hoodie, navy jeans, dark sneakers"
+    }
+  ]
+}

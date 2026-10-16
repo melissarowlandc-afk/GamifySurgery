@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "tool": "built-in image_gen",
+  "completeArtwork": true,
+  "designApproval": false,
+  "assets": [
+    {
+      "id": "peds-table",
+      "generationId": "peds-table-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "transparent_background": true,
+      "originalSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11bf9-4775-7921-bd94-14fb205992f6\\exec-e9e90aa4-2d38-45a2-980e-d237055a972f.png",
+      "file": "originals/peds-table-01.png",
+      "prompt": "prompts/peds-table-01.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit.\nAsset type: transparent Pediatric Examination Room furniture sprite.\nInput images: image 1 is the simple table stand-in, fixing the north-south orientation and tall narrow silhouette; image 2 is the approved GS-015 exam bed, a PAINTED MATERIAL/STYLE reference only, not an orientation reference; image 3 is the approved pediatric waiting table, a finish/palette reference only.\nPrimary request: turn the stand-in into a polished painted pediatric examination table. The table runs NORTH-SOUTH, seen lengthwise directly from its FOOT END at the bottom; head/pillow at top/north. The entire long cream upholstered pad is readable from above with a white paper strip running down the middle. Sky-blue cabinet/drawer base below, small original simplified animal decals, plain silver handles. Use the tall narrow north-south stand-in silhouette; total object about 0.78 wide by 1.72 tall at game scale, width/height about 0.45. The pad's east edge at the middle has a flat clear sitting surface for a separately drawn child facing right/east. No child in this image. Keep pad aligned vertically, not an east-west bed turned diagonally. Front end with blue drawers at bottom; no raised side rails. Complete base and contact line visible.\nStyle/medium: the established GamifySurgery GS-015 / Level 3 painted game sprite finish. Soft painterly cel shading and restrained texture, tidy dark deep-green outlines, softened cream, sky-blue, mint, coral and sunflower palette; upper-left light and only a faint contact shadow. Elevated-front orthographic camera: parallel edges with no vanishing point, no diagonal isometric rotation.\nConstraints: one complete isolated object with generous truly transparent margins, genuine alpha background. No room, floor scene, people, readable letters, numbers, logos, brand names, watermarks or media characters. No cropped meaningful edges. Match the illustrated game assets, not a photorealistic product photo.\n",
+      "inputReferences": [
+        "tools/room-design/level-4/pediatric-exam/stand-in/peds-table.png",
+        "apps/player/public/art/rooms/gs015-v1/examination/bed-south.webp",
+        "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png"
+      ],
+      "referenceRoles": "Stand-in design target plus approved project-owned style references; all visually inspected.",
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Head top, paper middle, blue drawers foot end, east-edge sitting surface clear."
+      },
+      "sha256": "7F8DF693B11A07265AC5842D555B05E5C814B15AE57755E33100B5EE7B01B4F6",
+      "promptSha256": "941D0DE06E45E38294B573BBD56324C8E9831DC077A3065F013BFD1D48385E9F",
+      "size": [
+        945,
+        1665
+      ],
+      "nativeSize": [
+        374,
+        826
+      ],
+      "alpha": {
+        "transparent": 504407,
+        "opaque": 1027595,
+        "edgeAlphaMax": 1
+      },
+      "references": [
+        {
+          "path": "tools/room-design/level-4/pediatric-exam/stand-in/peds-table.png",
+          "sha256": "93C9AF5F2D29F9C263BF058D5B5F45CFDF7E7430C747E6BAC04EEE62672FF08F"
+        },
+        {
+          "path": "apps/player/public/art/rooms/gs015-v1/examination/bed-south.webp",
+          "sha256": "3941AB461C814757FA9DC546BC1DDFE11BBDAB0E54B9C7C6382E404A37DC1543"
+        },
+        {
+          "path": "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png",
+          "sha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632"
+        }
+      ],
+      "status": "candidate_needs_owner_review"
+    },
+    {
+      "id": "scale-counter",
+      "generationId": "scale-counter-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "transparent_background": true,
+      "originalSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11bf9-4775-7921-bd94-14fb205992f6\\exec-695f3b33-3a65-40bb-ab7a-04ae7391f230.png",
+      "file": "originals/scale-counter-01.png",
+      "prompt": "prompts/scale-counter-01.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit.\nAsset type: transparent Pediatric Examination Room cabinet sprite.\nInput images: image 1 is the scale-counter stand-in, fixing subject placement and proportions; image 2 is the approved GS-015 waiting furniture, a painted finish and shallow front/down orthographic camera reference only.\nPrimary request: paint one cream floor-standing clinical cabinet, blue counter, small infant weighing scale on the LEFT and a small inset sink with plain metal faucet on the RIGHT. Infant scale has a clean curved empty tray and a small blank dark display, absolutely no digits or letters. A few plain cupboard doors below and a recessed toe-kick; whole silhouette roughly 0.92 wide by 1.02 tall. Front-facing cabinet with straight level horizontal counter edge and modest top visibility, no diagonal corner view. Keep scale tray, faucet, cabinet and feet complete with generous transparent margins. This is one compact combined counter fixture, not separate items. No countertop bottles or clinical instructions.\nStyle/medium: the established GamifySurgery GS-015 / Level 3 painted game sprite finish. Soft painterly cel shading and restrained texture, tidy dark deep-green outlines, softened cream, sky-blue, mint, coral and sunflower palette; upper-left light and only a faint contact shadow. Elevated-front orthographic camera: parallel edges with no vanishing point, no diagonal isometric rotation.\nConstraints: one complete isolated object with generous truly transparent margins, genuine alpha background. No room, floor scene, people, readable letters, numbers, logos, brand names, watermarks or media characters. No cropped meaningful edges. Match the illustrated game assets, not a photorealistic product photo.\n",
+      "inputReferences": [
+        "tools/room-design/level-4/pediatric-exam/stand-in/scale-counter.png",
+        "apps/player/public/art/rooms/gs015-v1/waiting/south.webp"
+      ],
+      "referenceRoles": "Stand-in design target plus approved project-owned style references; all visually inspected.",
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Blank scale display, tray left and sink right, complete feet."
+      },
+      "sha256": "948318C1D50A8C435CF006EF3BE073E771148785A2F20AC4FF40DAF6E51472B9",
+      "promptSha256": "8240EC35BF4FA582925A71A2CCF5712A5E257C214FC10F43547EC4530EE9B313",
+      "size": [
+        1327,
+        1185
+      ],
+      "nativeSize": [
+        442,
+        490
+      ],
+      "alpha": {
+        "transparent": 584365,
+        "opaque": 968660,
+        "edgeAlphaMax": 1
+      },
+      "references": [
+        {
+          "path": "tools/room-design/level-4/pediatric-exam/stand-in/scale-counter.png",
+          "sha256": "066D2B3F7A508575DF402689E937160659C56B061A0FD125EE7945B9B8A29D2E"
+        },
+        {
+          "path": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+          "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+        }
+      ],
+      "status": "candidate_needs_owner_review"
+    },
+    {
+      "id": "growth-chart",
+      "generationId": "growth-chart-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "transparent_background": true,
+      "originalSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11bf9-4775-7921-bd94-14fb205992f6\\exec-5d550a3f-3812-4b50-8303-fff7aefdd970.png",
+      "file": "originals/growth-chart-01.png",
+      "prompt": "prompts/growth-chart-01.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit.\nAsset type: transparent Pediatric Examination Room north-wall decoration.\nInput images: image 1 is the tall giraffe growth-chart stand-in, fixing scale and tick-only design; image 2 is the approved pediatric waiting painted table, a palette/finish reference only.\nPrimary request: paint one friendly ORIGINAL giraffe height chart as a tall narrow flat wall-mounted wooden plaque. Small rounded giraffe head with ears/horns at the top, long sunflower-yellow neck with brown patches, understated tick marks down one side; no ruler digits or letters anywhere. Tall narrow silhouette about 0.36 wide by 0.78 tall, width/height about 0.46. Frontal orthographic wall art, straight vertical axis, no tilt, no wall background or floor shadow. A warm original animal rather than a recognizable media character. Keep its head, ticks and bottom all intact.\nStyle/medium: the established GamifySurgery GS-015 / Level 3 painted game sprite finish. Soft painterly cel shading and restrained texture, tidy dark deep-green outlines, softened cream, sky-blue, mint, coral and sunflower palette; upper-left light and only a faint contact shadow. Elevated-front orthographic camera: parallel edges with no vanishing point, no diagonal isometric rotation.\nConstraints: one complete isolated object with generous truly transparent margins, genuine alpha background. No room, floor scene, people, readable letters, numbers, logos, brand names, watermarks or media characters. No cropped meaningful edges. Match the illustrated game assets, not a photorealistic product photo.\n",
+      "inputReferences": [
+        "tools/room-design/level-4/pediatric-exam/stand-in/growth-chart.png",
+        "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png"
+      ],
+      "referenceRoles": "Stand-in design target plus approved project-owned style references; all visually inspected.",
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Narrow tick-only giraffe, full ears/horns/base visible."
+      },
+      "sha256": "2648A7229AD206E1D39526F0C23B5531601642D1786C2B726CE322BF8EE9EF89",
+      "promptSha256": "05DA9053B032BA25959BFBBFDAC0A952F0A775AB1C6EE790E206C85939D55681",
+      "size": [
+        850,
+        1850
+      ],
+      "nativeSize": [
+        172,
+        374
+      ],
+      "alpha": {
+        "transparent": 1134787,
+        "opaque": 424813,
+        "edgeAlphaMax": 0
+      },
+      "references": [
+        {
+          "path": "tools/room-design/level-4/pediatric-exam/stand-in/growth-chart.png",
+          "sha256": "2E2C2C81D09A12B9915F045209B2F35E3B34FD58DFA88AD08922275D65015F91"
+        },
+        {
+          "path": "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png",
+          "sha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632"
+        }
+      ],
+      "status": "candidate_needs_owner_review"
+    },
+    {
+      "id": "animal-print",
+      "generationId": "animal-print-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "transparent_background": true,
+      "originalSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11bf9-4775-7921-bd94-14fb205992f6\\exec-f6df9a60-0315-40d8-b71c-5023fda474bb.png",
+      "file": "originals/animal-print-01.png",
+      "prompt": "prompts/animal-print-01.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit.\nAsset type: transparent Pediatric Examination Room north-wall decoration.\nInput images: image 1 is the single framed animal-print stand-in, fixing compact frame scale; image 2 is the approved GS-015 waiting furniture, a painted finish reference only.\nPrimary request: paint ONE small slightly portrait square framed animal print: an original friendly sky-blue whale swimming on a cream background with a few simple mint waves, framed by warm wood. Straight frontal wall-mounted frame, no tilted perspective, no text, no ocean photograph or media character. Total silhouette roughly 0.34 wide by 0.36 tall. Simple bold animal silhouette readable at game size, restrained shading. One framed print only, complete border and corners visible; no second print, hanging wire or wall scene.\nStyle/medium: the established GamifySurgery GS-015 / Level 3 painted game sprite finish. Soft painterly cel shading and restrained texture, tidy dark deep-green outlines, softened cream, sky-blue, mint, coral and sunflower palette; upper-left light and only a faint contact shadow. Elevated-front orthographic camera: parallel edges with no vanishing point, no diagonal isometric rotation.\nConstraints: one complete isolated object with generous truly transparent margins, genuine alpha background. No room, floor scene, people, readable letters, numbers, logos, brand names, watermarks or media characters. No cropped meaningful edges. Match the illustrated game assets, not a photorealistic product photo.\n",
+      "inputReferences": [
+        "tools/room-design/level-4/pediatric-exam/stand-in/animal-print.png",
+        "apps/player/public/art/rooms/gs015-v1/waiting/south.webp"
+      ],
+      "referenceRoles": "Stand-in design target plus approved project-owned style references; all visually inspected.",
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Complete original design with genuine transparent surround."
+      },
+      "sha256": "1F593BFC3D83CB2B71CFBD09E9E2ADE95C40FC5D2666DA9D7217F1AD6C1305C1",
+      "promptSha256": "867E99D933BF617DFD32BA30CAA436C2438F8CFE9DFE627BB5B0C181E0CAA20B",
+      "size": [
+        1221,
+        1289
+      ],
+      "nativeSize": [
+        164,
+        172
+      ],
+      "alpha": {
+        "transparent": 466203,
+        "opaque": 1087090,
+        "edgeAlphaMax": 1
+      },
+      "references": [
+        {
+          "path": "tools/room-design/level-4/pediatric-exam/stand-in/animal-print.png",
+          "sha256": "04B7BF150B7FE5636EE16D36B7443890DCB2C3312305CA130B7A300222A248EA"
+        },
+        {
+          "path": "apps/player/public/art/rooms/gs015-v1/waiting/south.webp",
+          "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+        }
+      ],
+      "status": "candidate_needs_owner_review"
+    },
+    {
+      "id": "toy-bin",
+      "generationId": "toy-bin-01",
+      "date": "2026-10-08",
+      "tool": "built-in image_gen",
+      "transparent_background": true,
+      "originalSourcePath": "C:\\Users\\rowla\\.codex\\generated_images\\01a11bf9-4775-7921-bd94-14fb205992f6\\exec-9b1f82e6-2bc5-4f98-8eee-76e35d436982.png",
+      "file": "originals/toy-bin-01.png",
+      "prompt": "prompts/toy-bin-01.prompt.txt",
+      "sentPrompt": "Use case: precise-object-edit.\nAsset type: transparent Pediatric Examination Room floor prop.\nInput images: image 1 is the small toy-bin stand-in, fixing the purple bin and two unmarked toys; image 2 is the approved pediatric waiting table, a painted finish/palette reference only.\nPrimary request: paint ONE small low purple toy bin, open top, with one sky-blue ball and one sunflower-yellow block peeking out. Plain smooth rounded box with modest top visibility and a level front rim, front-facing elevated orthographic camera, no diagonal isometric rotation. Total object roughly 0.44 wide by 0.42 tall. Clearly original unbranded toys, no words or letters on the block. Keep complete bin base, ball and block fully framed; no extra scattered toys.\nStyle/medium: the established GamifySurgery GS-015 / Level 3 painted game sprite finish. Soft painterly cel shading and restrained texture, tidy dark deep-green outlines, softened cream, sky-blue, mint, coral and sunflower palette; upper-left light and only a faint contact shadow. Elevated-front orthographic camera: parallel edges with no vanishing point, no diagonal isometric rotation.\nConstraints: one complete isolated object with generous truly transparent margins, genuine alpha background. No room, floor scene, people, readable letters, numbers, logos, brand names, watermarks or media characters. No cropped meaningful edges. Match the illustrated game assets, not a photorealistic product photo.\n",
+      "inputReferences": [
+        "tools/room-design/level-4/pediatric-exam/stand-in/toy-bin.png",
+        "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png"
+      ],
+      "referenceRoles": "Stand-in design target plus approved project-owned style references; all visually inspected.",
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Complete original design with genuine transparent surround."
+      },
+      "sha256": "BB1CA6FC45DEED9BE5FDF7B2485F4F32683AEE50D5C09087AD4E2377FFC34C31",
+      "promptSha256": "6813BB763402C949643842E08D403ED77F011BC9ED216EBF5CAA711F03CA2591",
+      "size": [
+        1285,
+        1224
+      ],
+      "nativeSize": [
+        212,
+        202
+      ],
+      "alpha": {
+        "transparent": 874860,
+        "opaque": 672027,
+        "edgeAlphaMax": 1
+      },
+      "references": [
+        {
+          "path": "tools/room-design/level-4/pediatric-exam/stand-in/toy-bin.png",
+          "sha256": "97E0D4604BDD9E7765D1418BAEAA861918F52792A8B6E578C22671842C42C98A"
+        },
+        {
+          "path": "tools/room-design/level-4/pediatric-waiting/assets/prepared/kids-table.png",
+          "sha256": "421E5813EE73FDEDEC06D92289097000427A1EBE26C57138568E2458FD477632"
+        }
+      ],
+      "status": "candidate_needs_owner_review"
+    }
+  ],
+  "history": [
+    {
+      "generationId": "peds-table-01",
+      "file": "originals/peds-table-01.png",
+      "prompt": "prompts/peds-table-01.prompt.txt",
+      "sha256": "7F8DF693B11A07265AC5842D555B05E5C814B15AE57755E33100B5EE7B01B4F6",
+      "promptSha256": "941D0DE06E45E38294B573BBD56324C8E9831DC077A3065F013BFD1D48385E9F",
+      "selected": true,
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Head top, paper middle, blue drawers foot end, east-edge sitting surface clear."
+      }
+    },
+    {
+      "generationId": "scale-counter-01",
+      "file": "originals/scale-counter-01.png",
+      "prompt": "prompts/scale-counter-01.prompt.txt",
+      "sha256": "948318C1D50A8C435CF006EF3BE073E771148785A2F20AC4FF40DAF6E51472B9",
+      "promptSha256": "8240EC35BF4FA582925A71A2CCF5712A5E257C214FC10F43547EC4530EE9B313",
+      "selected": true,
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Blank scale display, tray left and sink right, complete feet."
+      }
+    },
+    {
+      "generationId": "growth-chart-01",
+      "file": "originals/growth-chart-01.png",
+      "prompt": "prompts/growth-chart-01.prompt.txt",
+      "sha256": "2648A7229AD206E1D39526F0C23B5531601642D1786C2B726CE322BF8EE9EF89",
+      "promptSha256": "05DA9053B032BA25959BFBBFDAC0A952F0A775AB1C6EE790E206C85939D55681",
+      "selected": true,
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Narrow tick-only giraffe, full ears/horns/base visible."
+      }
+    },
+    {
+      "generationId": "animal-print-01",
+      "file": "originals/animal-print-01.png",
+      "prompt": "prompts/animal-print-01.prompt.txt",
+      "sha256": "1F593BFC3D83CB2B71CFBD09E9E2ADE95C40FC5D2666DA9D7217F1AD6C1305C1",
+      "promptSha256": "867E99D933BF617DFD32BA30CAA436C2438F8CFE9DFE627BB5B0C181E0CAA20B",
+      "selected": true,
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Complete original design with genuine transparent surround."
+      }
+    },
+    {
+      "generationId": "toy-bin-01",
+      "file": "originals/toy-bin-01.png",
+      "prompt": "prompts/toy-bin-01.prompt.txt",
+      "sha256": "BB1CA6FC45DEED9BE5FDF7B2485F4F32683AEE50D5C09087AD4E2377FFC34C31",
+      "promptSha256": "6813BB763402C949643842E08D403ED77F011BC9ED216EBF5CAA711F03CA2591",
+      "selected": true,
+      "inspection": {
+        "status": "selected_candidate_needs_owner_review",
+        "inspected": true,
+        "method": "Built-in output shown at full resolution",
+        "camera": "Requested front/down orthographic; table foot end north-south, wall items frontal",
+        "text": false,
+        "logos": false,
+        "mediaCharacters": false,
+        "cropping": false,
+        "comments": "Complete original design with genuine transparent surround."
+      }
+    }
+  ]
+}

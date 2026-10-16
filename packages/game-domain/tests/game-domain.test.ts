@@ -295,13 +295,18 @@ describe("current prototype contracts", () => {
     expect({
       facilityTick: state.facilityTick,
       cash: state.cash,
-    }).toEqual({ facilityTick: 198, cash: 160.5 });
+    }).toEqual({ facilityTick: 198, cash: 176.75 });
     expect(state.cash).toBeGreaterThanOrEqual(160);
 
     let delayed = deserializeGameState(serializeGameState(state));
     while (delayed.facilityTick < 210) {
       delayed = tick(delayed, `delayed-reader.${delayed.facilityTick}`);
     }
+    expect(delayed.cash).toBe(176.5);
+    // Option B's lower rent preserves the reserve through this short delay.
+    // Exercise the same existing emergency fallback with a depleted reserve.
+    delayed.cash = 159.5;
+    delayed.cashCents = 15_950;
     expect(delayed.cash).toBeLessThan(160);
     expect(getEmergencyGlp1Status(delayed)).toMatchObject({
       eligible: true,
@@ -314,6 +319,7 @@ describe("current prototype contracts", () => {
     expect(
       delayed.operationReceipts["delayed-reader.emergency-consult"]?.status,
     ).toBe("applied");
+    expect(delayed.cash).toBe(209.5);
     expect(delayed.cash).toBeGreaterThanOrEqual(160);
     delayed = gameReducer(delayed, {
       type: "PLACE_ROOM",
@@ -585,7 +591,7 @@ describe("current prototype contracts", () => {
     expect(state.facilityLevel).toBe(1);
   });
 
-  it("keeps ordinary and unreachable-room care gated after the protected tutorials", () => {
+  it("opens actionable charts immediately while unreachable care attendance waits", () => {
     const protectedWithUnreachableRoom = createInitialGameState();
     const protectedEncounter =
       protectedWithUnreachableRoom.encounters[TUTORIAL_ENCOUNTER_ID]!;
@@ -601,14 +607,16 @@ describe("current prototype contracts", () => {
       upgradeLevel: 1,
       cleanliness: 100,
     });
-    const protectedRejected = gameReducer(protectedWithUnreachableRoom, {
+    const protectedOpened = gameReducer(protectedWithUnreachableRoom, {
       type: "OPEN_CHART",
       operationId: "protected.unreachable-exam",
       encounterId: TUTORIAL_ENCOUNTER_ID,
     });
     expect(
-      protectedRejected.operationReceipts["protected.unreachable-exam"]?.status,
-    ).toBe("rejected");
+      protectedOpened.operationReceipts["protected.unreachable-exam"]?.status,
+    ).toBe("applied");
+    expect(protectedOpened.openChartEncounterId).toBe(TUTORIAL_ENCOUNTER_ID);
+    expect(protectedOpened.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle).toBe("active_action_required");
 
     const state = createInitialGameState();
     const tutorial = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
@@ -623,17 +631,17 @@ describe("current prototype contracts", () => {
       },
     };
 
-    let rejected = gameReducer(state, {
+    let opened = gameReducer(state, {
       type: "OPEN_CHART",
       operationId: "ordinary.no-exam",
       encounterId: "encounter.ordinary",
     });
-    expect(rejected.operationReceipts["ordinary.no-exam"]?.status).toBe("rejected");
-    expect(rejected.operationReceipts["ordinary.no-exam"]?.message).toBe(
-      "No reachable Examination Room is available for this visit.",
-    );
+    expect(opened.operationReceipts["ordinary.no-exam"]?.status).toBe("applied");
+    expect(opened.openChartEncounterId).toBe("encounter.ordinary");
+    expect(opened.encounters["encounter.ordinary"]?.lifecycle).toBe("active_action_required");
+    expect(opened.environment.founderActivity?.kind).not.toBe("attend_encounter");
 
-    rejected.rooms.push({
+    opened.rooms.push({
       id: "room.unreachable.examination",
       roomDefinitionId: "room.examination",
       x: 34,
@@ -643,17 +651,15 @@ describe("current prototype contracts", () => {
       upgradeLevel: 1,
       cleanliness: 100,
     });
-    rejected = gameReducer(rejected, {
+    opened = gameReducer(opened, {
       type: "OPEN_CHART",
       operationId: "ordinary.unreachable-exam",
       encounterId: "encounter.ordinary",
     });
     expect(
-      rejected.operationReceipts["ordinary.unreachable-exam"]?.status,
-    ).toBe("rejected");
-    expect(
-      rejected.operationReceipts["ordinary.unreachable-exam"]?.message,
-    ).toBe("No reachable Examination Room is available for this visit.");
+      opened.operationReceipts["ordinary.unreachable-exam"]?.status,
+    ).toBe("applied");
+    expect(opened.openChartEncounterId).toBe("encounter.ordinary");
   });
 
   it("validates the approved synthetic content and centralized Level 0-2 balance", () => {
@@ -694,15 +700,32 @@ describe("current prototype contracts", () => {
       expect.objectContaining({
         level: 2,
         minimumClinicalXp: 300,
-        requiredRoomDefinitionIds: [
-          "room.endoscopy",
-          "room.periop_recovery",
-        ],
-        requiredStaffRoleIds: [
-          "staff.periop_nurse",
-          "staff.endoscopy_nurse",
-          "staff.endoscopist",
-        ],
+        requiredRoomDefinitionIds: [],
+        requiredStaffRoleIds: [],
+        nextFacilityLevel: 3,
+      }),
+      expect.objectContaining({
+        level: 3,
+        minimumClinicalXp: 500,
+        requiredRoomDefinitionIds: [],
+        requiredStaffRoleIds: ["staff.pharmacist"],
+        nextFacilityLevel: 4,
+      }),
+      expect.objectContaining({
+        level: 4,
+        minimumClinicalXp: 750,
+        requiredRoomDefinitionIds: [],
+        requiredStaffRoleIds: ["staff.app"],
+        requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],
+        nextFacilityLevel: 5,
+      }),
+      expect.objectContaining({
+        level: 5,
+        minimumClinicalXp: 2000,
+        satisfactionMustBeGreaterThan: 90,
+        minimumAverageStaffMorale: 85,
+        requiredRoomDefinitionIds: [],
+        requiredStaffRoleIds: [],
         nextFacilityLevel: null,
       }),
     ]);
@@ -826,7 +849,7 @@ describe("current prototype contracts", () => {
     const restored = deserializeGameState(serializeGameState(state));
 
     expect(restored).toMatchObject({
-      schemaVersion: 8,
+      schemaVersion: 9,
       campaignId: state.campaignId,
       campaignSeed: state.campaignSeed,
       clinicalReleaseId: state.clinicalReleaseId,

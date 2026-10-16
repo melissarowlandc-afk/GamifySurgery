@@ -16,7 +16,7 @@ async function startVisualClinic(page: Page): Promise<void> {
     "Visual Test Surgical Clinic",
   );
   const turnOffTutorials = page.getByRole("button", {
-    name: "Turn off tutorials",
+    name: "Skip guidance",
   });
   if (await turnOffTutorials.isVisible({ timeout: 2_000 })) {
     await turnOffTutorials.click();
@@ -47,7 +47,7 @@ test("the facility stays fixed above the clinical desk", async ({
     .first()
     .click();
   await waitForDecisionChoices(page);
-  const chart = page.locator(".paper-chart");
+  const chart = page.locator(".chart-sheet");
   await expect(chart).toBeVisible();
 
   const [after, chartBox] = await Promise.all([
@@ -130,7 +130,7 @@ test("the paper chart becomes a readable phone-width sheet", async ({
     .click();
   await waitForDecisionChoices(page);
 
-  const chart = page.locator(".paper-chart");
+  const chart = page.locator(".chart-sheet");
   await expect(chart).toBeVisible();
   const box = await chart.boundingBox();
   expect(box).not.toBeNull();
@@ -139,7 +139,7 @@ test("the paper chart becomes a readable phone-width sheet", async ({
   expect(box!.width).toBeLessThanOrEqual(390);
   expect(box!.height).toBeLessThanOrEqual(844);
   await expect(
-    page.locator(".chart-step-column.is-current .answer-choice").first(),
+    page.locator(".cs-step.is-current .cs-answer").first(),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Close patient chart" }),
@@ -167,12 +167,12 @@ test("captures phone-width tutorial and Build Mode usability", async ({
   );
   await setFastFacilitySpeed(page);
   const firstPatient = await waitForFirstPatientReady(page);
-  await page.getByRole("button", { name: "Got It" }).click();
+  await expect(page.getByRole("button", {name: "Got It"})).toHaveCount(0);
   await firstPatient.click();
   await waitForDecisionChoices(page);
   await expect(
     page.getByRole("heading", {
-      name: "Read across the chart, then choose",
+      name: "Make the decision",
     }),
   ).toBeVisible();
   await page.screenshot({
@@ -181,7 +181,7 @@ test("captures phone-width tutorial and Build Mode usability", async ({
     animations: "disabled",
   });
 
-  await page.getByRole("button", { name: "Turn off tutorials" }).click();
+  await page.getByRole("button", { name: "Skip guidance" }).click();
   await page.getByRole("button", { name: "Close patient chart" }).click();
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
   await expect(

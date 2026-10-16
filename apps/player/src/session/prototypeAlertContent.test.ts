@@ -8,6 +8,7 @@ import {
   type PrototypeAlertDefinition,
   type PrototypeAlertEligibilityContext,
 } from "@gamify-surgery/balance-config";
+import { shouldStoreSystemNotice } from "./usePrototypeSession";
 
 const APPROVED_AMBIENT_TEXT = [
   "A fax arrived. Historians have been notified.",
@@ -88,15 +89,20 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
     }
   });
 
-  it("contains exactly the 25 approved ambient lines", () => {
+  it("contains the original ambient clinic lines", () => {
     const ambient = PROTOTYPE_ALERT_CONTENT.filter(
       (candidate) => candidate.category === "ambient_flavor",
     );
 
-    expect(ambient).toHaveLength(25);
-    expect(ambient.map((candidate) => candidate.bodyTemplate)).toEqual(
-      APPROVED_AMBIENT_TEXT,
-    );
+    expect(ambient).toHaveLength(41);
+    expect(ambient.slice(0, APPROVED_AMBIENT_TEXT.length).map(
+      (candidate) => candidate.bodyTemplate,
+    )).toEqual(APPROVED_AMBIENT_TEXT);
+    expect(ambient.slice(0, APPROVED_AMBIENT_TEXT.length).map(
+      (candidate) => candidate.id,
+    )).toEqual(APPROVED_AMBIENT_TEXT.map(
+      (_, index) => `alert.ambient.${String(index + 1).padStart(2, "0")}`,
+    ));
     expect(
       ambient.every(
         (candidate) =>
@@ -155,7 +161,7 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
     }
   });
 
-  it("gates break-room, waiting-room, object, and checked-in-patient ambient lines by context", () => {
+  it("gates contextual ambient lines by context and keeps eligible humor available at Level 2", () => {
     const base = eligibilityContext();
     const contextCases = [
       {
@@ -164,25 +170,26 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
           "alert.ambient.15",
           "alert.ambient.20",
           "alert.ambient.22",
+          "alert.ambient.31",
         ],
         enabled: eligibilityContext({
-          roomDefinitionIds: new Set(["room.break_room"]),
+          roomDefinitionIds: new Set(["room.staff_break"]),
         }),
       },
       {
-        ids: ["alert.ambient.05", "alert.ambient.13"],
+        ids: ["alert.ambient.05", "alert.ambient.13", "alert.ambient.28"],
         enabled: eligibilityContext({
           roomDefinitionIds: new Set(["room.waiting"]),
         }),
       },
       {
-        ids: ["alert.ambient.10"],
+        ids: ["alert.ambient.10", "alert.ambient.35"],
         enabled: eligibilityContext({
           objectIds: new Set(["water_cooler"]),
         }),
       },
       {
-        ids: ["alert.ambient.21"],
+        ids: ["alert.ambient.21", "alert.ambient.36"],
         enabled: eligibilityContext({ hasCheckedInPatient: true }),
       },
     ] as const;
@@ -195,6 +202,27 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
           true,
         );
       }
+    }
+
+    expect(isPrototypeAlertEligible(
+      definition("alert.ambient.33"),
+      eligibilityContext({
+        facilityLevel: 2,
+        roomDefinitionIds: new Set(["room.endoscopy"]),
+      }),
+    )).toBe(true);
+    expect(isPrototypeAlertEligible(
+      definition("alert.ambient.26"),
+      eligibilityContext({ facilityLevel: 2 }),
+    )).toBe(true);
+  });
+
+  it("keeps original humor and adds room-specific Level 3 lines without changing cadence", () => {
+    expect(isPrototypeAlertEligible(definition("alert.ambient.26"), eligibilityContext({ facilityLevel: 3 }))).toBe(true);
+    for (const [id, roomId] of [["38", "room.reading"], ["39", "room.ambulatory_or"], ["40", "room.pharmacy"], ["41", "room.laboratory"]]) {
+      const candidate = definition(`alert.ambient.${id}`);
+      expect(isPrototypeAlertEligible(candidate, eligibilityContext({ facilityLevel: 3 }))).toBe(false);
+      expect(isPrototypeAlertEligible(candidate, eligibilityContext({ facilityLevel: 3, roomDefinitionIds: new Set([roomId!]) }))).toBe(true);
     }
   });
 
@@ -276,6 +304,12 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
       expect.arrayContaining([
         "alert.success.trash-cleaned",
         "alert.success.water-refilled",
+        "alert.system.saved",
+        "alert.system.hidden-pause",
+        "alert.system.campaign-created",
+        "alert.system.campaign-restored",
+        "alert.system.campaign-restarted",
+        "alert.system.testing-mode",
       ]),
     );
     expect(
@@ -290,5 +324,17 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
         "alert.success.first-ordinary-patient-resolved",
       ),
     ).toBe(false);
+    for (const definitionId of [
+      "alert.system.saved",
+      "alert.system.hidden-pause",
+      "alert.system.campaign-created",
+      "alert.system.campaign-restored",
+      "alert.system.campaign-restarted",
+      "alert.system.testing-mode",
+    ]) {
+      expect(shouldStoreSystemNotice(definitionId)).toBe(false);
+    }
+    expect(shouldStoreSystemNotice("alert.system.save-failed")).toBe(true);
+    expect(shouldStoreSystemNotice("alert.system.future-warning")).toBe(true);
   });
 });

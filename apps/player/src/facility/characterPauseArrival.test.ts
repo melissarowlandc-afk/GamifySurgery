@@ -1,13 +1,16 @@
 import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import { describe, expect, it, vi } from "vitest";
 import { characterBitmapLayers } from "../art/characterBitmapArt";
+import { getCharacterStillPresentationMetrics } from "./characterPresentation";
 
 vi.mock("phaser", () => ({ default: { Scene: class { constructor(_config?: unknown) {} } } }));
 
 import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
 import { getFrontDeskV5StationaryActorDisplay } from "./frontDeskPresentation";
 
-type Draw = { key: string; centerX: number; baseY: number; offsetIndex: number; direction: string; pose: string; rightFacing: boolean; representation?: string };
+type Draw = { key: string; centerX: number; baseY: number; offsetIndex: number; direction: string; pose: string; rightFacing: boolean; representation?: string; visualLift: number; scaleX: number; scaleY: number };
+type Motion = { lift: number; scaleX: number; scaleY: number; shadowAlpha: number; shadowScale: number };
+const chain = () => vi.fn(function (this: object) { return this; });
 const APPEARANCE: PixelAppearanceDescriptor = {
   version: "pixel-avatar.v1", bodyShape: "average", hairStyle: "short", skinTone: 1,
   hairShade: 2, faceStyle: "round", outfitStyle: "plain", outfitShade: 1,
@@ -47,8 +50,8 @@ function harness(source = bridge()) {
   scene.refreshLayout = vi.fn();
   scene.ensureCharacterStills = vi.fn();
   scene.getCharacterGraphics = vi.fn((key: string) => ({ getData: () => key, setData: vi.fn(), setDepth: vi.fn(), setVisible: vi.fn(), setPosition: vi.fn() }));
-  scene.drawPixelPerson = vi.fn((graphics: { getData(): string }, centerX: number, baseY: number, offsetIndex: number, _appearance: unknown, _color: number, direction: string, pose: string, rightFacing: boolean, _scale: number, representation?: string) => {
-    draws.push({ key: graphics.getData(), centerX, baseY, offsetIndex, direction, pose, rightFacing, representation });
+  scene.drawPixelPerson = vi.fn((graphics: { getData(): string }, centerX: number, baseY: number, offsetIndex: number, _appearance: unknown, _color: number, direction: string, pose: string, rightFacing: boolean, _scale: number, representation?: string, _frozen?: boolean, _seat?: boolean, motion: Motion = { lift: 0, scaleX: 1, scaleY: 1, shadowAlpha: 0.45, shadowScale: 1 }) => {
+    draws.push({ key: graphics.getData(), centerX, baseY, offsetIndex, direction, pose, rightFacing, representation, visualLift: motion.lift, scaleX: motion.scaleX, scaleY: motion.scaleY });
     return { baseY, representation: representation ?? "procedural" };
   });
   scene.getFrontDeskV5ActorDisplayPosition = vi.fn(() => undefined);
@@ -135,6 +138,65 @@ describe("FacilityScene character pause and arrival presentation", () => {
       scene.update(0, 30_000); expect(state(latest(draws, key))).toEqual(before);
       scene.update(0, 100); expect(latest(draws, key).centerX).toBeGreaterThan(before.centerX);
     }
+  });
+
+  it("starts grounded, hops no higher than seven pixels, and freezes exactly through pause and resume", () => {
+    const { scene, draws, bridge: source } = harness();
+    const key = "character:staff:staff-a";
+    scene.update(0, 0);
+    expect(latest(draws, key)).toMatchObject({ visualLift: 0, scaleX: 1, scaleY: 1 });
+    scene.update(100, 100);
+    const airborne = latest(draws, key);
+    expect(airborne.direction).toBe("side");
+    expect(airborne.visualLift).toBeGreaterThan(0);
+    expect(airborne.visualLift).toBeLessThanOrEqual(7);
+    const frozen = { visualLift: airborne.visualLift, scaleX: airborne.scaleX, scaleY: airborne.scaleY, centerX: airborne.centerX };
+    source.viewModel.paused = true;
+    scene.update(200, 250);
+    expect(latest(draws, key)).toMatchObject(frozen);
+    source.viewModel.paused = false;
+    scene.update(10_000, 9_500);
+    expect(latest(draws, key)).toMatchObject(frozen);
+  });
+
+  it("settles a floor stop with a landing squash and drops into seats only after walking", () => {
+    const { scene } = harness();
+    const hop = (key: string, moving: boolean, tiles: number, milliseconds: number) => {
+      scene.frameDeltaMilliseconds = milliseconds;
+      const sample = { location: { x: 4, y: 2 }, direction: "side", moving, rightFacing: true };
+      return scene.advanceCharacterHopState(key, moving, tiles, 2, sample);
+    };
+    const motion = (key: string, pose: string, frozen = false) =>
+      scene.characterStepMotion(key, pose, frozen) as Motion;
+
+    hop("floor", true, 0, 0);
+    expect(motion("floor", "walk-a")).toMatchObject({ lift: 0, scaleX: 1, scaleY: 1 });
+    hop("floor", true, 0.2, 100);
+    const walking = motion("floor", "walk-a");
+    expect(walking.lift).toBeGreaterThan(0);
+    const stopped = hop("floor", false, 0, 0);
+    expect(motion("floor", "idle").lift).toBeCloseTo(walking.lift, 10);
+    const location = { x: 4, y: 2 };
+    const settling = scene.characterHopSettleLocation(location, stopped);
+    expect(settling.x).not.toBe(location.x);
+    hop("floor", false, 0, 60);
+    const halfway = motion("floor", "idle");
+    expect(halfway.lift).toBeCloseTo(walking.lift / 2, 10);
+    expect(halfway.scaleY).toBeLessThan(1);
+    expect(motion("floor", "idle", true)).toEqual(halfway);
+    const settled = hop("floor", false, 0, 60);
+    expect(motion("floor", "idle").lift).toBe(0);
+    expect(scene.characterHopSettleLocation(location, settled)).toEqual(location);
+
+    for (const pose of ["seated", "exam-table"]) {
+      hop(pose, true, 0, 0); hop(pose, true, 0.2, 100);
+      hop(pose, false, 0, 0);
+      expect(motion(pose, pose).lift).toBe(6);
+      hop(pose, false, 0, 400);
+      expect(motion(pose, pose).lift).toBe(0);
+    }
+    expect(motion("never-moved", "seated").lift).toBe(0);
+    expect(motion("never-moved", "idle").lift).toBe(0);
   });
 
   it("does not reuse update delta in callbacks, discards callback pause delta once, then advances the route", () => {
@@ -224,13 +286,18 @@ describe("FacilityScene character pause and arrival presentation", () => {
       setData: vi.fn(function (this: object, values: Record<string, unknown>) { for (const [key, value] of Object.entries(values)) data.set(key, value); return this; }),
       getData: (key: string) => data.get(key),
     };
-    const container = { visible: true, getByName: () => actor, setVisible: vi.fn(function (this: { visible: boolean }, value: boolean) { this.visible = value; return this; }), setPosition: vi.fn(function (this: object) { return this; }), setDepth: vi.fn(function (this: object) { return this; }) };
+    const shadow = { setPosition: chain(), setDisplaySize: chain(), setAlpha: chain(), setVisible: chain() };
+    const container = { visible: true, getByName: (name: string) => name === "actor" ? actor : name === "shadow" ? shadow : null, setVisible: vi.fn(function (this: { visible: boolean }, value: boolean) { this.visible = value; return this; }), setPosition: vi.fn(function (this: object) { return this; }), setDepth: vi.fn(function (this: object) { return this; }) };
     scene.getCharacterBitmapContainer = vi.fn(() => container); scene.textures = { exists: vi.fn(() => true) };
     source.viewModel.paused = true;
     scene.drawCharacterPresentation(graphics, "actor", { ...candidate, direction: "front", pose: "idle", rightFacing: false }, 0);
     expect({ frame: data.get("gait-frame"), flip: data.get("gait-flip-x"), direction: data.get("gait-direction"), pose: data.get("gait-pose"), representation: scene.characterMotionSnapshots.get("actor").representation })
       .toMatchObject({ direction: "side", pose: "walk-a", flip: false, representation: "neutral" });
     expect(scene.getCharacterBitmapContainer).toHaveBeenCalled();
+    // The frozen frame keeps its resting scale, and its shadow stays on the floor.
+    expect(actor.displayWidth * 2).toBe(actor.displayHeight);
+    expect(shadow.setPosition).toHaveBeenLastCalledWith(0, 1);
+    expect(shadow.setAlpha).toHaveBeenLastCalledWith(0.45);
   });
 
   it("retains the loaded same-identity bitmap through a cold or failed turn but not an identity swap", () => {
@@ -239,12 +306,14 @@ describe("FacilityScene character pause and arrival presentation", () => {
     scene.textures = { exists: vi.fn(() => false) };
     scene.ensureCharacterStill = vi.fn(() => false);
     const actor = {
+      y: 0,
       getData: (key: string) => key === "gait-still-id" ? "founder.01" : key === "gait-direction" ? "front" : undefined,
       setDisplaySize: vi.fn(function (this: object) { return this; }),
     };
+    const shadow = { setPosition: chain(), setDisplaySize: chain(), setAlpha: chain(), setVisible: chain() };
     const container = {
       visible: true,
-      getByName: () => actor,
+      getByName: (name: string) => name === "actor" ? actor : name === "shadow" ? shadow : null,
       setVisible: vi.fn(function (this: object) { return this; }),
       setPosition: vi.fn(function (this: object) { return this; }),
       setDepth: vi.fn(function (this: object) { return this; }),
@@ -255,11 +324,17 @@ describe("FacilityScene character pause and arrival presentation", () => {
       fillStyle: vi.fn(), fillCircle: vi.fn(), fillRoundedRect: vi.fn(),
     };
     const founder01: PixelAppearanceDescriptor = { ...APPEARANCE, stillId: "founder.01", roleStyle: "founder" };
-    const retained = scene.drawPixelPerson(graphics, 96, 128, 0, founder01, 0, "side", "walk-neutral", true, 1);
+    const { width, height } = getCharacterStillPresentationMetrics(32, 1);
+    const hopping: Motion = { lift: 2.5, scaleX: 1.02, scaleY: 0.97, shadowAlpha: 0.3, shadowScale: 0.9 };
+    const retained = scene.drawPixelPerson(graphics, 96, 128, 0, founder01, 0, "side", "walk-neutral", true, 1, undefined, false, false, hopping);
     expect(retained.representation).toBe("bitmap");
     expect(container.setPosition).toHaveBeenCalledWith(96, 128);
     expect(scene.activeCharacterBitmapContainers.has("actor")).toBe(true);
     expect(actor.getData("gait-direction")).toBe("front");
+    expect(actor.y).toBe(-2.5);
+    expect(actor.setDisplaySize).toHaveBeenLastCalledWith(width * 1.02, height * 0.97);
+    expect(shadow.setDisplaySize).toHaveBeenLastCalledWith(width * 0.6 * 0.9, width * 0.6 * 0.9 * 0.32);
+    expect(shadow.setAlpha).toHaveBeenLastCalledWith(0.3);
     expect(graphics.fillCircle).not.toHaveBeenCalled();
 
     scene.failedCharacterStills.add(
@@ -267,6 +342,9 @@ describe("FacilityScene character pause and arrival presentation", () => {
     );
     const stillRetained = scene.drawPixelPerson(graphics, 100, 132, 0, founder01, 0, "back", "walk-neutral", false, 1);
     expect(stillRetained.representation).toBe("bitmap");
+    expect(actor.setDisplaySize).toHaveBeenLastCalledWith(width, height);
+    expect(actor.y).toBe(-0);
+    expect(shadow.setAlpha).toHaveBeenLastCalledWith(0.45);
 
     const swapped = scene.drawPixelPerson(
       graphics, 100, 132, 0,
@@ -274,5 +352,38 @@ describe("FacilityScene character pause and arrival presentation", () => {
     );
     expect(swapped.representation).toBe("neutral");
     expect(graphics.fillCircle).toHaveBeenCalled();
+  });
+
+  it("puts the bordered founder activity box above the actual visible bitmap bounds and hides it at idle", () => {
+    const scene = new FacilityScene(bridge()) as any;
+    const text = {
+      setText: vi.fn(function (this: object) { return this; }),
+      setPosition: vi.fn(function (this: object) { return this; }),
+      setVisible: vi.fn(function (this: object) { return this; }),
+      getBounds: vi.fn(() => ({ x: 80, y: 44, width: 40, height: 12 })),
+    };
+    const box = {
+      clear: vi.fn(function (this: object) { return this; }),
+      fillStyle: vi.fn(function (this: object) { return this; }),
+      fillRect: vi.fn(function (this: object) { return this; }),
+      lineStyle: vi.fn(function (this: object) { return this; }),
+      strokeRect: vi.fn(function (this: object) { return this; }),
+      setVisible: vi.fn(function (this: object) { return this; }),
+    };
+    scene.founderActivityText = text;
+    scene.founderActivityBox = box;
+    scene.characterBitmapContainers.set("character:founder", {
+      visible: true,
+      getByName: () => ({ visible: true, getBounds: () => ({ centerX: 100, top: 48, width: 24, height: 40 }) }),
+    });
+
+    scene.renderFounderActivityBox("character:founder", "Performing endoscopy", 4, 400);
+    expect(text.setPosition).toHaveBeenCalledWith(100, 44);
+    expect(box.fillRect).toHaveBeenCalledWith(77, 42, 46, 16);
+    expect(box.strokeRect).toHaveBeenCalledWith(77.5, 42.5, 45, 15);
+
+    scene.renderFounderActivityBox("character:founder", undefined, 4, 400);
+    expect(text.setVisible).toHaveBeenLastCalledWith(false);
+    expect(box.setVisible).toHaveBeenLastCalledWith(false);
   });
 });

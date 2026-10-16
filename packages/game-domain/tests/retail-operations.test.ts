@@ -6,10 +6,13 @@ import {
   deserializeGameState,
   gameReducer,
   PROTOTYPE_DOMAIN_CONTEXT,
+  recordLevelThreeRoomUse,
   serializeGameState,
+  startRetailPurchase,
   type DomainContext,
   type GameState,
   type PendingResult,
+  type ServiceOperationState,
 } from "../src";
 
 let sequence = 0;
@@ -76,16 +79,140 @@ function futureOutletContext(roomId: string, capability: string, role?: string):
   const context = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as DomainContext;
   const rooms = context.balanceRelease.facility.roomDefinitions as unknown as Array<(typeof context.balanceRelease.facility.roomDefinitions)[number]>;
   const stages = context.balanceRelease.facility.stageDefinitions as unknown as Array<(typeof context.balanceRelease.facility.stageDefinitions)[number]>;
-  rooms.push({ ...rooms.find((room) => room.id === "room.coffee_kiosk")!, id: roomId, displayName: roomId, capabilityIds: [capability] });
+  const outletFixture = { ...rooms.find((room) => room.id === "room.coffee_kiosk")!, id: roomId, displayName: roomId, capabilityIds: [capability] };
+  const existingRoom = rooms.find((room) => room.id === roomId);
+  if (existingRoom) Object.assign(existingRoom, outletFixture);
+  else rooms.push(outletFixture);
   if (role) {
     const roles = context.balanceRelease.facility.staffRoleDefinitions as unknown as Array<(typeof context.balanceRelease.facility.staffRoleDefinitions)[number]>;
-    roles.push({ ...roles.find((candidate) => candidate.id === "staff.imaging_technician")!, id: role, displayName: role, requiredAnyRoomDefinitionIds: [roomId], capabilityIds: [`capability.${role}`] });
+    const roleFixture = { ...roles.find((candidate) => candidate.id === "staff.imaging_technician")!, id: role, displayName: role, requiredAnyRoomDefinitionIds: [roomId], capabilityIds: [`capability.${role}`] };
+    const existingRole = roles.find((candidate) => candidate.id === role);
+    if (existingRole) Object.assign(existingRole, roleFixture);
+    else roles.push(roleFixture);
   }
   for (const level of [3, 4, 5] as const) if (!stages.some((stage) => stage.level === level)) stages.push({ ...stages.find((stage) => stage.level === 2)!, level, displayName: `L${level}`, nextFacilityLevel: null } as (typeof stages)[number]);
   return context;
 }
 
 describe("retail operations", () => {
+  it("opens a waiting chart once and redirects an optional shopper from the live retail tile", () => {
+    let state = retailState();
+    const exam = state.rooms.find((room) => room.id === "room.retail.ultrasound")!;
+    exam.roomDefinitionId = "room.examination";
+    addWaitingPatient(state, "encounter.chart-shopper");
+    const encounter = state.encounters["encounter.chart-shopper"]!;
+    encounter.checkInStatus = "checked_in";
+    encounter.pendingResult!.timingPhases![0]!.resourceBound = false;
+    encounter.retailFoodDrinkAllowed = true;
+    state = start(state, "income.coffee", "encounter", encounter.id);
+    expect(state.retailOperations).toHaveLength(1);
+    const retail = state.retailOperations[0]!;
+    const liveRetailLocation = { ...retail.path.at(-1)! };
+    retail.location = { ...liveRetailLocation };
+    retail.pathIndex = retail.path.length - 1;
+    const readyEncounter = state.encounters[encounter.id]!;
+    readyEncounter.lifecycle = "active_action_required";
+    readyEncounter.pendingResult = null;
+    readyEncounter.steps[0]!.status = "action_required";
+    readyEncounter.steps[0]!.result = null;
+    // Prove OPEN_CHART takes movement ownership from the retail operation,
+    // rather than routing from a stale encounter snapshot.
+    state.encounters[encounter.id]!.patientLocation = { x: 31, y: 31 };
+
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "retail.chart-shopper.open",
+      encounterId: encounter.id,
+    });
+    expect(state.operationReceipts["retail.chart-shopper.open"]?.status).toBe("applied");
+    expect(state.openChartEncounterId).toBe(encounter.id);
+    expect(state.retailOperations[0]).toMatchObject({ status: "cancelled" });
+    expect(state.encounters[encounter.id]!.patientMovement).toMatchObject({
+      kind: "walking_to_care",
+      destinationRoomInstanceId: exam.id,
+    });
+    expect(state.encounters[encounter.id]!.patientMovement?.path[0]).toEqual(liveRetailLocation);
+    expect(state.encounters[encounter.id]!.waitingDestination).toBeNull();
+  });
+
+  it("keeps a resolved encounter and its service operation synchronized through a departure purchase and cancellation", () => {
+    const makeState = () => {
+      const state = retailState();
+      addWaitingPatient(state, "encounter.departure-retail");
+      const encounter = state.encounters["encounter.departure-retail"]!;
+      encounter.lifecycle = "resolved";
+      encounter.resolutionReason = "completed";
+      encounter.pendingResult = null;
+      encounter.patientLocation = { x: 35, y: 25 };
+      const operation: ServiceOperationState = {
+        id: "service-operation.departure-retail", incomeLineId: "income.endoscopy", catalogVersion: 1,
+        actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName, appearance: encounter.patientAppearance,
+        status: "discharging", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 60,
+        startedAtFacilityTick: 0, completedAtFacilityTick: 0, cancelledAtFacilityTick: null, quoteFee: 0,
+        phaseIndex: 3, phaseStartedAtFacilityTick: 0, phaseEndsAtFacilityTick: 0,
+        reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
+        location: { ...encounter.patientLocation }, path: [{ ...encounter.patientLocation }], pathIndex: 0,
+        lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+        frozenOperationPhases: [
+          { id: "prep", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: [], roomStationId: "periop_preparation" },
+          { id: "procedure", roomDefinitionId: "room.endoscopy", durationMinutes: 45, staffRoleDefinitionIds: [] },
+          { id: "recovery", roomDefinitionId: "room.periop_recovery", durationMinutes: 60, staffRoleDefinitionIds: [], roomStationId: "periop_recovery" },
+        ],
+        departureItinerary: { version: "service-departure-itinerary.v1", status: "pending", choiceKind: null, selectedAtFacilityTick: null, completedAtFacilityTick: null, linkedTripId: null, retailIncomeLineId: null },
+      };
+      state.serviceOperations.push(operation);
+      return { state, encounter, operation };
+    };
+    for (const cancel of [false, true]) {
+      const fixture = makeState();
+      fixture.state.paused = false;
+      const id = startRetailPurchase(fixture.state, "income.coffee", "encounter", fixture.encounter.id, PROTOTYPE_DOMAIN_CONTEXT, undefined, fixture.operation.id);
+      expect(id).toBeTruthy();
+      fixture.operation.departureItinerary!.status = "retail";
+      fixture.operation.departureItinerary!.choiceKind = "retail";
+      fixture.operation.departureItinerary!.linkedTripId = id;
+      fixture.operation.departureItinerary!.retailIncomeLineId = "income.coffee";
+      advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      expect(fixture.state.retailOperations[0]!.pathIndex).toBe(0);
+      fixture.state.facilityTick += 1;
+      advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      if (cancel) {
+        fixture.state.cashCents = 0;
+        fixture.state.cash = 0;
+      }
+      for (let minute = 0; minute < 40 && fixture.state.retailOperations[0]?.status !== "completed" && fixture.state.retailOperations[0]?.status !== "cancelled"; minute += 1) {
+        fixture.state.facilityTick += 1;
+        advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      }
+      const retail = fixture.state.retailOperations[0]!;
+      expect(retail.status).toBe(cancel ? "cancelled" : "completed");
+      expect(fixture.state.encounters[fixture.encounter.id]!.patientLocation).toEqual(retail.location);
+      expect(fixture.operation.location).toEqual(retail.location);
+      expect(fixture.state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.coffee")).toHaveLength(cancel ? 0 : 1);
+      for (let minute = 0; minute < 10 && fixture.state.serviceOperations.find((operation) => operation.id === fixture.operation.id)?.status !== "completed"; minute += 1) {
+        fixture.state = gameReducer(fixture.state, { type: "ADVANCE_TICK", operationId: `departure.retail.exit.${cancel}.${minute}` });
+      }
+      expect(
+        fixture.state.serviceOperations.find((operation) => operation.id === fixture.operation.id)?.status,
+        `departure handoff should complete the service operation (cancel=${cancel})`,
+      ).toBe("completed");
+      const departure = fixture.state.encounters[fixture.encounter.id]!.patientMovement;
+      expect(departure?.path.length).toBeGreaterThan(1);
+      expect(departure?.path.every((point, index, path) => index === 0 || Math.abs(point.x - path[index - 1]!.x) + Math.abs(point.y - path[index - 1]!.y) === 1)).toBe(true);
+      let reachedExterior = false;
+      for (let minute = 0; minute < 120 && fixture.state.encounters[fixture.encounter.id]?.patientMovement !== null; minute += 1) {
+        fixture.state = gameReducer(fixture.state, { type: "ADVANCE_TICK", operationId: `departure.retail.path.${cancel}.${minute}` });
+        const location = fixture.state.encounters[fixture.encounter.id]?.patientLocation;
+        reachedExterior ||= location != null && (
+          location.x < 0 || location.y < 0 ||
+          location.x >= PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridWidth ||
+          location.y >= PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridHeight
+        );
+      }
+      expect(reachedExterior).toBe(true);
+      expect(fixture.state.encounters[fixture.encounter.id]!.patientLocation).toBeNull();
+    }
+  });
   it("autonomously starts optional trips for a free employee and eligible waiting patient without duplicating either identity", () => {
     let state = retailState();
     addWaitingPatient(state);
@@ -218,12 +345,38 @@ describe("retail operations", () => {
     expect(state.retailExternalActors).toEqual([expect.objectContaining({ id: "rx.customer", lifecycle: "arriving" })]);
     state = start(state, "income.pharmacy_pickup", "retail_visitor", "rx.customer", "order.rx", context);
     state = advance(state, 40, context);
-    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", grossAmount: 25, stockCost: 15, netCashDelta: 10 })]));
+    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", grossAmount: 70, stockCost: 15, netCashDelta: 55 })]));
     expect(state.retailOrders[0]).toMatchObject({ fulfilledQuantity: 1 });
+    expect(state.rooms.find((room) => room.id === "room.retail.coffee")?.maintenance).toMatchObject({ completedUses: 1, status: "operational" });
     state = gameReducer(state, { type: "AUTHORIZE_RETAIL_ORDER", operationId: "authorize-supply", orderId: "order.supply", incomeLineId: "income.wound_supply", actorKind: "retail_visitor", actorId: "supply.customer" }, context);
     state = start(state, "income.wound_supply", "retail_visitor", "supply.customer", "order.supply", context);
     state = advance(state, 40, context);
     expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.wound_supply", grossAmount: 20, stockCost: 10 })]));
+  });
+
+  it("finishes an active pharmacy purchase at the maintenance deadline and blocks the queued purchase", () => {
+    const context = futureOutletContext("room.pharmacy", "capability.pharmacy", "staff.pharmacist");
+    let state = retailState();
+    state.facilityLevel = 3;
+    const pharmacy = state.rooms.find((room) => room.id === "room.retail.coffee")!;
+    pharmacy.roomDefinitionId = "room.pharmacy";
+    state.employees.push(employee(state, "employee.pharmacist", "staff.pharmacist", pharmacy.id, { x: 30, y: 28 }));
+    state = gameReducer(state, { type: "AUTHORIZE_RETAIL_ORDER", operationId: "authorize.order.active", orderId: "order.active", incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", actorId: "rx.active" }, context);
+    state = start(state, "income.pharmacy_pickup", "retail_visitor", "rx.active", "order.active", context);
+    for (let minute = 0; minute < 60 && !state.retailOperations.some((operation) => operation.status === "purchasing"); minute += 1) {
+      state = advance(state, 1, context);
+    }
+    const active = state.retailOperations.find((operation) => operation.status === "purchasing")!;
+    expect(active).toBeDefined();
+    const queued = { ...active, id: "retail-operation.queued-maintenance", actorId: "rx.queued", status: "queued" as const, createdAtFacilityTick: active.createdAtFacilityTick + 1, startedAtFacilityTick: null, purchaseEndsAtFacilityTick: null, resourceWaitReason: null };
+    state.retailOperations.push(queued);
+    expect(queued).toBeDefined();
+    for (let index = 0; index < 8; index += 1) recordLevelThreeRoomUse(state, pharmacy.id, `pharmacy.deadline.${index}`, context);
+    state.rooms.find((room) => room.id === pharmacy.id)!.maintenance!.outOfServiceAtFacilityTick = state.facilityTick;
+    active.purchaseEndsAtFacilityTick = state.facilityTick + 1;
+    state = advance(state, 1, context);
+    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ actorId: active.actorId, incomeLineId: "income.pharmacy_pickup" })]));
+    expect(state.retailOperations.find((operation) => operation.id === queued.id)).toMatchObject({ status: "queued", resourceWaitReason: "Waiting for equipment repair." });
   });
 
   it("enforces explicit food restrictions, 120-minute cooldowns, and the two-per-day food cap", () => {
@@ -284,9 +437,77 @@ describe("retail operations", () => {
     expect(Math.abs(companion.location!.x - before.x) + Math.abs(companion.location!.y - before.y)).toBeLessThanOrEqual(1);
     state.serviceOperations[0]!.status = "completed";
     state.serviceOperations[0]!.location = null;
-    state = advance(state, 30);
+    // A legacy companion displaced outside the public floor now walks the
+    // complete exit path rather than vanishing when its old route is empty.
+    state = advance(state, 100);
     expect(state.retailExternalActors[0]).toMatchObject({ lifecycle: "departed", location: null });
     expect(state.serviceOperations[0]!.status).toBe("completed");
+  });
+
+  it("keeps new periop-flow companions on a stable public route instead of the patient endpoint", () => {
+    const state = retailState();
+    // This public Waiting Room sorts before the reachable Front Desk, but has
+    // no door. The companion must scan on to a route it can actually take.
+    state.rooms.push({ id: "room.retail.unreachable-waiting", roomDefinitionId: "room.waiting", x: 1, y: 1, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.rooms.push({ id: "room.retail.periop", roomDefinitionId: "room.periop_recovery", x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.serviceOperations.push({
+      id: "procedure.periop", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "visitor", actorId: "procedure.periop.patient", displayName: "Peri-op Patient",
+      appearance: state.founder.appearance, status: "in_service", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 60, startedAtFacilityTick: 0, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 0,
+      phaseEndsAtFacilityTick: 30, reservedRoomInstanceIds: ["room.retail.periop"], reservedEmployeeIds: [],
+      providerReservation: null, location: { x: 30, y: 25 }, path: [{ x: 30, y: 25 }], pathIndex: 0,
+      lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.retail.periop", bedId: "N3", endpoint: { x: 30, y: 25 } },
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    });
+
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    const companion = state.retailExternalActors.find((actor) => actor.kind === "companion")!;
+    const publicEndpoint = companion.path.at(-1)!;
+    expect(companion.location).not.toEqual({ x: 30, y: 25 });
+    expect(publicEndpoint).not.toEqual({ x: 30, y: 25 });
+    expect(publicEndpoint.x < 1 || publicEndpoint.x > 6 || publicEndpoint.y < 1 || publicEndpoint.y > 5).toBe(true);
+    expect(publicEndpoint.x < 28 || publicEndpoint.x > 31 || publicEndpoint.y < 23 || publicEndpoint.y > 27).toBe(true);
+    expect(companion.lifecycle).toBe("arriving");
+
+    state.facilityTick += 1;
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(companion.path.at(-1)).toEqual(publicEndpoint);
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.retailExternalActors.find((actor) => actor.id === companion.id)?.path.at(-1)).toEqual(publicEndpoint);
+
+    state.serviceOperations[0]!.status = "completed";
+    state.facilityTick += 1;
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(["departing", "departed"]).toContain(
+      state.retailExternalActors.find((actor) => actor.id === companion.id)?.lifecycle,
+    );
+  });
+
+  it("does not fall back to a legacy patient-bed companion when a new periop companion has no public route", () => {
+    const state = retailState();
+    addWaitingPatient(state, "encounter.periop-no-companion");
+    const encounter = state.encounters["encounter.periop-no-companion"]!;
+    encounter.pendingResult!.routeId = "route.endoscopy.in_house";
+    state.doors = state.doors.filter((door) => !door.exterior);
+    state.serviceOperations.push({
+      id: "procedure.periop.no-companion", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "waiting_for_resources", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 60, startedAtFacilityTick: null, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: null,
+      phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
+      location: { ...encounter.patientLocation! }, path: [{ ...encounter.patientLocation! }], pathIndex: 0,
+      lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    });
+
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(state.retailExternalActors.filter((actor) => actor.kind === "companion")).toEqual([]);
   });
 
   it("cancels a walking patient trip when a result becomes due, preserves patient location, and takes no sale", () => {

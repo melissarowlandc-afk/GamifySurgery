@@ -6,3 +6,4 @@ export * from "./tutorialViewModels";
 export * from "./prototypeStorage";
 export * from "./localCampaignRepository";
 export * from "./questionReviewFlags";
+export * from "./employeeTrainingViewModels";

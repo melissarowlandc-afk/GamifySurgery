@@ -1,4 +1,4 @@
-import { ANSWER_CHOICE_TIMING_REGISTRY, type DecisionNode } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, VARIETY3_TIMING_ENTRIES, type DecisionNode } from "@gamify-surgery/clinical-content";
 import type { EncounterState } from "./types";
 
 export type TestChoiceOrderDisposition =
@@ -6,13 +6,17 @@ export type TestChoiceOrderDisposition =
       kind: "result_gate_route_override" | "terminal_service";
       serviceId: string;
       allowedRouteIds: readonly string[];
+      /** Preserve exact external-only routing when an onsite equivalent exists. */
+      allowOnsiteEquivalents?: boolean;
       externalRemainder?: string;
+      externalRemainderMode?: "external_patient_visit" | "external_processing" | "retained_protocol";
     }
   | {
       kind: "test_only_continuation";
       serviceId: string;
       allowedRouteIds: readonly string[];
       externalRemainder: string;
+      externalRemainderMode?: "external_patient_visit" | "external_processing" | "retained_protocol";
     }
   | {
       kind: "staged_result_gate";
@@ -68,11 +72,12 @@ const terminalService = (
   serviceId: string,
   allowedRouteIds: readonly string[],
   externalRemainder?: string,
+  externalRemainderMode: "external_patient_visit" | "external_processing" | "retained_protocol" = "retained_protocol",
 ) => record(caseId, nodeId, questionVariantId, choiceId, choiceLabel, timingProfileId, {
   kind: "terminal_service",
   serviceId,
   allowedRouteIds,
-  ...(externalRemainder ? { externalRemainder } : {}),
+  ...(externalRemainder ? { externalRemainder, externalRemainderMode } : {}),
 });
 
 const gateOverride = (
@@ -84,10 +89,12 @@ const gateOverride = (
   timingProfileId: string,
   serviceId: string,
   allowedRouteIds: readonly string[],
+  allowOnsiteEquivalents = true,
 ) => record(caseId, nodeId, questionVariantId, choiceId, choiceLabel, timingProfileId, {
   kind: "result_gate_route_override",
   serviceId,
   allowedRouteIds,
+  ...(allowOnsiteEquivalents ? {} : { allowOnsiteEquivalents: false }),
 });
 
 const stagedGate = (
@@ -106,6 +113,10 @@ const stagedGate = (
 });
 
 const terminalServices: ExactTestChoiceOrderRecord[] = [
+  terminalService("case.gs028b.differentiated-thyroid-cancer.a-molecular-malignancy", "node.gs028b.differentiated-thyroid-cancer.a-molecular-malignancy.1", "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v2", "correct_2", "Cervical-node ultrasound", "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]),
+  terminalService("case.gs028b.differentiated-thyroid-cancer.a-palpable-node", "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1", "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3", "correct_3", "Complete neck ultrasound", "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]),
+  terminalService("case.gs028b.nipple-discharge.paired-bloody-single-duct", "node.gs028b.nipple-discharge.paired-bloody-single-duct.2", "question.pathologic-nipple-discharge.diagnostic-imaging.v1", "correct_1", "Diagnostic mammography and ultrasound", "timing.test.breast_imaging_bundle", "service.diagnostic_breast_imaging", ["route.diagnostic_breast_imaging.outsourced"]),
+  terminalService("case.gs028b.nipple-discharge.b-male-pathologic", "node.gs028b.nipple-discharge.b-male-pathologic.1", "question.pathologic-nipple-discharge.diagnostic-imaging.v3", "correct_3", "Diagnostic mammography and ultrasound", "timing.test.breast_imaging_bundle", "service.diagnostic_breast_imaging", ["route.diagnostic_breast_imaging.outsourced"]),
   terminalService("case.gs028.primary-midline-hernia.a-uncertain-deep-bulge", "node.gs028.primary-midline-hernia.a-uncertain-deep-bulge.1", "question.umbilical-epigastric-hernia.clinical-recognition.v3", "correct_3", "Targeted abdominal-wall ultrasound", "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]),
   terminalService("case.gs028.varicose-veins.a-recurrent-after-prior-care", "node.gs028.varicose-veins.a-recurrent-after-prior-care.1", "question.varicose-veins.reflux-duplex-evaluation.v3", "correct_3", "Comprehensive venous reflux duplex", "timing.test.venous_duplex", "service.venous_duplex", ["route.venous_duplex.in_house", "route.venous_duplex.outsourced"]),
   terminalService("case.gs028.varicose-veins.a-asymmetric-branches", "node.gs028.varicose-veins.a-asymmetric-branches.1", "question.varicose-veins.reflux-duplex-evaluation.v4", "correct_4", "Venous duplex with reflux assessment", "timing.test.venous_duplex", "service.venous_duplex", ["route.venous_duplex.in_house", "route.venous_duplex.outsourced"]),
@@ -127,10 +138,10 @@ const terminalServices: ExactTestChoiceOrderRecord[] = [
     terminalService(`case.nephrolithiasis.${slug}`, `node.nephrolithiasis.${slug}.2`, `question.nephrolithiasis.recurrent-metabolic-evaluation.v${number}`, `stone_metabolic_${number}`, "Stone analysis with serum studies and 24-hour urine testing", "timing.test.twenty_four_hour_protocol", "service.basic_labs", ["route.basic_labs.phlebotomy_sendout", "route.basic_labs.outsourced"], "Stone analysis and 24-hour urine testing remain external or take-home components."),
   ),
   ...["resistant-three-drugs", "early-stroke-risk", "headache-free", "family-pressure"].map((slug, index) =>
-    terminalService(`case.primary-aldosteronism.${slug}`, `node.primary-aldosteronism.${slug}.2`, `question.primary-aldosteronism.ct-avs-lateralization.v${index + 1}`, `ct_avs_${index + 1}`, "Adrenal CT with venous sampling", "timing.test.adrenal_ct_avs", "service.ct", ["route.ct.in_house", "route.ct.outsourced"], "Adrenal venous sampling remains an external specialty component."),
+    terminalService(`case.primary-aldosteronism.${slug}`, `node.primary-aldosteronism.${slug}.2`, `question.primary-aldosteronism.ct-avs-lateralization.v${index + 1}`, `ct_avs_${index + 1}`, "Adrenal CT with venous sampling", "timing.test.adrenal_ct_avs", "service.ct", ["route.ct.in_house", "route.ct.outsourced"], "Adrenal venous sampling remains an external specialty component.", "external_patient_visit"),
   ),
   ...["crusted-nipple", "nipple-erosion", "areolar-rash", "scaly-nipple"].map((slug, index) =>
-    terminalService(`case.mammary-paget.${slug}`, `node.mammary-paget.${slug}.2`, `question.mammary-paget.underlying-breast-evaluation.v${index + 1}`, `mammo_us_${index + 1}`, "Mammography with ultrasound", "timing.test.breast_imaging_bundle", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"], "Mammography remains an external component."),
+    terminalService(`case.mammary-paget.${slug}`, `node.mammary-paget.${slug}.2`, `question.mammary-paget.underlying-breast-evaluation.v${index + 1}`, `mammo_us_${index + 1}`, "Mammography with ultrasound", "timing.test.breast_imaging_bundle", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"], "Mammography remains an external component.", "external_patient_visit"),
   ),
   ...["obstetric-injury", "prior-anorectal-injury", "sphincter-concern", "repair-consult"].map((slug, index) =>
     terminalService(`case.fecal-incontinence.${slug}`, `node.fecal-incontinence.${slug}.1`, `question.fecal-incontinence.endoanal-ultrasound-repair-planning.v${index + 1}`, `eaus_${index + 1}`, "Endoanal ultrasound", "timing.test.endoanal_ultrasound", "service.endoanal_ultrasound", ["route.endoanal_ultrasound.in_house", "route.endoanal_ultrasound.outsourced"]),
@@ -228,6 +239,195 @@ const testOnlyContinuations: ExactTestChoiceOrderRecord[] = [
   ),
 ];
 
+const gs028October2Records: ExactTestChoiceOrderRecord[] = [
+  ...["mastectomy", "oncoplastic-mapping", "invasion-concern"].map((slug, index) => record(`case.gs028c.dcis.b-${slug}`, `node.gs028c.dcis.b-${slug}.1`, `question.dcis.sentinel-node-setting.v${[1, 3, 4][index]}`, `correct_${[1, 3, 4][index]}`, "Include SLNB at breast surgery", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" })),
+  gateOverride("case.gs028c.palpable-breast.paired-dense-focal", "node.gs028c.palpable-breast.paired-dense-focal.1", "question.palpable-breast.negative-mammogram-targeted-us.v1", "correct_1", "Targeted breast ultrasound", "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]),
+  gateOverride("case.gs028c.palpable-breast.paired-scar-edge", "node.gs028c.palpable-breast.paired-scar-edge.1", "question.palpable-breast.negative-mammogram-targeted-us.v2", "correct_2", "Targeted scar-edge ultrasound", "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]),
+  ...[
+    ["paired-dense-focal", "2", "1"], ["paired-scar-edge", "2", "2"], ["b-enlarging-negative-imaging", "1", "3"], ["b-surgeon-discordance", "1", "4"],
+  ].map(([slug, node, version]) => record(`case.gs028c.palpable-breast.${slug}`, `node.gs028c.palpable-breast.${slug}.${node}`, `question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v${version}`, `correct_${version}`, "Breast-specialist biopsy referral", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" })),
+  ...[
+    ["a-recent-negative", "3", "Targeted breast ultrasound"], ["a-discordant-exam", "4", "Targeted breast ultrasound"],
+  ].map(([slug, version, label]) => terminalService(`case.gs028c.palpable-breast.${slug}`, `node.gs028c.palpable-breast.${slug}.1`, `question.palpable-breast.negative-mammogram-targeted-us.v${version}`, `correct_${version}`, label!, "timing.test.ultrasound", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"])),
+  ...["pedunculated-enbloc", "sessile-superficial", "outside-slide-review", "clear-cautery-line"].map((slug, index) => record(`case.gs028c.malignant-polyp.a-${slug}`, `node.gs028c.malignant-polyp.a-${slug}.1`, `question.malignant-polyp.low-risk-endoscopic-excision.v${index + 1}`, `correct_${index + 1}`, "Colonoscopic surveillance", "timing.test.lower_endoscopy", { kind: "not_executed", reason: "future_planned" })),
+  ...["nondiagnostic-ultrasound", "atypical-older-adult", "equivocal-exam", "competing-diagnoses"].map((slug, index) => record(`case.gs028c.appendicitis.a-${slug}`, `node.gs028c.appendicitis.a-${slug}.1`, `question.appendicitis.stable-adult-ct.v${index + 1}`, `correct_${index + 1}`, "Abdominopelvic CT", "timing.test.ct", { kind: "not_executed", reason: "external_only" })),
+  ...["equivocal-wall-thickening", "stones-without-secondary-signs", "limited-ultrasound", "persistent-suspicion"].map((slug, index) => record(`case.gs028c.acute-cholecystitis.a-${slug}`, `node.gs028c.acute-cholecystitis.a-${slug}.1`, `question.cholecystitis.hida-after-equivocal-ultrasound.v${index + 1}`, `correct_${index + 1}`, "Hepatobiliary scintigraphy", "timing.test.nuclear_imaging", { kind: "not_executed", reason: "external_only" })),
+  ...["atrial-fibrillation", "acute-on-chronic-pattern", "kidney-injury", "possible-arterial-thrombosis"].map((slug, index) => record(`case.gs028c.acute-mesenteric-ischemia.a-${slug}`, `node.gs028c.acute-mesenteric-ischemia.a-${slug}.1`, `question.acute-mesenteric-ischemia.prompt-cta.v${index + 1}`, `correct_${index + 1}`, "Mesenteric CT angiography", "timing.test.ct_angiography", { kind: "not_executed", reason: "external_only" })),
+];
+
+const gs028October3Records: ExactTestChoiceOrderRecord[] = [
+  ...[
+    ["steering-wheel-impact", "1", "ECG plus cardiac troponin"],
+    ["sports-chest-impact", "2", "ECG and cardiac troponin"],
+    ["fall-anterior-chest", "3", "ECG with cardiac troponin"],
+    ["bicycle-handlebar-impact", "4", "ECG with cardiac troponin"],
+  ].map(([slug, version, label]) =>
+    record(
+      `case.gs028d.blunt-cardiac-injury.a-${slug}`,
+      `node.gs028d.blunt-cardiac-injury.a-${slug}.1`,
+      `question.blunt-cardiac-injury.ecg-troponin-evaluation.v${version}`,
+      `correct_${version}`,
+      label!,
+      "timing.test.combined_diagnostic",
+      { kind: "not_executed", reason: "external_only" },
+    ),
+  ),
+  ...[
+    ["warfarin-fall", "1"],
+    ["apixaban-doorframe", "2"],
+    ["rivaroxaban-cabinet", "3"],
+    ["dabigatran-low-speed-crash", "4"],
+  ].map(([slug, version]) =>
+    record(
+      `case.gs028d.head-pelvis-trauma.a-${slug}`,
+      `node.gs028d.head-pelvis-trauma.a-${slug}.1`,
+      `question.head-injury.anticoagulant-ed-ct-evaluation.v${version}`,
+      `correct_${version}`,
+      "Emergency evaluation for head CT",
+      "timing.test.ct",
+      { kind: "not_executed", reason: "external_only" },
+    ),
+  ),
+  ...[
+    ["diarrhea-low-bicarb", "1", "External blood gas"],
+    ["renal-low-bicarb", "2", "External blood-gas result"],
+    ["tachypnea-low-bicarb", "3", "External blood gas"],
+  ].map(([slug, version, label]) =>
+    record(
+      `case.gs028d.acid-base.a-${slug}`,
+      `node.gs028d.acid-base.a-${slug}.1`,
+      `question.metabolic-acidosis.confirm-with-blood-gas.v${version}`,
+      `correct_${version}`,
+      label!,
+      "timing.test.basic_labs",
+      { kind: "not_executed", reason: "external_only" },
+    ),
+  ),
+  gateOverride(
+    "case.gs028d.dialysis-access.paired-indeterminate-thrill",
+    "node.gs028d.dialysis-access.paired-indeterminate-thrill.1",
+    "question.dialysis-access.maturation-physical-assessment.v1",
+    "correct_1",
+    "Arrange specialist Doppler ultrasound",
+    "timing.test.ultrasound",
+    "service.ultrasound",
+    ["route.ultrasound.outsourced"],
+    false,
+  ),
+  gateOverride(
+    "case.gs028d.dialysis-access.paired-deep-access",
+    "node.gs028d.dialysis-access.paired-deep-access.1",
+    "question.dialysis-access.maturation-physical-assessment.v2",
+    "correct_2",
+    "Arrange specialist Doppler ultrasound",
+    "timing.test.ultrasound",
+    "service.ultrasound",
+    ["route.ultrasound.outsourced"],
+    false,
+  ),
+  ...[
+    ["current-smoker-eligible", "1"],
+    ["recent-quitter-eligible", "2"],
+  ].map(([slug, version]) =>
+    record(
+      `case.gs028d.thoracic-screening.a-${slug}`,
+      `node.gs028d.thoracic-screening.a-${slug}.1`,
+      `question.lung-cancer-screening.annual-ldct-eligibility.v${version}`,
+      `correct_${version}`,
+      "Refer for annual LDCT",
+      "timing.test.advanced_diagnostic",
+      { kind: "not_executed", reason: "external_only" },
+    ),
+  ),
+  ...[
+    ["new-unilateral", "1", "External image-guided thoracentesis"],
+    ["small-effusion", "2", "Image-guided thoracentesis"],
+    ["loculated-effusion", "3", "Image-guided pleural sampling"],
+    ["postoperative-effusion", "4", "Request image guidance"],
+  ].map(([slug, version, label]) =>
+    record(
+      `case.gs028d.thoracic-pleural.b-${slug}`,
+      `node.gs028d.thoracic-pleural.b-${slug}.1`,
+      `question.pleural-effusion.image-guided-thoracentesis-referral.v${version}`,
+      `correct_${version}`,
+      label!,
+      "timing.test.clinical_procedure",
+      { kind: "not_executed", reason: "specialist_or_unsupported_service" },
+    ),
+  ),
+];
+
+// These are outside-specialist workup choices. Incorrect selections retain the
+// corrected-forward policy: only the correct mixing assessment is ordered.
+// Explicit non-execution records keep their estimates independent of local labs.
+const gs028October7Records: ExactTestChoiceOrderRecord[] = [
+  ...([
+    ["elective-record-workup", "1", "Platelet-function testing"],
+    ["specialist-bruising-review", "2", "Platelet-count measurement"],
+  ] as const).flatMap(([slug, version, plateletLabel]) => {
+    const caseId = `case.gs028e.coagulation.paired-${slug}`;
+    const nodeId = `node.gs028e.coagulation.paired-${slug}.1`;
+    const questionId = `question.coagulation.isolated-aptt-mixing-workup.v${version}`;
+    return [
+      record(caseId, nodeId, questionId, `correct_${version}`, "aPTT mixing study", "timing.test.basic_labs", {
+        kind: "result_gate_route_override",
+        serviceId: "service.basic_labs",
+        allowedRouteIds: ["route.basic_labs.outsourced"],
+        allowOnsiteEquivalents: false,
+        externalRemainder: "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis.",
+      }),
+      record(caseId, nodeId, questionId, `d1_${version}`, plateletLabel, "timing.test.basic_labs", {
+        kind: "not_executed", reason: "external_only",
+      }),
+      record(caseId, nodeId, questionId, `d2_${version}`, "Fibrinogen activity measurement", "timing.test.basic_labs", {
+        kind: "not_executed", reason: "external_only",
+      }),
+      record(caseId, nodeId, questionId, `d3_${version}`, "Prothrombin-time measurement", "timing.test.basic_labs", {
+        kind: "not_executed", reason: "external_only",
+      }),
+    ];
+  }),
+];
+
+// The second variety batch uses ordinary blood/CT services where implemented.
+// Alternate wrong workups receive feedback without execution; specialist neck
+// sampling remains a referral because a generic neck-FNA service is not present.
+const gs028October7Variety2Records: ExactTestChoiceOrderRecord[] = [
+  ...([
+    ["late-period", "1", "Complete blood count", "Serum lipase testing", "Serum creatinine testing"],
+    ["contraception-spotting", "2", "Complete blood count", "Serum electrolyte testing", "Serum creatinine testing"],
+    ["early-home-negative", "3", "Complete blood count", "Serum lipase testing", "Serum electrolyte testing"],
+  ] as const).flatMap(([slug, version, ...labels]) => {
+    const caseId = `case.gs028f.gynecology.c1-${slug}`;
+    const nodeId = `node.gs028f.gynecology.c1-${slug}.1`;
+    const questionId = `question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v${version}`;
+    return [
+      terminalService(caseId, nodeId, questionId, `correct_${version}`, "Serum hCG measurement", "timing.test.basic_labs", "service.basic_labs", ["route.basic_labs.phlebotomy_sendout", "route.basic_labs.outsourced"]),
+      ...labels.map((label, index) => record(caseId, nodeId, questionId, `d${index + 1}_${version}`, label, "timing.test.basic_labs", {
+        kind: "not_executed", reason: "specialist_or_unsupported_service",
+      })),
+    ];
+  }),
+  ...([
+    ["persistent-solid", "1"], ["cystic-is-not-benign", "2"],
+  ] as const).flatMap(([slug, version]) => {
+    const caseId = `case.gs028f.neck-mass.paired-${slug}`;
+    const imagingNodeId = `node.gs028f.neck-mass.paired-${slug}.1`;
+    const imagingQuestionId = `question.gs028f.head-neck.persistent-mass-malignancy-ct.v${version}`;
+    const tissueNodeId = `node.gs028f.neck-mass.paired-${slug}.2`;
+    const tissueQuestionId = `question.gs028f.head-neck.initial-fna-not-open-biopsy.v${version}`;
+    return [
+      gateOverride(caseId, imagingNodeId, imagingQuestionId, `correct_${version}`, "Contrast-enhanced neck CT", "timing.test.ct", "service.ct", ["route.ct.in_house", "route.ct.outsourced"]),
+      record(caseId, imagingNodeId, imagingQuestionId, `d1_${version}`, "Plain cervical spine radiographs", "timing.test.radiography", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+      record(caseId, imagingNodeId, imagingQuestionId, `d2_${version}`, "Thyroid radionuclide scintigraphy", "timing.test.nuclear_imaging", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+      record(caseId, imagingNodeId, imagingQuestionId, `d3_${version}`, "Barium swallow fluoroscopy", "timing.test.contrast_swallow", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+      record(caseId, tissueNodeId, tissueQuestionId, `correct_${version}`, "Fine-needle aspiration referral", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+      record(caseId, tissueNodeId, tissueQuestionId, `d1_${version}`, "Open incisional biopsy referral", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+      record(caseId, tissueNodeId, tissueQuestionId, `d2_${version}`, "Open excisional biopsy referral", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+    ];
+  }),
+];
+
 const explicitNonExecutionRecords: ExactTestChoiceOrderRecord[] = [
   record("case.l2.gastroparesis.general-confirmatory-testing.v1", "node.gastroparesis.general-confirmatory-testing.v1", "question.gastroparesis.general-confirmatory-testing.v1", "four_hour_solid_meal_scintigraphy", "Four-hour solid-meal gastric emptying scintigraphy", "timing.test.four_hour_protocol", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
   record("case.l2.gastroparesis.diabetes-confirmatory-testing.v1", "node.gastroparesis.diabetes-confirmatory-testing.v1", "question.gastroparesis.diabetes-confirmatory-testing.v1", "four_hour_standardized_meal_scintigraphy", "Four-hour scintigraphy after a standardized solid meal", "timing.test.four_hour_protocol", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
@@ -275,8 +475,21 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   ...gateRouteOverrides,
   ...stagedResultGates,
   ...testOnlyContinuations,
+  ...gs028October2Records,
+  ...gs028October3Records,
+  ...gs028October7Records,
+  ...gs028October7Variety2Records,
+  // Planned specialist sentinel-node staging; no generic clinic biopsy alias.
+  ...GS028_20261007_LEVEL3_TIMING_ENTRIES.flatMap((entry): ExactTestChoiceOrderRecord[] => entry.classification.kind === "test_choices" ? entry.classification.choices.flatMap((choice): ExactTestChoiceOrderRecord[] => choice.timing.kind === "test" ? [{ caseId: entry.caseId, nodeId: entry.nodeId, questionVariantId: entry.questionVariantId, choiceId: choice.choiceId, choiceLabel: choice.choiceLabel, timingProfileId: choice.timing.timingProfileId, disposition: { kind: "not_executed", reason: "specialist_or_unsupported_service" } }] : []) : []),
   ...explicitNonExecutionRecords,
   ...existingTerminalProcedureRecords,
+  // Exact outside-plan discussions, including distractors. Timing is a preview;
+  // these clinic questions never submit a procedure or external service order.
+  ...VARIETY3_TIMING_ENTRIES.flatMap((entry): ExactTestChoiceOrderRecord[] =>
+    entry.classification.kind === "test_choices" ? entry.classification.choices.flatMap((choice): ExactTestChoiceOrderRecord[] =>
+      choice.timing.kind === "test" ? [record(entry.caseId, entry.nodeId, entry.questionVariantId,
+        choice.choiceId, choice.choiceLabel, choice.timing.timingProfileId,
+        { kind: "not_executed", reason: "external_only" })] : []) : []),
 ];
 
 const recordByExactKey = new Map(

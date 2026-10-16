@@ -166,7 +166,9 @@ Rooms and buildables:
 - Pediatric Waiting Room
 - Pediatric Examination Room
 - Wound/Ostomy Clinic
-- Call Room
+
+Owner decision (October 7, 2026): the Call Room is removed from the game; an
+overnight call room does not fit an ambulatory surgery center.
 
 Hireable staff:
 

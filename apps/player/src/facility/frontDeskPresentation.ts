@@ -1,7 +1,7 @@
 import type { GridPoint } from "@gamify-surgery/game-domain";
 
 import type { FixtureId } from "../art/fixtureArt";
-import type { LandscapingAtlasFrameId } from "../art/bitmapAssetManifest";
+import { FRONTAGE_V2_ASSETS, type FrontageAssetId } from "../art/bitmapAssetManifest";
 import type {
   FacilityFounderView,
   FacilityRoomView,
@@ -130,53 +130,21 @@ export const FRONT_DESK_PRESENTATION = {
   entrancePlanters: [
     {
       side: "west",
+      assetId: "frontage:bed-west-v3",
       centerXInTiles: 0.95,
       baseYInSidewalk: 0.5,
       widthInTiles: 1.55,
-      heightInTiles: 0.5,
-      bloomAccents: [
-        {
-          id: "landscape:flowers-white",
-          centerXInTiles: 0.64,
-          baseYInSidewalk: 0.43,
-          widthInTiles: 0.52,
-          heightInTiles: 0.43,
-          alpha: 0.96,
-        },
-        {
-          id: "landscape:flowers-pink",
-          centerXInTiles: 1.22,
-          baseYInSidewalk: 0.57,
-          widthInTiles: 0.46,
-          heightInTiles: 0.38,
-          alpha: 0.9,
-        },
-      ],
+      heightInTiles: 1.55 * FRONTAGE_V2_ASSETS["frontage:bed-west-v3"].nativeHeight /
+        FRONTAGE_V2_ASSETS["frontage:bed-west-v3"].nativeWidth,
     },
     {
       side: "east",
+      assetId: "frontage:bed-east-v3",
       centerXInTiles: 4.05,
       baseYInSidewalk: 0.5,
       widthInTiles: 1.55,
-      heightInTiles: 0.5,
-      bloomAccents: [
-        {
-          id: "landscape:flowers-pink",
-          centerXInTiles: 3.78,
-          baseYInSidewalk: 0.43,
-          widthInTiles: 0.5,
-          heightInTiles: 0.42,
-          alpha: 0.92,
-        },
-        {
-          id: "landscape:flowers-white",
-          centerXInTiles: 4.35,
-          baseYInSidewalk: 0.57,
-          widthInTiles: 0.48,
-          heightInTiles: 0.38,
-          alpha: 0.9,
-        },
-      ],
+      heightInTiles: 1.55 * FRONTAGE_V2_ASSETS["frontage:bed-east-v3"].nativeHeight /
+        FRONTAGE_V2_ASSETS["frontage:bed-east-v3"].nativeWidth,
     },
   ] as const satisfies readonly FrontDeskEntrancePlanterPlacement[],
 } as const;
@@ -193,25 +161,14 @@ export interface FrontDeskFixturePlacement {
 
 export interface FrontDeskWallFixturePlacement extends FrontDeskFixturePlacement {}
 
-export interface FrontDeskEntranceBloomAccent {
-  id: Extract<
-    LandscapingAtlasFrameId,
-    "landscape:flowers-white" | "landscape:flowers-pink"
-  >;
-  centerXInTiles: number;
-  baseYInSidewalk: number;
-  widthInTiles: number;
-  heightInTiles: number;
-  alpha: number;
-}
-
 export interface FrontDeskEntrancePlanterPlacement {
   side: "west" | "east";
+  /** All leaves and blooms are authored inside the complete soil/rim prop. */
+  assetId: Extract<FrontageAssetId, "frontage:bed-west-v3" | "frontage:bed-east-v3">;
   centerXInTiles: number;
   baseYInSidewalk: number;
   widthInTiles: number;
   heightInTiles: number;
-  bloomAccents: readonly FrontDeskEntranceBloomAccent[];
 }
 
 export interface FrontDeskEntranceDisplayBounds {
@@ -248,14 +205,6 @@ export function getFrontDeskEntrancePlanterDisplayBounds(
       planter.baseYInSidewalk,
       planter.widthInTiles,
       planter.heightInTiles,
-    ),
-    ...planter.bloomAccents.map((accent) =>
-      boundsForEntranceDisplay(
-        accent.centerXInTiles,
-        accent.baseYInSidewalk,
-        accent.widthInTiles,
-        accent.heightInTiles,
-      ),
     ),
   ];
 }

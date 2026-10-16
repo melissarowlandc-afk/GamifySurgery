@@ -89,7 +89,7 @@ test("patient-v1 keeps the same identity through map/list/chart and reload", asy
   const thumbnailSrc = await thumbnail.getAttribute("src");
   expect(thumbnailSrc).toBeTruthy();
   await jordanTab.click();
-  const chartPortrait = page.locator(".chart-identity-column img.pixel-avatar-still");
+  const chartPortrait = page.locator(".cs-avatar img.pixel-avatar-still");
   await expect(chartPortrait).toHaveAttribute("src", thumbnailSrc!);
   await expect(page.locator(".facility-host canvas")).toBeVisible();
   await page.screenshot({

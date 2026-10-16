@@ -44,12 +44,12 @@ describe("clinical service choice labels", () => {
     expect(
       chart(available).answerChoices.find((choice) => choice.id === CORRECT_CHOICE_ID)
         ?.detailLabel,
-    ).toBe("Estimated test wait (game time)");
+    ).toContain("Estimated total (game time; includes queues and walking).");
     expect(
       currentStep(available).answerChoices.find(
         (choice) => choice.id === CORRECT_CHOICE_ID,
       )?.detailLabel,
-    ).toBe("Estimated test wait (game time)");
+    ).toContain("Estimated total (game time; includes queues and walking).");
 
     const unavailable = structuredClone(available);
     const choice = unavailable.encounters[ENCOUNTER_ID]!.frozenCase

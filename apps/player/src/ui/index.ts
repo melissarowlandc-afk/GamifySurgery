@@ -10,6 +10,7 @@ export { GoalsPanel } from "./GoalsPanel";
 export { HelpDialog } from "./HelpDialog";
 export { ManagementPanel } from "./ManagementPanel";
 export { ServiceIncomePanel } from "./ServiceIncomePanel";
+export { MoneyPanel } from "./MoneyPanel";
 export { OpeningSequence } from "./OpeningSequence";
 export { PatientLists } from "./PatientLists";
 export { PixelAvatar } from "./PixelAvatar";
@@ -29,12 +30,17 @@ export type {
   ChartRewardView,
   ChartView,
   DevelopmentView,
+  EndoscopySetupRequirementView,
+  ProcedureSetupRequirementView,
   EmergencyGlp1View,
   MessageBoardCategory,
   MessageBoardItemKind,
   MessageBoardItemView,
   MessageBoardPriority,
   MessageBoardTargetType,
+  NeedsYouItemView,
+  ClinicAlertAction,
+  ClinicAlertActionResult,
   PatientFolder,
   PatientTabView,
   PixelAvatarAccessory,
@@ -50,9 +56,13 @@ export type {
   ServiceIncomeOperationView,
   ServiceIncomeReceiptView,
   ServiceIncomeView,
+  ServiceSetupActionView,
+  ManagementFinanceView,
   RoomBuildOptionView,
   SelectedRoomBuildView,
   StaffHireOptionView,
   StaffMemberView,
   StaffRoleGroupView,
+  StaffRoleTrainingSummaryView,
+  StaffTrainingOverviewView,
 } from "./types";

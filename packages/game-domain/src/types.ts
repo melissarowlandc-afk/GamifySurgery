@@ -1,4 +1,6 @@
-import type { PrototypeBalanceRelease } from "@gamify-surgery/balance-config";
+import type { FacilityLevel, PrototypeBalanceRelease } from "@gamify-surgery/balance-config";
+import type { LevelFiveState } from "./level-five-types";
+export type * from "./level-five-types";
 import type {
   DecisionNode,
   SyntheticClinicalCase,
@@ -23,6 +25,39 @@ export type SimulationSpeed = 1 | 2 | 4;
 export type RoomOrientation = 0 | 90 | 180 | 270;
 export type CardinalDirection = "north" | "east" | "south" | "west";
 export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
+
+/** Optional opt-in contract: old work without this marker keeps its original fee. */
+export interface RoomUpgradeRevenueQuote {
+  version: "room-upgrade-revenue.v1";
+  baseFee: number;
+  roomDefinitionId: string;
+  candidates: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel; multiplier: number }>;
+  /** Bound exactly once to the room that earns the fee, never to preparation or recovery. */
+  boundRoom: { roomInstanceId: string; multiplier: number } | null;
+}
+
+export interface RoomUpgradeExperienceWitness {
+  roomInstanceId: string;
+  /** Frozen points, including zero; capped awards still consume the witness. */
+  points: number;
+  boundAtFacilityTick: number;
+  appliedAtFacilityTick: number | null;
+}
+
+export interface RoomUpgradeExperience {
+  version: "room-upgrade-experience.v1";
+  waiting?: RoomUpgradeExperienceWitness;
+  examination?: RoomUpgradeExperienceWitness;
+  recovery?: RoomUpgradeExperienceWitness & { operationId: string };
+}
+
+/** Optional original-acceptance contract; unmarked legacy Recovery stays neutral. */
+export interface RoomUpgradeRecoveryQuote {
+  version: "room-upgrade-recovery.v1";
+  phaseId: string;
+  candidates: Array<{ roomInstanceId: string; points: number }>;
+  boundRoom: { roomInstanceId: string; points: number } | null;
+}
 export type PrototypeAlertCategory =
   | "action_required"
   | "guidance"
@@ -118,6 +153,156 @@ export interface GridPoint {
   y: number;
 }
 
+/** Frozen inputs and progress for new diagnostic work; absent on legacy orders. */
+export interface DiagnosticResourceChoice {
+  roomInstanceId: string;
+  roomDefinitionId: string;
+  /** Reading workstations and Periop beds share a room without sharing a queue. */
+  stationId: string | null;
+  employeeIds: string[];
+  provider: { kind: "employee"; employeeId: string } | { kind: "founder" } | null;
+  patientAnchor: GridPoint;
+  staffAnchor: GridPoint;
+}
+
+export interface DiagnosticResourceRequirement {
+  roomDefinitionId: string;
+  staffRoleDefinitionIds: string[];
+  providerRoleDefinitionIds: string[];
+  founderEligible: boolean;
+  stationKind: "reading" | "periop_bed" | null;
+}
+
+/** Opt-in five-minute local reading contract; never added to legacy work. */
+export interface RoomUpgradeReadingWork {
+  version: "room-upgrade-reading.v1";
+  baselineMinutes: 5;
+  employeeReductionPercent: number;
+  acceptedAtTick: number;
+  executionEnabledAtTick: number | null;
+  /** Actual completed dependencies, never their forecast. */
+  readyAtTick: number | null;
+  acceptedRooms: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel }>;
+  quotedRoomInstanceId: string;
+  boundRoomInstanceId: string | null;
+  boundUpgradeLevel: RoomUpgradeLevel | null;
+  durationMinutes: number | null;
+}
+
+export interface DiagnosticOrderPhase {
+  id: string;
+  componentId: string | null;
+  kind: "collection" | "acquisition" | "preparation" | "procedure" | "recovery" |
+    "interpretation" | "laboratory_processing" | "pathology" | "retained" | "patient_departure" | "patient_return";
+  mode: "local" | "external";
+  patientPresent: boolean;
+  durationMinutes: number;
+  dependsOn: string[];
+  requirement: DiagnosticResourceRequirement | null;
+  resource: DiagnosticResourceChoice | null;
+  forecast: {
+    readyAtTick: number;
+    startsAtTick: number;
+    endsAtTick: number;
+    queueMinutes: number;
+    walkingMinutes: number;
+    patientPath: GridPoint[];
+    employeePaths: Array<{ employeeId: string; path: GridPoint[] }>;
+    founderPath: GridPoint[];
+    tilesPerTick: number;
+  };
+  status: "pending" | "queued" | "active" | "completed" | "cancelled";
+  /** Interrupted work keeps this value; it never rereads balance or restarts. */
+  remainingMinutes: number;
+  startedAtTick: number | null;
+  completedAtTick: number | null;
+  serviceOperationId: string | null;
+  /** Phase identity inside a linked multi-phase physical operation. */
+  operationPhaseId: string | null;
+  readingUpgradeWork?: RoomUpgradeReadingWork;
+}
+
+export interface DiagnosticOrderMilestone {
+  afterPhaseIds: string[];
+  forecastAtTick: number;
+  reachedAtTick: number | null;
+}
+
+export interface DiagnosticOrderPlan {
+  version: "diagnostic-order.v1";
+  /** New accepted plans freeze nurse skill; unmarked legacy plans stay exempt. */
+  periopNurseAttentionQuote?: Pick<PeriopNurseAttentionState, "version" | "trainingPercent">;
+  timingVersion: "diagnostic-timing.v1";
+  orderId: string;
+  encounterId: string;
+  createdAtTick: number;
+  /** Generic profiles can quote work without inventing an executable procedure. */
+  execution: "supported" | "preview_only";
+  sources: Array<{
+    componentId: string | null;
+    serviceId: string | null;
+    timingProfileId: string | null;
+    routeId: string | null;
+    routeDisplayName: string;
+    /** Optional for older v1 plans; new local acquisitions freeze their fee. */
+    incomeLineId?: string;
+    quoteFee?: number;
+    /** Frozen fee paid once by the local interpretation. */
+    readIncomeFee?: number;
+    /** Absent on accepted legacy split contracts; new fees are additional. */
+    readIncomeBilling?: "additive";
+    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+    roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
+    kind: "explicit_route_phases" | "approved_operation" | "retained_inclusive_total" | "retained_profile";
+    inclusiveDurationMinutes: number;
+    routePhases: Array<{ id: string; durationMinutes: number; resourceBound: boolean }>;
+    operationPhases: Array<{
+      id: string;
+      roomDefinitionId: string | null;
+      durationMinutes: number;
+      staffRoleDefinitionIds: string[];
+      providerRoleDefinitionIds: string[];
+      founderEligible: boolean;
+      roomStationId: string | null;
+    }>;
+  }>;
+  phases: DiagnosticOrderPhase[];
+  resultReady: DiagnosticOrderMilestone;
+  /** Visual endoscopy findings can be viewed while recovery/pathology continues. */
+  visualResultReady: DiagnosticOrderMilestone | null;
+  careComplete: DiagnosticOrderMilestone;
+}
+
+/** Internal remote work; a marked read receives its reserved bundle portion. */
+export interface DiagnosticPhaseWork {
+  version: "diagnostic-phase-work.v1";
+  orderId: string;
+  encounterId: string;
+  phaseId: string;
+  kind: "interpretation" | "laboratory_processing" | "pathology";
+  billing: "none";
+  durationMinutes: number;
+  remainingMinutes: number;
+  resource: DiagnosticResourceChoice | null;
+  readingUpgradeWork?: RoomUpgradeReadingWork;
+  readIncomeFee?: number;
+}
+
+/** Binding of frozen diagnostic patient work to the existing physical engine. */
+export interface DiagnosticPhysicalWork {
+  version: "diagnostic-physical-work.v1";
+  orderId: string;
+  encounterId: string;
+  componentId: string | null;
+  billing: "existing_service" | "none";
+  /** Legacy split only: withheld from acquisition, paid by the linked read. */
+  readIncomeFee?: number;
+  phaseBindings: Array<{ diagnosticPhaseId: string; operationPhaseId: string; resource: DiagnosticResourceChoice | null }>;
+  phaseWitnesses: Array<{ operationPhaseId: string; startedAtFacilityTick: number | null; completedAtFacilityTick: number | null }>;
+  /** Frozen remaining work at the most recent start/resume, never tick-decremented. */
+  remainingPhaseMinutes: number | null;
+}
+
 export type PixelAppearanceVariant =
   | 0
   | 1
@@ -197,7 +382,8 @@ export interface PixelAppearanceDescriptor {
     | "endoscopist"
     | "phlebotomist"
     | "evs_worker"
-    | "glp1_np";
+    | "glp1_np"
+    | "app";
 }
 
 export interface FounderIdentity {
@@ -208,6 +394,11 @@ export interface FounderIdentity {
 }
 
 export interface DomainContext {
+  /** Session-only storage failure gate; never serialized as campaign state. */
+  guidanceTipsDeliveryBlocked?: boolean;
+  /** Session attention holds never acquire or serialize a pause. */
+  guidanceAttentionBlocked?: boolean;
+  guidanceBlockedTopicIds?: readonly string[];
   clinicalRelease: SyntheticClinicalRelease;
   balanceRelease: PrototypeBalanceRelease;
 }
@@ -278,6 +469,7 @@ export interface SchedulerPins {
 }
 
 export interface PendingResult {
+  diagnosticTiming?: DiagnosticOrderPlan;
   operationId: string;
   gateId: string;
   originatingNodeIndex: number;
@@ -295,6 +487,25 @@ export interface PendingResult {
   durationTicks: number;
   dueTick: number;
   deliveredAtTick: number | null;
+  /**
+   * New perioperative result orders run their local work through the service
+   * operation engine before the frozen external-result interval begins.
+   * Undefined preserves the timing and travel of existing pending results.
+   */
+  localServiceOperation?: {
+    version: "pending-result-service-operation.v1";
+    status: "feedback_pending" | "waiting_for_service" | "external_processing";
+    incomeLineId: string;
+    serviceOperationId: string | null;
+    externalDurationTicks: number;
+  };
+  /** Non-busy witness for routing a returned procedure question to its completed suite. */
+  completedCareProvenance?: {
+    version: "completed-care-provenance.v1";
+    serviceOperationId: string;
+    roomInstanceId: string;
+    provider: { kind: "employee"; employeeId: string } | { kind: "founder" } | null;
+  };
   /**
    * Set when an off-site patient begins the persisted offscreen-to-Front-Desk
    * return route. Null before that transition.
@@ -322,6 +533,8 @@ export interface PendingResult {
   /** Frozen only for work scheduled after the income feature was introduced. */
   serviceIncomeLineId?: string;
   serviceIncomeFee?: number;
+  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+  roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
   resourceReservations?: Array<{ roomDefinitionId: string; staffRoleDefinitionId: string | null }>;
   /** Concrete mobile imaging worker selected for this frozen onsite service. */
   imagingTechnicianId?: string | null;
@@ -480,17 +693,79 @@ export interface ServiceIncomeReceipt {
   completedAtFacilityTick: number;
 }
 
+export interface RadiologistReadTotals {
+  inHouseReads: number;
+  inHouseIncomeCents: number;
+  outsideReads: number;
+  outsideIncomeCents: number;
+}
+
+export interface RadiologistReadIncomeState {
+  version: "radiologist-read-income.v1";
+  nextOutsideReadSequence: number;
+  dayNumber: number;
+  facilityLevel: number;
+  today: RadiologistReadTotals;
+  thisLevel: RadiologistReadTotals;
+}
+
+export interface OutsideRadiologyRead {
+  version: "outside-radiology-read.v1";
+  sequence: number;
+  employeeId: string;
+  roomInstanceId: string;
+  stationId: string;
+  startedAtFacilityTick: number;
+  lastObservedAtFacilityTick: number;
+  baselineMinutes: number;
+  employeeReductionPercent: number;
+  upgradeLevel: RoomUpgradeLevel;
+  durationMinutes: number;
+  fee: number;
+}
+
 export type ServiceOperationStatus =
   | "arriving"
   | "waiting_for_resources"
   | "walking_to_service"
   | "in_service"
   | "walking_between_phases"
+  | "waiting_for_next_phase"
+  | "waiting_for_results"
+  | "discharging"
   | "leaving"
   | "completed"
   | "cancelled";
 
+export interface PeriopNurseAttentionTask {
+  phaseIndex: number;
+  kind: "pre_op" | "post_op";
+  /** Frozen once, independently of the patient's (possibly trained) phase. */
+  durationMinutes: number;
+  remainingMinutes: number;
+  readyAtFacilityTick: number | null;
+  requiredUntilFacilityTick: number | null;
+  employeeId: string | null;
+  standingPoint: GridPoint | null;
+  startedAtFacilityTick: number | null;
+  completedAtFacilityTick: number | null;
+  lastProgressAtFacilityTick: number | null;
+}
+
+export interface PeriopNurseAttentionState {
+  version: "periop-nurse-attention.v1";
+  trainingPercent: number;
+  tasks: PeriopNurseAttentionTask[];
+}
+
 export interface ServiceOperationState {
+  executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
+  /** Once-only actual garden-rest witness; omitted on older visits. */
+  gardenVisitBenefit?: GardenVisitBenefit;
+  diagnosticPhaseWork?: DiagnosticPhaseWork;
+  diagnosticPhysicalWork?: DiagnosticPhysicalWork;
+  /** Scheduled MRI uses the same frozen acquisition/read plan as chart orders. */
+  diagnosticTiming?: DiagnosticOrderPlan;
   id: string;
   incomeLineId: string;
   catalogVersion: 1;
@@ -498,6 +773,17 @@ export interface ServiceOperationState {
   actorId: string;
   displayName: string;
   appearance: PixelAppearanceDescriptor | null;
+  /** Frozen unscored clinic visit; omission retains legacy operation semantics. */
+  clinicVisit?: ClinicVisitState;
+  /** Optional, provider-specific payment contract for new adult APP visits. */
+  appAppointmentRevenue?: {
+    version: "app-appointment-revenue.v1";
+    providerEmployeeId: string;
+    baseFee: number;
+    trainingLevel: RoomUpgradeLevel;
+    trainingPercent: number;
+    fee: number;
+  };
   status: ServiceOperationStatus;
   createdAtFacilityTick: number;
   waitDeadlineFacilityTick: number;
@@ -505,6 +791,8 @@ export interface ServiceOperationState {
   completedAtFacilityTick: number | null;
   cancelledAtFacilityTick: number | null;
   quoteFee: number;
+  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+  roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
   phaseIndex: number;
   phaseStartedAtFacilityTick: number | null;
   phaseEndsAtFacilityTick: number | null;
@@ -514,11 +802,18 @@ export interface ServiceOperationState {
     | { kind: "employee"; employeeId: string }
     | { kind: "founder" }
     | null;
+  /** Historical care witness; it never reserves the room or provider. */
+  completedCareProvenance?: {
+    version: "completed-care-provenance.v1";
+    roomInstanceId: string;
+    provider: { kind: "employee"; employeeId: string } | { kind: "founder" } | null;
+  };
   location: GridPoint | null;
   path: GridPoint[];
   pathIndex: number;
   lastMovedAtFacilityTick: number;
   cancellationReason: string | null;
+  resourceWaitReason?: string | null;
   /** Frozen sidewalk continuity for scheduled diagnostic visitors. */
   visitorTravel?: {
     version: "service-visitor-travel.v1";
@@ -527,6 +822,43 @@ export interface ServiceOperationState {
   };
   /** New encounter operations wait indefinitely for installed onsite resources. */
   resourceQueueVersion?: 1;
+  /** New periop-first operations reserve and release one phase at a time. */
+  phaseFlowVersion?: 1;
+  /** New operations bind one real Periop bed from preparation through physical discharge. */
+  periopBedFlowVersion?: 1;
+  /** Opt-in for new work; unmarked saved phases retain legacy attendance. */
+  periopNurseAttention?: PeriopNurseAttentionState;
+  periopBedReservation?: {
+    version: "periop-bed-reservation.v1";
+    roomInstanceId: string;
+    bedId: string;
+    endpoint: GridPoint;
+  };
+  /** Stable FIFO timestamp for a physically present patient waiting on the next phase. */
+  nextPhaseReadyAtFacilityTick?: number | null;
+  /** Rooms retained until the actor physically clears the outgoing suite. */
+  transitionHeldRoomInstanceIds?: string[];
+  /** Current phase was interrupted by a room sale and must restart in compatible capacity. */
+  saleTransfer?: {
+    version: "room-sale-transfer.v1";
+    interruptedAtFacilityTick: number;
+    remainingPhaseMinutes: number;
+  };
+  departureItinerary?: {
+    version: "service-departure-itinerary.v1";
+    status: "pending" | "bathroom" | "retail" | "completed" | "skipped";
+    choiceKind: "bathroom" | "retail" | "none" | null;
+    selectedAtFacilityTick: number | null;
+    completedAtFacilityTick: number | null;
+    linkedTripId: string | null;
+    retailIncomeLineId: string | null;
+  };
+  /** New work snapshots category skill; each phase binds its alternative once. */
+  trainingTiming?: {
+    version: "employee-training-timing.v1";
+    categoryPercents: Record<string, number>;
+    phases: Array<{ phaseId: string; baselineMinutes: number; boundPercent: number | null }>;
+  };
   /** Frozen staged-order work template; ordinary and older operations continue using their catalog template. */
   frozenOperationPhases?: Array<{
     id: string;
@@ -535,11 +867,12 @@ export interface ServiceOperationState {
     staffRoleDefinitionIds: string[];
     providerRoleDefinitionIds?: string[];
     founderEligible?: true;
+    roomStationId?: "periop_preparation" | "periop_recovery";
   }>;
   /** Frozen exact authored test order for encounter work scheduled by a choice. */
   testChoiceOrder?: {
     version: "test-choice-order.v1";
-    purpose: "terminal" | "continuation" | "staged_result_component";
+    purpose: "terminal" | "continuation" | "staged_result_component" | "result_gate";
     caseId: string;
     nodeId: string;
     questionVariantId: string;
@@ -553,10 +886,47 @@ export interface ServiceOperationState {
   };
 }
 
+export interface GardenVisitBenefit {
+  version: "garden-visit-benefit.v1";
+  roomInstanceId: string;
+  upgradeLevel: RoomUpgradeLevel;
+  seatId: "leftSeat" | "rightSeat";
+  points: number;
+  completedAtFacilityTick: number;
+}
+
+interface PatientAmenityTripBase {
+  version: "patient-amenity-trip.v1";
+  id: string;
+  actorKind: "encounter" | "service_visitor";
+  actorId: string;
+  status: "walking_to_amenity" | "using_amenity" | "returning";
+  startedAtFacilityTick: number;
+  dwellEndsAtFacilityTick: number | null;
+  returnRequested: boolean;
+  returnTarget: GridPoint;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  purpose?: "departure";
+  linkedServiceOperationId?: string;
+}
+
+export type PatientAmenityTripState = PatientAmenityTripBase & (
+  { amenityKind: "bathroom"; bathroomRoomInstanceId: string } |
+  { amenityKind: "garden"; bathroomRoomInstanceId?: never; gardenRoomInstanceId: string;
+    gardenSeatId: GardenVisitBenefit["seatId"]; gardenUpgradeLevel: RoomUpgradeLevel;
+    gardenSatisfactionPoints: number; gardenRestMinutes: number; supportDoorId: string;
+    /** Contact released; retain the native path/cursor until an exit reopens. */
+    returnBlocked?: true }
+);
+
 export type RetailActorKind = "employee" | "founder" | "encounter" | "service_visitor" | "retail_visitor" | "companion";
 export type RetailOperationStatus = "walking_to_outlet" | "queued" | "purchasing" | "returning" | "leaving" | "completed" | "abandoned" | "cancelled";
 
 export interface RetailOperationState {
+  giftCheckout?: GiftCheckoutState;
+  executiveStock?: import("./level-five-types").ExecutiveStockQuote;
   id: string;
   incomeLineId: string;
   catalogVersion: 1;
@@ -572,6 +942,7 @@ export interface RetailOperationState {
   startedAtFacilityTick: number | null;
   completedAtFacilityTick: number | null;
   quoteGross: number;
+  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
   quoteStockCost: number;
   outletRoomInstanceId: string;
   outletDurationMinutes: number;
@@ -584,9 +955,85 @@ export interface RetailOperationState {
   lastMovedAtFacilityTick: number;
   purchaseEndsAtFacilityTick: number | null;
   cancellationReason: string | null;
+  resourceWaitReason?: string | null;
+  departureServiceOperationId?: string;
+}
+
+export interface ProcedureCompanionState {
+  version: "procedure-companion.v1";
+  phase: "waiting_in_periop" | "walking_to_amenity" | "using_amenity" | "returning_to_periop" | "leaving_with_patient";
+  periopRoomInstanceId: string | null;
+  waitingReservation: {
+    roomInstanceId: string;
+    location: GridPoint;
+    kind: "chair" | "standing";
+    seatId: string | null;
+  } | null;
+  /** One seeded amenity decision per procedure phase, preserved through reload. */
+  amenityDecisionPhaseIndex: number | null;
+  amenityRoomInstanceId: string | null;
+  amenityDwellEndsAtFacilityTick: number | null;
+}
+
+export interface ClinicVisitState {
+  version: "clinic-visit.v1";
+  kind: "adult_appointment" | "pediatric_consult" | "wound_care" | "ostomy_support" | "mri";
+  demographics: { ageYears: number; sexLabel: PatientSexLabel };
+  /** Pediatric visits alone require a family; adults never gain one by default. */
+  pediatricFamilyId?: string;
+  /** Demand attribution and dispatch preference, not an exclusive reservation. */
+  requestedRoomInstanceId?: string;
+}
+
+/** One patient admission and one adult companion, independent of peri-op excursions. */
+export interface PediatricFamilyState {
+  version: "pediatric-family.v1";
+  id: string;
+  child: { kind: "encounter" | "service_visitor"; id: string };
+  parentActorId: string;
+  /** Optional on M1/older saves. Two aligned lanes cross each doorway together. */
+  movement?: {
+    version: "pediatric-pair-travel.v1";
+    childPath: GridPoint[];
+    parentPath: GridPoint[];
+    pathIndex: number;
+    lastMovedAtFacilityTick: number;
+    doorIds: string[];
+  };
+  phase: "arriving" | "waiting" | "in_care" | "results_wait" | "departing" | "departed";
+  /** Both places belong to the same room; no extra patient or learning slot. */
+  reservation: {
+    roomInstanceId: string;
+    childLocation: GridPoint;
+    parentLocation: GridPoint;
+    childSeatId: string | null;
+    parentSeatId: string | null;
+  } | null;
+}
+
+/** Historical service evidence intentionally does not require retained live actors/rooms. */
+export interface LevelFourVisitWitness {
+  completedAtFacilityTick: number;
+  serviceOperationId: string | null;
+  encounterId: string | null;
+}
+
+export interface LevelFourCompletionState {
+  version: "level-four-completion.v1";
+  pediatricVisitWithParent: (LevelFourVisitWitness & {
+    incomeLineId: "income.pediatric_consult";
+    parentActorId: string;
+  }) | null;
+  woundOstomyCareVisit: (LevelFourVisitWitness & {
+    incomeLineId: "income.wound_care" | "income.ostomy_support";
+  }) | null;
+  /** Once-only acknowledgement; no Level 5 successor or automatic reward. */
+  acknowledgedAtFacilityTick: number | null;
 }
 
 export interface RetailExternalActorState {
+  /** A separate Level 5 adult shopping stream, never a clinical admission. */
+  giftOnlyVisit?: GiftOnlyVisitState;
   id: string;
   kind: "retail_visitor" | "companion";
   displayName: string;
@@ -599,6 +1046,11 @@ export interface RetailExternalActorState {
   pathIndex: number;
   lastMovedAtFacilityTick: number;
   activeRetailOperationId: string | null;
+  /** A blocked optional actor journey is visible and retried, never an alert. */
+  movementWaitReason?: string | null;
+  /** Linked legacy procedure companions are adopted on load/tick. */
+  procedureCompanion?: ProcedureCompanionState;
+  pediatricFamilyId?: string;
 }
 
 export interface RetailOrderState {
@@ -611,6 +1063,29 @@ export interface RetailOrderState {
   createdAtFacilityTick: number;
 }
 
+export interface GiftRetailDemandState {
+  version: "gift-retail-demand.v1";
+  nextOpportunityAtFacilityTick: number;
+  opportunitySequence: number;
+}
+
+export interface GiftOnlyVisitState {
+  version: "gift-only-visit.v1";
+  opportunitySequence: number;
+  ageYears: number;
+  sexLabel: "Female" | "Male";
+}
+
+export interface GiftCheckoutState {
+  version: "gift-checkout.v1";
+  /** Released on dispense/cancel, including while a blocked exit is retried. */
+  contactId: "pay" | "queue1" | "queue2" | null;
+  doorId: string;
+  returnBlocked?: true;
+  /** Freeze presentation at the actual cursor while another shopper uses the aisle. */
+  aisleWaiting?: true;
+}
+
 export interface RetailActorLedgerState {
   dayNumber: number;
   foodDayNumber: number;
@@ -621,7 +1096,11 @@ export interface RetailActorLedgerState {
 }
 
 export interface EncounterState {
+  executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
+  /** Once-only actual garden-rest witness; omitted on older visits. */
+  gardenVisitBenefit?: GardenVisitBenefit;
   id: string;
+  pediatricFamilyId?: string;
   clinicalReleaseId: string;
   frozenCase: SyntheticClinicalCase;
   /**
@@ -643,6 +1122,8 @@ export interface EncounterState {
   idleWaitingSinceTick: number | null;
   lastSatisfactionDecayAtTick: number;
   walkoutThreshold: number;
+  /** First feed warning for this encounter's actual walkout-risk window. */
+  departureRiskWarningAtTick: number | null;
   satisfactionWarningsShown: number[];
   /**
    * Persisted attribution for losses to the one patient-satisfaction score.
@@ -663,6 +1144,7 @@ export interface EncounterState {
   /** Prevents the staffed-check-in overdue consequence from repeating. */
   unstaffedCheckInOverdueApplied: boolean;
   finalPatientSatisfaction: number | null;
+  roomUpgradeExperience?: RoomUpgradeExperience;
   resolvedAtFacilityTick: number | null;
   arrivalClass: ArrivalClass;
   protectedGuaranteeId: string | null;
@@ -695,6 +1177,7 @@ export interface EncounterState {
   pendingResult: PendingResult | null;
   /** Frozen local component of a non-result test order before an authored later follow-up. */
   testOnlyContinuation?: {
+    diagnosticTiming?: DiagnosticOrderPlan;
     version: "test-only-continuation.v1";
     originatingNodeIndex: number;
     serviceId: string;
@@ -702,13 +1185,24 @@ export interface EncounterState {
     routeDisplayName: string;
     incomeLineId: string | null;
     externalRemainder: string;
+    quoteFee?: number;
+    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+    roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
     status: "feedback_pending" | "waiting_for_service" | "returning_to_front_desk" | "completed" | "external_arranged";
     serviceOperationId: string | null;
     scheduledAtFacilityTick: number;
     completedAtFacilityTick: number | null;
+    /** Persisted only when a room sale forces the local component off site. */
+    saleInterruptedOffsite?: {
+      version: "sale-interrupted-continuation.v1";
+      readyAtFacilityTick: number | null;
+      offscreenEndpoint: GridPoint | null;
+      returnPath: GridPoint[];
+    };
   };
   /** Frozen supported local pieces that must finish before an authored external result gate begins. */
   stagedResultOrder?: {
+    diagnosticTiming?: DiagnosticOrderPlan;
     version: "staged-result-order.v1";
     originatingNodeIndex: number;
     caseId: string;
@@ -720,12 +1214,15 @@ export interface EncounterState {
     remainderMode: "external_patient_visit" | "external_processing";
     currentComponentIndex: number;
     components: Array<{
+      diagnosticTiming?: DiagnosticOrderPlan;
       componentId: string;
       serviceId: string;
       routeId: string;
       routeDisplayName: string;
       incomeLineId: string;
       quoteFee: number;
+      roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+      roomUpgradeRecovery?: RoomUpgradeRecoveryQuote;
       operationPhases: Array<{
         id: string;
         roomDefinitionId: string | null;
@@ -733,6 +1230,7 @@ export interface EncounterState {
         staffRoleDefinitionIds: string[];
         providerRoleDefinitionIds?: string[];
         founderEligible?: true;
+        roomStationId?: "periop_preparation" | "periop_recovery";
       }>;
       externalRemainder: string;
       status: "pending" | "waiting_for_service" | "returning_to_front_desk" | "completed" | "cancelled";
@@ -743,6 +1241,7 @@ export interface EncounterState {
   };
   /** Durable terminal test order, including offsite routes that create no local operation. */
   terminalTestOrder?: {
+    diagnosticTiming?: DiagnosticOrderPlan;
     version: "terminal-test-order.v1";
     caseId: string;
     nodeId: string;
@@ -774,6 +1273,20 @@ export interface PlacedRoom {
   upgradeLevel: RoomUpgradeLevel;
   /** Version-5 saves always persist this; optional only for legacy fixtures/imports. */
   cleanliness?: number;
+  /** Continuous, observed technical outage; never inferred from old downtime. */
+  upkeepOutage?: {
+    version: "room-upkeep-outage.v1";
+    sinceFacilityTick: number;
+    lastObservedFacilityTick: number;
+  };
+  /** Level 3 equipment upkeep is independent of EVS cleanliness. */
+  maintenance?: {
+    status: "operational" | "due" | "out_of_service";
+    completedUses: number;
+    dueAtFacilityTick: number | null;
+    outOfServiceAtFacilityTick: number | null;
+    appliedUseKeys: string[];
+  };
 }
 
 export interface DoorState {
@@ -785,11 +1298,65 @@ export interface DoorState {
   exterior: boolean;
 }
 
+export type RoomUpgradeSupportEffectKind =
+  | "cleaning_duration_reduction_percent"
+  | "repair_duration_reduction_percent"
+  | "quality_review_duration_reduction_percent"
+  | "training_duration_reduction_percent";
+
+/** Optional frozen work contract; unmarked legacy support retains its old terms. */
+export interface RoomUpgradeSupportWork {
+  version: "room-upgrade-support.v1";
+  effectKind: RoomUpgradeSupportEffectKind;
+  baselineMinutes: number;
+  employeeReductionPercent: number;
+  acceptedRooms: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel }>;
+  boundRoomInstanceId: string | null;
+  boundUpgradeLevel: RoomUpgradeLevel | null;
+  durationMinutes: number | null;
+}
+
+export interface RoomUpgradeBreakBenefit {
+  version: "room-upgrade-break.v1";
+  roomInstanceId: string;
+  upgradeLevel: RoomUpgradeLevel;
+  baselineMoraleGain: number;
+  moraleGain: number;
+  /** Omitted on ordinary and legacy break-room quotes. */
+  roomDefinitionId?: "room.staff_gym";
+}
+
 export interface EmployeeFacilityTaskState {
-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service";
+  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "periop_attention" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi" | "daily_management_round";
   startedAtFacilityTick: number;
   workMinutesRemaining: number;
   targetId?: string;
+  seatId?: LevelThreeBreakSeatId | "benchSeat" | "stretchSpot";
+  /** Actual approved gym entrance; closing it interrupts the accepted break. */
+  supportDoorId?: string;
+  /** Frozen on new EVS room jobs; legacy jobs restore their baseline quantity. */
+  cleanlinessRestore?: number;
+  /** Allows fractional remaining work only for strictly marked new support jobs. */
+  roomUpgradeWork?: RoomUpgradeSupportWork;
+  roomUpgradeBreakBenefit?: RoomUpgradeBreakBenefit;
+}
+
+export interface EmployeeTrainingState {
+  version: 1;
+  requestSequence: number;
+  requestedAtFacilityTick: number;
+  /** Finish an already-running automated consultation before departing. */
+  earliestDepartureAtFacilityTick: number;
+  paidAmount: number;
+  targetLevel: 2 | 3 | 4 | 5;
+  stage: "queued" | "walking_to_training" | "training" | "returning";
+  roomInstanceId: string | null;
+  placeId: "stool1" | "stool2" | null;
+  remainingMinutes: number;
+  startedAtFacilityTick: number | null;
+  completedAtFacilityTick: number | null;
+  lastProgressAtFacilityTick: number;
+  roomUpgradeWork?: RoomUpgradeSupportWork;
 }
 
 export interface EmployeeState {
@@ -801,15 +1368,42 @@ export interface EmployeeState {
   salaryPerExpenseInterval: number;
   morale: number;
   trainingLevel: RoomUpgradeLevel;
+  /** Paid training request/session; omitted in legacy campaigns and fixtures. */
+  training?: EmployeeTrainingState | null;
   homeRoomInstanceId: string | null;
+  /** Stable approved reading cubicle; absent for other/legacy employees. */
+  readingStationId?: string;
   location: GridPoint;
   path: GridPoint[];
   pathIndex: number;
   lastMovedAtFacilityTick: number;
   lastPraisedAtFacilityTick: number | null;
+  lastBreakAtFacilityTick?: number | null;
+  /** Fair peri-op dispatch; absent in older saves means no previous check. */
+  lastPeriopAttentionAssignedAtFacilityTick?: number;
   nextIdleActionAtFacilityTick: number;
   /** Persisted operational work that temporarily supersedes room idling. */
   facilityTask?: EmployeeFacilityTaskState | null;
+}
+
+export type LevelThreeBreakSeatId = "massage" | "largeNorth" | "largeSouth" | "largeWest" | "largeEast" | "smallNorth" | "smallSouth";
+
+export interface LevelThreeQiReviewState {
+  id: string;
+  receiptId: string;
+  status: "queued" | "in_progress" | "completed";
+  surgeonEmployeeId: string | null;
+  enqueuedAtFacilityTick: number;
+  startedAtFacilityTick: number | null;
+  completedAtFacilityTick: number | null;
+  /** Accepted work survives clinical preemption and changes in category skill. */
+  trainingWork?: { version: "employee-training-work.v1"; durationMinutes: number; remainingMinutes: number };
+  roomUpgradeWork?: RoomUpgradeSupportWork;
+}
+
+/** A dismissed employee retained only while their visible exit walk completes. */
+export interface DepartingEmployeeState extends EmployeeState {
+  dismissedAtFacilityTick: number;
 }
 
 export interface LitterState {
@@ -839,17 +1433,28 @@ export interface FounderActivityState {
     | "wander_facility"
     | "sit_in_chair"
     | "visit_bathroom"
-    | "perform_service";
+    | "perform_service"
+    | "attend_employee_discussion";
   targetId: string;
   path: GridPoint[];
   pathIndex: number;
   lastMovedAtFacilityTick: number;
   workMinutesRemaining: number;
+  /** A player-selected chair holds until a newer command or required work supersedes it. */
+  explicitSeat?: boolean;
 }
 
 export interface FacilityEnvironmentState {
   founderLocation: GridPoint;
   founderActivity: FounderActivityState | null;
+  /** Benign explicit movement paused while an answer-ready consult is open. */
+  suspendedFounderActivity?: FounderActivityState | null;
+  /** The one still-unanswered chart allowed to retry physical founder attendance. */
+  pendingFounderConsult?: {
+    kind: "encounter" | "employee_discussion";
+    targetId: string;
+    nodeId: string;
+  } | null;
   ambientPedestrians: AmbientPedestrianState[];
   ambientPedestrianSequence: number;
   nextAmbientPedestrianTick: number;
@@ -868,6 +1473,9 @@ export interface FacilityEnvironmentState {
     suiteRoomInstanceId: string;
     employeeId: string;
     nextPayoutTick: number;
+    /** Optional frozen staff-only legacy payment, or the full new room-and-staff quote. */
+    quotePayment?: number;
+    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
   }>;
   /** One due tick per currently operational staffed GLP-1 suite. */
   glp1AutomationNextPayoutTicks: number[];
@@ -895,6 +1503,66 @@ export interface EmergencyGlp1State {
   lastFlavorMessage: string | null;
 }
 
+export type EmployeeDiscussionLifecycle =
+  | "waiting_unopened"
+  | "active_traveling"
+  | "active_action_required"
+  | "feedback_pending"
+  | "resolved_summary_available"
+  | "resolved"
+  | "cancelled";
+
+/**
+ * A persisted learning conversation with a real employee actor.
+ *
+ * This is deliberately separate from EncounterState: it has no patient,
+ * satisfaction, room-capacity, settlement, service, or revenue semantics.
+ */
+export interface EmployeeDiscussionState {
+  id: string;
+  clinicalReleaseId: string;
+  frozenCase: SyntheticClinicalCase;
+  employeeId: string;
+  employeeDisplayName: string;
+  employeeAppearance: PixelAppearanceDescriptor;
+  lifecycle: EmployeeDiscussionLifecycle;
+  createdAtFacilityTick: number;
+  firstOpenedAtTick: number | null;
+  resolvedAtFacilityTick: number | null;
+  cancellationReason: "employee_unavailable" | "content_invalid" | null;
+  currentNodeIndex: number;
+  answers: AnswerRecord[];
+  steps: EncounterStepState[];
+}
+
+export interface EmployeeDiscussionListItem {
+  discussionId: string;
+  employeeId: string;
+  employeeDisplayName: string;
+  lifecycle: EmployeeDiscussionLifecycle;
+  statusLabel: string;
+  actionRequired: boolean;
+  createdAtFacilityTick: number;
+}
+
+export interface EmployeeDiscussionLists {
+  waiting: EmployeeDiscussionListItem[];
+  active: EmployeeDiscussionListItem[];
+  resolved: EmployeeDiscussionListItem[];
+}
+
+export interface CurrentEmployeeDiscussionQuestion {
+  discussionId: string;
+  employeeId: string;
+  employeeDisplayName: string;
+  caseDisplayName: string;
+  presentation: string;
+  node: DecisionNode;
+  questionNumber: number;
+  questionCount: number;
+  syntheticDisclaimer: string;
+}
+
 export interface EmergencyGlp1Status {
   dayNumber: number;
   usesToday: number;
@@ -905,6 +1573,8 @@ export interface EmergencyGlp1Status {
 }
 
 export interface AlertHumorState {
+  /** Additive namespace: absent in older campaigns until safely initialized. */
+  guidanceTips?: import("./guidance-tip-types").GuidanceTipsState;
   /** Facility tick at which the player acknowledged the Alerts tutorial. */
   alertsTutorialAcknowledgedAtTick: number | null;
   /** Facility-time deadline; null keeps ambient messages locked. */
@@ -957,6 +1627,7 @@ export interface DomainEvent {
     | "staff_hired"
     | "staff_fired"
     | "staff_quit"
+    | "staff_departure_risk"
     | "staff_salary_changed"
     | "facility_level_advanced"
     | "day_rollover"
@@ -970,10 +1641,22 @@ export interface DomainEvent {
     | "litter_collected"
     | "water_cooler_low"
     | "water_cooler_refilled"
-    | "employee_praised";
+    | "employee_praised"
+    | "employee_discussion_decision";
   facilityTick: number;
   encounterId: string | null;
   message: string;
+  /** Additive rollover snapshot; older events have only their original text. */
+  clinicDaySummary?: {
+    dayNumber: number;
+    patientsSeen: number;
+    moneyEarnedCents: number;
+    satisfactionPercent: number;
+    reviewLine?: string;
+    partial?: boolean;
+    completedTotal: number;
+    earnedTotalCents: number;
+  };
   priority?: "critical" | "action_required" | "informational" | "flavor";
   definitionId?: string;
   alertCategory?: PrototypeAlertCategory;
@@ -994,7 +1677,7 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 8;
+  schemaVersion: 8 | 9;
   /** Present only when an older campaign required the approved-room geometry migration. */
   approvedRoomGeometryMigration?: {
     version: "approved-room-geometry.v1";
@@ -1011,8 +1694,15 @@ export interface GameState {
   founder: FounderIdentity;
   clinicalReleaseId: string;
   balanceReleaseId: string;
+  /** Missing only on pre-Option-B saves; rebased contracts are never shifted twice. */
+  salaryEconomyVersion?: "room-economy-b.v1";
   schedulerPins: SchedulerPins;
-  facilityLevel: 0 | 1 | 2;
+  facilityLevel: FacilityLevel;
+  /** Omission means no families or earned witnesses; preserve old save bytes. */
+  pediatricFamilies?: Record<string, PediatricFamilyState>;
+  levelFourCompletion?: LevelFourCompletionState;
+  /** Inert optional foundation. Legacy/fresh saves do not acquire Level 5 evidence. */
+  levelFive?: LevelFiveState;
   facilityTick: number;
   paused: boolean;
   simulationSpeed: SimulationSpeed;
@@ -1029,22 +1719,44 @@ export interface GameState {
   openChartEncounterId: string | null;
   /** Simulation state: only an unresolved Active patient receives reading-time protection. */
   attendedEncounterId: string | null;
+  /** Additive non-patient chart state; absent in older version-8 saves. */
+  employeeDiscussions?: Record<string, EmployeeDiscussionState>;
+  employeeDiscussionSequence?: number;
+  nextEmployeeDiscussionTick?: number;
+  openEmployeeDiscussionId?: string | null;
+  levelThreeQiReviews: LevelThreeQiReviewState[];
+  levelThreeQiReviewSequence: number;
+  /** Durable room-use event ledger; survives repair and sale/rebuild cycles. */
+  levelThreeMaintenanceAppliedUseKeys: string[];
   rooms: PlacedRoom[];
   doors: DoorState[];
   employees: EmployeeState[];
+  /** Monotonic paid FIFO order, initialized lazily for legacy campaigns. */
+  employeeTrainingSequence?: number;
+  departingEmployees?: DepartingEmployeeState[];
   encounters: Record<string, EncounterState>;
   learningHistories: Record<string, ConceptLearningHistory>;
   reviewIntents: SchedulerReviewIntent[];
   settlements: EncounterSettlement[];
   serviceIncomeReceipts: ServiceIncomeReceipt[];
+  /** Independent counters survive normal retirement of income receipts. */
+  radiologistReadIncome?: RadiologistReadIncomeState;
+  /** Only current station work; legacy campaigns start with no outside jobs. */
+  outsideRadiologyReads?: OutsideRadiologyRead[];
   nextServiceIncomeReceiptSequence: number;
   serviceAppointmentsEnabled: boolean;
   nextServiceAppointmentTicks: Record<string, number>;
   lastServiceAppointmentArrivalTick: number | null;
   serviceOperationSequence: number;
   serviceOperations: ServiceOperationState[];
+  /** Optional for save compatibility; initialized lazily by patient amenity scheduling. */
+  patientAmenityTrips?: PatientAmenityTripState[];
+  patientAmenityNextOpportunityTicks?: Record<string, number>;
+  patientAmenityTripSequence?: number;
   retailOperationSequence: number;
   retailOperations: RetailOperationState[];
+  /** Lazy and absent from old/ordinary Level 0-4 campaigns. One clock per facility. */
+  giftRetailDemand?: GiftRetailDemandState;
   retailExternalActors: RetailExternalActorState[];
   retailOrders: RetailOrderState[];
   retailActorLedgers: Record<string, RetailActorLedgerState>;
@@ -1063,6 +1775,67 @@ export interface GameState {
   emergencyGlp1: EmergencyGlp1State;
   environment: FacilityEnvironmentState;
   alertHumor: AlertHumorState;
+  /**
+   * Compact history of resolved patients whose full records were removed from
+   * `encounters` after they left the facility. Optional for save compatibility.
+   */
+  retiredEncounterSummary?: RetiredEncounterSummary;
+  /**
+   * Totals and milestones of income receipts and finished service operations
+   * removed from live state. Optional for save compatibility.
+   */
+  retiredServiceHistory?: RetiredServiceHistory;
+  /** Daily totals survive eviction of the bounded raw event history. */
+  clinicDaySummaryBaseline?: { facilityTick: number; completedTotal: number; earnedTotalCents: number };
+}
+
+export interface RetiredServiceHistory {
+  version: "retired-service-history.v1";
+  retiredReceiptCount: number;
+  grossCents: number;
+  stockCostCents: number;
+  netCashDeltaCents: number;
+  /** A retired receipt satisfied the first-endoscopy receipt check. */
+  endoscopyReceipt: boolean;
+  /** A retired receipt satisfied the first-ambulatory-operation receipt check. */
+  ambulatoryOperationReceipt: boolean;
+  retiredOperationCount: number;
+  /** A retired operation satisfied the first-endoscopy operation check. */
+  endoscopyOperationCompleted: boolean;
+  /** A retired operation satisfied the first-ambulatory-operation check. */
+  ambulatoryOperationCompleted: boolean;
+}
+
+export interface RetiredEncounterSatisfactionSample {
+  id: string;
+  resolvedAtFacilityTick: number;
+  finalPatientSatisfaction: number;
+  resolutionReason: "completed" | "walkout";
+}
+
+/**
+ * Everything campaign rules still need from retired encounters. Each full
+ * encounter retains its frozen case (several kilobytes), and every facility
+ * tick clones the whole state, so retained history made each minute slower.
+ */
+export interface RetiredEncounterSummary {
+  version: "retired-encounter-summary.v1";
+  retiredCount: number;
+  completedCount: number;
+  /** A non-tutorial encounter has been completed. */
+  ordinaryEncounterCompleted: boolean;
+  /** A delivered in-house endoscopy result existed on a retired encounter. */
+  inHouseEndoscopyCompleted: boolean;
+  /** Newest-last satisfaction samples for the rolling clinic window. */
+  recentEndedSatisfaction: RetiredEncounterSatisfactionSample[];
+  /** Latest retired use of each still, merged by arrival for appearance rotation. */
+  recentStillUses: RetiredEncounterStillUse[];
+}
+
+export interface RetiredEncounterStillUse {
+  stillId: string;
+  encounterId: string;
+  arrivedAtTick: number;
 }
 
 interface CommandBase {
@@ -1070,6 +1843,9 @@ interface CommandBase {
 }
 
 export type GameCommand =
+  | (CommandBase & { type: "BOOK_INSPECTION" })
+  | (CommandBase & { type: "CANCEL_INSPECTION" })
+  | (CommandBase & { type: "ACKNOWLEDGE_FINISH_PAGE" })
   | (CommandBase & {
       type: "SET_ADVERTISING_LEVEL";
       level: number;
@@ -1081,6 +1857,30 @@ export type GameCommand =
   | (CommandBase & {
       type: "CLOSE_CHART";
       encounterId: string;
+    })
+  | (CommandBase & {
+      type: "OPEN_EMPLOYEE_DISCUSSION";
+      discussionId: string;
+    })
+  | (CommandBase & {
+      type: "CLOSE_EMPLOYEE_DISCUSSION";
+      discussionId: string;
+    })
+  | (CommandBase & {
+      type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER";
+      discussionId: string;
+      decisionNodeId: string;
+      answerChoiceId: string;
+      reviewedAtMs?: number;
+    })
+  | (CommandBase & {
+      type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK";
+      discussionId: string;
+      decisionNodeId: string;
+    })
+  | (CommandBase & {
+      type: "FILE_EMPLOYEE_DISCUSSION";
+      discussionId: string;
     })
   | (CommandBase & {
       type: "SUBMIT_ANSWER";
@@ -1100,6 +1900,10 @@ export type GameCommand =
     })
   | (CommandBase & {
       type: "ACKNOWLEDGE_ALERTS_TUTORIAL";
+    })
+  | (CommandBase & {
+      type: "RECORD_GUIDANCE_TOPIC_EXPOSURE";
+      topicIds: string[];
     })
   | (CommandBase & {
       type: "SET_PAUSED";
@@ -1125,6 +1929,8 @@ export type GameCommand =
   | (CommandBase & {
       type: "SELL_ROOM";
       roomId: string;
+      /** Required when the current sale preview names employee dismissals. */
+      saleConfirmationToken?: string;
     })
   | (CommandBase & {
       type: "UPGRADE_ROOM";
@@ -1164,6 +1970,10 @@ export type GameCommand =
       salaryPerExpenseInterval: number;
     })
   | (CommandBase & {
+      type: "TRAIN_EMPLOYEE";
+      employeeId: string;
+    })
+  | (CommandBase & {
       type: "FIRE_EMPLOYEE";
       employeeId: string;
     })
@@ -1181,6 +1991,13 @@ export type GameCommand =
   | (CommandBase & {
       type: "MOVE_FOUNDER";
       destination: GridPoint;
+    })
+  | (CommandBase & {
+      type: "SEAT_FOUNDER_IN_CHAIR";
+      roomInstanceId: string;
+      location: GridPoint;
+      /** Break Room seats share nearest tiles, so they are named explicitly. */
+      seatId?: LevelThreeBreakSeatId;
     })
   | (CommandBase & { type: "SEAT_FOUNDER_AT_FRONT_DESK" })
   | (CommandBase & {
@@ -1278,10 +2095,12 @@ export interface ProgressionRequirementStatus {
 }
 
 export interface FacilityProgressionStatus {
-  facilityLevel: 0 | 1 | 2;
+  facilityLevel: FacilityLevel;
   displayName: string;
   requirements: ProgressionRequirementStatus[];
   eligible: boolean;
-  nextFacilityLevel: 1 | 2 | null;
-  maximumPlayableLevel: 2;
+  /** Terminal milestone, retained after acknowledgement even if live goals change. */
+  terminalComplete: boolean;
+  nextFacilityLevel: 1 | 2 | 3 | 4 | 5 | null;
+  maximumPlayableLevel: 3 | 4 | 5;
 }

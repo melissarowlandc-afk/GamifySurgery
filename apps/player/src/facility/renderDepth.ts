@@ -20,6 +20,12 @@ const BASELINE_STRIDE = 128;
 const CHARACTER_TIE_OFFSET = 64;
 const MAXIMUM_STABLE_ORDER = 63;
 
+/** Contact sorting confined above turf and below every room/floor layer. */
+export function getExteriorLandscapeDepth(contactY: number): number {
+  const baseline = Number.isFinite(contactY) ? contactY : 0;
+  return FACILITY_DEPTH_WORLD - 8 + Math.atan(baseline) / Math.PI;
+}
+
 export type FacilitySortableKind = "fixture" | "character";
 
 /**

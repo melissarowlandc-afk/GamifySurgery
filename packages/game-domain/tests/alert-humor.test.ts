@@ -5,6 +5,8 @@ import {
 } from "@gamify-surgery/balance-config";
 import {
   SECOND_TUTORIAL_ENCOUNTER_ID,
+  PROTOTYPE_DOMAIN_CONTEXT,
+  createGuidanceTipsState,
   TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
@@ -16,10 +18,11 @@ import {
 } from "../src";
 
 function tick(state: GameState, operationId: string): GameState {
+  // Isolate humor here; due-tip arbitration has its own scheduler regression.
   return gameReducer(state, {
     type: "ADVANCE_TICK",
     operationId,
-  });
+  }, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: true });
 }
 
 function advance(
@@ -140,6 +143,18 @@ function resolveSingleDecisionRoutine(
 }
 
 describe("persisted alert humor scheduler", () => {
+  it("delivers humor at Level 3 on the saved cadence and does not replay it after reload", () => {
+    let state = makeTutorialsResolved("level-three-humor"); state.facilityLevel = 3;
+    state.alertHumor.alertsTutorialAcknowledgedAtTick = 0;
+    state.alertHumor.nextAmbientAlertTick = 120;
+    state.facilityTick = 119;
+    state = advance(state, 1, "level-three-humor");
+    expect(state.events.filter((event) => event.type === "ambient_message")).toHaveLength(1);
+    state = deserializeGameState(serializeGameState(state));
+    state = advance(state, 1, "level-three-humor-restored");
+    expect(state.events.filter((event) => event.type === "ambient_message")).toHaveLength(1);
+    expect(state.alertHumor.nextAmbientAlertTick).toBe(240);
+  });
   it("rejects an early acknowledgement and leaves ambient messages locked", () => {
     const state = createInitialGameState(undefined, {
       campaignSeed: "early-alert-ack",
@@ -300,8 +315,9 @@ describe("persisted alert humor scheduler", () => {
       .dissatisfactionByCause;
 
     const restored = deserializeGameState(JSON.stringify(legacy));
-    expect(restored.schemaVersion).toBe(8);
+    expect(restored.schemaVersion).toBe(9);
     expect(restored.alertHumor).toEqual({
+      guidanceTips: createGuidanceTipsState(restored.facilityTick),
       alertsTutorialAcknowledgedAtTick: null,
       nextAmbientAlertTick: null,
       ambientCadenceVersion: 1,

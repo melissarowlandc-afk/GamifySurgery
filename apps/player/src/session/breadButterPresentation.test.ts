@@ -92,7 +92,7 @@ describe("September 17 bread-and-butter chart presentation", () => {
               expect(choice.etaLabel, `${clinicalCase.id}/${node.id}/${choice.id}`)
                 .not.toBe("No test wait");
               expect(choice.detailLabel, `${clinicalCase.id}/${node.id}/${choice.id}`)
-                .toBe("Estimated test wait (game time)");
+                .toContain("Estimated total (game time; includes queues and walking).");
             } else {
               expect(choice.etaLabel).toBe("No test wait");
               expect(choice.detailLabel).toBeUndefined();

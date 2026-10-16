@@ -193,7 +193,7 @@ test("renders Build Mode candidate door spans for the complete vertical Examinat
   await openVisualRoom(page);
   const capture = await openFreshCapture(page, 90);
   await capture.getByRole("button", { name: "Enter Build Mode" }).click();
-  const placeDoor = capture.getByRole("button", { name: "Place Door" });
+  const placeDoor = capture.getByRole("button", { name: "Doors", exact: true });
   await expect(placeDoor).toBeVisible();
   await placeDoor.evaluate((button) => (button as HTMLButtonElement).click());
   await expect(placeDoor).toHaveAttribute("aria-pressed", "true");

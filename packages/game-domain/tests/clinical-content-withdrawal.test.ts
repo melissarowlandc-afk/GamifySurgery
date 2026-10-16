@@ -26,6 +26,15 @@ import {
   EARLY_LEVELS_20260913_CASES,
   TWENTY_CONCEPT_BATCH_CASES,
   GS028_20260928_CASES,
+  GS028_20260929_CASES,
+  GS028_STATS_ETHICS_20260929_CASES,
+  GS028_20261002_CASES,
+  GS028_20261003_CASES,
+  GS028_20261007_CASES,
+  GS028_20261007_VARIETY2_CASES,
+  GS028_20261007_LEVEL3_CASES,
+  PEDIATRIC_CLINIC_CASES,
+  VARIETY3_CASES,
 } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -99,6 +108,15 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...BRIEF_EARLY_LEVELS_20260917_CASES.map((clinicalCase) => clinicalCase.id),
       ...BREAD_BUTTER_20260917_CASES.map((clinicalCase) => clinicalCase.id),
       ...GS028_20260928_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20260929_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_STATS_ETHICS_20260929_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261002_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261003_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261007_VARIETY2_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261007_LEVEL3_CASES.map((clinicalCase) => clinicalCase.id),
+      ...PEDIATRIC_CLINIC_CASES.map((clinicalCase) => clinicalCase.id),
+      ...VARIETY3_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
   });
 

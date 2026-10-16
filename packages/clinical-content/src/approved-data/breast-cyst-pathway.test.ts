@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { validateSyntheticClinicalRelease } from "../schema";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../synthetic-content";
+// Keep this historical batch's inventory proof scoped to its original bank.
+// Later-batch admission/protected-intake checks live in their own tests.
+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")&&!c.id.startsWith("case.variety3.")),
+};
 import { TWENTY_CONCEPT_BATCH_CASES } from "../development-batch/2026-09-09/twenty-concept-batch";
 import { SURGERY_CENTER_CASES } from "../development-batch/2026-09-10/surgery-center-batch";
 import { BOARD_EXPANSION_CASES } from "../development-batch/2026-09-11/board-expansion-batch";
@@ -9,6 +15,12 @@ import { EARLY_LEVELS_20260913_CASES } from "../development-batch/2026-09-13/ear
 import { BRIEF_EARLY_LEVELS_20260917_CASES } from "../development-batch/2026-09-17/brief-early-levels-batch";
 import { BREAD_BUTTER_20260917_CASES } from "../development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
 import { GS028_20260928_CASES } from "../development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20260929_CASES } from "../development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_STATS_ETHICS_20260929_CASES } from "../development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
+import { GS028_20261002_CASES } from "../development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20261003_CASES } from "../development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+import { GS028_20261007_CASES } from "../development-batch/2026-10-07-variety/variety-batch";
+import { GS028_20261007_VARIETY2_CASES } from "../development-batch/2026-10-07-variety-2/variety-batch";
 import { ROW_047_CASES } from "./aaa-female-sex-perioperative-mortality";
 import { ROW_048_CASES } from "./desmoid-management-pathway";
 import { ROW_029_CASES } from "./hcc-milan-criteria";
@@ -244,6 +256,12 @@ describe("owner row 30 approved breast-cyst pathway", () => {
       ...BRIEF_EARLY_LEVELS_20260917_CASES.map((clinicalCase) => clinicalCase.id),
       ...BREAD_BUTTER_20260917_CASES.map((clinicalCase) => clinicalCase.id),
       ...GS028_20260928_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20260929_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_STATS_ETHICS_20260929_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261002_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261003_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),
+      ...GS028_20261007_VARIETY2_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
     expect(
       SYNTHETIC_CLINICAL_RELEASE.cases.some(

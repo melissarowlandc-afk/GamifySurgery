@@ -39,37 +39,21 @@ describe("GS-026 individual character still resolver", () => {
     expect(characterBitmapLayers(subject, "side", "seated", true)!.actor.atlas.id).not.toBe(ids[0]);
   });
 
-  it("opts only Blue Glasses into authored cardinal walking when a frame is requested", () => {
-    const blue = appearance("patient.adult.039");
-    const standing = characterBitmapLayers(blue, "front", "idle")!.actor;
-    const stoppedContract = characterBitmapLayers(blue, "front", "walk-neutral")!.actor;
-    expect(stoppedContract.asset).toBe(standing.asset);
-    for (const [direction, movingRight] of [
-      ["front", false], ["back", false], ["side", true], ["side", false],
-    ] as const) {
-      const frames = Array.from({ length: 8 }, (_, frame) =>
-        characterBitmapLayers(blue, direction, "walk-neutral", movingRight, undefined, frame)!.actor,
-      );
-      expect(new Set(frames.map((layer) => layer.asset.sha256)).size).toBe(8);
-      expect(frames.every((layer) => layer.flipX === false)).toBe(true);
-    }
-    expect(characterWalkingBitmapDescriptors(blue)).toHaveLength(32);
-    expect(characterWalkingBitmapDescriptors(appearance("patient.adult.038"))).toEqual([]);
-    expect(characterBitmapLayers(appearance("patient.adult.038"), "front", "walk-neutral", false, undefined, 3)!.actor.asset)
-      .toBe(characterBitmapLayers(appearance("patient.adult.038"), "front", "idle")!.actor.asset);
-  });
-
-  it("uses approved directional stills while moving for the two excluded gait pilots", () => {
-    for (const id of ["patient.adult.032", "retained.gray-braid"] as const) {
-      const subject = appearance(id);
-      expect(characterWalkingBitmapDescriptors(subject)).toEqual([]);
-      for (const [direction, movingRight] of [
-        ["front", false], ["back", false], ["side", true], ["side", false],
+  it("keeps all 128 identities on directional standing stills even when a walk frame is requested", () => {
+    for (const entry of getAllCharacterStillEntries()) {
+      const subject = appearance(entry.id, entry.category === "founder" ? "founder" : "patient");
+      for (const [direction, movingRight, cardinal] of [
+        ["front", false, "south"], ["back", false, "north"],
+        ["side", true, "east"], ["side", false, "west"],
       ] as const) {
-        expect(characterBitmapLayers(subject, direction, "walk-neutral", movingRight, undefined, 3)!.actor.asset)
-          .toBe(characterBitmapLayers(subject, direction, "idle", movingRight)!.actor.asset);
+        for (let frame = 0; frame < 8; frame += 1) {
+          const actor = characterBitmapLayers(subject, direction, "walk-neutral", movingRight, undefined, frame)!.actor;
+          expect(actor.asset).toBe(entry.poses.stand[cardinal]);
+          expect(actor.flipX).toBe(false);
+        }
       }
     }
+    expect(characterWalkingBitmapDescriptors(appearance("patient.adult.039"))).toHaveLength(32);
   });
 
   it("uses seated cardinals, founder clipboard South, and uniform 160x320 registration", () => {

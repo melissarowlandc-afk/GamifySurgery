@@ -1,0 +1,44 @@
+.inspection-report-card { --inspection-accent: #82bdad; min-width: 0; color: #e9e5d7; background: #172924; border: 1px solid #53685b; border-radius: 8px; padding: 14px; }
+.inspection-report-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.inspection-report-eyebrow { font: bold 12px var(--font-label, monospace); text-transform: uppercase; letter-spacing: .08em; color: #a5c6b7; }
+.inspection-report-total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; margin: 4px 0; }
+.inspection-report-total > strong { font-size: 32px; font-variant-numeric: tabular-nums; line-height: 1; }
+.inspection-report-total > b { color: #d9c187; font-size: 14px; }
+.inspection-report-best { display: grid; gap: 2px; text-align: right; font-variant-numeric: tabular-nums; }
+.inspection-report-best small { color: #b9c6bb; }
+.inspection-report-sample { display: grid; gap: 3px; font-size: 12px; color: #becfc3; margin: 8px 0 12px; }
+.inspection-report-sample span { overflow-wrap: anywhere; }
+.inspection-category-grid { display: grid; gap: 6px; }
+.inspection-category-row { background: #21352d; border: 1px solid #455b4d; border-radius: 4px; min-width: 0; }
+.inspection-category-row > summary { display: grid; grid-template-columns: minmax(120px, 1.25fr) minmax(60px, 1fr) auto; align-items: center; gap: 6px 12px; cursor: pointer; padding: 8px 10px; min-height: 44px; }
+.inspection-category-row > summary small { grid-column: 1 / -1; color: #bdcdbf; }
+.inspection-score-bar { display: block; height: 6px; width: 100%; min-width: 0; background: #0f201a; border-radius: 3px; overflow: hidden; }
+.inspection-score-bar > span { display: block; height: 100%; width: var(--inspection-score); background: var(--inspection-accent); }
+.inspection-category-arithmetic { padding: 8px 10px; overflow-wrap: anywhere; font-size: 14px; }
+.inspection-category-arithmetic p { margin: 8px 0; }
+.inspection-category-status { color: #d9c187; }
+.inspection-category-arithmetic dl { display: grid; gap: 4px; }
+.inspection-category-arithmetic dl > div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; border-bottom: 1px solid #3b5143; padding-bottom: 3px; }
+.inspection-category-arithmetic dd { margin: 0; font-variant-numeric: tabular-nums; }
+.inspection-report-card summary, .inspection-report-card button { min-height: 44px; }
+.inspection-missing-items > summary, .inspection-report-math > summary { display: flex; align-items: center; cursor: pointer; }
+.inspection-report-math { font-size: 12px; color: #bed0c2; }
+.inspection-report-math p { margin: 6px 0; overflow-wrap: anywhere; }
+.inspection-report-card.is-compact { padding: 10px; }
+.is-compact .inspection-category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.inspection-category-tile { display: grid; align-content: space-between; gap: 5px; min-height: 65px; text-align: left; padding: 6px 8px; border: 1px solid #4d6555; border-radius: 5px; color: #e9e5d7; background: #24392f; font-size: 12px; min-width: 0; cursor: pointer; }
+.inspection-category-tile > strong { font-size: 12px; line-height: 1.15; }
+.inspection-category-tile > span:last-child { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 4px; font-variant-numeric: tabular-nums; }
+.inspection-category-tile small { font-size: 11px; color: #bed0c2; }
+.inspection-category-detail > button { color: #e9e5d7; background: #24392f; border: 1px solid #4d6555; border-radius: 4px; width: 100%; }
+.mobile-shell .inspection-category-detail h3 { color: #e9e5d7; }
+.inspection-category-detail h3 { font-size: 16px; margin: 10px 0; }
+.inspection-report-card :is(button, summary):focus-visible { outline: 3px solid #efd997; outline-offset: 2px; }
+@media (max-width: 480px) {
+  .inspection-category-row > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  .inspection-category-row > summary .inspection-score-bar { grid-column: 1 / -1; grid-row: 2; }
+  .inspection-report-total > strong { font-size: 28px; }
+}
+@media (min-width: 700px) and (max-height: 520px) {
+  .inspection-report-card.is-compact .inspection-category-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}

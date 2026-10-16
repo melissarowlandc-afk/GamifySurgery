@@ -48,3 +48,29 @@ export * from "./development-batch/2026-09-13/early-levels-batch";
 export * from "./development-batch/2026-09-17/brief-early-levels-batch";
 export * from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
 export * from "./development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
+export * from "./development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
+export * from "./development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
+export * from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+export * from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+export * from "./development-batch/2026-10-07-variety/variety-batch";
+export * from "./development-batch/2026-10-07-variety-2/variety-batch";
+export * from "./development-batch/2026-10-07-level3/level3-batch";
+export * from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
+export {
+  VARIETY3_AUTHORING_CONCEPTS,
+  VARIETY3_TESTED_CONCEPTS,
+  VARIETY3_QUESTIONS,
+  VARIETY3_CASES,
+  VARIETY3_CASE_REVIEWS,
+  VARIETY3_ADULT_CONTEXTS,
+  VARIETY3_STATEMENT_MAPPINGS,
+  VARIETY3_TIMING_ENTRIES,
+  VARIETY3_SERVICE_CONTRACTS,
+  VARIETY3_CLAIMS,
+  VARIETY3_SOURCES,
+  VARIETY3_SOURCE_LINKS,
+  VARIETY3_BATCH_MANIFEST,
+  WITHHELD_DISAGREEMENTS as VARIETY3_WITHHELD_DISAGREEMENTS,
+  WITHHELD_TOPICS as VARIETY3_WITHHELD_TOPICS,
+  EXCLUDED_SOURCE_CHECKS as VARIETY3_EXCLUDED_SOURCE_CHECKS,
+} from "./development-batch/2026-10-10-variety-3/variety3-batch";

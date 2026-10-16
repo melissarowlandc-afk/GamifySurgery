@@ -126,8 +126,8 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
     const current = (await getActiveState(page)) as unknown as GameState;
     return current.rooms.find((room) => room.roomDefinitionId === "room.ultrasound")!.id;
   });
-  const placeDoor = page.getByRole("button", { name: "Place Door" });
-  await placeDoor.click();
+  // Placing a room turns the single Doors tool on automatically.
+  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
   layout = await facilityLayout(page);
   for (const [tileX, tileY] of [
     [34.5, 28], [35.5, 28], [36.5, 28],
@@ -191,7 +191,7 @@ test("onsite authored ultrasound stays pending through reload and reveals its re
   await expect(page.getByText(question.node.resultGateAfter!.resultNarrative, { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Enact Plan", exact: true }).click();
   await page.getByText("Ultrasound Review Patient", { exact: true }).click();
-  await expect(page.locator(".chart-pending-card")).toContainText("Onsite ultrasound");
+  await expect(page.locator(".cs-away")).toContainText("Onsite ultrasound");
   await page.screenshot({ path: `${SHOTS}/gs-020-onsite-ultrasound-pending.png`, animations: "disabled" });
   const pending = ((await getActiveState(page)) as unknown as GameState).encounters[encounter.id]!.pendingResult!;
   expect(pending.imagingTechnicianId).toBe("employee.gs020.imaging");

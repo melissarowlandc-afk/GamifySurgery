@@ -13,6 +13,7 @@ export interface PersistedCampaign {
 export interface PersistedProfile {
   activeCampaignId: string | null;
   tutorialsEnabled?: boolean;
+  tutorialGuidanceByCampaign?: Record<string, {version: 2; mode: "guided" | "off" | "complete"; exposedTopicIds: string[]}>;
   campaigns: PersistedCampaign[];
 }
 
@@ -78,20 +79,12 @@ export async function completeClinicOpening(
   page: Page,
   founderName = "Test Founder",
   clinicName = "Test Surgical Clinic",
+  guidanceEnabled = true,
 ): Promise<void> {
-  await expect(
-    page.getByRole("heading", { name: "Create Your Founder" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Open Your Clinic"})).toBeVisible();
+  await expect(page.getByText("Grandpa left you options. You chose overhead.")).toBeVisible();
   await page.getByLabel("Founder name").fill(founderName);
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByText("Your rich grandpa died.")).toBeVisible();
-  await expect(page.getByText("He left you $1,000,000.")).toBeVisible();
-  await page
-    .getByRole("button", { name: "Build a Surgery Clinic" })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "Name Your Clinic" }),
-  ).toBeVisible();
+  await page.getByLabel("First-shift guidance").setChecked(guidanceEnabled);
   await page.getByLabel("Clinic name").fill(clinicName);
   await page.getByRole("button", { name: "Open the Clinic" }).click();
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
@@ -101,10 +94,11 @@ export async function startClinic(
   page: Page,
   founderName = "Test Founder",
   clinicName = "Test Surgical Clinic",
+  guidanceEnabled = true,
 ): Promise<void> {
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
-  await completeClinicOpening(page, founderName, clinicName);
+  await completeClinicOpening(page, founderName, clinicName, guidanceEnabled);
 }
 
 export async function setFastFacilitySpeed(page: Page): Promise<void> {
@@ -130,7 +124,7 @@ export async function waitForDecisionChoices(
   page: Page,
 ): Promise<Locator> {
   const choices = page.locator(
-    ".chart-step-column.is-current .answer-choice",
+    ".cs-step.is-current .cs-answer",
   );
   await expect(choices.first()).toBeVisible({ timeout: 15_000 });
   return choices;
@@ -598,7 +592,7 @@ export async function readMoney(page: Page): Promise<number> {
   if (!match) {
     throw new Error(`Could not read money from "${label}".`);
   }
-  return Number(match[1].replaceAll(",", ""));
+  return Number(match[1]!.replaceAll(",", ""));
 }
 
 export function xpValue(page: Page): Locator {

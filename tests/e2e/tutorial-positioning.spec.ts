@@ -1,11 +1,11 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   setFastFacilitySpeed,
-  getActiveState,
   startClinic,
   waitForDecisionChoices,
   waitForFirstPatientReady,
 } from "./helpers";
+import { chooseTutorialAnswer, enactTutorialPlan, expectNoMandatoryCoachClicks, fileTutorialChart, openReturnedTutorialChart, resumeFacility, tutorialState } from "./tutorial-helpers";
 
 async function expectCoachBesideTarget(
   page: Page,
@@ -154,290 +154,69 @@ async function expectCoachToRemainStable(
   expect(result.maximumDrift).toBeLessThanOrEqual(1);
 }
 
-test("keeps tutorial guidance beside real controls at variable widths", async ({
-  page,
-}, testInfo) => {
-  await startClinic(
-    page,
-    "Tutorial Founder",
-    `Tutorial Positioning ${testInfo.project.name}`,
-  );
+test("keeps a compact native-action coach usable at every viewport", async ({page}, testInfo) => {
+  await startClinic(page, "Tutorial Founder", `Tutorial Positioning ${testInfo.project.name}`);
   await setFastFacilitySpeed(page);
-  await waitForFirstPatientReady(page);
-
+  await resumeFacility(page);
+  const firstPatient = await waitForFirstPatientReady(page);
   const coach = page.locator(".tutorial-coach");
-  const arrivalCoach = coach.getByRole("heading", {
-    name: "Your first patient is entering the clinic",
-  });
-  if (await arrivalCoach.isVisible()) {
-    await coach.getByRole("button", { name: "Got It" }).click();
-  }
-  await expect(
-    coach.getByRole("heading", {
-      name: "Open your first patient chart",
-    }),
-  ).toBeVisible();
-
-  const firstPatient = page
-    .locator(".patient-folder.is-waiting .patient-tab")
-    .first();
+  await expect(coach).toHaveAttribute("data-tutorial-step", "open-first-chart");
   await expectCoachBesideTarget(page, firstPatient);
   await expectCoachToRemainStable(page);
-  await expect(
-    coach.getByRole("button", { name: /open first chart/i }),
-  ).toHaveCount(0);
+  await expectNoMandatoryCoachClicks(page);
+  const width = await coach.evaluate((element) => element.getBoundingClientRect().width);
+  expect(width).toBeLessThanOrEqual(340);
 
-  // The tutorial advances only when the player uses the highlighted control.
   await firstPatient.click();
   await waitForDecisionChoices(page);
-  await expect(
-    coach.getByRole("heading", {
-      name: "Read across the chart, then choose",
-    }),
-  ).toBeVisible();
-
-  const answers = page.locator(
-    ".chart-step-column.is-current .answer-list",
-  );
-  await expectCoachBesideTarget(page, answers);
+  await expect(coach).toHaveAttribute("data-tutorial-step", "first-decision");
+  const answers = page.locator("[data-tutorial-anchor='current-answer-choices']");
+  await answers.scrollIntoViewIfNeeded();
+  await expectCoachBesideTarget(page, answers, testInfo.project.name === "phone-chrome" ? answers : page.locator(".chart-sheet"));
   await expectCoachToRemainStable(page);
-  await expect(
-    coach.getByRole("button", { name: /choose|answer|continue/i }),
-  ).toHaveCount(0);
+  await expectNoMandatoryCoachClicks(page);
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".chart-sheet")).toHaveCount(0);
+  await expect(coach).toHaveAttribute("data-tutorial-step", "reopen-first-chart");
+  await page.locator(".patient-folder.is-active .patient-tab").first().click();
+  await waitForDecisionChoices(page);
+  await page.keyboard.press("1");
+  await expect.poll(async () => {
+    const state = await tutorialState(page);
+    return state.encounters[state.openChartEncounterId!]!.answers.length;
+  }).toBe(1);
+  await expect(page.getByRole("button", {name: /^(Resolve Completed Chart|Dismiss and close chart)$/})).toBeVisible();
+  await expectNoMandatoryCoachClicks(page);
 });
 
-test("keeps multistep feedback and semantic action anchors precise", async ({
-  page,
-}, testInfo) => {
-  testInfo.setTimeout(90_000);
-  test.skip(
-    testInfo.project.name !== "desktop-chrome",
-    "The complete tutorial target walkthrough runs once at desktop width.",
-  );
-
-  await startClinic(
-    page,
-    "Tutorial Anchor Founder",
-    "Tutorial Anchor Surgical Clinic",
-  );
+test("anchors feedback to native filing and timed-plan controls without a tour", async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "Full semantic anchor walkthrough runs once at desktop width.");
+  testInfo.setTimeout(180_000);
+  await startClinic(page, "Anchor Founder", "Tutorial Anchor Clinic");
   await setFastFacilitySpeed(page);
-  const firstPatient = await waitForFirstPatientReady(page);
-  await page.getByRole("button", { name: "Got It" }).click();
-  await firstPatient.click();
-  await waitForDecisionChoices(page);
-  await page.getByRole("button", { name: "Got It" }).click();
-  // This is a tutorial-geometry test, not a clinical-content wording test.
-  // The campaign seed may select any approved question variant, so exercise
-  // the real current answer control without coupling the walkthrough to one
-  // particular stem or option label.
-  const serviceState = await getActiveState(page);
-  const serviceEncounter = serviceState.encounters[
-    serviceState.openChartEncounterId!
-  ]!;
-  const serviceChoice = serviceEncounter.frozenCase.decisionNodes[
-    serviceEncounter.currentNodeIndex
-  ]!.answerChoices.find((choice) => choice.isCorrect)!;
-  await page.getByRole("button", { name: serviceChoice.label, exact: true }).click();
-
-  const currentFeedback = page.locator(
-    ".chart-step-column.is-current .chart-step-feedback",
-  );
-  await expect(
-    page.getByRole("heading", { name: "Review the decision result" }),
-  ).toBeVisible();
-  await expectCoachBesideTarget(page, currentFeedback);
+  await resumeFacility(page);
+  await (await waitForFirstPatientReady(page)).click();
+  await chooseTutorialAnswer(page, false);
+  await expectCoachBesideTarget(page, page.locator("[data-tutorial-anchor='decision-feedback-action']"), page.locator(".chart-sheet"));
   await expectCoachToRemainStable(page);
-
-  await page.getByRole("button", { name: "Got It" }).click();
-  const dismissFirstCoach = page.getByRole("heading", {
-    name: "Dismiss the completed decision",
-  });
-  if (await dismissFirstCoach.isVisible({ timeout: 2_000 })) {
-    const firstDismiss = page.locator(
-      '[data-tutorial-anchor="decision-feedback-action"]',
-    );
-    await expectCoachBesideTarget(page, firstDismiss);
-    await page.getByRole("button", { name: "Got It" }).click();
-    await firstDismiss.click();
-  }
-  await expect(
-    page.getByRole("heading", { name: "Review the encounter summary" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Flip for More Disease Information",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await page
-    .getByRole("button", { name: "Flip for More Disease Information" })
-    .click();
-
-  await expect(
-    page.getByRole("heading", { name: "Resolve Completed Chart" }),
-  ).toBeVisible();
-  const firstResolve = page.locator(
-    '[data-tutorial-anchor="resolve-chart"]',
-  );
-  await expectCoachBesideTarget(page, firstResolve);
-  await page.getByRole("button", { name: "Got It" }).click();
-  await firstResolve.click();
-
-  const quietMomentCoach = page.getByRole("heading", {
-    name: "Use quiet moments around the clinic",
-  });
-  if (await quietMomentCoach.isVisible({ timeout: 2_000 })) {
-    await page.getByRole("button", { name: "Got It" }).click();
-  }
-  const secondArrivalCoach = page.getByRole("heading", {
-    name: /is entering the clinic$/,
-  });
-  if (await secondArrivalCoach.isVisible({ timeout: 8_000 })) {
-    await page.getByRole("button", { name: "Got It" }).click();
-  }
-
-  const secondPatient = page
-    .locator(".patient-folder.is-waiting .patient-tab")
-    .first();
-  await expect(secondPatient).toBeVisible({ timeout: 15_000 });
-  await secondPatient.click();
-  await waitForDecisionChoices(page);
-  await expect(
-    page.getByRole("heading", { name: "Choose the first plan" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  const finalState = await getActiveState(page);
-  const finalEncounter = finalState.encounters[
-    finalState.openChartEncounterId!
-  ]!;
-  const finalChoice = finalEncounter.frozenCase.decisionNodes[
-    finalEncounter.currentNodeIndex
-  ]!.answerChoices.find((choice) => choice.isCorrect)!;
-  await page
-    .getByRole("button", {
-      name: new RegExp(
-        `^${finalChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-      ),
-    })
-    .click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Review the answer before care begins",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Send the patient for the timed service",
-    }),
-  ).toBeVisible();
-  const enactPlan = page.locator(
-    '[data-tutorial-anchor="decision-feedback-action"]',
-  );
-  await expectCoachBesideTarget(page, enactPlan);
-  await page.getByRole("button", { name: "Got It" }).click();
-  await enactPlan.click();
-
-  const returnToClinic = page.getByRole("button", {
-    name: "Return to clinic",
-  });
-  if (await returnToClinic.isVisible({ timeout: 2_000 })) {
-    await returnToClinic.click();
-  } else {
-    // Physical travel may still be finishing before the pending-result
-    // action appears. Close the chart through its ordinary control so this
-    // positioning test deterministically exercises the returning-patient
-    // tab anchor rather than racing the service route.
-    const closeChart = page.getByRole("button", {
-      name: "Close patient chart",
-    });
-    if (await closeChart.isVisible({ timeout: 2_000 })) {
-      await closeChart.click();
-    }
-  }
-  const awayCoach = page.getByRole("heading", {
-    name: "The patient is away for the timed service",
-  });
-  if (await awayCoach.isVisible({ timeout: 5_000 })) {
-    await page.getByRole("button", { name: "Got It" }).click();
-  }
-
-  const returningPatient = page
-    .locator(".patient-folder.is-active .patient-tab")
-    .first();
-  await expect(returningPatient).toHaveAccessibleName(/Action required/, {
-    timeout: 60_000,
-  });
-  await expect(
-    page.getByRole("heading", {
-      name: "The returning patient is ready",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await returningPatient.click();
-  await expect(
-    page.getByRole("heading", {
-      name: "The result unlocked the next decision",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await page
-    .locator(".chart-step-column.is-current .answer-choice")
-    .first()
-    .click();
-
-  await expect(
-    page.getByRole("heading", { name: "Review the final decision" }),
-  ).toBeVisible();
-  const finalFeedback = page.locator(
-    ".chart-step-column.is-current .chart-step-feedback",
-  );
-  await expectCoachBesideTarget(page, finalFeedback);
+  await fileTutorialChart(page);
+  const second = page.locator(".patient-folder.is-waiting .patient-tab").first();
+  await expect(second).toBeVisible({timeout: 30_000});
+  await second.click();
+  await chooseTutorialAnswer(page, true);
+  const plan = page.getByRole("button", {name: "Enact Plan", exact: true});
+  await expectCoachBesideTarget(page, plan, page.locator(".chart-sheet"));
   await expectCoachToRemainStable(page);
-  await expect(
-    page.locator(
-      ".chart-completed-decision .chart-step-feedback.tutorial-target-highlight",
-    ),
-  ).toHaveCount(0);
-
-  await page.getByRole("button", { name: "Got It" }).click();
-  const dismissFinalCoach = page.getByRole("heading", {
-    name: "Dismiss the final decision",
-  });
-  if (await dismissFinalCoach.isVisible({ timeout: 2_000 })) {
-    const finalDismiss = page.locator(
-      '[data-tutorial-anchor="decision-feedback-action"]',
-    );
-    await expectCoachBesideTarget(page, finalDismiss);
-    await page.getByRole("button", { name: "Got It" }).click();
-    await finalDismiss.click();
-  }
-  await expect(
-    page.getByRole("heading", { name: "Resolve the second chart" }),
-  ).toBeVisible();
-  const secondResolve = page.locator(
-    '[data-tutorial-anchor="resolve-chart"]',
-  );
-  await expectCoachBesideTarget(page, secondResolve);
-  await page.getByRole("button", { name: "Got It" }).click();
-  await secondResolve.click();
-
-  await expect(
-    page.getByRole("heading", {
-      name: "Alerts explain what the clinic needs",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Enter Build Mode" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Enter Build Mode" }).click();
-
-  await expect(
-    page.locator('[data-tutorial-anchor="place-door"]'),
-  ).toBeVisible();
-  await expect(
-    page.locator('[data-tutorial-anchor="build-done"]'),
-  ).toBeVisible();
+  await enactTutorialPlan(page, true);
+  await openReturnedTutorialChart(page);
+  await expect(page.locator(".cs-past")).toHaveCount(1);
+  await chooseTutorialAnswer(page, true);
+  const resolve = page.locator("[data-tutorial-anchor='resolve-chart']");
+  await expectCoachBesideTarget(page, resolve, page.locator(".chart-sheet"));
+  await expectCoachToRemainStable(page);
+  await expect(page.locator(".cs-past .tutorial-target-highlight")).toHaveCount(0);
+  await fileTutorialChart(page);
+  await expectNoMandatoryCoachClicks(page);
+  const coach = page.locator(".tutorial-coach");
+  await expect(coach).toHaveAttribute("data-tutorial-step", /enter-build-mode|remaining-goals/);
 });

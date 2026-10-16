@@ -93,6 +93,11 @@ export interface HostedAuthConfiguration {
 }
 
 export function localPrototypeBypassEnabled(): boolean {
+  // Partial/invalid hosted setup must not silently unlock the local prototype.
+  // Fully unconfigured owner builds keep the historical entry behavior.
+  if (import.meta.env.VITE_SUPABASE_URL?.trim() || import.meta.env.VITE_SUPABASE_ANON_KEY?.trim()) {
+    return false;
+  }
   const explicit = import.meta.env.VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS;
   if (explicit === "true") {
     return true;
@@ -100,17 +105,14 @@ export function localPrototypeBypassEnabled(): boolean {
   if (explicit === "false") {
     return false;
   }
-  // A static/local build without owner-controlled Supabase credentials is the
-  // approved prototype path. Once hosted credentials exist, bypass must be
-  // explicitly enabled.
-  return hostedAuthConfiguration() === null;
+  return true;
 }
 
 export function hostedAuthConfiguration():
   | HostedAuthConfiguration
   | null {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
   return typeof supabaseUrl === "string" &&
     supabaseUrl.length > 0 &&
     typeof supabaseAnonKey === "string" &&

@@ -7,6 +7,7 @@ import { PatientLists } from "./PatientLists";
 import { ResourceBar } from "./ResourceBar";
 import { CharacterQaGallery } from "./CharacterQaGallery";
 import { PixelAvatar } from "./PixelAvatar";
+import { getAllCharacterStillEntries } from "../art/characterStillRegistry";
 import type { ChartView, ResourceBarView } from "./types";
 import type { FacilityViewModel } from "../facility";
 
@@ -54,7 +55,7 @@ describe("paper chart presentation", () => {
           answerChoices: [],
           feedbackTitle: "Correct",
           feedbackBody: "The requested result was obtained.",
-          collapsedResultLabel: "Correct · Chest X-ray ordered",
+          collapsedResultLabel: "Correct Â· Chest X-ray ordered",
           current: false,
           complete: true,
         },
@@ -92,7 +93,7 @@ describe("paper chart presentation", () => {
       />,
     );
 
-    expect(markup).toContain("paper-chart");
+    expect(markup).toContain("chart-sheet");
     expect(markup).toContain("Morgan Reyes");
     expect(markup).toContain("Painful swelling");
     expect(markup).toContain("Three days of worsening localized pain.");
@@ -103,17 +104,15 @@ describe("paper chart presentation", () => {
     expect(markup).toContain("Satisfaction 94%");
     expect(markup).toContain("+10 learning XP");
     expect(markup).toContain("Flip for More Disease Information");
-    expect(markup).toContain(
-      "Decision 1 Result — Correct · Chest X-ray ordered",
-    );
+    expect(markup).toContain(">Decision 1<");
+    expect(markup).toContain("Correct Â· Chest X-ray ordered");
     expect(markup).toContain("Decisions Correct: 1/1");
     expect(markup).toContain("Encounter Payment: +$75");
     expect(markup).toContain("Encounter XP: +20");
     const updatePosition = markup.indexOf("Current update");
     const activeDecisionPosition = markup.indexOf("Decision 2 of 2");
-    expect(updatePosition).toBeGreaterThan(
-      markup.indexOf("chart-decision-region"),
-    );
+    // Updates sit with the patient story, before the active decision.
+    expect(updatePosition).toBeGreaterThan(markup.indexOf("cs-story"));
     expect(updatePosition).toBeLessThan(activeDecisionPosition);
     expect(markup).toContain(
       "Ultrasound now shows a simple fluid-filled cyst.",
@@ -185,7 +184,7 @@ describe("patient chart tabs", () => {
           {
             id: "encounter-1",
             name: "Morgan Reyes",
-            subtitle: "42 years · Female",
+            subtitle: "42 years Â· Female",
             folder: "waiting",
             statusLabel: "Clinic patient",
             actionRequired: true,
@@ -209,7 +208,7 @@ describe("patient chart tabs", () => {
 });
 
 describe("tutorial controls", () => {
-  it("always offers acknowledgment and tutorial opt-out without performing the highlighted action", () => {
+  it("offers only optional Skip guidance; native controls own progress", () => {
     const markup = renderToStaticMarkup(
       <TutorialCoach
         step={{
@@ -225,14 +224,14 @@ describe("tutorial controls", () => {
       />,
     );
 
-    expect(markup).toContain("Got It");
-    expect(markup).toContain("Turn off tutorials");
+    expect(markup).not.toContain("Got It");
+    expect(markup).toContain("Skip guidance");
     expect(markup).not.toContain("Enact Plan");
     expect(markup).toContain('data-anchor-state="locating"');
     expect(markup).toContain("visibility:hidden");
   });
 
-  it("uses authored tutorial action labels and action identifiers", () => {
+  it("ignores retired coach action labels and identifiers", () => {
     const markup = renderToStaticMarkup(
       <TutorialCoach
         step={{
@@ -255,15 +254,15 @@ describe("tutorial controls", () => {
       />,
     );
 
-    expect(markup).toContain("Close tutorial");
-    expect(markup).toContain("Advance now");
-    expect(markup).toContain(
+    expect(markup).not.toContain("Close tutorial");
+    expect(markup).not.toContain("Advance now");
+    expect(markup).not.toContain(
       'data-tutorial-action="acknowledge-step"',
     );
-    expect(markup).toContain('data-tutorial-action="level-up"');
+    expect(markup).not.toContain('data-tutorial-action="level-up"');
   });
 
-  it("shows only the completion action on the final tutorial prompt", () => {
+  it("never renders a separate completion action, even for retired metadata", () => {
     const markup = renderToStaticMarkup(
       <TutorialCoach
         step={{
@@ -283,8 +282,8 @@ describe("tutorial controls", () => {
       />,
     );
 
-    expect(markup).toContain("Complete tutorial");
-    expect(markup).toContain(
+    expect(markup).not.toContain("Complete tutorial");
+    expect(markup).not.toContain(
       'data-tutorial-action="complete-tutorial"',
     );
     expect(markup).not.toContain("Got It");
@@ -489,8 +488,14 @@ describe("character visual QA gallery", () => {
     expect(markup).toContain("Stand North");
     expect(markup).toContain("Sit South");
     expect(markup).toContain("Sit North");
-    expect((markup.match(/data-character-id=/g) ?? [])).toHaveLength(128);
-    expect((markup.match(/data-static-pose=/g) ?? []).length).toBe(1054);
+    const entries = getAllCharacterStillEntries();
+    for (const entry of entries) {
+      expect(markup).toContain(`data-character-id=\"${entry.id}\"`);
+    }
+    expect((markup.match(/data-character-id=/g) ?? [])).toHaveLength(entries.length);
+    expect((markup.match(/data-static-pose=/g) ?? []).length).toBe(
+      entries.length * 8 + entries.filter((entry) => entry.clipboard).length,
+    );
     expect(markup).not.toContain("Live route");
   });
 });

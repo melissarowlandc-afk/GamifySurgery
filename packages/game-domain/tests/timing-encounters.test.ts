@@ -151,7 +151,7 @@ function addOperationalXrayService(state: GameState): void {
     {
       id: "room.test.examination",
       roomDefinitionId: "room.examination",
-      x: 34,
+      x: 29,
       y: 26,
       orientation: 0,
       doorSide: null,
@@ -161,8 +161,8 @@ function addOperationalXrayService(state: GameState): void {
     {
       id: "room.test.imaging-control",
       roomDefinitionId: "room.imaging_control",
-      x: 31,
-      y: 24,
+      x: 29,
+      y: 23,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
@@ -178,7 +178,7 @@ function addOperationalXrayService(state: GameState): void {
       upgradeLevel: 1,
       cleanliness: 100,
     },
-    ...([26, 27, 28] as const).map((y) => ({
+    ...([23, 24, 25, 26, 27, 28] as const).map((y) => ({
       id: `room.hall.32.${y}`,
       roomDefinitionId: "room.hallway",
       x: 32,
@@ -188,14 +188,16 @@ function addOperationalXrayService(state: GameState): void {
       upgradeLevel: 1 as const,
       cleanliness: 100,
     })),
+    ...([30, 31] as const).map((x) => ({
+      id: `room.hall.${x}.25`, roomDefinitionId: "room.hallway", x, y: 25,
+      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
+    })),
+    ...([30, 31] as const).map((x) => ({
+      id: `room.hall.${x}.28`, roomDefinitionId: "room.hallway", x, y: 28,
+      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
+    })),
   );
-  state.doors.push({
-    id: "door.test.exam-to-xray",
-    roomId: "room.test.xray",
-    side: "south",
-    offset: 2,
-    exterior: false,
-  });
+  state.doors.push({ id: "door.test.examination", roomId: "room.test.examination", side: "south", offset: 1, exterior: false });
   state.doors.push({
     id: "door.test.imaging-control-to-xray",
     roomId: "room.test.imaging-control",
@@ -217,8 +219,8 @@ function addOperationalXrayService(state: GameState): void {
     morale: 75,
     trainingLevel: 1,
     homeRoomInstanceId: "room.test.imaging-control",
-    location: { x: 31, y: 24 },
-    path: [{ x: 31, y: 24 }],
+    location: { x: 30, y: 24 },
+    path: [{ x: 30, y: 24 }],
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,
     lastPraisedAtFacilityTick: null,
@@ -232,13 +234,13 @@ function addOperationalImagingService(
 ): void {
   const roomDefinitionId = service === "ultrasound" ? "room.ultrasound" : "room.ct";
   const room = service === "ultrasound"
-    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 2 }
-    : { x: 33, y: 22, patientOffset: 1, controlOffset: 3 };
+    ? { x: 33, y: 23, controlY: 23, connectionY: 25, serviceDoorOffset: 2 }
+    : { x: 33, y: 22, controlY: 22, connectionY: 24, serviceDoorOffset: 3 };
   state.rooms.push(
     {
       id: "room.test.examination",
       roomDefinitionId: "room.examination",
-      x: 34,
+      x: 29,
       y: 26,
       orientation: 0,
       doorSide: null,
@@ -248,8 +250,8 @@ function addOperationalImagingService(
     {
       id: "room.test.imaging-control",
       roomDefinitionId: "room.imaging_control",
-      x: 31,
-      y: service === "ultrasound" ? 24 : 23,
+      x: 29,
+      y: room.controlY,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
@@ -265,7 +267,7 @@ function addOperationalImagingService(
       upgradeLevel: 1,
       cleanliness: 100,
     },
-    ...(service === "ct" ? [25, 26, 27, 28] : [26, 27, 28]).map((y) => ({
+    ...([22, 23, 24, 25, 26, 27, 28] as const).map((y) => ({
       id: `room.hall.32.${y}`,
       roomDefinitionId: "room.hallway",
       x: 32,
@@ -275,10 +277,18 @@ function addOperationalImagingService(
       upgradeLevel: 1 as const,
       cleanliness: 100,
     })),
+    ...([30, 31] as const).map((x) => ({
+      id: `room.hall.${x}.${room.connectionY}`, roomDefinitionId: "room.hallway", x, y: room.connectionY,
+      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
+    })),
+    ...([30, 31] as const).map((x) => ({
+      id: `room.hall.${x}.28`, roomDefinitionId: "room.hallway", x, y: 28,
+      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
+    })),
   );
   state.doors.push(
-    { id: `door.test.${service}.patient`, roomId: `room.test.${service}`, side: "south", offset: room.patientOffset, exterior: false },
-    { id: `door.test.${service}.control`, roomId: `room.test.${service}`, side: "west", offset: room.controlOffset, exterior: false },
+    { id: "door.test.examination", roomId: "room.test.examination", side: "south", offset: 1, exterior: false },
+    { id: `door.test.${service}.control`, roomId: `room.test.${service}`, side: "west", offset: room.serviceDoorOffset, exterior: false },
     { id: "door.test.imaging-control-to-hall", roomId: "room.test.imaging-control", side: "south", offset: 1, exterior: false },
     { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
@@ -292,8 +302,8 @@ function addOperationalImagingService(
     morale: 75,
     trainingLevel: 1,
     homeRoomInstanceId: "room.test.imaging-control",
-    location: { x: 31, y: service === "ultrasound" ? 24 : 23 },
-    path: [{ x: 31, y: service === "ultrasound" ? 24 : 23 }],
+    location: { x: 30, y: room.controlY + 1 },
+    path: [{ x: 30, y: room.controlY + 1 }],
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,
     lastPraisedAtFacilityTick: null,
@@ -306,8 +316,8 @@ function addOperationalPhlebotomyService(state: GameState): void {
   state.rooms.push({
     id: "room.test.phlebotomy",
     roomDefinitionId: "room.phlebotomy",
-    x: 29,
-    y: 27,
+    x: 28,
+    y: 20,
     orientation: 0,
     doorSide: null,
     upgradeLevel: 1,
@@ -320,6 +330,11 @@ function addOperationalPhlebotomyService(state: GameState): void {
     offset: 1,
     exterior: false,
   });
+  state.rooms.push(
+    { id: "room.test.phlebotomy-hall.31.21", roomDefinitionId: "room.hallway", x: 31, y: 21, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "room.test.phlebotomy-hall.32.21", roomDefinitionId: "room.hallway", x: 32, y: 21, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "room.test.phlebotomy-hall.32.22", roomDefinitionId: "room.hallway", x: 32, y: 22, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+  );
   state.employees.push({
     id: "employee.test.phlebotomist",
     staffRoleDefinitionId: "staff.phlebotomist",
@@ -330,8 +345,8 @@ function addOperationalPhlebotomyService(state: GameState): void {
     morale: 75,
     trainingLevel: 1,
     homeRoomInstanceId: "room.test.phlebotomy",
-    location: { x: 30, y: 28 },
-    path: [{ x: 30, y: 28 }],
+    location: { x: 29, y: 21 },
+    path: [{ x: 29, y: 21 }],
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,
     lastPraisedAtFacilityTick: null,
@@ -379,9 +394,9 @@ function addTwoExamOperationalXrayService(state: GameState): void {
     {
       id: "room.test.exam-xray",
       roomDefinitionId: "room.examination",
-      x: 31,
-      y: 28,
-      orientation: 270,
+      x: 29,
+      y: 23,
+      orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
       cleanliness: 100,
@@ -406,6 +421,15 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       upgradeLevel: 1,
       cleanliness: 100,
     },
+    ...([
+      { x: 30, y: 25 }, { x: 31, y: 25 },
+      { x: 32, y: 25 }, { x: 32, y: 26 }, { x: 32, y: 27 },
+      { x: 32, y: 28 }, { x: 32, y: 29 }, { x: 31, y: 29 },
+    ] as const).map((point) => ({
+      id: `room.test.multi-hall.${point.x}.${point.y}`,
+      roomDefinitionId: "room.hallway", x: point.x, y: point.y,
+      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
+    })),
   );
   state.doors.push(
     {
@@ -418,8 +442,8 @@ function addTwoExamOperationalXrayService(state: GameState): void {
     {
       id: "door.test.exam-xray-front",
       roomId: "room.test.exam-xray",
-      side: "east",
-      offset: 2,
+      side: "south",
+      offset: 1,
       exterior: false,
     },
     {
@@ -436,6 +460,7 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       offset: 1,
       exterior: false,
     },
+    { id: "door.test.multi-front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
   state.employees.push({
     id: "employee.test.multi-imaging-tech",
@@ -447,8 +472,8 @@ function addTwoExamOperationalXrayService(state: GameState): void {
     morale: 75,
     trainingLevel: 1,
     homeRoomInstanceId: "room.test.multi-imaging-control",
-    location: { x: 28, y: 27 },
-    path: [{ x: 28, y: 27 }],
+    location: { x: 29, y: 27 },
+    path: [{ x: 29, y: 27 }],
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,
     lastPraisedAtFacilityTick: null,
@@ -560,9 +585,9 @@ describe("minute simulation and economy", () => {
 
     state = tick(state, "expense.quarter");
     expect(state.facilityTick).toBe(15);
-    // A fresh campaign now owns only the Front Desk, whose $6 hourly upkeep
-    // posts as $1.50 at the first quarter-hour boundary.
-    expect(state.cash).toBe(startingCash - 1.5);
+    // A fresh campaign now owns only the Front Desk, whose $1 hourly upkeep
+    // posts as $0.25 at the first quarter-hour boundary.
+    expect(state.cash).toBe(startingCash - 0.25);
     const restored = deserializeGameState(serializeGameState(state));
     expect(restored.nextFinancialPostingTick).toBe(30);
     expect(restored.operatingAccrualSixtiethCents).toBe(
@@ -947,6 +972,12 @@ describe("physical patient routing", () => {
     encounter.queuedCareRoomInstanceId = null;
     state = answerCorrect(state, encounterId, "multi-exam.order");
 
+    // Route previews may carry a different compatible Examination Room. The
+    // acknowledgement must rebind the frozen trip to this patient's actual
+    // room rather than relying on that provisional room choice.
+    state.encounters[encounterId]!.pendingResult!.patientTravel!.originRoomInstanceId =
+      "room.test.exam-xray";
+
     expect(
       state.encounters[encounterId]!.pendingResult?.patientTravel
         ?.originRoomInstanceId,
@@ -984,10 +1015,10 @@ describe("physical patient routing", () => {
     expect(
       restored.encounters[encounterId]!.pendingResult?.patientTravel
         ?.tilesPerTick,
-    ).toBe(
-      PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
-        .characterTravelTilesPerTick,
-    );
+    ).toBe(4);
+    expect(
+      restored.encounters[encounterId]!.pendingResult?.patientTravel,
+    ).toEqual(state.encounters[encounterId]!.pendingResult?.patientTravel);
     expect(
       restored.encounters[encounterId]!.pendingResult?.dueTick,
     ).toBe(timingBoundaries.dueTick);
@@ -1080,7 +1111,7 @@ describe("physical patient routing", () => {
     expect(opened.environment.founderActivity?.path.at(-1)).toEqual(getRoomCareAnchor(exam, definition, "clinician"));
   });
 
-  it("rejects chart opening atomically when no exam is available or the founder is explicitly busy", () => {
+  it("opens the question immediately when no exam is available or the founder is explicitly busy", () => {
     const state = emptyLevelOne("open-chart-atomic-rejection");
     const admitted = admit(state, "encounter.open-chart-atomic-rejection");
     const encounter = admitted.encounters["encounter.open-chart-atomic-rejection"]!;
@@ -1089,16 +1120,20 @@ describe("physical patient routing", () => {
     encounter.patientMovement = null;
     encounter.patientLocation = { ...admitted.environment.founderLocation };
     encounter.waitingDestination = { roomInstanceId: "room.instance.founder_desk", location: { ...encounter.patientLocation }, kind: "standing" };
-    const snapshot = JSON.stringify({ open: admitted.openChartEncounterId, encounter, founder: admitted.environment.founderActivity });
     const noExam = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.no-exam", encounterId: encounter.id });
-    expect(noExam.operationReceipts["atomic.no-exam"]?.status).toBe("rejected");
-    expect(JSON.stringify({ open: noExam.openChartEncounterId, encounter: noExam.encounters[encounter.id], founder: noExam.environment.founderActivity })).toBe(snapshot);
+    expect(noExam.operationReceipts["atomic.no-exam"]?.status).toBe("applied");
+    expect(noExam.openChartEncounterId).toBe(encounter.id);
+    expect(getCurrentQuestion(noExam, encounter.id)).not.toBeNull();
+    expect(noExam.environment.founderActivity).toBeNull();
     addWaitingAndExaminationRooms(admitted);
     admitted.environment.founderActivity = { kind: "collect_litter", targetId: "litter.busy", path: [{ ...admitted.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: admitted.facilityTick, workMinutesRemaining: 5 };
-    const busySnapshot = JSON.stringify({ open: admitted.openChartEncounterId, encounter: admitted.encounters[encounter.id], founder: admitted.environment.founderActivity });
     const busy = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.busy-founder", encounterId: encounter.id });
-    expect(busy.operationReceipts["atomic.busy-founder"]?.status).toBe("rejected");
-    expect(JSON.stringify({ open: busy.openChartEncounterId, encounter: busy.encounters[encounter.id], founder: busy.environment.founderActivity })).toBe(busySnapshot);
+    expect(busy.operationReceipts["atomic.busy-founder"]?.status).toBe("applied");
+    expect(getCurrentQuestion(busy, encounter.id)).not.toBeNull();
+    expect(busy.environment.founderActivity).toMatchObject({
+      kind: "collect_litter",
+      targetId: "litter.busy",
+    });
   });
 
   it("uses only one Front Desk waiting place before queuing later patients on the sidewalk", () => {
@@ -1430,10 +1465,7 @@ describe("physical patient routing", () => {
       kind: "walking_to_care",
       destinationRoomInstanceId: "room.test.return-examination",
     });
-    expect(intermediate.environment.founderActivity).toMatchObject({
-      kind: "attend_encounter",
-      targetId: encounterId,
-    });
+    expect(intermediate.environment.founderActivity).toBeNull();
 
     let manual = beforeAcknowledgement as GameState;
     manual.environment.founderActivity = {
@@ -1540,10 +1572,7 @@ describe("physical patient routing", () => {
         expect(
           state.encounters[encounterId]!.pendingResult!.offsiteTravel
             ?.tilesPerTick,
-        ).toBe(
-          PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
-            .characterTravelTilesPerTick,
-        );
+        ).toBe(4);
         restoredAwayState = true;
       }
       sawReturningInside ||=

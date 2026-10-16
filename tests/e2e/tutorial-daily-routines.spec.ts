@@ -1,183 +1,86 @@
-import { mkdirSync } from "node:fs";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { SECOND_TUTORIAL_ENCOUNTER_ID } from "@gamify-surgery/game-domain";
+import { setFastFacilitySpeed, startClinic, waitForFirstPatientReady } from "./helpers";
 import {
-  SECOND_TUTORIAL_ENCOUNTER_ID,
-  getCurrentQuestion,
-  type GameState,
-} from "@gamify-surgery/game-domain";
-import {
-  getActiveState,
-  getProfile,
-  setFastFacilitySpeed,
-  startClinic,
-  waitForDecisionChoices,
-  waitForFirstPatientReady,
-} from "./helpers";
+  chooseTutorialAnswer, enactTutorialPlan, expectNoMandatoryCoachClicks, fileTutorialChart,
+  openReturnedTutorialChart, reloadTutorialCampaign, resumeFacility, tutorialState,
+} from "./tutorial-helpers";
 
-const SCREENSHOTS = "artifacts/screenshots";
-const CLINIC_NAME = "GS-023 Daily Routines Clinic";
-
-test.beforeAll(() => mkdirSync(SCREENSHOTS, { recursive: true }));
-
-function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-async function dismissCoach(page: Page): Promise<void> {
-  const button = page.getByRole("button", { name: "Got It" });
-  if (await button.isVisible({ timeout: 500 }).catch(() => false)) {
-    await button.click();
-  }
-}
-
-async function answerTutorialCorrectly(page: Page): Promise<void> {
-  await waitForDecisionChoices(page);
-  const state = (await getActiveState(page)) as unknown as GameState;
-  const encounter = state.encounters[state.openChartEncounterId!]!;
-  const question = getCurrentQuestion(state, encounter.id)!;
-  const correct = question.node.answerChoices.find(
-    (choice) => choice.isCorrect,
-  )!;
-  await page
-    .getByRole("button", {
-      name: new RegExp(`^${escapeRegex(correct.label)}(?:$|\\s)`),
-    })
-    .click();
-}
-
-async function finishTutorialChart(page: Page): Promise<void> {
-  for (let attempt = 0; attempt < 30; attempt += 1) {
-    await dismissCoach(page);
-    const flip = page.getByRole("button", {
-      name: /Flip for (?:M|m)ore Disease Information/,
-    });
-    if (await flip.isVisible({ timeout: 200 }).catch(() => false)) {
-      await flip.click();
-      continue;
-    }
-    const resolve = page.getByRole("button", {
-      name: "Resolve Completed Chart",
-    });
-    if (await resolve.isVisible({ timeout: 200 }).catch(() => false)) {
-      await resolve.click();
-      return;
-    }
-  }
-  throw new Error("Tutorial chart did not resolve.");
-}
-
-async function resumeCampaignAfterReload(page: Page): Promise<void> {
-  await page.reload();
-  await page
-    .getByRole("button", { name: `Resume ${CLINIC_NAME}` })
-    .click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
-}
-
-async function expectTip(page: Page, id: string): Promise<void> {
-  await expect(
-    page.locator(`.tutorial-coach[data-tutorial-step='${id}']`),
-  ).toBeVisible({ timeout: 30_000 });
-}
-
-test("daily-routine tips survive first and later reloads and release their pause after Management closes", async ({
-  page,
-}) => {
-  test.setTimeout(180_000);
-  await startClinic(page, "GS-023 Routine Founder", CLINIC_NAME);
+test("timed visits keep running; optional Management, Help and deliberate pause retain ownership across reload", async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "Full timed-visit recovery runs once at desktop width.");
+  testInfo.setTimeout(240_000);
+  const clinicName = "Timed Guidance Recovery Clinic";
+  await startClinic(page, "Waiting Founder", clinicName);
   await setFastFacilitySpeed(page);
-  await page.getByRole("button", { name: "Resume facility time" }).click();
-
-  await dismissCoach(page);
+  await resumeFacility(page);
   await (await waitForFirstPatientReady(page)).click();
-  await dismissCoach(page);
-  await answerTutorialCorrectly(page);
-  await finishTutorialChart(page);
-  await dismissCoach(page);
-
+  await chooseTutorialAnswer(page, true);
+  await fileTutorialChart(page);
   const second = page.locator(".patient-folder.is-waiting .patient-tab").first();
-  await expect(second).toBeVisible({ timeout: 25_000 });
+  await expect(second).toBeVisible({timeout: 30_000});
   await second.click();
-  await dismissCoach(page);
-  await answerTutorialCorrectly(page);
-  await dismissCoach(page);
-  await page.getByRole("button", { name: "Enact Plan" }).click();
-  await dismissCoach(page);
+  await chooseTutorialAnswer(page, false);
+  await enactTutorialPlan(page, false);
+  await expect.poll(async () => {
+    const encounter = (await tutorialState(page)).encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!;
+    return encounter.patientLocation === null && encounter.patientMovement === null;
+  }, {timeout: 30_000}).toBe(true);
+  await expect(page.locator(".tutorial-coach")).toHaveAttribute("data-tutorial-step", "sendout-management");
+  const pending = await tutorialState(page);
+  expect(pending.paused).toBe(false);
+  expect(pending.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.answers[0]!.correct).toBe(false);
+  await expectNoMandatoryCoachClicks(page);
+  await expect.poll(async () => (await tutorialState(page)).facilityTick).toBeGreaterThan(pending.facilityTick);
 
-  await expectTip(page, "sendout-management");
-  const beforeFirstReload = (await getActiveState(page)) as unknown as GameState;
-  expect(beforeFirstReload.paused).toBe(true);
-  expect(
-    beforeFirstReload.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
-      .patientLocation,
-  ).toBeNull();
-  await page.screenshot({
-    path: `${SCREENSHOTS}/gs-023-sendout-management-before-reload.png`,
-    animations: "disabled",
-  });
+  await page.getByRole("button", {name: "Enter Management Mode", exact: true}).click();
+  await expect(page.getByRole("tab", {name: "Employees"})).toBeVisible();
+  expect((await tutorialState(page)).paused).toBe(true);
+  await expect(page.locator(".tutorial-coach")).toHaveCount(0);
+  await page.getByRole("button", {name: "Done", exact: true}).click();
+  await expect.poll(async () => (await tutorialState(page)).paused).toBe(false);
+  await expect.poll(async () => (await tutorialState(page)).alertHumor.guidanceTips?.topicActivity?.management?.exposedAtTick).not.toBeUndefined();
+  await expect(page.locator(".tutorial-coach[data-tutorial-step='sendout-trash'], .tutorial-coach[data-tutorial-step='sendout-water']")).toHaveCount(0);
 
-  await resumeCampaignAfterReload(page);
-  await expectTip(page, "sendout-management");
-  const afterFirstReload = (await getActiveState(page)) as unknown as GameState;
-  expect(afterFirstReload.paused).toBe(true);
-  expect(afterFirstReload.facilityTick).toBe(beforeFirstReload.facilityTick);
+  await page.getByRole("button", {name: "Pause facility time"}).click();
+  const paused = await tutorialState(page);
+  await page.getByRole("button", {name: "Help", exact: true}).click();
+  await expect(page.getByRole("navigation", {name: "Help topics"}).getByRole("button")).toHaveCount(6);
+  await page.getByRole("button", {name: "Time & waiting", exact: true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Tips never pause the clinic");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(page.getByRole("button", {name: "Help", exact: true})).toBeFocused();
+  expect((await tutorialState(page)).paused).toBe(true);
 
-  await page.getByRole("button", { name: "Open Management" }).click();
-  await expect(page.getByRole("tab", { name: "Employees" })).toBeVisible();
-  await expect(
-    page.getByRole("tab", { name: "Services & income" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Done" }).click();
-  await expectTip(page, "sendout-management");
-  expect(
-    ((await getActiveState(page)) as unknown as GameState).paused,
-  ).toBe(true);
+  await reloadTutorialCampaign(page, clinicName);
+  const restored = await tutorialState(page);
+  expect(restored.paused).toBe(true);
+  expect(restored.facilityTick).toBe(paused.facilityTick);
+  expect(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase).toEqual(paused.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase);
+  expect(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult).toEqual(paused.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult);
+  expect(restored.learningHistories).toEqual(paused.learningHistories);
+  await expect(page.locator(".tutorial-coach")).toContainText("Resume");
+  await resumeFacility(page);
+  await openReturnedTutorialChart(page);
+  await chooseTutorialAnswer(page, true);
+  await fileTutorialChart(page);
+  expect((await tutorialState(page)).encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.answers.map((answer) => answer.correct)).toEqual([false, true]);
+});
 
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expectTip(page, "sendout-trash");
-  await expect
-    .poll(async () => {
-      const profile = await getProfile(page);
-      const routineProgress = profile as typeof profile & {
-        tutorialDailyRoutineTipAcknowledgments?: Record<string, string[]>;
-      };
-      return routineProgress.tutorialDailyRoutineTipAcknowledgments?.[
-        profile.activeCampaignId!
-      ];
-    })
-    .toContain("sendout-management");
-  await page.screenshot({
-    path: `${SCREENSHOTS}/gs-023-sendout-trash-before-reload.png`,
-    animations: "disabled",
-  });
-
-  await resumeCampaignAfterReload(page);
-  await expectTip(page, "sendout-trash");
-  expect(
-    ((await getActiveState(page)) as unknown as GameState).paused,
-  ).toBe(true);
-
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expectTip(page, "sendout-water");
-  await page.screenshot({
-    path: `${SCREENSHOTS}/gs-023-sendout-water.png`,
-    animations: "disabled",
-  });
-  const beforeRelease = (await getActiveState(page)) as unknown as GameState;
-  await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.locator(".tutorial-coach[data-tutorial-step^='sendout-']"),
-  ).toHaveCount(0);
-  await expect
-    .poll(
-      async () =>
-        ((await getActiveState(page)) as unknown as GameState).paused,
-    )
-    .toBe(false);
-  await expect
-    .poll(
-      async () =>
-        ((await getActiveState(page)) as unknown as GameState).facilityTick,
-    )
-    .toBeGreaterThan(beforeRelease.facilityTick);
+test("Help restores a running clinic without stealing its chart or answer shortcuts", async ({page}) => {
+  await startClinic(page, "Help Founder", "Short Help Clinic");
+  await setFastFacilitySpeed(page);
+  await resumeFacility(page);
+  await (await waitForFirstPatientReady(page)).click();
+  await expect(page.locator(".cs-step.is-current .cs-answer").first()).toBeVisible();
+  const before = await tutorialState(page);
+  await page.getByRole("button", {name: "Help", exact: true}).click();
+  expect((await tutorialState(page)).paused).toBe(true);
+  await page.keyboard.press("1");
+  expect((await tutorialState(page)).encounters[before.openChartEncounterId!]!.answers).toEqual([]);
+  await page.keyboard.press("Escape");
+  await expect.poll(async () => (await tutorialState(page)).paused).toBe(false);
+  await expect(page.locator(".chart-sheet")).toBeVisible();
+  await page.keyboard.press("1");
+  await expect.poll(async () => (await tutorialState(page)).encounters[before.openChartEncounterId!]!.answers.length).toBe(1);
 });

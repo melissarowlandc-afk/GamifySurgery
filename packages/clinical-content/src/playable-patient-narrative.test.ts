@@ -11,7 +11,7 @@ const MULTI_PATIENT_FRAMING = [
 const PATIENT_REFERENCE =
   /(?:\{patientName\}|\b(?:patient|adult|woman|man|recipient|they|she|he|\d{1,3}-year-old)\b)/i;
 const STORY_CUE =
-  /\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|noticed|notes?|describes?|is seen|comes?|brings?|discuss|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|eats?)\b/i;
+  /\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|noticed|notes?|describes?|is seen|is offered|is invited|comes?|visits?|brings?|discuss(?:es|ing)?|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|evaluates?|assess(?:ed|ing)|wakes?|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|reads?|sees?|declines?|lacks?|overhears?|recognizes?|waits?|considers?|compares?|moves?|records?|measures?|tabulates?|cross-classifies|designs?|tests?|recalls?|cannot|eats?|viene|consulta|llega|quiere|dice|pregunta|está|comprende)\b/i;
 const ALTERNATE_PATIENT_CHOICE =
   /^(?:a|an|fit) (?:patient|adult|woman|man)\b/i;
 
@@ -23,6 +23,19 @@ describe("playable one-patient narratives", () => {
   it("anchors every admitted case to one patient with a brief story", () => {
     for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
       if (clinicalCase.id.startsWith("case.l2.")) continue;
+      if (clinicalCase.participant?.kind === "employee_discussion") {
+        expect(clinicalCase.presentation, clinicalCase.id).toContain(
+          "{patientName}",
+        );
+        expect(clinicalCase.presentation, clinicalCase.id).toMatch(STORY_CUE);
+        expect(clinicalCase.prototypeDemographics, clinicalCase.id).toBeUndefined();
+        expect(clinicalCase.prototypeVitalSigns, clinicalCase.id).toBeUndefined();
+        expect(
+          clinicalCase.approvedInstantiationProfiles,
+          clinicalCase.id,
+        ).toBeUndefined();
+        continue;
+      }
       expect(clinicalCase.presentation, clinicalCase.id).toMatch(
         PATIENT_REFERENCE,
       );
@@ -67,6 +80,14 @@ describe("playable one-patient narratives", () => {
 
   it("keeps explicitly female stories attached to female chart identities", () => {
     for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
+      if (clinicalCase.participant?.kind === "employee_discussion") {
+        expect(clinicalCase.prototypeDemographics, clinicalCase.id).toBeUndefined();
+        expect(
+          clinicalCase.approvedInstantiationProfiles,
+          clinicalCase.id,
+        ).toBeUndefined();
+        continue;
+      }
       const profiles = clinicalCase.approvedInstantiationProfiles ?? [];
       if (profiles.length > 0) {
         for (const profile of profiles) {

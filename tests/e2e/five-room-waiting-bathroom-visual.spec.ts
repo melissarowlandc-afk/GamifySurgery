@@ -101,7 +101,7 @@ test("renders normal and exact-conflict X-ray, Imaging Control, and Minor Proced
     animations: "disabled",
   });
   await normal.getByRole("button", { name: "Enter Build Mode" }).click();
-  const placeDoor = normal.getByRole("button", { name: "Place Door" });
+  const placeDoor = normal.getByRole("button", { name: "Doors", exact: true });
   await expect(placeDoor).toBeVisible();
   await placeDoor.evaluate((button) => (button as HTMLButtonElement).click());
   await expect(placeDoor).toHaveAttribute("aria-pressed", "true");

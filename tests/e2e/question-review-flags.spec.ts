@@ -18,7 +18,7 @@ test("a player can flag the exact displayed question for developer review", asyn
   await startClinic(page, "Review Founder", "Review Surgical Clinic");
   await setFastFacilitySpeed(page);
   const patient = await waitForFirstPatientReady(page);
-  await page.getByRole("button", { name: "Got It" }).click();
+  await expect(page.getByRole("button", {name: "Got It"})).toHaveCount(0);
   await patient.click();
   await waitForDecisionChoices(page);
 

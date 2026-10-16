@@ -5,6 +5,15 @@ import { EARLY_LEVELS_20260913_TIMING_ENTRIES } from "./development-batch/2026-0
 import { BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES } from "./development-batch/2026-09-17/brief-early-levels-batch";
 import { BREAD_BUTTER_20260917_TIMING_ENTRIES } from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
 import { GS028_20260928_TIMING_ENTRIES } from "./development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20260929_TIMING_ENTRIES } from "./development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_STATS_ETHICS_20260929_TIMING_ENTRIES } from "./development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
+import { GS028_20261002_TIMING_ENTRIES } from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20261003_TIMING_ENTRIES } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+import { GS028_20261007_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety/variety-batch";
+import { GS028_20261007_VARIETY2_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety-2/variety-batch";
+import { GS028_20261007_LEVEL3_TIMING_ENTRIES } from "./development-batch/2026-10-07-level3/level3-batch";
+import { PEDIATRIC_CLINIC_TIMING_ENTRIES } from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
+import { VARIETY3_TIMING_ENTRIES } from "./development-batch/2026-10-10-variety-3/variety3-batch";
 
 /**
  * Explicit presentation-only timing classifications for every node in the admitted bank.
@@ -5941,6 +5950,15 @@ const entries: AnswerChoiceTimingRegistryEntry[] = [
   ...BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES,
   ...BREAD_BUTTER_20260917_TIMING_ENTRIES,
   ...GS028_20260928_TIMING_ENTRIES,
+  ...GS028_20260929_TIMING_ENTRIES,
+  ...GS028_STATS_ETHICS_20260929_TIMING_ENTRIES,
+  ...GS028_20261002_TIMING_ENTRIES,
+  ...GS028_20261003_TIMING_ENTRIES,
+  ...GS028_20261007_TIMING_ENTRIES,
+  ...GS028_20261007_VARIETY2_TIMING_ENTRIES,
+  ...GS028_20261007_LEVEL3_TIMING_ENTRIES,
+  ...PEDIATRIC_CLINIC_TIMING_ENTRIES,
+  ...VARIETY3_TIMING_ENTRIES,
 ];
 
 export const ANSWER_CHOICE_TIMING_REGISTRY = entries.map((entry) =>

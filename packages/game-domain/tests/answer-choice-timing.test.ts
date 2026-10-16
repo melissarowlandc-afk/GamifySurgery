@@ -104,7 +104,7 @@ describe("answer-choice test timing previews", () => {
     ).toMatchObject({ kind: "test", durationTicks: 150, timingProfileId: "timing.test.ultrasound" });
   });
 
-  it("uses the same live EGD timing for implemented and preview-only EGD choices", () => {
+  it("retains the same inclusive external EGD input and includes walking for implemented and preview-only choices", () => {
     const context = JSON.parse(
       JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT),
     ) as typeof PROTOTYPE_DOMAIN_CONTEXT;
@@ -128,12 +128,16 @@ describe("answer-choice test timing previews", () => {
       ),
     );
     const previewOnly = readyEncounter("case.achalasia.water-and-solids", "encounter.preview-egd");
-    expect(
-      getAnswerChoiceServicePreview(implemented, "encounter.implemented-egd", "egd_1", context)?.durationTicks,
-    ).toBe(222);
-    expect(
-      getAnswerChoiceServicePreview(previewOnly, "encounter.preview-egd", "repeat_egd_1", context)?.durationTicks,
-    ).toBe(222);
+    const biopsies = getAnswerChoiceServicePreview(implemented, "encounter.implemented-egd", "egd_1", context)!;
+    const visual = getAnswerChoiceServicePreview(previewOnly, "encounter.preview-egd", "repeat_egd_1", context)!;
+    for (const preview of [biopsies, visual]) {
+      const plan = "diagnosticTiming" in preview ? preview.diagnosticTiming : null;
+      expect(plan?.sources[0]?.inclusiveDurationMinutes).toBe(222);
+      expect(preview.durationTicks).toBe(Math.max(...plan!.phases.map((phase) => phase.forecast.endsAtTick)));
+      expect(preview.durationTicks).toBeGreaterThan(222);
+    }
+    expect("diagnosticTiming" in biopsies && biopsies.diagnosticTiming?.phases.some((phase) => phase.kind === "pathology")).toBe(true);
+    expect("diagnosticTiming" in visual && visual.diagnosticTiming?.phases.some((phase) => phase.kind === "pathology")).toBe(false);
   });
 
   it("preserves uniform fully routed legacy previews while suppressing incomplete groups", () => {

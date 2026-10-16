@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "batchKey": "first-existing-four",
+  "contractId": "shared-character-walk-v1",
+  "members": [
+    { "identityKey": "mixed-20260910-patient-01", "outputKey": "mixed-20260910-patient-01", "status": "ready", "recipe": "docs/features/character-movement/recipes/patient-01.json" },
+    { "identityKey": "mixed-20260910-patient-02", "outputKey": "mixed-20260910-patient-02", "status": "pending_measurement", "blockers": ["character-specific lateral and front/back proportions", "per-view registration", "long-coat overlap and hidden-joint evidence", "approved reflection lineage inputs"] },
+    { "identityKey": "mixed-20260910-receptionist-01", "outputKey": "mixed-20260910-receptionist-01", "status": "pending_measurement", "blockers": ["Marisol-specific lateral and front/back proportions", "per-view registration", "uniform and hidden-joint evidence", "approved reflection lineage inputs"] },
+    { "identityKey": "mixed-20260910-nurse-01", "outputKey": "mixed-20260910-nurse-01", "status": "pending_measurement", "blockers": ["Caleb-specific lateral and front/back proportions", "per-view registration", "uniform and hidden-joint evidence", "approved reflection lineage inputs"] }
+  ]
+}

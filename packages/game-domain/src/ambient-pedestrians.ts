@@ -1,4 +1,7 @@
-import { createPatientPixelAppearance } from "./appearance";
+import {
+  createPatientPixelAppearance,
+  getPatientAppearanceSelectionContext,
+} from "./appearance";
 import {
   RANDOM_STREAMS,
   deterministicInteger,
@@ -76,6 +79,7 @@ function createAmbientPedestrian(
       id,
       {},
       "ambient-pedestrian",
+      getPatientAppearanceSelectionContext(state),
     ),
     path: sidewalkPath(start, destination),
     pathIndex: 0,

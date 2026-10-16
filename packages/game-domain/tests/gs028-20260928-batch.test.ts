@@ -338,7 +338,7 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
     wrong = answer(wrong, wrongEncounterId, false, `${wrongEncounterId}.answer`, REAL_MS + 101);
     expect(wrong.encounters[wrongEncounterId]?.terminalTestOrder).toBeUndefined();
     expect(wrong.serviceOperations).toEqual([]);
-  }, 10_000);
+  });
 
   it.each(GS028_20260928_CASES.map((clinicalCase, index) => [index, clinicalCase] as const))(
     "runs every authored node in case %s correctly through gates without leaking pending results",
@@ -403,8 +403,12 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
     let onsite = scheduleVenousGate(preparedVenousDuplexClinic("venous-onsite"), clinicalCase, "gs028.venous.onsite");
     expect(onsite.encounters["gs028.venous.onsite.encounter"]?.pendingResult).toMatchObject({
       routeId: "route.venous_duplex.in_house", deliveredAtTick: null,
-      imagingTechnicianId: "employee.gs028.imaging",
+      diagnosticTiming: { version: "diagnostic-order.v1" },
     });
+    expect(onsite.encounters["gs028.venous.onsite.encounter"]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")?.resource).toMatchObject({
+      roomInstanceId: "room.gs028.ultrasound", employeeIds: ["employee.gs028.imaging"],
+    });
+    expect(onsite.encounters["gs028.venous.onsite.encounter"]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "interpretation")).toMatchObject({ mode: "external", durationMinutes: 30 });
     expect(onsite.encounters["gs028.venous.onsite.encounter"]?.deliveredResultNarratives).toEqual([]);
     onsite = acknowledge(onsite, "gs028.venous.onsite.encounter", "gs028.venous.onsite.acknowledge");
     onsite = waitForResult(onsite, "gs028.venous.onsite.encounter", "gs028.venous.onsite.wait");
@@ -417,22 +421,26 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
     for (let tick = 0; tick < 80 && competing.employees.find((employee) => employee.id === "employee.gs028.imaging")?.facilityTask === null; tick += 1) {
       competing = gameReducer(competing, { type: "ADVANCE_TICK", operationId: `gs028.venous.first.start.${tick}`, advancedAtRealMs: REAL_MS }, BATCH_CONTEXT);
     }
-    expect(competing.employees.find((employee) => employee.id === "employee.gs028.imaging")?.facilityTask).toMatchObject({ kind: "perform_imaging" });
+    expect(competing.employees.find((employee) => employee.id === "employee.gs028.imaging")?.facilityTask).toMatchObject({ kind: "perform_service" });
     competing = admit(competing, clinicalCase, "gs028.venous.queued.encounter", "gs028.venous.queued.admit");
     competing = ready(competing, "gs028.venous.queued.encounter", "gs028.venous.queued.ready");
     competing = answer(competing, "gs028.venous.queued.encounter", true, "gs028.venous.queued.answer", REAL_MS + 43);
     expect(competing.encounters["gs028.venous.queued.encounter"]?.pendingResult).toMatchObject({
       routeId: "route.venous_duplex.in_house", deliveredAtTick: null, imagingTechnicianId: null,
-      resourceQueue: { status: "waiting_for_resources", routeId: "route.venous_duplex.in_house" },
     });
+    const queuedAcquisition = () => competing.encounters["gs028.venous.queued.encounter"]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")!;
+    expect(queuedAcquisition().forecast.queueMinutes).toBeGreaterThan(0);
     competing = acknowledge(competing, "gs028.venous.queued.encounter", "gs028.venous.queued.acknowledge");
-    for (let tick = 0; tick < 1_500 && competing.encounters["gs028.venous.queued.encounter"]?.pendingResult?.resourceQueue; tick += 1) {
+    expect(competing.serviceOperations.find((operation) => operation.id === queuedAcquisition().serviceOperationId)?.status).toBe("waiting_for_resources");
+    for (let tick = 0; tick < 1_500 && queuedAcquisition().status !== "active"; tick += 1) {
       competing = gameReducer(competing, { type: "ADVANCE_TICK", operationId: `gs028.venous.queued.release.${tick}`, advancedAtRealMs: REAL_MS }, BATCH_CONTEXT);
     }
     expect(competing.encounters["gs028.venous.queued.encounter"]?.pendingResult).toMatchObject({
-      routeId: "route.venous_duplex.in_house", imagingTechnicianId: "employee.gs028.imaging",
+      routeId: "route.venous_duplex.in_house",
     });
-    expect(competing.encounters["gs028.venous.queued.encounter"]?.pendingResult?.resourceQueue).toBeUndefined();
+    expect(queuedAcquisition().resource?.employeeIds).toEqual(["employee.gs028.imaging"]);
+    const firstAcquisition = competing.encounters["gs028.venous.first.encounter"]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")!;
+    expect(queuedAcquisition().startedAtTick).toBeGreaterThanOrEqual(firstAcquisition.completedAtTick!);
     competing = waitForResult(competing, "gs028.venous.queued.encounter", "gs028.venous.queued.wait");
     expect(competing.encounters["gs028.venous.queued.encounter"]?.deliveredResultNarratives).toContain(gate.resultNarrative);
 

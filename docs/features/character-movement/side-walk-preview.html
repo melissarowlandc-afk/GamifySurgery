@@ -1,0 +1,230 @@
+<section id="gs012-side-walk-preview" aria-labelledby="gs012-walk-title" data-current-pose="1">
+  <style>
+    #gs012-side-walk-preview { color: var(--foreground); font-family: inherit; }
+    #gs012-side-walk-preview .gs012-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; }
+    #gs012-side-walk-preview .gs012-head h2 { margin-bottom: 0; }
+    #gs012-side-walk-preview .gs012-views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: .75rem; }
+    #gs012-side-walk-preview figure { margin: 0; min-width: 0; }
+    #gs012-side-walk-preview figcaption { font-weight: 500; margin-bottom: .25rem; }
+    #gs012-side-walk-preview .gs012-stage { width: 100%; min-height: 228px; }
+    #gs012-side-walk-preview svg { display: block; width: 100%; height: 228px; color: var(--foreground); }
+    #gs012-side-walk-preview .gs012-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .75rem; }
+    #gs012-side-walk-preview .gs012-detail { margin: .5rem 0 0; color: var(--foreground); }
+    #gs012-side-walk-preview .gs012-swatch { display: inline-block; width: 1.4em; border-top: 3px solid var(--blue); vertical-align: middle; }
+    #gs012-side-walk-preview .gs012-swatch--right { border-color: var(--orange); border-top-style: dashed; }
+    #gs012-side-walk-preview .gs012-ground { stroke: var(--border); stroke-width: 2; }
+    #gs012-side-walk-preview .gs012-right { stroke: var(--orange); stroke-dasharray: 7 11; }
+    #gs012-side-walk-preview .gs012-left { stroke: var(--blue); }
+    #gs012-side-walk-preview .gs012-limb { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+    #gs012-side-walk-preview .gs012-torso { fill: var(--muted); stroke: var(--foreground); stroke-width: 2; stroke-linejoin: round; }
+    #gs012-side-walk-preview .gs012-skin { fill: var(--background); stroke: var(--foreground); stroke-width: 2; stroke-linejoin: round; }
+    #gs012-side-walk-preview .gs012-neck { fill: none; stroke: var(--foreground); stroke-width: 7; stroke-linecap: round; }
+    #gs012-side-walk-preview .gs012-foot { fill: none; stroke-width: 7; stroke-linecap: round; }
+    @media (max-width: 520px) { #gs012-side-walk-preview .gs012-views { grid-template-columns: 1fr; } }
+  </style>
+  <div class="gs012-head">
+    <h2 id="gs012-walk-title">Eight-pose side walk</h2>
+    <output class="tabular-nums" data-phase>Pose 1 / 8 · right stride</output>
+  </div>
+  <div class="gs012-views">
+    <figure><figcaption>East-facing</figcaption><div class="gs012-stage"><svg data-view="east" role="img" aria-label="East-facing humanoid walk pose"></svg></div></figure>
+    <figure><figcaption>West-facing</figcaption><div class="gs012-stage"><svg data-view="west" role="img" aria-label="West-facing humanoid walk pose"></svg></div></figure>
+  </div>
+  <div class="viz-controls gs012-controls" aria-label="Walk pose controls">
+    <button class="btn" type="button" data-action="previous">Previous</button>
+    <button class="btn btn-primary" type="button" data-action="play" aria-pressed="true">Pause</button>
+    <button class="btn" type="button" data-action="next">Next</button>
+  </div>
+  <p class="gs012-detail" data-detail>Right leg and left arm reach far forward; the opposite limbs reach back.</p>
+  <div class="gs012-legend" aria-label="Anatomical limb identity legend">
+    <span><i class="gs012-swatch" aria-hidden="true"></i> L · left limbs</span>
+    <span><i class="gs012-swatch gs012-swatch--right" aria-hidden="true"></i> R · right limbs</span>
+  </div>
+  <span class="sr-only" aria-live="polite" data-manual-status></span>
+  <script>
+    (() => {
+      const root = document.getElementById('gs012-side-walk-preview');
+      if (!root || root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const groundY = 212;
+      const ankleContactY = 208.5;
+      const poseData = [
+        { name: 'right stride', kind: 'main', detail: 'Right leg and left arm reach far forward; the opposite limbs reach back.', bob: 8, rightFoot: [36, 0], leftFoot: [-36, 0], rightHand: [-38, 46], leftHand: [38, 46] },
+        { name: 'toward right passing', kind: 'intermediate', detail: 'The right foot settles under the body while the left leg begins to swing through.', bob: 3, rightFoot: [18, 0], leftFoot: [-18, 7], rightHand: [-20, 55], leftHand: [20, 55] },
+        { name: 'right support passing', kind: 'main', detail: 'Right leg is straight and grounded; left knee is slightly bent in the air; both arms are down.', bob: 0, support: 'right', rightFoot: [0, 0], leftFoot: [0, 5], rightHand: [0, 61], leftHand: [0, 61] },
+        { name: 'toward left stride', kind: 'intermediate', detail: 'The left foot reaches forward as the arms begin the opposite swing.', bob: 3, rightFoot: [-18, 0], leftFoot: [18, 3], rightHand: [20, 55], leftHand: [-20, 55] },
+        { name: 'left stride', kind: 'main', detail: 'Left leg and right arm reach far forward; the opposite limbs reach back.', bob: 8, rightFoot: [-36, 0], leftFoot: [36, 0], rightHand: [38, 46], leftHand: [-38, 46] },
+        { name: 'toward left passing', kind: 'intermediate', detail: 'The left foot settles under the body while the right leg begins to swing through.', bob: 3, rightFoot: [-18, 7], leftFoot: [18, 0], rightHand: [20, 55], leftHand: [-20, 55] },
+        { name: 'left support passing', kind: 'main', detail: 'Left leg is straight and grounded; right knee is slightly bent in the air; both arms are down.', bob: 0, support: 'left', rightFoot: [0, 5], leftFoot: [0, 0], rightHand: [0, 61], leftHand: [0, 61] },
+        { name: 'toward right stride', kind: 'intermediate', detail: 'The right foot reaches forward as the cycle returns smoothly to the first stride.', bob: 3, rightFoot: [18, 3], leftFoot: [-18, 0], rightHand: [-20, 55], leftHand: [20, 55] }
+      ];
+
+      const point = (x, y) => ({ x, y });
+      const mirrorPoint = (p, centerX, direction) => point(centerX + direction * (p.x - centerX), p.y);
+      const solveJoint = (a, b, upper, lower, bendForward = true) => {
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const distance = Math.hypot(dx, dy);
+        if (!distance || distance > upper + lower || distance < Math.abs(upper - lower)) throw new Error('Unreachable two-bone limb');
+        const along = (upper * upper - lower * lower + distance * distance) / (2 * distance);
+        const height = Math.sqrt(Math.max(0, upper * upper - along * along));
+        const base = point(a.x + dx * along / distance, a.y + dy * along / distance);
+        const sign = bendForward ? -1 : 1;
+        return point(base.x + sign * (-dy / distance) * height, base.y + sign * (dx / distance) * height);
+      };
+      const segmentLength = (a, b) => Math.hypot(b.x - a.x, b.y - a.y);
+      const fmt = n => Number(n.toFixed(3));
+      const line = (className, a, b, extra = '') => `<path class="${className}" ${extra} d="M ${fmt(a.x)} ${fmt(a.y)} L ${fmt(b.x)} ${fmt(b.y)}"/>`;
+
+      const geometryFor = (poseIndex, direction, width) => {
+        const pose = poseData[poseIndex];
+        const centerX = width / 2;
+        const hip = point(centerX, 120.5 + pose.bob);
+        const shoulderY = 80.5 + pose.bob;
+        const head = point(centerX, 54.5 + pose.bob);
+        const makeLeg = side => {
+          const foot = pose[`${side}Foot`];
+          const ankle = point(centerX + foot[0], ankleContactY - foot[1]);
+          const isSupport = pose.support === side;
+          const knee = isSupport ? point((hip.x + ankle.x) / 2, (hip.y + ankle.y) / 2) : solveJoint(hip, ankle, 44, 44, true);
+          return { side, hip, knee, ankle, footLift: foot[1], isSupport };
+        };
+        const makeArm = side => {
+          const shoulder = point(centerX + (side === 'right' ? 3 : -3), shoulderY);
+          const offset = pose[`${side}Hand`];
+          const hand = point(shoulder.x + offset[0], shoulder.y + offset[1]);
+          const elbow = solveJoint(shoulder, hand, 30, 31, false);
+          return { side, shoulder, elbow, hand };
+        };
+        const source = { centerX, groundY, hip, shoulderY, head, legs: { left: makeLeg('left'), right: makeLeg('right') }, arms: { left: makeArm('left'), right: makeArm('right') } };
+        const flip = p => mirrorPoint(p, centerX, direction);
+        return {
+          ...source,
+          direction,
+          head: flip(source.head),
+          hip: flip(source.hip),
+          legs: Object.fromEntries(Object.entries(source.legs).map(([side, leg]) => [side, { ...leg, hip: flip(leg.hip), knee: flip(leg.knee), ankle: flip(leg.ankle) }])),
+          arms: Object.fromEntries(Object.entries(source.arms).map(([side, arm]) => [side, { ...arm, shoulder: flip(arm.shoulder), elbow: flip(arm.elbow), hand: flip(arm.hand) }]))
+        };
+      };
+
+      const drawLeg = (geometry, side) => {
+        const leg = geometry.legs[side];
+        const identity = side === 'right' ? 'gs012-right' : 'gs012-left';
+        const toe = point(leg.ankle.x + geometry.direction * 12, leg.ankle.y);
+        return line(`gs012-limb ${identity}`, leg.hip, leg.knee, `data-side="${side}" data-segment="thigh"`) +
+          line(`gs012-limb ${identity}`, leg.knee, leg.ankle, `data-side="${side}" data-segment="shin"`) +
+          line(`gs012-foot ${identity}`, leg.ankle, toe, `data-side="${side}" data-segment="foot"`);
+      };
+      const drawArm = (geometry, side) => {
+        const arm = geometry.arms[side];
+        const identity = side === 'right' ? 'gs012-right' : 'gs012-left';
+        return line(`gs012-limb ${identity}`, arm.shoulder, arm.elbow, `data-side="${side}" data-segment="upper-arm"`) +
+          line(`gs012-limb ${identity}`, arm.elbow, arm.hand, `data-side="${side}" data-segment="forearm"`);
+      };
+      const drawBody = geometry => {
+        const { centerX, direction, hip, shoulderY, head } = geometry;
+        const shoulderBack = mirrorPoint(point(centerX - 10, shoulderY), centerX, direction);
+        const shoulderFront = mirrorPoint(point(centerX + 10, shoulderY), centerX, direction);
+        const hipFront = mirrorPoint(point(centerX + 8, hip.y), centerX, direction);
+        const hipBack = mirrorPoint(point(centerX - 8, hip.y), centerX, direction);
+        const neckTop = point(head.x, head.y + 16);
+        const neckBottom = point(centerX, shoulderY);
+        const noseBaseTop = point(head.x + direction * 14, head.y - 4);
+        const noseTip = point(head.x + direction * 20, head.y + 1);
+        const noseBaseBottom = point(head.x + direction * 14, head.y + 6);
+        return line('gs012-neck', neckTop, neckBottom) +
+          `<path class="gs012-torso" d="M ${fmt(shoulderBack.x)} ${fmt(shoulderBack.y)} L ${fmt(shoulderFront.x)} ${fmt(shoulderFront.y)} L ${fmt(hipFront.x)} ${fmt(hipFront.y)} L ${fmt(hipBack.x)} ${fmt(hipBack.y)} Z"/>` +
+          `<circle class="gs012-skin" cx="${fmt(head.x)}" cy="${fmt(head.y)}" r="16"/>` +
+          `<path class="gs012-skin" d="M ${fmt(noseBaseTop.x)} ${fmt(noseBaseTop.y)} L ${fmt(noseTip.x)} ${fmt(noseTip.y)} L ${fmt(noseBaseBottom.x)} ${fmt(noseBaseBottom.y)}"/>`;
+      };
+
+      let index = 0;
+      const draw = svg => {
+        const width = Math.max(260, Math.round(svg.parentElement.getBoundingClientRect().width || 260));
+        const direction = svg.dataset.view === 'east' ? 1 : -1;
+        const geometry = geometryFor(index, direction, width);
+        const farSide = direction === 1 ? 'left' : 'right';
+        const nearSide = farSide === 'left' ? 'right' : 'left';
+        svg.setAttribute('viewBox', `0 0 ${width} 228`);
+        svg.setAttribute('aria-label', `${svg.dataset.view === 'east' ? 'East' : 'West'}-facing pose ${index + 1}: ${poseData[index].name}`);
+        svg.innerHTML = `<title>${svg.dataset.view === 'east' ? 'East' : 'West'}-facing ${poseData[index].name}</title>` +
+          '<desc>Anatomical left limbs are solid and right limbs are dashed. The figure remains in place to compare the walk poses.</desc>' +
+          line('gs012-ground', point(24, groundY), point(width - 24, groundY)) +
+          drawLeg(geometry, farSide) + drawArm(geometry, farSide) + drawBody(geometry) +
+          drawArm(geometry, nearSide) + drawLeg(geometry, nearSide);
+        svg.__gs012Geometry = geometry;
+      };
+
+      const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+      let wantsPlayback = !motionPreference.matches;
+      let pageVisible = !document.hidden;
+      let onScreen = true;
+      let timer;
+      const phase = root.querySelector('[data-phase]');
+      const detail = root.querySelector('[data-detail]');
+      const playButton = root.querySelector('[data-action="play"]');
+      const manualStatus = root.querySelector('[data-manual-status]');
+      const canRun = () => wantsPlayback && pageVisible && onScreen;
+      const syncTimer = () => {
+        clearInterval(timer);
+        timer = undefined;
+        if (canRun()) timer = setInterval(() => { index = (index + 1) % poseData.length; render(false); }, 180);
+      };
+      const render = (manual = false) => {
+        root.dataset.currentPose = String(index + 1);
+        root.dataset.playing = String(canRun());
+        phase.textContent = `Pose ${index + 1} / 8 · ${poseData[index].name}`;
+        detail.textContent = poseData[index].detail;
+        root.querySelectorAll('svg[data-view]').forEach(draw);
+        playButton.textContent = wantsPlayback ? 'Pause' : 'Play';
+        playButton.setAttribute('aria-pressed', String(wantsPlayback));
+        if (manual) manualStatus.textContent = `Pose ${index + 1} of 8, ${poseData[index].name}.`;
+      };
+      const setPose = (nextIndex, manual = true) => {
+        wantsPlayback = false;
+        index = (nextIndex + poseData.length) % poseData.length;
+        syncTimer();
+        render(manual);
+      };
+      root.querySelector('[data-action="previous"]').addEventListener('click', () => setPose(index - 1));
+      root.querySelector('[data-action="next"]').addEventListener('click', () => setPose(index + 1));
+      playButton.addEventListener('click', () => {
+        wantsPlayback = !wantsPlayback;
+        syncTimer();
+        render(false);
+        manualStatus.textContent = wantsPlayback ? 'Walk cycle playing.' : 'Walk cycle paused.';
+      });
+      document.addEventListener('visibilitychange', () => {
+        pageVisible = !document.hidden;
+        syncTimer();
+        render(false);
+      });
+      motionPreference.addEventListener('change', event => {
+        if (!event.matches) return;
+        wantsPlayback = false;
+        syncTimer();
+        render(false);
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          onScreen = entries[0]?.isIntersecting ?? true;
+          syncTimer();
+          render(false);
+        }, { threshold: 0.01 }).observe(root);
+      }
+      if ('ResizeObserver' in window) new ResizeObserver(() => render(false)).observe(root.querySelector('.gs012-views'));
+
+      root.__gs012Preview = {
+        poseData,
+        geometryFor,
+        segmentLength,
+        getState: () => ({ index, wantsPlayback, pageVisible, onScreen, running: Boolean(timer) }),
+        setPose
+      };
+      render(false);
+      syncTimer();
+    })();
+  </script>
+</section>

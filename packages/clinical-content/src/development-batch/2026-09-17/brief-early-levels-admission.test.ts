@@ -4,16 +4,22 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { syntheticClinicalCaseSchema } from "../../schema";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+// Keep this historical batch's inventory proof scoped to its original bank.
+// Later-batch admission/protected-intake checks live in their own tests.
+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")&&!c.id.startsWith("case.variety3.")),
+};
 import { BRIEF_EARLY_LEVELS_20260917_AUTHORING_CONCEPTS as concepts, BRIEF_EARLY_LEVELS_20260917_BATCH_MANIFEST as manifest, BRIEF_EARLY_LEVELS_20260917_CASE_REVIEWS as reviews, BRIEF_EARLY_LEVELS_20260917_CASES as cases, BRIEF_EARLY_LEVELS_20260917_CLAIMS as claims, BRIEF_EARLY_LEVELS_20260917_QUESTIONS as questions, BRIEF_EARLY_LEVELS_20260917_SOURCES as sources, BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES as timings } from "./brief-early-levels-batch";
 
 describe("September 17 brief early-level admission", () => {
   it("admits the exact authored batch once", () => {
     expect(manifest).toMatchObject({ authoringConceptCount: 20, testedConceptCount: 20, questionVariantCount: 80, caseCount: 48, decisionNodeCount: 80, resultGateCount: 32 });
     expect([concepts, questions, cases, reviews, timings].map((items) => items.length)).toEqual([20, 80, 48, 48, 80]);
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(203);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(518);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(783);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
     for (const clinicalCase of cases) expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
   });
   it("keeps provenance, review status, concise presentations, and parallel choices", () => {

@@ -100,7 +100,30 @@ describe("EventMessageBoard", () => {
     );
     expect(markup).toContain('title="Open Taylor"');
     expect(markup).toContain("Open Taylor&#x27;s chart.");
+    expect(markup).toContain(
+      'class="message-board-compact-action-label">Open Taylor</span>',
+    );
+    expect(markup).toContain('data-message-id="focus-patient"');
+    expect(markup).toContain('data-new-message="false"');
     expect(markup).not.toContain(">Action needed<");
+  });
+
+  it("treats server-rendered or remounted history as existing history", () => {
+    const markup = renderToStaticMarkup(
+      <EventMessageBoard
+        items={Array.from({ length: 35 }, (_, index) => ({
+          id: `history-${index}`,
+          message: `History ${index}`,
+          sortKey: index,
+        }))}
+        mode="ticker"
+        maximumVisibleItems={30}
+      />,
+    );
+
+    expect(markup).not.toContain("is-new-message");
+    expect(markup).not.toContain("message-board-new-token");
+    expect(markup).not.toContain('class="message-board-new-indicator"');
   });
 
   it("lets newer flavor move ahead of older actionable rows", () => {

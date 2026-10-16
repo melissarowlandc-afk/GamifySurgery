@@ -3,6 +3,13 @@ import { describe, expect, it } from "vitest";
 import { getEnvironmentTileLogicalPhase } from "./environmentTilePhase";
 
 describe("getEnvironmentTileLogicalPhase", () => {
+  it("keeps uniformly tiny frontage materials anchored without the legacy 0.02 scale floor", () => {
+    const scale = 0.12 / 16;
+    const before = getEnvironmentTileLogicalPhase(32, 80, 12, 40, scale, 0.000001);
+    const after = getEnvironmentTileLogicalPhase(85, 43, 65, 3, scale, 0.000001);
+    expect(after).toEqual(before);
+    expect(before.x).toBe(Math.round(20/scale));
+  });
   it("keeps a fixed logical material phase when the camera moves its rendered origin", () => {
     const beforePan = getEnvironmentTileLogicalPhase(184, 256, 40, 64, 0.5);
     const afterPan = getEnvironmentTileLogicalPhase(232, 219, 88, 27, 0.5);

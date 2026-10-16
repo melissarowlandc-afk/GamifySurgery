@@ -11,6 +11,7 @@ import {
   getCurrentCapabilities,
   getCurrentQuestion,
   getEligibleServiceRoute,
+  getPendingResultEta,
   serializeGameState,
   type GameState,
 } from "../src";
@@ -116,10 +117,17 @@ describe("September 10 surgery-center production flows", () => {
         gateCount += 1;
         const pending = state.encounters[encounterId]!.pendingResult!;
         expect(pending).toMatchObject({ resultTypeId: clinicalCase.decisionNodes[0]!.resultGateAfter!.resultTypeId });
-        expect(pending.dueTick).toBeGreaterThan(state.facilityTick);
+        if (pending.localServiceOperation) {
+          expect(getPendingResultEta(state, encounterId)).toBeNull();
+          for (let minute = 0; minute < 400 && state.encounters[encounterId]!.pendingResult?.localServiceOperation?.status !== "external_processing"; minute += 1) {
+            state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `sc.${index}.local-service.${minute}` });
+          }
+        }
+        const activePending = state.encounters[encounterId]!.pendingResult!;
+        expect(activePending.dueTick).toBeGreaterThan(state.facilityTick);
         expect(getCurrentQuestion(state, encounterId)).toBeNull();
         expect(state.encounters[encounterId]!.deliveredResultNarratives).toEqual([]);
-        while (state.facilityTick < pending.dueTick) {
+        while (state.facilityTick < activePending.dueTick) {
           expect(getCurrentQuestion(state, encounterId)).toBeNull();
           expect(state.encounters[encounterId]!.deliveredResultNarratives).toEqual([]);
           state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `sc.${index}.before-result.${state.facilityTick}` });
@@ -136,7 +144,7 @@ describe("September 10 surgery-center production flows", () => {
     }
     expect(gateCount).toBe(32);
     expect(reviewed).toEqual(new Set(SURGERY_CENTER_TESTED_CONCEPTS.map((item) => item.id)));
-  }, 15_000);
+  }, 60_000);
 
   it("uses corrective-forward Again grading and preserves a pending external encounter across reload", () => {
     const encounterId = "encounter.sc.corrective";
@@ -173,23 +181,28 @@ describe("September 10 surgery-center production flows", () => {
     state = answerCorrect(state, "encounter.sc.egd.ready", "sc.egd.ready", 20_000);
     expect(state.encounters["encounter.sc.egd.ready"]!.steps[0]!.status).toBe("feedback_pending");
     state = acknowledge(state, "encounter.sc.egd.ready", "sc.egd.ready");
-    expect(state.operationReceipts["sc.egd.ready.ack"]?.message).toBe("Feedback reviewed; the corrected service is now underway.");
+    expect(state.operationReceipts["sc.egd.ready.ack"]?.message).toBe("Feedback reviewed; the ordered diagnostic work is now underway.");
     const pending = state.encounters["encounter.sc.egd.ready"]!.pendingResult!;
     expect(pending).toMatchObject({
       routeId: "route.endoscopy.in_house",
-      patientTravel: { originRoomInstanceId: "room.instance.starter_examination", destinationRoomInstanceId: "room.sc.endoscopy" },
-      resourceReservations: [
-        { roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" },
-        { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" },
-      ],
-      providerReservation: { kind: "employee", employeeId: "employee.sc.endoscopist", staffRoleDefinitionId: "staff.endoscopist" },
+      patientTravel: null,
+      resourceReservations: [],
+      providerReservation: null,
+      diagnosticTiming: { version: "diagnostic-order.v1", execution: "supported" },
     });
-    expect(pending.timingPhases).toEqual(expect.arrayContaining([
-      expect.objectContaining({ id: "phase.endoscopy.preparation", durationTicks: 30, resourceBound: true }),
-      expect.objectContaining({ id: "phase.endoscopy.procedure", durationTicks: 45, resourceBound: true }),
-      expect.objectContaining({ id: "phase.endoscopy.recovery", durationTicks: 45, resourceBound: true }),
-      expect.objectContaining({ id: "phase.endoscopy.return_and_report", durationTicks: 60, resourceBound: false }),
-    ]));
+    expect(pending.timingPhases).toEqual([]);
+    expect(pending.diagnosticTiming?.phases.filter((phase) => phase.durationMinutes).map((phase) => [phase.kind, phase.durationMinutes])).toEqual([
+      ["preparation", 30], ["procedure", 45], ["pathology", 60], ["recovery", 60],
+    ]);
+    expect(state.serviceOperations.find((operation) => operation.diagnosticPhysicalWork?.orderId === pending.diagnosticTiming?.orderId)).toMatchObject({
+      phaseFlowVersion: 1,
+      testChoiceOrder: { purpose: "result_gate" },
+      frozenOperationPhases: [
+        { id: "periop_preparation", durationMinutes: 30 },
+        { id: "preparation_and_procedure.procedure", durationMinutes: 45 },
+        { id: "recovery", durationMinutes: 60 },
+      ],
+    });
   });
 
   it("freezes generated identity, appearance, profile, and shuffled answer order", () => {

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { SimulationSpeed } from "@gamify-surgery/game-domain";
 import type { ResourceBarView } from "./types";
 import { SmoothHudIcon } from "./SmoothHudIcon";
+import "./financePresentation.css";
 
 interface ResourceBarProps {
   view: ResourceBarView;
@@ -14,6 +15,7 @@ interface ResourceBarProps {
   onSimulationSpeedChange?: (speed: SimulationSpeed) => void;
   onSaveAndClose?: () => void;
   endControls?: ReactNode;
+  headline?: ReactNode;
 }
 
 function clampPercent(value: number | undefined): number {
@@ -62,6 +64,7 @@ export function ResourceBar({
   onSimulationSpeedChange,
   onSaveAndClose,
   endControls,
+  headline,
 }: ResourceBarProps) {
   const levelLabel = view.levelLabel ?? view.facilityLevelLabel;
   const controlledMode = buildMode
@@ -76,6 +79,10 @@ export function ResourceBar({
   const xpProgressPercent = clampPercent(view.xpProgressPercent);
   const moneyDelta =
     view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel;
+  const moneyBreakdown = view.moneyHourlyBreakdown;
+  const moneyTooltip = moneyBreakdown
+    ? `Net ${moneyDelta}: income ${moneyBreakdown.incomeLabel} − costs ${moneyBreakdown.costLabel}. ${moneyBreakdown.windowLabel}. ${moneyBreakdown.explanation}`
+    : undefined;
   const dayTime = view.dayTimeLabel ?? view.facilityTimeLabel;
   const satisfactionMood = satisfactionExpression(
     view.satisfactionLabel,
@@ -116,9 +123,26 @@ export function ResourceBar({
             <HudIcon kind="money" />
             <div className="resource-chip-content">
               <span>Money</span>
-              <strong className="resource-money-value">
-                {view.moneyLabel} <small>({moneyDelta})</small>
-              </strong>
+              {moneyBreakdown ? (
+                <details className="resource-money-details">
+                  <summary className="resource-money-summary" title={moneyTooltip} aria-label={`Cash ${view.moneyLabel}. Net ${moneyDelta}. Show income and costs per game hour.`}>
+                    <strong className="resource-money-value">
+                      {view.moneyLabel} <small className={`finance-net is-${view.moneyHourlyNetSign ?? "neutral"}`}>({moneyDelta})</small>
+                    </strong>
+                  </summary>
+                  <div className="resource-money-breakdown">
+                    <p><span>Average income</span><b>{moneyBreakdown.incomeLabel}</b></p>
+                    <p><span>Costs</span><b>{moneyBreakdown.costLabel}</b></p>
+                    <p><span>Net per game hour</span><b className={`finance-net is-${view.moneyHourlyNetSign ?? "neutral"}`}>{moneyDelta}</b></p>
+                    <small>{moneyBreakdown.windowLabel}</small>
+                    <small>{moneyBreakdown.explanation}</small>
+                  </div>
+                </details>
+              ) : (
+                <strong className="resource-money-value">
+                  {view.moneyLabel} <small>({moneyDelta})</small>
+                </strong>
+              )}
             </div>
           </section>
 
@@ -234,6 +258,7 @@ export function ResourceBar({
           {endControls}
         </div>
       </div>
+      {headline}
     </header>
   );
 }

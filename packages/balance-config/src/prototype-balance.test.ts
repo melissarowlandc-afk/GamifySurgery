@@ -112,7 +112,7 @@ describe("Level 2 expanded outpatient definitions", () => {
       expect(PROTOTYPE_BALANCE_RELEASE.services.find((service) => service.id === serviceId)?.routes[0]?.durationTicks).toBe(480);
     }
   });
-  it("unlocks the accepted rooms, staff, capabilities, and locked Level 3 preview", () => {
+  it("preserves Level 2 and unlocks the approved Level 3 facility catalog", () => {
     const facility = PROTOTYPE_BALANCE_RELEASE.facility;
     const rooms = facility.roomDefinitions.filter((definition) =>
       LEVEL_TWO_ROOM_DEFINITION_IDS.includes(
@@ -125,7 +125,7 @@ describe("Level 2 expanded outpatient definitions", () => {
       ),
     );
 
-    expect(facility.maximumPlayableLevel).toBe(2);
+    expect(facility.maximumPlayableLevel).toBe(5);
     expect(rooms.map((room) => room.id)).toEqual(LEVEL_TWO_ROOM_DEFINITION_IDS);
     expect(staff.map((role) => role.id)).toEqual(LEVEL_TWO_STAFF_ROLE_IDS);
     expect(rooms.every((room) => room.unlockFacilityLevel === 2)).toBe(true);
@@ -142,15 +142,15 @@ describe("Level 2 expanded outpatient definitions", () => {
         ]),
       ),
     ).toEqual({
-      "room.xray": [750, 14, "3x3"],
-      "room.ct": [1600, 26, "4x4"],
-      "room.phlebotomy": [550, 9, "3x2"],
-      "room.evs_closet": [475, 6, "2x2"],
-      "room.endoscopy": [1450, 24, "4x3"],
-      "room.periop_recovery": [900, 16, "6x6"],
-      "room.training": [650, 8, "3x3"],
-      "room.coffee_kiosk": [500, 5, "2x2"],
-      "room.glp1_telehealth_suite": [1200, 12, "3x2"],
+      "room.xray": [750, 4, "3x3"],
+      "room.ct": [1600, 8, "4x4"],
+      "room.phlebotomy": [550, 2, "3x2"],
+      "room.evs_closet": [475, 1, "2x2"],
+      "room.endoscopy": [1450, 12, "4x3"],
+      "room.periop_recovery": [900, 3, "6x6"],
+      "room.training": [650, 1, "3x3"],
+      "room.coffee_kiosk": [500, 1, "2x2"],
+      "room.glp1_telehealth_suite": [1200, 2, "3x2"],
     });
     const recovery = rooms.find((room) => room.id === "room.periop_recovery")!;
     expect(recovery.workloadLimitContribution).toBe(1);
@@ -167,12 +167,12 @@ describe("Level 2 expanded outpatient definitions", () => {
         ]),
       ),
     ).toEqual({
-      "staff.periop_nurse": [450, 34, 2],
-      "staff.endoscopy_nurse": [500, 36, 2],
-      "staff.endoscopist": [900, 60, 2],
-      "staff.phlebotomist": [350, 28, 2],
-      "staff.evs_worker": [280, 24, 2],
-      "staff.glp1_np": [600, 40, 10],
+      "staff.periop_nurse": [450, 20, 2],
+      "staff.endoscopy_nurse": [500, 24, 2],
+      "staff.endoscopist": [900, 40, 2],
+      "staff.phlebotomist": [350, 18, 2],
+      "staff.evs_worker": [280, 12, 2],
+      "staff.glp1_np": [600, 30, 10],
     });
     expect(PROTOTYPE_BALANCE_RELEASE.environment).toMatchObject({
       glp1AutomationIntervalMinutes: 60,
@@ -185,8 +185,8 @@ describe("Level 2 expanded outpatient definitions", () => {
       ),
     ).toMatchObject({
       hiringCost: 300,
-      salaryPerExpenseInterval: 26,
-      maximumEmployees: 3,
+      salaryPerExpenseInterval: 18,
+      maximumEmployees: 4, // The fourth physical imaging post is the Level-4 MRI.
     });
     expect(
       rooms.find((room) => room.id === "room.endoscopy")?.capabilityIds,
@@ -207,16 +207,47 @@ describe("Level 2 expanded outpatient definitions", () => {
           level: 2,
           minimumClinicalXp: 300,
           satisfactionMustBeGreaterThan: 90,
-          requiredRoomDefinitionIds: ["room.endoscopy", "room.periop_recovery"],
-          requiredStaffRoleIds: [
-            "staff.periop_nurse",
-            "staff.endoscopy_nurse",
-            "staff.endoscopist",
-          ],
-          nextFacilityLevel: null,
+          requiredRoomDefinitionIds: [],
+          requiredStaffRoleIds: [],
+          nextFacilityLevel: 3,
+        }),
+        expect.objectContaining({
+          level: 3,
+          minimumClinicalXp: 500,
+          satisfactionMustBeGreaterThan: 90,
+          requiredRoomDefinitionIds: [],
+          requiredStaffRoleIds: ["staff.pharmacist"],
+          nextFacilityLevel: 4,
         }),
       ]),
     );
+    expect(
+      facility.roomDefinitions
+        .filter((room) => room.unlockFacilityLevel === 3)
+        .map((room) => [room.id, room.constructionCost, room.upkeepPerExpenseInterval, room.maximumInstances]),
+    ).toEqual([
+      ["room.ambulatory_or", 2400, 12, 2],
+      ["room.laboratory", 1800, 4, 2],
+      ["room.pharmacy", 1200, 2, 2],
+      ["room.maintenance_workshop", 800, 1, 1],
+      ["room.staff_break", 900, 1, 2],
+      ["room.surgeon_office", 700, 1, 1],
+      ["room.vending", 450, 1, 5],
+      ["room.reading", 1800, 6, 4],
+    ]);
+    expect(
+      facility.staffRoleDefinitions
+        .filter((role) => role.unlockFacilityLevel === 3)
+        .map((role) => [role.id, role.hiringCost, role.salaryPerExpenseInterval, role.maximumEmployees]),
+    ).toEqual([
+      ["staff.laboratory_technician", 500, 20, 2],
+      ["staff.surgeon", 1400, 50, 2],
+      ["staff.or_nurse", 650, 26, 2],
+      ["staff.pharmacist", 600, 24, 2],
+      ["staff.repair_person", 400, 16, 2],
+      ["staff.radiologist", 300, 18, 4],
+    ]);
+    expect(facility.staffRoleDefinitions.find((role) => role.id === "staff.radiologist")?.requiredRoomDefinitionIds).toEqual(["room.reading"]);
   });
 });
 

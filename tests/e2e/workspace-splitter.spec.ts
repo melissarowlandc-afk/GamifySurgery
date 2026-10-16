@@ -101,7 +101,7 @@ test("desktop splitter reallocates the facility and desk without changing canvas
   expect(Math.abs(bitmap!.width - hostSize.width)).toBeLessThanOrEqual(1);
   expect(Math.abs(bitmap!.height - hostSize.height)).toBeLessThanOrEqual(1);
 
-  const tutorialDismiss = page.getByRole("button", { name: "Got It" });
+  const tutorialDismiss = page.getByRole("button", { name: "Skip guidance" });
   if (await tutorialDismiss.isVisible()) {
     await tutorialDismiss.click();
   }

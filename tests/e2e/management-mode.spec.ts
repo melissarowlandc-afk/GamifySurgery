@@ -213,7 +213,7 @@ test("Management Mode yields its desk to charts and tracks the splitter", async 
   await expectNoHorizontalOverflow(page);
 
   await page.locator(".patient-tab").first().click();
-  const chart = page.locator(".paper-chart");
+  const chart = page.locator(".chart-sheet");
   await expect(chart).toBeVisible();
   await expect(panel).toHaveCount(0);
   await expect(managementTrigger).toHaveCount(0);

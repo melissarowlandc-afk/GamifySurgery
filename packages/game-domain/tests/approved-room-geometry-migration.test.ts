@@ -115,7 +115,7 @@ describe("approved Recovery geometry migration", () => {
       upgradeLevel: 4,
       cleanliness: 63,
     });
-    expect(restored.schemaVersion).toBe(8);
+    expect(restored.schemaVersion).toBe(9);
     expect(restored.cash).toBe(777);
     expect(restored.cashCents).toBe(77_700);
     const recoveryDefinition = definitionFor("room.periop_recovery")!;

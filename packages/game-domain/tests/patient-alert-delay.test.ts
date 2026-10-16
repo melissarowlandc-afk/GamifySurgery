@@ -87,15 +87,11 @@ describe("delayed patient attention events", () => {
     const restored = deserializeGameState(serializeGameState(state));
     restored.environment.founderLocation = deskLocation;
     state = tick(restored, "check-in-overdue.after-threshold");
-    const overdueEvents = state.events.filter(
-      (event) => event.definitionId === "alert.patient.check-in-unattended",
-    );
-    expect(overdueEvents).toHaveLength(1);
-    expect(overdueEvents[0]).toMatchObject({
-      facilityTick: 61,
-      priority: "action_required",
-      target: { kind: "room", id: "room.instance.founder_desk" },
-    });
+    expect(
+      state.events.some(
+        (event) => event.definitionId === "alert.patient.check-in-unattended",
+      ),
+    ).toBe(false);
     expect(
       state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientSatisfaction,
     ).toBe(
@@ -112,10 +108,10 @@ describe("delayed patient attention events", () => {
 
     state = advance(state, 10, "check-in-overdue.no-repeat");
     expect(
-      state.events.filter(
+      state.events.some(
         (event) => event.definitionId === "alert.patient.check-in-unattended",
       ),
-    ).toHaveLength(1);
+    ).toBe(false);
   });
 
   it("keeps a saved awaiting check-in operationally unstarted until staffed", () => {
@@ -167,7 +163,7 @@ describe("delayed patient attention events", () => {
     delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!
       .unstaffedCheckInOverdueApplied;
     const restoredArrival = deserializeGameState(JSON.stringify(arriving));
-    expect(restoredArrival.schemaVersion).toBe(8);
+    expect(restoredArrival.schemaVersion).toBe(9);
     expect(
       restoredArrival.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus,
     ).toBe("approaching");
@@ -190,7 +186,7 @@ describe("delayed patient attention events", () => {
     ).toBe("checked_in");
   });
 
-  it("records actual idle waiting once only after more than 60 facility minutes", () => {
+  it("keeps actual idle waiting free of generic feed notices after 60 facility minutes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "waiting_unopened";
@@ -216,27 +212,15 @@ describe("delayed patient attention events", () => {
 
     state = tick(restored, "checked-in.after-threshold");
     expect(
-      state.events.filter(
+      state.events.some(
         (event) => event.definitionId === "alert.patient.waiting",
       ),
-    ).toHaveLength(1);
-    expect(
-      state.events.find(
-        (event) => event.definitionId === "alert.patient.waiting",
-      ),
-    ).toMatchObject({
-      facilityTick: 61,
-      priority: "action_required",
-      target: {
-        kind: "encounter",
-        id: TUTORIAL_ENCOUNTER_ID,
-      },
-    });
+    ).toBe(false);
     expect(
       state.alertHumor.conditionLastEmittedTicks[
         `patient.waiting:${TUTORIAL_ENCOUNTER_ID}`
       ],
-    ).toBe(61);
+    ).toBeUndefined();
     state.events = [];
     state = tick(state, "checked-in.same-episode-after-history-trim");
     expect(
@@ -253,10 +237,10 @@ describe("delayed patient attention events", () => {
     ).toBe(false);
     state = tick(state, "checked-in.new-episode.after-threshold");
     expect(
-      state.events.find(
+      state.events.some(
         (event) => event.definitionId === "alert.patient.waiting",
       ),
-    ).toMatchObject({ facilityTick: 122 });
+    ).toBe(false);
   });
 
   it("never records a brief checked-in wait that the player addresses", () => {
@@ -303,7 +287,7 @@ describe("delayed patient attention events", () => {
     });
   });
 
-  it("records a generic clinical wait only after more than 60 idle minutes", () => {
+  it("keeps a generic clinical wait free of feed notices after more than 60 idle minutes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -323,21 +307,13 @@ describe("delayed patient attention events", () => {
 
     state = tick(state, "decision.after-threshold");
     expect(
-      state.events.find(
-        (event) =>
-          event.definitionId === "alert.patient.waiting",
+      state.events.some(
+        (event) => event.definitionId === "alert.patient.waiting",
       ),
-    ).toMatchObject({
-      type: "patience_warning",
-      facilityTick: 61,
-      message: expect.stringContaining(
-        "has been waiting for clinical attention",
-      ),
-      priority: "action_required",
-    });
+    ).toBe(false);
   });
 
-  it("suppresses result-ready feed events but alerts after a returned patient idles", () => {
+  it("suppresses result-ready and generic waiting feed events after a returned patient idles", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -373,14 +349,10 @@ describe("delayed patient attention events", () => {
     state = tick(state, "result.after-threshold");
     expect(state.events.some((event) => event.type === "result_ready")).toBe(false);
     expect(
-      state.events.find(
+      state.events.some(
         (event) => event.definitionId === "alert.patient.waiting",
       ),
-    ).toMatchObject({
-      type: "patience_warning",
-      facilityTick: 61,
-      encounterId: TUTORIAL_ENCOUNTER_ID,
-    });
+    ).toBe(false);
 
     state = gameReducer(state, {
       type: "OPEN_CHART",
@@ -399,9 +371,8 @@ describe("delayed patient attention events", () => {
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
       feedAttentionKind: "result_ready",
       feedAttentionStartedAtTick: 61,
-      patientMovement: expect.objectContaining({
-        kind: "walking_to_waiting",
-      }),
+      patientMovement: null,
+      waitingDestination: expect.objectContaining({ kind: "chair" }),
     });
     state = advance(state, 1, "result.after-close.no-duplicate");
     expect(

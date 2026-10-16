@@ -19,6 +19,7 @@ function routineCasesAtStage(
 ): SyntheticClinicalCase[] {
   return PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(
     (clinicalCase) =>
+      clinicalCase.participant?.kind !== "employee_discussion" &&
       clinicalCase.routineEligible &&
       clinicalCase.earliestFacilityStage <= stage &&
       clinicalCase.requiredCapabilityIds.every((capabilityId) =>
@@ -224,9 +225,13 @@ function admitAndCompleteAtDay(
 describe("routine patient supply", () => {
   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
-    expect(release.concepts).toHaveLength(203);
-    expect(release.cases).toHaveLength(518);
-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(783);
+    expect(release.concepts).toHaveLength(370);
+    // The current old bank includes the concurrent interpreter pairing:
+    // 1,008 existing cases, 62 Level-3 cases, 20 L4 pediatric variants
+    // and 20 Variety-3 adult clinic/outside-plan variants.
+    // The reused midline-recognition concept adds no second concept record.
+    expect(release.cases).toHaveLength(1008 + 62 + 20 + 20);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1415);
 
     const noCapabilities = new Set<string>();
     const everyCapability = new Set(
@@ -309,59 +314,105 @@ describe("routine patient supply", () => {
         .sort(([left], [right]) => left.localeCompare(right)),
     }).toMatchInlineSnapshot(`
       {
-        "conceptsWithoutRoutineCases": [],
+        "conceptsWithoutRoutineCases": [
+          "concept.gs028g.hiv-perioperative.art-continuity",
+          "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+          "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
+          "concept.gs028g.incidental-gallbladder.t1a-depth",
+          "concept.gs028g.incisional-hernia.fascial-closure",
+          "concept.gs028g.incisional-hernia.retrorectus-plane",
+          "concept.gs028g.laparoscopy-respiratory.co2-absorption",
+          "concept.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+          "concept.gs028g.merkel-cell.clinically-negative-node-staging",
+          "concept.gs028g.merkel-cell.integrated-diagnosis",
+          "concept.gs028g.mucocutaneous-separation.recognition",
+          "concept.gs028g.mucocutaneous-separation.superficial-care",
+          "concept.gs028g.neuromuscular-recovery.quantitative-assessment",
+          "concept.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+          "concept.gs028g.peristomal-skin.effluent-irritation",
+          "concept.gs028g.peristomal-skin.restore-seal",
+          "concept.gs028g.postoperative-scapula.long-thoracic",
+          "concept.gs028g.postoperative-scapula.spinal-accessory",
+          "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
+          "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+          "concept.pediatric-clinic.acquired-testis-ascent-referral",
+          "concept.pediatric-clinic.concerning-neck-node-referral",
+          "concept.pediatric-clinic.developmental-assent-discussion",
+          "concept.pediatric-clinic.inguinal-hernia-referral",
+          "concept.pediatric-clinic.limited-pilonidal-conservative-care",
+          "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
+          "concept.pediatric-clinic.reactive-neck-node-observation",
+          "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
+          "concept.pediatric-clinic.true-retractile-testis-surveillance",
+          "concept.quality-improvement.pdsa-act-and-iterate",
+          "concept.statistics-ethics.bias-confounding",
+          "concept.statistics-ethics.chi-square",
+          "concept.statistics-ethics.confidence-interval",
+          "concept.statistics-ethics.errors-power",
+          "concept.statistics-ethics.fisher-exact",
+          "concept.statistics-ethics.independent-t",
+          "concept.statistics-ethics.one-way-anova",
+          "concept.statistics-ethics.p-value",
+          "concept.statistics-ethics.paired-t",
+          "concept.statistics-ethics.qi-measures",
+          "concept.statistics-ethics.rank-sum",
+          "concept.statistics-ethics.risk-ratio-odds-ratio",
+          "concept.statistics-ethics.signed-rank",
+          "concept.statistics-ethics.study-design",
+          "concept.variety3.penicillin-label-structured-history",
+          "concept.variety3.surgical-hair-preparation",
+        ],
         "duplicateConceptRecordIds": [],
         "stageOne": {
-          "availableConcepts": 168,
-          "cases": 444,
-          "introducedConcepts": 168,
+          "availableConcepts": 285,
+          "cases": 882,
+          "introducedConcepts": 285,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 114,
-            "minimum": 107,
+            "maximum": 228,
+            "minimum": 218,
           },
-          "seededPatientsUntilNotDue": 112,
+          "seededPatientsUntilNotDue": 222,
           "strandedConceptIds": [],
         },
         "stageTwoAllCapabilities": {
-          "availableConcepts": 203,
-          "cases": 518,
-          "introducedConcepts": 200,
+          "availableConcepts": 324,
+          "cases": 964,
+          "introducedConcepts": 322,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 135,
-            "minimum": 131,
+            "maximum": 253,
+            "minimum": 241,
           },
-          "seededPatientsUntilNotDue": 131,
+          "seededPatientsUntilNotDue": 251,
           "strandedConceptIds": [
-            "concept.breast-cyst.asymptomatic-simple-observation",
+            "concept.breast-cyst.symptomatic-simple-aspiration",
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
-            "concept.fhh.biochemical-evaluation",
           ],
         },
         "stageTwoExternal": {
-          "availableConcepts": 184,
-          "cases": 480,
-          "introducedConcepts": 183,
+          "availableConcepts": 305,
+          "cases": 926,
+          "introducedConcepts": 303,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 123,
-            "minimum": 117,
+            "maximum": 241,
+            "minimum": 233,
           },
-          "seededPatientsUntilNotDue": 117,
-          "strandedConceptIds": [
-            "concept.felty-syndrome.splenectomy-for-refractory-infections",
-          ],
-        },
-        "stageZero": {
-          "availableConcepts": 66,
-          "cases": 224,
-          "introducedConcepts": 64,
-          "patientBoundaryAcrossSeeds": {
-            "maximum": 60,
-            "minimum": 54,
-          },
-          "seededPatientsUntilNotDue": 58,
+          "seededPatientsUntilNotDue": 237,
           "strandedConceptIds": [
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
             "concept.fhh.biochemical-evaluation",
+          ],
+        },
+        "stageZero": {
+          "availableConcepts": 175,
+          "cases": 639,
+          "introducedConcepts": 174,
+          "patientBoundaryAcrossSeeds": {
+            "maximum": 163,
+            "minimum": 157,
+          },
+          "seededPatientsUntilNotDue": 162,
+          "strandedConceptIds": [
+            "concept.felty-syndrome.splenectomy-for-refractory-infections",
           ],
         },
       }
@@ -390,6 +441,27 @@ describe("routine patient supply", () => {
 
     expect(selection?.clinicalCase.id).toBe(eligibleCase.id);
     expect(selection?.kind).toBe("new_concept");
+  });
+
+  it("keeps legacy objectives displaced by the deterministic snapshot individually eligible", () => {
+    const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+    const everyCapability = new Set(
+      release.cases.flatMap((clinicalCase) => clinicalCase.requiredCapabilityIds),
+    );
+    for (const [targetId, cases] of [
+      ["concept.felty-syndrome.splenectomy-for-refractory-infections", routineCasesAtStage(0, new Set())],
+      ["concept.fhh.biochemical-evaluation", routineCasesAtStage(0, new Set())],
+      ["concept.breast-cyst.symptomatic-simple-aspiration", routineCasesAtStage(2, everyCapability)],
+    ] as const) {
+      const state = blankState(`legacy-individual.${targetId}`);
+      const targetCases = cases.filter((clinicalCase) =>
+        uniqueConceptIds(clinicalCase).includes(targetId),
+      );
+      expect(targetCases.length, `${targetId} retains an eligible routine case`).toBeGreaterThan(0);
+      const selection = selectRoutineClinicalCase(state, targetCases, FIXED_REAL_TIME_MS);
+      expect(selection, `${targetId} retains its original eligible case path`).not.toBeNull();
+      expect(uniqueConceptIds(selection!.clinicalCase)).toContain(targetId);
+    }
   });
 
   it("admits and completes patients in prepared day-six through day-eight states", () => {
@@ -425,14 +497,14 @@ describe("routine patient supply", () => {
         },
         {
           "answerCorrectly": true,
-          "answerCount": 2,
+          "answerCount": 1,
           "arrivalTick": 3600,
           "dayNumber": 7,
           "resolutionReason": "completed",
         },
         {
           "answerCorrectly": false,
-          "answerCount": 2,
+          "answerCount": 1,
           "arrivalTick": 4200,
           "dayNumber": 8,
           "resolutionReason": "completed",

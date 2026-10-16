@@ -17,6 +17,22 @@ import {
 const PROFILE_STORAGE_KEY = "gamify-surgery.prototype.profile.v1";
 const LEGACY_STORAGE_KEY = "gamify-surgery.prototype.save.v1";
 
+describe("ambiguous retired tutorial pause migration", () => {
+  it("preserves the clinic and conservatively retains pause ownership until session reconciliation", () => {
+    const storage = useMemoryStorage();
+    const created = appendLocalCampaign(createFreshProfile(), FOUNDER, "Pause Recovery", 123);
+    expect(savePrototypeProfile(created.profile)).toBe(true);
+    const raw = JSON.parse(storage.get(PROFILE_STORAGE_KEY)!);
+    raw.tutorialDailyRoutinePauseByCampaign = {[created.campaign.campaignId]: "prior-value-unknown"};
+    storage.set(PROFILE_STORAGE_KEY, JSON.stringify(raw));
+    const loaded = loadPrototypeProfile().profile;
+    expect(loaded.campaigns[0]!.state).toEqual(created.campaign.state);
+    expect(loaded.tutorialDailyRoutinePauseByCampaign).toEqual({[created.campaign.campaignId]: true});
+    expect(savePrototypeProfile(loaded)).toBe(true);
+    expect(loadPrototypeProfile().profile.tutorialDailyRoutinePauseByCampaign).toEqual(loaded.tutorialDailyRoutinePauseByCampaign);
+  });
+});
+
 const FOUNDER: FounderIdentity = {
   displayName: "Avery",
   headId: "head.test",
@@ -344,7 +360,7 @@ describe("new-campaign opening storage", () => {
     });
   });
 
-  it("enables tutorial guidance for every newly created campaign", () => {
+  it("uses the new-clinic default separately from per-campaign guidance", () => {
     const profile = {
       ...createFreshProfile(),
       tutorialsEnabled: false,
@@ -359,7 +375,8 @@ describe("new-campaign opening storage", () => {
       "tutorial-returns-seed",
     );
 
-    expect(created.profile.tutorialsEnabled).toBe(true);
+    expect(created.profile.tutorialsEnabled).toBe(false);
+    expect(created.profile.tutorialGuidanceByCampaign?.[created.campaign.campaignId]?.mode).toBe("off");
     expect(
       created.profile.tutorialIntroDismissedCampaignIds,
     ).not.toContain(created.campaign.campaignId);
@@ -379,6 +396,21 @@ describe("new-campaign opening storage", () => {
       tutorialDailyRoutineTipAcknowledgments: { [campaignId]: ["sendout-management", "sendout-trash"] },
       tutorialDailyRoutinePauseByCampaign: { [campaignId]: false },
     });
+  });
+
+  it("round-trips independent skip/completion and creates a fresh guided replay without archiving", () => {
+    useMemoryStorage();
+    const first = appendLocalCampaign(createFreshProfile(), FOUNDER, "First Shift", 123);
+    const profile = { ...first.profile, tutorialGuidanceByCampaign: {
+      [first.campaign.campaignId]: { version: 2 as const, mode: "off" as const, exposedTopicIds: ["management"] },
+    } };
+    const replay = appendLocalCampaign(profile, FOUNDER, "Second Shift", 456, undefined, true);
+    expect(replay.profile.campaigns[0]?.status).toBe("resumable");
+    expect(savePrototypeProfile(replay.profile)).toBe(true);
+    const restored = loadPrototypeProfile().profile;
+    expect(restored.tutorialGuidanceByCampaign?.[first.campaign.campaignId]).toEqual(profile.tutorialGuidanceByCampaign[first.campaign.campaignId]);
+    expect(restored.tutorialGuidanceByCampaign?.[replay.campaign.campaignId]?.mode).toBe("guided");
+    expect(restored.campaigns[0]?.state.learningHistories).toEqual(first.campaign.state.learningHistories);
   });
 
   it("round-trips an intentional no-active-campaign state with archived campaigns", () => {

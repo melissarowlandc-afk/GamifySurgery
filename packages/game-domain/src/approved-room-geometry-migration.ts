@@ -126,11 +126,44 @@ function legacyContainingRecovery(
   );
 }
 
+/**
+ * Door slots the owner made legal on 2026-10-07 (every wall is a legal door;
+ * doorway furniture is passable). Legacy saves migrate under the earlier
+ * rules so their door moves and reconnections are exactly as before; the new
+ * slots apply to the migrated save from then on.
+ */
+const OWNER_PASSABLE_DOOR_SLOTS_2026_10_07: Readonly<Record<string, readonly Readonly<{ side: string; offset: number }>[]>> = {
+  "room.examination": [{ side: "east", offset: 0 }, { side: "east", offset: 1 }],
+  "room.waiting": [{ side: "north", offset: 1 }, { side: "north", offset: 2 }, { side: "west", offset: 1 }, { side: "east", offset: 1 }],
+  "room.bathroom": [{ side: "north", offset: 0 }, { side: "north", offset: 1 }, { side: "west", offset: 0 }, { side: "east", offset: 0 }],
+  "room.ct": [{ side: "west", offset: 1 }, { side: "west", offset: 2 }],
+  "room.phlebotomy": [{ side: "north", offset: 1 }],
+  "room.endoscopy": [{ side: "north", offset: 1 }],
+  "room.glp1_telehealth_suite": [{ side: "north", offset: 1 }],
+  "room.pharmacy": [{ side: "west", offset: 1 }],
+  "room.staff_break": [{ side: "south", offset: 2 }],
+  "room.vending": [{ side: "north", offset: 0 }, { side: "north", offset: 1 }, { side: "west", offset: 0 }, { side: "east", offset: 0 }],
+};
+
+function withoutOwnerPassableSlots(definition: RoomDefinition): RoomDefinition {
+  const added = OWNER_PASSABLE_DOOR_SLOTS_2026_10_07[definition.id];
+  const exceptions = definition.navigation?.doorThresholdExceptions;
+  if (!added || !exceptions || !definition.navigation) return definition;
+  return {
+    ...definition,
+    navigation: {
+      ...definition.navigation,
+      doorThresholdExceptions: exceptions.filter((slot) =>
+        !added.some((owner) => owner.side === slot.side && owner.offset === slot.offset)),
+    },
+  };
+}
+
 function getDefinitionLookup(context: DomainContext) {
   const definitions = new Map(
     context.balanceRelease.facility.roomDefinitions.map((definition) => [
       definition.id,
-      definition,
+      withoutOwnerPassableSlots(definition),
     ]),
   );
   return (definitionId: string): RoomDefinition | null =>

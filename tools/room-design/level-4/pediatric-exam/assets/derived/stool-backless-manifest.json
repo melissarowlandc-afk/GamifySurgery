@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "reason": "Owner 2026-10-08: remove rolling-stool backs and draw the clinician entirely above the stool; otherwise the room is approved.",
+  "ownerQuote": "Remove the 'backs' on rolling stools and just have the clinician layer on top of the stool. Then we don't have to worry about the back funniness. Otherwise this is approved.",
+  "source": {
+    "path": "apps/player/public/art/rooms/gs015-v1/minor-procedure/furniture.webp",
+    "sha256": "0532E455112D364B21B1AE6D1FD482593C76357D1A3E73D966C9BD18291C9722",
+    "sourceRect": [
+      8,
+      2448,
+      266,
+      427
+    ],
+    "approved": true,
+    "modified": false
+  },
+  "output": {
+    "file": "stool-backless.png",
+    "canvas": [
+      266,
+      427
+    ],
+    "sourceRect": [
+      0,
+      0,
+      266,
+      427
+    ],
+    "sha256": "94624408D870AF708837547537D5FCC8ECE96B49CC15B52B5048BF5D0260C399",
+    "opaqueBounds": {
+      "left": 3,
+      "top": 104,
+      "right": 261,
+      "bottom": 423,
+      "width": 259,
+      "height": 320,
+      "pixels": 38160,
+      "edgeAlphaMax": 2
+    }
+  },
+  "derivation": {
+    "method": "Native RGBA mask plus same-row linear interpolation from approved cushion-edge pixels; no new generation or rescaling.",
+    "clearRows": [
+      0,
+      104
+    ],
+    "repair": {
+      "left": 110,
+      "rightExclusive": 150,
+      "top": 104,
+      "bottomExclusive": 207,
+      "leftSourceX": 109,
+      "rightSourceX": 150
+    },
+    "removedBackPixels": 17838,
+    "repairedPixels": 4120,
+    "retainedPixels": 81798,
+    "maxRetainedChannelDelta": 0,
+    "nativeAlphaEncoding": {
+      "maxRepairChannelDelta": 1,
+      "repairChangedChannels": 78,
+      "alphaChanged": false,
+      "basis": "Native Canvas premultiplied-alpha PNG round trip; at most one RGB value on the repaired strip, zero change to retained approved pixels."
+    },
+    "retained": "Every pixel outside the upper-back mask and narrow cushion repair is unchanged, including the seat flanks, entire column/neck, lever and wheel base. Canvas/registration unchanged."
+  },
+  "renderer": {
+    "singleStoolLayer": true,
+    "clinicianAboveEntireStool": true,
+    "stoolForegroundLayers": 0
+  },
+  "approval": {
+    "ownerDesign": "approved_with_requested_revision",
+    "revisionImplemented": true,
+    "managerBrowserValidation": "pending"
+  }
+}

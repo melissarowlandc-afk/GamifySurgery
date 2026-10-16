@@ -6,6 +6,32 @@ const stableIdSchema = z
   .max(120)
   .regex(/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/, "Use a stable lowercase identifier.");
 
+export const facilityLevelSchema = z.union([
+  z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5),
+]);
+
+/** Presentation/operational eligibility, never disease-selection weights. */
+export const patientEligibilitySchema = z.discriminatedUnion("population", [
+  z.object({ population: z.literal("adult") }).strict(),
+  z.object({
+    population: z.literal("pediatric"),
+    minimumAgeYears: z.number().int().min(5).max(17),
+    maximumAgeYears: z.number().int().min(5).max(17),
+    requiresParent: z.literal(true),
+    clinicalScope: z.literal("outpatient"),
+  }).strict().superRefine((eligibility, context) => {
+    if (eligibility.minimumAgeYears > eligibility.maximumAgeYears) {
+      context.addIssue({ code: "custom", message: "Patient age eligibility bounds are inverted.", path: ["maximumAgeYears"] });
+    }
+  }),
+]);
+
+/** Binding M0 finish requirements; MRI and Pediatric Waiting are not witnesses. */
+export const facilityCompletionWitnessIdSchema = z.enum([
+  "pediatric_visit_with_parent",
+  "wound_ostomy_care_visit",
+]);
+
 export const roomOrientationSchema = z.union([
   z.literal(0),
   z.literal(90),
@@ -74,6 +100,7 @@ export const serviceRouteDefinitionSchema = z
       .nullable()
       .default(null),
     patientRemainsOnsite: z.literal(true).optional(),
+    patientEligibility: patientEligibilitySchema.optional(),
   })
   .strict()
   .superRefine((route, context) => {
@@ -107,6 +134,7 @@ export const serviceDefinitionSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     routes: z.array(serviceRouteDefinitionSchema).min(1),
+    patientEligibility: patientEligibilitySchema.optional(),
   })
   .strict()
   .superRefine((service, context) => {
@@ -139,7 +167,8 @@ export const roomDefinitionSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     kind: z.enum(["room", "hallway"]),
-    unlockFacilityLevel: z.number().int().min(0).max(2),
+    unlockFacilityLevel: facilityLevelSchema,
+    patientEligibility: patientEligibilitySchema.optional(),
     width: z.number().int().positive(),
     height: z.number().int().positive(),
     defaultDoorSide: cardinalDirectionSchema.nullable(),
@@ -220,6 +249,12 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           }),
         ),
+        companionSeats: z.array(z.object({
+          id: z.string().min(1),
+          kind: z.literal("armchair"),
+          anchor: z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }),
+          facing: z.enum(["north", "east", "south", "west"]),
+        }).strict()).optional(),
         standingWaitingAnchors: z
           .array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }))
           .optional(),
@@ -234,6 +269,16 @@ export const roomDefinitionSchema = z
           .nullable()
           .optional(),
         clinicianCareAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
+        careStations: z.array(z.object({
+          id: z.string().min(1),
+          kind: z.literal("periop_bed"),
+          patientAnchor: z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }),
+          facing: z.enum(["north", "east", "south", "west"]),
+        })).optional(),
+        sharedStaffAnchor: z
           .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
           .nullable()
           .optional(),
@@ -379,7 +424,37 @@ export const roomDefinitionSchema = z
         "navigation",
         "clinicianCareAnchor",
       ]);
+      validateAnchor(navigation.sharedStaffAnchor ?? null, [
+        "navigation",
+        "sharedStaffAnchor",
+      ]);
+      const careStationIds = new Set<string>();
+      const careStationAnchors = new Set<string>();
+      navigation.careStations?.forEach((station, index) => {
+        validateAnchor(station.patientAnchor, ["navigation", "careStations", index, "patientAnchor"]);
+        if (careStationIds.has(station.id)) {
+          context.addIssue({ code: "custom", message: "Care-station ids must be unique.", path: ["navigation", "careStations", index, "id"] });
+        }
+        if (careStationAnchors.has(key(station.patientAnchor))) {
+          context.addIssue({ code: "custom", message: "Care-station anchors must be unique.", path: ["navigation", "careStations", index, "patientAnchor"] });
+        }
+        careStationIds.add(station.id);
+        careStationAnchors.add(key(station.patientAnchor));
+      });
       const waitingKeys = new Set<string>();
+      const companionSeatIds = new Set<string>();
+      const companionSeatAnchors = new Set<string>();
+      navigation.companionSeats?.forEach((seat, index) => {
+        validateAnchor(seat.anchor, ["navigation", "companionSeats", index, "anchor"]);
+        if (companionSeatIds.has(seat.id) || companionSeatAnchors.has(key(seat.anchor))) {
+          context.addIssue({ code: "custom", message: "Companion seat ids and anchors must be unique.", path: ["navigation", "companionSeats", index] });
+        }
+        if (careStationAnchors.has(key(seat.anchor)) || navigation.waitingAnchors.some((point) => key(point) === key(seat.anchor))) {
+          context.addIssue({ code: "custom", message: "Companion seats must be separate from patient contacts.", path: ["navigation", "companionSeats", index, "anchor"] });
+        }
+        companionSeatIds.add(seat.id);
+        companionSeatAnchors.add(key(seat.anchor));
+      });
       navigation.waitingAnchors.forEach((point, index) => {
         validateAnchor(point, [
           "navigation",
@@ -413,7 +488,7 @@ export const staffRoleDefinitionSchema = z
   .object({
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
-    unlockFacilityLevel: z.number().int().min(1).max(2),
+    unlockFacilityLevel: z.number().int().min(1).max(5),
     hiringCost: z.number().int().nonnegative(),
     salaryPerExpenseInterval: z.number().int().nonnegative(),
     minimumSalaryPerExpenseInterval: z.number().int().nonnegative(),
@@ -454,16 +529,28 @@ export const patientRewardTierSchema = z
 
 export const facilityStageDefinitionSchema = z
   .object({
-    level: z.number().int().min(0).max(2),
+    level: facilityLevelSchema,
     displayName: z.string().min(1).max(160),
     minimumClinicalXp: z.number().int().nonnegative(),
     minimumCompletedEncounters: z.number().int().nonnegative(),
     satisfactionMustBeGreaterThan: z.number().int().min(0).max(99),
+    /** Optional Level 5 goal seam; no earlier stage acquires a morale requirement. */
+    minimumAverageStaffMorale: z.number().min(0).max(100).optional(),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
     requiredStaffRoleIds: z.array(stableIdSchema),
-    nextFacilityLevel: z.number().int().min(1).max(2).nullable(),
+    requiredCompletionWitnessIds: z.array(facilityCompletionWitnessIdSchema).max(2).optional(),
+    nextFacilityLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
   })
-  .strict();
+  .strict()
+  .superRefine((stage, context) => {
+    if (stage.minimumAverageStaffMorale !== undefined && stage.level !== 5) {
+      context.addIssue({ code: "custom", message: "Average staff morale is a Level 5 goal.", path: ["minimumAverageStaffMorale"] });
+    }
+    const witnessIds = stage.requiredCompletionWitnessIds ?? [];
+    if (new Set(witnessIds).size !== witnessIds.length || (witnessIds.length > 0 && stage.level !== 4)) {
+      context.addIssue({ code: "custom", message: "Completion witnesses must be unique Level 4 requirements.", path: ["requiredCompletionWitnessIds"] });
+    }
+  });
 
 export const initialRoomSchema = z
   .object({
@@ -493,11 +580,11 @@ export const prototypeBalanceReleaseSchema = z
         characterTravelTilesPerTick: z.number().int().positive(),
         startingCash: z.number().int().nonnegative(),
         startingSatisfaction: z.number().int().min(0).max(100),
-        maximumPlayableLevel: z.literal(2),
+        maximumPlayableLevel: z.union([z.literal(3), z.literal(4), z.literal(5)]),
         initialRooms: z.array(initialRoomSchema).min(1),
         roomDefinitions: z.array(roomDefinitionSchema).min(1),
         staffRoleDefinitions: z.array(staffRoleDefinitionSchema).min(1),
-        stageDefinitions: z.array(facilityStageDefinitionSchema).length(3),
+        stageDefinitions: z.array(facilityStageDefinitionSchema).min(4).max(6),
         tutorialRequiredRoomDefinitionId: stableIdSchema,
         tutorialMinimumOperatingBuffer: z.number().int().nonnegative(),
       })
@@ -619,7 +706,6 @@ export const prototypeBalanceReleaseSchema = z
         waterCoolerDrainPerInterval: z.number().int().positive().max(100),
         waterCoolerLowThreshold: z.number().int().min(0).max(99),
         waterCoolerEmptyReminderMinutes: z.number().int().positive(),
-        receptionistWaterRefillDelayMinutes: z.number().int().positive(),
         waterRefillSatisfactionBonus: z.number().int().nonnegative().max(10),
         praiseMoraleBonus: z.number().int().positive().max(25),
         praiseCooldownMinutes: z.number().int().positive(),
@@ -639,6 +725,15 @@ export const prototypeBalanceReleaseSchema = z
         evsRoomCleanupCooldownMinutes: z.number().int().positive(),
         trainingRoutineWorkloadContribution: z.number().int().nonnegative().max(10),
         coffeeMoraleBonusPerDay: z.number().int().nonnegative().max(25),
+        levelThreeSupport: z.object({
+          breakDurationMinutes: z.number().int().positive(),
+          breakMoraleGain: z.number().int().positive().max(25),
+          breakCooldownMinutes: z.number().int().positive(),
+          maintenanceUseThreshold: z.number().int().positive(),
+          maintenanceGraceMinutes: z.number().int().positive(),
+          repairDurationMinutes: z.number().int().positive(),
+          qiReviewDurationMinutes: z.number().int().positive(),
+        }).strict(),
       })
       .strict()
       .superRefine((environment, context) => {
@@ -972,6 +1067,10 @@ export const prototypeBalanceReleaseSchema = z
     const stagesByLevel = new Map(
       release.facility.stageDefinitions.map((stage) => [stage.level, stage]),
     );
+    if (stagesByLevel.size !== release.facility.stageDefinitions.length ||
+        !stagesByLevel.has(release.facility.maximumPlayableLevel)) {
+      context.addIssue({ code: "custom", message: "Facility stages must be unique and include the playable cap.", path: ["facility", "stageDefinitions"] });
+    }
     if (
       !stagesByLevel.has(0) ||
       !stagesByLevel.has(1) ||
@@ -984,6 +1083,9 @@ export const prototypeBalanceReleaseSchema = z
       });
     }
     release.facility.stageDefinitions.forEach((stage, stageIndex) => {
+      if (stage.nextFacilityLevel !== null && !stagesByLevel.has(stage.nextFacilityLevel)) {
+        context.addIssue({ code: "custom", message: "A stage successor must have a stage definition.", path: ["facility", "stageDefinitions", stageIndex, "nextFacilityLevel"] });
+      }
       stage.requiredRoomDefinitionIds.forEach((requiredId) => {
         if (!roomDefinitions.has(requiredId)) {
           context.addIssue({
@@ -1184,6 +1286,9 @@ export const prototypeBalanceReleaseSchema = z
   });
 
 export type ServiceRouteDefinition = z.infer<typeof serviceRouteDefinitionSchema>;
+export type FacilityLevel = z.infer<typeof facilityLevelSchema>;
+export type PatientEligibility = z.infer<typeof patientEligibilitySchema>;
+export type FacilityCompletionWitnessId = z.infer<typeof facilityCompletionWitnessIdSchema>;
 export type ServiceDefinition = z.infer<typeof serviceDefinitionSchema>;
 export type RoomDefinition = z.infer<typeof roomDefinitionSchema>;
 export type StaffRoleDefinition = z.infer<typeof staffRoleDefinitionSchema>;

@@ -422,7 +422,7 @@ describe("durable facility-condition occurrences", () => {
           occurrence.conditionKey === "empty_water_cooler",
       );
     expect(waterOccurrences).toHaveLength(2);
-    expect(waterOccurrences[0]!.resolvedAtFacilityTick).toBe(671);
+    expect(waterOccurrences[0]!.resolvedAtFacilityTick).toBeNull();
     expect(waterOccurrences[1]).toMatchObject({
       kind: "reminder",
       occurredAtFacilityTick: 671,
@@ -442,7 +442,7 @@ describe("durable facility-condition occurrences", () => {
         (occurrence) =>
           occurrence.resolvedAtFacilityTick === null,
       ),
-    ).toHaveLength(1);
+    ).toHaveLength(3);
     expect(waterOccurrences[2]).toMatchObject({
       kind: "reminder",
       occurredAtFacilityTick: 2_000,
@@ -451,9 +451,7 @@ describe("durable facility-condition occurrences", () => {
     state.facilityTick = 2_001;
     state.environment.waterCoolerFillPercent = 100;
     synchronizeFacilityConditionOccurrences(state);
-    expect(
-      waterOccurrences[2]!.resolvedAtFacilityTick,
-    ).toBe(2_001);
+    expect(waterOccurrences.map((occurrence) => occurrence.resolvedAtFacilityTick)).toEqual([2_001, 2_001, 2_001]);
     expect(state.environment.waterCoolerEmptySinceTick).toBeNull();
     expect(state.environment.nextWaterCoolerReminderTick).toBeNull();
   });

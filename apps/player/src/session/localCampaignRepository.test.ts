@@ -36,6 +36,30 @@ const founder: FounderIdentity = {
 
 let factory: IDBFactory;
 
+describe("campaign guidance repository metadata", () => {
+  it("merges only the saved campaign's guidance and preserves another clinic's status and bytes", async () => {
+    const first = createCampaignProfile("Guide A");
+    const second = appendLocalCampaign(first.profile, founder, "Guide B", 456);
+    const repository = createRepository();
+    expect((await repository.saveCampaign(first.profile, first.campaign, 0)).ok).toBe(true);
+    const profile = { ...second.profile, tutorialGuidanceByCampaign: {
+      ...second.profile.tutorialGuidanceByCampaign,
+      [second.campaign.campaignId]: {version: 2 as const, mode: "off" as const, exposedTopicIds: ["management"]},
+    }};
+    expect((await repository.saveCampaign(profile, second.campaign, 0)).ok).toBe(true);
+    const staleFirst = { ...first.profile, tutorialGuidanceByCampaign: {
+      [first.campaign.campaignId]: {version: 2 as const, mode: "guided" as const, exposedTopicIds: ["patient-folders"]},
+    }};
+    expect((await repository.saveCampaign(staleFirst, first.campaign, 1)).ok).toBe(true);
+    const loaded = await repository.loadProfile();
+    expect(loaded.ok).toBe(true);
+    if (!loaded.ok) throw new Error(loaded.failure.message);
+    expect(loaded.value?.tutorialGuidanceByCampaign?.[second.campaign.campaignId]).toEqual(profile.tutorialGuidanceByCampaign[second.campaign.campaignId]);
+    expect(loaded.value?.tutorialGuidanceByCampaign?.[first.campaign.campaignId]?.exposedTopicIds).toEqual(["patient-folders"]);
+    expect(serializeGameState(loaded.value!.campaigns.find((c) => c.campaignId === second.campaign.campaignId)!.state)).toBe(serializeGameState(second.campaign.state));
+  });
+});
+
 beforeEach(() => {
   factory = new IDBFactory();
 });

@@ -531,7 +531,7 @@ describe("September 17 bread-and-butter production flows", () => {
       ),
     ).map((clinicalCase, index) => [index, clinicalCase] as const),
   )(
-    "schedules retention case %s as a five-tick bedside scan without travel",
+    "performs retention case %s as a five-tick bedside scan, then returns to Front Desk",
     (index, clinicalCase) => {
       const encounterId = `encounter.bread-butter-sept17.retention.${index}`;
       const prefix = `bread-butter-sept17.retention.${index}`;
@@ -557,14 +557,19 @@ describe("September 17 bread-and-butter production flows", () => {
       expect(pending).toMatchObject({
         resultTypeId: "service.bladder_scan",
         routeId: "route.bladder_scan.in_house",
-        serviceDurationTicks: 5,
-        durationTicks: 5,
         deliveredAtTick: null,
         offsiteTravel: null,
         patientTravel: null,
-        patientRemainsOnsite: true,
+        diagnosticTiming: { version: "diagnostic-order.v1", execution: "supported" },
       });
-      expect(pending!.dueTick - pending!.scheduledAtTick).toBe(5);
+      const plan = pending!.diagnosticTiming!;
+      expect(plan.phases.filter((phase) => phase.durationMinutes)).toEqual([
+        expect.objectContaining({ kind: "acquisition", mode: "local", durationMinutes: 5,
+          resource: expect.objectContaining({ patientAnchor: locationBeforeScan }) }),
+      ]);
+      expect(plan.phases.some((phase) => phase.kind === "interpretation")).toBe(false);
+      expect(pending!.dueTick).toBe(Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick));
+      expect(pending!.dueTick - pending!.scheduledAtTick).toBeGreaterThanOrEqual(5);
       expect(pending?.resourceReservations ?? []).toEqual([]);
       expect(pending?.imagingTechnicianId ?? null).toBeNull();
       expect(pending?.providerReservation ?? null).toBeNull();
@@ -573,7 +578,6 @@ describe("September 17 bread-and-butter production flows", () => {
       expect(state.encounters[encounterId]?.pendingResult).toMatchObject({
         offsiteTravel: null,
         patientTravel: null,
-        patientRemainsOnsite: true,
       });
       expect(state.encounters[encounterId]?.patientMovement).toBeNull();
       expect(state.encounters[encounterId]?.patientLocation).toEqual(
@@ -587,12 +591,11 @@ describe("September 17 bread-and-butter production flows", () => {
         dueTick: pending?.dueTick,
         offsiteTravel: null,
         patientTravel: null,
-        patientRemainsOnsite: true,
       });
       state = advanceUntilResult(state, encounterId, `${prefix}.wait`);
-      expect(state.encounters[encounterId]?.pendingResult?.onsiteReturn).toMatchObject({
-        status: "front_desk_arrived",
-        frontDeskArrivalTick: expect.any(Number),
+      expect(state.encounters[encounterId]?.pendingResult?.diagnosticTiming?.careComplete.reachedAtTick).toEqual(expect.any(Number));
+      expect(state.encounters[encounterId]?.pendingResult?.diagnosticTiming?.phases.find((phase) => phase.kind === "acquisition")).toMatchObject({
+        status: "completed", durationMinutes: 5,
       });
       expect(state.encounters[encounterId]?.patientLocation).not.toEqual(locationBeforeScan);
       expect(state.encounters[encounterId]?.assignedRoomInstanceId).not.toBe(roomBeforeScan);

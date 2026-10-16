@@ -18,7 +18,7 @@ export function getFacilityWorldSignature(
   const rooms = model.rooms
     .map(
       (room) =>
-        `${room.instanceId}:${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}`,
+        `${room.instanceId}:${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}:${room.buildLabel ?? "-"}:${room.upgradeMaxLevel ?? 1}:${room.upgradeAffordable ? 1 : 0}:${room.accessProblem ? 1 : 0}`,
     )
     .join("|");
   const doors = (model.doors ?? [])
@@ -55,6 +55,7 @@ export function getFacilityWorldSignature(
   const occupiedEndoscopyRooms = [...(model.endoscopyOccupancy?.roomInstanceIds ?? [])]
     .sort()
     .join(",");
+  const activeImagingRooms = [...(model.imagingActiveRoomInstanceIds ?? [])].sort().join(",");
 
   return [
     model.buildMode ? 1 : 0,
@@ -69,6 +70,7 @@ export function getFacilityWorldSignature(
     doors,
     environment,
     `endoscopy:${occupiedEndoscopyRooms}`,
+    `imaging:${activeImagingRooms}`,
     model.selectedRoomInstanceId ?? "-",
     model.camera
       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`

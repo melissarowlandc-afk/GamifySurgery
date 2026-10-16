@@ -1,0 +1,38 @@
+.beta-account { text-align: left; overflow-wrap: anywhere; }
+.beta-account summary { cursor: pointer; padding: 8px 0; font-weight: 700; }
+.beta-account p, .beta-usage-notice p { margin: 8px 0; }
+.beta-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.beta-actions button { min-height: 44px; padding: 8px 12px; }
+.beta-version { display: block; margin: 8px 0; opacity: .8; }
+.opening-beta-info { width: min(560px, 100%); text-align: center; }
+.opening-beta-info .beta-account { text-align: left; }
+.beta-clinical-notice { margin: 4px 0; font-size: 11px; line-height: 1.25; }
+.beta-usage-notice { position: fixed; z-index: 120; inset: auto 12px 12px; max-width: 560px; max-height: 72dvh;
+  overflow: auto; margin-inline: auto; padding: 16px; border: 2px solid var(--ink, #30291e);
+  border-radius: 12px; background: var(--paper-raised, #faf1dc); color: var(--ink, #30291e); box-shadow: 0 4px 20px #0004; }
+.question-flag-control { max-width: 100%; margin-left: auto; }
+.chart-sheet .cs-step-row { flex-wrap: wrap; }
+.question-flag-control:has(.question-flag-composer) { flex-basis: 100%; }
+.chart-sheet .cs-flag { width: auto; min-width: 30px; padding-inline: 5px; }
+.question-flag-composer { min-width: 0; width: min(340px, 100%); padding: 8px; border: 1px solid currentColor; border-radius: 8px; font-size: 14px; }
+.question-flag-composer label, .question-flag-composer small { display: block; }
+.question-flag-composer textarea { display: block; width: 100%; box-sizing: border-box; margin: 6px 0; padding: 8px;
+  font: inherit; color: inherit; background: var(--paper-raised, #faf1dc); resize: vertical; }
+.question-flag-receipt { max-width: 340px; margin: 4px 0; font-size: 12px; font-weight: 400; }
+.mobile-shell .question-flag-control { flex: 0 1 100%; }
+.mobile-shell .question-flag-composer { width: 100%; box-sizing: border-box; }
+.mobile-shell .beta-clinical-notice { font-size: 10px; }
+.tester-feedback-menu { position: relative; }
+.tester-feedback-popover { position: absolute; bottom: calc(100% + 8px); right: 0; z-index: 110;
+  width: min(380px, calc(100vw - 32px)); max-height: 65dvh; overflow: auto; box-sizing: border-box;
+  padding: 16px; border: 2px solid var(--ink, #30291e); border-radius: 12px;
+  background: var(--paper-raised, #faf1dc); color: var(--ink, #30291e); box-shadow: 0 4px 20px #0004; text-align: left; }
+.tester-feedback-popover h2 { margin: 0 0 12px; font-size: 18px; }
+.tester-feedback-form { width: 100%; min-width: 0; text-align: left; font-size: 14px; }
+.tester-feedback-form label, .tester-feedback-form small { display: block; }
+.tester-feedback-form textarea { display: block; width: 100%; box-sizing: border-box; margin: 6px 0; padding: 8px;
+  font: inherit; color: inherit; background: var(--paper-raised, #faf1dc); resize: vertical; }
+.tester-feedback-form p { margin: 8px 0; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .beta-usage-notice { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+}

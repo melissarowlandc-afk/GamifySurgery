@@ -8,6 +8,8 @@ import type {
   LocalCampaignStatus,
   LocalPrototypeProfile,
 } from "./prototypeStorage";
+import { normalizeTutorialGuidanceRecords, type CampaignTutorialGuidance } from "./tutorialGuidance";
+import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
 
 export const LOCAL_CAMPAIGN_DATABASE_NAME = "gamify-surgery.local.v1";
 
@@ -55,6 +57,7 @@ export interface StoredProfileMetadata {
   activeCampaignId: string | null;
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
+  tutorialGuidanceByCampaign?: Record<string, CampaignTutorialGuidance>;
   tutorialIntroDismissedCampaignIds: string[];
   tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
   tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
@@ -327,9 +330,7 @@ function validateStoredProfile(value: unknown): StoredProfile | undefined {
   const tipAcknowledgments = isRecord(value.tutorialDailyRoutineTipAcknowledgments)
     ? Object.fromEntries(Object.entries(value.tutorialDailyRoutineTipAcknowledgments).filter(([, tips]) => Array.isArray(tips)).map(([id, tips]) => [id, (tips as unknown[]).filter((tip): tip is string => typeof tip === "string")]))
     : {};
-  const pauseByCampaign = isRecord(value.tutorialDailyRoutinePauseByCampaign)
-    ? Object.fromEntries(Object.entries(value.tutorialDailyRoutinePauseByCampaign).filter(([, paused]) => typeof paused === "boolean")) as Record<string, boolean>
-    : {};
+  const pauseByCampaign = normalizeRetiredTutorialPauses(value.tutorialDailyRoutinePauseByCampaign);
   if (new Set(dismissedCampaignIds).size !== dismissedCampaignIds.length) {
     throw namedError("MetadataValidationError", "Stored tutorial metadata contains duplicate campaigns.");
   }
@@ -352,6 +353,7 @@ function validateStoredProfile(value: unknown): StoredProfile | undefined {
     activeCampaignId: value.activeCampaignId as string | null,
     nextCampaignNumber: value.nextCampaignNumber as number,
     tutorialsEnabled: value.tutorialsEnabled,
+    tutorialGuidanceByCampaign: value.tutorialGuidanceByCampaign as Record<string, CampaignTutorialGuidance> | undefined,
     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds],
     tutorialDailyRoutineTipAcknowledgments: tipAcknowledgments,
     tutorialDailyRoutinePauseByCampaign: pauseByCampaign,
@@ -505,6 +507,10 @@ function buildStoredProfile(
   };
   const callerTips = callerProfile.tutorialDailyRoutineTipAcknowledgments[targetCampaign.campaignId];
   const callerPause = callerProfile.tutorialDailyRoutinePauseByCampaign[targetCampaign.campaignId];
+  const guidanceByCampaign = { ...(storedProfile?.tutorialGuidanceByCampaign ?? {}) };
+  guidanceByCampaign[targetCampaign.campaignId] = normalizeTutorialGuidanceRecords(
+    callerProfile.tutorialGuidanceByCampaign, [targetCampaign], callerProfile.tutorialsEnabled,
+    callerProfile.tutorialDailyRoutineTipAcknowledgments)[targetCampaign.campaignId]!;
   if (callerTips) tipAcknowledgments[targetCampaign.campaignId] = [...callerTips];
   else delete tipAcknowledgments[targetCampaign.campaignId];
   if (callerPause !== undefined) pauseByCampaign[targetCampaign.campaignId] = callerPause;
@@ -519,6 +525,7 @@ function buildStoredProfile(
       callerProfile.nextCampaignNumber,
     ),
     tutorialsEnabled: callerProfile.tutorialsEnabled,
+    tutorialGuidanceByCampaign: Object.fromEntries(Object.entries(guidanceByCampaign).filter(([id]) => resultingIds.has(id))),
     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds].filter((campaignId) =>
       resultingIds.has(campaignId),
     ),
@@ -547,6 +554,12 @@ function migrationMetadataMatches(
     (!sourceDismissed || storedDismissed)
       && JSON.stringify(storedProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []) === JSON.stringify(sourceProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? [])
       && storedProfile.tutorialDailyRoutinePauseByCampaign[campaignId] === sourceProfile.tutorialDailyRoutinePauseByCampaign[campaignId]
+      && JSON.stringify(normalizeTutorialGuidanceRecords(storedProfile.tutorialGuidanceByCampaign,
+        sourceProfile.campaigns.filter((campaign) => campaign.campaignId === campaignId), storedProfile.tutorialsEnabled,
+        storedProfile.tutorialDailyRoutineTipAcknowledgments)[campaignId]) ===
+        JSON.stringify(normalizeTutorialGuidanceRecords(sourceProfile.tutorialGuidanceByCampaign,
+          sourceProfile.campaigns.filter((campaign) => campaign.campaignId === campaignId), sourceProfile.tutorialsEnabled,
+          sourceProfile.tutorialDailyRoutineTipAcknowledgments)[campaignId])
   );
 }
 
@@ -1240,6 +1253,8 @@ export class LocalCampaignRepository {
           activeCampaignId: profile.activeCampaignId,
           nextCampaignNumber: profile.nextCampaignNumber,
           tutorialsEnabled: profile.tutorialsEnabled,
+          tutorialGuidanceByCampaign: normalizeTutorialGuidanceRecords(profile.tutorialGuidanceByCampaign,
+            campaigns, profile.tutorialsEnabled, profile.tutorialDailyRoutineTipAcknowledgments),
           tutorialIntroDismissedCampaignIds: [
             ...profile.tutorialIntroDismissedCampaignIds,
           ],

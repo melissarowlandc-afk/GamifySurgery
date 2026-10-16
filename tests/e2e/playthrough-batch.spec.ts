@@ -88,7 +88,7 @@ async function openOnlyPatient(page: Page): Promise<void> {
   const patient = page.locator(".patient-folder .patient-tab").first();
   await expect(patient).toBeVisible();
   await patient.click();
-  await expect(page.locator(".paper-chart")).toBeVisible();
+  await expect(page.locator(".chart-sheet")).toBeVisible();
 }
 
 async function openResolvedPatient(page: Page, encounterId: string): Promise<void> {
@@ -99,7 +99,7 @@ async function openResolvedPatient(page: Page, encounterId: string): Promise<voi
   await cabinet.click();
   const patient = page.locator(".is-resolved-stack .patient-tab").first();
   await expect(patient).toBeVisible();
-  const chart = page.locator(".paper-chart");
+  const chart = page.locator(".chart-sheet");
   await expect(async () => {
     await patient.click();
     await expect(chart).toBeVisible({ timeout: 750 });
@@ -244,7 +244,7 @@ test("one close acknowledges wrong intermediate feedback and preserves the next 
   });
   await openOnlyPatient(page);
   const correctAnswer = await answerCurrent(page, false);
-  const feedback = page.locator(".chart-step-column.is-current .chart-step-feedback");
+  const feedback = page.locator(".cs-step.is-current .cs-feedback");
   await expect(feedback).toContainText("Incorrect");
   await expect(feedback).toContainText(`Correct answer: ${correctAnswer}`);
   await expect(page.getByText(futureStem, { exact: true })).toHaveCount(0);
@@ -253,7 +253,7 @@ test("one close acknowledges wrong intermediate feedback and preserves the next 
     animations: "disabled",
   });
   await page.getByRole("button", { name: "Close patient chart" }).click();
-  await expect(page.locator(".paper-chart")).toHaveCount(0);
+  await expect(page.locator(".chart-sheet")).toHaveCount(0);
   const closed = (await getActiveState(page)) as unknown as GameState;
   expect(closed.openChartEncounterId).toBeNull();
   expect(closed.encounters[encounterId]!.currentNodeIndex).toBe(1);
@@ -262,7 +262,7 @@ test("one close acknowledges wrong intermediate feedback and preserves the next 
   expect(closed.learningHistories[closed.encounters[encounterId]!.steps[1]!.primaryConceptId]?.reviews ?? []).toHaveLength(0);
   await openOnlyPatient(page);
   await expect(page.getByText("Decision 2 of 2", { exact: true })).toBeVisible();
-  await expect(page.locator(".chart-step-feedback")).toContainText(
+  await expect(page.locator(".cs-feedback")).toContainText(
     `Correct answer: ${correctAnswer}`,
   );
 });
@@ -281,7 +281,7 @@ for (const correct of [false, true] as const) {
     );
     await openOnlyPatient(page);
     const correctAnswer = await answerCurrent(page, correct);
-    const feedback = page.locator(".chart-step-feedback");
+    const feedback = page.locator(".cs-feedback");
     await expect(feedback).toContainText(correct ? "Correct" : "Incorrect");
     if (!correct) await expect(feedback).toContainText(`Correct answer: ${correctAnswer}`);
     await page.screenshot({
@@ -293,14 +293,14 @@ for (const correct of [false, true] as const) {
     } else {
       await page.getByRole("button", { name: "Dismiss and close chart" }).click();
     }
-    await expect(page.locator(".paper-chart")).toHaveCount(0);
+    await expect(page.locator(".chart-sheet")).toHaveCount(0);
     const completed = (await getActiveState(page)) as unknown as GameState;
     const encounter = completed.encounters[TUTORIAL_ENCOUNTER_ID]!;
     expect(encounter.resolutionReason).toBe("completed");
     if (!correct) expect(encounter.terminalFeedback?.acknowledged).toBe(true);
     expect(completed.learningHistories[encounter.steps[0]!.primaryConceptId]!.reviews).toHaveLength(1);
     await openResolvedPatient(page, TUTORIAL_ENCOUNTER_ID);
-    await expect(page.locator(".chart-step-feedback")).toContainText(
+    await expect(page.locator(".cs-feedback")).toContainText(
       correct ? "Correct" : `Correct answer: ${correctAnswer}`,
     );
     const reopened = (await getActiveState(page)) as unknown as GameState;
@@ -313,8 +313,7 @@ for (const correct of [false, true] as const) {
 }
 
 async function dismissCoach(page: Page): Promise<void> {
-  const button = page.getByRole("button", { name: "Got It" });
-  if (await button.isVisible({ timeout: 500 }).catch(() => false)) await button.click();
+  await expect(page.getByRole("button", {name: "Got It"})).toHaveCount(0);
 }
 
 async function answerTutorialCorrectly(page: Page): Promise<void> {
@@ -329,20 +328,9 @@ async function answerTutorialCorrectly(page: Page): Promise<void> {
 }
 
 async function finishTutorialChart(page: Page): Promise<void> {
-  for (let attempt = 0; attempt < 30; attempt += 1) {
-    await dismissCoach(page);
-    const flip = page.getByRole("button", { name: /Flip for (?:M|m)ore Disease Information/ });
-    if (await flip.isVisible({ timeout: 200 }).catch(() => false)) {
-      await flip.click();
-      continue;
-    }
-    const resolve = page.getByRole("button", { name: "Resolve Completed Chart" });
-    if (await resolve.isVisible({ timeout: 200 }).catch(() => false)) {
-      await resolve.click();
-      return;
-    }
-  }
-  throw new Error("Tutorial chart did not resolve.");
+  await dismissCoach(page);
+  await page.getByRole("button", {name: "Resolve Completed Chart"}).click();
+  await expect(page.locator(".chart-sheet")).toHaveCount(0);
 }
 
 async function facilityLayout(page: Page): Promise<{
@@ -430,7 +418,8 @@ test("fresh campaign builds a real Examination Room and door, then retains both"
   const room = state.rooms.find((candidate) => candidate.roomDefinitionId === "room.examination")!;
   expect(state.cashCents).toBe(beforeBuild.cashCents - 16_000);
   await dismissCoach(page);
-  await page.getByRole("button", { name: "Place Door" }).click();
+  // Placing a room turns the single Doors tool on automatically.
+  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
   const beforeDoorCount = state.doors.length;
   layout = await facilityLayout(page);
   await canvas.click({ position: {

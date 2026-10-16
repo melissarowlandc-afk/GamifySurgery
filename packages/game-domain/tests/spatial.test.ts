@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   APPROVED_ROOM_NAVIGATION_CONTRACTS,
+  APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS,
   type RoomDefinition,
 } from "@gamify-surgery/balance-config";
 import {
@@ -566,7 +567,13 @@ describe("approved room navigation parity", () => {
 
   it("reaches every required role contact from one doorway in every approved orientation", () => {
     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
-      const definition = definitionFor(contract.roomDefinitionId)!;
+      const definition = definitionFor(contract.roomDefinitionId);
+      if (!definition) {
+        // M2 promotes art/navigation before M3 definitions. The dedicated
+        // Level 4 matrix exercises every door/support with test-only rooms.
+        expect(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS[contract.roomDefinitionId]).toBeDefined();
+        continue;
+      }
       if (definition.kind === "hallway") continue;
       for (const orientation of contract.allowedOrientations) {
         const placed: PlacedRoom = {
@@ -623,6 +630,62 @@ describe("approved room navigation parity", () => {
             `${definition.id}@${orientation} does not route through solid endpoint contacts`,
           ).toBe(true);
         }
+      }
+    }
+  });
+
+  it("mounts and dismounts every Waiting Room seat through an east-0 door without opening fixture transit", () => {
+    const definition = definitionFor("room.waiting")!;
+    for (const orientation of [0, 270] as const) {
+      const placed: PlacedRoom = {
+        id: `room.waiting.seat-egress.${orientation}`,
+        roomDefinitionId: definition.id,
+        x: 28,
+        y: 20,
+        orientation,
+        doorSide: null,
+        upgradeLevel: 1,
+      };
+      const door: DoorState = {
+        id: `door.waiting.seat-egress.${orientation}`,
+        roomId: placed.id,
+        side: "east",
+        offset: 0,
+        exterior: false,
+      };
+      const size = getRotatedFootprint(definition, orientation);
+      const doorInside = {
+        x: placed.x + size.width - 1,
+        y: placed.y,
+      };
+      const endpointKeys = new Set(
+        getRoomWaitingAnchors(placed, definition).map((point) => `${point.x},${point.y}`),
+      );
+      for (const seat of getRoomWaitingAnchors(placed, definition)) {
+        const outbound = findDeterministicFacilityPath(
+          seat,
+          doorInside,
+          [placed],
+          [door],
+          definitionFor,
+        );
+        const inbound = findDeterministicFacilityPath(
+          doorInside,
+          seat,
+          [placed],
+          [door],
+          definitionFor,
+        );
+        expect(outbound.at(-1), `${orientation} dismount ${seat.x},${seat.y}`).toEqual(doorInside);
+        expect(inbound.at(-1), `${orientation} mount ${seat.x},${seat.y}`).toEqual(seat);
+        expect(
+          outbound.slice(1).every((point) => !endpointKeys.has(`${point.x},${point.y}`)),
+          `${orientation} dismount must not cross another seat`,
+        ).toBe(true);
+        expect(
+          inbound.slice(0, -1).every((point) => !endpointKeys.has(`${point.x},${point.y}`)),
+          `${orientation} mount must not cross another seat`,
+        ).toBe(true);
       }
     }
   });

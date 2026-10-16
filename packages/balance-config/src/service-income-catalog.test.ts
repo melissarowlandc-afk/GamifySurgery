@@ -11,7 +11,7 @@ describe("service income retail contracts", () => {
     ["income.gift_shop", 15, 6, "room.gift_shop", 2],
     ["income.gift_shop_premium", 25, 12, "room.gift_shop", 2],
     ["income.otc_supply", 12, 6, "room.pharmacy", 2],
-    ["income.pharmacy_pickup", 25, 15, "room.pharmacy", 2],
+    ["income.pharmacy_pickup", 70, 15, "room.pharmacy", 2],
   ])("freezes %s gross, stock cost, outlet, and fulfillment duration", (id, gross, cost, room, duration) => {
     const line = getServiceIncomeLine(id)!;
     expect(line.fee).toBe(gross);
@@ -29,13 +29,15 @@ describe("service income retail contracts", () => {
     expect(getServiceIncomeLine("income.xray")!.operation!.phases[0]!.durationMinutes).toBe(60);
   });
 
-  it("sets routine and advanced endoscopy to the approved hourly nominal income without changing their cadence", () => {
+  it("keeps question fees separate from approved scheduled Endoscopy income and cadence", () => {
     expect(getServiceIncomeLine("income.endoscopy")).toMatchObject({
       fee: 450,
-      operation: { arrivalCadenceMinutes: 300 },
+      scheduledVisitorFee: 600,
+      operation: { arrivalCadenceMinutes: 120 },
     });
     expect(getServiceIncomeLine("income.advanced_endoscopy")).toMatchObject({
       fee: 600,
+      scheduledVisitorFee: 600,
       operation: { arrivalCadenceMinutes: 600 },
     });
   });

@@ -11,7 +11,6 @@ import {
 } from "./characterStillRegistry";
 import {
   getCharacterWalkEntry,
-  getCharacterWalkFrame,
   type CharacterWalkAsset,
 } from "./characterWalkRegistry";
 
@@ -129,26 +128,23 @@ export function characterStandingBitmapDescriptors(
   );
 }
 
-/** An explicit walk frame opts a registered pilot into authored movement;
- * omitted frames and unregistered identities retain the directional still. */
+/** Runtime movement always uses the matching directional standing still.
+ * The optional frame argument remains source-compatible with archived gait
+ * review tools, but it cannot opt any identity into active walking art. */
 export function characterBitmapLayers(
   appearance: PixelAppearanceDescriptor,
   direction: CharacterDirection,
   pose: CharacterPose,
   movingRight = false,
   _representation?: "thumbnail" | "portrait",
-  walkFrame?: number,
+  _walkFrame?: number,
 ): CharacterBitmapLayers | undefined {
   const stillId = characterStillIdForAppearance(appearance);
   if (!stillId) return undefined;
   const cardinal = characterStillDirection(direction, movingRight);
   const seated = pose === "seated" || pose === "exam-table";
   const clipboard = pose === "interaction" && appearance.roleStyle === "founder" ? getClipboardStill(stillId) : undefined;
-  const walking = pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b";
-  const walkAsset = walking && walkFrame !== undefined
-    ? getCharacterWalkFrame(stillId, cardinal, walkFrame)
-    : undefined;
-  const asset = clipboard ?? walkAsset ?? getCharacterStill(stillId, seated ? "sit" : "stand", cardinal);
+  const asset = clipboard ?? getCharacterStill(stillId, seated ? "sit" : "stand", cardinal);
   if (!asset) return undefined;
   const actor: CharacterBitmapLayer = { atlas: descriptor(stillId, asset), variant: 0, flipX: false, stillId, asset };
   return { actor, head: actor, body: actor, direction: viewFor(clipboard ? "south" : cardinal), pose };

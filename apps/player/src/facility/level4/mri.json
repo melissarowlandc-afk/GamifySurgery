@@ -1,0 +1,5979 @@
+{
+  "proofId": "mri",
+  "roomDefinitionId": "room.mri",
+  "proofPath": "tools/room-design/level-4/mri/proof/index.html",
+  "assets": [
+    {
+      "id": "level4:mri:gantry-side",
+      "relativePath": "art/rooms/level4-v1/mri/gantry-side.png"
+    },
+    {
+      "id": "level4:mri:table-empty",
+      "relativePath": "art/rooms/level4-v1/mri/table-empty.png"
+    },
+    {
+      "id": "level4:mri:console",
+      "relativePath": "art/rooms/level4-v1/mri/console.png"
+    },
+    {
+      "id": "level4:mri:operator-chair",
+      "relativePath": "art/rooms/level4-v1/mri/operator-chair.png"
+    },
+    {
+      "id": "level4:mri:coil-cabinet",
+      "relativePath": "art/rooms/level4-v1/mri/coil-cabinet.png"
+    },
+    {
+      "id": "level4:mri:zone-sign",
+      "relativePath": "art/rooms/level4-v1/mri/zone-sign.png"
+    },
+    {
+      "id": "level4:mri:scan-light",
+      "relativePath": "art/rooms/level4-v1/mri/scan-light.png"
+    },
+    {
+      "id": "level4:mri:comfort-cart",
+      "relativePath": "art/rooms/level4-v1/mri/comfort-cart.png"
+    },
+    {
+      "id": "level4:mri:open-shelves",
+      "relativePath": "art/rooms/level4-v1/mri/open-shelves.png"
+    }
+  ],
+  "orientations": [
+    {
+      "runtimeOrientation": 0,
+      "proofView": "north-up",
+      "footprint": [
+        4,
+        4
+      ]
+    }
+  ],
+  "shell": {
+    "tilePixels": 120,
+    "rearWallHeightPixels": 90,
+    "lowNorthHeightPixels": 29,
+    "sideCapWidthPixels": 14,
+    "southHeightPixels": 29,
+    "floorAlgorithm": "approved-proof",
+    "floorBase": "#dfe7e8",
+    "floorPalette": [
+      "#dfe7e8"
+    ],
+    "background": "#f3ead3",
+    "rearWall": "#a8c7c9",
+    "baseTrim": "#58735a",
+    "edgeTrim": "#294632",
+    "doorJamb": "#744a29",
+    "doorInsetPixels": 12,
+    "floorPattern": "mri approved material",
+    "floorPatternKind": "vinyl",
+    "floorPatternSizePixels": 30,
+    "floorPatternSeed": 17,
+    "floorGrout": "#7a6c5e",
+    "floorAccent": "#000000",
+    "exactProofFloor": [
+      {
+        "shape": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 480,
+        "color": "#dfe7e8"
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 1,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 31,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 61,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 91,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 121,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 151,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 181,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 211,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 241,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 271,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 301,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 331,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 361,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 391,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 421,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 1,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 31,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 61,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 91,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 121,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 151,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 181,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 211,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 241,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 271,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 301,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 331,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 361,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 391,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#d3dddf",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 421,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "rect",
+        "x": 451,
+        "y": 451,
+        "width": 28,
+        "height": 28,
+        "color": "#e6eded",
+        "alpha": 0.7
+      },
+      {
+        "shape": "line",
+        "x": 30,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 60,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 90,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 120,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 150,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 180,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 210,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 240,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 270,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 300,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 330,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 360,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 390,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 420,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 450,
+        "y": 0,
+        "width": 0,
+        "height": 480,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 30,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 60,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 90,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 120,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 150,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 180,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 210,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 240,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 270,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 300,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 330,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 360,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 390,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 420,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "line",
+        "x": 0,
+        "y": 450,
+        "width": 480,
+        "height": 0,
+        "color": "#7f9396",
+        "alpha": 0.16
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 232.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 246.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 260.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 274.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 288.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 302.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 316.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 330.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 344.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 358.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 372.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 386.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 400.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 414.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 428.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 442.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 456.8,
+        "y": 125.2,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 125.2,
+        "width": 4,
+        "height": 11.920000000000002,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 139.6,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 154,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 168.4,
+        "width": 4,
+        "height": 11.919999999999987,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 182.8,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 197.20000000000002,
+        "width": 4,
+        "height": 11.919999999999987,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 211.60000000000002,
+        "width": 4,
+        "height": 11.919999999999987,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 226,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 240.40000000000003,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 254.8,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 269.20000000000005,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 283.6,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 298,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 312.40000000000003,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 326.8,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 470.8,
+        "y": 341.20000000000005,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 463.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 449.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 435.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 421.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 407.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 393.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 379.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 365.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 351.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 337.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 323.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 309.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 295.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 281.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 267.1,
+        "y": 355.6,
+        "width": 11.699999999999989,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 253.1,
+        "y": 355.6,
+        "width": 11.700000000000017,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 239.1,
+        "y": 355.6,
+        "width": 11.700000000000017,
+        "height": 4,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 225.1,
+        "y": 355.6,
+        "width": 11.700000000000017,
+        "height": 4,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 347.68,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 333.28000000000003,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 318.88,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 304.48,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 290.08000000000004,
+        "width": 4,
+        "height": 11.919999999999959,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 275.68,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 261.28000000000003,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 246.88,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 232.48,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 218.07999999999998,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 203.67999999999998,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 189.28,
+        "width": 4,
+        "height": 11.919999999999987,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 174.88,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 160.48,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 146.07999999999998,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#c0392b",
+        "alpha": 0.85
+      },
+      {
+        "shape": "rect",
+        "x": 218.8,
+        "y": 131.67999999999998,
+        "width": 4,
+        "height": 11.920000000000016,
+        "color": "#e0b52e",
+        "alpha": 0.85
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "gantry",
+      "assetId": "level4:mri:gantry-side",
+      "sourceRect": [
+        0,
+        0,
+        384,
+        519
+      ],
+      "renderSizeTiles": [
+        1.6,
+        2.1625
+      ],
+      "destinationTopLeftTiles": [
+        2.4,
+        0.8245567527606537
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.2,
+        2.970390086093987
+      ],
+      "depthKey": 2.970390086093987,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        192.00000000000006,
+        515
+      ]
+    },
+    {
+      "id": "tableEmpty",
+      "assetId": "level4:mri:table-empty",
+      "sourceRect": [
+        0,
+        0,
+        252,
+        149
+      ],
+      "renderSizeTiles": [
+        1.05,
+        0.6208333333333333
+      ],
+      "destinationTopLeftTiles": [
+        1.9650000000000003,
+        1.8283333333333331
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        2.49,
+        2.42
+      ],
+      "depthKey": 2.980390086093987,
+      "depthPolicy": "authored-layer",
+      "doorOwners": [],
+      "backedOwners": [],
+      "clipRightWorld": 2.5299418604651165,
+      "boreEntry": {
+        "x": 2.5299418604651165,
+        "y": 1.9703900860939874
+      },
+      "sourceFloorContact": [
+        125.99999999999997,
+        142.00000000000003
+      ]
+    },
+    {
+      "id": "console",
+      "assetId": "level4:mri:console",
+      "sourceRect": [
+        0,
+        0,
+        206,
+        317
+      ],
+      "renderSizeTiles": [
+        0.8583333333333333,
+        1.3208333333333333
+      ],
+      "destinationTopLeftTiles": [
+        0.6908333333333334,
+        0.8400000000000003
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.12,
+        2.14
+      ],
+      "depthKey": 2.14,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        103.00000000000001,
+        312
+      ]
+    },
+    {
+      "id": "operatorChair",
+      "assetId": "level4:mri:operator-chair",
+      "sourceRect": [
+        0,
+        0,
+        96,
+        168
+      ],
+      "renderSizeTiles": [
+        0.4,
+        0.7000000000000001
+      ],
+      "destinationTopLeftTiles": [
+        0.92,
+        1.8566666666666667
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        1.12,
+        2.54
+      ],
+      "depthKey": 2.55,
+      "depthPolicy": "authored-layer",
+      "doorOwners": [],
+      "backedOwners": [],
+      "sourceFloorContact": [
+        48.000000000000014,
+        163.99999999999997
+      ],
+      "foregroundSupportIds": [
+        "operator"
+      ]
+    },
+    {
+      "id": "coilCabinet",
+      "assetId": "level4:mri:coil-cabinet",
+      "sourceRect": [
+        0,
+        0,
+        154,
+        312
+      ],
+      "renderSizeTiles": [
+        0.64,
+        1.2966233766233766
+      ],
+      "destinationTopLeftTiles": [
+        3.23,
+        -0.9558441558441557
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.55,
+        0.32
+      ],
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N4",
+        "EA"
+      ],
+      "backedOwners": [
+        "N4"
+      ],
+      "footprint": {
+        "left": 3.3,
+        "top": 0.18,
+        "width": 0.5,
+        "height": 0.14
+      },
+      "touchupKeepWhenBacked": true,
+      "sourceFloorContact": [
+        76.99999999999996,
+        307
+      ]
+    },
+    {
+      "id": "zoneSign",
+      "assetId": "level4:mri:zone-sign",
+      "sourceRect": [
+        0,
+        0,
+        110,
+        96
+      ],
+      "renderSizeTiles": [
+        0.46,
+        0.4014545454545455
+      ],
+      "destinationTopLeftTiles": [
+        2.32,
+        -0.7
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N3"
+      ],
+      "backedOwners": [
+        "N3"
+      ]
+    },
+    {
+      "id": "scanLight",
+      "assetId": "level4:mri:scan-light",
+      "sourceRect": [
+        0,
+        0,
+        96,
+        53
+      ],
+      "renderSizeTiles": [
+        0.4,
+        0.22083333333333335
+      ],
+      "destinationTopLeftTiles": [
+        0.6,
+        -0.62
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "depthKey": -1,
+      "depthPolicy": "wall",
+      "doorOwners": [
+        "N1"
+      ],
+      "backedOwners": [
+        "N1"
+      ]
+    },
+    {
+      "id": "comfortCart",
+      "assetId": "level4:mri:comfort-cart",
+      "sourceRect": [
+        0,
+        0,
+        180,
+        216
+      ],
+      "renderSizeTiles": [
+        0.75,
+        0.9
+      ],
+      "destinationTopLeftTiles": [
+        3.105,
+        3.0008333333333335
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        3.48,
+        3.88
+      ],
+      "depthKey": 3.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S4",
+        "ED"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 3.17,
+        "top": 3.74,
+        "width": 0.62,
+        "height": 0.14
+      },
+      "sourceFloorContact": [
+        90,
+        210.99999999999994
+      ]
+    },
+    {
+      "id": "openShelves",
+      "assetId": "level4:mri:open-shelves",
+      "sourceRect": [
+        0,
+        0,
+        180,
+        300
+      ],
+      "renderSizeTiles": [
+        0.75,
+        1.25
+      ],
+      "destinationTopLeftTiles": [
+        0.07500000000000001,
+        2.650833333333333
+      ],
+      "canvasTransform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "attachments": {},
+      "worldLocalGround": [
+        0.45,
+        3.88
+      ],
+      "depthKey": 3.88,
+      "depthPolicy": "ground-contact",
+      "doorOwners": [
+        "S1",
+        "WD"
+      ],
+      "backedOwners": [],
+      "footprint": {
+        "left": 0.14,
+        "top": 3.74,
+        "width": 0.62,
+        "height": 0.14
+      },
+      "sourceFloorContact": [
+        90,
+        295.0000000000001
+      ]
+    }
+  ],
+  "supports": [
+    {
+      "id": "operator",
+      "role": "mri-operator",
+      "pose": "seated",
+      "facing": "north",
+      "seat": {
+        "x": 1.12,
+        "y": 2.21
+      },
+      "ground": {
+        "x": 1.12,
+        "y": 2.54
+      },
+      "fixtureGround": {
+        "x": 1.12,
+        "y": 2.54
+      },
+      "supportRecord": "operatorChair"
+    },
+    {
+      "id": "patient-standing",
+      "role": "mri-patient",
+      "pose": "standing",
+      "facing": "north",
+      "seat": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "ground": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "fixtureGround": {
+        "x": 2.45,
+        "y": 3.3
+      }
+    },
+    {
+      "id": "patient-seated",
+      "role": "mri-patient",
+      "pose": "seated",
+      "facing": "west",
+      "seat": {
+        "x": 2.18,
+        "y": 1.9703900860939874
+      },
+      "ground": {
+        "x": 2.18,
+        "y": 2.347116042559397
+      },
+      "fixtureGround": {
+        "x": 2.49,
+        "y": 2.42
+      },
+      "painterDepth": 2.990390086093987,
+      "supportRecord": "tableEmpty",
+      "doorOwners": [],
+      "backedOwners": []
+    }
+  ],
+  "solids": [
+    {
+      "id": "gantry",
+      "footprint": {
+        "left": 2.42,
+        "top": 1.3,
+        "width": 1.54,
+        "height": 1.670390086093987
+      }
+    },
+    {
+      "id": "table",
+      "footprint": {
+        "left": 1.8,
+        "top": 1.95,
+        "width": 0.95,
+        "height": 0.45
+      }
+    },
+    {
+      "id": "glass",
+      "footprint": {
+        "left": 1.6,
+        "top": 0.72,
+        "width": 0.12,
+        "height": 2.46
+      }
+    },
+    {
+      "id": "console",
+      "footprint": {
+        "left": 0.7600000000000001,
+        "top": 1.79,
+        "width": 0.72,
+        "height": 0.35
+      }
+    },
+    {
+      "id": "operator-chair",
+      "footprint": {
+        "left": 0.9500000000000001,
+        "top": 2.34,
+        "width": 0.34,
+        "height": 0.2
+      },
+      "endpoint": true
+    }
+  ],
+  "routeClearances": [],
+  "approachRoutes": [
+    {
+      "doorSegment": "N1",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          0.55,
+          0.2
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N1",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          0.55,
+          0.2
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N1",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.5,
+          0.2
+        ],
+        [
+          0.55,
+          0.2
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N2",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          1.5,
+          0.2
+        ],
+        [
+          1.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N3",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          2.5,
+          0.2
+        ],
+        [
+          2.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N4",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.5,
+          0.2
+        ],
+        [
+          3.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N4",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.5,
+          0.2
+        ],
+        [
+          3.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "N4",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.5,
+          0.2
+        ],
+        [
+          3.5,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.8,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.8,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EA",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.8,
+          0.5
+        ],
+        [
+          1.4,
+          0.5
+        ],
+        [
+          1.4,
+          1.6
+        ],
+        [
+          0.55,
+          1.6
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.8,
+          1.5
+        ],
+        [
+          3.8,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.8,
+          1.5
+        ],
+        [
+          3.8,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EB",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.8,
+          1.5
+        ],
+        [
+          3.8,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.8,
+          2.5
+        ],
+        [
+          3.8,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.8,
+          2.5
+        ],
+        [
+          3.8,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "EC",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.8,
+          2.5
+        ],
+        [
+          3.8,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "ED",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.8,
+          3.5
+        ],
+        [
+          3.8,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "ED",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.8,
+          3.5
+        ],
+        [
+          3.8,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "ED",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.8,
+          3.5
+        ],
+        [
+          3.8,
+          3.2
+        ],
+        [
+          2.2,
+          3.2
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.5,
+          3.8
+        ],
+        [
+          0.5,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.5,
+          3.8
+        ],
+        [
+          0.5,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S1",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.5,
+          3.8
+        ],
+        [
+          0.5,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          1.5,
+          3.8
+        ],
+        [
+          1.5,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          1.5,
+          3.8
+        ],
+        [
+          1.5,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S2",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          1.5,
+          3.8
+        ],
+        [
+          1.5,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          2.5,
+          3.8
+        ],
+        [
+          2.5,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          2.5,
+          3.8
+        ],
+        [
+          2.5,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S3",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          2.5,
+          3.8
+        ],
+        [
+          2.5,
+          3.2
+        ],
+        [
+          2.2,
+          3.2
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S4",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          3.5,
+          3.8
+        ],
+        [
+          3.5,
+          3.4
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.4,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S4",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          3.5,
+          3.8
+        ],
+        [
+          3.5,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "S4",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          3.5,
+          3.8
+        ],
+        [
+          3.5,
+          3.2
+        ],
+        [
+          2.2,
+          3.2
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          0.55,
+          0.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          0.55,
+          0.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WA",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          0.5
+        ],
+        [
+          0.55,
+          0.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          0.55,
+          1.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          0.55,
+          1.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WB",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          1.5
+        ],
+        [
+          0.55,
+          1.5
+        ],
+        [
+          0.55,
+          2.35
+        ],
+        [
+          0.75,
+          2.35
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.75,
+          2.5
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.1,
+          2.75
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.75,
+          2.5
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WC",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          2.5
+        ],
+        [
+          0.75,
+          2.5
+        ],
+        [
+          0.75,
+          2.75
+        ],
+        [
+          1.4,
+          2.75
+        ],
+        [
+          1.4,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WD",
+      "supportId": "operator",
+      "standingApproach": {
+        "x": 1.12,
+        "y": 2.9
+      },
+      "walkingPath": [
+        [
+          0.2,
+          3.5
+        ],
+        [
+          0.2,
+          2.9
+        ],
+        [
+          1.1,
+          2.9
+        ],
+        [
+          1.12,
+          2.9
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WD",
+      "supportId": "patient-standing",
+      "standingApproach": {
+        "x": 2.45,
+        "y": 3.3
+      },
+      "walkingPath": [
+        [
+          0.2,
+          3.5
+        ],
+        [
+          0.2,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          3.3
+        ],
+        [
+          2.45,
+          3.3
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    },
+    {
+      "doorSegment": "WD",
+      "supportId": "patient-seated",
+      "standingApproach": {
+        "x": 2.18,
+        "y": 2.8
+      },
+      "walkingPath": [
+        [
+          0.2,
+          3.5
+        ],
+        [
+          0.2,
+          3.4
+        ],
+        [
+          1.9,
+          3.4
+        ],
+        [
+          1.9,
+          2.8
+        ],
+        [
+          2.2,
+          2.8
+        ],
+        [
+          2.18,
+          2.8
+        ]
+      ],
+      "actorRadius": 0.18,
+      "step": 0.05,
+      "seatingTransition": "static-contact-after-walking"
+    }
+  ],
+  "procedural": [
+    {
+      "id": "glass",
+      "rect": {
+        "left": 1.6,
+        "top": 0.72,
+        "width": 0.12,
+        "height": 2.46
+      },
+      "doorOwners": [],
+      "backedOwners": [],
+      "style": {
+        "kind": "approved-glass"
+      },
+      "drawPhase": "depth-sorted",
+      "depthKey": 3.18,
+      "screenRect": {
+        "left": 192,
+        "top": 86.39999999999999,
+        "width": 14.399999999999999,
+        "height": 295.2
+      }
+    }
+  ],
+  "provenance": {
+    "receiptPath": "tools/room-design/level-4/mri/approval-2026-10-07.md",
+    "receiptSha256": "18e1e32b94d1852ce5deed68ec92f635574e6fc2fb1fe06daa828b9ec6fa241c",
+    "designSha256": "9f1978ddfcc286447f06675a305341df9ea51a59d1353cdca494a68dc05f0910",
+    "approved": [
+      {
+        "source": "tools/room-design/level-4/mri/proof/index.html",
+        "sha256": "129ce8ad53aa051aefb0241508dd5bc45cd2f734a9ab2a061d038cd56162774a"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/proof/data.json",
+        "sha256": "6d0e51993cbd6e4f79f1b98e138a8d9e1973083d6eb11132aec3a3b2f744639d"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/proof/proof-manifest.json",
+        "sha256": "f8dde3c7761c81e93304f6ec1248c7264252adcbaf04c749591862dce47444f3"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/proof/registration-contract.json",
+        "sha256": "7c7c1e0ef03d65b1573d72a80d500a4636f3cf1a565d93f0194800dd59b53f1b"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/generation-manifest.json",
+        "sha256": "e64394168118e1f3352ef82814ddab298a75113f2527fe48c23e50ca8bf15fb6"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/coil-cabinet.png",
+        "sha256": "6ec194370d8a46304f9a663386faffa036db0bb266e4b792050d8e5662783677"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/comfort-cart.png",
+        "sha256": "a57241873742be14cf981f4016f042a0ed26d13efd182e8b2d30258e2d9a2742"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/console.png",
+        "sha256": "6157154ffb36859a77de16e15f75b5ac6de7e94363267a76574c933393ef8724"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/gantry-side.png",
+        "sha256": "b8e8b3373b07e2eb5ba89687058b88dedf52d147f552709ecfa0ab6554b22f56"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/open-shelves.png",
+        "sha256": "52303b83b50465137f318fef3b723d8510bd28cac858187f52a3472b24fb06a0"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/operator-chair.png",
+        "sha256": "6ea0b9b51ad3d26473dabad55998bc09103e629fbbd0ed3dc3dcf5243cc3f50e"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/scan-light.png",
+        "sha256": "48ada0f0f837863bb1d75c243989da7c0bcbd15d8128478647cf8fc6f9cb2315"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/table-empty.png",
+        "sha256": "6479afb89b324b919e26534387f61e2ffde78beaab49b2255c63d9a6a6420db5"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/zone-sign.png",
+        "sha256": "2c055a2d517ef42d6bbf84d8394c23a2315b3e0c94270219fe3ff3e84e647851"
+      },
+      {
+        "source": "tools/room-design/level-4/mri/assets/prepared/metadata.json",
+        "sha256": "37da44c9b0db86e26e8ff5fd1bb2bf4bee3963a61ada290bb5122bb831846f0c"
+      }
+    ]
+  }
+}

@@ -78,13 +78,14 @@ describe("full patient-library wording repair", () => {
       expect(clinicalCase.chiefComplaint, clinicalCase.id).not.toMatch(
         /^(?:Select|Identify|Level|Clinic|Outpatient)\b|\bv\d+\b/i,
       );
-      expect(clinicalCase.presentation, clinicalCase.id).toContain("{patientName}");
+      const name = (clinicalCase.pediatricProfile || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
+      expect(clinicalCase.presentation, clinicalCase.id).toContain(name);
       expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(
         /^(?:A patient|An adult|Patient with)\b/i,
       );
       for (const profile of clinicalCase.approvedInstantiationProfiles ?? []) {
         expect(profile.presentation, `${clinicalCase.id}/${profile.id}`).toContain(
-          "{patientName}",
+          name,
         );
         expect(profile.presentation, `${clinicalCase.id}/${profile.id}`).not.toMatch(
           /^(?:A patient|An adult|Patient with)\b/i,

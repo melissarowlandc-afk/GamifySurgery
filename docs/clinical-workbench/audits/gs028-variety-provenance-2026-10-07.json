@@ -1,0 +1,2658 @@
+{
+  "contentVersion": "development-batch.2026-10-07.variety.1",
+  "reviewStatus": "needs_clinician_review",
+  "clinicianApproval": null,
+  "publicReleaseAuthorized": false,
+  "checkedOn": "2026-10-07",
+  "counts": {
+    "contentVersion": "development-batch.2026-10-07.variety.1",
+    "authoringConceptCount": 20,
+    "testedConceptCount": 20,
+    "questionVariantCount": 80,
+    "caseCount": 78,
+    "decisionNodeCount": 80,
+    "sourceCount": 31,
+    "evidenceClaimCount": 51,
+    "timingEntryCount": 80,
+    "caseReviewCount": 78,
+    "resultGateCount": 2,
+    "publicReleaseAuthorized": false
+  },
+  "objectHashes": {
+    "authoring_concepts": "81f8636aaeebed67cf8fd4688807ba92f38ec8d60b56a886763cbad382461f18",
+    "tested_concepts": "590f1f4df67d0400dd30fd0e2e6fc3de5ea9abf32b4690247790a6a9f84281fe",
+    "questions": "9107fa3d289cf2b5f0db6975c3da644fa38f5a329ad2b90c8ec818e272c02363",
+    "cases": "df142637040549869cdcd7dbf0b7ca47a85c2b44372d1f8c2babed1eee420dcd",
+    "timing_entries": "23f4808dfd564bd41a2dedbd18b61aef2648bfe23990556fea09332efc10c0d2",
+    "case_reviews": "a167b6c50c3ad4dc1899d26e1db11584f31efae175befbd86512f7506909d901",
+    "claims": "91e423f2a4cdf1481bdc4b3a50ed5d93cab021a90bcd11a0fcc2a4cc7198934f",
+    "sources": "efe3bb8a1045778928cc9a12b722369e5dd6c62ced65074523ca3c904d35f5a8",
+    "service_contracts": "ad0ad931e6bfb1c8b73b231b8a97eed719dcb0177774cff8c9db21f67bc6b4df",
+    "batch_manifest": "a4434cbf119fdac8ef600593c7f80e6e255e147929097892e1027cbdeaacc1c5"
+  },
+  "sources": [
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.medical-x-ray-imaging",
+      "title": "Medical X-ray Imaging",
+      "completeCitation": "U.S. Food and Drug Administration. Medical X-ray Imaging. FDA medical-imaging safety guidance, undated web page; accessed October 7, 2026. Description and justification sections.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/radiation-emitting-products/medical-imaging/medical-x-ray-imaging",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Federal radiation-safety guidance directly identifies CT as X-ray imaging using ionizing radiation; no numeric dose or cancer-risk estimate is taught.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.imaging.ct-ionizing-xrays"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.ultrasound-imaging",
+      "title": "Ultrasound Imaging",
+      "completeCitation": "U.S. Food and Drug Administration. Ultrasound Imaging. FDA medical-imaging safety guidance, undated web page; accessed October 7, 2026. Description and benefits/risks sections.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/radiation-emitting-products/medical-imaging/ultrasound-imaging",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Federal device guidance identifies acoustic ultrasound imaging without ionizing radiation; nonionizing does not mean unrestricted or risk-free use.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.mri-benefits-risks",
+      "title": "MRI: Benefits and Risks",
+      "completeCitation": "U.S. Food and Drug Administration. MRI (Magnetic Resonance Imaging): Benefits and Risks. Undated FDA web guidance; accessed October 7, 2026. Risks and patients with implants, external and accessory devices sections.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/radiation-emitting-products/mri-magnetic-resonance-imaging/benefits-and-risks",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Federal MRI-safety guidance distinguishes absence of ionizing radiation from magnetic/RF hazards and requires identification of device status and applicable MR Conditional restrictions.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.imaging.mri-magnetic-rf-nonionizing",
+        "claim.gs028e.mri.device-specific-conditions"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.mri-patient-device-screening",
+      "title": "What Patients Should Know Before Having an MRI Exam",
+      "completeCitation": "U.S. Food and Drug Administration. What Patients Should Know Before Having an MRI Exam. Undated FDA web guidance; accessed October 7, 2026. Implanted-device disclosure and implant-card instructions.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/radiation-emitting-products/mri-magnetic-resonance-imaging/what-patients-should-know-having-mri-exam",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Independent FDA patient-guidance page corroborates disclosure and exact-device identification. It is an additional document from the same authority, not an independent medical organization.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.cochlear-implants-mri-safety",
+      "title": "Cochlear Implants and MRI Safety",
+      "completeCitation": "U.S. Food and Drug Administration. Cochlear Implants and MRI Safety. FDA medical-device safety web guidance; accessed October 7, 2026. Device identification and manufacturer-specific MRI instructions.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/medical-devices/cochlear-implants/cochlear-implants-and-mri-safety",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Device-specific federal safety guidance confirms that cochlear-implant MRI conditions differ by implant; no manufacturer restriction or magnet-removal protocol is invented.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.mri.cochlear-specific-instructions"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.acr.contrast-manual.2026.reaction-classification",
+      "title": "ACR Manual on Contrast Media: reaction classification",
+      "completeCitation": "American College of Radiology Committee on Drugs and Contrast Media. ACR Manual on Contrast Media. Current web manual with 2026 revision history; accessed October 7, 2026. Extravasation, printed p. 21 (physical PDF p. 24); Allergic-Like and Physiologic Reactions to Intravascular Iodinated Contrast Media, printed pp. 26–31, including delayed cutaneous events on p. 29; acute reaction categories, printed p. 101 (physical PDF p. 104).",
+      "organizationOrJournal": "American College of Radiology",
+      "authors": [
+        "American College of Radiology Committee on Drugs and Contrast Media"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current professional-society consensus manual used only to verify reaction categories. No table, reaction algorithm, exact incidence, prophylaxis rule, or drug treatment is reproduced.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.contrast.delayed-cutaneous-event",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.empagliflozin-label.2025.s063",
+      "title": "Jardiance (empagliflozin): FDA prescribing information",
+      "completeCitation": "Boehringer Ingelheim Pharmaceuticals, Inc. Jardiance (empagliflozin tablets): FDA-approved prescribing information, revised October 2025, NDA 204629/S-063, Reference ID 5683490. Sections 2.3 and 5.1; accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. Food and Drug Administration / Boehringer Ingelheim Pharmaceuticals, Inc.",
+      "authors": [
+        "Boehringer Ingelheim Pharmaceuticals, Inc."
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "FDA-approved drug-specific labeling directly supports ketoacidosis recognition and the empagliflozin interruption interval. The dated label is cross-checked against the currently displayed NIH-hosted label; it is not asserted to be the globally latest FDA supplement.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.postoperative-restart-conditions",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.dailymed.empagliflozin-label.2026",
+      "title": "Jardiance (empagliflozin): current DailyMed label cross-check",
+      "completeCitation": "Cardinal Health 107, LLC, repackager of Boehringer Ingelheim Pharmaceuticals, Inc. Jardiance (empagliflozin): prescribing information, revised January 2026; DailyMed record updated February 17, 2026, set ID 5777b8a8-ada6-4950-8548-43a1de11f075. Sections 2.3 and 5.1; accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. National Library of Medicine DailyMed / Boehringer Ingelheim Pharmaceuticals, Inc. / Cardinal Health 107, LLC",
+      "authors": [
+        "Boehringer Ingelheim Pharmaceuticals, Inc.",
+        "Cardinal Health 107, LLC"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5777b8a8-ada6-4950-8548-43a1de11f075",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current NIH-distributed structured product label corroborates unchanged drug-specific interruption and ketoacidosis language. This is repackaged manufacturer labeling, not an independent clinical guideline.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.postoperative-restart-conditions",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.ertugliflozin-label.2026.s012",
+      "title": "Steglatro (ertugliflozin): FDA prescribing information",
+      "completeCitation": "Merck Sharp & Dohme LLC. Steglatro (ertugliflozin tablets): FDA-approved prescribing information, revised June 2026, NDA 209803/S-012, Reference ID 5809551. Sections 2.3 and 5.1; accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. Food and Drug Administration / Merck Sharp & Dohme LLC",
+      "authors": [
+        "Merck Sharp & Dohme LLC"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/209803s012lbl.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Recent FDA-approved ertugliflozin labeling directly supports the four-day minimum interruption when possible, which must not be collapsed into empagliflozin's three-day label interval.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.postoperative-restart-conditions",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.mhra.sglt2-ketoacidosis-safety.2016",
+      "title": "SGLT2 inhibitors: updated advice on the risk of diabetic ketoacidosis",
+      "completeCitation": "Medicines and Healthcare products Regulatory Agency. SGLT2 inhibitors: updated advice on the risk of diabetic ketoacidosis. Drug Safety Update. April 18, 2016. Government safety guidance, accessed October 7, 2026.",
+      "organizationOrJournal": "Medicines and Healthcare products Regulatory Agency, United Kingdom",
+      "authors": [
+        "Medicines and Healthcare products Regulatory Agency"
+      ],
+      "publicationYear": 2016,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.gov.uk/drug-safety-update/sglt2-inhibitors-updated-advice-on-the-risk-of-diabetic-ketoacidosis",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "UK Crown copyright, Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/; MHRA credited; no source expression adapted.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Independent national regulator corroborates near-normal glucose presentations, ketone assessment and drug interruption in suspected ketoacidosis. This older source is not used for the U.S. drug-specific preoperative interval.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.naloxone-label.2023.s007.mechanism",
+      "title": "Narcan (naloxone): FDA mechanism and safety information",
+      "completeCitation": "Emergent Devices Inc. Narcan (naloxone hydrochloride) nasal spray: FDA-approved prescribing information, revised March 2023, NDA 208411/S-007, Reference ID 5147689. Sections 1, 5.1 and 12.1; accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. Food and Drug Administration / Emergent Devices Inc.",
+      "authors": [
+        "Emergent Devices Inc."
+      ],
+      "publicationYear": 2023,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/208411s007lbl.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "FDA-approved label directly states competitive opioid receptor antagonism and need for emergency care. An older prescription-label document is used for the stable mechanism only; no dose, dispensing rule or current packaging claim is authored.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.fda.naloxone-emergency-counseling.2020",
+      "title": "FDA naloxone counseling and emergency care guidance",
+      "completeCitation": "U.S. Food and Drug Administration. FDA recommends health care professionals discuss naloxone with all patients when prescribing opioid pain relievers or medicines to treat opioid use disorder. Drug Safety Communication, July 23, 2020. Mechanism and emergency-care sections; accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration"
+      ],
+      "publicationYear": 2020,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/drugs/drug-safety-communications/fda-recommends-health-care-professionals-discuss-naloxone-all-patients-when-prescribing-opioid-pain",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Federal safety communication independently corroborates temporary opioid-effect blockade and emergency assistance even after initial improvement; access/dispensing details are outside this batch's claim scope.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.jcm.laparoscopic-anesthesia-review.2020",
+      "title": "Do Small Incisions Need Only Minimal Anesthesia? Anesthetic Management in Laparoscopic and Robotic Surgery",
+      "completeCitation": "Hottenrott S, Schlesinger T, Helmer P, Meybohm P, Alkatout I, Kranke P. Do Small Incisions Need Only Minimal Anesthesia?—Anesthetic Management in Laparoscopic and Robotic Surgery. Journal of Clinical Medicine. 2020;9(12):4058. Published December 15, 2020. doi:10.3390/jcm9124058. Sections 3.1 and 3.4, pp. 3–4; accessed October 7, 2026.",
+      "organizationOrJournal": "Journal of Clinical Medicine",
+      "authors": [
+        "Sebastian Hottenrott",
+        "Tobias Schlesinger",
+        "Philipp Helmer",
+        "Patrick Meybohm",
+        "Ibrahim Alkatout",
+        "Peter Kranke"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.3390/jcm9124058",
+      "pmid": null,
+      "officialUrl": "https://mdpi-res.com/d_attachment/jcm/jcm-09-04058/article_deploy/jcm-09-04058.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Article-specific Creative Commons Attribution 4.0 notice verified on PDF p. 15, https://creativecommons.org/licenses/by/4.0/; credited to the six named authors and Journal of Clinical Medicine. Original underlying-fact synthesis only. The publisher HTML and general terms/open-access pages were unavailable during checking; general site terms were not asserted to have been read.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed physiology review directly supports absorption/exhalation of insufflated CO2 and context-dependent pressure/position effects on venous return. The older review is cross-checked with a current independent clinical study; no numeric pressure limit, ventilator setting or operating-room treatment protocol is authored.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026",
+      "title": "Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study",
+      "completeCitation": "Pitimada M, Chiumello D, Monte A, Fratti I, Festa F, Pozzi T, Coppola S. Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study. Journal of Robotic Surgery. 2026;20:440. Published April 21, 2026. doi:10.1007/s11701-026-03392-8. Introduction and discussion: acid-base equilibrium and gas exchange; accessed October 7, 2026.",
+      "organizationOrJournal": "Journal of Robotic Surgery",
+      "authors": [
+        "Matteo Pitimada",
+        "Davide Chiumello",
+        "Alessandro Monte",
+        "Isabella Fratti",
+        "Federica Festa",
+        "Tommaso Pozzi",
+        "Silvia Coppola"
+      ],
+      "publicationYear": 2026,
+      "doi": "10.1007/s11701-026-03392-8",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1007/s11701-026-03392-8",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "observational_study",
+      "licenseLabel": "Creative Commons Attribution 4.0 International, https://creativecommons.org/licenses/by/4.0/; credited to the seven named authors and Journal of Robotic Surgery. Original underlying-fact synthesis only; no source expression, data tables, images or ventilation protocol is reproduced.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current peer-reviewed observational study corroborates peritoneal CO2 absorption with increased arterial CO2/respiratory acidemia and pressure-associated hemodynamic effects. Colorectal/gynecological surgical population and observational design limit universal mechanistic inference; no renal, numeric outcome or treatment claim is extrapolated.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.sages.laparoscopic-gallbladder-patient-information.2026",
+      "title": "Patient information for laparoscopic gallbladder removal",
+      "completeCitation": "Society of American Gastrointestinal and Endoscopic Surgeons. Patient Information for Laparoscopic Gallbladder Removal (Cholecystectomy). Patient guidance revised May 6, 2026. Recovery and when-to-call sections; accessed October 7, 2026.",
+      "organizationOrJournal": "Society of American Gastrointestinal and Endoscopic Surgeons",
+      "authors": [
+        "Society of American Gastrointestinal and Endoscopic Surgeons"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.sages.org/publications/patient-information/patient-information-for-laparoscopic-gallbladder-removal-cholecystectomy-from-sages/",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current society patient guidance supports gas-associated shoulder pain after laparoscopic cholecystectomy and evaluation of warning symptoms. No brochure prose, numeric fever cutoff, expected duration or recovery schedule is reproduced.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gynecological-surgery.shoulder-pain-trial.2021",
+      "title": "Effects of delayed suprapubic port removal on post-laparoscopic shoulder pain: a randomized controlled trial",
+      "completeCitation": "Chalermchockcharoenkit A, Hengrasmee P, Sophontanarak P, Sirimai K, Sutchritpongsa P, Srichaikul P. Effects of delayed suprapubic port removal on post-laparoscopic shoulder pain: a randomized controlled trial. Gynecological Surgery. 2021;18:8. Published May 11, 2021. doi:10.1186/s10397-021-01087-6. Introduction; accessed October 7, 2026.",
+      "organizationOrJournal": "Gynecological Surgery",
+      "authors": [
+        "Amphan Chalermchockcharoenkit",
+        "Pattaya Hengrasmee",
+        "Paiboon Sophontanarak",
+        "Korakot Sirimai",
+        "Pavit Sutchritpongsa",
+        "Pisutt Srichaikul"
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1186/s10397-021-01087-6",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s10397-021-01087-6",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "randomized_trial",
+      "licenseLabel": "Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/; credited to the six named authors and Gynecological Surgery. Only original underlying-fact synthesis is authored; no trial expression or intervention protocol is adapted.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed trial introduction independently corroborates diaphragmatic/phrenic irritation as a proposed contributor to referred shoulder pain. The study population was adults undergoing gynecologic laparoscopy; it is a mechanism cross-check, not a universal cause or a cholecystectomy treatment recommendation.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.frontiers.skin-wound-healing-review.2024",
+      "title": "Recent advances in molecular mechanisms of skin wound healing and its treatments",
+      "completeCitation": "Al Mamun A, Shao C, Geng P, Wang S, Xiao J. Recent advances in molecular mechanisms of skin wound healing and its treatments. Frontiers in Immunology. 2024;15:1395479. Published May 21, 2024. doi:10.3389/fimmu.2024.1395479. Remodeling section; accessed October 7, 2026.",
+      "organizationOrJournal": "Frontiers in Immunology",
+      "authors": [
+        "Abdullah Al Mamun",
+        "Chuxiao Shao",
+        "Peiwu Geng",
+        "Shuanghu Wang",
+        "Jian Xiao"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.3389/fimmu.2024.1395479",
+      "pmid": null,
+      "officialUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1395479/full",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/; credited to Al Mamun, Shao, Geng, Wang and Xiao and Frontiers in Immunology. Only original underlying-fact synthesis is authored; no source expression, figures or tables are reproduced.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed narrative review directly describes early type III collagen being replaced by type I during remodeling. This is a biological mechanism source, not a management guideline; no exact healing timeline, strength percentage or treatment is inferred.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.nhs_scars",
+      "title": "Scars",
+      "completeCitation": "NHS. Scars. NHS website, reviewed September 18, 2023. Types of scars section; accessed October 7, 2026.",
+      "organizationOrJournal": "National Health Service, United Kingdom",
+      "authors": [
+        "National Health Service"
+      ],
+      "publicationYear": 2023,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.nhs.uk/conditions/scars/",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "NHS website text under Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/; logo and third-party exclusions apply. Contains public sector information licensed under the Open Government Licence v3.0. The schema has no OGL category, so targeted factual verification is recorded conservatively; OGL is not public domain. Rights: https://www.nhs.uk/our-policies/terms-and-conditions/, sections 3.3–3.6.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Official patient information directly supports the original-wound boundary distinction between hypertrophic scars and keloids and depressed atrophic-scar morphology. No treatment, demographic selection, onset interval or regression guarantee is taught.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.uhd_secondary_healing",
+      "title": "Secondary intention healing wound care",
+      "completeCitation": "Murguia A, Atienza M. Secondary intention healing wound care. Dermatology Minor Skin Surgery. University Hospitals Dorset NHS Foundation Trust; version three, February 2026. Ref 400/21; review February 2029. Physical PDF p. 2, What is Secondary Intention Healing? Accessed October 7, 2026.",
+      "organizationOrJournal": "University Hospitals Dorset NHS Foundation Trust",
+      "authors": [
+        "A. Murguia",
+        "M. Atienza"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.uhd.nhs.uk/uploads/about/docs/our_publications/patient_information_leaflets/dermatology/secondary-intention-healing.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Institutional patient-information leaflet; no open license verified. NHS.uk's OGL is not assumed to cover this separate trust. Targeted definition verification only; no expression or wound-care instructions reproduced.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current institutional leaflet supports the narrow definition of an appropriately open wound healing without stitched approximation. Single adequate source for this definition; no healing duration, dressing schedule, later-closure recommendation or medication rule is inferred.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.niaid_food_summary",
+      "title": "NIAID-sponsored food-allergy guideline summary",
+      "completeCitation": "National Institute of Allergy and Infectious Diseases. Guidelines for the Diagnosis and Management of Food Allergy in the United States: Summary of the NIAID-Sponsored Expert Panel Report. NIH Publication No. 11-7700. December 2010. Section 4.4, printed p. 14 / physical PDF p. 26; section 6.1, printed p. 21 / physical p. 33. Accessed October 7, 2026.",
+      "organizationOrJournal": "National Institute of Allergy and Infectious Diseases, National Institutes of Health",
+      "authors": [
+        "National Institute of Allergy and Infectious Diseases"
+      ],
+      "publicationYear": 2010,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.niaid.nih.gov/sites/default/files/faguidelinesexecsummary.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States government-authored text; public-domain conditions and attribution apply. Third-party material, images, marks and product labeling are excluded; no source expression reproduced. NIAID publication-text policy: https://www.niaid.nih.gov/global/copyright-and-reuse.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Federal expert-panel summary directly supports allergen interaction with mast-cell-bound IgE and notes that contact urticaria can also be non-IgE-mediated. Stable mechanism only; this older report is not used to author current food-allergy treatment or challenge instructions.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.urticaria_not_always_ige"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.fda_immunotoxicity",
+      "title": "Immunotoxicity Testing Guidance",
+      "completeCitation": "U.S. Food and Drug Administration, Center for Devices and Radiological Health, Molecular Biology Branch, Division of Life Sciences, Office of Science and Technology. Immunotoxicity Testing Guidance. Final guidance issued May 6, 1999; HTML content current as of March 27, 2018. Glossary, Hypersensitivity, and immunogenicity discussion following Table 3. Accessed October 7, 2026.",
+      "organizationOrJournal": "U.S. Food and Drug Administration",
+      "authors": [
+        "U.S. Food and Drug Administration, Center for Devices and Radiological Health"
+      ],
+      "publicationYear": 1999,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/immunotoxicity-testing-guidance",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States government-authored text; public-domain conditions and attribution apply. Third-party material, images, marks and product labeling are excluded; no source expression reproduced.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Older federal device guidance corroborates stable type I IgE and type IV T-cell mechanisms, including latex-protein versus glove-chemical reactions, and supplies the narrow non-IgE IgG/IgM-complement comparator. It is not a current patient-management or device-testing protocol; no table or algorithm is reused.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.gs028e.non_ige_antibody_comparison",
+        "claim.gs028e.type_i",
+        "claim.gs028e.type_iv"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.acd_tong2026",
+      "title": "Immunopathogenesis and immunoregulatory mechanisms in allergic contact dermatitis",
+      "completeCitation": "Tong Y, Chen H, Kou Q, He B, Tang Y, Ran K, Zhang L, Gan X. Immunopathogenesis and immunoregulatory mechanisms in allergic contact dermatitis. Front Immunol. 2026;17:1835083. Published May 13, 2026. doi:10.3389/fimmu.2026.1835083. Abstract and section 1, Introduction; accessed October 7, 2026.",
+      "organizationOrJournal": "Frontiers in Immunology",
+      "authors": [
+        "Yanjun Tong",
+        "Hong Chen",
+        "Qiong Kou",
+        "Bin He",
+        "Ying Tang",
+        "Kunjie Ran",
+        "Lijun Zhang",
+        "Xin Gan"
+      ],
+      "publicationYear": 2026,
+      "doi": "10.3389/fimmu.2026.1835083",
+      "pmid": null,
+      "officialUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1835083/full",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Copyright © 2026 Tong, Chen, Kou, He, Tang, Ran, Zhang and Gan. Article-specific Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Authors and original publication credited; independently written factual synthesis only.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current peer-reviewed mini-review supports the T-cell-mediated mechanism of confirmed allergic contact dermatitis. It does not make all contact rashes allergic, prescribe a patch-test protocol, or supply an exact reaction interval.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.type_iv"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.hyperacute_matsuda2016",
+      "title": "Unraveling the Role of Allo-Antibodies and Transplant Injury",
+      "completeCitation": "Matsuda Y, Sarwal MM. Unraveling the Role of Allo-Antibodies and Transplant Injury. Front Immunol. 2016;7:432. Published October 21, 2016. doi:10.3389/fimmu.2016.00432. PMID:27818660. Abstract; The Role of Preformed DSA, Mechanisms of Onset of ABMR by Preformed DSA; accessed October 7, 2026.",
+      "organizationOrJournal": "Frontiers in Immunology",
+      "authors": [
+        "Yoshiko Matsuda",
+        "Minnie M. Sarwal"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.3389/fimmu.2016.00432",
+      "pmid": "27818660",
+      "officialUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2016.00432/full",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Copyright © 2016 Matsuda and Sarwal. Article-specific Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Authors and original publication credited; no source expression reused.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed transplant review supports preformed donor-specific antibodies binding graft endothelium with complement-associated vascular injury. Its Abstract distinguishes T-cell and antibody pathways and recognizes coexistence. Narrow documented hyperacute mechanism only; not every early graft failure or acute rejection is assigned this mechanism.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.ahrq_transplant2012",
+      "title": "The impact of pre-transplant red blood cell transfusions in renal allograft rejection",
+      "completeCitation": "Chen W, Lee S, Colby J, Kluger J, Ashaye A, Tongbram V, Baker E, Mather J, Coleman CI, White CM. The Impact of Pre-Transplant Red Blood Cell Transfusions in Renal Allograft Rejection. University of Connecticut/Hartford Hospital Evidence-based Practice Center for AHRQ; March 7, 2012. Project RENT0610. Executive Summary ES-1 / physical PDF p. 9; conditions of use, printed iii / physical p. 3. Accessed October 7, 2026.",
+      "organizationOrJournal": "University of Connecticut/Hartford Hospital Evidence-based Practice Center; Agency for Healthcare Research and Quality",
+      "authors": [
+        "Wendy Chen",
+        "Soyon Lee",
+        "Jennifer Colby",
+        "Jeffrey Kluger",
+        "Ajibade Ashaye",
+        "Vanita Tongbram",
+        "Erica Baker",
+        "Jeffrey Mather",
+        "Craig I. Coleman",
+        "C. Michael White"
+      ],
+      "publicationYear": 2012,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cms.gov/Medicare/Coverage/DeterminationProcess/downloads/id78TA.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "systematic_review",
+      "licenseLabel": "Commissioned EPC report, not presumed government-authored public domain. Printed iii allows use as a basis for clinical/quality tools without implying AHRQ or HHS endorsement. Targeted original factual cross-check only.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Older commissioned systematic review corroborates pre-existing anti-donor antibodies in hyperacute renal allograft rejection. Background mechanism only, not current transplant treatment, allocation or crossmatch management.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.tiede_mixing2020",
+      "title": "International recommendations on the diagnosis and treatment of acquired hemophilia A",
+      "completeCitation": "Tiede A, Collins P, Knoebl P, Teitel J, Kessler C, Shima M, Di Minno G, d’Oiron R, Salaj P, Jiménez-Yuste V, Huth-Kühne A, Giangrande P. International recommendations on the diagnosis and treatment of acquired hemophilia A. Haematologica. 2020;105(7):1791–1801. doi:10.3324/haematol.2019.230771. PMID:32381574. Diagnosis, Mixing tests; accessed October 7, 2026.",
+      "organizationOrJournal": "Haematologica; Ferrata Storti Foundation",
+      "authors": [
+        "Andreas Tiede",
+        "Peter Collins",
+        "Paul Knoebl",
+        "Jerome Teitel",
+        "Craig Kessler",
+        "Midori Shima",
+        "Giovanni Di Minno",
+        "Roseline d’Oiron",
+        "Peter Salaj",
+        "Victor Jiménez-Yuste",
+        "Angela Huth-Kühne",
+        "Paul Giangrande"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.3324/haematol.2019.230771",
+      "pmid": "32381574",
+      "officialUrl": "https://haematologica.org/article/view/9931",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Publisher default is CC BY-NC; article-specific license version not verified. Rights: https://haematologica.org/rights-and-permissions and /our-policies. Targeted guideline factual verification only; no expression, algorithm or commercial text mining.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "International consensus guideline supports the conditional role of mixing tests when immediate FVIII:C is unavailable, parallel factor assays, time-dependent inhibitors and inability of mixing alone to establish or exclude acquired hemophilia A. No universal mandatory next-test rule or bleeding-risk prediction is authored.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_limits",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_time_dependent"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.czempik_mixing2020",
+      "title": "Isolated prolongation of activated partial thromboplastin time in intensive care unit patients",
+      "completeCitation": "Czempik PF, Żurawska E, Krzych ŁJ. Isolated prolongation of activated partial thromboplastin time in intensive care unit patients: a practical diagnostic algorithm and management options. Anaesthesiol Intensive Ther. 2020;52(2):165–170. Published June 28, 2020. doi:10.5114/ait.2020.96484. Printed p. 168 / physical PDF p. 4, mixing-study discussion following congenital causes; accessed October 7, 2026.",
+      "organizationOrJournal": "Anaesthesiology Intensive Therapy; Polish Society of Anaesthesiology and Intensive Therapy",
+      "authors": [
+        "Piotr F. Czempik",
+        "Elżbieta Żurawska",
+        "Łukasz J. Krzych"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.5114/ait.2020.96484",
+      "pmid": null,
+      "officialUrl": "https://www.ait-journal.com/pdf-120403-121971",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Author institutional record confirms CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/, https://ppm.sum.edu.pl/info/article/SUMad15725785874be7b52463ed0a761ea2?lang=en. The schema lacks an SA category; conservative targeted factual verification only. Czempik, Żurawska and Krzych and original publication credited; no source expression adapted or redistributed.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Independent society-journal review supports initial immediate/incubated correction-versus-inhibition patterns, laboratory-specific criteria and specimen/drug limitations. Its ICU algorithm is not generalized to all preoperative patients, and its local-laboratory statement does not establish this game's onsite capability.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.gs028e.mixing_correction",
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_limits",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_noncorrection",
+        "claim.gs028e.mixing_time_dependent"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.nci_stage",
+      "title": "Cancer Staging",
+      "completeCitation": "National Cancer Institute. Cancer Staging. Reviewed October 14, 2022. Definition, staging systems and TNM discussion; accessed October 7, 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "National Cancer Institute"
+      ],
+      "publicationYear": 2022,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/about-cancer/diagnosis-staging/staging",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States government-authored text; public-domain conditions and attribution apply. Third-party material, images, marks and product labeling are excluded; no source expression reproduced. Source credited to NCI. Text reuse policy, reviewed March 12, 2025: https://www.cancer.gov/policies/copyright-reuse.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Official patient education supports stage as disease extent and explicitly recognizes cancer-specific staging systems. No universal stage number, prognosis or treatment rule is inferred.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.grade_not_stage",
+        "claim.gs028e.stage_extent"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.nci_grade",
+      "title": "Tumor Grade",
+      "completeCitation": "National Cancer Institute. Tumor Grade. Updated August 1, 2022. What is tumor grade? and How pathologists grade tumors sections; accessed October 7, 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "National Cancer Institute"
+      ],
+      "publicationYear": 2022,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/about-cancer/diagnosis-staging/diagnosis/tumor-grade",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States government-authored text; public-domain conditions and attribution apply. Third-party material, images, marks and product labeling are excluded; no source expression reproduced. Source credited to NCI. https://www.cancer.gov/policies/copyright-reuse.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Official patient education distinguishes microscopic appearance/differentiation from anatomic extent. Grading criteria differ among cancers; no numeric grading scheme, equivalence to stage or guaranteed behavior is taught.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.nlm_rb1",
+      "title": "RB1 gene",
+      "completeCitation": "National Library of Medicine. RB1 gene. MedlinePlus Genetics; updated April 1, 2009. Normal Function; Health Conditions Related to Genetic Changes, Retinoblastoma and Other Cancers. Accessed October 7, 2026.",
+      "organizationOrJournal": "National Library of Medicine, MedlinePlus Genetics",
+      "authors": [
+        "National Library of Medicine"
+      ],
+      "publicationYear": 2009,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://medlineplus.gov/genetics/gene/rb1/",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "open_educational_resource",
+      "licenseLabel": "MedlinePlus Genetics gene summaries are public domain under https://medlineplus.gov/about/using/usingcontent/ (updated October 26, 2022). Source: MedlinePlus, National Library of Medicine. A.D.A.M. encyclopedia, drug monographs, logos and third-party content excluded.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Government-curated gene summary supports RB1 growth restraint and the classic loss of both functioning copies. Used for a supplied adult tumor molecular report, not pediatric disease management, inherited-syndrome diagnosis or a universal rule for every tumor suppressor.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.suppressor_loss"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.nci_rb1_pdq",
+      "title": "Retinoblastoma Treatment (PDQ®): molecular RB1 background",
+      "completeCitation": "PDQ Pediatric Treatment Editorial Board. Retinoblastoma Treatment (PDQ®): Health Professional Version. Bethesda, MD: National Cancer Institute; updated April 3, 2025. PMID:26389442. Genetics and Genomics, Nonheritable Retinoblastoma; About This PDQ Summary, permissions. Accessed October 7, 2026.",
+      "organizationOrJournal": "National Cancer Institute PDQ",
+      "authors": [
+        "PDQ Pediatric Treatment Editorial Board"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": "26389442",
+      "officialUrl": "https://www.cancer.gov/types/retinoblastoma/hp/retinoblastoma-treatment-pdq",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Freely usable PDQ text with attribution; modified material cannot be labeled an NCI PDQ summary. NCI trademarks, images and third-party expression excluded. Independent factual cross-check only.",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current peer-reviewed PDQ summary, explicitly not a formal NCI/NIH guideline, corroborates biallelic RB1 loss and describes exceptions. Only molecular background is used; no pediatric case or cancer-management recommendation is generated.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.two_hit_scoped"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.ukhsa_woundclass",
+      "title": "Protocol for the Surveillance of Surgical Site Infection: wound class",
+      "completeCitation": "UK Health Security Agency. Protocol for the Surveillance of Surgical Site Infection. Version 6 (June 2013) r2, published January 2022. Publishing reference GOV-10188. London: UKHSA; 2022. Section 5.2.16, printed and physical PDF p. 50; copyright and license, p. 101. Accessed October 7, 2026.",
+      "organizationOrJournal": "UK Health Security Agency",
+      "authors": [
+        "UK Health Security Agency"
+      ],
+      "publicationYear": 2022,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://assets.publishing.service.gov.uk/media/61e989028fa8f505985ef463/Protocol_for_the_Surveillance_of_Surgical_Site_Infection.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "© Crown copyright 2022. Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/; logo and third-party exclusions apply. Contains public sector information licensed under the Open Government Licence v3.0. The schema has no OGL category, so targeted factual verification is recorded conservatively; OGL is not public domain.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current official linked surveillance protocol supports clean, clean-contaminated, contaminated and dirty/infected distinctions. Definitions only; no copied table, source-specific traumatic-wound time cutoff, infection probability or automatic antibiotic prescription.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    }
+  ],
+  "atomicClaims": [
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.imaging.ct-ionizing-xrays",
+      "statement": "CT produces images using ionizing X-rays; omitting injected contrast does not remove the X-ray exposure inherent to CT.",
+      "sourceIds": [
+        "source.fda.medical-x-ray-imaging"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "A physical modality distinction only; no patient-specific radiation dose, organ-imaging preference, or numeric risk estimate is supplied.",
+      "applicablePopulation": "Adults discussing medically indicated CT imaging.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.imaging.ultrasound-acoustic-nonionizing",
+      "statement": "Diagnostic ultrasound produces images using sound waves rather than ionizing radiation.",
+      "sourceIds": [
+        "source.fda.ultrasound-imaging"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Nonionizing does not establish that ultrasound is the correct examination for every clinical question or that unlimited exposure is harmless.",
+      "applicablePopulation": "Adults discussing diagnostic ultrasound.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.imaging.mri-magnetic-rf-nonionizing",
+      "statement": "MRI produces images using magnetic fields and radiofrequency energy without ionizing radiation; this distinction does not eliminate its separate magnetic, device, and heating hazards.",
+      "sourceIds": [
+        "source.fda.mri-benefits-risks"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "No universal imaging preference or contrast-safety guarantee is inferred from absence of ionizing radiation.",
+      "applicablePopulation": "Adults discussing an MRI examination.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mri.device-specific-conditions",
+      "statement": "MRI screening requires positive identification of an implanted device and verification that the proposed examination satisfies the device's MR safety labeling; a prior uneventful scan alone does not establish clearance for different conditions.",
+      "sourceIds": [
+        "source.fda.mri-benefits-risks",
+        "source.fda.mri-patient-device-screening"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "The cross-check is another FDA document, not an independent organization. The clinic must not independently clear an unidentified implant or impose a permanent ban on every implant.",
+      "applicablePopulation": "Adults with implanted devices referred for MRI.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mri.cochlear-specific-instructions",
+      "statement": "Cochlear-implant MRI restrictions depend on the identified implant and its manufacturer's instructions; instructions for another model cannot be substituted.",
+      "sourceIds": [
+        "source.fda.cochlear-implants-mri-safety"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Single device-specific federal source; no invented field-strength, bandaging, or magnet-removal instruction is authored.",
+      "applicablePopulation": "Adults with cochlear implants considering MRI.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contrast.transient-warmth-physiologic",
+      "statement": "Brief isolated flushing or warmth during intravascular iodinated contrast administration is categorized as a physiologic reaction rather than an allergic-like reaction.",
+      "sourceIds": [
+        "source.acr.contrast-manual.2026.reaction-classification"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Single society classification source. Applies only to the supplied isolated, transient, fully resolved event; no inference is made about future reaction risk or premedication.",
+      "applicablePopulation": "Adults reviewing a documented iodinated contrast event.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contrast.urticaria-allergic-like",
+      "statement": "Urticaria following intravascular iodinated contrast is categorized as an allergic-like reaction, which does not by itself establish an IgE mechanism.",
+      "sourceIds": [
+        "source.acr.contrast-manual.2026.reaction-classification"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Single society classification source; no treatment algorithm, exposure challenge, severity inference, or allergy-testing recommendation is supplied.",
+      "applicablePopulation": "Adults reviewing documented iodinated contrast-associated hives.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contrast.extravasation-local-tissue-event",
+      "statement": "Contrast extravasation is escape of intravascular contrast into adjacent tissue and can produce local injection-site pain or swelling rather than isolated generalized warmth.",
+      "sourceIds": [
+        "source.acr.contrast-manual.2026.reaction-classification"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Single society source used to distinguish the supplied documented events; no severity, observation interval, or treatment algorithm is authored.",
+      "applicablePopulation": "Adults reviewing a documented intravascular contrast event.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contrast.delayed-cutaneous-event",
+      "statement": "Delayed cutaneous contrast reactions produce a later skin eruption, which is distinct from isolated warmth during injection or urticaria documented during the injection itself.",
+      "sourceIds": [
+        "source.acr.contrast-manual.2026.reaction-classification"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Single society source; no precise timing cutoff or immunologic mechanism is assigned to an individual event.",
+      "applicablePopulation": "Adults reviewing the documented timing and features of a contrast event.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+      "statement": "SGLT2-inhibitor exposure can be associated with diabetic ketoacidosis despite glucose that is not markedly elevated; supplied ketone excess and metabolic acidosis support recognition, whereas glucose alone cannot exclude it.",
+      "sourceIds": [
+        "source.fda.empagliflozin-label.2025.s063",
+        "source.dailymed.empagliflozin-label.2026",
+        "source.fda.ertugliflozin-label.2026.s012",
+        "source.mhra.sglt2-ketoacidosis-safety.2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Medication exposure is a clinically important association, not proof that every acidosis is drug-caused. No glucose, ketone, pH or bicarbonate cutoff is invented.",
+      "applicablePopulation": "Adults with diabetes taking an SGLT2 inhibitor and compatible ketone/acidosis findings.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+      "statement": "Surgery, reduced caloric intake, acute illness, and inadequate insulin are recognized precipitating contexts for ketoacidosis during SGLT2-inhibitor therapy.",
+      "sourceIds": [
+        "source.fda.empagliflozin-label.2025.s063",
+        "source.fda.ertugliflozin-label.2026.s012",
+        "source.mhra.sglt2-ketoacidosis-safety.2016"
+      ],
+      "evidenceCategory": "presentation",
+      "certainty": "high",
+      "limitation": "Context raises concern but does not diagnose ketoacidosis without supporting clinical and laboratory evidence; no risk probability is authored.",
+      "applicablePopulation": "Adults taking an SGLT2 inhibitor around illness, fasting or surgery.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care",
+      "statement": "Suspected SGLT2-associated ketoacidosis warrants interruption of the implicated drug and immediate medical assessment; a reassuring glucose value must not delay urgent care when ketones and acidosis are present.",
+      "sourceIds": [
+        "source.fda.empagliflozin-label.2025.s063",
+        "source.dailymed.empagliflozin-label.2026",
+        "source.fda.ertugliflozin-label.2026.s012",
+        "source.mhra.sglt2-ketoacidosis-safety.2016"
+      ],
+      "evidenceCategory": "disposition",
+      "certainty": "high",
+      "limitation": "The clinic escalates rather than administering a DKA treatment protocol; no insulin, fluid, electrolyte, restart dose, or monitoring schedule is authored.",
+      "applicablePopulation": "Adults with suspected current SGLT2-associated ketoacidosis.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.naloxone.competitive-opioid-antagonism",
+      "statement": "Naloxone reverses opioid effects by competing at opioid receptor sites as an antagonist rather than stimulating those receptors or chemically destroying the opioid.",
+      "sourceIds": [
+        "source.fda.naloxone-label.2023.s007.mechanism",
+        "source.fda.naloxone-emergency-counseling.2020"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "This is a receptor-mechanism objective; no dose, formulation superiority or response guarantee is supplied. The 2023 label is not asserted to be the latest product label.",
+      "applicablePopulation": "Adults discussing documented or planned opioid-overdose reversal.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.naloxone.emergency-support-still-required",
+      "statement": "Naloxone is a temporary reversal intervention and does not replace emergency medical assistance, airway or respiratory support when needed; opioid-related depression can recur after initial improvement.",
+      "sourceIds": [
+        "source.fda.naloxone-label.2023.s007.mechanism",
+        "source.fda.naloxone-emergency-counseling.2020"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Two FDA documents from one authority corroborate the boundary; this clinic does not conduct an opioid challenge or simulate advanced airway care.",
+      "applicablePopulation": "Adults with known or suspected opioid toxicity or counseling about naloxone.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+      "statement": "U.S. empagliflozin labeling advises withholding the drug for at least three days when possible before surgery or a procedure associated with prolonged fasting.",
+      "sourceIds": [
+        "source.fda.empagliflozin-label.2025.s063",
+        "source.dailymed.empagliflozin-label.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Exact interval is drug-specific and based on official U.S. labeling; the second source is a manufacturer-label cross-check, not an independent guideline. Emergency surgery and individualized specialist decisions are outside the scored scenario.",
+      "applicablePopulation": "Adults taking empagliflozin before elective surgery with sufficient planning time.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption",
+      "statement": "U.S. ertugliflozin labeling advises withholding the drug for at least four days when possible before surgery or a procedure associated with prolonged fasting.",
+      "sourceIds": [
+        "source.fda.ertugliflozin-label.2026.s012"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Single current drug-specific FDA-approved label; the four-day interval is not generalized to every SGLT2 inhibitor. Emergency surgery decisions are outside this objective.",
+      "applicablePopulation": "Adults taking ertugliflozin before elective surgery with sufficient planning time.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.sglt2.postoperative-restart-conditions",
+      "statement": "Empagliflozin and ertugliflozin labels condition postoperative resumption on clinical stability and return of oral intake rather than a fixed postoperative clock alone.",
+      "sourceIds": [
+        "source.fda.empagliflozin-label.2025.s063",
+        "source.dailymed.empagliflozin-label.2026",
+        "source.fda.ertugliflozin-label.2026.s012"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Resumption remains an individualized treating-team decision; these cases do not authorize restart during active ketoacidosis or prescribe a fixed restart time.",
+      "applicablePopulation": "Adults discussing a perioperative empagliflozin or ertugliflozin plan.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+      "statement": "CO2 used to create pneumoperitoneum can cross peritoneal tissue into blood; absorbed CO2 is carried to the lungs for exhalation.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Physiology review plus current clinical observational cross-check. No absorption rate, pressure cutoff, or claim that every raised CO2 measurement has this sole cause is authored.",
+      "applicablePopulation": "Adults reviewing completed outside laparoscopic surgery with documented CO2 insufflation.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+      "statement": "Peritoneal CO2 absorption adds a CO2 load; when pulmonary elimination does not match that load, blood CO2 can rise and produce respiratory acidemia.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Ventilation and respiratory mechanics also affect blood CO2. The current observational study cannot establish every mechanistic contribution; these cases supply completed-care records rather than asking the clinic to select ventilator settings or manage live hypercarbia.",
+      "applicablePopulation": "Adults reviewing a resolved CO2-associated event in an outside anesthesia record.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.caval-compression-venous-return",
+      "statement": "Pneumoperitoneum pressure that compresses abdominal veins or the vena cava can reduce venous return and cardiac preload; this is a possible mechanism in the supplied compression context, not an inevitable effect of laparoscopy.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "No numeric pressure threshold, automatic hypotension rule, or universal cardiac-output direction is inferred. Both pressure and other perioperative factors contribute to hemodynamic observations.",
+      "applicablePopulation": "Adults reviewing a completed laparoscopic operation with documented pressure-associated venous compression.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.pressure-position-context",
+      "statement": "Pneumoperitoneum hemodynamics depend on pressure, circulating volume, and positioning; early compression of splanchnic veins may increase central filling, while head-up positioning can reduce venous return and head-down positioning can increase it.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "The review directly supports phase/position distinctions, while the independent study corroborates pressure-associated effects rather than every position comparison. No universal preload outcome or operative management instruction is supplied.",
+      "applicablePopulation": "Adults discussing the hemodynamic context in an outside laparoscopy record.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+      "statement": "After laparoscopy, residual gas and diaphragmatic irritation can stimulate the phrenic sensory pathway and contribute to pain perceived at the shoulder even without a shoulder injury.",
+      "sourceIds": [
+        "source.sages.laparoscopic-gallbladder-patient-information.2026",
+        "source.gynecological-surgery.shoulder-pain-trial.2021"
+      ],
+      "evidenceCategory": "anatomy",
+      "certainty": "moderate",
+      "limitation": "Shoulder pain has multiple possible causes; the proposed phrenic/diaphragmatic mechanism is not proved for every episode. The trial is a gynecologic-population mechanism cross-check; no analgesic, gas-removal procedure or fixed pain duration is prescribed.",
+      "applicablePopulation": "Adults with a completed outside laparoscopic cholecystectomy and a fully reassuring clinic assessment.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary",
+      "statement": "A mild improving shoulder symptom after laparoscopy may be discussed as referred pain only in a reassuring clinical context; breathing difficulty, severe or worsening abdominal pain, fever, persistent vomiting, jaundice, or concerning wound changes require renewed assessment rather than automatic gas-pain reassurance.",
+      "sourceIds": [
+        "source.sages.laparoscopic-gallbladder-patient-information.2026"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Single current professional-society patient guidance supports these warning features. No exact fever threshold or complete triage algorithm is authored; the stem supplies current benign findings and does not exclude all disease through wording alone.",
+      "applicablePopulation": "Adults discussing shoulder pain after outside laparoscopic gallbladder removal.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.wound.collagen-iii-to-i-remodeling",
+      "statement": "Early healing tissue contains relatively more type III collagen; remodeling progressively replaces much of that matrix with type I collagen rather than reversing the sequence.",
+      "sourceIds": [
+        "source.frontiers.skin-wound-healing-review.2024"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "One adequate peer-reviewed biological review supports this narrow mechanism. This describes a relative matrix change, not complete elimination of type III collagen, an exact timeline, restoration of normal skin strength, or a wound treatment recommendation.",
+      "applicablePopulation": "Adults discussing uncomplicated healing of a skin incision.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.scar_extent",
+      "statement": "A raised hypertrophic scar stays within the original wound boundary, whereas a keloid extends into skin beyond that boundary.",
+      "sourceIds": [
+        "source.gs028e.nhs_scars"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Morphologic distinction from one official patient-information source; neither timing, symptoms nor ancestry alone establishes the classification. No regression or treatment guarantee.",
+      "applicablePopulation": "Adults discussing a raised scar after a healed skin wound.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.scar_shape_comparison",
+      "statement": "An atrophic scar may be depressed below the surrounding skin, in contrast to the raised morphology supplied for hypertrophic scars and keloids.",
+      "sourceIds": [
+        "source.gs028e.nhs_scars"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "One official patient-information source; used only for the morphological distractor distinction, without cause, treatment or timing claims.",
+      "applicablePopulation": "Adults comparing a raised healed scar with a depressed scar pattern.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.secondary_intention",
+      "statement": "Secondary-intention healing describes an appropriately open wound allowed to heal without bringing its edges together with closure; planned later edge approximation is a different strategy.",
+      "sourceIds": [
+        "source.gs028e.uhd_secondary_healing"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "One current institutional source for the narrow definition. The question supplies the treating clinician's appropriate open-wound plan; it does not decide which wounds should be left open or prescribe care, duration or strength.",
+      "applicablePopulation": "Adults reviewing a clinician-selected open skin-wound healing plan.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.type_i",
+      "statement": "In a documented IgE-mediated type I reaction, antigen engagement of IgE on sensitized mast cells can trigger mediator release.",
+      "sourceIds": [
+        "source.gs028e.niaid_food_summary",
+        "source.gs028e.fda_immunotoxicity"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Stable immune mechanism, not a diagnosis from symptoms alone or an allergy-treatment protocol. Both federal sources are older; their mechanism is cross-checked without importing historical management instructions.",
+      "applicablePopulation": "Adults discussing an outside-confirmed IgE-mediated reaction.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.urticaria_not_always_ige",
+      "statement": "Urticaria alone does not establish an IgE-mediated mechanism because contact urticaria may be IgE-mediated or non-IgE-mediated.",
+      "sourceIds": [
+        "source.gs028e.niaid_food_summary"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "The authored cases explicitly supply specialist confirmation where an IgE mechanism is tested; they do not classify all hives, all food reactions or all drug reactions as type I.",
+      "applicablePopulation": "Adults reviewing a resolved urticarial reaction.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.type_iv",
+      "statement": "Confirmed allergic contact dermatitis is a T-cell-mediated, type IV delayed hypersensitivity reaction rather than an IgE-mediated mast-cell reaction.",
+      "sourceIds": [
+        "source.gs028e.acd_tong2026",
+        "source.gs028e.fda_immunotoxicity"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "This applies to allergic contact dermatitis, not every irritant contact rash. Exact onset intervals, patch-testing instructions and treatment are not taught.",
+      "applicablePopulation": "Adults with specialist-confirmed allergic contact dermatitis.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.non_ige_antibody_comparison",
+      "statement": "Type II and type III hypersensitivity involve non-IgE antibodies, including IgG or IgM, and complement; these broad antibody mechanisms differ from the IgE mast-cell and T-cell contact pathways.",
+      "sourceIds": [
+        "source.gs028e.fda_immunotoxicity"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Narrow comparator from the FDA glossary, Hypersensitivity. No specific cytotoxic target, immune-complex disease, frequency or management claim is inferred from this older source.",
+      "applicablePopulation": "Adults comparing the established immune mechanism of a resolved reaction.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.t_cell_graft_comparison",
+      "statement": "Allograft rejection may involve T-cell-mediated or antibody-mediated pathways, and the pathways can coexist; a documented hyperacute preformed-antibody event should not be substituted with an unproven T-cell-only explanation.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Narrow comparator from the transplant review Abstract; does not classify all acute rejection as T-cell-only, infer a treatment or establish a new active diagnosis.",
+      "applicablePopulation": "Stable adults reviewing a confirmed historical transplant rejection mechanism.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.hyperacute_preformed",
+      "statement": "Documented hyperacute allograft rejection can be driven by recipient antibodies that were present before transplantation and recognize donor antigens.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016",
+        "source.gs028e.ahrq_transplant2012"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Narrow mechanism from a transplant review plus an independent commissioned background cross-check. Early graft dysfunction alone does not prove rejection or this mechanism; no transplant timing threshold or treatment is inferred.",
+      "applicablePopulation": "Stable adults reviewing an outside-confirmed historical hyperacute allograft event.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.hyperacute_vascular",
+      "statement": "Preformed donor-specific antibodies can bind allograft endothelium and initiate complement-associated vascular injury and thrombosis in hyperacute rejection.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "One adequately licensed review supplies this narrow vascular mechanism. No claim that all acute rejection is antibody-mediated or that T-cell and antibody mechanisms cannot coexist.",
+      "applicablePopulation": "Adults discussing a documented historical donor-specific antibody-mediated graft injury.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_initial_workup",
+      "statement": "For an unexplained isolated prolonged aPTT after specimen and anticoagulant interference have been assessed, a mixing study can initially help distinguish factor deficiency from an inhibitory substance when immediate FVIII activity testing is unavailable.",
+      "sourceIds": [
+        "source.gs028e.tiede_mixing2020",
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Conditional laboratory workup, not routine preoperative screening or a universal mandatory next test. The cases supply repeated unexplained findings, reviewed interferences and unavailable immediate FVIII:C. Specific factor assays are pursued in parallel by the specialist.",
+      "applicablePopulation": "Stable adults already referred for an outside specialist evaluation of an unexplained isolated prolonged aPTT.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_method",
+      "statement": "An aPTT mixing study evaluates the aPTT response after combining patient plasma with normal plasma; immediate and incubated assessments can reveal different inhibitory patterns.",
+      "sourceIds": [
+        "source.gs028e.tiede_mixing2020",
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Qualitative method only. No mixing ratio, incubation duration, temperature or correction threshold is specified. Neither platelet testing nor a patient-only repeat is that plasma comparison.",
+      "applicablePopulation": "Stable adults reviewing the purpose or method of an outside specialist mixing assessment.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_correction",
+      "statement": "Correction of a prolonged aPTT with normal plasma both immediately and after incubation favors factor deficiency as an initial interpretation.",
+      "sourceIds": [
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The independent society-journal review supports the laboratory principle, not importation of its ICU management algorithm. Correction is laboratory-defined and does not identify a particular factor or establish a final diagnosis.",
+      "applicablePopulation": "Adults reviewing a specialist laboratory's qualitative immediate and incubated mixing report.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_noncorrection",
+      "statement": "Failure of the aPTT mixture to correct immediately and after incubation favors an inhibitory substance as an initial interpretation.",
+      "sourceIds": [
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "This finding does not establish a particular inhibitor, acquired hemophilia A or a clinical bleeding phenotype. Drug and preanalytical effects must be considered; the authored report states these have been assessed.",
+      "applicablePopulation": "Adults reviewing a valid specialist mixing study with persistent noncorrection.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_time_dependent",
+      "statement": "Initial correction followed by loss of correction after incubation can indicate a time-dependent inhibitor; immediate correction alone does not exclude that possibility.",
+      "sourceIds": [
+        "source.gs028e.tiede_mixing2020",
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "No exact incubation period, temperature, ratio or laboratory cutoff is authored. A qualitative pattern suggests a mechanism and requires appropriate factor/inhibitor assessment; it is not a definitive diagnosis.",
+      "applicablePopulation": "Adults reviewing immediate versus incubated results from a specialist coagulation laboratory.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.mixing_limits",
+      "statement": "Mixing studies are incompletely standardized, cannot by themselves establish or exclude acquired hemophilia A, and should not replace appropriate parallel factor assays.",
+      "sourceIds": [
+        "source.gs028e.tiede_mixing2020",
+        "source.gs028e.czempik_mixing2020"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "No universal correction threshold or isolated-aPTT bleeding-risk estimate is inferred. Interpretation remains tied to the laboratory method and clinical context.",
+      "applicablePopulation": "Adults with an outside specialist workup of an unexplained prolonged aPTT.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.stage_extent",
+      "statement": "Cancer stage describes the extent of disease, including the primary tumor and its spread, using the system appropriate to that cancer.",
+      "sourceIds": [
+        "source.gs028e.nci_stage"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "General official definition from one government source; systems differ by cancer. No stage number, treatment or universal prognosis is assigned from incomplete details.",
+      "applicablePopulation": "Adults reviewing cancer-specific staging records.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.grade_morphology",
+      "statement": "Tumor grade describes microscopic features such as differentiation and abnormal appearance, with criteria specific to the tumor type.",
+      "sourceIds": [
+        "source.gs028e.nci_grade"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "General official definition from one government source. No universal numeric grading scheme or guaranteed clinical behavior is taught.",
+      "applicablePopulation": "Adults reviewing a pathologist's tumor-specific grading report.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.grade_not_stage",
+      "statement": "Tumor grade and cancer stage describe different properties; microscopic grade alone does not establish anatomic spread, and an extent-of-disease finding alone does not establish grade.",
+      "sourceIds": [
+        "source.gs028e.nci_stage",
+        "source.gs028e.nci_grade"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Two official NCI pages corroborate the distinction but are not independent organizations. The questions do not deny that both properties may matter in a cancer-specific system.",
+      "applicablePopulation": "Adults comparing staging and pathology descriptions of cancer.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.suppressor_loss",
+      "statement": "Functional RB1 protein helps restrain cell division; loss of its function removes a tumor-suppressive restraint rather than creating an activated growth-promoting protein.",
+      "sourceIds": [
+        "source.gs028e.nlm_rb1"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Stable molecular mechanism from a government gene summary; not a general statement that all cancer-causing mutations act through loss of function.",
+      "applicablePopulation": "Adults discussing an outside tumor molecular report explicitly documenting RB1 loss.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.rb1_biallelic",
+      "statement": "The classic RB1 biallelic-loss model involves inactivation or loss of both functioning RB1 copies in a tumor cell.",
+      "sourceIds": [
+        "source.gs028e.nlm_rb1",
+        "source.gs028e.nci_rb1_pdq"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "The authored report explicitly establishes loss of both alleles. A supplied adult tumor report is used for molecular discussion; retinoblastoma background sources are not used to create adult retinoblastoma care or inherited-syndrome diagnoses.",
+      "applicablePopulation": "Adults with a supplied tumor-cell report documenting biallelic RB1 loss.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.two_hit_scoped",
+      "statement": "A classic RB1 two-hit explanation is scoped to the documented biallelic-loss mechanism and is not a universal claim that every tumor suppressor or every tumor requires two such events.",
+      "sourceIds": [
+        "source.gs028e.nci_rb1_pdq"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "The current PDQ summary recognizes alternate molecular pathways. No inherited FAP/Lynch objective, germline inference or universal rule is taught.",
+      "applicablePopulation": "Adults receiving explanation of an explicitly supplied RB1 biallelic tumor finding.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.clean_wound",
+      "statement": "An uninfected operative wound without inflammation, relevant tract entry or a break in aseptic technique, and closed primarily, fits the clean class.",
+      "sourceIds": [
+        "source.gs028e.ukhsa_woundclass"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "One official surveillance definition source. The case explicitly supplies the operative circumstances; current skin appearance alone does not determine the original class.",
+      "applicablePopulation": "Adults reviewing an outside operation's recorded contamination conditions.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.clean_contaminated",
+      "statement": "Controlled entry into an alimentary, respiratory, genital or urinary tract without unusual contamination, infection or a major aseptic breach fits the clean-contaminated class.",
+      "sourceIds": [
+        "source.gs028e.ukhsa_woundclass"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Single official surveillance source. No procedure name alone, infection risk percentage or antibiotic regimen is inferred.",
+      "applicablePopulation": "Adults reviewing a documented controlled tract-entry operation.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contaminated",
+      "statement": "Gross gastrointestinal spillage during an operation without established infection or a pre-existing perforated viscus fits the contaminated class.",
+      "sourceIds": [
+        "source.gs028e.ukhsa_woundclass"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "The authored scenario explicitly distinguishes an intraoperative spill from pre-existing perforation or purulent infection; this is not an antibiotic-selection rule.",
+      "applicablePopulation": "Adults reviewing an operation with documented gross gastrointestinal spillage.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.contaminated_aseptic_breach",
+      "statement": "A major break in aseptic technique is a criterion for the contaminated operative wound class.",
+      "sourceIds": [
+        "source.gs028e.ukhsa_woundclass"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Narrow comparator criterion from the same official surveillance source, not a postoperative treatment or infection-probability rule.",
+      "applicablePopulation": "Adults reviewing documented operative aseptic conditions.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.dirty_infected",
+      "statement": "An operation encountering established purulent infection or a pre-existing perforated viscus fits the dirty/infected class.",
+      "sourceIds": [
+        "source.gs028e.ukhsa_woundclass"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Single official surveillance definition; no copied classification table, traumatic-wound time cutoff, postoperative probability or treatment algorithm is used.",
+      "applicablePopulation": "Adults reviewing a prior operation with documented purulence or a perforated viscus.",
+      "lastCheckedOn": "2026-10-07"
+    }
+  ],
+  "objectiveEvidenceMappings": [
+    {
+      "id": "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "evidenceClaimIds": [
+        "claim.gs028e.imaging.ct-ionizing-xrays",
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing",
+        "claim.gs028e.imaging.mri-magnetic-rf-nonionizing"
+      ]
+    },
+    {
+      "id": "concept.mri.device-specific-safety-verification",
+      "evidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions",
+        "claim.gs028e.mri.cochlear-specific-instructions"
+      ]
+    },
+    {
+      "id": "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "evidenceClaimIds": [
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.delayed-cutaneous-event"
+      ]
+    },
+    {
+      "id": "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "id": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "evidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "id": "concept.perioperative-sglt2.drug-specific-interruption",
+      "evidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.postoperative-restart-conditions"
+      ]
+    },
+    {
+      "id": "concept.laparoscopy.co2-absorption-hypercarbia",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia"
+      ]
+    },
+    {
+      "id": "concept.pneumoperitoneum.context-dependent-venous-return",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "id": "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "id": "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "evidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "id": "concept.wound.hypertrophic-versus-keloid-extent",
+      "evidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "id": "concept.wound.secondary-intention-healing",
+      "evidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "id": "concept.immunology.ige-mast-cell-type-i",
+      "evidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.urticaria_not_always_ige",
+        "claim.gs028e.non_ige_antibody_comparison"
+      ]
+    },
+    {
+      "id": "concept.immunology.t-cell-type-iv-contact",
+      "evidenceClaimIds": [
+        "claim.gs028e.type_iv",
+        "claim.gs028e.type_i",
+        "claim.gs028e.non_ige_antibody_comparison"
+      ]
+    },
+    {
+      "id": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "evidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison"
+      ]
+    },
+    {
+      "id": "concept.coagulation.isolated-aptt-mixing-workup",
+      "evidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "concept.coagulation.mixing-study-initial-interpretation",
+      "evidenceClaimIds": [
+        "claim.gs028e.mixing_correction",
+        "claim.gs028e.mixing_noncorrection",
+        "claim.gs028e.mixing_time_dependent",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "concept.oncology.stage-versus-grade",
+      "evidenceClaimIds": [
+        "claim.gs028e.stage_extent",
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "id": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "evidenceClaimIds": [
+        "claim.gs028e.suppressor_loss",
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.two_hit_scoped"
+      ]
+    },
+    {
+      "id": "concept.infection.operative-wound-classification",
+      "evidenceClaimIds": [
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    }
+  ],
+  "questionEvidenceMappings": [
+    {
+      "id": "question.imaging.ionizing-versus-nonionizing-modalities.v1",
+      "conceptId": "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.imaging.ct-ionizing-xrays",
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing"
+      ]
+    },
+    {
+      "id": "question.imaging.ionizing-versus-nonionizing-modalities.v2",
+      "conceptId": "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.imaging.ct-ionizing-xrays",
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing",
+        "claim.gs028e.imaging.mri-magnetic-rf-nonionizing"
+      ]
+    },
+    {
+      "id": "question.imaging.ionizing-versus-nonionizing-modalities.v3",
+      "conceptId": "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.imaging.ct-ionizing-xrays",
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing",
+        "claim.gs028e.imaging.mri-magnetic-rf-nonionizing"
+      ]
+    },
+    {
+      "id": "question.imaging.ionizing-versus-nonionizing-modalities.v4",
+      "conceptId": "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.imaging.ultrasound-acoustic-nonionizing",
+        "claim.gs028e.imaging.ct-ionizing-xrays",
+        "claim.gs028e.imaging.mri-magnetic-rf-nonionizing"
+      ]
+    },
+    {
+      "id": "question.mri.device-specific-safety-verification.v1",
+      "conceptId": "concept.mri.device-specific-safety-verification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions"
+      ]
+    },
+    {
+      "id": "question.mri.device-specific-safety-verification.v2",
+      "conceptId": "concept.mri.device-specific-safety-verification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions",
+        "claim.gs028e.mri.cochlear-specific-instructions"
+      ]
+    },
+    {
+      "id": "question.mri.device-specific-safety-verification.v3",
+      "conceptId": "concept.mri.device-specific-safety-verification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions"
+      ]
+    },
+    {
+      "id": "question.mri.device-specific-safety-verification.v4",
+      "conceptId": "concept.mri.device-specific-safety-verification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mri.device-specific-conditions"
+      ]
+    },
+    {
+      "id": "question.iodinated-contrast.physiologic-versus-allergic-like-reaction.v1",
+      "conceptId": "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.delayed-cutaneous-event"
+      ]
+    },
+    {
+      "id": "question.iodinated-contrast.physiologic-versus-allergic-like-reaction.v2",
+      "conceptId": "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.delayed-cutaneous-event"
+      ]
+    },
+    {
+      "id": "question.iodinated-contrast.physiologic-versus-allergic-like-reaction.v3",
+      "conceptId": "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.delayed-cutaneous-event"
+      ]
+    },
+    {
+      "id": "question.iodinated-contrast.physiologic-versus-allergic-like-reaction.v4",
+      "conceptId": "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.contrast.transient-warmth-physiologic",
+        "claim.gs028e.contrast.urticaria-allergic-like",
+        "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "claim.gs028e.contrast.delayed-cutaneous-event"
+      ]
+    },
+    {
+      "id": "question.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect.v1",
+      "conceptId": "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "id": "question.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect.v2",
+      "conceptId": "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context"
+      ]
+    },
+    {
+      "id": "question.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect.v3",
+      "conceptId": "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+        "claim.gs028e.sglt2.suspected-ketoacidosis-urgent-care"
+      ]
+    },
+    {
+      "id": "question.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect.v4",
+      "conceptId": "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.ketoacidosis-without-marked-hyperglycemia",
+        "claim.gs028e.sglt2.ketoacidosis-precipitating-context"
+      ]
+    },
+    {
+      "id": "question.naloxone.competitive-opioid-antagonist-mechanism.v1",
+      "conceptId": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "id": "question.naloxone.competitive-opioid-antagonist-mechanism.v2",
+      "conceptId": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "id": "question.naloxone.competitive-opioid-antagonist-mechanism.v3",
+      "conceptId": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "id": "question.naloxone.competitive-opioid-antagonist-mechanism.v4",
+      "conceptId": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.naloxone.competitive-opioid-antagonism",
+        "claim.gs028e.naloxone.emergency-support-still-required"
+      ]
+    },
+    {
+      "id": "question.perioperative-sglt2.drug-specific-interruption.v1",
+      "conceptId": "concept.perioperative-sglt2.drug-specific-interruption",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption"
+      ]
+    },
+    {
+      "id": "question.perioperative-sglt2.drug-specific-interruption.v2",
+      "conceptId": "concept.perioperative-sglt2.drug-specific-interruption",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption"
+      ]
+    },
+    {
+      "id": "question.perioperative-sglt2.drug-specific-interruption.v3",
+      "conceptId": "concept.perioperative-sglt2.drug-specific-interruption",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption"
+      ]
+    },
+    {
+      "id": "question.perioperative-sglt2.drug-specific-interruption.v4",
+      "conceptId": "concept.perioperative-sglt2.drug-specific-interruption",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.ertugliflozin-preoperative-interruption",
+        "claim.gs028e.sglt2.postoperative-restart-conditions"
+      ]
+    },
+    {
+      "id": "question.laparoscopy.co2-absorption-hypercarbia.v1",
+      "conceptId": "concept.laparoscopy.co2-absorption-hypercarbia",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia"
+      ]
+    },
+    {
+      "id": "question.laparoscopy.co2-absorption-hypercarbia.v2",
+      "conceptId": "concept.laparoscopy.co2-absorption-hypercarbia",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia"
+      ]
+    },
+    {
+      "id": "question.laparoscopy.co2-absorption-hypercarbia.v3",
+      "conceptId": "concept.laparoscopy.co2-absorption-hypercarbia",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake"
+      ]
+    },
+    {
+      "id": "question.laparoscopy.co2-absorption-hypercarbia.v4",
+      "conceptId": "concept.laparoscopy.co2-absorption-hypercarbia",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia"
+      ]
+    },
+    {
+      "id": "question.pneumoperitoneum.context-dependent-venous-return.v1",
+      "conceptId": "concept.pneumoperitoneum.context-dependent-venous-return",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "id": "question.pneumoperitoneum.context-dependent-venous-return.v2",
+      "conceptId": "concept.pneumoperitoneum.context-dependent-venous-return",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "id": "question.pneumoperitoneum.context-dependent-venous-return.v3",
+      "conceptId": "concept.pneumoperitoneum.context-dependent-venous-return",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "id": "question.pneumoperitoneum.context-dependent-venous-return.v4",
+      "conceptId": "concept.pneumoperitoneum.context-dependent-venous-return",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ]
+    },
+    {
+      "id": "question.postlaparoscopy.benign-referred-shoulder-pain.v1",
+      "conceptId": "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "id": "question.postlaparoscopy.benign-referred-shoulder-pain.v2",
+      "conceptId": "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "id": "question.postlaparoscopy.benign-referred-shoulder-pain.v3",
+      "conceptId": "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "id": "question.postlaparoscopy.benign-referred-shoulder-pain.v4",
+      "conceptId": "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ]
+    },
+    {
+      "id": "question.wound-healing.type-iii-to-type-i-collagen-remodeling.v1",
+      "conceptId": "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "id": "question.wound-healing.type-iii-to-type-i-collagen-remodeling.v2",
+      "conceptId": "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "id": "question.wound-healing.type-iii-to-type-i-collagen-remodeling.v3",
+      "conceptId": "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "id": "question.wound-healing.type-iii-to-type-i-collagen-remodeling.v4",
+      "conceptId": "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.wound.collagen-iii-to-i-remodeling"
+      ]
+    },
+    {
+      "id": "question.wound.hypertrophic-versus-keloid-extent.v1",
+      "conceptId": "concept.wound.hypertrophic-versus-keloid-extent",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "id": "question.wound.hypertrophic-versus-keloid-extent.v2",
+      "conceptId": "concept.wound.hypertrophic-versus-keloid-extent",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "id": "question.wound.hypertrophic-versus-keloid-extent.v3",
+      "conceptId": "concept.wound.hypertrophic-versus-keloid-extent",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "id": "question.wound.hypertrophic-versus-keloid-extent.v4",
+      "conceptId": "concept.wound.hypertrophic-versus-keloid-extent",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.scar_extent",
+        "claim.gs028e.scar_shape_comparison"
+      ]
+    },
+    {
+      "id": "question.wound.secondary-intention-healing.v1",
+      "conceptId": "concept.wound.secondary-intention-healing",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "id": "question.wound.secondary-intention-healing.v2",
+      "conceptId": "concept.wound.secondary-intention-healing",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "id": "question.wound.secondary-intention-healing.v3",
+      "conceptId": "concept.wound.secondary-intention-healing",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "id": "question.wound.secondary-intention-healing.v4",
+      "conceptId": "concept.wound.secondary-intention-healing",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.secondary_intention"
+      ]
+    },
+    {
+      "id": "question.immunology.ige-mast-cell-type-i.v1",
+      "conceptId": "concept.immunology.ige-mast-cell-type-i",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.urticaria_not_always_ige",
+        "claim.gs028e.type_iv"
+      ]
+    },
+    {
+      "id": "question.immunology.ige-mast-cell-type-i.v2",
+      "conceptId": "concept.immunology.ige-mast-cell-type-i",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.type_iv"
+      ]
+    },
+    {
+      "id": "question.immunology.ige-mast-cell-type-i.v3",
+      "conceptId": "concept.immunology.ige-mast-cell-type-i",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.urticaria_not_always_ige"
+      ]
+    },
+    {
+      "id": "question.immunology.ige-mast-cell-type-i.v4",
+      "conceptId": "concept.immunology.ige-mast-cell-type-i",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_i",
+        "claim.gs028e.type_iv",
+        "claim.gs028e.non_ige_antibody_comparison"
+      ]
+    },
+    {
+      "id": "question.immunology.t-cell-type-iv-contact.v1",
+      "conceptId": "concept.immunology.t-cell-type-iv-contact",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_iv",
+        "claim.gs028e.type_i"
+      ]
+    },
+    {
+      "id": "question.immunology.t-cell-type-iv-contact.v2",
+      "conceptId": "concept.immunology.t-cell-type-iv-contact",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_iv",
+        "claim.gs028e.type_i"
+      ]
+    },
+    {
+      "id": "question.immunology.t-cell-type-iv-contact.v3",
+      "conceptId": "concept.immunology.t-cell-type-iv-contact",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_iv",
+        "claim.gs028e.type_i",
+        "claim.gs028e.non_ige_antibody_comparison"
+      ]
+    },
+    {
+      "id": "question.immunology.t-cell-type-iv-contact.v4",
+      "conceptId": "concept.immunology.t-cell-type-iv-contact",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.type_iv",
+        "claim.gs028e.type_i",
+        "claim.gs028e.non_ige_antibody_comparison"
+      ]
+    },
+    {
+      "id": "question.immunology.preformed-antibody-hyperacute-rejection.v1",
+      "conceptId": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison",
+        "claim.gs028e.type_i"
+      ]
+    },
+    {
+      "id": "question.immunology.preformed-antibody-hyperacute-rejection.v2",
+      "conceptId": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular"
+      ]
+    },
+    {
+      "id": "question.immunology.preformed-antibody-hyperacute-rejection.v3",
+      "conceptId": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed"
+      ]
+    },
+    {
+      "id": "question.immunology.preformed-antibody-hyperacute-rejection.v4",
+      "conceptId": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison",
+        "claim.gs028e.type_i"
+      ]
+    },
+    {
+      "id": "question.coagulation.isolated-aptt-mixing-workup.v1",
+      "conceptId": "concept.coagulation.isolated-aptt-mixing-workup",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.mixing-study-initial-interpretation.v1",
+      "conceptId": "concept.coagulation.mixing-study-initial-interpretation",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_correction",
+        "claim.gs028e.mixing_noncorrection",
+        "claim.gs028e.mixing_time_dependent",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.isolated-aptt-mixing-workup.v2",
+      "conceptId": "concept.coagulation.isolated-aptt-mixing-workup",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.mixing-study-initial-interpretation.v2",
+      "conceptId": "concept.coagulation.mixing-study-initial-interpretation",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_noncorrection",
+        "claim.gs028e.mixing_correction",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.isolated-aptt-mixing-workup.v3",
+      "conceptId": "concept.coagulation.isolated-aptt-mixing-workup",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.isolated-aptt-mixing-workup.v4",
+      "conceptId": "concept.coagulation.isolated-aptt-mixing-workup",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_initial_workup",
+        "claim.gs028e.mixing_method",
+        "claim.gs028e.mixing_time_dependent",
+        "claim.gs028e.mixing_limits"
+      ]
+    },
+    {
+      "id": "question.coagulation.mixing-study-initial-interpretation.v3",
+      "conceptId": "concept.coagulation.mixing-study-initial-interpretation",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_time_dependent",
+        "claim.gs028e.mixing_limits",
+        "claim.gs028e.mixing_correction",
+        "claim.gs028e.mixing_noncorrection"
+      ]
+    },
+    {
+      "id": "question.coagulation.mixing-study-initial-interpretation.v4",
+      "conceptId": "concept.coagulation.mixing-study-initial-interpretation",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.mixing_time_dependent",
+        "claim.gs028e.mixing_limits",
+        "claim.gs028e.mixing_correction"
+      ]
+    },
+    {
+      "id": "question.oncology.stage-versus-grade.v1",
+      "conceptId": "concept.oncology.stage-versus-grade",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.stage_extent",
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "id": "question.oncology.stage-versus-grade.v2",
+      "conceptId": "concept.oncology.stage-versus-grade",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.stage_extent",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "id": "question.oncology.stage-versus-grade.v3",
+      "conceptId": "concept.oncology.stage-versus-grade",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.stage_extent",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "id": "question.oncology.stage-versus-grade.v4",
+      "conceptId": "concept.oncology.stage-versus-grade",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.stage_extent",
+        "claim.gs028e.grade_morphology",
+        "claim.gs028e.grade_not_stage"
+      ]
+    },
+    {
+      "id": "question.oncology.rb1-biallelic-tumor-suppressor-loss.v1",
+      "conceptId": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.suppressor_loss",
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.two_hit_scoped"
+      ]
+    },
+    {
+      "id": "question.oncology.rb1-biallelic-tumor-suppressor-loss.v2",
+      "conceptId": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.suppressor_loss",
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.two_hit_scoped"
+      ]
+    },
+    {
+      "id": "question.oncology.rb1-biallelic-tumor-suppressor-loss.v3",
+      "conceptId": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.suppressor_loss",
+        "claim.gs028e.rb1_biallelic",
+        "claim.gs028e.two_hit_scoped"
+      ]
+    },
+    {
+      "id": "question.oncology.rb1-biallelic-tumor-suppressor-loss.v4",
+      "conceptId": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.suppressor_loss"
+      ]
+    },
+    {
+      "id": "question.infection.operative-wound-classification.v1",
+      "conceptId": "concept.infection.operative-wound-classification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    },
+    {
+      "id": "question.infection.operative-wound-classification.v2",
+      "conceptId": "concept.infection.operative-wound-classification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    },
+    {
+      "id": "question.infection.operative-wound-classification.v3",
+      "conceptId": "concept.infection.operative-wound-classification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    },
+    {
+      "id": "question.infection.operative-wound-classification.v4",
+      "conceptId": "concept.infection.operative-wound-classification",
+      "supportingEvidenceClaimIds": [
+        "claim.gs028e.clean_wound",
+        "claim.gs028e.clean_contaminated",
+        "claim.gs028e.contaminated",
+        "claim.gs028e.contaminated_aseptic_breach",
+        "claim.gs028e.dirty_infected"
+      ]
+    }
+  ],
+  "limitations": [
+    "Bibliographic metadata and independently authored atomic claims only; no source excerpts or full article text.",
+    "This manifest does not authorize public clinical release or constitute clinician sign-off.",
+    "Source metadata conflicts are rejected; reused source reciprocal claim links are unioned."
+  ]
+}

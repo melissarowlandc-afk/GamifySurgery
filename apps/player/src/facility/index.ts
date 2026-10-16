@@ -1,4 +1,5 @@
 export { FacilityCanvas, type FacilityCanvasProps } from "./FacilityCanvas";
+export type { FacilityScreenRect } from "./FacilityScene";
 export type {
   BuildDoorTool,
   FacilityAmbientPedestrianView,

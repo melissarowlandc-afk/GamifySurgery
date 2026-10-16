@@ -9,6 +9,8 @@ import {
   type PersistedProfile,
 } from "./helpers";
 
+test.skip(true, "Archived walking contract; replaced by character-step-bounce.spec.ts after owner selected static bounce");
+
 const SCREENSHOT_DIRECTORY = "artifacts/screenshots/gs026-simple-walk-pilot";
 const EXPANSION_SCREENSHOT_DIRECTORY = "artifacts/screenshots/gs026-uniform-walk-batch";
 const stillRegistry = JSON.parse(readFileSync("apps/player/src/art/characterStillRegistry.generated.json", "utf8")) as any;

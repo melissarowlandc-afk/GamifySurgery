@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { StaffPanel } from "./StaffPanel";
 import { ServiceIncomePanel } from "./ServiceIncomePanel";
-import type { ServiceIncomeView, StaffRoleGroupView } from "./types";
+import { MoneyPanel } from "./MoneyPanel";
+import type {
+  ServiceIncomeView,
+  ServiceSetupActionView,
+  StaffRoleGroupView,
+  StaffTrainingOverviewView,
+} from "./types";
 
 interface ManagementPanelProps {
   managementMode: boolean;
   showInactiveTrigger?: boolean;
   roles: StaffRoleGroupView[];
+  staffTraining?: StaffTrainingOverviewView | null;
   highlightedRoleId?: string | null;
   highlightedEmployeeId?: string | null;
+  requestedTraining?: { employeeId: string; requestKey: number } | null;
   serviceIncome: ServiceIncomeView;
   onEnterManagementMode: () => void;
   onExitManagementMode: () => void;
@@ -16,16 +24,29 @@ interface ManagementPanelProps {
   onDecreaseSalary: (employeeId: string) => void;
   onIncreaseSalary: (employeeId: string) => void;
   onFire: (employeeId: string) => void;
+  onTrain?: (employeeId: string) => void;
   onAppointmentsEnabledChange: (enabled: boolean) => void;
+  onStartLaboratoryProcessing: () => void;
+  onSetupAction?: (action: ServiceSetupActionView) => void;
 }
 
-/** Desk-owned employee roster shown while facility time is paused. */
+type ManagementTab = "employees" | "services" | "money";
+
+const TABS: { id: ManagementTab; label: string }[] = [
+  { id: "employees", label: "Employees" },
+  { id: "services", label: "Services" },
+  { id: "money", label: "Money" },
+];
+
+/** Desk-owned staff, services and money views shown while facility time is paused. */
 export function ManagementPanel({
   managementMode,
   showInactiveTrigger = true,
   roles,
+  staffTraining = null,
   highlightedRoleId,
   highlightedEmployeeId,
+  requestedTraining,
   serviceIncome,
   onEnterManagementMode,
   onExitManagementMode,
@@ -33,9 +54,12 @@ export function ManagementPanel({
   onDecreaseSalary,
   onIncreaseSalary,
   onFire,
+  onTrain,
   onAppointmentsEnabledChange,
+  onStartLaboratoryProcessing,
+  onSetupAction,
 }: ManagementPanelProps) {
-  const [activeTab, setActiveTab] = useState<"employees" | "services">("employees");
+  const [activeTab, setActiveTab] = useState<ManagementTab>("employees");
   useEffect(() => {
     if (highlightedRoleId || highlightedEmployeeId) setActiveTab("employees");
   }, [highlightedEmployeeId, highlightedRoleId]);
@@ -59,14 +83,12 @@ export function ManagementPanel({
   return (
     <section className="panel management-panel" aria-labelledby="management-mode-title">
       <header className="management-mode-topbar">
-        <div>
-          <strong id="management-mode-title" className="management-mode-title">
-            Management Mode
-          </strong>
-          <span>Staff, services &amp; income</span>
-        </div>
+        <strong id="management-mode-title" className="management-mode-title">
+          Management Mode
+        </strong>
+        <span className="management-paused-chip">Clinic paused</span>
         <button
-          className="button button-primary management-done-button"
+          className="management-done-button"
           type="button"
           onClick={onExitManagementMode}
         >
@@ -74,10 +96,41 @@ export function ManagementPanel({
         </button>
       </header>
       <div className="management-tabs" role="tablist" aria-label="Management sections">
-        <button type="button" role="tab" aria-selected={activeTab === "employees"} onClick={() => setActiveTab("employees")}>Employees</button>
-        <button type="button" role="tab" aria-selected={activeTab === "services"} onClick={() => setActiveTab("services")}>Services &amp; income</button>
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
-      {activeTab === "employees" ? <StaffPanel roles={roles} highlightedRoleId={highlightedRoleId} highlightedEmployeeId={highlightedEmployeeId} onHire={onHire} onDecreaseSalary={onDecreaseSalary} onIncreaseSalary={onIncreaseSalary} onFire={onFire} /> : <ServiceIncomePanel serviceIncome={serviceIncome} onAppointmentsEnabledChange={onAppointmentsEnabledChange} />}
+      {activeTab === "employees" ? (
+        <StaffPanel
+          roles={roles}
+          staffTraining={staffTraining}
+          highlightedRoleId={highlightedRoleId}
+          highlightedEmployeeId={highlightedEmployeeId}
+          requestedTraining={requestedTraining}
+          onHire={onHire}
+          onDecreaseSalary={onDecreaseSalary}
+          onIncreaseSalary={onIncreaseSalary}
+          onFire={onFire}
+          onTrain={onTrain}
+        />
+      ) : activeTab === "services" ? (
+        <ServiceIncomePanel
+          serviceIncome={serviceIncome}
+          onAppointmentsEnabledChange={onAppointmentsEnabledChange}
+          onStartLaboratoryProcessing={onStartLaboratoryProcessing}
+          onSetupAction={onSetupAction}
+        />
+      ) : (
+        <MoneyPanel serviceIncome={serviceIncome} />
+      )}
     </section>
   );
 }

@@ -66,12 +66,15 @@ describe("canonical room shell", () => {
     expect(olive.components.map((component) => component.bounds)).toEqual(cream.components.map((component) => component.bounds));
   });
 
-  it("enumerates every enclosed Level 0-2 room without classifying the hallway", () => {
+  it("enumerates every enclosed Level 0-3 room without classifying the hallway", () => {
     expect(CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS).toEqual([
       "room.waiting", "room.bathroom", "room.xray", "room.imaging_control",
       "room.minor_procedure", "room.ultrasound", "room.ct", "room.phlebotomy",
       "room.evs_closet", "room.endoscopy", "room.periop_recovery", "room.training",
       "room.coffee_kiosk", "room.glp1_telehealth_suite",
+      "room.ambulatory_or", "room.laboratory", "room.pharmacy",
+      "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
+      "room.vending",
     ]);
     expect(isCanonicalEnclosedRoomDefinition("room.hallway")).toBe(false);
   });

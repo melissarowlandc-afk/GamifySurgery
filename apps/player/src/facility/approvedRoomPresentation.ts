@@ -1,10 +1,23 @@
 import type { CardinalDirection, RoomOrientation } from "@gamify-surgery/game-domain";
+import { rotateDirection } from "@gamify-surgery/game-domain";
+import { APPROVED_PROCEDURE_STAFF_SPOTS, APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
 import type { FacilityActorSupportRole } from "./types";
+import { getApprovedRollingStoolSource } from "./backlessRollingStools";
 import {
   getApprovedSideChairMask,
   type ApprovedSideChairLayerBinding,
 } from "./approvedSideChairLayers";
 import proofDataJson from "./approvedRoomProofData.json";
+import { APPROVED_LEVEL4_ROOM_DATA, APPROVED_LEVEL4_ROOM_PRESENTATIONS } from "./approvedLevel4RoomData";
+import { APPROVED_LEVEL5_ROOM_DATA, APPROVED_LEVEL5_ROOM_PRESENTATIONS, getApprovedLevel5RoomTier } from "./approvedLevel5RoomData";
+import type { ApprovedPaintPrimitive } from "./approvedRoomRenderer";
+import {
+  APPROVED_LEVEL3_ACTOR_SUPPORTS,
+  APPROVED_LEVEL3_FLOOR_ORIGINS,
+  APPROVED_LEVEL3_PROOF_SHA256,
+  APPROVED_LEVEL3_ROOM_DRAW_RECORDS,
+  APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS,
+} from "./approvedLevel3RoomProofData";
 
 export type ApprovedRoomCollision = "solid" | "nonblocking" | "none";
 export type ApprovedRoomDepth = "wall" | "rear-floor" | "actor-seat" | "floor" | "front";
@@ -30,6 +43,7 @@ export interface ApprovedFixturePresentation {
   doorOwners?: readonly ApprovedWallSegment[];
   backedOwners?: readonly ApprovedWallSegment[];
   variants?: readonly string[];
+  touchupKeepWhenBacked?: boolean;
 }
 
 export interface ApprovedRoomShellPresentation {
@@ -42,7 +56,9 @@ export interface ApprovedRoomShellPresentation {
   floorPatternKind: "square-tile" | "terrazzo" | "vinyl" | "carpet" | "hallway-phase";
   floorPatternSizePixels: number;
   floorPatternSeed: number;
-  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo";
+  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo" | "level3-or-slate" | "level3-laboratory-tile" | "level3-pharmacy-tile" | "level3-concrete" | "level3-break-wood" | "level3-office-texture" | "level3-vending-terrazzo" | "reading-carpet" | "approved-proof";
+  /** Exact approved fixed-room marks, including MRI safety markings. */
+  exactProofFloor?: readonly ApprovedPaintPrimitive[];
   floorPalette: readonly string[];
   floorGrout: string;
   floorAccent: string;
@@ -53,9 +69,13 @@ export interface ApprovedRoomShellPresentation {
   edgeTrim: string;
   doorJamb: string;
   doorInsetPixels: number;
+  /** Optional approved-shell overrides (default: house sage highlight, cream south face). */
+  capLight?: string;
+  southFace?: string;
 }
 
 export type ApprovedProceduralStyle =
+  | Readonly<{ kind: "approved-glass" }>
   | Readonly<{
       kind: "ct-observation-partition";
       body: "#38524a";
@@ -117,6 +137,7 @@ export interface ApprovedRoomPresentation {
 }
 
 export interface ApprovedRoomDrawRecord {
+  readonly classification?: "necessary" | "optional";
   readonly id: string;
   readonly assetId: string;
   readonly sourceRect: readonly [x: number, y: number, width: number, height: number];
@@ -135,6 +156,11 @@ export interface ApprovedRoomDrawRecord {
   /** Stable painter ordering from the exact proof destination envelope. */
   readonly depthKey: number;
   readonly depthPolicy: "ground-contact" | "wall" | "authored-layer";
+  readonly touchupKeepWhenBacked?: boolean;
+  /** Approved MRI table forepart ends at the measured bore centre. */
+  readonly clipRightWorld?: number;
+  /** Promoted native front-armrest masks follow their actual sitter depth. */
+  readonly foregroundSupportIds?: readonly string[];
 }
 
 export interface ApprovedActorSupport {
@@ -148,8 +174,15 @@ export interface ApprovedActorSupport {
   readonly ground: Readonly<{ x: number; y: number }>;
   /** Shared owning-fixture baseline; seated actors must never paint behind it. */
   readonly fixtureGround: Readonly<{ x: number; y: number }>;
-  /** Exact source crop whose southern arm alone paints in front of this sitter. */
+  /** Exact furniture crop whose near armrest or back paints in front of this sitter. */
   readonly sideChairLayer?: ApprovedSideChairLayerBinding;
+  readonly painterDepth?: number;
+  readonly supportRecord?: string;
+  readonly doorOwners?: readonly ApprovedWallSegment[];
+  readonly backedOwners?: readonly ApprovedWallSegment[];
+  readonly allowedActors?: readonly ("child" | "parent" | "patient" | "provider")[];
+  readonly maxAgeExclusive?: number;
+  readonly seatType?: "ordinary-chair" | "kid-stool";
 }
 
 export type ApprovedRoomStateVariant = "emptyWater" | "visitorEdHidden" | "occupiedCovered";
@@ -180,6 +213,14 @@ const asset = (id: string, file: string): ApprovedRoomAsset => ({
   id: `gs015:${id}`,
   relativePath: `art/rooms/gs015-v1/${file}`,
 });
+
+const level3Asset = (room: string, file: string): ApprovedRoomAsset => ({
+  id: `level3:${room}:${file}`,
+  relativePath: `art/rooms/level3-v1/${room}/${file}`,
+});
+
+const level3Assets = (room: string, files: readonly string[]): readonly ApprovedRoomAsset[] =>
+  files.map((file) => level3Asset(room, file));
 
 const clinicalShell = (
   floorPattern: string,
@@ -218,6 +259,8 @@ const rotated = (base: string, rotatedView: string, width: number, height: numbe
 ];
 
 export const APPROVED_ROOM_PRESENTATIONS = [
+  ...APPROVED_LEVEL5_ROOM_PRESENTATIONS,
+  ...APPROVED_LEVEL4_ROOM_PRESENTATIONS,
   {
     proofId: "front-desk", roomDefinitionId: "room.front_desk", proofPath: "tools/room-design/front-desk-layout/front-desk-layout.html",
     assets: [asset("front-desk:furniture", "front-desk/furniture.webp"), asset("front-desk:counter", "front-desk/counter.webp"), asset("front-desk:props", "front-desk/props.webp"), asset("front-desk:upkeep", "front-desk/upkeep.webp")],
@@ -386,6 +429,102 @@ export const APPROVED_ROOM_PRESENTATIONS = [
       { id: "windows", assetId: "gs015:telehealth:window", quantity: 3, collision: "none", depth: "wall", contacts: [[.5, 0], [1.5, 0], [2.5, 0]], doorOwners: ["N1", "N2", "N3"], backedOwners: ["N1", "N2", "N3"] },
     ],
   },
+  {
+    proofId: "ambulatory-or", roomDefinitionId: "room.ambulatory_or", proofPath: "tools/room-design/level-3/ambulatory-or/proof/ambulatory-or-proof.html",
+    assets: level3Assets("ambulatory-or", ["anesthesia.webp", "lights.webp", "sink.webp", "storageLeft.webp", "storageRight.webp", "tableEmpty.webp", "tableOccupied.webp", "tray.webp", "workstation.webp"]),
+    orientations: fixed("north-up", 4, 4),
+    shell: { ...clinicalShell("24px dark slate procedure tile", "#69757a", "#d7ddd8"), floorAlgorithm: "level3-or-slate", floorPalette: ["#69757a"], floorGrout: "rgba(39,49,54,.22)", floorAccent: "rgba(205,170,153,.12)", background: "#e7dfc7" },
+    variantPolicy: { occupiedCoveredWhen: "active-in-service-or-legacy-frozen-care-interval", hideIndividualPatient: true, preserveGlobalActorScale: true },
+    fixtures: [
+      { id: "table", assetId: "level3:ambulatory-or:tableEmpty.webp", collision: "solid", depth: "actor-seat", contacts: [[2, 3.2]], footprint: [1.55, 1.4, .9, 1.8], approach: [2, 3.55], variants: ["empty", "occupiedCovered"] },
+      { id: "anesthesia", assetId: "level3:ambulatory-or:anesthesia.webp", collision: "solid", depth: "floor", contacts: [[1.1, 1.3]], footprint: [.75, .58, .7, .72] },
+      { id: "tray", assetId: "level3:ambulatory-or:tray.webp", collision: "solid", depth: "floor", contacts: [[3.425, 3.3]], footprint: [3.15, 2.55, .55, .75] },
+      { id: "lights", assetId: "level3:ambulatory-or:lights.webp", collision: "none", depth: "front", contacts: [[2, -.2]] },
+      { id: "workstation", assetId: "level3:ambulatory-or:workstation.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "storageLeft", assetId: "level3:ambulatory-or:storageLeft.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
+      { id: "storageRight", assetId: "level3:ambulatory-or:storageRight.webp", collision: "nonblocking", depth: "wall", contacts: [[2.5, .33]], doorOwners: ["N3"], backedOwners: ["N3"] },
+      { id: "sink", assetId: "level3:ambulatory-or:sink.webp", collision: "nonblocking", depth: "wall", contacts: [[3.55, .33]], doorOwners: ["N4", "EA"], backedOwners: ["N4"] },
+    ],
+  },
+  {
+    proofId: "laboratory", roomDefinitionId: "room.laboratory", proofPath: "tools/room-design/level-3/laboratory/proof/laboratory-proof.html",
+    assets: level3Assets("laboratory", ["bench.webp", "fridge.webp", "sink.webp", "workstation.webp"]), orientations: fixed("north-up", 3, 3),
+    shell: { ...clinicalShell("24px light blue-gray laboratory tile", "#b8c6c6", "#d9e3e1"), floorAlgorithm: "level3-laboratory-tile", floorPalette: ["#b8c6c6"], floorGrout: "rgba(63,88,91,.18)", floorAccent: "rgba(126,158,158,.13)", baseTrim: "#3f756d", edgeTrim: "#294d49", doorJamb: "#6e4935", background: "#e5e2d8" },
+    fixtures: [
+      { id: "bench", assetId: "level3:laboratory:bench.webp", collision: "solid", depth: "front", contacts: [[1.5, 1.75]], footprint: [.8, 1.1, 1.4, .65], approach: [1.5, 2.65] },
+      { id: "sink", assetId: "level3:laboratory:sink.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "workstation", assetId: "level3:laboratory:workstation.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
+      { id: "fridge", assetId: "level3:laboratory:fridge.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
+    ],
+  },
+  {
+    proofId: "pharmacy", roomDefinitionId: "room.pharmacy", proofPath: "tools/room-design/level-3/pharmacy/proof/pharmacy-proof.html",
+    assets: level3Assets("pharmacy", ["computer.webp", "counter.webp", "shelves.webp", "stock.webp"]), orientations: fixed("north-up", 3, 3),
+    shell: { ...clinicalShell("24px warm neutral pharmacy tile", "#c8c8b9", "#e0dcc9"), floorAlgorithm: "level3-pharmacy-tile", floorPalette: ["#c8c8b9"], floorGrout: "rgba(79,91,70,.18)", floorAccent: "rgba(147,151,119,.14)", baseTrim: "#6f806a", edgeTrim: "#465545", doorJamb: "#6e4935", background: "#e8e3d6" },
+    fixtures: [
+      { id: "counter", assetId: "level3:pharmacy:counter.webp", collision: "solid", depth: "front", contacts: [[1.275, 1.8]], footprint: [.4, 1.15, 1.75, .65], approach: [2.55, 2.55] },
+      { id: "stock", assetId: "level3:pharmacy:stock.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "shelves", assetId: "level3:pharmacy:shelves.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
+      { id: "computer", assetId: "level3:pharmacy:computer.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
+    ],
+  },
+  {
+    proofId: "maintenance-workshop", roomDefinitionId: "room.maintenance_workshop", proofPath: "tools/room-design/level-3/maintenance-workshop/proof/maintenance-workshop-proof.html",
+    assets: level3Assets("maintenance-workshop", ["bench.webp", "cupboard.webp", "parts.webp", "pegboard.webp"]), orientations: fixed("north-up", 3, 3),
+    shell: { ...clinicalShell("sealed poured concrete", "#aaa9a2", "#a9aa9e", 120), floorAlgorithm: "level3-concrete", floorPalette: ["#aaa9a2"], floorGrout: "rgba(65,67,63,.20)", floorAccent: "rgba(255,255,255,.055)", background: "#dedbcf" },
+    fixtures: [
+      { id: "bench", assetId: "level3:maintenance-workshop:bench.webp", collision: "solid", depth: "front", contacts: [[1.5, 1.85]], footprint: [.575, 1.2, 1.85, .65], approach: [1.5, 2.65] },
+      { id: "parts", assetId: "level3:maintenance-workshop:parts.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "pegboard", assetId: "level3:maintenance-workshop:pegboard.webp", collision: "none", depth: "wall", contacts: [[1.5, -.04]], doorOwners: ["N2"], backedOwners: ["N2"] },
+      { id: "cupboard", assetId: "level3:maintenance-workshop:cupboard.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
+    ],
+  },
+  {
+    proofId: "staff-break-room", roomDefinitionId: "room.staff_break", proofPath: "tools/room-design/level-3/staff-break-room/proof/staff-break-room-proof.html",
+    assets: level3Assets("staff-break-room", ["art.webp", "bookshelf.webp", "chairEast.webp", "chairNorth.webp", "chairNorthFront.webp", "chairSouth.webp", "chairWest.webp", "fridge.webp", "kitchen.webp", "largeTable.webp", "largeTableFront.webp", "massage.webp", "massageFront.webp", "plant.webp", "smallTable.webp", "smallTableFront.webp", "table.webp"]), orientations: fixed("north-up", 4, 4),
+    shell: { ...clinicalShell("warm staggered wood planks", "#b98a5e", "#e3d5bd", 30), floorAlgorithm: "level3-break-wood", floorPalette: ["#b98a5e", "#c59667", "#aa794f"], floorGrout: "rgba(77,51,34,.18)", floorAccent: "rgba(255,241,210,.08)", background: "#e9e0d0" },
+    fixtures: [
+      { id: "largeTable", assetId: "level3:staff-break-room:largeTable.webp", collision: "solid", depth: "actor-seat", contacts: [[2, 1.7]], footprint: [1.2, .95, 1.6, .75] },
+      { id: "massageChair", assetId: "level3:staff-break-room:massage.webp", collision: "solid", depth: "actor-seat", contacts: [[1.05, 3]], footprint: [.65, 2, .8, 1] },
+      { id: "smallTable", assetId: "level3:staff-break-room:smallTable.webp", collision: "solid", depth: "actor-seat", contacts: [[2.7, 3.15]], footprint: [2.3, 2.45, .8, .7] },
+      { id: "kitchen", assetId: "level3:staff-break-room:kitchen.webp", collision: "nonblocking", depth: "wall", contacts: [[.65, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "art", assetId: "level3:staff-break-room:art.webp", collision: "none", depth: "wall", contacts: [[2.5, -.04]], doorOwners: ["N3"], backedOwners: ["N3"] },
+      { id: "fridge", assetId: "level3:staff-break-room:fridge.webp", collision: "nonblocking", depth: "wall", contacts: [[3.35, .33]], doorOwners: ["N4", "EA"], backedOwners: ["N4"] },
+      { id: "bookshelf-plants", assetId: "level3:staff-break-room:bookshelf.webp", collision: "none", depth: "floor", contacts: [[3.55, 1.85], [3.55, 2.7], [.45, 3.65]], doorOwners: ["EB", "EC", "WD", "S1"] },
+    ],
+  },
+  {
+    proofId: "surgeons-office", roomDefinitionId: "room.surgeon_office", proofPath: "tools/room-design/level-3/surgeons-office/proof/surgeons-office-proof.html",
+    assets: level3Assets("surgeons-office", ["bookcase.webp", "chairSouth.webp", "desk.webp", "diplomas.webp", "plant.webp"]), orientations: fixed("north-up", 2, 2),
+    shell: { ...clinicalShell("subdued blue-gray broad native texture", "#8e9ca0", "#ccd7d5", 30), floorAlgorithm: "level3-office-texture", floorPalette: ["#8e9ca0"], floorGrout: "rgba(65,76,80,.12)", floorAccent: "rgba(235,243,240,.08)", background: "#e4e0d7" },
+    fixtures: [
+      { id: "writingDesk", assetId: "level3:surgeons-office:desk.webp", collision: "solid", depth: "front", contacts: [[1.135, 1.43]], footprint: [.46, .78, 1.35, .65], approach: [.68, .45] },
+      { id: "surgeonChair", assetId: "level3:surgeons-office:chairSouth.webp", collision: "solid", depth: "actor-seat", contacts: [[1.135, .87]], seat: [1.135, .495] },
+      { id: "bookcase", assetId: "level3:surgeons-office:bookcase.webp", collision: "none", depth: "wall", contacts: [[.38, .32]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
+      { id: "diplomas", assetId: "level3:surgeons-office:diplomas.webp", collision: "none", depth: "wall", contacts: [[1.5, -.4]], doorOwners: ["N2"], backedOwners: ["N2"] },
+      { id: "plant", assetId: "level3:surgeons-office:plant.webp", collision: "none", depth: "floor", contacts: [[.22, 1.7]], doorOwners: ["WB", "S1"] },
+    ],
+  },
+  {
+    proofId: "vending", roomDefinitionId: "room.vending", proofPath: "tools/room-design/level-3/vending/proof/vending-proof.html",
+    assets: level3Assets("vending", ["machine.webp", "print1.webp", "print2.webp"]), orientations: fixed("north-up", 2, 2),
+    shell: { ...clinicalShell("warm seamless speckled terrazzo", "#d9c1a5", "#b77f72", 31), floorAlgorithm: "level3-vending-terrazzo", floorPalette: ["#d9c1a5"], floorGrout: "rgba(0,0,0,0)", floorAccent: "rgba(122,76,61,.15)", baseTrim: "#627965", background: "#e8e0ce", doorJamb: "#755345" },
+    fixtures: [
+      { id: "machine", assetId: "level3:vending:machine.webp", collision: "solid", depth: "front", contacts: [[1, 1.24]], footprint: [.51, .6, .98, .64], approach: [1, 1.56] },
+      { id: "prints", assetId: "level3:vending:print1.webp", collision: "none", depth: "wall", contacts: [[.28, -.03], [1.72, -.03]], doorOwners: ["N1", "N2"], backedOwners: ["N1", "N2"] },
+    ],
+  },
+  {
+    // Owner-approved 2026-10-07 (approval-2026-10-07.md). Gray walls, dark
+    // green carpet; always dim, people included (roomTouchups "ambient").
+    proofId: "radiology-reading", roomDefinitionId: "room.reading", proofPath: "tools/room-design/level-4/radiology-reading/proof/radiology-reading-proof.html",
+    assets: level3Assets("radiology-reading", ["island.webp", "chair-northwest.webp", "chair-northeast.webp", "chair-southeast.webp", "chair-southwest.webp"]), orientations: fixed("north-up", 4, 4),
+    shell: { ...clinicalShell("muted green carpet", "#2f453c", "#aaa996", 8), floorAlgorithm: "reading-carpet", floorPalette: ["#2f453c"], floorGrout: "rgba(0,0,0,0)", floorAccent: "rgba(145,165,111,.18)", baseTrim: "#a3a28f", edgeTrim: "#7d8275", doorJamb: "#6b6f63", background: "#101917", capLight: "#959a8d", southFace: "#858a7d" },
+    fixtures: [
+      { id: "fourStationPinwheel", assetId: "level3:radiology-reading:island.webp", collision: "solid", depth: "front", contacts: [[2, 3.32]] },
+      { id: "chairs", assetId: "level3:radiology-reading:chair-northwest.webp", quantity: 4, collision: "solid", depth: "actor-seat", contacts: [[1.30, 1.95], [3.18, 1.89], [2.64, 2.91], [0.90, 3.06]] },
+    ],
+  },
 ] as const satisfies readonly ApprovedRoomPresentation[];
 
 const BY_DEFINITION = new Map<string, ApprovedRoomPresentation>(APPROVED_ROOM_PRESENTATIONS.map((room) => [room.roomDefinitionId, room]));
@@ -451,7 +590,7 @@ export function resolveApprovedRoomProceduralDrawRecords(
   orientation: RoomOrientation,
 ): readonly ApprovedProceduralDrawRecord[] {
   if (orientation !== 0) return [];
-  return APPROVED_PROCEDURAL_DRAWS[definitionId] ?? [];
+  return APPROVED_LEVEL5_ROOM_DATA.get(definitionId)?.procedural ?? APPROVED_LEVEL4_ROOM_DATA.get(definitionId)?.procedural ?? APPROVED_PROCEDURAL_DRAWS[definitionId] ?? [];
 }
 
 export function isApprovedProceduralDrawVisible(
@@ -469,7 +608,7 @@ export function isApprovedFixtureVisible(
   backedNorthSegments: ReadonlySet<string>,
 ): boolean {
   return !(fixture.doorOwners?.some((owner) => openDoorSegments.has(owner)) ?? false) &&
-    !(fixture.backedOwners?.some((owner) => backedNorthSegments.has(owner)) ?? false);
+    (fixture.touchupKeepWhenBacked === true || !(fixture.backedOwners?.some((owner) => backedNorthSegments.has(owner)) ?? false));
 }
 
 export function isApprovedDrawVisible(
@@ -478,7 +617,15 @@ export function isApprovedDrawVisible(
   backedNorthSegments: ReadonlySet<string>,
 ): boolean {
   return !draw.doorOwners.some((owner) => openDoorSegments.has(owner)) &&
-    !draw.backedOwners.some((owner) => backedNorthSegments.has(owner));
+    (draw.touchupKeepWhenBacked === true || !draw.backedOwners.some((owner) => backedNorthSegments.has(owner)));
+}
+
+/** Door-owned occupants disappear with their chair and native front mask. */
+export function isApprovedActorSupportVisible(
+  support: ApprovedActorSupport, openDoorSegments: ReadonlySet<string>, backedNorthSegments: ReadonlySet<string>,
+): boolean {
+  return !(support.doorOwners?.some((owner) => openDoorSegments.has(owner)) ?? false) &&
+    !(support.backedOwners?.some((owner) => backedNorthSegments.has(owner)) ?? false);
 }
 
 type JsonObject = Record<string, unknown>;
@@ -507,9 +654,55 @@ const segments = (value: unknown): ApprovedWallSegment[] => Array.isArray(value)
 export function getApprovedRoomProofCapture(
   definitionId: string,
   orientation: RoomOrientation,
+  upgradeLevel = 1,
 ): ApprovedRoomProofCapture | undefined {
   const room = getApprovedRoomPresentation(definitionId);
   if (!room) return undefined;
+  const level4 = orientation === 0 ? APPROVED_LEVEL5_ROOM_DATA.get(definitionId) ?? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+  if (level4) return {
+    state: "approved-art-promotion", canvasId: `${room.proofId}-art`,
+    dataset: { approvalReceiptSha256: level4.provenance.receiptSha256 },
+    coordinateSpace: { floorOriginPixels: [0, 0], tilePixels: 120 },
+    drawImages: (getApprovedLevel5RoomTier(definitionId, upgradeLevel)?.records ?? level4.records).map((record) => ({
+      canvas: `${room.proofId}-art`, src: { width: record.sourceRect[2], height: record.sourceRect[3], assetId: record.assetId },
+      transform: record.canvasTransform,
+      args: [...record.sourceRect, ...record.destinationTopLeftTiles.map((value) => value * 120), ...record.renderSizeTiles.map((value) => value * 120)],
+    })),
+  };
+  const level3Records = APPROVED_LEVEL3_ROOM_DRAW_RECORDS[definitionId];
+  if (level3Records && orientation === 0) {
+    const floorOrigin = APPROVED_LEVEL3_FLOOR_ORIGINS[definitionId]!;
+    const toDrawImages = (records: readonly ApprovedRoomDrawRecord[]) => records.map((record) => ({
+      canvas: `${room.proofId}-art`,
+      src: {
+        width: record.sourceRect[2],
+        height: record.sourceRect[3],
+        assetId: record.assetId,
+      },
+      transform: record.canvasTransform,
+      args: [
+        ...record.sourceRect,
+        floorOrigin[0] + record.destinationTopLeftTiles[0] * 120,
+        floorOrigin[1] + record.destinationTopLeftTiles[1] * 120,
+        record.renderSizeTiles[0] * 120,
+        record.renderSizeTiles[1] * 120,
+      ],
+    }));
+    const variants = APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS[definitionId];
+    return {
+      state: "approved-runtime-integration",
+      canvasId: `${room.proofId}-art`,
+      dataset: { proofSha256: APPROVED_LEVEL3_PROOF_SHA256[definitionId] },
+      drawImages: toDrawImages(level3Records),
+      coordinateSpace: { floorOriginPixels: floorOrigin, tilePixels: 120 },
+      ...(variants ? {
+        variants: Object.fromEntries(Object.entries(variants).map(([variant, records]) => [variant, {
+          dataset: { tableState: variant },
+          drawImages: toDrawImages(records),
+        }])) as ApprovedRoomProofCapture["variants"],
+      } : {}),
+    };
+  }
   const key = PROOF_DATA_KEYS[room.proofId];
   const rawRoom = key ? (proofDataJson.rooms as JsonObject)[key] : undefined;
   if (!isObject(rawRoom) || !Array.isArray(rawRoom.orientations)) return undefined;
@@ -621,6 +814,14 @@ const bindSideChairSupport = (
   value: ApprovedActorSupport,
   draws: readonly ApprovedRoomDrawRecord[],
 ): ApprovedActorSupport => {
+  const stool = draws.find((draw) => draw.id === value.id.split(":")[0] && getApprovedRollingStoolSource(draw));
+  if (stool && value.pose === "seated") {
+    // The entire clinician is above a backless stool, even when the proof's
+    // bitmap bottom extends slightly beyond its authored actor floor contact.
+    const stoolGroundY = stool.depthPolicy === "authored-layer" ? stool.depthKey :
+      stool.worldLocalGround?.[1] ?? stool.destinationTopLeftTiles[1] + stool.renderSizeTiles[1];
+    return { ...value, fixtureGround: { ...value.fixtureGround, y: Math.max(value.fixtureGround.y, stoolGroundY) } };
+  }
   const mask = getApprovedSideChairMask(definitionId, orientation, value.id);
   if (!mask) return value;
   const draw = draws.find((candidate) => candidate.id === mask.drawId);
@@ -628,8 +829,10 @@ const bindSideChairSupport = (
     !draw || draw.assetId !== mask.assetId ||
     !mask.sourceRect.every((part, index) => part === draw.sourceRect[index])
   ) return value;
-  const actualDrawGroundY = draw.worldLocalGround?.[1] ??
-    draw.destinationTopLeftTiles[1] + draw.renderSizeTiles[1];
+  // Authored split furniture (Reading Room) sorts at its layer key, not its
+  // bitmap bottom. Keep the sitter inside the approved desk/actor layer order.
+  const actualDrawGroundY = mask.respectAuthoredDepth ? draw.depthKey :
+    draw.worldLocalGround?.[1] ?? draw.destinationTopLeftTiles[1] + draw.renderSizeTiles[1];
   return {
     ...value,
     fixtureGround: {
@@ -644,8 +847,47 @@ const bindSideChairSupport = (
 export function resolveApprovedRoomActorSupports(
   definitionId: string,
   orientation: RoomOrientation,
+  upgradeLevel = 1,
 ): readonly ApprovedActorSupport[] {
+  const level5 = orientation === 0 ? getApprovedLevel5RoomTier(definitionId, upgradeLevel) : undefined;
+  if (level5) return level5.supports;
+  const level4 = orientation === 0 ? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+  if (level4) return level4.supports;
+  const procedureSpots = APPROVED_PROCEDURE_STAFF_SPOTS[definitionId];
+  const procedureLayout = APPROVED_ROOM_NAVIGATION_CONTRACTS[definitionId];
+  if (procedureSpots && procedureLayout?.allowedOrientations.includes(orientation as 0 | 270)) {
+    return procedureSpots.map((spot) => {
+      const ground = orientation === 270
+        ? { x: spot.ground.y, y: procedureLayout.width - spot.ground.x }
+        : spot.ground;
+      const role: FacilityActorSupportRole = definitionId === "room.endoscopy"
+        ? spot.actor === "provider" ? "endoscopy-provider" : "endoscopy-nurse"
+        : spot.actor === "provider" ? "ambulatory-or-surgeon" : "ambulatory-or-nurse";
+      return support(spot.id, role, "standing", rotateDirection(spot.facing, orientation), ground, ground);
+    });
+  }
+  const level3Supports = orientation === 0 ? APPROVED_LEVEL3_ACTOR_SUPPORTS[definitionId] : undefined;
+  if (level3Supports) return level3Supports.map((value) => bindSideChairSupport(
+    definitionId, orientation, value, resolveApprovedRoomDrawRecords(definitionId, orientation),
+  ));
   const capture = getApprovedRoomProofCapture(definitionId, orientation);
+  if (capture && definitionId === "room.training") {
+    const model = isObject(capture.dataset.model) ? capture.dataset.model : undefined;
+    const stools = Array.isArray(model?.stools) ? model.stools : [];
+    const draws = isObject(model?.draws) ? model.draws : undefined;
+    const records = resolveApprovedRoomDrawRecords(definitionId, orientation);
+    return stools.flatMap((stool) => {
+      if (!isObject(stool) || typeof stool.id !== "string") return [];
+      const candidateDraw = draws?.[stool.id];
+      const draw = isObject(candidateDraw) ? candidateDraw : undefined;
+      const seat = screenPointToLocal(draw?.seatContact, capture);
+      const ground = point(stool.ground);
+      return seat && ground
+        ? [bindSideChairSupport(definitionId, orientation,
+            support(stool.id, "training-employee", "seated", "north", seat, ground), records)]
+        : [];
+    });
+  }
   if (capture && definitionId === "room.examination") {
     const table = isObject(capture.dataset.table) ? capture.dataset.table : undefined;
     const patientSeat = point(table?.patientSeat);
@@ -661,7 +903,8 @@ export function resolveApprovedRoomActorSupports(
     };
     return [
       ...(patientSeat && patientGround ? [support("exam-table:patient", "examination-patient", "exam-table", cardinal((table?.patientSeat as JsonObject | undefined)?.facing), patientSeat, patientGround, fixtureGround(["table", "exam-table"], patientGround))] : []),
-      ...(clinicianSeat && clinicianGround ? [support("stool:clinician", "examination-clinician", "seated", cardinal((table?.founderSeat as JsonObject | undefined)?.facing), clinicianSeat, clinicianGround, fixtureGround(["stool"], clinicianGround))] : []),
+      ...(clinicianSeat && clinicianGround ? [bindSideChairSupport(definitionId, orientation,
+        support("stool:clinician", "examination-clinician", "seated", cardinal((table?.founderSeat as JsonObject | undefined)?.facing), clinicianSeat, clinicianGround, fixtureGround(["stool"], clinicianGround)), draws)] : []),
     ];
   }
   if (capture && definitionId === "room.waiting") {
@@ -695,6 +938,7 @@ export function resolveApprovedRoomActorSupports(
   }
   if (capture && (definitionId === "room.ultrasound" || definitionId === "room.minor_procedure")) {
     const fixtures = Array.isArray(capture.dataset.fixtures) ? capture.dataset.fixtures : [];
+    const records = resolveApprovedRoomDrawRecords(definitionId, orientation);
     return fixtures.flatMap((raw) => {
       if (!isObject(raw) || (raw.id !== "table" && raw.id !== "stool") || !isObject(raw.draw)) return [];
       const seat = screenPointToLocal(raw.draw.seatScreen, capture);
@@ -702,7 +946,7 @@ export function resolveApprovedRoomActorSupports(
       if (!seat || !ground) return [];
       const ultrasound = definitionId === "room.ultrasound";
       const patient = raw.id === "table";
-      return [support(
+      return [bindSideChairSupport(definitionId, orientation, support(
         `${String(raw.id)}:${patient ? "patient" : "clinician"}`,
         ultrasound
           ? patient ? "ultrasound-patient" : "ultrasound-clinician"
@@ -711,7 +955,7 @@ export function resolveApprovedRoomActorSupports(
         cardinal(isObject(raw.seat) ? raw.seat.facing : raw.facing),
         seat,
         ground,
-      )];
+      ), records)];
     });
   }
   if (capture && definitionId === "room.ct") {
@@ -750,6 +994,34 @@ export function resolveApprovedRoomActorSupports(
         draws,
       )];
     });
+  }
+  if (capture && definitionId === "room.periop_recovery") {
+    const draws = resolveApprovedRoomDrawRecords(definitionId, orientation);
+    const fixtureGround = (bedId: string, ground: Readonly<{ x: number; y: number }>) => {
+      const draw = draws.find((candidate) => candidate.id === `${bedId}.bed`);
+      return draw?.worldLocalGround
+        ? { x: draw.worldLocalGround[0], y: draw.worldLocalGround[1] }
+        : draw ? { x: ground.x, y: draw.depthKey } : ground;
+    };
+    const beds = [
+      ["N3", "south", { x: 2.25, y: 1.20443 }, { x: 2.25, y: 1.55 }],
+      ["N4", "south", { x: 3.75, y: 1.20443 }, { x: 3.75, y: 1.55 }],
+      ["S3", "north", { x: 2.25, y: 4.104393 }, { x: 2.25, y: 4.45 }],
+      ["S4", "north", { x: 3.75, y: 4.104393 }, { x: 3.75, y: 4.45 }],
+      ["WC", "east", { x: 1.428906, y: 2.25125 }, { x: 1.55, y: 2.6 }],
+      ["WD", "east", { x: 1.428906, y: 3.75125 }, { x: 1.55, y: 4.1 }],
+      ["EC", "west", { x: 4.570905, y: 2.254212 }, { x: 4.45, y: 2.6 }],
+      ["ED", "west", { x: 4.570905, y: 3.754212 }, { x: 4.45, y: 4.1 }],
+    ] as const;
+    return beds.map(([bedId, facing, seat, ground]) => bindSideChairSupport(definitionId, orientation, support(
+      `periop-bed:${bedId}`,
+      "periop-bed-patient",
+      "seated",
+      facing,
+      seat,
+      ground,
+      fixtureGround(bedId, ground),
+    ), draws));
   }
   if (capture && definitionId === "room.glp1_telehealth_suite") {
     const model = isObject(capture.dataset.model) ? capture.dataset.model : undefined;
@@ -806,25 +1078,25 @@ export function resolveApprovedRoomActorSupports(
       frontDesk && staff,
     );
   }));
-  if (supports.length > 0) return supports;
+  if (supports.length > 0) return supports.map((value) => bindSideChairSupport(definitionId, orientation, value, records));
   const room = getApprovedRoomPresentation(definitionId);
   if (!room) return [];
   const baseWidth = room.orientations[0]?.footprint[0] ?? 0;
   const orientPoint = (value: readonly [number, number]) => orientation === 270
     ? { x: value[1], y: baseWidth - value[0] }
     : { x: value[0], y: value[1] };
-  return room.fixtures.flatMap((fixture) => fixture.seat ? [support(
+  return room.fixtures.flatMap((fixture) => fixture.seat ? [bindSideChairSupport(definitionId, orientation, support(
     `${fixture.id}:seat-1`,
     definitionId === "room.front_desk"
       ? fixture.id === "receptionist-chair" ? "front-desk-staff" : "front-desk-public"
       : "waiting-seat",
     "seated",
-    "south",
+    definitionId === "room.front_desk" && fixture.id === "visitor-chair" ? "north" : "south",
     orientPoint(fixture.seat),
     orientPoint(fixture.contacts[0]!),
     undefined,
     definitionId === "room.waiting" || (definitionId === "room.front_desk" && fixture.id === "receptionist-chair"),
-  )] : []);
+  ), records)] : []);
 }
 
 function flattenedDraws(dataset: JsonObject): Array<{ id: string; draw: JsonObject }> {
@@ -858,7 +1130,19 @@ export function resolveApprovedRoomDrawRecords(
   definitionId: string,
   orientation: RoomOrientation,
   variant?: ApprovedRoomStateVariant,
+  upgradeLevel = 1,
 ): readonly ApprovedRoomDrawRecord[] {
+  const level5 = orientation === 0 ? getApprovedLevel5RoomTier(definitionId, upgradeLevel) : undefined;
+  if (level5) return level5.records;
+  const level4 = orientation === 0 ? APPROVED_LEVEL4_ROOM_DATA.get(definitionId) : undefined;
+  if (level4) return level4.records;
+  const level3Records = orientation === 0 ? APPROVED_LEVEL3_ROOM_DRAW_RECORDS[definitionId] : undefined;
+  if (level3Records) {
+    if (!variant) return level3Records;
+    const variantRecords = APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS[definitionId]?.[variant];
+    if (!variantRecords) throw new Error(`Approved proof ${definitionId}:${orientation} has no ${variant} variant`);
+    return variantRecords;
+  }
   const room = getApprovedRoomPresentation(definitionId);
   const baseCapture = getApprovedRoomProofCapture(definitionId, orientation);
   if (!room || !baseCapture) return [];

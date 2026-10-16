@@ -86,14 +86,19 @@ describe("Front Desk founder presentation", () => {
 
     for (const planter of FRONT_DESK_PRESENTATION.entrancePlanters) {
       const displayBounds = getFrontDeskEntrancePlanterDisplayBounds(planter);
-      expect(displayBounds).toHaveLength(1 + planter.bloomAccents.length);
+      // The finished bed includes plants: no independent blooms can drift
+      // over the rim, front face, walkway or doorway.
+      expect(displayBounds).toHaveLength(1);
+      expect(planter.assetId).toBe(`frontage:bed-${planter.side}-v3`);
+      expect(planter.heightInTiles).toBe(0.484375);
       for (const bounds of displayBounds) {
         expect(bounds.left).toBeGreaterThanOrEqual(0);
         expect(bounds.right).toBeLessThanOrEqual(
           FRONT_DESK_PRESENTATION.footprint.width,
         );
         expect(bounds.top).toBeGreaterThanOrEqual(0);
-        expect(bounds.bottom).toBeLessThanOrEqual(frontWalkLaneTop);
+        expect(bounds.bottom).toBeLessThanOrEqual(0.5);
+        expect(bounds.bottom).toBeLessThan(frontWalkLaneTop);
         expect(
           bounds.right <= centeredEntrance.left || bounds.left >= centeredEntrance.right,
         ).toBe(true);

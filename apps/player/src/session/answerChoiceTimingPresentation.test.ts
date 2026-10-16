@@ -6,6 +6,7 @@ import {
 import {
   createInitialGameState,
   gameReducer,
+  getAnswerChoiceServicePreview,
   serializeGameState,
 } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
@@ -33,11 +34,16 @@ function chartFor(caseId: string) {
 
 describe("answer-choice timing presentation", () => {
   it("uses one neutral label for all tests and an explicit no-test label on mixed nodes", () => {
-    const { chart } = chartFor("case.fhh.suggestive-results-confirmation");
+    const { state, encounter, chart } = chartFor("case.fhh.suggestive-results-confirmation");
     const choices = chart.decisionSteps!.find((step) => step.current)!.answerChoices;
+    const preview = getAnswerChoiceServicePreview(state, encounter.id, "suspect_fhh_genetic_testing")!;
+    expect(preview.diagnosticTiming?.phases.filter((phase) => phase.durationMinutes)).toEqual([
+      expect.objectContaining({ kind: "collection", mode: "external", durationMinutes: 120 }),
+    ]);
+    const minutes = preview.durationTicks!;
     expect(choices.find((choice) => choice.id === "suspect_fhh_genetic_testing")).toMatchObject({
-      etaLabel: "3 hours",
-      detailLabel: "Estimated test wait (game time)",
+      etaLabel: minutes >= 60 && minutes % 60 === 0 ? `${minutes / 60} hours` : `${minutes} min`,
+      detailLabel: expect.stringContaining("Estimated total (game time; includes queues and walking)."),
     });
     const noTests = choices.filter((choice) => choice.id !== "suspect_fhh_genetic_testing");
     expect(noTests.every((choice) => choice.etaLabel === "No test wait")).toBe(true);

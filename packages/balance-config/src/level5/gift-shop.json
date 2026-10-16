@@ -1,0 +1,254 @@
+{
+  "contract": {
+    "roomDefinitionId": "room.gift_shop",
+    "width": 3,
+    "height": 3,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "northLeft",
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "northMiddle",
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "northRight",
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.35
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 2
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "westRear",
+        "footprint": {
+          "left": 0,
+          "top": 0.35,
+          "width": 0.38,
+          "height": 0.65
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "westMiddle",
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.38,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "west",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "westCooler",
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.38,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "eastRear",
+        "footprint": {
+          "left": 2.75,
+          "top": 0.35,
+          "width": 0.25,
+          "height": 0.65
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 2
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "eastMiddle",
+        "footprint": {
+          "left": 2.75,
+          "top": 1,
+          "width": 0.25,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "east",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "entranceEndcap",
+        "footprint": {
+          "left": 2.1,
+          "top": 2.35,
+          "width": 0.9,
+          "height": 0.65
+        },
+        "blockedTiles": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 2
+          },
+          {
+            "side": "east",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "mainIsland",
+        "footprint": {
+          "left": 0.85,
+          "top": 0.75,
+          "width": 1.1,
+          "height": 1.15
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "primaryAnchor": {
+      "x": 1,
+      "y": 2
+    },
+    "waitingAnchors": [],
+    "staffAnchor": null
+  },
+  "supports": [
+    {
+      "id": "browse",
+      "fixtureId": "mainIsland",
+      "anchor": {
+        "x": 0,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 0.625,
+        "y": 1
+      }
+    },
+    {
+      "id": "pay",
+      "fixtureId": "mainIsland",
+      "anchor": {
+        "x": 1,
+        "y": 2
+      },
+      "standingApproach": {
+        "x": 1.4,
+        "y": 2.1
+      }
+    },
+    {
+      "id": "queue1",
+      "anchor": {
+        "x": 2,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 2.55,
+        "y": 1.975
+      }
+    },
+    {
+      "id": "queue2",
+      "anchor": {
+        "x": 2,
+        "y": 1
+      },
+      "standingApproach": {
+        "x": 2.55,
+        "y": 1.05
+      }
+    }
+  ]
+}

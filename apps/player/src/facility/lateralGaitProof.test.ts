@@ -15,11 +15,11 @@ describe("static lateral movement proof", () => {
     expect(frames[0]!.atlasId).not.toBe(frames[3]!.atlasId);
   });
 
-  it("shows distinct authored lateral steps only for the opted-in Blue Glasses identity", () => {
+  it("keeps an archived-walk identity on its standing still in active runtime resolution", () => {
     const blue = { ...createUnifiedFounderAppearance(0), stillId: "patient.adult.039" };
     const frames = traceLateralGaitRoute(blue);
-    expect(new Set(frames.filter((frame) => frame.travel === "west").map((frame) => frame.atlasId)).size).toBe(3);
-    expect(new Set(frames.filter((frame) => frame.travel === "east").map((frame) => frame.atlasId)).size).toBe(3);
+    expect(new Set(frames.filter((frame) => frame.travel === "west").map((frame) => frame.atlasId)).size).toBe(1);
+    expect(new Set(frames.filter((frame) => frame.travel === "east").map((frame) => frame.atlasId)).size).toBe(1);
     expect(frames.map((frame) => frame.walkFrame)).toEqual([0, 1, 2, 0, 1, 2]);
     expect(frames.every((frame) => frame.flipX === false)).toBe(true);
   });

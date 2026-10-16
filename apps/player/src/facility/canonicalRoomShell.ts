@@ -130,6 +130,13 @@ export const CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS = [
   "room.training",
   "room.coffee_kiosk",
   "room.glp1_telehealth_suite",
+  "room.ambulatory_or",
+  "room.laboratory",
+  "room.pharmacy",
+  "room.maintenance_workshop",
+  "room.staff_break",
+  "room.surgeon_office",
+  "room.vending",
 ] as const;
 
 export function isCanonicalEnclosedRoomDefinition(definitionId: string): boolean {

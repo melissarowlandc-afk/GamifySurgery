@@ -1,0 +1,806 @@
+{
+  "schemaVersion": "patient-demographics20-v4-roster/v1",
+  "cohort": "patient-demographics20-v4",
+  "identities": [
+    {
+      "number": "001",
+      "stableId": "patient-demographics20-v4.001",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 32,
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "slim build",
+        "skin": "fair skin",
+        "hair": "tousled dark-blond hair",
+        "accessory": "black rectangular glasses and a clean-shaven face",
+        "outfit": "a mustard-yellow full-sleeve ribbed sweater, forest-green chinos and brown casual ankle boots"
+      },
+      "stage1": {
+        "prompt": "prompts/001/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/001/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/001/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "002",
+      "stableId": "patient-demographics20-v4.002",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 35,
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "athletic build",
+        "skin": "deep dark-brown skin",
+        "hair": "short neat locs tied at the back",
+        "accessory": "a short tidy beard",
+        "outfit": "a burgundy full-sleeve hoodie, light-gray cargo trousers and black high-top sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/002/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/002/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/002/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "003",
+      "stableId": "patient-demographics20-v4.003",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 39,
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "average build",
+        "skin": "olive skin",
+        "hair": "short black hair with a neat tapered cut",
+        "accessory": "a small trimmed moustache",
+        "outfit": "a turquoise zip jacket over a cream T-shirt, dark-indigo jeans and maroon sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/003/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/003/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/003/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "004",
+      "stableId": "patient-demographics20-v4.004",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 42,
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "heavyset build",
+        "skin": "light warm skin",
+        "hair": "short receding copper-red hair",
+        "accessory": "a matching short copper beard",
+        "outfit": "a mint-green long-sleeve polo shirt, navy jeans and white trainers"
+      },
+      "stage1": {
+        "prompt": "prompts/004/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/004/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/004/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "005",
+      "stableId": "patient-demographics20-v4.005",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 44,
+      "ageBand": "adult",
+      "visualBrief": {
+        "build": "tall lean build",
+        "skin": "medium-brown skin",
+        "hair": "straight black shoulder-length hair tied in a low ponytail",
+        "accessory": "light stubble",
+        "outfit": "a cobalt-blue full-sleeve knit pullover with one broad white chest stripe, ochre trousers and white sneakers"
+      },
+      "stage1": {
+        "prompt": "prompts/005/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/005/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/005/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "006",
+      "stableId": "patient-demographics20-v4.006",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 46,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "slim build",
+        "skin": "fair skin",
+        "hair": "short curly dark-brown hair with gray temples",
+        "accessory": "a short scruffy beard",
+        "outfit": "an orange quilted vest over an indigo long-sleeve shirt, olive cargo trousers and tan hiking boots"
+      },
+      "stage1": {
+        "prompt": "prompts/006/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/006/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/006/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "007",
+      "stableId": "patient-demographics20-v4.007",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 49,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "stocky build",
+        "skin": "warm medium-brown skin",
+        "hair": "a bald head",
+        "accessory": "a close-trimmed salt-and-pepper goatee",
+        "outfit": "a plum-purple long-sleeve henley shirt, black jeans and brown loafers"
+      },
+      "stage1": {
+        "prompt": "prompts/007/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/007/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/007/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "008",
+      "stableId": "patient-demographics20-v4.008",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 52,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "average build",
+        "skin": "deep brown skin",
+        "hair": "short salt-and-pepper hair in a rounded flat-top",
+        "accessory": "a clean-shaven face",
+        "outfit": "a white-and-blue checked full-sleeve button-down shirt, tan trousers and navy slip-on shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/008/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/008/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/008/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "009",
+      "stableId": "patient-demographics20-v4.009",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 55,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "plus-size build",
+        "skin": "tan olive skin",
+        "hair": "wavy dark-brown hair with gray temples",
+        "accessory": "a full tidy dark beard",
+        "outfit": "a mustard overshirt worn open over a black long-sleeve top, dark-blue jeans and brown desert boots"
+      },
+      "stage1": {
+        "prompt": "prompts/009/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/009/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/009/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "010",
+      "stableId": "patient-demographics20-v4.010",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 58,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "slim build",
+        "skin": "light skin",
+        "hair": "short silver hair brushed back",
+        "accessory": "a gray moustache and thin rectangular metal glasses",
+        "outfit": "an emerald-green full-sleeve zip track jacket, gray joggers and white trainers with dark soles"
+      },
+      "stage1": {
+        "prompt": "prompts/010/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/010/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/010/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "011",
+      "stableId": "patient-demographics20-v4.011",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 61,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "tall sturdy build",
+        "skin": "medium-brown skin",
+        "hair": "a shaved bald head",
+        "accessory": "short gray stubble",
+        "outfit": "a navy long-sleeve crewneck sweater with a broad cream chest stripe, gray-brown trousers and burgundy leather shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/011/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/011/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/011/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "012",
+      "stableId": "patient-demographics20-v4.012",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 64,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "stocky build",
+        "skin": "fair ruddy skin",
+        "hair": "thinning reddish-gray hair",
+        "accessory": "a short reddish-gray beard",
+        "outfit": "a burgundy long-sleeve knit cardigan over a pale-yellow shirt, dark-olive trousers and black boots"
+      },
+      "stage1": {
+        "prompt": "prompts/012/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/012/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/012/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "013",
+      "stableId": "patient-demographics20-v4.013",
+      "category": "patient",
+      "compatibleSexLabel": "Female",
+      "intendedAge": 67,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "petite build",
+        "skin": "light warm skin",
+        "hair": "a short straight silver-gray bob",
+        "accessory": "round blue glasses",
+        "outfit": "a powder-blue full-sleeve windbreaker, rust-brown trousers and white flats"
+      },
+      "stage1": {
+        "prompt": "prompts/013/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/013/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/013/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "014",
+      "stableId": "patient-demographics20-v4.014",
+      "category": "patient",
+      "compatibleSexLabel": "Female",
+      "intendedAge": 68,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "full-figured build",
+        "skin": "deep brown skin",
+        "hair": "silver-gray locs gathered into a high coiled bun",
+        "accessory": "small gold stud earrings",
+        "outfit": "a rust-orange long-sleeve knit top, a navy calf-length skirt and low black shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/014/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/014/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/014/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "015",
+      "stableId": "patient-demographics20-v4.015",
+      "category": "patient",
+      "compatibleSexLabel": "Female",
+      "intendedAge": 71,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "average build",
+        "skin": "fair skin",
+        "hair": "short white wavy hair swept back",
+        "accessory": "rectangular tortoiseshell glasses",
+        "outfit": "a violet long-sleeve turtleneck, charcoal-green wide-leg slacks and black loafers"
+      },
+      "stage1": {
+        "prompt": "prompts/015/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/015/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/015/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "016",
+      "stableId": "patient-demographics20-v4.016",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 67,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "average build",
+        "skin": "medium olive skin",
+        "hair": "short receding gray hair",
+        "accessory": "thin oval wire glasses and a clean-shaven face",
+        "outfit": "a coral long-sleeve quarter-zip sweater, navy pleated trousers and cream canvas shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/016/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/016/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/016/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "017",
+      "stableId": "patient-demographics20-v4.017",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 68,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "heavyset build",
+        "skin": "medium-brown skin",
+        "hair": "a bald crown with a silver fringe",
+        "accessory": "a short full white beard",
+        "outfit": "a teal full-sleeve cardigan worn open over a white collared shirt, charcoal trousers and brown shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/017/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/017/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/017/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "018",
+      "stableId": "patient-demographics20-v4.018",
+      "category": "patient",
+      "compatibleSexLabel": "Male",
+      "intendedAge": 71,
+      "ageBand": "older_adult",
+      "visualBrief": {
+        "build": "slim build",
+        "skin": "deep dark-brown skin",
+        "hair": "close-cropped silver hair",
+        "accessory": "a gray moustache",
+        "outfit": "a chestnut-brown casual jacket over a cream full-sleeve knit top, olive trousers and dark-brown lace-up shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/018/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/018/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/018/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "019",
+      "stableId": "patient-demographics20-v4.019",
+      "category": "patient",
+      "compatibleSexLabel": "Female",
+      "intendedAge": 48,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "tall athletic build",
+        "skin": "olive skin",
+        "hair": "an asymmetric cropped chocolate-brown pixie cut",
+        "accessory": "green round glasses",
+        "outfit": "a sunflower-yellow full-sleeve hooded athletic jacket, maroon leggings and black running shoes"
+      },
+      "stage1": {
+        "prompt": "prompts/019/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/019/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/019/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    },
+    {
+      "number": "020",
+      "stableId": "patient-demographics20-v4.020",
+      "category": "patient",
+      "compatibleSexLabel": "Female",
+      "intendedAge": 60,
+      "ageBand": "middle_aged",
+      "visualBrief": {
+        "build": "curvy build",
+        "skin": "fair skin",
+        "hair": "long straight silver hair tied in a low ponytail",
+        "accessory": "small pearl studs",
+        "outfit": "an emerald-green long-sleeve belted knee-length dress and dark-brown ankle boots"
+      },
+      "stage1": {
+        "prompt": "prompts/020/stage1-standing-cardinals.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          }
+        ]
+      },
+      "stage2": {
+        "prompt": "prompts/020/stage2-eight-pose.prompt.txt",
+        "references": [
+          {
+            "path": "tools/character-mapping/gs026-employee-expansion-v1/assets/gs026-employee-001-cardinals-v1.png",
+            "sha256": "d5d925adfe28ac0b0d72456f52fbfc4e7d2c97452ffa6cf375ce45743be827f6",
+            "role": "style-layout-pose-reference"
+          },
+          {
+            "path": "sources/020/stage1-standing-cardinals.png",
+            "role": "identity-outfit-reference"
+          }
+        ]
+      },
+      "status": "spec_only;not-generated;not-approved;not-runtime-integrated"
+    }
+  ]
+}

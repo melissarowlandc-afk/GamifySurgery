@@ -3,7 +3,13 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+// Keep this historical batch's inventory proof scoped to its original bank.
+// Later-batch admission/protected-intake checks live in their own tests.
+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")&&!c.id.startsWith("case.variety3.")),
+};
 import { syntheticClinicalCaseSchema } from "../../schema";
 import {
   BOARD_EXPANSION_AUTHORING_CONCEPTS,
@@ -47,9 +53,9 @@ describe("September 11 board-expansion batch admission", () => {
     expect(BOARD_EXPANSION_CASE_REVIEWS).toHaveLength(40);
     expect(BOARD_EXPANSION_CASES.flatMap((item) => item.decisionNodes).filter((node) => node.resultGateAfter)).toHaveLength(40);
     expect(BOARD_EXPANSION_BATCH_MANIFEST).toMatchObject({ authoringConceptCount: 20, questionVariantCount: 80, caseCount: 40, resultGateCount: 40, sourceCount: 21, evidenceClaimCount: 21, admissionScope: "active_synthetic_unapproved_prototype", publicReleaseAuthorized: false });
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(203);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(518);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(783);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
     for (const clinicalCase of BOARD_EXPANSION_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(clinicalCase.approvedInstantiationProfiles).toHaveLength(4);

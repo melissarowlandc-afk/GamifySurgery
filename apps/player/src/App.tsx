@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { AppShell } from "./AppShell";
+import { lazy, Suspense, useMemo, useState } from "react";
+import { PrototypeShell } from "./PrototypeShell";
+import { getTutorialClockMultiplier } from "./session/tutorialTiming";
 import {
   appendLocalCampaign,
   archiveLocalCampaign,
@@ -16,10 +17,17 @@ import {
 } from "./session";
 import { OpeningSequence } from "./ui";
 import { AuthGate } from "./auth/AuthGate";
+import { useAuthAccountId } from "./auth/AuthAccountContext";
+import { usePresentationLayout } from "./shellPresentation";
+import { UsageProvider } from "./playtime/UsageProvider";
+import { UsageNotice } from "./ui/AccountMenu";
+import { QuestionFlagProvider } from "./session/QuestionFlagProvider";
+
+const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
 interface ActivePrototypeGameProps {
   loadedProfile: LoadedPrototypeProfile;
-  onRequestNewCampaign: (profile: LocalPrototypeProfile) => void;
+  onRequestNewCampaign: (profile: LocalPrototypeProfile, guidanceEnabled?: boolean) => void;
   onRequestRestart: (
     profile: LocalPrototypeProfile,
     campaignSeed: string,
@@ -58,19 +66,35 @@ function ActivePrototypeGame({
   );
 
   return (
-    <AppShell
+    <>
+    <PrototypeShell
       resourceBar={view.resourceBar}
       paused={session.state.paused}
       simulationSpeed={session.state.simulationSpeed}
       patients={view.patients}
       chart={view.chart}
-      facility={view.facility}
+      employeeDiscussionRows={view.employeeDiscussionRows}
+      employeeDiscussion={view.employeeDiscussion}
+      onOpenEmployeeDiscussion={session.openEmployeeDiscussion}
+      onCloseEmployeeDiscussion={session.closeEmployeeDiscussion}
+      onAnswerEmployeeDiscussion={session.answerEmployeeDiscussion}
+      onAcknowledgeEmployeeDiscussion={session.acknowledgeEmployeeDiscussion}
+      onFileEmployeeDiscussion={session.fileEmployeeDiscussion}
+      facility={{
+        ...view.facility,
+        realMillisecondsPerFacilityMinuteAt1x: view.facility.realMillisecondsPerFacilityMinuteAt1x /
+          getTutorialClockMultiplier(session.state, session.tutorialsEnabled),
+      }}
       progression={view.progression}
       roomOptions={view.roomOptions}
+      ownedRooms={view.ownedRooms}
+      lockedRoomOptions={view.lockedRoomOptions}
       selectedRoomBuild={view.selectedRoomBuild}
       staffRoles={view.staffRoles}
+      staffTraining={view.staffTraining}
       serviceIncome={view.serviceIncome}
       messages={view.messages}
+      needsYou={view.needsYou}
       systemNotices={session.systemNotices}
       questionReviewFlags={session.questionReviewFlags}
       development={view.development}
@@ -81,6 +105,7 @@ function ActivePrototypeGame({
       tutorialTargetEncounterId={session.tutorialTargetEncounterId}
       tutorialStep={session.tutorialStep}
       workloadStatus={view.workloadStatus}
+      patientAvailabilityGuidance={view.patientAvailabilityGuidance}
       announcement={session.announcement}
       onTogglePause={session.togglePause}
       onSimulationSpeedChange={session.setSimulationSpeed}
@@ -98,9 +123,12 @@ function ActivePrototypeGame({
       onCancelPlacement={session.cancelPlacement}
       onRotatePlacement={session.rotatePlacement}
       onPlaceRoom={session.placeRoom}
+      mobileBuildActions={session.mobileBuildActions}
       buildMode={session.buildMode}
       managementMode={session.managementMode}
       buildUndoCount={session.buildUndoCount}
+      buildUndoLabel={session.buildUndoLabel}
+      movingRoomInstanceId={session.movingRoomInstanceId}
       buildExitBlockedReason={session.buildExitBlockedReason}
       buildExitBlockedIssues={session.buildExitBlockedIssues}
       placementOrientation={session.placementOrientation}
@@ -109,9 +137,12 @@ function ActivePrototypeGame({
       onEnterManagementMode={session.enterManagementMode}
       onExitManagementMode={session.exitManagementMode}
       onServiceAppointmentsEnabledChange={session.setServiceAppointmentsEnabled}
+      onStartLaboratoryProcessing={session.startLaboratoryProcessing}
       onSelectRoom={session.selectRoom}
       onSellSelectedRoom={session.sellSelectedRoom}
       onUpgradeSelectedRoom={session.upgradeSelectedRoom}
+      onUpgradeRoom={session.upgradeRoom}
+      onBeginMoveSelectedRoom={session.beginMoveSelectedRoom}
       onPlaceDoor={session.placeDoor}
       onRemoveDoor={session.removeDoor}
       onUndoBuildAction={session.undoBuildAction}
@@ -120,12 +151,20 @@ function ActivePrototypeGame({
       onDecreaseEmployeeSalary={session.decreaseEmployeeSalary}
       onIncreaseEmployeeSalary={session.increaseEmployeeSalary}
       onFireEmployee={session.fireEmployee}
+      onTrainEmployee={session.trainEmployee}
       onCollectLitter={session.collectLitter}
       onRefillWaterCooler={session.refillWaterCooler}
       onSeatFounderAtFrontDesk={session.seatFounderAtFrontDesk}
+      onSeatFounderInChair={session.seatFounderInChair}
+      onDescribeCharacter={session.describeCharacter}
       onPraiseEmployee={session.praiseEmployee}
       onMoveFounder={session.moveFounder}
       onLevelUp={session.levelUp}
+      onBookInspection={session.bookInspection}
+      onCancelInspection={session.cancelInspection}
+      finishReportOpen={session.finishReportOpen}
+      onViewFinishReport={session.openFinishReport}
+      onCloseFinishReport={session.closeFinishReport}
       onFastForward={session.fastForward}
       onAddMoney={session.addMoney}
       onRunEmergencyGlp1Consultation={
@@ -136,12 +175,17 @@ function ActivePrototypeGame({
       onSwitchCampaign={session.switchCampaign}
       onTutorialAction={session.performTutorialAction}
       onTutorialsEnabledChange={session.setTutorialsEnabled}
+      onReferencePauseLockedChange={session.setReferencePauseLocked}
+      onTutorialTopicExposure={session.recordTutorialTopicExposure}
+      onReplayFirstShift={() => { const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); }}
       onSaveAndPause={session.saveAndPause}
+      onClinicAlertAction={session.runClinicAlertAction}
       onClearLocalCampaigns={session.clearLocalCampaigns}
       onRestart={() =>
         onRequestRestart(session.profile, session.state.campaignSeed)
       }
     />
+    </>
   );
 }
 
@@ -150,6 +194,7 @@ interface OpeningLaunchState {
   profile: LocalPrototypeProfile;
   campaignSeed?: string;
   initialStep: "main" | "founder";
+  guidanceEnabled?: boolean;
   sequence: number;
 }
 
@@ -160,8 +205,8 @@ interface GameLaunchState {
 
 type LaunchState = OpeningLaunchState | GameLaunchState;
 
-function initialLaunchState(): LaunchState {
-  const loadedProfile = loadPrototypeProfile();
+function initialLaunchState(accountId: string | null): LaunchState {
+  const loadedProfile = loadPrototypeProfile(accountId);
   return {
     mode: "opening",
     profile: loadedProfile.profile,
@@ -171,18 +216,21 @@ function initialLaunchState(): LaunchState {
 }
 
 function AuthenticatedPrototype() {
-  const [launch, setLaunch] = useState<LaunchState>(initialLaunchState);
+  const accountId = useAuthAccountId();
+  const [launch, setLaunch] = useState<LaunchState>(() => initialLaunchState(accountId));
 
   const requestOpening = (
     profile: LocalPrototypeProfile,
     campaignSeed?: string,
     initialStep: "main" | "founder" = "founder",
+    guidanceEnabled?: boolean,
   ) => {
     setLaunch((current) => ({
       mode: "opening",
       profile,
       ...(campaignSeed ? { campaignSeed } : {}),
       initialStep,
+      ...(guidanceEnabled === undefined ? {} : { guidanceEnabled }),
       sequence: current.mode === "opening" ? current.sequence + 1 : 1,
     }));
   };
@@ -193,7 +241,7 @@ function AuthenticatedPrototype() {
     notice = "Local campaign restored.",
   ) => {
     const selected = selectLocalCampaign(profile, campaignId);
-    const saved = savePrototypeProfileResult(selected);
+    const saved = savePrototypeProfileResult(selected, accountId);
     setLaunch({
       mode: "game",
       loadedProfile: {
@@ -210,15 +258,17 @@ function AuthenticatedPrototype() {
         profile={launch.profile}
         campaignSeed={launch.campaignSeed}
         initialStep={launch.initialStep}
-        onBeginClinic={(founder, clinicName, campaignSeed) => {
+        initialGuidanceEnabled={launch.guidanceEnabled}
+        onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
           const next = appendLocalCampaign(
             launch.profile,
             founder,
             clinicName,
             Date.now(),
             campaignSeed,
+            guidanceEnabled,
           );
-          const saved = savePrototypeProfileResult(next.profile);
+          const saved = savePrototypeProfileResult(next.profile, accountId);
           setLaunch({
             mode: "game",
             loadedProfile: {
@@ -237,7 +287,7 @@ function AuthenticatedPrototype() {
             launch.profile,
             campaignId,
           );
-          const saved = savePrototypeProfileResult(restored);
+          const saved = savePrototypeProfileResult(restored, accountId);
           openCampaign(
             restored,
             campaignId,
@@ -256,13 +306,16 @@ function AuthenticatedPrototype() {
       <OpeningSequence
         profile={launch.loadedProfile.profile}
         initialStep="main"
-        onBeginClinic={(founder, clinicName) => {
+        onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
           const next = appendLocalCampaign(
             launch.loadedProfile.profile,
             founder,
             clinicName,
+            Date.now(),
+            campaignSeed,
+            guidanceEnabled,
           );
-          const saved = savePrototypeProfileResult(next.profile);
+          const saved = savePrototypeProfileResult(next.profile, accountId);
           setLaunch({
             mode: "game",
             loadedProfile: {
@@ -281,7 +334,7 @@ function AuthenticatedPrototype() {
             launch.loadedProfile.profile,
             campaignId,
           );
-          const saved = savePrototypeProfileResult(restored);
+          const saved = savePrototypeProfileResult(restored, accountId);
           openCampaign(
             restored,
             campaignId,
@@ -298,15 +351,15 @@ function AuthenticatedPrototype() {
     <ActivePrototypeGame
       key={activeCampaign.campaignId}
       loadedProfile={launch.loadedProfile}
-      onRequestNewCampaign={(profile) =>
-        requestOpening(profile, undefined, "founder")
+      onRequestNewCampaign={(profile, guidanceEnabled) =>
+        requestOpening(profile, undefined, "founder", guidanceEnabled)
       }
       onRequestRestart={(profile, campaignSeed) => {
         const archived = archiveLocalCampaign(
           profile,
           activeCampaign.campaignId,
         );
-        savePrototypeProfileResult(archived);
+        savePrototypeProfileResult(archived, accountId);
         requestOpening(archived, campaignSeed, "founder");
       }}
     />
@@ -314,9 +367,18 @@ function AuthenticatedPrototype() {
 }
 
 export function App() {
+  const layout = usePresentationLayout();
   return (
-    <AuthGate>
-      <AuthenticatedPrototype />
-    </AuthGate>
+    <>
+      {layout === "phone" ? <Suspense fallback={null}><MobileEntryPresentation /></Suspense> : null}
+      <AuthGate>
+        <UsageProvider>
+          <QuestionFlagProvider>
+            <UsageNotice />
+            <AuthenticatedPrototype />
+          </QuestionFlagProvider>
+        </UsageProvider>
+      </AuthGate>
+    </>
   );
 }

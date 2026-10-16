@@ -1,0 +1,2085 @@
+{
+  "generatedAt": "2026-09-28T17:58:40.256Z",
+  "scope": "Current loaded runtime catalogs. This is a simulation-routing inventory, not a clinical recommendation or approval.",
+  "reproducibility": {
+    "generator": "tools/procedure-room-audit/extract-procedure-room-routing.test.ts",
+    "command": "node_modules/.bin/vitest.cmd run tools/procedure-room-audit/extract-procedure-room-routing.test.ts",
+    "sourceReferences": [
+      "packages/balance-config/src/prototype-balance.ts",
+      "packages/balance-config/src/service-income-catalog.ts",
+      "packages/game-domain/src/reducer.ts",
+      "packages/game-domain/src/service-operations.ts"
+    ]
+  },
+  "procedureRooms": [
+    {
+      "id": "room.minor_procedure",
+      "displayName": "Minor-Procedure Room",
+      "capabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "constructionCost": 800,
+      "upkeep": {
+        "hourly": 15,
+        "perUpgradeLevelHourly": 2,
+        "postingIntervalFacilityMinutes": 15,
+        "semantics": "The reducer accrues hourly room upkeep each facility minute and posts it every 15 facility minutes. economy.expenseIntervalTicks is not used by this runtime calculation."
+      },
+      "upgrades": {
+        "costs": [
+          220,
+          330,
+          480,
+          680
+        ],
+        "configuredDurationReductionPercentPerUpgradeLevel": 5,
+        "runtimeUse": "The selector exposes this value, but current routing and operation code do not call it; no current procedure duration is reduced by this configuration."
+      }
+    },
+    {
+      "id": "room.ultrasound",
+      "displayName": "Ultrasound Room",
+      "capabilityIds": [
+        "capability.ultrasound_machine"
+      ],
+      "constructionCost": 950,
+      "upkeep": {
+        "hourly": 16,
+        "perUpgradeLevelHourly": 2,
+        "postingIntervalFacilityMinutes": 15,
+        "semantics": "The reducer accrues hourly room upkeep each facility minute and posts it every 15 facility minutes. economy.expenseIntervalTicks is not used by this runtime calculation."
+      },
+      "upgrades": {
+        "costs": [
+          240,
+          360,
+          525,
+          715
+        ],
+        "configuredDurationReductionPercentPerUpgradeLevel": 8,
+        "runtimeUse": "The selector exposes this value, but current routing and operation code do not call it; no current procedure duration is reduced by this configuration."
+      }
+    }
+  ],
+  "clock": {
+    "facilityTick": "one facility minute",
+    "realMillisecondsPerFacilityMinuteAt1x": 1000,
+    "supportedSpeeds": [
+      1,
+      2,
+      4
+    ],
+    "semantics": "A 1x facility minute lasts 1 real second; 2x and 4x divide that duration."
+  },
+  "currentRoutesToProcedureRoom": [
+    {
+      "kind": "case_result_gate_route",
+      "approval": "owner_approved_runtime_mapping",
+      "serviceId": "service.breast_core_needle_biopsy",
+      "serviceDisplayName": "Core-needle biopsy",
+      "routeId": "route.breast_core_needle_biopsy.in_house",
+      "routeDisplayName": "Onsite image-guided core biopsy with external pathology",
+      "requiredCapabilityId": "capability.ultrasound_machine",
+      "requiredCapabilityIds": [
+        "capability.staff.imaging_technician"
+      ],
+      "resourceRequirements": [
+        {
+          "roomDefinitionId": "room.ultrasound",
+          "staffRoleDefinitionId": "staff.imaging_technician"
+        }
+      ],
+      "providerRequirement": null,
+      "routeDuration": {
+        "facilityMinutes": 180,
+        "realSeconds": {
+          "1x": 180,
+          "2x": 90,
+          "4x": 45
+        }
+      },
+      "timingPhases": [
+        {
+          "id": "phase.breast_core_needle_biopsy.procedure",
+          "durationTicks": 60,
+          "resourceBound": true,
+          "duration": {
+            "facilityMinutes": 60,
+            "realSeconds": {
+              "1x": 60,
+              "2x": 30,
+              "4x": 15
+            }
+          }
+        },
+        {
+          "id": "phase.breast_core_needle_biopsy.external_pathology",
+          "durationTicks": 120,
+          "resourceBound": false,
+          "duration": {
+            "facilityMinutes": 120,
+            "realSeconds": {
+              "1x": 120,
+              "2x": 60,
+              "4x": 30
+            }
+          }
+        }
+      ],
+      "patientTravel": {
+        "originRoomDefinitionId": "room.examination",
+        "destinationRoomDefinitionId": "room.ultrasound",
+        "roundTrip": true
+      },
+      "money": {
+        "serviceIncomeLineId": "income.procedure.image_guided_breast_core_biopsy",
+        "grossRevenue": 150,
+        "directExpense": 0,
+        "semantics": "Route-linked income is credited to the clinic only after the final resource-bound phase. No separate procedure-room expense is configured."
+      }
+    },
+    {
+      "kind": "case_result_gate_route",
+      "approval": "owner_approved_runtime_mapping",
+      "serviceId": "service.thyroid_fna",
+      "serviceDisplayName": "Thyroid fine-needle aspiration",
+      "routeId": "route.thyroid_fna.in_house",
+      "routeDisplayName": "Onsite ultrasound-guided thyroid FNA with external cytology",
+      "requiredCapabilityId": "capability.ultrasound_machine",
+      "requiredCapabilityIds": [
+        "capability.staff.imaging_technician"
+      ],
+      "resourceRequirements": [
+        {
+          "roomDefinitionId": "room.ultrasound",
+          "staffRoleDefinitionId": "staff.imaging_technician"
+        }
+      ],
+      "providerRequirement": null,
+      "routeDuration": {
+        "facilityMinutes": 180,
+        "realSeconds": {
+          "1x": 180,
+          "2x": 90,
+          "4x": 45
+        }
+      },
+      "timingPhases": [
+        {
+          "id": "phase.thyroid_fna.procedure",
+          "durationTicks": 60,
+          "resourceBound": true,
+          "duration": {
+            "facilityMinutes": 60,
+            "realSeconds": {
+              "1x": 60,
+              "2x": 30,
+              "4x": 15
+            }
+          }
+        },
+        {
+          "id": "phase.thyroid_fna.external_cytology",
+          "durationTicks": 120,
+          "resourceBound": false,
+          "duration": {
+            "facilityMinutes": 120,
+            "realSeconds": {
+              "1x": 120,
+              "2x": 60,
+              "4x": 30
+            }
+          }
+        }
+      ],
+      "patientTravel": {
+        "originRoomDefinitionId": "room.examination",
+        "destinationRoomDefinitionId": "room.ultrasound",
+        "roundTrip": true
+      },
+      "money": {
+        "serviceIncomeLineId": "income.procedure.ultrasound_guided_thyroid_fna",
+        "grossRevenue": 150,
+        "directExpense": 0,
+        "semantics": "Route-linked income is credited to the clinic only after the final resource-bound phase. No separate procedure-room expense is configured."
+      }
+    },
+    {
+      "kind": "case_result_gate_route",
+      "approval": "owner_approved_runtime_mapping",
+      "serviceId": "service.anoscopy",
+      "serviceDisplayName": "Anoscopy",
+      "routeId": "route.anoscopy.in_house",
+      "routeDisplayName": "Onsite anoscopy",
+      "requiredCapabilityId": "capability.minor_procedure",
+      "requiredCapabilityIds": [],
+      "resourceRequirements": [
+        {
+          "roomDefinitionId": "room.minor_procedure",
+          "staffRoleDefinitionId": null
+        }
+      ],
+      "providerRequirement": {
+        "preferredEmployeeStaffRoleDefinitionId": "staff.app",
+        "founderEligible": true
+      },
+      "routeDuration": {
+        "facilityMinutes": 15,
+        "realSeconds": {
+          "1x": 15,
+          "2x": 7.5,
+          "4x": 3.75
+        }
+      },
+      "timingPhases": [
+        {
+          "id": "phase.anoscopy.procedure",
+          "durationTicks": 15,
+          "resourceBound": true,
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          }
+        }
+      ],
+      "patientTravel": {
+        "originRoomDefinitionId": "room.examination",
+        "destinationRoomDefinitionId": "room.minor_procedure",
+        "roundTrip": true
+      },
+      "money": {
+        "serviceIncomeLineId": "income.procedure.anoscopy",
+        "grossRevenue": 200,
+        "directExpense": 0,
+        "semantics": "Route-linked income is credited to the clinic only after the final resource-bound phase. No separate procedure-room expense is configured."
+      }
+    },
+    {
+      "kind": "case_result_gate_route",
+      "approval": "owner_approved_runtime_mapping",
+      "serviceId": "service.skin_excisional_biopsy",
+      "serviceDisplayName": "Excisional skin biopsy",
+      "routeId": "route.skin_excisional_biopsy.in_house",
+      "routeDisplayName": "Onsite excisional skin biopsy with external pathology",
+      "requiredCapabilityId": "capability.minor_procedure",
+      "requiredCapabilityIds": [],
+      "resourceRequirements": [
+        {
+          "roomDefinitionId": "room.minor_procedure",
+          "staffRoleDefinitionId": null
+        }
+      ],
+      "providerRequirement": {
+        "preferredEmployeeStaffRoleDefinitionId": "staff.app",
+        "founderEligible": true
+      },
+      "routeDuration": {
+        "facilityMinutes": 165,
+        "realSeconds": {
+          "1x": 165,
+          "2x": 82.5,
+          "4x": 41.25
+        }
+      },
+      "timingPhases": [
+        {
+          "id": "phase.skin_excisional_biopsy.sampling",
+          "durationTicks": 45,
+          "resourceBound": true,
+          "duration": {
+            "facilityMinutes": 45,
+            "realSeconds": {
+              "1x": 45,
+              "2x": 22.5,
+              "4x": 11.25
+            }
+          }
+        },
+        {
+          "id": "phase.skin_excisional_biopsy.external_pathology",
+          "durationTicks": 120,
+          "resourceBound": false,
+          "duration": {
+            "facilityMinutes": 120,
+            "realSeconds": {
+              "1x": 120,
+              "2x": 60,
+              "4x": 30
+            }
+          }
+        }
+      ],
+      "patientTravel": {
+        "originRoomDefinitionId": "room.examination",
+        "destinationRoomDefinitionId": "room.minor_procedure",
+        "roundTrip": true
+      },
+      "money": {
+        "serviceIncomeLineId": "income.minor_procedure_sampling",
+        "grossRevenue": 150,
+        "directExpense": 0,
+        "semantics": "Route-linked income is credited to the clinic only after the final resource-bound phase. No separate procedure-room expense is configured."
+      }
+    },
+    {
+      "kind": "case_result_gate_route",
+      "approval": "owner_approved_runtime_mapping",
+      "serviceId": "service.cutaneous_lesion_biopsy",
+      "serviceDisplayName": "Cutaneous lesion biopsy",
+      "routeId": "route.cutaneous_lesion_biopsy.in_house",
+      "routeDisplayName": "Onsite cutaneous lesion biopsy with external pathology",
+      "requiredCapabilityId": "capability.minor_procedure",
+      "requiredCapabilityIds": [],
+      "resourceRequirements": [
+        {
+          "roomDefinitionId": "room.minor_procedure",
+          "staffRoleDefinitionId": null
+        }
+      ],
+      "providerRequirement": {
+        "preferredEmployeeStaffRoleDefinitionId": "staff.app",
+        "founderEligible": true
+      },
+      "routeDuration": {
+        "facilityMinutes": 135,
+        "realSeconds": {
+          "1x": 135,
+          "2x": 67.5,
+          "4x": 33.75
+        }
+      },
+      "timingPhases": [
+        {
+          "id": "phase.cutaneous_lesion_biopsy.sampling",
+          "durationTicks": 15,
+          "resourceBound": true,
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          }
+        },
+        {
+          "id": "phase.cutaneous_lesion_biopsy.external_pathology",
+          "durationTicks": 120,
+          "resourceBound": false,
+          "duration": {
+            "facilityMinutes": 120,
+            "realSeconds": {
+              "1x": 120,
+              "2x": 60,
+              "4x": 30
+            }
+          }
+        }
+      ],
+      "patientTravel": {
+        "originRoomDefinitionId": "room.examination",
+        "destinationRoomDefinitionId": "room.minor_procedure",
+        "roundTrip": true
+      },
+      "money": {
+        "serviceIncomeLineId": "income.minor_procedure_sampling",
+        "grossRevenue": 150,
+        "directExpense": 0,
+        "semantics": "Route-linked income is credited to the clinic only after the final resource-bound phase. No separate procedure-room expense is configured."
+      }
+    }
+  ],
+  "discoveredMinorProcedureRouteIds": [
+    "route.anoscopy.in_house",
+    "route.skin_excisional_biopsy.in_house",
+    "route.cutaneous_lesion_biopsy.in_house"
+  ],
+  "currentNonterminalCaseGateTriggers": [
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.thyroid-nodule.palpable-referral",
+      "caseDisplayName": "Selected thyroid-nodule evaluation",
+      "chiefComplaint": "Thyroid nodule consultation",
+      "nodeId": "node.thyroid-nodule.palpable-referral.1",
+      "stem": "Which diagnostic step best fits {patientName}'s thyroid nodule now?",
+      "gateId": "gate.thyroid-nodule.fna.1",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.thyroid_fna.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "thyroid_fna_1",
+          "label": "Ultrasound-guided thyroid FNA",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_tsh_1",
+          "label": "Serum thyroid-stimulating hormone",
+          "isCorrect": false
+        },
+        {
+          "id": "radionuclide_scan_1",
+          "label": "Radionuclide thyroid uptake scan",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_ultrasound_1",
+          "label": "Repeat thyroid ultrasonography",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.thyroid-nodule.incidental-imaging",
+      "caseDisplayName": "Selected thyroid-nodule evaluation",
+      "chiefComplaint": "Thyroid nodule consultation",
+      "nodeId": "node.thyroid-nodule.incidental-imaging.1",
+      "stem": "What is the appropriate next diagnostic action for {patientName}?",
+      "gateId": "gate.thyroid-nodule.fna.2",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.thyroid_fna.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "thyroid_fna_2",
+          "label": "Ultrasound-guided thyroid FNA",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_tsh_2",
+          "label": "Serum thyroid-stimulating hormone",
+          "isCorrect": false
+        },
+        {
+          "id": "radionuclide_scan_2",
+          "label": "Radionuclide thyroid uptake scan",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_ultrasound_2",
+          "label": "Repeat thyroid ultrasonography",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.thyroid-nodule.family-clinic",
+      "caseDisplayName": "Selected thyroid-nodule evaluation",
+      "chiefComplaint": "Thyroid nodule consultation",
+      "nodeId": "node.thyroid-nodule.family-clinic.1",
+      "stem": "Which study should be arranged next for {patientName}'s nodule?",
+      "gateId": "gate.thyroid-nodule.fna.3",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.thyroid_fna.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "thyroid_fna_3",
+          "label": "Ultrasound-guided thyroid FNA",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_tsh_3",
+          "label": "Serum thyroid-stimulating hormone",
+          "isCorrect": false
+        },
+        {
+          "id": "radionuclide_scan_3",
+          "label": "Radionuclide thyroid uptake scan",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_ultrasound_3",
+          "label": "Repeat thyroid ultrasonography",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.thyroid-nodule.surveillance-change",
+      "caseDisplayName": "Selected thyroid-nodule evaluation",
+      "chiefComplaint": "Thyroid nodule consultation",
+      "nodeId": "node.thyroid-nodule.surveillance-change.1",
+      "stem": "What is the best next diagnostic step for {patientName}?",
+      "gateId": "gate.thyroid-nodule.fna.4",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.thyroid_fna.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "thyroid_fna_4",
+          "label": "Ultrasound-guided thyroid FNA",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_tsh_4",
+          "label": "Serum thyroid-stimulating hormone",
+          "isCorrect": false
+        },
+        {
+          "id": "radionuclide_scan_4",
+          "label": "Radionuclide thyroid uptake scan",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_ultrasound_4",
+          "label": "Repeat thyroid ultrasonography",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.internal-hemorrhoids.commute",
+      "caseDisplayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "nodeId": "node.internal-hemorrhoids.commute.1",
+      "stem": "Which focused examination should be selected next for {patientName}?",
+      "gateId": "gate.internal-hemorrhoids.anoscopy.1",
+      "serviceId": "service.anoscopy",
+      "allowedRouteIds": [
+        "route.anoscopy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.anoscopy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "anoscopy_1",
+          "label": "Anal canal anoscopy",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_colonoscopy_1",
+          "label": "Repeat colonoscopy",
+          "isCorrect": false
+        },
+        {
+          "id": "pelvic_mri_1",
+          "label": "Pelvic MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "occult_blood_1",
+          "label": "Fecal occult-blood testing",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.internal-hemorrhoids.exercise",
+      "caseDisplayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "nodeId": "node.internal-hemorrhoids.exercise.1",
+      "stem": "Which focused examination should be selected next for {patientName}?",
+      "gateId": "gate.internal-hemorrhoids.anoscopy.2",
+      "serviceId": "service.anoscopy",
+      "allowedRouteIds": [
+        "route.anoscopy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.anoscopy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "anoscopy_2",
+          "label": "Anal canal anoscopy",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_colonoscopy_2",
+          "label": "Repeat colonoscopy",
+          "isCorrect": false
+        },
+        {
+          "id": "pelvic_mri_2",
+          "label": "Pelvic MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "occult_blood_2",
+          "label": "Fecal occult-blood testing",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.internal-hemorrhoids.workday",
+      "caseDisplayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "nodeId": "node.internal-hemorrhoids.workday.1",
+      "stem": "Which focused examination should be selected next for {patientName}?",
+      "gateId": "gate.internal-hemorrhoids.anoscopy.3",
+      "serviceId": "service.anoscopy",
+      "allowedRouteIds": [
+        "route.anoscopy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.anoscopy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "anoscopy_3",
+          "label": "Anal canal anoscopy",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_colonoscopy_3",
+          "label": "Repeat colonoscopy",
+          "isCorrect": false
+        },
+        {
+          "id": "pelvic_mri_3",
+          "label": "Pelvic MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "occult_blood_3",
+          "label": "Fecal occult-blood testing",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.internal-hemorrhoids.followup",
+      "caseDisplayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "nodeId": "node.internal-hemorrhoids.followup.1",
+      "stem": "Which focused examination should be selected next for {patientName}?",
+      "gateId": "gate.internal-hemorrhoids.anoscopy.4",
+      "serviceId": "service.anoscopy",
+      "allowedRouteIds": [
+        "route.anoscopy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.anoscopy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "anoscopy_4",
+          "label": "Anal canal anoscopy",
+          "isCorrect": true
+        },
+        {
+          "id": "repeat_colonoscopy_4",
+          "label": "Repeat colonoscopy",
+          "isCorrect": false
+        },
+        {
+          "id": "pelvic_mri_4",
+          "label": "Pelvic MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "occult_blood_4",
+          "label": "Fecal occult-blood testing",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+      "caseDisplayName": "Changing skin lesion evaluation",
+      "chiefComplaint": "Changing skin spot",
+      "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.1",
+      "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+      "gateId": "gate.pigmented-skin-lesion.biopsy.1",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.skin_excisional_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "excisional_1",
+          "label": "Complete excisional biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "superficial_shave_1",
+          "label": "Superficial shave biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "partial_punch_1",
+          "label": "Partial punch biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "wide_excision_1",
+          "label": "Definitive wide local excision",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.pigmented-skin-lesion.shoulder-border",
+      "caseDisplayName": "Changing skin lesion evaluation",
+      "chiefComplaint": "Changing skin spot",
+      "nodeId": "node.pigmented-skin-lesion.shoulder-border.1",
+      "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+      "gateId": "gate.pigmented-skin-lesion.biopsy.2",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.skin_excisional_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "excisional_2",
+          "label": "Complete excisional biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "superficial_shave_2",
+          "label": "Superficial shave biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "partial_punch_2",
+          "label": "Partial punch biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "wide_excision_2",
+          "label": "Definitive wide local excision",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.pigmented-skin-lesion.calf-growth",
+      "caseDisplayName": "Changing skin lesion evaluation",
+      "chiefComplaint": "Changing skin spot",
+      "nodeId": "node.pigmented-skin-lesion.calf-growth.1",
+      "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+      "gateId": "gate.pigmented-skin-lesion.biopsy.3",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.skin_excisional_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "excisional_3",
+          "label": "Complete excisional biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "superficial_shave_3",
+          "label": "Superficial shave biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "partial_punch_3",
+          "label": "Partial punch biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "wide_excision_3",
+          "label": "Definitive wide local excision",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.pigmented-skin-lesion.forearm-change",
+      "caseDisplayName": "Changing skin lesion evaluation",
+      "chiefComplaint": "Changing skin spot",
+      "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+      "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+      "gateId": "gate.pigmented-skin-lesion.biopsy.4",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.skin_excisional_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "excisional_4",
+          "label": "Complete excisional biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "superficial_shave_4",
+          "label": "Superficial shave biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "partial_punch_4",
+          "label": "Partial punch biopsy",
+          "isCorrect": false
+        },
+        {
+          "id": "wide_excision_4",
+          "label": "Definitive wide local excision",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.cutaneous-scc.forearm-low",
+      "caseDisplayName": "Keratinocyte lesion review",
+      "chiefComplaint": "Scaly forearm lesion",
+      "nodeId": "node.cutaneous-scc.forearm-low.1",
+      "stem": "Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",
+      "gateId": "gate.cutaneous-scc.biopsy.0",
+      "serviceId": "service.cutaneous_lesion_biopsy",
+      "allowedRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house",
+        "route.cutaneous_lesion_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "biopsy_0",
+          "label": "Diagnostic skin biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "freeze_0",
+          "label": "Cryotherapy treatment",
+          "isCorrect": false
+        },
+        {
+          "id": "observe_0",
+          "label": "Clinical observation",
+          "isCorrect": false
+        },
+        {
+          "id": "mohs_0",
+          "label": "Refer for Mohs surgery",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.cutaneous-scc.trunk-low",
+      "caseDisplayName": "Keratinocyte lesion review",
+      "chiefComplaint": "Trunk skin lesion",
+      "nodeId": "node.cutaneous-scc.trunk-low.1",
+      "stem": "Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",
+      "gateId": "gate.cutaneous-scc.biopsy.1",
+      "serviceId": "service.cutaneous_lesion_biopsy",
+      "allowedRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house",
+        "route.cutaneous_lesion_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "biopsy_1",
+          "label": "Diagnostic skin biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "freeze_1",
+          "label": "Cryotherapy treatment",
+          "isCorrect": false
+        },
+        {
+          "id": "observe_1",
+          "label": "Clinical observation",
+          "isCorrect": false
+        },
+        {
+          "id": "mohs_1",
+          "label": "Refer for Mohs surgery",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.cutaneous-scc.ear-high",
+      "caseDisplayName": "Keratinocyte lesion review",
+      "chiefComplaint": "Ear skin lesion",
+      "nodeId": "node.cutaneous-scc.ear-high.1",
+      "stem": "Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",
+      "gateId": "gate.cutaneous-scc.biopsy.2",
+      "serviceId": "service.cutaneous_lesion_biopsy",
+      "allowedRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house",
+        "route.cutaneous_lesion_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "biopsy_2",
+          "label": "Diagnostic skin biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "freeze_2",
+          "label": "Cryotherapy treatment",
+          "isCorrect": false
+        },
+        {
+          "id": "observe_2",
+          "label": "Clinical observation",
+          "isCorrect": false
+        },
+        {
+          "id": "mohs_2",
+          "label": "Refer for Mohs surgery",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.cutaneous-scc.recurrent-high",
+      "caseDisplayName": "Keratinocyte lesion review",
+      "chiefComplaint": "Recurrent skin lesion",
+      "nodeId": "node.cutaneous-scc.recurrent-high.1",
+      "stem": "Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",
+      "gateId": "gate.cutaneous-scc.biopsy.3",
+      "serviceId": "service.cutaneous_lesion_biopsy",
+      "allowedRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house",
+        "route.cutaneous_lesion_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.cutaneous_lesion_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "explicit_in_house_route"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "biopsy_3",
+          "label": "Diagnostic skin biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "freeze_3",
+          "label": "Cryotherapy treatment",
+          "isCorrect": false
+        },
+        {
+          "id": "observe_3",
+          "label": "Clinical observation",
+          "isCorrect": false
+        },
+        {
+          "id": "mohs_3",
+          "label": "Refer for Mohs surgery",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.bread-butter.breast-mass.screening-call-back",
+      "caseDisplayName": "Suspicious solid breast mass",
+      "chiefComplaint": "Breast mass review",
+      "nodeId": "node.bread-butter.breast-mass.screening-call-back.1",
+      "stem": "Which next step is best?",
+      "gateId": "gate.bread-butter.breast-mass.core.1",
+      "serviceId": "service.breast_core_needle_biopsy",
+      "allowedRouteIds": [
+        "route.breast_core_needle_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.breast_core_needle_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "core_1",
+          "label": "Image-guided core biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "mri_1",
+          "label": "Contrast-enhanced breast MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_1",
+          "label": "Repeat diagnostic mammography",
+          "isCorrect": false
+        },
+        {
+          "id": "excision_1",
+          "label": "Immediate excisional biopsy",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.bread-butter.breast-mass.palpable-lump",
+      "caseDisplayName": "Suspicious solid breast mass",
+      "chiefComplaint": "Breast lump",
+      "nodeId": "node.bread-butter.breast-mass.palpable-lump.1",
+      "stem": "Which next step is best?",
+      "gateId": "gate.bread-butter.breast-mass.core.2",
+      "serviceId": "service.breast_core_needle_biopsy",
+      "allowedRouteIds": [
+        "route.breast_core_needle_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.breast_core_needle_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "core_2",
+          "label": "Image-guided core biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "mri_2",
+          "label": "Contrast-enhanced breast MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_2",
+          "label": "Repeat diagnostic mammography",
+          "isCorrect": false
+        },
+        {
+          "id": "excision_2",
+          "label": "Immediate excisional biopsy",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.bread-butter.breast-mass.imaging-follow-up",
+      "caseDisplayName": "Suspicious solid breast mass",
+      "chiefComplaint": "Imaging results",
+      "nodeId": "node.bread-butter.breast-mass.imaging-follow-up.1",
+      "stem": "Which next step is best?",
+      "gateId": "gate.bread-butter.breast-mass.core.3",
+      "serviceId": "service.breast_core_needle_biopsy",
+      "allowedRouteIds": [
+        "route.breast_core_needle_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.breast_core_needle_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "core_3",
+          "label": "Image-guided core biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "mri_3",
+          "label": "Contrast-enhanced breast MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_3",
+          "label": "Repeat diagnostic mammography",
+          "isCorrect": false
+        },
+        {
+          "id": "excision_3",
+          "label": "Immediate excisional biopsy",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "kind": "nonterminal_case_result_gate",
+      "approval": "owner_approved_runtime_mapping",
+      "caseId": "case.bread-butter.breast-mass.new-breast-nodule",
+      "caseDisplayName": "Suspicious solid breast mass",
+      "chiefComplaint": "Breast nodule",
+      "nodeId": "node.bread-butter.breast-mass.new-breast-nodule.1",
+      "stem": "Which next step is best?",
+      "gateId": "gate.bread-butter.breast-mass.core.4",
+      "serviceId": "service.breast_core_needle_biopsy",
+      "allowedRouteIds": [
+        "route.breast_core_needle_biopsy.outsourced"
+      ],
+      "directProcedureRoomRouteIds": [
+        "route.breast_core_needle_biopsy.in_house"
+      ],
+      "routeSelectionReason": [
+        "selector_accepts_outsourced_equivalent"
+      ],
+      "answerTriggerSemantics": "The reducer schedules this nonterminal result gate after any submitted choice at this node, including an incorrect choice; the route is not selected from answer wording.",
+      "answerChoices": [
+        {
+          "id": "core_4",
+          "label": "Image-guided core biopsy",
+          "isCorrect": true
+        },
+        {
+          "id": "mri_4",
+          "label": "Contrast-enhanced breast MRI",
+          "isCorrect": false
+        },
+        {
+          "id": "repeat_4",
+          "label": "Repeat diagnostic mammography",
+          "isCorrect": false
+        },
+        {
+          "id": "excision_4",
+          "label": "Immediate excisional biopsy",
+          "isCorrect": false
+        }
+      ]
+    }
+  ],
+  "currentProcedureRoomServiceOperations": [
+    {
+      "kind": "service_operation",
+      "approval": "frozen_legacy_not_new_mapping",
+      "incomeLineId": "income.minor_procedure_simple",
+      "displayName": "Simple minor procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 100,
+        "stockCost": 0,
+        "netCashDelta": 100,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 45,
+            "realSeconds": {
+              "1x": 45,
+              "2x": 22.5,
+              "4x": 11.25
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "frozen_legacy_not_new_mapping",
+      "incomeLineId": "income.minor_procedure_sampling",
+      "displayName": "Minor diagnostic sampling",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "resource_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 150,
+        "stockCost": 0,
+        "netCashDelta": 150,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "sampling",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 60,
+            "realSeconds": {
+              "1x": 60,
+              "2x": 30,
+              "4x": 15
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "frozen_legacy_not_new_mapping",
+      "incomeLineId": "income.minor_procedure_complex",
+      "displayName": "Complex office procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 200,
+        "stockCost": 0,
+        "netCashDelta": 200,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 60,
+            "realSeconds": {
+              "1x": 60,
+              "2x": 30,
+              "4x": 15
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.breast_cyst_aspiration.v2",
+      "displayName": "Simple minor procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 150,
+        "stockCost": 0,
+        "netCashDelta": 150,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "displayName": "Simple minor procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 100,
+        "stockCost": 0,
+        "netCashDelta": 100,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "displayName": "Complex office procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 200,
+        "stockCost": 0,
+        "netCashDelta": 200,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "displayName": "Office procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 200,
+        "stockCost": 0,
+        "netCashDelta": 200,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 30,
+            "realSeconds": {
+              "1x": 30,
+              "2x": 15,
+              "4x": 7.5
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "displayName": "Office procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.minor_procedure"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 200,
+        "stockCost": 0,
+        "netCashDelta": 200,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.minor_procedure",
+          "duration": {
+            "facilityMinutes": 15,
+            "realSeconds": {
+              "1x": 15,
+              "2x": 7.5,
+              "4x": 3.75
+            }
+          },
+          "staffRoleDefinitionIds": [],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": true
+        }
+      ]
+    },
+    {
+      "kind": "service_operation",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "displayName": "Ultrasound-guided procedure",
+      "visitorMode": "explicit_only",
+      "arrivalCadenceMinutes": null,
+      "encounterOnly": true,
+      "requiredCapabilityIds": [
+        "capability.ultrasound_machine",
+        "capability.staff.imaging_technician"
+      ],
+      "paymentStage": "episode_completion",
+      "money": {
+        "grossRevenueOnConfiguredPaymentStage": 150,
+        "stockCost": 0,
+        "netCashDelta": 150,
+        "semantics": "Revenue is credited at the configured payment stage after the operation completes; no separate procedure-room expense exists."
+      },
+      "phases": [
+        {
+          "id": "procedure",
+          "roomDefinitionId": "room.ultrasound",
+          "duration": {
+            "facilityMinutes": 60,
+            "realSeconds": {
+              "1x": 60,
+              "2x": 30,
+              "4x": 15
+            }
+          },
+          "staffRoleDefinitionIds": [
+            "staff.imaging_technician"
+          ],
+          "providerRoleDefinitionIds": [],
+          "founderEligible": false
+        }
+      ]
+    }
+  ],
+  "currentTerminalAnswerTriggers": [
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.breast_cyst_aspiration.v2",
+      "caseId": "case.breast-cyst.under-30-painful-simple",
+      "nodeId": "node.breast-cyst.symptomatic-simple-aspiration.v1",
+      "choiceId": "needle_aspiration",
+      "displayName": "Clinic Patient: Painful Simple Breast Cyst",
+      "chiefComplaint": "Breast lump",
+      "stem": "Which initial procedure should you offer for symptom relief?",
+      "choiceLabel": "Offer needle aspiration of the cyst for symptom relief",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "caseId": "case.bread-butter.cutaneous-abscess.forearm-redness",
+      "nodeId": "node.bread-butter.cutaneous-abscess.forearm-redness.2",
+      "choiceId": "drain_1",
+      "displayName": "Equivocal superficial skin infection",
+      "chiefComplaint": "Tender forearm redness",
+      "stem": "Which primary treatment should {patientName} receive?",
+      "choiceLabel": "Perform incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "caseId": "case.bread-butter.cutaneous-abscess.back-nodule",
+      "nodeId": "node.bread-butter.cutaneous-abscess.back-nodule.2",
+      "choiceId": "drain_2",
+      "displayName": "Equivocal superficial skin infection",
+      "chiefComplaint": "Painful back nodule",
+      "stem": "Which primary treatment should {patientName} receive?",
+      "choiceLabel": "Perform incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "caseId": "case.bread-butter.cutaneous-abscess.thigh-swelling",
+      "nodeId": "node.bread-butter.cutaneous-abscess.thigh-swelling.2",
+      "choiceId": "drain_3",
+      "displayName": "Equivocal superficial skin infection",
+      "chiefComplaint": "Tender thigh swelling",
+      "stem": "Which primary treatment should {patientName} receive?",
+      "choiceLabel": "Perform incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "caseId": "case.bread-butter.cutaneous-abscess.abdominal-wall-redness",
+      "nodeId": "node.bread-butter.cutaneous-abscess.abdominal-wall-redness.2",
+      "choiceId": "drain_4",
+      "displayName": "Equivocal superficial skin infection",
+      "chiefComplaint": "Abdominal wall redness",
+      "stem": "Which primary treatment should {patientName} receive?",
+      "choiceLabel": "Perform incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "caseId": "case.bread-butter.superficial-incisional-ssi.purulent-staple-line",
+      "nodeId": "node.bread-butter.superficial-incisional-ssi.purulent-staple-line.1",
+      "choiceId": "open_1",
+      "displayName": "Superficial incisional infection",
+      "chiefComplaint": "Incision drainage",
+      "stem": "Which treatment provides source control for {patientName}?",
+      "choiceLabel": "Open and drain incision",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "caseId": "case.bread-butter.superficial-incisional-ssi.red-incision",
+      "nodeId": "node.bread-butter.superficial-incisional-ssi.red-incision.1",
+      "choiceId": "open_2",
+      "displayName": "Superficial incisional infection",
+      "chiefComplaint": "Red draining incision",
+      "stem": "Which treatment provides source control for {patientName}?",
+      "choiceLabel": "Open and drain incision",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "caseId": "case.bread-butter.superficial-incisional-ssi.incisional-collection",
+      "nodeId": "node.bread-butter.superficial-incisional-ssi.incisional-collection.1",
+      "choiceId": "open_3",
+      "displayName": "Superficial incisional infection",
+      "chiefComplaint": "Wound drainage",
+      "stem": "Which treatment provides source control for {patientName}?",
+      "choiceLabel": "Open and drain incision",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "caseId": "case.bread-butter.superficial-incisional-ssi.tender-staples",
+      "nodeId": "node.bread-butter.superficial-incisional-ssi.tender-staples.1",
+      "choiceId": "open_4",
+      "displayName": "Superficial incisional infection",
+      "chiefComplaint": "Tender staple line",
+      "stem": "Which treatment provides source control for {patientName}?",
+      "choiceLabel": "Open and drain incision",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "caseId": "case.internal-hemorrhoids.commute",
+      "nodeId": "node.internal-hemorrhoids.commute.2",
+      "choiceId": "banding_1",
+      "displayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "stem": "What is the best next, least invasive procedural plan for {patientName}'s confirmed internal disease?",
+      "choiceLabel": "Office rubber-band ligation",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "caseId": "case.internal-hemorrhoids.exercise",
+      "nodeId": "node.internal-hemorrhoids.exercise.2",
+      "choiceId": "banding_2",
+      "displayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "stem": "What is the best next, least invasive procedural plan for {patientName}'s confirmed internal disease?",
+      "choiceLabel": "Office rubber-band ligation",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "caseId": "case.internal-hemorrhoids.workday",
+      "nodeId": "node.internal-hemorrhoids.workday.2",
+      "choiceId": "banding_3",
+      "displayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "stem": "What is the best next, least invasive procedural plan for {patientName}'s confirmed internal disease?",
+      "choiceLabel": "Office rubber-band ligation",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "caseId": "case.internal-hemorrhoids.followup",
+      "nodeId": "node.internal-hemorrhoids.followup.2",
+      "choiceId": "banding_4",
+      "displayName": "Persistent anorectal bleeding evaluation",
+      "chiefComplaint": "Rectal bleeding or prolapse",
+      "stem": "What is the best next, least invasive procedural plan for {patientName}'s confirmed internal disease?",
+      "choiceLabel": "Office rubber-band ligation",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+      "nodeId": "node.bread-butter.perianal-abscess.tender-perianal-lump.1",
+      "choiceId": "drain_1",
+      "displayName": "Clinically evident perianal abscess",
+      "chiefComplaint": "Painful perianal lump",
+      "stem": "Which treatment should {patientName} receive now?",
+      "choiceLabel": "Arrange incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+      "nodeId": "node.bread-butter.perianal-abscess.perianal-swelling.1",
+      "choiceId": "drain_2",
+      "displayName": "Clinically evident perianal abscess",
+      "chiefComplaint": "Perianal swelling",
+      "stem": "Which treatment should {patientName} receive now?",
+      "choiceLabel": "Arrange incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+      "nodeId": "node.bread-butter.perianal-abscess.painful-sitting.1",
+      "choiceId": "drain_3",
+      "displayName": "Clinically evident perianal abscess",
+      "chiefComplaint": "Pain with sitting",
+      "stem": "Which treatment should {patientName} receive now?",
+      "choiceLabel": "Arrange incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+      "nodeId": "node.bread-butter.perianal-abscess.draining-pain.1",
+      "choiceId": "drain_4",
+      "displayName": "Clinically evident perianal abscess",
+      "chiefComplaint": "Perianal pain",
+      "stem": "Which treatment should {patientName} receive now?",
+      "choiceLabel": "Arrange incision and drainage",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "caseId": "case.lactational-breast-abscess.tender-upper-breast",
+      "nodeId": "node.lactational-breast-abscess.tender-upper-breast.2",
+      "choiceId": "guided_aspiration_1",
+      "displayName": "Lactational breast mass evaluation",
+      "chiefComplaint": "Painful breast lump",
+      "stem": "Which initial source-control plan is appropriate for {patientName}'s confirmed uncomplicated drainable collection?",
+      "choiceLabel": "Image-guided aspiration with fluid culture",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "caseId": "case.lactational-breast-abscess.persistent-mass",
+      "nodeId": "node.lactational-breast-abscess.persistent-mass.2",
+      "choiceId": "guided_aspiration_2",
+      "displayName": "Lactational breast mass evaluation",
+      "chiefComplaint": "Painful breast lump",
+      "stem": "Which initial source-control plan is appropriate for {patientName}'s confirmed uncomplicated drainable collection?",
+      "choiceLabel": "Image-guided aspiration with fluid culture",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "caseId": "case.lactational-breast-abscess.focal-redness",
+      "nodeId": "node.lactational-breast-abscess.focal-redness.2",
+      "choiceId": "guided_aspiration_3",
+      "displayName": "Lactational breast mass evaluation",
+      "chiefComplaint": "Painful breast lump",
+      "stem": "Which initial source-control plan is appropriate for {patientName}'s confirmed uncomplicated drainable collection?",
+      "choiceLabel": "Image-guided aspiration with fluid culture",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    },
+    {
+      "kind": "terminal_answer_allowlist",
+      "approval": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "caseId": "case.lactational-breast-abscess.nursing-pain",
+      "nodeId": "node.lactational-breast-abscess.nursing-pain.2",
+      "choiceId": "guided_aspiration_4",
+      "displayName": "Lactational breast mass evaluation",
+      "chiefComplaint": "Painful breast lump",
+      "stem": "Which initial source-control plan is appropriate for {patientName}'s confirmed uncomplicated drainable collection?",
+      "choiceLabel": "Image-guided aspiration with fluid culture",
+      "isCorrect": true,
+      "triggerSemantics": "A correct terminal choice matching this exact tuple calls startEncounterProcedureOperation. It requires the income line to be installed and operational; room-path reservation is checked when the operation tries to reserve resources."
+    }
+  ],
+  "approvedProcedureWorkContracts": [
+    {
+      "id": "procedure.breast_cyst_aspiration",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.breast_cyst_aspiration.v2",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.cutaneous_abscess_drainage",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.cutaneous_abscess_drainage.v2",
+      "fee": 100,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.superficial_incisional_infection_drainage",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.superficial_incisional_infection_drainage.v2",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.diagnostic_skin_biopsy",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.minor_procedure_sampling",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.anoscopy",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.anoscopy",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.office_internal_hemorrhoid_banding",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 30,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.office_internal_hemorrhoid_banding",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.excisional_skin_biopsy",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 45,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.minor_procedure_sampling",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.perianal_abscess_drainage",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.perianal_abscess_drainage",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.ultrasound_guided_thyroid_fna",
+      "roomDefinitionId": "room.ultrasound",
+      "durationMinutes": 60,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.ultrasound_guided_thyroid_fna",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.image_guided_breast_core_biopsy",
+      "roomDefinitionId": "room.ultrasound",
+      "durationMinutes": 60,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_core_biopsy",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.image_guided_breast_abscess_aspiration",
+      "roomDefinitionId": "room.ultrasound",
+      "durationMinutes": 60,
+      "implementation": "mapped",
+      "status": "owner_approved_runtime_mapping",
+      "incomeLineId": "income.procedure.image_guided_breast_abscess_aspiration",
+      "fee": 150,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.thrombosed_external_hemorrhoid_excision",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "future_explicit_action",
+      "status": "future_only_inert_contract",
+      "incomeLineId": "income.procedure.thrombosed_external_hemorrhoid_excision",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.pilonidal_abscess_drainage",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "future_explicit_action",
+      "status": "future_only_inert_contract",
+      "incomeLineId": "income.procedure.pilonidal_abscess_drainage",
+      "fee": 200,
+      "feeSemantics": "Catalog fee applies only to new work that adopts this exact mapped income line; already-frozen quotes are retained."
+    },
+    {
+      "id": "procedure.superficial_cyst_removal",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 45,
+      "implementation": "future_explicit_action",
+      "status": "future_only_inert_contract",
+      "incomeLineId": null,
+      "fee": null,
+      "feeSemantics": "No approved fee is recorded for this future-only work contract."
+    },
+    {
+      "id": "procedure.superficial_lipoma_removal",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 45,
+      "implementation": "future_explicit_action",
+      "status": "future_only_inert_contract",
+      "incomeLineId": null,
+      "fee": null,
+      "feeSemantics": "No approved fee is recorded for this future-only work contract."
+    },
+    {
+      "id": "procedure.seroma_aspiration",
+      "roomDefinitionId": "room.minor_procedure",
+      "durationMinutes": 15,
+      "implementation": "future_explicit_action",
+      "status": "future_only_inert_contract",
+      "incomeLineId": null,
+      "fee": null,
+      "feeSemantics": "No approved fee is recorded for this future-only work contract."
+    }
+  ],
+  "rejectedOwnerObservation": {
+    "choiceLabel": "Reflux monitoring off PPI",
+    "serviceId": "service.ambulatory_reflux_monitoring",
+    "routeIds": [
+      "route.ambulatory_reflux_monitoring.outsourced"
+    ],
+    "finding": "Current catalog route is outsourced: it has no patientTravel, resourceRequirements, minor-room destination, procedure-income line, or founder reservation. The reported room wait was not reproduced by this inventory and needs a live save/build reproduction before assigning cause."
+  },
+  "patientTravelBehaviorProbe": {
+    "status": "legacy_behavior_probe_only",
+    "input": {
+      "resourceBoundPhaseEndsAtTick": 60,
+      "serviceCompletionTick": 170,
+      "returnArrivalTick": 180
+    },
+    "locationAtTick100": {
+      "x": 1,
+      "y": 0
+    },
+    "interpretation": "This probe documents the pre-existing 170/180 travel-helper dwell behavior only. It does not imply that a newly approved mapped procedure uses this dwell; current marked-route return behavior is covered by separate reducer tests."
+  },
+  "legacyAndFrozenCaveats": [
+    "Already-frozen pending results retain their saved route, timing phases, and patient travel; this current-catalog audit cannot rewrite them.",
+    "Existing legacy room instances can remain in saves even when their current build behavior differs.",
+    "Procedure operations are encounter-only and explicit-only. No generic automatic minor-procedure visitor is scheduled by the current catalog.",
+    "Future-only work contracts are inert until a reviewed exact case/node/choice or service route adopts them."
+  ]
+}

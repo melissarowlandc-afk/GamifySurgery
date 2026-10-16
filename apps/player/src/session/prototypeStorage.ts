@@ -6,6 +6,10 @@ import {
   type FounderIdentity,
   type GameState,
 } from "@gamify-surgery/game-domain";
+import { normalizeTutorialGuidanceRecords, type CampaignTutorialGuidance } from "./tutorialGuidance";
+import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
+import { accountStorageKey } from "./accountStorageKey";
+import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
 
 export const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
 export const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
@@ -28,12 +32,16 @@ export interface LocalPrototypeProfile {
   /** Retained only to migrate historical automatically named local saves. */
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
+  /** Default for new clinics is separate from each clinic's skip/completion. */
+  tutorialGuidanceByCampaign?: Record<string, CampaignTutorialGuidance>;
   tutorialIntroDismissedCampaignIds: string[];
   /** Completed optional operations tips, kept per campaign so a reload cannot replay them. */
   tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
   /** Previous paused value while an operations tip owns the temporary pause. */
   tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
   campaigns: LocalCampaignRecord[];
+  /** Atomic staging with a newly scored state; only opaque count receipts. */
+  pendingUsageQuestions?: QuestionUsageReceipt[];
 }
 
 export interface LoadedPrototypeProfile {
@@ -86,10 +94,12 @@ interface PersistedPrototypeProfile {
   activeCampaignId: string | null;
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
+  tutorialGuidanceByCampaign?: Record<string, CampaignTutorialGuidance>;
   tutorialIntroDismissedCampaignIds: string[];
   tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
   tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
   campaigns: PersistedCampaignRecord[];
+  pendingUsageQuestions?: QuestionUsageReceipt[];
 }
 
 function storageFailure(
@@ -221,6 +231,7 @@ export function createFreshProfile(): LocalPrototypeProfile {
     activeCampaignId: null,
     nextCampaignNumber: 1,
     tutorialsEnabled: true,
+    tutorialGuidanceByCampaign: {},
     tutorialIntroDismissedCampaignIds: [],
     tutorialDailyRoutineTipAcknowledgments: {},
     tutorialDailyRoutinePauseByCampaign: {},
@@ -234,6 +245,7 @@ export function appendLocalCampaign(
   clinicName: string,
   now = Date.now(),
   campaignSeed?: string,
+  guidanceEnabled = profile.tutorialsEnabled,
 ): {
   profile: LocalPrototypeProfile;
   campaign: LocalCampaignRecord;
@@ -258,9 +270,11 @@ export function appendLocalCampaign(
       ...profile,
       activeCampaignId: campaign.campaignId,
       nextCampaignNumber: profile.nextCampaignNumber + 1,
-      // Every newly created clinic introduces the game from the beginning,
-      // even if guidance was disabled during a different campaign.
-      tutorialsEnabled: true,
+      tutorialGuidanceByCampaign: {
+        ...normalizeTutorialGuidanceRecords(profile.tutorialGuidanceByCampaign, profile.campaigns,
+          profile.tutorialsEnabled, profile.tutorialDailyRoutineTipAcknowledgments),
+        [campaign.campaignId]: { version: 2, mode: guidanceEnabled ? "guided" : "off", exposedTopicIds: [] },
+      },
       campaigns: [...profile.campaigns, campaign],
     },
   };
@@ -441,6 +455,13 @@ function parsePersistedProfile(serialized: string): {
         typeof candidate.tutorialsEnabled === "boolean"
           ? candidate.tutorialsEnabled
           : true,
+      tutorialGuidanceByCampaign: normalizeTutorialGuidanceRecords(
+        candidate.tutorialGuidanceByCampaign, campaigns,
+        typeof candidate.tutorialsEnabled === "boolean" ? candidate.tutorialsEnabled : true,
+        isRecord(candidate.tutorialDailyRoutineTipAcknowledgments)
+          ? Object.fromEntries(Object.entries(candidate.tutorialDailyRoutineTipAcknowledgments)
+            .filter(([, tips]) => Array.isArray(tips))) as Record<string, string[]> : {},
+      ),
       tutorialIntroDismissedCampaignIds: Array.isArray(
         candidate.tutorialIntroDismissedCampaignIds,
       )
@@ -465,16 +486,10 @@ function parsePersistedProfile(serialized: string): {
               ]),
           )
         : {},
-      tutorialDailyRoutinePauseByCampaign: isRecord(
-        candidate.tutorialDailyRoutinePauseByCampaign,
-      )
-        ? Object.fromEntries(
-            Object.entries(candidate.tutorialDailyRoutinePauseByCampaign).filter(
-              ([, wasPaused]) => typeof wasPaused === "boolean",
-            ),
-          ) as Record<string, boolean>
-        : {},
+      tutorialDailyRoutinePauseByCampaign: normalizeRetiredTutorialPauses(candidate.tutorialDailyRoutinePauseByCampaign),
       campaigns,
+      ...(Array.isArray(candidate.pendingUsageQuestions)
+        ? { pendingUsageQuestions: parseQuestionUsageReceipts(candidate.pendingUsageQuestions) } : {}),
     },
     skippedCampaignCount,
   };
@@ -502,6 +517,7 @@ function migrateLegacySave(serializedState: string): LocalPrototypeProfile {
     tutorialDailyRoutineTipAcknowledgments: {},
     tutorialDailyRoutinePauseByCampaign: {},
     campaigns: [campaign],
+    tutorialGuidanceByCampaign: normalizeTutorialGuidanceRecords(undefined, [campaign], true),
   };
 }
 
@@ -524,7 +540,7 @@ export function requireActiveCampaign(
   return activeCampaign;
 }
 
-export function loadPrototypeProfile(): LoadedPrototypeProfile {
+export function loadPrototypeProfile(accountId: string | null = null): LoadedPrototypeProfile {
   const storageResult = getBrowserStorage();
   if (!storageResult.ok) {
     return {
@@ -535,7 +551,7 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
 
   try {
     const serializedProfile = storageResult.storage.getItem(
-      PROTOTYPE_PROFILE_KEY,
+      accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId),
     );
     if (serializedProfile !== null) {
       const { profile, skippedCampaignCount } =
@@ -551,12 +567,14 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
       };
     }
 
-    const legacySave = storageResult.storage.getItem(
-      LEGACY_PROTOTYPE_SAVE_KEY,
-    );
+    // Unowned prototype campaigns belong to no authenticated player. Preserve
+    // them for the local fallback and the future explicit Beta 2 import.
+    const legacySave = accountId === null
+      ? storageResult.storage.getItem(LEGACY_PROTOTYPE_SAVE_KEY)
+      : null;
     if (legacySave !== null) {
       const profile = migrateLegacySave(legacySave);
-      const persisted = savePrototypeProfileResult(profile);
+      const persisted = savePrototypeProfileResult(profile, accountId);
       return {
         profile,
         notice: persisted.ok
@@ -566,7 +584,7 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
     }
 
     const profile = createFreshProfile();
-    const persisted = savePrototypeProfileResult(profile);
+    const persisted = savePrototypeProfileResult(profile, accountId);
     return {
       profile,
       notice: persisted.ok
@@ -585,12 +603,14 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
 
 export function savePrototypeProfile(
   profile: LocalPrototypeProfile,
+  accountId: string | null = null,
 ): boolean {
-  return savePrototypeProfileResult(profile).ok;
+  return savePrototypeProfileResult(profile, accountId).ok;
 }
 
 export function savePrototypeProfileResult(
   profile: LocalPrototypeProfile,
+  accountId: string | null = null,
 ): PrototypeSaveResult {
   const storageResult = getBrowserStorage();
   if (!storageResult.ok) {
@@ -604,6 +624,8 @@ export function savePrototypeProfileResult(
       activeCampaignId: profile.activeCampaignId,
       nextCampaignNumber: profile.nextCampaignNumber,
       tutorialsEnabled: profile.tutorialsEnabled,
+      tutorialGuidanceByCampaign: normalizeTutorialGuidanceRecords(profile.tutorialGuidanceByCampaign,
+        profile.campaigns, profile.tutorialsEnabled, profile.tutorialDailyRoutineTipAcknowledgments),
       tutorialIntroDismissedCampaignIds:
         profile.tutorialIntroDismissedCampaignIds,
       tutorialDailyRoutineTipAcknowledgments:
@@ -618,6 +640,8 @@ export function savePrototypeProfileResult(
         status: campaign.status,
         serializedState: serializeGameState(campaign.state),
       })),
+      ...(accountId !== null && profile.pendingUsageQuestions?.length
+        ? { pendingUsageQuestions: parseQuestionUsageReceipts(profile.pendingUsageQuestions) } : {}),
     };
     serialized = JSON.stringify(persistedProfile);
   } catch (error) {
@@ -631,7 +655,7 @@ export function savePrototypeProfileResult(
   }
 
   try {
-    storageResult.storage.setItem(PROTOTYPE_PROFILE_KEY, serialized);
+    storageResult.storage.setItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId), serialized);
     return { ok: true, profileCharacters: serialized.length };
   } catch (error) {
     return {
@@ -641,20 +665,20 @@ export function savePrototypeProfileResult(
   }
 }
 
-/** Deletes only the legacy prototype campaign keys; unrelated preferences stay intact. */
-export function clearPrototypeCampaignStorage(): PrototypeResetResult {
+/** Clears only this account's campaigns, or the historical local keys for null. */
+export function clearPrototypeCampaignStorage(accountId: string | null = null): PrototypeResetResult {
   const storageResult = getBrowserStorage();
   if (!storageResult.ok) {
     return storageResult;
   }
   let firstFailure: PrototypeStorageFailure | null = null;
   try {
-    storageResult.storage.removeItem(PROTOTYPE_PROFILE_KEY);
+    storageResult.storage.removeItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId));
   } catch (error) {
     firstFailure = storageFailure(error, "remove");
   }
   try {
-    storageResult.storage.removeItem(LEGACY_PROTOTYPE_SAVE_KEY);
+    if (accountId === null) storageResult.storage.removeItem(LEGACY_PROTOTYPE_SAVE_KEY);
   } catch (error) {
     firstFailure ??= storageFailure(error, "remove");
   }
@@ -662,7 +686,7 @@ export function clearPrototypeCampaignStorage(): PrototypeResetResult {
 }
 
 /** Keeps page-exit/autosave writers from recreating campaigns after reset. */
-export function createPrototypeCampaignWriteGate(): PrototypeCampaignWriteGate {
+export function createPrototypeCampaignWriteGate(accountId: string | null = null): PrototypeCampaignWriteGate {
   let suppressed = false;
   return {
     save: (profile) => {
@@ -677,7 +701,7 @@ export function createPrototypeCampaignWriteGate(): PrototypeCampaignWriteGate {
           },
         };
       }
-      return savePrototypeProfileResult(profile);
+      return savePrototypeProfileResult(profile, accountId);
     },
     suppress: () => {
       suppressed = true;

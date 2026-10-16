@@ -1,4 +1,5 @@
 import type { CardinalDirection, RoomOrientation } from "@gamify-surgery/game-domain";
+import { APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS, APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
 
 /**
  * Renderer-only room layout metadata.
@@ -262,11 +263,19 @@ const ROOM_VISUAL_LAYOUTS: Readonly<Record<string, RoomVisualLayout>> = {
  * before this presentation check runs, so legacy ratio zones must not remove
  * a domain-enabled approved segment. */
 const APPROVED_DYNAMIC_DOOR_ROOM_IDS = new Set([
+  ...Object.keys(APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS),
+  ...Object.keys(APPROVED_LEVEL4_ROOM_NAVIGATION_CONTRACTS),
   "room.front_desk", "room.hallway", "room.waiting", "room.examination",
   "room.bathroom", "room.minor_procedure", "room.ultrasound", "room.xray",
   "room.ct", "room.phlebotomy", "room.evs_closet", "room.endoscopy",
   "room.periop_recovery", "room.training", "room.coffee_kiosk",
   "room.glp1_telehealth_suite",
+  // Owner rule (2026-10-07): every wall is a legal door. The approved Level 3
+  // and Reading Room shells hide door-owned fixtures like the rooms above, so
+  // the legacy clear-zone filter must not hide their door slots.
+  "room.ambulatory_or", "room.laboratory", "room.pharmacy",
+  "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
+  "room.vending", "room.reading",
 ]);
 
 export const PRIMARY_ROOM_VISUAL_IDS = [

@@ -2,7 +2,61 @@
 
 Status: Accepted design direction
 
-Last updated: 2026-07-30
+Last updated: 2026-09-29
+
+## Current owner direction (2026-09-29)
+
+This section supersedes conflicting timing and visibility examples below. The
+older message bank remains reference material, not an instruction to enable all
+of its messages. Implementation and validation are tracked in
+`docs/execplans/alerts-usefulness-and-humor.md`.
+
+- Keep a plain chronological feed. Every visible entry should explain a real
+  problem, offer a useful next step, mark a meaningful milestone, or entertain.
+- Hide routine player-action and bookkeeping receipts, including salary,
+  hiring/firing, building, treatment/accounting, save and campaign-opening
+  confirmations. Keep raw records and local control feedback; preserve genuine
+  save failures.
+- Replace generic patient waiting/satisfaction warnings with one warning per
+  encounter near the patient's actual individual walkout cutoff. Initial
+  alert-only lead margin is10 satisfaction points. No warnings for travel,
+  testing, exempt patients, or an actively attended chart. No patient-departure
+  notifications or departure-review feed entries.
+- Employee warnings must reflect risk of quitting after another unpaid posting,
+  using the configured morale loss and quitting cutoff plus forecast expenses.
+  Low morale alone is insufficient. Unexpected staff departures can still explain
+  a new staffing vacancy; deliberate firing confirmations are hidden.
+- Repeat a clinic-wide condition at most once per rolling configured operating
+  day, surviving recovery/recurrence and reload. A different newly endangered
+  person, or escalation from low cash to no cash, is a useful exception.
+- Different ambient jokes may continue at least120 facility minutes apart;
+  suppress the same joke within an operating day. Invisible receipts must not
+  consume the visible feed's history capacity.
+- Keep operational room/staff guidance with working action targets. Favor short
+  problem/consequence/next-step copy, requiring no click to understand it.
+  Setup rows identify the actual missing room or staff role. Endoscopy missing
+  recovery space points to Peri-op/Recovery; an affected imaging modality is
+  named instead of claiming every imaging room is unavailable.
+- After the opening tutorial, one optional next-step hint chooses an unmet
+  progression requirement, prioritizing required rooms and staff. It yields to
+  operational setup problems and low cash, and updates the same per-level row
+  instead of creating repeated notifications. Level2 copy describes the current
+  clinic goal rather than promising an unavailable Level3. If the retained
+  level-up event has been trimmed, the hint has no invented timestamp and uses
+  a stable fallback sort position.
+- The ambient catalog now has37 original clinic lines, preserving the first25
+  IDs and wording. Room/object/patient eligibility still applies, including at
+  Level2. The existing120-minute spacing and daily exact-joke limits remain.
+- New messages receive a brief two-second accent and New badge. Initial/restored
+  history, same-ID edits and returning rows do not replay it. Reduced-motion
+  settings remove the animation while retaining the temporary visual marker.
+- Reading older messages preserves the visible position when the feed changes.
+  A compact count in the heading offers an optional jump to newest; scrolling
+  back manually clears it. Nothing forces acknowledgment or expands/collapses.
+- Full-width message copy is at least12px with comfortable line spacing, and
+  optional action labels sit below it. The message remains understandable and
+  fully visible without clicking. Desktop/phone and lifecycle browser checks
+  are recorded in the implementation plan.
 
 This document is the durable message and interaction bank. The Level 0-2 local
 prototype implements only alerts backed by mechanics that currently exist.
@@ -378,7 +432,6 @@ Keep these inactive until the associated room exists:
 - The gift shop has converted anxiety into branded merchandise.
 - The indoor garden has reduced stress and increased watering obligations.
 - The staff gym is open. Attendance remains aspirational.
-- The call room is available. Sleep not included.
 - The surgeon's office is complete. Email has already found it.
 - The executive office is furnished. Clinical throughput is unchanged.
 - The radiology reading room now contains four desks and one atmosphere of corporate dread.

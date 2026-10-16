@@ -1,0 +1,2289 @@
+{
+  "schemaVersion": "gs028.variety2.clinical-provenance.2026-10-07.v1",
+  "checkedAtUtc": "2026-10-08T00:35:45.910Z",
+  "scope": "Actual native exports for the second October7 twenty-concept batch. Bibliographic/rights metadata and independently authored atomic claims only; no original source text, raw private sheet rows or real patient data.",
+  "clinicalStatus": "needs_clinician_review",
+  "clinicianApproval": false,
+  "publicReleaseAuthorized": false,
+  "editorialDecision": "accepted_for_explicitly_unapproved_owner_prototype_after_four_narrative_leak_corrections",
+  "hashRepresentation": "SHA256 of UTF8 JSON.stringify(value,null,2) plus one LF. Collections sorted by stable ID; the family bundle retains the original reviewed filename order. Source-file hashes use actual raw bytes.",
+  "acceptedClinicalFamilyBundleSha256": "87d60df237ab6eb5ababd4cd5d562c8e06767738eebe515890487287a47bb460",
+  "priorBundleSha256": "1de1e5a48261d2eab69587794345870f8b9d8de7e43716a8ec57412f9ff96b8f",
+  "acceptedFiles": [
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/anesthesia-remaining.ts",
+      "sha256": "12c05e2a51b472bc0ee661111f12a4c9c60320a2f9cab6d96c6a63edc3e2b3ed"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/batch-helpers.ts",
+      "sha256": "46d0b1eb8f44c2075ec4f94c8ef416990329fdbe0fed41e11aee02983e1244aa"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/family-builder.ts",
+      "sha256": "ec85b1377b2f566605c2e27fe751cc0f95fe8cc2cecd409584cde28e99b9fcb4"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/foreign-body.ts",
+      "sha256": "a405a6d8615620ba2fce2612bae44cdf4121c1ccc774c08acf90af9177704a83"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/gynecology.ts",
+      "sha256": "71d0cf5b327579b024cbcdc2d201d058f5623646354dd30b85a28177ac47822c"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/local-anesthetic-mechanism.ts",
+      "sha256": "5b78a2d126cf08b42892691ae1a7ba53bf09e1c391da922d0162c798fe115252"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/melanoma-bowel.ts",
+      "sha256": "51f32fe4e6134e3bff572822d940b84faa5f8032792e243cefad06b7fb007d08"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/neck-mass-workup.ts",
+      "sha256": "a91020b94a7a84d75151d02d9bf19d5e13ee6c8d0e0597449f68bfa721863978"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/nutrition.ts",
+      "sha256": "e517d0dec2664b83be124dae2bc9c616e5cd3cf8269d3e9f527bd868c8175111"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/oxygen-content.ts",
+      "sha256": "b4152db060d121aac083a2a1d47a8285e3dcbbeb42333da7616c2b2bdbad2511"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/patient-safety.ts",
+      "sha256": "0e2f5808ed7446faef8a8025d5a7e7600ce633b549383c0bc3fef20867acea61"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/peripheral-nerve-localization.ts",
+      "sha256": "01227c5146ac0a8f96beec3de104cfc5913fe68f77100808ca4e23381ea500b0"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/reconstruction-principles.ts",
+      "sha256": "8e82a927f89d3f8f91960af6732d88afe9b79e7b2359bc34cce3b1fa8366f2ef"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/source-catalog-first10.ts",
+      "sha256": "01b6a27048eb7bab35f87e6d613413af5f58fa90f61b263a78e1ee6fcd8fbe21"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/source-catalog-remaining10.ts",
+      "sha256": "cfdb3a445957e9eaf567c59e47383084b5d32029a3bf40041beaa3f6310d297a"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/spec-utils.ts",
+      "sha256": "0ca6b44ff8755ed284eee074c597d73a485445820c8fa31b5a26ab2efd2b7767"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/tacrolimus.ts",
+      "sha256": "e433ca7d0936638a8800af58ce1634cd08d8e780dcecc80803482261f24106fd"
+    },
+    {
+      "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/transplant-relationships.ts",
+      "sha256": "47549c9ef9854ff49faaca0a58ca558cd363f5d64a81220123a3394bedaf7168"
+    }
+  ],
+  "nativeAggregateFile": {
+    "file": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-batch.ts",
+    "sha256": "634d355cb6a43b6d1f2719194064317bac7ce474a15efb30122512a10d745033"
+  },
+  "collectionHashes": {
+    "sources": "6235d1f83c2b0423073e80a2a0bc631e61ae0e8d3f78970ca9ff3d47c2fc4006",
+    "atomicClaims": "f20a9e063b7ed8a0cf593bd834f22ea5f08e7eb263f4123ff62397b132f4e6ed",
+    "questionVariants": "0026727784aa9ce26197995e2c7b24ec1991a58033ea18ab27f5abe65bc279aa",
+    "cases": "41df61e20260ca57918278bf0a6647213b1a362c1611276daa1481b699c92bae",
+    "manifest": "4fbe2ffcf1cfbc05b0b1d4889d602e172a9a6be22adaeecd56a15758b2daf823"
+  },
+  "batchManifest": {
+    "contentVersion": "development-batch.2026-10-07.variety.2",
+    "authoringConceptCount": 20,
+    "testedConceptCount": 20,
+    "questionVariantCount": 80,
+    "caseCount": 78,
+    "decisionNodeCount": 80,
+    "runtimeCaseProfileCount": 294,
+    "questionProfileReferenceCount": 302,
+    "sourceCount": 32,
+    "evidenceClaimCount": 51,
+    "timingEntryCount": 80,
+    "caseReviewCount": 78,
+    "resultGateCount": 2,
+    "publicReleaseAuthorized": false
+  },
+  "sources": [
+    {
+      "id": "source.gs028f.adnan.skin-grafting.2022",
+      "objectSha256": "3885cc9a991df328b1cbd961edaac29fb496dcca4c59323d78bab5a90520d8f0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.adnan.skin-grafting.2022",
+        "title": "Skin Grafting, Cryopreservation, and Diseases: A Review Article",
+        "completeCitation": "Adnan M, Jha RK, Verma P, Shah HN, Singh P. Skin Grafting, Cryopreservation, and Diseases: A Review Article. Cureus. 2022;14(10):e30202. Published October11,2022. doi:10.7759/cureus.30202. Printed page4, Storing human skin paragraph on retained donor-site appendage epithelium; accessed October7,2026.",
+        "organizationOrJournal": "Cureus",
+        "authors": [
+          "Mohammad Adnan",
+          "Roshan K Jha",
+          "Priyanshu Verma",
+          "Harsh N Shah",
+          "Parth Singh"
+        ],
+        "publicationYear": 2022,
+        "doi": "10.7759/cureus.30202",
+        "pmid": null,
+        "officialUrl": "https://assets.cureus.com/uploads/review_article/pdf/116718/20221012-8403-1skf9rv.pdf",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "narrative_review",
+        "licenseLabel": "CC BY4.0, ©Adnan and coauthors2022; article-specific license verified on actual publisher PDF page1. https://creativecommons.org/licenses/by/4.0/. Original authors, journal and DOI credited; no source prose or figures reproduced.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Peer-reviewed narrative review directly states that retained hair-follicle/sebaceous epithelial islands regrow at the donor site after partial-thickness harvest. Used only for this foundational mechanism; historical review and sole direct source, without an exact healing time, graft-thickness rule or full-thickness donor closure recommendation.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.reconstruction.appendage-epithelial-source",
+          "claim.gs028f.reconstruction.donor-retained-epithelium"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.ahrq_rca2024",
+      "objectSha256": "d063d375f2e4a35e3d247c5792de50e9a1057bb672b2e8b624c7169ca0e8a600",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.ahrq_rca2024",
+        "title": "AHRQ PSNet root cause analysis primer",
+        "completeCitation": "UC Davis PSNet Editorial Team. Root Cause Analysis. PSNet [Internet]. Rockville, MD: Agency for Healthcare Research and Quality, US Department of Health and Human Services; 2019. Reviewed and updated June 15, 2024. Background: retrospective systems analysis. Accessed October 7, 2026.",
+        "organizationOrJournal": "Agency for Healthcare Research and Quality; UC Davis PSNet Editorial Team",
+        "authors": [
+          "UC Davis PSNet Editorial Team"
+        ],
+        "publicationYear": 2019,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://psnet.ahrq.gov/primer/root-cause-analysis",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "Government-hosted primer with UC Davis editorial authorship; no article-specific open licence established. Conservative copyrighted targeted-verification status rather than inferring public domain from hosting. Original method-classification facts only; no case, table or RCA protocol reproduced.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Actual current primer displays original citation year 2019 and last review June 15, 2024. Background directly describes RCA as retrospective analysis of an event with underlying systems contributors rather than individual blame. Authoritative patient-safety educational guidance, not a claim that RCA is superior for every problem or guarantees effective remediation. No copied method steps or source case is used.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.safety.rca-retrospective"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.asra_last2021",
+      "objectSha256": "5007ec6431c987245884e85fabd65bf85f205381867e13ab3ba5a274cc1b0e64",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.asra_last2021",
+        "title": "Local anesthetic systemic toxicity: recognition discussion",
+        "completeCitation": "Feldheim T, Lobo S, Mallett JW, Le-Wendling L. Local Anesthetic Systemic Toxicity (LAST): A Problem-Based Learning Discussion. American Society of Regional Anesthesia and Pain Medicine. February 1, 2021. Targeted recognition facts in sections 6 and 8. Accessed October 7, 2026.",
+        "organizationOrJournal": "American Society of Regional Anesthesia and Pain Medicine",
+        "authors": [
+          "Timothy Feldheim",
+          "Sharlene Lobo",
+          "John William Mallett",
+          "Linda Le-Wendling"
+        ],
+        "publicationYear": 2021,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://asra.com/the-asra-family/trainees/problem-based-learning-discussions-for-residents/pblds-for-residents/legacy-b-blog-posts/2021/02/01/local-anesthetic-systemic-toxicity-(last)-a-problem-based-learning-discussion",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "Copyright ASRA Pain Medicine; current https://asra.com/terms-of-use checked October 7, 2026 prohibits reproduction without written consent. Targeted clinical facts only; no source case, questions, answer explanations, checklist or rescue algorithm is reused. No explicit AI-use prohibition found in those terms.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Society-authored educational discussion published February 1, 2021, not a current treatment guideline. Sections 6/8 directly verify neurologic and cardiac manifestations, including possible cardiovascular-first presentation. Sole direct recognition source; cases concern completed outside events and supplied exposure. No dose limit, prevention technique, rescue treatment or mandated symptom sequence is taught.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.last.cardiac-pattern",
+          "claim.gs028f.last.neurologic-pattern",
+          "claim.gs028f.last.variable-first-manifestation"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.auspen_refeeding2025",
+      "objectSha256": "3ebcaf49415236dd09d75e783a83debc4e5f71ab6b51b98f6a36b6058b2a96ce",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.auspen_refeeding2025",
+        "title": "AuSPEN consensus statements on refeeding syndrome",
+        "completeCitation": "Matthews-Rensch K, Blackwood K, Lawlis D, Breik L, McLean C, Nguyen T, Phillips S, Small K, Stewart T, Thatcher A, Venkat L, Brodie E, Cleeve B, Diamond L, Ng MY, Small A, Viner Smith E, Asrani V. The Australasian Society of Parenteral and Enteral Nutrition: Consensus statements on refeeding syndrome. Nutrition & Dietetics. 2025;82(2):128–142. Published March 16, 2025. doi:10.1111/1747-0080.70003. PMID:40090863. Accessed October 7, 2026.",
+        "organizationOrJournal": "Australasian Society of Parenteral and Enteral Nutrition; Nutrition & Dietetics",
+        "authors": [
+          "Kylie Matthews-Rensch",
+          "Kirrilee Blackwood",
+          "Deborah Lawlis",
+          "Lina Breik",
+          "Cameron McLean",
+          "Truc Nguyen",
+          "Sarah Phillips",
+          "Kimberly Small",
+          "Tim Stewart",
+          "Amber Thatcher",
+          "Leanne Venkat",
+          "Emily Brodie",
+          "Brydie Cleeve",
+          "Lauren Diamond",
+          "Mei Yuen Ng",
+          "Anna Small",
+          "Elizabeth Viner Smith",
+          "Varsha Asrani"
+        ],
+        "publicationYear": 2025,
+        "doi": "10.1111/1747-0080.70003",
+        "pmid": "40090863",
+        "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11973624/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "professional_society_guideline",
+        "licenseLabel": "Article-specific CC BY-NC-ND 4.0, https://creativecommons.org/licenses/by-nc-nd/4.0/ verified in the actual article October 7, 2026. The schema lacks a BY-NC-ND category, so conservative targeted-verification status is used. Only underlying facts in original claims; no source prose, tables, figures or algorithm adaptations.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Adult multidisciplinary 2025 society consensus, literature search through November 20, 2024. Section 3.4.1 recommends thiamine before nutrition and explicitly notes absence of specific evidence evaluating thiamine's preventive role. Section 3.5 and summary support close electrolyte/clinical monitoring; risk and diagnosis sections caution that phosphate decline has other causes. Recommendation is expert consensus with limited direct preventive evidence. No dose, duration, feeding rate, diagnostic threshold or claimed prevention certainty is imported; NICE content is excluded.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.refeeding.monitoring-separate",
+          "claim.gs028f.refeeding.phosphate-not-specific",
+          "claim.gs028f.refeeding.thiamine-before-intake"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.esge_foreignbody2016",
+      "objectSha256": "c8bd98b71d72cc7eb5165759c5b9cfdba05acf64323eab1f10dea88df29783ad",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.esge_foreignbody2016",
+        "title": "ESGE adult upper gastrointestinal foreign-body guideline",
+        "completeCitation": "Birk M, Bauerfeind P, Deprez PH, Häfner M, Hartmann D, Hassan C, Hucl T, Lesur G, Aabakken L, Meining A. Removal of foreign bodies in the upper gastrointestinal tract in adults: European Society of Gastrointestinal Endoscopy (ESGE) Clinical Guideline. Endoscopy. 2016;48(5):489–496. doi:10.1055/s-0042-100456. Official eight-page PDF, imaging page 3 and therapeutic endoscopy page 4. Accessed October 7, 2026.",
+        "organizationOrJournal": "European Society of Gastrointestinal Endoscopy; Endoscopy",
+        "authors": [
+          "Michael Birk",
+          "Peter Bauerfeind",
+          "Pierre H Deprez",
+          "Michael Häfner",
+          "Dirk Hartmann",
+          "Cesare Hassan",
+          "Tomas Hucl",
+          "Gilles Lesur",
+          "Lars Aabakken",
+          "Alexander Meining"
+        ],
+        "publicationYear": 2016,
+        "doi": "10.1055/s-0042-100456",
+        "pmid": null,
+        "officialUrl": "https://www.esge.com/assets/downloads/pdfs/guidelines/2016_s_0042_100456.pdf",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "professional_society_guideline",
+        "licenseLabel": "Copyrighted ESGE/Thieme society guideline; no Creative Commons licence shown in the official PDF. Targeted underlying-fact cross-check only, without source text, tables, algorithms, figures or PDF retained. ESGE public policy checked October 7, 2026; no specific AI prohibition identified there.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Actual DOI-matched 2016 official PDF, not the currently mispopulated titled landing page, directly verifies fish/chicken-bone radiographic limitations and emergent endoscopy for sharp objects in the esophagus. It remains listed in the current ESGE guideline index. Low-quality evidence and age are recorded; the 2019 WSES guideline independently agrees. Prepublication PDF pagination 1–8 is distinct from final journal pages 489–496. No timed clinic gate, exact removal deadline or procedural technique is inferred.",
+        "usageRole": "cross_check",
+        "evidenceClaimIds": [
+          "claim.gs028f.foreign-body.negative-bone-films",
+          "claim.gs028f.foreign-body.persistent-symptoms-evaluation",
+          "claim.gs028f.foreign-body.sharp-esophageal-emergency",
+          "claim.gs028f.foreign-body.sharp-perforation-risk"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.fda_oximeter2025",
+      "objectSha256": "b50eeaf95ac12fc99f50e1ab6d00c865c394df0518dad956f977ab2e29371201",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.fda_oximeter2025",
+        "title": "FDA pulse oximeter basics",
+        "completeCitation": "US Food and Drug Administration. Pulse Oximeter Basics. Consumer Update. Content current March 26, 2025. Section What is a pulse oximeter? Accessed October 7, 2026.",
+        "organizationOrJournal": "US Food and Drug Administration",
+        "authors": [
+          "US Food and Drug Administration"
+        ],
+        "publicationYear": 2025,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.fda.gov/consumers/consumer-updates/pulse-oximeter-basics",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "FDA government consumer text; FDA Website Policies https://www.fda.gov/about-fda/about-website/website-policies checked October 7, 2026, government text public domain unless otherwise noted. Agency attribution recorded; no image, logo or third-party copyrighted material reused.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current March 26, 2025 official consumer explanation verifies SpO2 as a percentage estimate, pulse-rate display and occasional signal-strength display. Used for what an ordinary clip reading reports, not for an exact normal threshold, device clearance, anemia treatment, or reassurance that symptoms are safe. Device limitations are acknowledged; no demographic selection rule is adopted.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.oxygen.clip-display-limit",
+          "claim.gs028f.oxygen.saturation-fraction"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.fda_oximetry2024",
+      "objectSha256": "8340532de9270367aab1608d5a46db987b272be3e1717fd54078a7784486768c",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.fda_oximetry2024",
+        "title": "FDA pulse-oximetry executive summary: measurement background",
+        "completeCitation": "US Food and Drug Administration, Center for Devices and Radiological Health. FDA Executive Summary: Performance Evaluation of Pulse Oximeters Taking into Consideration Skin Pigmentation, Race and Ethnicity. Prepared for the Anesthesiology and Respiratory Therapy Devices Panel meeting, February 2, 2024. Introduction, printed page 1/physical page 4; Current Technology, printed pages 4–5/physical pages 7–8. Accessed October 7, 2026.",
+        "organizationOrJournal": "US Food and Drug Administration; Center for Devices and Radiological Health",
+        "authors": [
+          "US Food and Drug Administration, Center for Devices and Radiological Health"
+        ],
+        "publicationYear": 2024,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.fda.gov/media/175828/download",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "FDA-authored government device-background text; FDA Website Policies, Linking to or Copying Information, https://www.fda.gov/about-fda/about-website/website-policies checked October 7, 2026 permits government text unless otherwise noted. Public-domain conditions apply; no third-party references, graphics or agency mark reused.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Official 2024 advisory-panel background, not a clinical anemia-management guideline. Introduction verifies saturation as the proportion of hemoglobin oxygen capacity occupied; technology discussion identifies reduced oxygen-carrying ability in anemia. Original qualitative saturation-versus-carrier-quantity inference only. No device regulatory recommendation, race-based case selection, accuracy formula or transfusion decision is adopted.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.oxygen.anemia-content-limit",
+          "claim.gs028f.oxygen.hemoglobin-carriage",
+          "claim.gs028f.oxygen.saturation-fraction"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.khare.grafts-flaps.2026",
+      "objectSha256": "e00f7e701903b93968a6b0e91b44e20c328d1eb84c4da925cb96e94b40d3b7c0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.khare.grafts-flaps.2026",
+        "title": "Mastering grafts and flaps in dermatologic surgery: A narrative review",
+        "completeCitation": "Khare S, Sharma A, Vinay K. Mastering grafts and flaps in dermatologic surgery: A narrative review. Indian J Dermatol Venereol Leprol. 2026;92(4):476–484. doi:10.25259/IJDVL_66_2025. Published June27,2026; first online September11,2025. Abstract and Flaps section, targeted vascular-transfer definitions; accessed October7,2026.",
+        "organizationOrJournal": "Indian Journal of Dermatology, Venereology and Leprology",
+        "authors": [
+          "Shivansh Khare",
+          "Apoorva Sharma",
+          "Keshavamurthy Vinay"
+        ],
+        "publicationYear": 2026,
+        "doi": "10.25259/IJDVL_66_2025",
+        "pmid": "41100376",
+        "officialUrl": "https://ijdvl.com/mastering-grafts-and-flaps-in-dermatologic-surgery-a-narrative-review/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "narrative_review",
+        "licenseLabel": "©IJDVL2026, CC BY-NC-SA4.0 on actual publisher page, https://creativecommons.org/licenses/by-nc-sa/4.0/. Conservative targeted verification of underlying vascular definitions only; no copied or adapted source expression or licensed derivative/table/figure is distributed. Credit: Khare, Sharma, Vinay and original journal/DOI.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current peer-reviewed reconstructive review supports the foundational graft-versus-flap blood-supply distinction. NCI independently corroborates pedicled/free vascular-transfer facts. No detailed operative recipe, exact healing time or unsupported outcome ranking is used.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+          "claim.gs028f.reconstruction.graft-without-transferred-supply",
+          "claim.gs028f.reconstruction.pedicled-flap-supply",
+          "claim.gs028f.reconstruction.perfusion-not-donor-identity"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.korner.local-anesthetic-sodium.2022",
+      "objectSha256": "8c10a9cff28e36cd43b94dd1a5ca1beadba5a5f2ec84e2234e4094153111536b",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.korner.local-anesthetic-sodium.2022",
+        "title": "Sodium Channels and Local Anesthetics—Old Friends With New Perspectives",
+        "completeCitation": "Körner J, Albani S, Sudha Bhagavath Eswaran V, Roehl AB, Rossetti G, Lampert A. Sodium Channels and Local Anesthetics—Old Friends With New Perspectives. Front Pharmacol. 2022;13:837088. Published March 28, 2022. doi:10.3389/fphar.2022.837088. Introduction and mechanism sections; accessed October 7, 2026.",
+        "organizationOrJournal": "Frontiers in Pharmacology",
+        "authors": [
+          "Jannis Körner",
+          "Simone Albani",
+          "Vishal Sudha Bhagavath Eswaran",
+          "Anna B. Roehl",
+          "Giulia Rossetti",
+          "Angelika Lampert"
+        ],
+        "publicationYear": 2022,
+        "doi": "10.3389/fphar.2022.837088",
+        "pmid": null,
+        "officialUrl": "https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2022.837088/full",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "narrative_review",
+        "licenseLabel": "CC BY 4.0, ©2022 Körner and coauthors; original publication and authors credited. Article-specific license verified on actual publisher page; no protected source expression or figures reproduced.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Peer-reviewed mechanistic review identifies voltage-gated sodium channels as the principal local-anesthetic target and links blockade to impaired nerve excitation/conduction. Mechanistic evidence supports the narrow objective, not dosing or exclusive action at every molecular target.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.local-anesthetic.nerve-conduction",
+          "claim.gs028f.local-anesthetic.sodium-channel-block"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.mao.hair-wound-epithelium.2022",
+      "objectSha256": "60ae1b0f39f519a1fc21adb305fbd7234355647f7bc5334df901ae5e7de81d8d",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.mao.hair-wound-epithelium.2022",
+        "title": "Epithelial-Mesenchymal Interaction in Hair Regeneration and Skin Wound Healing",
+        "completeCitation": "Mao MQ, Jing J, Miao YJ, Lv ZF. Epithelial-Mesenchymal Interaction in Hair Regeneration and Skin Wound Healing. Front Med. 2022;9:863786. Published April14,2022. doi:10.3389/fmed.2022.863786. Introduction, EMI in Skin Wound Healing via HFSCs and Discussion; accessed October7,2026.",
+        "organizationOrJournal": "Frontiers in Medicine",
+        "authors": [
+          "Mei-Qi Mao",
+          "Jing Jing",
+          "Yu-Jie Miao",
+          "Zhong-Fa Lv"
+        ],
+        "publicationYear": 2022,
+        "doi": "10.3389/fmed.2022.863786",
+        "pmid": null,
+        "officialUrl": "https://www.frontiersin.org/journals/medicine/articles/10.3389/fmed.2022.863786/full",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "narrative_review",
+        "licenseLabel": "CC BY4.0, ©Mao, Jing, Miao and Lv2022; actual publisher-page license verified, https://creativecommons.org/licenses/by/4.0/. Original authors, journal and DOI credited. Original facts only; no source wording or figures reproduced.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Independent mechanistic review corroborates the epithelial compartment of hair follicles and its contribution to wound re-epithelialization. General mechanistic cross-check, not a direct donor-site management guideline; animal-model limitations and lack of a clinical healing-time guarantee are retained.",
+        "usageRole": "cross_check",
+        "evidenceClaimIds": [
+          "claim.gs028f.reconstruction.appendage-epithelial-source"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nci_metastatic2026",
+      "objectSha256": "4983c8887c76ca0678ce606a2d02439e8696faa6a8bf2182b6f83cd1e00fffd3",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nci_metastatic2026",
+        "title": "NCI metastatic cancer: primary identity after spread",
+        "completeCitation": "National Cancer Institute. Metastatic Cancer: When Cancer Spreads. National Institutes of Health. Updated August 17, 2026. Opening explanation of metastatic-cell identity and primary-cancer naming. Accessed October 7, 2026.",
+        "organizationOrJournal": "National Cancer Institute; National Institutes of Health",
+        "authors": [
+          "National Cancer Institute"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.cancer.gov/types/metastatic-cancer",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "NCI text reuse policy https://www.cancer.gov/policies/copyright-reuse checked October 7, 2026: NCI text is copyright-free unless indicated otherwise; credit and original-product link are recorded. Government-text conditions apply, with no private graphics, logo or PDQ trademark reproduced.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current NCI patient explanation updated August 17, 2026 directly supports metastatic-cell similarity to the primary and preservation of the primary cancer's name. Used with supplied specialist pathology and a known primary, not to establish origin from a single stain or rank likely primary sites. This source does not specifically establish small-bowel melanoma occurrence; the independent cohort does.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.melanoma.metastatic-primary-identity"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nci.allograft",
+      "objectSha256": "ed6513d53f574da5fc605c4515cdfde62f5047cce2fcbd9b3de67bb9d6927cfe",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nci.allograft",
+        "title": "Definition of allograft",
+        "completeCitation": "National Cancer Institute. Allograft. NCI Dictionary of Cancer Terms. Undated current entry; accessed October 7, 2026.",
+        "organizationOrJournal": "National Cancer Institute",
+        "authors": [
+          "National Cancer Institute"
+        ],
+        "publicationYear": null,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/allograft",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Credit: National Cancer Institute. Reuse policy checked at https://www.cancer.gov/policies/copyright-reuse; no third-party graphics or protected expression used.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal terminology defines same-species transplantation between different individuals other than identical twins; not a transplant-selection guideline.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.transplant.different-human"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nci.autologous",
+      "objectSha256": "870e0de410839e5adb6e1950c12ee6a9f89d84587797034ed4e2e92a41dfaef0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nci.autologous",
+        "title": "Definition of autologous",
+        "completeCitation": "National Cancer Institute. Autologous. NCI Dictionary of Cancer Terms. Undated current entry; accessed October 7, 2026.",
+        "organizationOrJournal": "National Cancer Institute",
+        "authors": [
+          "National Cancer Institute"
+        ],
+        "publicationYear": null,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/autologous",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Credit: National Cancer Institute. Reuse policy checked at https://www.cancer.gov/policies/copyright-reuse; no third-party graphics or protected expression used.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal terminology directly identifies a person's own cells or tissue as autologous; no graft survival or immunosuppression claim is taught.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.transplant.same-individual"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nci.breast-reconstruction-flaps",
+      "objectSha256": "5a0748bfbfb413d5e528a24406c4b3f6b4adb41680a01ba11e3d3d053705e9f8",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nci.breast-reconstruction-flaps",
+        "title": "Breast Reconstruction After Mastectomy",
+        "completeCitation": "National Cancer Institute. Breast Reconstruction After Mastectomy. Current official fact sheet, undated displayed page; accessed October 7, 2026. How do surgeons use tissue from a woman's own body to reconstruct the breast? section.",
+        "organizationOrJournal": "National Cancer Institute",
+        "authors": [
+          "National Cancer Institute"
+        ],
+        "publicationYear": null,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Credit: National Cancer Institute. Reuse policy checked at https://www.cancer.gov/policies/copyright-reuse; no third-party graphics or protected expression used.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal fact sheet independently verifies that pedicled flaps retain attached vessels and free flaps have vessels reconnected at the recipient site. Only vascular-transfer principles are used; no selection, timing, cancer treatment or onsite reconstructive service is inferred.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+          "claim.gs028f.reconstruction.pedicled-flap-supply",
+          "claim.gs028f.reconstruction.perfusion-not-donor-identity"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nci.xenograft",
+      "objectSha256": "5c65c8516ed5632d4c75a22f5fbda7d19e0d4f8bc01dd3fb283c4d762da30072",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nci.xenograft",
+        "title": "Definition of xenograft",
+        "completeCitation": "National Cancer Institute. Xenograft. NCI Dictionary of Cancer Terms. Undated current entry; accessed October 7, 2026.",
+        "organizationOrJournal": "National Cancer Institute",
+        "authors": [
+          "National Cancer Institute"
+        ],
+        "publicationYear": null,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/xenograft",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Credit: National Cancer Institute. Reuse policy checked at https://www.cancer.gov/policies/copyright-reuse; no third-party graphics or protected expression used.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal terminology defines different-species donor and recipient relationships; no routine xenotransplant indication or eligibility claim is inferred.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.transplant.different-species"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nhlbi_anemia2025",
+      "objectSha256": "c1aa522d91f7622b7b73b95a6a352a83bdb4631a9dbdafa6a60c09e12ff605ea",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nhlbi_anemia2025",
+        "title": "NHLBI anemia diagnosis: hemoglobin oxygen carriage",
+        "completeCitation": "National Heart, Lung, and Blood Institute. Anemia: Diagnosis. National Institutes of Health. Last updated December 18, 2025. Complete blood count section. Accessed October 7, 2026.",
+        "organizationOrJournal": "National Heart, Lung, and Blood Institute; National Institutes of Health",
+        "authors": [
+          "National Heart, Lung, and Blood Institute"
+        ],
+        "publicationYear": 2025,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.nhlbi.nih.gov/health/anemia/diagnosis",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "Official NIH/NHLBI patient information. No article-specific open licence verified in this packet; conservative targeted factual verification is used rather than presuming every hosted element is public domain. Underlying hemoglobin-carriage facts only, with agency credit and no copied ranges, tables or graphics.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Actual December 18, 2025 update independently verifies hemoglobin as an oxygen-carrying protein in red cells and blood hemoglobin measurement in anemia evaluation. This patient information is not a transfusion guideline. No numeric anemia threshold, treatment rule, race-adjusted reference range or acute critical-care protocol is imported.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.oxygen.anemia-content-limit",
+          "claim.gs028f.oxygen.hemoglobin-carriage"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nhs.ectopic-pregnancy.2022",
+      "objectSha256": "4c079b056115332e657fc9980bc81d48dddeca3c80f0aff362c360be351e5a99",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nhs.ectopic-pregnancy.2022",
+        "title": "Ectopic pregnancy",
+        "completeCitation": "NHS. Ectopic pregnancy. NHS conditions guidance. Reviewed August 23, 2022; displayed next review August 23, 2025; accessed October 7, 2026. Symptoms and When to get medical advice sections.",
+        "organizationOrJournal": "NHS",
+        "authors": [
+          "NHS"
+        ],
+        "publicationYear": 2022,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.nhs.uk/conditions/ectopic-pregnancy/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "NHS website content under Open Government Licence v3.0, subject to stated exclusions. Contains public sector information licensed under the Open Government Licence v3.0. https://www.nhs.uk/our-policies/terms-and-conditions/ checked; no NHS endorsement implied.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "National health-service patient guidance verifies prompt assessment of compatible symptoms when pregnancy is possible, pregnancy testing and early-pregnancy referral. Displayed review is overdue; cross-checked with independent U.S. government information. No current guideline status is claimed.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.ectopic.symptoms-require-assessment"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nlm.carpal-tunnel-genetics.2018",
+      "objectSha256": "02f4b2416124dfb121db706d1a6f230e178fe5d1dfed04876e118942c0740f67",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nlm.carpal-tunnel-genetics.2018",
+        "title": "Carpal tunnel syndrome",
+        "completeCitation": "National Library of Medicine. Carpal tunnel syndrome. MedlinePlus Genetics. Updated November 1, 2018; accessed October 7, 2026. Description and Causes sections.",
+        "organizationOrJournal": "National Library of Medicine / MedlinePlus Genetics",
+        "authors": [
+          "National Library of Medicine"
+        ],
+        "publicationYear": 2018,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://medlineplus.gov/genetics/condition/carpal-tunnel-syndrome/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Source: MedlinePlus, National Library of Medicine. Public-domain medical-test/Genetics/topic summaries verified at https://medlineplus.gov/about/using/usingcontent/; proprietary encyclopedia content excluded.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal educational summary identifies median compression at the wrist and nocturnal/wrist-provoked hand symptoms. Older foundational anatomy source; no epidemiologic weights, automatic test or treatment rule is inferred.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.nerve.median-carpal-localization",
+          "claim.gs028f.nerve.median-wrist-symptoms"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nlm.ectopic-pregnancy",
+      "objectSha256": "b97455ef8a3bdc6b99ab2b35bf3981203ea5ab90cde2791e5b453d0ecca1142b",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nlm.ectopic-pregnancy",
+        "title": "Ectopic Pregnancy",
+        "completeCitation": "National Library of Medicine; U.S. Department of Health and Human Services Office on Women's Health. Ectopic Pregnancy. MedlinePlus health-topic summary, undated current page; accessed October 7, 2026. Summary.",
+        "organizationOrJournal": "National Library of Medicine / HHS Office on Women's Health",
+        "authors": [
+          "National Library of Medicine",
+          "HHS Office on Women's Health"
+        ],
+        "publicationYear": null,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://medlineplus.gov/ectopicpregnancy.html",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Source: MedlinePlus, National Library of Medicine. Public-domain medical-test/Genetics/topic summaries verified at https://medlineplus.gov/about/using/usingcontent/; proprietary encyclopedia content excluded.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Independent U.S. government topic summary supports immediate medical evaluation with compatible pregnancy/pelvic pain/bleeding and distinguishes testing from diagnosis. Only the government topic summary is used, not linked commercial encyclopedia material.",
+        "usageRole": "both",
+        "evidenceClaimIds": [
+          "claim.gs028f.ectopic.hcg-does-not-locate",
+          "claim.gs028f.ectopic.symptoms-require-assessment"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nlm.mesh.isogeneic.2026",
+      "objectSha256": "3feef751bfb3449cb95bf0850c802cfa5d72b32aaa2397f5145ba3b7e30af096",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nlm.mesh.isogeneic.2026",
+        "title": "Transplantation, Isogeneic: MeSH Descriptor D014185",
+        "completeCitation": "National Library of Medicine. Transplantation, Isogeneic. MeSH Descriptor D014185, 2026 production vocabulary (descriptor last updated July 8, 2013). Scope note and entry terms; accessed October 7, 2026.",
+        "organizationOrJournal": "National Library of Medicine / Medical Subject Headings",
+        "authors": [
+          "National Library of Medicine"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://meshb.nlm.nih.gov/record/ui?ui=D014185",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "U.S. government terminology. Courtesy of the U.S. National Library of Medicine. https://www.nlm.nih.gov/databases/download/terms_and_conditions.html checked; no endorsement implied.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal controlled vocabulary explicitly identifies genetically identical individuals, including monozygotic twins, and the isograft/syngeneic terminology. Vocabulary year does not imply a newly published clinical study.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.transplant.genetically-identical"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nlm.mesh.lidocaine.2026",
+      "objectSha256": "9ebc6437e3544646fd88f707b324a70e0105b8119710b59d0644c855f9282aa5",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nlm.mesh.lidocaine.2026",
+        "title": "Lidocaine: MeSH Descriptor D008012",
+        "completeCitation": "National Library of Medicine. Lidocaine. MeSH Descriptor D008012, 2026 production vocabulary (descriptor last updated July 1, 2016). Pharmacological action: Voltage-Gated Sodium Channel Blockers; accessed October 7, 2026.",
+        "organizationOrJournal": "National Library of Medicine / Medical Subject Headings",
+        "authors": [
+          "National Library of Medicine"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://meshb.nlm.nih.gov/record/ui?ui=D008012",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "U.S. government terminology. Courtesy of the U.S. National Library of Medicine. https://www.nlm.nih.gov/databases/download/terms_and_conditions.html checked; no endorsement implied.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Government pharmacological-action classification independently corroborates lidocaine's sodium-channel blocker class; not an administration, dose, efficacy or toxicity guideline.",
+        "usageRole": "cross_check",
+        "evidenceClaimIds": [
+          "claim.gs028f.local-anesthetic.sodium-channel-block"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.nlm.pregnancy-test.2025",
+      "objectSha256": "7b6ac5e8c9ff9fd4a1a2452fb1654f9a3a93c13e311720ddcb55d46421d3233f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.nlm.pregnancy-test.2025",
+        "title": "Pregnancy Test",
+        "completeCitation": "National Library of Medicine. Pregnancy Test. MedlinePlus Medical Tests. Updated September 25, 2025; accessed October 7, 2026. What is it used for?, Why do I need a pregnancy test?, and What do the results mean? sections.",
+        "organizationOrJournal": "National Library of Medicine / MedlinePlus",
+        "authors": [
+          "National Library of Medicine"
+        ],
+        "publicationYear": 2025,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://medlineplus.gov/lab-tests/pregnancy-test/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "U.S. government text. Source: MedlinePlus, National Library of Medicine. Public-domain medical-test/Genetics/topic summaries verified at https://medlineplus.gov/about/using/usingcontent/; proprietary encyclopedia content excluded.",
+        "reuseStatus": "public_domain_conditions_apply",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Federal patient-test information directly verifies urine/blood hCG pregnancy testing, compatible symptoms, and early false-negative limits. It does not establish pregnancy location from a positive test.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.ectopic.hcg-does-not-locate",
+          "claim.gs028f.pregnancy.early-negative-limit",
+          "claim.gs028f.pregnancy.hcg-testing"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.north-tees.cubital-tunnel.2026",
+      "objectSha256": "70caec9f094df92bd0fb13b5dd243e6dab9d6cde22d2af9ec330621798fa1f57",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.north-tees.cubital-tunnel.2026",
+        "title": "Hand Therapy – Cubital Tunnel Syndrome",
+        "completeCitation": "North Tees and Hartlepool NHS Foundation Trust, iMSK Hand Therapy Team. Hand Therapy – Cubital Tunnel Syndrome. Patient information leaflet PIL1557. Reviewed March 30, 2026; review due December 2027. What is it? and What are the causes and symptoms? sections; accessed October 7, 2026.",
+        "organizationOrJournal": "North Tees and Hartlepool NHS Foundation Trust",
+        "authors": [
+          "North Tees and Hartlepool NHS Foundation Trust iMSK Hand Therapy Team"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.nth.nhs.uk/resources/hand-therapy-cubital-tunnel-syndrome/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "Copyright North Tees and Hartlepool NHS Foundation Trust. https://www.nth.nhs.uk/terms-conditions/ checked; targeted factual verification only, without reproducing leaflet text, images or exercises. No public-domain or open-license status is asserted.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current trust-authored hand-therapy information directly verifies ulnar compression at the inner elbow, little/ring-finger symptoms, and elbow-flexion/leaning provocation. Patient guidance supports foundational localization, not an operative indication or a rule that every paresthesia has this cause.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.nerve.elbow-provocation",
+          "claim.gs028f.nerve.ulnar-cubital-localization"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.prograf2023",
+      "objectSha256": "418da3825875f6207bf874fb2337e803a0136b80018250f55f61faaceba136af",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.prograf2023",
+        "title": "PROGRAF prescribing information: mechanism of action",
+        "completeCitation": "Astellas Pharma US, Inc. PROGRAF (tacrolimus) capsules, injection and granules: full prescribing information. DailyMed, National Library of Medicine. Updated August 25, 2023. Section 12.1, Mechanism of Action. Set ID 7f667de1-9dfa-4bd6-8ba0-15ee2d78873b. Accessed October 7, 2026.",
+        "organizationOrJournal": "Astellas Pharma US, Inc.; NLM DailyMed",
+        "authors": [
+          "Astellas Pharma US, Inc."
+        ],
+        "publicationYear": 2023,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7f667de1-9dfa-4bd6-8ba0-15ee2d78873b",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "Manufacturer-contributed prescribing information, not automatically public domain because hosted by NLM. NLM Web Policies, Copyright, https://www.nlm.nih.gov/web_policies.html#copyright checked October 7, 2026. Copyrighted targeted factual verification only; no label expression reproduced.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current official DailyMed record for the named PROGRAF products, updated August 25, 2023. Manufacturer regulatory prescribing information is the sole direct mechanism source; the schema's public educational-resource class is not an open licence or a professional guideline. Section 12.1 directly verifies FKBP12 binding, calcineurin inhibition and suppression of T-cell activation. No medicine adjustment, formulation substitution, dosing or monitoring algorithm is inferred.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.tacrolimus.calcineurin",
+          "claim.gs028f.tacrolimus.fkbp12-complex",
+          "claim.gs028f.tacrolimus.t-cell-activation"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.qld.early-pregnancy-loss.2025",
+      "objectSha256": "ff32c7dd74659a4b623e608fe67e149a19dd5aec7ab3add8b555d41e0922abaf",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.qld.early-pregnancy-loss.2025",
+        "title": "Early pregnancy loss",
+        "completeCitation": "Queensland Clinical Guidelines. Early pregnancy loss. Guideline No. MN22.29-V8-R27. Queensland Health; 2025. Sections 3 Assessment and 4 Ectopic pregnancy, printed pages 14–20; accessed October 7, 2026.",
+        "organizationOrJournal": "Queensland Health / Queensland Clinical Guidelines",
+        "authors": [
+          "Queensland Clinical Guidelines"
+        ],
+        "publicationYear": 2025,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.health.qld.gov.au/__data/assets/pdf_file/0033/139947/g-epl.pdf",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "©State of Queensland (Queensland Health) 2025. Article-specific CC BY-NC-ND 4.0 verified on printed page2, https://creativecommons.org/licenses/by-nc-nd/4.0/. Conservative targeted factual verification only; no source expression, table, flowchart or adapted algorithm is used. Credit: Queensland Clinical Guidelines, Queensland Health.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current state clinical guideline supports pregnancy testing in reproductive-age suspected early-pregnancy loss, clinical assessment irrespective of initial hemodynamic stability, and assessment of pregnancy location. Used only for these narrow facts, independently corroborated with NLM/NHS; no treatment threshold, regimen or copied algorithm.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.ectopic.hcg-does-not-locate",
+          "claim.gs028f.ectopic.symptoms-require-assessment",
+          "claim.gs028f.pregnancy.hcg-testing"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.rocuronium2026",
+      "objectSha256": "6f3d287452c59cd283ced56455c0584662efede5fcf083be41361a9b6aefb522",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.rocuronium2026",
+        "title": "Rocuronium prescribing information: need for adequate anesthesia",
+        "completeCitation": "Fresenius Kabi USA, LLC. Rocuronium Bromide Injection: full prescribing information. Revised July 2026; DailyMed updated August 2, 2026. Sections 1, Indications and Usage; 5.4, Need for Adequate Anesthesia; and 12.1, Mechanism of Action. Set ID 04c9812d-5aa3-4949-ad02-c618028f1bb0. Accessed October 7, 2026.",
+        "organizationOrJournal": "Fresenius Kabi USA, LLC; NLM DailyMed",
+        "authors": [
+          "Fresenius Kabi USA, LLC"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=04c9812d-5aa3-4949-ad02-c618028f1bb0",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "Manufacturer-contributed copyrighted label; NLM hosting does not confer government ownership. NLM copyright policy https://www.nlm.nih.gov/web_policies.html#copyright checked October 7, 2026. Targeted underlying-fact verification only, with no label prose or administration instructions reproduced.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current exact Fresenius Kabi label, revised July 2026 and updated August 2, 2026. Sections 1/12.1 verify skeletal-muscle neuromuscular blockade; section 5.4 directly verifies lack of consciousness or pain-relieving effects and separate adequate anesthesia/sedation. This is the sole direct source for the narrow drug-effect boundary, not a sedation continuum, delivery protocol or awareness-management guideline. No ASA content or derivative definition is used.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.nmb.no-unconsciousness-analgesia",
+          "claim.gs028f.nmb.skeletal-muscle-effect"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.rsna-acr.neck-mass-imaging.2022",
+      "objectSha256": "8d2f9a94549ad0c4526aaea49361012be8dd711becb97f578126f3a21cf419b9",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.rsna-acr.neck-mass-imaging.2022",
+        "title": "Neck Mass/Adenopathy",
+        "completeCitation": "Newman R, Sadowski EA. Neck Mass/Adenopathy. RadiologyInfo.org, ACR/RSNA Appropriateness Criteria patient summary. Reviewed July 15, 2022; accessed October 7, 2026. Neck imaging options.",
+        "organizationOrJournal": "Radiological Society of North America / American College of Radiology",
+        "authors": [
+          "Rachel Newman",
+          "Elizabeth A Sadowski"
+        ],
+        "publicationYear": 2022,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.radiologyinfo.org/en/info/acs-neck-mass-adenopathy",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "open_educational_resource",
+        "licenseLabel": "©RSNA. Targeted factual verification only; no copying permitted by site footer. Current terms reviewed March1,2026, https://www.radiologyinfo.org/en/info/about-terms-of-use, checked without an explicit AI-use ban. Original underlying fact and direct link only.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Society-authored, physician-reviewed summary supports IV-contrast neck CT among appropriate imaging choices for a selected nonthyroid/nonparotid neck mass. It is a patient summary, not the primary ACR narrative. The primary ACR2018 Narrative/portal was inaccessible and is not claim evidence; questionable felt/cannot-felt distinctions are not adopted. No universal CT superiority or mandatory CT-to-FNA sequence is claimed.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.neck.selected-contrast-ct"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.uk.head-neck-guidelines.2024",
+      "objectSha256": "c75d458d4edb098a2813c7186fe7eadea6e8158ea629629955dbb29a79127c3c",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.uk.head-neck-guidelines.2024",
+        "title": "Head and Neck Cancer: United Kingdom National Multidisciplinary Guidelines, Sixth Edition",
+        "completeCitation": "Homer JJ, Winter SC, editors, with the United Kingdom national multidisciplinary guideline author group. Head and Neck Cancer: United Kingdom National Multidisciplinary Guidelines, Sixth Edition. J Laryngol Otol. 2024;138(Suppl1):S1–S224. doi:10.1017/S0022215123001615. Neck lumps and needle-versus-open biopsy, printed S15–S16; imaging S16–S17; unknown primary S172–S174. Accessed October 7, 2026.",
+        "organizationOrJournal": "The Journal of Laryngology & Otology / United Kingdom multidisciplinary head-and-neck societies",
+        "authors": [
+          "J J Homer",
+          "S C Winter",
+          "United Kingdom National Multidisciplinary Guidelines author group"
+        ],
+        "publicationYear": 2024,
+        "doi": "10.1017/S0022215123001615",
+        "pmid": null,
+        "officialUrl": "https://discovery.ucl.ac.uk/10193598/1/head-and-neck-cancer-united-kingdom-national-multidisciplinary-guidelines-sixth-edition.pdf",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "peer_reviewed_guideline",
+        "licenseLabel": "CC BY 4.0, ©Authors2024, publisher-version institutional copy; https://creativecommons.org/licenses/by/4.0/ verified on printed S1. Credit: Homer, Winter and guideline author group, original journal and DOI. No source wording, illustrations, algorithms, tables or embedded third-party recommendations reproduced.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Independent multidisciplinary guideline directly supports malignancy concern in adult lateral/cystic masses and needle sampling before initial open biopsy. Core biopsy may be appropriate, so FNA is only the best offered needle option. CT helps delineate tumor/nodal anatomy, but MRI/US can be appropriate and CT is not universally required before FNA. No AAO-HNS or NICE body/reprint is used. May2024 author-name corrigendum does not alter these clinical facts.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+          "claim.gs028f.neck.core-biopsy-alternative",
+          "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+          "claim.gs028f.neck.needle-before-open",
+          "claim.gs028f.neck.selected-contrast-ct"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.va_pra2026",
+      "objectSha256": "2b010e44d5baa37c504bd8e825d1c824e81302e7403eea3d8010ab9dde8ee77f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.va_pra2026",
+        "title": "VHA proactive risk assessment and healthcare FMEA",
+        "completeCitation": "Veterans Health Administration National Center for Patient Safety. Proactive Risk Assessment: Healthcare Failure Mode and Effects Analysis. US Department of Veterans Affairs. Updated August 28, 2026. Sections Proactive Risk Assessment and Healthcare Failure Mode and Effects Analysis. Accessed October 7, 2026.",
+        "organizationOrJournal": "US Department of Veterans Affairs; VHA National Center for Patient Safety",
+        "authors": [
+          "VHA National Center for Patient Safety"
+        ],
+        "publicationYear": 2026,
+        "doi": null,
+        "pmid": null,
+        "officialUrl": "https://www.patientsafety.va.gov/professionals/onthejob/hfmea.asp",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "government_guidance",
+        "licenseLabel": "Official VA-authored public method overview; https://digital.va.gov/web-governance/standards-and-policies/web-policies/ checked October 7, 2026 distinguishes agency content from third-party works. Conservative targeted-fact status; no third-party paper, flipbook, scoring matrix, decision tree or source wording reproduced.",
+        "reuseStatus": "copyrighted_targeted_verification_only",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "Current official NCPS overview updated August 28, 2026. Directly defines prospective/proactive risk assessment before problems occur and identifies healthcare FMEA as its healthcare-specific method. Used only for temporal-purpose classification, not for selecting a scoring system, algorithm or claiming improved outcomes. Healthcare adaptation is named where appropriate, rather than treating every prospective method as FMEA.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.safety.fmea-prospective"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.wong_bowel_melanoma2024",
+      "objectSha256": "6905878f7ab74316b013f96c583e025e341bf5de85c57f5bdce44f9e7f463d95",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.wong_bowel_melanoma2024",
+        "title": "Metastatic cutaneous melanoma involving small bowel",
+        "completeCitation": "Wong P, Wisneski AD, Tsai KK, Chang TT, Hirose K, Nakakura EK, Daud AI, Maker AV, Corvera CU. Metastatic melanoma to small bowel: metastasectomy is supported in the era of immunotherapy and checkpoint inhibitors. World Journal of Surgical Oncology. 2024;22:77. Published March 11, 2024. doi:10.1186/s12957-024-03335-3. PMID:38468341. Accessed October 7, 2026. Introduction and case-series description used only for occurrence.",
+        "organizationOrJournal": "World Journal of Surgical Oncology",
+        "authors": [
+          "Paul Wong",
+          "Andrew D Wisneski",
+          "Katy K Tsai",
+          "Tammy T Chang",
+          "Kenzo Hirose",
+          "Eric K Nakakura",
+          "Adil I Daud",
+          "Ajay V Maker",
+          "Carlos U Corvera"
+        ],
+        "publicationYear": 2024,
+        "doi": "10.1186/s12957-024-03335-3",
+        "pmid": "38468341",
+        "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10926580/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "observational_study",
+        "licenseLabel": "Actual article states CC BY 4.0, https://creativecommons.org/licenses/by/4.0/, verified October 7, 2026; it also identifies US-government-work conditions with possible foreign protection. Conservative CC BY attribution retained. Original occurrence facts only; no source figures, patient data, tables or prose reproduced.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "2024 single-institution fifteen-patient retrospective surgical case series. Introduction and case description verify that cutaneous melanoma can spread to small bowel. The selected cohort cannot establish population prevalence, most-common-primary rankings or benefit of surgery. No therapy recommendation, survival estimate, exact interval, histologic diagnostic shortcut or postoperative protocol is inferred.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.melanoma.small-bowel-spread"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.wses_esophagus2019",
+      "objectSha256": "c1e76ef6def8060aa61f374d72d3d3c8da0c6d19036b5c0e4386532006c21894",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.wses_esophagus2019",
+        "title": "WSES esophageal emergencies guideline: foreign bodies",
+        "completeCitation": "Chirica M, Kelly MD, Siboni S, Aiolfi A, Riva CG, Asti E, Ferrari D, Leppäniemi A, ten Broek RPG, Brichon PY, Kluger Y, Fraga GP, Frey G, Andreollo NA, Coccolini F, Frattini C, Moore EE, Chiara O, Di Saverio S, Sartelli M, Weber D, Ansaloni L, Biffl W, Corte H, Wani I, Baiocchi G, Cattan P, Catena F, Bonavina L. Esophageal emergencies: WSES guidelines. World Journal of Emergency Surgery. 2019;14:26. Published May 31, 2019. doi:10.1186/s13017-019-0245-2. PMID:31164915. Accessed October 7, 2026.",
+        "organizationOrJournal": "World Society of Emergency Surgery; World Journal of Emergency Surgery",
+        "authors": [
+          "Mircea Chirica",
+          "Michael D Kelly",
+          "Stefano Siboni",
+          "Alberto Aiolfi",
+          "Carlo Galdino Riva",
+          "Emanuele Asti",
+          "Davide Ferrari",
+          "Ari Leppäniemi",
+          "Richard P G ten Broek",
+          "Pierre Yves Brichon",
+          "Yoram Kluger",
+          "Gustavo Pereira Fraga",
+          "Gil Frey",
+          "Nelson Adami Andreollo",
+          "Federico Coccolini",
+          "Cristina Frattini",
+          "Ernest E Moore",
+          "Osvaldo Chiara",
+          "Salomone Di Saverio",
+          "Massimo Sartelli",
+          "Dieter Weber",
+          "Luca Ansaloni",
+          "Walter Biffl",
+          "Helene Corte",
+          "Imtaz Wani",
+          "Gianluca Baiocchi",
+          "Pierre Cattan",
+          "Fausto Catena",
+          "Luigi Bonavina"
+        ],
+        "publicationYear": 2019,
+        "doi": "10.1186/s13017-019-0245-2",
+        "pmid": "31164915",
+        "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6544956/",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "professional_society_guideline",
+        "licenseLabel": "Article-specific CC BY 4.0 verified in the actual article October 7, 2026, https://creativecommons.org/licenses/by/4.0/. Attribution to authors and original guideline recorded. Original narrow clinical facts only; no source recommendation table, algorithm, illustration or prose adapted.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "2019 WSES guideline remains listed by the current official WSES guideline index, checked October 7, 2026; no newer named WSES esophageal update was found. Foreign-body questions on imaging and endoscopy directly support radiographic bone limitations, persistent-symptom evaluation despite negative films and emergent sharp-esophageal-object removal. ESGE independently agrees, but both are older guidelines with largely low-quality underlying evidence. No numeric diagnostic performance, removal deadline or extraction technique is imported.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.foreign-body.initial-endoscopic-approach",
+          "claim.gs028f.foreign-body.negative-bone-films",
+          "claim.gs028f.foreign-body.persistent-symptoms-evaluation",
+          "claim.gs028f.foreign-body.sharp-esophageal-emergency",
+          "claim.gs028f.foreign-body.sharp-perforation-risk"
+        ]
+      }
+    },
+    {
+      "id": "source.gs028f.zhang_refeeding2023",
+      "objectSha256": "63975bce4b634b57490045dedb61e3a668bc819f20e1ba3872b741490433c0fc",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "source.gs028f.zhang_refeeding2023",
+        "title": "Refeeding physiology in a neurocritical cohort report",
+        "completeCitation": "Zhang W, Zhang S-X, Chen S-F, Yu T, Tang Y. Development and validation of risk prediction model for refeeding syndrome in neurocritical patients. Frontiers in Nutrition. 2023;10:1083483. Published February 15, 2023. doi:10.3389/fnut.2023.1083483. Accessed October 7, 2026. Mechanism background in Introduction.",
+        "organizationOrJournal": "Frontiers in Nutrition",
+        "authors": [
+          "Wei Zhang",
+          "Sheng-Xiang Zhang",
+          "Shu-Fan Chen",
+          "Tao Yu",
+          "Yun Tang"
+        ],
+        "publicationYear": 2023,
+        "doi": "10.3389/fnut.2023.1083483",
+        "pmid": null,
+        "officialUrl": "https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2023.1083483/full",
+        "accessedOn": "2026-10-07",
+        "sourceClass": "observational_study",
+        "licenseLabel": "Article-specific CC BY 4.0 verified in the actual publisher copyright notice October 7, 2026, https://creativecommons.org/licenses/by/4.0/. Authors and original article credited here. Claims/cards independently synthesize underlying physiology; no prose, predictive model, table or figure adapted.",
+        "reuseStatus": "cc_by_4_0",
+        "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+        "authorityAssessment": "2023 observational neurocritical-care cohort. Its Introduction independently describes the insulin-associated intracellular phosphate uptake and catabolic-to-anabolic transition after feeding. Those stable background mechanisms alone are used; the cohort's risk model, incidence, thresholds and neurocritical-care management are not generalized to clinic patients. Not independent evidence for thiamine timing or efficacy.",
+        "usageRole": "evidence",
+        "evidenceClaimIds": [
+          "claim.gs028f.refeeding.anabolic-transition",
+          "claim.gs028f.refeeding.insulin-phosphate-shift"
+        ]
+      }
+    }
+  ],
+  "atomicClaims": [
+    {
+      "id": "claim.gs028f.ectopic.hcg-does-not-locate",
+      "objectSha256": "3de7bbf2e812ba6ffe217409dad8db86078cfc4b53dd104557eac1b81c3661aa",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.ectopic.hcg-does-not-locate",
+        "statement": "A positive hCG result establishes evidence of pregnancy but does not by itself establish its location; clinical assessment and appropriate ultrasonography are needed to evaluate a suspected ectopic pregnancy.",
+        "sourceIds": [
+          "source.gs028f.qld.early-pregnancy-loss.2025",
+          "source.gs028f.nlm.pregnancy-test.2025",
+          "source.gs028f.nlm.ectopic-pregnancy"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "No hCG discriminatory value, definitive ultrasound rule, treatment regimen or mandatory test sequence is authored.",
+        "applicablePopulation": "Adults being evaluated for a possible ectopic pregnancy.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.ectopic.symptoms-require-assessment",
+      "objectSha256": "8d8a26cf1cb0e1b83757f0a995271418c0685d0cf06b6eaee25b73aa7294f9cb",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.ectopic.symptoms-require-assessment",
+        "statement": "A positive pregnancy test with compatible pelvic pain or abnormal vaginal bleeding raises concern for an ectopic pregnancy and requires prompt specialist-capable assessment even when the initial circulation is stable.",
+        "sourceIds": [
+          "source.gs028f.qld.early-pregnancy-loss.2025",
+          "source.gs028f.nhs.ectopic-pregnancy.2022",
+          "source.gs028f.nlm.ectopic-pregnancy"
+        ],
+        "evidenceCategory": "disposition",
+        "certainty": "high",
+        "limitation": "Current guideline corroborated by independent government symptom guidance. This is suspicion requiring urgent evaluation, not a definitive ectopic diagnosis or an onsite treatment recommendation. The NHS page's displayed review is overdue. Escalating pain, faintness or other deterioration requires emergency assessment without a routine testing wait.",
+        "applicablePopulation": "Symptomatic adults with a positive pregnancy test and an unestablished pregnancy location.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.foreign-body.initial-endoscopic-approach",
+      "objectSha256": "417775103f59b479b556bcfab1d21151866ddcdd5ecf608051d95e7a4292c9c9",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.foreign-body.initial-endoscopic-approach",
+        "statement": "For a persistent esophageal foreign body requiring removal, therapeutic endoscopy is the initial approach when the supplied assessment has not identified a complication or circumstance requiring an operation.",
+        "sourceIds": [
+          "source.gs028f.wses_esophagus2019"
+        ],
+        "evidenceCategory": "management",
+        "certainty": "moderate",
+        "limitation": "WSES 2019 endoscopy and surgical-indication sections directly support initial endoscopic care and separately identify operative indications. Sole direct source for this narrow comparator boundary. No extraction technique, universal avoidance of surgery, patient self-treatment or clinic procedure is taught.",
+        "applicablePopulation": "Adults with a confirmed retained esophageal foreign body and no supplied operative complication.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.foreign-body.negative-bone-films",
+      "objectSha256": "06a4c9b0317dea9a93fd33a8096881223fa1525bd24219db9f67a1bc853a2f32",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.foreign-body.negative-bone-films",
+        "statement": "Some swallowed fish or chicken bones are not readily visible on plain radiographs, so a negative film does not exclude a retained bone.",
+        "sourceIds": [
+          "source.gs028f.wses_esophagus2019",
+          "source.gs028f.esge_foreignbody2016"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "Direct concordant WSES 2019 imaging guidance and official ESGE 2016 PDF page 3. The older guidelines remain on current official indexes; underlying diagnostic evidence has limitations. No exact sensitivity, false-negative proportion, blanket plain-film-first rule or claim that every bone is radiolucent.",
+        "applicablePopulation": "Symptomatic adults reporting swallowed fish or chicken bone.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.foreign-body.persistent-symptoms-evaluation",
+      "objectSha256": "ed1e2cde1d85a90f54a07ff439c542e9f47117d8d332124062b842979eeef8c5",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.foreign-body.persistent-symptoms-evaluation",
+        "statement": "Persistent esophageal symptoms after a suspected swallowed foreign body warrant further specialist evaluation even when plain radiographs are negative.",
+        "sourceIds": [
+          "source.gs028f.wses_esophagus2019",
+          "source.gs028f.esge_foreignbody2016"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "moderate",
+        "limitation": "WSES 2019 endoscopy section directly supports evaluation despite negative radiographs; ESGE independently cross-checks the radiographic bone limitation and therapeutic assessment. No complete imaging sequence or numeric removal deadline. Normal breathing does not resolve the supplied esophageal concern; urgent outside assessment is a case disposition rather than new clinic capability.",
+        "applicablePopulation": "Adults with ongoing swallowing-related symptoms after suspected sharp-bone ingestion.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.foreign-body.sharp-esophageal-emergency",
+      "objectSha256": "553d127fc9bc86d99ff71b55133d9d4f57ae01a803915473e82a945b77ca8ab0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.foreign-body.sharp-esophageal-emergency",
+        "statement": "A confirmed sharp-pointed foreign body retained in the esophagus is an indication for emergent therapeutic endoscopic removal.",
+        "sourceIds": [
+          "source.gs028f.wses_esophagus2019",
+          "source.gs028f.esge_foreignbody2016"
+        ],
+        "evidenceCategory": "disposition",
+        "certainty": "moderate",
+        "limitation": "WSES 2019 endoscopy recommendation and ESGE 2016 official PDF page 4 agree. Strong guideline recommendations rely on largely low-quality evidence; age and current index status are recorded. The cases direct emergency hospital care outside the clinic, not a routine timed game EGD, a rescue protocol, extraction technique or a numeric deadline.",
+        "applicablePopulation": "Adults with supplied confirmation of a sharp esophageal foreign body.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.foreign-body.sharp-perforation-risk",
+      "objectSha256": "314d4ee784331211e11c469d554631ff39714224244fa9a25fcbd213ea52eb94",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.foreign-body.sharp-perforation-risk",
+        "statement": "A sharp-pointed esophageal foreign body presents a risk of full-thickness esophageal injury, which underlies the need for emergent removal even without complete obstruction.",
+        "sourceIds": [
+          "source.gs028f.wses_esophagus2019",
+          "source.gs028f.esge_foreignbody2016"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "moderate",
+        "limitation": "Both guidelines support sharp-object urgency independent of the separate complete-obstruction indication. No exact perforation probability or claim that injury has already occurred. Cases have confirmed esophageal location, normal respiration and no supplied perforation; no onsite treatment or automatic surgery is inferred.",
+        "applicablePopulation": "Adults with a confirmed retained sharp esophageal object and preserved breathing.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.last.cardiac-pattern",
+      "objectSha256": "1b15c750b1b2fdaee71d03a03715a902cf3e1e2fac7c3778b5c52aca87294b0a",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.last.cardiac-pattern",
+        "statement": "Systemic local-anesthetic toxicity can also involve cardiac conduction disturbances and serious ventricular arrhythmias.",
+        "sourceIds": [
+          "source.gs028f.asra_last2021"
+        ],
+        "evidenceCategory": "presentation",
+        "certainty": "moderate",
+        "limitation": "Targeted ASRA discussion sections 6 and 8 support cardiac involvement. Sole direct source; no ECG cutoffs, frequency, mandatory waveform or treatment protocol is claimed. A supplied compatible exposure is necessary for the case reasoning.",
+        "applicablePopulation": "Adults reviewing documented cardiac findings after outside local-anesthetic administration.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.last.neurologic-pattern",
+      "objectSha256": "27bf36c891ddfa096c385063786430009ab1615fc9138a307bc062c652fc1a7b",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.last.neurologic-pattern",
+        "statement": "Systemic local-anesthetic toxicity can produce neurologic findings such as altered taste, tinnitus, perioral numbness, confusion and seizures in a compatible exposure context.",
+        "sourceIds": [
+          "source.gs028f.asra_last2021"
+        ],
+        "evidenceCategory": "presentation",
+        "certainty": "moderate",
+        "limitation": "ASRA educational discussion section 8 is the sole direct recognition source, published 2021. These findings are not individually diagnostic or a required sequence; the cases supply local-anesthetic exposure and a completed outside clinical course. No source vignette or rescue algorithm is reused.",
+        "applicablePopulation": "Adults reviewing a completed outside-care event after local-anesthetic exposure.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.last.variable-first-manifestation",
+      "objectSha256": "3946058d29243e4ee5bc14917b70ec591f53322abdd6e0be9204b31ff4ca3a2b",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.last.variable-first-manifestation",
+        "statement": "Cardiovascular manifestations of systemic local-anesthetic toxicity can be the initial presentation, so a preceding neurologic warning sequence is not required.",
+        "sourceIds": [
+          "source.gs028f.asra_last2021"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "moderate",
+        "limitation": "ASRA educational section 8 directly supports possible cardiac-first presentation. This is a recognition limit, not a claim that every perioperative arrhythmia is toxicity or that the supplied event's cause can be established without clinical evaluation.",
+        "applicablePopulation": "Adults discussing a completed outside event with documented local-anesthetic exposure.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.local-anesthetic.nerve-conduction",
+      "objectSha256": "6f68532134ff4c2bd33de40c000ecff9be2e25bbc0c903a1596978d21516aefb",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.local-anesthetic.nerve-conduction",
+        "statement": "Local-anesthetic inhibition of voltage-gated sodium-channel function reduces the sodium current needed for nerve excitation and action-potential conduction.",
+        "sourceIds": [
+          "source.gs028f.korner.local-anesthetic-sodium.2022"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Mechanistic review is the sole direct source for the conduction explanation. No specific concentration, onset, duration, sensory-fiber ranking or irreversible nerve effect is claimed.",
+        "applicablePopulation": "Sensory nerve membranes exposed to a conventional local anesthetic.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.local-anesthetic.sodium-channel-block",
+      "objectSha256": "59225b2522cf0a28803ff80f5f56224ee7e36bfd5728c0f3a40613a6c898f5b0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.local-anesthetic.sodium-channel-block",
+        "statement": "Voltage-gated sodium channels are the principal molecular target responsible for the nerve-blocking action of conventional local anesthetics such as lidocaine.",
+        "sourceIds": [
+          "source.gs028f.korner.local-anesthetic-sodium.2022",
+          "source.gs028f.nlm.mesh.lidocaine.2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Principal mechanism, not a claim that these medicines interact with no other targets. Molecular review and independent government classification; no administration or dose rule.",
+        "applicablePopulation": "Adults discussing local-anesthetic action in sensory nerves.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.melanoma.metastatic-primary-identity",
+      "objectSha256": "946556d13b5eb8ba85a3efa6d6b4a3ae3e6c8c263564722730d0c79e996337ec",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.melanoma.metastatic-primary-identity",
+        "statement": "A cancer metastasis retains the identity of its established primary cancer; its new anatomic location does not by itself make it a primary cancer of that organ.",
+        "sourceIds": [
+          "source.gs028f.nci_metastatic2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Current NCI explanation directly supports primary identity and naming after metastatic spread. The cases give a specialist pathology comparison confirming the relationship to a known cutaneous primary. No unknown-primary ranking, diagnosis from one stain, melanoma subtype inference or management decision.",
+        "applicablePopulation": "Adults reviewing a confirmed metastasis from a supplied known primary.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.melanoma.small-bowel-spread",
+      "objectSha256": "0cac585641fd6279f8dc71fc654e9586ff5cbfb12d1430f1071854825c5df620",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.melanoma.small-bowel-spread",
+        "statement": "Cutaneous melanoma can metastasize to the small bowel.",
+        "sourceIds": [
+          "source.gs028f.wong_bowel_melanoma2024"
+        ],
+        "evidenceCategory": "presentation",
+        "certainty": "high",
+        "limitation": "The 2024 retrospective case series directly establishes occurrence, not a population frequency or ranking of primary cancers. No survival, treatment benefit, timing or diagnostic marker threshold is inferred from this selected surgical cohort.",
+        "applicablePopulation": "Adults with an established cutaneous melanoma history and a supplied outside small-bowel pathology diagnosis.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+      "objectSha256": "405c5da10d185a36e687419240f1d66ae5b99cb672dbafaaf35ce0e338f6451a",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+        "statement": "A persistent unexplained lateral neck mass in an adult requires evaluation for malignancy; a cystic appearance in an older adult does not establish a benign developmental cyst.",
+        "sourceIds": [
+          "source.gs028f.uk.head-neck-guidelines.2024"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "Single independent multidisciplinary guideline directly supports the malignancy/cystic boundary. The cases are adults older than40 with persistent unexplained nonthyroid masses, not a thyroid-nodule, thyroglossal-duct or known benign-cyst objective. No precise duration threshold or definitive cancer diagnosis is inferred.",
+        "applicablePopulation": "Adults older than40 with a persistent unexplained lateral or cystic neck mass.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.neck.core-biopsy-alternative",
+      "objectSha256": "9108d82672dfe4722e239a69e5cc374107ec0beb38270b30bf4071111e069c6c",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.neck.core-biopsy-alternative",
+        "statement": "Core needle biopsy may be appropriate for selected neck masses when the tissue or ancillary testing needed is not adequately supplied by fine-needle aspiration.",
+        "sourceIds": [
+          "source.gs028f.uk.head-neck-guidelines.2024"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "high",
+        "limitation": "Single guideline; core is acknowledged in feedback and is never an incorrect alternative to FNA. The cases do not ask for lymphoma-specific sampling or prescribe open biopsy after a fixed number of attempts.",
+        "applicablePopulation": "Specialist-assessed neck masses with technique selection based on pathology requirements.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+      "objectSha256": "9b6481aaa09b4b966e8a291da6294582860cbe56069e7619d5c483b3b3856a8f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+        "statement": "Cross-sectional neck imaging characterizes anatomy, whereas cell or tissue sampling supplies the material for a cytological or histological diagnosis of an undiagnosed suspicious neck mass.",
+        "sourceIds": [
+          "source.gs028f.uk.head-neck-guidelines.2024"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "Single guideline's independently synthesized distinction between imaging and needle-sampling roles. A supplied CT description does not substitute for a tissue specimen; no universal sequence or guaranteed sampling result is claimed.",
+        "applicablePopulation": "Adults with an imaged but still undiagnosed suspicious cervical mass.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.neck.needle-before-open",
+      "objectSha256": "7efcd6bcb0864d19055aa2f87fd1aa99910dd940c8dd646522e4cc83852687f0",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.neck.needle-before-open",
+        "statement": "After appropriate assessment of an undiagnosed at-risk adult neck mass, fine-needle aspiration is an appropriate initial needle-sampling approach; open incisional or excisional biopsy should not replace the initial needle approach.",
+        "sourceIds": [
+          "source.gs028f.uk.head-neck-guidelines.2024"
+        ],
+        "evidenceCategory": "management",
+        "certainty": "high",
+        "limitation": "Single independent guideline. FNA is the best offered needle option, not universally preferable to core biopsy. The game action is specialist referral, not a fabricated local generic-FNA procedure or a complete cancer-workup sequence.",
+        "applicablePopulation": "Adults with an assessed, undiagnosed suspicious cervical mass requiring an initial needle sample.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.neck.selected-contrast-ct",
+      "objectSha256": "ee22fdd3c1631dda9ed78ab63267a620a613299678df784a516928fc82bafd4f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.neck.selected-contrast-ct",
+        "statement": "Contrast-enhanced neck CT can be an appropriate selected cross-sectional study to characterize a nonthyroid/nonparotid neck mass and its cervical anatomy during malignancy evaluation.",
+        "sourceIds": [
+          "source.gs028f.rsna-acr.neck-mass-imaging.2022",
+          "source.gs028f.uk.head-neck-guidelines.2024"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "moderate",
+        "limitation": "Society-reviewed2022 patient summary supports CT among appropriate options, corroborated by UK2024 CT/anatomy guidance. Primary ACR2018 narrative/portal was inaccessible and is not used. MRI and ultrasound can also be appropriate; CT is not universally superior or mandatory before FNA. No felt/cannot-felt distinction is used.",
+        "applicablePopulation": "Stable adults with a persistent nonpulsatile nonthyroid/nonparotid neck mass and a specialist-selected cross-sectional imaging plan.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nerve.elbow-provocation",
+      "objectSha256": "803878f8bc7e8fff17a9a9e0651cc5ac98c5058290373b6137f798003a65ae62",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nerve.elbow-provocation",
+        "statement": "Bending the elbow for prolonged periods or leaning on the inner elbow can provoke symptoms from ulnar compression at the cubital tunnel.",
+        "sourceIds": [
+          "source.gs028f.north-tees.cubital-tunnel.2026"
+        ],
+        "evidenceCategory": "presentation",
+        "certainty": "high",
+        "limitation": "Current patient guidance supports provocation, not a guarantee of diagnosis from position alone or a treatment protocol.",
+        "applicablePopulation": "Adults with elbow-provoked little/ring-finger paresthesias.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nerve.median-carpal-localization",
+      "objectSha256": "3db82f98da0a7e39e2e4bc1306f82f27a5afff365a346bc0857284cd453181fb",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nerve.median-carpal-localization",
+        "statement": "Carpal tunnel syndrome localizes compression of the median nerve to the carpal tunnel at the wrist.",
+        "sourceIds": [
+          "source.gs028f.nlm.carpal-tunnel-genetics.2018"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "Single federal educational source for foundational anatomy, updated 2018. Supplied clinical clues support localization; no automatic operation, electrodiagnostic test or universal cause of hand tingling is asserted.",
+        "applicablePopulation": "Adults with a supplied carpal-tunnel pattern or an outside localization report.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nerve.median-wrist-symptoms",
+      "objectSha256": "14ebe5fcfffcfbbf01e99acfca9709c243af2c8c785372145227ff507b596236",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nerve.median-wrist-symptoms",
+        "statement": "Median-nerve compression at the wrist can produce hand numbness and tingling involving the thumb, index and middle fingers, with nocturnal or wrist-position-provoked symptoms.",
+        "sourceIds": [
+          "source.gs028f.nlm.carpal-tunnel-genetics.2018"
+        ],
+        "evidenceCategory": "presentation",
+        "certainty": "high",
+        "limitation": "Only the sourced symptom distribution and wrist/nocturnal context are used. No exact sensory boundary, prevalence, occupational causation or diagnostic certainty from one symptom is claimed.",
+        "applicablePopulation": "Adults with characteristic supplied wrist-level median symptoms.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nerve.ulnar-cubital-localization",
+      "objectSha256": "895effe05d59ec61f5313d1ccb55687036ad1a6931519b9d1bcdcf073f2d1b1c",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nerve.ulnar-cubital-localization",
+        "statement": "Cubital tunnel syndrome localizes ulnar-nerve compression to the inner elbow and can produce tingling or numbness in the little and ring fingers.",
+        "sourceIds": [
+          "source.gs028f.north-tees.cubital-tunnel.2026"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "Single current NHS hand-therapy source for the narrow localization. Ulnar symptoms alone do not distinguish every elbow, wrist or proximal lesion; the authored cases supply elbow-localizing findings.",
+        "applicablePopulation": "Adults with characteristic supplied elbow-level ulnar findings.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nmb.no-unconsciousness-analgesia",
+      "objectSha256": "6abf6ce1fd112dc70d7af0c3d52136aa577e72cf373ad35d8dd7b164850f14c1",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nmb.no-unconsciousness-analgesia",
+        "statement": "Rocuronium's neuromuscular blockade does not itself provide unconsciousness or pain relief; adequate anesthesia or sedation is a separate requirement when it is used.",
+        "sourceIds": [
+          "source.gs028f.rocuronium2026"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "high",
+        "limitation": "Label section 5.4 directly supports this boundary. Absence of movement cannot independently establish adequate anesthesia. Sole direct source; no ASA sedation definitions, awareness incidence or rescue/administration instructions are used.",
+        "applicablePopulation": "Adults receiving patient counseling about neuromuscular blockade.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.nmb.skeletal-muscle-effect",
+      "objectSha256": "dd5225d73035637f8ff8325324d16f097a4f5f08d797e24499c8b49391680ab8",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.nmb.skeletal-muscle-effect",
+        "statement": "Rocuronium is a neuromuscular blocking drug that produces skeletal-muscle relaxation through blockade at the motor end plate.",
+        "sourceIds": [
+          "source.gs028f.rocuronium2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Current label sections 1 and 12.1 are the sole direct source. A qualitative drug-effect classification, not a dose, administration technique, recovery interval or respiratory-management protocol.",
+        "applicablePopulation": "Adults discussing documented rocuronium use in outside anesthesia care.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.oxygen.anemia-content-limit",
+      "objectSha256": "2c9376ba229ce5698a3dc6a88ac169a3cc8da363c9ee7be4db862b9c1948414f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.oxygen.anemia-content-limit",
+        "statement": "Reduced hemoglobin can reduce blood oxygen-carrying content even when the remaining hemoglobin has a normal oxygen saturation, so a normal SpO2 alone does not exclude anemia or establish adequate oxygen content.",
+        "sourceIds": [
+          "source.gs028f.nhlbi_anemia2025",
+          "source.gs028f.fda_oximetry2024"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "high",
+        "limitation": "Qualitative physiological inference from independently verified hemoglobin-carriage and saturation-fraction facts; FDA device background also describes reduced oxygen-carrying ability in anemia. Other determinants of tissue oxygen delivery are not assessed. No numeric content equation, hemoglobin threshold or treatment decision.",
+        "applicablePopulation": "Stable adults with established anemia discussing an outside blood-count result.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.oxygen.clip-display-limit",
+      "objectSha256": "f032bcee8170721589cbfebbecea48e50009bf7a7ee79d082c2feab51ab46b6c",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.oxygen.clip-display-limit",
+        "statement": "An ordinary pulse-oximeter display can report oxygen saturation and pulse rate, sometimes with signal strength; those displayed values do not provide a hemoglobin concentration.",
+        "sourceIds": [
+          "source.gs028f.fda_oximeter2025"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "FDA 2025 consumer page is the sole direct source for ordinary clip display fields. Cases explicitly supply those fields only. This does not claim that every specialized multi-parameter device lacks additional functions, and it does not order a new blood test.",
+        "applicablePopulation": "Adults interpreting supplied ordinary pulse-oximeter display values.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.oxygen.hemoglobin-carriage",
+      "objectSha256": "755d00038992bdc744ed6edc15acbb93f2dffdcf4f84a9e3b80e870c9be74fd6",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.oxygen.hemoglobin-carriage",
+        "statement": "Hemoglobin in red blood cells carries oxygen, and its blood concentration is a separate quantity from the percentage oxygen saturation.",
+        "sourceIds": [
+          "source.gs028f.nhlbi_anemia2025",
+          "source.gs028f.fda_oximetry2024"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "NHLBI December 2025 CBC explanation verifies hemoglobin carriage; FDA background verifies saturation's proportional meaning. Original qualitative comparison, without a numeric anemia threshold, race-specific reference range, transfusion indication or claim about cardiac output.",
+        "applicablePopulation": "Adults with a supplied outside hemoglobin result and saturation reading.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.oxygen.saturation-fraction",
+      "objectSha256": "f9d786383d9a45b695bba4c54a55af5534556df48753b3ec89e8c294617b1c37",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.oxygen.saturation-fraction",
+        "statement": "Pulse-oximeter SpO2 estimates the proportion of hemoglobin oxygen-binding capacity occupied by oxygen, expressed as a percentage.",
+        "sourceIds": [
+          "source.gs028f.fda_oximetry2024",
+          "source.gs028f.fda_oximeter2025"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "FDA 2024 executive-summary Introduction supplies the hemoglobin-fraction explanation; FDA 2025 consumer page independently confirms the percentage estimate. SpO2 is an estimate with device limitations, not a direct measurement of blood oxygen content or tissue delivery. No formula or fixed normal threshold.",
+        "applicablePopulation": "Adults interpreting an ordinary supplied pulse-oximeter reading.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.pregnancy.early-negative-limit",
+      "objectSha256": "e6dbf17846690b4212384b19bb0f70197a5b34480fb65c1af07faa09642e3f9a",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.pregnancy.early-negative-limit",
+        "statement": "A home urine pregnancy test taken early can be negative despite pregnancy, so an early negative home result does not settle pregnancy status when compatible symptoms persist.",
+        "sourceIds": [
+          "source.gs028f.nlm.pregnancy-test.2025"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "high",
+        "limitation": "Single federal test-information source; no exact repeat interval, detection threshold or assay sensitivity is specified.",
+        "applicablePopulation": "Adults with a possible early pregnancy and an early negative home test.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.pregnancy.hcg-testing",
+      "objectSha256": "cc1365a808df30c76ffddac4b13e6064fdbfeb3b590f1aef65ed3d774b47e5f6",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.pregnancy.hcg-testing",
+        "statement": "Pregnancy testing for hCG is part of the assessment of reproductive-age pelvic or abdominal pain when pregnancy is possible; menstrual history or reported contraception does not substitute for testing when early-pregnancy complications are suspected.",
+        "sourceIds": [
+          "source.gs028f.nlm.pregnancy-test.2025",
+          "source.gs028f.qld.early-pregnancy-loss.2025"
+        ],
+        "evidenceCategory": "evaluation",
+        "certainty": "high",
+        "limitation": "Guideline and independent government test information. The authored task selects testing as part of immediate assessment; it does not postpone urgent care, select a universal urine-versus-serum assay, or diagnose an ectopic pregnancy.",
+        "applicablePopulation": "Reproductive-age adults with pelvic/abdominal symptoms and possible pregnancy.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.appendage-epithelial-source",
+      "objectSha256": "27a6489b518bab344e9ad12686a6f6f4b477eb3eb3d64cadff12f26b529707bd",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.appendage-epithelial-source",
+        "statement": "Hair follicles contain epithelial cells that can contribute to skin-wound re-epithelialization.",
+        "sourceIds": [
+          "source.gs028f.mao.hair-wound-epithelium.2022",
+          "source.gs028f.adnan.skin-grafting.2022"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "Mechanistic review and donor-site narrative corroboration. Models do not establish an exact human healing time or imply every epithelial source is interchangeable; the authored donor cases explicitly retain appendages.",
+        "applicablePopulation": "Skin wounds with retained epithelial hair-follicle structures.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.donor-retained-epithelium",
+      "objectSha256": "9ee125340dc586c4ecf5c42eee3291523f285367cf6ae6c0059a069e18733c34",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.donor-retained-epithelium",
+        "statement": "After a split-thickness skin harvest, retained epithelial elements of deeper skin appendages at the donor site can regenerate the donor wound's epithelial surface.",
+        "sourceIds": [
+          "source.gs028f.adnan.skin-grafting.2022"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "The historical narrative review is the sole direct donor-site source. Independent hair-follicle mechanistic evidence corroborates epithelial contribution but is not a donor-management guideline. No exact healing interval, harvest depth, guaranteed outcome or full-thickness donor closure rule is asserted.",
+        "applicablePopulation": "Adults reviewing a partial-thickness skin-graft donor wound with retained appendages.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+      "objectSha256": "97a34aa378cd18b3279efe3643a8fc38144d0eda1a74c25c9d43915c4d2da2d9",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+        "statement": "A free flap carries its vessels with the transferred tissue, with those vessels reconnected at the recipient site to establish perfusion.",
+        "sourceIds": [
+          "source.gs028f.khare.grafts-flaps.2026",
+          "source.gs028f.nci.breast-reconstruction-flaps"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "Independent sources corroborate free-flap vascular transfer. Being detached during transfer does not make it a skin graft when the supplied record documents vessel reconnection; no onsite microsurgical capability is implied.",
+        "applicablePopulation": "Adults reviewing a completed outside free-flap reconstruction.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.graft-without-transferred-supply",
+      "objectSha256": "10f0cf5a678f6a907dfe6cdf36b735ffdbf6d023aea6df64478359903376451b",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.graft-without-transferred-supply",
+        "statement": "A skin graft is transferred without its own connected blood supply and depends on the recipient bed for support and subsequent vascularization.",
+        "sourceIds": [
+          "source.gs028f.khare.grafts-flaps.2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Single current peer-reviewed review for the graft definition. No exact stages, timing of vascularization, selection rule or graft-survival guarantee is used.",
+        "applicablePopulation": "Adults reviewing documented skin-graft reconstruction.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.pedicled-flap-supply",
+      "objectSha256": "c05c5cf5b293d2685c88b1883238b0354c2f6a3e5977f25288f2c54ae0a2a28f",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.pedicled-flap-supply",
+        "statement": "A pedicled flap moves tissue while retaining a vascular connection that supplies the transferred tissue.",
+        "sourceIds": [
+          "source.gs028f.khare.grafts-flaps.2026",
+          "source.gs028f.nci.breast-reconstruction-flaps"
+        ],
+        "evidenceCategory": "anatomy",
+        "certainty": "high",
+        "limitation": "Current review and independent federal fact sheet support the vascular principle. No named flap design, operative instruction or outcome ranking is inferred.",
+        "applicablePopulation": "Adults discussing a documented pedicled tissue transfer.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.reconstruction.perfusion-not-donor-identity",
+      "objectSha256": "a02976908d8667d381c3046872cbc3e8a900bfcd6cc85b42dad800332e24ca10",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.reconstruction.perfusion-not-donor-identity",
+        "statement": "The graft-versus-flap distinction concerns transfer of the tissue's blood supply, whereas donor-recipient relationship, tissue thickness and donor location describe separate aspects of reconstruction.",
+        "sourceIds": [
+          "source.gs028f.khare.grafts-flaps.2026",
+          "source.gs028f.nci.breast-reconstruction-flaps"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Original comparison of independently verified definitions, not a copied classification table. It does not claim that perfusion is the sole factor in choosing a reconstruction.",
+        "applicablePopulation": "Adults comparing supplied reconstructive reports.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.refeeding.anabolic-transition",
+      "objectSha256": "69bb0fdfd1b6511ce5ecf463d72ccf1793ccf5470079b306d2b3f8a86437d199",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.refeeding.anabolic-transition",
+        "statement": "Reintroduction of nutrition after starvation shifts metabolism from a predominantly catabolic state toward an anabolic state.",
+        "sourceIds": [
+          "source.gs028f.zhang_refeeding2023"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Qualitative mechanism background in the observational report; no numerical energy requirement, timing or incidence adopted. The source population is neurocritical care, but only the stated background physiology is used.",
+        "applicablePopulation": "Adults discussing an already evaluated refeeding-related electrolyte course.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.refeeding.insulin-phosphate-shift",
+      "objectSha256": "2bf9372c22f10c7b4b84c63489c0c7d81c6c149ffc341e9bb3ca97df3c55b122",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.refeeding.insulin-phosphate-shift",
+        "statement": "After substantial undernutrition, carbohydrate reintroduction can increase insulin and promote cellular uptake of phosphate, contributing to a fall in serum phosphate during refeeding.",
+        "sourceIds": [
+          "source.gs028f.zhang_refeeding2023"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "The original 2023 cohort report's Introduction is the sole direct mechanism source in this packet. Stable physiology, not its neurocritical risk model or management algorithm. No exact intake, interval, phosphate threshold or claim that every postfeeding fall has this cause.",
+        "applicablePopulation": "Adults with a supplied compatible outside refeeding course after substantial undernutrition.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.refeeding.monitoring-separate",
+      "objectSha256": "83029ff107ae1e3047d27ace8d897a82f8c1142f96479a061ef25bcbff40aa92",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.refeeding.monitoring-separate",
+        "statement": "A high-risk nutrition-restart plan includes close clinical and electrolyte monitoring; planned thiamine supplementation does not replace that monitoring.",
+        "sourceIds": [
+          "source.gs028f.auspen_refeeding2025"
+        ],
+        "evidenceCategory": "management",
+        "certainty": "moderate",
+        "limitation": "AuSPEN 2025 summary and treatment discussion are the sole direct management source. A qualitative multidisciplinary-care principle, not a bedside feeding protocol or a guarantee of avoiding complications. No monitoring frequency, numeric target, prophylactic electrolyte dose or universal feeding rate.",
+        "applicablePopulation": "Adults receiving an expert-coordinated high-risk nutrition-restart plan.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.refeeding.phosphate-not-specific",
+      "objectSha256": "0d99ead8b7c0341b444e61e8b2dcdfda9bbd51e63677fb5d4f54e0bae1129697",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.refeeding.phosphate-not-specific",
+        "statement": "A low serum phosphate concentration has causes other than refeeding, so that result alone does not establish refeeding syndrome.",
+        "sourceIds": [
+          "source.gs028f.auspen_refeeding2025"
+        ],
+        "evidenceCategory": "safety_boundary",
+        "certainty": "moderate",
+        "limitation": "AuSPEN 2025 risk and diagnosis discussion supports this limit. No particular diagnostic definition, percentage fall, timing rule or alternative-cause algorithm is adopted. The mechanism cases supply the outside team's assessment and relevant course.",
+        "applicablePopulation": "Adults with low phosphate interpreted in a clinical context.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.refeeding.thiamine-before-intake",
+      "objectSha256": "fa24d638f36615c4e5d6f8ba5cd6392b0a97689b0a044307d851dbc207704f6d",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.refeeding.thiamine-before-intake",
+        "statement": "For adults identified as at risk of refeeding syndrome, the AuSPEN consensus recommends planned thiamine supplementation before restarting nutrition.",
+        "sourceIds": [
+          "source.gs028f.auspen_refeeding2025"
+        ],
+        "evidenceCategory": "management",
+        "certainty": "moderate",
+        "limitation": "Single adequate directly verified management source: AuSPEN 2025 section 3.4.1. Expert consensus explicitly reports no specific evidence evaluating thiamine's preventive role; benefit is not guaranteed. Original underlying-fact synthesis under conservative CC BY-NC-ND targeted-verification status. Dose, route, duration, feeding rate and NICE recommendations are excluded.",
+        "applicablePopulation": "Adults already assessed by a specialist nutrition team as at risk during a monitored nutrition restart.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.safety.fmea-prospective",
+      "objectSha256": "2a70de2a7bc2c334915186f9dc358bd7478e423e8be88faf5e1f214f54e862f6",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.safety.fmea-prospective",
+        "statement": "Healthcare failure mode and effects analysis is a proactive method for identifying potential process failures before those problems occur.",
+        "sourceIds": [
+          "source.gs028f.va_pra2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Current VA NCPS proactive-risk overview, updated August 28, 2026, supports the healthcare FMEA variant. No claim that every prospective assessment is FMEA, no copied scoring matrix or decision tree, and no statement that the method eliminates risk.",
+        "applicablePopulation": "Patients discussing prospective safety review of a planned healthcare process.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.safety.rca-retrospective",
+      "objectSha256": "d99108dcdba2aaf7146f1655505256d7642bc70914bf93c724a008c2561c9bec",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.safety.rca-retrospective",
+        "statement": "Root cause analysis retrospectively reconstructs an adverse event or close call to identify contributing systems problems, rather than treating individual blame as its central purpose.",
+        "sourceIds": [
+          "source.gs028f.ahrq_rca2024"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Current AHRQ primer, reviewed June 15, 2024, directly supports the retrospective systems purpose. This is method classification, not a complete RCA protocol, proof of legal liability, mandated institutional policy or a guarantee of improvement.",
+        "applicablePopulation": "Patients discussing an already completed patient-specific safety event.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.tacrolimus.calcineurin",
+      "objectSha256": "e0ae5be1126529e287ef33415d07eebcfaeb5355da3129c74e9e06885e165d94",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.tacrolimus.calcineurin",
+        "statement": "Calcineurin phosphatase is the key enzyme inhibited by the tacrolimus–FKBP12 complex in the drug's immunosuppressive mechanism.",
+        "sourceIds": [
+          "source.gs028f.prograf2023"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Exact label section 12.1 supports the principal pathway. This does not assert that tacrolimus has only one molecular interaction or prescribe any change in transplant medicines.",
+        "applicablePopulation": "Adults with specialist-managed tacrolimus immunosuppression.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.tacrolimus.fkbp12-complex",
+      "objectSha256": "4d8794e1fe53b8ec5e11c3d1c65879bcfe393caf336632c11b840447068a79c7",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.tacrolimus.fkbp12-complex",
+        "statement": "Tacrolimus binds the intracellular immunophilin FKBP12; the resulting complex participates in inhibition of calcineurin.",
+        "sourceIds": [
+          "source.gs028f.prograf2023"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Sole direct source is current PROGRAF prescribing information section 12.1. A qualitative mechanism only; no binding affinity, drug-comparison ranking, dose or medication-management rule.",
+        "applicablePopulation": "Adults discussing a documented tacrolimus prescription.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.tacrolimus.t-cell-activation",
+      "objectSha256": "c1995e6391da4b045c0673e438eb8d9954215f7dc37dd893de9c6fb067eac3e7",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.tacrolimus.t-cell-activation",
+        "statement": "The calcineurin-inhibiting action of tacrolimus suppresses T-lymphocyte activation and proliferation.",
+        "sourceIds": [
+          "source.gs028f.prograf2023"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Sole verified mechanism source is the product label; qualitative immune effect only. No claim of guaranteed rejection prevention, selective depletion of every T cell or control of an individual patient's graft course.",
+        "applicablePopulation": "Adults reviewing tacrolimus's immune mechanism.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.transplant.different-human",
+      "objectSha256": "5e74f42a14e65595629cb118b5e1f147a293a97c6ab38141bee82ceb8f503539",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.transplant.different-human",
+        "statement": "A graft transferred between different people who are not genetically identical is an allograft, whether or not they are relatives.",
+        "sourceIds": [
+          "source.gs028f.nci.allograft"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Single government dictionary entry supports the relationship; no suitability or immunosuppression recommendation is made.",
+        "applicablePopulation": "Human donor-recipient pairs who are not genetically identical.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.transplant.different-species",
+      "objectSha256": "3a1fcf0d3f09d13ef176d0adff2c08ea6aacbab36b2e6c66b9ae3909e9cccd22",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.transplant.different-species",
+        "statement": "A graft transferred from a donor of another species is a xenograft.",
+        "sourceIds": [
+          "source.gs028f.nci.xenograft"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Relationship only; the scenario supplies an outside-care product record and does not recommend routine animal-organ transplantation.",
+        "applicablePopulation": "Recipients of tissue with a supplied different-species origin.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.transplant.genetically-identical",
+      "objectSha256": "b15e38767028a91d8786cc5c6e21860853e234548ef28e0f0a7404d8fda0ac00",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.transplant.genetically-identical",
+        "statement": "A graft between genetically identical individuals, such as confirmed monozygotic twins, is an isograft or syngeneic graft.",
+        "sourceIds": [
+          "source.gs028f.nlm.mesh.isogeneic.2026"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Single government controlled-vocabulary source; twin appearance or a matched blood type alone is not asserted to establish genetic identity.",
+        "applicablePopulation": "Genetically identical donor-recipient pairs.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    },
+    {
+      "id": "claim.gs028f.transplant.same-individual",
+      "objectSha256": "7683c1bbb95abb8846ff3ac0d89c1aa1a471100ac2aaa780377bd276e31bff75",
+      "metadata": {
+        "contentVersion": "development-batch.2026-10-07.variety.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "claim.gs028f.transplant.same-individual",
+        "statement": "A graft using tissue obtained from the recipient's own body is an autograft.",
+        "sourceIds": [
+          "source.gs028f.nci.autologous"
+        ],
+        "evidenceCategory": "definition",
+        "certainty": "high",
+        "limitation": "Donor-recipient terminology only; not a statement about blood supply, rejection, graft survival or the best reconstruction.",
+        "applicablePopulation": "Adults discussing documented tissue transplantation.",
+        "lastCheckedOn": "2026-10-07"
+      }
+    }
+  ],
+  "narrowNarrativeCorrection": {
+    "sourceFilesChanged": [
+      "neck-mass-workup.ts"
+    ],
+    "replacedSourceStrings": 4,
+    "unchangedSourcesAndAtomicClaims": true,
+    "unchangedIDsProfilesChoicesTimingAndMeaning": true,
+    "originalAcceptedReceiptPreserved": true
+  },
+  "sourceReviewLimits": [
+    "Bibliographic and source/claim metadata were independently reviewed during authoring; this native capture verifies actual records and reciprocal claim links, not a new exhaustive source retrieval or named clinician approval.",
+    "Medical authority and license/reuse status remain separate in every source record. Government-hosted manufacturer labels are copyrighted targeted verification, not public-domain content.",
+    "NHS/OGL, noncommercial/no-derivatives and copyrighted guidance limits remain explicitly recorded. Only independently synthesized underlying facts were used; no source prose, figures, algorithms or original excerpts are retained.",
+    "ASA, AAO-HNS AI-prohibited material, NICE restrictions, AAOS limited-use material, RCPI limited-use material and inaccessible primary ACR neck guidance were excluded; derivative reprints were not used as a workaround.",
+    "Single-source foundational and management limitations remain explicit at claim level. Older ESGE/WSES criteria, expert-consensus refeeding/thiamine evidence and the educational LAST source retain their recorded dates and certainty limits.",
+    "The neck CT task does not assert universal superiority over MRI or ultrasound, and FNA is the best offered initial needle approach with selected core-biopsy alternatives acknowledged. No universal CT-before-FNA sequence is asserted.",
+    "All20 groups are unapproved drafts. Agent/editorial/test acceptance is not clinical approval, a public release, therapeutic advice, or proof of owner save or live campaign behavior."
+  ]
+}

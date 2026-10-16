@@ -386,10 +386,10 @@ describe("prototype staff", () => {
       type: "SET_EMPLOYEE_SALARY",
       operationId: "salary.receptionist",
       employeeId: "employee.receptionist",
-      salaryPerExpenseInterval: 30,
+      salaryPerExpenseInterval: 22,
     });
     expect(state.employees[0]).toMatchObject({
-      salaryPerExpenseInterval: 30,
+      salaryPerExpenseInterval: 22,
       morale: 100,
     });
   });

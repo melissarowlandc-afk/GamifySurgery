@@ -1,0 +1,358 @@
+{
+  "contract": {
+    "roomDefinitionId": "room.staff_gym",
+    "width": 4,
+    "height": 4,
+    "allowedOrientations": [
+      0
+    ],
+    "solidFixtures": [
+      {
+        "id": "north1",
+        "footprint": {
+          "left": 0,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        },
+        "blockedTiles": [
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "north2",
+        "footprint": {
+          "left": 1,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 0
+          }
+        ],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "north3",
+        "footprint": {
+          "left": 2,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        },
+        "blockedTiles": [
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "north4",
+        "footprint": {
+          "left": 3,
+          "top": 0,
+          "width": 1,
+          "height": 0.75
+        },
+        "blockedTiles": [
+          {
+            "x": 3,
+            "y": 0
+          }
+        ],
+        "hiddenByDoorSlots": [
+          {
+            "side": "north",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 0
+          }
+        ]
+      },
+      {
+        "id": "west2",
+        "footprint": {
+          "left": 0,
+          "top": 1,
+          "width": 0.35,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "west",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "west3",
+        "footprint": {
+          "left": 0,
+          "top": 2,
+          "width": 0.35,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "west",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "west4",
+        "footprint": {
+          "left": 0,
+          "top": 3,
+          "width": 0.35,
+          "height": 0.72
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "east2",
+        "footprint": {
+          "left": 3.65,
+          "top": 1,
+          "width": 0.35,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "east",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "east3",
+        "footprint": {
+          "left": 3.65,
+          "top": 2,
+          "width": 0.35,
+          "height": 1
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "east",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "east4",
+        "footprint": {
+          "left": 3.65,
+          "top": 3,
+          "width": 0.35,
+          "height": 0.72
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "front1",
+        "footprint": {
+          "left": 0,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 0
+          },
+          {
+            "side": "west",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "front2",
+        "footprint": {
+          "left": 1,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "id": "front3",
+        "footprint": {
+          "left": 2,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "id": "front4",
+        "footprint": {
+          "left": 3,
+          "top": 3.72,
+          "width": 1,
+          "height": 0.28
+        },
+        "blockedTiles": [],
+        "hiddenByDoorSlots": [
+          {
+            "side": "south",
+            "offset": 3
+          },
+          {
+            "side": "east",
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "id": "benchSeat",
+        "footprint": {
+          "left": 0.95,
+          "top": 1.6,
+          "width": 0.5,
+          "height": 1.1
+        },
+        "blockedTiles": [
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "exerciseBall",
+        "footprint": {
+          "left": 2.6,
+          "top": 1.5,
+          "width": 0.7,
+          "height": 0.4
+        },
+        "blockedTiles": []
+      },
+      {
+        "id": "foamRoller",
+        "footprint": {
+          "left": 2.3125,
+          "top": 3.13,
+          "width": 0.775,
+          "height": 0.09
+        },
+        "blockedTiles": []
+      }
+    ],
+    "primaryAnchor": {
+      "x": 2,
+      "y": 3
+    },
+    "waitingAnchors": [],
+    "staffAnchor": null
+  },
+  "supports": [
+    {
+      "id": "gymAisle",
+      "anchor": {
+        "x": 2,
+        "y": 3
+      },
+      "standingApproach": {
+        "x": 2,
+        "y": 3.35
+      }
+    },
+    {
+      "id": "benchSeat",
+      "fixtureId": "benchSeat",
+      "anchor": {
+        "x": 1,
+        "y": 3
+      },
+      "standingApproach": {
+        "x": 1.2,
+        "y": 3.05
+      }
+    },
+    {
+      "id": "stretchSpot",
+      "fixtureId": "stretchMat",
+      "anchor": {
+        "x": 2,
+        "y": 2
+      },
+      "standingApproach": {
+        "x": 2.7,
+        "y": 2.7
+      }
+    }
+  ]
+}

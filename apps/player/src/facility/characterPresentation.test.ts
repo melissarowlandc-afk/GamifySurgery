@@ -6,6 +6,7 @@ import {
   getCharacterStillPresentationMetrics,
   getCharacterPresentationMetrics,
   getAuthoredCharacterPresentationMetrics,
+  isCharacterMovingPose,
   MAP_CHARACTER_REFERENCE_HEIGHT,
   MAP_CHARACTER_REFERENCE_TILE_SIZE,
 } from "./characterPresentation";
@@ -94,5 +95,10 @@ describe("facility character presentation", () => {
     const floorBase = alignCharacterStillSeatToWorld(200, 287, 221.153, metrics.height);
     expect(floorBase).toBeCloseTo(200 + (287 - 221.153) * (metrics.height / 320), 8);
     expect(getCharacterStillPresentationMetrics(52)).toEqual(metrics);
+  });
+
+  it("treats only the walking poses as moving", () => {
+    for (const pose of ["walk-a", "walk-neutral", "walk-b"]) expect(isCharacterMovingPose(pose)).toBe(true);
+    for (const pose of ["idle", "seated", "exam-table", "working"]) expect(isCharacterMovingPose(pose)).toBe(false);
   });
 });

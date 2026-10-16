@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { validateSyntheticClinicalRelease } from "../schema";
 import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
+import { GS028_STATS_ETHICS_20260929_AUTHORING_CONCEPTS, GS028_STATS_ETHICS_20260929_CASES } from "../development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
 import {
   ROW_050_APPROVED_BACKLOG,
   ROW_050_APPROVED_ENCOUNTER_BLUEPRINTS,
@@ -157,7 +158,7 @@ describe("owner row 50 approved PDSA iteration concept", () => {
     }
   });
 
-  it("keeps the Level 3 package outside the Level 0-1 runtime", () => {
+  it("keeps the approved Level 3 payload outside runtime while preserving its stable ID in the new draft", () => {
     expect(() =>
       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
     ).not.toThrow();
@@ -167,10 +168,28 @@ describe("owner row 50 approved PDSA iteration concept", () => {
       earliestFacilityStage: 3,
       maximumScoredDecisionsPerEncounter: 1,
     });
+    const conceptId = ROW_050_CONCEPTS[0]?.id;
+    expect(conceptId).toBe("concept.quality-improvement.pdsa-act-and-iterate");
+    const activeConcept = SYNTHETIC_CLINICAL_RELEASE.concepts.find(
+      (concept) => concept.id === conceptId,
+    );
+    expect(activeConcept).toMatchObject({
+      id: conceptId,
+      earliestFacilityStage: 2,
+    });
+    expect(GS028_STATS_ETHICS_20260929_AUTHORING_CONCEPTS.find(
+      (concept) => concept.id === conceptId,
+    )).toMatchObject({ reviewStatus: "needs_clinician_review", lastClinicianReview: null });
+    const approvedQuestionIds = new Set(ROW_050_QUESTION_VARIANTS.map((variant) => variant.id));
     expect(
-      SYNTHETIC_CLINICAL_RELEASE.concepts.some(
-        (concept) => concept.id === ROW_050_CONCEPTS[0]?.id,
-      ),
+      SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((clinicalCase) =>
+        clinicalCase.decisionNodes.map((node) => node.questionVariantId),
+      ).some((questionVariantId) => approvedQuestionIds.has(questionVariantId)),
     ).toBe(false);
+    expect(
+      GS028_STATS_ETHICS_20260929_CASES.filter((clinicalCase) =>
+        clinicalCase.decisionNodes.some((node) => node.primaryConceptId === conceptId),
+      ),
+    ).toHaveLength(4);
   });
 });

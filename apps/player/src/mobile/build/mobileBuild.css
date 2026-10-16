@@ -1,0 +1,47 @@
+.mobile-shell .mobile-build-controls { position: absolute; z-index: 4; bottom: 0; left: 0; right: 0; padding: 8px; border-top: 2px solid var(--ink); background: var(--paper-raised); box-shadow: 0 -3px 10px #0003; }
+.mobile-shell .mobile-build-controls p { margin: 6px 0; font-size: 13px; line-height: 1.35; }
+.mobile-shell .mobile-sheet:has(.mobile-build-catalog),
+.mobile-shell .mobile-sheet:has(.mobile-build-room),
+.mobile-shell .mobile-sheet[aria-label="Finish room access"] { bottom: var(--mobile-build-control-height, 136px); max-height: calc(100% - var(--mobile-build-control-height, 136px)); }
+.mobile-shell .mobile-build-persistent { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; }
+.mobile-shell .mobile-build-confirm { display: flex; flex-wrap: wrap; gap: 6px; }
+.mobile-shell .mobile-build-confirm button { min-height: 48px; flex: 1 1 auto; font-weight: 700; }
+.mobile-shell .mobile-build-confirm button:first-child { background: var(--focus); }
+.mobile-shell .mobile-build-reason { color: #8c392d; }
+.mobile-shell .mobile-build-valid { color: #245e35; }
+.mobile-shell .mobile-build-hint { color: var(--ink); }
+.mobile-shell .mobile-build-tools,
+.mobile-shell .mobile-build-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 8px 0 12px; }
+.mobile-shell .mobile-build-tabs button[aria-selected="true"] { background: var(--focus); font-weight: 700; }
+.mobile-shell .mobile-build-cards { display: grid; gap: 12px; }
+.mobile-shell .mobile-prestige-build-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mobile-shell .mobile-prestige-build-tile { min-width: 0; min-height: 44px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px; border: var(--mobile-border); border-radius: 10px; background: var(--paper); text-align: center; overflow-wrap: anywhere; }
+.mobile-shell .mobile-prestige-build-tile .mobile-room-thumbnail { width: 57px; height: auto; }
+.mobile-shell .mobile-prestige-build-tile strong { font-size: 14px; line-height: 1.15; }
+.mobile-shell .mobile-prestige-build-tile span, .mobile-shell .mobile-prestige-build-tile small { font-size: 12px; line-height: 1.2; }
+.mobile-shell .mobile-earlier-build-rooms > summary { min-height: 44px; padding: 12px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); cursor: pointer; }
+.mobile-shell .mobile-earlier-build-rooms[open] > summary { margin-bottom: 8px; }
+@media (min-width: 700px) { .mobile-shell .mobile-prestige-build-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.mobile-shell .mobile-build-card { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; padding: 10px; background: var(--paper); border: var(--mobile-border); border-radius: 10px; }
+.mobile-shell .mobile-build-card h3 { font-size: 17px; margin: 0 0 4px; }
+.mobile-shell .mobile-build-card p { font-size: 13px; line-height: 1.4; margin: 4px 0; }
+.mobile-shell .mobile-build-card button { width: 100%; margin-top: 6px; }
+.mobile-shell .mobile-room-thumbnail { width: 76px; height: 54px; object-fit: contain; image-rendering: pixelated; border: 1px solid var(--ink); border-radius: 4px; }
+.mobile-shell .mobile-build-room-heading { display: flex; align-items: center; gap: 10px; }
+.mobile-shell .mobile-build-room-heading p { margin: 4px 0; }
+.mobile-shell .mobile-build-room-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.mobile-shell .mobile-build-room-actions button { min-height: 48px; }
+.mobile-shell .mobile-build-benefit { padding: 10px; margin-top: 10px; background: var(--paper); border: var(--mobile-border); }
+.mobile-shell .mobile-build-benefit p { margin: 6px 0 0; }
+.mobile-shell .mobile-build-tiers summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; }
+.mobile-shell .mobile-build-sale { position: fixed; z-index: 30; inset: 0; display: flex; align-items: flex-end; background: #0008; padding: 8px; }
+.mobile-shell .mobile-build-sale > section { width: 100%; max-height: 85dvh; overflow: auto; padding: 16px; background: var(--paper-raised); border: var(--mobile-border); border-radius: 14px; }
+.mobile-shell .mobile-build-sale .dialog-actions { display: flex; gap: 8px; }
+.mobile-shell .mobile-build-sale .dialog-actions button { flex: 1; min-height: 48px; }
+.mobile-shell:has(.mobile-build-controls) .mobile-map-chips,
+.mobile-shell:has(.mobile-build-controls) .mobile-dire-banner { display: none; }
+@media (max-height: 480px) {
+  .mobile-shell .mobile-build-controls .mobile-build-hint { display: none; }
+  .mobile-shell .mobile-build-controls { padding: 4px 8px; }
+  .mobile-shell .mobile-build-controls p { font-size: 12px; margin: 3px 0; }
+}

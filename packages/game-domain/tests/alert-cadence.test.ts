@@ -99,4 +99,22 @@ describe("facility alert cadence", () => {
       conditionAlertIsDue(state, "advertising_recommended", policy),
     ).toBe(true);
   });
+
+  it("gives zero cash its own rolling daily escalation cooldown", () => {
+    const state = createInitialGameState();
+    const policy = alertCadencePolicy("no_cash", PROTOTYPE_DOMAIN_CONTEXT)!;
+    expect(policy).toMatchObject({
+      group: "finance.no-cash",
+      cooldownMinutes: 600,
+      complaint: false,
+    });
+    expect(conditionAlertIsDue(state, "no_cash", policy)).toBe(true);
+    recordConditionAlertEmission(state, policy);
+    clearConditionAlertAge(state, "no_cash");
+
+    state.facilityTick = 599;
+    expect(conditionAlertIsDue(state, "no_cash", policy)).toBe(false);
+    state.facilityTick = 600;
+    expect(conditionAlertIsDue(state, "no_cash", policy)).toBe(true);
+  });
 });

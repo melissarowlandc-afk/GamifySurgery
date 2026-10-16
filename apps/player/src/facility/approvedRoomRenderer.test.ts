@@ -3,13 +3,16 @@ import { describe, expect, it } from "vitest";
 import {
   APPROVED_ROOM_PRESENTATIONS,
   resolveApprovedRoomActorSupports,
+  resolveApprovedRoomDrawRecords,
   resolveApprovedRoomProceduralDrawRecords,
 } from "./approvedRoomPresentation";
 import {
   getApprovedFloorPrimitives,
+  getApprovedDrawPainterGround,
   getApprovedProceduralScreenRect,
   getApprovedSupportFacing,
   getApprovedSupportPainterGround,
+  getApprovedRoomStateVariant,
   getNearestApprovedActorSupport,
   parseApprovedCssColor,
 } from "./approvedRoomRenderer";
@@ -36,7 +39,14 @@ describe("approved room renderer helpers", () => {
         height: height * room.shell.tilePixels,
         color: room.shell.floorBase,
       });
-      expect(first.length, room.proofId).toBeGreaterThan(1);
+      if (room.roomDefinitionId === "room.indoor_garden" || room.roomDefinitionId === "room.staff_gym") {
+        // These approved rooms use a native textured floor/path bitmap over
+        // their single exact base primitive; do not invent extra floor marks.
+        expect(first, room.proofId).toEqual(room.shell.exactProofFloor);
+        expect(first).toHaveLength(1);
+        expect(resolveApprovedRoomDrawRecords(room.roomDefinitionId, 0).some(draw =>
+          draw.id === (room.roomDefinitionId === "room.indoor_garden" ? "stonePath" : "rubberFloor"))).toBe(true);
+      } else expect(first.length, room.proofId).toBeGreaterThan(1);
       expect(first.every((primitive) => [primitive.x, primitive.y, primitive.width, primitive.height].every(Number.isFinite))).toBe(true);
     }
   });
@@ -90,6 +100,15 @@ describe("approved room renderer helpers", () => {
     expect(getApprovedSupportFacing("west")).toEqual({ direction: "side", rightFacing: false });
   });
 
+  it("uses an exact requested support instead of falling through to another Peri-op bed", () => {
+    const beds = resolveApprovedRoomActorSupports("room.periop_recovery", 0);
+    // N3's logical cell is closer to WC's fixture baseline, so nearest-only
+    // selection would visibly put the patient in the wrong bay.
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient")?.id).toBe("periop-bed:WC");
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient", "periop-bed:N3")?.id).toBe("periop-bed:N3");
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient", "periop-bed:unknown")).toBeUndefined();
+  });
+
   it("floors only seated actor depth at the owning fixture baseline", () => {
     const waiting = resolveApprovedRoomActorSupports("room.waiting", 270);
     const upperBench = waiting.find((support) => support.id === "bench:seat-2")!;
@@ -114,6 +133,48 @@ describe("approved room renderer helpers", () => {
 
     const ctOperator = resolveApprovedRoomActorSupports("room.ct", 0).find((support) => support.role === "ct-operator")!;
     expect(getApprovedSupportPainterGround({ ...ctOperator, fixtureGround: { x: 3.35, y: 3.5 } })).toEqual(ctOperator.ground);
+
+    for (const bed of resolveApprovedRoomActorSupports("room.periop_recovery", 0)) {
+      expect(getApprovedSupportPainterGround(bed)).toEqual(bed.fixtureGround);
+    }
+  });
+
+  it("selects occupied presentation only for rooms with an approved covered-patient proof", () => {
+    expect(getApprovedRoomStateVariant("room.ambulatory_or", true, false)).toBe("occupiedCovered");
+    expect(getApprovedRoomStateVariant("room.endoscopy", true, false)).toBe("occupiedCovered");
+    expect(getApprovedRoomStateVariant("room.front_desk", false, true)).toBe("emptyWater");
+    expect(getApprovedRoomStateVariant("room.laboratory", true, true)).toBeUndefined();
+  });
+
+  it("preserves the approved OR table, light, and live-character painter order", () => {
+    const empty = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0);
+    const occupied = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0, "occupiedCovered");
+    for (const records of [empty, occupied]) {
+      expect(getApprovedDrawPainterGround(records.find((draw) => draw.id === "table")!)).toBe(2.58);
+      expect(getApprovedDrawPainterGround(records.find((draw) => draw.id === "lights")!)).toBe(2.59);
+      expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) =>
+        getApprovedSupportPainterGround(support).y
+      )).toEqual([2.6, 3.05, 2.6, 3.05]);
+    }
+  });
+
+  it("ports the Level 3 proof floor phases and fixed procedural details", () => {
+    const byId = (id: string) => APPROVED_ROOM_PRESENTATIONS.find((room) => room.roomDefinitionId === id)!;
+    const operatingRoom = getApprovedFloorPrimitives(byId("room.ambulatory_or").shell, 4, 4, [60, 130]);
+    expect(operatingRoom[0]).toMatchObject({ color: "#69757a", width: 480, height: 480 });
+    expect(operatingRoom).toContainEqual(expect.objectContaining({ shape: "line", x: 24, y: 0, color: "#1d272e", alpha: .24 }));
+
+    const workshop = getApprovedFloorPrimitives(byId("room.maintenance_workshop").shell, 3, 3, [60, 130]);
+    expect(workshop[0]).toMatchObject({ color: "#aaa9a2", width: 360, height: 360 });
+    expect(workshop).toContainEqual(expect.objectContaining({ shape: "line", x: 198, y: 0, height: 360 }));
+    expect(workshop).toContainEqual(expect.objectContaining({ shape: "line", x: 0, y: 252, width: 360 }));
+
+    const breakRoom = getApprovedFloorPrimitives(byId("room.staff_break").shell, 4, 4, [60, 130]);
+    expect(breakRoom).toContainEqual(expect.objectContaining({ shape: "rect", x: 30, y: 156, width: 198, height: 240, color: "#a85f4e" }));
+
+    const vending = getApprovedFloorPrimitives(byId("room.vending").shell, 2, 2, [150, 150]);
+    expect(vending[0]).toMatchObject({ color: "#d9c1a5", width: 240, height: 240 });
+    expect(vending.some((primitive) => primitive.shape === "ellipse" && primitive.x === 0 && primitive.y === 0)).toBe(true);
   });
 
 });

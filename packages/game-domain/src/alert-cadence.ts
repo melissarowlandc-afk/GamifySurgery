@@ -29,6 +29,15 @@ export function alertCadencePolicy(
         cooldownMinutes: day,
         complaint: false,
       };
+    case "no_cash":
+      return {
+        // Reaching zero is a distinct escalation from merely running low, so
+        // each condition owns one durable daily notice.
+        group: "finance.no-cash",
+        minimumActiveMinutes: 0,
+        cooldownMinutes: day,
+        complaint: false,
+      };
     case "visible_litter":
     case "dirty_cleanliness":
       return {

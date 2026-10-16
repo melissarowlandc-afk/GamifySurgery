@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { GS028_20261007_LEVEL3_TESTED_CONCEPTS, GS028_20261007_VARIETY2_TESTED_CONCEPTS, PEDIATRIC_CLINIC_TESTED_CONCEPTS, PEDIATRIC_CLINIC_BATCH_MANIFEST, VARIETY3_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, GS028_20260929_TESTED_CONCEPTS, GS028_20261002_TESTED_CONCEPTS, GS028_20261003_TESTED_CONCEPTS, GS028_20261007_TESTED_CONCEPTS, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
@@ -151,7 +152,7 @@ describe("approved clinical admission boundaries", () => {
     );
   });
 
-  it("keeps the active runtime release limited to reviewed concepts", () => {
+  it("keeps the unapproved prototype runtime release limited to explicitly admitted concepts", () => {
     expect(
       PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map(
         (concept) => concept.id,
@@ -201,6 +202,15 @@ describe("approved clinical admission boundaries", () => {
       ...BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS.map((concept) => concept.id),
       ...BREAD_BUTTER_20260917_TESTED_CONCEPTS.map((concept) => concept.id),
       ...GS028_20260928_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20260929_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20261002_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20261003_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20261007_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20261007_VARIETY2_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...GS028_20261007_LEVEL3_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...PEDIATRIC_CLINIC_TESTED_CONCEPTS.filter(concept => !PEDIATRIC_CLINIC_BATCH_MANIFEST.reusedConceptIds.includes(concept.id)).map(concept => concept.id),
+      ...VARIETY3_TESTED_CONCEPTS.map(concept => concept.id),
     ]);
   });
 

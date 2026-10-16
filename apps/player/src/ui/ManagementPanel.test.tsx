@@ -60,6 +60,7 @@ function renderPanel(managementMode: boolean, showInactiveTrigger = true) {
       onIncreaseSalary={noop}
       onFire={noop}
       onAppointmentsEnabledChange={noop}
+      onStartLaboratoryProcessing={noop}
     />,
   );
 }
@@ -84,7 +85,10 @@ describe("ManagementPanel", () => {
     expect(markup).toContain("Hire $60");
     expect(markup).toContain("Fire");
     expect(markup).toContain('role="tablist"');
-    expect(markup).toContain("Services &amp; income");
+    expect(markup).toContain(">Services<");
+    expect(markup).toContain(">Money<");
+    expect(markup).toContain("Clinic paused");
+    expect(markup.match(/role="tab"/g)).toHaveLength(3);
     expect(markup).toContain('aria-selected="true"');
     expect(markup).not.toContain("Scheduled appointments");
   });

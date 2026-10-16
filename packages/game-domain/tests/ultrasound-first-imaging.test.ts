@@ -41,10 +41,12 @@ function withOrdinaryDoorUltrasound(state: GameState): GameState {
     { id: "room.test.exam", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     { id: "room.test.ultrasound", roomDefinitionId: "room.ultrasound", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     ...([24, 25, 26, 27, 28] as const).map((y) => ({ id: `room.test.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
+    { id: "room.test.exam-hall", roomDefinitionId: "room.hallway", x: 33, y: 27, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
   );
   state.doors.push(
     { id: "door.test.ultrasound", roomId: "room.test.ultrasound", side: "south", offset: 2, exterior: false },
     { id: "door.test.ultrasound.staff", roomId: "room.test.ultrasound", side: "west", offset: 1, exterior: false },
+    { id: "door.test.exam", roomId: "room.test.exam", side: "west", offset: 1, exterior: false },
     { id: "door.test.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
   state.employees.push({
@@ -114,6 +116,13 @@ function admitQuestionAtCare(
     arrivalClass: "routine",
   }, context);
   const encounter = admitted.encounters[encounterId]!;
+  // These assertions exercise a saved, markerless question contract. A prior
+  // distractor wording keeps it outside the exact current-release opt-in guard.
+  // Current facility-dependent orders have their own diagnostic-orders suite.
+  for (const node of encounter.frozenCase.decisionNodes) {
+    const alternative = node.answerChoices.find((choice) => !choice.isCorrect);
+    if (alternative) alternative.label += " [frozen prior wording]";
+  }
   encounter.currentNodeIndex = selected!.nodeIndex;
   encounter.steps.forEach((step, index) => {
     step.status = index < selected!.nodeIndex ? "completed" :
@@ -470,8 +479,15 @@ describe("ultrasound-first imaging progression", () => {
       .toBe(state.encounters["parallel-labs"]!.pendingResult?.operationId);
   });
 
-  it("permits three shared imaging technicians and rejects a fourth without changing economics", () => {
-    let state = withOrdinaryDoorUltrasound(stateAt(2));
+  it("permits one shared imaging technician per installed imaging room and rejects a fourth without changing economics", () => {
+    let state = withReachableCt(withOrdinaryDoorUltrasound(stateAt(2)));
+    state.rooms.push(
+      { id: "room.test.xray-capacity", roomDefinitionId: "room.xray", x: 29, y: 27, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    );
+    state.doors.push({
+      id: "door.test.xray-capacity", roomId: "room.test.xray-capacity", side: "east", offset: 1,
+      exterior: false,
+    });
     const startingCash = state.cash;
     for (const employeeId of ["employee.test.imaging.second", "employee.test.imaging.third"] as const) {
       state = gameReducer(state, {

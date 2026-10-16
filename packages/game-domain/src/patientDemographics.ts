@@ -14,6 +14,7 @@ export interface PatientDemographicCompletionInput {
   readonly demographics?: Partial<PatientDemographics> | null;
   /** An existing saved roster identity may complete a medically unconstrained chart. */
   readonly savedPatientIdentityId?: PatientIdentityId;
+  readonly pediatric?: boolean;
 }
 
 const LEGACY_AGE_BY_VISUAL_BAND = {
@@ -66,6 +67,12 @@ export function completePatientDemographics(
   const explicitSex = isDisplaySexLabel(input.demographics?.sexLabel)
     ? input.demographics.sexLabel
     : undefined;
+  if (input.pediatric) {
+    if (explicitAge === undefined || explicitAge < 5 || explicitAge > 17 || !explicitSex) {
+      throw new Error("A pediatric admission needs explicit age 5-17 and sex.");
+    }
+    return { ageYears: explicitAge, sexLabel: explicitSex };
+  }
   const savedIdentity = patientRosterEntryById(input.savedPatientIdentityId);
   const constrainedAge = constrainedAgeYears(input);
   const constrainedSex = constrainedSexLabel(input);

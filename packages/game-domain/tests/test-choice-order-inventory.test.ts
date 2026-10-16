@@ -17,11 +17,11 @@ describe("active-release test-choice order inventory", () => {
       const entry = ANSWER_CHOICE_TIMING_REGISTRY.find((candidate) => candidate.caseId === clinicalCase.id && candidate.nodeId === node.id && candidate.questionVariantId === node.questionVariantId);
       return entry?.classification.kind === "test_choices" ? entry.classification.choices.map((choice) => ({ isTerminal: index === clinicalCase.decisionNodes.length - 1, isCorrect: node.answerChoices.find((candidate) => candidate.id === choice.choiceId)?.isCorrect === true, timing: choice.timing })) : [];
     })).filter((item) => item.timing.kind === "test");
-    expect(timed).toHaveLength(1198);
-    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(78);
+    expect(timed).toHaveLength(1480);
+    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(139);
   });
 
-  it("classifies every timing.test choice and leaves incorrect selections without an added order", () => {
+  it("classifies every timing.test choice and permits incorrect records only as explicit non-execution", () => {
     const registryByNode = new Map(
       ANSWER_CHOICE_TIMING_REGISTRY.map((entry) => [`${entry.caseId}|${entry.nodeId}|${entry.questionVariantId}`, entry]),
     );
@@ -43,7 +43,11 @@ describe("active-release test-choice order inventory", () => {
             continue;
           }
           if (!choice.isCorrect) {
-            expect(record, `incorrect test selection ${key} must retain no-extra-order policy`).toBeUndefined();
+            if (record) {
+              expect(record.disposition.kind, `incorrect test selection ${key} must retain no-extra-order policy`).toBe("not_executed");
+              expect(record.choiceLabel).toBe(choice.label);
+              expect(record.timingProfileId).toBe(timing.timingProfileId);
+            }
             continue;
           }
           seenCorrectTestKeys.add(key);
@@ -64,7 +68,7 @@ describe("active-release test-choice order inventory", () => {
     expect(seenCorrectTestKeys.size).toBeGreaterThan(0);
   });
 
-  it("binds every exact record to an active correct choice, exact timing metadata, and valid routes", () => {
+  it("binds every exact record to an active choice, exact timing metadata, and valid routes", () => {
     const activeChoices = new Map<string, { label: string; correct: boolean; timingProfileId: string }>();
     for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
       for (const node of clinicalCase.decisionNodes) {
@@ -80,7 +84,7 @@ describe("active-release test-choice order inventory", () => {
       const exactKey = keyOf(record.caseId, record.nodeId, record.questionVariantId, record.choiceId);
       const active = activeChoices.get(exactKey);
       expect(active, `orphan or guessed record ${exactKey}`).toBeDefined();
-      expect(active?.correct).toBe(true);
+      if (!active?.correct) expect(record.disposition.kind).toBe("not_executed");
       expect(active?.label).toBe(record.choiceLabel);
       expect(active?.timingProfileId).toBe(record.timingProfileId);
       if ("serviceId" in record.disposition) {

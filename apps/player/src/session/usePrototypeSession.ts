@@ -1,3 +1,5 @@
+import { questionReviewContext } from "./questionReviewContext";
+import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
 import {
   PROTOTYPE_ALERT_DEFINITIONS,
   isPrototypeEventSuppressedFromPlayerFeed,
@@ -19,6 +21,7 @@ import {
   type GameCommand,
   type GameState,
   type GridPoint,
+  type LevelThreeBreakSeatId,
   type OperationReceipt,
   type RoomOrientation,
   type SimulationSpeed,
@@ -32,6 +35,11 @@ import {
 import type { FacilityCameraView } from "../facility";
 import { getInitialFacilityCamera } from "../facility/defaultCamera";
 import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
+import {
+  bindFacilityCameraPreferenceLifecycle,
+  createFacilityCameraPreferenceSession,
+  type FacilityCameraPreferenceSession,
+} from "./facilityCameraPreference";
 import {
   loadPrototypeProfile,
   requireActiveCampaign,
@@ -64,6 +72,21 @@ import {
 } from "./questionReviewFlags";
 import { getChartFeedbackAcknowledgmentCommand } from "./chartCloseBehavior";
 import { getDailyRoutinePauseTransition, isDailyRoutineTipId } from "./dailyRoutineTutorialPause";
+import { describeBuildUndoAction } from "./buildModePresentation";
+import { describeFacilityCharacter } from "./characterActivityPresentation";
+import type { DescribeCharacterRequest } from "../facility/types";
+import type { ClinicAlertAction, ClinicAlertActionResult } from "../ui/types";
+import { clinicAlertCommand, getClinicAlertActionProblem } from "./clinicAlertActions";
+import { clearRecoveredSaveNotices } from "./clinicSaveNotices";
+import { getCampaignTutorialGuidance } from "./tutorialGuidance";
+import { getTutorialTickIntervalMs } from "./tutorialTiming";
+import { previewMobileDoor, previewMobileHallway, previewMobilePlacement } from "../mobile/build/buildSession";
+import type { MobileBuildActions } from "../mobile/build/types";
+import { useAuthAccountId } from "../auth/AuthAccountContext";
+import { trimMobileBuildHistory } from "../mobile/performance/buildHistory";
+import { useUsageTracking } from "../playtime/UsageProvider";
+import { isFirstScoredAnswer } from "../playtime/scoredQuestionUsage";
+import { boundUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
 
 type GameCommandInput = {
   [CommandType in GameCommand["type"]]: Omit<
@@ -73,12 +96,15 @@ type GameCommandInput = {
 }[GameCommand["type"]];
 
 interface ExecuteOptions {
+  /** Only a confirmed phone hallway stroke defers intermediate saves. */
+  deferPersistence?: boolean;
   announceReceipt?: boolean;
   announceEvents?: boolean;
   announcementOverride?: string;
 }
 
 export interface PrototypeSession {
+  mobileBuildActions: MobileBuildActions;
   profile: LocalPrototypeProfile;
   state: GameState;
   campaigns: CampaignSummary[];
@@ -91,19 +117,29 @@ export interface PrototypeSession {
   buildMode: boolean;
   managementMode: boolean;
   buildUndoCount: number;
+  /** What Undo would reverse, e.g. "Upgrade Waiting Room A (+$170 back)". */
+  buildUndoLabel: string | null;
+  /** Set while an existing room is being moved with the placement tool. */
+  movingRoomInstanceId: string | null;
   buildExitBlockedReason: string | null;
   buildExitBlockedIssues: string[];
   facilityCamera: FacilityCameraView;
   summaryVisible: boolean;
   announcement: string;
   systemNotices: PrototypeSystemNotice[];
+  runClinicAlertAction: (action: ClinicAlertAction) => ClinicAlertActionResult;
   questionReviewFlags: QuestionReviewFlag[];
   togglePause: () => void;
   setSimulationSpeed: (speed: SimulationSpeed) => void;
   openPatient: (encounterId: string) => void;
+  openEmployeeDiscussion: (discussionId: string) => void;
+  closeEmployeeDiscussion: () => void;
+  answerEmployeeDiscussion: (choiceId: string) => void;
+  acknowledgeEmployeeDiscussion: () => void;
+  fileEmployeeDiscussion: () => void;
   closeChart: () => void;
   submitAnswer: (choiceId: string) => void;
-  flagQuestionForReview: (decisionNodeId: string) => void;
+  flagQuestionForReview: SubmitQuestionReviewFlag;
   setQuestionReviewStatus: (
     flagId: string,
     status: QuestionReviewFlagStatus,
@@ -124,8 +160,10 @@ export interface PrototypeSession {
   enterManagementMode: () => void;
   exitManagementMode: () => void;
   selectRoom: (roomInstanceId: string) => void;
-  sellSelectedRoom: () => void;
+  sellSelectedRoom: (roomId: string, saleConfirmationToken?: string) => void;
   upgradeSelectedRoom: () => void;
+  /** One-click upgrade for any built room (My Rooms tab). */
+  upgradeRoom: (roomId: string) => void;
   beginMoveSelectedRoom: () => void;
   placeDoor: (
     roomId: string,
@@ -136,31 +174,45 @@ export interface PrototypeSession {
   undoBuildAction: () => void;
   setFacilityCamera: (camera: FacilityCameraView) => void;
   hireStaff: (staffRoleDefinitionId: string) => void;
+  trainEmployee: (employeeId: string) => void;
   decreaseEmployeeSalary: (employeeId: string) => void;
   increaseEmployeeSalary: (employeeId: string) => void;
   fireEmployee: (employeeId: string) => void;
   collectLitter: (litterId: string) => void;
   refillWaterCooler: () => void;
   seatFounderAtFrontDesk: () => boolean;
+  seatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
+  /** Map info box text for a clicked character; reads live state only. */
+  describeCharacter: DescribeCharacterRequest;
   praiseEmployee: (employeeId: string) => void;
   moveFounder: (destination: GridPoint) => boolean;
   levelUp: () => void;
+  bookInspection: () => void;
+  cancelInspection: () => void;
+  finishReportOpen: boolean;
+  openFinishReport: () => void;
+  closeFinishReport: () => void;
   fastForward: () => void;
   advanceTutorialResult: () => void;
   addMoney: () => void;
   runEmergencyGlp1Consultation: () => void;
   setAdvertisingLevel: (level: number) => void;
   setServiceAppointmentsEnabled: (enabled: boolean) => void;
+  startLaboratoryProcessing: () => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
   dismissTutorialIntro: () => void;
   performTutorialAction: (actionId: TutorialActionId) => void;
   setTutorialsEnabled: (enabled: boolean) => void;
+  setReferencePauseLocked: (locked: boolean) => void;
+  recordTutorialTopicExposure: (topicIds: readonly string[]) => void;
   saveAndPause: () => PrototypeSaveResult;
+  saveForFirstShiftReplay: () => LocalPrototypeProfile | null;
   clearLocalCampaigns: () => boolean;
 }
 
 export interface PrototypeSystemNotice {
+  targetType?: "save";
   id: string;
   definitionId: string;
   priority: PrototypeAlertPriority;
@@ -171,6 +223,18 @@ export interface PrototypeSystemNotice {
   timeLabel: string;
   sortKey: number;
   persistent: boolean;
+}
+
+/**
+ * System notices share the player feed with domain events. Keep routine
+ * lifecycle receipts out of the stored ticker queue, while preserving save
+ * failures and future system warnings unless the catalog explicitly opts out.
+ */
+export function shouldStoreSystemNotice(definitionId: string): boolean {
+  return !isPrototypeEventSuppressedFromPlayerFeed(
+    "system_notice",
+    definitionId,
+  );
 }
 
 export interface CampaignSummary {
@@ -225,11 +289,15 @@ function alertDefinition(definitionId: string) {
 export function usePrototypeSession(
   initialLoadedProfile?: LoadedPrototypeProfile,
 ): PrototypeSession {
+  // Captured for this mounted session; old cleanup/autosave writers can never
+  // start saving under another account when AuthGate remounts its provider.
+  const accountId = useRef(useAuthAccountId()).current;
+  const usage = useUsageTracking();
   const loadedRef = useRef<ReturnType<typeof loadPrototypeProfile> | null>(
     null,
   );
   if (loadedRef.current === null) {
-    loadedRef.current = initialLoadedProfile ?? loadPrototypeProfile();
+    loadedRef.current = initialLoadedProfile ?? loadPrototypeProfile(accountId);
   }
 
   const [profile, setProfile] = useState<LocalPrototypeProfile>(
@@ -240,6 +308,7 @@ export function usePrototypeSession(
     requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
+  const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
   const [
     selectedRoomDefinitionId,
     setSelectedRoomDefinitionId,
@@ -250,18 +319,47 @@ export function usePrototypeSession(
     useState<RoomOrientation>(0);
   const [buildMode, setBuildMode] = useState(false);
   const [managementMode, setManagementMode] = useState(false);
+  const [finishReportOpen, setFinishReportOpen] = useState(false);
+  const finishReportOpenRef = useRef(false);
+  const resumeAfterFinishRef = useRef(false);
+  const [referencePauseLocked, setReferencePauseLocked] = useState(false);
   const [movingRoomInstanceId, setMovingRoomInstanceId] =
     useState<string | null>(null);
   const [buildUndoCount, setBuildUndoCount] = useState(0);
+  const [buildUndoLabel, setBuildUndoLabel] = useState<string | null>(null);
   const [buildExitBlockedReason, setBuildExitBlockedReason] =
     useState<string | null>(null);
   const [buildExitBlockedIssues, setBuildExitBlockedIssues] =
     useState<string[]>([]);
   const buildHistoryRef = useRef<GameState[]>([]);
-  const [facilityCamera, setFacilityCamera] =
-    useState<FacilityCameraView>(() => getInitialFacilityCamera(
-      requireActiveCampaign(loadedRef.current!.profile).state,
-    ));
+  const mobileHallwayBatchRef = useRef(false);
+  const mobileBuildHistoryLimitRef = useRef(false);
+  const buildHistoryLabelsRef = useRef<string[]>([]);
+  const setMobileBuildHistoryLimit = useCallback((enabled: boolean) => {
+    mobileBuildHistoryLimitRef.current = enabled;
+    if (enabled) {
+      trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
+      setBuildUndoCount(buildHistoryRef.current.length);
+      setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
+    }
+  }, []);
+  const cameraPreferencesRef = useRef<FacilityCameraPreferenceSession | null>(null);
+  if (cameraPreferencesRef.current === null) {
+    cameraPreferencesRef.current = createFacilityCameraPreferenceSession();
+  }
+  const [facilityCamera, setFacilityCameraView] = useState<FacilityCameraView>(() => {
+    const campaign = requireActiveCampaign(loadedRef.current!.profile);
+    return cameraPreferencesRef.current!.restore(campaign.campaignId,
+      getInitialFacilityCamera(campaign.state));
+  });
+  const setFacilityCamera = useCallback((camera: FacilityCameraView) => {
+    if (cameraPreferencesRef.current!.change(stateRef.current.campaignId, camera)) {
+      setFacilityCameraView({ ...camera });
+    }
+  }, []);
+  useEffect(() => bindFacilityCameraPreferenceLifecycle(
+    cameraPreferencesRef.current!, window, document,
+  ), []);
   const preBuildPausedRef = useRef(true);
   const preManagementPausedRef = useRef(true);
   const [summaryVisible, setSummaryVisible] = useState(false);
@@ -287,27 +385,28 @@ export function usePrototypeSession(
       ? "alert.system.campaign-created"
       : "alert.system.campaign-restored";
     const definition = alertDefinition(definitionId);
-    return [
-      {
-        id: `system.initial.${initialState.campaignId}`,
-        definitionId,
-        priority: definition?.priority ?? "informational",
-        category: definition?.category ?? "success",
-        showAttentionMarker:
-          definition?.showAttentionMarker ?? false,
-        title:
-          definition?.titleTemplate ??
-          (isNewCampaign ? "New campaign" : "Campaign restored"),
-        message: loadedRef.current!.notice,
-        timeLabel: facilityTimeLabel(initialState.facilityTick),
-        sortKey: initialState.facilityTick + 0.01,
-        persistent: false,
-      },
-    ];
+    const initialNotice: PrototypeSystemNotice = {
+      id: `system.initial.${initialState.campaignId}`,
+      definitionId,
+      priority: definition?.priority ?? "informational",
+      category: definition?.category ?? "success",
+      showAttentionMarker:
+        definition?.showAttentionMarker ?? false,
+      title:
+        definition?.titleTemplate ??
+        (isNewCampaign ? "New campaign" : "Campaign restored"),
+      message: loadedRef.current!.notice,
+      timeLabel: facilityTimeLabel(initialState.facilityTick),
+      sortKey: initialState.facilityTick + 0.01,
+      persistent: false,
+    };
+    return shouldStoreSystemNotice(definitionId)
+      ? [initialNotice]
+      : [];
   });
   const [questionReviewFlags, setQuestionReviewFlags] = useState<
     QuestionReviewFlag[]
-  >(() => loadQuestionReviewFlags());
+  >(() => loadQuestionReviewFlags(undefined, accountId));
   const questionReviewFlagsRef = useRef(questionReviewFlags);
   const [documentVisible, setDocumentVisible] = useState(
     () =>
@@ -316,6 +415,7 @@ export function usePrototypeSession(
   );
   const sessionIdRef = useRef(createSessionId());
   const sequenceRef = useRef(0);
+  const lastCommandReceiptRef = useRef<OperationReceipt | undefined>(undefined);
   const systemNoticeSequenceRef = useRef(0);
   const saveWarningShownRef = useRef(false);
   const lastSaveSucceededRef = useRef(true);
@@ -323,10 +423,42 @@ export function usePrototypeSession(
     ok: true,
     profileCharacters: 0,
   });
-  const campaignWriteGateRef = useRef(createPrototypeCampaignWriteGate());
+  const campaignWriteGateRef = useRef(createPrototypeCampaignWriteGate(accountId));
   const pendingAutosaveProfileRef =
     useRef<LocalPrototypeProfile | null>(null);
   const autosaveTaskRef = useRef<PrototypeAutosaveTask | null>(null);
+  const promotingUsageRef = useRef(false);
+  const durableUsageQuestionsRef = useRef<QuestionUsageReceipt[]>(loadedRef.current.profile.pendingUsageQuestions ?? []);
+
+  const promoteCommittedQuestions = useCallback(() => {
+    const receipts = durableUsageQuestionsRef.current;
+    if (!usage || !receipts.length || promotingUsageRef.current) return;
+    promotingUsageRef.current = true;
+    try {
+      if (usage.commitQuestions(receipts)) {
+        // The durable outbox now owns these IDs. A crash before the next profile
+        // write replays the same IDs; trusted ingestion contributes zero twice.
+        durableUsageQuestionsRef.current = [];
+        const promoted = new Set(receipts.map((receipt) => receipt.receipt_id));
+        const strip = (current: LocalPrototypeProfile): LocalPrototypeProfile => ({ ...current,
+          pendingUsageQuestions: current.pendingUsageQuestions?.filter((receipt) => !promoted.has(receipt.receipt_id)) });
+        profileRef.current = strip(profileRef.current);
+        if (pendingAutosaveProfileRef.current) pendingAutosaveProfileRef.current = strip(pendingAutosaveProfileRef.current);
+      }
+    } finally { promotingUsageRef.current = false; }
+  }, [usage]);
+
+  useEffect(() => {
+    // Only the persisted staging field is recovered; old FSRS history is zero.
+    promoteCommittedQuestions();
+    return usage?.subscribe(promoteCommittedQuestions);
+  }, [promoteCommittedQuestions, usage]);
+
+  useEffect(() => {
+    usage?.setGame({ campaignId: state.campaignId, paused: state.paused, finishReportOpen });
+  }, [usage, state.campaignId, state.paused, finishReportOpen]);
+
+  useEffect(() => () => usage?.setGame({ campaignId: null, paused: true, finishReportOpen: false }), [usage]);
 
   const publishSystemNotice = useCallback(
     (
@@ -356,6 +488,7 @@ export function usePrototypeSession(
         sortKey:
           facilityTick + systemNoticeSequenceRef.current / 10_000,
         persistent: definition?.persistent ?? false,
+        ...(definitionId === "alert.system.save-failed" ? { targetType: "save" as const } : {}),
       };
       setSystemNotices((current) => {
         const withoutResolvedSaveFailure =
@@ -370,7 +503,9 @@ export function usePrototypeSession(
               (item) => item.definitionId !== definitionId,
             )
           : withoutResolvedSaveFailure;
-        return [...consolidated.slice(-19), notice];
+        return shouldStoreSystemNotice(definitionId)
+          ? [...consolidated.slice(-19), notice]
+          : consolidated;
       });
       setAnnouncement(message);
     },
@@ -390,13 +525,16 @@ export function usePrototypeSession(
       lastSaveResultRef.current = result;
       lastSaveSucceededRef.current = result.ok;
       if (result.ok) {
+        durableUsageQuestionsRef.current = nextProfile.pendingUsageQuestions ?? [];
+        promoteCommittedQuestions();
         // A later verified write makes the previous warning stale and allows
         // a distinct future failure to be reported again.
         saveWarningShownRef.current = false;
+        setSystemNotices(clearRecoveredSaveNotices);
       }
       return result;
     },
-    [],
+    [promoteCommittedQuestions],
   );
 
   const stageActiveState = useCallback((nextState: GameState) => {
@@ -474,9 +612,17 @@ export function usePrototypeSession(
         operationId,
       } as GameCommand;
       const previous = stateRef.current;
-      const next = gameReducer(previous, command);
+      const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
+        guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked });
+      if (usage && isFirstScoredAnswer(previous, next, command)) {
+        usage.activity(); // Accepted scored input is meaningful game activity, too.
+        const receipt = usage.createQuestionReceipt();
+        if (receipt) profileRef.current = { ...profileRef.current, pendingUsageQuestions:
+          boundUsageReceipts([...(profileRef.current.pendingUsageQuestions ?? []), receipt], Date.now()).receipts };
+      }
       stateRef.current = next;
       setState(next);
+      usage?.setGame({ campaignId: next.campaignId, paused: next.paused, finishReportOpen: finishReportOpenRef.current });
 
       const shouldPersist = shouldPersistPrototypeCommand(
         command.type,
@@ -487,12 +633,13 @@ export function usePrototypeSession(
         // Full localStorage serialization is deliberately deferred away from
         // the route-extension task so it cannot steal the next movement frame.
         scheduleActiveStateAutosave(next);
-      } else if (shouldPersist) {
+      } else if (shouldPersist && options.deferPersistence !== true) {
         saved = persistActiveState(next);
       } else {
         stageActiveState(next);
       }
       const receipt = next.operationReceipts[operationId];
+      lastCommandReceiptRef.current = receipt;
       const previousEventIds = new Set(
         previous.events.map((event) => event.id),
       );
@@ -539,6 +686,7 @@ export function usePrototypeSession(
       publishSystemNotice,
       scheduleActiveStateAutosave,
       stageActiveState,
+      usage,
     ],
   );
 
@@ -547,8 +695,10 @@ export function usePrototypeSession(
       const pendingProfile = pendingAutosaveProfileRef.current;
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
-      if (pendingProfile) {
-        attemptSaveProfile(pendingProfile);
+      if (accountId !== null || pendingProfile) {
+        // Sign-out/account switch also flushes ticks staged since the last
+        // checkpoint, using this session's captured account namespace.
+        attemptSaveProfile(accountId === null ? pendingProfile! : profileRef.current);
       }
     },
     [attemptSaveProfile, cancelScheduledAutosave],
@@ -557,13 +707,30 @@ export function usePrototypeSession(
   const executeBuildCommand = useCallback(
     (commandInput: GameCommandInput): OperationReceipt["status"] => {
       const before = stateRef.current;
-      const status = execute(commandInput);
+      const status = mobileHallwayBatchRef.current
+        ? execute(commandInput, { deferPersistence: true })
+        : execute(commandInput);
+      if (mobileHallwayBatchRef.current) return status;
       if (status === "applied") {
         buildHistoryRef.current = [
           ...buildHistoryRef.current,
           before,
         ];
+        const undoLabel = describeBuildUndoAction(
+          before,
+          stateRef.current,
+          commandInput,
+          (roomDefinitionId) =>
+            getRoomDefinition(roomDefinitionId)?.displayName ??
+            roomDefinitionId,
+        );
+        buildHistoryLabelsRef.current = [
+          ...buildHistoryLabelsRef.current,
+          undoLabel,
+        ];
+        if (mobileBuildHistoryLimitRef.current) trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
         setBuildUndoCount(buildHistoryRef.current.length);
+        setBuildUndoLabel(undoLabel);
         setBuildExitBlockedReason(null);
         setBuildExitBlockedIssues([]);
       }
@@ -579,6 +746,8 @@ export function usePrototypeSession(
     }
     const previous = buildHistoryRef.current.at(-1)!;
     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
+    buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
+    setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
     stateRef.current = previous;
     setState(previous);
     persistActiveState(previous);
@@ -667,8 +836,12 @@ export function usePrototypeSession(
     };
   }, [attemptSaveProfile, cancelScheduledAutosave, execute, publishSystemNotice]);
 
+  const campaignGuidance = getCampaignTutorialGuidance(profile, { campaignId: state.campaignId, state });
+  const tutorialsEnabled = campaignGuidance.mode === "guided";
+  const tutorialTickIntervalMs = getTutorialTickIntervalMs(state, tutorialsEnabled);
+
   useEffect(() => {
-    if (!documentVisible || state.paused) {
+    if (!documentVisible || state.paused || finishReportOpen) {
       return;
     }
 
@@ -684,13 +857,12 @@ export function usePrototypeSession(
         },
       );
     },
-    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock
-      .realMillisecondsPerFacilityMinuteAt1x / state.simulationSpeed);
+    tutorialTickIntervalMs);
 
     return () => {
       window.clearInterval(timerId);
     };
-  }, [documentVisible, execute, state.paused, state.simulationSpeed]);
+  }, [documentVisible, execute, state.paused, finishReportOpen, tutorialTickIntervalMs]);
 
   const exitManagementMode = useCallback(() => {
     if (!managementMode) {
@@ -716,6 +888,9 @@ export function usePrototypeSession(
     }
     const current = stateRef.current;
     preManagementPausedRef.current = current.paused;
+    if (current.openEmployeeDiscussionId) {
+      execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false });
+    }
     if (current.openChartEncounterId !== null) {
       execute(
         {
@@ -733,15 +908,68 @@ export function usePrototypeSession(
       );
     }
     setManagementMode(true);
+    execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: ["management"]}, {announceReceipt: false});
     setAnnouncement(
       "Management Mode opened. Facility time is paused while you manage staff.",
     );
   }, [buildMode, execute, managementMode]);
 
+  const closeEmployeeDiscussion = useCallback(() => {
+    const discussionId = stateRef.current.openEmployeeDiscussionId;
+    if (discussionId) execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId});
+  }, [execute]);
+  const openEmployeeDiscussion = useCallback((discussionId: string) => {
+    if (managementMode) exitManagementMode();
+    const current = stateRef.current;
+    if (current.openChartEncounterId) {
+      const acknowledgment = getChartFeedbackAcknowledgmentCommand(current, current.openChartEncounterId);
+      if (acknowledgment && execute(acknowledgment) !== "applied") return;
+      if (stateRef.current.openChartEncounterId === current.openChartEncounterId &&
+          execute({type: "CLOSE_CHART", encounterId: current.openChartEncounterId}) !== "applied") return;
+      setSummaryVisible(false);
+    }
+    if (current.openEmployeeDiscussionId && current.openEmployeeDiscussionId !== discussionId) {
+      execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId});
+    }
+    execute({type: "OPEN_EMPLOYEE_DISCUSSION", discussionId});
+  }, [execute, exitManagementMode, managementMode]);
+  const answerEmployeeDiscussion = useCallback((answerChoiceId: string) => {
+    const current = stateRef.current;
+    const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
+    const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
+    if (discussion && node) execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()});
+  }, [execute]);
+  const acknowledgeEmployeeDiscussion = useCallback(() => {
+    const current = stateRef.current;
+    const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
+    const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
+    if (!discussion || !node) return;
+    if (execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id}) !== "applied") return;
+    // The feedback card already holds the teaching text, so the final
+    // acknowledgment files the discussion instead of opening a summary page.
+    if (stateRef.current.employeeDiscussions?.[discussion.id]?.lifecycle === "resolved_summary_available") {
+      execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId: discussion.id});
+    }
+  }, [execute]);
+  const fileEmployeeDiscussion = useCallback(() => {
+    const discussionId = stateRef.current.openEmployeeDiscussionId;
+    if (discussionId) execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId});
+  }, [execute]);
+
   const openPatient = useCallback(
     (encounterId: string) => {
       if (managementMode) {
         exitManagementMode();
+      }
+      if (stateRef.current.openEmployeeDiscussionId) {
+        execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: stateRef.current.openEmployeeDiscussionId});
+      }
+      const currentlyOpen = stateRef.current.openChartEncounterId;
+      if (currentlyOpen !== null && currentlyOpen !== encounterId) {
+        const acknowledgment = getChartFeedbackAcknowledgmentCommand(stateRef.current, currentlyOpen);
+        if (acknowledgment && execute(acknowledgment) !== "applied") return;
+        if (stateRef.current.openChartEncounterId === currentlyOpen &&
+            execute({ type: "CLOSE_CHART", encounterId: currentlyOpen }) !== "applied") return;
       }
       const status = execute({
         type: "OPEN_CHART",
@@ -809,79 +1037,25 @@ export function usePrototypeSession(
     [execute],
   );
 
-  const flagQuestionForReview = useCallback(
-    (decisionNodeId: string) => {
+  const flagQuestionForReview = useCallback<SubmitQuestionReviewFlag>(
+    (decisionNodeId, comment = "", captured) => {
       const currentState = stateRef.current;
-      const encounterId = currentState.openChartEncounterId;
-      const encounter =
-        encounterId === null
-          ? null
-          : currentState.encounters[encounterId] ?? null;
-      const node = encounter?.frozenCase.decisionNodes.find(
-        (candidate) => candidate.id === decisionNodeId,
-      );
-      const step = encounter?.steps.find(
-        (candidate) => candidate.decisionNodeId === decisionNodeId,
-      );
-
-      if (!encounter || !node) {
-        setAnnouncement(
-          "This question could not be identified, so no review flag was stored.",
-        );
+      const subjectId = currentState.openEmployeeDiscussionId ?? currentState.openChartEncounterId;
+      const input = captured ?? (subjectId ? questionReviewContext(currentState, subjectId, decisionNodeId) : null);
+      if (!input || input.decisionNodeId !== decisionNodeId) {
+        setAnnouncement("This question could not be identified, so no review flag was stored.");
         return;
       }
-
-      const activeCampaign = profileRef.current.campaigns.find(
-        (campaign) => campaign.campaignId === currentState.campaignId,
-      );
-      const now = Date.now();
-      const result = recordQuestionReviewFlag(
-        questionReviewFlagsRef.current,
-        {
-          campaignId: currentState.campaignId,
-          clinicName: activeCampaign?.name ?? "Unnamed clinic",
-          clinicalReleaseId: encounter.clinicalReleaseId,
-          clinicalCaseId: encounter.frozenCase.id,
-          clinicalCaseDisplayName: encounter.frozenCase.displayName,
-          patientPresentationVariantId:
-            encounter.frozenCase.patientPresentationVariantId,
-          selectedInstantiationProfileId:
-            encounter.frozenCase.selectedInstantiationProfileId ?? null,
-          decisionNodeId: node.id,
-          questionVariantId: node.questionVariantId,
-          primaryConceptId: node.primaryConceptId,
-          releasePointId: encounter.frozenCase.releasePointId ?? null,
-          patientDisplayName: encounter.patientDisplayName,
-          patientPresentation: encounter.frozenCase.presentation,
-          stem: node.stem,
-          answerChoices: node.answerChoices.map((choice) => ({
-            id: choice.id,
-            label: choice.label,
-            isCorrect: choice.isCorrect,
-          })),
-          explanation: node.explanation,
-          sourceLabels: [
-            ...new Set([
-              ...encounter.frozenCase.sourceLabels,
-              ...node.sourceLabels,
-            ]),
-          ],
-          facilityTick: currentState.facilityTick,
-          selectedAnswerChoiceId: step?.answer?.answerChoiceId ?? null,
-          answerWasCorrect: step?.answer?.correct ?? null,
-        },
-        now,
-      );
+      const activeCampaign = profileRef.current.campaigns.find((campaign) => campaign.campaignId === input.campaignId);
+      const result = recordQuestionReviewFlag(questionReviewFlagsRef.current, {
+        ...input, clinicName: activeCampaign?.name ?? input.clinicName, comment: comment.slice(0, 500),
+      }, Date.now());
       questionReviewFlagsRef.current = result.flags;
       setQuestionReviewFlags(result.flags);
-      const persisted = saveQuestionReviewFlags(result.flags);
-      setAnnouncement(
-        persisted
-          ? "Question flagged for developer review."
-          : "Question flagged for this session, but browser storage was unavailable.",
-      );
+      const persisted = saveQuestionReviewFlags(result.flags, undefined, accountId);
+      setAnnouncement(persisted ? "Question flagged for developer review." : "Question flagged for this session, but browser storage was unavailable.");
     },
-    [],
+    [accountId],
   );
 
   const setQuestionReviewStatus = useCallback(
@@ -893,7 +1067,7 @@ export function usePrototypeSession(
       );
       questionReviewFlagsRef.current = next;
       setQuestionReviewFlags(next);
-      const persisted = saveQuestionReviewFlags(next);
+      const persisted = saveQuestionReviewFlags(next, undefined, accountId);
       setAnnouncement(
         persisted
           ? status === "reviewed"
@@ -1041,6 +1215,52 @@ export function usePrototypeSession(
     ],
   );
 
+  // This method is exposed only to MobileShell. The desktop placeRoom path above
+  // still executes, saves and snapshots every cell separately.
+  const commitMobileHallway = useCallback((cells: readonly GridPoint[]): boolean => {
+    if (!buildMode || selectedRoomDefinitionId !== "room.hallway" || movingRoomInstanceId || mobileHallwayBatchRef.current) return false;
+    const before = stateRef.current;
+    const preview = previewMobileHallway(before, cells);
+    if (preview.buildCells.length === 0) return false;
+    let applied = 0;
+    mobileHallwayBatchRef.current = true;
+    try {
+      for (const cell of preview.buildCells) {
+        if (!placeRoom(cell.x, cell.y, 0)) break;
+        applied += 1;
+      }
+    } finally {
+      mobileHallwayBatchRef.current = false;
+      if (applied > 0) {
+        const label = describeBuildUndoAction(before, stateRef.current,
+          { type: "PLACE_ROOM", roomDefinitionId: "room.hallway" },
+          id => getRoomDefinition(id)?.displayName ?? id);
+        buildHistoryRef.current = [...buildHistoryRef.current, before];
+        buildHistoryLabelsRef.current = [...buildHistoryLabelsRef.current, label];
+        if (mobileBuildHistoryLimitRef.current) trimMobileBuildHistory(buildHistoryRef.current, buildHistoryLabelsRef.current);
+        setBuildUndoCount(buildHistoryRef.current.length);
+        setBuildUndoLabel(label);
+        setBuildExitBlockedReason(null);
+        setBuildExitBlockedIssues([]);
+        setAnnouncement(`Built ${applied} hallway cell${applied === 1 ? "" : "s"}. Undo reverses this stroke.`);
+        const saved = persistActiveState(stateRef.current);
+        if (!saved && !saveWarningShownRef.current) {
+          saveWarningShownRef.current = true;
+          publishSystemNotice("alert.system.save-failed", lastSaveResultRef.current.ok
+            ? "The browser rejected this save. Keep this tab open and try again."
+            : describePrototypeStorageFailure(lastSaveResultRef.current.failure));
+        }
+      }
+    }
+    return applied > 0;
+  }, [buildMode, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
+
+  const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) =>
+    previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation),
+  [selectedRoomDefinitionId, movingRoomInstanceId, placementOrientation]);
+  const previewMobileHallwayCells = useCallback((cells: readonly GridPoint[]) => previewMobileHallway(stateRef.current, cells), []);
+  const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
+
   const enterBuildMode = useCallback(() => {
     if (buildMode) {
       return;
@@ -1051,10 +1271,15 @@ export function usePrototypeSession(
     const current = stateRef.current;
     preBuildPausedRef.current = current.paused;
     buildHistoryRef.current = [];
+    buildHistoryLabelsRef.current = [];
     setBuildUndoCount(0);
+    setBuildUndoLabel(null);
     setBuildExitBlockedReason(null);
     setBuildExitBlockedIssues([]);
     setBuildExitBlockedIssues([]);
+    if (current.openEmployeeDiscussionId) {
+      execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false });
+    }
     if (current.openChartEncounterId !== null) {
       execute(
         {
@@ -1097,7 +1322,9 @@ export function usePrototypeSession(
     }
     setBuildMode(false);
     buildHistoryRef.current = [];
+    buildHistoryLabelsRef.current = [];
     setBuildUndoCount(0);
+    setBuildUndoLabel(null);
     setBuildExitBlockedReason(null);
     setBuildExitBlockedIssues([]);
     setSelectedRoomDefinitionId(null);
@@ -1124,16 +1351,17 @@ export function usePrototypeSession(
     setAnnouncement("Room selected. Upgrade or sell it from Build Mode.");
   }, []);
 
-  const sellSelectedRoom = useCallback(() => {
-    if (!selectedRoomInstanceId) {
+  const sellSelectedRoom = useCallback((roomId: string, saleConfirmationToken?: string) => {
+    if (!roomId) {
       setAnnouncement("Select a room to sell.");
       return;
     }
     const status = executeBuildCommand({
       type: "SELL_ROOM",
-      roomId: selectedRoomInstanceId,
+      roomId,
+      saleConfirmationToken,
     });
-    if (status === "applied") {
+    if (status === "applied" && selectedRoomInstanceId === roomId) {
       setSelectedRoomInstanceId(null);
     }
   }, [executeBuildCommand, selectedRoomInstanceId]);
@@ -1148,6 +1376,14 @@ export function usePrototypeSession(
       roomId: selectedRoomInstanceId,
     });
   }, [executeBuildCommand, selectedRoomInstanceId]);
+
+  const upgradeRoom = useCallback((roomId: string) => {
+    if (!buildMode) {
+      setAnnouncement("Enter Build Mode before upgrading a room.");
+      return;
+    }
+    executeBuildCommand({ type: "UPGRADE_ROOM", roomId });
+  }, [buildMode, executeBuildCommand]);
 
   const beginMoveSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
@@ -1222,6 +1458,13 @@ export function usePrototypeSession(
     [execute],
   );
 
+  const trainEmployee = useCallback(
+    (employeeId: string) => {
+      execute({ type: "TRAIN_EMPLOYEE", employeeId });
+    },
+    [execute],
+  );
+
   const changeEmployeeSalary = useCallback(
     (employeeId: string, direction: -1 | 1) => {
       const employee = stateRef.current.employees.find(
@@ -1282,6 +1525,22 @@ export function usePrototypeSession(
     [execute],
   );
 
+  const seatFounderInChair = useCallback(
+    (roomInstanceId: string, location: GridPoint, seatId?: string) =>
+      execute({
+        type: "SEAT_FOUNDER_IN_CHAIR",
+        roomInstanceId,
+        location,
+        ...(seatId ? { seatId: seatId as LevelThreeBreakSeatId } : {}),
+      }) === "applied",
+    [execute],
+  );
+
+  const describeCharacter = useCallback<DescribeCharacterRequest>(
+    (character) => describeFacilityCharacter(stateRef.current, character),
+    [],
+  );
+
   const praiseEmployee = useCallback(
     (employeeId: string) => {
       execute({ type: "PRAISE_EMPLOYEE", employeeId });
@@ -1298,6 +1557,33 @@ export function usePrototypeSession(
     [execute],
   );
 
+  const bookInspection = useCallback(() => { execute({ type: "BOOK_INSPECTION" }); }, [execute]);
+  const cancelInspection = useCallback(() => { execute({ type: "CANCEL_INSPECTION" }); }, [execute]);
+
+  // Session-owned presentation survives shell changes. Persist only the existing acknowledgment.
+  const openFinishReport = useCallback(() => {
+    if (finishReportOpenRef.current || stateRef.current.facilityLevel !== 5 || !stateRef.current.levelFive?.progress.gameFinished) return;
+    resumeAfterFinishRef.current = !stateRef.current.paused;
+    finishReportOpenRef.current = true;
+    if (!stateRef.current.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+    setFinishReportOpen(true);
+  }, [execute]);
+  const closeFinishReport = useCallback(() => {
+    if (!finishReportOpenRef.current) return;
+    if (stateRef.current.levelFive?.progress.finishPageAcknowledgedAtFacilityTick === null &&
+        execute({ type: "ACKNOWLEDGE_FINISH_PAGE" }, { announceReceipt: false }) !== "applied") return;
+    finishReportOpenRef.current = false;
+    setFinishReportOpen(false);
+    if (resumeAfterFinishRef.current && stateRef.current.paused && !buildMode && !managementMode) {
+      execute({ type: "SET_PAUSED", paused: false }, { announceReceipt: false });
+    }
+    resumeAfterFinishRef.current = false;
+  }, [execute, buildMode, managementMode]);
+  useEffect(() => {
+    if (state.facilityLevel === 5 && state.levelFive?.progress.gameFinished &&
+        state.levelFive.progress.finishPageAcknowledgedAtFacilityTick === null) openFinishReport();
+  }, [state.campaignId, state.facilityLevel, state.levelFive?.progress.gameFinished, state.levelFive?.progress.finishPageAcknowledgedAtFacilityTick, openFinishReport]);
+
   const levelUp = useCallback(() => {
     const status = execute({
       type: "LEVEL_UP",
@@ -1308,6 +1594,7 @@ export function usePrototypeSession(
   }, [execute]);
 
   const fastForward = useCallback(() => {
+    if (finishReportOpenRef.current) return;
     const status = execute(
       {
         type: "DEV_FAST_FORWARD",
@@ -1413,7 +1700,16 @@ export function usePrototypeSession(
     [execute],
   );
 
+  const startLaboratoryProcessing = useCallback(() => {
+    execute({
+      type: "START_SERVICE_OPERATION",
+      incomeLineId: "income.laboratory_processing",
+      actorKind: "remote",
+    });
+  }, [execute]);
+
   const togglePause = useCallback(() => {
+    if (finishReportOpenRef.current) { setAnnouncement("Close the finish report before resuming facility time."); return; }
     if (buildMode || managementMode) {
       setAnnouncement(
         buildMode
@@ -1431,6 +1727,7 @@ export function usePrototypeSession(
 
   const setSimulationSpeed = useCallback(
     (speed: SimulationSpeed) => {
+      if (finishReportOpenRef.current) return;
       if (buildMode || managementMode) {
         setAnnouncement(
           buildMode
@@ -1448,6 +1745,8 @@ export function usePrototypeSession(
   );
 
   const saveAndPause = useCallback((): PrototypeSaveResult => {
+    usage?.endSession();
+    cameraPreferencesRef.current!.flush();
     if (!stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: true },
@@ -1479,15 +1778,51 @@ export function usePrototypeSession(
         : describePrototypeStorageFailure(result.failure),
     );
     return result;
-  }, [execute, persistActiveState, publishSystemNotice]);
+  }, [execute, persistActiveState, publishSystemNotice, usage]);
+
+  const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
+    const problem = getClinicAlertActionProblem(stateRef.current, action);
+    if (problem) return { ok: false, reason: problem };
+    if (action.kind === "save_and_pause") {
+      const result = saveAndPause();
+      return result.ok ? { ok: true } : { ok: false, reason: describePrototypeStorageFailure(result.failure) };
+    }
+    if (action.kind === "place_room" || action.kind === "restore_access" || action.kind === "train_employee" || action.kind === "show_goals") return { ok: true };
+    if (action.kind === "open_discussion") {
+      if (buildMode) {
+        const access = getFacilityAccessValidation(stateRef.current);
+        if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a discussion." };
+        exitBuildMode();
+      }
+      openEmployeeDiscussion(action.discussionId);
+      return stateRef.current.openEmployeeDiscussionId === action.discussionId ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The discussion could not be opened." };
+    }
+    if (action.kind === "open_chart") {
+      if (buildMode) {
+        const access = getFacilityAccessValidation(stateRef.current);
+        if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a chart." };
+        exitBuildMode();
+      }
+      openPatient(action.encounterId);
+      return stateRef.current.openChartEncounterId === action.encounterId ? { ok: true } :
+        { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The chart could not be opened." };
+    }
+    const command = clinicAlertCommand(action, nextInstanceId("employee.instance", stateRef.current.employees.map((employee) => employee.id)));
+    if (!command) return { ok: false, reason: "This action is no longer available." };
+    // Build undo stores whole-state snapshots. Include every tray mutation so
+    // undoing an older room edit cannot silently erase a later clinic fix.
+    const status = buildMode ? executeBuildCommand(command) : execute(command);
+    return status === "applied" ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The clinic could not apply this action." };
+  }, [buildMode, execute, executeBuildCommand, exitBuildMode, openPatient, openEmployeeDiscussion, saveAndPause]);
 
   const clearLocalCampaigns = useCallback((): boolean => {
     // This must happen before deleting keys: pagehide/unmount can otherwise
     // synchronously put the in-memory whole-profile snapshot back.
     campaignWriteGateRef.current.suppress();
+    cameraPreferencesRef.current!.discard();
     cancelScheduledAutosave();
     pendingAutosaveProfileRef.current = null;
-    const result = clearPrototypeCampaignStorage();
+    const result = clearPrototypeCampaignStorage(accountId);
     if (!result.ok) {
       publishSystemNotice(
         "alert.system.save-failed",
@@ -1523,6 +1858,9 @@ export function usePrototypeSession(
     setProfile(nextProfile);
     stateRef.current = selectedCampaign.state;
     setState(selectedCampaign.state);
+    finishReportOpenRef.current = false;
+    resumeAfterFinishRef.current = false;
+    setFinishReportOpen(false);
     setAcknowledgedTutorialStepIds(
       new Set(
         (nextProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []).map(
@@ -1537,9 +1875,12 @@ export function usePrototypeSession(
     setBuildMode(false);
     setManagementMode(false);
     buildHistoryRef.current = [];
+    buildHistoryLabelsRef.current = [];
     setBuildUndoCount(0);
+    setBuildUndoLabel(null);
     setBuildExitBlockedReason(null);
-    setFacilityCamera(getInitialFacilityCamera(selectedCampaign.state));
+    setFacilityCameraView(cameraPreferencesRef.current!.restore(campaignId,
+      getInitialFacilityCamera(selectedCampaign.state)));
     setSummaryVisible(false);
     const saveResult = attemptSaveProfile(nextProfile);
     const saved = saveResult.ok;
@@ -1558,7 +1899,7 @@ export function usePrototypeSession(
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
   const tutorialStep = createTutorialStepView({
     state,
-    tutorialsEnabled: profile.tutorialsEnabled,
+    tutorialsEnabled,
     introDismissed: tutorialIntroDismissed,
     acknowledgedStepIds: acknowledgedTutorialStepIds,
     dailyRoutineTipsStarted:
@@ -1568,19 +1909,30 @@ export function usePrototypeSession(
     selectedRoomDefinitionId,
     selectedRoomInstanceId,
     summaryVisible,
+    managementMode,
+    exposedTopicIds: [...campaignGuidance.exposedTopicIds, ...Object.keys(state.alertHumor.guidanceTips?.topicActivity ?? {})],
+    buildExitBlockedIssues,
   });
   const tutorialTargetEncounter =
     tutorialStep?.patientEncounterId
       ? state.encounters[tutorialStep.patientEncounterId] ?? null
       : null;
+  guidanceContextRef.current = { blockedTopicIds: tutorialStep?.topicIds ?? [],
+    attentionBlocked: referencePauseLocked || finishReportOpen || buildMode || managementMode || tutorialStep?.target === "answer-choices" || tutorialStep?.target === "chart-feedback" };
+
+  const recordTutorialTopicExposure = useCallback((topicIds: readonly string[]) => {
+    const unseen = topicIds.filter((id) => stateRef.current.alertHumor.guidanceTips?.topicActivity?.[id]?.exposedAtTick === undefined);
+    if (unseen.length) execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: unseen}, {announceReceipt: false, announceEvents: false});
+  }, [execute]);
+
+  useEffect(() => { recordTutorialTopicExposure(campaignGuidance.exposedTopicIds); },
+    [state.campaignId, campaignGuidance.exposedTopicIds.join("|"), recordTutorialTopicExposure]);
 
   useEffect(() => {
     if (
-      profile.tutorialsEnabled ||
       state.alertHumor.alertsTutorialAcknowledgedAtTick !== null ||
-      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]
-        ?.resolutionReason === null ||
-      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] === undefined
+      state.facilityLevel < 1 && ![TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID]
+        .every((id) => state.encounters[id]?.lifecycle === "resolved")
     ) {
       return;
     }
@@ -1590,7 +1942,7 @@ export function usePrototypeSession(
     );
   }, [
     execute,
-    profile.tutorialsEnabled,
+    state.facilityLevel,
     state.alertHumor.alertsTutorialAcknowledgedAtTick,
     state.encounters,
   ]);
@@ -1617,33 +1969,30 @@ export function usePrototypeSession(
   );
 
   useEffect(() => {
+    if (state.facilityLevel < 1 || profile.tutorialGuidanceByCampaign?.[state.campaignId]?.mode === "complete") return;
+    const currentProfile = profileRef.current;
+    const guidance = getCampaignTutorialGuidance(currentProfile, { campaignId: state.campaignId, state });
+    persistTutorialProfile({ ...currentProfile, tutorialGuidanceByCampaign: {
+      ...currentProfile.tutorialGuidanceByCampaign, [state.campaignId]: guidance,
+    } }, "First-shift guidance complete. Help and contextual tips remain available.");
+    if (currentProfile.tutorialGuidanceByCampaign?.[state.campaignId]?.mode === "guided") {
+      publishSystemNotice("alert.system.first-shift-complete", "You're running the clinic now. Waiting and Existing Patients hold the work. Needs you flags live problems; Around the clinic supplies tips and commentary.");
+    }
+  }, [persistTutorialProfile, publishSystemNotice, profile.tutorialGuidanceByCampaign, state.campaignId, state.facilityLevel]);
+
+  useEffect(() => {
     const campaignId = state.campaignId;
     const previousPaused = profile.tutorialDailyRoutinePauseByCampaign[campaignId];
     const transition = getDailyRoutinePauseTransition({
       activeTipId: tutorialStep?.id,
       previousPaused,
       currentlyPaused: state.paused,
-      modeLocksPause: managementMode || buildMode,
+      modeLocksPause: managementMode || buildMode || referencePauseLocked,
     });
-    if (transition === "capture-and-pause") {
-        persistTutorialProfile(
-          {
-            ...profile,
-            tutorialDailyRoutinePauseByCampaign: {
-              ...profile.tutorialDailyRoutinePauseByCampaign,
-              [campaignId]: state.paused,
-            },
-          },
-          "Tutorial guidance paused facility time.",
-        );
-      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
-      return;
-    }
-    if (transition === "keep-paused" || transition === "reassert-pause") {
-      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
-      return;
-    }
     if (transition === "none" || transition === "defer-release") return;
+    if (transition === "release-keep-paused" && !state.paused) {
+      execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+    }
     if (transition === "release-resume" && state.paused) {
       // Persist resumed time while the owner still exists. If the page exits
       // between these writes, the next session can safely finish the release.
@@ -1664,7 +2013,7 @@ export function usePrototypeSession(
         ? "Tutorial guidance closed. The clinic remains paused."
         : "Tutorial guidance closed. Facility operations resumed.",
     );
-  }, [buildMode, execute, managementMode, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
+  }, [buildMode, execute, managementMode, referencePauseLocked, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
 
   const acknowledgeDailyRoutineTip = useCallback((stepId: string) => {
     const campaignId = stateRef.current.campaignId;
@@ -1709,17 +2058,19 @@ export function usePrototypeSession(
   const setTutorialsEnabled = useCallback(
     (enabled: boolean) => {
       const currentProfile = profileRef.current;
-      if (currentProfile.tutorialsEnabled === enabled) {
-        return;
-      }
+      const campaign = { campaignId: stateRef.current.campaignId, state: stateRef.current };
+      const guidance = getCampaignTutorialGuidance(currentProfile, campaign);
       persistTutorialProfile(
         {
           ...currentProfile,
-          tutorialsEnabled: enabled,
+          tutorialGuidanceByCampaign: {
+            ...currentProfile.tutorialGuidanceByCampaign,
+            [campaign.campaignId]: { ...guidance, mode: campaign.state.facilityLevel >= 1 ? "complete" : enabled ? "guided" : "off" },
+          },
         },
         enabled
-          ? "Tutorial guidance enabled."
-          : "Tutorial guidance disabled. Help remains available.",
+          ? "Guidance shown for this clinic's current work."
+          : "Guidance skipped in this clinic. Help and contextual tips remain available.",
       );
     },
     [persistTutorialProfile],
@@ -1842,7 +2193,7 @@ export function usePrototypeSession(
     profile,
     state,
     campaigns,
-    tutorialsEnabled: profile.tutorialsEnabled,
+    tutorialsEnabled,
     tutorialTargetEncounterId: tutorialTargetEncounter?.id ?? null,
     tutorialStep,
     selectedRoomDefinitionId,
@@ -1851,16 +2202,26 @@ export function usePrototypeSession(
     buildMode,
     managementMode,
     buildUndoCount,
+    buildUndoLabel,
+    movingRoomInstanceId,
     buildExitBlockedReason,
     buildExitBlockedIssues,
     facilityCamera,
     summaryVisible,
     announcement,
-    systemNotices,
+    systemNotices: systemNotices.filter((notice) =>
+      shouldStoreSystemNotice(notice.definitionId),
+    ),
+    runClinicAlertAction,
     questionReviewFlags,
     togglePause,
     setSimulationSpeed,
     openPatient,
+    openEmployeeDiscussion,
+    closeEmployeeDiscussion,
+    answerEmployeeDiscussion,
+    acknowledgeEmployeeDiscussion,
+    fileEmployeeDiscussion,
     closeChart,
     submitAnswer,
     flagQuestionForReview,
@@ -1872,6 +2233,8 @@ export function usePrototypeSession(
     cancelPlacement,
     rotatePlacement,
     placeRoom,
+    mobileBuildActions: { setHistoryLimit: setMobileBuildHistoryLimit, previewPlacement: previewMobileRoom, previewHallway: previewMobileHallwayCells,
+      previewDoor: previewMobileDoorRequest, commitHallway: commitMobileHallway },
     enterBuildMode,
     exitBuildMode,
     enterManagementMode,
@@ -1879,33 +2242,46 @@ export function usePrototypeSession(
     selectRoom,
     sellSelectedRoom,
     upgradeSelectedRoom,
+    upgradeRoom,
     beginMoveSelectedRoom,
     placeDoor,
     removeDoor,
     undoBuildAction,
     setFacilityCamera,
     hireStaff,
+    trainEmployee,
     decreaseEmployeeSalary,
     increaseEmployeeSalary,
     fireEmployee,
     collectLitter,
     refillWaterCooler,
     seatFounderAtFrontDesk,
+    seatFounderInChair,
+    describeCharacter,
     praiseEmployee,
     moveFounder,
     levelUp,
+    bookInspection,
+    cancelInspection,
+    finishReportOpen,
+    openFinishReport,
+    closeFinishReport,
     fastForward,
     advanceTutorialResult,
     addMoney,
     runEmergencyGlp1Consultation,
     setAdvertisingLevel,
     setServiceAppointmentsEnabled,
+    startLaboratoryProcessing,
     switchCampaign,
     openTutorialPatient,
     dismissTutorialIntro,
     performTutorialAction,
     setTutorialsEnabled,
+    setReferencePauseLocked,
+    recordTutorialTopicExposure,
     saveAndPause,
+    saveForFirstShiftReplay: () => saveAndPause().ok ? profileRef.current : null,
     clearLocalCampaigns,
   };
 }

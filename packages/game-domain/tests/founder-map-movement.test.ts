@@ -6,6 +6,7 @@ import {
   gameReducer,
   getOccupiedTiles,
   getRoomNavigationAnchor,
+  getRoomWaitingAnchors,
   getRoomNavigableTiles,
   isEmployeeAssignedToOperationalRoom,
   serializeGameState,
@@ -568,5 +569,45 @@ describe("founder map movement", () => {
         Object.keys(rejected.operationReceipts).at(-1)!
       ]?.status,
     ).toBe("rejected");
+  });
+
+  it("walks to an explicit unreserved waiting chair, persists it, and rejects a patient reservation", () => {
+    let state = createInitialGameState();
+    state.facilityLevel = 1;
+    state.nextRoutineArrivalTick = 100_000;
+    const waiting = { id: "chair.waiting", roomDefinitionId: "room.waiting", x: 29, y: 28, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+    state.rooms.push(waiting, { id: "chair.hall", roomDefinitionId: "room.hallway", x: 28, y: 28, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 });
+    state.doors.push({ id: "chair.waiting-west", roomId: waiting.id, side: "west", offset: 0, exterior: false });
+    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find((room) => room.id === "room.waiting")!;
+    const chair = getRoomWaitingAnchors(waiting, definition)[0]!;
+    state.environment.founderLocation = { x: 28, y: 28 };
+    state.environment.founderActivity = null;
+    state = gameReducer(state, { type: "SEAT_FOUNDER_IN_CHAIR", operationId: "chair.select", roomInstanceId: waiting.id, location: chair });
+    expect(state.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
+    expect(state.environment.founderActivity?.path.at(-1)).toEqual(chair);
+    expect(state.environment.founderActivity?.path.length).toBeGreaterThan(1);
+    for (let index = 0; index < 40 && (
+      state.environment.founderLocation.x !== chair.x || state.environment.founderLocation.y !== chair.y
+    ); index += 1) {
+      state = tick(state);
+    }
+    expect(state.environment.founderLocation).toEqual(chair);
+    expect(state.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
+    state = tick(tick(state));
+    expect(state.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
+
+    state = move(state, { ...chair });
+    expect(state.environment.founderActivity?.kind).toBe("walk_to_point");
+
+    const reserved = createInitialGameState();
+    reserved.rooms.push(waiting, { id: "chair.hall", roomDefinitionId: "room.hallway", x: 28, y: 28, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 });
+    reserved.doors.push({ id: "chair.waiting-west", roomId: waiting.id, side: "west", offset: 0, exterior: false });
+    const patient = Object.values(reserved.encounters)[0]!;
+    patient.waitingDestination = { roomInstanceId: waiting.id, location: chair, kind: "chair" };
+    const rejected = gameReducer(reserved, { type: "SEAT_FOUNDER_IN_CHAIR", operationId: "chair.reserved", roomInstanceId: waiting.id, location: chair });
+    expect(rejected.operationReceipts["chair.reserved"]?.status).toBe("rejected");
+    expect(rejected.environment.founderActivity).toBeNull();
   });
 });

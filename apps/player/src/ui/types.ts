@@ -1,4 +1,6 @@
 import type { PixelAppearanceVariant } from "@gamify-surgery/game-domain";
+import type { CaseExhibit } from "@gamify-surgery/clinical-content";
+import type { QuestionReviewFlagInput } from "../session/questionReviewFlags";
 
 export type PatientFolder = "waiting" | "active" | "resolved";
 
@@ -60,13 +62,18 @@ export interface PixelAvatarView {
     | "endoscopist"
     | "phlebotomist"
     | "evs_worker"
-    | "glp1_np";
+    | "glp1_np"
+    | "app";
 }
 
 export interface PatientTabView {
   id: string;
   folder: PatientFolder;
   name: string;
+  /** Frozen encounter facts; absent legacy values stay undefined. */
+  ageLabel?: string;
+  sexLabel?: string;
+  chiefComplaint?: string;
   subtitle: string;
   statusLabel: string;
   actionRequired: boolean;
@@ -78,6 +85,37 @@ export interface PatientTabView {
   sortKey?: number;
 }
 
+/** A real employee discussion is deliberately not modeled as a patient chart. */
+export interface EmployeeDiscussionTabView {
+  subjectKind: "employee-discussion";
+  id: string;
+  employeeId: string;
+  folder: PatientFolder;
+  name: string;
+  roleLabel: string;
+  statusLabel: string;
+  actionRequired: boolean;
+  selected: boolean;
+  blockedReason?: string;
+  avatar?: PixelAvatarView;
+  sortKey?: number;
+}
+export interface EmployeeDiscussionView {
+  reviewFlagInput?: QuestionReviewFlagInput;
+  flaggedForDeveloperReview?: boolean;
+  id:string; employeeName:string; roleLabel:string; avatar?:PixelAvatarView;
+  /** `traveling` still accepts answers; the founder is walking over. */
+  status:"traveling"|"question"|"feedback"|"summary";
+  /** Short authored topic shown in the chart's chief-complaint slot. */
+  topicLabel?:string;
+  presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[];
+  feedbackTitle?:"Correct"|"Incorrect"; feedback?:string; correctAnswerText?:string;
+  exhibit?: CaseExhibit;
+  teachingPoint?: string;
+  /** True when acknowledging this step's feedback completes the discussion. */
+  finalStep:boolean;
+}
+
 export interface AnswerChoiceView {
   id: string;
   label: string;
@@ -86,9 +124,23 @@ export interface AnswerChoiceView {
   /** Facility-time estimate shown before selection when this choice orders work. */
   etaLabel?: string;
   detailLabel?: string;
+  /** Set only after the decision is answered, so the key is never revealed early. */
+  revealedCorrect?: boolean;
+  /** Teaching feedback, supplied only after this decision has been answered. */
+  rationale?: string;
+}
+
+/** One stage of pending diagnostic work, shown as a list in the chart. */
+export interface ChartPendingPhaseView {
+  label: string;
+  location: "onsite" | "offsite";
+  progressLabel: string;
+  delayLabel?: string;
+  complete: boolean;
 }
 
 export interface ChartDecisionStepView {
+  reviewFlagInput?: QuestionReviewFlagInput;
   id: string;
   /** Stable authored identity used by the non-scoring developer review flag. */
   questionVariantId?: string;
@@ -100,9 +152,14 @@ export interface ChartDecisionStepView {
   answerChoices: AnswerChoiceView[];
   resultHeading?: string;
   resultBody?: string;
+  /** Diagnostic result status without the per-stage clause, paired with `resultPhases`. */
+  resultSummary?: string;
+  resultPhases?: ChartPendingPhaseView[];
   etaLabel?: string;
   feedbackTitle?: string;
   feedbackBody?: string;
+  teachingPoint?: string;
+  exhibit?: CaseExhibit;
   rewardLabel?: string;
   nextActionLabel?: string;
   collapsedResultLabel?: string;
@@ -150,6 +207,10 @@ export interface ChartClinicalReviewView {
 
 export interface ChartView {
   id: string;
+  /** Team discussions reuse the chart sheet; omitted means a patient chart. */
+  subjectKind?: "patient" | "team_discussion";
+  /** Header line used in place of age/sex, such as an employee's role. */
+  subtitleLabel?: string;
   /** Stable clinical case ID for provenance and development inspection. */
   clinicalCaseId?: string;
   patientName: string;
@@ -159,6 +220,7 @@ export interface ChartView {
   sexLabel?: string;
   chiefComplaint?: string;
   patientSatisfactionLabel?: string;
+  executiveComfortLabel?: string;
   /** Optional approved vital signs. Omitted values are never invented by UI. */
   vitals?: Array<{
     id: string;
@@ -171,6 +233,9 @@ export interface ChartView {
   /** Later-step findings shown with the presentation, never above answers. */
   presentationUpdate?: string;
   pendingLabel?: string;
+  /** Diagnostic pending status without the per-stage clause, paired with `pendingPhases`. */
+  pendingSummary?: string;
+  pendingPhases?: ChartPendingPhaseView[];
   /** Whether the active pending service sends the patient away from clinic. */
   pendingPatientIsAway?: boolean;
   etaLabel?: string;
@@ -178,6 +243,8 @@ export interface ChartView {
   answerChoices: AnswerChoiceView[];
   feedbackTitle?: string;
   feedbackBody?: string;
+  teachingPoint?: string;
+  exhibit?: CaseExhibit;
   terminalOutcomeTitle?: string;
   terminalOutcomeBody?: string;
   terminalOutcomeSeverity?: "minor" | "major";
@@ -212,6 +279,13 @@ export interface ResourceBarView {
   xpProgressLabel?: string;
   xpProgressPercent?: number;
   moneyHourlyDeltaLabel?: string;
+  moneyHourlyNetSign?: "positive" | "negative" | "neutral";
+  moneyHourlyBreakdown?: {
+    incomeLabel: string;
+    costLabel: string;
+    windowLabel: string;
+    explanation: string;
+  };
   dayTimeLabel?: string;
   goals?: ProgressionGoalView[];
   contentNoticeLabel?: string;
@@ -239,14 +313,34 @@ export interface ServiceIncomeCatalogLineView {
   requirementLabel: string;
   available: boolean;
   unavailableReason?: string;
+  /** Management grouping: earning now, temporarily paused, missing setup, or a later level. */
+  group?: "earning" | "paused" | "needs" | "future";
+  /** How this income arrives, e.g. booked visitors, chart orders or walk-up sales. */
+  arrivalLabel?: string;
+  /** Booked visitors stop while scheduled appointments are switched off. */
+  scheduled?: boolean;
+  pausedReason?: string;
+  /** Build/Hire shortcuts for the missing room or staff role. */
+  setupActions?: ServiceSetupActionView[];
+}
+
+export interface ServiceSetupActionView {
+  label: string;
+  target: "room" | "staff";
+  id: string;
 }
 
 export interface ServiceIncomeOperationView {
+  executiveComfortLabel?: string;
   id: string;
+  /** Optional phone detail grouping; desktop rendering ignores this source identity. */
+  incomeLineId?: string;
   displayName: string;
   actorLabel: string;
   statusLabel: string;
   quoteFeeLabel: string;
+  /** Optional presentation label of the existing assigned provider/team; desktop ignores it. */
+  providerLabel?: string;
 }
 
 export interface ServiceIncomeReceiptView {
@@ -256,9 +350,42 @@ export interface ServiceIncomeReceiptView {
   grossLabel: string;
   stockCostLabel: string;
   netLabel: string;
+  timeLabel?: string;
+}
+
+/** Since-opening operating picture for Management's Money tab. */
+export interface ExecutiveManagementView {
+  homeLabel: string; statusLabel: string; durationLabel: string; acceptedLabel: string; lastRoundLabel: string;
+  activeLabel: string; preparationLabel: string; savingsLabel: string;
+  effects: { label: string; currentLabel: string; nextLabel: string | null; activeLabel: string }[];
+}
+
+export interface ManagementFinanceView {
+  supplierSavingsLabel?: string;
+  cashLabel: string;
+  earnedLabel: string;
+  billedLabel: string;
+  stockLabel: string;
+  runningCostsLabel: string;
+  profitLabel: string;
+  profitPositive: boolean;
+  hourlyIncomeLabel: string;
+  hourlyNetLabel: string;
+  hourlyNetSign: "positive" | "negative" | "neutral";
+  incomeWindowLabel: string;
+  incomeWindowExplanation: string;
+  hourlyIncomeSources: { id: string; label: string; amount: number; amountLabel: string; count: number }[];
+  hourlyCostLabel: string;
+  hourlyCosts: { id: "staff" | "rooms" | "advertising" | "stock" | "relief" | "supplier"; label: string; amount: number; amountLabel: string }[];
+  runwayLabel: string;
+  recentEarnings: { displayName: string; net: number; netLabel: string; count: number }[];
+  recentEarningsReceiptCount: number;
 }
 
 export interface ServiceIncomeView {
+  giftShop?: GiftShopView;
+  executiveManagement?: ExecutiveManagementView;
+  periopNurseQueueLength?: number;
   appointmentsEnabled: boolean;
   catalogLines: ServiceIncomeCatalogLineView[];
   activeOperations: ServiceIncomeOperationView[];
@@ -266,6 +393,36 @@ export interface ServiceIncomeView {
   grossTotalLabel: string;
   stockCostTotalLabel: string;
   netTotalLabel: string;
+  radiologistReads?: {
+    today: { inHouseReads: number; outsideReads: number; inHouseIncomeLabel: string; outsideIncomeLabel: string };
+    thisLevel: { inHouseReads: number; outsideReads: number; inHouseIncomeLabel: string; outsideIncomeLabel: string };
+  };
+  laboratoryWorkQueue?: {
+    enabled: boolean;
+    statusLabel: string;
+    disabledReason?: string;
+  };
+  levelFiveSupport?: {
+    gymBreakCount: number;
+    gardenRestCount: number;
+    rooms: Array<{ id: string; displayName: string; upgradeLevel: number; currentBenefitLabel: string; upgradeLabel: string; policyLabel: string }>;
+  };
+  levelThreeSupport?: {
+    maintenanceDueRoomNames: string[];
+    maintenanceOutOfServiceRoomNames: string[];
+    maintenanceRepairingRoomNames: string[];
+    queuedQiReviewCount: number;
+    inProgressQiReviewCount: number;
+    completedQiReviewCount: number;
+    staffOnBreakCount: number;
+  };
+  finances?: ManagementFinanceView;
+}
+
+export interface GiftShopView {
+  statusLabel: string; demandLabel: string; checkoutLabel: string;
+  normalLabel: string; premiumLabel: string; budgetLabel: string; upgradeLabel: string;
+  receiptWindowLabel: string; purchaseCount: number; grossLabel: string; stockLabel: string; netLabel: string;
 }
 
 export interface AdvertisingView {
@@ -277,12 +434,68 @@ export interface AdvertisingView {
   canIncrease: boolean;
 }
 
+/** Build Mode groups shared by the New Rooms and My Rooms tabs. */
+export type RoomBuildCategoryId =
+  | "patient"
+  | "diagnostics"
+  | "procedures"
+  | "support"
+  | "services";
+
+/**
+ * What one more upgrade does, in player words. Codex owns the upgrade rules
+ * (GS-038); Build Mode only describes the effect the game really applies.
+ */
+export interface RoomUpgradeBenefitView {
+  perUpgradeLabel: string;
+  /** Words before this room's running total; defaults to "Now". */
+  totalCaption?: string;
+  currentLabel: string;
+  nextLabel?: string;
+  note?: string;
+  upkeepLabel?: string;
+}
+
+/** One built room in the My Rooms tab. */
+export interface OwnedRoomBuildView {
+  id: string;
+  roomDefinitionId: string;
+  /** Lettered ("Waiting Room A") only while 2+ rooms of the type exist. */
+  displayName: string;
+  category: RoomBuildCategoryId;
+  upgradeLevel: number;
+  maxUpgradeLevel: number;
+  upgradeable: boolean;
+  nextUpgradeCostLabel?: string;
+  canUpgrade: boolean;
+  benefitSummary?: string;
+  benefit?: RoomUpgradeBenefitView;
+  accessProblem: boolean;
+}
+
+/** A room that unlocks at the next facility level. */
+export interface LockedRoomBuildView {
+  id: string;
+  displayName: string;
+  category: RoomBuildCategoryId;
+  purpose: string;
+  costLabel: string;
+  unlockLabel: string;
+}
+
 export interface RoomBuildOptionView {
   id: string;
   displayName: string;
+  category?: RoomBuildCategoryId;
+  /** One line saying what the room is for. */
+  purpose?: string;
   footprintLabel: string;
   costLabel: string;
   upkeepLabel: string;
+  /** Kept separate from upkeep so construction capacity stays readable. */
+  builtCountLabel: string;
+  /** Built up to its instance limit; listed under the collapsed maximum section. */
+  atMaximum?: boolean;
   owned: boolean;
   selected: boolean;
   enabled: boolean;
@@ -291,8 +504,15 @@ export interface RoomBuildOptionView {
 
 export interface SelectedRoomBuildView {
   id: string;
+  roomDefinitionId: string;
   displayName: string;
   upgradeLevel: number;
+  maxUpgradeLevel?: number;
+  /** False for rooms with a single level (no stars, no upgrade button). */
+  upgradeable?: boolean;
+  benefit?: RoomUpgradeBenefitView;
+  canMove?: boolean;
+  accessProblem?: boolean;
   nextUpgradeLevel?: number;
   upgradeCostLabel?: string;
   upgradeImprovements: string[];
@@ -300,6 +520,16 @@ export interface SelectedRoomBuildView {
   canUpgrade: boolean;
   canSell: boolean;
   blockedReason?: string;
+  salePreview?: {
+    roomId: string;
+    roomDefinitionId: string;
+    dismissedEmployees: Array<{
+      id: string;
+      displayName: string;
+      staffRoleDefinitionId: string;
+    }>;
+    confirmationToken: string;
+  };
 }
 
 export interface StaffHireOptionView {
@@ -312,19 +542,47 @@ export interface StaffHireOptionView {
   blockedReason?: string;
 }
 
+/** Training data for Management's employee card; the domain owns eligibility. */
+export interface EmployeeTrainingView {
+  level: number;
+  nextLevel: number | null;
+  cost: number | null;
+  costLabel: string | null;
+  canTrain: boolean;
+  blockedReason: string | null;
+  status: "idle" | "queued" | "walking" | "training" | "returning" | "max_level";
+  statusLabel: string;
+  minutesRemaining: number | null;
+  /** Null until a room is bound; an active session keeps its saved duration. */
+  sessionDurationMinutes: number | null;
+  currentBenefitLabel: string;
+  nextBenefitLabel: string | null;
+  /** Additional benefit earned by this purchase, separate from target total. */
+  incrementBenefitLabel: string | null;
+}
+
 export interface StaffMemberView {
+  executiveManagement?: ExecutiveManagementView;
   id: string;
   displayName: string;
   roleDisplayName: string;
+  activityLabel?: string;
   salaryLabel: string;
   moraleLabel: string;
   moralePercent: number;
   avatar?: PixelAvatarView;
   canDecreaseSalary: boolean;
   canIncreaseSalary: boolean;
+  /** Optional only for older UI fixtures; live employee cards supply this. */
+  training?: EmployeeTrainingView;
+  /** Numeric hourly salary for Management payroll totals. */
+  salaryPerHour?: number;
+  /** Role-average benefit if this employee completes their next level. */
+  trainingTeamAverageAfterLabel?: string;
 }
 
 export interface StaffRoleGroupView {
+  defaultSalaryLabel?: string;
   id: string;
   displayName: string;
   currentCount: number;
@@ -334,6 +592,21 @@ export interface StaffRoleGroupView {
   canHire: boolean;
   blockedReason?: string;
   staffingGuidance?: string;
+  /** Present once a Training Room is built and the role has employees. */
+  trainingSummary?: StaffRoleTrainingSummaryView;
+}
+
+export interface StaffRoleTrainingSummaryView {
+  averageLevelLabel: string;
+  averageBenefitLabel: string;
+}
+
+/** Training Room status for Management; absent until a Training Room is built. */
+export interface StaffTrainingOverviewView {
+  inTrainingCount: number;
+  queuedCount: number;
+  capacity: number;
+  summaryLabel: string;
 }
 
 export interface ProgressionGoalView {
@@ -343,12 +616,77 @@ export interface ProgressionGoalView {
   progressLabel: string;
 }
 
+export interface ProcedureSetupRequirementView {
+  id: string;
+  label: string;
+  detail: string;
+  met: boolean;
+  action?: {
+    label: "Build" | "Hire";
+    target: "room" | "staff";
+    id: string;
+  };
+}
+
+export type EndoscopySetupRequirementView = ProcedureSetupRequirementView;
+
+export interface InspectionReportView {
+  runId: string;
+  outcome: "completed" | "incomplete" | "cancelled";
+  totalLabel: string;
+  rawTotalScore: number | null;
+  scoreLabel: string;
+  recognitionLabel: string | null;
+  windowLabel: string;
+  sampleLabel: string;
+  sampleStatusLabel: string;
+  categories: Array<import("@gamify-surgery/game-domain").InspectionCategoryResult & { label: string; scoreLabel: string; pointsLabel: string }>;
+}
+
+export interface FinishedGameView {
+  headline: string;
+  lines: readonly string[];
+  finishedLabel: string;
+  acknowledged: boolean;
+  report: InspectionReportView;
+}
+
+export interface FacilityInspectionView {
+  status: import("@gamify-surgery/game-domain").FacilityInspectionStatus;
+  statusLabel: string;
+  preparationLabel: string;
+  bookingLabel: string;
+  bookingDisabledReason: string | null;
+  canCancel: boolean;
+  sampleLabel: string;
+  provisionalReport?: InspectionReportView;
+  lastReport?: InspectionReportView;
+  latestLabel?: string;
+  bestLabel?: string;
+  firstCompletionRecorded: boolean;
+  finish?: FinishedGameView;
+}
+
 export interface ProgressionView {
   facilityLevelLabel: string;
   nextLevelLabel: string | null;
   goals: ProgressionGoalView[];
+  secondaryGoals?: ProgressionGoalView[];
   canLevelUp: boolean;
   prototypeComplete: boolean;
+  /** Level 5 only; current conditions stay visible after this durable unlock. */
+  inspectionUnlock?: {
+    unlocked: boolean;
+    statusLabel: string;
+    earnedLabel?: string;
+    description: string;
+    bookingLabel: string;
+    bookingDisabledReason: string | null;
+    tip?: string;
+  };
+  inspection?: FacilityInspectionView;
+  endoscopySetupRequirements?: EndoscopySetupRequirementView[];
+  ambulatoryOperationSetupRequirements?: ProcedureSetupRequirementView[];
 }
 
 export interface DevelopmentView {
@@ -403,7 +741,36 @@ export type MessageBoardTargetType =
   | "litter"
   | "build_mode"
   | "goal"
-  | "emergency_glp1";
+  | "emergency_glp1"
+  | "money"
+  | "save";
+
+/** Intent only; the session revalidates and dispatches the guarded command. */
+export type ClinicAlertAction = (import("@gamify-surgery/game-domain").GuidanceTipAction |
+  { kind: "save_and_pause" }) & {
+    tip?: { id: import("@gamify-surgery/balance-config").GuidanceTipId; targetKey: string };
+  };
+
+export interface ClinicAlertActionResult {
+  ok: boolean;
+  reason?: string;
+}
+
+export interface NeedsYouItemView {
+  id: string;
+  kind: "save" | "patient" | "payroll" | "resource";
+  title: string;
+  why: string;
+  sortKey: number;
+  timeLabel?: string;
+  actionLabel: string;
+  action: ClinicAlertAction;
+  targetType?: MessageBoardTargetType;
+  targetId?: string;
+  /** Only a modeled deadline; patient satisfaction is not a countdown. */
+  deadline?: { minutesLeft: number; windowMinutes: number; label: string };
+  pin?: { kind: "patient" | "service_visitor" | "room"; id: string };
+}
 
 export interface MessageBoardItemView {
   id: string;
@@ -428,4 +795,17 @@ export interface MessageBoardItemView {
   persistent?: boolean;
   targetType?: MessageBoardTargetType;
   targetId?: string;
+  /** M3 can add tip rows without changing the board or gameplay history. */
+  rowKind?: "event" | "humor" | "milestone" | "resolved" | "day_summary" | "tip";
+  guidanceTopicIds?: readonly string[];
+  speaker?: string;
+  action?: ClinicAlertAction;
+  daySummary?: {
+    dayNumber: number;
+    patientsSeen: number;
+    moneyEarnedLabel: string;
+    satisfactionLabel: string;
+    reviewLine?: string;
+    partial?: boolean;
+  };
 }

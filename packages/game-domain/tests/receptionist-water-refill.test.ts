@@ -3,6 +3,8 @@ import {
   createInitialGameState,
   deserializeGameState,
   gameReducer,
+  getRoomDefinition,
+  getRoomNavigationAnchor,
   serializeGameState,
   type GameState,
 } from "../src";
@@ -67,6 +69,29 @@ function advance(state: GameState, minutes: number): GameState {
 }
 
 describe("receptionist water-cooler work", () => {
+  it("assigns immediately when the cooler has just emptied, before an empty-since marker exists", () => {
+    const state = preparedState();
+    state.environment.waterCoolerEmptySinceTick = null;
+    const next = advance(state, 1);
+    expect(next.employees[0]!.facilityTask).toMatchObject({ kind: "refill_water", startedAtFacilityTick: 101 });
+  });
+  it("assigns in the same minute that patient check-in frees the receptionist", () => {
+    const state = preparedState();
+    const desk = state.rooms[0]!;
+    const post = getRoomNavigationAnchor(desk, getRoomDefinition(desk.roomDefinitionId)!, "staff");
+    state.employees[0]!.location = post; state.employees[0]!.path = [post];
+    state.environment.founderLocation = post;
+    const encounter = structuredClone(Object.values(createInitialGameState().encounters)[0]!);
+    encounter.checkInStatus = "awaiting_staff";
+    encounter.patientLocation = { x: 34, y: 29 }; encounter.patientMovement = null;
+    encounter.checkInWaitingSinceTick = 90;
+    encounter.nextIdleActionAtFacilityTick = 100_000;
+    state.encounters[encounter.id] = encounter;
+    const next = advance(state, 1);
+    expect(next.encounters[encounter.id]?.checkInStatus).toBe("checked_in");
+    expect(next.employees[0]!.facilityTask).toMatchObject({ kind: "refill_water", startedAtFacilityTick: 101 });
+    expect(next.environment.waterCoolerFillPercent).toBe(0);
+  });
   it("returns an idle receptionist to the Front Desk staff post instead of wandering", () => {
     let state = preparedState();
     state.environment.waterCoolerFillPercent = 100;

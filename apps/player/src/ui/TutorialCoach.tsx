@@ -1,5 +1,6 @@
 import {
   useId,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -22,6 +23,11 @@ interface TutorialTargetBeacon {
   top: number;
   left: number;
   direction: TutorialPlacement;
+}
+
+function stopTutorialMapInput(event: { stopPropagation: () => void }): void {
+  // Keep native coach buttons usable, but never pass a gesture into the map.
+  event.stopPropagation();
 }
 
 function createTargetBeacon(
@@ -227,6 +233,7 @@ interface TutorialCoachProps {
   step?: TutorialStepView | null;
   onAction?: (actionId: TutorialActionId) => void;
   onDisableTutorials?: () => void;
+  onTopicExposure?: (topicIds: readonly string[]) => void;
   /**
    * Legacy first-step props remain optional while AppShell migrates to the
    * step-driven interface.
@@ -239,8 +246,8 @@ interface TutorialCoachProps {
 
 export function TutorialCoach({
   step = null,
-  onAction,
   onDisableTutorials,
+  onTopicExposure,
   visible = false,
   patientName = "the first patient",
 }: TutorialCoachProps) {
@@ -270,6 +277,14 @@ export function TutorialCoach({
     layout?.signature === anchorSignature ? layout : null;
   const position = activeLayout?.position ?? null;
   const targetBeacon = activeLayout?.beacon ?? null;
+
+  const exposureKey = step?.topicIds?.join("|") ?? "";
+  useEffect(() => {
+    if (!step || !position || !exposureKey || !onTopicExposure) return;
+    // A readable optional pointer is exposure, never a progression/read gate.
+    const timer = window.setTimeout(() => onTopicExposure(exposureKey.split("|")), 6_000);
+    return () => window.clearTimeout(timer);
+  }, [step?.id, position !== null, exposureKey, onTopicExposure]);
 
   useLayoutEffect(() => {
     if (
@@ -652,11 +667,14 @@ export function TutorialCoach({
       <aside
         ref={coachRef}
         className="tutorial-coach"
+        onPointerDown={stopTutorialMapInput}
+        onPointerUp={stopTutorialMapInput}
+        onClick={stopTutorialMapInput}
         role="region"
         aria-labelledby={coachTitleId}
       >
         <div className="tutorial-coach-content">
-          <span className="eyebrow">Level 0 tutorial · Step 1</span>
+          <span className="eyebrow">Level 0 tutorial Â· Step 1</span>
           <h2 id={coachTitleId}>Open your first patient chart</h2>
           <p>
             Patients arrive in the <strong>Waiting</strong> folder. Open{" "}
@@ -675,12 +693,6 @@ export function TutorialCoach({
     );
   }
 
-  const primaryActionId =
-    step.primaryAction?.id ?? "acknowledge-step";
-  const primaryActionLabel = step.primaryAction?.label ?? "Got It";
-  const secondaryAction = step.secondaryAction;
-  const completingTutorial =
-    primaryActionId === "complete-tutorial";
   const positionStyle = position
     ? ({
         top: `${position.top}px`,
@@ -696,7 +708,7 @@ export function TutorialCoach({
     : ({
         top: "12px",
         left: "12px",
-        width: "min(390px, calc(100vw - 24px))",
+        width: "min(340px, calc(100vw - 24px))",
         maxHeight: "calc(100vh - 2rem)",
         visibility: "hidden",
         pointerEvents: "none",
@@ -707,6 +719,9 @@ export function TutorialCoach({
       {targetBeacon ? (
         <span
           className="tutorial-target-beacon"
+          onPointerDown={stopTutorialMapInput}
+          onPointerUp={stopTutorialMapInput}
+          onClick={stopTutorialMapInput}
           data-direction={targetBeacon.direction}
           aria-hidden="true"
           style={{
@@ -720,6 +735,9 @@ export function TutorialCoach({
       <aside
         ref={coachRef}
         className={`tutorial-coach tutorial-coach--${step.target}`}
+        onPointerDown={stopTutorialMapInput}
+        onPointerUp={stopTutorialMapInput}
+        onClick={stopTutorialMapInput}
         data-tutorial-step={step.id}
         data-placement={position?.placement}
         data-anchor-mode={
@@ -767,31 +785,9 @@ export function TutorialCoach({
           <p className="tutorial-coach-flavor">{step.flavor}</p>
         ) : null}
         <div className="tutorial-coach-actions">
-          <button
-            className="button button-secondary"
-            type="button"
-            data-tutorial-action={primaryActionId}
-            onClick={() => onAction?.(primaryActionId)}
-          >
-            {primaryActionLabel}
-          </button>
-          {secondaryAction ? (
-            <button
-              className="button button-secondary"
-              type="button"
-              data-tutorial-action={secondaryAction.id}
-              onClick={() => onAction?.(secondaryAction.id)}
-            >
-              {secondaryAction.label}
-            </button>
-          ) : null}
-          {onDisableTutorials && !completingTutorial ? (
-            <button
-              className="text-button tutorial-disable-button"
-              type="button"
-              onClick={onDisableTutorials}
-            >
-              Turn off tutorials
+          {onDisableTutorials ? (
+            <button className="text-button tutorial-disable-button" type="button" onClick={onDisableTutorials}>
+              Skip guidance
             </button>
           ) : null}
         </div>

@@ -15,7 +15,7 @@ test.beforeAll(() => {
   mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true });
 });
 
-test("a new campaign reopens tutorial guidance after it was previously disabled", async ({
+test("the combined opening explicitly enables guidance independently of the old default", async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -46,11 +46,20 @@ test("a new campaign reopens tutorial guidance after it was previously disabled"
   await expect(
     page.locator(".tutorial-coach").getByRole("heading"),
   ).toHaveText(
-    /Your first patient is entering the clinic|Open your first patient chart/,
+    /Incoming paperwork|Meet /,
   );
   await expect(
-    page.getByRole("button", { name: /Turn off tutorials/i }),
+    page.getByRole("button", { name: /Skip guidance/i }),
   ).toBeVisible();
+});
+
+test("the combined opening can turn guidance off for just the new clinic", async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "Campaign preference is checked once at desktop width.");
+  await startClinic(page, "Unguided Founder", "Unguided Opening Clinic", false);
+  await expect(page.locator(".tutorial-coach")).toHaveCount(0);
+  const profile = await getProfile(page);
+  expect(profile.tutorialGuidanceByCampaign?.[profile.activeCampaignId!]?.mode).toBe("off");
+  expect(profile.tutorialsEnabled).toBe(true);
 });
 
 test("the smooth HUD and compact bottom-left advertising leave room for six charts", async ({

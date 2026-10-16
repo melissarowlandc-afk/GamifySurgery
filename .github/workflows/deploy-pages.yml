@@ -38,11 +38,13 @@ jobs:
         run: npm ci
 
       - name: Run deterministic tests
-        run: |
-          npm run test:boundaries
-          npm run test --workspaces --if-present -- --maxWorkers=1
+        run: npm test
 
       - name: Build and verify Pages artifact
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS: 'false'
         run: npm run build:pages
 
       - name: Configure GitHub Pages

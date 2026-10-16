@@ -1,27 +1,22 @@
 import { describe, expect, it } from "vitest";
-import { getDailyRoutinePauseTransition } from "./dailyRoutineTutorialPause";
+import { getDailyRoutinePauseTransition, normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
 
-describe("daily routine tutorial pause ownership", () => {
-  it("captures a running clinic and restores it only after the final tip", () => {
-    expect(getDailyRoutinePauseTransition({ activeTipId: "sendout-management", previousPaused: undefined, currentlyPaused: false, modeLocksPause: false })).toBe("capture-and-pause");
-    expect(getDailyRoutinePauseTransition({ activeTipId: "sendout-trash", previousPaused: false, currentlyPaused: true, modeLocksPause: false })).toBe("keep-paused");
-    expect(getDailyRoutinePauseTransition({ activeTipId: null, previousPaused: false, currentlyPaused: true, modeLocksPause: false })).toBe("release-resume");
+describe("retired operations pause compatibility", () => {
+  it("retains an explicit ambiguous owner conservatively and never fabricates an absent owner", () => {
+    expect(normalizeRetiredTutorialPauses({running: false, paused: true, unknown: null, old: "unknown"})).toEqual({running: false, paused: true, unknown: true, old: true});
+    expect(normalizeRetiredTutorialPauses(undefined)).toEqual({});
+    expect(normalizeRetiredTutorialPauses([])).toEqual({});
   });
-
-  it("preserves a manual pause and defers release while Management or Build owns it", () => {
-    expect(getDailyRoutinePauseTransition({ activeTipId: "sendout-water", previousPaused: true, currentlyPaused: true, modeLocksPause: false })).toBe("keep-paused");
-    expect(getDailyRoutinePauseTransition({ activeTipId: null, previousPaused: true, currentlyPaused: true, modeLocksPause: false })).toBe("release-keep-paused");
-    expect(getDailyRoutinePauseTransition({ activeTipId: null, previousPaused: false, currentlyPaused: true, modeLocksPause: true })).toBe("defer-release");
+  it.each(["sendout-management", "sendout-trash", "sendout-water", "second-sendout-wait", null])("never acquires a new pause for %s", (activeTipId) => {
+    expect(getDailyRoutinePauseTransition({activeTipId, previousPaused: undefined, currentlyPaused: false, modeLocksPause: false})).toBe("none");
   });
-
-  it("reasserts its pause after a reload whose game-state write lagged the owner", () => {
-    expect(
-      getDailyRoutinePauseTransition({
-        activeTipId: "sendout-management",
-        previousPaused: false,
-        currentlyPaused: false,
-        modeLocksPause: false,
-      }),
-    ).toBe("reassert-pause");
+  it("releases old running ownership idempotently, including an interrupted state write", () => {
+    for (const currentlyPaused of [true, false]) expect(getDailyRoutinePauseTransition({activeTipId: "sendout-management", previousPaused: false, currentlyPaused, modeLocksPause: false})).toBe("release-resume");
+    expect(getDailyRoutinePauseTransition({activeTipId: null, previousPaused: undefined, currentlyPaused: false, modeLocksPause: false})).toBe("none");
+  });
+  it("preserves manual pause and defers all releases under Build, Management or Help", () => {
+    expect(getDailyRoutinePauseTransition({activeTipId: null, previousPaused: true, currentlyPaused: true, modeLocksPause: false})).toBe("release-keep-paused");
+    expect(getDailyRoutinePauseTransition({activeTipId: null, previousPaused: true, currentlyPaused: false, modeLocksPause: false})).toBe("release-keep-paused");
+    for (const previousPaused of [false,true]) expect(getDailyRoutinePauseTransition({activeTipId: null, previousPaused, currentlyPaused: true, modeLocksPause: true})).toBe("defer-release");
   });
 });

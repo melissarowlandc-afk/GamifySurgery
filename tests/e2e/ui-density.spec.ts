@@ -11,7 +11,7 @@ test("desktop primary bars stay compact and move Build Mode status into the HUD"
   test.skip(testInfo.project.name !== "desktop-chrome", "Desktop density proof.");
   await startClinic(page, "Density Reviewer", "Density Clinic");
 
-  const tutorialDismiss = page.getByRole("button", { name: "Got It" });
+  const tutorialDismiss = page.getByRole("button", { name: "Skip guidance" });
   if (await tutorialDismiss.isVisible()) {
     await tutorialDismiss.click();
   }
@@ -327,6 +327,6 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
   await page.getByRole("button", { name: "Done / Save" }).click();
   await expect(page.getByRole("button", { name: "Enter Build Mode" })).toBeVisible();
   await page.locator(".patient-tab").first().click();
-  await expect(page.locator(".paper-chart")).toBeVisible();
+  await expect(page.locator(".chart-sheet")).toBeVisible();
   expect(await assertNoOverflow()).toBe(true);
 });

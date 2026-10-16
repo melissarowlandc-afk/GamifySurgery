@@ -98,7 +98,7 @@ describe("ChartPanel decision prompt placement", () => {
     );
 
     expect(markup.split(prompt)).toHaveLength(2);
-    expect(markup.indexOf(prompt)).toBeLessThan(markup.indexOf('class="answer-list"'));
+    expect(markup.indexOf(prompt)).toBeLessThan(markup.indexOf('class="cs-answers is-open"'));
     expect(markup.indexOf("A focused update for this decision.")).toBeLessThan(markup.indexOf(prompt));
     expect(markup.indexOf("The original presentation remains separate from the decision.")).toBeLessThan(markup.indexOf(prompt));
   });

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   createPatientPixelAppearance,
   createPixelAppearance,
+  createStaffDisplayName,
+  dedupeStaffDisplayNames,
   normalizePatientAppearanceForSex,
 } from "./appearance";
 import {
@@ -103,5 +105,29 @@ describe("coherent rendered appearance families", () => {
       { sexLabel: "Female", ageYears: 12 },
     );
     expect(child.patientIdentityId).toBeUndefined();
+  });
+});
+
+describe("staff display names", () => {
+  it("skips names already in use instead of numbering them", () => {
+    const first = createStaffDisplayName("seed.names", "employee.a");
+    const second = createStaffDisplayName("seed.names", "employee.a", [first]);
+    expect(second).not.toBe(first);
+    expect(second).toMatch(/^[A-Z][a-z]+$/);
+  });
+
+  it("renames numbered and repeated employee names to unused plain first names", () => {
+    const employees = [
+      { id: "employee.1", displayName: "Blake" },
+      { id: "employee.2", displayName: "Blake 2" },
+      { id: "employee.3", displayName: "Sam" },
+      { id: "employee.4", displayName: "Sam" },
+    ];
+    dedupeStaffDisplayNames("seed.names", employees, ["Riley"]);
+    const names = employees.map((employee) => employee.displayName);
+    expect(names[0]).toBe("Blake");
+    expect(names[2]).toBe("Sam");
+    expect(new Set([...names, "Riley"]).size).toBe(5);
+    expect(names.every((name) => /^[A-Z][a-z]+$/.test(name))).toBe(true);
   });
 });

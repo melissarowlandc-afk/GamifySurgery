@@ -1,3 +1,5 @@
+import type { FacilityLevel } from "./schema";
+
 export type PrototypeAlertPriority =
   | "critical"
   | "action_required"
@@ -26,7 +28,7 @@ export type PrototypeAlertTargetKind =
 
 export type PrototypeAlertEligibility =
   | { kind: "always" }
-  | { kind: "facility_level"; levels: readonly (0 | 1 | 2)[] }
+  | { kind: "facility_level"; levels: readonly FacilityLevel[] }
   | { kind: "room_exists"; roomDefinitionId: string }
   | { kind: "object_exists"; objectId: "water_cooler" }
   | { kind: "checked_in_patient_exists" };
@@ -72,7 +74,7 @@ export interface PrototypeAlertDefinition {
   reviewRatings?: readonly (1 | 2)[];
   persistent: boolean;
   tickerEligible: boolean;
-  eligibleFacilityLevels: readonly (0 | 1 | 2)[];
+  eligibleFacilityLevels: readonly FacilityLevel[];
   consolidationKeyTemplate: string;
 }
 
@@ -206,6 +208,20 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     tickerEligible: false,
     eligibleFacilityLevels: [0, 1],
     consolidationKeyTemplate: "patient:{{patient_id}}:patience",
+  },
+  {
+    id: "alert.patient.departure-risk",
+    trigger: "patient_departure_risk",
+    priority: "critical",
+    titleTemplate: "Patient may leave soon",
+    bodyTemplate:
+      "{{patient_name}} is close to walking out and has started gathering their things. Open the chart now.",
+    targetKind: "patient",
+    clickAction: "open_patient",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [0, 1],
+    consolidationKeyTemplate: "patient:{{patient_id}}:departure-risk",
   },
   {
     id: "alert.patient.left",
@@ -528,6 +544,19 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     consolidationKeyTemplate: "progress:level:{{level}}",
   },
   {
+    id: "alert.progress.next-step",
+    trigger: "progression_next_step",
+    priority: "informational",
+    titleTemplate: "Next clinic step",
+    bodyTemplate: "Check your current clinic goals for the next step.",
+    targetKind: "system",
+    clickAction: "open_system",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [1, 2],
+    consolidationKeyTemplate: "progress:next-step:{{level}}",
+  },
+  {
     id: "alert.system.saved",
     trigger: "campaign_saved",
     priority: "informational",
@@ -692,8 +721,12 @@ function enrichBaseDefinition(
   definition: BasePrototypeAlertDefinition,
 ): PrototypeAlertDefinition {
   const category = categoryForBaseDefinition(definition);
+  const eligibleFacilityLevels = definition.eligibleFacilityLevels.includes(2)
+    ? [...definition.eligibleFacilityLevels, 3 as const]
+    : definition.eligibleFacilityLevels;
   return {
     ...definition,
+    eligibleFacilityLevels,
     category,
     variants: [
       {
@@ -706,7 +739,7 @@ function enrichBaseDefinition(
     eligibility: [
       {
         kind: "facility_level",
-        levels: definition.eligibleFacilityLevels,
+        levels: eligibleFacilityLevels,
       },
     ],
     selectionWeight: 1,
@@ -740,7 +773,9 @@ interface AdditionalAlertInput {
 function additionalAlert(
   input: AdditionalAlertInput,
 ): PrototypeAlertDefinition {
-  const levels = [0, 1] as const;
+  const levels = input.eligibility?.find(
+    (rule) => rule.kind === "facility_level",
+  )?.levels ?? ([0, 1] as const);
   return {
     id: input.id,
     trigger: input.trigger,
@@ -785,6 +820,26 @@ function additionalAlert(
 }
 
 const CONTEXTUAL_AND_SUCCESS_ALERTS = [
+  additionalAlert({
+    id: "alert.progress.inspections-unlocked",
+    trigger: "inspections_unlocked",
+    category: "success",
+    title: "Inspections unlocked",
+    body: "Inspections unlocked. Level 5 goals complete. Inspections are now available.",
+    eligibility: [{ kind: "facility_level", levels: [5] }],
+    tickerEligible: false,
+    oncePerEvent: true,
+  }),
+  additionalAlert({
+    id: "alert.progress.level-four-complete",
+    trigger: "level_four_complete",
+    category: "success",
+    title: "Level 4 goals complete",
+    body: "The goals are complete. The clinic remains open; the next level is still in the planning department.",
+    eligibility: [{ kind: "facility_level", levels: [4] }],
+    tickerEligible: false,
+    oncePerEvent: true,
+  }),
   additionalAlert({
     id: "alert.patient.leaving",
     trigger: "patient_leaving",
@@ -890,6 +945,18 @@ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
     targetKind: "employee",
     clickAction: "open_employee",
     cooldownMinutes: 60,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.staff.departure-risk",
+    trigger: "staff_departure_risk",
+    category: "action_required",
+    title: "Employee may quit soon",
+    body:
+      "An unpaid expense cycle would reduce {{employee_name}}'s morale enough to quit. Add enough cash before payroll.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    cooldownMinutes: 600,
     persistent: true,
   }),
   additionalAlert({
@@ -1041,7 +1108,7 @@ const AMBIENT_ALERT_INPUTS = [
   [
     "09",
     "The break-room fridge contains a yogurt with tenure.",
-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
   ],
   [
     "10",
@@ -1063,7 +1130,7 @@ const AMBIENT_ALERT_INPUTS = [
   [
     "15",
     "Someone labeled their leftovers DO NOT EAT. Interest has increased.",
-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
   ],
   [
     "16",
@@ -1088,7 +1155,7 @@ const AMBIENT_ALERT_INPUTS = [
   [
     "20",
     "The break-room microwave finished heating something no one remembers starting.",
-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
   ],
   [
     "21",
@@ -1098,7 +1165,7 @@ const AMBIENT_ALERT_INPUTS = [
   [
     "22",
     "Someone found a clean mug. Spirits are high.",
-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
   ],
   [
     "23",
@@ -1115,6 +1182,66 @@ const AMBIENT_ALERT_INPUTS = [
     "A box marked Miscellaneous has achieved its final form.",
     [],
   ],
+  ["26", "The label maker has named itself. Authority is under review.", []],
+  [
+    "27",
+    "The examination-room stool has been moved exactly one inch. Everyone noticed.",
+    [{ kind: "room_exists", roomDefinitionId: "room.examination" }],
+  ],
+  [
+    "28",
+    "A waiting-room chair is facing the wrong way. It calls this networking.",
+    [{ kind: "room_exists", roomDefinitionId: "room.waiting" }],
+  ],
+  [
+    "29",
+    "The bathroom mirror has received excellent feedback from itself.",
+    [{ kind: "room_exists", roomDefinitionId: "room.bathroom" }],
+  ],
+  [
+    "30",
+    "The supply closet inventory is accurate, assuming optimism counts as a unit.",
+    [{ kind: "room_exists", roomDefinitionId: "room.supply_closet" }],
+  ],
+  [
+    "31",
+    "A break-room spoon has been declared communal by unanimous absence.",
+    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+  ],
+  [
+    "32",
+    "The X-ray room is being very quiet about what it has seen.",
+    [{ kind: "room_exists", roomDefinitionId: "room.xray" }],
+  ],
+  [
+    "33",
+    "The endoscopy room requested mood lighting. Facilities declined.",
+    [{ kind: "room_exists", roomDefinitionId: "room.endoscopy" }],
+  ],
+  [
+    "34",
+    "A clipboard has acquired a second clipboard. The hierarchy is unclear.",
+    [],
+  ],
+  [
+    "35",
+    "The water cooler has become the clinic's least qualified consultant.",
+    [{ kind: "object_exists", objectId: "water_cooler" }],
+  ],
+  [
+    "36",
+    "A patient complimented the pen. The pen is considering leadership.",
+    [{ kind: "checked_in_patient_exists" }],
+  ],
+  [
+    "37",
+    "The thermostat has opened a new ticket. It remains emotionally unresolved.",
+    [],
+  ],
+  ["38", "The Reading Room has reviewed the lighting. The findings are guarded.", [{ kind: "room_exists", roomDefinitionId: "room.reading" }]],
+  ["39", "The Operating Room has requested fewer meetings. The request was tabled.", [{ kind: "room_exists", roomDefinitionId: "room.ambulatory_or" }]],
+  ["40", "The Pharmacy has labeled the label maker. Compliance is improving.", [{ kind: "room_exists", roomDefinitionId: "room.pharmacy" }]],
+  ["41", "The Laboratory has received a specimen of optimism. Processing is delayed.", [{ kind: "room_exists", roomDefinitionId: "room.laboratory" }]],
 ] as const satisfies readonly [
   string,
   string,
@@ -1130,7 +1257,7 @@ export const PROTOTYPE_AMBIENT_ALERT_DEFINITIONS =
       title: "Around the clinic",
       body,
       eligibility: [
-        { kind: "facility_level", levels: [0, 1] },
+        { kind: "facility_level", levels: [0, 1, 2, 3] },
         ...contextualEligibility,
       ],
       cooldownMinutes: 30,
@@ -1211,6 +1338,8 @@ export const PROTOTYPE_ALERT_SCHEDULING = {
    * many facility minutes before the feed records it.
    */
   patientAttentionDelayMinutes: 60,
+  /** Alert-only lead distance above each patient's unchanged walkout cutoff. */
+  patientDepartureRiskMargin: 10,
   firstAmbientMinimumMinutes: 120,
   firstAmbientMaximumMinutes: 120,
   recurringAmbientMinimumMinutes: 120,
@@ -1233,6 +1362,7 @@ export const PROTOTYPE_PLAYER_FEED_POLICY = {
   suppressedEventTypes: [
     "operating_expense",
     "clinical_decision_recorded",
+    "employee_discussion_decision",
     "encounter_settled",
     "emergency_glp1_consultation",
     "development_money_added",
@@ -1248,14 +1378,43 @@ export const PROTOTYPE_PLAYER_FEED_POLICY = {
     "water_cooler_low",
     "water_cooler_refilled",
     "staff_hired",
+    "staff_fired",
+    "staff_salary_changed",
     "employee_praised",
+    "day_rollover",
+    "left_before_seen",
   ],
   suppressedDefinitionIds: [
     "event.clinical.decision-correct",
     "alert.patient.arrived",
     "alert.patient.result-ready",
+    "alert.patient.decision-required",
+    "alert.patient.left",
+    "alert.patient.complete",
+    "alert.patient.leaving",
+    "alert.patient.waiting",
+    "alert.patient.patience",
+    "alert.patient.check-in-unattended",
+    "alert.staff.morale-low",
+    "alert.staff.hired",
+    "alert.staff.fired",
+    "alert.staff.praised",
+    "alert.finance.patient-payment",
+    "alert.finance.expense",
+    "alert.finance.emergency-glp1-completed",
+    "alert.success.receptionist-hired",
+    "alert.success.waiting-room-constructed",
+    "alert.success.xray-constructed",
+    "alert.success.imaging-technician-hired",
+    "alert.success.room-upgraded",
     "alert.success.trash-cleaned",
     "alert.success.water-refilled",
+    "alert.system.saved",
+    "alert.system.hidden-pause",
+    "alert.system.campaign-created",
+    "alert.system.campaign-restored",
+    "alert.system.campaign-restarted",
+    "alert.system.testing-mode",
   ],
 } as const;
 
@@ -1264,6 +1423,8 @@ export function isPrototypeEventSuppressedFromPlayerFeed(
   definitionId?: string,
 ): boolean {
   return (
+    (eventType === "patience_warning" &&
+      definitionId !== "alert.patient.departure-risk") ||
     PROTOTYPE_PLAYER_FEED_POLICY.suppressedEventTypes.some(
       (candidate) => candidate === eventType,
     ) ||
@@ -1356,7 +1517,7 @@ export function renderPrototypeAlert(
 }
 
 export interface PrototypeAlertEligibilityContext {
-  facilityLevel: 0 | 1 | 2;
+  facilityLevel: FacilityLevel;
   roomDefinitionIds: ReadonlySet<string>;
   objectIds: ReadonlySet<string>;
   hasCheckedInPatient: boolean;

@@ -1,0 +1,1004 @@
+{
+  "status": "candidate_needs_owner_review",
+  "complete": true,
+  "nativePixelsPerTile": 240,
+  "proofPixelsPerTile": 120,
+  "contractSha256": "8B105EA288E3F560F5C15D507EB2D457E699796D326FA442734ECEC1C28EFA84",
+  "generationManifestSha256": "E64394168118E1F3352EF82814DDAB298A75113F2527FE48C23E50CA8BF15FB6",
+  "assets": {
+    "gantry-side": {
+      "id": "gantry-side",
+      "status": "candidate_needs_owner_review",
+      "file": "gantry-side.png",
+      "canvas": [
+        384,
+        519
+      ],
+      "widthTiles": 1.6,
+      "proofScale": 0.5,
+      "source": "originals/gantry-side-02.png",
+      "sourceSha256": "8538A643A844501F7608635FD69A1C2C0948110B8BA072E9C57B272B11E6859A",
+      "outputSha256": "B8E8B3373B07E2EB5BA89687058B88DEDF52D147F552709ECFA0AB6554B22F56",
+      "canvasAnchor": [
+        192,
+        515
+      ],
+      "canvasEnvelopeBottom": [
+        192,
+        519
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        3.2,
+        2.970390086093987
+      ],
+      "depthRecord": "gantry",
+      "expectedRiseNativePixels": 240,
+      "measuredRiseNativePixels": 240,
+      "measuredRiseProofPixels": 120,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2,
+      "sourceSize": [
+        1079,
+        1457
+      ],
+      "sourceAlphaBounds": {
+        "left": 0,
+        "top": 0,
+        "width": 1075,
+        "height": 1457,
+        "pixels": 1147876
+      },
+      "sourceVisibleBounds": {
+        "left": 39,
+        "top": 147,
+        "width": 1014,
+        "height": 1175,
+        "pixels": 1133758
+      },
+      "sourceOpaqueBounds": {
+        "left": 40,
+        "top": 148,
+        "width": 1013,
+        "height": 1173,
+        "pixels": 1130060
+      },
+      "crop": [
+        39,
+        147,
+        1014,
+        1175
+      ],
+      "scale": 0.3488372093023256,
+      "fitScale": 0.3708086785009862,
+      "destination": [
+        15.139534883720927,
+        105.11627906976742,
+        353.72093023255815,
+        409.8837209302326
+      ],
+      "calibratedPoints": {
+        "bore": [
+          31.186046511627904,
+          275
+        ]
+      },
+      "outputVisibleBounds": {
+        "left": 15,
+        "top": 105,
+        "width": 354,
+        "height": 410
+      },
+      "outputAllAlphaBounds": {
+        "left": 15,
+        "top": 105,
+        "width": 354,
+        "height": 410
+      },
+      "alphaClearancePixels": {
+        "left": 15,
+        "top": 105,
+        "right": 15,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 0.9407471548738249,
+        "note": "Owner-authorized uniform4/3 enlargement of the previously calibrated whole source, on revised384x519 canvas. Actual ground is recomputed to match the unchanged empty couch surface."
+      },
+      "alpha": {
+        "transparent": 60087,
+        "opaque": 137529,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 514,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": [],
+      "groundRegistration": {
+        "method": "align measured bore to unchanged empty-couch surface",
+        "couchSurfaceProofY": 236.44681033127847,
+        "alignedBoreProofY": 236.44681033127847,
+        "privateGround": [
+          3.2,
+          2.970390086093987
+        ],
+        "layoutChangeAuthorizedBy": "../OWNER_REVISIONS_2026-10-07.md"
+      }
+    },
+    "table-empty": {
+      "id": "table-empty",
+      "status": "candidate_needs_owner_review",
+      "file": "table-empty.png",
+      "canvas": [
+        252,
+        149
+      ],
+      "widthTiles": 1.05,
+      "proofScale": 0.5,
+      "source": "originals/table-empty-03.png",
+      "sourceSha256": "C1AE313DB73AED72474E83C190348E18F7BCCE69E71AC6C7C8E3665CDEAE842D",
+      "outputSha256": "6479AFB89B324B919E26534387F61E2FFDE78BEAAB49B2255C63D9A6A6420DB5",
+      "canvasAnchor": [
+        126,
+        142
+      ],
+      "canvasEnvelopeBottom": [
+        126,
+        149
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        2.49,
+        2.42
+      ],
+      "depthRecord": "tableEmpty",
+      "expectedRiseNativePixels": 108,
+      "measuredRiseNativePixels": 107.90637933744301,
+      "measuredRiseProofPixels": 53.95318966872151,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 3.5,
+      "sourceSize": [
+        1630,
+        965
+      ],
+      "sourceAlphaBounds": {
+        "left": 50,
+        "top": 21,
+        "width": 1548,
+        "height": 889,
+        "pixels": 569312
+      },
+      "sourceVisibleBounds": {
+        "left": 54,
+        "top": 78,
+        "width": 1541,
+        "height": 779,
+        "pixels": 545309
+      },
+      "sourceOpaqueBounds": {
+        "left": 55,
+        "top": 79,
+        "width": 1539,
+        "height": 758,
+        "pixels": 520926
+      },
+      "crop": [
+        54,
+        78,
+        1541,
+        779
+      ],
+      "scale": 0.153397481794527,
+      "fitScale": 0.1583387410772226,
+      "destination": [
+        7.80724027731695,
+        25.50336168206347,
+        236.3855194453661,
+        119.49663831793653
+      ],
+      "calibratedPoints": {
+        "couchTop": [
+          137.5815098754868,
+          34.09362066255699
+        ]
+      },
+      "outputVisibleBounds": {
+        "left": 8,
+        "top": 26,
+        "width": 236,
+        "height": 119
+      },
+      "outputAllAlphaBounds": {
+        "left": 8,
+        "top": 26,
+        "width": 236,
+        "height": 119
+      },
+      "alphaClearancePixels": {
+        "left": 8,
+        "top": 26,
+        "right": 8,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 0.9687931124810085,
+        "note": "Original empty couch source and uniform shape are retained; private ground moves east to put the outer cushion under the west-facing patient. Visible forepart draws to the bore center."
+      },
+      "alpha": {
+        "transparent": 24351,
+        "opaque": 12226,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 141,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "console": {
+      "id": "console",
+      "status": "candidate_needs_owner_review",
+      "file": "console.png",
+      "canvas": [
+        206,
+        317
+      ],
+      "widthTiles": 0.8583333333333333,
+      "proofScale": 0.5,
+      "source": "originals/console-06.png",
+      "sourceSha256": "C26DDA09176708ED51C81362A246A8544BA1CEB485176E80B9E621CC02B23C3D",
+      "outputSha256": "6157154FFB36859A77DE16E15F75B5AC6DE7E94363267A76574C933393EF8724",
+      "canvasAnchor": [
+        103,
+        312
+      ],
+      "canvasEnvelopeBottom": [
+        103,
+        317
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        1.12,
+        2.14
+      ],
+      "depthRecord": "console",
+      "expectedRiseNativePixels": 192,
+      "measuredRiseNativePixels": 192.2,
+      "measuredRiseProofPixels": 96.1,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2.5,
+      "sourceSize": [
+        1001,
+        1571
+      ],
+      "sourceAlphaBounds": {
+        "left": 20,
+        "top": 117,
+        "width": 958,
+        "height": 1454,
+        "pixels": 731812
+      },
+      "sourceVisibleBounds": {
+        "left": 24,
+        "top": 267,
+        "width": 951,
+        "height": 1206,
+        "pixels": 721404
+      },
+      "sourceOpaqueBounds": {
+        "left": 25,
+        "top": 268,
+        "width": 948,
+        "height": 1198,
+        "pixels": 707914
+      },
+      "crop": [
+        24,
+        267,
+        951,
+        1206
+      ],
+      "scale": 0.20618996798292422,
+      "fitScale": 0.2082018927444795,
+      "destination": [
+        4.956670224119534,
+        64.3348986125934,
+        196.08665955176093,
+        248.6651013874066
+      ],
+      "calibratedPoints": {
+        "worktop": [
+          103.10309498399147,
+          119.80000000000001
+        ],
+        "worktopRear": [
+          103.10309498399147,
+          119.80000000000001
+        ],
+        "worktopFront": [
+          144.3410885805763,
+          159.5946638207044
+        ]
+      },
+      "outputVisibleBounds": {
+        "left": 5,
+        "top": 64,
+        "width": 196,
+        "height": 249
+      },
+      "outputAllAlphaBounds": {
+        "left": 5,
+        "top": 64,
+        "width": 196,
+        "height": 249
+      },
+      "alphaClearancePixels": {
+        "left": 5,
+        "top": 64,
+        "right": 5,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 0.990336664402833,
+        "note": "Owner requests visibly larger desk: whole source enlarged uniformly by20%; rear worktop96px, projected front lip measured separately. North-facing tech sits south of desk."
+      },
+      "alpha": {
+        "transparent": 33749,
+        "opaque": 30162,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 311,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "operator-chair": {
+      "id": "operator-chair",
+      "status": "candidate_needs_owner_review",
+      "file": "operator-chair.png",
+      "canvas": [
+        96,
+        168
+      ],
+      "widthTiles": 0.4,
+      "proofScale": 0.5,
+      "source": "originals/operator-chair-03.png",
+      "sourceSha256": "0A4F34C28994E3E96B979B9A966C505BA84620191D25F45166FB618C11F4741C",
+      "outputSha256": "6EA0B9B51AD3D26473DABAD55998BC09103E629FBBD0ED3DC3DCF5243CC3F50E",
+      "canvasAnchor": [
+        48,
+        164
+      ],
+      "canvasEnvelopeBottom": [
+        48,
+        168
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        1.12,
+        2.54
+      ],
+      "depthRecord": "operatorChair",
+      "expectedRiseNativePixels": 90,
+      "measuredRiseNativePixels": 90,
+      "measuredRiseProofPixels": 45,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2,
+      "sourceSize": [
+        957,
+        1644
+      ],
+      "sourceAlphaBounds": {
+        "left": 33,
+        "top": 0,
+        "width": 892,
+        "height": 1620,
+        "pixels": 582643
+      },
+      "sourceVisibleBounds": {
+        "left": 98,
+        "top": 142,
+        "width": 761,
+        "height": 1396,
+        "pixels": 569904
+      },
+      "sourceOpaqueBounds": {
+        "left": 98,
+        "top": 143,
+        "width": 760,
+        "height": 1394,
+        "pixels": 564114
+      },
+      "crop": [
+        98,
+        142,
+        761,
+        1396
+      ],
+      "scale": 0.10739856801909309,
+      "fitScale": 0.11461318051575932,
+      "destination": [
+        7.13484486873508,
+        14.071599045346062,
+        81.73031026252984,
+        149.92840095465394
+      ],
+      "calibratedPoints": {
+        "seat": [
+          82.52863961813841,
+          74
+        ]
+      },
+      "outputVisibleBounds": {
+        "left": 7,
+        "top": 14,
+        "width": 82,
+        "height": 150
+      },
+      "outputAllAlphaBounds": {
+        "left": 7,
+        "top": 14,
+        "width": 82,
+        "height": 150
+      },
+      "alphaClearancePixels": {
+        "left": 7,
+        "top": 14,
+        "right": 7,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 0.9370525059665872,
+        "note": "New back-facing swivel chair matches the unchanged sit.north tech; uniform fit only."
+      },
+      "alpha": {
+        "transparent": 9047,
+        "opaque": 6410,
+        "min": 0,
+        "max": 253,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 163,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "coil-cabinet": {
+      "id": "coil-cabinet",
+      "status": "candidate_needs_owner_review",
+      "file": "coil-cabinet.png",
+      "canvas": [
+        154,
+        312
+      ],
+      "widthTiles": 0.64,
+      "proofScale": 0.4987012987012987,
+      "source": "originals/coil-cabinet-01.png",
+      "sourceSha256": "4D1D45D0D4A7834FC8082B847BC773B63185C9E403D4965830853E2E13F5A53A",
+      "outputSha256": "6EC194370D8A46304F9A663386FAFFA036DB0BB266E4B792050D8E5662783677",
+      "canvasAnchor": [
+        77,
+        307
+      ],
+      "canvasEnvelopeBottom": [
+        77,
+        312
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        3.55,
+        0.32
+      ],
+      "depthRecord": "coilCabinet",
+      "expectedRiseNativePixels": null,
+      "measuredRiseNativePixels": null,
+      "measuredRiseProofPixels": null,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2.4935064935064934,
+      "sourceSize": [
+        882,
+        1784
+      ],
+      "sourceAlphaBounds": {
+        "left": 0,
+        "top": 61,
+        "width": 828,
+        "height": 1703,
+        "pixels": 1184377
+      },
+      "sourceVisibleBounds": {
+        "left": 71,
+        "top": 71,
+        "width": 741,
+        "height": 1630,
+        "pixels": 1170427
+      },
+      "sourceOpaqueBounds": {
+        "left": 71,
+        "top": 72,
+        "width": 740,
+        "height": 1624,
+        "pixels": 1145461
+      },
+      "crop": [
+        71,
+        71,
+        741,
+        1630
+      ],
+      "scale": 0.18650306748466258,
+      "fitScale": 0.18650306748466258,
+      "destination": [
+        7.9006134969325075,
+        4,
+        138.19877300613499,
+        304
+      ],
+      "calibratedPoints": {},
+      "outputVisibleBounds": {
+        "left": 8,
+        "top": 4,
+        "width": 138,
+        "height": 304
+      },
+      "outputAllAlphaBounds": {
+        "left": 8,
+        "top": 4,
+        "width": 138,
+        "height": 304
+      },
+      "alphaClearancePixels": {
+        "left": 8,
+        "top": 4,
+        "right": 8,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 1,
+        "note": "Maximum uniform fit inside the exact canvas"
+      },
+      "alpha": {
+        "transparent": 6705,
+        "opaque": 39904,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 306,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "zone-sign": {
+      "id": "zone-sign",
+      "status": "candidate_needs_owner_review",
+      "file": "zone-sign.png",
+      "canvas": [
+        110,
+        96
+      ],
+      "widthTiles": 0.46,
+      "proofScale": 0.5018181818181818,
+      "source": "originals/zone-sign-01.png",
+      "sourceSha256": "3B0770FC9781F405906A72212CB6B63BD9F4371E28EAA89BDC6390881FBBBEDF",
+      "outputSha256": "2C055A2D517EF42D6BBF84D8394C23A2315B3E0C94270219FE3FF3E84E647851",
+      "canvasAnchor": [
+        55,
+        0
+      ],
+      "canvasEnvelopeBottom": [
+        55,
+        96
+      ],
+      "groundAnchorBasis": "north-wall top centre",
+      "worldAnchor": [
+        2.55,
+        -0.7
+      ],
+      "depthRecord": "zoneSign",
+      "expectedRiseNativePixels": null,
+      "measuredRiseNativePixels": null,
+      "measuredRiseProofPixels": null,
+      "measuredOpaqueContactGapProofPixels": null,
+      "canvasPaddingBelowGroundProofPixels": null,
+      "sourceSize": [
+        1342,
+        1172
+      ],
+      "sourceAlphaBounds": {
+        "left": 72,
+        "top": 89,
+        "width": 1141,
+        "height": 971,
+        "pixels": 645634
+      },
+      "sourceVisibleBounds": {
+        "left": 224,
+        "top": 225,
+        "width": 895,
+        "height": 723,
+        "pixels": 641645
+      },
+      "sourceOpaqueBounds": {
+        "left": 225,
+        "top": 226,
+        "width": 893,
+        "height": 720,
+        "pixels": 638180
+      },
+      "crop": [
+        224,
+        225,
+        895,
+        723
+      ],
+      "scale": 0.11396648044692738,
+      "fitScale": 0.11396648044692738,
+      "destination": [
+        4,
+        9.6022346368715,
+        102,
+        82.3977653631285
+      ],
+      "calibratedPoints": {},
+      "outputVisibleBounds": {
+        "left": 4,
+        "top": 10,
+        "width": 102,
+        "height": 82
+      },
+      "outputAllAlphaBounds": {
+        "left": 4,
+        "top": 10,
+        "width": 102,
+        "height": 82
+      },
+      "alphaClearancePixels": {
+        "left": 4,
+        "top": 10,
+        "right": 4,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 1,
+        "note": "Maximum uniform fit inside the exact canvas"
+      },
+      "alpha": {
+        "transparent": 2215,
+        "opaque": 8299,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 91,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "scan-light": {
+      "id": "scan-light",
+      "status": "candidate_needs_owner_review",
+      "file": "scan-light.png",
+      "canvas": [
+        96,
+        53
+      ],
+      "widthTiles": 0.4,
+      "proofScale": 0.5,
+      "source": "originals/scan-light-01.png",
+      "sourceSha256": "45B1FF18880683116D0924E1187CFE12CFDBC771A85C541A54817C3EAF13F684",
+      "outputSha256": "48ADA0F0F837863BB1D75C243989DA7C0BCBD15D8128478647CF8FC6F9CB2315",
+      "canvasAnchor": [
+        48,
+        0
+      ],
+      "canvasEnvelopeBottom": [
+        48,
+        53
+      ],
+      "groundAnchorBasis": "north-wall top centre",
+      "worldAnchor": [
+        0.8,
+        -0.62
+      ],
+      "depthRecord": "scanLight",
+      "expectedRiseNativePixels": null,
+      "measuredRiseNativePixels": null,
+      "measuredRiseProofPixels": null,
+      "measuredOpaqueContactGapProofPixels": null,
+      "canvasPaddingBelowGroundProofPixels": null,
+      "sourceSize": [
+        1688,
+        932
+      ],
+      "sourceAlphaBounds": {
+        "left": 85,
+        "top": 41,
+        "width": 1557,
+        "height": 867,
+        "pixels": 592624
+      },
+      "sourceVisibleBounds": {
+        "left": 257,
+        "top": 192,
+        "width": 1169,
+        "height": 513,
+        "pixels": 583179
+      },
+      "sourceOpaqueBounds": {
+        "left": 257,
+        "top": 193,
+        "width": 1168,
+        "height": 511,
+        "pixels": 580423
+      },
+      "crop": [
+        257,
+        192,
+        1169,
+        513
+      ],
+      "scale": 0.07527801539777587,
+      "fitScale": 0.07527801539777587,
+      "destination": [
+        4,
+        10.382378100940976,
+        88,
+        38.617621899059024
+      ],
+      "calibratedPoints": {},
+      "outputVisibleBounds": {
+        "left": 4,
+        "top": 10,
+        "width": 88,
+        "height": 39
+      },
+      "outputAllAlphaBounds": {
+        "left": 4,
+        "top": 10,
+        "width": 88,
+        "height": 39
+      },
+      "alphaClearancePixels": {
+        "left": 4,
+        "top": 10,
+        "right": 4,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 1,
+        "note": "Maximum uniform fit inside the exact canvas"
+      },
+      "alpha": {
+        "transparent": 1720,
+        "opaque": 3324,
+        "min": 0,
+        "max": 253,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 48,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "comfort-cart": {
+      "id": "comfort-cart",
+      "status": "candidate_needs_owner_review",
+      "file": "comfort-cart.png",
+      "canvas": [
+        180,
+        216
+      ],
+      "widthTiles": 0.75,
+      "proofScale": 0.5,
+      "source": "originals/comfort-cart-01.png",
+      "sourceSha256": "92F9665343C8DCC9AEBA1544804185636B0BEE13AA83001670336176DEFA47A5",
+      "outputSha256": "A57241873742BE14CF981F4016F042A0ED26D13EFD182E8B2D30258E2D9A2742",
+      "canvasAnchor": [
+        90,
+        211
+      ],
+      "canvasEnvelopeBottom": [
+        90,
+        216
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        3.48,
+        3.88
+      ],
+      "depthRecord": "comfortCart",
+      "expectedRiseNativePixels": null,
+      "measuredRiseNativePixels": null,
+      "measuredRiseProofPixels": null,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2.5,
+      "sourceSize": [
+        1102,
+        1427
+      ],
+      "sourceAlphaBounds": {
+        "left": 29,
+        "top": 35,
+        "width": 1045,
+        "height": 1392,
+        "pixels": 687942
+      },
+      "sourceVisibleBounds": {
+        "left": 91,
+        "top": 158,
+        "width": 936,
+        "height": 1162,
+        "pixels": 634730
+      },
+      "sourceOpaqueBounds": {
+        "left": 91,
+        "top": 158,
+        "width": 935,
+        "height": 1156,
+        "pixels": 619245
+      },
+      "crop": [
+        91,
+        158,
+        936,
+        1162
+      ],
+      "scale": 0.17900172117039587,
+      "fitScale": 0.17900172117039587,
+      "destination": [
+        6.227194492254739,
+        4,
+        167.54561101549052,
+        208
+      ],
+      "calibratedPoints": {},
+      "outputVisibleBounds": {
+        "left": 6,
+        "top": 4,
+        "width": 168,
+        "height": 208
+      },
+      "outputAllAlphaBounds": {
+        "left": 6,
+        "top": 4,
+        "width": 168,
+        "height": 208
+      },
+      "alphaClearancePixels": {
+        "left": 6,
+        "top": 4,
+        "right": 6,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 1,
+        "note": "Maximum uniform fit inside the exact canvas"
+      },
+      "alpha": {
+        "transparent": 17005,
+        "opaque": 19791,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 210,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    },
+    "open-shelves": {
+      "id": "open-shelves",
+      "status": "candidate_needs_owner_review",
+      "file": "open-shelves.png",
+      "canvas": [
+        180,
+        300
+      ],
+      "widthTiles": 0.75,
+      "proofScale": 0.5,
+      "source": "originals/open-shelves-01.png",
+      "sourceSha256": "B69A61F8C0AA5931A2A8C66189233FA7F658BD71A6E08CCD1C962049D0512C61",
+      "outputSha256": "52303B83B50465137F318FEF3B723D8510BD28CAC858187F52A3472B24FB06A0",
+      "canvasAnchor": [
+        90,
+        295
+      ],
+      "canvasEnvelopeBottom": [
+        90,
+        300
+      ],
+      "groundAnchorBasis": "Bottom edge after last opaque foot/base row at alpha>=160; source visual base inspected",
+      "worldAnchor": [
+        0.45,
+        3.88
+      ],
+      "depthRecord": "openShelves",
+      "expectedRiseNativePixels": null,
+      "measuredRiseNativePixels": null,
+      "measuredRiseProofPixels": null,
+      "measuredOpaqueContactGapProofPixels": 0,
+      "canvasPaddingBelowGroundProofPixels": 2.5,
+      "sourceSize": [
+        971,
+        1619
+      ],
+      "sourceAlphaBounds": {
+        "left": 77,
+        "top": 23,
+        "width": 878,
+        "height": 1596,
+        "pixels": 955811
+      },
+      "sourceVisibleBounds": {
+        "left": 81,
+        "top": 137,
+        "width": 810,
+        "height": 1398,
+        "pixels": 904149
+      },
+      "sourceOpaqueBounds": {
+        "left": 82,
+        "top": 137,
+        "width": 808,
+        "height": 1392,
+        "pixels": 850092
+      },
+      "crop": [
+        81,
+        137,
+        810,
+        1398
+      ],
+      "scale": 0.2088698140200286,
+      "fitScale": 0.2088698140200286,
+      "destination": [
+        5.407725321888421,
+        4,
+        169.18454935622316,
+        292
+      ],
+      "calibratedPoints": {},
+      "outputVisibleBounds": {
+        "left": 5,
+        "top": 4,
+        "width": 170,
+        "height": 292
+      },
+      "outputAllAlphaBounds": {
+        "left": 5,
+        "top": 4,
+        "width": 170,
+        "height": 292
+      },
+      "alphaClearancePixels": {
+        "left": 5,
+        "top": 4,
+        "right": 5,
+        "bottom": 4
+      },
+      "uniformContactCalibration": {
+        "factorRelativeToMaximumFit": 1,
+        "note": "Maximum uniform fit inside the exact canvas"
+      },
+      "alpha": {
+        "transparent": 12122,
+        "opaque": 36891,
+        "min": 0,
+        "max": 254,
+        "edgeAlphaMax": 0
+      },
+      "opaqueBottom": 294,
+      "aspectPreserved": true,
+      "discardedByCrop": true,
+      "warnings": []
+    }
+  },
+  "missing": [],
+  "notes": []
+}

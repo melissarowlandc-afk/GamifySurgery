@@ -16,6 +16,7 @@ import {
   getPendingPatientLocation,
   getPendingPatientRoutePresentation,
   getRoomDefinition,
+  getRoomSalePreview,
   getRoomNavigationAnchor,
   isRoomOperationalForFacilityWork,
   serializeGameState,
@@ -70,11 +71,13 @@ function ultrasoundProcedureState(): GameState {
   state.rooms.push(
     { id: "room.test.exam", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     { id: "room.test.ultrasound", roomDefinitionId: "room.ultrasound", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "room.test.exam-hall", roomDefinitionId: "room.hallway", x: 33, y: 27, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     ...([24, 25, 26, 27, 28] as const).map((y) => ({ id: `room.test.us-hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
   );
   state.doors.push(
     { id: "door.test.ultrasound", roomId: "room.test.ultrasound", side: "south", offset: 2, exterior: false },
     { id: "door.test.ultrasound.staff", roomId: "room.test.ultrasound", side: "west", offset: 1, exterior: false },
+    { id: "door.test.exam", roomId: "room.test.exam", side: "west", offset: 1, exterior: false },
     { id: "door.test.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
   const ultrasound = state.rooms.find((room) => room.id === "room.test.ultrasound")!;
@@ -198,7 +201,7 @@ function endoscopyProcedureState(): GameState {
   return state;
 }
 
-function prepareQuestion(state: GameState, caseId: string, conceptId: string): GameState {
+function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true): GameState {
   let next = gameReducer(state, {
     type: "ADMIT_PATIENT",
     operationId: `procedure.admit.${sequence++}`,
@@ -209,6 +212,15 @@ function prepareQuestion(state: GameState, caseId: string, conceptId: string): G
   });
   expect(next.operationReceipts[Object.keys(next.operationReceipts).at(-1)!]?.status).toBe("applied");
   const encounter = next.encounters["procedure-patient"]!;
+  // These scenarios exercise the saved, markerless operation contract. A
+  // previous-version alternative prevents the complete current choice group
+  // from opting into diagnostic-order.v1, while the exact correct operational
+  // choice remains unchanged. New current-release orders are tested separately
+  // in diagnostic-orders.test.ts and diagnostic-service-operations.test.ts.
+  for (const node of markerless ? encounter.frozenCase.decisionNodes : []) {
+    const alternative = node.answerChoices.find((choice) => !choice.isCorrect);
+    if (alternative) alternative.label += " [frozen prior wording]";
+  }
   const nodeIndex = encounter.frozenCase.decisionNodes.findIndex((node) => node.primaryConceptId === conceptId);
   expect(nodeIndex).toBeGreaterThanOrEqual(0);
   encounter.currentNodeIndex = nodeIndex;
@@ -561,6 +573,9 @@ describe("mapped in-clinic procedure operations", () => {
       durationMinutes: 7,
       staffRoleDefinitionIds: ["staff.imaging_technician"],
     }];
+    // A custom legacy contract has no snapshots from the original factory phases.
+    delete state.serviceOperations[0]!.trainingTiming;
+    delete state.serviceOperations[0]!.roomUpgradeRevenue;
     state = deserializeGameState(serializeGameState(state));
     for (let minute = 0; minute < 80 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
       state = advance(state, 1);
@@ -622,9 +637,12 @@ describe("mapped in-clinic procedure operations", () => {
     expect(pending.patientTravel!.serviceCompletionTick).toBeGreaterThanOrEqual(resource.endsAtTick);
     expect(pending.patientTravel!.returnArrivalTick).toBe(pending.dueTick);
     state = advance(state, pending.dueTick - state.facilityTick);
+    const repairedDueTick = state.encounters["procedure-patient"]!.pendingResult!.dueTick;
+    expect(state.encounters["procedure-patient"]!.pendingResult!.deliveredAtTick).toBeNull();
+    state = advance(state, repairedDueTick - state.facilityTick);
     expect(state.encounters["procedure-patient"]!.pendingResult).toMatchObject({
-      dueTick: pending.dueTick,
-      deliveredAtTick: pending.dueTick,
+      dueTick: repairedDueTick,
+      deliveredAtTick: repairedDueTick,
     });
   });
 
@@ -677,7 +695,7 @@ describe("mapped in-clinic procedure operations", () => {
       providerReservation: null,
       timingPhases: [{ durationTicks: 60, resourceBound: true }, { durationTicks: 120, resourceBound: false }],
     });
-    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter" });
+    expect(state.environment.founderActivity).toBeNull();
     expect(state.employees[0]!.facilityTask).toMatchObject({ kind: "perform_imaging" });
     state = deserializeGameState(serializeGameState(state));
     expect(state.encounters[encounter.id]!.pendingResult?.approvedProcedureTimingVersion).toBe(1);
@@ -729,6 +747,11 @@ describe("mapped in-clinic procedure operations", () => {
     state = advance(state, pending.dueTick - state.facilityTick);
     expect(state.encounters[encounter.id]!.pendingResult?.deliveredAtTick).toBe(state.facilityTick);
     expect(state.encounters[encounter.id]!.feedAttentionKind).toBe("result_ready");
+    const markerlessDeliveredState = deserializeGameState(serializeGameState(state));
+    markerlessDeliveredState.encounters[encounter.id]!.pendingResult!.onsiteReturn = undefined;
+    markerlessDeliveredState.encounters[encounter.id]!.pendingResult!.deliveredAtTick = 0;
+    expect(getPendingPatientLocation(markerlessDeliveredState, encounter.id)).toBeNull();
+    expect(getPendingPatientRoutePresentation(markerlessDeliveredState, encounter.id)).toBeNull();
     state.openChartEncounterId = null;
     state.attendedEncounterId = null;
     state = gameReducer(state, {
@@ -814,14 +837,19 @@ describe("mapped in-clinic procedure operations", () => {
     for (let x = 35; x <= 68; x += 1) addHallway(x, 26);
     for (let y = 22; y <= 25; y += 1) addHallway(68, y);
     for (let x = 40; x <= 68; x += 1) addHallway(x, 22);
+    for (let x = 32; x <= 39; x += 1) addHallway(x, 22);
+    addHallway(32, 23);
     for (let y = 20; y <= 21; y += 1) addHallway(40, y);
     for (let x = 40; x <= 68; x += 1) addHallway(x, 20);
     for (let y = 18; y <= 19; y += 1) addHallway(68, y);
     for (let x = 40; x <= 68; x += 1) addHallway(x, 18);
     for (let y = 16; y <= 17; y += 1) addHallway(40, y);
     for (let x = 40; x <= 68; x += 1) addHallway(x, 16);
-    slowTechState.employees[0]!.location = { x: 68, y: 16 };
-    slowTechState.employees[0]!.path = [{ x: 68, y: 16 }];
+    for (let y = 0; y <= 15; y += 1) addHallway(8, y);
+    for (let x = 8; x <= 39; x += 1) addHallway(x, 0);
+    for (let x = 8; x <= 39; x += 1) addHallway(x, 16);
+    slowTechState.employees[0]!.location = { x: 8, y: 0 };
+    slowTechState.employees[0]!.path = [{ x: 8, y: 0 }];
     slowTechState.employees[0]!.pathIndex = 0;
 
     let state = prepareQuestion(
@@ -885,7 +913,7 @@ describe("mapped in-clinic procedure operations", () => {
     const correctChoiceId = getCurrentQuestion(state, encounter.id)!.node.answerChoices.find(
       (choice) => choice.isCorrect,
     )!.id;
-    expect(getAnswerChoiceServicePreview(state, encounter.id, correctChoiceId)?.durationTicks).toBe(15);
+    expect(getAnswerChoiceServicePreview(state, encounter.id, correctChoiceId)).toBeNull();
     state = acknowledgeDecisionFeedback(submit(state, true));
     const pending = state.encounters[encounter.id]!.pendingResult!;
     const work = pending.timingPhases![0]!;
@@ -1135,6 +1163,52 @@ describe("mapped in-clinic procedure operations", () => {
     expect(state.serviceIncomeReceipts).toEqual([]);
   });
 
+  it("converts an interrupted terminal collection to its external order without clinic revenue", () => {
+    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
+      (candidate) => candidate.id === "case.fhh.suggestive-results-confirmation",
+    )!;
+    const node = clinicalCase.decisionNodes.find(
+      (candidate) => candidate.id === "node.fhh.suggestive-results-confirmation.v1",
+    )!;
+    let state = prepareQuestion(phlebotomyProcedureState(), clinicalCase.id, node.primaryConceptId);
+    placePatientInTestExam(state);
+    state = submit(state, true);
+    for (let minute = 0; minute < 120 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
+      state = advance(state, 1);
+    }
+    const roomId = state.serviceOperations[0]!.reservedRoomInstanceIds[0]!;
+    const preview = getRoomSalePreview(state, roomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+    state = gameReducer(state, {
+      type: "SELL_ROOM",
+      operationId: "sell.terminal.phlebotomy",
+      roomId,
+      saleConfirmationToken: preview.confirmationToken,
+    });
+    expect(state.encounters["procedure-patient"]!.terminalTestOrder).toMatchObject({
+      status: "external_arranged",
+      serviceOperationId: null,
+    });
+    expect(state.serviceIncomeReceipts).toEqual([]);
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "ack.terminal.after-sale",
+      encounterId: "procedure-patient",
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "close.terminal.after-sale",
+      encounterId: "procedure-patient",
+    });
+    let sawVisibleDeparture = false;
+    for (let minute = 0; minute < 180 && state.encounters["procedure-patient"]!.patientLocation !== null; minute += 1) {
+      state = advance(state, 1);
+      sawVisibleDeparture ||= state.encounters["procedure-patient"]!.patientMovement?.kind === "leaving_after_resolution";
+    }
+    expect(sawVisibleDeparture).toBe(true);
+    expect(state.encounters["procedure-patient"]!.patientLocation).toBeNull();
+    expect(state.serviceIncomeReceipts).toEqual([]);
+  });
+
   it.each([
     [
       "ultrasound",
@@ -1380,6 +1454,58 @@ describe("mapped in-clinic procedure operations", () => {
     expect(reloaded.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.ct")).toHaveLength(1);
   });
 
+  it("moves a staged result fully off site when its last local room is sold mid-acquisition", () => {
+    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
+      (candidate) => candidate.id === "case.anal-squamous-cell-cancer.bleeding-lesion",
+    )!;
+    const node = clinicalCase.decisionNodes.find(
+      (candidate) => candidate.id === "node.anal-squamous-cell-cancer.bleeding-lesion.1",
+    )!;
+    let state = prepareQuestion(ctProcedureState(), clinicalCase.id, node.primaryConceptId);
+    placePatientInTestExam(state);
+    state = acknowledgeDecisionFeedback(submit(state, true));
+    const expectedExternalDuration = state.encounters["procedure-patient"]!
+      .stagedResultOrder!.remainder.serviceDurationTicks;
+    for (let minute = 0; minute < 120 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
+      state = advance(state, 1);
+    }
+    const roomId = state.serviceOperations[0]!.reservedRoomInstanceIds[0]!;
+    const preview = getRoomSalePreview(state, roomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+    state = gameReducer(state, {
+      type: "SELL_ROOM",
+      operationId: "sell.staged.ct",
+      roomId,
+      saleConfirmationToken: preview.confirmationToken,
+    });
+    const encounter = state.encounters["procedure-patient"]!;
+    expect(encounter.stagedResultOrder).toMatchObject({
+      status: "remainder_pending",
+      components: [{ status: "cancelled" }],
+    });
+    expect(encounter.pendingResult).toMatchObject({
+      routeId: "route.anal_lesion_biopsy_staging.outsourced",
+      patientTravel: null,
+      offsiteTravel: null,
+      deliveredAtTick: null,
+    });
+    expect(encounter.pendingResult?.patientRemainsOnsite).toBeUndefined();
+    expect(encounter.pendingResult!.dueTick - encounter.pendingResult!.scheduledAtTick)
+      .toBe(expectedExternalDuration);
+    expect(state.serviceIncomeReceipts).toEqual([]);
+    let sawOffsite = false;
+    for (let minute = 0; minute < 600; minute += 1) {
+      state = advance(state, 1);
+      sawOffsite ||= state.encounters["procedure-patient"]!.patientLocation === null;
+      const current = state.encounters["procedure-patient"]!;
+      if (current.pendingResult?.deliveredAtTick !== null && current.patientLocation !== null &&
+          current.patientMovement?.kind !== "returning_from_offsite_testing") break;
+    }
+    expect(sawOffsite).toBe(true);
+    expect(typeof state.encounters["procedure-patient"]!.pendingResult?.deliveredAtTick).toBe("number");
+    expect(state.encounters["procedure-patient"]!.patientLocation).not.toBeNull();
+    expect(state.serviceIncomeReceipts).toEqual([]);
+  });
+
   it("shows serial local-plus-external time for the staged breast-imaging bundle", () => {
     const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
       (candidate) => candidate.id === "case.mondor-disease.full-pathway",
@@ -1387,16 +1513,23 @@ describe("mapped in-clinic procedure operations", () => {
     const node = clinicalCase.decisionNodes.find(
       (candidate) => candidate.id === "node.mondor-disease.evaluation.diagnostic-breast-imaging.full-pathway",
     )!;
-    const state = prepareQuestion(ultrasoundProcedureState(), clinicalCase.id, node.primaryConceptId);
-    expect(getAnswerChoiceServicePreview(
+    const state = prepareQuestion(ultrasoundProcedureState(), clinicalCase.id, node.primaryConceptId, false);
+    const preview = getAnswerChoiceServicePreview(
       state,
       "procedure-patient",
       "diagnostic_mammography_or_dbt_and_targeted_ultrasound",
-    )).toMatchObject({
+    )!;
+    expect(preview).toMatchObject({
       routeId: "route.ultrasound.in_house",
-      routeDisplayName: expect.stringContaining("remaining components outside"),
-      durationTicks: 165,
     });
+    expect(preview.diagnosticTiming!.phases).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: "acquisition", mode: "local", durationMinutes: 45 }),
+      expect.objectContaining({ kind: "interpretation", mode: "external", durationMinutes: 30 }),
+      expect.objectContaining({ id: "diagnostic.remainder", durationMinutes: 120, patientPresent: true }),
+      expect.objectContaining({ id: "diagnostic.remainder.patient_departure" }),
+    ]));
+    expect(preview.durationTicks).toBe(Math.max(...preview.diagnosticTiming!.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick);
+    expect(preview.durationTicks).toBeGreaterThan(165);
   });
 
   it("falls back to the authored external compound route when no reviewed local component is available", () => {
@@ -1446,8 +1579,9 @@ describe("mapped in-clinic procedure operations", () => {
     expect(state.serviceOperations[0]).toMatchObject({
       quoteFee: 600,
       frozenOperationPhases: [
-        { id: "preparation_and_procedure", durationMinutes: 75 },
-        { id: "recovery", durationMinutes: 45 },
+        { id: "periop_preparation", durationMinutes: 30 },
+        { id: "preparation_and_procedure.procedure", durationMinutes: 45 },
+        { id: "recovery", durationMinutes: 60 },
       ],
       testChoiceOrder: {
         purpose: "staged_result_component",
@@ -1459,6 +1593,8 @@ describe("mapped in-clinic procedure operations", () => {
       state = advance(state, 1);
     }
     const encounter = state.encounters["procedure-patient"]!;
+    expect(state.serviceOperations[0]).toMatchObject({ status: "completed", cancellationReason: null });
+    expect(state.serviceOperations[0]!.departureItinerary).toBeUndefined();
     expect(encounter.stagedResultOrder).toMatchObject({
       remainderMode: "external_processing",
       status: "remainder_pending",
@@ -1510,6 +1646,155 @@ describe("mapped in-clinic procedure operations", () => {
     expect(encounter.pendingResult).toBeNull();
     expect(encounter.deliveredResultNarratives).toEqual([]);
     expect(state.serviceIncomeReceipts).toHaveLength(1);
+  });
+
+  it("sends an interrupted continuation collection off site and returns before unlocking its follow-up", () => {
+    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
+      (candidate) => candidate.id === "case.fhh.evaluation-to-confirmed-management",
+    )!;
+    const node = clinicalCase.decisionNodes.find(
+      (candidate) => candidate.id === "node.fhh.initial-biochemical-evaluation.v1",
+    )!;
+    let state = prepareQuestion(phlebotomyProcedureState(), clinicalCase.id, node.primaryConceptId);
+    placePatientInTestExam(state);
+    state = acknowledgeDecisionFeedback(submit(state, true));
+    for (let minute = 0; minute < 120 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
+      state = advance(state, 1);
+    }
+    const operation = state.serviceOperations[0]!;
+    const roomId = operation.reservedRoomInstanceIds[0]!;
+    const preview = getRoomSalePreview(state, roomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+    state = gameReducer(state, {
+      type: "SELL_ROOM",
+      operationId: "sell.continuation.phlebotomy",
+      roomId,
+      saleConfirmationToken: preview.confirmationToken,
+    });
+    expect(state.encounters["procedure-patient"]!.testOnlyContinuation).toMatchObject({
+      status: "external_arranged",
+      saleInterruptedOffsite: { version: "sale-interrupted-continuation.v1" },
+    });
+    expect(state.serviceIncomeReceipts).toEqual([]);
+    state = deserializeGameState(serializeGameState(state));
+    let sawOffsite = false;
+    let checkedContiguousDeparture = false;
+    for (let minute = 0; minute < 480 && state.encounters["procedure-patient"]!.currentNodeIndex === 0; minute += 1) {
+      state = advance(state, 1);
+      const movement = state.encounters["procedure-patient"]!.patientMovement;
+      if (!checkedContiguousDeparture && movement?.kind === "departing_for_offsite_testing") {
+        for (let index = 1; index < movement.path.length; index += 1) {
+          expect(Math.abs(movement.path[index]!.x - movement.path[index - 1]!.x) +
+            Math.abs(movement.path[index]!.y - movement.path[index - 1]!.y)).toBe(1);
+        }
+        checkedContiguousDeparture = true;
+      }
+      sawOffsite ||= state.encounters["procedure-patient"]!.patientLocation === null;
+    }
+    const encounter = state.encounters["procedure-patient"]!;
+    expect(sawOffsite).toBe(true);
+    expect(checkedContiguousDeparture).toBe(true);
+    expect(encounter.currentNodeIndex).toBe(1);
+    expect(encounter.patientLocation).not.toBeNull();
+    expect(encounter.testOnlyContinuation).toMatchObject({ status: "external_arranged" });
+    expect(encounter.testOnlyContinuation?.saleInterruptedOffsite).toBeUndefined();
+    expect(state.serviceIncomeReceipts).toEqual([]);
+  });
+
+  it("falls back to authored external result timing when the last local collection room is sold", () => {
+    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
+      (candidate) => candidate.id === "case.fap.new-parent",
+    )!;
+    const node = clinicalCase.decisionNodes.find(
+      (candidate) => candidate.id === "node.fap.new-parent.1",
+    )!;
+    let state = prepareQuestion(phlebotomyProcedureState(), clinicalCase.id, node.primaryConceptId);
+    placePatientInTestExam(state);
+    state = acknowledgeDecisionFeedback(submit(state, true));
+    const expectedExternalDuration = state.encounters["procedure-patient"]!.pendingResult!
+      .durationTicks;
+    const roomId = state.encounters["procedure-patient"]!.pendingResult!.patientTravel!
+      .destinationRoomInstanceId;
+    const preview = getRoomSalePreview(state, roomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+    state = gameReducer(state, {
+      type: "SELL_ROOM",
+      operationId: "sell.result-gate.phlebotomy",
+      roomId,
+      saleConfirmationToken: preview.confirmationToken,
+    });
+    expect(state.encounters["procedure-patient"]!.pendingResult).toMatchObject({
+      patientTravel: null,
+      offsiteTravel: null,
+      deliveredAtTick: null,
+    });
+    expect(state.encounters["procedure-patient"]!.pendingResult?.localServiceOperation).toBeUndefined();
+    expect(state.encounters["procedure-patient"]!.pendingResult?.patientRemainsOnsite).toBeUndefined();
+    expect(state.encounters["procedure-patient"]!.pendingResult!.dueTick -
+      state.encounters["procedure-patient"]!.pendingResult!.scheduledAtTick)
+      .toBe(expectedExternalDuration);
+    expect(state.serviceIncomeReceipts).toEqual([]);
+    let sawOffsite = false;
+    for (let minute = 0; minute < 480; minute += 1) {
+      state = advance(state, 1);
+      sawOffsite ||= state.encounters["procedure-patient"]!.patientLocation === null;
+      const pending = state.encounters["procedure-patient"]!.pendingResult;
+      if (pending?.deliveredAtTick !== null &&
+          state.encounters["procedure-patient"]!.patientLocation !== null &&
+          state.encounters["procedure-patient"]!.patientMovement?.kind !== "returning_from_offsite_testing") break;
+    }
+    expect(sawOffsite).toBe(true);
+    expect(typeof state.encounters["procedure-patient"]!.pendingResult?.deliveredAtTick).toBe("number");
+    expect(state.encounters["procedure-patient"]!.patientLocation).not.toBeNull();
+    expect(state.serviceIncomeReceipts).toEqual([]);
+  });
+
+  it("preserves an authored result-gate return after its in-progress Endoscopy room is sold", () => {
+    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
+      (candidate) => candidate.id === "case.colorectal.routine-screen",
+    )!;
+    const node = clinicalCase.decisionNodes.find(
+      (candidate) => candidate.id === "node.colorectal.routine-screen.1",
+    )!;
+    let state = prepareQuestion(endoscopyProcedureState(), clinicalCase.id, node.primaryConceptId);
+    placePatientInTestExam(state);
+    state = acknowledgeDecisionFeedback(submit(state, true));
+    const expectedExternalDuration = state.encounters["procedure-patient"]!.pendingResult!
+      .localServiceOperation!.externalDurationTicks;
+    for (let minute = 0; minute < 240 && !(state.serviceOperations[0]?.status === "in_service" &&
+      state.serviceOperations[0]?.phaseIndex === 1); minute += 1) {
+      state = advance(state, 1);
+    }
+    expect(state.serviceOperations[0]).toMatchObject({
+      status: "in_service",
+      phaseIndex: 1,
+      testChoiceOrder: { purpose: "result_gate" },
+    });
+    const roomId = state.serviceOperations[0]!.reservedRoomInstanceIds.find((id) =>
+      state.rooms.find((room) => room.id === id)?.roomDefinitionId === "room.endoscopy")!;
+    const preview = getRoomSalePreview(state, roomId, PROTOTYPE_DOMAIN_CONTEXT)!;
+    state = gameReducer(state, {
+      type: "SELL_ROOM",
+      operationId: "sell.result-gate.endoscopy",
+      roomId,
+      saleConfirmationToken: preview.confirmationToken,
+    });
+    const pending = state.encounters["procedure-patient"]!.pendingResult!;
+    expect(pending.localServiceOperation).toBeUndefined();
+    expect(pending.dueTick - pending.scheduledAtTick).toBe(expectedExternalDuration);
+    expect(pending.patientRemainsOnsite).toBeUndefined();
+    expect(state.serviceIncomeReceipts).toEqual([]);
+    state = deserializeGameState(serializeGameState(state));
+    let sawOffsite = false;
+    for (let minute = 0; minute < 600; minute += 1) {
+      state = advance(state, 1);
+      const current = state.encounters["procedure-patient"]!;
+      sawOffsite ||= current.patientLocation === null;
+      if (typeof current.pendingResult?.deliveredAtTick === "number" && current.patientLocation !== null &&
+          current.patientMovement?.kind !== "returning_from_offsite_testing") break;
+    }
+    expect(sawOffsite).toBe(true);
+    expect(typeof state.encounters["procedure-patient"]!.pendingResult?.deliveredAtTick).toBe("number");
+    expect(state.encounters["procedure-patient"]!.patientLocation).not.toBeNull();
+    expect(state.serviceIncomeReceipts).toEqual([]);
   });
 
   it("routes the intermediate FAP genetic order through phlebotomy while retaining its authored result gate", () => {

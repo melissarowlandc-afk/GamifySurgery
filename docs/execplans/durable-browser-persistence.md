@@ -53,10 +53,14 @@ site preferences or allowing the active page's exit autosave to recreate it.
   completion agreement authorizes only its audited commit, current-branch
   backup, verification, evidence, and archival, superseding earlier planning-
   only restrictions for this task. No M3, merge, Pages publication, or release.
-- This repository cannot inspect or erase the storage partition in the owner's
-  remote laptop browser. The affected browser must expose its caught exception
-  once before reset to conclusively distinguish quota exhaustion from a privacy
-  or site-data policy.
+- The owner explicitly authorized implementation on 2026-09-03 and does not
+  require preservation of the existing campaigns on this device. Runtime work
+  may therefore provide a deliberate campaign-only reset and replace the local
+  persistence path, but it must not silently delete every user's data merely
+  because one write fails.
+- This repository cannot directly inspect or erase the storage partition in the
+  owner's ordinary browser profile. The updated application must expose the
+  caught failure category and provide the reset inside that same origin/profile.
 - Do not call `localStorage.clear()`. The reset must target only
   `gamify-surgery.prototype.profile.v1` and
   `gamify-surgery.prototype.save.v1` during the legacy phase.
@@ -270,11 +274,20 @@ then select Save & Close:
 - [x] Measure fresh profile, campaign-count, and encounter-history growth.
 - [x] Design the safe active-tab reset and durable IndexedDB repository.
 - [x] Record implementation milestones, ownership, acceptance, and validation.
-- [ ] Capture the actual DOMException in the affected laptop browser.
-- [ ] Clear the owner's campaigns after the diagnostic capture.
-- [ ] Implement Milestone 1 only after explicit implementation direction.
-- [ ] Review Milestone 1 before delegating Milestone 2.
-
+- [ ] Capture the actual DOMException through the new in-application diagnostic
+  when the owner next reproduces the affected-profile write.
+- [ ] Clear the owner's campaigns through the guarded in-application reset.
+- [x] Implement Milestone 1 under the owner's 2026-09-03 direction. The active
+  save path now retains a structured, sanitized failure with operation,
+  category, browser exception name/message, and serialized profile size;
+  category-specific notices replace the former generic warning.
+- [x] Review Milestone 1 before delegating Milestone 2. Failed Save & Close now
+  exposes a two-step campaign-only reset. Its one-way write gate is suppressed
+  before both exact legacy keys are removed, so pending autosave, unmount, and
+  `pagehide` cannot recreate a fully or partly deleted profile. Sol reviewed
+  the actual seven-path diff, returned the overbroad/generic-message and gate-
+  resume gaps, and independently passed 2 focused files / 18 tests plus player
+  typecheck and diff validation.
 - [x] Preserve the rejected first Milestone 2 pass and its rejection history.
   `localCampaignRepository.ts` and its test were added with `fake-indexeddb`
   6.2.5 pinned for tests. Sol rejected that pass pending atomic rollback proof, safe transaction
@@ -339,7 +352,11 @@ then select Save & Close:
 - IndexedDB materially increases practical capacity and enables transactions,
   but only export or the future cloud backend protects against device loss,
   browser-profile loss, and site-data clearing.
-
+- A reset write gate must be one-way for the lifetime of the current document.
+  Allowing a failed partial removal to re-enable writes lets a later unmount or
+  `pagehide` recreate the aggregate profile that the player just tried to
+  remove. Retrying the exact removals is safe; resuming that document's writer
+  is not.
 - The original rejected IndexedDB pass installed
   transaction completion handlers late, returned directly after `abort()` on
   conflict, computed checksums outside structured failure handling, could not

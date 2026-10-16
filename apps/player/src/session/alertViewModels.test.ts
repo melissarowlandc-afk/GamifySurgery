@@ -1,17 +1,22 @@
-import { describe, expect, it } from "vitest";
-import { renderPrototypeAlert } from "@gamify-surgery/balance-config";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { ROOM_UPGRADE_CATALOG, renderPrototypeAlert } from "@gamify-surgery/balance-config";
 import {
   TUTORIAL_ENCOUNTER_ID,
+  PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
   serializeGameState,
   synchronizeFacilityConditionOccurrences,
+  synchronizeFacilityOperationalAlertOccurrences,
+  getRoomDefinition,
+  getRoomNavigableTiles,
   type DomainEvent,
   type GameState,
 } from "@gamify-surgery/game-domain";
 import { createMessageBoardView } from "./alertViewModels";
+import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
 
 function cloneState(state: GameState): GameState {
   return JSON.parse(JSON.stringify(state)) as GameState;
@@ -107,21 +112,20 @@ describe("createMessageBoardView data-driven alerts", () => {
     state.cashCents = 10_000_000;
     const items = createMessageBoardView(state);
     expect(rawAmbientEvents).toHaveLength(2);
-    expect(items.filter((item) => !item.persistent)).toHaveLength(5);
+    expect(items.filter((item) => !item.persistent)).toHaveLength(3);
     expect(new Set(items.map((item) => item.id))).toEqual(new Set([
       ...rawAmbientEvents.map((entry) => entry.id),
       "condition.water.onset",
-      "condition.water.reminder",
-      "condition.water.latest",
     ]));
-    expect(items.find((item) => item.id === "condition.water.latest")).toMatchObject({
+    expect(items.find((item) => item.id === "condition.water.onset")).toMatchObject({
       priority: "action_required",
       showAttentionMarker: true,
       targetType: "water_cooler",
+      message: "The water cooler is still empty; refill it.",
     });
   });
 
-  it("suppresses legacy check-in and result-return rows while retaining generic waits", () => {
+  it("suppresses every legacy patient-attention alias including an undefined generic wait", () => {
     const state = createInitialGameState();
     state.events = [
       event({
@@ -164,13 +168,21 @@ describe("createMessageBoardView data-driven alerts", () => {
         target: { kind: "encounter", id: TUTORIAL_ENCOUNTER_ID },
         message: "The patient has been waiting for clinical attention.",
       }),
+      event({
+        id: "event.patient-waiting.undefined",
+        type: "patience_warning",
+        facilityTick: 5,
+        encounterId: TUTORIAL_ENCOUNTER_ID,
+        message: "Legacy generic wait without a definition.",
+      }),
     ];
 
     const items = createMessageBoardView(state);
     expect(items.some((item) => item.id === "event.patient-a.resolved")).toBe(false);
     expect(items.some((item) => item.id === "event.patient-result")).toBe(false);
     expect(items.some((item) => item.id === "event.patient-decision")).toBe(false);
-    expect(items.some((item) => item.id === "event.patient-waiting")).toBe(true);
+    expect(items.some((item) => item.id === "event.patient-waiting")).toBe(false);
+    expect(items.some((item) => item.id === "event.patient-waiting.undefined")).toBe(false);
   });
 
   it("adds non-attention Level 2 phlebotomy guidance only for the accepted station ID", () => {
@@ -193,6 +205,79 @@ describe("createMessageBoardView data-driven alerts", () => {
       targetId: "room.phlebotomy",
       actionLabel: "Open Build Mode",
     });
+  });
+
+  it("points an inoperable endoscopy setup to its missing Peri-op Recovery Room", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 2;
+    state.rooms.push({
+      ...state.rooms[0]!,
+      id: "room.test.endoscopy",
+      roomDefinitionId: "room.endoscopy",
+      x: 50,
+      y: 50,
+    });
+
+    expect(createMessageBoardView(state)).toContainEqual(expect.objectContaining({
+      id: "persistent.alert.facility.endoscopy-inoperable",
+      message: "Endoscopy cannot run without an operational Peri-op Recovery Room. Build or reconnect it.",
+      targetType: "build_mode",
+      targetId: "room.periop_recovery",
+      actionLabel: "Open Build Mode",
+    }));
+  });
+
+  it("keeps one post-tutorial progression hint concrete and stable after a trimmed level event", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 1;
+    state.cash = 1_000;
+    state.cashCents = 100_000;
+    for (const encounterId of [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID]) {
+      state.encounters[encounterId] = {
+        ...state.encounters[TUTORIAL_ENCOUNTER_ID]!,
+        id: encounterId,
+        resolutionReason: "completed",
+      };
+    }
+    state.events = [event({
+      id: "event.level-one",
+      type: "facility_level_advanced",
+      facilityTick: 100,
+      definitionId: "alert.progress.level-complete",
+    })];
+
+    const retained = createMessageBoardView(state).find(
+      (item) => item.id === "persistent.progress.next-step.1",
+    );
+    expect(retained).toMatchObject({
+      category: "guidance",
+      showAttentionMarker: false,
+      targetType: "build_mode",
+      actionLabel: "Open Build Mode",
+      timeLabel: "Day 1, 9:40 AM",
+    });
+    expect(retained?.message).toMatch(/needed for the next level/);
+
+    state.events = [];
+    state.facilityTick = 200;
+    const trimmed = createMessageBoardView(state).find(
+      (item) => item.id === "persistent.progress.next-step.1",
+    );
+    state.facilityTick = 400;
+    const laterTrimmed = createMessageBoardView(state).find(
+      (item) => item.id === "persistent.progress.next-step.1",
+    );
+    expect(trimmed).toMatchObject({
+      id: "persistent.progress.next-step.1",
+      sortKey: 0.042,
+    });
+    expect(trimmed?.timeLabel).toBeUndefined();
+    expect(laterTrimmed).toMatchObject({
+      id: trimmed?.id,
+      sortKey: trimmed?.sortKey,
+      message: trimmed?.message,
+    });
+    expect(laterTrimmed?.timeLabel).toBe(trimmed?.timeLabel);
   });
   it("renders persisted ambient events from their registry definition", () => {
     const state = createInitialGameState();
@@ -293,6 +378,9 @@ describe("createMessageBoardView data-driven alerts", () => {
     encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
     encounter.feedAttentionKind = "clinical_decision";
     encounter.feedAttentionStartedAtTick = 0;
+    encounter.waiting.patienceExempt = false;
+    encounter.patientSatisfaction = encounter.walkoutThreshold + 10;
+    encounter.departureRiskWarningAtTick = 0;
     state.events = [
       event({
         id: "event.decision.marker-test",
@@ -300,7 +388,7 @@ describe("createMessageBoardView data-driven alerts", () => {
         facilityTick: 0,
         encounterId: encounter.id,
         priority: "action_required",
-        definitionId: "alert.patient.waiting",
+        definitionId: "alert.patient.departure-risk",
         target: { kind: "encounter", id: encounter.id },
       }),
       event({
@@ -495,7 +583,7 @@ describe("createMessageBoardView data-driven alerts", () => {
       withRoom.find(
         (item) =>
           item.id ===
-          "condition.xray.staff",
+          "condition.xray.room",
       ),
     ).toMatchObject({
       category: "guidance",
@@ -506,7 +594,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     });
   });
 
-  it("keeps prior patient alerts as history while only the newest unresolved warning requires attention", () => {
+  it("suppresses prior generic patient alerts while retaining their raw history", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     checkInTutorialPatient(state);
@@ -544,32 +632,17 @@ describe("createMessageBoardView data-driven alerts", () => {
       (item) => item.targetId === encounter.id,
     );
 
-    expect(patientItems).toHaveLength(1);
-    expect(patientItems[0]).toMatchObject({
-      id: "event.patience-warning.duplicate.2",
-      category: "action_required",
-      showAttentionMarker: true,
-      targetType: "patient",
-      actionLabel: "Open chart",
-      persistent: false,
-    });
+    expect(patientItems).toHaveLength(0);
     for (const historicalId of [
       "event.patience-warning.duplicate.1",
     ]) {
-      expect(
-        createMessageBoardView(state).find(
-          (item) => item.id === historicalId,
-        ),
-      ).toMatchObject({
-        category: "guidance",
-        priority: "informational",
-        showAttentionMarker: false,
-        persistent: false,
-      });
+      expect(createMessageBoardView(state).some(
+        (item) => item.id === historicalId,
+      )).toBe(false);
     }
   });
 
-  it("retains the irreversible leaving alert after the persistent wait warning ends", () => {
+  it("hides the irreversible leaving alert while retaining its raw record", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     checkInTutorialPatient(state);
@@ -593,43 +666,13 @@ describe("createMessageBoardView data-driven alerts", () => {
       }),
     ];
 
-    expect(
-      createMessageBoardView(state).find(
-        (item) => item.id === "event.patient-leaving.test",
-      ),
-    ).toMatchObject({
-      category: "action_required",
-      priority: "critical",
-      showAttentionMarker: true,
-      title: "Patient leaving",
-      persistent: false,
-    });
-    const leaving = createMessageBoardView(state).find(
-      (item) => item.id === "event.patient-leaving.test",
-    );
-    expect(leaving?.targetType).toBeUndefined();
-    expect(leaving?.actionLabel).toBeUndefined();
+    expect(state.events).toHaveLength(1);
+    expect(createMessageBoardView(state)).toEqual([]);
 
     encounter.patientMovement = null;
     encounter.lifecycle = "resolved";
     encounter.resolutionReason = "walkout";
-    expect(
-      createMessageBoardView(state).find(
-        (item) => item.id === "event.patient-leaving.test",
-      ),
-    ).toMatchObject({
-      id: "event.patient-leaving.test",
-      category: "guidance",
-      priority: "informational",
-      showAttentionMarker: false,
-      persistent: false,
-      sortKey: 10,
-    });
-    const resolvedLeaving = createMessageBoardView(state).find(
-      (item) => item.id === "event.patient-leaving.test",
-    );
-    expect(resolvedLeaving?.targetType).toBeUndefined();
-    expect(resolvedLeaving?.actionLabel).toBeUndefined();
+    expect(createMessageBoardView(state)).toEqual([]);
   });
 
   it("suppresses legacy check-in and water aliases without synthesizing live duplicates", () => {
@@ -731,7 +774,11 @@ describe("createMessageBoardView data-driven alerts", () => {
       "litter_collected",
       "water_cooler_refilled",
       "staff_hired",
+      "staff_fired",
+      "staff_salary_changed",
       "employee_praised",
+      "day_rollover",
+      "left_before_seen",
     ] as const;
     state.events = [
       ...suppressedTypes.map((type, index) =>
@@ -766,6 +813,57 @@ describe("createMessageBoardView data-driven alerts", () => {
     ]) {
       expect(items.some((item) => item.id === hiddenId)).toBe(false);
     }
+  });
+
+  it("hides legacy patient departure rows while retaining their raw records", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    state.events = [
+      event({
+        id: "event.patient.leaving.legacy",
+        type: "patience_warning",
+        facilityTick: 1,
+        encounterId: encounter.id,
+        definitionId: "alert.patient.leaving",
+        priority: "critical",
+      }),
+      event({
+        id: "event.patient.walkout-review.legacy",
+        type: "left_before_seen",
+        facilityTick: 2,
+        encounterId: encounter.id,
+      }),
+    ];
+
+    expect(state.events).toHaveLength(2);
+    expect(createMessageBoardView(state)).toEqual([]);
+  });
+
+  it("keeps humor visible when more than 80 later raw receipts are suppressed", () => {
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.events = [
+      event({
+        id: "event.ambient.survives-receipts",
+        type: "ambient_message",
+        facilityTick: 1,
+        alertCategory: "ambient_flavor",
+        priority: "flavor",
+      }),
+      ...Array.from({ length: 81 }, (_, index) =>
+        event({
+          id: `event.salary.receipt.${index}`,
+          type: "staff_salary_changed",
+          facilityTick: index + 2,
+          message: "A salary receipt that belongs in the raw audit trail.",
+        }),
+      ),
+    ];
+
+    expect(state.events).toHaveLength(82);
+    expect(createMessageBoardView(state)).toEqual([
+      expect.objectContaining({ id: "event.ambient.survives-receipts" }),
+    ]);
   });
 
   it("suppresses hired and praised staff rows including first-hire aliases", () => {
@@ -982,7 +1080,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     ).toBe(false);
   });
 
-  it("renders cause-aware walkout reviews as non-actionable ended-encounter events", () => {
+  it("hides cause-aware walkout reviews while retaining their raw records", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "resolved";
@@ -1006,25 +1104,8 @@ describe("createMessageBoardView data-driven alerts", () => {
       }),
     ];
 
-    expect(
-      createMessageBoardView(state).find(
-        (item) => item.id === "event.walkout-review.test",
-      ),
-    ).toMatchObject({
-      category: "walkout_review",
-      priority: "informational",
-      showAttentionMarker: false,
-      title: "New patient review",
-      message: expect.stringContaining(
-        "The dust bunny was seen before I was.",
-      ),
-      persistent: false,
-    });
-    const review = createMessageBoardView(state).find(
-      (item) => item.id === "event.walkout-review.test",
-    );
-    expect(review?.targetType).toBeUndefined();
-    expect(review?.actionLabel).toBeUndefined();
+    expect(state.events[0]?.walkoutReview?.cause).toBe("poor_cleanliness");
+    expect(createMessageBoardView(state)).toEqual([]);
   });
 
   it("renders a meaningful retained success from the registry", () => {
@@ -1264,25 +1345,29 @@ describe("createMessageBoardView data-driven alerts", () => {
       createMessageBoardView(state).find(
         (item) => item.id === "condition.cleanliness.legacy",
       )?.message,
-    ).toBe("Visible trash is distracting patients. Select it to send the founder to clean it.");
-    expect(
-      createMessageBoardView(state).find(
-        (item) => item.id === "condition.cleanliness.measured",
-      )?.message,
     ).toBe("Clinic cleanliness is 23%. Even the dust looks concerned.");
+    expect(
+      createMessageBoardView(state).some(
+        (item) => item.id === "condition.cleanliness.measured",
+      ),
+    ).toBe(false);
     expect(
       state.environment.facilityConditionOccurrences[1]?.message,
     ).toBe("Clinic cleanliness is 23%. Even the dust looks concerned.");
   });
 
-  it("keeps individual patient waiting copy patient-specific", () => {
+  it("keeps individual patient departure-risk copy patient-specific", () => {
     const state = createInitialGameState();
     checkInTutorialPatient(state);
     state.facilityTick = 61;
     state.encounters[TUTORIAL_ENCOUNTER_ID]!.idleWaitingSinceTick = 0;
+    state.encounters[TUTORIAL_ENCOUNTER_ID]!.waiting.patienceExempt = false;
+    state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientSatisfaction =
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.walkoutThreshold + 10;
+    state.encounters[TUTORIAL_ENCOUNTER_ID]!.departureRiskWarningAtTick = 60;
 
     const waiting = createMessageBoardView(state).find(
-      (item) => item.id === `persistent.patient.${TUTORIAL_ENCOUNTER_ID}.waiting`,
+      (item) => item.id === `event.patient-departure-risk.${TUTORIAL_ENCOUNTER_ID}`,
     );
     expect(waiting?.message).toContain(
       state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientDisplayName,
@@ -1449,7 +1534,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     ).toBe(false);
   });
 
-  it("routes an overdue unstaffed check-in alert to the Front Desk, not an unavailable chart", () => {
+  it("suppresses a legacy overdue unstaffed check-in alert", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.checkInStatus = "awaiting_staff";
@@ -1465,21 +1550,14 @@ describe("createMessageBoardView data-driven alerts", () => {
       }),
     ];
 
-    const active = createMessageBoardView(state).find(
+    expect(createMessageBoardView(state).some(
       (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
-    );
-    expect(active).toMatchObject({
-      targetType: "room",
-      targetId: "room.instance.founder_desk",
-      actionLabel: "Show Front Desk",
-    });
+    )).toBe(false);
 
     encounter.checkInStatus = "checked_in";
-    const resolved = createMessageBoardView(state).find(
+    expect(createMessageBoardView(state).some(
       (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
-    );
-    expect(resolved?.actionLabel).toBeUndefined();
-    expect(resolved?.targetType).toBeUndefined();
+    )).toBe(false);
   });
 
   it("keeps encounter settlement audit events out of Alerts and Events", () => {
@@ -1566,5 +1644,92 @@ describe("createMessageBoardView data-driven alerts", () => {
           item.message.toLowerCase().includes("water cooler is empty"),
       ),
     ).toBe(false);
+  });
+
+  it("keeps one stable patient risk row only while the exact risk remains actionable", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    checkInTutorialPatient(state);
+    encounter.waiting.patienceExempt = false;
+    encounter.lifecycle = "active_action_required";
+    encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
+    encounter.patientSatisfaction = encounter.walkoutThreshold + 10;
+    encounter.departureRiskWarningAtTick = 7;
+    state.facilityTick = 20;
+    state.events = [];
+
+    expect(createMessageBoardView(state)).toContainEqual(expect.objectContaining({
+      id: `event.patient-departure-risk.${encounter.id}`,
+      showAttentionMarker: true,
+      targetId: encounter.id,
+      persistent: true,
+    }));
+
+    state.openChartEncounterId = encounter.id;
+    expect(createMessageBoardView(state).some((item) =>
+      item.id === `event.patient-departure-risk.${encounter.id}`,
+    )).toBe(false);
+  });
+
+  it("reactivates a stable legacy cash row from live state during its daily cooldown", () => {
+    const state = createInitialGameState();
+    state.facilityTick = 20;
+    state.cash = 0;
+    state.cashCents = 0;
+    state.alertHumor.conditionActiveSinceTicks.no_cash = 20;
+    state.environment.facilityConditionOccurrences = [{
+      id: "condition.cash.original",
+      conditionKey: "no_cash",
+      kind: "onset",
+      occurredAtFacilityTick: 1,
+      resolvedAtFacilityTick: 10,
+      definitionId: "alert.finance.no-cash",
+      message: "The clinic ran out of cash.",
+      priority: "action_required",
+      target: { kind: "emergency_glp1", id: "emergency-glp1" },
+    }];
+
+    expect(createMessageBoardView(state)).toContainEqual(expect.objectContaining({
+      id: "condition.cash.original",
+      sortKey: 1,
+      showAttentionMarker: true,
+      targetType: "emergency_glp1",
+      actionLabel: "Open emergency cash option",
+    }));
+  });
+});
+
+describe("room-specific upgrade comfort messages", () => {
+  const normalBalance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
+  beforeEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = createLevelFourRoomsQaContext().balanceRelease; });
+  afterEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = normalBalance; });
+  it.each(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future"))(
+    "only generates new satisfaction guidance for $roomDefinitionId", ({ roomDefinitionId }) => {
+      const context = getRoomDefinition(roomDefinitionId)!.unlockFacilityLevel === 4 ? createLevelFourRoomsQaContext() : undefined;
+      const state = createInitialGameState(); state.facilityLevel = getRoomDefinition(roomDefinitionId)!.unlockFacilityLevel === 4 ? 4 : 3; state.facilityTick = 120;
+      const room = { id: "room.player.comfort", roomDefinitionId, x: 20, y: 12,
+        orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+      state.rooms.push(room);
+      const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+      encounter.lifecycle = "waiting_unopened"; encounter.assignedRoomInstanceId = room.id;
+      encounter.patientMovement = null; encounter.patientSatisfaction = 82;
+      encounter.waiting.arrivedAtTick = 0;
+      encounter.patientLocation = getRoomNavigableTiles(room, getRoomDefinition(roomDefinitionId)!, state.doors)[0] ?? null;
+      state.encounters = { [encounter.id]: encounter };
+      synchronizeFacilityOperationalAlertOccurrences(state, context);
+      const messages = createMessageBoardView(state).filter((item) => item.targetType === "room" && item.targetId === room.id);
+      expect(messages.length > 0).toBe(["room.waiting", "room.examination", "room.periop_recovery", "room.pediatric_waiting", "room.pediatric_examination"].includes(roomDefinitionId));
+    },
+  );
+
+  it("continues to display old recorded revenue-room upgrade requests unchanged", () => {
+    const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
+    const saved = event({ id: "event.old-revenue-comfort", type: "success_message", facilityTick: 60,
+      definitionId: "alert.patient.room-upgrade-requested", message: "Historical X-ray Room upgrade request.",
+      target: { kind: "room", id: "room.old.xray" }, priority: "informational" });
+    state.events.push(saved);
+    const reloaded = deserializeGameState(serializeGameState(state));
+    expect(reloaded.events.find((item) => item.id === saved.id)).toEqual(saved);
+    expect(createMessageBoardView(reloaded).find((item) => item.id === saved.id)?.message).toBe(saved.message);
   });
 });

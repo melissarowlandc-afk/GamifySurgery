@@ -6,6 +6,35 @@ import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("patient movement presentation", () => {
+  it("keeps dismissed employees visible only as outbound, unseated staff actors", () => {
+    const state = createInitialGameState();
+    const employee = {
+      id: "employee.test.departing",
+      staffRoleDefinitionId: "staff.receptionist",
+      displayName: "Leaving Staff",
+      appearance: state.founder.appearance,
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 0,
+      morale: 75,
+      trainingLevel: 1 as const,
+      homeRoomInstanceId: null,
+      location: { x: 3, y: 2 },
+      path: [{ x: 3, y: 2 }, { x: 2, y: 2 }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: state.facilityTick + 10,
+      facilityTask: null,
+      dismissedAtFacilityTick: state.facilityTick,
+    };
+    state.departingEmployees = [employee];
+
+    const staff = createPrototypePlayerView(state, null, false, null).facility.staff
+      .find((candidate) => candidate.instanceId === employee.id)!;
+    expect(staff).toMatchObject({ location: employee.location, path: employee.path, pathIndex: 0, moving: true });
+    expect(staff.supportRole).toBeUndefined();
+  });
+
   it("seats an available founder at an unstaffed Front Desk without seating reserved work", () => {
     const state = createInitialGameState();
     const frontDesk = state.rooms.find(
@@ -492,6 +521,48 @@ describe("patient movement presentation", () => {
     state.employees.at(-1)!.facilityTask = null;
     facility = createPrototypePlayerView(state, null, false, null).facility;
     expect(facility.patients?.find((candidate) => candidate.instanceId === encounter.id)?.supportRole).toBeUndefined();
-    expect(facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation")?.supportRole).toBeUndefined();
+    // Collection is over; an idle phlebotomist resting on the stool now just
+    // sits there as idle staff (owner-approved idle seating, 2026-10-07).
+    expect(facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation"))
+      .toMatchObject({ supportRole: "staff-idle", supportId: "phlebotomy:stool" });
+  });
+
+  it("projects an active encounter service path without overriding a Front Desk return", () => {
+    const state = createInitialGameState();
+    const encounter = Object.values(state.encounters)[0]!;
+    const servicePath = [{ x: 3, y: 4 }, { x: 3, y: 7 }, { x: 8, y: 7 }];
+    encounter.patientMovement = null;
+    encounter.patientLocation = { ...servicePath[1]! };
+    state.serviceOperations.push({
+      id: "service.test.periop-path", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "walking_to_service", createdAtFacilityTick: state.facilityTick,
+      waitDeadlineFacilityTick: state.facilityTick + 60, startedAtFacilityTick: null,
+      completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 0, phaseIndex: 0,
+      phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [],
+      reservedEmployeeIds: [], providerReservation: null, location: { ...servicePath[1]! },
+      path: servicePath, pathIndex: 1, lastMovedAtFacilityTick: state.facilityTick,
+      cancellationReason: null, phaseFlowVersion: 1,
+      frozenOperationPhases: [{
+        id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30,
+        staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation",
+      }],
+    });
+
+    const patient = () => createPrototypePlayerView(state, null, false, null).facility.patients
+      ?.find((candidate) => candidate.instanceId === encounter.id)!;
+    expect(patient()).toMatchObject({ path: servicePath, pathIndex: 1, moving: true });
+
+    const frontDeskReturn = [{ x: 8, y: 7 }, { x: 6, y: 2 }, { x: 4, y: 2 }];
+    encounter.patientMovement = {
+      kind: "returning_from_onsite_service", path: frontDeskReturn, pathIndex: 1,
+      lastMovedAtFacilityTick: state.facilityTick, destinationRoomInstanceId: state.rooms[0]!.id,
+    };
+    expect(patient()).toMatchObject({ path: frontDeskReturn, pathIndex: 1, moving: true });
+
+    encounter.patientMovement = null;
+    state.serviceOperations[0]!.status = "completed";
+    expect(patient()).not.toHaveProperty("path");
+    expect(patient()).not.toHaveProperty("pathIndex");
   });
 });

@@ -3,6 +3,29 @@ import { createInitialGameState } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("economy player view models", () => {
+  it("uses the same actual hourly net and breakdown in the HUD and Management", () => {
+    const state = createInitialGameState();
+    state.rooms = [];
+    state.facilityTick = 360;
+    state.serviceIncomeReceipts = [{
+      id: "finance.actual", transactionKey: "finance.actual", incomeLineId: "income.ultrasound",
+      catalogVersion: 1, routeId: null, actorKind: "visitor", actorId: "finance.visitor",
+      grossAmount: 600, stockCost: 60, netCashDelta: 540, completedAtFacilityTick: 359,
+    }];
+    const cash = state.cash;
+    const view = createPrototypePlayerView(state, null, false, null);
+    expect(view.resourceBar).toMatchObject({
+      moneyDeltaLabel: "+$90/hr", moneyHourlyDeltaLabel: "+$90/hr", moneyHourlyNetSign: "positive",
+      moneyHourlyBreakdown: { incomeLabel: "$100/hr", costLabel: "$10/hr", windowLabel: "Last 6 game hours" },
+    });
+    expect(view.resourceBar.moneyDeltaLabel).toBe(view.serviceIncome.finances?.hourlyNetLabel);
+    expect(state.cash).toBe(cash);
+    state.facilityTick = 720;
+    const idle = createPrototypePlayerView(state, null, false, null);
+    expect(idle.resourceBar.moneyHourlyDeltaLabel).toBe("$0/hr");
+    expect(idle.resourceBar.moneyHourlyNetSign).toBe("neutral");
+  });
+
   it("keeps the GLP-1 control available until a suite is operationally staffed", () => {
     const state = createInitialGameState();
     const view = createPrototypePlayerView(state, null, false, null);
@@ -179,6 +202,9 @@ describe("economy player view models", () => {
     const state = createInitialGameState();
     const catalog = createPrototypePlayerView(state, null, false, null).serviceIncome.catalogLines;
     expect(catalog.find((line) => line.id === "income.coffee")).toMatchObject({ feeLabel: "$5.00", stockCostLabel: "$1.00", contributionLabel: "$4.00" });
+    expect(catalog.find((line) => line.id === "income.endoscopy")).toMatchObject({
+      feeLabel: "$600.00 per scheduled visitor · $450.00 question-ordered",
+    });
     expect(catalog.find((line) => line.id === "income.wound_supply")).toMatchObject({
       available: false,
       requirementLabel: "Pharmacy + Pharmacist or Wound/Ostomy Clinic",

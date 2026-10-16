@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { syntheticClinicalCaseSchema } from "../../schema";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+// Keep this historical batch's inventory proof scoped to its original bank.
+// Later-batch admission/protected-intake checks live in their own tests.
+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")&&!c.id.startsWith("case.variety3.")),
+};
 import {
   BREAD_BUTTER_20260917_AUTHORING_CONCEPTS as concepts,
   BREAD_BUTTER_20260917_BATCH_MANIFEST as manifest,
@@ -47,10 +53,10 @@ describe("September 17 bread-and-butter admission", () => {
     ]) {
       expect(records.length).toBeGreaterThan(0);
     }
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(203);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(518);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes))
-      .toHaveLength(783);
+      .toHaveLength(1295);
 
     for (const clinicalCase of cases) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);

@@ -26,7 +26,7 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
   await page.setViewportSize({ width: 1806, height: 1014 });
   await startClinic(page, "Dr. Rowan Vale", "Vale Surgical Clinic");
   const initialTutorialDismiss = page.getByRole("button", {
-    name: "Turn Off Tutorials",
+    name: "Skip guidance",
   });
   if (await initialTutorialDismiss.isVisible()) {
     await initialTutorialDismiss.click();
@@ -120,7 +120,7 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
   });
   if (await resume.isVisible()) await resume.click();
   const turnOffTutorials = capturePage.getByRole("button", {
-    name: "Turn Off Tutorials",
+    name: "Skip guidance",
   });
   if (await turnOffTutorials.isVisible()) await turnOffTutorials.click();
   const facility = capturePage.locator(".facility-frame");
@@ -255,7 +255,7 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
   });
   if (await resumeVacant.isVisible()) await resumeVacant.click();
   const vacantTutorialDismiss = vacantPage.getByRole("button", {
-    name: "Turn Off Tutorials",
+    name: "Skip guidance",
   });
   if (await vacantTutorialDismiss.isVisible()) await vacantTutorialDismiss.click();
   const vacantFacility = vacantPage.locator(".facility-frame");

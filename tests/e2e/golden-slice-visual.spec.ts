@@ -51,7 +51,7 @@ test("renders the actual Level 1 golden slice on desktop", async ({
   await page
     .getByRole("button", { name: /Quinn Hart portrait/ })
     .click();
-  await expect(page.locator(".paper-chart")).toBeVisible();
+  await expect(page.locator(".chart-sheet")).toBeVisible();
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/level-1-golden-slice-desktop.png`,
     fullPage: false,

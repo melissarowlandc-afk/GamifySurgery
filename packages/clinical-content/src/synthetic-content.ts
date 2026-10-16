@@ -78,6 +78,98 @@ import { EARLY_LEVELS_20260913_CASES, EARLY_LEVELS_20260913_TESTED_CONCEPTS } fr
 import { BRIEF_EARLY_LEVELS_20260917_CASES, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS } from "./development-batch/2026-09-17/brief-early-levels-batch";
 import { BREAD_BUTTER_20260917_CASES, BREAD_BUTTER_20260917_TESTED_CONCEPTS } from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
 import { GS028_20260928_CASES, GS028_20260928_TESTED_CONCEPTS } from "./development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20260929_CASES, GS028_20260929_TESTED_CONCEPTS } from "./development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_STATS_ETHICS_20260929_CASES, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS } from "./development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch";
+import { GS028_20261002_CASES, GS028_20261002_TESTED_CONCEPTS } from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+import { GS028_20261003_CASES, GS028_20261003_TESTED_CONCEPTS } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
+import { GS028_20261007_CASES, GS028_20261007_TESTED_CONCEPTS } from "./development-batch/2026-10-07-variety/variety-batch";
+import { GS028_20261007_VARIETY2_CASES, GS028_20261007_VARIETY2_TESTED_CONCEPTS } from "./development-batch/2026-10-07-variety-2/variety-batch";
+import { GS028_20261007_LEVEL3_CASES, GS028_20261007_LEVEL3_TESTED_CONCEPTS } from "./development-batch/2026-10-07-level3/level3-batch";
+import {
+  PEDIATRIC_CLINIC_BATCH_MANIFEST,
+  PEDIATRIC_CLINIC_CASES,
+  PEDIATRIC_CLINIC_FAMILY_CONTEXTS,
+  PEDIATRIC_CLINIC_TESTED_CONCEPTS,
+} from "./development-batch/2026-10-08-pediatric-clinic/pediatric-clinic-batch";
+import {
+  VARIETY3_ADULT_CONTEXTS,
+  VARIETY3_BATCH_MANIFEST,
+  VARIETY3_CASES,
+  VARIETY3_TESTED_CONCEPTS,
+} from "./development-batch/2026-10-10-variety-3/variety3-batch";
+
+/** Separate assembly receipt; the standalone draft receipt and clinical status are retained. */
+export const VARIETY3_PROTOTYPE_ADMISSION_MANIFEST = {
+  id: "prototype-admission.2026-10-10.variety-3",
+  batchId: VARIETY3_BATCH_MANIFEST.id,
+  contentVersion: VARIETY3_BATCH_MANIFEST.contentVersion,
+  reviewStatus: "needs_clinician_review",
+  aiAssistedDrafting: true,
+  lastClinicianReview: null,
+  clinicalApproval: false,
+  authorization: "manager_scope_editorial_acceptance",
+  authorizedOn: "2026-10-10",
+  assemblyAuthorized: true,
+  publicReleaseAuthorized: false,
+  publicationStatus: "synthetic_unapproved_prototype",
+  requiredFacilityStages: VARIETY3_BATCH_MANIFEST.requiredFacilityStages,
+  releasePointIds: VARIETY3_BATCH_MANIFEST.releasePointIds,
+  requiredClinicalSetting: "clinic",
+  requiredCapabilityIds: [],
+  executionScope: "clinic_recognition_counseling_outside_plan_review",
+  conceptIds: VARIETY3_TESTED_CONCEPTS.map(concept => concept.id),
+  reusedConceptIds: VARIETY3_BATCH_MANIFEST.reusedConceptIds,
+  variants: VARIETY3_CASES.map(clinicalCase => {
+    const adult = VARIETY3_ADULT_CONTEXTS.find(row => row.caseId === clinicalCase.id)!;
+    return {
+      caseId: clinicalCase.id,
+      questionVariantId: clinicalCase.decisionNodes[0]!.questionVariantId,
+      conceptId: clinicalCase.decisionNodes[0]!.primaryConceptId,
+      earliestFacilityStage: clinicalCase.earliestFacilityStage,
+      releasePointId: clinicalCase.releasePointId,
+      requiredClinicalSetting: clinicalCase.requiredClinicalSetting,
+      adultContextId: adult.id,
+      profileId: adult.profileId,
+      patientStillId: adult.patientStillId,
+    };
+  }),
+  // All twenty variants are supported clinic visits. Test/procedure choices are
+  // outside-plan discussions with presentation estimates, never local execution.
+  deferredVariants: [] as readonly { caseId: string; questionVariantId: string; reason: string }[],
+} as const;
+
+/** Manager scope/editorial acceptance only; the authoring review states are unchanged. */
+export const PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST = {
+  id: "prototype-admission.2026-10-09.pediatric-clinic",
+  batchId: PEDIATRIC_CLINIC_BATCH_MANIFEST.id,
+  contentVersion: PEDIATRIC_CLINIC_BATCH_MANIFEST.contentVersion,
+  reviewStatus: "needs_clinician_review",
+  aiAssistedDrafting: true,
+  lastClinicianReview: null,
+  clinicalApproval: false,
+  authorization: "manager_scope_editorial_acceptance",
+  authorizedOn: "2026-10-09",
+  assemblyAuthorized: true,
+  publicReleaseAuthorized: false,
+  publicationStatus: "synthetic_unapproved_prototype",
+  requiredFacilityStage: 4,
+  releasePointId: "release.l4.pediatrics",
+  requiredCapabilityIds: ["capability.pediatric_examination"],
+  careRoomDefinitionId: "room.pediatric_examination",
+  parentPolicy: "one_named_parent_same_room_throughout",
+  conceptIds: PEDIATRIC_CLINIC_TESTED_CONCEPTS.map(concept => concept.id),
+  reusedConceptIds: PEDIATRIC_CLINIC_BATCH_MANIFEST.reusedConceptIds,
+  variants: PEDIATRIC_CLINIC_CASES.map(clinicalCase => ({
+    caseId: clinicalCase.id,
+    questionVariantId: clinicalCase.decisionNodes[0]!.questionVariantId,
+    conceptId: clinicalCase.decisionNodes[0]!.primaryConceptId,
+    familyContextId: PEDIATRIC_CLINIC_FAMILY_CONTEXTS.find(family => family.caseId === clinicalCase.id)!.id,
+    profileId: clinicalCase.approvedInstantiationProfiles![0]!.id,
+  })),
+  // All twenty variants are counseling/referral/recognition decisions. Neither
+  // keys nor distractors offer testing, and referrals do not enact procedures.
+  deferredVariants: [] as readonly { caseId: string; questionVariantId: string; reason: string }[],
+} as const;
 
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
@@ -1128,6 +1220,8 @@ export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
   ...BRIEF_EARLY_LEVELS_20260917_CASES,
   ...BREAD_BUTTER_20260917_CASES,
   ...GS028_20260928_CASES,
+  ...GS028_20260929_CASES,
+  ...GS028_STATS_ETHICS_20260929_CASES,
 ];
 
 /** Exact pre-repair assembly used by the literal September 13 wording bindings. */
@@ -1196,6 +1290,17 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ...BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS,
     ...BREAD_BUTTER_20260917_TESTED_CONCEPTS,
     ...GS028_20260928_TESTED_CONCEPTS,
+    ...GS028_20260929_TESTED_CONCEPTS,
+    ...GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS,
+    ...GS028_20261002_TESTED_CONCEPTS,
+    ...GS028_20261003_TESTED_CONCEPTS,
+    ...GS028_20261007_TESTED_CONCEPTS,
+    ...GS028_20261007_VARIETY2_TESTED_CONCEPTS,
+    ...GS028_20261007_LEVEL3_TESTED_CONCEPTS,
+    ...PEDIATRIC_CLINIC_TESTED_CONCEPTS.filter(concept =>
+      !PEDIATRIC_CLINIC_BATCH_MANIFEST.reusedConceptIds.includes(concept.id),
+    ),
+    ...VARIETY3_TESTED_CONCEPTS,
   ],
   cases: [
     ...applyPatientLibraryWordingRepair(PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES),
@@ -1203,6 +1308,15 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ...BRIEF_EARLY_LEVELS_20260917_CASES,
     ...BREAD_BUTTER_20260917_CASES,
     ...GS028_20260928_CASES,
+    ...GS028_20260929_CASES,
+    ...GS028_STATS_ETHICS_20260929_CASES,
+    ...GS028_20261002_CASES,
+    ...GS028_20261003_CASES,
+    ...GS028_20261007_CASES,
+    ...GS028_20261007_VARIETY2_CASES,
+    ...GS028_20261007_LEVEL3_CASES,
+    ...PEDIATRIC_CLINIC_CASES,
+    ...VARIETY3_CASES,
   ],
 });
 

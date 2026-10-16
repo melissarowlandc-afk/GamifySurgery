@@ -11,6 +11,7 @@ export const answerChoiceSchema = z
     id: stableIdSchema,
     label: z.string().min(1).max(240),
     isCorrect: z.boolean(),
+    rationale: z.string().min(1).max(1_000).optional(),
     /**
      * Optional operational preview for a choice that requests a timed service.
      *
@@ -101,6 +102,35 @@ export const resultGateSchema = z
   })
   .strict();
 
+/** Small, independently authored teaching exhibits; optional on legacy saves. */
+export const caseExhibitSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("table"),
+    caption: z.string().min(1).max(240),
+    columnHeaders: z.array(z.string().min(1).max(240)).min(1).max(12),
+    rowHeaders: z.array(z.string().min(1).max(240)).min(1).max(12),
+    cells: z.array(z.array(z.string().max(500)).min(1).max(12)).min(1).max(12),
+  }).strict().superRefine((table, context) => {
+    if (table.cells.length !== table.rowHeaders.length ||
+        table.cells.some((row) => row.length !== table.columnHeaders.length)) {
+      context.addIssue({ code: "custom", message: "Exhibit cells must match the row and column headers.", path: ["cells"] });
+    }
+  }),
+  z.object({
+    kind: z.literal("keyValue"),
+    caption: z.string().min(1).max(240).optional(),
+    items: z.array(z.object({
+      label: z.string().min(1).max(240),
+      value: z.string().min(1).max(500),
+    }).strict()).min(1).max(20),
+  }).strict(),
+  z.object({
+    kind: z.literal("abstract"),
+    title: z.string().min(1).max(240),
+    body: z.string().min(1).max(2_000),
+  }).strict(),
+]);
+
 export const decisionNodeSchema = z
   .object({
     id: stableIdSchema,
@@ -121,6 +151,8 @@ export const decisionNodeSchema = z
     answerChoices: z.array(answerChoiceSchema).min(2).max(8),
     shuffleAnswers: z.boolean(),
     explanation: z.string().min(1).max(2_000),
+    teachingPoint: z.string().min(1).max(1_000).optional(),
+    exhibit: caseExhibitSchema.optional(),
     sourceLabels: z.array(z.string().min(1).max(240)).min(1),
     resultGateAfter: resultGateSchema.nullable(),
     terminalDispositions: z.array(terminalOutcomeDispositionSchema),
@@ -184,6 +216,24 @@ export const testedConceptSchema = z
   })
   .strict();
 
+/** Owner-approved presentation scope; this marker grants no clinical approval. */
+export const pediatricPatientProfileSchema = z.object({
+  version: z.literal("pediatric-patient-profile.v1"),
+  requiresParent: z.literal(true),
+  clinicalScope: z.literal("outpatient"),
+}).strict();
+
+function validatePediatricDemographics(
+  demographics: { ageYears: number; sexLabel: string } | undefined,
+  context: z.RefinementCtx,
+  path: Array<string | number>,
+): void {
+  if (!demographics || demographics.ageYears < 5 || demographics.ageYears > 17 ||
+      (demographics.sexLabel !== "Female" && demographics.sexLabel !== "Male")) {
+    context.addIssue({ code: "custom", message: "A pediatric profile needs explicit age 5-17 and sex, without adult defaults.", path });
+  }
+}
+
 /**
  * One complete, clinician-reviewed presentation profile that may be selected
  * when a runtime encounter is frozen.
@@ -195,6 +245,7 @@ export const testedConceptSchema = z
 export const approvedInstantiationProfileSchema = z
   .object({
     id: stableIdSchema,
+    pediatricProfile: pediatricPatientProfileSchema.optional(),
     prototypeDemographics: z
       .object({
         ageYears: z.number().int().min(0).max(120),
@@ -215,7 +266,10 @@ export const approvedInstantiationProfileSchema = z
     chiefComplaint: z.string().min(1).max(160).optional(),
     presentation: z.string().min(1).max(2_000),
   })
-  .strict();
+  .strict()
+  .superRefine((profile, context) => {
+    if (profile.pediatricProfile) validatePediatricDemographics(profile.prototypeDemographics, context, ["prototypeDemographics"]);
+  });
 
 /**
  * A presentation-only revision is deliberately independent from the approved
@@ -273,6 +327,7 @@ export const patientPresentationRevisionSchema = z
 export const syntheticClinicalCaseSchema = z
   .object({
     id: stableIdSchema,
+    pediatricProfile: pediatricPatientProfileSchema.optional(),
     displayName: z.string().min(1).max(160),
     patientPresentationVariantId: stableIdSchema,
     /**
@@ -281,6 +336,20 @@ export const syntheticClinicalCaseSchema = z
      */
     releasePointId: stableIdSchema.optional(),
     patientDisplayName: z.string().min(1).max(80),
+    /**
+     * Optional non-patient learning participant. Omission preserves the
+     * existing patient-encounter contract for every frozen legacy case.
+     */
+    participant: z
+      .object({
+        kind: z.literal("employee_discussion"),
+        requiredStaffRoleDefinitionIds: z
+          .array(stableIdSchema)
+          .min(1)
+          .max(8),
+      })
+      .strict()
+      .optional(),
     prototypeDemographics: z
       .object({
         ageYears: z.number().int().min(0).max(120),
@@ -319,7 +388,7 @@ export const syntheticClinicalCaseSchema = z
     selectedInstantiationProfileId: stableIdSchema.optional(),
     tutorialEligible: z.boolean(),
     routineEligible: z.boolean(),
-    earliestFacilityStage: z.number().int().min(0).max(2),
+    earliestFacilityStage: z.number().int().min(0).max(4),
     requiredClinicalSetting: z.enum([
       "clinic",
       "ambulatory_surgery",
@@ -335,6 +404,12 @@ export const syntheticClinicalCaseSchema = z
   })
   .strict()
   .superRefine((clinicalCase, context) => {
+    if (clinicalCase.pediatricProfile) {
+      validatePediatricDemographics(clinicalCase.prototypeDemographics, context, ["prototypeDemographics"]);
+      clinicalCase.approvedInstantiationProfiles?.forEach((profile, index) => {
+        validatePediatricDemographics(profile.prototypeDemographics ?? clinicalCase.prototypeDemographics, context, ["approvedInstantiationProfiles", index, "prototypeDemographics"]);
+      });
+    }
     if (
       clinicalCase.decisionNodes.length === 4 &&
       clinicalCase.earliestFacilityStage < 3
@@ -673,6 +748,7 @@ export const syntheticClinicalReleaseSchema = z
   });
 
 export type AnswerChoice = z.infer<typeof answerChoiceSchema>;
+export type CaseExhibit = z.infer<typeof caseExhibitSchema>;
 export type AnswerChoiceTimingClassification = z.infer<
   typeof answerChoiceTimingClassificationSchema
 >;
@@ -689,6 +765,7 @@ export type TestedConcept = z.infer<typeof testedConceptSchema>;
 export type ApprovedInstantiationProfile = z.infer<
   typeof approvedInstantiationProfileSchema
 >;
+export type PediatricPatientProfile = z.infer<typeof pediatricPatientProfileSchema>;
 export type PatientPresentationRevision = z.infer<
   typeof patientPresentationRevisionSchema
 >;

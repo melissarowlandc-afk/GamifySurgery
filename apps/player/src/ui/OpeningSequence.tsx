@@ -1,7 +1,10 @@
+import { AccountMenu } from "./AccountMenu";
+import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   FounderIdentity,
 } from "@gamify-surgery/game-domain";
+import { PROTOTYPE_BALANCE_RELEASE } from "@gamify-surgery/balance-config";
 import {
   clinicNameExists,
   normalizeClinicName,
@@ -24,10 +27,12 @@ interface OpeningSequenceProps {
   profile: LocalPrototypeProfile;
   campaignSeed?: string;
   initialStep?: "main" | "founder";
+  initialGuidanceEnabled?: boolean;
   onBeginClinic: (
     founder: FounderIdentity,
     clinicName: string,
     campaignSeed?: string,
+    guidanceEnabled?: boolean,
   ) => void;
   onResumeCampaign: (campaignId: string) => void;
   onRestoreCampaign: (campaignId: string) => void;
@@ -36,8 +41,6 @@ interface OpeningSequenceProps {
 type OpeningStep =
   | "main"
   | "founder"
-  | "inheritance"
-  | "clinic-name"
   | "happy";
 
 function wrapIndex(index: number, length: number): number {
@@ -48,6 +51,7 @@ export function OpeningSequence({
   profile,
   campaignSeed,
   initialStep = "main",
+  initialGuidanceEnabled = true,
   onBeginClinic,
   onResumeCampaign,
   onRestoreCampaign,
@@ -61,6 +65,7 @@ export function OpeningSequence({
   );
   const [founderName, setFounderName] = useState("");
   const [clinicName, setClinicName] = useState("");
+  const [guidanceEnabled, setGuidanceEnabled] = useState(initialGuidanceEnabled);
   const [founderIdentityIndex, setFounderIdentityIndex] = useState(0);
   const initializingRef = useRef(false);
   const [initializing, setInitializing] = useState(false);
@@ -109,11 +114,12 @@ export function OpeningSequence({
     }
     initializingRef.current = true;
     setInitializing(true);
-    onBeginClinic(founder, normalizedClinicName, campaignSeed);
+    onBeginClinic(founder, normalizedClinicName, campaignSeed, guidanceEnabled);
   };
 
   const beginFreshFounder = () => {
     setFounderName("");
+    setGuidanceEnabled(initialGuidanceEnabled);
     setClinicName("");
     setFounderIdentityIndex(0);
     initializingRef.current = false;
@@ -131,6 +137,7 @@ export function OpeningSequence({
   if (step === "main") {
     return (
       <main className="opening-screen prototype-main-screen">
+        <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
         <header className="opening-title-lockup">
           <span className="opening-wordmark">Stitchin&apos; Time</span>
           <div className="opening-tagline-slot">
@@ -195,84 +202,10 @@ export function OpeningSequence({
     );
   }
 
-  if (step === "inheritance") {
-    return (
-      <main className="opening-screen inheritance-screen">
-        <div className="inheritance-copy">
-          <p>Your rich grandpa died.</p>
-          <p>He left you $1,000,000.</p>
-        </div>
-        <div className="inheritance-actions">
-          <button
-            className="opening-choice"
-            type="button"
-            onClick={() => setStep("happy")}
-            disabled={initializing}
-          >
-            Be Rich and Happy
-          </button>
-          <button
-            className="opening-choice"
-            type="button"
-            onClick={() => setStep("clinic-name")}
-            disabled={initializing}
-          >
-            Build a Surgery Clinic
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  if (step === "clinic-name") {
-    return (
-      <main className="opening-screen clinic-name-screen">
-        <section className="founder-creator" aria-labelledby="clinic-name-title">
-          <span className="eyebrow">An irreversible commitment to overhead</span>
-          <h1 id="clinic-name-title">Name Your Clinic</h1>
-          <label className="founder-name-field">
-            <span>Clinic name</span>
-            <input
-              autoFocus
-              maxLength={80}
-              value={clinicName}
-              onChange={(event) => setClinicName(event.target.value)}
-              onKeyDown={(event) => {
-                if (
-                  event.key === "Enter" &&
-                  normalizedClinicName.length > 0 &&
-                  !duplicateClinicName
-                ) {
-                  beginClinic();
-                }
-              }}
-            />
-          </label>
-          {duplicateClinicName ? (
-            <p className="opening-form-error" role="alert">
-              That clinic name already exists in town.
-            </p>
-          ) : null}
-          <button
-            className="opening-choice founder-continue"
-            type="button"
-            disabled={
-              initializing ||
-              normalizedClinicName.length === 0 ||
-              duplicateClinicName
-            }
-            onClick={beginClinic}
-          >
-            {initializing ? "Opening clinic..." : "Open the Clinic"}
-          </button>
-        </section>
-      </main>
-    );
-  }
-
   if (step === "happy") {
     return (
       <main className="opening-screen happy-ending-screen">
+        <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
         <PixelAvatar
           avatar={appearance}
           label={`${trimmedFounderName}, rich and happy`}
@@ -295,8 +228,11 @@ export function OpeningSequence({
 
   return (
     <main className="opening-screen founder-creator-screen">
-      <section className="founder-creator" aria-labelledby="founder-title">
-        <h1 id="founder-title">Create Your Founder</h1>
+      <form className="founder-creator" aria-labelledby="founder-title" onSubmit={(event) => { event.preventDefault(); beginClinic(); }}>
+        <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
+        <h1 id="founder-title">Open Your Clinic</h1>
+        <p className="opening-overhead-copy">Grandpa left you options. You chose overhead.</p>
+        <p className="opening-starting-cash">Starting cash: ${PROTOTYPE_BALANCE_RELEASE.facility.startingCash.toLocaleString("en-US")}</p>
         <PixelAvatar
           avatar={appearance}
           label={
@@ -316,14 +252,6 @@ export function OpeningSequence({
             maxLength={60}
             value={founderName}
             onChange={(event) => setFounderName(event.target.value)}
-            onKeyDown={(event) => {
-              if (
-                event.key === "Enter" &&
-                trimmedFounderName.length > 0
-              ) {
-                setStep("inheritance");
-              }
-            }}
           />
         </label>
         <div className="founder-preset-row">
@@ -358,15 +286,22 @@ export function OpeningSequence({
             &rarr;
           </button>
         </div>
-        <button
-          className="opening-choice founder-continue"
-          type="button"
-          disabled={trimmedFounderName.length === 0}
-          onClick={() => setStep("inheritance")}
-        >
-          Continue
+        <label className="founder-name-field">
+          <span>Clinic name</span>
+          <input maxLength={80} value={clinicName} onChange={(event) => setClinicName(event.target.value)} />
+        </label>
+        {duplicateClinicName ? <p className="opening-form-error" role="alert">That clinic name already exists in town.</p> : null}
+        <label className="opening-guidance-preference">
+          <input type="checkbox" aria-label="First-shift guidance" checked={guidanceEnabled} onChange={(event) => setGuidanceEnabled(event.target.checked)} />
+          <span>Guidance: {guidanceEnabled ? "On" : "Off"}</span>
+        </label>
+        <button className="opening-choice founder-continue" type="submit"
+          disabled={initializing || trimmedFounderName.length === 0 || normalizedClinicName.length === 0 || duplicateClinicName}>
+          {initializing ? "Opening clinic..." : "Open the Clinic"}
         </button>
-      </section>
+        <button className="text-button" type="button" disabled={initializing || trimmedFounderName.length === 0} onClick={() => setStep("happy")}>Be Rich and Happy</button>
+        <button className="text-button" type="button" onClick={returnToCampaigns}>Return to Campaigns</button>
+      </form>
     </main>
   );
 }

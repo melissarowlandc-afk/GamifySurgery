@@ -1,0 +1,917 @@
+# Level 5 room design — 2026-10-08
+
+## Goal and authorized scope
+
+Sol worker for the Claude Code **GamifySurgery manager**. Trace the defined
+Level 5 room inventory without inventing rooms, then make the first room's
+isolated painted interactive mockup. Owner direction relayed by the manager:
+after the last Level 4 approval, move to the next room, including the next
+facility level if Level 4 is complete.
+
+Owned active lane: `tools/room-design/level-5/founders-office/**` and this plan. Shared working tree:
+preserve concurrent manager, Claude, owner and worker changes. No Git commands,
+agents, installs, game/runtime/balance edits, saves, commits, push or deployment.
+All authored text is UTF-8 without BOM. The current handoff was read; its
+active October 8 work remains outside this lane. This new plan and the Level 5
+directory were absent at initial intake. The later owner revision preserves the
+first candidate under the room’s history directory.
+
+## Step 1 — defined room inventory and citations
+
+The accepted roadmap **does define Level 5**, titled *Optimized ASC / Prestige*.
+Use its existing list order:
+
+| Order | Defined room | Roadmap evidence | Independent repository cross-check |
+| --- | --- | --- | --- |
+| 1 | Founder's Office | [Accepted facility roadmap, lines 182–190](../features/facility-levels-and-clinical-release-points.md#level-5---optimized-asc--prestige) | [GS-038 accepted future upgrade table, line 459](gs038-all-room-upgrades.md#simple-owner-review-table---october-7); `packages/balance-config/src/room-upgrades.ts:95`, `room.founder_office`, status `future`, appearance changes enabled |
+| 2 | Executive Office | Same roadmap, line 187 | GS-038 line 460; `room-upgrades.ts:96`, `room.executive_office`, status `future` |
+| 3 | Gift Shop | Same roadmap, line 188 | GS-038 line 461; `room-upgrades.ts:97`, `room.gift_shop`, status `future` |
+| 4 | Indoor Garden | Same roadmap, line 189 | GS-038 line 462; `room-upgrades.ts:98`, `room.indoor_garden`, status `future` |
+| 5 | Staff Gym | Same roadmap, line 190 | GS-038 line 463; `room-upgrades.ts:99`, `room.staff_gym`, status `future` |
+
+GS-038's future inventory separately lists exactly these five Level 5 categories
+at lines 697–701. Its older open-benefit discussion is superseded by the
+accepted numerical table (lines 412–426 and 497–500): future upgrade ladders are
+catalog metadata until base room behavior exists. They do not define a room
+footprint or authorize gameplay integration.
+
+The roadmap says Level 5 adds no clinical setting (lines 196–197), with
+hospital/ED/ICU progression deliberately deferred without invented numeric
+levels (lines 25–38 and 272). Call Room is removed (lines 170–171); it is not a
+Level 5 candidate. Reading Room's later move to Level 3 is explicitly recorded
+in GS-038 lines 703–707 and does not change this Level 5 list.
+
+Search coverage: `docs/project-management/PROJECT_BOARD.md`, `docs/features/**`,
+`docs/execplans/**` including `level-four-room-design.md` and
+`gs038-all-room-upgrades.md`, `packages/balance-config/**`, and
+`tools/room-design/**`. The board's GS-015 records establish owner-led standalone
+room design, without supplying another Level 5 list. The Level 4 plan lines
+35–37 supplies the prior room inventory. No alternative Level 5 inventory or
+Founder Office footprint was found. `rg` is unavailable in this shell; native
+PowerShell file enumeration and `Select-String` were used instead.
+
+**Step 1 result:** five defined rooms; Step 2 is authorized. Chosen room:
+**Founder's Office**, first in roadmap order.
+
+## Step 2 — owner-directed revision, complete for manager review
+
+The manager stopped the preceding turn so the owner’s expanded direction could
+be incorporated. The active design is **3×3 with five complete room appearances
+(Levels 1–5)**. The old proposed 4×4 base candidate and its manager browser
+evidence remain under `founders-office/history/4x4-base-20261008/`; they are
+superseded for this revision. This does not change the accepted room list.
+
+Owner direction (October 8): “a basic table for a desk and each level the desk
+gets more ornate”; the shelf starts as a wire rack; the founder chair can end
+“basically a throne”; the visitor chair progresses from folding to velvet; the
+final appearance has a fancy rug, generic bust and gold highlights. The manager
+clarified the desk orientation: founder sits north facing south, visitor sits
+south facing north, and desk art shows the south visitor-side face, without
+operator drawers or an operator knee-hole view. Visitor chair is seen from
+behind, with the rear panel and arms in front of the real seated adult.
+
+| Appearance | Complete selected set |
+| --- | --- |
+| 1 Startup | Basic table; simple office chair; folding visitor chair; wire rack; plain mat; small print |
+| 2 Established | Plain wood desk; padded task/guest chairs; wood shelf; small rug; unreadable diploma; small plant |
+| 3 Refined | Paneled solid wood desk with lamp; leather founder chair; upholstered visitor chair; wood bookcase; patterned rug; art |
+| 4 Executive | Carved executive desk; high-back leather founder chair; leather visitor armchair; glass awards cabinet; rich rug; statement art; plant |
+| 5 Grand | Gold-trim ornate desk; throne-like founder chair; velvet visitor armchair; gold-accent ornate bookcase; luxurious rug; gilded art; generic classical bust/pedestal |
+
+All five tiers have unique built-in-generated desk, founder chair, visitor chair,
+shelf, rug/mat and wall decor assets. Plants (L2/L4) and bust (L5) are separate
+accents; L3 lamp is part of its desk. **35 calls, 33 selected objects, 10 native
+chair foregrounds.** Rejected L1 desk and L5 throne originals, exact prompts and
+edit receipts are preserved alongside selected versions. No logos, readable
+text, real-person sculpture, wounds, blood or clinical body detail.
+
+### Layout, seats and doorway contract
+
+One shared layout, 120 proof pixels/tile, 12 independent one-tile wall sections:
+N1–N3, S1–S3, WA–WC, EA–EC. Real unchanged `founder.01/sit-south.png` and
+`patient.adult.007/sit-north.png` sit in every tier. Both measured cushions rise
+45 proof pixels above their fixed floor anchors. Layer order is chair, real
+adult, camera-side foreground, with desk in front of founder. Seated legs hang;
+there are no leg rests. No rolling stool or pediatric occupant is introduced.
+
+`stand-in/v2/layout-prepaint.json`, seven canvases, manifest and route receipt
+were frozen before painting. Later native replay images use those originals.
+The shared art-fit corrections in `layout-reconciliation-v2.json` move the
+desk 0.20 tile north, slightly widen the founder canvas, clear decor from the
+bust and move the visitor approach 0.10 tile west. All tiers share the final
+anchors and footprints; floor/seat contacts and doorway ownership remain fixed.
+
+Shelf and accent hide on their own door sections, opening the complete threshold
+and approach. Floor furniture remains full height against low north backing;
+wall art hides on its own door/backing sections. Rugs are walkable. No furniture
+pass-through exception is used. Radius-clear paths account for declared
+footprints and measured opaque floor-contact bands. Single-door paths are safe
+with all other optional objects present; opening further doors removes obstacles,
+so arbitrary door combinations remain safe.
+
+### Milestones and ownership
+
+1. Roadmap trace — **complete**, existing citations above; first room selected.
+2. Re-read tree and preserve prior candidate — **complete**, history archive.
+3. Shared 3×3 stand-ins and ART_BRIEF before art — **complete**, frozen sources.
+4. Five complete generated appearances, inspection, preparation and provenance
+   — **complete**, originals/prompts/receipts/hashes and source registrations.
+5. Tier buttons/keyboard, real seating, all-door/backing/inspection controls,
+   Node validators, native renders and all-tier browser helpers — **complete**.
+6. Scoped room handoff and this plan — **complete**. Manager acceptance,
+   browser execution and owner art review are the next steps.
+
+The worker owns the room directory and this plan only. Preserve concurrent work.
+No Git, agent spawning, installs, runtime/balance/gameplay edits, save access,
+commit, push, deployment or publication. UTF-8 without BOM. Manager owns the
+global current handoff, product decisions, acceptance and checkpoint reminder.
+This valuable local milestone has no GitHub backup claimed.
+
+### Review pathway and pending decisions
+
+Review URL:
+<http://127.0.0.1:4191/tools/room-design/level-5/founders-office/proof/index.html>
+
+This isolated room proof uses no campaign storage. Owner gameplay stays
+`START_GAME.cmd` → exact `http://127.0.0.1:4173` in the usual persistent profile;
+saves do not transfer to port 4191. The existing manager server was unchanged.
+
+The five tier buttons, keys 1–5 and arrows preserve doors/backing/diagnostics;
+Escape resets to Level 1. Twelve doors, three backing sections, bulk actions,
+occupancy, contacts, measured bases, grid and routes remain available.
+
+Owner art approval is pending (`approval: null`), runtime integration is false.
+**The mockup’s morale mechanic remains undecided**, per the latest worker brief.
+Accepted GS-038 +2 metadata is distinct from an operating mechanic. The
+concurrent manager note below is preserved; manager should reconcile that record
+with the latest brief before any gameplay integration. No mechanic was authored.
+
+## Validation commands and exact current output
+
+Run from the repository root. Existing dependencies only.
+
+```text
+node tools/room-design/level-5/founders-office/proof/validate.cjs
+VALIDATION PASS: 5 tiers; 33 painted assets + 10 chair foregrounds; 2 real stills; 560 door/backing states; 2880 routes; 1115024 radius-clear samples at 0.005T; 12 one-tile doors; shared anchors; contacts/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/founders-office/proof/validate-controls.mjs
+CONTROL VALIDATION PASS 153 Node handler checks; 5 tier buttons, 12 door buttons, 3 backing buttons, 4 bulk buttons, keyboard, real-error/performance-warning discrimination; browser pending
+
+node tools/room-design/level-5/founders-office/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 45 actual-render states across 5 tiers; occupied/empty/individual adults/contacts/all doors/backing/owned door hides; browser QA pending.
+
+node tools/room-design/level-5/founders-office/proof/reproduce.mjs
+BUILD PASS: painted; 5 complete tiers; 33 distinct assets + 10 chair foregrounds; shared 3x3; 12 one-tile doors; same seat anchors.
+BUILD PASS: painted; 5 complete tiers; 33 distinct assets + 10 chair foregrounds; shared 3x3; 12 one-tile doors; same seat anchors.
+REPRODUCIBILITY PASS: 50 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/founders-office/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution pending manager.
+
+node tools/room-design/level-5/founders-office/assets/write-provenance-v2.mjs
+PROVENANCE PASS: 35 built-in calls; 33 selected originals/prompts/receipts; 43 prepared hashes; frozen stand-ins; real stills unchanged; approval pending.
+```
+
+Read-only PowerShell requests to the existing server:
+`HTTP VALIDATION PASS: 54 current proof resources return 200 at http://127.0.0.1:4191; existing server unchanged.`
+The commands in `proof/check-http.ps1` were executed inline because this worker
+environment disables PowerShell script files; no execution policy was changed.
+
+Manager, with server running:
+
+```text
+node tools/room-design/level-5/founders-office/proof/validate-browser.cjs
+node tools/room-design/level-5/founders-office/proof/capture.cjs
+```
+
+Browser scripts compile and installed Playwright resolves; worker did not spawn
+a browser. Current receipts are pending in `proof/evidence/v2/` and
+`proof/evidence/v2/browser/`. Validator pins served code/manifest/sprite hashes,
+checks all five tiers, 560 states/2,880 routes, contacts/layers, actual controls,
+keyboard and 320 px. Capture writes 50 room states plus five desktop and five
+narrow pages. Canvas readback performance advisories are nonfatal; real page
+exceptions, console errors, failed requests and HTTP failures are fatal.
+
+## Evidence, discoveries and handback
+
+- `proof/evidence/v2/native-all-five-levels.png` compares all five native tiers.
+  Forty-five native views are engineering art inspections, not browser captures.
+- Node validation checks alpha edges/padding, aspect preservation, no upscale,
+  original/prompt/receipt/processed hashes, both real stills, measured contacts,
+  actual foreground overlap and shared anchors; 720 monotonic comparisons
+  justify arbitrary door combinations. No clinical approval is implied.
+- Two native rebuilds reproduce all 50 delivered files byte-for-byte.
+- Twenty-five shared reference hashes were checked. The shared Level 4
+  Wound/Ostomy `proof/lab.js` changed concurrently; this is recorded in the
+  receipt and preserved. Reused still hashes match.
+- Root evidence JSON reports are explicitly superseded; prior native/browser
+  PNGs remain for comparison. Untouched originals also remain in the history
+  archive. New evidence is under `v2/`.
+- Founder’s Office only: the other four defined rooms were not started during
+  this revision. No architecture or gameplay decision was made.
+- Exact paths, outputs and manager actions:
+  [worker handoff](../../tools/room-design/level-5/founders-office/WORKER_HANDOFF.md).
+
+Next action: manager inspects scoped changes and native contact sheet, runs the
+browser validator and all-tier capture, then opens the review URL for owner art
+approval. Remaining owner question is approval of the five appearances/layout;
+the manager must reconcile the morale record before a future runtime milestone.
+
+### Concurrent manager note — preserved, not implemented by this worker
+
+- 2026-10-08: OWNER: morale effect = simply owning the Founder Office raises every employee's morale (per-upgrade +2 per GS-038 ladder).
+- 2026-10-08: Founder Office v2 (3x3, five tiers) browser validation PASS (13 groups, 5 tiers, 12 doors, page errors 0), capture PASS; opened in the Claude browser pane for owner review. Morale: owner chose "owning the room raises every employee's morale".
+
+## Step: Executive Office mockup
+
+**2026-10-11 occupied-seat fix complete for manager review.** Owner: "The executive's chair needs to stay even if there is a N2 door. Just allow characters to path by it." N2 retains Executive chair/sitter/foreground at unchanged anchors; S2 retains visitor chair/sitter/foreground too. Full routes pass solid furniture and reach standing approaches and every other door. Native engineering checks pass; manager browser QA and conditional approval receipt remain pending.
+
+Existing **room-lab-4191**:
+<http://127.0.0.1:4191/tools/room-design/level-5/executive-office/proof/index.html>
+
+Exact path: `/tools/room-design/level-5/executive-office/proof/index.html`.
+
+### Footprint, furniture and fixed appearance
+
+Owner 2026-10-10 directed **3x2**: three wide, two deep, six floor tiles, smaller than approved 3x3 Founder. Full former 4x3 reference: `history/4x3-20261010/`, 187 original files byte-identical, prior plan section and working static reference. Earlier 3x2 code/docs: `history/3x2-seat-hiding-20261011/`; v3 art/evidence untouched.
+
+**Kept:** dual-monitor desk, occupied Executive/visitor chairs, approved sitters, unreadable KPI, window, plant, compact credenza, walkable rug.
+**Dropped:** round meeting table and both meeting placements; a separate bay crowds desk approaches/door clearances. Compact credenza remains after footprint and measured base checks.
+
+Roadmap lists Executive second at facility Level 5 (`facility-levels-and-clinical-release-points.md:182-190`). Catalog `room-upgrades.ts:51-53,96` and GS-038:460,465-466 retain `appearanceChanges=false`. Facility level, upgrade level and appearance remain separate.
+
+| Upgrade | Appearance | Furniture |
+| --- | --- | --- |
+| 1 Base | Corporate base, appearance 1 | Dual-monitor desk; occupied Executive/visitor chairs; KPI; window; plant; compact credenza; rug |
+| 2 | Same appearance 1 | Identical art, seating and anchors |
+| 3 | Same appearance 1 | Identical art, seating and anchors |
+| 4 | Same appearance 1 | Identical art, seating and anchors |
+| 5 | Same appearance 1 | Identical art, seating and anchors |
+
+### Retained seats, ten doors and walker layers
+
+Executive north faces south using unchanged approved `founder.01` south seated stand-in. Visitor south faces north using unchanged adult `.007` north still. Desk presents south visitor panel/monitor backs. Same source scale/contact calibration and 45px cushion rise. Chair then sitter then source-pixel front arms/rear panel; desk in front of Executive.
+
+Executive floor/seat stays **(1.50, 0.82)/(1.50, 0.445)**. Visitor fixed floor/seat becomes **(1.50, 1.60)/(1.50, 1.225)**, 0.14T toward desk, leaving a 0.40T south strip for existing 0.18T-radius character. Doors never move/hide either seat, sitter or foreground. Both chair footprints remain solid.
+
+**Ten legal one-tile doors: N1-N3, S1-S3, WA-WB, EA-EB; three north backing sections.** Approaches 0.20T inside portals; full paths include entry/exit from 0.20T outside. Declared footprints plus measured opaque floor bands block paths. No chair pass-through, skipped threshold or radius reduction. Every single, pair and all doors pass at eight backing combinations and five fixed upgrades. 7,200 door-to-door routes plus 500 monotonic blocker comparisons cover onward paths for arbitrary door selections. Seat-contact links remain static transitions.
+
+Prior visibility stays: KPI N1/N2 doors/backing, window N3; plant N1/WA doors, credenza N2/N3/EA doors. These existing item hides are preserved; backing retains full-height floor furniture and both sitters.
+
+Passing-adult slider/step/reverse opens N2/S2, retains seated actors and reuses approved .007 standing stills in four directions at same scale. Floor depth sorts the walker behind/in front of chairs, sitters, foregrounds and desk. Closing a portal stops only this example walker. W toggles; Escape resets; upgrades preserve inspection state.
+
+### Provenance and exact validation output
+
+Eight untouched originals from ten prior built-in imagegen calls; **zero new calls**. Ten prepared PNGs, including two exact-source foregrounds, are byte-identical to v3. Same crisp pixel art, palette/outlines/perspective and nearest-neighbour rendering. No new identity, readable KPI text/numbers/logo, clinical content or administrative mechanic. Active freeze/reconciliation/preparation/evidence v4; originals/prompts/real receipts v2.
+
+Current receipts: `proof/evidence/v4/`. Exact commands/full outputs in worker handoff:
+
+```text
+VALIDATION PASS: 1 fixed look / 5 upgrade selections; 8 reused painted assets + 2 chair foregrounds; 2 real stills; 2280 door/backing states; 20400 routes; 10736360 radius-clear samples at 0.005T; 10 one-tile doors; N2/S2 occupied seats retained; full entry/exit routes; contacts/layers/alpha/hashes/UTF-8 checked.
+WALKING VALIDATION PASS: 44 checks; 510 depth samples; 20 opaque chair/walker composites; N2/S2 occupied seats never move or disappear; full entry/exit routes at 0.18T; 4 approved standing directions; browser pending.
+CONTROL VALIDATION PASS 180 Node handler checks; 5 upgrade buttons, 10 door buttons, 3 backing buttons, 4 bulk buttons, occupied-seat walking slider/step/reverse, keyboard, real-error/performance-warning discrimination; browser pending
+NATIVE INSPECTION PASS: 100 actual-render states across 5 fixed-appearance upgrades; occupied/empty/individual adults/contacts/all doors/backing/retained N2/S2 occupied seats/walkers in both directions; browser QA pending.
+REPRODUCIBILITY PASS: 17 delivered files byte-identical across two native rebuilds.
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution pending manager.
+HTTP VALIDATION PASS: 25 current proof resources return 200 at http://127.0.0.1:4191; existing server unchanged.
+PROVENANCE PASS: 8 reused objects; 0 new calls; 10 prepared sprites byte-identical to v3; 2 seated stand-ins + 4 unchanged standing directions; retained N2/S2 seats; approval pending manager.
+PLAN REVISION PASS: Executive Office section updated for retained N2/S2 seats; all preceding/following plan bytes preserved.
+LANE AUDIT PASS: 187 archived 4x3 originals + 34 prior 3x2 intake files unchanged; 10 prepared sprites byte-identical; 43 shared hashes unchanged; assigned plan section only; Node/native/rebuild/HTTP PASS; browser pending manager.
+```
+
+2,280 states = five upgrades x eight backing combinations x (closed + ten singles + 45 pairs + all ten). 20,400 routes, 10,736,360 radius-clear samples at 0.005T including portals. Native occupied render hashes match across upgrades. Walker source-over tests tolerate RGB 2/alpha 1 for native rounding; native evidence is not browser/owner approval.
+
+Current browser attempt exited 1 before page: **`browserType.launch: spawn EPERM`**. Actual stack saved in `proof/evidence/v4/browser-launch-attempt.json`; browser/capture reports `PENDING_MANAGER`. Manager on existing server:
+
+```text
+node tools/room-design/level-5/executive-office/proof/validate-browser.cjs
+node tools/room-design/level-5/executive-office/proof/capture.cjs
+```
+
+Helpers cover served hashes, all pair/portal paths, retained seats/fronts, real walker depth/source-over overlap, wall hides, actual controls/keyboard and 320px. Capture: 100 room states plus five desktop/five narrow pages. Open owner questions: none blocking; manager should inspect the small visitor move/both walk directions and record conditional approval after browser checks. Approval remains null until that receipt; runtime integration false.
+
+Only owned room lane plus this assigned section changed. All preceding/following plan bytes, including concurrent manager rules, preserved. 43 shared intake hashes unchanged. No Git, agents, installs, runtime/balance/save edits, global-handoff write or external messages. Valuable milestone remains local; manager owns acceptance and backup reminders. Port 4191 has no campaign storage; gameplay stays `START_GAME.cmd` at exact `http://127.0.0.1:4173` in usual profile, with no save transfer or server/launcher change.
+
+[Worker handoff](../../tools/room-design/level-5/executive-office/WORKER_HANDOFF.md) |
+[Art provenance](../../tools/room-design/level-5/executive-office/assets/provenance.md) |
+[Occupied N2/S2 proof](../../tools/room-design/level-5/executive-office/proof/evidence/v4/native-level-1-occupied-middle-doors.png)
+
+
+## Owner rules (2026-10-11, binding for remaining Level 5 rooms)
+
+- Only the Founder's Office changes appearance with upgrade level; every other room keeps one fixed look at all upgrade levels (matches room-upgrades.ts appearance flags).
+- Necessary furniture is never removed by doors (the room's functional pieces: work/visitor chairs and their sitters, checkout, primary displays, standing/queue spots); characters path around/past it instead (Executive Office N2 review). Optional decor may still be hidden by a door, as wall items already are. (Owner wording, 2026-10-11.)
+- Executive Office approved by the owner on 2026-10-11 conditional on the N2/S2 chair-stays fix; approval receipt to be written after that fix is validated.
+
+## Step: Gift Shop mockup
+
+**Revision 3 — room-first composition, 2026-10-11; isolated candidate, owner approval pending.**
+
+URL: [http://127.0.0.1:4191/tools/room-design/level-5/gift-shop/proof/index.html](http://127.0.0.1:4191/tools/room-design/level-5/gift-shop/proof/index.html). The full-room concept is shown beside the playable 3×3 room (stacked at narrow widths). Current handoff: `tools/room-design/level-5/gift-shop/WORKER_HANDOFF.md`.
+
+### Concept, derivation and tier decision
+
+The full-room concept came first. It transforms the approved 3×3 Wound/Ostomy empty-room view into a Gift Shop, with Pediatric Waiting as a second finish/outline reference. Its straight rear wall, elevated orthographic camera, subdued hospital palette and crisp raster shading follow those approved rooms.
+
+Seven subsequent built-in edits reference that exact concept: the central island, one adjoining three-bay back run, left card/flower module, left-front cooler, right snack/magazine/plush module, entrance endcap, and mat. These are concept-derived cutouts/redraws, with occluded edges completed. The back run is split at its shared posts into three bays; left/right modules repeat at adjoining floor intervals. Merchandise belongs to its fixture and overlaps neighboring silhouettes by real floor depth.
+
+Native preparation uses explicit source rectangles, alpha below 8 cleanup in prepared copies, and one uniform scale; original outputs remain untouched. The rear bays’ decoded plinths are registered to exactly one tile each and abut edge to edge. The filled main-island footprint is 1.10×1.15 tiles, the front-right endcap 0.90×0.65, and continuous shallow wall runs leave a connected aisle. Art rises from those footprints rather than sitting as small isolated icons. Painted-base measurements and all refinements are recorded in `layout-reconciliation-v3.json`.
+
+The loose spinner’s cards become the joined left-wall run, the round display’s flowers/plush become the island, and mugs/candles become adjoining rear stock. Size, proximity, stock and colors come from the one room composition.
+
+The concept is `tools/room-design/level-5/gift-shop/concept/gift-shop-concept.png`; its exact prompt and real built-in receipt are in the same folder. Built-in image generation only: one concept and seven concept-derived transparent edits, nine prepared sprites / eleven fixture records. The catalog’s `room.gift_shop appearanceChanges=false` remains the tier decision: one fixed look for all five upgrade selections. Three default standing shoppers, an optional fourth occupant to prove the second necessary queue spot, self-service checkout, no shopkeeper. Retail income remains outside this isolated proof.
+
+### Necessary and optional pieces
+
+**Necessary furniture isn't removed by doors.** One joined island provides the checkout and main display; all four standing/queue contacts stay. Optional stocked wall bays/fixture segments may hide for their declared doors; attached wall merchandise hides with its fixture. The walkable mat remains. Routes avoid every visible fixture and measured base with other shoppers present.
+
+| Piece | Contents / role | Class | Hidden by doors |
+| --- | --- | --- | --- |
+| `northLeft` | Rear left: balloons, plush, cards and mugs | Optional | N1, WA |
+| `northMiddle` | Rear middle: mugs, candles and impulse snacks | Optional | N2 |
+| `northRight` | Rear right: magazines, cards and overflowing plush | Optional | N3, EA |
+| `westRear` | Left rear: joined card rack and flower buckets | Optional | N1, WA |
+| `westMiddle` | Left middle: continuing cards and flowers | Optional | WB |
+| `westCooler` | Left front: flower cooler and bouquet endcap | Optional | S1, WC |
+| `eastRear` | Right rear: magazine/snack shelving and plush | Optional | N3, EA |
+| `eastMiddle` | Right middle: continuing stocked shelves | Optional | EB |
+| `entranceEndcap` | Entrance: joined plush bin, flowers and balloons | Optional | S3, EC |
+| `mainIsland` | Joined main display and self-service checkout | Necessary | None |
+| `checkoutMat` | Checkout mat | Optional · walkable | None |
+| `browse`, `pay`, `queue1`, `queue2` | Four standing/queue spots | Necessary | None |
+
+- `browse`: [0.625, 1], east, unchanged `patient.adult.007`.
+- `pay`: [1.4, 2.1], north, unchanged `patient.adult.001`.
+- `queue1`: [2.55, 1.975], west, unchanged `patient.adult.004`.
+- `queue2`: [2.55, 1.05], south, unchanged `patient.adult.006`.
+
+### Provenance, history and validation
+
+Untouched new originals and actual receipts: `assets/originals/v3/`; exact prompt set: `assets/prompts/v3/` plus `concept/prompt.txt`; registered PNGs: `assets/processed/v3/`; provenance: `assets/provenance-v3.json` / `assets/art-provenance.json`. Prior v2 is fully preserved under `history/v2/` with 417 verified byte-hashed files; earlier v1 history also stays. Owner art review remains separate from engineering checks.
+
+All runnable native validators pass: 3,200 door/backing states, 63,480 routes and 63,480 full-queue routes; 27,145,760 unoccupied and 28,991,560 occupied radius-clear samples at 0.005T, using a 0.18T radius. Necessary geometry remains unchanged for doors/backing. Optional visibility only removes blockers/contacts, so the single-door proofs extend to all 4096 door combinations, all 8 backing combinations and all 5 fixed-look upgrade selections. Queue advance is tested after the next spot clears, with other shoppers retained as obstacles. Entry routes also provide exits in reverse.
+
+Actual shipped handlers pass 230 checks. The actual Canvas renderer produces 110 states, including shoppers hidden, four occupied spots, contacts, routes, all single doors/all doors and north backing. The rear plinth seams, floor registration, depth order, alpha, unchanged adult-source hashes and UTF-8 are checked. Two native rebuilds preserve 21 delivered files byte-for-byte. All 23 served page/art/still resources return 200 with matching bytes at the unchanged manager server.
+
+With shoppers hidden, actual fixture paint covers 54.5% of the visible floor versus 37.6% in v2 (+16.9 percentage points); this measures visible fixture paint, not collision area or owner approval. The concept/empty/full-queue comparison is `proof/evidence/v3/concept-playable-comparison.png`.
+
+Browser validation and capture both actually returned `browserType.launch: spawn EPERM` (exit 1) in the worker sandbox. Their status is `PENDING_MANAGER`; no browser PASS or owner approval is claimed. Full stderr is in the v3 browser reports.
+
+Exact runnable output (successful stdout verbatim; browser first-line results, with complete stderr retained in reports):
+
+```text
+node tools/room-design/level-5/gift-shop/proof/build.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.
+
+node tools/room-design/level-5/gift-shop/proof/validate.cjs
+VALIDATION PASS: room-first concept; 1 fixed look / 5 upgrades; 9 derived sprites / 11 fixtures; 1 necessary joined checkout/main display / 10 optional records; 4 unchanged approved adult stills; 3200 door/backing states; 63480 routes / 27145760 radius-clear samples at 0.005T; 63480 full-queue routes / 28991560 occupied samples; all 12 doors; necessary furniture and spots retained; tile-filled rear plinths/visibility/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/gift-shop/proof/validate-controls.mjs
+CONTROL VALIDATION PASS: 230 Node handler checks; 5 fixed-look upgrade buttons, 12 door buttons, 3 backing buttons, 4 bulk buttons, 4 standing shoppers, keyboard, real-error/performance-warning discrimination; browser pending.
+
+node tools/room-design/level-5/gift-shop/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 110 actual-render states across 5 fixed-appearance upgrades; default/empty/individual shoppers/full queue/contacts/routes/all 12 doors/backing; browser QA pending.
+
+node tools/room-design/level-5/gift-shop/proof/inspect-composition.mjs
+COMPOSITION INSPECTION PASS: fixture paint with shoppers hidden fills 54.5% of the visible floor versus 37.6% in v2 (+16.9 points); concept/playable/full-queue comparison saved.
+
+node tools/room-design/level-5/gift-shop/proof/reproduce.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.
+BUILD PASS: painted; 1 fixed look / 5 upgrade selections; 9 concept-derived sprites / 11 fixture records; shared 3x3; 12 one-tile doors; necessary joined main display/checkout and standing spots; no staff.
+REPRODUCIBILITY PASS: 21 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/gift-shop/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.
+
+node tools/room-design/level-5/gift-shop/proof/check-http.mjs
+HTTP VALIDATION PASS: 23 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.
+
+node tools/room-design/level-5/gift-shop/assets/write-provenance-v3.mjs
+ART PROVENANCE PASS: 1 built-in full-room concept + 7 concept-derived transparent edits; 9 prepared sprites / 11 fixture records; prompts/receipts/originals/crops/transforms/hashes recorded; 4 unchanged approved adult stills; complete v2 archive retained.
+
+node tools/room-design/level-5/gift-shop/proof/validate-browser.cjs
+browserType.launch: spawn EPERM
+Exit 1; PENDING_MANAGER. Complete stderr: proof/evidence/v3/browser-validation-report.json.
+
+node tools/room-design/level-5/gift-shop/update-plan-v3.mjs
+SCOPED PLAN UPDATE PASS: only Step: Gift Shop mockup replaced; 23455 prefix bytes / 604 suffix bytes preserved exactly, including the manager’s room-first directive.
+
+node tools/room-design/level-5/gift-shop/proof/audit-lane.cjs
+LANE AUDIT PASS: 1024 owned files; 19/26 shared hashes unchanged; 7 concurrent read-only reference changes preserved; assigned Gift Shop plan section only; UTF-8/source/secret/privacy checks; Node/native/rebuild/HTTP PASS; browser PENDING_MANAGER.
+
+```
+
+Detailed outputs and all 110 native states: `proof/evidence/v3/`; complete command results: `validation-outputs.json`. Manager reruns `node tools/room-design/level-5/gift-shop/proof/validate-browser.cjs` and `node tools/room-design/level-5/gift-shop/proof/capture.cjs`.
+
+### Open questions and lane
+
+- Owner: does the concept and the playable view with shoppers hidden now meet the requested cohesive, densely stocked Gift Shop appearance?
+- Owner: approve the joined necessary checkout/main-display island, shelf proximity, overlapping merchandise and shopper facing, or identify specific visual adjustments.
+- Manager: rerun browser validation and capture, including the side-by-side concept at desktop width and stacked comparison at 320px, then record owner acceptance. No runtime or income integration is part of this handoff.
+
+Worker writes are confined to `tools/room-design/level-5/gift-shop/**` and this assigned section. All other shared-plan bytes, including the manager’s binding room-first directive, are preserved by the scoped replacement receipt. No runtime, game, balance, clinical, income, global handoff, Git, install, agent or external-message work in this revision. The page uses the unchanged port-4191 room-lab; gameplay remains `START_GAME.cmd` → `http://127.0.0.1:4173` in the intended persistent profile. The proof does not use campaign saves.
+
+- **Room-first composition (owner, 2026-10-11, applies to all remaining rooms):** design the room as one cohesive, realistic room before designing objects. Start from a single full-room concept in the game's perspective (how the room looks in real life: walls lined with fixtures, objects abutting/overlapping, one clear aisle). Then derive each furniture/decor piece from that concept with floor footprints that fill the floor tiles and art that extends upward from the footprint; size and proximity come from the concept, not from isolated object generation. Avoid 'separate objects in an empty room'.
+
+
+## Step: Indoor Garden mockup
+
+**2026-10-11 — isolated 4×4 painted candidate delivered; native validation PASS, browser QA and owner art approval pending.**
+
+URL: <http://127.0.0.1:4191/tools/room-design/level-5/indoor-garden/proof/index.html>. Exact path: `/tools/room-design/level-5/indoor-garden/proof/index.html`. Handoff: `tools/room-design/level-5/indoor-garden/WORKER_HANDOFF.md`.
+
+### Concept and derivation
+
+The complete room came first: a continuous cream-stone planting run with large terracotta palms and a living green trellis across the north wall; adjoining side beds and front entrance beds; a low planted stone fountain; two inward-facing honeywood garden armchairs; one connected cream flagstone loop with clear chair approaches. The camera and raster finish follow the approved Gift Shop concept and Pediatric Waiting proof. The concept is `concept/indoor-garden-concept.png` and is displayed beside the playable room, stacking at narrow widths.
+
+The rear bed and trellis were each generated as a joined four-tile run and split into four independently owned wall sections. Two concept-derived side modules repeat by floor depth; a front bed is reused at both entrance corners. The fountain, both empty chairs and stone paving were separately derived from the same concept. Footprints and floor registration come from this room composition, with foliage rising above filled beds and overlapping neighboring silhouettes. There are no after-packing layout or seat moves. Interior rear plinth sprites cover exactly one tile and abut; corner palms join that run. Planting/furniture paint covers 49.7% of the floor view with visitors hidden, excluding the path; this is a composition measurement, not collision area or owner approval.
+
+One fixed look at all five upgrade selections. No satisfaction, rest duration, employee assignment, clinical workload or runtime behavior is simulated.
+
+### Necessary / optional classification
+
+| Piece | Design / role | Class | Door/backing owners |
+| --- | --- | --- | --- |
+| `north1` | Rear bed 1 · joined flowers, vines and terracotta palm | optional | N1, WA |
+| `trellis1` | Living green trellis · section 1 | optional | N1 · trellis also hides for its north backing |
+| `north2` | Rear bed 2 · joined flowers, vines | optional | N2 |
+| `trellis2` | Living green trellis · section 2 | optional | N2 · trellis also hides for its north backing |
+| `north3` | Rear bed 3 · joined flowers, vines | optional | N3 |
+| `trellis3` | Living green trellis · section 3 | optional | N3 · trellis also hides for its north backing |
+| `north4` | Rear bed 4 · joined flowers, vines and terracotta palm | optional | N4, EA |
+| `trellis4` | Living green trellis · section 4 | optional | N4 · trellis also hides for its north backing |
+| `west1` | Left raised planting run · section 1 | optional | N1, WA |
+| `west2` | Left raised planting run · section 2 | optional | WB |
+| `west3` | Left raised planting run · section 3 | optional | WC |
+| `west4` | Left raised planting run · section 4 | optional | S1, WD |
+| `east1` | Right raised planting run · section 1 | optional | N4, EA |
+| `east2` | Right raised planting run · section 2 | optional | EB |
+| `east3` | Right raised planting run · section 3 | optional | EC |
+| `east4` | Right raised planting run · section 4 | optional | S4, ED |
+| `frontLeft` | Entrance left · adjoining low raised flower bed | optional | S1, S2, WD |
+| `frontRight` | Entrance right · adjoining low raised flower bed | optional | S3, S4, ED |
+| `fountain` | Planted stone fountain island | optional | None |
+| `leftSeat` | Left garden chair · faces east | necessary | None |
+| `rightSeat` | Right garden chair · faces west | necessary | None |
+| `stonePath` | Stone planting aisle and chair approaches · walkable | necessary | None |
+| `leftSeat-front`, `rightSeat-front` | Original-pixel front arms and legs | necessary | None |
+| `leftSeat`, `rightSeat` visitor contacts / approaches | Two separate adult rest seats, linked to the aisle | necessary | None |
+
+All sixteen one-tile doors remain legal. Four north backing controls hide only their trellis sections; floor furniture stays full height. Necessary chairs, sitters, source-pixel fronts, spots/approaches and stone aisle remain under every door/backing selection.
+
+### Seated contacts and provenance
+
+Two unchanged approved adult stills: `patient.adult.001/sit-east.png` on the left and `patient.adult.007/sit-west.png` on the right. They face into the garden. Both keep the existing 0.6865478271728273 source scale and registered source seat/floor anchors. Floor contacts are [1, 3.08] and [3, 3.08]; cushion rises are 45.2071px and 44.1354px. Separate standing approaches are [1.6, 2.775] and [2.4, 2.775], connected to the necessary aisle at [2, 3.30]. No home or clinical slot exists.
+
+Painter order: chair → real seated adult → exact-source front arms/legs. Foreground masks are combined into one union before copying the generated source once; an independent pixel-identity check found and corrected alpha accumulation at overlapping rectangles. The correction changed prepared foreground edges only; source art, masks, seating/floor anchors and geometry stayed fixed. Both front overlays genuinely overlap their sitter and leave heads visible. Cushion contacts are exact; measured opaque floor registration allows at most one prepared native pixel (0.25 proof px) of nearest-neighbor rounding. Native foreground/source-composite checks allow channel delta ≤2 for Canvas rounding.
+
+Eleven built-in imagegen calls: one concept plus ten derivation/edit calls, nine selected outputs. Fifteen prepared sprites and two chair fronts make twenty-four fixture records. Unchanged approved adult source hashes, exact prompts, actual receipts, crops, uniform transforms and all prepared hashes are retained in `assets/provenance-v1.json`. No new people, external art, readable text, brands, employee home, clinical slot, clinical content or gameplay/balance effect. The frozen concept layout is unchanged after packing. Neutral replay is explicitly a post-paint engineering artifact.
+
+### Validation output and limits
+
+11040 states = five fixed-look upgrades × sixteen north-backing combinations × (closed + sixteen single doors + 120 door pairs + all sixteen). 103680 routes and 103680 occupied routes are sampled every 0.005 tile at 0.18-tile actor radius, including the complete entrance/exit thresholds, declared solid footprints, measured furniture bands and both unchanged seated-adult foot bands. Standing approaches are distinct from static seating transitions; no walk-through furniture exception exists.
+
+Necessary furniture and contacts are invariant. Opening more doors only removes optional blockers, so single-door seat/aisle proofs and pair door-to-door proofs extend to all 65,536 door combinations, sixteen backing states and five upgrades. Entry routes reverse safely for exit while the other visitor stays seated. Every door/backing visibility variant retains chair, sitter, foreground and aisle coordinates. All five native appearances are byte-identical.
+
+Browser validator and capture were actually attempted and both returned `browserType.launch: spawn EPERM`. The connected browser fallback also failed initialization (`helper_unknown_error: setup refresh had errors`), with a receipt in `proof/evidence/v1/connected-browser-attempt.json`. Browser PASS, browser screenshots and owner approval are not claimed. The manager should rerun both browser scripts on the existing port-4191 server.
+
+```text
+node tools/room-design/level-5/indoor-garden/proof/build.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+
+node tools/room-design/level-5/indoor-garden/proof/validate.cjs
+VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 15 derived sprites + 2 source-pixel chair fronts; 2 unchanged approved seated adults; 11040 door/backing states; 103680 routes / 81654720 radius-clear samples at 0.005T; 103680 occupied routes / 81947040 samples; all 16 doors; permanent seats/aisle, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/indoor-garden/proof/validate-controls.mjs
+CONTROL VALIDATION PASS: 319 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 seated visitors, keyboard, real-error/performance-warning discrimination; browser separate.
+
+node tools/room-design/level-5/indoor-garden/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated visitors/contacts/routes/all 16 doors/backing; browser QA separate.
+
+node tools/room-design/level-5/indoor-garden/proof/inspect-composition.mjs
+COMPOSITION INSPECTION PASS: planting/furniture paint with visitors hidden covers 49.7% of the floor view; concept/empty/two-seat comparison saved.
+
+node tools/room-design/level-5/indoor-garden/proof/reproduce.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 15 concept-derived sprites + 2 chair foregrounds / 24 records; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+REPRODUCIBILITY PASS: 29 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/indoor-garden/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.
+
+node tools/room-design/level-5/indoor-garden/proof/check-http.mjs
+HTTP VALIDATION PASS: 29 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.
+
+node tools/room-design/level-5/indoor-garden/assets/write-provenance-v1.mjs
+ART PROVENANCE PASS: 1 built-in concept + 10 transparent derivation/edit calls (9 selected); 15 sprites + 2 exact-source chair fronts; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved seated adults; owner approval pending.
+
+node tools/room-design/level-5/indoor-garden/proof/validate-browser.cjs
+browserType.launch: spawn EPERM
+Exit 1; PENDING_MANAGER. Complete stderr in browser-validation-report.json.
+
+node tools/room-design/level-5/indoor-garden/proof/capture.cjs
+browserType.launch: spawn EPERM
+Exit 1; PENDING_MANAGER. Complete stderr in browser/capture-report.json.
+```
+
+Detailed receipts and 120 actual native states: `proof/evidence/v1/`. Concept/empty/occupied comparison: `proof/evidence/v1/concept-playable-comparison.png`.
+
+### Owner questions, lane and handback
+
+- Owner: approve the room-first garden composition, density, fountain, two inward-facing seats and clear aisle, or specify visual adjustments.
+- Owner: approve the seated placements and owned optional planting hides for alternative doors.
+- Manager: inspect files/native comparison, rerun browser validation and capture, record owner acceptance, and update the global handoff.
+
+Only the Indoor Garden directory and this append-only plan section are assigned. Existing shared plan bytes and concurrent work are preserved. No runtime/game/balance/save, global-handoff, server or launcher writes; no agents, installs, commits, staging, pushes or publication. One read-only Git status was inadvertently run at intake; no later Git commands. This local checkpoint has no GitHub backup; the manager owns the **“push to GitHub”** reminder after acceptance.
+
+The opening pathway is unchanged room-lab port 4191, with no campaign storage. Gameplay remains START_GAME.cmd → exact http://127.0.0.1:4173 in the intended persistent profile; saves do not transfer to the room proof. No remote playtest URL changed.
+
+
+### Owner revision: continuous south planting — 2026-10-11
+
+**Correction complete; native validators PASS. Approval of all other garden elements retained. Fresh browser verification assigned to manager. These notes supersede the initial front-gap geometry/pending-owner-review wording above.**
+
+Owner: “Have the plants continuous across the bottom front and the middle front is only empty of plants if the player puts a door there. Otherwise I approve the flower garden.”
+
+URL: <http://127.0.0.1:4191/tools/room-design/level-5/indoor-garden/proof/index.html>. Handoff: `tools/room-design/level-5/indoor-garden/WORKER_HANDOFF.md`.
+
+Four adjoining optional south segments now fill S1–S4 with no default middle gap. Each `south1`–`south4` segment hides only for its matching S1–S4 door. North/west/east doors and north backing never remove any south segment. A south door exposes the existing stone path to the aisle and both seated approaches; with no south door, use another wall’s doorway.
+
+The unchanged generated front original is split into adjoining left/right halves and repeated across the four sections, with explicit crops, a common floor line and uniform transforms. One-tile footprints cover the full width at y=3.70–3.98 and leave the cross-aisle/corner side portals clear. All 480 columns of the native south-paint view are covered.
+
+The original concept PNG, all ten generated originals, twenty-two non-south records, both chairs/sitters/contacts, fountain, other walls and sixteen prepared non-south/foreground PNG hashes remain identical. One fixed appearance at five upgrade selections; two necessary visitor contacts; no employee or clinical slot. The retained concept shows the original garden; the playable row applies the later owner correction.
+
+Owner statement is recorded verbatim in `layout.ownerReview`. Approval of the rest of the garden is retained. The requested correction awaits manager verification; no new design decision or unrelated change is proposed.
+
+| Piece | Class | Hides for |
+| --- | --- | --- |
+| `north1` | optional | N1, WA |
+| `trellis1` | optional | N1 / its north backing |
+| `north2` | optional | N2 |
+| `trellis2` | optional | N2 / its north backing |
+| `north3` | optional | N3 |
+| `trellis3` | optional | N3 / its north backing |
+| `north4` | optional | N4, EA |
+| `trellis4` | optional | N4 / its north backing |
+| `west1` | optional | N1, WA |
+| `west2` | optional | WB |
+| `west3` | optional | WC |
+| `west4` | optional | S1, WD |
+| `east1` | optional | N4, EA |
+| `east2` | optional | EB |
+| `east3` | optional | EC |
+| `east4` | optional | S4, ED |
+| `south1` | optional | S1 |
+| `south2` | optional | S2 |
+| `south3` | optional | S3 |
+| `south4` | optional | S4 |
+| `fountain` | optional | None |
+| `leftSeat` | necessary | None |
+| `rightSeat` | necessary | None |
+| `stonePath` | necessary | None |
+| `leftSeat-front`, `rightSeat-front` | necessary | None |
+| Both seated contacts, visitors and approaches | necessary | None |
+
+Full validator: 11040 door/backing states, 103680 routes / 81649920 radius-clear samples, plus 103680 occupied routes / 81942240 samples. Sampling remains 0.005 tile at 0.18-tile actor radius, including full portals, declared solids, measured furniture/visitor floor bands and the other seated adult. Necessary blockers stay fixed; further doors only remove optional blockers, preserving the monotonic proof for all 65,536 door combinations.
+
+South regression: 17920 south/other-wall/backing/upgrade visibility states; 2880 occupied routes from the twelve non-south doors to both seats and the aisle with every south planter present; 2237760 radius-clear samples. Real controls independently check sole south ownership. Final controls: 383 checks. Native inspection: 140 actual renders, including closed-south N2, WD, ED and all-other-wall door route overlays. Five appearances remain byte-identical.
+
+Eleven prior built-in imagegen calls (one concept plus ten transparent derivations/edits, nine selected); **zero new calls**. Sixteen prepared sprite slots plus two exact-source chair foregrounds, twenty-six fixture records and twenty-one measured bands. Originals, prompts and real call receipts stay at v1; active packing/registration/reconciliation/provenance/evidence are v2. Approved adult stills `patient.adult.001/sit-east.png` and `patient.adult.007/sit-west.png` keep their source hashes, scale, seated anchors, layering and front occluders. Complete before-revision evidence, including the manager’s actual browser PASS, is retained under `history/before-continuous-south-20261011/` (271 archived files). No clinical content or gameplay effects are authored.
+
+Exact final executed output:
+
+```text
+node tools/room-design/level-5/indoor-garden/reconcile-south-v2.mjs
+SOUTH RECONCILIATION PASS: only S1-S4 planting revised; concept, 22 non-south records, both seated contacts and 16 prepared sprites unchanged; 21 measured floor bands; all 16 single-door routes pass.
+
+node tools/room-design/level-5/indoor-garden/proof/build.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+
+node tools/room-design/level-5/indoor-garden/proof/validate.cjs
+VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 16 reused derived sprites + 2 source-pixel chair fronts; continuous S1-S4 planting; 2 unchanged approved seated adults; 11040 door/backing states; 103680 routes / 81649920 radius-clear samples at 0.005T; 103680 occupied routes / 81942240 samples; all 16 doors; permanent seats/aisle, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/indoor-garden/proof/validate-south.cjs
+SOUTH VALIDATION PASS: continuous S1-S4 paint / 480 columns; sole south-door ownership across 17920 states; 2880 occupied routes with south closed / 2237760 radius-clear samples; concept, both seats/sitters, fountain, other walls and 16 sprites unchanged; 0 new image-generation calls.
+
+node tools/room-design/level-5/indoor-garden/proof/validate-controls.mjs
+CONTROL VALIDATION PASS: 383 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 seated visitors, keyboard, real-error/performance-warning discrimination; browser separate.
+
+node tools/room-design/level-5/indoor-garden/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 140 actual-render states across 5 fixed-look upgrades; default/empty/individual seated visitors/contacts/routes/all 16 doors/backing; browser QA separate.
+
+node tools/room-design/level-5/indoor-garden/proof/inspect-composition.mjs
+COMPOSITION INSPECTION PASS: planting/furniture paint with visitors hidden covers 56.5% of the floor view; concept/empty/two-seat comparison saved.
+
+node tools/room-design/level-5/indoor-garden/proof/reproduce.mjs
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+BUILD PASS: painted; 1 fixed look / 5 upgrades; 16 reused concept-derived sprites + 2 chair foregrounds / 26 records; continuous S1-S4 planting; 4x4; 16 one-tile doors; 2 necessary occupied seats and stone aisle; no employee/clinical slots.
+REPRODUCIBILITY PASS: 30 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/indoor-garden/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.
+
+node tools/room-design/level-5/indoor-garden/proof/check-http.mjs
+HTTP VALIDATION PASS: 30 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.
+
+node tools/room-design/level-5/indoor-garden/assets/write-provenance-v1.mjs
+ART PROVENANCE PASS: 1 built-in concept + 10 transparent derivation/edit calls (9 selected); 16 reused sprites + 2 exact-source chair fronts; continuous S1-S4 row; 0 new calls; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved seated adults; owner-approved remainder preserved; south correction awaits manager verification.
+```
+
+The owner explicitly assigned fresh browser validation to the manager. v1 manager PASS is preserved as historical evidence; v2 browser/capture reports are PENDING_MANAGER with the current manifest hash. Browser helper syntax and installed Playwright resolution pass. No browser launch was attempted in this revision.
+
+```text
+node tools/room-design/level-5/indoor-garden/proof/validate-browser.cjs
+node tools/room-design/level-5/indoor-garden/proof/capture.cjs
+```
+
+Manager: inspect the continuous closed front, each S1–S4 opening and non-south routes to both seats at desktop and 320px; record acceptance and update the global handoff. No unresolved owner design question remains beyond verifying this correction; approval of the unchanged garden is retained.
+
+Writes stay within this room folder and append-only correction notes in its existing plan section. This revision used no Git, agents, installs, runtime/game/balance/save edits, global-handoff writes, server/launcher changes or external messages. The earlier intake’s read-only Git status remains disclosed in the archived v1 handoff.
+
+Exact opening pathway: http://127.0.0.1:4191/tools/room-design/level-5/indoor-garden/proof/index.html, unchanged room-lab port 4191. This proof stores no campaign saves. Gameplay remains `START_GAME.cmd` → exact `http://127.0.0.1:4173` in the usual persistent profile. No remote pathway changes. This checkpoint is local only; the manager owns acceptance/global handoff and the reminder to say **“push to GitHub”** for a backup.
+
+
+### Final scope audit
+
+```text
+node tools/room-design/level-5/indoor-garden/proof/audit-lane.cjs
+LANE AUDIT PASS: 271 prior files archived unchanged; 16 non-south sprites and original concept/art unchanged; 13/13 shared hashes unchanged; 0 concurrent changes preserved; 47629 prefix / 0 suffix plan bytes unchanged; native/control/rebuild/HTTP/source/privacy/UTF-8 PASS; browser assigned to manager.
+```
+
+All authorized worker work is complete and validated. The manager’s fresh v2 browser validation/capture and acceptance remain the next actions.
+
+
+## Step: Staff Gym mockup
+
+**2026-10-11 — isolated room-first 4×4 candidate complete for manager review. Native engineering checks pass; browser QA and owner art approval pending.** One fixed appearance at upgrades 1–5; two permanent staff contacts; no home/hiring slot or animated rig.
+
+Desktop proof: <http://127.0.0.1:4191/tools/room-design/level-5/staff-gym/proof/index.html>. Exact path: `/tools/room-design/level-5/staff-gym/proof/index.html`.
+
+The existing phone server serves the same path on port 4192; both desktop and phone HTTP checks return 200 with matching bytes for all 33 resources. Phone HTTPS pathway: <https://melissadesktop.taile197db.ts.net:8443/tools/room-design/level-5/staff-gym/proof/index.html>. The 8443 phone browser/TLS pathway was not verified by this sandbox. No server, launcher or hosting configuration changed.
+
+This isolated proof has no campaign storage. Owner gameplay remains `START_GAME.cmd` → exact `http://127.0.0.1:4173` in the usual persistent profile. Saves do not transfer to ports 4191/4192/8443; no remote gameplay URL changed.
+
+### Concept and derivation
+
+The full-room concept came first, using the owner-approved Gift Shop concept for the camera and room-first composition and approved Level 4 Pediatric Waiting for clinic palette/outline/raster finish. The fixed 4×4 room has a straight rear wall, unrotated square floor, elevated front orthographic camera, charcoal speckled rubber tiles, teal pads and honeywood storage. Treadmill, bike, dumbbells and hydration adjoin across the rear; continuous shallow side cubbies and low front trays surround the bench, mat and one connected aisle. Art extends upward from filled footprints and neighbors abut/overlap by floor depth.
+
+Eleven later built-in transparent generations reference that exact concept: rear equipment run, bench, mirror/poster, west cubbies, east mat racks, stretch mat, exercise ball, foam roller, front storage run, rubber floor and towel hooks. One rear image splits into four adjoining bays; the mirror and front run also split at four shared seams. Side modules repeat along four wall-depth intervals. The concept’s front-center gap is filled in the playable room to obey the owner’s latest Indoor Garden rule: closed wall rows remain continuous, and a section opens only for a selected owned doorway. Extra concept plants are omitted in favor of adjoining gym storage. No new character or exercise rig was generated.
+
+### Necessary / optional classification
+
+| Piece | Role | Class | Hidden for |
+| --- | --- | --- | --- |
+| `north1` | Treadmill · rear bay 1 | optional | N1, WA |
+| `mirror1` | Wall mirror · section 1 | optional | N1 / its north backing |
+| `north2` | Exercise bike and adjoining weights · rear bay 2 | optional | N2 |
+| `mirror2` | Wall mirror · section 2 | optional | N2 / its north backing |
+| `north3` | Dumbbell rack · rear bay 3 | optional | N3 |
+| `mirror3` | Wall mirror · section 3 | optional | N3 / its north backing |
+| `north4` | Water cooler, towel cubby and weights · rear bay 4 | optional | N4, EA |
+| `mirror4` | Mirror edge and abstract motivational poster | optional | N4 / its north backing |
+| `west1` | Towel, bottle and block cubbies · west section 1 | optional | N1, WA |
+| `west2` | Towel, bottle and block cubbies · west section 2 | optional | WB |
+| `west3` | Towel, bottle and block cubbies · west section 3 | optional | WC |
+| `west4` | Towel, bottle and block cubbies · west section 4 | optional | S1, WD |
+| `east1` | Rolled-mat and accessory rack · east section 1 | optional | N4, EA |
+| `east2` | Rolled-mat and accessory rack · east section 2 | optional | EB |
+| `east3` | Rolled-mat and accessory rack · east section 3 | optional | EC |
+| `east4` | Rolled-mat and accessory rack · east section 4 | optional | S4, ED |
+| `front1` | Folded towel tray · front section 1 | optional | S1, WD |
+| `front2` | Bottle tray · front section 2 | optional | S2 |
+| `front3` | Dumbbell and yoga-block tray · front section 3 | optional | S3 |
+| `front4` | Rolled-mat tray · front section 4 | optional | S4, ED |
+| `benchSeat` | Padded rest bench · adult seated south | necessary | None |
+| `stretchMat` | Stretch mat · standing staff station | necessary | None |
+| `exerciseBall` | Exercise ball · stretch station equipment | necessary | None |
+| `foamRoller` | Foam roller · front of stretch station | necessary | None |
+| `rubberFloor` | Rubber gym floor and connected aisle · walkable | necessary | None |
+| `towelHooks` | Wall towel hooks · above dumbbell bay | optional | N3 / its north backing |
+| `benchSeat-front` | Exact-source camera-side rail and legs | necessary | None |
+| Both staff contacts and approaches | Seated bench and standing stretch station; connected rubber aisle | necessary | None |
+
+### Staff contacts and provenance
+
+- Seated contact: unchanged approved fictional staff `gs026-employee-001/sit-south.png`; ground [1.2, 2.7], cushion [1.2, 2.4196596372377623], approach [1.2, 3.05]. Existing source scale 0.6865478271728273; exact cushion rise 33.64084353146853 proof pixels.
+- Standing contact: unchanged approved fictional staff `gs026-employee-004/stand-south.png`; floor/contact/approach [2.7, 2.7], same existing source scale. Mat is walkable; ball is behind the adult and roller is in front by depth.
+- Permanent aisle target [2, 3.35]. Bench → real seated staff → source-pixel front rail/legs. The foreground overlaps 542 opaque sitter pixels and leaves the head unobscured. Only the seated contact uses a static seating transition; the standing mat is reached by its walking route.
+
+Twelve built-in `image_gen.imagegen` calls: one concept plus eleven transparent concept-derived outputs, all selected. Twenty prepared sprite slots plus one exact-source bench front create twenty-seven records. Untouched originals, exact prompts, actual tool receipts/input references, SHA-256 hashes, source crops, uniform transforms and registration are retained under `concept/`, `assets/originals/v1/`, `assets/prompts/v1/`, `assets/processed/v1/`, and `assets/provenance-v1.json` / `assets/art-provenance.json`.
+
+Native preparation uses explicit source rectangles, low-alpha <8 cleanup only in prepared copies, one uniform nearest-neighbor transform, and no upscaling. Foreground rectangles are combined into one union before copying the generated bench source once. Floor/seat registration tolerates at most one prepared native pixel (0.25 proof px) of nearest-neighbor rounding; cushion/floor targets retain their measured exact anchors. `stand-in/v1/layout-concept.json` was frozen before native packing; reconciliation makes no geometry changes. Neutral rectangles and three replay images are explicitly post-paint engineering evidence, distinct from generated final art or pre-generation approval.
+
+No external art, readable text, brands, new identity, proprietary source, clinical statements, patient records, gameplay effects, employee home/hiring slot, animation rig or campaign storage. Owner art approval is null and runtime integration remains false.
+
+### Validation output and limits
+
+11040 states = five fixed-look upgrade selections × sixteen north-backing combinations × (closed + sixteen singles + 120 pairs + all doors). 103680 routes / 81572560 radius-clear samples and 103680 occupied routes / 82191200 samples pass at 0.005 tile spacing and 0.18-tile actor radius, including full outside/inside portal thresholds, solid footprints, measured opaque floor bands and the other occupied staff contact. The bench’s seated foot band remains a blocker even when the actor is hidden. No pass-through exception or radius reduction exists.
+
+All sixteen one-tile wall sections are legal doors: N1–N4, S1–S4, WA–WD, EA–ED. Necessary bench, its front rail, mat, ball, roller, contacts, approaches and rubber aisle never hide. Optional wall-row pieces hide only for owned doors; corner pieces can serve both adjoining wall sections. Four north backing controls hide corresponding mirror/poster/hooks only, retaining full-height floor equipment. Opening additional doors only removes optional blockers; 690 monotonic checks extend the single/pair route proofs to all 65,536 door combinations, sixteen backing states and five upgrades.
+
+The dedicated front-row regression covers 17920 visibility states, all 480 floor-view columns with the front closed, and 2880 occupied routes / 2276640 samples from the twelve non-south doors. No default front gap is left. All five native appearances are byte-identical. Actual fixture/mat paint with staff hidden occupies 60.6% of the floor view; solid equipment without the mat occupies 48.7%. These are visible composition metrics, not collision area or owner approval.
+
+```text
+node tools/room-design/level-5/staff-gym/reconcile.mjs
+RECONCILIATION PASS: unchanged concept layout; tile-filled rear/front plinths exactly abut; permanent contacts and footprints; bench cushion/floor within one prepared native pixel.
+
+node tools/room-design/level-5/staff-gym/proof/build.mjs
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+
+node tools/room-design/level-5/staff-gym/proof/validate.cjs
+VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 source-pixel bench front; 2 unchanged approved staff stills in scrubs (seated/standing); 11040 door/backing states; 103680 routes / 81572560 radius-clear samples at 0.005T; 103680 occupied routes / 82191200 samples; all 16 doors; permanent stations/aisle, continuous wall rows, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/staff-gym/proof/validate-south.cjs
+SOUTH VALIDATION PASS: continuous S1-S4 storage / 480 columns; owned-door visibility and necessary equipment across 17920 states; 2880 occupied routes with south closed / 2276640 radius-clear samples; corner sections open only for their selected S/W/E door.
+
+node tools/room-design/level-5/staff-gym/proof/validate-controls.mjs
+CONTROL VALIDATION PASS: 335 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 staff contacts, keyboard, real-error/performance-warning discrimination; browser separate.
+
+node tools/room-design/level-5/staff-gym/proof/inspect-composition.mjs
+COMPOSITION INSPECTION PASS: equipment and mat with staff hidden cover 60.6% of the floor view; solid equipment alone 48.7%; concept/empty/two-contact comparison saved.
+
+node tools/room-design/level-5/staff-gym/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated/standing staff/contacts/routes/all 16 doors/backing; browser QA separate.
+
+node tools/room-design/level-5/staff-gym/stand-in/v1/replay.mjs
+STAND-IN REPLAY PASS: 20 neutral registered geometry frames; 3 actual native replay views; all 16 single-door occupied routes; painted files and frozen layout unchanged.
+
+node tools/room-design/level-5/staff-gym/proof/reproduce.mjs
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 bench foreground / 27 records; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+REPRODUCIBILITY PASS: 33 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/staff-gym/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.
+
+node tools/room-design/level-5/staff-gym/proof/check-http.mjs
+HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.
+
+node tools/room-design/level-5/staff-gym/proof/check-http.mjs --phone
+HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4192; existing server unchanged.
+
+node tools/room-design/level-5/staff-gym/assets/write-provenance-v1.mjs
+ART PROVENANCE PASS: 1 built-in concept + 11 transparent derivations (all selected); 20 sprites + 1 exact-source bench front / 27 records; prompts/receipts/originals/crops/transforms/hashes; 2 unchanged approved scrubs staff stills; owner approval pending.
+
+node tools/room-design/level-5/staff-gym/proof/record-browser-attempt.mjs
+BROWSER ATTEMPT RECEIPTS SAVED: actual Playwright spawn EPERM and connected-browser sandbox setup failures; no browser PASS or screenshots claimed.
+```
+
+The actual browser validator and capture both failed before Chrome opened with `browserType.launch: spawn EPERM` (exit 1). Connected-browser initialization was tried twice and failed with `windows sandbox failed: helper_unknown_error: setup refresh had errors`. Full errors and final manifest hashes are in `proof/evidence/v1/browser-validation-report.json`, `browser/capture-report.json` and `connected-browser-attempt.json`. Browser PASS, browser screenshots and owner approval are not claimed.
+
+Manager recovery, from the repository root with the existing port-4191 server running:
+
+```text
+node tools/room-design/level-5/staff-gym/proof/validate-browser.cjs
+node tools/room-design/level-5/staff-gym/proof/capture.cjs
+```
+
+Helpers compile and installed Playwright resolves. Validator checks served art/still/code hashes, all 11,040 door/backing states and occupied routes, real controls, keyboard, desktop concept-beside-playable layout and stacked 320px layout. Capture covers 120 room states plus five desktop/five narrow pages. Page exceptions, console errors, failed requests and HTTP errors are fatal; Canvas readback performance advisories are classified separately.
+
+Detailed outputs and native images: `tools/room-design/level-5/staff-gym/proof/evidence/v1/`; exact command receipt: `validation-outputs.json`; comparison: `concept-playable-comparison.png`. Worker handoff: `tools/room-design/level-5/staff-gym/WORKER_HANDOFF.md`.
+
+### Open owner questions and handback
+
+- Owner: approve the cohesive 4×4 room, equipment density, palette and fixed appearance, or identify visual adjustments.
+- Owner: approve the seated bench and standing mat placements and optional wall-row hides for alternate doorways.
+- Manager: inspect actual files and native comparison, rerun browser validator/capture at desktop and 320px, record owner art acceptance, update the global handoff and arrange the checkpoint reminder. Staff-break morale behavior remains outside this mockup; nothing was simulated.
+
+Worker writes are confined to `tools/room-design/level-5/staff-gym/**` and one appended `Step: Staff Gym mockup` section in the shared Level 5 room plan. The current plan prefix is preserved byte-for-byte at append time, including the concurrent Indoor Garden correction. Shared reference changes are reported and preserved. No runtime/game/balance/save, global-handoff, shared-room, server or launcher edits; no agents, installs, staging, commit, push, publication or external messages.
+
+One read-only `git status --short` was inadvertently run at initial intake despite the brief’s no-Git rule; it was disclosed immediately. No later Git command was run. This valuable checkpoint remains local only. The manager owns the reminder to say **“push to GitHub”** after acceptance; this worker has no Git authorization.
+
+
+### Owner revision: exclusive Staff Gym corner ownership — 2026-10-11
+
+**These v2 notes supersede the initial corner geometry and pending approval wording above.**
+
+Owner (2026-10-11): “Some of the shelves on the side walls look like they are in the same spot as and overlapping the equipment in the back wall. Otherwise this is approved.”
+
+**Correction complete; native validators PASS. Approval of every other room element is retained. Fresh browser validation is assigned to the manager.** This revision changes only the side-wall shelving geometry and its door ownership. There is no new design question or request to reapprove the rest of the room.
+
+The rear side pieces `west1` and `east1` are removed. Rear equipment `north1` and `north4` now own the northwest and northeast corners. Remaining side shelves start at floor y=1 (one tile south), and their unchanged generated sprites use the same uniform display factor 0.7462686567164178, placing the first visible shelf edge at or below the rear equipment's y=0.75 floor edge. Native alpha tests find zero rear silhouette overlap.
+
+The `west4` / `east4` floor and footprint ends move from y=4 to y=3.72; they exactly abut the unchanged front trays’ footprints, which start at y=3.72. `front1` / `front4` own the southwest and southeast corners. Front trays retain their camera-side depth and source-over faces. Side and front fixtures share touching edges, never floor area. Rear equipment, the whole front row, mirror/poster, cooler, weights, treadmill/bike, towels/hooks, bench, mat/ball/roller, rubber floor and all other approved elements remain unchanged.
+
+There are twenty-five fixture records, twenty reused sprite slots and one bench foreground. All twenty-one prepared PNGs, all twelve original built-in outputs and their prompts/real receipts are byte-identical. Nineteen non-side records, both approved scrubs stills and their contacts/approaches, supports and navigation/aisle are identical to the reviewed version. No new image-generation calls, animation rig, home/hiring slot, runtime/balance/game/save or clinical-content edit.
+
+Review URL: <http://127.0.0.1:4191/tools/room-design/level-5/staff-gym/proof/index.html>. Exact path: `/tools/room-design/level-5/staff-gym/proof/index.html`.
+
+The existing phone server serves the same files on port 4192 / tailnet HTTPS 8443: <https://melissadesktop.taile197db.ts.net:8443/tools/room-design/level-5/staff-gym/proof/index.html>. HTTP checks pass with matching bytes for all 33 resources on ports 4191 and 4192. This worker did not verify phone-browser/TLS behavior on 8443. No server, launcher or hosting change.
+
+This proof holds no campaign saves. Gameplay remains `START_GAME.cmd` → exact `http://127.0.0.1:4173` in the usual persistent profile; saves do not transfer to the room-lab origins. No remote gameplay pathway changed.
+
+| Piece | Role | Class | Hides for |
+| --- | --- | --- | --- |
+| `north1` | Treadmill · rear bay 1 | optional | N1, WA |
+| `mirror1` | Wall mirror · section 1 | optional | N1 / its north backing |
+| `north2` | Exercise bike and adjoining weights · rear bay 2 | optional | N2 |
+| `mirror2` | Wall mirror · section 2 | optional | N2 / its north backing |
+| `north3` | Dumbbell rack · rear bay 3 | optional | N3 |
+| `mirror3` | Wall mirror · section 3 | optional | N3 / its north backing |
+| `north4` | Water cooler, towel cubby and weights · rear bay 4 | optional | N4, EA |
+| `mirror4` | Mirror edge and abstract motivational poster | optional | N4 / its north backing |
+| `west2` | Towel, bottle and block cubbies · west section 2 | optional | WB |
+| `west3` | Towel, bottle and block cubbies · west section 3 | optional | WC |
+| `west4` | Towel, bottle and block cubbies · west section 4 | optional | S1, WD |
+| `east2` | Rolled-mat and accessory rack · east section 2 | optional | EB |
+| `east3` | Rolled-mat and accessory rack · east section 3 | optional | EC |
+| `east4` | Rolled-mat and accessory rack · east section 4 | optional | S4, ED |
+| `front1` | Folded towel tray · front section 1 | optional | S1, WD |
+| `front2` | Bottle tray · front section 2 | optional | S2 |
+| `front3` | Dumbbell and yoga-block tray · front section 3 | optional | S3 |
+| `front4` | Rolled-mat tray · front section 4 | optional | S4, ED |
+| `benchSeat` | Padded rest bench · adult seated south | necessary | None |
+| `stretchMat` | Stretch mat · standing staff station | necessary | None |
+| `exerciseBall` | Exercise ball · stretch station equipment | necessary | None |
+| `foamRoller` | Foam roller · front of stretch station | necessary | None |
+| `rubberFloor` | Rubber gym floor and connected aisle · walkable | necessary | None |
+| `towelHooks` | Wall towel hooks · above dumbbell bay | optional | N3 / its north backing |
+| `benchSeat-front` | Exact-source camera-side rail and legs | necessary | None |
+| Both staff contacts and approaches | Seated bench and standing stretch contact; connected aisle | necessary | None |
+
+Seated `gs026-employee-001/sit-south.png` keeps floor [1.2, 2.7], cushion [1.2, 2.4196596372377623], approach [1.2, 3.05], existing scale 0.6865478271728273, bench → real staff → exact-source rail/legs order and 542 opaque foreground-overlap pixels with zero head occlusion. Standing `gs026-employee-004/stand-south.png` remains at [2.7, 2.7] on the walkable mat, with the ball behind and roller in front. The aisle target remains [2, 3.35]. Necessary stations, staff contacts, foreground and aisle never hide for a door or backing selection.
+
+All sixteen one-tile doors remain legal (N1–N4, S1–S4, WA–WD, EA–ED), with four independent north backing sections. The revised side sections retain only their intersecting doorway owners. No north side module remains to duplicate `north1`/`north4`; front corner trays and shortened side sections clear their actually owned S/W/E doorway.
+
+The new `fixtureFloorFootprintOverlaps` check compares every pair of records declaring a floor footprint, in both Node and the browser geometry module. No pair or classification exception exists. Touching edges are legal; wall art, walkable floor/mat surfaces and the bench foreground declare no independent solid floor volume. A deliberately overlapping necessary/walkable fixture probe is rejected, and the archived candidate’s four original pairs are rejected.
+
+Current corner regression: 11040 door/backing states / 1107920 fixture-pair checks, seventeen floor fixtures, zero overlaps. It also checks separate rear painted silhouettes, exact front floor edges and independently predicted front-over-side RGBA composites (native RGB tolerance 2 / alpha 1).
+
+Full routes: 11040 states, 103680 routes / 81568960 radius-clear samples, plus 103680 occupied routes / 82187600 samples. Spacing remains 0.005 tile, actor radius 0.18 tile, full outside/inside portals included, with the other staff contact occupied and the bench foot band retained. Single/pair/all proofs and 690 monotonic comparisons still cover all 65,536 door combinations × sixteen backing states × five identical upgrade appearances. No furniture pass-through or radius reduction.
+
+Closed-front regression still passes 17,920 visibility states, 2,880 occupied routes and all 480 front-view columns. All 335 shipped-handler control checks, 120 native render states, neutral geometry replay, helper syntax, two rebuilds, provenance and desktop/phone served bytes pass. Current fixture/mat paint covers 58.0% of the floor; equipment alone 46.1%. Visual density remains high; these metrics are not collision area or owner approval.
+
+Current geometry, registration, reconciliation, provenance, neutral replay and engineering evidence are v2. Concept, untouched original PNGs and prepared PNGs retain v1 paths. The pre-correction candidate is preserved under `history/before-corner-fix-20261011/`: 287 files archived byte-for-byte (the 286 prior candidate files plus the initial corner-diagnostic script). No archived file is edited.
+
+Compare `proof/evidence/v2/corner-before-after.png` and the four `corner-*.png` close-ups. The usual concept / staff-hidden / occupied comparison is `concept-playable-comparison.png`. Native images are actual shipped-renderer output, not browser screenshots. `assets/provenance-v2.json` / `assets/art-provenance.json` pin sources, unchanged PNGs, real receipts, display bindings and the final manifest. `layout-reconciliation-v2.json` records the scoped changes and preservation checks.
+
+Exact current successful output:
+
+```text
+node tools/room-design/level-5/staff-gym/reconcile-v2.mjs
+CORNER RECONCILIATION PASS: exclusive four-corner ownership; 0 overlapping fixture footprints; side paint clears rear equipment and front edges abut at y=3.72; 19 non-side records, 21 prepared PNGs, all originals, both staff contacts and aisle unchanged; 0 new calls.
+
+node tools/room-design/level-5/staff-gym/proof/build.mjs
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+
+node tools/room-design/level-5/staff-gym/proof/validate-corners.cjs
+CORNER VALIDATION PASS: 17 floor fixtures; 11040 door/backing states / 1107920 fixture-pair checks; 0 footprint overlaps or exceptions; all 4 old corner collisions rejected; rear silhouettes separated, front floor edges abut and front faces retained; 19 other records, 21 PNGs, staff contacts and aisle unchanged.
+
+node tools/room-design/level-5/staff-gym/proof/validate.cjs
+VALIDATION PASS: room-first 4x4; 1 fixed look / 5 upgrades; 20 derived sprites + 1 source-pixel bench front; 2 unchanged approved staff stills in scrubs (seated/standing); 11040 door/backing states; 103680 routes / 81568960 radius-clear samples at 0.005T; 103680 occupied routes / 82187600 samples; all 16 doors; permanent stations/aisle, exclusive floor footprints and four corner owners, continuous wall rows, plinth seams, visibility/layers/alpha/hashes/UTF-8 checked.
+
+node tools/room-design/level-5/staff-gym/proof/validate-south.cjs
+SOUTH VALIDATION PASS: continuous S1-S4 storage / 480 columns; owned-door visibility and necessary equipment across 17920 states; 2880 occupied routes with south closed / 2276640 radius-clear samples; corner sections open only for their selected S/W/E door.
+
+node tools/room-design/level-5/staff-gym/proof/validate-controls.mjs
+CONTROL VALIDATION PASS: 335 Node handler checks; 5 fixed-look upgrade buttons, 16 door buttons, 4 backing buttons, 4 bulk buttons, 2 staff contacts, keyboard, real-error/performance-warning discrimination; browser separate.
+
+node tools/room-design/level-5/staff-gym/stand-in/v2/replay.mjs
+STAND-IN REPLAY PASS: 20 neutral registered geometry frames; 3 actual native replay views; all 16 single-door occupied routes; painted files and frozen layout unchanged.
+
+node tools/room-design/level-5/staff-gym/proof/reproduce.mjs
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+BUILD PASS: painted; room-first 4x4; 1 fixed look / 5 upgrades; 20 reused sprites + 1 bench foreground / 25 records; exclusive corner ownership; 16 one-tile doors; 2 permanent staff contacts and rubber aisle; no home/hiring slots.
+REPRODUCIBILITY PASS: 36 delivered files byte-identical across two native rebuilds.
+
+node tools/room-design/level-5/staff-gym/proof/check-helpers.cjs
+BROWSER HELPERS READY: syntax PASS; installed Playwright resolves; browser execution separate.
+
+node tools/room-design/level-5/staff-gym/proof/inspect-native.mjs
+NATIVE INSPECTION PASS: 120 actual-render states across 5 fixed-look upgrades; default/empty/individual seated/standing staff/contacts/routes/all 16 doors/backing; browser QA separate.
+
+node tools/room-design/level-5/staff-gym/proof/inspect-composition.mjs
+COMPOSITION INSPECTION PASS: equipment and mat with staff hidden cover 58.0% of the floor view; solid equipment alone 46.1%; concept/empty/two-contact comparison saved.
+
+node tools/room-design/level-5/staff-gym/proof/inspect-corners.mjs
+CORNER INSPECTION PASS: actual before/after composition plus all 4 corner close-ups; unchanged contacts and approved art; native evidence, browser rerun assigned to manager.
+
+node tools/room-design/level-5/staff-gym/proof/check-http.mjs
+HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4191; existing server unchanged.
+
+node tools/room-design/level-5/staff-gym/proof/check-http.mjs --phone
+HTTP VALIDATION PASS: 33 current proof resources return 200 with matching bytes at http://127.0.0.1:4192; existing server unchanged.
+
+node tools/room-design/level-5/staff-gym/assets/write-provenance-v2.mjs
+ART PROVENANCE PASS: 12 prior built-in calls / 0 new calls; all originals, prompts, receipts, 21 prepared PNGs and 2 approved scrubs stills unchanged; 19 other records and contacts preserved; geometry-only corner revision; owner-approved remainder retained, manager verification pending.
+
+node tools/room-design/level-5/staff-gym/proof/pending-browser-v2.mjs
+BROWSER HANDOFF READY: fresh v2 validation/capture assigned to manager; current manifest pinned; prior evidence archived; no browser PASS claimed.
+```
+
+The owner explicitly assigned the fresh browser rerun to the manager. Current v2 browser/capture reports are `PENDING_MANAGER` and pin the delivered manifest. This worker did not launch a browser in this correction. Prior v1 attempt/evidence receipts remain archived; no current browser PASS is claimed.
+
+Manager, on the existing port-4191 server:
+
+```text
+node tools/room-design/level-5/staff-gym/proof/validate-browser.cjs
+node tools/room-design/level-5/staff-gym/proof/capture.cjs
+```
+
+Inspect all four corners with doors closed and each owned doorway open, both staff contacts, routes, unchanged front continuity, desktop concept comparison and 320px layout. The browser validator now checks exclusive floor footprints in every state. Record verification of the correction and retain the owner’s approval of all other elements; update the manager-owned global handoff. No unresolved owner design question remains.
+
+Handoff: `tools/room-design/level-5/staff-gym/WORKER_HANDOFF.md`. Full current results: `tools/room-design/level-5/staff-gym/validation-outputs-v2.json`. No new design question remains.
+
+Writes remain in `tools/room-design/level-5/staff-gym/**` and correction notes appended inside the existing Staff Gym plan section. The scoped plan receipt preserves all preceding/following bytes, including concurrent work. The lane audit verifies the archive, all original and prepared image hashes, nineteen non-side records, contacts/aisle, shared references, UTF-8, source/credential/privacy checks and the current manifest.
+
+No Git commands were used in this correction; no agents, installs, commits/push/publication, external messages, runtime/game/balance/save edits, global-handoff writes or server/launcher changes. The historical initial v1 read-only Git-status mistake remains disclosed in the archive. This checkpoint remains local only; the manager owns acceptance and the **“push to GitHub”** backup reminder.

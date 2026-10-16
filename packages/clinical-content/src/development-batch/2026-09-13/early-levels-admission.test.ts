@@ -3,7 +3,13 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+// Keep this historical batch's inventory proof scoped to its original bank.
+// Later-batch admission/protected-intake checks live in their own tests.
+const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+  concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+  cases: releaseWithLevel3.cases.filter(c=>!c.id.startsWith("case.gs028g.")&&!c.id.startsWith("case.pediatric-clinic.")&&!c.id.startsWith("case.variety3.")),
+};
 import { syntheticClinicalCaseSchema } from "../../schema";
 import {
   EARLY_LEVELS_20260913_AUTHORING_CONCEPTS,
@@ -48,9 +54,9 @@ describe("September 13 early-level batch admission", () => {
     expect(EARLY_LEVELS_20260913_CLAIMS).toHaveLength(21);
     expect(EARLY_LEVELS_20260913_SOURCES).toHaveLength(20);
     expect(EARLY_LEVELS_20260913_BATCH_MANIFEST).toMatchObject({authoringConceptCount:20,testedConceptCount:20,questionVariantCount:80,caseCount:52,decisionNodeCount:80,multistepCaseCount:28,resultGateCount:28,caseReviewCount:52,sourceCount:20,evidenceClaimCount:21,serviceContractCount:7,timingEntryCount:80,publicReleaseAuthorized:false});
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(203);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(518);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(783);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
     for (const clinicalCase of EARLY_LEVELS_20260913_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(SYNTHETIC_CLINICAL_RELEASE.cases.filter((item) => item.id === clinicalCase.id)).toHaveLength(1);

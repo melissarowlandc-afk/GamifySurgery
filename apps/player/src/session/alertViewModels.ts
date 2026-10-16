@@ -1,16 +1,24 @@
+import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
 import {
   PROTOTYPE_ALERT_SCHEDULING,
   getPrototypeAlertDefinition,
+  getCurrentRoomUpgradeDefinition,
   isPrototypeEventSuppressedFromPlayerFeed,
   renderPrototypeAlert,
 } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
+  TUTORIAL_ENCOUNTER_ID,
+  alertCadencePolicy,
+  employeeDepartureRiskCadenceGroup,
+  employeeDepartureRiskIsActive,
+  evaluateFacilityOperationalAlertConditions,
   getFacilityProgressionStatus,
-  getOperationalGlp1AutomationCapacity,
   isEmployeeAssignedToOperationalRoom,
   isRoomOperationalForFacilityWork,
+  operatingDayMinutes,
+  patientDepartureRiskIsActive,
   getRoomNavigableTiles,
   getRoomDefinition,
   type DomainEvent,
@@ -51,6 +59,7 @@ function configuredAlertCopy(
 
 export interface LevelTwoOperationalGuidance {
   definitionId: string;
+  title?: string;
   message: string;
   targetType: MessageBoardTargetType;
   targetId?: string;
@@ -73,50 +82,149 @@ export function getLevelTwoOperationalGuidance(
     (employee) => employee.staffRoleDefinitionId === roleDefinitionId &&
       isEmployeeAssignedToOperationalRoom(state, employee.id),
   );
-  const roomAction = (definitionId: string) => ({
+  const roomAction = (definitionId: string, message: string) => ({
     targetType: "build_mode" as const,
     targetId: definitionId,
     actionLabel: "Open Build Mode",
+    message,
   });
-  const rows: Array<Omit<LevelTwoOperationalGuidance, "message">> = [];
+  const hiringAction = (roleDefinitionId: string, message: string) => ({
+    targetType: "staff_role" as const,
+    targetId: roleDefinitionId,
+    actionLabel: "Show hiring",
+    message,
+  });
+  const rows: LevelTwoOperationalGuidance[] = [];
   if (hasBuilt("room.endoscopy") &&
     (!hasOperationalRoom("room.endoscopy") || !hasOperationalRoom("room.periop_recovery"))) {
-    rows.push({ definitionId: "alert.facility.endoscopy-inoperable", ...roomAction("room.endoscopy") });
+    const missingRoom = !hasOperationalRoom("room.periop_recovery")
+      ? "room.periop_recovery"
+      : "room.endoscopy";
+    rows.push({
+      definitionId: "alert.facility.endoscopy-inoperable",
+      ...roomAction(
+        missingRoom,
+        missingRoom === "room.periop_recovery"
+          ? "Endoscopy cannot run without an operational Peri-op Recovery Room. Build or reconnect it."
+          : "Endoscopy cannot run because its room is not operational. Restore operational access.",
+      ),
+    });
   } else if (hasBuilt("room.endoscopy") &&
     (!hasAssignedStaff("staff.endoscopy_nurse") || !hasAssignedStaff("staff.periop_nurse"))) {
-    rows.push({ definitionId: "alert.facility.endoscopy-inoperable", targetType: "staff_role", targetId: !hasAssignedStaff("staff.endoscopy_nurse") ? "staff.endoscopy_nurse" : "staff.periop_nurse", actionLabel: "Show hiring" });
+    const missingRole = !hasAssignedStaff("staff.endoscopy_nurse")
+      ? "staff.endoscopy_nurse"
+      : "staff.periop_nurse";
+    rows.push({
+      definitionId: "alert.facility.endoscopy-inoperable",
+      ...hiringAction(
+        missingRole,
+        missingRole === "staff.endoscopy_nurse"
+          ? "Endoscopy has room capacity but needs an Endoscopy Nurse. Hire one or restore their room assignment."
+          : "Endoscopy has room capacity but needs a Peri-op Nurse. Hire one or restore their room assignment.",
+      ),
+    });
   }
   const builtImaging = ["room.ultrasound", "room.xray", "room.ct"].find(hasBuilt);
   const inoperableImaging = ["room.ultrasound", "room.xray", "room.ct"].find(
     (definitionId) => hasBuilt(definitionId) && !hasOperationalRoom(definitionId),
   );
   if (builtImaging && inoperableImaging) {
-    rows.push({ definitionId: "alert.facility.imaging-inoperable", ...roomAction(inoperableImaging ?? builtImaging) });
+    const roomName = getRoomDefinition(inoperableImaging)?.displayName ?? "This imaging room";
+    rows.push({ definitionId: "alert.facility.imaging-inoperable", ...roomAction(inoperableImaging, `${roomName} is not operational. Restore operational access.`) });
   } else if (builtImaging && !hasAssignedStaff("staff.imaging_technician")) {
-    rows.push({ definitionId: "alert.facility.imaging-inoperable", targetType: "staff_role", targetId: "staff.imaging_technician", actionLabel: "Show hiring" });
+    const roomName = getRoomDefinition(builtImaging)?.displayName ?? "This imaging room";
+    rows.push({ definitionId: "alert.facility.imaging-inoperable", ...hiringAction("staff.imaging_technician", `${roomName} is operational but needs an Imaging Technician. Hire one or restore their room assignment.`) });
   }
-  if (state.facilityLevel !== 2) {
-    return rows.map((row) => ({ ...row, message: renderPrototypeAlert(row.definitionId, {}).body }));
+  if (state.facilityLevel < 2) {
+    return rows;
   }
   if (hasBuilt("room.phlebotomy") && !hasOperationalRoom("room.phlebotomy")) {
-    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", ...roomAction("room.phlebotomy") });
+    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", ...roomAction("room.phlebotomy", "The Phlebotomy Station is not operational. Restore operational access.") });
   } else if (hasBuilt("room.phlebotomy") && !hasAssignedStaff("staff.phlebotomist")) {
-    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", targetType: "staff_role", targetId: "staff.phlebotomist", actionLabel: "Show hiring" });
+    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", ...hiringAction("staff.phlebotomist", "The Phlebotomy Station is operational but needs a Phlebotomist. Hire one or restore their room assignment.") });
   }
   if (hasBuilt("room.evs_closet") && !hasOperationalRoom("room.evs_closet")) {
-    rows.push({ definitionId: "alert.facility.evs-inoperable", ...roomAction("room.evs_closet") });
+    rows.push({ definitionId: "alert.facility.evs-inoperable", ...roomAction("room.evs_closet", "The EVS Closet is not operational. Restore operational access.") });
   } else if (hasBuilt("room.evs_closet") && !hasAssignedStaff("staff.evs_worker")) {
-    rows.push({ definitionId: "alert.facility.evs-inoperable", targetType: "staff_role", targetId: "staff.evs_worker", actionLabel: "Show hiring" });
+    rows.push({ definitionId: "alert.facility.evs-inoperable", ...hiringAction("staff.evs_worker", "The EVS Closet is operational but needs an EVS Worker. Hire one or restore their room assignment.") });
   }
   if (hasBuilt("room.glp1_telehealth_suite") && !hasOperationalRoom("room.glp1_telehealth_suite")) {
-    rows.push({ definitionId: "alert.facility.glp1-inoperable", ...roomAction("room.glp1_telehealth_suite") });
-  } else if (hasBuilt("room.glp1_telehealth_suite") && getOperationalGlp1AutomationCapacity(state) === 0) {
-    rows.push({ definitionId: "alert.facility.glp1-inoperable", targetType: "staff_role", targetId: "staff.glp1_np", actionLabel: "Show hiring" });
+    rows.push({ definitionId: "alert.facility.glp1-inoperable", ...roomAction("room.glp1_telehealth_suite", "The telehealth suite is not operational. Restore operational access.") });
+  } else if (hasBuilt("room.glp1_telehealth_suite") && !hasAssignedStaff("staff.glp1_np")) {
+    rows.push({ definitionId: "alert.facility.glp1-inoperable", ...hiringAction("staff.glp1_np", "The telehealth suite is operational but needs NP coverage before automation can begin. Hire one or restore their room assignment.") });
   }
-  return rows.map((row) => ({
-    ...row,
-    message: configuredAlertCopy(row.definitionId, {}).message,
-  }));
+  if (state.facilityLevel >= 3) {
+    for (const [roomId, roleId] of [["room.reading", "staff.radiologist"], ["room.laboratory", "staff.laboratory_technician"], ["room.pharmacy", "staff.pharmacist"], ["room.maintenance_workshop", "staff.repair_person"], ["room.ambulatory_or", "staff.or_nurse"]]) {
+      if (!hasBuilt(roomId!)) continue;
+      const name = getRoomDefinition(roomId!)?.displayName ?? "Room";
+      const title = `${name} setup`;
+      if (!hasOperationalRoom(roomId!)) rows.push({ definitionId: `alert.facility.setup.${roomId}`, title, ...roomAction(roomId!, `${name} needs operational access before work can begin.`) });
+      else if (!hasAssignedStaff(roleId!)) rows.push({ definitionId: `alert.facility.setup.${roomId}`, title, ...hiringAction(roleId!, `${name} has space but needs its assigned staff coverage. The furniture declines to help.`) });
+    }
+  }
+  return rows;
+}
+
+function getNextProgressionGuidance(
+  state: GameState,
+): LevelTwoOperationalGuidance | null {
+  if (
+    state.facilityLevel === 0 ||
+    [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].some(
+      (encounterId) =>
+        state.encounters[encounterId]?.resolutionReason !== "completed",
+    )
+  ) {
+    return null;
+  }
+  const progression = getFacilityProgressionStatus(state);
+  if (progression.eligible) return null;
+  const unmet = progression.requirements.filter((requirement) => !requirement.met);
+  const nextRequirement = unmet.find((requirement) =>
+    requirement.id.startsWith("progression.room.") ||
+    requirement.id.startsWith("progression.staff."),
+  ) ?? unmet[0];
+  if (!nextRequirement) return null;
+
+  const roomPrefix = "progression.room.";
+  const staffPrefix = "progression.staff.";
+  const goalLabel = progression.nextFacilityLevel === null
+    ? "the current clinic goal"
+    : "the next level";
+  const target = nextRequirement.id.startsWith(roomPrefix)
+    ? {
+        targetType: "build_mode" as const,
+        targetId: nextRequirement.id.slice(roomPrefix.length),
+        actionLabel: "Open Build Mode",
+      }
+    : nextRequirement.id.startsWith(staffPrefix)
+      ? {
+          targetType: "staff_role" as const,
+          targetId: nextRequirement.id.slice(staffPrefix.length),
+          actionLabel: "Show hiring",
+        }
+      : {
+          targetType: "goal" as const,
+          actionLabel: "View goals",
+        };
+  const message = nextRequirement.id.startsWith(roomPrefix)
+    ? `${nextRequirement.label.replace(/^Build /, "")} is needed for ${goalLabel}. Build it or restore its access.`
+    : nextRequirement.id.startsWith(staffPrefix)
+      ? `${nextRequirement.label} to work toward ${goalLabel}. Open hiring to add that role.`
+      : nextRequirement.id === "progression.clinical_xp"
+        ? `Complete patient encounters to earn Clinical XP for ${goalLabel} (${nextRequirement.current}/${nextRequirement.required}).`
+      : nextRequirement.id === "progression.completed_encounters"
+          ? `Finish patient encounters for ${goalLabel} (${nextRequirement.current}/${nextRequirement.required}).`
+      : nextRequirement.id === "progression.satisfaction"
+            ? `Complete visits with better satisfaction for ${goalLabel} (${nextRequirement.current}/${nextRequirement.required}).`
+      : nextRequirement.id === "progression.endoscopy_completion"
+              ? `Complete your first endoscopy to finish the current clinic goal (${nextRequirement.current}/${nextRequirement.required}).`
+              : `${nextRequirement.label} is needed for ${goalLabel} (${nextRequirement.current}/${nextRequirement.required}).`;
+  return {
+    definitionId: "alert.progress.next-step",
+    message,
+    ...target,
+  };
 }
 
 function eventTarget(
@@ -256,6 +364,7 @@ const CLINIC_WIDE_COMPLAINT_DEFINITION_IDS = new Set([
 ]);
 
 function conditionOccurrenceToMessage(
+  state: GameState,
   occurrence: FacilityConditionOccurrenceState,
   isLatestForCondition: boolean,
 ): MessageBoardItemView {
@@ -264,7 +373,8 @@ function conditionOccurrenceToMessage(
     unresolved &&
     isLatestForCondition &&
     occurrence.priority === "action_required";
-  const rendered = renderPrototypeAlert(occurrence.definitionId);
+  const room = occurrence.target?.kind === "room" ? state.rooms.find((candidate) => candidate.id === occurrence.target?.id) : undefined;
+  const rendered = renderPrototypeAlert(occurrence.definitionId, { room_name: room ? getRoomDefinition(room.roomDefinitionId)?.displayName ?? "the room" : "the room" });
   const message = CLINIC_WIDE_COMPLAINT_DEFINITION_IDS.has(
     occurrence.definitionId,
   )
@@ -300,6 +410,8 @@ function fallbackEventTitle(event: DomainEvent): string {
       return "Patient waiting";
     case "left_before_seen":
       return "Patient left";
+    case "employee_discussion_decision":
+      return "Team learning decision";
     case "clinical_decision_recorded":
       return event.definitionId === "event.clinical.decision-correct"
         ? "Decision recorded"
@@ -328,6 +440,8 @@ function fallbackEventTitle(event: DomainEvent): string {
       return "Employee fired";
     case "staff_quit":
       return "Employee quit";
+    case "staff_departure_risk":
+      return "Employee may quit soon";
     case "staff_salary_changed":
       return "Salary updated";
     case "facility_level_advanced":
@@ -486,6 +600,12 @@ function attentionGroup(event: DomainEvent): string | null {
   if (event.type === "water_cooler_low") {
     return "environment:water-cooler";
   }
+  if (
+    event.type === "staff_departure_risk" &&
+    event.target?.kind === "employee"
+  ) {
+    return `staff:${event.target.id}:departure-risk`;
+  }
   return null;
 }
 
@@ -503,6 +623,23 @@ function attentionConditionActive(
       state.environment.waterCoolerFillPercent <=
       PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
         .waterCoolerLowThreshold
+    );
+  }
+
+  if (
+    definitionId === "alert.staff.departure-risk" &&
+    event.target?.kind === "employee"
+  ) {
+    const employee = state.employees.find(
+      (candidate) => candidate.id === event.target?.id,
+    );
+    return Boolean(
+      employee &&
+        employeeDepartureRiskIsActive(
+          state,
+          employee,
+          PROTOTYPE_DOMAIN_CONTEXT,
+        ),
     );
   }
 
@@ -538,6 +675,9 @@ function attentionConditionActive(
         encounter.feedAttentionKind === "checked_in" &&
         state.openChartEncounterId !== encounter.id
       );
+    }
+    if (definitionId === "alert.patient.departure-risk") {
+      return patientDepartureRiskIsActive(state, encounter);
     }
     if (event.type === "patience_warning") {
       return (
@@ -612,122 +752,34 @@ function persistentPatientMessages(
   recentEvents: readonly DomainEvent[],
 ): MessageBoardItemView[] {
   return Object.values(state.encounters).flatMap((encounter) => {
-    const idleWaitingSinceTick = encounter.idleWaitingSinceTick;
-    if (encounter.lifecycle === "waiting_unopened") {
-      if (
-        encounter.checkInStatus !== "checked_in" ||
-        encounter.feedAttentionKind !== "checked_in" ||
-        idleWaitingSinceTick === null ||
-        state.facilityTick -
-          idleWaitingSinceTick <=
-          PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
-        state.openChartEncounterId === encounter.id ||
-        encounter.patientMovement?.kind === "arriving_for_check_in" ||
-        encounter.patientMovement?.kind === "leaving_after_walkout"
-      ) {
-        return [];
-      }
-      if (
-        recentEvents.some(
-          (event) =>
-            event.encounterId === encounter.id &&
-            event.type === "patience_warning" &&
-            event.definitionId === "alert.patient.waiting" &&
-            event.facilityTick > idleWaitingSinceTick,
-        )
-      ) {
-        return [];
-      }
-      const leaveWarningActive =
-        !encounter.waiting.patienceExempt &&
-        encounter.patientSatisfaction < 75;
-      const configuredCopy = configuredAlertCopy(
-        leaveWarningActive
-          ? "alert.patient.patience"
-          : "alert.patient.waiting",
-        {
-          patient_name: encounter.patientDisplayName,
-        },
-      );
-      return [
-        {
-          id: leaveWarningActive
-            ? `persistent.patient.${encounter.id}.leave-warning`
-            : `persistent.patient.${encounter.id}.waiting`,
-          priority: leaveWarningActive ? "critical" : "action_required",
-          category: "action_required",
-          showAttentionMarker: true,
-          title: configuredCopy.title,
-          message: configuredCopy.message,
-          timeLabel: facilityTimeLabel(
-            idleWaitingSinceTick +
-              PROTOTYPE_ALERT_SCHEDULING
-                .patientAttentionDelayMinutes +
-              1,
-          ),
-          actionLabel: "Open chart",
-          targetType: "patient",
-          targetId: encounter.id,
-          sortKey:
-            idleWaitingSinceTick +
-            PROTOTYPE_ALERT_SCHEDULING
-              .patientAttentionDelayMinutes +
-            1 +
-            (leaveWarningActive ? 0.09 : 0.05),
-          persistent: true,
-        } satisfies MessageBoardItemView,
-      ];
-    }
-    if (encounter.lifecycle === "active_action_required") {
-      if (
-        idleWaitingSinceTick === null ||
-        state.facilityTick -
-          idleWaitingSinceTick <=
-          PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
-        state.openChartEncounterId === encounter.id ||
-        recentEvents.some(
-          (event) =>
-            event.encounterId === encounter.id &&
-            event.type === "patience_warning" &&
-            event.definitionId === "alert.patient.waiting" &&
-            event.facilityTick > idleWaitingSinceTick,
-        )
-      ) {
-        return [];
-      }
-      const configuredCopy = configuredAlertCopy(
-        "alert.patient.waiting",
-        {
-          patient_name: encounter.patientDisplayName,
-        },
-      );
-      return [
-        {
-          id: `persistent.patient.${encounter.id}.waiting`,
-          priority: "action_required",
-          category: "action_required",
-          showAttentionMarker: true,
-          title: configuredCopy.title,
-          message: configuredCopy.message,
-          timeLabel: facilityTimeLabel(
-            idleWaitingSinceTick +
-              PROTOTYPE_ALERT_SCHEDULING
-                .patientAttentionDelayMinutes +
-              1,
-          ),
-          actionLabel: "Open chart",
-          targetType: "patient",
-          targetId: encounter.id,
-          sortKey:
-            idleWaitingSinceTick +
-            PROTOTYPE_ALERT_SCHEDULING
-              .patientAttentionDelayMinutes +
-            1.08,
-          persistent: true,
-        } satisfies MessageBoardItemView,
-      ];
-    }
-    return [];
+    const warningTick = encounter.departureRiskWarningAtTick;
+    if (
+      warningTick == null ||
+      !patientDepartureRiskIsActive(state, encounter) ||
+      recentEvents.some(
+        (event) =>
+          event.encounterId === encounter.id &&
+          event.definitionId === "alert.patient.departure-risk",
+      )
+    ) return [];
+    const configuredCopy = configuredAlertCopy(
+      "alert.patient.departure-risk",
+      { patient_name: encounter.patientDisplayName },
+    );
+    return [{
+      id: `event.patient-departure-risk.${encounter.id}`,
+      priority: "critical",
+      category: "action_required",
+      showAttentionMarker: true,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(warningTick),
+      actionLabel: "Open chart",
+      targetType: "patient",
+      targetId: encounter.id,
+      sortKey: warningTick,
+      persistent: true,
+    } satisfies MessageBoardItemView];
   });
 }
 
@@ -763,38 +815,6 @@ function persistentSystemMessages(
       persistent: true,
     });
   }
-  const secondTutorial =
-    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
-  const hasExaminationRoom = state.rooms.some(
-    (room) => room.roomDefinitionId === "room.examination",
-  );
-  if (
-    state.facilityLevel === 0 &&
-    secondTutorial?.lifecycle === "resolved" &&
-    !hasExaminationRoom &&
-    !materializedConditionKeys.has("missing_examination_room")
-  ) {
-    const configuredCopy = configuredAlertCopy(
-      "alert.facility.private-exam-needed",
-      { patient_name: secondTutorial.patientDisplayName },
-    );
-    messages.push({
-      id: "persistent.facility.private-exam-needed",
-      priority: "action_required",
-      category: "action_required",
-      showAttentionMarker: true,
-      title: configuredCopy.title,
-      message: configuredCopy.message,
-      timeLabel: facilityTimeLabel(state.facilityTick),
-      targetType: "goal",
-      actionLabel: "View goal",
-      sortKey:
-        (secondTutorial.resolvedAtFacilityTick ??
-          secondTutorial.waiting.arrivedAtTick) + 0.065,
-      persistent: true,
-    });
-  }
-
   const checkedInWaiting = Object.values(state.encounters).filter(
     (encounter) =>
       encounter.lifecycle === "waiting_unopened" &&
@@ -869,6 +889,7 @@ function persistentSystemMessages(
         message: configuredCopy.message,
         timeLabel: facilityTimeLabel(state.facilityTick),
         targetType: "build_mode",
+        targetId: "room.xray",
         actionLabel: "Open Build Mode",
         sortKey:
           pendingOffsiteXray.pendingResult!.scheduledAtTick + 0.043,
@@ -919,6 +940,7 @@ function persistentSystemMessages(
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "build_mode",
+      targetId: "room.waiting",
       actionLabel: "Open Build Mode",
       sortKey: firstWaitingPatient.waiting.arrivedAtTick + 0.041,
       persistent: true,
@@ -947,6 +969,7 @@ function persistentSystemMessages(
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "build_mode",
+      targetId: "room.bathroom",
       actionLabel: "Open Build Mode",
       sortKey: firstWaitingPatient.waiting.arrivedAtTick + 30.04,
       persistent: true,
@@ -1098,6 +1121,9 @@ function persistentSystemMessages(
           "returning_from_offsite_testing" &&
         room.upgradeLevel === 1 &&
         definition.maximumUpgradeLevel > 1 &&
+        ["waiting_satisfaction_points", "examination_satisfaction_points", "recovery_satisfaction_points"].includes(
+          getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.effectKind ?? "none",
+        ) &&
         encounter.patientSatisfaction < 90 &&
         state.facilityTick - encounter.waiting.arrivedAtTick >=
           (roomUpgradeComplaintDefinition?.cooldownMinutes ?? 60)
@@ -1173,33 +1199,43 @@ function persistentSystemMessages(
     });
   }
 
-  const lowMoraleThreshold =
-    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
-      .unhappyStaffMoraleThreshold;
-  for (const employee of state.employees.filter(
-    (candidate) =>
-      candidate.morale <= lowMoraleThreshold &&
-      !materializedConditionKeys.has("low_staff_morale"),
+  for (const employee of state.employees.filter((candidate) =>
+    employeeDepartureRiskIsActive(
+      state,
+      candidate,
+      PROTOTYPE_DOMAIN_CONTEXT,
+    ),
   )) {
+    const cadenceGroup = employeeDepartureRiskCadenceGroup(employee.id);
+    const warningTick =
+      state.alertHumor.conditionLastEmittedTicks[cadenceGroup];
+    if (
+      warningTick === undefined ||
+      recentEvents.some(
+        (event) =>
+          event.definitionId === "alert.staff.departure-risk" &&
+          event.target?.kind === "employee" &&
+          event.target.id === employee.id,
+      )
+    ) continue;
     const configuredCopy = configuredAlertCopy(
-      "alert.staff.morale-low",
+      "alert.staff.departure-risk",
       {
         employee_name: employee.displayName,
-        morale: String(employee.morale),
+        morale: String(getEmployeeEffectiveMorale(state, employee)),
       },
     );
     messages.push({
-      id: `persistent.staff.morale-low.${employee.id}`,
+      id: `event.staff-departure-risk.${employee.id}.${warningTick}`,
       priority: "action_required",
       category: "action_required",
       showAttentionMarker: true,
       title: configuredCopy.title,
       message: configuredCopy.message,
-      timeLabel: facilityTimeLabel(state.facilityTick),
-      targetType: "employee",
-      targetId: employee.id,
-      actionLabel: "Show employee",
-      sortKey: employee.hiredAtFacilityTick + 0.057,
+      timeLabel: facilityTimeLabel(warningTick),
+      targetType: "money",
+      actionLabel: "Show money",
+      sortKey: warningTick,
       persistent: true,
     });
   }
@@ -1254,38 +1290,15 @@ function persistentSystemMessages(
     });
   }
 
-  if (
-    state.facilityLevel === 1 &&
-    checkedInWaiting.length >= 3 &&
-    state.rooms.some((room) => room.roomDefinitionId === "room.waiting") &&
-    !materializedConditionKeys.has("waiting_room_crowded")
-  ) {
-    const configuredCopy = configuredAlertCopy(
-      "alert.facility.waiting-room-crowded",
-      {},
-    );
-    messages.push({
-      id: "persistent.facility.waiting-room-crowded",
-      priority: "informational",
-      category: "guidance",
-      showAttentionMarker: false,
-      title: configuredCopy.title,
-      message: configuredCopy.message,
-      timeLabel: facilityTimeLabel(state.facilityTick),
-      targetType: "build_mode",
-      actionLabel: "Open Build Mode",
-      sortKey:
-        Math.max(
-          ...checkedInWaiting.map(
-            (encounter) => encounter.waiting.arrivedAtTick,
-          ),
-        ) + 0.037,
-      persistent: true,
-    });
-  }
-
-  for (const guidance of getLevelTwoOperationalGuidance(state)) {
-    const configuredCopy = configuredAlertCopy(guidance.definitionId, {});
+  const operationalGuidance = getLevelTwoOperationalGuidance(state);
+  for (const guidance of operationalGuidance) {
+    const configuredCopy = getPrototypeAlertDefinition(guidance.definitionId) ? configuredAlertCopy(guidance.definitionId, {}) : { title: guidance.title ?? "Clinic setup" };
+    const guidanceRoomIds: Record<string, string> = { "alert.facility.endoscopy-inoperable": "room.endoscopy", "alert.facility.imaging-inoperable": "room.xray", "alert.facility.phlebotomy-inoperable": "room.phlebotomy", "alert.facility.evs-inoperable": "room.evs_closet", "alert.facility.glp1-inoperable": "room.glp1_telehealth_suite" };
+    const targetRoom = guidance.targetType === "build_mode" ? state.rooms.find((room) => room.roomDefinitionId === guidance.targetId) :
+      state.rooms.find((room) => state.employees.some((employee) => employee.staffRoleDefinitionId === guidance.targetId && employee.homeRoomInstanceId === room.id));
+    const setupRoom = targetRoom ?? state.rooms.find((room) => room.roomDefinitionId === (guidanceRoomIds[guidance.definitionId] ?? guidance.definitionId.replace("alert.facility.setup.", "")));
+    const onset = state.events.find((event) => event.type === "room_placed" && event.target?.id === setupRoom?.id)?.facilityTick ??
+      state.events.find((event) => event.type === "facility_level_advanced" && event.message.includes(`Level ${state.facilityLevel}`))?.facilityTick ?? 0;
     messages.push({
       id: `persistent.${guidance.definitionId}`,
       priority: "informational",
@@ -1293,16 +1306,41 @@ function persistentSystemMessages(
       showAttentionMarker: false,
       title: configuredCopy.title,
       message: guidance.message,
-      timeLabel: facilityTimeLabel(state.facilityTick),
+      timeLabel: facilityTimeLabel(onset),
       targetType: guidance.targetType,
       targetId: guidance.targetId,
       actionLabel: guidance.actionLabel,
-      sortKey: state.facilityTick + 0.041,
+      sortKey: onset + 0.041,
       persistent: true,
     });
   }
 
   const progression = getFacilityProgressionStatus(state);
+  const nextProgressionGuidance =
+    operationalGuidance.length === 0 && state.cash >= lowCashThreshold
+      ? getNextProgressionGuidance(state)
+      : null;
+  if (nextProgressionGuidance) {
+    const levelStartedAtTick = state.events
+      .filter((event) => event.type === "facility_level_advanced")
+      .at(-1)?.facilityTick;
+    messages.push({
+      id: `persistent.progress.next-step.${state.facilityLevel}`,
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: "Next clinic step",
+      message: nextProgressionGuidance.message,
+      ...(levelStartedAtTick === undefined
+        ? {}
+        : { timeLabel: facilityTimeLabel(levelStartedAtTick) }),
+      targetType: nextProgressionGuidance.targetType,
+      targetId: nextProgressionGuidance.targetId,
+      actionLabel: nextProgressionGuidance.actionLabel,
+      sortKey: (levelStartedAtTick ?? 0) + 0.042,
+      persistent: true,
+    });
+  }
   if (
     progression.eligible &&
     !materializedConditionKeys.has("progression_eligible")
@@ -1359,6 +1397,7 @@ function isCadenceManagedPersistentMessage(
 ): boolean {
   return [
     "persistent.finance.low-cash",
+    "persistent.finance.no-cash",
     "persistent.facility.waiting-room-needed",
     "persistent.facility.private-exam-needed",
     "persistent.facility.bathroom-needed",
@@ -1373,16 +1412,117 @@ function isCadenceManagedPersistentMessage(
   ].includes(item.id) || item.id.startsWith("persistent.room-upgrade-requested.");
 }
 
+function projectFacilityConditionOccurrences(
+  state: GameState,
+  occurrences: readonly FacilityConditionOccurrenceState[],
+): FacilityConditionOccurrenceState[] {
+  const projected: FacilityConditionOccurrenceState[] = [];
+  const representativeByGroup = new Map<
+    string,
+    { index: number; occurredAtFacilityTick: number }
+  >();
+  for (const occurrence of occurrences) {
+    if (occurrence.conditionKey === "low_staff_morale") {
+      continue;
+    }
+    const policy = alertCadencePolicy(
+      occurrence.conditionKey,
+      PROTOTYPE_DOMAIN_CONTEXT,
+    );
+    if (!policy) {
+      projected.push(occurrence);
+      continue;
+    }
+    const representative = representativeByGroup.get(policy.group);
+    if (
+      representative &&
+      occurrence.occurredAtFacilityTick -
+        representative.occurredAtFacilityTick <
+        policy.cooldownMinutes
+    ) {
+      const prior = projected[representative.index]!;
+      projected[representative.index] = {
+        ...occurrence,
+        id: prior.id,
+        occurredAtFacilityTick: prior.occurredAtFacilityTick,
+      };
+      continue;
+    }
+    representativeByGroup.set(policy.group, {
+      index: projected.length,
+      occurredAtFacilityTick: occurrence.occurredAtFacilityTick,
+    });
+    projected.push(occurrence);
+  }
+  const activeOperational = new Map<
+    string,
+    ReturnType<typeof evaluateFacilityOperationalAlertConditions>[number]
+  >(
+    evaluateFacilityOperationalAlertConditions(
+      state,
+      PROTOTYPE_DOMAIN_CONTEXT,
+    ).map((condition) => [condition.conditionKey, condition]),
+  );
+  return projected.map((occurrence) => {
+    const operational = activeOperational.get(occurrence.conditionKey);
+    if (operational) {
+      return {
+        ...occurrence,
+        resolvedAtFacilityTick: null,
+        definitionId: operational.definitionId,
+        message: operational.message,
+        priority: operational.priority,
+        target: operational.target,
+      };
+    }
+    return state.alertHumor.conditionActiveSinceTicks[
+      occurrence.conditionKey
+    ] !== undefined
+      ? { ...occurrence, resolvedAtFacilityTick: null }
+      : occurrence;
+  });
+}
+
+function projectDailyFeedEvents(
+  events: readonly DomainEvent[],
+): DomainEvent[] {
+  const day = operatingDayMinutes(PROTOTYPE_DOMAIN_CONTEXT);
+  const lastProjectedTicks = new Map<string, number>();
+  return events.filter((event) => {
+    const dailyGroup =
+      event.type === "ambient_message" &&
+      event.definitionId &&
+      event.alertVariantId
+        ? `ambient:${event.definitionId}:${event.alertVariantId}`
+        : event.definitionId === "alert.success.satisfaction-above-90"
+          ? "success.satisfaction-above-90"
+          : null;
+    if (!dailyGroup) return true;
+    const lastProjected = lastProjectedTicks.get(dailyGroup);
+    if (
+      lastProjected !== undefined &&
+      event.facilityTick - lastProjected < day
+    ) return false;
+    lastProjectedTicks.set(dailyGroup, event.facilityTick);
+    return true;
+  });
+}
+
 export function createMessageBoardView(
   state: GameState,
 ): MessageBoardItemView[] {
   const recentEvents = state.events.slice(-80);
-  const recentConditionOccurrences = (
-    state.environment.facilityConditionOccurrences ?? []
+  const recentConditionOccurrences = projectFacilityConditionOccurrences(
+    state,
+    state.environment.facilityConditionOccurrences ?? [],
   ).slice(-80);
-  const visibleEvents = recentEvents.filter(
-    (event) => !isSuppressedFromPlayerFeed(event),
-  );
+  // Apply player-feed eligibility before the bounded display window. Routine
+  // receipts remain durable domain history, but must not crowd a readable
+  // ambient or guidance row out of the 80-row presentation window.
+  const visibleEvents = projectDailyFeedEvents(
+    state.events.filter((event) => !isSuppressedFromPlayerFeed(event)),
+  )
+    .slice(-80);
   const latestAttentionEventIdByGroup = new Map<string, string>();
   for (const event of visibleEvents) {
     const group = attentionGroup(event);
@@ -1427,6 +1567,7 @@ export function createMessageBoardView(
     .map(
     (occurrence) =>
       conditionOccurrenceToMessage(
+        state,
         occurrence,
         latestOccurrenceIdByCondition.get(
           occurrence.conditionKey,
@@ -1439,10 +1580,10 @@ export function createMessageBoardView(
     ),
   );
   const persistent = [
-    ...persistentPatientMessages(state, recentEvents),
+    ...persistentPatientMessages(state, visibleEvents),
     ...persistentSystemMessages(
       state,
-      recentEvents,
+      visibleEvents,
       materializedConditionKeys,
     ).filter((item) => !isCadenceManagedPersistentMessage(item)),
   ];

@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "snapshot": "GS-019 motion closeout text-only backup",
+  "baseCommit": "c26c96a111103d8665e33c9258ef54071d729f14",
+  "generatedAt": "2026-09-17",
+  "policy": {
+    "payloadFileCount": 91,
+    "payloadBytes": 531110,
+    "includedExtensions": [
+      ".mjs",
+      ".txt",
+      ".md",
+      ".html"
+    ],
+    "imageAndArtifactPolicy": "All binary art, source/donor PNGs, rendered frames, proofs, QA screenshots, WebP files, artifact-root output, and generated review HTML are intentionally excluded. Approved frames remain local because private-source boundaries do not unequivocally authorize derivative-art upload.",
+    "reproducibilityLimitation": "This snapshot preserves text tooling, prompts, validators, review templates, provenance, and closure documentation. Pixel-perfect rebuilding requires intentionally local donor/reference images and inherited identity/standing assets that are not included.",
+    "externalDependencies": [
+      "Node.js ESM runtime",
+      "@napi-rs/canvas for image builders and validators",
+      "Playwright or local Google Chrome for browser review validators",
+      "Python with Pillow for selected normalization or lossless WebP helper paths"
+    ]
+  },
+  "excludedPrivatePathScripts": [
+    "tools/character-mapping/gs019-blue-west/build.mjs",
+    "tools/character-mapping/gs019-blue-west/build-whole-body-v1.mjs",
+    "tools/character-mapping/gs019-blue-west/build-whole-body-candidate.mjs",
+    "tools/character-mapping/gs019-blue-directions/investigate-north-south-sources.mjs"
+  ],
+  "excludedRoots": [
+    "artifacts/character-movement/gs019-blue-west/**",
+    "artifacts/character-movement/gs019-blue-directions/**",
+    "artifacts/character-movement/gs019-navy-walk/**",
+    "artifacts/character-movement/gs019-beanie-walk/**",
+    "artifacts/character-movement/gs019-gray-braid-walk/**",
+    "tools/character-mapping/gs019-*/**/*.png",
+    "tools/character-mapping/gs019-*/**/*.webp"
+  ],
+  "files": [
+    {
+      "path": "docs/execplans/founder-motion-reset.md",
+      "sha256": "fa4e7d1659391bed0a09d0ecb16e1055789d07397f1a822030e5cdd67657d13f",
+      "sizeBytes": 36711
+    },
+    {
+      "path": "docs/handoffs/GS-019_FOUNDER_MOTION.md",
+      "sha256": "60e01728a540f21ddd56d333ccfb5bfb9cc55a08125de8ac74f792ccb308c4c0",
+      "sizeBytes": 16540
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/build-gait-v1-review.mjs",
+      "sha256": "3c7d5496b203e0be66e8086dfc2de43ce602e30feb3f83fcb4aef98ccd84308c",
+      "sizeBytes": 4081
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/build-gait-v1.mjs",
+      "sha256": "3cea027bf83cdccc9f305ee09229b8c57e74e579f162b386526d72b146fe781c",
+      "sizeBytes": 12384
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/gait-v1-review-template.html",
+      "sha256": "efe02e8e224ae895c7aa90aa77b5cd62d71704279f02f031232900842ba2fd53",
+      "sizeBytes": 5793
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/validate-gait-v1-review.mjs",
+      "sha256": "1e37c0a1b2bc67857bf8ef657df14965b00bd6ebaf69759d638d15d3c62c1d42",
+      "sizeBytes": 5642
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/validate-gait-v1.mjs",
+      "sha256": "e78eaefdcf6e29e64f7ac8b31f78c0abe1fb9da9a0fc1d17b4ada42ef5a39e22",
+      "sizeBytes": 10823
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/west-first-half-v1-prompt.txt",
+      "sha256": "edd79ae4a2fd90a3a7da6b67dd9a8cc0aecc2df6ec6d6d9838d2be3a9f308130",
+      "sizeBytes": 1424
+    },
+    {
+      "path": "tools/character-mapping/gs019-beanie-walk/west-second-half-v1-prompt.txt",
+      "sha256": "8f1c2309620fcead92a6a12e95ff82b6110cdf10ad3dda973683e07b1c43b9e1",
+      "sizeBytes": 1352
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/analyze-donor-cells.mjs",
+      "sha256": "bf55e3b542d4797b87bc7c4751fac1dd110ae5dde23a1e055f346779335d18b2",
+      "sizeBytes": 6114
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/build-directional-review.mjs",
+      "sha256": "63166536014dffd0ffb3229bf5039360bf92e816c01393ee54751ac00f3ea7f1",
+      "sizeBytes": 5056
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/build-east-mirror.mjs",
+      "sha256": "5ba1943050bead8ecf47eb43daba19cdb43668608544cafb163749779d038579",
+      "sizeBytes": 5796
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/build-north-south-draft.mjs",
+      "sha256": "212f8ce2ce01967fa349d23e9c096411bb974257aa00c5be58fbb8eba09b78fb",
+      "sizeBytes": 21496
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/build-south-corrected-review.mjs",
+      "sha256": "ced37732f2d55976ec246dcd6bb7a5873835ac2efe6198e435783d0f5c4542f7",
+      "sizeBytes": 6529
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/build-south-corrected-v2.mjs",
+      "sha256": "7ff93200c18d020ff8a93da07f7de186959a4e74124eeb1c9db01262b6a40416",
+      "sizeBytes": 10069
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/directional-review-template.html",
+      "sha256": "b59b680cbc2e119429fee99aeb2e91c05931658ab14d4734414c520a303bcba8",
+      "sizeBytes": 6961
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/north-transitions-v1-prompt.txt",
+      "sha256": "985b822c72790c964794a47388dad27c51db285a23e12ef198b9fbc29f64d1c0",
+      "sizeBytes": 1513
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/north-whole-body-v1-prompt.txt",
+      "sha256": "bfc27106f24fb886554182c169b5f0cd6092dcf6524e75b05a746969572c15b9",
+      "sizeBytes": 2050
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/probe-north-south-contacts.mjs",
+      "sha256": "af87e760ffc730c8c5b0ec0ef1d3fa724d936ac17ddceb0652c17c7401c35c61",
+      "sizeBytes": 14346
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/README.md",
+      "sha256": "e9cc3e798096ae21fe131f36fd8d7076f8fdc93b0f23b66839d5314349729325",
+      "sizeBytes": 1665
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/south-whole-body-v1-prompt.txt",
+      "sha256": "20180d2c18db39b9a9a3eacface3b252547ba16124879e5c832473dc91e5290b",
+      "sizeBytes": 1993
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/south-whole-body-v2-prompt.txt",
+      "sha256": "a2022a2093520e2aecba1ebff93f930990133124678c0d6a7033b5f6eb857a2e",
+      "sizeBytes": 1565
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/validate-directional-review.mjs",
+      "sha256": "785cbef2c2b39ce181aa06de08048435e2bb07f72fc8aadf334eff3fad97d550",
+      "sizeBytes": 5622
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/validate-east-mirror.mjs",
+      "sha256": "4f90dbabd9abe78654e0d317335e16aa6029f552d181dcdf96feab3ccc0ee90e",
+      "sizeBytes": 3826
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/validate-north-south-draft.mjs",
+      "sha256": "c49436fc476bc524a7c5385390575f3ede6aed90a8a81c43a978e001624ea026",
+      "sizeBytes": 11321
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/validate-south-corrected-review.mjs",
+      "sha256": "8126bfed1d896ce5f94bd9a1e8e6de049653c95be32a92f658c6f2d0fb61a1b7",
+      "sizeBytes": 2424
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-directions/validate-south-corrected-v2.mjs",
+      "sha256": "93125035286aa1a704782dfc86941343a8035f4f45bd7ca6ecffcf3f6dae999e",
+      "sizeBytes": 9075
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/build-gait-v6-review.mjs",
+      "sha256": "4d8a06fe2272f0cbbc9bdaaec5e36fd733488b82535d8aba72f917c34625c141",
+      "sizeBytes": 3720
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/build-gait-v6.mjs",
+      "sha256": "9e02ccd8ec8a74ee192ca1cbeab7d04dd71bfc3fc93a9e0f77818f5ea003f713",
+      "sizeBytes": 11627
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/build-gait-v7-review.mjs",
+      "sha256": "7b1bb0cc1252a0e16bb37dcd9e24b00b771fccd52e8fbca3db84f5a536ab1ce4",
+      "sizeBytes": 3720
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/build-head-cleanup.mjs",
+      "sha256": "4c2c57fd9bfdf9bcf75a5fe3c14a000ff1cc0f19d680fd616d00b7e6c599d81f",
+      "sizeBytes": 6609
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/build-whole-body-candidate-v5.mjs",
+      "sha256": "e5dce5d056d441068fda79c179c312ea2d18a10679d6902a619b01c079594dc2",
+      "sizeBytes": 17384
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/donor-v1-prompt.txt",
+      "sha256": "f4b86819707b31dfea9c339956a9d32dba0d73e733aaf1c1b2c7644b8b0c8adc",
+      "sizeBytes": 2171
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/donor-v2-prompt.txt",
+      "sha256": "45b756f1f67580ba064e5eacaa71311dbabbe381807c59c7f0d46de8c7d3b879",
+      "sizeBytes": 2191
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/gait-v6-review-template.html",
+      "sha256": "611397d5038975e88cd67c350a36137feaf5570959912931ac785b3243cf745d",
+      "sizeBytes": 5653
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/gait-v7-review-template.html",
+      "sha256": "5ee1006fd32fd409cc8dafd25f4e3ff5e9a412dbbf8be6d7f3bc4f875f73d337",
+      "sizeBytes": 5653
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/measure-standing-head-reference.mjs",
+      "sha256": "f346c323596145c3718a404b6f984b0e347f60fdd2bae6d3c369aefb9d1b5b7a",
+      "sizeBytes": 2255
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/probe-dynamic-head-v4.mjs",
+      "sha256": "82fe7ef116ebefafb3000c969cd6e94e1d6a96adfe26824bc114862c72363aa5",
+      "sizeBytes": 4736
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/probe-head-source.mjs",
+      "sha256": "7af536cdb45f0fe5883036d2ed0435b090c11fc920c131f4dcf4009a80254be4",
+      "sizeBytes": 1332
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/probe-native-head-v5.mjs",
+      "sha256": "766bfbe73f2ff2e36ffb5e61f5dde79cfc8051aa671cb57a798a014b8c6fae86",
+      "sizeBytes": 7558
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/probe-phase01-neck.mjs",
+      "sha256": "9326b3b79041265d8d65077e21c2ba4f9561c6127246561f788cbf6e8792e00d",
+      "sizeBytes": 7929
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/README.md",
+      "sha256": "8baeaf29f8341382c6f166204ae1bc9a84f46ccf2da036b4c6010fb6df189ae3",
+      "sizeBytes": 2933
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/review-template.html",
+      "sha256": "b6a255c205ad224704eca65831e59b652116a195791ce1c503ac30c17737f4ec",
+      "sizeBytes": 7172
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-gait-v6-review.mjs",
+      "sha256": "a8df1e189738d524ef5c3233d8841251f5ab37b30565e68e4bdf195b4606e0cc",
+      "sizeBytes": 5380
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-gait-v6.mjs",
+      "sha256": "1608af401b2d378679148c833e078aaac3a60403e69a81d2e52906718d9f776a",
+      "sizeBytes": 10049
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-gait-v7-review.mjs",
+      "sha256": "a3840b5f3e1435620b14c150aaf15d641f826c0ab1f964d34d54b451b86f1fe1",
+      "sizeBytes": 5380
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-head-cleanup.mjs",
+      "sha256": "a5e0375539610d5667eb681c277270e9f3119488fa976a252cf22ca0cfc2f3d9",
+      "sizeBytes": 4482
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-review.mjs",
+      "sha256": "7e988c220f737e7d863c767780356fb516dea01f7509487305f468ec21358c31",
+      "sizeBytes": 2440
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-whole-body-candidate.mjs",
+      "sha256": "dab40a56f4227d3fc2e48915c68a9907897cdda09633001415e0ef8a07b4c2fb",
+      "sizeBytes": 16307
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate-whole-body-v1.mjs",
+      "sha256": "32b03b689a3fa8fe7fe8d7b9fa05c740e0e625f19728140d3c3d03f6f244cfeb",
+      "sizeBytes": 5871
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/validate.mjs",
+      "sha256": "0d19380ff2815d273bc27b2c7ca3b8652c744db6b5ff45a4c02170b89031b6a6",
+      "sizeBytes": 4220
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/west-first-half-v6-prompt.txt",
+      "sha256": "a9974d93b631adef3ca0adfdf9d81ab4712a9009913b58f928e418d606caa12d",
+      "sizeBytes": 1390
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/west-second-half-v6-prompt.txt",
+      "sha256": "25ad734b7f06fafafc2ba9532319fcd7c15727efd478aab4c146646435d0b5dc",
+      "sizeBytes": 1328
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-phase08-v1-prompt.txt",
+      "sha256": "ddf562d04e154785907c8287e02f118c3363ba8ef8fe33c15679b7bdfd216ae4",
+      "sizeBytes": 1596
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-phase08-v2-prompt.txt",
+      "sha256": "82ee8c6037b9174dfcdef11943d21fad03840bd973ac08e9e1c1c1601b797a23",
+      "sizeBytes": 1184
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-phase08-v3-prompt.txt",
+      "sha256": "9164076ffe02c80ae6fc69633e5c4c99c3e655fcaed1ad5264169e1f2c95441d",
+      "sizeBytes": 1135
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-transitions-v1-prompt.txt",
+      "sha256": "595f07e0d73b026c0768151c72e400057042b145c9fff5353b2c7833b97c6878",
+      "sizeBytes": 2296
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-v1-prompt.txt",
+      "sha256": "b64d77b28dcca31b7d9d7ef83679bdce634daf40ab0eb45f0f7afc46367ea377",
+      "sizeBytes": 2736
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-v2-prompt.txt",
+      "sha256": "b1b1cdc41837e6c90a36d74d4f2e9ce5c9489ae5e5b9f955b5b7d7c7bf5c0932",
+      "sizeBytes": 1964
+    },
+    {
+      "path": "tools/character-mapping/gs019-blue-west/whole-body-v3-prompt.txt",
+      "sha256": "621313247e86256054e3ef3bea6a92c650d981706dc2d275f7a20abdf40fd911",
+      "sizeBytes": 1988
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/build-gait-v1.mjs",
+      "sha256": "855bf4d699b01b8b77f4166e697b7f0c219e26fc5efdfa5d6ecb8a545ec75efa",
+      "sizeBytes": 14410
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-first-half-v1-prompt.txt",
+      "sha256": "ad623f4a8407d822773788f960e3728942cb7389fb15d0c565b41e73c6d3619f",
+      "sizeBytes": 1442
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-first-half-v2-prompt.txt",
+      "sha256": "bf4771e32f52be7325f936f8e91e662ce0abab15167a6600f27f98a63e6ba9a7",
+      "sizeBytes": 1737
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-first-half-v3-prompt.txt",
+      "sha256": "bc05bf4970a03022ad3f3895460e6685e646e55bb884d6da99af8f7fc1562012",
+      "sizeBytes": 1129
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-second-half-v1-prompt.txt",
+      "sha256": "57db8fc3091b72b9f9be3c489e40fb8d240690d84af846ca2b28c9a50180737e",
+      "sizeBytes": 1430
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-second-half-v2-prompt.txt",
+      "sha256": "c94bcefbb027fad830914bafc7509a2d50300b2114aa3abc35015a018fb8bdbe",
+      "sizeBytes": 1666
+    },
+    {
+      "path": "tools/character-mapping/gs019-gray-braid-walk/west-second-half-v3-prompt.txt",
+      "sha256": "78e6216843f9a9063d72e8a4b5c07b706c7c851a48a6cfaf75afeab725cd6af4",
+      "sizeBytes": 1110
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-gait-v2.mjs",
+      "sha256": "e61928d260c93982eab87c6bd704773d819a74e6cbd7ab20bf3969d990d390c5",
+      "sizeBytes": 21105
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-head-cleanup.mjs",
+      "sha256": "8699efc007684ff2cd9d30d6d45f834db61bd32f53720da79d60f651dff59e2c",
+      "sizeBytes": 7344
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-navy-review.mjs",
+      "sha256": "676a164066f48231752d0e7cf10f4175ea5ba3420e6896aecbeb7003117b8468",
+      "sizeBytes": 4515
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-review-v2.mjs",
+      "sha256": "6817714a62a683616c3a6abff2551c542816d1e08c08004f93e0cc3f29017283",
+      "sizeBytes": 4524
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-review-v3.mjs",
+      "sha256": "79c86e0eee616fb43b8bccd9369e6d0f13446e41d0fc07707b70ccda22520c3d",
+      "sizeBytes": 4524
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-west-candidate.mjs",
+      "sha256": "75a6cc90dbb3c1c1dcc973bb112e56743f6ba62acacb7682f1cd2fadaa7b9ccd",
+      "sizeBytes": 18364
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/build-west-early.mjs",
+      "sha256": "047594a12409000e1a600b90e450acd5f8adda49ad71086bffff0d02d4ab07b7",
+      "sizeBytes": 5031
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/navy-review-template.html",
+      "sha256": "300500dbe62af6873e60fa5ea9d3a80c88e6d016b25f5de986e22217fe14be96",
+      "sizeBytes": 6186
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/navy-review-v2-template.html",
+      "sha256": "3e2d2b1f550d8b701808d2ab7247261047f322fd0fee871d373f07b967a21260",
+      "sizeBytes": 6331
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/navy-review-v3-template.html",
+      "sha256": "25e5b0fac90fa11ced0d796ec093ebe2ca4043225740343485b1439039922c09",
+      "sizeBytes": 6331
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-gait-v2.mjs",
+      "sha256": "94dc864aa72d02998f20153e8f3d0a3c3f51e09f3fa1e89d4560815faff67c2e",
+      "sizeBytes": 8583
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-head-cleanup.mjs",
+      "sha256": "d0a8ab3540b56b2b6e328e50cee3ea98605c0a2e984117415572605533cc6e27",
+      "sizeBytes": 3667
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-navy-review.mjs",
+      "sha256": "caac6e925f9b536fe5b9d532caa547e24b96b8cb5c043e044e7cc0e5f6ea217d",
+      "sizeBytes": 5071
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-review-v2.mjs",
+      "sha256": "f57907832d49437f6261e3ac103e4c306c2ddceba9f770399af1a390ca609fb8",
+      "sizeBytes": 6233
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-review-v3.mjs",
+      "sha256": "de6f7170b3167f6233ba09a48af4402ac419ec3bba276d4bb895ded7b129f78a",
+      "sizeBytes": 6233
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/validate-west-candidate.mjs",
+      "sha256": "d6f6c70b4a90b461471a7af8202a4f19663db8181810036487ac4a633da2f8a9",
+      "sizeBytes": 8413
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-first-half-v1-prompt.txt",
+      "sha256": "b31fb81220b9242c213a856fb324e5263def54fa60820454252490a66be5dcce",
+      "sizeBytes": 1425
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-first-half-v2-prompt.txt",
+      "sha256": "e8da6b588b45976f9a8492accc98d64285b7458c982ca9c62ea805b315e13d79",
+      "sizeBytes": 971
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-gait-v2-prompt.txt",
+      "sha256": "163feb4aed58dd73cfbd2cb41533574edc316eeac9446f9af75a8e4b098f8b9c",
+      "sizeBytes": 2318
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-second-half-v1-prompt.txt",
+      "sha256": "7a1b3e1dec6f9c71951c07f56f38fa6b6b21daf8f0dd0e2a680feafcb1bf3bba",
+      "sizeBytes": 1943
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-second-half-v2-prompt.txt",
+      "sha256": "0744366b7e3884e587f94cca792bdf925612f2bf9876d0e7c8e2872e773d12e8",
+      "sizeBytes": 899
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-second-half-v3-prompt.txt",
+      "sha256": "ccac8ef6f2818f8ee23ed9538383bc492fdcf721d231f7bd06c8aacf05c50679",
+      "sizeBytes": 816
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-transitions-v1-prompt.txt",
+      "sha256": "7c652583a8ec1210c3c5d1d23e8a2abd05001bea3ad435be2375c9762f4ab2e4",
+      "sizeBytes": 1395
+    },
+    {
+      "path": "tools/character-mapping/gs019-navy-walk/west-whole-body-v1-prompt.txt",
+      "sha256": "4d11bc2d2a685ad42a6ff3797e6372f4e8284af952197a267f7a73c3139e8570",
+      "sizeBytes": 1404
+    }
+  ]
+}
