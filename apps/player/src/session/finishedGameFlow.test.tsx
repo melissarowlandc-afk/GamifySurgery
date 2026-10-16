@@ -10,6 +10,8 @@ import { AppShell } from "../AppShell";
 import MobileShell from "../mobile/MobileShell";
 import { allElements, cleanupPhoneTests, phoneFixture, phoneTestDom } from "../mobile/screenTestUtils";
 import { TestElement, testElementProps } from "../mobile/testDom";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 vi.mock("../facility", () => ({ FacilityCanvas: () => <div data-testid="facility-canvas">Map</div> }));
 vi.mock("../mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div data-testid="facility-canvas">Map</div> }));
@@ -67,7 +69,7 @@ describe("M7c finished-game page in the actual desktop and phone shells", () => 
     await env.click("Keep playing"); expect(env.session.state.paused).toBe(false);
     expect(env.session.state.levelFive!.progress.gameFinished).toEqual(first);
     expect(env.session.state.events.filter(event => event.id === "event.level-five.game-finished")).toHaveLength(1);
-  }, 60_000);
+  }, hostedTime(60_000));
 
   it.each([false, true])("opens the first valid low-score finish on phone=%s, pauses once, and keeps the campaign on double-tap Keep playing", async phone => {
     const state = createLevelFiveStateQaState("finish"); state.paused = false;

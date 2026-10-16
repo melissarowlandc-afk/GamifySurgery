@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { getCurrentPeriopNurseAttention, getRoomCareStations, getRoomDefinition } from "../src";
 import { stuckPeriopOwnerSaveFixture } from "./periop-stuck-owner-save-fixture";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Owner save: stranded periop patients and legacy companion", () => {
   it("releases Riley's 281-minute stalled bedside assignment on load, walks the patient back and preserves the 14 minutes still owed", () => {
@@ -37,7 +39,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(walked).toBe(true); expect(arrived).toBe(true); expect(completed).toBe(true);
     expect(progressedMinutes).toBe(14);
     expect(clinic.current().periopNurseAttention!.tasks[0]!.remainingMinutes).toBe(0);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("repairs the same assignment on a live tick without requiring reload", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -45,7 +47,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(getCurrentPeriopNurseAttention(clinic.current())!.employeeId).toBeNull();
     expect(clinic.current().path.at(-1)).toEqual({ x: 27, y: 29 });
     expect(clinic.state.encounters[clinic.current().actorId]!.patientLocation).not.toEqual({ x: 37, y: 23 });
-  }, 30000);
+  }, hostedTime(30000));
 
   it("resumes Maxwell's markerless 2,155-minute wait, adopts Lane, completes the visit and walks both off the map", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -72,7 +74,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(clinic.lane().lifecycle).toBe("departed");
     expect(clinic.lane().location).toBeNull();
     expect(clinic.state.encounters[clinic.legacy().actorId]!.patientLocation).toBeNull();
-  }, 30000);
+  }, hostedTime(30000));
 
   it.each(["load", "tick"])("adopts legacy phase flags without training metadata on %s, retaining the accepted 29/41/60-minute work", (repair) => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -85,7 +87,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(clinic.legacy().periopNurseAttention).toBeUndefined();
     for (let minute = 0; minute < 100 && clinic.legacy().phaseIndex === 0; minute++) clinic.advance();
     expect(clinic.legacy().phaseIndex).toBe(1);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("repairs an invalid saved bed endpoint to a reachable real bed instead of discarding the visit or pinning Riley", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -100,7 +102,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     for (let minute = 0; minute < 100 && clinic.current().periopNurseAttention!.tasks[0]!.completedAtFacilityTick === null; minute++) clinic.advance();
     expect(clinic.current().periopNurseAttention!.tasks[0]!.remainingMinutes).toBe(0);
     expect(clinic.current().status).not.toBe("cancelled");
-  }, 30000);
+  }, hostedTime(30000));
 
   it("reports a disconnected room, frees the nurse and resumes with the same remaining work when its real door is restored", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -116,7 +118,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     for (let minute = 0; minute < 110 && clinic.current().periopNurseAttention!.tasks[0]!.completedAtFacilityTick === null; minute++) clinic.advance();
     expect(clinic.current().periopNurseAttention!.tasks[0]!.remainingMinutes).toBe(0);
     expect(clinic.current().status).not.toBe("cancelled");
-  }, 30000);
+  }, hostedTime(30000));
 
   it("reports a genuine indefinite capacity wait without completing or cancelling the accepted visit", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -128,7 +130,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(clinic.legacy().waitDeadlineFacilityTick).toBe(Number.MAX_SAFE_INTEGER);
     expect(clinic.legacy().cancelledAtFacilityTick).toBeNull();
     expect(clinic.legacy().completedAtFacilityTick).toBeNull();
-  }, 30000);
+  }, hostedTime(30000));
 
   it("releases a dangling retail lock and lets a terminal visit's companion leave independently of a retained patient location", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -139,7 +141,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     for (let minute = 0; minute < 100 && clinic.lane().lifecycle !== "departed"; minute++) clinic.advance();
     expect(clinic.lane().lifecycle).toBe("departed");
     expect(clinic.lane().location).toBeNull();
-  }, 30000);
+  }, hostedTime(30000));
 
   it("walks an orphaned shopper out instead of retaining a missing optional-trip reservation forever", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -149,7 +151,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(clinic.lane().activeRetailOperationId).toBeNull();
     for (let minute = 0; minute < 100 && clinic.lane().lifecycle !== "departed"; minute++) clinic.advance();
     expect(clinic.lane().lifecycle).toBe("departed");
-  }, 30000);
+  }, hostedTime(30000));
 
   it("repairs a legacy completed-recovery transition with no next phase instead of waiting forever", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -164,7 +166,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(clinic.state.serviceIncomeReceipts.filter((receipt) => receipt.transactionKey.includes(op.id))).toHaveLength(1);
     clinic.reload(); clinic.advance(3);
     expect(clinic.state.serviceIncomeReceipts.filter((receipt) => receipt.transactionKey.includes(op.id))).toHaveLength(1);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("reserves a new bed for a legacy completed procedure whose recovery reservation is missing, then physically returns there", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -181,7 +183,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     expect(walked).toBe(true);
     expect(clinic.legacy()).toMatchObject({ phaseIndex: 2, status: "in_service" });
     expect(clinic.legacy().location).toEqual(clinic.legacy().periopBedReservation!.endpoint);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("restores a missing in-service phase clock without overwriting the attention task's required-until time", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -192,7 +194,7 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
     clinic.advance();
     expect(clinic.current().phaseEndsAtFacilityTick).toBeGreaterThanOrEqual(clinic.state.facilityTick + 14);
     expect(clinic.current().phaseIndex).toBe(0);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("does not forgive an incomplete check in a saved next-phase transition, and round-trips its mid-walk progress", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -213,5 +215,5 @@ describe("Owner save: stranded periop patients and legacy companion", () => {
       if (clinic.current().periopNurseAttention!.tasks[0]!.completedAtFacilityTick === null) expect(clinic.current().phaseIndex).toBe(0);
     }
     expect(clinic.current().periopNurseAttention!.tasks[0]!.completedAtFacilityTick).not.toBeNull();
-  }, 30000);
+  }, hostedTime(30000));
 });

@@ -5,6 +5,8 @@ import { getCurrentPeriopNurseAttention, getPeriopNurseAttentionQueue, serialize
 import { ownerBlake, periopOwnerSaveFixture } from "../../../../packages/game-domain/tests/periop-nurse-owner-save-fixture";
 import { describeFacilityCharacter } from "./characterActivityPresentation";
 import { createPrototypePlayerView } from "./viewModels";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Owner-save Blake after legacy coverage release", () => {
   it("shows paid training, walking to named checks, checking and sitting in the owner's Level-3 room geometry", () => {
@@ -77,5 +79,5 @@ describe("Owner-save Blake after legacy coverage release", () => {
     expect(working).toEqual(new Set(["pre_op", "post_op"]));
     expect(seated).toBe(true);
     if (process.env.PERIOP_OWNER_SAVE_QA_EXPORT === "1") writeFileSync(resolve(process.cwd(), "../../.local-dev/periop-legacy-release/owner-save-activity.json"), JSON.stringify(trace, null, 2) + "\n", "utf8");
-  }, 30000);
+  }, hostedTime(30000));
 });

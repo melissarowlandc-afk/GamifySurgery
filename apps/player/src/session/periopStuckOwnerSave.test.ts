@@ -5,6 +5,8 @@ import { getPeriopNurseAttentionQueue, serializeGameState } from "@gamify-surger
 import { stuckPeriopOwnerSaveFixture } from "../../../../packages/game-domain/tests/periop-stuck-owner-save-fixture";
 import { describeFacilityCharacter } from "./characterActivityPresentation";
 import { createPrototypePlayerView } from "./viewModels";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Compiled Level-3 presentation of the supplied stranded save shapes", () => {
   it("renders the recovered walks, named checks, companion chair and departures, then idle nurses", () => {
@@ -70,7 +72,7 @@ describe("Compiled Level-3 presentation of the supplied stranded save shapes", (
     expect(clinic.current().status).toBe("completed"); expect(clinic.legacy().status).toBe("completed");
     expect(clinic.lane().lifecycle).toBe("departed");
     if (exporting) writeFileSync(resolve(process.cwd(), "../../.local-dev/periop-stuck-flow/qa-stuck-activity.json"), JSON.stringify(trace, null, 2) + "\n", "utf8");
-  }, 30000);
+  }, hostedTime(30000));
 
   it("shows the watchdog reason for blocked companion exits and indefinite service queues", () => {
     const clinic = stuckPeriopOwnerSaveFixture();
@@ -81,5 +83,5 @@ describe("Compiled Level-3 presentation of the supplied stranded save shapes", (
     clinic.lane().movementWaitReason = "Waiting for a connected exit route";
     clinic.reload();
     expect(describeFacilityCharacter(clinic.state, { kind: "companion", id: "companion.59" })?.activity).toBe("Waiting for a connected exit route");
-  }, 30000);
+  }, hostedTime(30000));
 });

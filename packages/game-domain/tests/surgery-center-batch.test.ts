@@ -15,6 +15,8 @@ import {
   serializeGameState,
   type GameState,
 } from "../src";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function preparedState(seed: string, level: 1 | 2): GameState {
   const state = createInitialGameState(undefined, { campaignId: `campaign.sc.${seed}`, campaignSeed: seed, createdAtRealMs: 0 });
@@ -144,7 +146,7 @@ describe("September 10 surgery-center production flows", () => {
     }
     expect(gateCount).toBe(32);
     expect(reviewed).toEqual(new Set(SURGERY_CENTER_TESTED_CONCEPTS.map((item) => item.id)));
-  }, 60_000);
+  }, hostedTime(60_000));
 
   it("uses corrective-forward Again grading and preserves a pending external encounter across reload", () => {
     const encounterId = "encounter.sc.corrective";

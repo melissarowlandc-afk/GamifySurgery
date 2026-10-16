@@ -7,6 +7,8 @@ import { createMriAppointmentsQaState } from "../../../tests/fixtures/mri-appoin
 import { createWoundOstomyAppointmentsQaState } from "../../../tests/fixtures/wound-ostomy-appointments";
 import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID } from "../../../tests/fixtures/pediatric-charts";
 import { m9Apply, m9Minute, m9PumpChart, m9Until } from "../../../tests/fixtures/level-four-integration";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const services = [
   ["ordinary APP", "income.app_consult", createAppAppointmentsQaState],
@@ -64,7 +66,7 @@ describe("Level 4 M9 save/reload integration matrix", () => {
       if (process.env.LEVEL_FOUR_M9_REPORT === "1") writeFileSync(new URL(`../../../.local-dev/level4-m9/reload-${line.slice(7)}-${phase.replaceAll(/[^a-z]/g, "-")}.json`, import.meta.url),
         `${JSON.stringify({ service: name, phase, checkpointTick: state.facilityTick, operationId: id, careComparedMinutes: 200, rootEquality: "DEFECT-M9-1",
           receipts: result.serviceIncomeReceipts.filter(receipt => receipt.actorId === actorId) }, null, 2)}\n`);
-    }, 30_000);
+    }, hostedTime(30_000));
   }
 
   it("resumes local MRI reading with continuous care and one additive $5 receipt (root equality: DEFECT-M9-1)", () => {
@@ -101,7 +103,7 @@ describe("Level 4 M9 save/reload integration matrix", () => {
       expect(pediatricRoomAtPoint(result, PROTOTYPE_DOMAIN_CONTEXT, childLocation ?? null)?.id).toBe(pediatricRoomAtPoint(result, PROTOTYPE_DOMAIN_CONTEXT, parent.location)?.id);
     }
     if (kind === "scored") expect(result.encounters[PEDIATRIC_CHARTS_QA_ENCOUNTER_ID]?.resolutionReason).toBe("completed");
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it.skip("DEFECT-M9-1: preserves a real APP's saved idle deadline during an in-care reload", () => {
     let state = createAppAppointmentsQaState();

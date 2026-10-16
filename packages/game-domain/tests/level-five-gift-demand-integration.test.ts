@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { writeFileSync } from "node:fs";
 import { gameReducer, deserializeGameState, serializeGameState, getClinicalCaseEligibilityIssue, getServiceIncomeTotalsCents, type GameState } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = createLevelFiveStateQaContext();
 function advance(state: GameState, count: number, seed: string): GameState {
@@ -40,7 +42,7 @@ describe("M5 measured dedicated gift demand", () => {
       allFacilityChargedOperatingCents:Math.round(state.totalOperatingExpenses*100)-costs, allFacilityCashDeltaCents:state.cashCents-cash,
       executiveTerms:false, supplierSavingsStockCents:0, scoredArrivals:false, optionalShopping:false, clinicalXpChange:0,
     },null,2)+"\n");
-  }, 90000);
+  }, hostedTime(90000));
   it.each([false,true])("preserves exact scored cases, arrival ticks and eligible pool with gift-only demand on/off (optional shopping %s)", optionalShopping => {
     let on = quiet("m5.gift-clinical-independence"), off = structuredClone(on);
     if (optionalShopping) { on.retailNextOpportunityTicks={}; off.retailNextOpportunityTicks={}; }
@@ -68,5 +70,5 @@ describe("M5 measured dedicated gift demand", () => {
       onGiftOpportunities:on.giftRetailDemand!.opportunitySequence, offGiftOpportunities:off.giftRetailDemand!.opportunitySequence,
       caseIds:[...selectedOn].map(([id,value])=>({id,...value as {caseId:string; arrivalTick:number},frozenCase:undefined})),
     },null,2)+"\n");
-  }, 90000);
+  }, hostedTime(90000));
 });

@@ -4,6 +4,8 @@ import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../.
 import { createPrototypePlayerView } from "../session/viewModels";
 vi.mock("phaser",()=>({default:{Scene:class {}}}));
 import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context=createLevelFiveStateQaContext(), original=PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 beforeAll(()=>{PROTOTYPE_DOMAIN_CONTEXT.balanceRelease=context.balanceRelease;});
@@ -109,4 +111,4 @@ it.each([1, 4] as const)("renders the whole real gift queue lifecycle at %ix wit
   expect(reloaded).toBe(true);
   expect(shopSamples).toBeGreaterThan(100);
   for (const call of calls) expect(call.mock.results.filter(result => result.type === "throw")).toEqual([]);
-}, 20000);
+}, hostedTime(20000));

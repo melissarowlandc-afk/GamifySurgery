@@ -9,6 +9,8 @@ import { getApprovedRoomOrientation } from "../facility/approvedRoomPresentation
 import { resolveStaffIdleSupports } from "../facility/staffIdleSupports";
 import { describeFacilityCharacter } from "./characterActivityPresentation";
 import { createPrototypePlayerView } from "./viewModels";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Peri-op nurse presentation through ordinary chart commands", () => {
   it("shows walking, named checks, short walks, seats and automatic coffee-kiosk trips in the approved Level-2 room", () => {
@@ -92,5 +94,5 @@ describe("Peri-op nurse presentation through ordinary chart commands", () => {
     const trips = clinic.state.retailOperations.filter((trip) => trip.actorKind === "employee" && trip.outletRoomInstanceId === "qa.coffee" && trip.status === "completed");
     if (process.env.PERIOP_SECOND_QA_EXPORT === "1") writeFileSync(resolve(process.cwd(), "../../.local-dev/periop-second-fix/real-visit-activity.json"), JSON.stringify(trace, null, 2), "utf8");
     expect(new Set(trips.map((trip) => trip.actorId)).size, JSON.stringify(clinic.state.retailOperations)).toBe(2);
-  }, 30000);
+  }, hostedTime(30000));
 });

@@ -4,6 +4,8 @@ import { APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-conf
 import { proceduralStaffingFixture } from "../../../../packages/game-domain/tests/procedural-staffing-fixture";
 import { resolveApprovedRoomActorSupports } from "../facility/approvedRoomPresentation";
 import { createPrototypePlayerView } from "./viewModels";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("opposite-side procedure actor presentation", () => {
   it.each([false, true])("binds the actual walking endpoints to separate nurse/provider standing supports (surgery=%s)", (surgery) => {
@@ -36,7 +38,7 @@ describe("opposite-side procedure actor presentation", () => {
       fixture.advance();
     }
     expect(witnessed).toBe(true);
-  }, 30000);
+  }, hostedTime(30000));
 
   it.each([0, 270] as const)("rotates both Endoscopy sides and their facing with the approved table (%s degrees)", (orientation) => {
     const supports = resolveApprovedRoomActorSupports("room.endoscopy", orientation);

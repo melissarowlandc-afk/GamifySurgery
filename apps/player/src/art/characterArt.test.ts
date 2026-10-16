@@ -14,6 +14,8 @@ import {
   FOUNDER_HEAD_PRESETS,
 } from "../content/founderAppearancePresets";
 import type { PixelCell, PixelFrame } from "./pixelArt";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const APPEARANCE: PixelAppearanceDescriptor = {
   version: "pixel-avatar.v1",
@@ -163,7 +165,7 @@ describe("canonical character pixel art", () => {
         expect(portrait.cells.length).toBeGreaterThan(150);
       }
     }
-  }, 10_000);
+  }, hostedTime(10_000));
 
   it("gives every founder head and body option distinct canonical art", () => {
     const headPortraits = FOUNDER_HEAD_PRESETS.map((_, headIndex) =>

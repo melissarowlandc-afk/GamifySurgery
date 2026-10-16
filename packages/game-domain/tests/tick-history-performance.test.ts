@@ -10,6 +10,8 @@ import {
 } from "../src";
 import { synchronizeFacilityOperationalAlertOccurrences } from "../src/facility-alert-conditions";
 import { synchronizeFacilityConditionOccurrences } from "../src/facility-experience";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function tick(state: GameState, operationId: string): GameState {
   return gameReducer(state, { type: "ADVANCE_TICK", operationId });
@@ -25,7 +27,7 @@ describe("per-minute tick work", () => {
       synchronizeFacilityOperationalAlertOccurrences(resynchronized, PROTOTYPE_DOMAIN_CONTEXT);
       expect(resynchronized).toEqual(state);
     }
-  }, 120_000);
+  }, hostedTime(120_000));
 
   it("reuses facility access validation only while rooms and doors are unchanged", () => {
     const state = createInitialGameState();

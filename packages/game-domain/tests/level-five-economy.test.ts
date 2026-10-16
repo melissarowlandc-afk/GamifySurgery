@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { gameReducer, getEmployeeEffectiveMorale } from "../src";
 import { LevelFiveReducerAudit } from "../../../tools/economy-audit/level-five-simulation";
 import { createLevelFiveStateQaContext } from "../../../tests/fixtures/level-five-state";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Level 5 M8 actual reducer audit", () => {
   it("keeps the accepted consultation trip when another checked-in chart is ready", () => {
@@ -18,7 +20,7 @@ describe("Level 5 M8 actual reducer audit", () => {
     audit.pump();
     expect(audit.state.openChartEncounterId).toBe(openedId);
     expect(audit.state.encounters[openedId]!.patientMovement?.kind).toBe("walking_to_care");
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("starts funded at zero XP, uses default wages/tiers, and reconciles real cash through repeat ticks and reload", () => {
     const context = createLevelFiveStateQaContext();
@@ -41,7 +43,7 @@ describe("Level 5 M8 actual reducer audit", () => {
     expect(audit.state.levelFive).toEqual(state.levelFive);
     expect(audit.state.cashCents).toBe(state.cashCents);
     expect(audit.state.clinicalXp).toBe([...audit.answers.values()].reduce((sum, answer) => sum + (answer.correct ? 10 : 2), 0));
-  }, 120_000);
+  }, hostedTime(120_000));
 
   it("keeps the $45 wage and full support upkeep when a real blocked office cannot complete a round", () => {
     const context = createLevelFiveStateQaContext(), audit = new LevelFiveReducerAudit(context, "level-five-m8.no-round", false, 80, { blockExecutive: true });
@@ -50,5 +52,5 @@ describe("Level 5 M8 actual reducer audit", () => {
     expect(audit.state.levelFive?.management.supplierSavings ?? { stockCents: 0, upkeepSixtiethCents: 0 }).toEqual({ stockCents: 0, upkeepSixtiethCents: 0 });
     expect(audit.state.employees.find(e => e.staffRoleDefinitionId === "staff.executive")!.salaryPerExpenseInterval).toBe(45);
     expect(audit.minuteCosts.every(row => row.roomUpkeep["room.executive_office"] === 1 && row.supplier === 0)).toBe(true);
-  }, 60_000);
+  }, hostedTime(60_000));
 });

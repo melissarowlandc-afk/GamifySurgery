@@ -5,6 +5,8 @@ import { getCurrentPeriopNurseAttention, getPeriopNurseStandingPoints, getRoomDe
   periopNurseAttentionStatus, PROTOTYPE_DOMAIN_CONTEXT } from "../src";
 import { periopNurses, periopFlowFixture } from "./periop-nurse-flow-fixture";
 import { periopRealVisitFixture } from "./periop-nurse-real-visit-fixture";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Peri-op nurses through the real chart UI command pipeline", () => {
   it("checks a normally arriving colonoscopy patient before procedure and discharge", () => {
@@ -85,7 +87,7 @@ describe("Peri-op nurses through the real chart UI command pipeline", () => {
     expect(clinic.patientIds.every((id) => clinic.state.encounters[id]!.lifecycle === "resolved"), JSON.stringify(summary)).toBe(true);
     expect(clinic.state.serviceOperations.every((operation) => operation.status === "completed" && operation.periopNurseAttention?.tasks.length === 2)).toBe(true);
     if (process.env.PERIOP_SECOND_QA_EXPORT === "1") writeFileSync(resolve(process.cwd(), "../../.local-dev/periop-second-fix/four-real-visits.json"), JSON.stringify({ finalTick: clinic.state.facilityTick, concurrent, assignments: [...assignments], summary }, null, 2), "utf8");
-  }, 30000);
+  }, hostedTime(30000));
 
   it("holds real pre-op and recovery beyond their timers when both nurses are away training, including reload", () => {
     const clinic = periopRealVisitFixture();

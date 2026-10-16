@@ -7,6 +7,8 @@ import { APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-conf
 import { getApprovedLevel5RoomTier } from "./approvedLevel5RoomData";
 vi.mock("phaser", () => ({ default: { Scene: class {} } }));
 import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = createLevelFiveStateQaContext(), balance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 beforeAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = context.balanceRelease; });
@@ -48,7 +50,7 @@ it.each([1, 4] as const)("uses the existing routeMotion and clipboard standing c
   }
   expect(ids.size).toBe(10); expect(samples).toBe(9000); expect(directions).toContain("side"); expect(directions).toContain("back");
   for (const call of calls) expect(call.mock.results.filter(result => result.type === "throw")).toEqual([]);
-}, 30_000);
+}, hostedTime(30_000));
 
 it.each([false, true])("draws the separate inspector layer with standard scale/depth and clears it when the run ends (phone=%s)", mobileInput => {
   const state = createLevelFiveStateQaState("inspectors", context), facility = createPrototypePlayerView(state, null, false, null).facility;

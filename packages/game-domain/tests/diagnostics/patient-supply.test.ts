@@ -7,6 +7,8 @@ import {
   selectRoutineClinicalCase,
   type GameState,
 } from "../../src";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const REAL_MS = 10_000;
 const OPERATING_MINUTES_PER_DAY = 600;
@@ -467,5 +469,5 @@ describe("GS-017 sustained patient supply diagnostic", () => {
     expect(arrivalsByDay[7]).toBeGreaterThan(0);
     expect(evidence.completed).toBeGreaterThan(0);
     expect(answers).toBeGreaterThan(0);
-  }, 300_000);
+  }, hostedTime(300_000));
 });

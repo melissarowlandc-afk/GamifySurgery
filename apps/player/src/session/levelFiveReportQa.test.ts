@@ -5,6 +5,8 @@ import { createLevelFiveStateQaContext, createLevelFiveStateQaState, levelFiveQa
 import { assertLevelFiveQaEntry, prepareLevelFiveQaProfile } from "../../../../tools/qa/level-five-state-bootstrap";
 import { createFreshProfile } from "./prototypeStorage";
 import { createFacilityInspectionView } from "./inspectionViewModels";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const shipped = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 afterEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped; });
@@ -30,5 +32,5 @@ describe("M7c earned report and finish QA states on the existing 5184 server", (
     expect(resumed.campaigns).toHaveLength(1); expect(resumed.campaigns[0]).toBe(existing);
     expect(resumed.activeCampaignId).toBe(levelFiveQaCampaignId(scenario)); expect(existing.state.cashCents).toBe(123400);
     expect(base.campaigns).toHaveLength(0); expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
-  }, 60_000);
+  }, hostedTime(60_000));
 });

@@ -11,6 +11,8 @@ import { advanceInspectionPresentation, createInitialGameState, createFacilityIn
   STAFF_CHARACTER_STILLS, serializeGameState, staffStillEligibleEntries, inspectionPresentationNavigationSummary, type GameState } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
 import { APPROVED_LEVEL5_SUPPORT_NAVIGATION, APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = createLevelFiveStateQaContext();
 const blankLane = () => ({ version: "inspection-presentation.v1" as const, runId: null, seed: null, actors: [] });
@@ -64,7 +66,7 @@ describe("Level 5 M7b inspection actors", () => {
     expect(state.levelFive!.inspectionPresentation.runId).toBe(runId);
     expect(state.levelFive!.inspection.run!.accumulators.observedActiveMinutes).toBe(180);
     expect(state.employees).toHaveLength(1); expect(state.levelFive!.inspectionPresentation.actors).toHaveLength(10);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("freezes with pause and preserves every identity, route cursor and observation clock on reload", () => {
     const state = createLevelFiveStateQaState("inspectors", context);
@@ -136,7 +138,7 @@ describe("Level 5 M7b inspection actors", () => {
     expect(observedRooms.size).toBeGreaterThanOrEqual(9);
     expect(state.levelFive!.inspection.lastReport!.observedActiveMinutes).toBe(3000);
     expect(state.levelFive!.inspection.status).toBe("incomplete"); expect(state.levelFive!.inspectionPresentation).toEqual(blankLane());
-  }, 60_000);
+  }, hostedTime(60_000));
 
   it("loads a pre-fix inspector hold unchanged, then leaves the necessary Gift Shop contact using only clear floor", () => {
     const state = createLevelFiveStateQaState("inspectors", context), gift = state.rooms.find(room => room.roomDefinitionId === "room.gift_shop")!;
@@ -197,7 +199,7 @@ describe("Level 5 M7b inspection actors", () => {
     expect(on.nextRoutineArrivalTick).toBe(off.nextRoutineArrivalTick);
     expect(Object.keys(on.encounters).length).toBeGreaterThan(0);
     expect(on.levelFive!.inspection.run!.accumulators).toEqual(off.levelFive!.inspection.run!.accumulators);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("holds truthfully when room access disappears and never reserves a door or care contact", () => {
     let state = createLevelFiveStateQaState("inspectors", context);
@@ -269,5 +271,5 @@ describe("Level 5 M7b inspection actors", () => {
       }
     }
     expect(checked).toBe(66);
-  }, 30_000);
+  }, hostedTime(30_000));
 });

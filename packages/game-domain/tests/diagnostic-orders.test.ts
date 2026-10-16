@@ -4,6 +4,8 @@ import { deserializeGameState, gameReducer, getAnswerChoiceServicePreview, getDi
   getPendingResultEta, serializeGameState, type GameState } from "../src";
 import { getDiagnosticChoicePlanning } from "../src/diagnostic-order-requests";
 import { timingFixture } from "./diagnostic-timing-fixtures";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function readyFixture(caseId: string, index = 0) {
   const fixture = timingFixture();
@@ -79,7 +81,7 @@ describe("facility diagnostic orders and answer estimates", () => {
       }
     }
     expect(testingChoices).toBeGreaterThan(1000);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("freezes the same quoted phases at acceptance and preserves wholly external120-minute laboratory work", () => {
     const fixture = readyFixture("case.fhh.suggestive-results-confirmation");

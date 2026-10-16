@@ -4,6 +4,8 @@ import { advanceServiceOperations, deserializeGameState, getDoorCells, getEligib
   getRoomDefinition, planDiagnosticOrder, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type DiagnosticOrderPlan, type GameState, type ServiceOperationState } from "../src";
 import { proceduralStaffingFixture } from "./procedural-staffing-fixture";
 import { timingFixture } from "./diagnostic-timing-fixtures";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function traceProcedures(fixture: ReturnType<typeof proceduralStaffingFixture>, ids: string[], maximum = 480) {
   const providers = new Map<string, NonNullable<ServiceOperationState["providerReservation"]>>();
@@ -50,7 +52,7 @@ describe("specialists before founder procedure overflow", () => {
     expect(new Set(result.providers.map((provider) => provider.kind === "employee" ? provider.employeeId : "founder")).size).toBe(2);
     // Reused rooms include specialists walking back from their last procedure.
     expect(traceProcedures(fixture, fixture.admit()).providers.every((provider) => provider.kind === "employee")).toBe(true);
-  }, 30000);
+  }, hostedTime(30000));
 
   it.each([false, true])("uses founder only for overflow while one specialist trains (surgery=%s)", (surgery) => {
     const fixture = proceduralStaffingFixture(surgery);
@@ -61,7 +63,7 @@ describe("specialists before founder procedure overflow", () => {
     expect(result.simultaneous).toBe(true);
     expect(result.providers.filter((provider) => provider.kind === "founder")).toHaveLength(1);
     expect(result.providers.filter((provider) => provider.kind === "employee")).toHaveLength(1);
-  }, 30000);
+  }, hostedTime(30000));
 
   it("keeps a reachable endoscopist dispatchable while walking outside their assigned room", () => {
     const fixture = proceduralStaffingFixture();

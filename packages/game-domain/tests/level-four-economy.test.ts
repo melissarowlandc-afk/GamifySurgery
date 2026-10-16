@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { writeFileSync } from "node:fs";
 import { createEarlyLevelFourEconomyState, simulateEarlyLevelFourEconomy } from "../../../tools/economy-audit/level-four-simulation";
 import { gameReducer, getEmergencyGlp1Status, type GameState } from "../src";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Level 4 real simulation economy and arrivals", () => {
   it("covers each specialty's base rent and staff through ordinary appointments, with real shared overhead", () => {
@@ -18,7 +20,7 @@ describe("Level 4 real simulation economy and arrivals", () => {
       new URL("../../../tools/economy-audit/level-four-results-20261009.json", import.meta.url),
       `${JSON.stringify(report, null, 2)}\n`, "utf8",
     );
-  }, 120_000);
+  }, hostedTime(120_000));
 
   it("adds all APP streams beside the same normal scored arrivals without rewarding learning", () => {
     let withAppointments = createEarlyLevelFourEconomyState("level-four-arrival-fairness-m8");
@@ -42,5 +44,5 @@ describe("Level 4 real simulation economy and arrivals", () => {
     expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.app_consult")).toBe(true);
     expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.wound_care")).toBe(true);
     expect(getEmergencyGlp1Status(withAppointments).payment).toBe(50);
-  }, 120_000);
+  }, hostedTime(120_000));
 });

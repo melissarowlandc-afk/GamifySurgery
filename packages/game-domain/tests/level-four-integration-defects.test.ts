@@ -2,6 +2,8 @@ import { writeFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getClinicalCaseEligibilityIssue, getCurrentCapabilities, PROTOTYPE_DOMAIN_CONTEXT } from "../src";
 import { createLevelFourIntegrationState, m9Minute, m9DeferAppDemand } from "../../../tests/fixtures/level-four-integration";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 describe("Level 4 M9 isolated defect reproducers", () => {
   it.skip("DEFECT-M9-2: APP on/off preserves the scored case selected at game minute 900", () => {
@@ -36,5 +38,5 @@ describe("Level 4 M9 isolated defect reproducers", () => {
     if (process.env.LEVEL_FOUR_M9_REPORT === "1") writeFileSync(new URL("../../../.local-dev/level4-m9/defect-2-trace.json", import.meta.url),
       `${JSON.stringify({ before, after: { on: summarize(on), off: summarize(off) } }, null, 2)}\n`);
     expect(on.encounters[id]!.frozenCase.id).toBe(off.encounters[id]!.frozenCase.id);
-  }, 90_000);
+  }, hostedTime(90_000));
 });

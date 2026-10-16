@@ -4,6 +4,8 @@ import { deserializeGameState, gameReducer, getCurrentQuestion, getExecutivePrep
   serializeGameState, type GameCommand, type GameState } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
 import { createLevelFiveInspectionQaState } from "../../../tests/fixtures/level-five-inspection";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = createLevelFiveStateQaContext();
 const apply = (state: GameState, command: GameCommand) => {
@@ -86,7 +88,7 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     state = apply(state, { type: "CANCEL_INSPECTION", operationId: "finish.retry.cancel" });
     expect(state.levelFive!.inspection.bestCompletedReport).toEqual(first);
     expect(state.levelFive!.progress.gameFinished).toEqual(finished);
-  }, 60_000);
+  }, hostedTime(60_000));
 
   it("ends the separate real 3000-minute empty window incomplete without fabricated sample, score or finish", () => {
     let state = createLevelFiveInspectionQaState("inspection-incomplete", context);
@@ -98,7 +100,7 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     expect(deserializeGameState(serializeGameState(state), context).levelFive).toEqual(state.levelFive);
     state = apply(state, { type: "BOOK_INSPECTION", operationId: "incomplete.qa.retry" });
     expect(state.levelFive!.inspection.status).toBe("preparing");
-  }, 60_000);
+  }, hostedTime(60_000));
 
   it("keeps real clinical selection, normal first-answer XP/FSRS, cash and receipts equal with the observer on/off", () => {
     let observed = createLevelFiveInspectionQaState("inspection-running", context);
@@ -131,5 +133,5 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     for (const key of ["campaignSeed", "encounters", "employees", "rooms", "cashCents", "clinicalXp", "learningHistories", "reviewIntents", "serviceIncomeReceipts", "settlements", "events"] as const) {
       expect(observed[key], key).toEqual(control[key]);
     }
-  }, 60_000);
+  }, hostedTime(60_000));
 });

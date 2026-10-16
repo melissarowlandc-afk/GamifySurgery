@@ -13,6 +13,8 @@ import {
 import { pending, timingFixture } from "./diagnostic-timing-fixtures";
 import { hasQueuedHomeRoomWork } from "../src/staff-dispatch";
 import { proceduralStaffingFixture } from "./procedural-staffing-fixture";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function twoStations(roomDefinitionId: string, roleId: string) {
   const fixture = timingFixture();
@@ -310,7 +312,7 @@ describe("concurrent staff through real chart/order commands", () => {
     expect(concurrent).toBe(true);
     expect(assignments.size).toBe(3);
     expect(new Set(assignments.values()).size).toBe(2);
-  }, 30_000);
+  }, hostedTime(30_000));
 });
 
 describe("per-room role dispatch audit", () => {
@@ -344,7 +346,7 @@ describe("per-room role dispatch audit", () => {
     }
     expect(served.size).toBe(2);
     expect(concurrent).toBe(true);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("processes two ready studies at home desks in two Reading Rooms concurrently", () => {
     const fixture = twoStations("room.reading", "staff.radiologist");
