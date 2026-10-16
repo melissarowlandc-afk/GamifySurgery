@@ -1,4 +1,6 @@
 export * from "./appearance";
+export * from "./colleagueNames";
+export * from "./namePresentationProfiles";
 export * from "./alert-cadence";
 export * from "./guidance-tip-types";
 export * from "./guidance-tips";

@@ -26,6 +26,8 @@ import {
   patientRosterEligibleEntries,
   patientRosterEntryById,
 } from "./patientAppearanceCatalog";
+import { selectColleagueDisplayName, type ColleagueNameSelectionContext } from "./colleagueNames";
+import { getNamePresentationProfile } from "./namePresentationProfiles";
 
 const BODY_SHAPES = ["compact", "average", "broad", "tall"] as const;
 const HAIR_STYLES = ["none", "short", "parted", "curly", "bun"] as const;
@@ -433,6 +435,41 @@ export function getPresentPatientDisplayNames(
       .filter((actor) => !actor.giftOnlyVisit && actor.lifecycle !== "departed" && actor.location !== null)
       .map((actor) => actor.displayName),
   ];
+}
+
+/** Cross-role reservations for new Easter-egg names only; no save migration. */
+export function getPresentColleagueDisplayNames(state: GameState): string[] {
+  return [
+    state.founder.displayName,
+    ...state.employees.map(employee => employee.displayName),
+    ...(state.departingEmployees ?? []).map(employee => employee.displayName),
+    ...Object.values(state.encounters)
+      .filter(encounter => encounter.patientLocation !== null)
+      .map(encounter => encounter.patientDisplayName),
+    ...state.serviceOperations
+      .filter(operation => operation.actorKind === "visitor" && operation.location !== null)
+      .map(operation => operation.displayName),
+    ...state.retailExternalActors
+      .filter(actor => actor.lifecycle !== "departed" && actor.location !== null)
+      .map(actor => actor.displayName),
+  ];
+}
+
+/** Unconstrained shopper/companion identity, frozen at creation. */
+export function createGeneratedPatientActorIdentity(state: GameState, actorId: string): {
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
+} {
+  const appearance = createPatientPixelAppearance(
+    state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state),
+  );
+  return {
+    displayName: createPatientDisplayName(
+      state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state),
+      { ...getNamePresentationProfile(appearance), occupiedDisplayNames: getPresentColleagueDisplayNames(state) },
+    ),
+    appearance,
+  };
 }
 
 const ROLE_STYLES: readonly PixelRoleStyle[] = [
@@ -873,21 +910,25 @@ export function createPatientPixelAppearance(
 }
 
 /**
- * Plain first name for an employee. Starting from the seeded pick, it skips
- * names already in use so staff never need numbered names like "Sam 2".
+ * A new compatible profile can draw an owner-requested colleague name.
+ * The normal seeded first-name pool skips used names without numeric suffixes.
  */
 export function createStaffDisplayName(
   campaignSeed: string,
   employeeId: string,
   usedDisplayNames: Iterable<string> = [],
+  colleagueContext?: ColleagueNameSelectionContext,
 ): string {
+  // Materialize once so a one-shot iterable is safe for both pools.
+  const used = new Set(usedDisplayNames);
+  const colleagueName = selectColleagueDisplayName(campaignSeed, `staff:${employeeId}`, colleagueContext, used);
+  if (colleagueName) return colleagueName;
   const random = createDeterministicRandom(
     campaignSeed,
     RANDOM_STREAMS.staffAppearance,
     `${employeeId}:display-name.v1`,
   );
   const start = random.integer(STAFF_NAMES.length);
-  const used = new Set(usedDisplayNames);
   for (let offset = 0; offset < STAFF_NAMES.length; offset += 1) {
     const name = STAFF_NAMES[(start + offset) % STAFF_NAMES.length]!;
     if (!used.has(name)) return name;
@@ -930,7 +971,13 @@ export function createPatientDisplayName(
   encounterId: string,
   sexLabel?: PatientSexLabel,
   excludedDisplayNames: readonly string[] = [],
+  colleagueContext?: ColleagueNameSelectionContext,
 ): string {
+  const colleagueName = selectColleagueDisplayName(
+    campaignSeed, `patient:${encounterId}`,
+    { ...colleagueContext, sexLabel: sexLabel ?? colleagueContext?.sexLabel }, excludedDisplayNames,
+  );
+  if (colleagueName) return colleagueName;
   const random = createDeterministicRandom(
     campaignSeed,
     RANDOM_STREAMS.patientIdentity,

@@ -1526,3 +1526,306 @@ Validation receipts and filesystem baselines: `.local-dev/l5-evidence-rebind-202
 ### Manager acceptance - Phase 2A Revision 1 and Level 5 rebind (2026-10-15)
 
 Revision 1 accepted editorially after manager sampling (humor now behavioral/situational, no instruction-ending or key-cueing stories, per-choice rationales distinct). Owner read-through published as a private artifact (https://claude.ai/artifact/VTmfGNEH92d4TCtdrj35Ef); owner tone feedback may still adjust wording. Level 5 evidence rebind accepted: the guard's M10 strip now applies only to the historical pre-M10 hash; history preserved in `inputHistory`. Manager reran (default configs): game-domain 156 files / 4226 passed / 2 skipped; clinical-content 88 / 635 passed; player 2163 passed earlier on the same content. Level 5 e2e: 104/104 passed with --retries=0 after restarting the stale 5184 QA dev server (it was serving a mid-edit module graph: "TesterFeedback.ts does not provide TesterFeedbackMenu"); owner 4173 and private phone origins probed in fresh contexts, no page errors. All content remains needs_clinician_review. Next: P2-E ethics-to-clinical pairings (owner decision 4 = yes).
+
+### Level 5 evidence rebind 2 (2026-10-16)
+
+Completed the same bounded Sol-worker evidence rebind for the manager-accepted, owner-requested colleague name pool documented in `docs/execplans/accounts-playtime-release-20261012.md`, "Colleague name pool (2026-10-16)". The actual journey was rerun from its existing funded synthetic Level 4 opening with the current sources and original seed. The established lower helper then retained the actual third-result progress state. Both commands exited 0, and all existing journey/guard assertions were kept.
+
+#### Files changed and preserved scope
+
+- `tools/qa/level-five-integration-results-20261012.json`: regenerated run summary and all current source/driver hashes. Appended the previous run as `inputHistory[1]`; `inputHistory[0]` is preserved exactly. There are now two history entries.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`: regenerated all nine actual reducer checkpoints, including the lower retry.
+- This append-only handoff section.
+
+**The guard test was not edited.** Its SHA-256 remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. No checks were loosened or skipped. Name-pool/source implementation, clinical content, e2e specs, runner/helper scripts and clinical-review statuses were not changed. The e2e spec and lower-helper hashes were also verified against this task's filesystem baseline.
+
+As in rebind 1, the unchanged runner emits the historical literal `liveCap: 4`, while its current independently loaded validated context uses ordinary cap **5**. Only that metadata label was corrected alongside the history append; all measured values were retained exactly. The fresh helper output SHA-256 before metadata/history addition was `f55cef596d2b526bb5e5e351884d2e2f500aa005ebc0fa1f984cc6203eb15b39`.
+
+#### Previous and fresh input hashes
+
+The previous run had **371** recorded inputs; the fresh run records **373**. **Six existing hashes changed**, **two inputs are newly recorded**, **365 existing hashes are unchanged**, and no input was removed. The two newly recorded inputs are `colleagueNames.ts` and `namePresentationProfiles.ts`; neither had a hash in the prior recorded input map. Every changed/new input is in the accepted name-pool source lane. All current clinical-content, balance and driver hashes are unchanged from the previous run.
+
+`inputHistory[1]` preserves the previous run's complete 371-entry `inputs` map, helper fingerprint, seed, version, actual cap metadata and result-file SHA-256 `29702c804b77c4ddd84fcdbf4ee13318bcd0c80d4b9fd493d53be36264540b49`. The earlier history entry, including its historical compatibility provenance, remains unchanged. The new top-level `inputs` map directly hashes both new modules and every other current input; no compatibility exception was added. Source hashes remained stable during replay and validation.
+
+| Input | Previous recorded SHA-256 | Fresh-run SHA-256 |
+| --- | --- | --- |
+| `packages/game-domain/src/appearance.ts` | `26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9` | `bef418db571fcef7a6f8a4b082e04eade2cdb6d80f5b68b6ee4a87c22da19ebb` |
+| `packages/game-domain/src/colleagueNames.ts` | Not recorded in previous run | `50103eb51f76024227355afe4a42641e1c7e5ab12bce6cb36e779f85db140c54` |
+| `packages/game-domain/src/gift-retail.ts` | `bcabcce2ddfd206de8db03bb56eb4afb264e8051db4a380e9fcc77cb11db433b` | `aeb94dc7ea1e6931ce9d03d6d7c1d48a2e68cce8a9bbdffd72e4f5f4a652946c` |
+| `packages/game-domain/src/index.ts` | `54d11f5d506212abce8ecaf5ba2c9519a5fe59e0b20f8aebcba5169a6c971ed5` | `3045ff30cb0cf9701d6220ac506135db811a206e112fba788fa90c58b18bfa7b` |
+| `packages/game-domain/src/namePresentationProfiles.ts` | Not recorded in previous run | `43dfc3014aa765a30b605c994072ecc0e29a16bcd7df1689fb020c659757766d` |
+| `packages/game-domain/src/reducer.ts` | `93d5aaed766fd61e9af616d368478669ed98973b577e11a6b28e290b07659bd5` | `daf3be68ec8134205113fc7be6136b5a0fdcf7b3d93149a9ffeab83c7599d1f6` |
+| `packages/game-domain/src/retail-operations.ts` | `b6d0686be7e077f8dcae425745f8755287cac889d265bb66b15b4fd60f1d4f1c` | `34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5` |
+| `packages/game-domain/src/service-operations.ts` | `9b0c8232faccc272ae3d17d3457980d14594cdd2a24cd7ad5ffa090c7db8712e` | `8c264588a14c70845ca06a5cec3322a7ec7239727e3581c678f7291c4a3770c4` |
+
+#### Actual run numbers
+
+- Seed: `level-five-m9.integration.01`; **27,944 applied and cash-reconciled commands**, exceeding the unchanged 20,000-command guard.
+- First answers: **555 total / 466 at Level 5**. Completed daily rounds: **38**. Positive comfort uses: **1,031**.
+- Cash, all in cents: **1,785,500 + 15,728,300 - 292,202 - 10,124,856 - 1,048,000 = 6,048,742** (opening + gross - stock - paid operating - capital = closing). Per-command and lifetime reconciliation passed.
+- XP goal tick **15,493**; inspection unlock tick **16,281**, with **2,162 XP / 91 displayed satisfaction / 100 average staff morale / 9 employed staff**.
+- Supplier savings: **2,098 stock cents / 751,140 upkeep sixtieth-cents**. Retired receipts **5,692**; retired encounters **423**.
+- Every measured summary field and all three completed report objects are identical to the previous run. The best completed report is the higher retry; latest is the lower retry; the first-finish report remains the original first report. All round/comfort, supplier-savings, retirement and checkpoint pause assertions passed.
+
+| Report | Raw total score | Qualifying patients | Final role |
+| --- | --- | --- | --- |
+| First | 62.49398772204757 | 52 | Immutable first finish |
+| Higher retry | 66.65755625217645 | 50 | Best completed report |
+| Lower retry | 45.489710466735836 | 48 | Latest completed report |
+
+#### Changed checkpoint saves and consumers
+
+**All nine checkpoint saves changed.** The exact comparison found **64 changed string values**: `displayName` 27, `patientDisplayName` 4, `presentation` 10, `stem` 4, and `message` 19. These are names and text containing the names. No fields were added/removed, and every non-string value is unchanged. All nine saves preserve their prior tick, XP, cash, facility level, inspection phase, clinical IDs and report state.
+
+| Changed scenario | Tick | XP | Cash cents | Inspection phase |
+| --- | --- | --- | --- | --- |
+| `integration-l4` | 3965 | 754 | 2656300 | No Level 5 state |
+| `integration-build` | 3965 | 0 | 1608300 | locked |
+| `integration-preparing` | 16282 | 2162 | 4143642 | preparing |
+| `integration-running` | 16419 | 2184 | 4148611 | running |
+| `integration-final` | 19338 | 2750 | 4892761 | running |
+| `integration-finish` | 19339 | 2750 | 4892761 | completed |
+| `integration-repeat-final` | 22995 | 3466 | 5747398 | running |
+| `integration-repeat` | 22996 | 3466 | 5747398 | completed |
+| `integration-lower-repeat` | 26053 | 3596 | 6048742 | completed |
+
+`tests/e2e/level-five.spec.ts` consumes all nine changed saves. It was not edited or run. The launch fixture factory and domain/player integration/launch tests also consume these checkpoints. The full domain suite and the focused player integration/launch tests passed with the regenerated saves. Manager browser acceptance should use the refreshed fixtures; no earlier browser result is claimed as new evidence.
+
+#### Validation and exact output
+
+**All requested validations passed:** game-domain **157 files passed / 1 skipped; 4,245 tests passed / 2 existing skipped; 0 failures**; root typecheck **exit 0**. Additional focused player consumers: **2 files / 33 tests passed**. All npm commands below used the existing `.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload through `NODE_OPTIONS` (`--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs`). Typecheck and both test commands ran after artifact regeneration/history preservation. The runner and helper emitted Node's experimental TypeScript-transform warning and still exited 0.
+
+Exact output follows. Only UTF-16 log encoding and CRLF were normalized for this UTF-8/LF document. `EXIT_CODE` lines are the wrappers' recorded exit statuses.
+
+<details>
+<summary>Actual reducer journey: exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-run.mjs --write
+
+L4 10h, 114 XP
+L4 20h, 210 XP
+L4 30h, 334 XP
+L4 40h, 450 XP
+L4 50h, 566 XP
+L4 60h, 692 XP
+L5 70h, 52 XP
+L5 80h, 146 XP
+L5 90h, 250 XP
+L5 100h, 366 XP
+L5 110h, 472 XP
+L5 120h, 566 XP
+L5 130h, 682 XP
+L5 140h, 786 XP
+L5 150h, 880 XP
+L5 160h, 996 XP
+L5 170h, 1080 XP
+L5 180h, 1196 XP
+L5 190h, 1300 XP
+L5 200h, 1416 XP
+L5 210h, 1532 XP
+L5 220h, 1626 XP
+L5 230h, 1720 XP
+L5 240h, 1816 XP
+L5 250h, 1930 XP
+L5 260h, 2016 XP
+L5 270h, 2142 XP
+Inspection 1: 62.49398772204757, 52/20
+Inspection 2: 66.65755625217645, 50/20
+Inspection 3: 45.489710466735836, 48/20
+{
+  "commands": 27944,
+  "closingCashCents": 6048742,
+  "xpGoalTick": 15493,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 16281,
+    "clinicalXp": 2162,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "snapshots": {
+    "integration-l4": {
+      "tick": 3965,
+      "xp": 754,
+      "phase": null
+    },
+    "integration-build": {
+      "tick": 3965,
+      "xp": 0,
+      "phase": "locked"
+    },
+    "integration-preparing": {
+      "tick": 16282,
+      "xp": 2162,
+      "phase": "preparing"
+    },
+    "integration-running": {
+      "tick": 16419,
+      "xp": 2184,
+      "phase": "running"
+    },
+    "integration-final": {
+      "tick": 19338,
+      "xp": 2750,
+      "phase": "running"
+    },
+    "integration-finish": {
+      "tick": 19339,
+      "xp": 2750,
+      "phase": "completed"
+    },
+    "integration-repeat-final": {
+      "tick": 22995,
+      "xp": 3466,
+      "phase": "running"
+    },
+    "integration-repeat": {
+      "tick": 22996,
+      "xp": 3466,
+      "phase": "completed"
+    }
+  },
+  "reports": [
+    {
+      "score": 62.49398772204757,
+      "patients": 52
+    },
+    {
+      "score": 66.65755625217645,
+      "patients": 50
+    },
+    {
+      "score": 45.489710466735836,
+      "patients": 48
+    }
+  ]
+}
+node : (node:24556) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-run.mjs --write *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:24556) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Actual lower-retry checkpoint: exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-lower.mjs
+
+M9 lower retry checkpoint PASS: latest 45.489710466735836, best 66.65755625217645, immutable first 62.49398772204757.
+node : (node:2176) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-lower.mjs *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:2176) Exp...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Full game-domain suite: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+
+ Test Files  157 passed | 1 skipped (158)
+      Tests  4245 passed | 2 skipped (4247)
+   Start at  19:04:14
+   Duration  893.58s (transform 4.85s, setup 0ms, import 66.48s, tests 816.28s, environment 7ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Root typecheck, after artifact regeneration: exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Focused player consumers: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+
+ Test Files  2 passed (2)
+      Tests  33 passed (33)
+   Start at  19:04:14
+   Duration  12.80s (transform 4.64s, setup 0ms, import 7.53s, tests 5.11s, environment 0ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+Filesystem baselines, original artifact copies, comparison receipts and raw command logs are in `.local-dev/l5-evidence-rebind-20261016/`. Original checkpoints SHA-256: `967a91da0debd354f60a294f8007e5e7928fd6528ec8897a8d58a769317ec6b7`; final checkpoints: `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`; final result: `ad1e949b2f9878421abc1504cae246f0a4388825e3644feaa85e5578a3d0881a`. Final checks verified both history entries, every current input, the unchanged guard/helper/e2e spec, and UTF-8 without BOM / LF for the delivered files. The existing plan prefix is preserved byte for byte.
+
+**LOCAL ONLY:** no Git, agents, installs, external messages, commits, pushes, deployment or publication. The manager owns scoped diff review, browser e2e acceptance, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**. No browser, launcher, playtest-origin/profile or owner-save pathway changed.

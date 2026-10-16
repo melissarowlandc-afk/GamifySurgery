@@ -13,6 +13,9 @@ import {
   getEmployeeDiscussionLists,
   getRoomWaitingAnchors,
   serializeGameState,
+  createStaffDisplayName,
+  getNamePresentationProfile,
+  selectColleagueDisplayName,
   type DomainContext,
   type GameState,
 } from "../src";
@@ -181,6 +184,28 @@ function schedule(fixtureState: GameState, context: DomainContext): GameState {
 }
 
 describe("employee quality-improvement discussions", () => {
+  it("keeps a generated colleague host's name, sex-compatible art and frozen discussion through reload", () => {
+    const { context, state: initial } = fixture();
+    const employee = initial.employees[0]!;
+    employee.appearance = { ...employee.appearance, stillId: "gs022-new-employee-019" };
+    const presentation = getNamePresentationProfile(employee.appearance);
+    expect(presentation).toEqual({ sexLabel: "Female", ageBand: "middle_aged" });
+    for (let index = 0; index < 1_000; index++) {
+      const seed = `discussion.colleague.${index}`;
+      if (!selectColleagueDisplayName(seed, `staff:${employee.id}`, presentation)) continue;
+      initial.campaignSeed = seed;
+      employee.displayName = createStaffDisplayName(seed, employee.id, [], presentation);
+      break;
+    }
+    expect(employee.displayName).toBe(selectColleagueDisplayName(initial.campaignSeed, `staff:${employee.id}`, presentation));
+    const state = schedule(initial, context);
+    const discussion = Object.values(state.employeeDiscussions ?? {})[0]!;
+    expect(discussion.employeeDisplayName).toBe(employee.displayName);
+    expect(discussion.employeeAppearance).toEqual(employee.appearance);
+    expect(discussion.frozenCase.presentation).toContain(employee.displayName);
+    expect(deserializeGameState(serializeGameState(state), context).employeeDiscussions?.[discussion.id]).toEqual(discussion);
+  });
+
   it("does not turn employee content into a patient when no eligible employee exists", () => {
     const { context, state } = fixture(false);
     state.nextRoutineArrivalTick = 1;

@@ -57,6 +57,7 @@ import {
 } from "./care-room-access";
 import { getFrozenPatientTravelLocation } from "./patient-travel";
 import { completePatientDemographics } from "./patientDemographics";
+import { getNamePresentationProfile } from "./namePresentationProfiles";
 import { getClinicalCaseEligibilityIssue, getPediatricClinicFamilyContext } from "./clinical-case-eligibility";
 import {
   advancePediatricPair,
@@ -103,6 +104,7 @@ import {
   createPatientDisplayName,
   getPatientAppearanceSelectionContext,
   getPresentPatientDisplayNames,
+  getPresentColleagueDisplayNames,
   createPatientPixelAppearance,
   createPixelAppearance,
   createStaffDisplayName,
@@ -1602,6 +1604,16 @@ function createEncounter(
       input.encounterId,
       patientSexLabel,
       getPresentPatientDisplayNames(state),
+      {
+        ...patientDemographics,
+        // Authored identities, family pairs and interpreter profiles retain
+        // their existing name selection. Other diagnoses share the same pool.
+        constrained: Boolean(frozenCase.pediatricProfile) ||
+          !["{patientName}", "Clinic Patient", "Outpatient Patient", "Synthetic Patient"].includes(frozenCase.patientDisplayName) ||
+          frozenCase.decisionNodes.some(node => node.primaryConceptId === "concept.statistics-ethics.qualified-interpreter") ||
+          /\bSpanish\b|español|una mujer de/u.test(frozenCase.presentation),
+        occupiedDisplayNames: getPresentColleagueDisplayNames(state),
+      },
     );
   frozenCase = materializePatientName(frozenCase, patientDisplayName);
   const entrance = getPublicEntrance(state, context);
@@ -10041,7 +10053,10 @@ function reduceHireStaff(
   const requestedName = command.displayName?.trim();
   const displayName = requestedName && !usedNames.includes(requestedName)
     ? requestedName
-    : createStaffDisplayName(next.campaignSeed, command.employeeId, usedNames);
+    : createStaffDisplayName(next.campaignSeed, command.employeeId, usedNames, {
+        ...getNamePresentationProfile({ stillId: selectedStillId }),
+        occupiedDisplayNames: getPresentColleagueDisplayNames(next),
+      });
   const arrival = getEmployeeArrival(
     next,
     definition.id,

@@ -7351,3 +7351,45 @@ external messages, backup push, deployment or publication. Manager owns actual
 acceptance, the audited GitHub checkpoint/reminder (**"push to GitHub"**, under
 existing owner direction) and the separate first-publication gate. This bounded
 worker milestone is complete for handoff; no sub-agents were spawned.
+
+## Colleague name pool (2026-10-16) - Sol worker handoff
+
+Implemented the owner's 81-name Easter-egg pool, exactly given/family/sex/group;
+no contact data. Separate editorial rate **0.05**; measured **515/10,000 (5.15%)**
+per compatible sex/group. Attendings match 40-65, residents 25-35; explicit chart
+ages win. Staff with no chart age use only an authored matching visual band.
+38 exact staff age/sex records + 13 original authored bands were independently
+checked. Unknown/older art, four named radiologists, founders, authored/explicit
+identities, pediatric pairs and Spanish interpreter profiles retain the existing
+name path. No clinical, schema, RNG-contract or art/catalog edit.
+
+New patient/staff/service/shopping/companion names reserve colleagues across
+all present roles, including gift shoppers, parents and departing employees.
+Discussion hosts inherit the employee identity. Inspectors have no generated
+personal names today. The separate hash-derived stream leaves legacy RNG draws
+unchanged; frozen saves are never reselected. Original seeded fixture names,
+appearance and persisted normal/colleague names are covered by regression tests.
+
+Final validation: focused **26/26**, FULL player **2166/2166 in 245 files**, all
+seven workspace typechecks PASS. FULL game-domain **4244 passed / 1 failed /
+2 existing skips**, **156 passed files / 1 failed / 1 skipped**. The single
+failure is the unchanged Level 5 input-hash assertion: this feature intentionally
+changes six pinned source files. Its other 35 integration tests pass. No test
+was softened or skipped; existing evidence/checkpoint fixtures remain unchanged.
+Manager acceptance needs a separate fresh Level 5 evidence run/review, then the
+full suite again. Exact ordered runner commands, output, files changed, details
+and recovery action are appended to
+`docs/execplans/accounts-playtime-release-20261012.md`, **Colleague name pool
+(2026-10-16)**. Actual diff/baseline/audits/raw logs are ignored
+`.local-dev/colleague-name-pool/`. Source/test UTF-8/no-BOM/LF and email-pattern
+scans pass; all source/test hashes stayed fixed during final validation.
+
+LOCAL ONLY: no Git, installs, network, agents, external messages, browser/owner
+storage, deployment or publication used. Manager owns source/evidence acceptance
+and the audited **"push to GitHub"** checkpoint/reminder under existing owner
+direction. Bounded naming implementation complete for handoff; the evidence
+refresh is the next lane. Opening paths stay `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the intended persistent profile
+(`location.origin = http://127.0.0.1:4173`) and the canonical remote
+`https://melissarowlandc-afk.github.io/GamifySurgery/`; their saves remain separate.
+No owner pathway or served build was changed by this worker.

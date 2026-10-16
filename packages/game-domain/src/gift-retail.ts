@@ -1,5 +1,5 @@
 import { APPROVED_LEVEL5_SUPPORT_ROUTES, getServiceIncomeLine, isGiftIncomeLineId, LEVEL_FIVE_GIFT_RETAIL } from "@gamify-surgery/balance-config";
-import { createPatientDisplayName, createPatientPixelAppearance } from "./appearance";
+import { createPatientDisplayName, createPatientPixelAppearance, getPresentColleagueDisplayNames } from "./appearance";
 import { characterStillCatalogEntryById } from "./characterStillCatalog";
 import { isRoomAvailableForNewFacilityWork } from "./selectors";
 import type { DomainContext, GameState, GiftCheckoutState, GiftOnlyVisitState, GiftRetailDemandState, GridPoint, PlacedRoom, RetailExternalActorState, RetailOperationState } from "./types";
@@ -137,7 +137,8 @@ export function scheduleGiftRetailDemand(state: GameState, context: DomainContex
   const ageYears = still.intendedAge ?? (still.ageBand === "young_adult" ? 24 : still.ageBand === "adult" ? 38 : still.ageBand === "middle_aged" ? 54 : 70);
   if (ageYears < 18) return;
   const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(seed, id, sexLabel,
-    state.retailExternalActors.filter(a => a.giftOnlyVisit && a.lifecycle !== "departed").map(a => a.displayName)), appearance,
+    state.retailExternalActors.filter(a => a.giftOnlyVisit && a.lifecycle !== "departed").map(a => a.displayName),
+    { ageYears, sexLabel, occupiedDisplayNames: getPresentColleagueDisplayNames(state) }), appearance,
     giftOnlyVisit: { version: "gift-only-visit.v1", opportunitySequence: sequence, ageYears, sexLabel },
     linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location, path: [], pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };

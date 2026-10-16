@@ -2302,3 +2302,176 @@ Owner in chat: "You have my okay to publish." This is the one-time confirmation 
 ## Owner request queued (2026-10-16): colleague name pool
 
 Owner asked to add the surgery department's attending and resident names (plus playtesters) to the generated name pool at a low random rate. Owner decision via question: **"Anywhere, any role"** (patients with any diagnosis and any role, including ethics scenarios). Attendings = middle-aged profiles; residents = young-adult profiles; owner supplied sex for pronouns. Names only (no emails) may enter the repository; the list is held privately by the manager until dispatch. Manager defaults: about 1 in 20 generated names, age/sex-consistent with the case, constrained profiles (interpreter, pediatric, fixed identities) unchanged, separate editorial weight. Dispatch after the first Beta 1 publication so it does not mix into the release commit. Playtesters added (2026-10-16): four residents, owner-supplied sex. Final list: 81 names (46 attendings, 35 residents).
+- 2026-10-16 release: clean real-path commit f2c8dab3 on branch release/beta1-20261016 (worktree C:/Users/rowla/Projects/GS-release, parent origin/main 02ab585f; 3,528 staged + 153 removed; manager secret/privacy scan clean). Clean worktree CI: npm ci OK; npm test OK (boundaries 5,488 paths; launcher contract; player 2166, game-domain 4226+2 skipped, clinical 635, others green); build:pages OK (3,283 files verified). Push of the release branch and fast-forward of main was blocked by the auto-mode safety check pending explicit owner confirmation of that specific push.
+- **2026-10-16 PUBLISHED.** Owner confirmed "Push the release to main". origin/main = release/beta1-20261016 = 73fb5e69 (f2c8dab3 release + three CI-timing commits: job cap 75 min; CI-only 60 s default test timeout; CI-only 10x scaling of explicit long test deadlines in 28 files; no test skipped). Pages run 38971037540 succeeded (26 min). Live check (fresh Chromium): https://melissarowlandc-afk.github.io/GamifySurgery/ shows invitation-only sign-in, no page errors; a throwaway example.org setup link opened "Set up your account" on a 390 px viewport with the fragment scrubbed, then was cancelled. Five tester setup links were generated privately (not in the repository). Release worktree: C:/Users/rowla/Projects/GS-release. Note: the live working tree carries the same CI-timing edits.
+
+## Colleague name pool (2026-10-16)
+
+Bounded Sol worker implementation for the Claude Code manager. Owner decision
+"Anywhere, any role" is implemented for compatible newly generated identities.
+No sub-agents, Git, installs, network, external messages, browser/owner storage,
+publication or deployment were used.
+
+Files changed:
+
+- `packages/game-domain/src/colleagueNames.ts`: all 81 exact owner-provided
+  given/family/sex/group records (46 attendings, 35 residents), marked as
+  owner-requested Easter eggs; no contact data. Separate cosmetic/editorial
+  `COLLEAGUE_NAME_EDITORIAL_WEIGHT = 0.05`; independent seed-derived
+  `colleague_names.editorial.v1` stream.
+- `packages/game-domain/src/namePresentationProfiles.ts`: existing adult art
+  age/sex metadata and 38 exact staff profiles from accepted roster metadata.
+  Thirteen original employee20 briefs explicitly describe young/middle-aged
+  staff; their authored visual bands permit compatible staff names without
+  inventing exact ages. Other unknown/older art and the four named radiologists
+  retain the ordinary pool. Explicit chart ages always override visual bands.
+- `packages/game-domain/src/appearance.ts`: opt-in context on the two legacy
+  name functions; cross-role active-name reservations; common shopper/companion
+  creation helper. Default low-level calls and save-load name repair retain
+  the old deterministic output.
+- `packages/game-domain/src/reducer.ts`: new compatible patient and staff draws;
+  frozen demographics/selected art determine eligibility. Explicit/authored
+  identities, pediatric families, Spanish interpreter profiles and fixed art
+  keep their existing selection path. No diagnosis is excluded otherwise.
+- `packages/game-domain/src/retail-operations.ts`: all five generated shopper/
+  companion creation paths use the common helper.
+- `packages/game-domain/src/service-operations.ts` and `gift-retail.ts`: service
+  visitors and gift shoppers use their existing demographic/art profile.
+- `packages/game-domain/src/index.ts`: exports the new name/presentation helpers.
+- `packages/game-domain/tests/colleague-names.test.ts`: 18 meaningful cases,
+  including rate/sex/age boundaries, legacy seeded names and tutorial appearance,
+  constrained identities, pool exhaustion, cross-role reservations, actual
+  hires/service visits/gift demand, and saved normal/colleague name retention.
+- `packages/game-domain/tests/employee-discussions.test.ts`: a colleague NP host
+  keeps the employee's name, sex-compatible art, discussion text and saved state.
+- `docs/execplans/accounts-playtime-release-20261012.md` and
+  `docs/handoffs/CURRENT_THREAD_HANDOFF.md`: appended this milestone/handoff.
+
+Selection is 5% per compatible generated name. Attendings match ages 40-65;
+residents match 25-35; children, outside ages and unknown profiles fall back.
+Staff without a chart age can use only an explicitly authored matching visual
+band. Exact ages outside the bands cannot be overridden by that fallback.
+Sex labels select the corresponding pool after clinical case/demographics have
+already been frozen; no race/ethnicity field or disease-selection input is added.
+Names never change clinical content, concept IDs, answer order or FSRS history.
+
+The independent 10,000-seed measurement selected **515 / 10,000 = 5.15%** for
+each sex/group combination. It reached all 13 female/22 male resident names and
+all 7 female/39 male attending names. The configured rate is still exactly 0.05;
+this sample's deviation is ordinary sampling variation. Occupied names are
+reserved across founder, hired/departing staff, visible encounters, service
+visitors, shoppers (including gift-only shoppers) and parents/companions. An
+exhausted compatible pool falls back to the existing normal generator.
+
+Discussion hosts are existing employees and inherit their frozen identity.
+Inspectors currently have a fixed "Inspector" role label, not a generated
+personal-name path; their presentation is unchanged. No persisted schema or
+migration is added. Existing frozen encounters and saved employees are not
+reselected. Tests assert the original eight patient/staff seeded pairs and the
+original tutorial name/demographics/appearance.
+
+Evidence is ignored `.local-dev/colleague-name-pool/`: before copies/baseline
+hashes, actual `review.diff`, final source audit, exact raw logs, seeded-before
+receipt, rate measurement and Level 5 provenance mismatch report. Source/test
+UTF-8/no-BOM/LF and contact-string scans pass. No clinical source/provenance,
+clinical-content data, save-schema, RNG-contract, character catalog, launcher,
+workflow or player source was changed. New names are cosmetic owner-approved
+content; no clinical-review status is promoted.
+
+Opening paths are unchanged: `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the intended persistent profile
+(`location.origin = http://127.0.0.1:4173`). Remote remains
+`https://melissarowlandc-afk.github.io/GamifySurgery/` with its separate saves.
+No build or owner opening pathway was substituted. This is LOCAL ONLY;
+manager owns acceptance and the audited GitHub checkpoint/reminder
+**"push to GitHub"** under the owner's existing direction.
+
+Validation (final source; no filters on either full suite):
+
+All commands used PowerShell with the existing preload:
+
+```powershell
+$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
+```
+
+1. `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1`
+   **Exit 1**, with this exact summary:
+
+```text
+ Test Files  1 failed | 156 passed | 1 skipped (158)
+      Tests  1 failed | 4244 passed | 2 skipped (4247)
+   Start at  18:25:28
+   Duration  900.95s (transform 4.56s, setup 0ms, import 66.92s, tests 823.08s, environment 7ms)
+```
+
+The sole failure is
+`tests/level-five-integration.test.ts:47`, "binds the actual run to its current
+game, balance, clinical and driver inputs and reconciles cash". It pins the
+byte hashes in `tools/qa/level-five-integration-results-20261012.json`, so this
+feature's intentional source changes invalidate its historical binding:
+
+```text
+AssertionError: packages/game-domain/src/appearance.ts
+Expected: "26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9"
+Received: "bef418db571fcef7a6f8a4b082e04eade2cdb6d80f5b68b6ee4a87c22da19ebb"
+```
+
+All other 35 tests in that integration file pass. The mismatch report identifies
+six intentionally edited pinned inputs: appearance, gift-retail, index, reducer,
+retail-operations and service-operations. These hashes matched at task start;
+this is a consequence of this feature, not a pre-existing failure. The worker
+has not softened/skipped the assertion, replaced expected hashes, or changed
+any existing evidence/checkpoint fixture. The two existing skips are unchanged.
+An earlier exploratory full-domain run was interrupted after the final staff
+band support was added; its incomplete log is retained separately. The summary
+above is the completed run started against the final source.
+
+2. `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`
+   **Exit 0**, exact summary:
+
+```text
+ Test Files  245 passed (245)
+      Tests  2166 passed (2166)
+   Start at  18:25:00
+   Duration  75.76s (transform 14.09s, setup 0ms, import 126.96s, tests 153.90s, environment 14ms)
+```
+
+3. `npm.cmd run typecheck` **Exit 0**. All seven workspace TypeScript checks
+   completed: clinical-context-workbench (client + server), player,
+   balance-config, clinical-authoring, clinical-content, clinical-research and
+   game-domain. Exact unabridged output is `typecheck.log` in the evidence folder.
+
+4. Additional focused command:
+   `npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/colleague-names.test.ts tests/employee-discussions.test.ts --pool=threads --maxWorkers=1`
+   **Exit 0**, exact summary:
+
+```text
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  18:24:44
+   Duration  4.53s (transform 2.53s, setup 0ms, import 3.99s, tests 392ms, environment 0ms)
+```
+
+Final independent audit also verifies all **38 exact staff age/sex profiles**
+and **13 authored staff bands** against their original local roster/design
+sources. All ten owned source/test file hashes stayed unchanged throughout the
+final validation run; all 1,872 other baseline source/config/docs paths were
+byte-unchanged before the two authorized documentation appends.
+
+Manager next action / acceptance limitation:
+
+- Inspect the actual filesystem diff, name data, source audits and full logs in
+  `.local-dev/colleague-name-pool/`. The naming milestone is implemented and its
+  scoped tests pass; full-domain acceptance is pending fresh Level 5 evidence.
+- Dispatch a separate evidence-refresh lane after accepting the final source.
+  The existing ordered runner commands are
+  `node tools/qa/level-five-integration-run.mjs --write`, followed by
+  `node tools/qa/level-five-integration-lower.mjs`. They regenerate actual reducer
+  evidence and checkpoints; review their output and retain historical frozen
+  fixtures appropriately. Do not replace hashes without a fresh run. Rerun the
+  full required suites/typecheck after accepting that evidence. These commands
+  were read, not executed by this worker, because the current lane preserves
+  existing frozen encounters, saves and fixtures.
+- Review/backup/publication remain the manager's lane. LOCAL ONLY: no GitHub
+  backup or publication of the colleague pool exists yet. Manager owns the
+  **"push to GitHub"** reminder/checkpoint under the owner's existing direction.
