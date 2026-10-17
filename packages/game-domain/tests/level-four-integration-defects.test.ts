@@ -5,8 +5,8 @@ import { createLevelFourIntegrationState, m9Minute, m9DeferAppDemand } from "../
 // Hosted CI runners run long simulations up to ten times slower.
 const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
-describe("Level 4 M9 isolated defect reproducers", () => {
-  it.skip("DEFECT-M9-2: APP on/off preserves the scored case selected at game minute 900", () => {
+describe("Level 4 M9 defect regressions", () => {
+  it("DEFECT-M9-2: APP on/off preserves the scored case selected at game minute 900", () => {
     let on = createLevelFourIntegrationState("level-four-m9-fairness");
     on.nextRoutineArrivalTick = 1;
     let off = m9DeferAppDemand(structuredClone(on));

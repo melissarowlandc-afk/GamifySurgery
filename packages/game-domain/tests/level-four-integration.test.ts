@@ -322,7 +322,7 @@ describe("Level 4 M9 integrated launch", () => {
     report("terminal", { completion, roomSold: M9_ROOMS.wound, reloads: 3, closingTick: state.facilityTick });
   }, hostedTime(30_000));
 
-  it("preserves scored arrival count/times for 24 hours with APPs on/off (case identity: DEFECT-M9-2)", () => {
+  it("preserves scored case identities and arrival count/times for 24 hours with APPs on/off", () => {
     let on = createLevelFourIntegrationState("level-four-m9-fairness");
     on.nextRoutineArrivalTick = 1;
     let off = m9DeferAppDemand(structuredClone(on));
@@ -337,8 +337,7 @@ describe("Level 4 M9 integrated launch", () => {
       mriReceipts: { on: on.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length,
         off: off.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length } });
     expect(onArrivals.size).toBeGreaterThan(1);
-    // DEFECT-M9-2 below covers the failing full case-identity comparison. This
-    // separate passing assertion proves cadence/count only, not case fairness.
+    expect([...onArrivals]).toEqual([...offArrivals]);
     expect([...onArrivals].map(([id, tuple]) => [id, (tuple as unknown[])[2]]))
       .toEqual([...offArrivals].map(([id, tuple]) => [id, (tuple as unknown[])[2]]));
     expect(m9Learning(on)).toEqual(m9Learning(off));

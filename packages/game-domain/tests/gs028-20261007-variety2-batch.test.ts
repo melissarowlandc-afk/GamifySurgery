@@ -134,13 +134,10 @@ function roundTrip(state: GameState, encounterId: string): GameState {
     }, null, 2)}\n`);
     throw error;
   }
-  // Assert the exact existing central loader rules: overdue cosmetic idle
-  // timers are renewed, and an open chart resets only its attention timestamps.
+  // DEFECT-M9-1: preserve overdue idle timers. An open chart resets only its
+  // attention timestamps under the existing central loader rules.
   // No clinical/satisfaction value, frozen order identity, route, phase,
   // ready time, narrative or learning history is ignored.
-  if (encounter && encounter.nextIdleActionAtFacilityTick < state.facilityTick) {
-    encounter.nextIdleActionAtFacilityTick = state.facilityTick + PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.idleActionMinimumMinutes;
-  }
   if (encounter && state.openChartEncounterId === encounterId) {
     encounter.idleWaitingSinceTick = null;
     encounter.lastSatisfactionDecayAtTick = state.facilityTick;
@@ -604,8 +601,9 @@ describe("GS-028 second October 7 actual gameplay", () => {
   });
 
   it("measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts", () => {
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 561, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 639, concepts: 175 }, { cases: 874, concepts: 281 }, { cases: 910, concepts: 297 }]);
+    // Three P2-E cases inherit level 1; this batch's additive delta stays 78/20.
+    expect(pools.map((item) => item.before)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
+    expect(pools.map((item) => item.after)).toEqual([{ cases: 636, concepts: 175 }, { cases: 874, concepts: 281 }, { cases: 910, concepts: 297 }]);
   });
 
   it("covers all eighty actual nodes and all three distractors plus the key in each", () => {

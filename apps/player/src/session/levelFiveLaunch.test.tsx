@@ -51,7 +51,7 @@ describe("M10 ordinary launch in desktop and phone presentations", () => {
 
   it.each([false, true])("renders the ordinary finish report with ten categories and both actions, compact=%s", compact => {
     const inspection = viewOf(createLevelFiveLaunchQaState("launch-finish")).progression.inspection!;
-    expect(inspection.finish!.report.scoreLabel).toBe("62.49");
+    expect(inspection.finish!.report.scoreLabel).toBe("62.56");
     expect(inspection.finish!.report.categories).toHaveLength(10);
     const markup = renderToStaticMarkup(<FinishedGamePage view={inspection.finish!} compact={compact}
       bestLabel={inspection.bestLabel} latestLabel={inspection.latestLabel} onKeepPlaying={vi.fn()} onStartNewCampaign={vi.fn()} />);

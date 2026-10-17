@@ -46,7 +46,9 @@ function deterministicChoice<T>(
  * A multi-decision case is eligible only when every concept it would score is
  * either unseen or due. This prevents reaching a new later decision by forcing
  * an early review of a preceding concept. Concepts already present in an
- * unresolved encounter are also excluded.
+ * answerable encounter are also excluded. A committed walkout no longer reserves
+ * concepts: service traffic can delay the physical exit, but cannot make that
+ * terminal chart answerable again or change the next educational selection.
  */
 export function selectRoutineClinicalCase(
   state: GameState,
@@ -59,7 +61,8 @@ export function selectRoutineClinicalCase(
 
   const activeConceptIds = new Set(
     Object.values(state.encounters)
-      .filter((encounter) => encounter.resolutionReason === null)
+      .filter((encounter) => encounter.resolutionReason === null &&
+        encounter.patientMovement?.kind !== "leaving_after_walkout")
       .flatMap((encounter) => uniqueConceptIds(encounter.frozenCase)),
   );
 

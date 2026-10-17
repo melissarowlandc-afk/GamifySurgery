@@ -140,4 +140,48 @@ describe("routine clinical selection", () => {
       ),
     ).toBeNull();
   });
+
+  it.each([null, "walking_to_care", "departing_for_offsite_testing"] as const)(
+    "keeps all concepts in an active chart reserved during %s movement",
+    kind => {
+      const state = blankState("active-concepts");
+      const encounter = Object.values(createInitialGameState().encounters)[0]!;
+      encounter.frozenCase = caseFor("case.active", ["concept.active.first", "concept.active.second"]);
+      encounter.patientMovement = kind ? { kind, path: [{ x: 0, y: 0 }], pathIndex: 0,
+        lastMovedAtFacilityTick: 0, destinationRoomInstanceId: null } : null;
+      state.encounters[encounter.id] = encounter;
+
+      expect(selectRoutineClinicalCase(state, [
+        caseFor("case.first-duplicate", ["concept.active.first"]),
+        caseFor("case.second-duplicate", ["concept.active.second"]),
+      ], 10_000)).toBeNull();
+    },
+  );
+
+  it("DEFECT-M9-2: physical walkout progress cannot change the scored selection pool", () => {
+    const state = blankState("walkout-concepts");
+    const encounter = Object.values(createInitialGameState().encounters)[0]!;
+    encounter.frozenCase = caseFor("case.departing", ["concept.departing"]);
+    encounter.patientMovement = { kind: "leaving_after_walkout",
+      path: [{ x: 0, y: 0 }, { x: 1, y: 0 }], pathIndex: 0,
+      lastMovedAtFacilityTick: 0, destinationRoomInstanceId: null };
+    state.encounters[encounter.id] = encounter;
+    const departed = structuredClone(state);
+    departed.encounters[encounter.id]!.resolutionReason = "walkout";
+    departed.encounters[encounter.id]!.lifecycle = "resolved";
+    departed.encounters[encounter.id]!.patientMovement = null;
+    const frozenBefore = structuredClone(encounter.frozenCase);
+    const cases = [encounter.frozenCase, caseFor("case.other", ["concept.other"])];
+    const selected = new Set<string>();
+
+    for (let sequence = 0; sequence < 32; sequence++) {
+      state.routineArrivalSequence = sequence;
+      departed.routineArrivalSequence = sequence;
+      const selection = selectRoutineClinicalCase(state, cases, 10_000);
+      expect(selection).toEqual(selectRoutineClinicalCase(departed, cases, 10_000));
+      selected.add(selection!.selectedConceptId);
+    }
+    expect([...selected].sort()).toEqual(["concept.departing", "concept.other"]);
+    expect(encounter.frozenCase).toEqual(frozenBefore);
+  });
 });

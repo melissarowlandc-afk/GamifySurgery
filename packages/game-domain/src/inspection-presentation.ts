@@ -14,9 +14,8 @@ const key = (point: GridPoint) => `${Math.round((point.x + .5) * 20)},${Math.rou
 const same = (a: GridPoint, b: GridPoint) => Math.hypot(a.x - b.x, a.y - b.y) < EPSILON;
 const distance = (a: GridPoint, b: GridPoint) => Math.hypot(a.x - b.x, a.y - b.y);
 type Node = { point: GridPoint; roomId: string; step: number; neighbors: Set<string> };
-type Graph = { signature: string; nodes: Map<string, Node>; components: Map<string, number>; targets: Map<string, GridPoint[]>; stopKeys: Set<string>; entrance: GridPoint | null };
+type Graph = { signature: string; nodes: Map<string, Node>; components: Map<string, number>; targets: Map<string, GridPoint[]>; stopKeys: Set<string>; entrance: GridPoint | null; paths: Map<string, GridPoint[]> };
 const cache = new WeakMap<DomainContext, Graph>();
-const validatedRoutes = new WeakMap<DomainContext, Map<string, string>>();
 const definition = (context: DomainContext, id: string) => context.balanceRelease.facility.roomDefinitions.find(row => row.id === id) ?? null;
 const signature = (state: GameState) => JSON.stringify([state.rooms.map(room => [room.id, room.roomDefinitionId, room.x, room.y, room.orientation, room.upgradeLevel]), state.doors]);
 
@@ -159,19 +158,26 @@ function graphFor(state: GameState, context: DomainContext): Graph {
     component++;
   }
   const stopKeys = new Set([...targets.values()].flatMap(points => points.map(key)));
-  const graph = { signature: stamp, nodes, components, targets, stopKeys, entrance }; cache.set(context, graph); return graph;
+  const graph = { signature: stamp, nodes, components, targets, stopKeys, entrance, paths: new Map<string, GridPoint[]>() }; cache.set(context, graph); return graph;
 }
 
 function pathInGraph(graph: Graph, start: GridPoint, end: GridPoint): GridPoint[] {
   const from = key(start), to = key(end);
   if (!graph.nodes.has(from) || !graph.nodes.has(to) || graph.components.get(from) !== graph.components.get(to)) return [];
+  // Memoize only pure graph queries, never whether a shared actor ID has
+  // already been compacted. Clones and reloads must take the same state change.
+  const routeKey = `${from}:${to}`, cached = graph.paths.get(routeKey);
+  if (cached) return cached;
   const parents = new Map<string, string | null>([[from, null]]), queue = [from];
   for (let index = 0; index < queue.length; index++) {
     const current = queue[index]!;
     if (current === to) {
       const path: GridPoint[] = [];
       for (let cursor: string | null = to; cursor; cursor = parents.get(cursor) ?? null) path.push(graph.nodes.get(cursor)!.point);
-      return path.reverse();
+      path.reverse();
+      if (graph.paths.size >= 256) graph.paths.delete(graph.paths.keys().next().value!);
+      graph.paths.set(routeKey, path);
+      return path;
     }
     for (const neighbor of graph.nodes.get(current)!.neighbors) if (!parents.has(neighbor)) { parents.set(neighbor, current); queue.push(neighbor); }
   }
@@ -188,7 +194,7 @@ function actorRoute(state: GameState, context: DomainContext, graph: Graph, star
 
 function compact(path: GridPoint[]): GridPoint[] {
   // Keep corners and <= half-tile legs for unchanged routeMotion lookahead/hops.
-  if (path.length < 3) return path;
+  if (path.length < 3) return [...path];
   const result = [path[0]!];
   for (let index = 1; index < path.length - 1; index++) {
     const point = path[index]!;
@@ -256,10 +262,6 @@ export function advanceInspectionPresentation(state: GameState, context: DomainC
         lastMovedAtFacilityTick: state.facilityTick, targetRoomInstanceId: null, observingUntilFacilityTick: state.facilityTick + index };
     });
   }
-  let validated = validatedRoutes.get(context);
-  if (!validated) { validated = new Map(); validatedRoutes.set(context, validated); }
-  const liveIds = new Set(lane.actors.map(actor => actor.id));
-  for (const id of validated.keys()) if (!liveIds.has(id)) validated.delete(id);
   for (const [index, actor] of lane.actors.entries()) {
     try {
       if (!graph.nodes.has(key(actor.location))) {
@@ -277,7 +279,7 @@ export function advanceInspectionPresentation(state: GameState, context: DomainC
         if (safe) {
           actor.location = { ...safe.point }; actor.path = [{ ...safe.point }]; actor.pathIndex = 0;
           actor.phase = "stationary"; actor.targetRoomInstanceId = room!.id;
-          actor.observingUntilFacilityTick = state.facilityTick; validated.delete(actor.id);
+          actor.observingUntilFacilityTick = state.facilityTick;
         }
       }
       if (actor.phase !== "walking") {
@@ -286,14 +288,15 @@ export function advanceInspectionPresentation(state: GameState, context: DomainC
         chooseRoute(state, context, graph, actor, index);
       } else if (actor.targetRoomInstanceId && !state.rooms.some(room => room.id === actor.targetRoomInstanceId)) {
         chooseRoute(state, context, graph, actor, index);
-      } else if (validated.get(actor.id) !== graph.signature) {
+      } else {
         // Revalidate against live doors/solids; a closed wall cannot retain an old route.
         const end = actor.path.at(-1)!;
-        const valid = actorRoute(state, context, graph, actor.location, end);
+        const retained = compact(actorRoute(state, context, graph, actor.path[0] ?? actor.location, end));
+        const cursor = retained.findIndex(point => same(point, actor.location));
+        const valid = cursor >= 0 ? retained : compact(actorRoute(state, context, graph, actor.location, end));
         if (!valid.length || !graph.stopKeys.has(key(end))) chooseRoute(state, context, graph, actor, index);
-        else { actor.path = compact(valid); actor.pathIndex = 0; }
+        else { actor.path = valid; actor.pathIndex = Math.max(0, cursor); }
       }
-      validated.set(actor.id, graph.signature);
       if (actor.phase !== "walking" || actor.lastMovedAtFacilityTick >= state.facilityTick || state.paused) continue;
       let budget = Math.max(0, context.balanceRelease.facility.characterTravelTilesPerTick);
       while (actor.pathIndex < actor.path.length - 1) {

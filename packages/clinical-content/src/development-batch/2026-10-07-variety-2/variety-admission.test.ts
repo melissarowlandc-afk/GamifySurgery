@@ -26,7 +26,7 @@ describe("GS-028 second October 7 additive runtime admission", () => {
     expect(release.publicationStatus).toBe("synthetic_unapproved_prototype");
     expect(release.concepts).toHaveLength(331);
     expect(release.cases).toHaveLength(1008);
-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const item of concepts) expect(release.concepts.filter((entry) => entry.id === item.id)).toEqual([item]);
     for (const item of cases) expect(release.cases.filter((entry) => entry.id === item.id)).toEqual([item]);
   });
@@ -39,12 +39,11 @@ describe("GS-028 second October 7 additive runtime admission", () => {
     };
     expect(oldRelease.concepts).toHaveLength(311);
     expect(oldRelease.cases).toHaveLength(930);
-    expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
-    // Round 3, 2026-10-16: scoped GS-028 clinical anchors and wording only.
-    // Restoring the 108 prior GS-028 cases reproduces the previous whole hash.
-    // All non-GS-028 records retain hash 7e1918260ca1433b7695f6ea91144e09866b2db4fe18960acdcf7e2336a45a02.
-    // Counts, IDs, stages, pairing, and execution are unchanged; see the ExecPlan.
-    expect(hash(oldRelease)).toBe("ae2e3c2d2bd64d280632279f066508a12bb5905a96f4ef2c2c2812815b86f9ab");
+    expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1223);
+    // P2-E adds eight clinical continuations. Restoring only those eight cases
+    // reproduces ae2e3c2d... exactly; every unrelated release record is
+    // unchanged. Full restoration/hash receipt: GS-028 plan, 2026-10-17.
+    expect(hash(oldRelease)).toBe("ce6977677134c338673fb14b1051076fceda9bdf7d59ef542244139e2d96f76c");
   });
 
   it("binds every new timing entry once and includes all twenty-six neutral test estimates", () => {

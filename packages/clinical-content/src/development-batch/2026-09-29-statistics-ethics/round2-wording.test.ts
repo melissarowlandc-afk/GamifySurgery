@@ -25,17 +25,23 @@ const anchorsByQuestion = {
   ...Object.fromEntries(ASSENT_FAMILY.questions.map((question, index) => [question.id, ASSENT_CLINICAL_ANCHOR_KEYS[index]!])),
 };
 const words = (text: string) => text.replaceAll("{patientName}", "Alex Morgan").trim().split(/\s+/).length;
+// This editorial contract covers the original 118-variant writing pass. The
+// reused clinical continuations have their own evidence/presentation tests.
+const focusedQuestionIds = new Set(questions.map(question => question.id));
 
 describe("round-3 clinically anchored statistics, ethics, safety, and assent wording", () => {
-  it("keeps the closed 30-concept / 118-variant / 114-case inventory and existing pairing boundary", () => {
+  it("keeps the original 30-concept / 118-variant / 114-case bank with eight added clinical continuations", () => {
     expect(concepts).toHaveLength(30);
     expect(questions).toHaveLength(118);
     expect(cases).toHaveLength(114);
     expect(new Set(questions.map((question) => question.id)).size).toBe(118);
     expect(new Set(cases.map((clinicalCase) => clinicalCase.id)).size).toBe(114);
     const paired = cases.filter((clinicalCase) => clinicalCase.decisionNodes.length > 1);
-    expect(paired).toHaveLength(4);
-    for (const clinicalCase of paired) {
+    expect(paired).toHaveLength(12);
+    const interpreted = paired.filter(clinicalCase => !clinicalCase.id.startsWith("case.gs028se.p2e."));
+    expect(interpreted).toHaveLength(4);
+    expect(paired.filter(clinicalCase => clinicalCase.id.startsWith("case.gs028se.p2e."))).toHaveLength(8);
+    for (const clinicalCase of interpreted) {
       expect(clinicalCase.decisionNodes.map((node) => node.primaryConceptId)).toEqual([
         "concept.statistics-ethics.qualified-interpreter", "concept.statistics-ethics.informed-consent",
       ]);
@@ -48,7 +54,7 @@ describe("round-3 clinically anchored statistics, ethics, safety, and assent wor
 
   it("anchors every decision to admitted clinical evidence and separates patients from employee hosts", () => {
     expect(Object.keys(anchorsByQuestion)).toHaveLength(118);
-    for (const clinicalCase of cases) for (const node of clinicalCase.decisionNodes) {
+    for (const clinicalCase of cases) for (const node of clinicalCase.decisionNodes.filter(item => focusedQuestionIds.has(item.questionVariantId))) {
       const anchorKey = anchorsByQuestion[node.questionVariantId]!;
       const anchor = CLINICAL_ANCHORS[anchorKey];
       expect(anchor, node.questionVariantId).toBeDefined();
@@ -123,7 +129,7 @@ describe("round-3 clinically anchored statistics, ethics, safety, and assent wor
   });
 
   it("provides complete stories, visible beginner lessons, distinct fallbacks, and aligned rationale fields", () => {
-    for (const clinicalCase of cases) for (const node of clinicalCase.decisionNodes) {
+    for (const clinicalCase of cases) for (const node of clinicalCase.decisionNodes.filter(item => focusedQuestionIds.has(item.questionVariantId))) {
       const question = questions.find((candidate) => candidate.id === node.questionVariantId)!;
       const story = node.currentUpdate ?? question.patientPresentation;
       expect(words(story), question.id).toBeGreaterThanOrEqual(45);

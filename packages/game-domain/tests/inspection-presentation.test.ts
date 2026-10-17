@@ -11,6 +11,7 @@ import { advanceInspectionPresentation, createInitialGameState, createFacilityIn
   STAFF_CHARACTER_STILLS, serializeGameState, staffStillEligibleEntries, inspectionPresentationNavigationSummary, type GameState } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
 import { APPROVED_LEVEL5_SUPPORT_NAVIGATION, APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
+import captured from "./fixtures/level-five-garden-offsite-overlap-20261017.json";
 // Hosted CI runners run long simulations up to ten times slower.
 const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
@@ -78,6 +79,23 @@ describe("Level 5 M7b inspection actors", () => {
     loaded.paused = false;
     const next = tick(loaded, "m7b.resume");
     expect(next.levelFive!.inspectionPresentation.actors.map(actor => actor.id)).toEqual(state.levelFive!.inspectionPresentation.actors.map(actor => actor.id));
+  });
+
+  it.each([false, true])("advances cloned routes identically with a shared context, reverse order=%s", reverse => {
+    const initial = deserializeGameState(JSON.stringify(captured), context);
+    expect(initial.levelFive!.inspectionPresentation.actors.some(actor => actor.phase === "walking" && actor.pathIndex > 0)).toBe(true);
+    const shared = createLevelFiveStateQaContext();
+    const clones = [structuredClone(initial), deserializeGameState(serializeGameState(initial), shared)];
+    for (const state of clones) { state.paused = false; state.facilityTick++; }
+    for (const index of reverse ? [1, 0] : [0, 1]) advanceInspectionPresentation(clones[index]!, shared);
+    const canonical = clones.map(state => deserializeGameState(serializeGameState(state), shared));
+    expect(canonical[0]).toEqual(canonical[1]);
+    // One branch keeps its warm route objects; the other is a fresh reload.
+    clones[1] = deserializeGameState(serializeGameState(clones[1]!), shared);
+    for (const state of clones) state.facilityTick++;
+    for (const index of reverse ? [0, 1] : [1, 0]) advanceInspectionPresentation(clones[index]!, shared);
+    expect(deserializeGameState(serializeGameState(clones[0]!), shared))
+      .toEqual(deserializeGameState(serializeGameState(clones[1]!), shared));
   });
 
   it("keeps every location and continuous path clear of fixtures and necessary contacts for the full 3000-minute inspection", () => {

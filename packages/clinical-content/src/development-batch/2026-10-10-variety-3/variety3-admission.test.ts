@@ -12,12 +12,12 @@ describe("manager-selected Variety-3 prototype admission", () => {
     const prior = { ...release, concepts: release.concepts.filter(item => !conceptIds.has(item.id)),
       cases: release.cases.filter(item => !caseIds.has(item.id)) };
     expect([prior.concepts.length, prior.cases.length, prior.cases.flatMap(item => item.decisionNodes).length])
-      .toEqual([360, 1090, 1395]);
-    // Round 3 full pass: restoring only the 114 scoped cases
-    // reproduces the independently captured e590b21f... intake hash.
-    // All unrelated records retain 5e456f01... (see the GS-028 ExecPlan).
+      .toEqual([360, 1090, 1403]);
+    // P2-E adds eight clinical continuations. Restoring only those eight cases
+    // reproduces a559b47f... exactly; every unrelated release record is
+    // unchanged. Full restoration/hash receipt: GS-028 plan, 2026-10-17.
     expect(createHash("sha256").update(`${JSON.stringify(prior, null, 2)}\n`).digest("hex"))
-      .toBe("a559b47f3470797900b15a1033acdc5374c64030025838ab945666935e8758c1");
+      .toBe("94898aae463e483b0a414e14beebbf51b00478ed109db73da43df7d72948f14a");
   });
 
   it("registers exact concepts, cases and identities once at their declared earliest levels and settings", () => {
@@ -29,7 +29,7 @@ describe("manager-selected Variety-3 prototype admission", () => {
     expect(draft.assemblyAuthorized).toBe(false);
     expect(release.publicationStatus).toBe("synthetic_unapproved_prototype");
     expect([release.concepts.length, release.cases.length, release.cases.flatMap(item => item.decisionNodes).length])
-      .toEqual([370, 1110, 1415]);
+      .toEqual([370, 1110, 1423]);
     expect(admission.conceptIds).toEqual(concepts.map(item => item.id));
     expect(admission.variants.map(item => item.caseId)).toEqual(cases.map(item => item.id));
     expect([1, 2, 3].map(level => concepts.filter(item => item.earliestFacilityStage === level).length)).toEqual([4, 4, 2]);

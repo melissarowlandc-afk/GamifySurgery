@@ -147,11 +147,7 @@ function roundTrip(state: GameState, encounterId: string): GameState {
   const frozen = clone(state.encounters[encounterId]);
   const histories = clone(state.learningHistories);
   const next = deserializeGameState(serializeGameState(state));
-  // Persistence legitimately renews an overdue cosmetic idle timer. Clinical
-  // content, frozen results, answers and learning histories remain exact.
-  if (frozen && frozen.nextIdleActionAtFacilityTick < state.facilityTick) {
-    frozen.nextIdleActionAtFacilityTick = state.facilityTick + PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.idleActionMinimumMinutes;
-  }
+  // DEFECT-M9-1: preserve overdue idle deadlines with the rest of the encounter.
   expect(clone(next.encounters[encounterId])).toEqual(frozen);
   expect(next.learningHistories).toEqual(histories);
   return next;
@@ -406,8 +402,9 @@ describe("GS-028 October 7 real gameplay admission", () => {
   });
 
   it("measures the real ordinary pools before and after admission", () => {
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 483, concepts: 135 }, { cases: 718, concepts: 241 }, { cases: 754, concepts: 257 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 561, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
+    // Three P2-E cases inherit level 1; this batch's additive delta stays 78/20.
+    expect(pools.map((item) => item.before)).toEqual([{ cases: 480, concepts: 135 }, { cases: 718, concepts: 241 }, { cases: 754, concepts: 257 }]);
+    expect(pools.map((item) => item.after)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
   });
 
   it("covers all eighty actual nodes and each of their four authored choices", () => {

@@ -69,7 +69,8 @@ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
 import { normalizeRetiredServiceHistory } from "./retired-service-history";
 import { normalizeProcedureCompanionState, reconcileProcedureCompanions } from "./procedure-companions";
 import { reconcileServiceOperationFlow } from "./service-operations";
-import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+import { getDiagnosticOrderPlans, normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+import { replaceDiagnosticOrderPlan } from "./diagnostic-orders";
 import { isReadingWorkMinute, readingMinutesEqual } from "./room-upgrade-reading";
 import { normalizeOutsideRadiologyReads, normalizeRadiologistReadIncome } from "./radiologist-read-income";
 import { getDefaultDoorOffset } from "./doors";
@@ -1305,7 +1306,9 @@ function normalizeServiceOperations(
       pathIndex: path.length > 0 ? Math.max(0, Math.min(path.length - 1, raw.pathIndex)) : 0,
       lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
       cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
-      resourceWaitReason: typeof raw.resourceWaitReason === "string" ? raw.resourceWaitReason : null,
+      ...(raw.resourceWaitReason !== undefined
+        ? { resourceWaitReason: typeof raw.resourceWaitReason === "string" ? raw.resourceWaitReason : null }
+        : {}),
       ...(visitorTravel ? { visitorTravel } : {}),
       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
       phaseFlowVersion,
@@ -1413,7 +1416,8 @@ function normalizeRetailExternalActors(candidate: unknown): RetailExternalActorS
       linkedEncounterId: typeof raw.linkedEncounterId === "string" ? raw.linkedEncounterId : null, lifecycle: raw.lifecycle, location: isGridPoint(raw.location) ? { ...raw.location } : null,
       path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
       activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null,
-      ...(typeof raw.movementWaitReason === "string" ? { movementWaitReason: raw.movementWaitReason } : {}),
+      ...(typeof raw.movementWaitReason === "string" || raw.movementWaitReason === null
+        ? { movementWaitReason: raw.movementWaitReason } : {}),
       ...(pediatricFamilyId ? { pediatricFamilyId } : {}),
       ...(procedureCompanion ? { procedureCompanion } : {}) } satisfies RetailExternalActorState];
   });
@@ -2327,7 +2331,6 @@ function normalizeEncounter(
   campaignSeed: string,
   facilityTick: number,
   context: DomainContext,
-  preserveOverdueIdleClocks = false,
 ): EncounterState | null {
   if (!isRecord(candidate.frozenCase)) {
     return null;
@@ -2977,7 +2980,8 @@ function normalizeEncounter(
     nextIdleActionAtFacilityTick:
       typeof candidate.nextIdleActionAtFacilityTick === "number" &&
       Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
-      candidate.nextIdleActionAtFacilityTick >= (preserveOverdueIdleClocks ? 0 : facilityTick)
+      // Occupied actors can legitimately retain an overdue idle action.
+      candidate.nextIdleActionAtFacilityTick >= 0
         ? candidate.nextIdleActionAtFacilityTick
         : facilityTick +
           context.balanceRelease.environment.idleActionMinimumMinutes,
@@ -3235,7 +3239,7 @@ function migrateVersionTwo(
     retailOrders,
     retailActorLedgers: normalizeRetailActorLedgers(parsed.retailActorLedgers),
     retailNextOpportunityTicks: isRecord(parsed.retailNextOpportunityTicks)
-      ? Object.fromEntries(Object.entries(parsed.retailNextOpportunityTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= parsedFacilityTick)) as Record<string, number>
+      ? Object.fromEntries(Object.entries(parsed.retailNextOpportunityTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= 0)) as Record<string, number>
       : {},
     nextExternalRetailOpportunityTick: typeof parsed.nextExternalRetailOpportunityTick === "number" && Number.isSafeInteger(parsed.nextExternalRetailOpportunityTick) && parsed.nextExternalRetailOpportunityTick > parsedFacilityTick ? parsed.nextExternalRetailOpportunityTick : parsedFacilityTick + 120,
     externalRetailSequence: typeof parsed.externalRetailSequence === "number" && Number.isSafeInteger(parsed.externalRetailSequence) && parsed.externalRetailSequence >= 0 ? parsed.externalRetailSequence : 0,
@@ -3322,7 +3326,6 @@ function migrateVersionTwo(
             campaignSeed,
             next.facilityTick,
             context,
-            next.facilityLevel === 5,
           )
         : null;
       return normalized ? [[encounterId, normalized]] : [];
@@ -3375,7 +3378,30 @@ function migrateVersionTwo(
     throw new Error("The saved outside radiology read sequence is invalid.");
   }
   next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
-    if (trip.amenityKind === "garden") return validateSavedGardenRest(next, trip);
+    if (trip.amenityKind === "garden") {
+      const encounter = trip.actorKind === "encounter" ? next.encounters[trip.actorId] : null;
+      if (trip.status === "returning" && encounter?.patientMovement?.kind === "departing_for_offsite_testing") {
+        const plan = getDiagnosticOrderPlans(next).find(plan => plan.encounterId === encounter.id &&
+          plan.phases.some(phase => phase.kind === "patient_departure" && phase.status === "active"));
+        const raw = rawEncounters[encounter.id];
+        if (plan && isRecord(raw) && isGridPoint(raw.patientLocation)) {
+          // Legacy diagnostic walks could start during an amenity return. The
+          // live amenity wrote the saved location last; validate that owner
+          // before yielding the conflicting walk, never inventing a cursor.
+          encounter.patientLocation = { ...raw.patientLocation };
+          if (!validateSavedGardenRest(next, trip)) return false;
+          encounter.patientMovement = null;
+          const queued = structuredClone(plan);
+          for (const phase of queued.phases) if (phase.kind === "patient_departure" && phase.status === "active") {
+            phase.status = "queued";
+            phase.startedAtTick = null;
+          }
+          replaceDiagnosticOrderPlan(encounter, queued);
+          return true;
+        }
+      }
+      return validateSavedGardenRest(next, trip);
+    }
     const operation = next.serviceOperations.find((candidate) =>
       trip.actorKind === "encounter"
         ? candidate.actorKind === "encounter" && candidate.actorId === trip.actorId && candidate.status !== "completed" && candidate.status !== "cancelled"
@@ -3621,7 +3647,7 @@ function migrateVersionTwo(
       nextIdleActionAtFacilityTick:
         typeof candidate.nextIdleActionAtFacilityTick === "number" &&
         Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
-        candidate.nextIdleActionAtFacilityTick >= (next.facilityLevel === 5 ? 0 : next.facilityTick)
+        candidate.nextIdleActionAtFacilityTick >= 0
           ? candidate.nextIdleActionAtFacilityTick
           : next.facilityTick +
             context.balanceRelease.environment.idleActionMinimumMinutes,

@@ -46,18 +46,19 @@ const allDraftRecords = [
 ];
 
 describe("GS-028 statistics and ethics batch admission", () => {
-  it("contains the exact 28 objectives and four question variants for each", () => {
+  it("contains 28 original objectives with four variants each plus eight reused clinical continuations", () => {
     expect(concepts).toHaveLength(28);
     expect(tested).toHaveLength(28);
-    expect(questions).toHaveLength(112);
+    expect(questions).toHaveLength(120);
     expect(cases).toHaveLength(108);
-    expect(cases.flatMap((clinicalCase) => clinicalCase.decisionNodes)).toHaveLength(112);
+    expect(cases.flatMap((clinicalCase) => clinicalCase.decisionNodes)).toHaveLength(120);
     expect(manifest).toMatchObject({
       authoringConceptCount: 28,
       testedConceptCount: 28,
-      questionVariantCount: 112,
+      questionVariantCount: 120,
       caseCount: 108,
-      decisionNodeCount: 112,
+      decisionNodeCount: 120,
+      reusedClinicalQuestionCount: 8,
       admissionScope: "owner_development_preview_only",
       publicReleaseAuthorized: false,
     });
@@ -122,14 +123,16 @@ describe("GS-028 statistics and ethics batch admission", () => {
   it("keeps patient topics early and methods at level 2, free of fake procedures", () => {
     expect(serviceContracts).toEqual([]);
     expect(concepts.every((concept) => concept.earliestFacilityStage === (employeeConceptIds.has(concept.id) ? 2 : 0))).toBe(true);
-    expect(timingEntries).toHaveLength(112);
+    expect(timingEntries).toHaveLength(120);
+    expect(timingEntries.filter(timing => timing.classification.kind === "test_choices")).toHaveLength(0);
     for (const timing of timingEntries) {
       answerChoiceTimingRegistryEntrySchema.parse(timing);
       expect(timing.classification).toEqual({ kind: "no_test" });
     }
     for (const clinicalCase of cases) {
       syntheticClinicalCaseSchema.parse(clinicalCase);
-      expect(clinicalCase.earliestFacilityStage).toBe(clinicalCase.participant ? 2 : 0);
+      if (clinicalCase.participant) expect(clinicalCase.earliestFacilityStage).toBe(2);
+      else expect(clinicalCase.earliestFacilityStage).toBeLessThanOrEqual(1);
       expect(clinicalCase.requiredCapabilityIds).toEqual([]);
       expect([1, 2]).toContain(clinicalCase.decisionNodes.length);
       for (const node of clinicalCase.decisionNodes) {
@@ -190,8 +193,8 @@ describe("GS-028 statistics and ethics batch admission", () => {
     expect(uniqueLongestKeys).toEqual([]);
   });
 
-  it("flags keys more than 1.5 times the mean distractor length across all 112 variants", () => {
-    expect(questions).toHaveLength(112);
+  it("flags keys more than 1.5 times the mean distractor length across all 120 variants", () => {
+    expect(questions).toHaveLength(120);
     const outliers = questions.flatMap((question) => {
       const key = question.answerChoices.find((choice) => choice.isCorrect)!;
       const distractors = question.answerChoices.filter((choice) => !choice.isCorrect);

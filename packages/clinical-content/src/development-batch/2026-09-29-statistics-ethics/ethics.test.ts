@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { syntheticClinicalCaseSchema } from "../../schema";
-import { ETHICS_FAMILIES } from "./ethics";
+import { ETHICS_FAMILIES, ETHICS_P2E_QUESTIONS } from "./ethics";
 import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "./clinical-anchor-test-catalog";
 
 const cases = ETHICS_FAMILIES.flatMap((family) => family.cases);
@@ -13,12 +13,12 @@ describe("GS028 patient-centered ethics overhaul", () => {
     expect(ETHICS_FAMILIES.flatMap((family) => family.authoringConcepts)).toHaveLength(10);
     expect(questions).toHaveLength(40);
     expect(cases).toHaveLength(36);
-    expect(cases.filter((clinicalCase) => clinicalCase.decisionNodes.length === 2)).toHaveLength(4);
+    expect(cases.filter((clinicalCase) => clinicalCase.decisionNodes.length === 2)).toHaveLength(12);
     for (const clinicalCase of cases) {
       syntheticClinicalCaseSchema.parse(clinicalCase);
       expect(clinicalCase.participant).toBeUndefined();
-      expect(clinicalCase.earliestFacilityStage).toBe(0);
-      expect(clinicalCase.chiefComplaint.trim().split(/\s+/).length).toBeLessThanOrEqual(5);
+      expect(clinicalCase.earliestFacilityStage).toBeLessThanOrEqual(1);
+      expect(clinicalCase.chiefComplaint!.trim().split(/\s+/).length).toBeLessThanOrEqual(5);
       expect(clinicalCase.presentation).toContain("{patientName}");
       expect(clinicalCase.presentation).not.toMatch(/A patient with|overhears staff discussing an identifiable clinic case/i);
       for (const profile of clinicalCase.approvedInstantiationProfiles ?? []) {
@@ -47,7 +47,9 @@ describe("GS028 patient-centered ethics overhaul", () => {
   });
 
   it("continues the same patient's interpreted consent discussion without a new clinical treatment claim", () => {
-    for (const clinicalCase of cases.filter((item) => item.decisionNodes.length === 2)) {
+    const interpreted = cases.filter((item) => item.decisionNodes[0]!.primaryConceptId === "concept.statistics-ethics.qualified-interpreter");
+    expect(interpreted).toHaveLength(4);
+    for (const clinicalCase of interpreted) {
       expect(clinicalCase.decisionNodes.map((node) => node.primaryConceptId)).toEqual([
         "concept.statistics-ethics.qualified-interpreter",
         "concept.statistics-ethics.informed-consent",
@@ -63,7 +65,7 @@ describe("GS028 patient-centered ethics overhaul", () => {
     for (const clinicalCase of cases) {
       expect(clinicalCase.learningSummary).toBe("Review the teaching points and choice rationales for this encounter.");
       for (const node of clinicalCase.decisionNodes) {
-        const authored = questions.find((question) => question.id === node.questionVariantId)!;
+        const authored = [...questions, ...ETHICS_P2E_QUESTIONS].find((question) => question.id === node.questionVariantId)!;
         expect(authored.teachingPoint).toBe(node.teachingPoint);
         expect(authored.explanation).toBe(node.explanation);
         expect(authored.reachedCurrentUpdate).toBe(node.currentUpdate);

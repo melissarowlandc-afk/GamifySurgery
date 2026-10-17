@@ -1,6 +1,7 @@
 import { buildFamily, type ConceptSpec, type FamilySpec, type VariantSpec } from "./family-builder";
 import { ETHICS_SOURCES } from "./ethics-source-catalog";
 import { CLINICAL_ANCHORS, type ClinicalAnchorKey } from "./statistics-variants";
+import { pairEthicsWithClinicalDecisions } from "./ethics-clinical-pairings";
 type Wrong = [string, string];
 type Story = { clinicalAnchor:ClinicalAnchorKey; complaint:string; body:string; task:string; key:string; why:string; keyRationale:string; teachingPoint:string; explanation:string; claimIds:string[]; ageYears:readonly number[]; update?:string; wrong:[Wrong,Wrong,Wrong]; spanish?:boolean; sources?:Array<keyof typeof ETHICS_SOURCES> };
 type Topic = { id:string; title:string; objective:string; sources:Array<keyof typeof ETHICS_SOURCES>; stories:[Story,Story,Story,Story] };
@@ -1520,7 +1521,7 @@ function family(a:Topic,b:Topic):FamilySpec {
  ...(a.id==="qualified-interpreter" ? {pairing:{indices:[0,1,2,3] as Array<0|1|2|3>,updates:b.stories.map(story => story.update!)}} : {}),
  concepts:pair.map(t=>({id:`concept.statistics-ethics.${t.id}`,displayName:t.title,learningObjective:t.objective,stage:0,educationalTier:0,conceptType:"applied_science",evidenceClaimIds:t.stories.map((_,i)=>`claim.gs028se.${t.id}.${i+1}`),variants:t.stories.map((s,i)=>variant(t,s,i))})) as [ConceptSpec,ConceptSpec]};
 }
-export const ETHICS_FAMILIES=Array.from({length:topics.length/2},(_,i)=>{
+export const ETHICS_BASE_FAMILIES=Array.from({length:topics.length/2},(_,i)=>{
   const built=buildFamily(family(topics[i*2]!,topics[i*2+1]!));
   return {...built,cases:built.cases.map(clinicalCase=>{
     const labels=clinicalCase.decisionNodes.flatMap(node=>{
@@ -1535,3 +1536,5 @@ export const ETHICS_FAMILIES=Array.from({length:topics.length/2},(_,i)=>{
     return {...clinicalCase,sourceLabels,decisionNodes:clinicalCase.decisionNodes.map(node=>({...node,sourceLabels}))};
   })};
 });
+export const ETHICS_FAMILIES = ETHICS_BASE_FAMILIES.map(pairEthicsWithClinicalDecisions);
+export const ETHICS_P2E_QUESTIONS = ETHICS_FAMILIES.flatMap(family => family.pairedQuestions);

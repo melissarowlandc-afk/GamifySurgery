@@ -56,7 +56,7 @@ describe("September 13 early-level batch admission", () => {
     expect(EARLY_LEVELS_20260913_BATCH_MANIFEST).toMatchObject({authoringConceptCount:20,testedConceptCount:20,questionVariantCount:80,caseCount:52,decisionNodeCount:80,multistepCaseCount:28,resultGateCount:28,caseReviewCount:52,sourceCount:20,evidenceClaimCount:21,serviceContractCount:7,timingEntryCount:80,publicReleaseAuthorized:false});
     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const clinicalCase of EARLY_LEVELS_20260913_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(SYNTHETIC_CLINICAL_RELEASE.cases.filter((item) => item.id === clinicalCase.id)).toHaveLength(1);

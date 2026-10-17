@@ -2670,3 +2670,1459 @@ EXIT_CODE=0
 Filesystem baselines, original artifacts, source/weight proof, comparison receipts and raw logs: `.local-dev/l5-evidence-rebind-20261017/` (`baseline.json`, `artifact-audit.json`, `integrity-review.json`, original artifact copies and command logs). Original checkpoint SHA-256: `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`; final checkpoints: `3baf8e3d564893d432ca8a2e86c0093648b8ae804c94af922deab0047a2f28dd`; final result: `1ec62f7a022ec88ee5dbbe58016d83dee88c4efb838f740eb644d9c1aab4fd14`. Final checks verified all current inputs, the full three-entry history, unchanged guard/helper/e2e fingerprints and UTF-8 without BOM / LF. The existing plan prefix is preserved byte for byte.
 
 **LOCAL ONLY:** no Git, agents, installs, external messages, commits, pushes, deployment or publication. The manager owns scoped diff review, browser acceptance, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**. No browser, launcher, playtest-origin/profile or owner-save pathway changed.
+
+## P2-E pairings (2026-10-17)
+
+**Status:** eight same-diagnosis ethics → clinical cases implemented for manager acceptance. Final validation is recorded below. Owner direction: decision 4 = yes, followed by proceed. Every new clinical adaptation and case review remains **needs_clinician_review**; no named clinician approval is inferred.
+
+**Owner read-through:** [Eight P2-E pairings](../reviews/stats-ethics-p2e-pairings-20261017.md), including both steps, key-first review-only choices, each rationale, lessons and per-node existing claim/source mappings. Runtime shuffles all choices.
+
+### Implementation, constraints and counts
+
+- The content adapter replaces eight single-node ethics cases with new `case.gs028se.p2e.*` IDs and eight contextual clinical question IDs. It reuses existing clinical concepts/objectives, question decisions, answer IDs/correctness and evidence bindings from direct authored-module imports. No cross-batch export or authored clinical source file was edited.
+- All 40 original ethics questions, concept IDs/objectives, choices, profiles, opening presentations and profile IDs are unchanged. The four existing Spanish interpreter → consent cases are byte-for-byte unchanged, including Female ages 43/68 and source labels. All other unselected ethics cases are unchanged.
+- Each node gets sources resolved from its own bound claims; case labels are their union. Clinical mappings also include the original ethics claims supporting the explicit corrected-forward transition. All **734 exported claim records and 452 source records** match the original catalog exactly, including statements, dates, license/reuse/authority metadata, reciprocal mappings and original clinical approvals.
+- The adapted desmoid, FHH and Mondor questions remain new drafts even though the original versions were clinically approved. No approval label is inherited. New technical-review metadata is dated 2026-10-17 and explicitly says no clinician sign-off; source/claim check and access dates are unchanged.
+- The first wrong answer has no terminal disposition and proceeds after feedback acknowledgement to the same reached update as a correct answer. Final wrong answers use neutral `no_terminal_outcome` feedback. No adverse-outcome narrative is added. Each of the two distinct intended concepts gets one FSRS review, using the existing stable concept IDs.
+- The final eight continuations are management or referral decisions, with their source no-test timing classifications preserved. Diagnostic candidates were excluded because new case/node identities would also require exact order registrations in the prohibited game-domain source lane. The cutaneous-abscess candidate was also excluded because its donor required a minor-procedure capability. No new capability, service, fixed waiting duration, onsite procedure or diagnostic-order contract is introduced. Existing testing choices elsewhere retain their wait declarations.
+- Desmoid and perianal-abscess labels use parallel treatment plans while preserving original answer IDs, decisions and correctness. All clinical stems state the patient-specific task completely. Lessons reuse the authored donor feedback; distinct short fallbacks and two legacy rationale completions use only existing claims.
+- Main batch: **28 original concepts, 120 question variants (112 original + 8 clinical adaptations), 108 cases, 120 nodes and 120 timing entries**; local claims/sources remain **63 / 30**. The eight clinical concepts already exist in the admitted catalog; no FSRS concept was added or renamed.
+- The original focused Round-3 bank retains its 30 concepts and 118 original question texts across 114 cases. The P2-E supplement makes **126 questions/decisions across those same 114 cases**. The earlier Round-3 review is preserved; the P2-E review gives the new continuations and case identities.
+- Ethics cases **36 → 36**, ethics decisions **40 → 40**, total ethics-case nodes **40 → 48**, two-step cases **4 → 12**. The complete release remains **370 concepts / 1,110 cases**; nodes change **1,415 → 1,423**.
+
+| Ethics supply | Before cases / ethics decisions / total nodes | After cases / ethics decisions / total nodes |
+| --- | --- | --- |
+| Level 0 | 36 / 40 / 40 | 33 / 37 / 42 |
+| Level 1 | 36 / 40 / 40 | 36 / 40 / 48 |
+| Level 2 | 36 / 40 / 40 | 36 / 40 / 48 |
+
+All 40 original ethics decisions, including four variants of every ethics concept and all four interpreted-consent sequences, remain available by level 1. Three cases inherit level 1 from varicose referral, PTLD tissue coordination and GIST treatment planning; five additions stay level 0. Main-batch patient case supply is **48 → 45 at level 0**, and **48 → 48 by level 1**, without a new capability. The 60 employee-discussion cases/nodes remain at their original level-2 host gate. Educational tier, acuity, capability and facility progression remain separate.
+
+### Delivered pairing register
+
+| Existing ethics question | Same diagnosis | Existing clinical question reused |
+| --- | --- | --- |
+| `question.statistics-ethics.capacity-refusal.v4` | varicose | `question.varicose-veins.intervention-referral-after-axial-reflux.v1` |
+| `question.statistics-ethics.perioperative-dnr.v4` | perianal-abscess | `question.perianal-abscess.prompt-drainage.v1` |
+| `question.statistics-ethics.error-disclosure.v4` | ptld | `question.ptld.tissue-diagnosis-coordination.v1` |
+| `question.statistics-ethics.research-consent.v1` | gist | `question.gastric-gist.mutation-guided-neoadjuvant-imatinib.v1` |
+| `question.statistics-ethics.research-consent.v3` | desmoid | `question.desmoid.initial-surveillance.new-diagnosis.v1` |
+| `question.statistics-ethics.research-consent.v4` | hidradenitis | `question.hidradenitis-suppurativa.multimodal-specialist-planning.v1` |
+| `question.statistics-ethics.confidentiality.v2` | fhh | `question.fhh.parathyroid-surgery-counseling.v1` |
+| `question.statistics-ethics.confidentiality.v4` | mondor | `question.mondor-disease.management.supportive-care.v1` |
+
+### Scope, restoration and supply proof
+
+A complete runtime comparison restores only the eight replaced cases and exactly recreates the original full release. All unrelated runtime records and all original ethics question records are unchanged. Nine related clinical-content admission tests were updated only for proven +8-node totals, three verified hashes and explanatory comments. Their authored objectives/content were not edited. Initial scope questions were resolved by inspecting that these are tests of this batch's runtime admission, covered by the brief's “and its tests” lane. No additional owner design or test-policy approval is claimed.
+
+| Historical intake | Original hash exactly reproduced by eight-case restoration | Current paired-release hash | Current concepts / cases / nodes |
+| --- | --- | --- | --- |
+| beforeVariety1 | `7f37f52ed571295a6d463e76ee7f4de121a2862f9ddec32ce1d0801438e0460b` | `6109a009e2c09d21018fe5e6da83641ca15fcf2a8e9b482fbbb4be3afc0052e1` | 291 / 852 / 1143 |
+| beforeVariety2 | `ae2e3c2d2bd64d280632279f066508a12bb5905a96f4ef2c2c2812815b86f9ab` | `ce6977677134c338673fb14b1051076fceda9bdf7d59ef542244139e2d96f76c` | 311 / 930 / 1223 |
+| beforeVariety3 | `a559b47f3470797900b15a1033acdc5374c64030025838ab945666935e8758c1` | `94898aae463e483b0a414e14beebbf51b00478ed109db73da43df7d72948f14a` | 360 / 1090 / 1403 |
+
+The Level-3 protected-intake hash remains `284dc7a272a79f441e834f81c33a3027587eec57d1d37929bca986c61661694c`; only its separate overall node total changes. The three historical hashes above are consequences of the verified eight-case diff. No check was relaxed, excluded or skipped. The scoped expectation diff is preserved at `.local-dev/stats-ethics-p2e-20261017/historical-expectations.patch`.
+
+The game-domain supply/case-mix updates were made only after a controlled counterfactual: use the same current domain source and seeds, first with original clinical modules restored in memory, then with the eight paired cases. The original modules exactly reproduce the existing inventory and day-eight snapshots. This isolates P2-E from concurrent M9 source changes. All live diagnostic receipt/operation assertions remain unchanged. Current versions of shared test files were copied before the small expectation edits so concurrent work is preserved.
+
+| Measured patient supply | Original | P2-E |
+| --- | --- | --- |
+| L0 ordinary cases / available concepts / introduced concepts | 639 / 175 / 174 | 636 / 175 / 174 |
+| L0 seeded patients; 16-seed range | 162; 157–163 | 159; 157–163 |
+| L1 ordinary cases / available concepts / introduced concepts | 882 / 285 / 285 | 882 / 285 / 285 |
+| L1 seeded patients; 16-seed range | 222; 218–228 | 225; 219–227 |
+| L2 external seeded patients; 16-seed range | 237; 233–241 | 238; 232–241 |
+| L2 all-capability seeded patients; 16-seed range | 251; 241–253 | 247; 241–252 |
+| Eight-day arrivals; completed; answers/scored concepts | 79; 78; 110 | 79; 79; 116 |
+| Eight-day pending/unresolved; walkouts; due reviews | 1 / 1; 0; 0 | 0 / 0; 0; 0 |
+
+The existing small stranded-concept counts in the inventory characterization are unchanged; the all-capability seed strands the other breast-cyst objective. Their exact identities remain explicit in the refreshed snapshot. This task does not claim to repair those pre-existing selection boundaries. The sustained run retains tick 4,800, arrivals `[11,10,9,10,10,9,10,10]`, last arrival 4,753 and next arrival 4,814. Only the measured supply/case-mix snapshots were refreshed; all positive arrival/completion checks and operation limits remain.
+
+### Files changed
+
+- Stats/ethics lane: new `ethics-clinical-pairings.ts` and `.test.ts`; `ethics.ts`, `statistics-ethics-batch.ts`, `ethics.test.ts`, `round2-wording.test.ts`, `runtime-flow.test.ts`, `statistics-ethics-admission.test.ts`.
+- Clinical-content aggregate admission tests only: September 11 and 12 board-expansion admission; September 13 early-level admission; September 17 brief admission and bread/butter admission; October 7 variety, variety-2 and Level-3 admission; October 10 variety-3 admission. Exact path/diffs are in the preserved expectation patch. No authored objectives in those batches were edited.
+- Game-domain tests only: `gs028-statistics-ethics-batch.test.ts`, `gs028-20261003-batch.test.ts`, `gs028-20261007-batch.test.ts`, `gs028-20261007-variety2-batch.test.ts`, `patient-supply.test.ts`, `diagnostics/patient-supply.test.ts`. Changes are supply totals, inherited-stage fixture setup and the two proven case-mix snapshots. Concurrent preceding edits in the two October-7 files are preserved.
+- Owner review `docs/reviews/stats-ethics-p2e-pairings-20261017.md` and this P2-E append. The pre-existing ExecPlan prefix is byte-preserved.
+
+### Validation
+
+**Clinical-content full: 89 files / 698 tests passed, exit 0. Root typecheck: all seven workspaces passed, exit 0.** Focused content: 7 files / 103 tests passed. Focused runtime coverage includes all four first-answer choices across all twelve paired cases (48 paths), duplicate-submit idempotence, one review per intended concept, reload before answering, during first-step feedback, between nodes and after completion. All eight removed single-step cases remain frozen and playable when absent from the current catalog. Existing optional-field legacy-save checks remain passing.
+
+**Full game-domain: 157 files passed / 1 failed; 4,262 tests passed / 1 failed, exit 1. The sole failure is the unchanged Level-5 recorded-input hash guard, as permitted by the brief. Its other 35 checks pass.** The manager must rebind the combined evidence after all workers finish. Exact requested-command output follows.
+
+<details>
+<summary>Full clinical-content — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
+
+> @gamify-surgery/clinical-content@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
+
+
+ Test Files  89 passed (89)
+      Tests  698 passed (698)
+   Start at  09:31:00
+   Duration  28.89s (transform 2.31s, setup 0ms, import 18.80s, tests 3.77s, environment 4ms)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Full game-domain — exit 1</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed) 249192ms
+     × binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash 31ms
+npm.cmd : 
+At line:4 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=th ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its 
+current game, balance, clinical and driver inputs and reconciles cash
+AssertionError: packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts: expected 
+'68e3d38198b0c4b0a718e1746d1c9a42e48b7…' to be '1c6d65c0c9c9ac4b6e159f6b3a4365c50e823…' // Object.is equality
+
+Expected: "1c6d65c0c9c9ac4b6e159f6b3a4365c50e823d9f5b63eafe354782ad7299429c"
+Received: "68e3d38198b0c4b0a718e1746d1c9a42e48b7333f015948049d2124df2bb5317"
+
+ ❯ tests/level-five-integration.test.ts:47:71
+     45|           .replace("        nextFacilityLevel: 5,\n      },\n      LEV…
+     46|       }
+     47|       expect(createHash("sha256").update(source).digest("hex"), file).…
+       |                                                                       ^
+     48|     }
+     49|     expect(run.commandsReconciled).toBeGreaterThan(20_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 157 passed (158)
+      Tests  1 failed | 4262 passed (4263)
+   Start at  09:23:12
+   Duration  937.79s (transform 4.56s, setup 0ms, import 67.32s, tests 859.73s, environment 7ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Root typecheck — exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+EXIT_CODE=0
+```
+
+</details>
+
+All npm validations used the existing `NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload. Complete original/current scoped files, the 600-file baseline, actual diffs, full catalog and runtime snapshots, hash-restoration receipts, controlled before/after supply captures and raw command logs are in `.local-dev/stats-ethics-p2e-20261017/`. Source and delivered docs/tests are UTF-8 without BOM and LF.
+
+**LOCAL ONLY:** no Git, installs, network, agents, external messages, commit, push, deployment, publication, browser/profile/origin change or save migration. This worker made no game-domain source edit and did not touch Level-5 results, checkpoint fixture or guard. The Beta-2 planning lane is untouched. Manager owns actual diff/clinical acceptance, the combined Level-5 evidence rebind after workers finish, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**.
+
+**Next action:** manager review and Level-5 evidence rebind, followed by named clinician review of the unapproved versions.
+
+<!-- END STATS_ETHICS_P2E_WORKER_HANDOFF -->
+
+### Level 5 evidence rebind 4 (2026-10-17)
+
+**Evidence regenerated honestly; zero-failure full-domain acceptance remains unmet.** The unchanged actual journey and lower-checkpoint helper both exit 0. The input-hash guard is rebound to the accepted DEFECT-M9-1/M9-2 fixes and P2-E pairings; its source and every assertion remain unchanged. Root typecheck passes. Full game-domain finishes with 4,261 passing / two failing tests: the fresh `integration-running` checkpoint exposes a garden-rest reader error during the unchanged reload continuation, and `packages/game-domain/tests/level-five-launch.test.ts:63` expects 52 patients while the actual new report has 53. Its next line also pins the old exact score. An independent cold-context focused run of that same continuation test stops earlier at an inspector-route cache asymmetry; both failure modes are documented below. The additional player consumer run has 31 passing / two failing tests, both from the old `62.49` display expectation at `apps/player/src/session/levelFiveLaunch.test.tsx:54`. No assertion was edited or weakened. This is an explicit manager handback, not an all-green acceptance claim.
+
+**Delivered files and provenance.** Changed `tools/qa/level-five-integration-results-20261012.json`, `tests/fixtures/level-five-integration-checkpoints-20261012.json`, and this append-only handoff. The full prior 374-input map is appended as `inputHistory[3]`, with prior result SHA-256 `1ec62f7a022ec88ee5dbbe58016d83dee88c4efb838f740eb644d9c1aab4fd14`. The earlier three history entries are retained verbatim. The new run records 375 inputs: four existing hashes changed, one pairing module was added, 370 hashes stayed equal and none were removed. No replay-compatible hash exception or allow-list was added.
+
+| Input | Previous SHA-256 | Current SHA-256 |
+| --- | --- | --- |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics-clinical-pairings.ts` | Not previously recorded (new file) | `319ece049eedb27bd10fd8a67dfab444a48b9b64f317bbab3070458df8f55bb9` |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts` | `1c6d65c0c9c9ac4b6e159f6b3a4365c50e823d9f5b63eafe354782ad7299429c` | `68e3d38198b0c4b0a718e1746d1c9a42e48b7333f015948049d2124df2bb5317` |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch.ts` | `097b988ad066520ae70c2e35b05ffa28fe7678bc1f7d2fcb1ae4cd53fb761f32` | `ccbc2a61360c4afed75090460f867bda9ba382354c2617cc49be9e10a8f0d50c` |
+| `packages/game-domain/src/clinical-selection.ts` | `9fb64941a4c1931ee00052fafd4e05ab7aaf8a8200a258ef2f3050b4563a1d9e` | `e4ad07cb009be75c1f2da4731a3137b83ea1bbdacf1c2034e0fdf7e50fa0dc57` |
+| `packages/game-domain/src/persistence.ts` | `4c818dc6b813864543c967754905567a8ebc6ba5b01cadec9f887bff15b134bc` | `13aae9e095aa2220781c43f9ca0d97f2b2fb73bcb827979cfa5681e1069ffcd2` |
+
+The established generator order was `node tools/qa/level-five-integration-run.mjs --write`, then `node tools/qa/level-five-integration-lower.mjs`. Both execute the current TypeScript sources through the existing Node source loader, without browser play or seeded reports. After both finish, only the established summary-metadata correction (`liveCap: 4` emitted by the unchanged runner → the actual validated context cap `5`) and the provenance history append are applied to the results. Raw post-helper results SHA-256 before this metadata/history step: `530db1c767dbb0d22f3f9cdc129f559c4949853424908f356420d20824654abd`. No run metric, report, checkpoint state, input hash, cash value, goal, or assertion was rewritten during that step.
+
+**Actual run numbers (cash values are cents).** Seed `level-five-m9.integration.01`, version `level-five-m9-integration.v1`, 26717 reconciled commands, three genuinely completed 3,000-minute reports, all at least 20 qualifying patients. The higher second report remains best, the lower third report is latest, and the first completed report remains the immutable first finish. Daily awards, positive comfort use, supplier savings and retirement assertions remain active.
+
+| Metric | Previous | Current | Delta |
+| --- | ---: | ---: | ---: |
+| `commandsReconciled` | 27944 | 26717 | -1227 |
+| `openingCashCents` | 1785500 | 1785500 | 0 |
+| `grossCents` | 15728300 | 15051500 | -676800 |
+| `stockCents` | 292202 | 272826 | -19376 |
+| `paidOperatingCents` | 10124856 | 9641655 | -483201 |
+| `capitalCents` | 1048000 | 1048000 | 0 |
+| `closingCashCents` | 6048742 | 5874519 | -174223 |
+| `levelFourAdvanceTick` | 3965 | 3965 | 0 |
+| `xpGoalTick` | 15493 | 15025 | -468 |
+| `firstAnswers` | 555 | 545 | -10 |
+| `levelFiveFirstAnswers` | 466 | 456 | -10 |
+| `completedDailyRounds` | 38 | 36 | -2 |
+| `positiveComfortUses` | 1031 | 977 | -54 |
+| `retiredReceipts` | 5692 | 5369 | -323 |
+| `retiredEncounters` | 423 | 402 | -21 |
+| `finishNotices` | 0 | 0 | 0 |
+
+Cash reconciles exactly: 1785500 + 15051500 − 272826 − 9641655 − 1048000 = **5874519**. The closing decrease is exactly −676800 gross + 19376 lower stock cost + 483201 lower paid operating cost = **−174223 cents**; opening cash and capital are unchanged. There is no finish payout or injected adjustment. Supplier savings are stock 2098 → 1974 cents and upkeep 751140 → 710700 sixtieth-cents. The final retained finish-notice count is zero in both runs because ordinary events retire; the durable first-completed record remains checked.
+
+| Report | Previous raw score | Current raw score | Patients, previous → current | Tick window, previous → current |
+| --- | ---: | ---: | ---: | --- |
+| 1 | 62.49398772204757 | 62.56333530490279 | 52 → 53 | 16339–19339 → 15151–18151 |
+| 2 | 66.65755625217645 | 66.78529669066674 | 50 → 51 | 19996–22996 → 18808–21808 |
+| 3 | 45.489710466735836 | 45.33910414489676 | 48 → 50 | 23053–26053 → 21865–24865 |
+
+All three report objects differ. Changes are in cleanliness, patient satisfaction, wait flow, financial raw amounts, answer counts/accuracy, patient membership and the observation windows; room construction, upgrades, staffing, training and morale categories remain equal. Financial scores stay 100 in all three windows, while gross/stock/net amounts change. The second and third answer-accuracy scores remain 100 and 0 respectively, but their answer counts become 66/66 and 0/66 rather than 60/60 and 0/64. Exact changed category scores and raw numerators/denominators are included below.
+
+**Why these are legitimate changed results.** This continuous journey does not resume from its checkpoint reader: `tests/fixtures/level-five-integration.ts:38` constructs a fresh opening; `tools/economy-audit/level-four-simulation.ts:10` reaches `tests/fixtures/level-four-rooms.ts:30`, which uses `createInitialGameState`. At `tests/fixtures/level-five-integration.ts:114`, a paused checkpoint is serialized and deserialized only to check its Level 5 contract; that loaded branch is discarded, never assigned back to `journey.state`. `packages/game-domain/src/persistence.ts:113` serializes with plain `JSON.stringify`; the lower helper also reads the actual raw progress state. Thus the accepted persistence-reader correction is bound and exercised by reload validation, but it does not explain this continuous run's changed cash/report trajectory.
+
+P2-E changes actual eligible case/concept membership and decision paths. A separate controlled prefix probe used the identical raw `integration-build` opening (tick 3965, zero Level 5 XP, 1608300 cash cents), the same current domain sources including both accepted M9 fixes, and only old versus new `ethics.ts` / `statistics-ethics-batch.ts` loaded in memory. Both old-module hashes exactly match the prior recorded inputs. No source or canonical evidence was edited by the probe. First variant divergence is at tick 4682, `encounter.auto.5.76`: `case.mondor-disease.select-supportive-patient` → `case.mondor-disease.safety-boundary`, for the same Mondor-management concept. A fixed seed does not keep the chosen variant identical after its eligible variant pool changes.
+
+At tick 6504, encounter 107 selects the new research-consent/hidradenitis pairing instead of the old two-node hidradenitis case; its first concept therefore changes while the second remains the same. The resulting review/pool path then selects the two-node research-consent/desmoid pairing at encounter 111 instead of a one-node hidradenitis case. Its additional correct second answer at tick 6819 earns the ordinary 10 XP. By tick 7200, the controlled old/new branches have 566/576 XP and 2255322/2263322 cash cents. New-content gross is 8000 cents higher, with exactly equal stock and paid operating costs; every probe cash and first-answer-XP assertion passes. Neither prefix observed a committed walkout. This demonstrates a content-caused divergence independently of any reload effect; it does not manufacture or replace the actual journey.
+
+In the full actual run, the XP goal moves 15493 → 15025, inspection unlock 16281 → 15094 (2162 → 2014 XP at unlock, still satisfaction 91, morale 100 and nine employees), and every inspection window/final endpoint moves 1188 ticks earlier. Different cases, question paths, reviews and operating duration change completions, rewards, service traffic, cleanliness, satisfaction and queues. The report raw values and lifetime cash decomposition above account for the measured result rather than forcing the old numbers. Both final retirement ledgers have retiredCount = completedCount (423/423 previously, 402/402 now), retained resolved encounters are all completed (11 previously, 13 now), and all six old/new report wait-flow samples show zero walkouts. M9-2 only changes reservations for a committed walkout; these ledgers and the controlled trace provide no walkout-trigger evidence for attributing this result to that special case.
+
+**Changed saves and consumers.** Seven real saves change: `integration-preparing`, `integration-running`, `integration-final`, `integration-finish`, `integration-repeat-final`, `integration-repeat`, `integration-lower-repeat`. `integration-l4` and `integration-build` are byte-identical when individually serialized. Every changed checkpoint occurs 1188 ticks earlier and contains the actual new timeline, including altered frozen cases/history/operations where applicable. All nine saves remain paused; phase names and the scenario list are unchanged.
+
+| Save | Changed? | Previous tick / XP / cash cents | Current tick / XP / cash cents |
+| --- | --- | ---: | ---: |
+| `integration-l4` | Identical | 3965 / 754 / 2656300 | 3965 / 754 / 2656300 |
+| `integration-build` | Identical | 3965 / 0 / 1608300 | 3965 / 0 / 1608300 |
+| `integration-preparing` | Changed | 16282 / 2162 / 4143642 | 15094 / 2014 / 3926777 |
+| `integration-running` | Changed | 16419 / 2184 / 4148611 | 15231 / 2026 / 3925358 |
+| `integration-final` | Changed | 19338 / 2750 / 4892761 | 18150 / 2572 / 4566010 |
+| `integration-finish` | Changed | 19339 / 2750 / 4892761 | 18151 / 2572 / 4566010 |
+| `integration-repeat-final` | Changed | 22995 / 3466 / 5747398 | 21807 / 3378 / 5449748 |
+| `integration-repeat` | Changed | 22996 / 3466 / 5747398 | 21808 / 3378 / 5449748 |
+| `integration-lower-repeat` | Changed | 26053 / 3596 / 6048742 | 24865 / 3512 / 5874519 |
+
+`tests/e2e/level-five.spec.ts` consumes these nine scenarios and is unchanged (SHA-256 `8697e951007e63caa70325c8ef18f19334c1ed8e31543acd4295cb941bb4e459`); browser checks were not run in this Node-only task. The ordinary launch aliases `launch-running`, `launch-final`, and `launch-finish` inherit changed saves; `launch-ready`, `launch-unmet`, and `launch-build` use the identical raw openings. The accepted reader correction can still change normalization of an identical raw save: a separate old/new-reader probe with the same current context finds 123 expected field differences across the two openings. Level 4 now preserves 13 overdue idle clocks; both openings preserve 44 overdue retail deadlines, three absent service resource-wait fields and eight explicit-null retail actor movement-wait fields each. Those are the accepted M9-1 semantics, not changes made by this worker. The Level 5 integration player consumer file passes; the ordinary launch player file has the two stale score-label expectations described above. No browser profile, origin, owner's campaign, saved owner encounter, e2e spec or content source was changed.
+
+**Newly exposed reload-continuation failures (runtime fixes are outside the evidence lane).** The full suite reports `The saved garden rest contract is invalid.` at `packages/game-domain/tests/level-five-integration.test.ts:138`, through `validateSavedGardenRest` and `persistence.ts:3380`. A native replay of the unchanged continuation operations, with separate value-identical contexts to isolate the independent presentation cache issue, reproduces it on minute 112, tick 15344, in the control branch. Encounter `encounter.auto.5.255` (`case.rectal-cancer.caregiver-followup`) simultaneously owns returning garden trip `patient-amenity-trip.49` and `departing_for_offsite_testing` movement. Its actual location and garden cursor agree at (37,26), while its offsite movement cursor is (35,28). Raw `validateSavedGardenRest` returns true. The reader prioritizes `patientMovement.path[pathIndex]` for the restored location at `persistence.ts:2966–2968`, then the garden validator rejects that location/cursor mismatch at `level-five-support.ts:150`. This is a concrete movement-ownership/read-agreement conflict; no validator bypass or runtime correction was attempted. Both raw continuation states and the trip/actor data are retained in scratch. Cash at the captured failure is 3957463 cents. The full original validation output below is authoritative; this reader error is distinct from the independent focused mismatch.
+
+With only the `integration-running` test selected, a cold-context run instead stops at `level-five-integration.test.ts:139` on minute zero with an inspector route mismatch, not a timeout. Before play, the loaded Level 5 state matches the raw checkpoint exactly. After one minute, a native-source reproduction finds 394 canonical differing fields, all under inspector `path` / `pathIndex`; all other canonical state, inspector locations and targets, reports and cash agree at that minute. For inspector `inspector.15151.12586039.1`, both branches end at (27.7, 25.8), target `room.economy.mri`, cash 3925358. The control branch has path length/index 15/4 while the resumed branch has 40/29.
+
+Read-only four-way probing isolates the cause: `packages/game-domain/src/inspection-presentation.ts:19` holds `validatedRoutes` in a context-keyed WeakMap whose inner key is actor ID and whose value is only the graph signature. At lines 288–296, the first cloned branch revalidates and compacts its current route, then marks the shared actor ID validated; the other branch with the same context/ID skips that compaction. Reversing branch order swaps the 15/4 and 40/29 representations. Using separate context objects with identical settings yields exact canonical equality after the same minute in either order. This source was unchanged across the prior and new recorded inputs. The changed timeline merely exposes a walking-inspector state at the 80-minute checkpoint. The diagnostic exclusion of presentation was used only to isolate the difference; the actual guard still compares the entire canonical state and fails honestly. No path was normalized in the delivered fixture, no cache/source fix was attempted, and no guard assertion was excluded. Full repro state pairs, differing paths and four-way results are retained in scratch.
+
+**Validation and unresolved acceptance.** The two required commands were run exactly as requested, using the existing `NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload. Root typecheck exits 0 across all seven workspaces. Full game-domain exits 1 with 156 files passed / two failed, 4261 tests passed / two failed. The Level 5 recorded-input guard passes; its file has 35 passing checks and the one continuation failure (garden reader error in the full suite, route-cache mismatch in isolation). The other failing test is the unowned old launch golden. The additional two-file player run exits 1 (31 passed, two failed) solely at the old rounded score golden. Exact output follows, including expected Node experimental-loader warnings where emitted.
+
+<details>
+<summary>Actual unchanged journey generator — exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-run.mjs --write
+L4 10h, 114 XP
+L4 20h, 210 XP
+L4 30h, 334 XP
+L4 40h, 450 XP
+L4 50h, 566 XP
+L4 60h, 692 XP
+L5 70h, 52 XP
+L5 80h, 146 XP
+L5 90h, 250 XP
+L5 100h, 366 XP
+L5 110h, 472 XP
+L5 120h, 576 XP
+L5 130h, 702 XP
+L5 140h, 796 XP
+L5 150h, 902 XP
+L5 160h, 1028 XP
+L5 170h, 1122 XP
+L5 180h, 1218 XP
+L5 190h, 1354 XP
+L5 200h, 1458 XP
+L5 210h, 1564 XP
+L5 220h, 1668 XP
+L5 230h, 1764 XP
+L5 240h, 1878 XP
+L5 250h, 1994 XP
+Inspection 1: 62.56333530490279, 53/20
+Inspection 2: 66.78529669066674, 51/20
+Inspection 3: 45.33910414489676, 50/20
+{
+  "commands": 26717,
+  "closingCashCents": 5874519,
+  "xpGoalTick": 15025,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 15094,
+    "clinicalXp": 2014,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "snapshots": {
+    "integration-l4": {
+      "tick": 3965,
+      "xp": 754,
+      "phase": null
+    },
+    "integration-build": {
+      "tick": 3965,
+      "xp": 0,
+      "phase": "locked"
+    },
+    "integration-preparing": {
+      "tick": 15094,
+      "xp": 2014,
+      "phase": "preparing"
+    },
+    "integration-running": {
+      "tick": 15231,
+      "xp": 2026,
+      "phase": "running"
+    },
+    "integration-final": {
+      "tick": 18150,
+      "xp": 2572,
+      "phase": "running"
+    },
+    "integration-finish": {
+      "tick": 18151,
+      "xp": 2572,
+      "phase": "completed"
+    },
+    "integration-repeat-final": {
+      "tick": 21807,
+      "xp": 3378,
+      "phase": "running"
+    },
+    "integration-repeat": {
+      "tick": 21808,
+      "xp": 3378,
+      "phase": "completed"
+    }
+  },
+  "reports": [
+    {
+      "score": 62.56333530490279,
+      "patients": 53
+    },
+    {
+      "score": 66.78529669066674,
+      "patients": 51
+    },
+    {
+      "score": 45.33910414489676,
+      "patients": 50
+    }
+  ]
+}
+node : (node:29892) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-run.mjs --write *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:29892) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Actual unchanged lower-checkpoint helper — exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-lower.mjs
+M9 lower retry checkpoint PASS: latest 45.33910414489676, best 66.78529669066674, immutable first 62.56333530490279.
+node : (node:14812) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-lower.mjs *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:14812) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Required full game-domain — exit 1; garden-rest reader error and stale launch golden, input-hash guard passes</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed) 253602ms
+     × matches continued play after save/reload at integration-running 21548ms
+ ❯ tests/level-five-launch.test.ts (8 tests | 1 failed) 453ms
+     × finishes the first ordinary low-score report and durably keeps playing without a reward 149ms
+npm.cmd : 
+At line:4 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=th ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after 
+save/reload at integration-running
+Error: The saved garden rest contract is invalid.
+ ❯ invalid src/level-five-support.ts:167:38
+    165| const tick = (value: unknown): value is number => typeof value === "nu…
+    166| const point = (value: unknown): value is GridPoint => record(value) &&…
+    167| const invalid = (): never => { throw new Error("The saved garden rest …
+       |                                      ^
+    168|
+    169| export function normalizeGardenVisitBenefit(value: unknown, facilityTi…
+ ❯ validateSavedGardenRest src/level-five-support.ts:150:116
+ ❯ src/persistence.ts:3380:47
+ ❯ migrateVersionTwo src/persistence.ts:3379:55
+ ❯ validateVersionNine src/persistence.ts:4714:17
+ ❯ deserializeGameState src/persistence.ts:4794:48
+ ❯ tests/level-five-integration.test.ts:138:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/level-five-launch.test.ts > M10 ordinary Level 5 launch > finishes the first ordinary low-score report 
+and durably keeps playing without a reward
+AssertionError: expected 53 to be 52 // Object.is equality
+
+- Expected
++ Received
+
+- 52
++ 53
+
+ ❯ tests/level-five-launch.test.ts:63:49
+     61|     expect(report.outcome).toBe("completed");
+     62|     expect(report.observedActiveMinutes).toBe(3000);
+     63|     expect(report.qualifyingScoredPatientCount).toBe(52);
+       |                                                 ^
+     64|     expect(report.rawTotalScore).toBe(62.49398772204757);
+     65|     expect(report.categories).toHaveLength(10);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 156 passed (158)
+      Tests  2 failed | 4261 passed (4263)
+   Start at  10:11:10
+   Duration  941.40s (transform 4.85s, setup 0ms, import 67.10s, tests 863.47s, environment 7ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Required root typecheck — exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Additional player checkpoint consumers — exit 1; two stale launch score labels</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+ ❯ src/session/levelFiveLaunch.test.tsx (16 tests | 2 failed) 570ms
+     × renders the ordinary finish report with ten categories and both actions, compact=false 100ms
+     × renders the ordinary finish report with ten categories and both actions, compact=true 92ms
+npm.cmd : 
+At line:4 char:1
++ npm.cmd run test --workspace @gamify-surgery/player -- src/session/le ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/session/levelFiveLaunch.test.tsx > M10 ordinary launch in desktop and phone presentations > renders the 
+ordinary finish report with ten categories and both actions, compact=false
+ FAIL  src/session/levelFiveLaunch.test.tsx > M10 ordinary launch in desktop and phone presentations > renders the 
+ordinary finish report with ten categories and both actions, compact=true
+AssertionError: expected '62.56' to be '62.49' // Object.is equality
+
+Expected: "62.49"
+Received: "62.56"
+
+ ❯ src/session/levelFiveLaunch.test.tsx:54:50
+     52|   it.each([false, true])("renders the ordinary finish report with ten …
+     53|     const inspection = viewOf(createLevelFiveLaunchQaState("launch-fin…
+     54|     expect(inspection.finish!.report.scoreLabel).toBe("62.49");
+       |                                                  ^
+     55|     expect(inspection.finish!.report.categories).toHaveLength(10);
+     56|     const markup = renderToStaticMarkup(<FinishedGamePage view={inspec…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 31 passed (33)
+   Start at  10:11:10
+   Duration  13.04s (transform 4.81s, setup 0ms, import 7.65s, tests 5.21s, environment 0ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run src/session/levelFiveIntegration.test.tsx 
+src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Controlled P2-E prefix comparison — both exit 0; diagnostic only</summary>
+
+```text
+node .local-dev/l5-evidence-rebind4-20261017/pairing-prefix-probe.mjs before
+{"tick":4200,"xp":52,"cashCents":1664737}
+{"tick":4800,"xp":146,"cashCents":1779445}
+{"tick":5400,"xp":250,"cashCents":1895629}
+{"tick":6000,"xp":366,"cashCents":2044230}
+{"tick":6600,"xp":472,"cashCents":2153828}
+{"tick":7200,"xp":566,"cashCents":2255322}
+Controlled before P2-E prefix PASS: 3454 commands, all journey cash/XP assertions retained.
+node : (node:14352) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node .local-dev/l5-evidence-rebind4-20261017/pairing-prefix-probe.mjs ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:14352) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+
+node .local-dev/l5-evidence-rebind4-20261017/pairing-prefix-probe.mjs after
+{"tick":4200,"xp":52,"cashCents":1664737}
+{"tick":4800,"xp":146,"cashCents":1779445}
+{"tick":5400,"xp":250,"cashCents":1895629}
+{"tick":6000,"xp":366,"cashCents":2044230}
+{"tick":6600,"xp":472,"cashCents":2153828}
+{"tick":7200,"xp":576,"cashCents":2263322}
+Controlled after P2-E prefix PASS: 3455 commands, all journey cash/XP assertions retained.
+node : (node:12936) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node .local-dev/l5-evidence-rebind4-20261017/pairing-prefix-probe.mjs ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:12936) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Focused unchanged integration-running reload assertion — exit 1, reproduced on minute zero</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-five-integration.test.ts --pool=threads --maxWorkers=1 -t 'matches continued play after save/reload at integration-running'
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run tests/level-five-integration.test.ts --pool=threads --maxWorkers=1 -t matches continued play after save/reload at integration-running
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed | 35 skipped) 553ms
+     × matches continued play after save/reload at integration-running 552ms
+npm.cmd : 
+At line:4 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/lev ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after 
+save/reload at integration-running
+AssertionError: minute 0: expected { schemaVersion: 9, …(76) } to deeply equal { schemaVersion: 9, …(76) }
+
+- Expected
++ Received
+
+@@ -28367,5 +28367,5 @@
+    "serviceOperations": [Array],
+    "settlements": [Array],
+    "simulationSpeed": 1,
+    "totalOperatingExpenses": 57148.850000001235,
+  }
+
+ ❯ tests/level-five-integration.test.ts:139:10
+    137|       // canonical serialized forms still detects changed clocks or ga…
+    138|       expect(deserializeGameState(serializeGameState(resumed.state), c…
+    139|         .toEqual(deserializeGameState(serializeGameState(control.state…
+       |          ^
+    140|     }
+    141|   }, hostedTime(30_000));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 skipped (36)
+   Start at  10:16:52
+   Duration  4.19s (transform 2.43s, setup 0ms, import 3.56s, tests 553ms, environment 0ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run tests/level-five-integration.test.ts --pool=threads 
+--maxWorkers=1 -t ^^^"matches^^^ continued^^^ play^^^ after^^^ save/reload^^^ at^^^ integration-running^^^"
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Focused unchanged input/cash binding guard — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-five-integration.test.ts --pool=threads --maxWorkers=1 -t 'binds the actual run'
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run tests/level-five-integration.test.ts --pool=threads --maxWorkers=1 -t binds the actual run
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 35 skipped (36)
+   Start at  10:22:34
+   Duration  3.59s (transform 2.42s, setup 0ms, import 3.48s, tests 36ms, environment 0ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Inspector cache diagnosis — four-way read-only experiment, all diagnostic assertions pass</summary>
+
+```json
+[
+  {
+    "name": "shared-context-control-first",
+    "separateContexts": false,
+    "reverseOrder": false,
+    "canonicalEqual": false,
+    "canonicalEqualExcludingPresentation": true,
+    "firstActor": [
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      },
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 40,
+        "pathIndex": 29,
+        "pathStart": {
+          "x": 34.25,
+          "y": 19.8
+        }
+      }
+    ],
+    "reportEqual": true,
+    "cash": [
+      3925358,
+      3925358
+    ]
+  },
+  {
+    "name": "shared-context-resumed-first",
+    "separateContexts": false,
+    "reverseOrder": true,
+    "canonicalEqual": false,
+    "canonicalEqualExcludingPresentation": true,
+    "firstActor": [
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 40,
+        "pathIndex": 29,
+        "pathStart": {
+          "x": 34.25,
+          "y": 19.8
+        }
+      },
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      }
+    ],
+    "reportEqual": true,
+    "cash": [
+      3925358,
+      3925358
+    ]
+  },
+  {
+    "name": "separate-identical-contexts-control-first",
+    "separateContexts": true,
+    "reverseOrder": false,
+    "canonicalEqual": true,
+    "canonicalEqualExcludingPresentation": true,
+    "firstActor": [
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      },
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      }
+    ],
+    "reportEqual": true,
+    "cash": [
+      3925358,
+      3925358
+    ]
+  },
+  {
+    "name": "separate-identical-contexts-resumed-first",
+    "separateContexts": true,
+    "reverseOrder": true,
+    "canonicalEqual": true,
+    "canonicalEqualExcludingPresentation": true,
+    "firstActor": [
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      },
+      {
+        "id": "inspector.15151.12586039.1",
+        "location": {
+          "x": 27.7,
+          "y": 25.8
+        },
+        "target": "room.economy.mri",
+        "pathLength": 15,
+        "pathIndex": 4,
+        "pathStart": {
+          "x": 29.7,
+          "y": 25.8
+        }
+      }
+    ],
+    "reportEqual": true,
+    "cash": [
+      3925358,
+      3925358
+    ]
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Garden continuation diagnosis — expected reader error reproduced; canonical guard not bypassed</summary>
+
+```json
+{
+  "minute": 112,
+  "branch": "control",
+  "facilityTick": 15344,
+  "error": "The saved garden rest contract is invalid.",
+  "cashCents": 3957463,
+  "gardens": [
+    {
+      "tripId": "patient-amenity-trip.49",
+      "actorId": "encounter.auto.5.255",
+      "status": "returning",
+      "pathIndex": 10,
+      "tripPathPoint": {
+        "x": 37,
+        "y": 26
+      },
+      "lastMovedAtFacilityTick": 15344,
+      "actorLocation": {
+        "x": 37,
+        "y": 26
+      },
+      "rawValidation": true,
+      "actorMovement": {
+        "kind": "departing_for_offsite_testing",
+        "pathIndex": 6,
+        "point": {
+          "x": 35,
+          "y": 28
+        },
+        "lastMovedAtFacilityTick": 15344
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Changed report categories — exact previous/current scores and raw values</summary>
+
+```json
+[
+  {
+    "number": 1,
+    "changed": true,
+    "oldScore": 62.49398772204757,
+    "newScore": 62.56333530490279,
+    "oldPatients": 52,
+    "newPatients": 53,
+    "oldWindow": [
+      16339,
+      19339
+    ],
+    "newWindow": [
+      15151,
+      18151
+    ],
+    "categories": [
+      {
+        "id": "cleanliness",
+        "changed": true,
+        "oldScore": 78.44137931034483,
+        "newScore": 79.04712643678161,
+        "oldRawValues": {
+          "cleanRoomMinutes": 204732,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 81.88359003831418,
+          "minimumCleanliness": 0
+        },
+        "newRawValues": {
+          "cleanRoomMinutes": 206313,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 82.06967816091954,
+          "minimumCleanliness": 0
+        }
+      },
+      {
+        "id": "patient_satisfaction",
+        "changed": true,
+        "oldScore": 95,
+        "newScore": 94.33962264150944,
+        "oldRawValues": {
+          "satisfactionSum": 4940,
+          "patientCount": 52
+        },
+        "newRawValues": {
+          "satisfactionSum": 5000,
+          "patientCount": 53
+        }
+      },
+      {
+        "id": "wait_flow",
+        "changed": true,
+        "oldScore": 99.71590909090908,
+        "newScore": 100,
+        "oldRawValues": {
+          "queueMinutes": 352,
+          "overdueQueueMinutes": 2,
+          "completed": 52,
+          "walkouts": 0
+        },
+        "newRawValues": {
+          "queueMinutes": 269,
+          "overdueQueueMinutes": 0,
+          "completed": 53,
+          "walkouts": 0
+        }
+      },
+      {
+        "id": "finances",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 100,
+        "oldRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 2026900,
+          "stockCostCents": 36425,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 767182,
+          "profitTerm": 1
+        },
+        "newRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 1910000,
+          "stockCostCents": 37618,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 649089,
+          "profitTerm": 1
+        }
+      },
+      {
+        "id": "clinical_answer_accuracy",
+        "changed": true,
+        "oldScore": 80,
+        "newScore": 80.3030303030303,
+        "oldRawValues": {
+          "correctFirstSubmissions": 56,
+          "allFirstSubmissions": 70,
+          "presentedButUnanswered": 0
+        },
+        "newRawValues": {
+          "correctFirstSubmissions": 53,
+          "allFirstSubmissions": 66,
+          "presentedButUnanswered": 0
+        }
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "changed": true,
+    "oldScore": 66.65755625217645,
+    "newScore": 66.78529669066674,
+    "oldPatients": 50,
+    "newPatients": 51,
+    "oldWindow": [
+      19996,
+      22996
+    ],
+    "newWindow": [
+      18808,
+      21808
+    ],
+    "categories": [
+      {
+        "id": "cleanliness",
+        "changed": true,
+        "oldScore": 78.29501915708812,
+        "newScore": 79.9080459770115,
+        "oldRawValues": {
+          "cleanRoomMinutes": 204350,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 81.58261302681993,
+          "minimumCleanliness": 0
+        },
+        "newRawValues": {
+          "cleanRoomMinutes": 208560,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 82.08220689655172,
+          "minimumCleanliness": 0
+        }
+      },
+      {
+        "id": "patient_satisfaction",
+        "changed": true,
+        "oldScore": 96.64,
+        "newScore": 97.17647058823529,
+        "oldRawValues": {
+          "satisfactionSum": 4832,
+          "patientCount": 50
+        },
+        "newRawValues": {
+          "satisfactionSum": 4956,
+          "patientCount": 51
+        }
+      },
+      {
+        "id": "wait_flow",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 98.25581395348837,
+        "oldRawValues": {
+          "queueMinutes": 298,
+          "overdueQueueMinutes": 0,
+          "completed": 50,
+          "walkouts": 0
+        },
+        "newRawValues": {
+          "queueMinutes": 344,
+          "overdueQueueMinutes": 12,
+          "completed": 51,
+          "walkouts": 0
+        }
+      },
+      {
+        "id": "finances",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 100,
+        "oldRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 1981300,
+          "stockCostCents": 37711,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 720296,
+          "profitTerm": 1
+        },
+        "newRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 1966600,
+          "stockCostCents": 36027,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 707280,
+          "profitTerm": 1
+        }
+      },
+      {
+        "id": "clinical_answer_accuracy",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 100,
+        "oldRawValues": {
+          "correctFirstSubmissions": 60,
+          "allFirstSubmissions": 60,
+          "presentedButUnanswered": 0
+        },
+        "newRawValues": {
+          "correctFirstSubmissions": 66,
+          "allFirstSubmissions": 66,
+          "presentedButUnanswered": 0
+        }
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "changed": true,
+    "oldScore": 45.489710466735836,
+    "newScore": 45.33910414489676,
+    "oldPatients": 48,
+    "newPatients": 50,
+    "oldWindow": [
+      23053,
+      26053
+    ],
+    "newWindow": [
+      21865,
+      24865
+    ],
+    "categories": [
+      {
+        "id": "cleanliness",
+        "changed": true,
+        "oldScore": 78.94406130268199,
+        "newScore": 78.27049808429119,
+        "oldRawValues": {
+          "cleanRoomMinutes": 206044,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 81.83425287356322,
+          "minimumCleanliness": 0
+        },
+        "newRawValues": {
+          "cleanRoomMinutes": 204286,
+          "observedRoomMinutes": 261000,
+          "meanCleanliness": 81.963969348659,
+          "minimumCleanliness": 0
+        }
+      },
+      {
+        "id": "patient_satisfaction",
+        "changed": true,
+        "oldScore": 84.3125,
+        "newScore": 83.48,
+        "oldRawValues": {
+          "satisfactionSum": 4047,
+          "patientCount": 48
+        },
+        "newRawValues": {
+          "satisfactionSum": 4174,
+          "patientCount": 50
+        }
+      },
+      {
+        "id": "wait_flow",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 100,
+        "oldRawValues": {
+          "queueMinutes": 315,
+          "overdueQueueMinutes": 0,
+          "completed": 48,
+          "walkouts": 0
+        },
+        "newRawValues": {
+          "queueMinutes": 261,
+          "overdueQueueMinutes": 0,
+          "completed": 50,
+          "walkouts": 0
+        }
+      },
+      {
+        "id": "finances",
+        "changed": true,
+        "oldScore": 100,
+        "newScore": 100,
+        "oldRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 1547100,
+          "stockCostCents": 37922,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 285885,
+          "profitTerm": 1
+        },
+        "newRawValues": {
+          "paidPostings": 200,
+          "expensePostings": 200,
+          "operatingGrossCents": 1690900,
+          "stockCostCents": 38975,
+          "chargedOperatingExpenseCents": 1223293,
+          "paidOperatingExpenseCents": 1223293,
+          "operatingNetCents": 428632,
+          "profitTerm": 1
+        }
+      },
+      {
+        "id": "clinical_answer_accuracy",
+        "changed": true,
+        "oldScore": 0,
+        "newScore": 0,
+        "oldRawValues": {
+          "correctFirstSubmissions": 0,
+          "allFirstSubmissions": 64,
+          "presentedButUnanswered": 0
+        },
+        "newRawValues": {
+          "correctFirstSubmissions": 0,
+          "allFirstSubmissions": 66,
+          "presentedButUnanswered": 0
+        }
+      }
+    ]
+  }
+]
+```
+
+</details>
+
+Final results SHA-256: `2dee43e9597db1634e41f52faf88f8548177ba129494f124a7b40a2d3b26a291`. Final checkpoint fixture SHA-256: `4d9901795638014195afe5c71eea7996195b29eb64bd023d42335f16780d113e`. Unchanged guard SHA-256: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. The runner, lower helper, 375 input files, e2e spec, launch/integration consumer specs and launch mapping were hash-checked again before this append. Results and checkpoint JSON are UTF-8 without BOM and LF; this handoff preserves the prior plan bytes and appends UTF-8/LF only.
+
+Backups, complete old/new input maps, the untouched prior guard, actual command logs, helper/guard/source fingerprints, checkpoint hashes and changed top-level fields, full category comparison, controlled prefix source/outputs and integrity receipts are under `.local-dev/l5-evidence-rebind4-20261017/`. Earlier history is also retained inside the delivered results JSON.
+
+**Manager next action:** inspect the actual artifacts and controlled divergence evidence, then assign runtime fixes for the returning-garden/offsite-movement reader conflict and the independent inspector-route cache asymmetry, preserving the complete reload guard and garden validation. Also assign the stale launch golden updates. For this recorded run, `packages/game-domain/tests/level-five-launch.test.ts:63–64` would need 52 → 53 patients and 62.49398772204757 → 62.56333530490279; `apps/player/src/session/levelFiveLaunch.test.tsx:54` would need 62.49 → 62.56. Derive final expected values from the subsequent actual run after runtime fixes, since those may legitimately change the journey again. This worker intentionally leaves all such assertions and all e2e specs intact. Runtime fixes change pinned inputs and will require another honest evidence rebind before full-domain acceptance; retain this run in history. Rerun full domain and the player consumers, plus browser QA if required. Zero-failure acceptance is still open; no clinical approval is implied by software validation.
+
+**LOCAL ONLY:** no Git, installs, agents, external messages, commit, push, deployment, publication, browser automation, owner storage access or save migration. Manager owns current-thread handoff integration, acceptance and any audited GitHub checkpoint/reminder to say **"push to GitHub"**.
+
+
+<!-- BEGIN LEVEL_FIVE_LATENT_BUG_FIXES_20261017 -->
+### Level 5 latent bug fixes (2026-10-17)
+
+**Implemented and validated: all four required commands exit 0, with zero failures.** Sol worker, one bounded manager-assigned milestone, no sub-agents. Full game-domain: **4,271 passed, zero failures**. Full player: **2,166 passed**. Clinical content: **698 passed**. Root typecheck passes across all seven workspaces. The actual journey and lower-checkpoint helper both exit 0; the existing recorded-input guard and complete canonical-state continuation assertions pass in the full suite.
+
+**Root causes and runtime changes.**
+
+- `packages/game-domain/src/diagnostic-orders.ts`: diagnostic patient departure/return phases previously checked only ordinary patient movement. An active garden return still owned the actor, so the new offsite movement and the amenity each advanced it. The amenity ran later and wrote the actual location. Diagnostic walking now requests the amenity return and waits until that owner finishes, then rebases from the actual return endpoint. The same ownership check covers encounter and service-visitor amenity trips.
+- `packages/game-domain/src/persistence.ts`: the reader previously restored the offsite movement cursor before validating the returning garden trip. For the captured legacy shape only (returning encounter garden trip, departing-for-offsite-testing movement, active diagnostic departure), it restores the raw saved location and runs the complete garden validator first. After successful validation it clears the conflicting movement and requeues the active departure, synchronizing every carrier through `replaceDiagnosticOrderPlan`. The garden trip, cursor, clocks, benefit, clinical case, rewards, cash, and completed phases remain intact. The next live advance waits for the return and recalculates the departure route. Invalid garden location, quote and clock data still throw. Other shapes retain the ordinary reader and validation behavior. This is an idempotent save-compatibility correction, with no schema-version change or blanket validator bypass.
+- `packages/game-domain/src/inspection-presentation.ts`: the old context/actor-ID cache treated route validation as a shared flag even though validation also replaced and compacted each state's route. One clone changed and the next skipped that mutation. Every walking state now applies the same canonical route and cursor update. Only pure graph path queries are memoized, keyed by their source/destination within the geometry-specific graph, with a bounded cache. A retained valid route keeps its current location/cursor; changed geometry falls back to a route from the current position. Cache warmth, clone order, and reload identity cannot suppress a state update.
+
+**Regressions and changed files.** Added `packages/game-domain/tests/level-five-latent-bugs.test.ts` (six checks) and `packages/game-domain/tests/fixtures/level-five-garden-offsite-overlap-20261017.json`. The fixture preserves the actual synthetic rebind-4 raw control save, minute 112 / tick 15344, from `.local-dev/l5-evidence-rebind4-20261017/garden-failing-control.json`; parsed-state fidelity is exact. It is independent of future regenerated checkpoints and contains no owner save data. Tests load that captured overlap, verify synchronized/idempotent migration, advance both a clean live transition and the migrated save until real offscreen departure, and retain rejection of malformed location/quote/clock data. Extended `packages/game-domain/tests/inspection-presentation.test.ts` with both clone execution orders and a warm-route versus reloaded-route continuation, comparing the entire canonical state.
+
+The only golden changes are `packages/game-domain/tests/level-five-launch.test.ts` (52 -> 53 patients; exact score `62.49398772204757` -> **`62.56467630107139`**) and `apps/player/src/session/levelFiveLaunch.test.tsx` (`62.49` -> **`62.56`**). Values came from the actual completed first report, retained in scratch at `inspection-1-progress-state.json`; the UI's existing `inspectionScoreLabel` supplies the displayed precision. The accepted P2-E journey had 53 patients and score `62.56333530490279`; the movement fix changes that score slightly again. No other golden/assertion was changed. Final delivered paths are these tests/fixture/goldens, the three runtime files, the two authorized evidence JSON files, and this append-only plan section.
+
+An isolated native-source probe loaded the intake versions only in memory: the raw save threw `The saved garden rest contract is invalid.`, the live transition produced overlapping owners, and canonical clones differed in both orders. The identical probe with current sources loads successfully, has no live overlap, and produces identical canonical state in both orders. Evidence: `regression-before.json`, `regression-after.json`, their logs and `regression-probe.mjs` in the scratch directory. Original source files on disk were never swapped. A focused run of the four original continuation scenarios also passed all four 120-minute comparisons before the evidence refresh; the final full suite then repeated the unchanged assertions against the new checkpoints.
+
+**Honest evidence regeneration and provenance.** Ran exactly in this order:
+
+```text
+node tools/qa/level-five-integration-run.mjs --write
+node tools/qa/level-five-integration-lower.mjs
+```
+
+Both commands exit **0**. The generator, lower helper and `packages/game-domain/tests/level-five-integration.test.ts` are byte-unchanged from intake. All runner/guard assertions remain enabled. Appended the full previous 375-input map as `inputHistory[4]`; the prior four entries are retained verbatim. Previous results SHA-256: `2dee43e9597db1634e41f52faf88f8548177ba129494f124a7b40a2d3b26a291`. The fresh run still has 375 inputs: exactly three changed, 372 unchanged, none added or removed. No replay-compatible hash exception was added.
+
+| Input | Previous SHA-256 | Current SHA-256 |
+| --- | --- | --- |
+| `packages/game-domain/src/diagnostic-orders.ts` | `47f5e470ab5777fafa0f119ca74ecbd4c12adbefa8a1d05bf3380b0e6eafd4aa` | `8719c7aa390425630d77465fe67861f9d895d375c83b057a546c68f2725f8644` |
+| `packages/game-domain/src/inspection-presentation.ts` | `d153e1ba5f09b54653660f332e974745effa5afd864a3250ca669a707e6649ec` | `94f0fb0fa980e841ff8c89b08cf126134bb957c61c69c392745ac5d6861f05e6` |
+| `packages/game-domain/src/persistence.ts` | `13aae9e095aa2220781c43f9ca0d97f2b2fb73bcb827979cfa5681e1069ffcd2` | `2489168f74e18a94f1acf86eedb9b4fd2480333527528dcd8e27d0f86dba0b50` |
+
+After the lower helper, only the established summary `liveCap: 4` -> validated actual context cap `5` correction and history append were applied. Raw post-helper results SHA-256: `6d0ef0b7cecc8ae8939f05933daf5cc7558cdc989363fba560ed90b921175391`. Reconstructing the raw object from final results reproduces that exact hash, proving no report, metric, input hash, goal, cash value or checkpoint was rewritten during metadata finalization. Final results SHA-256: `a30f66fe4fba13a255f15f3d351cb60e845e4ec52ba9fb749ade63a454dcbf5c`. Final checkpoint SHA-256: `0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501`.
+
+**Actual run differences from rebind 4 (cash in cents).**
+
+| Metric | Previous | Current | Delta |
+| --- | ---: | ---: | ---: |
+| `commandsReconciled` | 26717 | 26710 | -7 |
+| `openingCashCents` | 1785500 | 1785500 | 0 |
+| `grossCents` | 15051500 | 14994000 | -57500 |
+| `stockCents` | 272826 | 271344 | -1482 |
+| `paidOperatingCents` | 9641655 | 9641655 | 0 |
+| `capitalCents` | 1048000 | 1048000 | 0 |
+| `closingCashCents` | 5874519 | 5818501 | -56018 |
+| `firstAnswers` | 545 | 543 | -2 |
+| `levelFiveFirstAnswers` | 456 | 454 | -2 |
+| `completedDailyRounds` | 36 | 36 | 0 |
+| `positiveComfortUses` | 977 | 974 | -3 |
+| `retiredReceipts` | 5369 | 5372 | 3 |
+| `retiredEncounters` | 402 | 402 | 0 |
+
+Cash reconciles exactly: 1785500 + 14994000 - 271344 - 9641655 - 1048000 = **5818501**. The closing difference is exactly -57500 gross + 1482 lower stock cost = **-56018 cents**, with identical opening cash, paid operating cost and capital. Ordinary completion/movement timing changes the actual run; no finish payout or injected adjustment was used. Level 4 advance remains tick 3965, XP goal tick 15025, unlock tick 15094 with 2014 XP / satisfaction 91 / morale 100 / nine employees. All report windows remain unchanged; the real lower retry has one fewer qualifying patient and two fewer first answers overall. Positive comfort use, daily awards, supplier savings, retirement, higher best, lower latest, and immutable first-finish assertions remain active.
+
+| Report | Previous raw score | Current raw score | Patients | Tick window |
+| --- | ---: | ---: | --- | --- |
+| 1 | 62.56333530490279 | 62.56467630107139 | 53 -> 53 | 15151-18151 |
+| 2 | 66.78529669066674 | 66.81366326970975 | 51 -> 51 | 18808-21808 |
+| 3 | 45.33910414489676 | 45.2608970823534 | 50 -> 49 | 21865-24865 |
+
+All nine saves remain paused with the same names, phases and ticks. `integration-l4` and `integration-build` remain individually byte-identical; the seven later raw states change. Final Level 5 XP is 3508 (previously 3512). First/second final checkpoint cash becomes 4566714 / 5450363; final lower checkpoint cash is 5818501. All nine fresh raw saves load with unchanged `levelFive` objects and no garden/offsite overlap. Exact metric/source/checkpoint audits and changed category raw values are in `evidence-audit.json` and `report-deltas.json` in scratch.
+
+**Exact final validation output.** All npm commands used the existing preload:
+
+```text
+NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs
+```
+
+`npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1` - exit **0**:
+
+```text
+ Test Files  159 passed (159)
+      Tests  4271 passed (4271)
+   Start at  11:00:32
+   Duration  988.32s (transform 5.27s, setup 0ms, import 69.28s, tests 908.05s, environment 7ms)
+```
+
+`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads` - exit **0**:
+
+```text
+ Test Files  245 passed (245)
+      Tests  2166 passed (2166)
+   Start at  11:00:32
+   Duration  80.29s (transform 15.43s, setup 0ms, import 133.68s, tests 164.99s, environment 15ms)
+```
+
+`npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1` - exit **0**:
+
+```text
+ Test Files  89 passed (89)
+      Tests  698 passed (698)
+   Start at  10:40:26
+   Duration  31.07s (transform 2.94s, setup 0ms, import 20.32s, tests 4.23s, environment 5ms)
+```
+
+`npm.cmd run typecheck` - exit **0**:
+
+```text
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+Focused regressions plus existing inspector geometry, garden support and diagnostic-order tests - exit **0**:
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 tests/level-five-latent-bugs.test.ts tests/inspection-presentation.test.ts tests/level-five-support.test.ts tests/diagnostic-orders.test.ts
+ Test Files  4 passed (4)
+      Tests  76 passed (76)
+   Start at  10:39:14
+   Duration  44.74s (transform 2.53s, setup 0ms, import 5.22s, tests 39.24s, environment 0ms)
+```
+
+Complete baseline originals, the actual source/test diff, synthetic captured states, source/provenance audits and raw command logs are in **`.local-dev/level-five-latent-fixes-20261017/`**. Final source/test/evidence files are UTF-8 without BOM and LF. Protected content/player/driver source hashes are unchanged except the explicitly assigned player golden; clinical source remains byte-identical, with its existing review status preserved. The expected Node experimental TypeScript-transform warning appears in native-source command logs; those commands still exit 0.
+
+**Manager handoff / next action:** inspect the actual scoped diff and raw evidence, accept this bounded milestone, integrate the current-thread handoff, and perform manager-side validation as required. No unresolved decision or known failing test remains in this lane. No assertion was disabled and no test was skipped for this task. **LOCAL ONLY:** this worker used no Git, installs, network, sub-agents, external messages, owner browser/storage, commit, push, deployment or publication. Manager owns the audited GitHub checkpoint/reminder to say **"push to GitHub"**. Opening pathways remain `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the intended persistent profile and canonical remote `https://melissarowlandc-afk.github.io/GamifySurgery/`, with separate saves. No launcher, server, profile, origin or served build was changed.
+
+<!-- END LEVEL_FIVE_LATENT_BUG_FIXES_20261017 -->

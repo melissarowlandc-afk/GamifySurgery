@@ -233,7 +233,7 @@ describe("routine patient supply", () => {
     // and 20 Variety-3 adult clinic/outside-plan variants.
     // The reused midline-recognition concept adds no second concept record.
     expect(release.cases).toHaveLength(1008 + 62 + 20 + 20);
-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1415);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1423);
 
     const noCapabilities = new Set<string>();
     const everyCapability = new Set(
@@ -370,10 +370,10 @@ describe("routine patient supply", () => {
           "cases": 882,
           "introducedConcepts": 285,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 228,
-            "minimum": 218,
+            "maximum": 227,
+            "minimum": 219,
           },
-          "seededPatientsUntilNotDue": 222,
+          "seededPatientsUntilNotDue": 225,
           "strandedConceptIds": [],
         },
         "stageTwoAllCapabilities": {
@@ -381,12 +381,12 @@ describe("routine patient supply", () => {
           "cases": 964,
           "introducedConcepts": 322,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 253,
+            "maximum": 252,
             "minimum": 241,
           },
-          "seededPatientsUntilNotDue": 251,
+          "seededPatientsUntilNotDue": 247,
           "strandedConceptIds": [
-            "concept.breast-cyst.symptomatic-simple-aspiration",
+            "concept.breast-cyst.asymptomatic-simple-observation",
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
           ],
         },
@@ -396,9 +396,9 @@ describe("routine patient supply", () => {
           "introducedConcepts": 303,
           "patientBoundaryAcrossSeeds": {
             "maximum": 241,
-            "minimum": 233,
+            "minimum": 232,
           },
-          "seededPatientsUntilNotDue": 237,
+          "seededPatientsUntilNotDue": 238,
           "strandedConceptIds": [
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
             "concept.fhh.biochemical-evaluation",
@@ -406,13 +406,13 @@ describe("routine patient supply", () => {
         },
         "stageZero": {
           "availableConcepts": 175,
-          "cases": 639,
+          "cases": 636,
           "introducedConcepts": 174,
           "patientBoundaryAcrossSeeds": {
             "maximum": 163,
             "minimum": 157,
           },
-          "seededPatientsUntilNotDue": 162,
+          "seededPatientsUntilNotDue": 159,
           "strandedConceptIds": [
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
           ],

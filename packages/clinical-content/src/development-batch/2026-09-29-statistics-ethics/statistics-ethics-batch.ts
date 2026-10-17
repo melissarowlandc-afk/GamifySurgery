@@ -1,11 +1,12 @@
-import { ETHICS_FAMILIES } from "./ethics";
+import { ETHICS_FAMILIES, ETHICS_P2E_QUESTIONS } from "./ethics";
+import { P2E_CONTENT_VERSION } from "./ethics-clinical-pairings";
 import { STATISTICS_QI_FAMILIES } from "./statistics-qi";
 import { BATCH_CONTENT_VERSION } from "./batch-helpers";
 
 const families = [...STATISTICS_QI_FAMILIES, ...ETHICS_FAMILIES];
 export const GS028_STATS_ETHICS_20260929_AUTHORING_CONCEPTS = families.flatMap((family) => family.authoringConcepts);
 export const GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS = families.flatMap((family) => family.testedConcepts);
-export const GS028_STATS_ETHICS_20260929_QUESTIONS = families.flatMap((family) => family.questions);
+export const GS028_STATS_ETHICS_20260929_QUESTIONS = [...families.flatMap((family) => family.questions), ...ETHICS_P2E_QUESTIONS];
 export const GS028_STATS_ETHICS_20260929_CASES = families.flatMap((family) => family.cases);
 export const GS028_STATS_ETHICS_20260929_CLAIMS = families.flatMap((family) => family.claims);
 export const GS028_STATS_ETHICS_20260929_CASE_REVIEWS = families.flatMap((family) => family.caseReviews);
@@ -19,6 +20,8 @@ for (const item of families.flatMap((family) => family.sources)) {
 export const GS028_STATS_ETHICS_20260929_SOURCES = [...sources.values()];
 export const GS028_STATS_ETHICS_20260929_BATCH_MANIFEST = {
   contentVersion: BATCH_CONTENT_VERSION,
+  clinicalPairingContentVersion: P2E_CONTENT_VERSION,
+  reusedClinicalQuestionCount: ETHICS_P2E_QUESTIONS.length,
   authoringConceptCount: GS028_STATS_ETHICS_20260929_AUTHORING_CONCEPTS.length,
   testedConceptCount: GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS.length,
   questionVariantCount: GS028_STATS_ETHICS_20260929_QUESTIONS.length,

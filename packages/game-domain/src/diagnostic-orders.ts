@@ -4,6 +4,7 @@ import { forecastDiagnosticOrderPlan, getDiagnosticOrderPlans, hasOutstandingDia
 import { startDiagnosticAcquisitionOperation, startDiagnosticProcessingOperation } from "./service-operations";
 import { enableReadingPhase } from "./room-upgrade-reading";
 import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+import { hasActivePatientAmenityTrip, requestPatientAmenityReturn } from "./patient-amenities";
 import type { DiagnosticChoicePlanning } from "./diagnostic-order-requests";
 import type { DiagnosticOrderPhase, DiagnosticOrderPlan, DomainContext, EncounterState, GameState, GridPoint, PatientMovementKind, PendingResult, ServiceOperationState } from "./types";
 
@@ -159,6 +160,14 @@ export function advanceDiagnosticOrders(state: GameState, context: DomainContext
       enableReadingPhase(plan, phase, state.facilityTick);
       const dependenciesAt = Math.max(plan.createdAtTick, ...phase.dependsOn.map((id) => plan.phases.find((entry) => entry.id === id)!.completedAtTick!));
       if (phase.kind === "patient_departure" || phase.kind === "patient_return") {
+        const actorKind = encounter ? "encounter" : "service_visitor";
+        const actorId = encounter?.id ?? visitor!.id;
+        if (hasActivePatientAmenityTrip(state, actorKind, actorId)) {
+          // The amenity owns the actor until its return finishes. Rebase the
+          // diagnostic walk from that real location on a subsequent advance.
+          requestPatientAmenityReturn(state, actorKind, actorId, context);
+          continue;
+        }
         if (visitor) {
           const target = phase.forecast.patientPath.at(-1);
           if (phase.status === "active") {

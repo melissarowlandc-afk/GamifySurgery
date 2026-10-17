@@ -5206,3 +5206,338 @@ DEFECT-M9-1/2 fixes or explicit scope decisions, reruns strict required scenario
 and default-pool/root boundaries, completes browser acceptance, and updates the
 manager-owned CURRENT_THREAD_HANDOFF. M9 is a completed QA handback with two open
 defects; it is not an accepted integrated launch checkpoint.
+
+### DEFECT-M9-1/M9-2 fixes (2026-10-17)
+
+**Partial Sol worker handback: M9-1 is fixed; M9-2 is not closed.** The original
+minute-900 reproducer and original 24-hour full-identity comparison now pass.
+An additional seed still changes a scored case, so the broad APP fairness
+requirement needs a manager decision about reservations and admission timing.
+This is not an accepted integrated launch checkpoint.
+
+#### Files changed and preservation
+
+Runtime:
+
+- `packages/game-domain/src/persistence.ts`
+- `packages/game-domain/src/clinical-selection.ts`
+
+Regression/integration tests:
+
+- `packages/game-domain/tests/clinical-selection.test.ts`
+- `packages/game-domain/tests/level-four-integration-defects.test.ts`
+- `packages/game-domain/tests/level-four-integration-reload.test.ts`
+- `packages/game-domain/tests/level-four-integration.test.ts`
+
+Three existing round-trip helpers encoded the old timer-reset behavior. Only
+their expected-deadline rewriting and associated comments were removed:
+
+- `packages/game-domain/tests/gs028-20261007-batch.test.ts`
+- `packages/game-domain/tests/gs028-20261007-level3-batch.test.ts`
+- `packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts`
+
+This append is the only coordination-document edit. The manager-owned
+CURRENT_THREAD_HANDOFF remains for manager integration. Concurrent content/Beta 2
+work was preserved, including the content worker's game-domain statistics/ethics
+test edits. No clinical-content source, Level 5 evidence/checkpoint/guard,
+dependency, launcher, owner save or served build was edited by this worker.
+No sub-agents, Git commands, installs, network or external messages were used.
+
+The no-Git baseline covers 828 paths. Original game-domain bytes, the actual
+scoped diff, hashes, command receipts and raw logs are in ignored
+`.local-dev/level4-m9-fixes/`: `before/`, `before.json`, `review.diff`,
+`scoped-audit.json`, and the named logs below. The scoped code/test diff is nine
+files; production changes are confined to the two runtime files listed above.
+Protected Level 5 paths remain byte-unchanged. All delivered edits are UTF-8
+without BOM and LF; the previously CRLF level3 batch test was normalized to LF.
+
+#### M9-1: behavior and regression coverage
+
+Saved encounter and employee idle deadlines now preserve any nonnegative safe
+integer, including zero, an overdue deadline and Number.MAX_SAFE_INTEGER, at
+every facility level. The Level-5-only preservation flag was removed. Missing,
+null, negative, fractional, unsafe, nonfinite and string values retain the
+existing fallback. No save schema or RNG version changed.
+
+The full-state matrix also found the same defect in overdue
+retailNextOpportunityTicks: an ostomy checkpoint retained a completed visitor's
+deadline in memory but dropped it on load. Valid retail deadlines now survive.
+The loader also preserves absent service resourceWaitReason and explicit-null
+external-actor movementWaitReason representations. Invalid-value handling is
+unchanged.
+
+Both original skipped defect tests are active. The 20 service/phase checks,
+local MRI reading and both pediatric doorway checks now compare the entire
+state at load and every subsequent tick with toEqual, in addition to every
+previous care/fee/receipt/learning/family assertion. They cover 200/40/180 future
+minutes respectively. Added tests cover five valid clocks across three reloads,
+seven invalid/absent legacy values, and unchanged frozen cases. The three older
+round-trip helpers now expect the original clock exactly; their other clinical,
+result, routing, satisfaction, coverage and learning assertions are unchanged.
+
+#### M9-2: bounded change and remaining counterexample
+
+APP demand is cadence driven. Clinical selection already uses a stateless
+clinical_case_selection stream keyed by seed, routine sequence and purpose.
+It does not consume APP demand draws. A new RNG stream cannot repair a changed
+eligible pool.
+
+The bounded change releases concepts once a chart is committed to
+leaving_after_walkout. That chart cannot be reopened for an answer, so its
+physical exit duration no longer changes routine selection. All concepts in
+still-active charts, including care travel and off-site testing, remain excluded.
+Tests pin those exclusions and compare 32 selection purposes for a departing
+walkout versus an already-resolved walkout. The original 24-hour test now compares
+full encounter/case/class/arrival tuples while retaining its previous cadence,
+learning, APP-receipt and MRI-on-in-both-branches assertions.
+
+**The broad M9-2 contract still fails.** Additional 24-hour diagnostic probes used
+seeds level-four-m9-fairness.2, .3 and .4; .2 and .4 pass. Seed .3 first diverges at
+minute **1372**, encounter.auto.4.22:
+
+- APP on: case.bread-butter.hernia-anatomy.hernia-anatomy.
+- APP off: case.choledochal-cyst.type-iva.2b.
+
+At tick 1371, both branches have identical capabilities, capability-eligible case
+IDs, learning histories and active discussion concepts. Earlier encounter.auto.4.16
+has the same frozen case and arrival tick 1023. With APPs on it is already walking
+out (satisfaction/threshold 35/35, last decay 1363). With APPs off it remains
+answerable (38/35, last decay 1368). Its two concepts are therefore reserved only
+in the off branch. Changing only that encounter's terminal-movement status makes
+the selected case switch in either direction. This is a live-reservation
+boundary, not shared RNG consumption or only a delayed physical exit.
+
+Exact synthetic states and the counterfactual report are in
+extra-seed-before.json, extra-seed-after.json and remaining-fairness-policy.json
+under the scratch directory, with probe.test.ts, trace.test.ts and
+trace-analysis.test.ts. These diagnostic tests are outside the workspace suite;
+the failing probe is not inverted into an expected-failure acceptance test.
+
+**Manager decision pending:** choose the reservation/admission policy when a
+seeded identity is selected while its concept remains active in one branch.
+A persisted pending-case selection that waits for those concepts is one concrete
+candidate, with an explicit blocked-admission timing tradeoff. Ignoring live
+concept exclusion would violate the supplied requirement. AGENTS.md reserves
+architecture decisions to the single manager. An asynchronous question was
+raised; no approval/default was assumed and no admission queue was implemented.
+
+#### Save compatibility and future selection changes
+
+Existing saves load without a schema migration. Already-frozen encounters,
+answer ordering, clinical meaning and learning history are not reselected or
+rewritten. Repeated-reload tests retain the saved frozen case exactly.
+
+The bounded selector change **can change future cases in existing campaigns at
+any facility level** when selection occurs while a prior chart is physically
+leaving_after_walkout. Its concepts re-enter the unseen/due pool sooner than in
+the previous build; FSRS due rules still apply. RNG purposes and the algorithm
+are unchanged, but different pool membership/length can change any selected
+concept or variant. Later selections can diverge as active pools evolve. This
+removes exit-duration coupling but does not satisfy the broader contract above.
+The timer fix restores continuous-play idle opportunities instead of preserving
+the old buggy reload-reset timeline.
+
+#### Guard ownership and remaining integration work
+
+No Level 4 executable source-hash guard needed updating. The integration checks
+were strengthened; the optional reload report now records rootEquality: PASS.
+Earlier matrix/defect reports in this plan remain historical evidence. The
+approved Level 4 room-art/proof guards bind unchanged art and pass in the player
+suite. No recorded evidence hash was simply replaced.
+
+Manager's reserved Level 5 recorded-input check is the first test in
+packages/game-domain/tests/level-five-integration.test.ts. This worker changes
+exactly two recorded runtime inputs: clinical-selection.ts and persistence.ts.
+Concurrent content work also changes the recorded ethics.ts and
+statistics-ethics-batch.ts in development-batch/2026-09-29-statistics-ethics.
+Exact old/current hashes and ownership are in level-five-guard-mismatches.json.
+The Level 5 result/checkpoint/guard remain unchanged here; its other 35
+integration tests passed. Manager owns the fresh evidence run and rebinding.
+
+Two content-dependent catalog guards still fail and were left unchanged:
+
+1. gs028-20261007-batch.test.ts, "measures the real ordinary pools before and
+   after admission" (line 405). Actual before pools are
+   [{cases:479,concepts:136},{cases:718,concepts:242},{cases:754,concepts:258}];
+   old expectations are 483/135, 718/241 and 754/257.
+2. gs028-20261007-variety2-batch.test.ts, "measures the actual early ordinary pool
+   delta of seventy-eight cases and twenty concepts" (line 604). Actual before
+   pools are [{cases:557,concepts:156},{cases:796,concepts:262},{cases:832,concepts:278}];
+   old expectations are 561/155, 796/261 and 832/277.
+
+These counters read release membership/stages/capabilities directly, without
+calling either changed persistence or selection function. The content owner or
+manager must verify both before/after arrays after that lane finishes. The
+statistics/ethics admission-count guard also failed in the first full run; the
+concurrent worker corrected it, and the final guard-only rerun passes it.
+
+#### Validation and exact terminal output
+
+Requested commands used their checked-in workspace configs, NO_COLOR=1 and the
+existing narrow Vite Windows-probe preload:
+NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs.
+It translates only synchronous net use EPERM to Vite's ordinary asynchronous
+fallback. No replacement config/plugin or permanent test skip was used.
+The native runner, literal commands, exit receipts and full stdout/stderr are
+in .local-dev/level4-m9-fixes/run.ps1 and its logs. Blank native stderr may be
+rendered as System.Management.Automation.RemoteException by PowerShell.
+Filtered runs report unselected tests as skipped; both defect skips were removed.
+
+The first full domain run loaded old round-trip helpers before their correction.
+Its 757 timer-expectation failures were eliminated by the three-helper focused
+rerun, which retains only the two catalog failures above. The full command has
+not been rerun after those helper corrections because current catalog guards
+and the broader M9-2 policy remain unresolved. **The requested "only Level 5 may
+fail" target is not met.** Final focused M9, player and typecheck runs are current.
+
+**Requested full domain, first run; exit 1** (`domain.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+```
+
+```text
+ Test Files  5 failed | 153 passed (158)
+      Tests  761 failed | 3502 passed (4263)
+   Start at  08:50:58
+   Duration  1010.96s (transform 4.16s, setup 0ms, import 70.54s, tests 928.78s, environment 8ms)
+```
+
+**Corrected clinical-flow helpers; exit 1 (two catalog guards)** (`clinicalFlows.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/gs028-20261007-batch.test.ts tests/gs028-20261007-level3-batch.test.ts tests/gs028-20261007-variety2-batch.test.ts --pool=threads --maxWorkers=1
+```
+
+```text
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 956 passed (958)
+   Start at  09:03:43
+   Duration  71.28s (transform 2.21s, setup 0ms, import 3.71s, tests 67.28s, environment 0ms)
+```
+
+**Final Level 4 and selector regressions; exit 0** (`focused.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-four-integration-defects.test.ts tests/level-four-integration-reload.test.ts tests/level-four-integration.test.ts tests/clinical-selection.test.ts --pool=threads --maxWorkers=1
+```
+
+```text
+ Test Files  4 passed (4)
+      Tests  50 passed (50)
+   Start at  09:08:24
+   Duration  149.83s (transform 2.35s, setup 0ms, import 4.41s, tests 145.12s, environment 0ms)
+```
+
+**Idle and active/terminal-concept regressions; exit 0** (`regressions.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-four-integration-reload.test.ts tests/clinical-selection.test.ts --pool=threads --maxWorkers=1
+```
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  08:50:18
+   Duration  31.83s (transform 1.36s, setup 0ms, import 2.12s, tests 29.56s, environment 0ms)
+```
+
+**Current catalog guards; exit 1 (statistics/ethics guard passes)** (`catalogGuards.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/gs028-20261007-batch.test.ts tests/gs028-20261007-variety2-batch.test.ts tests/gs028-statistics-ethics-batch.test.ts --pool=threads --maxWorkers=1 -t "measures the real ordinary pools|measures the actual early ordinary pool|admits the 28 original objectives"
+```
+
+```text
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 1 passed | 747 skipped (750)
+   Start at  09:11:18
+   Duration  2.79s (transform 1.40s, setup 0ms, import 2.54s, tests 19ms, environment 0ms)
+```
+
+**Final requested full player; exit 0** (`player.log`):
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+```
+
+```text
+ Test Files  245 passed (245)
+      Tests  2166 passed (2166)
+   Start at  09:02:24
+   Duration  84.96s (transform 18.60s, setup 0ms, import 145.20s, tests 170.89s, environment 17ms)
+```
+
+**Final requested typecheck; exit 0** (`typecheck.log`):
+
+```powershell
+npm.cmd run typecheck
+```
+
+```text
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+**Additional-seed diagnostic; exit 1** (`probe.log`):
+
+```powershell
+node node_modules/vitest/vitest.mjs run .local-dev/level4-m9-fixes/probe.test.ts --config packages/game-domain/vitest.config.ts --pool=threads --maxWorkers=1
+```
+
+```text
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  08:55:30
+   Duration  146.14s (transform 1.37s, setup 0ms, import 1.83s, tests 144.23s, environment 0ms)
+```
+
+Initial red confirmation (red.log) enabled both original reproducers on the
+starting runtime: 2 failed, reproducing APP deadlines 20/23 becoming 37/37 and
+the original-seed case divergence. Both now pass, as does the original 24-hour
+comparison. Additional seed .3 remains an unaccepted failure.
+
+**Next manager action:** inspect the scoped diff/evidence; decide the broader
+M9-2 reservation/pending-admission policy; coordinate the two content-dependent
+catalog guards; complete that fix and fresh Level 5 evidence binding; rerun all
+three requested commands on the integrated state. Keep M9-2 open. This handback
+does not claim both defects or integrated launch acceptance are complete.
+
+Opening pathways and owner saves were not accessed or changed:
+START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile;
+the canonical remote remains https://melissarowlandc-afk.github.io/GamifySurgery/
+with separate storage. LOCAL ONLY: manager owns acceptance and the audited
+GitHub checkpoint/reminder ("push to GitHub") under the owner's existing direction.
+No worker backup, push, deployment or publication was performed.
+
+### Manager decision - DEFECT-M9-2 remainder (2026-10-17)
+
+Accepted the M9-1 fix and the bounded M9-2 change (concepts released once a chart is committed to leaving_after_walkout). The remaining seed-.3 divergence is a legitimate gameplay effect: APP staffing changes satisfaction and walkout timing, which changes which concepts are still live and therefore the eligible pool. Decision: **close as working as intended**. Case identity is required to be independent of RNG consumption (it is: stateless clinical_case_selection stream), not of real patient-flow state. Do not add a pending-case reservation mechanism. Keep the diagnostic probes out of the suite. Integrated acceptance (full domain suite, catalog guards, Level 5 rebind) follows the concurrent P2-E content worker.

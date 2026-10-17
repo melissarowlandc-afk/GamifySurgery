@@ -76,8 +76,12 @@ function runOrdinaryCase(
 ): GameState {
   const prefix = `gs028se.${correct ? "correct" : "wrong"}.${index}`;
   const encounterId = `encounter.${prefix}`;
+  const initial = ordinaryFixture(prefix);
+  // P2-E inherits the reused clinical objective's gate; all patient cases still
+  // reach level 1 and no additional capability is required by these pairings.
+  initial.facilityLevel = clinicalCase.earliestFacilityStage as GameState["facilityLevel"];
   let state = gameReducer(
-    ordinaryFixture(prefix),
+    initial,
     {
       type: "ADMIT_PATIENT",
       operationId: `${prefix}.admit`,
@@ -188,13 +192,16 @@ function addReachableNp(state: GameState): void {
 }
 
 describe("GS-028 statistics and ethics runtime admission", () => {
-  it("admits the 28 objectives and 112 nodes in 108 cases into the active release exactly once", () => {
+  it("admits the 28 original objectives and 120 nodes in 108 cases, reusing eight existing clinical concepts", () => {
     expect(GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS).toHaveLength(28);
     expect(GS028_STATS_ETHICS_20260929_CASES).toHaveLength(108);
-    expect(GS028_STATS_ETHICS_20260929_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(112);
+    expect(GS028_STATS_ETHICS_20260929_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(120);
+    expect(ordinaryCases.filter(item => item.earliestFacilityStage === 0)).toHaveLength(45);
+    expect(ordinaryCases.filter(item => item.earliestFacilityStage <= 1)).toHaveLength(48);
+    expect(ordinaryCases.every(item => item.requiredCapabilityIds.length === 0)).toBe(true);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1008);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {
       expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
     }

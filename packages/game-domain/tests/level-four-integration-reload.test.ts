@@ -1,6 +1,6 @@
 import { writeFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, pediatricRoomAtPoint, serializeGameState, type GameState } from "../src";
+import { PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, pediatricRoomAtPoint, serializeGameState, type GameState } from "../src";
 import { createAppAppointmentsQaState } from "../../../tests/fixtures/app-appointments";
 import { createPediatricAppointmentsQaState } from "../../../tests/fixtures/pediatric-appointments";
 import { createMriAppointmentsQaState } from "../../../tests/fixtures/mri-appointments";
@@ -31,8 +31,6 @@ function operationReached(op: GameState["serviceOperations"][number], line: stri
 function compareFuture(initial: GameState, minutes: number, pumpChart = false): GameState {
   let continuous = structuredClone(initial);
   let restored = deserializeGameState(serializeGameState(initial));
-  // Exact root equality is separately reported as DEFECT-M9-1. These active
-  // checks prove care progress/reservations/fees, not byte-for-byte root equality.
   const care = (state: GameState) => JSON.parse(JSON.stringify({
     cashCents: state.cashCents, expenses: state.totalOperatingExpenses, clinicalXp: state.clinicalXp,
     histories: state.learningHistories, intents: state.reviewIntents, settlements: state.settlements,
@@ -40,10 +38,12 @@ function compareFuture(initial: GameState, minutes: number, pumpChart = false): 
     receipts: state.serviceIncomeReceipts, families: state.pediatricFamilies, completion: state.levelFourCompletion,
     parents: state.retailExternalActors.filter(actor => actor.pediatricFamilyId).map(actor => ({ ...actor, movementWaitReason: actor.movementWaitReason ?? null })),
   }));
+  expect(restored).toEqual(continuous);
   expect(care(restored)).toEqual(care(continuous));
   for (let i = 0; i < minutes; i++) {
     continuous = m9Minute(continuous); restored = m9Minute(restored);
     if (pumpChart) { continuous = m9PumpChart(continuous); restored = m9PumpChart(restored); }
+    expect(restored, `full-state reload divergence at ${initial.facilityTick} + ${i + 1}`).toEqual(continuous);
     expect(care(restored), `care reload divergence at ${initial.facilityTick} + ${i + 1}`).toEqual(care(continuous));
   }
   return restored;
@@ -51,7 +51,7 @@ function compareFuture(initial: GameState, minutes: number, pumpChart = false): 
 
 describe("Level 4 M9 save/reload integration matrix", () => {
   for (const [name, line, fixture] of services) {
-    it.each(phases)(`${name}: preserves care/fees through %s reload (root equality: DEFECT-M9-1)`, phase => {
+    it.each(phases)(`${name}: preserves full state and care/fees through %s reload`, phase => {
       let state = fixture();
       state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.reload.play");
       state = m9Until(state, value => value.serviceOperations.some(op => operationReached(op, line, phase)), undefined, 600);
@@ -64,12 +64,12 @@ describe("Level 4 M9 save/reload integration matrix", () => {
       expect(result.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === line && receipt.actorId === actorId)).toHaveLength(1);
       expect(new Set(result.serviceIncomeReceipts.map(receipt => receipt.transactionKey)).size).toBe(result.serviceIncomeReceipts.length);
       if (process.env.LEVEL_FOUR_M9_REPORT === "1") writeFileSync(new URL(`../../../.local-dev/level4-m9/reload-${line.slice(7)}-${phase.replaceAll(/[^a-z]/g, "-")}.json`, import.meta.url),
-        `${JSON.stringify({ service: name, phase, checkpointTick: state.facilityTick, operationId: id, careComparedMinutes: 200, rootEquality: "DEFECT-M9-1",
+        `${JSON.stringify({ service: name, phase, checkpointTick: state.facilityTick, operationId: id, careComparedMinutes: 200, rootEquality: "PASS",
           receipts: result.serviceIncomeReceipts.filter(receipt => receipt.actorId === actorId) }, null, 2)}\n`);
     }, hostedTime(30_000));
   }
 
-  it("resumes local MRI reading with continuous care and one additive $5 receipt (root equality: DEFECT-M9-1)", () => {
+  it("resumes local MRI reading with continuous full state and one additive $5 receipt", () => {
     let state = createMriAppointmentsQaState();
     state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.read.reload.play");
     state = m9Until(state, value => value.serviceOperations.some(op => op.diagnosticPhaseWork?.kind === "interpretation" && op.status === "in_service"));
@@ -105,7 +105,7 @@ describe("Level 4 M9 save/reload integration matrix", () => {
     if (kind === "scored") expect(result.encounters[PEDIATRIC_CHARTS_QA_ENCOUNTER_ID]?.resolutionReason).toBe("completed");
   }, hostedTime(30_000));
 
-  it.skip("DEFECT-M9-1: preserves a real APP's saved idle deadline during an in-care reload", () => {
+  it("DEFECT-M9-1: preserves a real APP's saved idle deadline during an in-care reload", () => {
     let state = createAppAppointmentsQaState();
     state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.defect.one.play");
     state = m9Until(state, value => value.serviceOperations.some(op => op.status === "in_service"));
@@ -116,5 +116,47 @@ describe("Level 4 M9 save/reload integration matrix", () => {
         after: restored.employees.map(employee => [employee.id, employee.nextIdleActionAtFacilityTick]) }, null, 2)}\n`);
     expect(restored.employees.map(employee => [employee.id, employee.nextIdleActionAtFacilityTick]))
       .toEqual(state.employees.map(employee => [employee.id, employee.nextIdleActionAtFacilityTick]));
+  });
+
+  it.each([0, 20, 50, 80, Number.MAX_SAFE_INTEGER])(
+    "DEFECT-M9-1: preserves valid staff, encounter and retail idle deadline %s across repeated reloads",
+    deadline => {
+      let state = createAppAppointmentsQaState();
+      state.facilityTick = 50;
+      const encounter = Object.values(createInitialGameState().encounters)[0]!;
+      state.encounters[encounter.id] = encounter;
+      encounter.nextIdleActionAtFacilityTick = deadline;
+      state.employees[0]!.nextIdleActionAtFacilityTick = deadline;
+      state.retailNextOpportunityTicks["employee:app.0"] = deadline;
+      const frozen = structuredClone(encounter.frozenCase);
+
+      for (let reload = 0; reload < 3; reload++) {
+        state = deserializeGameState(serializeGameState(state));
+        expect(state.encounters[encounter.id]!.nextIdleActionAtFacilityTick).toBe(deadline);
+        expect(state.employees[0]!.nextIdleActionAtFacilityTick).toBe(deadline);
+        expect(state.retailNextOpportunityTicks["employee:app.0"]).toBe(deadline);
+        expect(state.encounters[encounter.id]!.frozenCase).toEqual(frozen);
+      }
+    },
+  );
+
+  it.each([
+    ["missing", undefined], ["null", null], ["negative", -1], ["fractional", 0.5],
+    ["unsafe", Number.MAX_SAFE_INTEGER + 1], ["string", "20"], ["nonfinite", Infinity],
+  ] as const)("DEFECT-M9-1: repairs %s legacy idle deadlines", (_label, deadline) => {
+    const state = createAppAppointmentsQaState();
+    state.facilityTick = 50;
+    const encounter = Object.values(createInitialGameState().encounters)[0]!;
+    state.encounters[encounter.id] = encounter;
+    const raw = JSON.parse(serializeGameState(state));
+    raw.encounters[encounter.id].nextIdleActionAtFacilityTick = deadline;
+    raw.employees[0].nextIdleActionAtFacilityTick = deadline;
+    raw.retailNextOpportunityTicks["employee:app.0"] = deadline;
+
+    const restored = deserializeGameState(JSON.stringify(raw));
+    const fallback = state.facilityTick + PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.idleActionMinimumMinutes;
+    expect(restored.encounters[encounter.id]!.nextIdleActionAtFacilityTick).toBe(fallback);
+    expect(restored.employees[0]!.nextIdleActionAtFacilityTick).toBe(fallback);
+    expect(restored.retailNextOpportunityTicks).not.toHaveProperty("employee:app.0");
   });
 });

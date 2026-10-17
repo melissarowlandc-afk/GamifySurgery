@@ -19,7 +19,7 @@ describe("September 17 brief early-level admission", () => {
     expect([concepts, questions, cases, reviews, timings].map((items) => items.length)).toEqual([20, 80, 48, 48, 80]);
     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const clinicalCase of cases) expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
   });
   it("keeps provenance, review status, concise presentations, and parallel choices", () => {

@@ -47,7 +47,7 @@ describe("GS028 twenty level3-plus concepts",()=>{
   // Round 3 full pass: restoring only the four RCA/FMEA cases
   // reproduces a5108ca5...; all unrelated records retain cf76b84d....
   expect(sha(protectedIntake)).toBe("284dc7a272a79f441e834f81c33a3027587eec57d1d37929bca986c61661694c");
-  expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1375]);
+  expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1383]);
  });
  it("has unique IDs, reciprocal atomic claims/sources and explicit evidence limitations",()=>{
   for(const records of [concepts,cases,questions,claims,sources])expect(new Set(records.map(x=>x.id)).size).toBe(records.length);

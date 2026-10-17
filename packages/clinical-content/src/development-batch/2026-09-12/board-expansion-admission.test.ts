@@ -68,7 +68,7 @@ describe("September 12 board-expansion batch admission", () => {
     });
     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const clinicalCase of BOARD_EXPANSION_20260912_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(clinicalCase.approvedInstantiationProfiles).toHaveLength(4);

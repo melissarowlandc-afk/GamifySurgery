@@ -56,7 +56,7 @@ describe("September 17 bread-and-butter admission", () => {
     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes))
-      .toHaveLength(1295);
+      .toHaveLength(1303);
 
     for (const clinicalCase of cases) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);

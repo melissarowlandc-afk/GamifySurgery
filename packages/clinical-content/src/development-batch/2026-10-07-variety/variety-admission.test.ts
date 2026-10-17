@@ -36,7 +36,7 @@ describe("GS-028 October 7 runtime admission", () => {
     expect(manifest).toMatchObject({ testedConceptCount: 20, questionVariantCount: 80, caseCount: 78, decisionNodeCount: 80, resultGateCount: 2, publicReleaseAuthorized: false });
     expect(release.concepts).toHaveLength(311);
     expect(release.cases).toHaveLength(930);
-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1223);
     for (const concept of concepts) {
       expect(release.concepts.filter((item) => item.id === concept.id)).toEqual([concept]);
     }
@@ -53,11 +53,11 @@ describe("GS-028 October 7 runtime admission", () => {
     };
     expect(oldRelease.concepts).toHaveLength(291);
     expect(oldRelease.cases).toHaveLength(852);
-    expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
-    // Round 3 full pass: restoring only the scoped GS-028 cases
-    // reproduces the prior 1b45db0e... hash. All unrelated records retain
-    // b02c2a82...; counts and execution are unchanged (see the GS-028 ExecPlan).
-    expect(hash(oldRelease)).toBe("7f37f52ed571295a6d463e76ee7f4de121a2862f9ddec32ce1d0801438e0460b");
+    expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1143);
+    // P2-E adds eight clinical continuations. Restoring only those eight cases
+    // reproduces 7f37f52e... exactly; every unrelated release record is
+    // unchanged. Full restoration/hash receipt: GS-028 plan, 2026-10-17.
+    expect(hash(oldRelease)).toBe("6109a009e2c09d21018fe5e6da83641ca15fcf2a8e9b482fbbb4be3afc0052e1");
   });
 
   it("retains clinic eligibility and unapproved draft metadata after admission", () => {
