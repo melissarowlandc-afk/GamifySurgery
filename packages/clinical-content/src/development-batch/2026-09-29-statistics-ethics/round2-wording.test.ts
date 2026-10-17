@@ -2,11 +2,13 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { SyntheticClinicalCase } from "../../schema";
 import { STATISTICS_QI_FAMILIES } from "./statistics-qi";
-import { ETHICS_FAMILIES } from "./ethics";
-import { PATIENT_SAFETY_FAMILY } from "../2026-10-07-variety-2/patient-safety";
-import { ASSENT_FAMILY } from "../2026-10-08-pediatric-clinic/assent";
+import { ETHICS_CLINICAL_ANCHOR_BY_QUESTION, ETHICS_FAMILIES } from "./ethics";
+import { PATIENT_SAFETY_FAMILY, SAFETY_CLINICAL_ANCHOR_KEYS } from "../2026-10-07-variety-2/patient-safety";
+import { ASSENT_FAMILY, ASSENT_CLINICAL_ANCHOR_KEYS } from "../2026-10-08-pediatric-clinic/assent";
 import { GS028_STATS_ETHICS_20260929_CLAIMS, GS028_STATS_ETHICS_20260929_SOURCES } from "./statistics-ethics-batch";
 import { PEDIATRIC_CLINIC_CLAIMS, PEDIATRIC_CLINIC_SOURCES } from "../2026-10-08-pediatric-clinic/evidence-claims";
+import { CLINICAL_ANCHORS, RESEARCH_PREMISES, RESEARCH_PREMISE_BY_QUESTION, STATISTICS_CLINICAL_ANCHOR_BY_QUESTION } from "./statistics-variants";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "./clinical-anchor-test-catalog";
 
 const mainFamilies = [...STATISTICS_QI_FAMILIES, ...ETHICS_FAMILIES];
 const questions = [
@@ -15,11 +17,16 @@ const questions = [
 ];
 const cases: SyntheticClinicalCase[] = [...mainFamilies.flatMap((family) => family.cases), ...PATIENT_SAFETY_FAMILY.cases, ...ASSENT_FAMILY.cases];
 const concepts = [...mainFamilies.flatMap((family) => family.testedConcepts), ...PATIENT_SAFETY_FAMILY.testedConcepts, ...ASSENT_FAMILY.testedConcepts];
-const claims = new Map([...GS028_STATS_ETHICS_20260929_CLAIMS, ...PATIENT_SAFETY_FAMILY.claims, ...PEDIATRIC_CLINIC_CLAIMS].map((claim) => [claim.id, claim]));
-const sources = [...GS028_STATS_ETHICS_20260929_SOURCES, ...PATIENT_SAFETY_FAMILY.sources, ...PEDIATRIC_CLINIC_SOURCES];
+const claims = new Map([...GS028_STATS_ETHICS_20260929_CLAIMS, ...PATIENT_SAFETY_FAMILY.claims, ...PEDIATRIC_CLINIC_CLAIMS, ...EXISTING_ANCHOR_CLAIMS].map((claim) => [claim.id, claim]));
+const sources = [...GS028_STATS_ETHICS_20260929_SOURCES, ...PATIENT_SAFETY_FAMILY.sources, ...PEDIATRIC_CLINIC_SOURCES, ...EXISTING_ANCHOR_SOURCES];
+const anchorsByQuestion = {
+  ...STATISTICS_CLINICAL_ANCHOR_BY_QUESTION, ...ETHICS_CLINICAL_ANCHOR_BY_QUESTION,
+  ...Object.fromEntries(PATIENT_SAFETY_FAMILY.questions.map((question, index) => [question.id, SAFETY_CLINICAL_ANCHOR_KEYS[index]!])),
+  ...Object.fromEntries(ASSENT_FAMILY.questions.map((question, index) => [question.id, ASSENT_CLINICAL_ANCHOR_KEYS[index]!])),
+};
 const words = (text: string) => text.replaceAll("{patientName}", "Alex Morgan").trim().split(/\s+/).length;
 
-describe("round-2 focused statistics, ethics, safety, and assent wording", () => {
+describe("round-3 clinically anchored statistics, ethics, safety, and assent wording", () => {
   it("keeps the closed 30-concept / 118-variant / 114-case inventory and existing pairing boundary", () => {
     expect(concepts).toHaveLength(30);
     expect(questions).toHaveLength(118);
@@ -37,6 +44,82 @@ describe("round-2 focused statistics, ethics, safety, and assent wording", () =>
       expect(questions.filter((question) => question.conceptId === concept.id))
         .toHaveLength(concept.id === "concept.pediatric-clinic.developmental-assent-discussion" ? 2 : 4);
     }
+  });
+
+  it("anchors every decision to admitted clinical evidence and separates patients from employee hosts", () => {
+    expect(Object.keys(anchorsByQuestion)).toHaveLength(118);
+    for (const clinicalCase of cases) for (const node of clinicalCase.decisionNodes) {
+      const anchorKey = anchorsByQuestion[node.questionVariantId]!;
+      const anchor = CLINICAL_ANCHORS[anchorKey];
+      expect(anchor, node.questionVariantId).toBeDefined();
+      const authored = questions.find((question) => question.id === node.questionVariantId)!;
+      expect(authored.supportingEvidenceClaimIds, node.questionVariantId).toEqual(expect.arrayContaining([...anchor.claimIds]));
+      const story = node.currentUpdate ?? clinicalCase.presentation;
+      expect(anchor.claimIds.length, node.questionVariantId).toBeGreaterThan(0);
+      if (clinicalCase.participant) {
+        expect(story, node.questionVariantId).toMatch(/^\{patientName\}, the .+ lead,/);
+        expect(story.toLowerCase(), node.questionVariantId).toContain(anchor.storyTerm.toLowerCase());
+        // A clinical research discussion uses one employee lead, without an
+        // unrelated named patient introduction or employee demographics.
+        expect(story, node.questionVariantId).not.toMatch(/\d+-year-old|\{patientAge\}|\{patientSex\}/);
+        expect(clinicalCase.prototypeDemographics).toBeUndefined();
+      } else {
+        expect(clinicalCase.prototypeDemographics, node.questionVariantId).toBeDefined();
+        const expandedStory = story.replaceAll("{patientAge}", String(clinicalCase.prototypeDemographics!.ageYears));
+        expect(expandedStory, node.questionVariantId).toMatch(/\d+-year-old|una mujer de \d+ años/);
+        if (node.primaryConceptId === "concept.statistics-ethics.qualified-interpreter") {
+          const spanishAnchors: Record<string, RegExp> = {
+            gallstones: /cálculos biliares/, graves: /Graves/,
+            "cutaneous-scc": /carcinoma escamoso cutáneo/, achalasia: /acalasia/,
+          };
+          expect(story, node.questionVariantId).toMatch(spanishAnchors[anchorKey]!);
+        } else if (anchorKey === "child-groin") {
+          expect(story, node.questionVariantId).toMatch(/groin bulge/);
+        } else {
+          expect(story.toLowerCase(), node.questionVariantId).toContain(anchor.storyTerm.toLowerCase());
+        }
+      }
+      expect(story, node.questionVariantId).not.toMatch(/retained sponge|retained surgical sponge/i);
+    }
+  });
+
+  it("caps diagnoses and investigational premises across the bank and diversifies siblings", () => {
+    const diagnoses = new Map<string, number>();
+    const premises = new Map<string, number>();
+    expect(Object.keys(RESEARCH_PREMISE_BY_QUESTION).sort()).toEqual(questions.map((question) => question.id).sort());
+    for (const concept of concepts) {
+      const siblings = questions.filter((question) => question.conceptId === concept.id);
+      const keys = siblings.map((question) => CLINICAL_ANCHORS[anchorsByQuestion[question.id]!].diagnosisKey);
+      expect(new Set(keys).size, concept.id).toBe(siblings.length);
+    }
+    for (const question of questions) {
+      const diagnosis = CLINICAL_ANCHORS[anchorsByQuestion[question.id]!].diagnosisKey;
+      diagnoses.set(diagnosis, (diagnoses.get(diagnosis) ?? 0) + 1);
+      const premise = RESEARCH_PREMISE_BY_QUESTION[question.id];
+      if (premise) {
+        expect(RESEARCH_PREMISES[premise], question.id).toBeDefined();
+        premises.set(premise, (premises.get(premise) ?? 0) + 1);
+      }
+    }
+    for (const [diagnosis, count] of diagnoses) expect(count, diagnosis).toBeLessThanOrEqual(10);
+    for (const [premise, count] of premises) expect(count, premise).toBeLessThanOrEqual(6);
+    expect(new Set([...premises.keys()].map((key) => RESEARCH_PREMISES[key as keyof typeof RESEARCH_PREMISES].kind)))
+      .toEqual(new Set(["drug", "test", "device", "technique", "care pathway", "screening program"]));
+    expect(CLINICAL_ANCHORS["child-groin"].diagnosisKey).toBe(CLINICAL_ANCHORS.inguinal.diagnosisKey);
+    expect(CLINICAL_ANCHORS.enterotomy.diagnosisKey).toBe(CLINICAL_ANCHORS.incisional.diagnosisKey);
+  });
+
+  it("labels every statistics exhibit as invented investigational work and preserves clinical outcomes", () => {
+    for (const question of STATISTICS_QI_FAMILIES.flatMap((family) => family.questions)) {
+      const exhibit = JSON.stringify(question.exhibit);
+      expect(exhibit, question.id).toMatch(/unnamed investigational/i);
+      expect(exhibit, question.id).toMatch(/invented|constructed|simulated/i);
+      expect(exhibit, question.id).not.toMatch(/\bFIT\b|mammograph|\bPSA\b|\bCEA\b|readmission|turnover|reminder|checklist|badge|queue/i);
+    }
+    const diff = questions.find((question) => question.id === "question.statistics-ethics.confidence-interval.v2")!;
+    expect(JSON.stringify(diff.exhibit)).toMatch(/recurrence risk difference/);
+    expect(JSON.stringify(diff.exhibit)).toMatch(/percentage points/);
+    expect(diff.explanation).toContain("risk difference");
   });
 
   it("provides complete stories, visible beginner lessons, distinct fallbacks, and aligned rationale fields", () => {
@@ -101,7 +184,9 @@ describe("round-2 focused statistics, ethics, safety, and assent wording", () =>
       for (const id of question.supportingEvidenceClaimIds) {
         const claim = claims.get(id);
         expect(claim, `${question.id}: ${id}`).toBeDefined();
-        expect(claim!.reviewStatus).toBe("needs_clinician_review");
+        if (id.startsWith("claim.gs028se.")) expect(claim!.reviewStatus).toBe("needs_clinician_review");
+        else if (claim!.reviewStatus === "clinically_approved") expect(claim!.lastClinicianReview?.reviewer).toBeTruthy();
+        else expect(claim!.reviewStatus).toBe("needs_clinician_review");
         for (const sourceId of claim!.sourceIds) {
           expect(sources.some((source) => source.id === sourceId && source.evidenceClaimIds.includes(id)), `${id}: ${sourceId}`).toBe(true);
         }
@@ -141,6 +226,8 @@ describe("round-2 focused statistics, ethics, safety, and assent wording", () =>
     const review = readFileSync(new URL("../../../../../docs/reviews/stats-ethics-round2-full-20261015.md", import.meta.url), "utf8");
     expect(review).toContain("KEY FIRST FOR REVIEW ONLY");
     expect(review).toContain("Runtime randomizes all answer choices");
+    expect(review).toContain("Diagnosis distribution");
+    expect(review).toContain("Investigational premise distribution");
     const sections = review.split(/(?=^### `question\.)/m).slice(1);
     expect(sections).toHaveLength(118);
     for (const question of questions) {
@@ -153,6 +240,7 @@ describe("round-2 focused statistics, ethics, safety, and assent wording", () =>
       expect(section).toContain(question.explanation);
       for (const choice of question.answerChoices) expect(section).toContain(choice.rationale!);
       expect(section).toMatch(/\*\*Humor:\*\* (Situational|Straight)/);
+      expect(section).toContain(`**Diagnosis anchor:** ${CLINICAL_ANCHORS[anchorsByQuestion[question.id]!].label}`);
     }
   });
 });

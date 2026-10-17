@@ -1,9 +1,9 @@
 import { buildFamily, type ConceptSpec, type FamilySpec, type VariantSpec } from "./family-builder";
 import { STATISTICS_SOURCES } from "./source-catalog";
-import { STATISTICS_VARIANTS } from "./statistics-variants";
+import { CLINICAL_ANCHORS, STATISTICS_VARIANTS } from "./statistics-variants";
 
 type SourceKey = keyof typeof STATISTICS_SOURCES;
-type DraftVariant = Omit<VariantSpec, "claimIds">;
+type DraftVariant = (typeof STATISTICS_VARIANTS)[string][number];
 
 interface TopicSpec {
   id: string;
@@ -156,7 +156,7 @@ const topics: TopicSpec[] = [
     displayName: "Calculate absolute risk reduction and NNT",
     objective: "Calculate absolute risk reduction and number needed to treat while retaining comparator, outcome, and time horizon.",
     claim: "Absolute risk reduction is the comparator risk minus intervention risk, and number needed to treat is the reciprocal of that absolute difference with outcome and time horizon stated.",
-    limitation: "All values are fictional teaching data; NNT interpretation depends on the stated comparator, outcome, and 30-day horizon.",
+    limitation: "All values are fictional teaching data; NNT interpretation depends on the stated comparator, outcome, and follow-up horizon.",
     sources: ["cochraneNnt"],
     variants: STATISTICS_VARIANTS["arr-nnt"]!,
   },
@@ -436,6 +436,18 @@ const CONTRAST_CLAIMS_BY_VARIANT: Record<string, readonly (readonly string[])[]>
 };
 
 function toConcept(topic: TopicSpec): ConceptSpec {
+  const bindVariant = (variant: DraftVariant, index: number): VariantSpec => ({
+    ...variant,
+    claimIds: [
+      claimId(topic),
+      ...CLINICAL_ANCHORS[variant.clinicalAnchor].claimIds,
+      ...(CONTRAST_CLAIMS_BY_VARIANT[topic.id]?.[index] ?? []),
+      ...(topic.usesMcNemar && MCNEMAR_BOUNDARY_VARIANT_INDICES[topic.id]?.includes(index)
+        ? [mcnemarClaimId(topic)]
+        : []),
+    ],
+    ...(topic.employeeDiscussion ? { participant: DISCUSSION_PARTICIPANT } : {}),
+  });
   return {
     id: conceptId(topic),
     displayName: topic.displayName,
@@ -444,17 +456,10 @@ function toConcept(topic: TopicSpec): ConceptSpec {
     educationalTier: 1,
     conceptType: "applied_science",
     evidenceClaimIds: topicClaimIds(topic),
-    variants: topic.variants.map((variant, index) => ({
-      ...variant,
-      claimIds: [
-        claimId(topic),
-        ...(CONTRAST_CLAIMS_BY_VARIANT[topic.id]?.[index] ?? []),
-        ...(topic.usesMcNemar && MCNEMAR_BOUNDARY_VARIANT_INDICES[topic.id]?.includes(index)
-          ? [mcnemarClaimId(topic)]
-          : []),
-      ],
-      ...(topic.employeeDiscussion ? { participant: DISCUSSION_PARTICIPANT } : {}),
-    })) as ConceptSpec["variants"],
+    variants: [
+      bindVariant(topic.variants[0], 0), bindVariant(topic.variants[1], 1),
+      bindVariant(topic.variants[2], 2), bindVariant(topic.variants[3], 3),
+    ],
   };
 }
 
@@ -512,4 +517,22 @@ for (let index = 0; index < topics.length; index += 2) {
   });
 }
 
-export const STATISTICS_QI_FAMILIES = families.map(buildFamily);
+// Context claims already live in the clinical catalog. Bind them to questions
+// without duplicating records or adding clinical concepts to the tested family.
+export const STATISTICS_QI_FAMILIES = families.map((spec) => {
+  const built = buildFamily(spec);
+  return {
+    ...built,
+    cases: built.cases.map((clinicalCase) => {
+      const question = built.questions.find((item) => item.id === clinicalCase.decisionNodes[0]!.questionVariantId)!;
+      const topic = topics.find((item) => conceptId(item) === question.conceptId)!;
+      const variantIndex = built.questions.filter((item) => item.conceptId === question.conceptId).findIndex((item) => item.id === question.id);
+      const anchor = CLINICAL_ANCHORS[topic.variants[variantIndex]!.clinicalAnchor];
+      const sourceLabels = [...new Set([...clinicalCase.sourceLabels, ...anchor.sourceLabels])];
+      return {
+        ...clinicalCase, sourceLabels,
+        decisionNodes: clinicalCase.decisionNodes.map((node) => ({ ...node, sourceLabels })),
+      };
+    }),
+  };
+});

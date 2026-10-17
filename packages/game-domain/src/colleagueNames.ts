@@ -94,7 +94,7 @@ export const COLLEAGUE_NAMES: readonly ColleagueName[] = [
 ];
 
 /** Cosmetic/editorial frequency only. Never a clinical or demographic weight. */
-export const COLLEAGUE_NAME_EDITORIAL_WEIGHT = 0.05;
+export const COLLEAGUE_NAME_EDITORIAL_WEIGHT = 0.01;
 
 export interface ColleagueNameSelectionContext {
   readonly ageYears?: number;

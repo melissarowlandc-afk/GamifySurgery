@@ -54,10 +54,10 @@ describe("GS-028 October 7 runtime admission", () => {
     expect(oldRelease.concepts).toHaveLength(291);
     expect(oldRelease.cases).toHaveLength(852);
     expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
-    // Round-2 Phase 2A Revision 1: restoring only the scoped GS-028 cases
+    // Round 3 full pass: restoring only the scoped GS-028 cases
     // reproduces the prior 1b45db0e... hash. All unrelated records retain
     // b02c2a82...; counts and execution are unchanged (see the GS-028 ExecPlan).
-    expect(hash(oldRelease)).toBe("6663fe0b6245984655a4bccc1bb002349233ef51f33c980aaaaeecb28f98dfd4");
+    expect(hash(oldRelease)).toBe("7f37f52ed571295a6d463e76ee7f4de121a2862f9ddec32ce1d0801438e0460b");
   });
 
   it("retains clinic eligibility and unapproved draft metadata after admission", () => {

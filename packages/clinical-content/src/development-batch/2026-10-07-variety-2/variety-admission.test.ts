@@ -40,11 +40,11 @@ describe("GS-028 second October 7 additive runtime admission", () => {
     expect(oldRelease.concepts).toHaveLength(311);
     expect(oldRelease.cases).toHaveLength(930);
     expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
-    // Round 2, 2026-10-15: GS-028 wording and unconstrained adult profiles only.
+    // Round 3, 2026-10-16: scoped GS-028 clinical anchors and wording only.
     // Restoring the 108 prior GS-028 cases reproduces the previous whole hash.
     // All non-GS-028 records retain hash 7e1918260ca1433b7695f6ea91144e09866b2db4fe18960acdcf7e2336a45a02.
     // Counts, IDs, stages, pairing, and execution are unchanged; see the ExecPlan.
-    expect(hash(oldRelease)).toBe("e8da1a48cbd0590577be647eb3e83494dd62e3bf790028f762b450c0ce60b36d");
+    expect(hash(oldRelease)).toBe("ae2e3c2d2bd64d280632279f066508a12bb5905a96f4ef2c2c2812815b86f9ab");
   });
 
   it("binds every new timing entry once and includes all twenty-six neutral test estimates", () => {

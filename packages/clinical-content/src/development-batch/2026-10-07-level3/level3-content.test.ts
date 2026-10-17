@@ -44,9 +44,9 @@ describe("GS028 twenty level3-plus concepts",()=>{
   // Exclude exactly that documented lane, never arbitrary differing records.
   const protectedIntake={...old,concepts:old.concepts.filter(c=>!c.id.startsWith("concept.statistics-ethics.")&&c.id!=="concept.quality-improvement.pdsa-act-and-iterate"),cases:old.cases.filter(c=>!c.id.startsWith("case.gs028se."))};
   expect([protectedIntake.concepts.length,protectedIntake.cases.length,protectedIntake.cases.flatMap(c=>c.decisionNodes).length]).toEqual([303,900,1183]);
-  // Round-2 Phase 2A Revision 1: restoring only the four RCA/FMEA cases
+  // Round 3 full pass: restoring only the four RCA/FMEA cases
   // reproduces a5108ca5...; all unrelated records retain cf76b84d....
-  expect(sha(protectedIntake)).toBe("45bf70ac66568f64d22b2142f23c6baf38ba7737174107eb8f98a6995e98bc25");
+  expect(sha(protectedIntake)).toBe("284dc7a272a79f441e834f81c33a3027587eec57d1d37929bca986c61661694c");
   expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1375]);
  });
  it("has unique IDs, reciprocal atomic claims/sources and explicit evidence limitations",()=>{

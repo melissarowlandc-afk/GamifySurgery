@@ -4,13 +4,15 @@ import {
   testedConceptSchema,
 } from "../../schema";
 import { STATISTICS_DISCUSSION_HOST_ROLE_IDS, STATISTICS_QI_FAMILIES } from "./statistics-qi";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "./clinical-anchor-test-catalog";
+import { CLINICAL_ANCHORS, STATISTICS_CLINICAL_ANCHOR_BY_QUESTION } from "./statistics-variants";
 
 const concepts = STATISTICS_QI_FAMILIES.flatMap((family) => family.testedConcepts);
 const questions = STATISTICS_QI_FAMILIES.flatMap((family) => family.questions);
 const cases = STATISTICS_QI_FAMILIES.flatMap((family) => family.cases);
 const claims = STATISTICS_QI_FAMILIES.flatMap((family) => family.claims);
 const sourcesById = new Map<string, (typeof STATISTICS_QI_FAMILIES)[number]["sources"][number]>();
-for (const source of STATISTICS_QI_FAMILIES.flatMap((family) => family.sources)) {
+for (const source of [...STATISTICS_QI_FAMILIES.flatMap((family) => family.sources), ...EXISTING_ANCHOR_SOURCES]) {
   const previous = sourcesById.get(source.id);
   sourcesById.set(
     source.id,
@@ -122,7 +124,7 @@ describe("GS028 statistics and QI authoring draft", () => {
         expect(sourcesById.get(sourceId)?.evidenceClaimIds).toContain(claim.id);
       }
     }
-    const claimsById = new Map(claims.map((claim) => [claim.id, claim]));
+    const claimsById = new Map([...claims, ...EXISTING_ANCHOR_CLAIMS].map((claim) => [claim.id, claim]));
     for (const question of questions) {
       expect(new Set(question.supportingEvidenceClaimIds).size).toBe(question.supportingEvidenceClaimIds.length);
       for (const id of question.supportingEvidenceClaimIds) {
@@ -142,6 +144,8 @@ describe("GS028 statistics and QI authoring draft", () => {
       "claim.gs028se.statistics.independent-t",
       "claim.gs028se.statistics.rank-sum",
       "claim.gs028se.statistics.signed-rank",
+      "claim.hs.pattern-recognition",
+      "claim.hs.multimodal-planning",
     ]));
     for (const question of questions.filter((item) => /sensitivity-specificity|predictive-value-prevalence/.test(item.conceptId))) {
       expect(question.supportingEvidenceClaimIds).toContain("claim.gs028se.statistics.sensitivity-specificity");
@@ -152,7 +156,7 @@ describe("GS028 statistics and QI authoring draft", () => {
     }
   });
 
-  it("calculates each 30-day teaching ARR and NNT exhibit exactly", () => {
+  it("calculates each recurrence ARR and NNT while retaining its trial horizon", () => {
     const arr = questions.filter((question) => question.conceptId === "concept.statistics-ethics.arr-nnt");
     const datasets = arr.map((question) => {
       const exhibit = question.exhibit!;
@@ -182,10 +186,24 @@ describe("GS028 statistics and QI authoring draft", () => {
       { percentagePoints: 6, nnt: 17 },
     ]);
     expect(arr.map((question) => question.answerChoices.find((choice) => choice.isCorrect)?.label)).toEqual([
-      "ARR 10 percentage points; NNT 10 over 30 days",
-      "ARR 5 percentage points; NNT 20 over 30 days",
-      "ARR 20 percentage points; NNT 5 over 30 days",
-      "ARR 6 percentage points; NNT 17 over 30 days",
+      "ARR 10 percentage points; NNT 10 over two years",
+      "ARR 5 percentage points; NNT 20 over three years",
+      "ARR 20 percentage points; NNT 5 over five years",
+      "ARR 6 percentage points; NNT 17 over two years",
+    ]);
+    for (const [index, question] of arr.entries()) {
+      const horizon = ["two years", "three years", "five years", "two years"][index]!;
+      expect(question.patientPresentation.replaceAll("-year", " years")).toContain(horizon);
+      expect(question.stem).toContain(horizon);
+      expect(JSON.stringify(question.exhibit)).toContain(horizon);
+      expect(JSON.stringify(question.exhibit)).toMatch(/recurrence/i);
+      expect(JSON.stringify(question.exhibit)).not.toMatch(/readmission/i);
+      expect(question.supportingEvidenceClaimIds).toEqual(expect.arrayContaining([
+        ...CLINICAL_ANCHORS[STATISTICS_CLINICAL_ANCHOR_BY_QUESTION[question.id]!].claimIds,
+      ]));
+    }
+    expect(arr.map((question) => STATISTICS_CLINICAL_ANCHOR_BY_QUESTION[question.id])).toEqual([
+      "colon", "cutaneous-scc", "pneumothorax", "gist",
     ]);
   });
 

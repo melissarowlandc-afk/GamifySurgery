@@ -1829,3 +1829,844 @@ EXIT_CODE=0
 Filesystem baselines, original artifact copies, comparison receipts and raw command logs are in `.local-dev/l5-evidence-rebind-20261016/`. Original checkpoints SHA-256: `967a91da0debd354f60a294f8007e5e7928fd6528ec8897a8d58a769317ec6b7`; final checkpoints: `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`; final result: `ad1e949b2f9878421abc1504cae246f0a4388825e3644feaa85e5578a3d0881a`. Final checks verified both history entries, every current input, the unchanged guard/helper/e2e spec, and UTF-8 without BOM / LF for the delivered files. The existing plan prefix is preserved byte for byte.
 
 **LOCAL ONLY:** no Git, agents, installs, external messages, commits, pushes, deployment or publication. The manager owns scoped diff review, browser e2e acceptance, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**. No browser, launcher, playtest-origin/profile or owner-save pathway changed.
+
+## Round 3 full pass (2026-10-16)
+
+**Status:** bounded worker delivery for manager integration and clinical review. The approved sample direction is applied to the complete focused bank. All rewritten question variants and case reviews remain `needs_clinician_review`; owner approval of the samples was not a clinical version sign-off.
+
+The complete owner-readable review is regenerated at `docs/reviews/stats-ethics-round2-full-20261015.md` under the round 3 title. Each item has its diagnosis anchor, complaint, named/aged/sexed clinical story, exhibit, self-contained question, review-only key-first choices, per-choice rationales, visible lesson, distinct fallback, humor tag and existing claim/source bindings. Runtime answers remain shuffled.
+
+| Content lane | Concepts | Variants rewritten | Situational / straight |
+| --- | --- | --- | --- |
+| Main statistics/QI | 18 | 72 | 46 / 26 |
+| Main ethics | 10 | 40 | 12 / 28 |
+| RCA/FMEA | 1 | 4 | 0 / 4 |
+| Developmental assent | 1 | 2 | 1 / 1 |
+| Total | 30 | 118 | 59 / 59 |
+
+Materialized stories are 53–60 words; visible lessons 47–55; distinct fallbacks 21–31. Every choice has its own one- or two-sentence rationale; the rationale-repeat guard remains. Humor targets professional behavior, research promotion or bureaucracy, with separate premises and no jokes in choices. Capacity, surrogate decisions, DNR, disclosure, clinician fitness and coercion remain straight.
+
+**Clinical and numerical decisions.** The oncology exercises use recurrence after localized colon-cancer resection over two, three or five years, with the horizon stated in the vignette, question, choices and exhibit. The new antibody is unnamed and investigational. Surgical-device exercises use SSI, hernia recurrence or direct wound-healing outcomes. The continuous/ordinal methods use the registered superficial-SSI/open-wound and secondary-intention claims for wound area, depth, completed uncensored healing time or explicitly protocol-defined ratings. This replaces the samples’ hospital-stay/recovery proxies under the manager’s natural-outcome correction. The CI difference example is a two-year recurrence risk difference in percentage points; its null-value objective is unchanged. Blood-screen accuracy is explicitly for breast cancer in separate invented validation cohorts, while suspicious-mass clinical assessment and planned tissue sampling remain distinct.
+
+Every invented numerical observation is attached to an unnamed investigational antibody, blood test or device. Accepted-practice hair-preparation projects have no fabricated efficacy numbers. All original table cells and numerical key/value inputs are retained; captions, units, outcome labels and follow-up context now fit the clinical question. No real drug, trial, guideline or established test receives invented performance. Hospital operative scenes describe the clinical decision under discussion and do not add onsite procedures or change clinic capability contracts.
+
+**Evidence:** 88 existing atomic claims and 57 existing source records support the focused questions. Cross-batch diagnosis/care bindings resolve to the admitted catalog and their reciprocal sources; existing records are referenced without duplication. The complete catalog remains 734 claims / 452 sources with unchanged statements, source metadata, access/check dates, reuse status and review status. The sole metadata edit generalizes the existing ARR limitation from a fixed 30-day horizon to the stated follow-up horizon, as explicitly authorized; the atomic time-horizon principle is unchanged. Previously approved breast-imaging and enterotomy claims retain their original named clinical reviews. No new question is promoted by those context bindings.
+
+**Age/sex distribution.** Across all 118 clinical decision vignettes, including the named cases in employee discussions and counting each reached consent node, there are 64 Female and 54 Male patients, ages 6–77. Counting the four Female interpreter/consent pairs once gives 114 case patients: 60 Female / 54 Male. The preserved game participant contract remains 60 employee-hosted discussions plus 54 patient cases (58 patient decision nodes). Patient case defaults are 30 Female / 24 Male; those nodes are 34 Female / 24 Male. The 202 existing patient instantiation profiles remain 106 Female / 96 Male. All profile IDs and age/sex pairs are unchanged from the start of this round. The clinical patients in the 60 staff discussions are separate from their staff hosts and contribute 30 Female / 30 Male to the vignette distribution.
+
+Clinical vignette age/sex counts by decision node:
+
+| Age (years) | Female | Male |
+| --- | --- | --- |
+| 6 | 1 | 0 |
+| 11 | 1 | 0 |
+| 28 | 1 | 0 |
+| 29 | 1 | 2 |
+| 32 | 2 | 0 |
+| 33 | 0 | 1 |
+| 34 | 0 | 1 |
+| 35 | 0 | 3 |
+| 36 | 1 | 0 |
+| 38 | 0 | 1 |
+| 39 | 0 | 1 |
+| 40 | 1 | 0 |
+| 41 | 1 | 0 |
+| 42 | 0 | 2 |
+| 43 | 4 | 1 |
+| 44 | 0 | 1 |
+| 45 | 2 | 1 |
+| 46 | 3 | 1 |
+| 47 | 3 | 1 |
+| 48 | 0 | 3 |
+| 49 | 1 | 1 |
+| 50 | 1 | 0 |
+| 51 | 0 | 4 |
+| 52 | 0 | 2 |
+| 53 | 0 | 2 |
+| 54 | 1 | 1 |
+| 55 | 0 | 2 |
+| 56 | 4 | 1 |
+| 57 | 1 | 1 |
+| 58 | 2 | 5 |
+| 59 | 1 | 1 |
+| 60 | 1 | 1 |
+| 61 | 4 | 1 |
+| 62 | 1 | 1 |
+| 63 | 1 | 2 |
+| 64 | 2 | 0 |
+| 65 | 2 | 0 |
+| 66 | 2 | 0 |
+| 67 | 1 | 2 |
+| 68 | 6 | 2 |
+| 69 | 4 | 0 |
+| 70 | 1 | 1 |
+| 71 | 3 | 0 |
+| 72 | 2 | 1 |
+| 73 | 1 | 1 |
+| 74 | 1 | 2 |
+| 77 | 0 | 1 |
+
+Spanish-interpreter and reached-consent identities retain Female ages 43/68 and the same four existing sequences. Lily Walker remains age 6, Female, with mother Susan Walker present and art `level3-roster-v2.021`; Ruby Anderson remains age 11, Female, with father Thomas Anderson present and art `level3-roster-v2.027`. Their anchors are pediatric groin/epigastric hernia discussion, without new repair-age or legal-consent rules.
+
+**Frozen-save and scope proof.** All 30 concept IDs/objectives, 118 question IDs, choice IDs/correctness, 114 case IDs, instantiation profile IDs/demographics, participant/host contracts, facility stages, capability/settings gates, service/timing classifications, reward fields and terminal behavior are preserved. Displayed terminal clinical rationales follow the rewritten fallback. All prior evidence bindings remain. The four interpreter-to-consent sequences are retained; no P2-E pairing was created. The focused game-domain consumer passed 50 tests.
+
+The original pre-Phase-2A case restoration audit independently reproduces each original whole-release digest by restoring only the scoped cases. The unrelated-record digests are identical to the earlier proof. Only the four expressly authorized clinical-content historical guards are rebound:
+
+| Historical guard | Final digest | Unrelated-record digest |
+| --- | --- | --- |
+| beforeVariety1 | a42d72dad52c28c5e65ad684644ccf19bb5c91a46bfac0bb73c95224eae97832 | b02c2a8211b6a76f4ef3b7325c9543fb43a17d7211e9c7ff6beb5b946aa6dd23 |
+| beforeVariety2 | 2d6882a224724ea2cc2c243e39c06e324005640e96c606d133fe7b43b382b53f | 7e1918260ca1433b7695f6ea91144e09866b2db4fe18960acdcf7e2336a45a02 |
+| level3ProtectedIntake | c7604c5cda0f1d8312e457b51140f2e66c120e6e3a0b32b3b99ca8c863f3cb4b | cf76b84db4827c9863d99c42975c7e691e6fbd6bab55cb2c11a510deb3f7b8d7 |
+| beforeVariety3 | efe8f6c946aa343618c9eb3328bcf0ef45530822adf97e073511418797f7a716 | 5e456f01f237cad29e2cd783a481cf4c56e10c8f09417f60093f714e1470a2c2 |
+
+Files changed (including this appended handoff):
+
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/reviews/stats-ethics-round2-full-20261015.md`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/clinical-anchor-test-catalog.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/round2-wording.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-ethics-admission.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-variants.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/full-batch-content.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/patient-safety.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/remaining10-content.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/assent.ts`
+- `packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts`
+
+The new test catalog helper resolves cross-batch bindings against existing exports. Provenance tests retain their local catalog count/uniqueness/bidirectional checks and additionally resolve question context claims with reciprocal source checks. New checks cover all 118 diagnosis bindings, the separate patient/employee identities, honest investigational exhibits, recurrence endpoints and stated ARR horizons. Count, population, profile, identity, shuffle, pediatric safety and clinician-review guards are retained. No game-domain source or test change was needed.
+
+Feedback was checked against the reached-node facts as well as the original claim: the interpreter case concerns core biopsy, the final consent case retains the companion/transport threat and private refusal used by its rationales, and Ruby explicitly says she does not understand the plan. The acute-cholecystitis consent lesson refers to the planned operation rather than calling it elective.
+
+**Level 5 and concurrency.** No game-domain source, colleague-name file/test, Level 5 result, checkpoint fixture or recorded-input guard was edited. Against the starting filesystem snapshot, the audit observed no changed paths outside this lane. The root-level checkpoint also matches the manager’s pre-existing accepted digest. The full domain run has only the expected recorded-input check failure; the manager owns the combined rebind after both workers.
+
+The recorded-input comparison has exactly six changed paths: the five owned content sources (`statistics-variants.ts`, `statistics-qi.ts`, `ethics.ts`, `patient-safety.ts`, `assent.ts`) and the separate worker’s `packages/game-domain/src/colleagueNames.ts`. The read-only comparison is saved as `.local-dev/stats-ethics-round3-full/pinned-input-drift.json`; it does not alter any evidence.
+
+- `packages/game-domain/tests/level-five-integration.test.ts`: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+- `tools/qa/level-five-integration-results-20261012.json`: `ad1e949b2f9878421abc1504cae246f0a4388825e3644feaa85e5578a3d0881a`.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`: `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`.
+
+**Withheld / NEEDS SOURCE.** Retained surgical sponge remains withheld: no existing authored claim supports it. The supported verified-enterotomy event is used for the operative disclosure sample; the other disclosure variants retain medication/specimen/chart-error objectives with catalog diagnosis anchors. Metastatic colon-cancer regimens, molecular eligibility, real biologic efficacy, established-test performance, personal outcome probabilities, new exact clinical thresholds and procedure-specific benefits/harms remain withheld. Existing source limitations (including older/single-source material and institution/jurisdiction-dependent ethics) remain. `withheld.pediatric-clinic.adolescent-confidentiality` remains withheld. No new source was fetched or invented.
+
+**Exact final validation output.** Required commands ran from the repository root after the final content, tests, guards and full review were generated. The player suite was also run because `chartStructuredFields.test.tsx` consumes GS-028 feedback and legacy saves. Its existing `.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload was supplied through `NODE_OPTIONS` for the known sandbox `net use` EPERM; no preload or dependency was changed.
+
+<details>
+<summary>Clinical content — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/clinical-content@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
+
+
+ Test Files  88 passed (88)
+      Tests  637 passed (637)
+   Start at  22:33:08
+   Duration  35.31s (transform 2.88s, setup 0ms, import 23.85s, tests 3.64s, environment 5ms)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Game domain — exit 1, expected recorded-input guard only</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed) 257575ms
+     × binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash 28ms
+npm.cmd : 
+At line:2 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=th ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its 
+current game, balance, clinical and driver inputs and reconciles cash
+AssertionError: packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts: expected 
+'2233cab83fdc81f6847edc79990bf00c51d18…' to be '2da4d73fe57ba9acfaec338ab3b296a0bb262…' // Object.is equality
+
+Expected: "2da4d73fe57ba9acfaec338ab3b296a0bb262e1d0f41f750f012201c8b37ddd0"
+Received: "2233cab83fdc81f6847edc79990bf00c51d18f74e95ee8e885cb30aa8c82dbc8"
+
+ ❯ tests/level-five-integration.test.ts:47:71
+     45|           .replace("        nextFacilityLevel: 5,\n      },\n      LEV…
+     46|       }
+     47|       expect(createHash("sha256").update(source).digest("hex"), file).…
+       |                                                                       ^
+     48|     }
+     49|     expect(run.commandsReconciled).toBeGreaterThan(20_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 156 passed | 1 skipped (158)
+      Tests  1 failed | 4244 passed | 2 skipped (4247)
+   Start at  22:33:08
+   Duration  908.33s (transform 5.07s, setup 0ms, import 67.54s, tests 830.22s, environment 7ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Workspace typecheck — exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Player consumers — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+
+ Test Files  245 passed (245)
+      Tests  2166 passed (2166)
+   Start at  22:33:08
+   Duration  79.77s (transform 18.30s, setup 0ms, import 132.17s, tests 165.35s, environment 14ms)
+EXIT_CODE=0
+```
+
+</details>
+
+Filesystem baselines, original case snapshots, generated current records, numerical/identity checks, catalog comparison, restoration receipts and raw validation logs are in `.local-dev/stats-ethics-round3-full/`. Delivered files are UTF-8 without BOM with LF line endings. This append preserves the prior ExecPlan prefix byte for byte.
+
+**LOCAL ONLY:** no Git, agents, installs, web access, external messages, commits, pushes, deployment, publication, browser/profile/origin changes or save migration. Manager responsibilities remain scoped review/acceptance, the combined Level 5 evidence rebind, clinician review, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**. No additional owner design decision is needed for this content pass.
+
+## Round 3 revision 1 (2026-10-16)
+
+**Status:** bounded worker revision for manager review. The anchor-repetition correction is implemented across the 118-variant bank. All rewritten questions and case reviews remain `needs_clinician_review`; no new approval or release is implied.
+
+**Counts:** 30 concepts, 118 variants, 114 existing cases and four existing interpreter → consent sequences. This revision changes 114 question records/stories. Four already suitable vignettes retain their wording: surrogate-decisions v1, perioperative-dnr v1, error-disclosure v1 and Lily’s assent v1. The complete review still covers every variant. No P2-E pairing was created.
+
+**Anchor distribution:** 73 diagnosis groups, maximum 4 per diagnosis (cap 10); 54 investigational premise groups, maximum 6 (cap 6). No two variants of any concept share a diagnosis. The normalization groups childhood/adult inguinal hernia together, and the enterotomy event with incisional hernia. Repeated topical agents and cancer biologics share premise keys across diseases. Closure-device scenarios: zero.
+
+The full catalog sweep loaded 249 authored modules across approved-data, pilot-data and all development batches, with no load failures. It inventoried 411 authored concepts/clinical contexts, 766 distinct claims and 452 sources, including records outside the public index. The revised bank uses existing GI, endocrine, breast, skin, oncology, vascular, critical-care, anesthesia, gynecologic, immunologic, transplant and pediatric contexts. The full review includes the complete authored inventory, both bank-wide distribution tables, and the 30-topic register.
+
+Investigations include unnamed drugs, diagnostic tests, devices, techniques, care pathways and a screening program. Endpoints fit the clinical question: recurrence, leak, SSI, repeat drainage, diagnostic accuracy, healing or an appropriate physiologic measurement. Invented numbers and protocol assumptions stay attached to the unnamed investigation. No established drug, test, trial or guideline receives invented performance. ARR/NNT cells and stated horizons, all other table cells and numerical key/value inputs retain their prior values.
+
+Staff methods discussions now start with the named staff lead and a real clinical research question; they contain no second named patient introduction. Patient encounters retain their own diagnosis, age, sex and decision. Context-specific feedback was aligned with the new clinical quantities and procedures; study-design feedback and the four QI measure lessons address different structures or misconceptions.
+
+| Lane | Concepts | Variants covered | Situational / straight |
+| --- | --- | --- | --- |
+| Statistics/QI | 18 | 72 | 46 / 26 |
+| Ethics | 10 | 40 | 12 / 28 |
+| RCA/FMEA | 1 | 4 | 0 / 4 |
+| Developmental assent | 1 | 2 | 1 / 1 |
+| Total | 30 | 118 | 59 / 59 |
+
+Materialized review stories: 55–60 words; visible lessons: 47–55; distinct fallbacks: 21–31. Per-choice rationales remain one or two sentences and address their own choice. The 59/59 humor split is retained, with behavioral comedy and no jokes in answer choices. Restricted topics remain straight.
+
+**Evidence:** 170 existing atomic claims resolve to 165 existing sources for the focused bank. All 734 exported claims and 452 source records exactly match the prior full round-3 catalog, including the already generalized ARR horizon limitation. There are no new sources, claim statements, access/check dates or review-status changes. Original method/ethics bindings are retained; superseded diagnosis-only bindings are replaced by the new anchors. Existing approved claims retain their named version reviews; rewritten content remains draft.
+
+**Patient profiles:** 60 employee discussions remain employee discussions at the existing host/stage gate. There are 54 patient cases and 58 patient nodes: case defaults 30 Female / 24 Male, node defaults 34 Female / 24 Male, and 202 preserved patient profiles comprising 106 Female / 96 Male. Patient-node default ages span 6–77 years. Staff discussions have no patient demographics. All profile IDs and age/sex pairs are unchanged.
+
+Patient age/sex counts by decision node, including reached consent nodes:
+
+| Age | Female | Male |
+| --- | --- | --- |
+| 6 | 1 | 0 |
+| 11 | 1 | 0 |
+| 28 | 1 | 0 |
+| 29 | 1 | 2 |
+| 32 | 2 | 0 |
+| 33 | 0 | 1 |
+| 35 | 0 | 3 |
+| 36 | 1 | 0 |
+| 38 | 0 | 1 |
+| 40 | 1 | 0 |
+| 42 | 0 | 1 |
+| 43 | 4 | 0 |
+| 45 | 2 | 0 |
+| 46 | 2 | 0 |
+| 47 | 2 | 0 |
+| 48 | 0 | 2 |
+| 51 | 0 | 3 |
+| 54 | 0 | 1 |
+| 56 | 3 | 0 |
+| 58 | 1 | 3 |
+| 61 | 3 | 0 |
+| 63 | 0 | 1 |
+| 67 | 0 | 1 |
+| 68 | 4 | 1 |
+| 69 | 2 | 0 |
+| 71 | 2 | 0 |
+| 72 | 1 | 0 |
+| 73 | 0 | 1 |
+| 74 | 0 | 2 |
+| 77 | 0 | 1 |
+
+Spanish cases and their reached consent nodes retain Female ages 43/68 and the same paired identities. Lily Walker remains age 6, Female, with mother Susan Walker and art `level3-roster-v2.021`; Ruby Anderson remains age 11, Female, with father Thomas Anderson and art `level3-roster-v2.027`. Both parents remain in the same room. Lily retains the nonurgent groin-bulge assessment; Ruby’s nonurgent observation discussion now concerns uncomplicated reactive cervical nodes. No repair-age, adolescent privacy or universal legal-consent rule was added.
+
+**Frozen-save and scope proof:** all concept IDs/objectives, question and choice IDs, correctness, case IDs, profile IDs/demographics, participant contracts, facility/capability/settings gates, services/timing, rewards and terminal behavior are preserved. Displayed terminal clinical rationales follow their revised fallbacks. Three `no_terminal_outcome` narratives automatically quote the revised allergy-record choice labels; the audit verifies that exact generated-label relationship before normalizing those display strings. No clinical behavior was excluded from comparison. The focused game-domain consumer passed 50 tests.
+
+Restoring only the original scoped cases recreates all four original pre-Phase-2A protected release hashes. Unrelated records retain their earlier digests. The only historical hash updates are the four authorized clinical-content guards:
+
+| Guard | Verified final SHA-256 | Unrelated-record SHA-256 |
+| --- | --- | --- |
+| beforeVariety1 | 7f37f52ed571295a6d463e76ee7f4de121a2862f9ddec32ce1d0801438e0460b | b02c2a8211b6a76f4ef3b7325c9543fb43a17d7211e9c7ff6beb5b946aa6dd23 |
+| beforeVariety2 | ae2e3c2d2bd64d280632279f066508a12bb5905a96f4ef2c2c2812815b86f9ab | 7e1918260ca1433b7695f6ea91144e09866b2db4fe18960acdcf7e2336a45a02 |
+| level3ProtectedIntake | 284dc7a272a79f441e834f81c33a3027587eec57d1d37929bca986c61661694c | cf76b84db4827c9863d99c42975c7e691e6fbd6bab55cb2c11a510deb3f7b8d7 |
+| beforeVariety3 | a559b47f3470797900b15a1033acdc5374c64030025838ab945666935e8758c1 | 5e456f01f237cad29e2cd783a481cf4c56e10c8f09417f60093f714e1470a2c2 |
+
+Tests now check the three whole-bank caps, all six investigational categories, real diagnosis language and supporting claims in both patient and staff stories, separate employee/patient contracts, honest exhibits, full review coverage and reached-node identities. Local catalog counts, population, shuffle, safety, source reciprocity, numeric calculations and pediatric identity guards remain. The catalog helper resolves context claims from the complete exported catalog instead of a selected group of batches.
+
+**Files changed in this revision (including this append):**
+
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/reviews/stats-ethics-round2-full-20261015.md`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/clinical-anchor-test-catalog.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/round2-wording.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.test.ts`
+- `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-variants.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/patient-safety.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts`
+- `packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/assent.ts`
+- `packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts`
+
+**Concurrency and Level 5:** filesystem hashes show no changed path outside this lane. No game-domain source, colleague-name file/test, player source, Level 5 result, root checkpoint fixture or recorded-input guard was edited. The domain suite’s sole failure is the expected Level 5 recorded-input binding check. The manager retains the combined evidence rebind after both workers. Preserved Level 5 files:
+
+- `packages/game-domain/tests/level-five-integration.test.ts` — `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+- `tools/qa/level-five-integration-results-20261012.json` — `ad1e949b2f9878421abc1504cae246f0a4388825e3644feaa85e5578a3d0881a`.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`.
+
+**Withheld / NEEDS SOURCE:** retained surgical sponge remains withheld. The existing recognized, securely repaired enterotomy supports the operative disclosure context; no general inference of negligence from enterotomy is taught. Metastatic/molecular treatment rules, real investigational efficacy, established-test performance, individual risk estimates, new exact clinical thresholds and jurisdiction-specific consent/privacy rules remain outside this rewrite. `withheld.pediatric-clinic.adolescent-confidentiality` remains withheld. No additional new-source item is needed for the vignettes as written. Existing single-source, dated-source and institutional/jurisdiction limitations remain.
+
+**Exact final validation output:** the required commands ran from the repository root against the final content, tests, hash guards and regenerated review. The player suite also ran because its GS028 feedback/legacy-save consumer references these texts. Player used the existing `.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload through `NODE_OPTIONS` for the known sandbox `net use` EPERM, then restored the previous value; the preload was not edited.
+
+<details>
+<summary>Clinical content — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/clinical-content@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content
+
+
+ Test Files  88 passed (88)
+      Tests  638 passed (638)
+   Start at  23:16:49
+   Duration  35.65s (transform 2.97s, setup 0ms, import 24.04s, tests 3.71s, environment 6ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Game domain — exit 1; expected recorded-input failure only</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed) 257243ms
+     × binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash 39ms
+npm.cmd : 
+At line:2 char:1
++ npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=th ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its 
+current game, balance, clinical and driver inputs and reconciles cash
+AssertionError: packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts: expected 
+'1c6d65c0c9c9ac4b6e159f6b3a4365c50e823…' to be '2da4d73fe57ba9acfaec338ab3b296a0bb262…' // Object.is equality
+
+Expected: "2da4d73fe57ba9acfaec338ab3b296a0bb262e1d0f41f750f012201c8b37ddd0"
+Received: "1c6d65c0c9c9ac4b6e159f6b3a4365c50e823d9f5b63eafe354782ad7299429c"
+
+ ❯ tests/level-five-integration.test.ts:47:71
+     45|           .replace("        nextFacilityLevel: 5,\n      },\n      LEV…
+     46|       }
+     47|       expect(createHash("sha256").update(source).digest("hex"), file).…
+       |                                                                       ^
+     48|     }
+     49|     expect(run.commandsReconciled).toBeGreaterThan(20_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 156 passed | 1 skipped (158)
+      Tests  1 failed | 4244 passed | 2 skipped (4247)
+   Start at  23:16:49
+   Duration  910.73s (transform 5.25s, setup 0ms, import 68.10s, tests 832.07s, environment 7ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+EXIT_CODE=1
+```
+
+</details>
+
+<details>
+<summary>Workspace typecheck — exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Player — exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+
+ Test Files  245 passed (245)
+      Tests  2166 passed (2166)
+   Start at  23:16:49
+   Duration  80.68s (transform 18.52s, setup 0ms, import 133.26s, tests 167.81s, environment 14ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+The complete owner review is `docs/reviews/stats-ethics-round2-full-20261015.md`. Baselines, the full-catalog inventory, assignment register, numerical/identity checks, restoration receipts, scope audit and raw validation logs are under `.local-dev/stats-ethics-round3-revision1/`. Delivered files are UTF-8 without BOM and use LF. This append preserves the previous plan prefix byte for byte.
+
+**LOCAL ONLY:** no Git, agents, installs, web access, external messages, commit, push, deployment, publication, browser/origin change or save migration. Remaining decisions are manager acceptance and named clinician review; the manager owns the combined Level 5 rebind, current-thread handoff integration and GitHub checkpoint reminder. No additional owner design decision is needed.
+
+### Level 5 evidence rebind 3 (2026-10-17)
+
+Completed the bounded Sol-worker rebind after the manager-accepted colleague editorial weight reduction from **0.05 to 0.01** and the stats/ethics **round 3 / revision 1** content pass. The actual reducer journey was rerun from its existing funded synthetic Level 4 opening with the original seed and current sources. The established lower helper then retained the actual third-result progress state. Both commands exited 0. All original journey and integration assertions were kept.
+
+#### Files changed and scope
+
+- `tools/qa/level-five-integration-results-20261012.json`: regenerated run summary/current hashes; appended the previous run as `inputHistory[2]`, preserving entries `[0]` and `[1]` exactly. There are now three history entries.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`: regenerated all nine actual reducer saves, including the lower retry.
+- This append-only handoff section.
+
+**The guard was not edited.** Its SHA-256 remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. No checks were loosened, bypassed or newly skipped. This worker did not edit the name-pool code, clinical content, e2e specs, runner/helper scripts or any other source. Clinical review statuses were not modified by this rebind.
+
+As in the previous rebinds, the unchanged runner emits the historical literal `liveCap: 4`, while its current independently loaded validated context uses ordinary cap **5**. The result metadata was corrected to 5 when preserving history; every measured value was retained exactly. The actual helper output SHA-256 before metadata/history addition is `fd9248842b3994d297060aaacd42df093fed5021d91ca43a54ee0d0d56340a1a`.
+
+#### Input provenance and preflight discovery
+
+The previous run recorded **373 inputs**; the fresh run records **374**. **Six recorded hashes changed** (the five content inputs and `colleagueNames.ts`), **one helper is newly recorded**, **367 existing hashes are unchanged**, and none was removed. Restoring only the colleague-weight literal from `0.01` to `0.05` in memory exactly reproduces its previous recorded file digest.
+
+Preflight also found `clinical-anchor-test-catalog.ts`. The round 3 revision 1 handoff explicitly lists this helper, and its only local consumers are clinical-content tests. The established runner scans all eligible source `.ts` files, so it collects this new helper as well. Its current hash is now bound directly; neither the collector nor guard was changed to exclude it. This accounts for the extra input beyond the six described runtime/content changes.
+
+`inputHistory[2]` retains the previous run's complete 373-entry input map, helper fingerprint, seed/version/cap metadata and result-file SHA-256 `ad1e949b2f9878421abc1504cae246f0a4388825e3644feaa85e5578a3d0881a`. Both earlier entries retain all their original hashes and historical compatibility provenance. The current top-level input map hashes all 374 files directly, with no new compatibility exception. Source, helper, guard and e2e-spec fingerprints remained stable through the replay and validations.
+
+| Input | Previous recorded SHA-256 | Fresh-run SHA-256 |
+| --- | --- | --- |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/clinical-anchor-test-catalog.ts` | Not recorded in previous run | `73ef68e2e12939536d7f1697b116c5946dcf5b205fff071fdeb654ae5e4fdc84` |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts` | `2da4d73fe57ba9acfaec338ab3b296a0bb262e1d0f41f750f012201c8b37ddd0` | `1c6d65c0c9c9ac4b6e159f6b3a4365c50e823d9f5b63eafe354782ad7299429c` |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.ts` | `e24e3454662e8728ba3bd4f896f5bcfb042625b0067431f5a56aafe4a3346476` | `633d689ae0d607077b13b738872c4ef5d94db0ef1fa0f2c0b8a9198ee3e18058` |
+| `packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-variants.ts` | `09d9650b05f2ae50891e423c49b57169cc74d99d83c0b904a84e7cdce6bdc444` | `8c4800f35615f4c16e889799048973b83e3ca823de0822467ae5908b10befaca` |
+| `packages/clinical-content/src/development-batch/2026-10-07-variety-2/patient-safety.ts` | `f28f40a4bbbe3f12374c25033863f5297f85abf8fd5be3cffa3bef26c085c32d` | `03ac56c0905c78d0ae44699eac69a09ee076952193de77065f9a40d7e8c0c304` |
+| `packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/assent.ts` | `da198959d1d168dd5a1a112f9de0e08f09870f00092be0fc1859512a9129cc64` | `abac4e8559876ff47443ebe595f15330fb0a5b7fffa908fac3557629eca21a94` |
+| `packages/game-domain/src/colleagueNames.ts` | `50103eb51f76024227355afe4a42641e1c7e5ab12bce6cb36e779f85db140c54` | `b03d78693e47e4580d7cca051ab4b19b28bc699ddbf4d8c42f0998e45d24621c` |
+
+#### Actual run numbers
+
+- Seed `level-five-m9.integration.01`; **27,944 applied and cash-reconciled commands**, exceeding the unchanged 20,000-command guard.
+- First answers **555 total / 466 at Level 5**; completed daily rounds **38**; positive comfort uses **1,031**.
+- Cash, all in cents: **1,785,500 + 15,728,300 - 292,202 - 10,124,856 - 1,048,000 = 6,048,742** (opening + gross - stock - paid operating - capital = closing). Per-command and lifetime reconciliation passed.
+- XP goal tick **15,493**. Inspection unlock tick **16,281** at **2,162 XP / 91 displayed satisfaction / 100 average staff morale / 9 employed staff**.
+- Supplier savings **2,098 stock cents / 751,140 upkeep sixtieth-cents**; retired receipts **5,692**; retired encounters **423**.
+- Every measured summary field and all three report objects are identical to the previous run. Higher retry remains best, lower retry is latest, and the immutable first-finish report remains the first report. Round/comfort, supplier-savings, retirement, report and pause assertions passed.
+
+| Report | Raw total score | Qualifying patients | Final role |
+| --- | --- | --- | --- |
+| First | 62.49398772204757 | 52 | Immutable first finish |
+| Higher retry | 66.65755625217645 | 50 | Best completed report |
+| Lower retry | 45.489710466735836 | 48 | Latest completed report |
+
+#### Changed saves and consumers
+
+**All nine checkpoint saves changed.** Exact comparison found **195 replaced strings and 36 added `sourceLabels` strings**. Differences include generated names and their text, frozen round-3 clinical wording/feedback and source labels. No numeric checkpoint value changed. All nine retain their previous tick, XP, cash, facility level, inspection phase and report state.
+
+| Changed scenario | Tick | XP | Cash cents | Inspection phase |
+| --- | --- | --- | --- | --- |
+| `integration-l4` | 3965 | 754 | 2656300 | No Level 5 state |
+| `integration-build` | 3965 | 0 | 1608300 | locked |
+| `integration-preparing` | 16282 | 2162 | 4143642 | preparing |
+| `integration-running` | 16419 | 2184 | 4148611 | running |
+| `integration-final` | 19338 | 2750 | 4892761 | running |
+| `integration-finish` | 19339 | 2750 | 4892761 | completed |
+| `integration-repeat-final` | 22995 | 3466 | 5747398 | running |
+| `integration-repeat` | 22996 | 3466 | 5747398 | completed |
+| `integration-lower-repeat` | 26053 | 3596 | 6048742 | completed |
+
+`tests/e2e/level-five.spec.ts` consumes all nine changed saves. It was not edited or run. The launch fixture factory and domain/player integration/launch tests also consume these saves; the full domain suite and both focused player consumer files passed with the refreshed artifacts. Manager browser acceptance should use the new saves. No previous browser pass is claimed as fresh evidence.
+
+#### Validation and exact output
+
+**All requested validations passed:** game-domain **157 files passed / 1 skipped; 4,245 tests passed / 2 existing skipped; 0 failures**; root typecheck **exit 0**. Additional focused player consumers: **2 files / 33 tests passed**. All npm commands below used the existing `.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload through `NODE_OPTIONS` (`--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs`). Typecheck and both test commands ran after regeneration and history preservation. The runner/helper emitted Node's experimental TypeScript-transform warning and still exited 0.
+
+Exact output follows; only UTF-16 log encoding and CRLF were normalized for this UTF-8/LF document. `EXIT_CODE` lines are the wrappers' recorded statuses.
+
+<details>
+<summary>Actual reducer journey: exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-run.mjs --write
+
+L4 10h, 114 XP
+L4 20h, 210 XP
+L4 30h, 334 XP
+L4 40h, 450 XP
+L4 50h, 566 XP
+L4 60h, 692 XP
+L5 70h, 52 XP
+L5 80h, 146 XP
+L5 90h, 250 XP
+L5 100h, 366 XP
+L5 110h, 472 XP
+L5 120h, 566 XP
+L5 130h, 682 XP
+L5 140h, 786 XP
+L5 150h, 880 XP
+L5 160h, 996 XP
+L5 170h, 1080 XP
+L5 180h, 1196 XP
+L5 190h, 1300 XP
+L5 200h, 1416 XP
+L5 210h, 1532 XP
+L5 220h, 1626 XP
+L5 230h, 1720 XP
+L5 240h, 1816 XP
+L5 250h, 1930 XP
+L5 260h, 2016 XP
+L5 270h, 2142 XP
+Inspection 1: 62.49398772204757, 52/20
+Inspection 2: 66.65755625217645, 50/20
+Inspection 3: 45.489710466735836, 48/20
+{
+  "commands": 27944,
+  "closingCashCents": 6048742,
+  "xpGoalTick": 15493,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 16281,
+    "clinicalXp": 2162,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "snapshots": {
+    "integration-l4": {
+      "tick": 3965,
+      "xp": 754,
+      "phase": null
+    },
+    "integration-build": {
+      "tick": 3965,
+      "xp": 0,
+      "phase": "locked"
+    },
+    "integration-preparing": {
+      "tick": 16282,
+      "xp": 2162,
+      "phase": "preparing"
+    },
+    "integration-running": {
+      "tick": 16419,
+      "xp": 2184,
+      "phase": "running"
+    },
+    "integration-final": {
+      "tick": 19338,
+      "xp": 2750,
+      "phase": "running"
+    },
+    "integration-finish": {
+      "tick": 19339,
+      "xp": 2750,
+      "phase": "completed"
+    },
+    "integration-repeat-final": {
+      "tick": 22995,
+      "xp": 3466,
+      "phase": "running"
+    },
+    "integration-repeat": {
+      "tick": 22996,
+      "xp": 3466,
+      "phase": "completed"
+    }
+  },
+  "reports": [
+    {
+      "score": 62.49398772204757,
+      "patients": 52
+    },
+    {
+      "score": 66.65755625217645,
+      "patients": 50
+    },
+    {
+      "score": 45.489710466735836,
+      "patients": 48
+    }
+  ]
+}
+node : (node:29416) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-run.mjs --write *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:29416) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Actual lower-retry checkpoint: exit 0</summary>
+
+```text
+node tools/qa/level-five-integration-lower.mjs
+
+M9 lower retry checkpoint PASS: latest 45.489710466735836, best 66.65755625217645, immutable first 62.49398772204757.
+node : (node:1616) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+At line:3 char:1
++ node tools/qa/level-five-integration-lower.mjs *> $taskLog
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:1616) Exp...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Full game-domain suite: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+
+ Test Files  157 passed | 1 skipped (158)
+      Tests  4245 passed | 2 skipped (4247)
+   Start at  23:55:45
+   Duration  889.58s (transform 4.68s, setup 0ms, import 67.55s, tests 811.03s, environment 7ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Root typecheck, after artifact regeneration: exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+EXIT_CODE=0
+```
+
+</details>
+
+<details>
+<summary>Focused player consumers: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run src/session/levelFiveIntegration.test.tsx src/session/levelFiveLaunch.test.tsx --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+
+ Test Files  2 passed (2)
+      Tests  33 passed (33)
+   Start at  23:55:45
+   Duration  12.57s (transform 4.56s, setup 0ms, import 7.30s, tests 5.10s, environment 0ms)
+
+EXIT_CODE=0
+```
+
+</details>
+
+Filesystem baselines, original artifacts, source/weight proof, comparison receipts and raw logs: `.local-dev/l5-evidence-rebind-20261017/` (`baseline.json`, `artifact-audit.json`, `integrity-review.json`, original artifact copies and command logs). Original checkpoint SHA-256: `5e2d00d66d63e60903cab57514a5fbd6f33208fb02fa17834948f9427f5eae33`; final checkpoints: `3baf8e3d564893d432ca8a2e86c0093648b8ae804c94af922deab0047a2f28dd`; final result: `1ec62f7a022ec88ee5dbbe58016d83dee88c4efb838f740eb644d9c1aab4fd14`. Final checks verified all current inputs, the full three-entry history, unchanged guard/helper/e2e fingerprints and UTF-8 without BOM / LF. The existing plan prefix is preserved byte for byte.
+
+**LOCAL ONLY:** no Git, agents, installs, external messages, commits, pushes, deployment or publication. The manager owns scoped diff review, browser acceptance, current-thread handoff integration and the audited GitHub checkpoint/reminder to say **"push to GitHub"**. No browser, launcher, playtest-origin/profile or owner-save pathway changed.

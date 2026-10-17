@@ -13,11 +13,11 @@ describe("manager-selected Variety-3 prototype admission", () => {
       cases: release.cases.filter(item => !caseIds.has(item.id)) };
     expect([prior.concepts.length, prior.cases.length, prior.cases.flatMap(item => item.decisionNodes).length])
       .toEqual([360, 1090, 1395]);
-    // Round-2 Phase 2A Revision 1: restoring only the 114 scoped cases
+    // Round 3 full pass: restoring only the 114 scoped cases
     // reproduces the independently captured e590b21f... intake hash.
     // All unrelated records retain 5e456f01... (see the GS-028 ExecPlan).
     expect(createHash("sha256").update(`${JSON.stringify(prior, null, 2)}\n`).digest("hex"))
-      .toBe("94999fac638cc41647c8dd709080e0a58cbb475f69e35b0e956f8436d5e870fe");
+      .toBe("a559b47f3470797900b15a1033acdc5374c64030025838ab945666935e8758c1");
   });
 
   it("registers exact concepts, cases and identities once at their declared earliest levels and settings", () => {

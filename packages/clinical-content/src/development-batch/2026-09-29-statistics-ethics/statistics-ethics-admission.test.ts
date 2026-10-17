@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "./clinical-anchor-test-catalog";
 import {
   answerChoiceTimingRegistryEntrySchema,
   syntheticClinicalCaseSchema,
@@ -95,7 +96,13 @@ describe("GS-028 statistics and ethics batch admission", () => {
     }
     for (const question of questions) {
       expect(question.supportingEvidenceClaimIds.length).toBeGreaterThan(0);
-      for (const claimId of question.supportingEvidenceClaimIds) expect(claimIds.has(claimId)).toBe(true);
+      for (const claimId of question.supportingEvidenceClaimIds) {
+        const claim = [...claims, ...EXISTING_ANCHOR_CLAIMS].find((item) => item.id === claimId);
+        expect(claim, `${question.id}: ${claimId}`).toBeDefined();
+        for (const sourceId of claim!.sourceIds) {
+          expect([...sources, ...EXISTING_ANCHOR_SOURCES].some((source) => source.id === sourceId && source.evidenceClaimIds.includes(claimId)), `${claimId}: ${sourceId}`).toBe(true);
+        }
+      }
     }
     for (const claim of claims) {
       expect(claim.sourceIds.length).toBeGreaterThan(0);

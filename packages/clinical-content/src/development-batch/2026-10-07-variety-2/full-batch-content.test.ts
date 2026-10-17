@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "../2026-09-29-statistics-ethics/clinical-anchor-test-catalog";
 import { answerChoiceTimingRegistryEntrySchema, syntheticClinicalCaseSchema, testedConceptSchema } from "../../schema";
 import {
   GS028_20261007_VARIETY2_AUTHORING_CONCEPTS as concepts,
@@ -92,7 +93,13 @@ describe("GS-028 second October 7 complete accepted authoring packet", () => {
       expect(item.officialUrl).toMatch(/^https:\/\//);
       for (const id of item.evidenceClaimIds) expect(claimById.get(id)?.sourceIds, id).toContain(item.id);
     }
-    for (const question of questions) for (const id of question.supportingEvidenceClaimIds) expect(claimById.has(id), id).toBe(true);
+    for (const question of questions) for (const id of question.supportingEvidenceClaimIds) {
+      const claim = claimById.get(id) ?? EXISTING_ANCHOR_CLAIMS.find((item) => item.id === id);
+      expect(claim, `${question.id}: ${id}`).toBeDefined();
+      for (const sourceId of claim!.sourceIds) {
+        expect([...sources, ...EXISTING_ANCHOR_SOURCES].some((source) => source.id === sourceId && source.evidenceClaimIds.includes(id)), `${id}: ${sourceId}`).toBe(true);
+      }
+    }
   });
 
   it("has eighty balanced single-best tasks and preserves each patient profile on paired second nodes", () => {

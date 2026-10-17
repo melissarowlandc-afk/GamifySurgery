@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "../2026-09-29-statistics-ethics/clinical-anchor-test-catalog";
 import { answerChoiceTimingRegistryEntrySchema, syntheticClinicalCaseSchema, testedConceptSchema } from "../../schema";
 import { TACROLIMUS_FAMILY } from "./tacrolimus";
 import { ANESTHESIA_REMAINING_FAMILY } from "./anesthesia-remaining";
@@ -97,7 +98,13 @@ describe("GS028 second October 7 remaining-ten original draft content", () => {
     for (const concept of concepts) for (const id of concept.evidenceClaimIds) expect(claimById.has(id), id).toBe(true);
     for (const question of questions) {
       expect(question.supportingEvidenceClaimIds.length, question.id).toBeGreaterThan(0);
-      for (const id of question.supportingEvidenceClaimIds) expect(claimById.has(id), id).toBe(true);
+      for (const id of question.supportingEvidenceClaimIds) {
+        const claim = claimById.get(id) ?? EXISTING_ANCHOR_CLAIMS.find((item) => item.id === id);
+        expect(claim, `${question.id}: ${id}`).toBeDefined();
+        for (const sourceId of claim!.sourceIds) {
+          expect([...sources, ...EXISTING_ANCHOR_SOURCES].some((source) => source.id === sourceId && source.evidenceClaimIds.includes(id)), `${id}: ${sourceId}`).toBe(true);
+        }
+      }
     }
     for (const claim of claims) {
       expect(claim.lastCheckedOn).toBe("2026-10-07");

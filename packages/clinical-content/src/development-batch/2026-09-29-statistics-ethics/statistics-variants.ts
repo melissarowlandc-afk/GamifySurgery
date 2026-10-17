@@ -1,763 +1,783 @@
 import type { VariantSpec } from "./family-builder";
 
-type DraftVariant = Omit<VariantSpec, "claimIds">;
+type DraftVariant = Omit<VariantSpec, "claimIds"> & { clinicalAnchor: ClinicalAnchorKey };
 type FourVariants = [DraftVariant, DraftVariant, DraftVariant, DraftVariant];
 
-// Wording revision: 2026-10-15, round 2 Phase 2A. All content remains needs_clinician_review.
-// Practice data retain their original meaning; they are never personal risk predictions.
+// Wording revision: 2026-10-16, round 3 clinical anchors. All content remains needs_clinician_review.
+// Invented study observations belong only to unnamed investigational interventions.
 export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
   "independent-t": [
     {
       "slug": "two-teams",
-      "complaint": "Turnover comparison",
-      "presentation": "{patientName}, the clinical huddle lead, is preparing a staffing report on turnover times from two teams. Each worker contributed one measurement. The director wants the analysis finished before his interview about the project's success; he has already rehearsed both the question and his modest reply. The teams' measurements and distribution checks are in the exhibit.",
-      "stem": "Which analysis best compares mean turnover time between the two teams in the exhibit?",
+      "complaint": "venous leg ulcer study",
+      "presentation": "{patientName}, the journal-club lead, reviews a trial of a new compression device for venous leg ulcers in adults whose arterial assessment permits compression. Two groups contribute healing times. The presenter cites his own testimonial as independent confirmation; he submitted it under his middle name so the reviews would look less repetitive. The protocol's assumptions are available.",
+      "stem": "Which analysis best fits the study's comparison of mean healing time, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_two-teams",
         "label": "Two-sample t test",
-        "rationale": "The target is mean turnover time in two separate teams. A two-sample t test fits the continuous measurements and the stated distribution and spread assumptions."
+        "rationale": "The study compares means from two groups of different people, and its stated continuous-data assumptions are reasonable. A two-sample t procedure matches that structure."
       },
       "distractors": [
         {
           "id": "d1_two-teams",
           "label": "Paired t test",
-          "rationale": "A paired t test needs repeated or deliberately matched measurements. Lining up unrelated workers' spreadsheet rows does not provide that link."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_two-teams",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank analyzes linked differences. There is no before-and-after or matched-worker difference to rank in this turnover comparison."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_two-teams",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ranked distributions in separate groups. It does not directly answer this question about mean turnover time under the supplied normal-model assumptions."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         }
       ],
-      "teachingPoint": "Start with who supplied each observation. Each worker belongs to only one team, so there is no before-and-after link to preserve. A two-sample t test compares the team means under the stated assumptions. Spreadsheet rows do not become matched observations just because they sit beside each other.",
-      "explanation": "Use a two-sample t test: the workers form two separate groups, the outcome is continuous, and the exhibit supplies reasonable assumptions for comparing means.",
+      "teachingPoint": "Start with the outcome and who contributed it. This study compares mean healing time between two groups of different people, with reasonable normal-model assumptions and complete follow-up. A two-sample t test fits that question. Remember: sharing an outcome measure does not make observations linked; repeated people or deliberate matching would change the structure.",
+      "explanation": "Use a two-sample t test for mean completed healing time: the groups contain different people, and the stated continuous-data assumptions are reasonable.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Turnover project: observations for practice",
-        "body": "Two clinic teams contributed turnover minutes. Each worker was measured once and belongs to only one team. The distributions are approximately normal with similar spread. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Healing time — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational compression device in venous leg ulcers. Outcome: healing time, in days. Two separately sampled treatment groups contribute one measurement per person. Groups do not overlap and nobody is matched. Measurements are approximately normal with comparable variability and no influential outliers. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "venous-ulcer"
     },
     {
       "slug": "two-cohorts",
-      "complaint": "Checklist comparison",
-      "presentation": "{patientName}, the journal-club lead, is reviewing checklist scores before the education committee meets. Two separately recruited trainee cohorts completed the same instrument, and no trainee belongs to both. A colleague says, 'They used the same checklist, so these must be repeated measurements.' The committee's report compares average scores; the exhibit summarizes recruitment and score distributions.",
-      "stem": "Which analysis best compares mean checklist scores between the two cohorts described in the exhibit?",
+      "complaint": "lactational breast abscess study",
+      "presentation": "{patientName}, the breast-service research lead, reviews a trial of a new topical agent after drainage of lactational breast abscesses. Different participants received each preparation. Ultrasound measured the remaining cavity area at the protocol visit. A colleague proposes linking the groups because the same sonographer collected all measurements. The report includes the distribution checks for analysis.",
+      "stem": "Which analysis best fits the study's comparison of mean remaining abscess-cavity area, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_two-cohorts",
         "label": "Two-sample t test",
-        "rationale": "These are continuous scores from two separately recruited cohorts, with suitable normality and spread assumptions. The two-sample t test answers the requested mean-score comparison."
+        "rationale": "The study compares means from two groups of different people, and its stated continuous-data assumptions are reasonable. A two-sample t procedure matches that structure."
       },
       "distractors": [
         {
           "id": "d1_two-cohorts",
           "label": "Paired t test",
-          "rationale": "Using the same instrument does not link the trainees. A paired t test would require each score to have a repeated or deliberately matched counterpart."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_two-cohorts",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum could address a ranked distributional comparison. The requested target here is the difference in means, with the stated t-model assumptions satisfied."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         },
         {
           "id": "d3_two-cohorts",
           "label": "Chi-square test of independence",
-          "rationale": "Chi-square analyzes counts in categories. The recorded checklist score is continuous; the cohort labels identify groups rather than turn the outcome into category counts."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Using the same ruler does not make two people the same observation. These cohorts contain different trainees, with no matching between them. A two-sample t test compares their mean continuous scores when the stated assumptions hold. A paired procedure would require a genuine link between observations.",
-      "explanation": "The two cohorts contain different trainees, not repeat scores from the same people. Compare their means with a two-sample t test under the stated assumptions.",
+      "teachingPoint": "The scanner does not define the relationship between observations. These abscess-cavity areas come from different people in two nonoverlapping groups, with suitable continuous-data assumptions. A two-sample t test compares their means. Remember to ask who was measured, not whether the groups used the same instrument or had the same number of columns.",
+      "explanation": "A two-sample t test fits mean remaining abscess-cavity area in two nonoverlapping groups. Using the same sonographer does not create repeated or matched observations.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Checklist project: observations for practice",
-        "body": "Two separately recruited cohorts completed a continuous checklist score. No trainee appears in both cohorts. Scores are approximately normal and variances are similar. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Remaining abscess-cavity area — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational topical agent in lactational breast abscesses. Outcome: remaining abscess-cavity area, in square centimeters. Two separately sampled treatment groups contribute one measurement per person. Groups do not overlap and nobody is matched. Measurements are approximately normal with comparable variability and no influential outliers. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "lactational-abscess"
     },
     {
       "slug": "two-shifts",
-      "complaint": "Task-time comparison",
-      "presentation": "{patientName}, the workflow review lead, is checking morning and evening completion times before signing a staffing report. Different workers contributed to each shift sample. A colleague proposes analyzing the shift labels as categories and leaves the time column out of the draft. The report's stated aim is to compare average completion time between the shifts.",
-      "stem": "Which analysis best compares mean completion time between shifts using the observations in the exhibit?",
+      "complaint": "superficial partial-thickness burn study",
+      "presentation": "{patientName}, the burn-service discussion lead, reviews two new cooling dressings for superficial partial-thickness burns. The trial records remaining wound depth at a protocol visit, with each adult contributing one measurement. A colleague has prepared a comparison of dressing labels. The investigators' stated question concerns average remaining depth, and the measurement assumptions appear in the exhibit.",
+      "stem": "Which analysis best fits the study's comparison of mean remaining burn depth, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_two-shifts",
         "label": "Two-sample t test",
-        "rationale": "Different workers contribute continuous times to the two shifts. The two-sample t test compares their means under the approximately normal, comparable-variability assumptions supplied."
+        "rationale": "The study compares means from two groups of different people, and its stated continuous-data assumptions are reasonable. A two-sample t procedure matches that structure."
       },
       "distractors": [
         {
           "id": "d1_two-shifts",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank requires linked differences, such as repeated measurements or matched counterparts. Morning and evening labels alone do not pair these different workers."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d2_two-shifts",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum answers a question about ranked distributions. It is not the direct mean-time comparison requested under the suitable normal-model assumptions in this exhibit."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         },
         {
           "id": "d3_two-shifts",
           "label": "Chi-square test of independence",
-          "rationale": "Shift is a grouping category, but completion time is the outcome. Chi-square would analyze categorical counts rather than compare these average times."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Distinguish the grouping label from the measured outcome. Morning and evening identify two groups; completion time is continuous. Because workers contribute to only one sample and the stated distributional assumptions are reasonable, a two-sample t test fits the mean comparison. A categorical group label does not turn minutes into categories.",
-      "explanation": "Compare the two mean times with a two-sample t test. Shift is the grouping variable; the continuous time measurements remain the outcome.",
+      "teachingPoint": "Device names identify the groups; measured burn depth is the continuous outcome. With two groups of different people and reasonable normal-model assumptions, a two-sample t test fits a comparison of means. Remember to distinguish a group label from the outcome being compared before selecting a categorical or continuous-data procedure.",
+      "explanation": "Compare mean burn depth with a two-sample t test under the supplied assumptions. Device labels define groups; they are not the measured outcome.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Shift-time project: observations for practice",
-        "body": "Morning and evening workers were sampled separately. Each contributed one completion time. Both time distributions are approximately normal without influential outliers, and their variability is comparable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Remaining burn depth — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational cooling dressing in superficial partial-thickness burns. Outcome: remaining burn depth, in millimeters. Two separately sampled treatment groups contribute one measurement per person. Groups do not overlap and nobody is matched. Measurements are approximately normal with comparable variability and no influential outliers. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "burn"
     },
     {
       "slug": "two-scripts",
-      "complaint": "Reminder reading times",
-      "presentation": "{patientName}, the reminder-project lead, brings reading times for two scripts to a staff meeting. Each volunteer read one script once. The communications officer describes the shorter script as revolutionary, then reads a disclaimer longer than either version. The team is comparing average reading time before choosing its report wording; the exhibit summarizes the observations and assumptions.",
-      "stem": "Which analysis best compares mean reading time between the two reminder scripts in the exhibit?",
+      "complaint": "chronic anal fissure study",
+      "presentation": "{patientName}, the colorectal research lead, reviews a study of a new topical agent for chronic anal fissure. Two hospitals contribute completed healing times from different patients. The company representative calls his presentation a brief overview, then asks whether attending it can count toward everyone's continuing education credits. The report supplies its sampling and distribution details.",
+      "stem": "Which analysis best fits the study's comparison of mean fissure-healing time, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_two-scripts",
         "label": "Two-sample t test",
-        "rationale": "Each volunteer reads one script, so the time samples are separate. A two-sample t test compares mean reading time with the stated normality and spread assumptions."
+        "rationale": "The study compares means from two groups of different people, and its stated continuous-data assumptions are reasonable. A two-sample t procedure matches that structure."
       },
       "distractors": [
         {
           "id": "d1_two-scripts",
           "label": "Paired t test",
-          "rationale": "The scripts are alternatives, but the readers are not paired. A paired t test cannot obtain linked time differences from these separate volunteers."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_two-scripts",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank needs signs and ranks of linked differences. No volunteer read both scripts, and no matching was used to create such differences."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_two-scripts",
           "label": "Chi-square test of independence",
-          "rationale": "Chi-square would compare category counts. Naming two scripts does not change the recorded continuous reading times into the categorical outcome that test uses."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Ask whether each person contributed to one group or both. Each volunteer read one script once, with no matching, so the samples are separate. A two-sample t test compares their mean reading times under the stated assumptions. Sharing a project does not create a within-person comparison.",
-      "explanation": "The volunteers supply two separate samples of reading times. Use a two-sample t test for the requested mean comparison under the exhibit's assumptions.",
+      "teachingPoint": "A two-sample t test compares means from two groups of different people when the stated assumptions are reasonable. Each participant contributes one completed fissure-healing time here, with no matching. Remember that two columns alone tell you little: the people, measurement scale and distribution checks determine whether a two-group mean comparison fits.",
+      "explanation": "A two-sample t test fits these two groups' mean completed fissure-healing times. There is no matching, and the normal-model assumptions are stated to be reasonable.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Reminder-script pilot: observations for practice",
-        "body": "Two groups used different reminder scripts. Each person read one script once, with no matching across groups. Reading times are approximately normal with similar spread. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Fissure-healing time — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational topical agent in chronic anal fissure. Outcome: fissure-healing time, in days. Two hospitals using different study preparations contribute different people, without matching, with one completed healing time per person. Measurements are approximately normal with comparable variability and no influential outliers. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "chronic-fissure"
     }
   ],
   "paired-t": [
     {
       "slug": "same-rooms",
-      "complaint": "Layout-change review",
-      "presentation": "{patientName}, the room-layout review lead, brings turnaround times to the staff huddle before the new arrangement is renewed. The same rooms were timed before and after the change. The consultant bills the visit as a listening exercise, then talks through every question. The team wants to report average turnaround-time change; the exhibit describes the recorded differences.",
-      "stem": "Which analysis best evaluates mean turnaround-time change for the room-layout pilot in the exhibit?",
+      "complaint": "hidradenitis suppurativa study",
+      "presentation": "{patientName}, the skin-service research lead, reviews a new topical agent for hidradenitis suppurativa. Investigators measured involved skin area before and after treatment in the same adults. The coordinator describes appointments as flexible: participants may choose any date, provided it is the one already booked for them. The study reports individual changes and their distribution checks.",
+      "stem": "Which analysis best fits the study's comparison of mean involved-skin-area change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_same-rooms",
         "label": "Paired t test",
-        "rationale": "Each room supplies a before-and-after difference, and those differences are approximately normal. A paired t test evaluates the requested mean turnaround-time change."
+        "rationale": "Each change comes from repeated measurements or a designated pair, and those differences are approximately normal. A paired t procedure compares their mean."
       },
       "distractors": [
         {
           "id": "d1_same-rooms",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples test treats the two collections as unrelated. That would discard the link between each room's measurements before and after the layout change."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         },
         {
           "id": "d2_same-rooms",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank uses signs and ranks of linked differences. The question instead asks about their mean, with an approximately normal difference distribution supporting the paired t model."
+          "rationale": "Signed-rank uses the signs and ranks of differences. Here the stated question is about mean change and the approximately normal differences support a paired mean model."
         },
         {
           "id": "d3_same-rooms",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares separate groups of ranked observations. It would ignore that each room contributes both measurements to this change analysis."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         }
       ],
-      "teachingPoint": "When the same room is measured twice, begin with one change for each room. A paired t test evaluates the mean of those linked changes when its assumptions hold. Here normality concerns the room-level differences, not each original column separately. Remember the unit before choosing the test.",
-      "explanation": "The 18 rooms supply 18 linked before-to-after differences. Their stated approximately normal distribution supports a paired t test of mean turnaround-time change.",
+      "teachingPoint": "Repeated measurements from one person belong together. Calculate each person's involved-skin-area change, then analyze those differences; here they are approximately normal, supporting a paired t test. Remember: the unit of analysis is the within-person change. Treating the visits as unrelated groups discards the relationship built into the study design.",
+      "explanation": "Use a paired t test on each person's involved-skin-area change. The same people supply both measurements, and the changes are approximately normal.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Room-layout pilot: observations for practice",
-        "body": "The same 18 rooms were measured before and after a layout change. Turnaround time is recorded in minutes. The room-level changes are approximately normal. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Involved-skin-area change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational topical agent in hidradenitis suppurativa. Outcome: involved-skin-area change, in square centimeters. The same 18 people are measured before and after treatment. Within-person differences are approximately normal without influential outliers. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "hidradenitis"
     },
     {
       "slug": "same-trainees",
-      "complaint": "Seminar-score review",
-      "presentation": "{patientName}, the education review lead, is preparing a seminar evaluation before the next course is booked. The same trainees completed scores before and after teaching. 'Please quote my anonymous feedback in the brochure, with my full title,' the organizer says. A colleague has put the two score columns into separate classes for the proposed analysis.",
-      "stem": "Which analysis best evaluates mean practice-score change after the seminar described in the exhibit?",
+      "complaint": "cutaneous abscess study",
+      "presentation": "{patientName}, the surgical research lead, reviews a new irrigation instrument used during drainage of cutaneous abscesses. The same participants had cavity depth measured before and after use. The presenter promises an anonymous discussion, then asks everyone to introduce themselves with names, departments and line managers. The report supplies the distribution of each participant's measured change.",
+      "stem": "Which analysis best fits the study's comparison of mean abscess-cavity-depth change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_same-trainees",
         "label": "Paired t test",
-        "rationale": "The same trainees supply both scores, and their changes meet the stated distribution assumptions. A paired t test targets average within-trainee score change."
+        "rationale": "Each change comes from repeated measurements or a designated pair, and those differences are approximately normal. A paired t procedure compares their mean."
       },
       "distractors": [
         {
           "id": "d1_same-trainees",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum would treat the scores as observations from separate groups. The seminar evaluation follows the same trainees, so that approach loses their within-person links."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d2_same-trainees",
           "label": "One-way ANOVA",
-          "rationale": "Ordinary one-way ANOVA uses separate observations across groups. The two score columns here are repeated observations of the same trainees, not separate classes."
+          "rationale": "The ordinary unrelated-group ANOVA listed here does not use the designated within-person or matched differences. Extra columns do not remove that linkage."
         },
         {
           "id": "d3_same-trainees",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test would ignore which baseline score belongs to each follow-up score. The shared trainee identity is central to the requested change comparison."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         }
       ],
-      "teachingPoint": "Two columns do not necessarily mean two groups of people. Here each trainee supplies a starting score and a later score, so calculate that trainee's change. A paired t test evaluates the mean change under the stated assumptions. Separating the columns discards the within-trainee link.",
-      "explanation": "Keep each trainee's two scores together. The 24 trainee-level changes meet the stated assumptions for a paired t test of mean score change.",
+      "teachingPoint": "The key distribution check concerns within-person changes, not whether each visit's column looks normal separately. These abscess-cavity-depth changes are approximately normal, supporting a paired t test of mean change. Remember to keep each person's two measurements together; a new visit does not create a new group of unrelated people.",
+      "explanation": "The approximately normal within-person abscess-cavity-depth changes support a paired t test. Separate visits do not make the repeated observations into unrelated samples.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Seminar evaluation: observations for practice",
-        "body": "The same 24 trainees completed a continuous practice score before and after a seminar. Their changes are approximately normal without influential outliers. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Abscess-cavity-depth change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational irrigation instrument in cutaneous abscesses. Outcome: abscess-cavity-depth change, in millimeters. The same 24 people are measured before and after treatment. Within-person differences are approximately normal without influential outliers. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "cutaneous-abscess"
     },
     {
       "slug": "matched-sites",
-      "complaint": "Site-delay review",
-      "presentation": "{patientName}, the site-comparison lead, reviews delay measurements before submitting a project report. Each clinic was matched to a similar comparison clinic before data collection; no clinic was measured twice. A colleague says, 'Different buildings mean separate samples.' The report compares average delay between the designated partners, and the exhibit describes the distribution of their differences.",
-      "stem": "Which analysis best compares mean delay between the clinics and their designated comparison sites in the exhibit?",
+      "complaint": "pilonidal disease study",
+      "presentation": "{patientName}, the colorectal journal-club lead, reviews a new excision technique for chronic pilonidal disease. Investigators matched each recipient with a comparison patient before recording completed healing times. One colleague says, 'They are different people, so the matching cannot matter.' The matching records and the distribution of differences within the designated pairs are available for review.",
+      "stem": "Which analysis best fits the study's comparison of mean pilonidal-wound healing-time difference, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_matched-sites",
         "label": "Paired t test",
-        "rationale": "Deliberate matching creates a difference within each clinic set, even without repeat visits. Those differences are approximately normal, supporting a paired t comparison of mean delay."
+        "rationale": "Each change comes from repeated measurements or a designated pair, and those differences are approximately normal. A paired t procedure compares their mean."
       },
       "distractors": [
         {
           "id": "d1_matched-sites",
           "label": "Independent-samples t test",
-          "rationale": "Different buildings do not imply an unlinked design. An independent-samples test would discard the designated clinic-to-comparison-site matches created before measurement."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         },
         {
           "id": "d2_matched-sites",
           "label": "One-way ANOVA",
-          "rationale": "Ordinary one-way ANOVA would treat the clinic groups as separate observations. It does not retain the designated site pairs that define this comparison."
+          "rationale": "The ordinary unrelated-group ANOVA listed here does not use the designated within-person or matched differences. Extra columns do not remove that linkage."
         },
         {
           "id": "d3_matched-sites",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank is a method for linked differences, but it targets their signs and ranks. The question requests a mean contrast with approximately normal within-set differences."
+          "rationale": "Signed-rank uses the signs and ranks of differences. Here the stated question is about mean change and the approximately normal differences support a paired mean model."
         }
       ],
-      "teachingPoint": "A pair can come from deliberate matching as well as repeated measurement. Each clinic has a designated counterpart, so calculate the delay difference within that set. The 15 approximately normal differences support a paired t test. Different buildings do not erase the link established by the study design.",
-      "explanation": "The design supplies 15 matched site-pair differences. Analyze their mean with a paired t test rather than treating all clinic observations as unrelated.",
+      "teachingPoint": "Pairing can come from deliberate matching as well as repeated measurements. Here each technique recipient has a designated comparison partner, and their pilonidal-wound healing-time differences are approximately normal. A paired t test analyzes those differences. Remember: different people can still supply linked observations when the study design establishes the pairs in advance.",
+      "explanation": "Use a paired t test for the designated partners' pilonidal-wound healing-time differences. Deliberate matching supplies the linkage, and the differences are approximately normal.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Site-comparison project: observations for practice",
-        "body": "Fifteen clinic sites were each matched to a similar comparison site. Delay minutes were recorded for both sites in every set. The 15 within-set differences are approximately normal. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Pilonidal-wound healing-time difference — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational excision technique in chronic pilonidal disease. Outcome: pilonidal-wound healing-time difference, in days. Fifteen treatment recipients were each matched to a comparison recipient before measurement; the 15 differences are computed within those pairs. Within-pair differences are approximately normal without influential outliers. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "pilonidal"
     },
     {
       "slug": "same-workers",
-      "complaint": "Workload-score review",
-      "presentation": "{patientName}, the workflow review lead, is preparing workload results for journal club. The same workers completed baseline and follow-up scores. Management offers a wellbeing day, conditional on everyone finishing all their workload before taking it. The report concerns average score change after the new workflow; the exhibit gives the measurements and the distribution check.",
-      "stem": "Which analysis best evaluates mean workload-score change from baseline to follow-up in the exhibit?",
+      "complaint": "skin-graft donor wound study",
+      "presentation": "{patientName}, the reconstructive research lead, reviews a new dressing for skin-graft donor wounds. The same participants had wound area recorded at baseline and four weeks. The coordinator calls follow-up effortless; participants phone to confirm an email confirming their telephone appointment. A colleague proposes treating visits as separate groups. The report includes the individual wound-area changes.",
+      "stem": "Which analysis best fits the study's comparison of mean donor-wound-area change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_same-workers",
         "label": "Paired t test",
-        "rationale": "Each worker contributes a baseline-to-follow-up difference, and those changes are approximately normal. A paired t test evaluates the requested mean workload-score change."
+        "rationale": "Each change comes from repeated measurements or a designated pair, and those differences are approximately normal. A paired t procedure compares their mean."
       },
       "distractors": [
         {
           "id": "d1_same-workers",
           "label": "One-way ANOVA",
-          "rationale": "Ordinary one-way ANOVA does not account for these repeated worker measurements. Treating the two occasions as separate groups would discard the within-worker comparison."
+          "rationale": "The ordinary unrelated-group ANOVA listed here does not use the designated within-person or matched differences. Extra columns do not remove that linkage."
         },
         {
           "id": "d2_same-workers",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares observations from separate groups. These scores belong to the same workers at two times and should retain those links in the change analysis."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d3_same-workers",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank analyzes the signs and ranks of linked changes. Here the target is their mean, and the supplied change distribution supports a paired t test."
+          "rationale": "Signed-rank uses the signs and ranks of differences. Here the stated question is about mean change and the approximately normal differences support a paired mean model."
         }
       ],
-      "teachingPoint": "For a repeated-measurement comparison, the observations of interest are each worker's changes. The paired t test uses their mean, with normality assessed for those changes. It does not require choosing a different method merely because the original scores have two dates. Keep the worker-level links intact.",
-      "explanation": "Use a paired t test of the 30 workers' follow-up-minus-baseline differences. The exhibit supports the assumptions for those differences, which are the relevant observations.",
+      "teachingPoint": "Two visits do not mean two unrelated samples when the same people attend both. Use each participant's follow-up-minus-baseline donor-wound area; the approximately normal changes support a paired t test. Remember to analyze the change distribution. A procedure for several unrelated groups would answer a different structural question from this repeated-measurement study.",
+      "explanation": "Analyze follow-up-minus-baseline donor-wound area with a paired t test. Both measurements belong to the same people, and their changes meet the supplied normality assumption.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Workload project: observations for practice",
-        "body": "The same 30 workers completed a continuous workload score at baseline and four weeks. Their follow-up-minus-baseline changes are approximately normal. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Donor-wound-area change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational donor-site dressing in skin-graft donor wounds. Outcome: donor-wound-area change, in square centimeters. The same 30 people are measured at baseline and four weeks. Within-person differences are approximately normal without influential outliers. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "donor-wound"
     }
   ],
   "one-way-anova": [
     {
       "slug": "three-teams",
-      "complaint": "Team-delay comparison",
-      "presentation": "{patientName}, the clinical audit lead, is reviewing delay scores before a meeting of three teams. Each team has nominated itself as the comparison standard and asked to see the other teams' results first. Different workers contributed to each group. The draft report asks whether all three average scores are equal; distribution and spread checks appear below.",
-      "stem": "Which analysis best assesses whether all three team mean delay scores are equal in the exhibit?",
+      "complaint": "diabetic foot ulcer study",
+      "presentation": "{patientName}, the wound-service research lead, reviews new offloading devices for clinically uninfected diabetic foot ulcers. Three separately assigned groups contribute completed healing times. Each manufacturer wants its product designated the reference standard before anyone sees the results. The investigators request one overall comparison of average healing time, with sampling and distribution information supplied in the report.",
+      "stem": "Which analysis best fits the study's comparison of mean ulcer-healing time, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_three-teams",
         "label": "One-way ANOVA",
-        "rationale": "One-way ANOVA addresses whether all three team means are equal. The continuous scores, separate observations, and stated residual and spread assumptions support that overall comparison."
+        "rationale": "The requested overall mean comparison includes several groups, each containing different people. The residual-normality and comparable-variance assumptions are stated to fit."
       },
       "distractors": [
         {
           "id": "d1_three-teams",
           "label": "Paired t test",
-          "rationale": "A paired t test requires linked continuous measurements and compares a mean difference. No repeated or matched workers connect these three team samples."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_three-teams",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ranked observations between two groups. This question asks for one overall mean comparison across all three teams under suitable model assumptions."
+          "rationale": "Rank-sum addresses two groups rather than the requested overall comparison across several treatment groups. It does not supply that multi-group mean test."
         },
         {
           "id": "d3_three-teams",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test compares two group means. Selecting two teams would leave the requested overall comparison of all three team means unanswered."
+          "rationale": "A two-sample procedure addresses two groups at a time. The requested overall comparison includes more than two treatment groups together."
         }
       ],
-      "teachingPoint": "One-way ANOVA asks whether the group means are all equal across several separate groups. The continuous scores and stated residual and variance assumptions support it here. Think of this as an overall question: even a significant result would not, by itself, identify which particular teams differ.",
-      "explanation": "Use one-way ANOVA for the overall mean comparison across the three separate teams under the stated assumptions. This test alone does not identify individual group differences.",
+      "teachingPoint": "One-way ANOVA tests an overall question about means across three or more groups when its assumptions fit. These ulcer-healing times come from different people, with suitable residual and spread checks. Remember: one overall test asks whether all group means are equal; a significant result alone would not identify which particular groups differ.",
+      "explanation": "Use one-way ANOVA for an overall comparison of mean completed ulcer-healing time across three groups. The stated observation, residual and spread assumptions fit.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Clinic-team project: observations for practice",
-        "body": "Three teams contributed continuous delay scores. Each worker appears in one team only. Model residuals are approximately normal and group spreads are similar. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Ulcer-healing time — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational offloading device in clinically uninfected diabetic foot ulcers. Outcome: ulcer-healing time, in days. 3 separately assigned treatment groups contribute one measurement per person. Groups do not overlap. Model residuals are approximately normal and within-group variances are comparable. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "diabetic-ulcer"
     },
     {
       "slug": "four-formats",
-      "complaint": "Training-format review",
-      "presentation": "{patientName}, the training review lead, brings completion times from four teaching formats to a renewal meeting. Each trainee used one format only. Procurement wants the winning format identified before opening bids, so the winning supplier can help write them. The team requested an overall comparison of average completion time; the exhibit describes the data and assumptions.",
-      "stem": "Which analysis best compares mean completion time across all four training formats in the exhibit?",
+      "complaint": "keloid study",
+      "presentation": "{patientName}, the plastic-surgery research lead, reviews four new injectable preparations for keloid scars. Each participant received one preparation, and scar area was measured at the protocol visit. Procurement wants the winning supplier named before opening bids, so that supplier can help write the purchasing criteria. The report supplies assumptions for comparing the groups' average scar areas.",
+      "stem": "Which analysis best fits the study's comparison of mean remaining scar area, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_four-formats",
         "label": "One-way ANOVA",
-        "rationale": "One-way ANOVA provides the requested overall comparison of four mean completion times. Each trainee appears once, and the exhibit supplies suitable continuous-outcome model assumptions."
+        "rationale": "The requested overall mean comparison includes several groups, each containing different people. The residual-normality and comparable-variance assumptions are stated to fit."
       },
       "distractors": [
         {
           "id": "d1_four-formats",
           "label": "Independent-samples t test",
-          "rationale": "A two-sample t test compares two means, not all four format means together. Choosing a pair would change the question posed by this evaluation."
+          "rationale": "A two-sample procedure addresses two groups at a time. The requested overall comparison includes more than two treatment groups together."
         },
         {
           "id": "d2_four-formats",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank requires linked differences. Each trainee used only one format, so there are no repeated or matched format measurements to supply those differences."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_four-formats",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum is a two-group ranked comparison. It does not provide the requested overall comparison of the four mean completion times."
+          "rationale": "Rank-sum addresses two groups rather than the requested overall comparison across several treatment groups. It does not supply that multi-group mean test."
         }
       ],
-      "teachingPoint": "Count the groups as well as identifying the outcome. Four separate groups contribute continuous completion times, and the exhibit supplies reasonable ANOVA assumptions. One-way ANOVA addresses the overall mean comparison. A two-sample method answers a two-group question and does not supply this requested four-group comparison by itself.",
-      "explanation": "The task compares four group means together. One-way ANOVA fits the separate groups, continuous times, and stated model assumptions. Retain the stated observation structure when reporting this comparison.",
+      "teachingPoint": "Four groups require a procedure that addresses their means together. With continuous scar areas, separate participants, reasonable residual normality and comparable variances, one-way ANOVA fits. Remember to count groups after checking the measurement structure. A two-group procedure does not become an overall four-group test simply because the outcome is continuous.",
+      "explanation": "One-way ANOVA compares mean remaining scar area across the four groups together. Each participant appears once, and the supplied model assumptions are reasonable.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Training-format pilot: observations for practice",
-        "body": "Four groups each used one training format. No participant appears in another group. Completion time is continuous, model residuals are approximately normal, and group variances are comparable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Remaining scar area — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational injectable scar preparation in keloids. Outcome: remaining scar area, in square centimeters. 4 separately assigned treatment groups contribute one measurement per person. Groups do not overlap. Model residuals are approximately normal and within-group variances are comparable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "keloid"
     },
     {
       "slug": "three-sites",
-      "complaint": "Handoff-time review",
-      "presentation": "{patientName}, the handoff-project lead, reviews times from three sites before submitting an operational report. Each observation belongs to one site, and the team wants an overall comparison of average handoff time. A colleague has entered the site labels as the outcome in the analysis draft. The exhibit summarizes the recorded times and the model checks.",
-      "stem": "Which analysis best assesses an overall difference in mean handoff time across the three sites in the exhibit?",
+      "complaint": "perianal abscess study",
+      "presentation": "{patientName}, the colorectal discussion lead, reviews new drainage adjuncts for superficial perianal abscesses. Three groups contribute remaining cavity depths at the protocol visit. Each participant belongs to one group. The investigators request an overall comparison of average depth. A colleague has instead entered the product labels as the outcome; the measurement assumptions accompany the data.",
+      "stem": "Which analysis best fits the study's comparison of mean remaining abscess-cavity depth, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_three-sites",
         "label": "One-way ANOVA",
-        "rationale": "Handoff time is continuous, and the report asks for an overall comparison across three site means. The separate observations and stated model checks support one-way ANOVA."
+        "rationale": "The requested overall mean comparison includes several groups, each containing different people. The residual-normality and comparable-variance assumptions are stated to fit."
       },
       "distractors": [
         {
           "id": "d1_three-sites",
           "label": "Independent-samples t test",
-          "rationale": "A two-sample t test would compare only two site means. The report asks whether there is an overall difference across all three sites."
+          "rationale": "A two-sample procedure addresses two groups at a time. The requested overall comparison includes more than two treatment groups together."
         },
         {
           "id": "d2_three-sites",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ranked distributions between two groups. It does not answer this three-site overall mean-time question under the supplied model assumptions."
+          "rationale": "Rank-sum addresses two groups rather than the requested overall comparison across several treatment groups. It does not supply that multi-group mean test."
         },
         {
           "id": "d3_three-sites",
           "label": "Chi-square test of independence",
-          "rationale": "The site labels define groups, but the outcome is measured time. Chi-square would compare categorical counts rather than the three average handoff times."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Site names define the groups; handoff time is the continuous outcome. One-way ANOVA compares the group means when its assumptions are reasonable, as specified here. A categorical label in a spreadsheet does not automatically call for a categorical-outcome test. First ask what quantity the team wants to compare.",
-      "explanation": "Use one-way ANOVA to compare mean handoff times across the three separate sites. The outcome is time, while site labels only define the groups.",
+      "teachingPoint": "The device label defines the group, while abscess-cavity depth supplies the measured outcome. One-way ANOVA compares mean depth across these three groups under the stated assumptions. Remember to identify what was measured before choosing a procedure: a table listing group names does not turn a continuous outcome into categorical counts.",
+      "explanation": "Use one-way ANOVA to compare mean abscess-cavity depth across three treatment groups. Depth is continuous; treatment labels identify the groups being compared.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Handoff-time project: observations for practice",
-        "body": "Three separate sites recorded continuous handoff times. Each observation comes from one site only. Approximate residual normality and similar within-site variance are reasonable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Remaining abscess-cavity depth — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational drainage adjunct in perianal abscesses. Outcome: remaining abscess-cavity depth, in millimeters. 3 separately assigned treatment groups contribute one measurement per person. Groups do not overlap. Model residuals are approximately normal and within-group variances are comparable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "perianal-abscess"
     },
     {
       "slug": "five-signs",
-      "complaint": "Reminder-sign review",
-      "presentation": "{patientName}, the communications review lead, is comparing response times for five reminder signs before printing them. Each volunteer saw one sign. The designer asks everyone to judge the work impartially, then stands beside a favorite design explaining how impartial people usually react. The report requests an overall comparison of average response time across the five groups.",
-      "stem": "Which analysis best compares mean response time across all five reminder-sign groups in the exhibit?",
+      "complaint": "ARDS study",
+      "presentation": "{patientName}, the critical-care journal-club lead, reviews five investigational ventilation techniques for adults with ARDS. Each group contributes measured changes in arterial oxygen tension. The designer requests an impartial assessment, then explains how impartial reviewers usually describe his favorite technique. Follow-up measurements are complete, and the report supplies assumptions for an overall comparison of average change.",
+      "stem": "Which analysis best fits the study's comparison of mean arterial-oxygen-tension change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_five-signs",
         "label": "One-way ANOVA",
-        "rationale": "One-way ANOVA compares all five group means in one overall analysis. The continuous times, separate participants, and stated residual and variance checks fit that model."
+        "rationale": "The requested overall mean comparison includes several groups, each containing different people. The residual-normality and comparable-variance assumptions are stated to fit."
       },
       "distractors": [
         {
           "id": "d1_five-signs",
           "label": "Paired t test",
-          "rationale": "A paired t test needs linked observations. Seeing one of five signs once does not create a repeated or matched measurement for each volunteer."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_five-signs",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank needs within-unit or matched differences. The five groups consist of different volunteers, so that required difference structure is absent."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_five-signs",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares two ranked groups. The requested analysis concerns all five mean response times under the suitable continuous-outcome model assumptions."
+          "rationale": "Rank-sum addresses two groups rather than the requested overall comparison across several treatment groups. It does not supply that multi-group mean test."
         }
       ],
-      "teachingPoint": "Seeing several versions does not imply repeated measurements if each person sees only one. These are five separate groups with a continuous time outcome. Under the stated assumptions, one-way ANOVA addresses their overall mean comparison. Preserve how people entered the groups rather than imagining a within-person sequence.",
-      "explanation": "One-way ANOVA fits the five separate response-time groups under the stated assumptions. Each person participated once, so there are no within-person changes to analyze.",
+      "teachingPoint": "One-way ANOVA can compare mean changes across five groups when its assumptions fit. Each participant contributes one oxygen-tension change score to a single group. Remember: the analysis compares group means of those scores; a change score does not make different treatment groups into matched pairs. An overall result does not locate every difference.",
+      "explanation": "One-way ANOVA fits the overall comparison of mean arterial-oxygen-tension change across five groups. A significant overall result alone would not identify which groups differ.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Reminder-sign pilot: observations for practice",
-        "body": "Five groups each saw one reminder sign. Each person participated once. Response time is continuous, residuals are approximately normal, and spreads are similar. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Arterial-oxygen-tension change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational ventilation technique in adult ARDS. Outcome: arterial-oxygen-tension change, in mmHg. 5 separately assigned treatment groups contribute one measurement per person. Groups do not overlap. Model residuals are approximately normal and within-group variances are comparable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "ards"
     }
   ],
   "rank-sum": [
     {
       "slug": "ordinal-teams",
-      "complaint": "Usability-rating review",
-      "presentation": "{patientName}, the usability review lead, brings two teams' ratings to a meeting about an internal tool. Workers used an ordered response scale, and nobody belongs to both teams. The vendor describes the feedback form as intuitive; staff have submitted a request for instructions on requesting its instructions. The exhibit describes the ratings available for the comparison.",
-      "stem": "Which analysis best compares the two teams' usability ratings on the ordinal scale in the exhibit?",
+      "complaint": "achalasia study",
+      "presentation": "{patientName}, the esophageal research lead, reviews two new endoscopic techniques for achalasia. The study uses ordered, protocol-defined symptom-relief ratings after structural obstruction was excluded. The sponsor calls the report accessible; the scale explanation appears only after the tutorial on accessing the report. Each participant received one technique, and the exhibit describes how the ratings are used.",
+      "stem": "Which analysis best fits the study's comparison of symptom-relief ratings, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_ordinal-teams",
         "label": "Wilcoxon rank-sum test",
-        "rationale": "Rank-sum compares the ordinal ratings from two separate teams. It uses their ordering without treating the response labels as continuous measurements with equal spacing."
+        "rationale": "These protocol-defined symptom-relief ratings are ordinal, and the two groups contain different people. Rank-sum fits that ranked comparison without assuming equal distances between category labels."
       },
       "distractors": [
         {
           "id": "d1_ordinal-teams",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank requires linked differences. These ratings come from different workers in separate teams, so there is no within-worker or matched change to analyze."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d2_ordinal-teams",
           "label": "Paired t test",
-          "rationale": "A paired t test would require linked continuous differences. The survey instead contains separate workers' ordinal ratings, with neither requirement established."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d3_ordinal-teams",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test targets continuous-outcome means under suitable model assumptions. The exhibit explicitly treats these five-level responses as ordinal ratings."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         }
       ],
-      "teachingPoint": "An ordinal scale orders responses without claiming equal distances between them. Wilcoxon rank-sum compares ranked observations from two separate groups, as supplied here. Signed-rank instead needs linked differences. Remember both questions: are the observations linked, and what kind of outcome was recorded? Neither is answered by the spreadsheet layout.",
-      "explanation": "Use Wilcoxon rank-sum for the two separate groups' ordinal usability ratings. The exhibit supplies no within-worker pairing or continuous mean-comparison assumptions.",
+      "teachingPoint": "Ordered symptom-relief categories preserve rank without promising equal spacing between labels. A Wilcoxon rank-sum test fits the comparison of two groups of different people here. Remember: ordered is not automatically continuous. Using a ranking procedure also does not justify describing every result as an unqualified difference in population medians.",
+      "explanation": "Use Wilcoxon rank-sum for ordinal symptom-relief ratings from two groups of different people. Ordered labels do not establish equal spacing for a mean comparison.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Usability survey: observations for practice",
-        "body": "Two teams provided five-level usability ratings. Every worker belongs to one team only. The scale is treated as ordinal. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Symptom-relief ratings — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational endoscopic technique in achalasia. Outcome: symptom-relief ratings, in ordered categories. Two separately sampled groups contribute one result per person, without matching. The protocol uses a five-level ordinal rating, not assumed equally spaced and not an established clinical score. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "achalasia"
     },
     {
       "slug": "skewed-delays",
-      "complaint": "Workflow-delay review",
-      "presentation": "{patientName}, the workflow-project lead, reviews delay distributions before an operations meeting. The two groups contain different workers, and data checks confirmed the unusually long delays. The project manager says the meeting will be brief, then distributes an agenda with a separate agenda briefing. The exhibit records the distribution findings used in the proposed comparison of workflows.",
-      "stem": "Which analysis best compares delay distributions between the two workflow groups described in the exhibit?",
+      "complaint": "gastroparesis study",
+      "presentation": "{patientName}, the foregut journal-club lead, reviews a new gastric motility agent for gastroparesis after mechanical obstruction was excluded. Two groups contribute gastric-emptying times, including verified unusually long measurements. The project manager promises a short discussion, then distributes an agenda with a separate agenda briefing. The report describes the distributions and the comparison requested by investigators.",
+      "stem": "Which analysis best fits the study's comparison of gastric-emptying-time distributions, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_skewed-delays",
         "label": "Wilcoxon rank-sum test",
-        "rationale": "Rank-sum compares the two separate delay distributions using ranks. The verified skew and extremes make the normal-model mean comparison unsuitable in this exercise."
+        "rationale": "The groups contain different people with completed gastric-emptying times that are unsuitable for the stated normal model. Rank-sum fits this comparison of ranked observations."
       },
       "distractors": [
         {
           "id": "d1_skewed-delays",
           "label": "Independent-samples t test",
-          "rationale": "Although the groups are separate, the exhibit explicitly rules out the normal-model mean comparison because of persistent skew and extreme values."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         },
         {
           "id": "d2_skewed-delays",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank needs repeated or matched differences. Different workers in the two workflow samples do not supply that linked structure."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_skewed-delays",
           "label": "Chi-square test of independence",
-          "rationale": "Chi-square analyzes categorical counts. These observations are delay minutes; converting them into unspecified categories would change the distributional comparison posed here."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Rank-sum uses the ordering of observations from two separate groups. Here the strongly skewed delays and persistent extremes make the stated normal-model mean comparison unsuitable. The method is not automatically a test of medians: distribution shapes and the intended interpretation still matter. Keep that limitation attached to the result.",
-      "explanation": "Wilcoxon rank-sum fits this comparison of ranked delays from two separate groups. The exhibit explicitly makes the normal-model mean comparison unsuitable; do not automatically call the result a median difference.",
+      "teachingPoint": "Check the data structure before the distribution. These completed gastric-emptying times come from two groups of different people, but verified extreme skew makes the stated normal-model comparison unsuitable. Wilcoxon rank-sum fits this ranked comparison. Remember that a median-only interpretation still needs additional distributional assumptions; selecting the procedure does not supply them.",
+      "explanation": "Wilcoxon rank-sum fits the two groups' ranked gastric-emptying-time comparison. The verified skew and extremes make the stated normal-model mean comparison unsuitable for this exercise.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Workflow-delay project: observations for practice",
-        "body": "Two separately sampled worker groups used different workflows. Delay minutes are strongly right-skewed with persistent extreme values after data checks. A normal-model mean comparison is unsuitable for this exercise. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Gastric-emptying-time distributions — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational gastric motility agent in gastroparesis. Outcome: gastric-emptying-time distributions, in minutes. Two separately sampled groups contribute one result per person, without matching. Measurements are strongly right-skewed with verified influential extremes; a normal-model mean comparison is unsuitable. No common distribution shape is established. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "gastroparesis"
     },
     {
       "slug": "independent-likert",
-      "complaint": "Practice-rating review",
-      "presentation": "{patientName}, the education-project lead, reviews trainee ratings before circulating a course report. Two separately recruited cohorts used the same ordered scale, with no trainee in both. One colleague proposes matching rows because the column headings agree; another proposes treating the labels as measured scores. The team is comparing the cohorts' ratings on the recorded scale.",
-      "stem": "Which analysis best compares the two cohorts' ordinal practice ratings in the exhibit?",
+      "complaint": "carpal tunnel syndrome study",
+      "presentation": "{patientName}, the hand-service research lead, reviews two new wrist devices for carpal tunnel syndrome. Participants reported hand function on an ordered scale at the protocol visit. A colleague proposes matching people because both groups used the same form. Another wants to treat the labels as evenly spaced measurements. The study's scale definitions accompany the results.",
+      "stem": "Which analysis best fits the study's comparison of hand-function categories, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_independent-likert",
         "label": "Wilcoxon rank-sum test",
-        "rationale": "The cohorts are separate, and their seven-point ratings are treated as ordinal. Rank-sum compares those ordered responses without inventing within-trainee matches or continuous score spacing."
+        "rationale": "These protocol-defined hand-function ratings are ordinal, and the two groups contain different people. Rank-sum fits that ranked comparison without assuming equal distances between category labels."
       },
       "distractors": [
         {
           "id": "d1_independent-likert",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Matching column headings does not match people. Signed-rank would need linked differences from repeated or deliberately matched observations, which this recruitment did not create."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d2_independent-likert",
           "label": "One-way ANOVA",
-          "rationale": "Ordinary ANOVA compares continuous-outcome means with suitable model assumptions. This exercise specifies an ordinal rating scale rather than establishing those conditions."
+          "rationale": "This ordinary mean-based ANOVA does not address the supplied ordinal or unsuitable non-normal comparison. Having groups does not by itself establish its assumptions."
         },
         {
           "id": "d3_independent-likert",
           "label": "Independent-samples t test",
-          "rationale": "A two-sample t test compares continuous-outcome means under suitable assumptions. Treating these ordinal labels as measured continuous scores is not supported by the exhibit."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         }
       ],
-      "teachingPoint": "Shared response options do not create a match between trainees. These are two separate cohorts, and their rating scale is treated as ordinal. Wilcoxon rank-sum compares their ranked observations. It does not require pretending the categories are continuous measurements, and it does not supply within-person changes that were never collected.",
-      "explanation": "Choose Wilcoxon rank-sum for ordinal ratings from two separate cohorts. Neither identical scale labels nor adjacent columns creates linked observations.",
+      "teachingPoint": "A shared rating form does not link people in different groups. These protocol-defined categories are ordinal, so Wilcoxon rank-sum fits their two-group comparison. Remember that numbers printed beside ordered labels do not establish equal distances between them. A mean-based model requires more than a convenient numerical code on the form.",
+      "explanation": "The groups contain different people using an ordinal scale, supporting Wilcoxon rank-sum. A shared form neither links the observations nor supplies equal measurement intervals.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Practice-rating project: observations for practice",
-        "body": "Two separately recruited cohorts used a seven-point rating scale. No trainee appears in both cohorts, and the scale is treated as ordinal. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Hand-function categories — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational wrist device in carpal tunnel syndrome. Outcome: hand-function categories, in ordered categories. Two separately sampled groups contribute one result per person, without matching. The protocol uses a seven-level ordinal rating, not assumed equally spaced and not an established clinical score. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "carpal-tunnel"
     },
     {
       "slug": "two-queues",
-      "complaint": "Queue-distribution review",
-      "presentation": "{patientName}, the queue-audit lead, checks observations from two sites before writing the summary. Different encounters were sampled, and verified unusually long queues remain in the data. A colleague proposes describing the result as a median difference. The requested analysis compares queue-length distributions, and the exhibit records the distribution checks available to the team for that comparison.",
-      "stem": "Which analysis best compares queue-length distributions between the two sites described in the exhibit?",
+      "complaint": "postherniorrhaphy pain study",
+      "presentation": "{patientName}, the pain-service journal-club lead, reviews a new targeted nerve-block delivery device for postherniorrhaphy pain. Two groups contribute the duration of symptom relief, with verified long observations retained. No participants are matched. A colleague proposes describing any detected difference as a difference in medians. The report provides the available distribution checks and the intended comparison.",
+      "stem": "Which analysis best fits the study's comparison of symptom-relief-duration distributions, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_two-queues",
         "label": "Wilcoxon rank-sum test",
-        "rationale": "Rank-sum fits the requested comparison of two separate queue-length distributions when a normal-model mean comparison is unsuitable. Its result is not automatically a median difference."
+        "rationale": "The groups contain different people with completed symptom-relief durations that are unsuitable for the stated normal model. Rank-sum fits this comparison of ranked observations."
       },
       "distractors": [
         {
           "id": "d1_two-queues",
           "label": "Paired t test",
-          "rationale": "A paired t test needs linked observations. The sites contributed different encounters, with no repeated or matched units to define queue-length differences."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d2_two-queues",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank analyzes linked differences, not two unlinked samples. Sampling separate encounters at the sites provides no counterparts for that method."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_two-queues",
           "label": "Independent-samples t test",
-          "rationale": "The exhibit identifies severe skew and influential extremes that make the normal-model mean comparison unsuitable. Separate samples alone do not establish its other assumptions."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         }
       ],
-      "teachingPoint": "Two separate samples with severely skewed observations can support the rank-sum comparison described here. Ranking preserves order without requiring the supplied normal-model mean assumptions. The result should still be interpreted with attention to distribution shape; choosing rank-sum does not grant permission to label every difference as a difference in medians.",
-      "explanation": "Use Wilcoxon rank-sum for the two separate queue samples under the exhibit's conditions. Its interpretation depends on distributional assumptions, rather than automatically being a median comparison.",
+      "teachingPoint": "Wilcoxon rank-sum compares ranked observations from two groups of different people. It fits the stated non-normal symptom-relief-duration distributions here. Remember the interpretation boundary: without further shape and location assumptions, its result is not automatically a pure median comparison. Choosing a suitable procedure and describing what it establishes are separate steps.",
+      "explanation": "Use Wilcoxon rank-sum for the stated ranked symptom-relief-duration comparison. Its result is not automatically a pure median comparison without additional distributional assumptions.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Queue audit: observations for practice",
-        "body": "Different encounters were sampled at two sites, with no repeated or matched units. Queue lengths are severely right-skewed with influential extremes, making a normal-model mean comparison unsuitable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Symptom-relief-duration distributions — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational nerve-block delivery device in postherniorrhaphy pain. Outcome: symptom-relief-duration distributions, in hours. Two separately sampled groups contribute one result per person, without matching. Measurements are strongly right-skewed with verified influential extremes; a normal-model mean comparison is unsuitable. No common distribution shape is established. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "postherniorrhaphy-pain"
     }
   ],
   "signed-rank": [
     {
       "slug": "paired-workload",
-      "complaint": "Workload-change review",
-      "presentation": "{patientName}, the workload-project lead, brings workers' before-and-after scores to journal club. The project sponsor asks for candid feedback, provided it can be submitted through the praise form. The same workers supplied both measurements. The team is reviewing workload change before writing its report, and the exhibit summarizes the differences and their distribution for the review.",
-      "stem": "Which analysis best evaluates workload-score change for the observations and assumptions in the exhibit?",
+      "complaint": "Graves disease study",
+      "presentation": "{patientName}, the endocrine research lead, reviews a new thyroid-directed agent for Graves disease. The same adults had thyroid volume measured before and after treatment. The reviewer requests raw measurements; the coordinator offers the polished version because it makes a better first impression. The report describes the distribution of individual volume changes and the assumptions under review.",
+      "stem": "Which analysis best fits the study's comparison of thyroid-volume change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_paired-workload",
         "label": "Wilcoxon signed-rank test",
-        "rationale": "The workers provide linked continuous differences with reasonable symmetry but a distinctly non-normal distribution. Signed-rank uses their signs and ranks under the stated assumptions."
+        "rationale": "The study supplies linked continuous differences that are reasonably symmetric but unsuitable for a t model. Signed-rank uses their signs and ranks."
       },
       "distractors": [
         {
           "id": "d1_paired-workload",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum would compare two separate groups. These before-and-after scores belong to the same workers, so the analysis should retain their linked changes."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d2_paired-workload",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test would treat the two occasions as unrelated. It would lose the worker-level differences and does not address the stated distribution problem."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         },
         {
           "id": "d3_paired-workload",
           "label": "Paired t test",
-          "rationale": "Pairing is present, but the exhibit says the paired mean model is unsuitable. Choosing a paired t test from the repeated design alone overlooks that distribution condition."
+          "rationale": "The observations are linked, but the exhibit says their differences are unsuitable for the paired mean model. Linkage alone does not establish its distributional assumptions."
         }
       ],
-      "teachingPoint": "Keep each worker's two measurements together and calculate the difference. Wilcoxon signed-rank ranks the nonzero differences and uses their signs; its usual location interpretation needs reasonable symmetry. Here the differences are symmetric but unsuitable for the paired t model. Linked observations alone do not settle which paired procedure fits.",
-      "explanation": "Wilcoxon signed-rank fits these linked, continuous changes: the differences are reasonably symmetric but distinctly non-normal and unsuitable for the stated paired mean model.",
+      "teachingPoint": "Keep each person's measurements linked before considering the distribution. These thyroid-volume differences are reasonably symmetric but unsuitable for the paired mean model, supporting Wilcoxon signed-rank. Remember: signed-rank uses the signs and ranks of nonzero within-pair differences. It is not the same procedure as comparing ranked observations from unrelated groups.",
+      "explanation": "Use Wilcoxon signed-rank for the linked thyroid-volume differences: they are reasonably symmetric but unsuitable for the stated paired mean model in this exercise.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Workload-change project: observations for practice",
-        "body": "The same workers completed a continuous score before and after a change. Worker-level differences are reasonably symmetric but distinctly non-normal, so a paired mean model is unsuitable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Thyroid-volume change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational thyroid-directed agent in Graves disease. Outcome: thyroid-volume change, in cubic centimeters. The same people are measured before and after treatment. Differences are reasonably symmetric but distinctly non-normal, making a paired mean model unsuitable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "graves"
     },
     {
       "slug": "same-rooms-skewed",
-      "complaint": "Room-delay review",
-      "presentation": "{patientName}, the room-workflow lead, reviews delay changes before a pilot presentation. The same rooms were timed before and afterward. The launch organizer insists everyone arrive early to hear his talk on eliminating waiting. A colleague has checked the two time columns separately; the exhibit also records the distribution of the changes between each room's two measurements.",
-      "stem": "Which analysis best evaluates room-delay change under the difference-distribution assumptions in the exhibit?",
+      "complaint": "primary hyperparathyroidism study",
+      "presentation": "{patientName}, the endocrine journal-club lead, reviews a new calcium-lowering agent for primary hyperparathyroidism. Serum calcium was measured before and after treatment in the same adults. The presenter insists everyone arrive early for his seminar on respecting colleagues' time. One colleague checked each visit separately; the report also describes the distribution of changes within individual participants.",
+      "stem": "Which analysis best fits the study's comparison of serum-calcium change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_same-rooms-skewed",
         "label": "Wilcoxon signed-rank test",
-        "rationale": "Each room supplies a linked time difference. Reasonable symmetry supports signed-rank here, while the non-normal tails make the paired mean model unsuitable for this exercise."
+        "rationale": "The study supplies linked continuous differences that are reasonably symmetric but unsuitable for a t model. Signed-rank uses their signs and ranks."
       },
       "distractors": [
         {
           "id": "d1_same-rooms-skewed",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum treats observations as two separate groups. It would discard the link between each room's time before and after the workflow change."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d2_same-rooms-skewed",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test ignores the repeated rooms. It also does not resolve the stated problem with modeling these changes using the paired mean model."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         },
         {
           "id": "d3_same-rooms-skewed",
           "label": "One-way ANOVA",
-          "rationale": "Ordinary one-way ANOVA assumes separate observations for this comparison. The observations are repeated room measurements, and the exhibit supplies a different linked-difference structure."
+          "rationale": "The ordinary unrelated-group ANOVA listed here does not use the designated within-person or matched differences. Extra columns do not remove that linkage."
         }
       ],
-      "teachingPoint": "For linked measurements, examine the differences that the analysis will use. These room-level changes have reasonably symmetric, non-normal tails and do not fit the stated paired mean model. Wilcoxon signed-rank works with ranked nonzero differences. Checking either original time column alone would miss the relevant assumption about the changes.",
-      "explanation": "Choose Wilcoxon signed-rank using the rooms' reasonably symmetric differences. The exhibit states that their non-normal tails make the paired mean model unsuitable.",
+      "teachingPoint": "The relevant distribution is the change within each patient. Here serum-calcium differences are reasonably symmetric but have non-normal tails that make the paired mean model unsuitable. Wilcoxon signed-rank fits the stated conditions. Remember that separate checks of the two visit columns do not replace a check of the differences being analyzed.",
+      "explanation": "Wilcoxon signed-rank fits the within-person serum-calcium differences under the supplied symmetry and distribution findings. Checking visit columns separately does not answer that change-distribution question.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Room-workflow test: observations for practice",
-        "body": "The same rooms were timed before and after the change. Their time differences are reasonably symmetric but have non-normal tails that make the paired mean model unsuitable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Serum-calcium change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational calcium-lowering agent in primary hyperparathyroidism. Outcome: serum-calcium change, in mg/dL. The same people are measured before and after treatment. Differences are reasonably symmetric but distinctly non-normal, making a paired mean model unsuitable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "hyperparathyroidism"
     },
     {
       "slug": "matched-dyads",
-      "complaint": "Matched-worker review",
-      "presentation": "{patientName}, the task-time review lead, checks a report before a staffing meeting. Workers were deliberately matched to counterparts before continuous task times were recorded; this was not a before-and-after project. The report compares the times within each designated pair. The exhibit summarizes the differences, including their symmetry and the distribution findings available for the analysis.",
-      "stem": "Which analysis best evaluates the within-set task-time contrast for the matched workers in the exhibit?",
+      "complaint": "persistent neck mass study",
+      "presentation": "{patientName}, the head-and-neck research lead, reviews a new needle-biopsy technique for persistent neck masses undergoing malignancy evaluation. Recipients were matched to comparison patients before completed biopsy-site healing times were recorded. The investigators want to compare times within those designated pairs. The report supplies the matching structure and the distribution of differences between paired healing times.",
+      "stem": "Which analysis best fits the study's comparison of biopsy-site healing-time differences, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_matched-dyads",
         "label": "Wilcoxon signed-rank test",
-        "rationale": "Matching creates continuous within-dyad differences, and the exhibit supplies reasonable symmetry with an unsuitable t model. Signed-rank fits those stated difference-distribution assumptions."
+        "rationale": "The study supplies linked continuous differences that are reasonably symmetric but unsuitable for a t model. Signed-rank uses their signs and ranks."
       },
       "distractors": [
         {
           "id": "d1_matched-dyads",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum would ignore the designated worker counterparts and compare unlinked groups. The question specifically concerns the within-set task-time contrast."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d2_matched-dyads",
           "label": "Independent-samples t test",
-          "rationale": "An independent-samples t test discards the deliberate matches. It also does not fit the stated non-normal difference distribution and unsuitable t-model conditions."
+          "rationale": "A two-sample t procedure treats the groups as unrelated. It would discard the within-person or designated-pair relationship that supplies this study's differences."
         },
         {
           "id": "d3_matched-dyads",
           "label": "McNemar test",
-          "rationale": "McNemar testing concerns linked binary responses. The matched observations here are continuous task times, not yes-or-no outcomes that changed category."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         }
       ],
-      "teachingPoint": "Deliberately matched workers create linked differences even without a before-and-after visit. Signed-rank uses the signs and ranks of nonzero continuous differences when its assumptions fit. Here symmetry is stated and the t model is unsuitable. McNemar testing concerns paired binary responses, which is a different outcome structure.",
-      "explanation": "The matched workers supply continuous differences, reasonably symmetric but unsuitable for a t model. Wilcoxon signed-rank preserves those links; McNemar testing would require paired binary responses.",
+      "teachingPoint": "Deliberately matched people can form pairs even when nobody is measured twice. These biopsy-site healing-time differences are reasonably symmetric but unsuitable for a t model, supporting Wilcoxon signed-rank. Remember to follow the design's links. McNemar testing concerns paired binary responses, not the continuous completed healing times recorded within these matched pairs.",
+      "explanation": "Use Wilcoxon signed-rank for the designated pairs' continuous biopsy-site healing-time differences. Their reasonable symmetry and unsuitable t-model distribution support that choice over unrelated-group or binary-response procedures.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Worker-matching project: observations for practice",
-        "body": "Workers were matched in dyads before recording continuous task times. Differences within dyads are reasonably symmetric but strongly non-normal, and a t model is unsuitable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Biopsy-site healing-time differences — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational needle-biopsy technique in persistent adult neck masses. Outcome: biopsy-site healing-time differences, in days. Treatment recipients were matched to comparison recipients before measurement; differences are computed within the designated pairs. Differences are reasonably symmetric but distinctly non-normal, making a paired mean model unsuitable. All times are observed to completion with no censoring. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "adult-neck-mass"
     },
     {
       "slug": "pre-post-counts",
-      "complaint": "Office-time review",
-      "presentation": "{patientName}, the office-workflow lead, brings repeated timing measurements to a staff meeting before the next pilot. Management calls the project frictionless; opening its presentation requires three passwords and a paper permission slip. The same offices were measured before and afterward. The team is reviewing change, and the exhibit records the distribution of the office-level time differences.",
-      "stem": "Which analysis best evaluates the office time changes under the assumptions stated in the exhibit?",
+      "complaint": "cubital tunnel syndrome study",
+      "presentation": "{patientName}, the hand-service journal-club lead, reviews a new elbow-bracing device for cubital tunnel syndrome. Investigators measured handgrip force before and after treatment in the same adults. Management calls the project frictionless; opening its presentation requires three passwords and a paper permission slip. The report describes individual force changes and the distribution checks for the proposed analysis.",
+      "stem": "Which analysis best fits the study's comparison of handgrip-force change, using the measurements and assumptions in the exhibit?",
       "correct": {
         "id": "correct_pre-post-counts",
         "label": "Wilcoxon signed-rank test",
-        "rationale": "The same offices supply continuous changes with reasonable symmetry and heavy non-normal tails. Signed-rank fits the linked differences under the assumptions supplied in the exercise."
+        "rationale": "The study supplies linked continuous differences that are reasonably symmetric but unsuitable for a t model. Signed-rank uses their signs and ranks."
       },
       "distractors": [
         {
           "id": "d1_pre-post-counts",
           "label": "Paired t test",
-          "rationale": "A paired t test recognizes the repeated offices but requires a suitable mean model. The exhibit expressly states that the heavy-tailed differences make that model unsuitable."
+          "rationale": "The observations are linked, but the exhibit says their differences are unsuitable for the paired mean model. Linkage alone does not establish its distributional assumptions."
         },
         {
           "id": "d2_pre-post-counts",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares separate samples. The two timing columns contain measurements of the same offices and should not lose those within-office links."
+          "rationale": "Rank-sum compares ranked observations from unrelated groups. It would ignore the repeated-person or matching structure used to form the study's differences."
         },
         {
           "id": "d3_pre-post-counts",
           "label": "Chi-square test of independence",
-          "rationale": "Chi-square compares categorical counts under its assumptions. The recorded outcome is continuous time change, even though the spreadsheet contains two measurement columns."
+          "rationale": "Chi-square testing analyzes counts in categories. The requested comparison concerns continuous measurements or ordered ratings, not a categorical contingency table."
         }
       ],
-      "teachingPoint": "Start with a time difference for each office. Signed-rank uses nonzero paired differences when reasonable symmetry supports its usual interpretation; it is not a general cure for every non-normal dataset. The exhibit supplies that symmetry and rules out the t model because of heavy tails, making signed-rank the fitting choice here.",
-      "explanation": "Use Wilcoxon signed-rank for the offices' continuous changes. The exhibit supplies reasonable symmetry and heavy non-normal tails that make the t model unsuitable.",
+      "teachingPoint": "A Wilcoxon signed-rank procedure fits linked continuous differences that are reasonably symmetric but unsuitable for the stated t model. These repeated handgrip forces meet those supplied conditions. Remember both requirements: linkage distinguishes signed-rank from rank-sum, while symmetry matters for the usual location interpretation. Non-normality alone is not a complete selection rule.",
+      "explanation": "The repeated handgrip-force differences support Wilcoxon signed-rank under the stated symmetry and non-normality findings. Non-normal data alone would not establish all the required conditions.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Office-workflow pilot: observations for practice",
-        "body": "The same offices were timed before and after a change. Time differences are continuous and reasonably symmetric, with heavy non-normal tails that make a t model unsuitable. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Handgrip-force change — illustrative clinical study",
+        "body": "Invented protocol observations for an unnamed investigational elbow-bracing device in cubital tunnel syndrome. Outcome: handgrip-force change, in newtons. The same people are measured before and after treatment. Differences are reasonably symmetric but distinctly non-normal, making a paired mean model unsuitable. These practice assumptions supply no real treatment efficacy."
+      },
+      "clinicalAnchor": "cubital-tunnel"
     }
   ],
   "chi-square": [
     {
       "slug": "role-by-choice",
-      "complaint": "Training-preference review",
-      "presentation": "{patientName}, the staff-survey lead, brings training preferences from three roles to the committee. Each worker chose one format. 'I'm saving the handout until after the workshop. Nobody likes a spoiler,' the training organizer says. The report concerns the relationship between role and preference; the exhibit contains the category counts and the analysis assumptions.",
-      "stem": "Which analysis best assesses the association between staff role and training preference in the exhibit?",
+      "complaint": "appendicitis study",
+      "presentation": "{patientName}, the emergency-surgery research lead, reviews three new operative techniques for appendicitis with an appendicolith. The trial records surgical-site infection categories within thirty days. The presenter saves the methods appendix until after discussion because, he says, nobody likes a spoiler. Each participant contributes one category, and the report supplies the table's expected-count assessment for analysis.",
+      "stem": "Which analysis best examines the association between study intervention and thirty-day SSI category, using the table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_role-by-choice",
         "label": "Chi-square test",
-        "rationale": "The question concerns association between two categorical variables. Each worker appears once, and adequate expected counts support the chi-square approximation for this table."
+        "rationale": "Device group and outcome category are categorical variables, with separate observations and adequate expected counts. The requested large-sample association procedure fits those conditions."
       },
       "distractors": [
         {
           "id": "d1_role-by-choice",
           "label": "McNemar test",
-          "rationale": "McNemar testing needs linked binary responses. This table records one training preference per worker across three roles and three response categories."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         },
         {
           "id": "d2_role-by-choice",
           "label": "Fisher exact test",
-          "rationale": "The offered exact-test contrast concerns sparse two-by-two tables. This multi-category table instead has adequate expected counts supporting the requested categorical association analysis."
+          "rationale": "The ordinary two-by-two exact procedure does not match this table's multiple categories. Adequate expected counts support the requested large-sample association analysis."
         },
         {
           "id": "d3_role-by-choice",
           "label": "Independent-samples t test",
-          "rationale": "A two-sample t test compares continuous-outcome means. Role and preferred training format are categories, and the cells contain counts rather than measured scores."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         }
       ],
-      "teachingPoint": "When both variables are categories, count observations in the combinations of those categories. A chi-square test assesses association when observations are independent and expected counts support the approximation. Each worker contributes once here. McNemar testing instead concerns linked binary responses, rather than this table of roles and preferences.",
-      "explanation": "Use a chi-square test of independence: role and preference are categories, each worker is counted once, and the exhibit states that expected counts support the approximation.",
+      "teachingPoint": "A chi-square test of independence assesses a relationship between categorical variables when observations are separate and expected counts support the approximation. Here intervention groups and outcome categories define the table. Remember to identify what each cell counts; several categories in a row do not make the same person a repeated observation.",
+      "explanation": "Use a chi-square test for the categorical intervention/outcome association. Observations are separate, and the supplied expected counts support the requested large-sample approximation.",
       "exhibit": {
         "kind": "table",
-        "caption": "One response per worker; expected counts support the approximation. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational appendectomy technique study: invented practice counts of people by intervention and thirty-day SSI category. Each contributes once; no matching. Expected counts support the requested approximation.",
         "columnHeaders": [
-          "Video",
-          "Workshop",
-          "Handout"
+          "No SSI",
+          "Superficial SSI",
+          "Deeper SSI"
         ],
         "rowHeaders": [
-          "Role A",
-          "Role B",
-          "Role C"
+          "New study intervention A",
+          "New study intervention B",
+          "New study intervention C"
         ],
         "cells": [
           [
@@ -776,49 +796,50 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "30"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "appendix"
     },
     {
       "slug": "shift-by-response",
-      "complaint": "Shift-response review",
-      "presentation": "{patientName}, the survey review lead, brings staff feedback to a meeting before the next scheduling review. Workers on day, evening, and night shifts each answered once, choosing yes, no, or undecided. The draft compares response categories across shifts. The table contains the observed counts, and its caption records the assumptions available for the proposed association analysis.",
-      "stem": "Which analysis best assesses the association between work shift and response category in the exhibit?",
+      "complaint": "gallstones study",
+      "presentation": "{patientName}, the biliary research lead, reviews three new dissection instruments used during surgery for symptomatic gallstones. The trial classifies thirty-day surgical-site infection as absent, superficial or deeper. Each participant contributes once and received one instrument. Investigators want to examine the relationship between instrument group and infection category; the report includes the expected-count assessment for the table.",
+      "stem": "Which analysis best examines the association between study intervention and thirty-day SSI category, using the table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_shift-by-response",
         "label": "Chi-square test",
-        "rationale": "Shift and response are categories, and each worker answers once. The exhibit's expected-count assessment supports the chi-square approximation for their association."
+        "rationale": "Device group and outcome category are categorical variables, with separate observations and adequate expected counts. The requested large-sample association procedure fits those conditions."
       },
       "distractors": [
         {
           "id": "d1_shift-by-response",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ordered observations between two groups. This table has three shifts and categorical response counts, not the two-group ranked comparison that method addresses."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         },
         {
           "id": "d2_shift-by-response",
           "label": "Fisher exact test",
-          "rationale": "The sparse two-by-two indication for the offered Fisher contrast is absent. The exhibit supplies a multi-category table with expected counts adequate for chi-square."
+          "rationale": "The ordinary two-by-two exact procedure does not match this table's multiple categories. Adequate expected counts support the requested large-sample association analysis."
         },
         {
           "id": "d3_shift-by-response",
           "label": "McNemar test",
-          "rationale": "McNemar testing compares linked binary responses. Here workers respond once across three response categories; they are not observed in paired yes-or-no states."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         }
       ],
-      "teachingPoint": "Yes, no, and undecided are response categories, not measured amounts to average. With one response per worker and adequate expected counts, chi-square assesses association with shift. The table has no repeated binary response pairs for McNemar testing. Identify the outcome type before deciding whether a method based on ranks or means fits.",
-      "explanation": "The question concerns association between two categorical variables. A chi-square test fits the independent observations and adequate expected counts stated in the exhibit.",
+      "teachingPoint": "Device group and recorded outcome category are both categorical variables. The expected counts support a chi-square approximation, and each person contributes once. Remember that the number of columns does not establish pairing or a continuous outcome. The question concerns an association between categories, not a comparison of numerical means.",
+      "explanation": "Use a chi-square test for the categorical intervention/outcome association. Observations are separate, and the supplied expected counts support the requested large-sample approximation.",
       "exhibit": {
         "kind": "table",
-        "caption": "One response per worker; expected counts support the approximation. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational gallbladder dissection instrument study: invented practice counts of people by intervention and thirty-day SSI category. Each contributes once; no matching. Expected counts support the requested approximation.",
         "columnHeaders": [
-          "Yes",
-          "No",
-          "Undecided"
+          "No SSI",
+          "Superficial SSI",
+          "Deeper SSI"
         ],
         "rowHeaders": [
-          "Day",
-          "Evening",
-          "Night"
+          "New study intervention A",
+          "New study intervention B",
+          "New study intervention C"
         ],
         "cells": [
           [
@@ -837,47 +858,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "30"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "gallstones"
     },
     {
       "slug": "badge-by-completion",
-      "complaint": "Completion-pattern review",
-      "presentation": "{patientName}, the audit discussion lead, reviews completion counts before issuing a badge-group report. The groups contain different workers, each counted once, and the analysis plan requests a large-sample approximation. A colleague proposes a comparison of average times. The records contain badge category and completion status for each worker; the exhibit displays the counts and expected-count checks.",
-      "stem": "Which analysis best assesses badge-group association with completion using the requested approximation in the exhibit?",
+      "complaint": "anal-canal SCC study",
+      "presentation": "{patientName}, the oncology discussion lead, reviews two new radiation-delivery devices for localized anal-canal SCC. The study records complete response or incomplete response at its stated assessment visit. A colleague proposes comparing average healing time, but the available records contain only device group and response category. Each participant contributes once, and the expected-count assessment accompanies the table.",
+      "stem": "Which analysis best examines the association between study intervention and tumor response at six months, using the table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_badge-by-completion",
         "label": "Chi-square test",
-        "rationale": "The plan requests a large-sample categorical association approximation, and the expected counts support it. Chi-square matches the separate workers' badge and completion counts."
+        "rationale": "Device group and outcome category are categorical variables, with separate observations and adequate expected counts. The requested large-sample association procedure fits those conditions."
       },
       "distractors": [
         {
           "id": "d1_badge-by-completion",
           "label": "McNemar test",
-          "rationale": "McNemar testing requires linked binary measurements. Each worker belongs to one badge group and contributes only one completion status in this comparison."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         },
         {
           "id": "d2_badge-by-completion",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ranked observations rather than the categorical association requested here. The table contains badge groups and binary completion counts, not continuous or ordinal scores."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         },
         {
           "id": "d3_badge-by-completion",
           "label": "Fisher exact test",
-          "rationale": "Fisher exact testing is an exact approach, not the large-sample approximation requested in this plan. The supplied expected counts support that requested approximation."
+          "rationale": "An exact two-by-two comparison could answer another analysis plan. This exhibit explicitly requests the large-sample approximation, whose expected-count conditions are met."
         }
       ],
-      "teachingPoint": "Two groups can still have a categorical outcome: here completion is recorded as completed or not completed. Chi-square fits the requested approximation because observations are independent and expected counts are adequate. Fisher exact testing addresses sparse two-by-two tables when that approximation is unreliable; sparsity is not the stated problem here.",
-      "explanation": "Use chi-square for the planned large-sample association analysis. Completion is binary, the workers are separate observations, and expected counts support the approximation.",
+      "teachingPoint": "The observed counts describe intervention group and whether complete response occurred. With separate observations and adequate expected counts, a chi-square test fits the planned large-sample association analysis. Remember to inspect expected counts and the requested approximation, rather than choosing solely because a table is two by two or has a large total.",
+      "explanation": "Use a chi-square test for the categorical intervention/outcome association. Observations are separate, and the supplied expected counts support the requested large-sample approximation.",
       "exhibit": {
         "kind": "table",
-        "caption": "400 workers counted once; expected counts support the approximation; the analysis plan calls for a large-sample approximation. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational anal-cancer radiation device study: invented practice counts of people by intervention and tumor response at six months. Each contributes once; no matching. Expected counts support the requested approximation.",
         "columnHeaders": [
-          "Completed",
-          "Not completed"
+          "Complete response",
+          "Incomplete response"
         ],
         "rowHeaders": [
-          "Blue badge",
-          "Green badge"
+          "New study intervention A",
+          "New study intervention B"
         ],
         "cells": [
           [
@@ -889,50 +911,51 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "120"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "anal-scc"
     },
     {
       "slug": "site-by-category",
-      "complaint": "Encounter-category review",
-      "presentation": "{patientName}, the site-audit lead, reviews encounter categories across three clinics before an operations meeting. Each encounter contributes one category. The committee wants a concise report, but each clinic insists that its contribution needs a personal foreword. The proposed analysis concerns the relationship between clinic and category; the exhibit contains the counts and the expected-count assessment.",
-      "stem": "Which analysis best assesses the association between clinic site and encounter category in the exhibit?",
+      "complaint": "carotid stenosis study",
+      "presentation": "{patientName}, the vascular journal-club lead, reviews three new monitoring devices used during carotid operations for symptomatic carotid stenosis. The study classifies postoperative neurologic outcomes at thirty days. The committee requests a concise summary, but each manufacturer insists on a personal foreword. Each participant contributes one category, and the report supplies the expected-count assessment for the comparison.",
+      "stem": "Which analysis best examines the association between study intervention and thirty-day neurologic outcome, using the table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_site-by-category",
         "label": "Chi-square test",
-        "rationale": "Clinic and encounter type are categorical variables, with separate records and adequate expected counts. Chi-square addresses the requested association across this multi-category table."
+        "rationale": "Device group and outcome category are categorical variables, with separate observations and adequate expected counts. The requested large-sample association procedure fits those conditions."
       },
       "distractors": [
         {
           "id": "d1_site-by-category",
           "label": "One-way ANOVA",
-          "rationale": "One-way ANOVA compares means of a continuous outcome. Encounter categories are not measured scores, and these cells count records rather than report outcome means."
+          "rationale": "This ordinary mean-based ANOVA does not address the supplied ordinal or unsuitable non-normal comparison. Having groups does not by itself establish its assumptions."
         },
         {
           "id": "d2_site-by-category",
           "label": "Fisher exact test",
-          "rationale": "The offered Fisher contrast addresses sparse two-by-two categorical data. This table has multiple categories and expected counts supporting the stated chi-square approximation."
+          "rationale": "The ordinary two-by-two exact procedure does not match this table's multiple categories. Adequate expected counts support the requested large-sample association analysis."
         },
         {
           "id": "d3_site-by-category",
           "label": "McNemar test",
-          "rationale": "McNemar testing needs linked binary responses. Separate encounter records across multiple clinics and categories do not provide that paired binary structure."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         }
       ],
-      "teachingPoint": "Category names identify kinds of encounters, not quantities with means. Chi-square assesses whether their distribution is associated with site when observations and expected counts support its approximation. This multi-category table is not the sparse two-by-two setting for the supplied Fisher option, nor a set of paired binary changes for McNemar testing.",
-      "explanation": "Choose chi-square to assess association between site and encounter category. The table contains independent category counts with adequate expected counts for the approximation.",
+      "teachingPoint": "A table can have several rows and columns while asking one categorical-association question. Here a chi-square test fits the separate observations and adequate expected counts. Remember that both conditions matter. Counting rows and columns alone cannot establish them, and numerical cell entries remain counts within categories, not continuous outcome measurements.",
+      "explanation": "Use a chi-square test for the categorical intervention/outcome association. Observations are separate, and the supplied expected counts support the requested large-sample approximation.",
       "exhibit": {
         "kind": "table",
-        "caption": "One record per encounter; expected counts support the approximation. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational carotid monitoring device study: invented practice counts of people by intervention and thirty-day neurologic outcome. Each contributes once; no matching. Expected counts support the requested approximation.",
         "columnHeaders": [
-          "Category A",
-          "Category B",
-          "Category C",
-          "Category D"
+          "No event",
+          "Transient deficit",
+          "Persistent deficit",
+          "Other neurologic event"
         ],
         "rowHeaders": [
-          "Site 1",
-          "Site 2",
-          "Site 3"
+          "New study intervention A",
+          "New study intervention B",
+          "New study intervention C"
         ],
         "cells": [
           [
@@ -954,49 +977,50 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "11"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "carotid"
     }
   ],
   "fisher-exact": [
     {
       "slug": "rare-event",
-      "complaint": "Pilot-event review",
-      "presentation": "{patientName}, the safety-project discussion lead, checks a small workflow pilot before circulating its methods summary. Each participant contributed one event status, and the two-by-two table includes a zero cell. The data review records sparse expected counts and an unreliable approximation. The team is comparing event categories between workflows, and the report's analysis field is still blank.",
-      "stem": "Which analysis best assesses workflow association with event status in the sparse table in the exhibit?",
+      "complaint": "gastric GIST study",
+      "presentation": "{patientName}, the upper-GI research lead, reviews a small trial of a new stapling instrument used during gastric GIST resection. The report records staple-line leak within thirty days in two separate groups. Participants were not matched, and some table entries are very small. The investigators want to compare leak outcomes; the report provides its expected-count assessment for analysis.",
+      "stem": "Which analysis best compares thirty-day staple-line leak between the separate groups, using the sparse table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_rare-event",
         "label": "Fisher exact test",
-        "rationale": "Fisher exact testing fits this two-by-two categorical comparison with separate participants. Sparse expected counts make the chi-square approximation unreliable, as the exhibit states."
+        "rationale": "The exhibit supplies a sparse two-by-two table from separate participants. An exact categorical comparison fits the stated expected-count problem."
       },
       "distractors": [
         {
           "id": "d1_rare-event",
           "label": "Chi-square test of independence",
-          "rationale": "The categorical association target fits chi-square in principle, but its approximation is explicitly unreliable with these sparse expected counts. The zero cell does not repair that limitation."
+          "rationale": "The usual chi-square approximation is unreliable under the stated sparse expected counts. A two-by-two table does not by itself establish that approximation's adequacy."
         },
         {
           "id": "d2_rare-event",
           "label": "Paired t test",
-          "rationale": "A paired t test needs linked continuous measurements. This table instead counts separate participants by workflow and binary event status."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         },
         {
           "id": "d3_rare-event",
           "label": "McNemar test",
-          "rationale": "McNemar testing concerns linked binary responses. Each participant appears once in one workflow group, so the event counts are not paired before-and-after states."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         }
       ],
-      "teachingPoint": "Fisher exact testing addresses a two-by-two table when sparse expected counts make the chi-square approximation unreliable. It uses the categorical counts without requiring a mean comparison or repeated measurements. A zero observed cell does not remove the analysis question; choose the method from the table structure and the stated approximation problem.",
-      "explanation": "The exhibit supplies a sparse two-by-two table of separate participants. Fisher exact testing fits the stated setting in which the chi-square approximation is unreliable.",
+      "teachingPoint": "Fisher's exact test fits this sparse two-by-two comparison of intervention group and outcome status. The supplied expected-count assessment makes a large-sample approximation unreliable. Remember to check the cells, not just the total sample size. A binary outcome from different people also does not create the paired binary structure needed for McNemar testing.",
+      "explanation": "Use Fisher's exact test for this sparse two-by-two intervention/outcome table. The stated expected counts make the usual large-sample approximation unreliable for this exercise.",
       "exhibit": {
         "kind": "table",
-        "caption": "18 participants counted once; sparse counts make the approximation unreliable. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational GIST resection stapler: invented practice counts by group and 30-day staple-line leak. Cells count people once, unmatched. Expected counts are sparse; the large-sample approximation is unreliable.",
         "columnHeaders": [
-          "Event",
-          "No event"
+          "Leak",
+          "No leak"
         ],
         "rowHeaders": [
-          "Workflow A",
-          "Workflow B"
+          "New study intervention",
+          "Study comparator"
         ],
         "cells": [
           [
@@ -1008,47 +1032,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "9"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "gist"
     },
     {
       "slug": "tiny-pilot",
-      "complaint": "Reminder-pilot review",
-      "presentation": "{patientName}, the reminder-pilot lead, brings response counts to the project meeting before its report is submitted. Each participant received one reminder and answered yes or no. The sponsor wants a statistically sophisticated report, provided the methods section fits inside his preferred headline. The exhibit contains the sparse table and the data team's assessment of the approximation.",
-      "stem": "Which analysis best compares response categories between the reminder groups in the sparse exhibit?",
+      "complaint": "rectal prolapse study",
+      "presentation": "{patientName}, the colorectal discussion lead, reviews a new fixation technique for rectal prolapse. A small pilot records recurrence within two years in separate groups. The supplier calls the pilot extensive; its sales delegation is larger than the study population. The report contains the observed two-by-two table and the expected-count assessment requested for the recurrence comparison.",
+      "stem": "Which analysis best compares two-year recurrence between the separate groups, using the sparse table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_tiny-pilot",
         "label": "Fisher exact test",
-        "rationale": "The exhibit describes a sparse two-by-two response table with an unreliable approximation. Fisher exact testing addresses this categorical comparison between separate reminder groups."
+        "rationale": "The exhibit supplies a sparse two-by-two table from separate participants. An exact categorical comparison fits the stated expected-count problem."
       },
       "distractors": [
         {
           "id": "d1_tiny-pilot",
           "label": "Chi-square test of independence",
-          "rationale": "Chi-square relies on an approximation that the exhibit identifies as unreliable. The two-by-two shape alone does not establish adequate expected counts."
+          "rationale": "The usual chi-square approximation is unreliable under the stated sparse expected counts. A two-by-two table does not by itself establish that approximation's adequacy."
         },
         {
           "id": "d2_tiny-pilot",
           "label": "Independent-samples t test",
-          "rationale": "A two-sample t test compares continuous means. Yes-or-no responses are counted categories, not measured scores whose means this question asks to compare."
+          "rationale": "This mean-based procedure does not fit the supplied ordinal scale or unsuitable normal-model distribution. A numerical code or a continuous time measurement alone does not establish its assumptions."
         },
         {
           "id": "d3_tiny-pilot",
           "label": "Wilcoxon rank-sum test",
-          "rationale": "Rank-sum compares ranked observations. The requested task is a sparse two-by-two categorical comparison, for which the exhibit identifies an unreliable count approximation."
+          "rationale": "Rank-sum answers a ranked-observation comparison. This study explicitly requests means and supplies reasonable assumptions for the mean-based procedure."
         }
       ],
-      "teachingPoint": "These are yes-or-no counts from two separate groups, so start with the two-by-two table. The exhibit states that sparse expected counts undermine the chi-square approximation. Fisher exact testing fits that problem. Comparing means or ranks would answer a different question from the categorical association requested here.",
-      "explanation": "Use Fisher exact testing for the sparse two-by-two reminder table. Each participant contributes once, and the exhibit rules out relying on the usual chi-square approximation.",
+      "teachingPoint": "A small two-by-two table with sparse expected counts can require an exact comparison rather than the usual chi-square approximation. Fisher's exact test fits these separate intervention groups. Remember that an empty observed cell is a count, not a continuous measurement; a mean-based procedure would change the question being asked.",
+      "explanation": "Use Fisher's exact test for this sparse two-by-two intervention/outcome table. The stated expected counts make the usual large-sample approximation unreliable for this exercise.",
       "exhibit": {
         "kind": "table",
-        "caption": "14 participants counted once; sparse counts make the approximation unreliable. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational prolapse fixation technique: invented practice counts by group and two-year recurrence. Cells count people once, unmatched. Expected counts are sparse; the large-sample approximation is unreliable.",
         "columnHeaders": [
-          "Yes",
-          "No"
+          "Recurrence",
+          "No recurrence"
         ],
         "rowHeaders": [
-          "Reminder A",
-          "Reminder B"
+          "New study intervention",
+          "Study comparator"
         ],
         "cells": [
           [
@@ -1060,47 +1085,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "4"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "rectal-prolapse"
     },
     {
       "slug": "sparse-exposure",
-      "complaint": "Exposure-table review",
-      "presentation": "{patientName}, the audit review lead, checks an exposure table before signing its methods summary. The groups differ in size, few records contain the event, and each person appears once. The table contains exposure and event categories. The data review notes sparse expected counts and an unreliable approximation; the team still needs an association analysis for the report.",
-      "stem": "Which analysis best assesses exposure association with event status in the sparse two-by-two exhibit?",
+      "complaint": "ectopic pregnancy study",
+      "presentation": "{patientName}, the gynecology journal-club lead, reviews a new diagnostic pathway for suspected ectopic pregnancy. A small observational study records whether ectopic diagnoses were missed during the protocol assessment. Pathway exposure was uncommon. Participants were not matched or measured repeatedly for this comparison, and the report includes a sparse two-by-two table with an expected-count assessment for analysis.",
+      "stem": "Which analysis best compares missed ectopic diagnosis at protocol assessment between the separate groups, using the sparse table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_sparse-exposure",
         "label": "Fisher exact test",
-        "rationale": "Fisher exact testing fits the sparse two-by-two exposure and event table. The separate records and stated unreliable approximation support this choice for categorical association."
+        "rationale": "The exhibit supplies a sparse two-by-two table from separate participants. An exact categorical comparison fits the stated expected-count problem."
       },
       "distractors": [
         {
           "id": "d1_sparse-exposure",
           "label": "One-way ANOVA",
-          "rationale": "One-way ANOVA compares continuous-outcome means. Exposure and event status are categories, and the table supplies counts rather than continuous measurements."
+          "rationale": "This ordinary mean-based ANOVA does not address the supplied ordinal or unsuitable non-normal comparison. Having groups does not by itself establish its assumptions."
         },
         {
           "id": "d2_sparse-exposure",
           "label": "Chi-square test of independence",
-          "rationale": "The exhibit expressly identifies an unreliable chi-square approximation because of sparse expected counts. Unequal group sizes do not remove that stated limitation."
+          "rationale": "The usual chi-square approximation is unreliable under the stated sparse expected counts. A two-by-two table does not by itself establish that approximation's adequacy."
         },
         {
           "id": "d3_sparse-exposure",
           "label": "Paired t test",
-          "rationale": "A paired t test requires linked continuous differences. No person is measured repeatedly or matched here, and event status is categorical rather than continuous."
+          "rationale": "A paired t procedure needs repeated or deliberately matched measurements. This comparison does not supply those links between observations."
         }
       ],
-      "teachingPoint": "Group sizes need not match for a two-by-two categorical analysis. What matters here is that sparse expected counts make the usual approximation unreliable. Fisher exact testing fits the supplied exposure and event table. A mean-comparison procedure does not become appropriate just because the groups are unequal in size.",
-      "explanation": "Fisher exact testing fits the sparse two-by-two exposure table. The task compares categorical event status across separate records, with an unreliable chi-square approximation.",
+      "teachingPoint": "The comparison concerns categorical intervention exposure and outcome status, with sparse counts in a two-by-two table. Fisher's exact test fits the stated conditions. Remember that an uneven exposure split can leave problematic cells even when the total seems larger. Continuous-outcome procedures do not become suitable merely because the table contains numerical counts.",
+      "explanation": "Use Fisher's exact test for this sparse two-by-two intervention/outcome table. The stated expected counts make the usual large-sample approximation unreliable for this exercise.",
       "exhibit": {
         "kind": "table",
-        "caption": "22 records counted once; sparse counts make the approximation unreliable. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational early-pregnancy diagnostic pathway: invented practice counts by group and missed ectopic diagnosis. Cells count people once, unmatched. Expected counts are sparse; the large-sample approximation is unreliable.",
         "columnHeaders": [
-          "Event",
-          "No event"
+          "Missed diagnosis",
+          "No missed diagnosis"
         ],
         "rowHeaders": [
-          "Exposed",
-          "Unexposed"
+          "New study intervention",
+          "Study comparator"
         ],
         "cells": [
           [
@@ -1112,47 +1138,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "18"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "ectopic"
     },
     {
       "slug": "small-response",
-      "complaint": "Format-response review",
-      "presentation": "{patientName}, the format-pilot lead, reviews response counts before a presentation. Each participant saw one format and either responded or did not. Communications wants a dramatic reveal and has asked the analyst to look surprised at results already circulated. The exhibit contains the sparse two-by-two table, including a zero cell, and the review of its approximation assumptions.",
-      "stem": "Which analysis best compares response categories between formats in the sparse table in the exhibit?",
+      "complaint": "allergic contact dermatitis study",
+      "presentation": "{patientName}, the immunology research lead, reviews a new barrier film for allergic contact dermatitis. The small trial records whether a flare occurred during protocol exposure. The representative offers to answer methods questions afterward, then books his departure for the minute his presentation ends. Each participant contributes one outcome, and the report includes its expected-count assessment.",
+      "stem": "Which analysis best compares flare during protocol exposure between the separate groups, using the sparse table and assumptions in the exhibit?",
       "correct": {
         "id": "correct_small-response",
         "label": "Fisher exact test",
-        "rationale": "The formats have separate participants and sparse binary-response counts. Fisher exact testing fits this two-by-two association comparison when the approximation is unreliable."
+        "rationale": "The exhibit supplies a sparse two-by-two table from separate participants. An exact categorical comparison fits the stated expected-count problem."
       },
       "distractors": [
         {
           "id": "d1_small-response",
           "label": "McNemar test",
-          "rationale": "A binary outcome alone does not establish a McNemar design. That method needs linked responses, but each participant saw only one format."
+          "rationale": "McNemar testing concerns paired binary responses. The exhibit instead supplies separate participants or continuous matched differences, so that observation structure does not fit."
         },
         {
           "id": "d2_small-response",
           "label": "Wilcoxon signed-rank test",
-          "rationale": "Signed-rank requires linked differences on a suitable measured scale. These separate participants contribute one binary response each, not paired continuous changes."
+          "rationale": "Signed-rank needs repeated or matched observations from which to form differences. The groups in this comparison do not supply those links."
         },
         {
           "id": "d3_small-response",
           "label": "Chi-square test of independence",
-          "rationale": "The table's expected counts make the chi-square approximation unreliable. Its two-by-two layout and zero cell do not establish the approximation conditions."
+          "rationale": "The usual chi-square approximation is unreliable under the stated sparse expected counts. A two-by-two table does not by itself establish that approximation's adequacy."
         }
       ],
-      "teachingPoint": "A binary outcome is not necessarily paired. Here each participant appears once in one format group, giving a sparse two-by-two table. Fisher exact testing fits the stated unreliable approximation. McNemar testing would require linked binary responses, while signed-rank would require differences whose signs and ranks can be analyzed.",
-      "explanation": "Choose Fisher exact testing for the sparse category counts from separate participants. The exhibit contains no linked response pairs for McNemar or signed-rank testing.",
+      "teachingPoint": "Fisher's exact test addresses the sparse two-by-two categorical comparison described here. Each person contributes one flare outcome, with no pairing. Remember the separate checks: sparse expected counts favor the exact method, while the observation structure rules out a paired binary procedure. Neither the table's two columns nor two groups establishes linkage.",
+      "explanation": "Use Fisher's exact test for this sparse two-by-two intervention/outcome table. The stated expected counts make the usual large-sample approximation unreliable for this exercise.",
       "exhibit": {
         "kind": "table",
-        "caption": "16 participants counted once; sparse counts make the approximation unreliable. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational contact-dermatitis barrier film: invented practice counts by group and protocol-exposure flare. Cells count people once, unmatched. Expected counts are sparse; the large-sample approximation is unreliable.",
         "columnHeaders": [
-          "Responded",
-          "Did not respond"
+          "Flare",
+          "No flare"
         ],
         "rowHeaders": [
-          "Format A",
-          "Format B"
+          "New study intervention",
+          "Study comparator"
         ],
         "cells": [
           [
@@ -1164,130 +1191,134 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "8"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "contact-dermatitis"
     }
   ],
   "study-design": [
     {
       "slug": "cohort-followup",
-      "complaint": "Reminder-study review",
-      "presentation": "{patientName}, the journal-club lead, reviews a reminder project before completing its methods cover sheet. Workers already used different reminders when investigators recruited them, and both groups were followed for later delays. The author lists visionary as the design and asks whether methodological questions can go through his publicist. The submission form still needs a study-design category.",
-      "stem": "Which study design fits the existing-reminder groups and later follow-up described in the exhibit?",
+      "complaint": "inguinal hernia study",
+      "presentation": "{patientName}, the hernia-service research lead, reviews a new reinforcement material for symptomatic inguinal hernia repair. Investigators grouped patients by material already received and followed recurrence for two years. The publicity officer wants 'breakthrough' in the title and offers 'breakthrough pending' as a compromise. The clinical teams chose materials; investigators did not allocate the treatments under review.",
+      "stem": "Which study design matches how the investigators selected participants, handled the study intervention and measured the clinical outcome described in the exhibit?",
       "correct": {
         "id": "correct_cohort-followup",
         "label": "Prospective cohort study",
-        "rationale": "Workers enter by existing reminder exposure and are followed for later delays. With no intervention assignment, that forward observation is a prospective cohort."
+        "rationale": "Patients enter by material already received and are followed for recurrence. With no investigator assignment, that forward observation is a prospective cohort."
       },
       "distractors": [
         {
           "id": "d1_cohort-followup",
           "label": "Retrospective case-control study",
-          "rationale": "Case-control sampling would begin with delay cases and controls. This project instead begins with existing reminder exposure and observes later outcomes."
+          "rationale": "Case-control sampling would begin with recurrence cases and controls. This project instead begins with existing material exposure and observes later outcomes."
         },
         {
           "id": "d2_cohort-followup",
           "label": "Cross-sectional study",
-          "rationale": "A cross-sectional snapshot measures exposure and outcome together. These investigators instead follow the exposure groups for later delays."
+          "rationale": "A cross-sectional snapshot measures exposure and outcome together. These investigators instead follow the exposure groups for later recurrence."
         },
         {
           "id": "d3_cohort-followup",
           "label": "Randomized experiment",
-          "rationale": "An experiment would assign the reminders. Following workers forward does not create the random assignment absent from this project."
+          "rationale": "An experiment would assign the materials. Following patients forward does not create the random allocation absent from this project."
         }
       ],
-      "teachingPoint": "Name the design by how people entered the study and what investigators did next. These workers were grouped by an existing exposure and then followed for later outcomes, without assigned treatment. That is a prospective cohort study. Watching forward in time does not, by itself, make a study randomized.",
-      "explanation": "This is a prospective cohort: investigators grouped workers by existing reminder use and followed later delays without assigning the reminders.",
+      "teachingPoint": "Name the design by how people entered the study and what investigators did next. These patients were grouped by material already received and followed for later recurrence, without assigned treatment. That is a prospective cohort. Remember: watching forward in time does not, by itself, make a study randomized or establish a treatment effect.",
+      "explanation": "This is a prospective cohort: investigators grouped patients by reinforcement material already received and followed later recurrence without assigning treatment. Forward observation alone does not create randomization.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Reminder project: observations for practice",
-        "body": "Workers already using different reminders were grouped by their existing choice. Investigators assigned nothing and followed both groups for later delays. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Hernia recurrence — illustrative study design",
+        "body": "Patients who already received one of two study reinforcement materials for inguinal hernia repair are grouped by exposure and followed for recurrence over two years. Investigators assign nothing. This unnamed investigational hernia reinforcement material protocol is invented for practice, not an actual study or efficacy estimate."
+      },
+      "clinicalAnchor": "inguinal"
     },
     {
       "slug": "random-scripts",
-      "complaint": "Script-study review",
-      "presentation": "{patientName}, the study review lead, checks a script project's abstract before submission. Investigators randomly allocated workers to reminder scripts and then measured scores. The committee has returned the abstract because the title contains more colons than the results table. The author has shortened the title, and the remaining discussion concerns the design category for the methods field.",
-      "stem": "Which study design fits the script assignment and score measurement described in the exhibit?",
+      "complaint": "colon cancer study",
+      "presentation": "{patientName}, the colorectal journal-club lead, reviews a new monoclonal antibody after resection of localized colon cancer. Investigators allocated participants to study arms and followed recurrence for two years. The representative requests equal speaking time for both products, then volunteers to speak for both. The report gives allocation details; the team is reviewing how the study was organized.",
+      "stem": "Which study design matches how the investigators selected participants, handled the study intervention and measured the clinical outcome described in the exhibit?",
       "correct": {
         "id": "correct_random-scripts",
         "label": "Randomized experiment",
-        "rationale": "Investigators randomly allocate reminder scripts before measuring scores. That assignment is the defining experimental action in this project."
+        "rationale": "Investigators randomly allocate antibody or control before measuring recurrence. That investigator-created assignment is the defining experimental action in this project."
       },
       "distractors": [
         {
           "id": "d1_random-scripts",
           "label": "Prospective cohort study",
-          "rationale": "A cohort would observe existing script exposure. Here investigators create the exposure groups through random assignment."
+          "rationale": "A cohort would observe existing exposure groups. Here investigators create the groups through random assignment rather than recording treatment already received."
         },
         {
           "id": "d2_random-scripts",
           "label": "Case-control study",
-          "rationale": "Case-control selection would start with outcome status and review exposure. This project assigns scripts before measuring the outcome."
+          "rationale": "Case-control selection would start with recurrence status and review exposure. This project assigns study arms before measuring that outcome."
         },
         {
           "id": "d3_random-scripts",
           "label": "Cross-sectional study",
-          "rationale": "A cross-sectional survey would measure current exposure and outcome together without assignment. Here investigators assign scripts and then measure scores."
+          "rationale": "A cross-sectional survey would measure exposure and outcome together without allocation. Here investigators assign study arms and subsequently measure recurrence."
         }
       ],
-      "teachingPoint": "Random assignment is an action by investigators, not a description of who happened to attend. Here they allocated workers to reminder scripts randomly and then measured scores. That makes the project a randomized experiment. A cohort observes existing exposures, while case-control and cross-sectional designs organize selection and measurement differently.",
-      "explanation": "The investigators randomly assigned scripts before measuring scores. That assignment makes this a randomized experiment rather than an observational design.",
+      "teachingPoint": "Random assignment is an action by investigators, not a description of who happened to attend. Here they allocated antibody or control randomly before measuring recurrence, making this a randomized experiment. Remember to look for assignment. A cohort observes existing exposures; case-control and cross-sectional designs organize selection and measurement differently.",
+      "explanation": "The investigators randomly allocated antibody or control before measuring recurrence. That assignment makes this a randomized experiment rather than observation of treatment groups that already existed.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Script project: observations for practice",
-        "body": "Investigators randomly allocated workers to one of two reminder scripts, then measured a continuous score. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Colon-cancer recurrence — illustrative study design",
+        "body": "Investigators randomly allocate people after localized colon-cancer resection to a new monoclonal antibody or control, then follow recurrence for two years. This unnamed investigational monoclonal antibody protocol is invented for practice, not an actual study or efficacy estimate."
+      },
+      "clinicalAnchor": "colon"
     },
     {
       "slug": "case-control",
-      "complaint": "Delay-study review",
-      "presentation": "{patientName}, the journal-club discussion lead, reviews a study of uncommon delays before writing its methods summary. Investigators first selected workers with the delay and workers without it, then reviewed earlier checklist use. They assigned no intervention. A colleague says, 'Any study looking through old records is a cohort.' The journal requires a design label in the abstract.",
-      "stem": "Which study design fits selection by delay status followed by review of earlier checklist use in the exhibit?",
+      "complaint": "peptic ulcer bleeding study",
+      "presentation": "{patientName}, the endoscopy research lead, reviews a new hemostasis device for peptic ulcer bleeding. Investigators selected patients who rebled and comparison patients who did not, then checked earlier device exposure. They did not assign treatment. The study concerns rebleeding after the initial procedure, and the report describes the sampling and sequence of measurements for the discussion.",
+      "stem": "Which study design matches how the investigators selected participants, handled the study intervention and measured the clinical outcome described in the exhibit?",
       "correct": {
         "id": "correct_case-control",
         "label": "Case-control study",
-        "rationale": "Selection begins with workers who had the delay and controls who did not; investigators then examine earlier checklist use. That outcome-first selection is case-control."
+        "rationale": "Selection begins with people who rebled and controls who did not; investigators then examine earlier device use. That outcome-first sampling is case-control."
       },
       "distractors": [
         {
           "id": "d1_case-control",
           "label": "Prospective cohort study",
-          "rationale": "A cohort comparison would begin with exposure groups. Reviewing earlier records does not make the outcome-selected groups a cohort."
+          "rationale": "A cohort comparison would begin with exposure groups. Reviewing earlier records does not make these outcome-selected groups into a cohort."
         },
         {
           "id": "d2_case-control",
           "label": "Randomized experiment",
-          "rationale": "The investigators assign no intervention. Selecting delay cases and controls is observational, rather than a randomized experiment."
+          "rationale": "The investigators assign no intervention. Selecting rebleeding cases and controls is observational, rather than allocation of a randomized treatment."
         },
         {
           "id": "d3_case-control",
           "label": "Cross-sectional study",
-          "rationale": "A cross-sectional study would sample without selecting on delay status and measure current variables together. This design selects cases and controls by outcome."
+          "rationale": "A cross-sectional study would sample without selecting on rebleeding status and measure current variables together. This design selects cases and controls by outcome."
         }
       ],
-      "teachingPoint": "Ask what determined entry into the comparison. Selecting people with an outcome and controls without it, then reviewing earlier exposure, gives a case-control study. The use of old records alone does not define that design; outcome-based selection does. A cohort would instead begin by organizing people according to exposure.",
-      "explanation": "Selection began with delay status and then looked back at checklist exposure. That is a case-control design, not a cohort merely because records were reviewed.",
+      "teachingPoint": "Ask what determined entry into the comparison. Selecting people who rebled and controls who did not, then reviewing earlier device exposure, gives a case-control study. Old records alone do not define that design; outcome-based selection does. Remember the entry rule: a cohort would begin by organizing people according to exposure.",
+      "explanation": "Selection began with rebleeding status and then examined earlier device exposure. That outcome-first sampling defines a case-control design, rather than a cohort simply because records were reviewed.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Delay project: observations for practice",
-        "body": "Investigators selected workers with a rare delay and workers without it, then reviewed prior checklist use. They assigned no intervention. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Ulcer rebleeding — illustrative study design",
+        "body": "Investigators select people with rebleeding after endoscopic treatment of peptic ulcer bleeding and controls without rebleeding, then review previous study-device exposure. Investigators assign nothing. This unnamed investigational endoscopic hemostasis device protocol is invented for practice, not an actual study or efficacy estimate."
+      },
+      "clinicalAnchor": "ulcer-bleeding"
     },
     {
       "slug": "cross-sectional",
-      "complaint": "Snapshot-survey review",
-      "presentation": "{patientName}, the clinic-survey lead, prepares a report on current checklist use and delay status. Both were recorded during the same visit, with recruitment unrelated to delay status. The author calls this a longitudinal journey and has requested travel expenses for writing it. There was no follow-up or assigned intervention, and the cover sheet requires a design label.",
-      "stem": "Which study design fits the same-visit exposure and outcome measurements described in the exhibit?",
+      "complaint": "reflux disease study",
+      "presentation": "{patientName}, the foregut journal-club lead, reviews a new wearable test for reflux disease. A survey records device use and current reflux symptoms at one visit, without allocating treatment or following participants afterward. The author calls the questionnaire streamlined; its optional feedback section first requires an explanation of why the feedback is optional. Recruitment details accompany the report.",
+      "stem": "Which study design matches how the investigators selected participants, handled the study intervention and measured the clinical outcome described in the exhibit?",
       "correct": {
         "id": "correct_cross-sectional",
         "label": "Cross-sectional study",
-        "rationale": "Current checklist use and delay status are recorded together, without outcome-based recruitment or follow-up. Those features define this cross-sectional snapshot."
+        "rationale": "Current device use and reflux symptoms are recorded together, without outcome-based recruitment or follow-up. Those features define this cross-sectional snapshot."
       },
       "distractors": [
         {
           "id": "d1_cross-sectional",
           "label": "Case-control study",
-          "rationale": "Case-control recruitment would depend on whether the delay occurred. The exhibit explicitly says recruitment does not depend on delay status."
+          "rationale": "Case-control recruitment would depend on outcome status. The exhibit explicitly says recruitment does not depend on the current symptom findings."
         },
         {
           "id": "d2_cross-sectional",
@@ -1297,28 +1328,29 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         {
           "id": "d3_cross-sectional",
           "label": "Randomized experiment",
-          "rationale": "A randomized experiment requires investigator assignment. This survey records current use and status without assigning a checklist."
+          "rationale": "A randomized experiment requires investigator assignment. This survey records device use and symptoms without assigning a device or study arm."
         }
       ],
-      "teachingPoint": "A cross-sectional study measures exposure and outcome at one time, giving a snapshot rather than follow-up. Recruitment here does not depend on outcome status, and investigators assign no intervention. Those details distinguish it from case-control selection and randomized assignment. A report title cannot create a time sequence that the study did not observe.",
-      "explanation": "This is a cross-sectional survey: current checklist use and current delay status were recorded together, without outcome-based recruitment, follow-up, or assigned intervention.",
+      "teachingPoint": "A cross-sectional study records exposure and outcome at one time, giving a snapshot. Here device use and current symptoms are measured together, without outcome-based recruitment, assignment or follow-up. Remember what the study actually observed. A report title cannot create a time sequence or treatment allocation that the design never supplied.",
+      "explanation": "This is a cross-sectional survey: device use and current reflux symptoms were recorded together, without outcome-based recruitment, subsequent follow-up or investigator-assigned intervention.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Checklist survey: observations for practice",
-        "body": "A clinic survey records current checklist use and current delay status during the same visit. Recruitment does not depend on delay status; there is no follow-up or intervention assignment. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Reflux findings — illustrative study design",
+        "body": "A survey records use of a new wearable reflux test and current reflux symptoms at the same visit. Recruitment is not based on symptom status; there is no follow-up or allocation. This unnamed investigational wearable reflux test protocol is invented for practice, not an actual study or efficacy estimate."
+      },
+      "clinicalAnchor": "gerd"
     }
   ],
   "bias-confounding": [
     {
       "slug": "baseline-shift",
-      "complaint": "Checklist-report review",
-      "presentation": "{patientName}, the audit discussion lead, checks a checklist comparison before its results reach the staff bulletin. Night shift relates to both checklist use and delay, but shift was omitted from the analysis. The author says readers want a simple story and has already cast himself as its hero. The team is reviewing the main threat to the conclusion.",
-      "stem": "Which threat to inference is most directly illustrated by the unaccounted-for shift factor in the exhibit?",
+      "complaint": "incisional hernia study",
+      "presentation": "{patientName}, the abdominal-wall research lead, reviews a new reinforcement material for incisional hernia repair. The observational study compares recurrence within two years. The sponsor wants a clean comparison, meaning a report without complicated caveats. The exhibit describes a study site related to both material use and recurrence; the unadjusted report does not account for that site.",
+      "stem": "Which problem most directly threatens the unadjusted intervention-outcome comparison when study site relates to both?",
       "correct": {
         "id": "correct_baseline-shift",
-        "label": "Confounding by work shift",
-        "rationale": "Shift relates to both checklist use and delay, and the comparison ignores it. Their mixed association is the stated confounding concern."
+        "label": "Confounding by study site",
+        "rationale": "Site relates to both intervention use and the outcome, and the comparison ignores it. Their mixed association is the stated confounding concern."
       },
       "distractors": [
         {
@@ -1329,62 +1361,64 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         {
           "id": "d2_baseline-shift",
           "label": "Measurement bias from recall",
-          "rationale": "No unequal recall or outcome-recording method is described. The stated problem is the ignored relationship of shift with both exposure and outcome."
+          "rationale": "No unequal recall or outcome-recording method is described. The stated problem is the ignored relationship of site with both exposure and outcome."
         },
         {
           "id": "d3_baseline-shift",
           "label": "Random error from sample size",
-          "rationale": "More observations do not automatically remove the systematic mixing with shift. Sample-size variation is not the primary mechanism described."
+          "rationale": "More observations do not automatically remove the systematic mixing with site. Sample-size variation is not the primary mechanism described."
         }
       ],
-      "teachingPoint": "Confounding occurs when an exposure comparison is mixed with another associated factor. Here shift relates to both checklist use and delay, so the unadjusted association may combine those relationships. Remember the third-factor question: what else differs with exposure and outcome? More observations do not automatically remove that systematic problem.",
-      "explanation": "Work shift is a confounder in this exercise because it relates to both checklist use and delay and is ignored in the comparison.",
+      "teachingPoint": "Confounding occurs when an exposure comparison is mixed with another associated factor. Here site relates to both intervention use and the outcome, so the unadjusted association may combine those relationships. Remember the third-factor question: what else differs with exposure and outcome? More observations do not automatically remove that systematic problem.",
+      "explanation": "Study site is a confounder in this exercise because it relates to both intervention use and the outcome and is ignored in the comparison.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Checklist comparison: observations for practice",
-        "body": "Night shift predicts both checklist use and delay. The analysis compares checklist users with nonusers without accounting for shift. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Clinical study — illustrative bias review",
+        "body": "An unnamed investigational hernia reinforcement material study: Study site predicts both material use and two-year hernia recurrence. The unadjusted comparison ignores site; that relationship is stipulated for this exercise, not a clinical risk-factor claim. These study conditions are invented for practice, not real intervention results."
+      },
+      "clinicalAnchor": "incisional"
     },
     {
       "slug": "night-excluded",
-      "complaint": "Audit-coverage review",
-      "presentation": "{patientName}, the all-shifts audit lead, reviews a clinic-wide report before presentation. The large sample contains daytime encounters only, with no night encounters. The author says the report represents everyone, then asks each reviewer to use his prepared comments. The exhibit describes the intended population and recruitment behind the report's proposed conclusion about all shifts.",
-      "stem": "Which threat most directly limits the report's all-shifts conclusion from the sampling described in the exhibit?",
+      "complaint": "thyroglossal duct cyst study",
+      "presentation": "{patientName}, the neck-surgery journal-club lead, reviews a new dissection technique for symptomatic thyroglossal duct cysts. Investigators record surgical-site infection within thirty days. The author says every patient's voice matters; recruitment stopped whenever the coordinator went home. The report presents its conclusion as applying to all eligible patients, although enrollment covered daytime operations and excluded nighttime operations.",
+      "stem": "Which bias most directly limits the claim about all eligible surgical patients when recruitment covers daytime operations only?",
       "correct": {
         "id": "correct_night-excluded",
-        "label": "Selection bias from daytime-only sampling",
-        "rationale": "Daytime encounters alone are used to make an all-shifts claim. The missing night encounters create the stated selection concern even with a large daytime sample."
+        "label": "Selection bias from daytime-only recruitment",
+        "rationale": "Daytime encounters alone are used to make an all-patients claim. The missing nighttime surgical patients create the stated selection concern even with a large daytime sample."
       },
       "distractors": [
         {
           "id": "d1_night-excluded",
-          "label": "Confounding by an unmeasured worker characteristic",
-          "rationale": "The supplied mechanism is who entered the audit. No worker factor relating both exposure and outcome is identified as the primary concern."
+          "label": "Confounding by an unmeasured patient characteristic",
+          "rationale": "The supplied mechanism is who entered the audit. No patient factor relating both exposure and outcome is identified as the primary concern."
         },
         {
           "id": "d2_night-excluded",
           "label": "Measurement bias from unequal recall windows",
-          "rationale": "The exhibit does not describe unequal recall. It describes exclusion of night encounters from an all-shifts conclusion."
+          "rationale": "The exhibit does not describe unequal recall. It describes exclusion of nighttime surgical patients from an all-patients conclusion."
         },
         {
           "id": "d3_night-excluded",
           "label": "Random error from insufficient sample precision",
-          "rationale": "A large daytime sample can still exclude the target population of night encounters. Greater sampling precision does not repair that selection problem."
+          "rationale": "A large daytime sample can still exclude the target population of nighttime surgical patients. Greater sampling precision does not repair that selection problem."
         }
       ],
-      "teachingPoint": "Selection bias concerns which observations enter the study. A large daytime-only sample still leaves night encounters outside an audit presented as applying to all shifts. Sample size cannot repair that missing coverage. Distinguish this selection problem from confounding within the comparison or inconsistent measurement after people have entered it.",
-      "explanation": "Daytime-only sampling creates the stated selection concern. Adding more daytime encounters does not supply the missing night-shift observations needed for the all-shifts conclusion.",
+      "teachingPoint": "Selection bias concerns which observations enter the study. A large daytime-only sample still leaves nighttime surgical patients outside an audit presented as applying to all eligible surgical patients. Sample size cannot repair that missing coverage. Distinguish this selection problem from confounding within the comparison or inconsistent measurement after people have entered it.",
+      "explanation": "Daytime-only sampling creates the stated selection concern. Adding more daytime surgical patients does not supply the missing nighttime surgical observations needed for the all-patients conclusion.",
       "exhibit": {
         "kind": "abstract",
-        "title": "All-shifts audit: observations for practice",
-        "body": "The audit includes a large number of daytime encounters and no night encounters. The report presents its conclusion as applying to all shifts. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Clinical study — illustrative bias review",
+        "body": "An unnamed investigational thyroglossal-cyst dissection technique study: Investigators enroll daytime operations and no nighttime operations, yet present their thirty-day SSI conclusion as applying to all eligible surgical patients. These study conditions are invented for practice, not real intervention results."
+      },
+      "clinicalAnchor": "thyroglossal"
     },
     {
       "slug": "recall-timing",
-      "complaint": "Delay-recording review",
-      "presentation": "{patientName}, the measurement review lead, compares two groups' delay reports before accepting a project summary. One group recorded delays immediately, while the other recalled them six months later. The report describes a difference between groups. At the review meeting, the team has the reporting schedules in the exhibit and is considering the main threat to interpreting that difference.",
-      "stem": "Which threat to inference is most directly illustrated by the unequal delay-reporting schedules in the exhibit?",
+      "complaint": "postoperative DVT study",
+      "presentation": "{patientName}, the perioperative research lead, reviews a new calf-stimulation device and postoperative DVT. One group reported thrombotic events when they occurred; another recalled events six months later. A colleague points out that everyone used the same form. The investigators are reviewing the collection process, and the report specifies how the two reporting schedules differed during follow-up.",
+      "stem": "Which information problem most directly threatens the outcome comparison when one group reports immediately and the other recalls events six months later?",
       "correct": {
         "id": "correct_recall-timing",
         "label": "Measurement bias from unequal recall",
@@ -1393,13 +1427,13 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "distractors": [
         {
           "id": "d1_recall-timing",
-          "label": "Selection bias from clinic enrollment",
+          "label": "Selection bias from study enrollment",
           "rationale": "The difference concerns how outcomes were recorded after entry, rather than how people were selected for the study."
         },
         {
           "id": "d2_recall-timing",
-          "label": "Confounding by baseline work shift",
-          "rationale": "No baseline shift factor is supplied as relating exposure and delay. The stated concern is the unequal reporting schedule."
+          "label": "Confounding by baseline study site",
+          "rationale": "No baseline site factor is supplied as relating exposure and the outcome. The stated concern is the unequal reporting schedule."
         },
         {
           "id": "d3_recall-timing",
@@ -1407,34 +1441,35 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
           "rationale": "The groups are measured by different recall processes. That systematic difference is not simply random variation that a larger sample necessarily removes."
         }
       ],
-      "teachingPoint": "Measurement bias can arise when groups' outcomes are recorded differently. Immediate reports and recall six months later use unequal measurement processes, so a difference in reports may reflect how delays were remembered. This is distinct from who was recruited or which baseline factor confounds the comparison. Larger samples do not equalize the reporting methods.",
+      "teachingPoint": "Measurement bias can arise when groups' outcomes are recorded differently. Immediate reports and recall six months later use unequal measurement processes, so a difference in reports may reflect how the outcomes were remembered. This is distinct from who was recruited or which baseline factor confounds the comparison. Larger samples do not equalize the reporting methods.",
       "explanation": "The primary concern is measurement bias from unequal recall schedules. The groups' recorded outcomes may differ because one reports immediately and the other recalls much later.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Delay-measurement project: observations for practice",
-        "body": "One group reports each delay immediately. The other group is asked to recall delays six months later. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Clinical study — illustrative bias review",
+        "body": "An unnamed investigational calf-stimulation device study: One group reports postoperative DVT events immediately; the other recalls those events six months later. The reporting schedules differ; no real device effect is supplied. These study conditions are invented for practice, not real intervention results."
+      },
+      "clinicalAnchor": "dvt"
     },
     {
       "slug": "adjusted-model",
-      "complaint": "Adjusted-report review",
-      "presentation": "{patientName}, the journal-club review lead, checks an adjusted workflow analysis before its conclusion is circulated. The model includes shift and experience. Important workload differences were not recorded, although workload relates to both workflow choice and delay. A colleague says, 'We adjusted the model, so the concern is settled.' The team is reviewing the limitation of the reported association.",
-      "stem": "Which limitation remains most relevant to the adjusted workflow analysis described in the exhibit?",
+      "complaint": "malignant-hyperthermia susceptibility study",
+      "presentation": "{patientName}, the anesthesia journal-club lead, reviews a new monitoring sensor for malignant-hyperthermia susceptibility. An observational model compares recognition of concerning intraoperative changes. Investigators adjusted for recorded differences between groups. Follow-up access relates to both sensor choice and recorded recognition, but important access differences were not measured. The report describes those stipulated relationships and the model under review.",
+      "stem": "Which limitation remains after adjustment when an important factor related to both sensor choice and recorded outcomes was not measured?",
       "correct": {
         "id": "correct_adjusted-model",
         "label": "Residual confounding by unmeasured factors",
-        "rationale": "Unrecorded workload differences relate to workflow choice and delay. Adjustment for other factors leaves that potential confounding unresolved."
+        "rationale": "Unrecorded follow-up access differences relate to intervention choice and the outcome. Adjustment for other factors leaves that potential confounding unresolved."
       },
       "distractors": [
         {
           "id": "d1_adjusted-model",
           "label": "Random error from the sampling process",
-          "rationale": "The exhibit identifies an unrecorded associated factor, not just sampling variability. Greater precision would not supply the missing workload information."
+          "rationale": "The exhibit identifies an unrecorded associated factor, not just sampling variability. Greater precision would not supply the missing follow-up access information."
         },
         {
           "id": "d2_adjusted-model",
           "label": "Selection bias from study enrollment",
-          "rationale": "No enrollment mechanism is described as the primary concern. The known limitation is confounding by workload differences absent from the model."
+          "rationale": "No enrollment mechanism is described as the primary concern. The known limitation is confounding by follow-up access differences absent from the model."
         },
         {
           "id": "d3_adjusted-model",
@@ -1442,21 +1477,22 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
           "rationale": "No inconsistent outcome-recording process is supplied. The gap is a relevant factor the model could not adjust for because it was not recorded."
         }
       ],
-      "teachingPoint": "Adjustment can address recorded factors without accounting for important unrecorded ones. Workload still relates to both workflow choice and delay, so residual confounding remains possible despite adjustment for shift and experience. Remember that an adjusted label is not a guarantee of an unconfounded result; ask which relevant differences the model could actually use.",
-      "explanation": "Residual confounding remains because relevant workload differences were not measured. Adjusting for shift and experience does not automatically account for that unrecorded factor.",
+      "teachingPoint": "Adjustment can address recorded factors without accounting for unrecorded ones. Follow-up access still relates to both intervention choice and the outcome, so residual confounding remains possible despite adjustment for site and procedure category. Remember that an adjusted label is not a guarantee of an unconfounded result; ask which relevant differences the model could actually use.",
+      "explanation": "Residual confounding remains because relevant follow-up access differences were not measured. Adjusting for site and procedure category does not automatically account for that unrecorded factor.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Adjusted workflow analysis: observations for practice",
-        "body": "The model adjusts for measured shift and experience. Workload relates to workflow choice and delay, but important workload differences were not recorded. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Clinical study — illustrative bias review",
+        "body": "An unnamed investigational anesthesia monitoring sensor study: The model adjusts for measured site and procedure category. Follow-up access relates to both sensor choice and recorded recognition of concerning intraoperative changes, but important access differences were not recorded. These relationships are stipulated, not general clinical risk-factor claims. These study conditions are invented for practice, not real intervention results."
+      },
+      "clinicalAnchor": "mh"
     }
   ],
   "sensitivity-specificity": [
     {
       "slug": "sensitivity-90",
-      "complaint": "Negative-screen questions",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a negative screen and a company brochure to clinic. The salesperson calls every customer personally to say how much time automation saves him. 'He talks for longer than my appointment,' the patient says. The patient asks how sensitivity is calculated; a separate practice table compares screening results with a reference assessment.",
-      "stem": "In the practice table, what percentage of people with the condition had a positive screen, giving the test's sensitivity?",
+      "complaint": "Blood-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has an accessible suspicious solid breast mass on completed diagnostic imaging. Core biopsy is arranged. A recruiter offers a study of a new screening blood test. His slides call the evidence transparent, but he keeps skipping the results table. The patient asks how often the test identified disease in the separate validation cohort.",
+      "stem": "What is the new investigational breast-cancer blood test's sensitivity in the separate constructed validation cohort shown in the exhibit?",
       "correct": {
         "id": "correct_sensitivity-90",
         "label": "90%",
@@ -1483,14 +1519,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Use the condition-present row: 90/(90 + 10) = 90% sensitivity. The positive-result column answers a different question, and this practice table is not a personal risk estimate.",
       "exhibit": {
         "kind": "table",
-        "caption": "Screen versus reference assessment, treated as correct for this exercise. Cells count people, not percentages; these practice figures are not the patient's personal probability.",
+        "caption": "Unnamed investigational breast-cancer blood test: invented practice counts from a separate validation cohort. Cells count people; reference classification is treated as correct. Not real test performance or a personal disease probability.",
         "columnHeaders": [
-          "Screen positive",
-          "Screen negative"
+          "New blood test positive",
+          "New blood test negative"
         ],
         "rowHeaders": [
-          "Condition present by reference",
-          "Condition absent by reference"
+          "Breast cancer present by reference",
+          "Breast cancer absent by reference"
         ],
         "cells": [
           [
@@ -1510,13 +1546,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "breast"
     },
     {
       "slug": "specificity-95",
-      "complaint": "Positive-screen questions",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, comes to discuss a positive screen after reading a leaflet about specificity. 'Does that describe people with a positive result like mine?' the patient asks. Before discussing the individual result, the clinician brings out a separate practice table. It records screening results alongside condition status determined by a reference assessment for the exercise.",
-      "stem": "In the practice table, what percentage of people without the condition had a negative screen, giving the test's specificity?",
+      "complaint": "Breath-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has an uncomplicated duodenal ulcer being evaluated for H. pylori. An optional study offers a new breath test. The patient asks, 'What happened to people who did not have the infection?' Its separate validation table compares the investigational result with a reference assessment. The planned clinical evaluation has not been replaced by enrollment.",
+      "stem": "What is the new investigational breast-cancer blood test's specificity in the separate constructed validation cohort shown in the exhibit?",
       "correct": {
         "id": "correct_specificity-95",
         "label": "95%",
@@ -1543,14 +1580,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Specificity is 95/(5 + 95) = 95%, using everyone without the condition as the denominator. It is not the proportion of positive results that are correct.",
       "exhibit": {
         "kind": "table",
-        "caption": "Screen versus reference assessment, treated as correct for this exercise. Cells count people, not percentages; these practice figures are not the patient's personal probability.",
+        "caption": "Unnamed investigational H. pylori breath test: invented practice counts from a separate validation cohort. Cells count people; reference classification is treated as correct. Not real test performance or a personal disease probability.",
         "columnHeaders": [
-          "Screen positive",
-          "Screen negative"
+          "New breath test positive",
+          "New breath test negative"
         ],
         "rowHeaders": [
-          "Condition present by reference",
-          "Condition absent by reference"
+          "H. pylori infection present by reference",
+          "H. pylori infection absent by reference"
         ],
         "cells": [
           [
@@ -1570,13 +1607,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "h-pylori"
     },
     {
       "slug": "sensitivity-80",
-      "complaint": "Missed-case questions",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a negative screen to clinic and asks about sensitivity. The testing company's website offers a simple explanation, available after an account, a tutorial, and a tutorial satisfaction survey. 'I came here before the sequel,' the patient says. A separate practice table records screens and reference assessments for a discussion of the calculation.",
-      "stem": "Using the practice table, what is the screening test's sensitivity among people with the condition?",
+      "complaint": "Optical-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is discussing biopsy of a lesion suspicious for cutaneous SCC. A brochure describes a new optical skin test's validation cohort. 'The evidence gets one paragraph; the subscription terms get three pages,' the patient says. The patient asks how often the test identified disease among participants known to have it by reference assessment.",
+      "stem": "What is the new investigational breast-cancer blood test's sensitivity in the separate constructed validation cohort shown in the exhibit?",
       "correct": {
         "id": "correct_sensitivity-80",
         "label": "80%",
@@ -1603,14 +1641,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "There are 25 people with the condition, and 20 screen positive: sensitivity is 80%. The five missed cases belong in that same denominator.",
       "exhibit": {
         "kind": "table",
-        "caption": "Screen versus reference assessment, treated as correct for this exercise. Cells count people, not percentages; these practice figures are not the patient's personal probability.",
+        "caption": "Unnamed investigational cutaneous-SCC optical test: invented practice counts from a separate validation cohort. Cells count people; reference classification is treated as correct. Not real test performance or a personal disease probability.",
         "columnHeaders": [
-          "Screen positive",
-          "Screen negative"
+          "New optical test positive",
+          "New optical test negative"
         ],
         "rowHeaders": [
-          "Condition present by reference",
-          "Condition absent by reference"
+          "Cutaneous SCC present by reference",
+          "Cutaneous SCC absent by reference"
         ],
         "cells": [
           [
@@ -1630,13 +1668,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "cutaneous-scc"
     },
     {
       "slug": "specificity-70",
-      "complaint": "Test-measure questions",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, asks about a positive screen after seeing several accuracy measures in the report. 'I want to understand specificity before we talk about me,' the patient says. The clinician has a separate practice table showing positive and negative screens alongside reference assessments, with condition status defined by the reference for this exercise.",
-      "stem": "Using the practice table, what is the screening test's specificity among people without the condition?",
+      "complaint": "Blood-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has suspected post-transplant lymphoproliferative disorder and is discussing tissue diagnosis. A recruiter presents a new blood test's separate validation table. The patient asks what negative results mean among participants without the disorder. Reference findings and investigational results appear separately, and the patient wants help interpreting the study before deciding about optional enrollment.",
+      "stem": "What is the new investigational breast-cancer blood test's specificity in the separate constructed validation cohort shown in the exhibit?",
       "correct": {
         "id": "correct_specificity-70",
         "label": "70%",
@@ -1659,18 +1698,18 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
           "rationale": "The calculation 16/(16 + 30) is about 35%. It uses all positive screens to calculate positive predictive value, not specificity."
         }
       ],
-      "teachingPoint": "Specificity uses everyone classified as condition absent, whether their screen was positive or negative. Here 70 of those 100 people test negative, so specificity is 70%. Remember the starting group: condition absent. The positive-screen column instead gives a predictive-value denominator and cannot supply specificity merely because this patient's result is positive.",
-      "explanation": "Use the condition-absent row: 70/(30 + 70) = 70% specificity. The patient's positive result does not change the denominator defining this test measure.",
+      "teachingPoint": "Specificity uses everyone classified as condition absent, whether their test was positive or negative. Here 70 of those 100 people test negative, so specificity is 70%. Remember the starting group: condition absent. Starting with the positive-result column would instead ask a predictive-value question, regardless of which result interests a particular patient.",
+      "explanation": "Use the condition-absent row: 70/(30 + 70) = 70% specificity. A particular patient’s result does not change the denominator defining this test measure.",
       "exhibit": {
         "kind": "table",
-        "caption": "Screen versus reference assessment, treated as correct for this exercise. Cells count people, not percentages; these practice figures are not the patient's personal probability.",
+        "caption": "Unnamed investigational PTLD blood test: invented practice counts from a separate validation cohort. Cells count people; reference classification is treated as correct. Not real test performance or a personal disease probability.",
         "columnHeaders": [
-          "Screen positive",
-          "Screen negative"
+          "New blood test positive",
+          "New blood test negative"
         ],
         "rowHeaders": [
-          "Condition present by reference",
-          "Condition absent by reference"
+          "PTLD present by reference",
+          "PTLD absent by reference"
         ],
         "cells": [
           [
@@ -1690,15 +1729,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "ptld"
     }
   ],
   "predictive-value-prevalence": [
     {
       "slug": "higher-prevalence",
-      "complaint": "Screen follow-up",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a positive screen and a handout from another testing setting. The sales representative says the handout suits everyone, then asks which version the clinic bought. The patient asks whether its positive-result figure applies here. A separate practice comparison describes the two settings, including test characteristics and how common the condition is.",
-      "stem": "Compared with the handout setting, how does positive predictive value change in the higher-prevalence clinic setting under the exhibit's assumptions?",
+      "complaint": "Positive-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is discussing diagnostic excision of a small pigmented lesion concerning for melanoma. A new optical-test brochure compares two hypothetical populations. Its presenter calls the brochure personalized, then offers two identical covers to choose from. The patient asks why a positive result would have different meanings in the populations before considering optional study enrollment.",
+      "stem": "How does the new investigational breast-cancer blood test's positive predictive value change between the hypothetical populations when sensitivity and specificity remain fixed as stated?",
       "correct": {
         "id": "correct_higher-prevalence",
         "label": "Positive predictive value increases",
@@ -1725,19 +1765,19 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Positive predictive value increases under the stated fixed-test assumptions because prevalence is higher. The exhibit supports the direction of change without supplying an exact personal probability.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Interpreting today's positive result. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational melanoma optical test: invented testing-population assumptions for practice. These comparisons supply no real test performance or personal disease probability.",
         "items": [
           {
             "label": "Sensitivity",
-            "value": "Same in the handout and clinic settings"
+            "value": "Same in the two hypothetical populations"
           },
           {
             "label": "Specificity",
-            "value": "Same in the handout and clinic settings"
+            "value": "Same in the two hypothetical populations"
           },
           {
             "label": "Prevalence",
-            "value": "Higher in today's clinic setting than in the handout setting"
+            "value": "Higher in population B than in population A"
           }
         ]
       },
@@ -1748,13 +1788,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "pigmented-lesion"
     },
     {
       "slug": "lower-prevalence",
-      "complaint": "Brochure-result questions",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a positive screen and a specialty-clinic brochure headed 'Precision You Can Hug.' 'Is the explanation extra, or does that come with the hug?' the patient asks. The patient wonders whether the brochure's positive-result figure applies to this screening setting. A separate practice comparison describes the test characteristics and the tested populations.",
-      "stem": "Compared with the specialty-clinic brochure setting, how does positive predictive value change in the lower-prevalence screening setting under the exhibit's assumptions?",
+      "complaint": "Positive-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has resectable pancreatic tail cancer and is discussing operative planning. A recruiter describes a new screening blood test using hypothetical testing populations. Its brochure advertises 'Precision You Can Hug.' The patient asks whether a positive result means the same thing when fewer people being tested have cancer. The study supplies no prognosis or treatment recommendation.",
+      "stem": "How does the new investigational breast-cancer blood test's positive predictive value change between the hypothetical populations when sensitivity and specificity remain fixed as stated?",
       "correct": {
         "id": "correct_lower-prevalence",
         "label": "Positive predictive value decreases",
@@ -1769,7 +1810,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         {
           "id": "d2_lower-prevalence",
           "label": "Positive predictive value stays fixed",
-          "rationale": "The brochure and screening setting can have the same test characteristics but different predictive values because prevalence differs."
+          "rationale": "Two populations can have the same test characteristics but different predictive values because prevalence differs."
         },
         {
           "id": "d3_lower-prevalence",
@@ -1781,19 +1822,19 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Positive predictive value decreases in the lower-prevalence setting under the stated assumptions. Unchanged sensitivity and specificity do not make predictive value constant.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Interpreting a screening result. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational pancreatic-cancer blood test: invented testing-population assumptions for practice. These comparisons supply no real test performance or personal disease probability.",
         "items": [
           {
             "label": "Sensitivity",
-            "value": "Same in the brochure and patient settings"
+            "value": "Same in the two hypothetical populations"
           },
           {
             "label": "Specificity",
-            "value": "Same in the brochure and patient settings"
+            "value": "Same in the two hypothetical populations"
           },
           {
             "label": "Prevalence",
-            "value": "Lower in the patient's screening setting than in the brochure's specialty clinic"
+            "value": "Lower in population B than in population A"
           }
         ]
       },
@@ -1804,13 +1845,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "pancreatic-cancer"
     },
     {
       "slug": "ppv-table",
-      "complaint": "Positive-result meaning",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, comes to discuss a positive screen. 'Does positive mean the diagnosis is settled?' the patient asks. The clinician brings out a separate practice table comparing screens with a reference assessment treated as correct for the exercise. The patient wants to know what share of its positive results matched the condition in those observations.",
-      "stem": "In the practice table, what percentage of positive screening results came from people with the condition?",
+      "complaint": "Positive-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has a suspicious thyroid nodule meeting biopsy criteria, with needle sampling planned. An study offers a new screening blood test and a separate validation table. The patient asks, 'Among the people with a positive result, how many actually had cancer?' Study enrollment remains undecided, and the table describes a constructed cohort rather than today's biopsy.",
+      "stem": "Among positive results in the separate constructed validation cohort, what is the new investigational breast-cancer blood test's positive predictive value?",
       "correct": {
         "id": "correct_ppv-table",
         "label": "80%",
@@ -1837,14 +1879,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Read the positive-screen column: 40 true positives and 10 false positives. Positive predictive value is 40/50 = 80% for these practice data.",
       "exhibit": {
         "kind": "table",
-        "caption": "Screen versus reference assessment, treated as correct for this exercise. Cells count people, not percentages; these practice figures are not the patient's personal probability.",
+        "caption": "Unnamed investigational thyroid-cancer blood test: invented practice counts from a separate validation cohort. Cells count people; reference classification is treated as correct. Not real test performance or a personal disease probability.",
         "columnHeaders": [
-          "Screen positive",
-          "Screen negative"
+          "New blood test positive",
+          "New blood test negative"
         ],
         "rowHeaders": [
-          "Condition present by reference",
-          "Condition absent by reference"
+          "Thyroid cancer present by reference",
+          "Thyroid cancer absent by reference"
         ],
         "cells": [
           [
@@ -1864,13 +1906,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "thyroid-nodule"
     },
     {
       "slug": "characteristics-fixed",
-      "complaint": "Result-number comparison",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings different positive-result figures from two clinics. One clinic's receptionist has advised trying its premium brochure for a more reassuring explanation. 'Does reassurance come in installments?' the patient asks. The practice comparison holds testing processes and accuracy characteristics constant, and the patient asks what population difference could account for the figures before discussing personal results.",
-      "stem": "Which population difference could explain different positive predictive values when both clinics use the same testing process, sensitivity, and specificity?",
+      "complaint": "Positive-test question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is being evaluated for primary aldosteronism and asks about a new urinary assay. Its report compares two hypothetical testing populations. The representative promises one simple answer, then offers three subscription levels for accessing it. The patient notices different positive-result predictions despite identical sensitivity and specificity and asks what could explain that difference.",
+      "stem": "Which difference can explain the new investigational breast-cancer blood test's different positive predictive values when testing definitions, sensitivity and specificity remain the same?",
       "correct": {
         "id": "correct_characteristics-fixed",
         "label": "Different prevalence in the tested populations",
@@ -1897,19 +1940,19 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Different prevalence can produce different positive predictive values despite identical test characteristics. The exhibit explicitly holds sensitivity, specificity, and result definitions constant.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "The patient's two clinic settings. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational primary-aldosteronism urinary assay: invented testing-population assumptions for practice. These comparisons supply no real test performance or personal disease probability.",
         "items": [
           {
             "label": "Testing process and result definitions",
-            "value": "Same at both clinics"
+            "value": "Same at both hypothetical populations"
           },
           {
             "label": "Sensitivity and specificity",
-            "value": "Same at both clinics"
+            "value": "Same at both hypothetical populations"
           },
           {
             "label": "Positive predictive value",
-            "value": "Different at the two clinics"
+            "value": "Different at the two hypothetical populations"
           }
         ]
       },
@@ -1920,15 +1963,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "aldosteronism"
     }
   ],
   "risk-ratio-odds-ratio": [
     {
       "slug": "cohort-risk",
-      "complaint": "Relative-number review",
-      "presentation": "{patientName}, the journal-club lead, reviews a study summary before a staff briefing. The author wants the largest number in the headline and offers to change the headline's font until the numbers cooperate. The exhibit supplies event risks for exposed and unexposed groups. The draft needs the relative measure from those risks, with exposed compared against unexposed.",
-      "stem": "Which relative estimate follows directly from exposed versus unexposed 30-day event risks in the exhibit?",
+      "complaint": "acute cholecystitis study",
+      "presentation": "{patientName}, the biliary journal-club lead, reviews a new dissection instrument for acute cholecystitis operations. The observational study reports surgical-site infection within thirty days. Its sponsor requests a balanced account: equal space for the data and the company's response to the data. The report supplies risks in exposed and unexposed groups, and the team is reviewing the comparison.",
+      "stem": "What risk ratio compares exposed with unexposed participants for the clinical outcome in the constructed cohort?",
       "correct": {
         "id": "correct_cohort-risk",
         "label": "Risk ratio of 2.0",
@@ -1955,7 +1999,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Dividing the exposed risk by the unexposed risk gives 0.20/0.10 = 2.0, a risk ratio. That calculation does not become an odds ratio by relabeling it.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Exposed versus unexposed, 30-day event. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational gallbladder dissection instrument study: invented thirty-day SSI estimates for practice. These describe the constructed study, not real efficacy or personal risk.",
         "items": [
           {
             "label": "Exposed group risk",
@@ -1966,13 +2010,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "10%"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "cholecystitis"
     },
     {
       "slug": "case-control-or",
-      "complaint": "Case-control estimate",
-      "presentation": "{patientName}, the study review lead, checks an exposure table before a staff briefing. Investigators selected cases and controls by outcome status, then counted earlier exposure. The table gives exposed and unexposed counts within those sampled groups; population risks are not available. The report compares exposure association in the stated direction and still needs its relative measure and value.",
-      "stem": "Which relative association estimate is supported by the outcome-selected case-control table in the exhibit?",
+      "complaint": "gastric adenocarcinoma study",
+      "presentation": "{patientName}, the upper-GI research lead, reviews a new anastomosis technique used during resection of gastric adenocarcinoma. Investigators selected people with a postoperative leak and controls without a leak, then reviewed previous technique exposure. The table gives exposure counts for those selected groups. The report does not supply leak risks in the entire surgical population under study.",
+      "stem": "Which association measure can be calculated directly from the case-control exposure table for postoperative leak?",
       "correct": {
         "id": "correct_case-control-or",
         "label": "Exposure odds ratio of 1.8",
@@ -1999,7 +2044,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The exposure odds ratio is (18/12)/(10/12) = 1.8 for cases versus controls. Population risks are not supplied, so a risk-ratio label is unsupported.",
       "exhibit": {
         "kind": "table",
-        "caption": "Outcome-selected cases and controls; population risks not supplied. Cells count participants or records in each category, not percentages; figures are for practice.",
+        "caption": "Unnamed investigational gastric anastomosis technique study: invented practice counts of people selected by thirty-day leak status. Cells count prior technique exposure; population leak risks are not supplied.",
         "columnHeaders": [
           "Exposed",
           "Unexposed"
@@ -2018,13 +2063,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "12"
           ]
         ]
-      }
+      },
+      "clinicalAnchor": "gastric-cancer"
     },
     {
       "slug": "adjusted-odds",
-      "complaint": "Adjusted-result wording",
-      "presentation": "{patientName}, the journal-club lead, reviews an adjusted result before circulation. Communications asks for a plain-language summary, then replaces 'people' with 'human outcome stakeholders' in every sentence. The model reports an adjusted odds ratio, and underlying group risks are not supplied. The report needs a sentence describing the estimate on the scale used by the model below.",
-      "stem": "Which wording preserves the adjusted effect scale reported in the exhibit without converting it into risk?",
+      "complaint": "Merkel cell carcinoma study",
+      "presentation": "{patientName}, the skin-oncology discussion lead, reviews a new biologic for Merkel cell carcinoma. An adjusted model reports recurrence odds over two years. The representative offers to simplify the statistics by removing the parts customers ask about. The report supplies an adjusted odds ratio, but no underlying group risks; the team is reviewing the wording of its result.",
+      "stem": "How should the adjusted odds ratio of 0.60 for two-year recurrence be described when group risks are unavailable?",
       "correct": {
         "id": "correct_adjusted-odds",
         "label": "Adjusted odds are 0.60 times as high",
@@ -2051,7 +2097,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The estimate describes adjusted odds at 0.60 times the comparison odds. Without group risks, it cannot provide the asserted exact risk ratio or absolute risk reduction.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Adjusted model. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational Merkel-cell biologic study: invented two-year recurrence estimates for practice. These describe the constructed study, not real efficacy or personal risk.",
         "items": [
           {
             "label": "Reported measure",
@@ -2066,13 +2112,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "Not supplied"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "merkel"
     },
     {
       "slug": "rare-not-identical",
-      "complaint": "Rare-outcome wording",
-      "presentation": "{patientName}, the report review lead, checks a rare-outcome study before signing its summary. 'As I already explained,' the author begins. His methods section still says 'explanation to follow.' The report gives an exposure odds ratio and discusses approximate similarity to a risk ratio. Baseline risks are absent, and the summary's terminology is under review.",
-      "stem": "Which wording best preserves the measure actually reported in the rare-outcome exhibit?",
+      "complaint": "marginal ulcer study",
+      "presentation": "{patientName}, the bariatric journal-club lead, reviews a new protective agent for marginal ulcer after gastric bypass. The observational report labels its estimate as an exposure odds ratio for rare ulcer recurrence. The editor requests a more exciting conclusion while retaining 'strictly factual.' Underlying group risks are unavailable, and the investigators discuss approximate similarity to a risk ratio.",
+      "stem": "Which interpretation preserves the reported measure when an exposure odds ratio for rare ulcer recurrence is discussed as approximately similar to a risk ratio?",
       "correct": {
         "id": "correct_rare-not-identical",
         "label": "Report the estimate as an odds ratio",
@@ -2099,51 +2146,52 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Report the estimate as an odds ratio. The stated approximate similarity does not convert it into an exact risk ratio or supply an absolute risk difference.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Rare-outcome report: observations for practice",
-        "body": "The table reports an exposure odds ratio. The outcome is rare, so the authors discuss approximate similarity to a risk ratio. Baseline risks are not provided. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Ulcer recurrence — illustrative study",
+        "body": "An invented study of an unnamed investigational marginal-ulcer protective agent reports an exposure odds ratio for rare one-year ulcer recurrence. Authors discuss approximate similarity to a risk ratio, but underlying group risks are unavailable. These practice conditions supply no real efficacy or clinical risk estimate."
+      },
+      "clinicalAnchor": "marginal-ulcer"
     }
   ],
   "arr-nnt": [
     {
       "slug": "arr-ten",
-      "complaint": "Benefit question",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is weighing an optional addition to care and brings an advertisement saying it halves risk. The presenter offers a complimentary consultation to discuss the complimentary consultation's upgrade options. 'I'd like the numbers before the sales appointment,' the patient says. A separate practice table compares the same unwanted outcome over the same period.",
-      "stem": "Using the practice table, what absolute risk reduction and number needed to treat over 30 days describe intervention versus comparator?",
+      "complaint": "Surgical-study question",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has biopsy-confirmed localized colon cancer and is discussing resection. An optional trial tests a new monoclonal antibody, reporting recurrence over two years. Its brochure announces 'a major improvement' in a typeface larger than the results table. The patient asks what absolute benefit the study showed and how many participants needed treatment for one fewer recurrence.",
+      "stem": "For colon-cancer recurrence over two years in the constructed trial, what ARR and NNT describe the new unnamed intervention versus control?",
       "correct": {
         "id": "correct_arr-ten",
-        "label": "ARR 10 percentage points; NNT 10 over 30 days",
-        "rationale": "The practice risks are 20/100 and 10/100. Subtracting gives 0.10; 1/0.10 = 10 for the specified outcome over 30 days."
+        "label": "ARR 10 percentage points; NNT 10 over two years",
+        "rationale": "The practice risks are 20/100 and 10/100. Subtracting gives 0.10; 1/0.10 = 10 for the specified outcome over two years."
       },
       "distractors": [
         {
           "id": "d1_arr-ten",
-          "label": "ARR 50 percentage points; NNT 2 over 30 days",
+          "label": "ARR 50 percentage points; NNT 2 over two years",
           "rationale": "The outcome risk halves relative to its 20% starting value, but falls by 10 percentage points, not 50. The relative wording does not supply this ARR or NNT."
         },
         {
           "id": "d2_arr-ten",
-          "label": "ARR 10 percentage points; NNT 100 over 30 days",
+          "label": "ARR 10 percentage points; NNT 100 over two years",
           "rationale": "The absolute difference is right, but its reciprocal uses the proportion 0.10: 1/0.10 = 10, not 100."
         },
         {
           "id": "d3_arr-ten",
-          "label": "ARR 5 percentage points; NNT 20 over 30 days",
+          "label": "ARR 5 percentage points; NNT 20 over two years",
           "rationale": "An NNT of 20 would correspond to an absolute difference of 0.05. These practice risks differ by 0.10 instead."
         }
       ],
-      "teachingPoint": "Calculate each group's risk first, then subtract intervention risk from comparator risk. Here 20% minus 10% is 10 percentage points, so NNT is 1/0.10 = 10 over 30 days. Half the starting risk and a 10-point absolute drop describe the same practice numbers; keep the outcome, comparator, and period attached.",
-      "explanation": "The practice risks are 20/100 and 10/100. Their difference is 0.10, giving ARR 10 percentage points and NNT 10 for the specified 30-day outcome.",
+      "teachingPoint": "Calculate each group's risk first, then subtract intervention risk from comparator risk. Here 20% minus 10% is 10 percentage points, so NNT is 1/0.10 = 10 over two years. Half the starting risk and a 10-point absolute drop describe the same practice numbers; keep the outcome, comparator, and period attached.",
+      "explanation": "The practice risks are 20/100 and 10/100. Their difference is 0.10, giving ARR 10 percentage points and NNT 10 for the specified two-year outcome.",
       "exhibit": {
         "kind": "table",
-        "caption": "Practice comparison of the same unwanted outcome by 30 days. Cells count people; group totals are denominators. These figures are not a prediction for this patient.",
+        "caption": "Unnamed investigational monoclonal antibody trial: invented practice counts of colon-cancer recurrence within two years. Cells count recurrences and people followed. Follow-up is complete; not real efficacy or personal risk.",
         "columnHeaders": [
-          "People with outcome",
-          "People in group"
+          "Recurrence within two years",
+          "People followed"
         ],
         "rowHeaders": [
-          "Comparator",
-          "Intervention"
+          "Control arm",
+          "New unnamed intervention"
         ],
         "cells": [
           [
@@ -2163,47 +2211,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "colon"
     },
     {
       "slug": "arr-five",
-      "complaint": "Group-size question",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a benefit comparison while weighing an optional intervention. The brochure's author claims arithmetic puts readers off, then includes a full page about his writing awards. 'I can cope with division,' the patient says. The separate practice table contains groups of different sizes and the same unwanted outcome assessed over the same period.",
-      "stem": "Using the practice table's unequal group sizes, what are the 30-day absolute risk reduction and number needed to treat?",
+      "complaint": "Research-results discussion",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has a resected low-risk cutaneous SCC and asks about an optional new topical-agent trial reporting recurrence over three years. The investigator calls the calculation obvious, then opens a spreadsheet containing twelve hidden tabs. The arms have different totals. The patient wants the absolute benefit and treatment number for the stated follow-up period.",
+      "stem": "For cutaneous-SCC recurrence over three years in the constructed trial, what ARR and NNT describe the new unnamed intervention versus control?",
       "correct": {
         "id": "correct_arr-five",
-        "label": "ARR 5 percentage points; NNT 20 over 30 days",
-        "rationale": "First divide within each group: 30/200 = 0.15 and 10/100 = 0.10. ARR is 0.05 and its reciprocal is NNT 20 over 30 days."
+        "label": "ARR 5 percentage points; NNT 20 over three years",
+        "rationale": "First divide within each group: 30/200 = 0.15 and 10/100 = 0.10. ARR is 0.05 and its reciprocal is NNT 20 over three years."
       },
       "distractors": [
         {
           "id": "d1_arr-five",
-          "label": "ARR 20 percentage points; NNT 5 over 30 days",
+          "label": "ARR 20 percentage points; NNT 5 over three years",
           "rationale": "Subtracting 30 and 10 events ignores that the groups contain 200 and 100 people. Risks, rather than raw counts, must be subtracted."
         },
         {
           "id": "d2_arr-five",
-          "label": "ARR 33 percentage points; NNT 3 over 30 days",
+          "label": "ARR 33 percentage points; NNT 3 over three years",
           "rationale": "About 33% describes the relative reduction from 15% to 10%. The absolute drop is five percentage points, giving NNT 20."
         },
         {
           "id": "d3_arr-five",
-          "label": "ARR 10 percentage points; NNT 10 over 30 days",
+          "label": "ARR 10 percentage points; NNT 10 over three years",
           "rationale": "The comparator risk is 30/200 = 15%, not 20%. Using the actual denominator gives a five-point difference rather than ten."
         }
       ],
-      "teachingPoint": "Unequal group sizes make raw event-count subtraction misleading. Convert each count to a risk: 30/200 = 15% and 10/100 = 10%. Their absolute difference is five percentage points, so NNT is 1/0.05 = 20 over 30 days. Remember: divide within groups before subtracting between groups, retaining the specified outcome and comparator.",
-      "explanation": "First calculate risks: 30/200 = 0.15 and 10/100 = 0.10. ARR is 0.05, or five percentage points, and 30-day NNT is 20.",
+      "teachingPoint": "Unequal group sizes make raw event-count subtraction misleading. Convert each count to a risk: 30/200 = 15% and 10/100 = 10%. Their absolute difference is five percentage points, so NNT is 1/0.05 = 20 over three years. Remember: divide within groups before subtracting between groups, retaining the specified recurrence outcome and comparator.",
+      "explanation": "First calculate risks: 30/200 = 0.15 and 10/100 = 0.10. ARR is 0.05, or five percentage points, and three-year NNT is 20.",
       "exhibit": {
         "kind": "table",
-        "caption": "Practice comparison of the same unwanted outcome by 30 days. Cells count people; group totals are denominators. These figures are not a prediction for this patient.",
+        "caption": "Unnamed investigational topical agent trial: invented practice counts of cutaneous-SCC recurrence within three years. Cells count recurrences and people followed. Follow-up is complete; not real efficacy or personal risk.",
         "columnHeaders": [
-          "People with outcome",
-          "People in group"
+          "Recurrence within three years",
+          "People followed"
         ],
         "rowHeaders": [
-          "Comparator",
-          "Intervention"
+          "Control arm",
+          "New unnamed intervention"
         ],
         "cells": [
           [
@@ -2223,47 +2272,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "cutaneous-scc"
     },
     {
       "slug": "arr-twenty",
-      "complaint": "Absolute-benefit question",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is considering an optional procedure and asks about absolute benefit and the number needed to treat. The clinician brings a separate practice comparison with equal-sized groups and the same unwanted outcome assessed over the same period. The patient wants to understand those figures before returning to a discussion of personal preferences about the procedure.",
-      "stem": "Using the practice comparison, what absolute risk reduction and number needed to treat describe the specified outcome over 30 days?",
+      "complaint": "Evidence review",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has recovered from a primary spontaneous pneumothorax and is discussing recurrence prevention. An optional study tested a new pleural device, reporting recurrence over five years. The patient compares the two trial arms and asks how the absolute benefit translates into the number treated for one fewer recurrence during that stated period.",
+      "stem": "For pneumothorax recurrence over five years in the constructed trial, what ARR and NNT describe the new unnamed intervention versus control?",
       "correct": {
         "id": "correct_arr-twenty",
-        "label": "ARR 20 percentage points; NNT 5 over 30 days",
-        "rationale": "Subtract 10/100 from 30/100 to get 0.20. The reciprocal is 1/0.20 = 5 for the same comparator and 30-day outcome."
+        "label": "ARR 20 percentage points; NNT 5 over five years",
+        "rationale": "Subtract 10/100 from 30/100 to get 0.20. The reciprocal is 1/0.20 = 5 for the same comparator and five-year outcome."
       },
       "distractors": [
         {
           "id": "d1_arr-twenty",
-          "label": "ARR 67 percentage points; NNT 2 over 30 days",
+          "label": "ARR 67 percentage points; NNT 2 over five years",
           "rationale": "The risk falls by about two thirds relative to its starting value, but the absolute drop is 20 percentage points, not 67."
         },
         {
           "id": "d2_arr-twenty",
-          "label": "ARR 20 percentage points; NNT 50 over 30 days",
+          "label": "ARR 20 percentage points; NNT 50 over five years",
           "rationale": "The ARR is correct, but 1/0.20 is 5. An NNT of 50 is a reciprocal calculation error."
         },
         {
           "id": "d3_arr-twenty",
-          "label": "ARR 10 percentage points; NNT 10 over 30 days",
+          "label": "ARR 10 percentage points; NNT 10 over five years",
           "rationale": "The two practice risks are 30% and 10%, a 20-point difference. A ten-point reduction would describe different inputs."
         }
       ],
-      "teachingPoint": "Absolute reduction subtracts risks on the same scale: 30% minus 10% is 20 percentage points. Taking the reciprocal of 0.20 gives NNT 5 for this comparator and outcome over 30 days. The relative reduction uses a different starting denominator. Remember that percentage points, percentages, and proportions are not interchangeable labels.",
-      "explanation": "The practice outcome risks differ by 0.30 - 0.10 = 0.20. ARR is 20 percentage points and NNT is 5 over the stated 30-day period.",
+      "teachingPoint": "Absolute reduction subtracts risks on the same scale: 30% minus 10% is 20 percentage points. Taking the reciprocal of 0.20 gives NNT 5 for this comparator and outcome over five years. The relative reduction uses a different starting denominator. Remember that percentage points, percentages, and proportions are not interchangeable labels.",
+      "explanation": "The practice outcome risks differ by 0.30 - 0.10 = 0.20. ARR is 20 percentage points and NNT is 5 over the stated five-year period.",
       "exhibit": {
         "kind": "table",
-        "caption": "Practice comparison of the same unwanted outcome by 30 days. Cells count people; group totals are denominators. These figures are not a prediction for this patient.",
+        "caption": "Unnamed investigational pleural device trial: invented practice counts of pneumothorax recurrence within five years. Cells count recurrences and people followed. Follow-up is complete; not real efficacy or personal risk.",
         "columnHeaders": [
-          "People with outcome",
-          "People in group"
+          "Recurrence within five years",
+          "People followed"
         ],
         "rowHeaders": [
-          "Comparator",
-          "Intervention"
+          "Control arm",
+          "New unnamed intervention"
         ],
         "cells": [
           [
@@ -2283,47 +2333,48 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Female",
         "Male"
-      ]
+      ],
+      "clinicalAnchor": "pneumothorax"
     },
     {
       "slug": "arr-six",
-      "complaint": "NNT-rounding question",
-      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings a benefit worksheet while weighing an optional intervention. Its presenter says there is no pressure, then asks when the patient would like to appear in a testimonial. 'After I've understood the worksheet,' the patient replies. The separate practice table gives outcome counts over the same period, and the patient asks about the calculation.",
-      "stem": "Using the practice table, what are the 30-day absolute risk reduction and conventionally rounded number needed to treat?",
+      "complaint": "Study interpretation",
+      "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has a resected gastric GIST and asks about an optional trial of a new biologic reporting recurrence over two years. The patient brings a calculator: 'They called this simple arithmetic, so I assumed they'd brought someone to explain it.' The discussion concerns absolute benefit and the treatment number calculated from the trial's results.",
+      "stem": "For gastric-GIST recurrence over two years in the constructed trial, what ARR and NNT describe the new unnamed intervention versus control?",
       "correct": {
         "id": "correct_arr-six",
-        "label": "ARR 6 percentage points; NNT 17 over 30 days",
-        "rationale": "The absolute difference is 0.20 - 0.14 = 0.06. Its reciprocal is about 16.67, conventionally rounded upward to NNT 17 over 30 days."
+        "label": "ARR 6 percentage points; NNT 17 over two years",
+        "rationale": "The absolute difference is 0.20 - 0.14 = 0.06. Its reciprocal is about 16.67, conventionally rounded upward to NNT 17 over two years."
       },
       "distractors": [
         {
           "id": "d1_arr-six",
-          "label": "ARR 6 percentage points; NNT 16 over 30 days",
+          "label": "ARR 6 percentage points; NNT 16 over two years",
           "rationale": "The six-point difference is right, but conventionally rounding NNT upward gives 17. Rounding down to 16 changes that reporting convention."
         },
         {
           "id": "d2_arr-six",
-          "label": "ARR 30 percentage points; NNT 4 over 30 days",
+          "label": "ARR 30 percentage points; NNT 4 over two years",
           "rationale": "Thirty percent is the relative reduction from the 20% comparator risk. The absolute reduction is six percentage points, not thirty."
         },
         {
           "id": "d3_arr-six",
-          "label": "ARR 14 percentage points; NNT 8 over 30 days",
+          "label": "ARR 14 percentage points; NNT 8 over two years",
           "rationale": "Fourteen percent is the intervention risk, not the difference between group risks. Subtracting from the comparator gives six percentage points."
         }
       ],
-      "teachingPoint": "Subtract the risks before taking a reciprocal: 20% minus 14% is six percentage points, or 0.06. Then 1/0.06 is about 16.67; conventionally round NNT upward to 17. Keep the specified outcome, comparator, and 30-day period with the result. The intervention's 14% risk is not itself the reduction.",
-      "explanation": "ARR is 0.20 - 0.14 = 0.06. Its reciprocal is about 16.67, conventionally rounded up to NNT 17 for the stated 30-day outcome.",
+      "teachingPoint": "Subtract the risks before taking a reciprocal: 20% minus 14% is six percentage points, or 0.06. Then 1/0.06 is about 16.67; conventionally round NNT upward to 17. Keep the specified recurrence outcome, comparator, and two-year period with the result. The intervention's 14% risk is not itself the reduction.",
+      "explanation": "ARR is 0.20 - 0.14 = 0.06. Its reciprocal is about 16.67, conventionally rounded up to NNT 17 for the stated two-year outcome.",
       "exhibit": {
         "kind": "table",
-        "caption": "Practice comparison of the same unwanted outcome by 30 days. Cells count people; group totals are denominators. These figures are not a prediction for this patient.",
+        "caption": "Unnamed investigational biologic trial: invented practice counts of gastric-GIST recurrence within two years. Cells count recurrences and people followed. Follow-up is complete; not real efficacy or personal risk.",
         "columnHeaders": [
-          "People with outcome",
-          "People in group"
+          "Recurrence within two years",
+          "People followed"
         ],
         "rowHeaders": [
-          "Comparator",
-          "Intervention"
+          "Control arm",
+          "New unnamed intervention"
         ],
         "cells": [
           [
@@ -2343,15 +2394,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "sexLabels": [
         "Male",
         "Female"
-      ]
+      ],
+      "clinicalAnchor": "gist"
     }
   ],
   "p-value": [
     {
       "slug": "p-003",
-      "complaint": "Study-result wording",
-      "presentation": "{patientName}, the journal-club lead, reviews a preplanned reminder-script analysis before a staff briefing. The report compares average practice scores and gives p = 0.03, with the effect estimate shown separately. Staff have proposed several sentences explaining the reported probability. The exhibit records the null model and analysis plan used for the number in the draft results section.",
-      "stem": "Which interpretation of p = 0.03 is accurate under the specified null model for the reminder-script comparison?",
+      "complaint": "acute cholecystitis study",
+      "presentation": "{patientName}, the biliary journal-club lead, reviews a new dissection instrument used in acute cholecystitis operations. The trial compares thirty-day surgical-site infection and reports its preplanned analysis. Investigators specified the null model before collecting outcomes. The team has the p-value but is reviewing what that value says about the infection results before drafting the study's written conclusion.",
+      "stem": "Which interpretation is justified by the reported p-value for thirty-day SSI in the constructed trial?",
       "correct": {
         "id": "correct_p-003",
         "label": "A 3% chance of results this extreme or more under the null model",
@@ -2375,10 +2427,10 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         }
       ],
       "teachingPoint": "A null model is the comparison's starting assumption. A p-value asks how probable data this incompatible with that model, or more so, would be under the model and analysis conditions. Here that probability is 0.03. Remember: probability of data under a model is not probability that the model is true, and is not effect size.",
-      "explanation": "Under the specified null model, results this extreme or more have probability 0.03. That is neither the probability of a true null nor the size of the score difference.",
+      "explanation": "Under the specified null model, results this extreme or more have probability 0.03. That is neither the probability of a true null nor the size of the clinical difference.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Preplanned analysis. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational gallbladder dissection instrument trial: invented analysis of thirty-day SSI for practice. The null specifies no group difference; the p-value is not an effect size or personal outcome probability.",
         "items": [
           {
             "label": "Null model and analysis",
@@ -2389,13 +2441,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "0.03"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "cholecystitis"
     },
     {
       "slug": "p-040",
-      "complaint": "Large-p-value wording",
-      "presentation": "{patientName}, the staff-briefing lead, reviews a study with p = 0.40 before the summary is printed. The author requests a prestigious description and suggests 'internationally peer-glanced-at' because a colleague read it at an airport. The analysis plan was specified before data collection. Staff are reviewing the sentence explaining the reported probability under the model in the exhibit.",
-      "stem": "Which interpretation of p = 0.40 is accurate under the preplanned null model in the exhibit?",
+      "complaint": "rectal prolapse study",
+      "presentation": "{patientName}, the colorectal research lead, reviews a new fixation technique for rectal prolapse and recurrence within two years. The press officer wants a headline saying the study settled the issue; the statistician has been offered a footnote in exchange for missing the press conference. The report includes its preplanned null model and the p-value from that analysis.",
+      "stem": "Which interpretation is justified by the reported p-value for two-year recurrence in the constructed trial?",
       "correct": {
         "id": "correct_p-040",
         "label": "A 40% chance of results this extreme or more under the null model",
@@ -2422,7 +2475,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The 0.40 describes data at least this extreme under the specified null model. It does not assign 40% or 60% probability to a hypothesis or quantify the effect.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Preplanned analysis. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational rectal-prolapse fixation technique trial: invented analysis of two-year recurrence for practice. The null specifies no group difference; the p-value is not an effect size or personal outcome probability.",
         "items": [
           {
             "label": "Null model and analysis",
@@ -2433,13 +2486,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "0.40"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "rectal-prolapse"
     },
     {
       "slug": "p-0001",
-      "complaint": "Small-p-value wording",
-      "presentation": "{patientName}, the journal-club lead, checks a result with p = 0.001 before a briefing. The communications officer wants more decimal places because the executive version of the report should look more expensive. The effect estimate appears separately. The team is reviewing a sentence explaining the p-value, with the reported probability and analysis context recorded in the exhibit.",
-      "stem": "Which interpretation of p = 0.001 is accurate under the analysis's specified null model in the exhibit?",
+      "complaint": "gastric MALT lymphoma study",
+      "presentation": "{patientName}, the gastric-oncology discussion lead, reviews a new agent for gastric MALT lymphoma in an invented recurrence-prevention trial after remission. Follow-up lasts two years. The sponsor requests 'life-changing' on every slide, including the Wi-Fi password. The trial reports a very small p-value, with its effect estimate supplied separately; the team is reviewing the interpretation for its report.",
+      "stem": "Which interpretation is justified by the reported p-value for two-year lymphoma recurrence in the constructed trial?",
       "correct": {
         "id": "correct_p-0001",
         "label": "A 0.1% chance of results this extreme or more under the null model",
@@ -2466,7 +2520,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The 0.001 refers to data under the specified null model, including more extreme results. It is not a posterior truth probability or the effect estimate.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Preplanned analysis. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational gastric-MALT agent trial: invented analysis of two-year lymphoma recurrence for practice. The null specifies no group difference; the p-value is not an effect size or personal outcome probability.",
         "items": [
           {
             "label": "p-value",
@@ -2477,13 +2531,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "Reported separately"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "gastric-malt"
     },
     {
       "slug": "p-008",
-      "complaint": "Equality-claim review",
-      "presentation": "{patientName}, the study-report lead, reviews a comparison before its conclusion is circulated. The report gives p = 0.08 and states that the two groups are exactly identical. A colleague has asked whether the number supports that sentence. This exercise supplies no effect magnitude or clinical-importance criterion; the exhibit contains the probability and the draft claim under review.",
-      "stem": "Which response best addresses the report's claim of exact group equality based on p = 0.08 in the exhibit?",
+      "complaint": "Meckel diverticulum study",
+      "presentation": "{patientName}, the emergency-surgery journal-club lead, reviews a new anastomosis instrument after ileal resection for symptomatic Meckel diverticulum. The trial records leak within thirty days. Its analysis does not reject the prespecified null model, and a draft conclusion says the instruments have exactly equal effects. The report gives the p-value and that proposed conclusion for the team's discussion.",
+      "stem": "Which interpretation is justified by the reported p-value for thirty-day leak in the constructed trial?",
       "correct": {
         "id": "correct_p-008",
         "label": "The result does not prove exact equality",
@@ -2492,7 +2547,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "distractors": [
         {
           "id": "d1_p-008",
-          "label": "The result favors equal group means",
+          "label": "The result favors equal group effects",
           "rationale": "Failure to establish a difference is not proof or a supplied probability of equality. The p-value alone does not settle whether the means are exactly equal."
         },
         {
@@ -2510,7 +2565,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The reported p-value does not prove exact equality. It also does not give an 8% probability of no effect or establish that any difference is clinically small.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Study report. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational Meckel resection anastomosis instrument trial: invented analysis of thirty-day leak for practice. The null specifies no group difference; the p-value is not an effect size or personal outcome probability.",
         "items": [
           {
             "label": "p-value",
@@ -2521,15 +2576,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "The groups are exactly identical"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "meckel"
     }
   ],
   "confidence-interval": [
     {
       "slug": "ratio-crosses",
-      "complaint": "Ratio-interval review",
-      "presentation": "{patientName}, the journal-club lead, reviews a ratio estimate before the team writes its summary. The author calls the report balanced because his own interpretation appears in both the introduction and conclusion. The exhibit gives the estimate and its interval. A colleague asks what the limits indicate about the no-association value, and the summary sentence remains under discussion.",
-      "stem": "What does the reported confidence interval show about the ratio null value in the exhibit?",
+      "complaint": "femoral hernia study",
+      "presentation": "{patientName}, the groin-surgery research lead, reviews a new reinforcement material for femoral hernia repair. The trial reports recurrence within two years as a risk ratio with an interval. The sponsor welcomes uncertainty in principle, but asks whether it can be moved to the appendix. The team is reviewing how the reported range relates to the no-difference value.",
+      "stem": "How does the constructed two-year recurrence risk-ratio interval relate to its null value, and what interpretation is justified?",
       "correct": {
         "id": "correct_ratio-crosses",
         "label": "The interval includes the null value 1",
@@ -2556,7 +2612,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The ratio interval from 0.40 to 1.20 contains 1. It is compatible with the ratio null value, without proving an exactly absent association.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Ratio estimate. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational femoral-hernia reinforcement material: invented two-year recurrence risk ratio, unitless ratio (new/control), for practice. No real efficacy or clinical-importance threshold.",
         "items": [
           {
             "label": "Estimate",
@@ -2567,13 +2623,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "0.40 to 1.20"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "femoral"
     },
     {
       "slug": "difference-excludes",
-      "complaint": "Difference-interval review",
-      "presentation": "{patientName}, the study review lead, checks a mean-difference interval before approving the summary. The estimate is negative, with both reported interval limits below zero. A colleague proposes describing the result as a probability of clinical benefit. The exercise supplies the estimate, scale, and limits in the exhibit; the proposed sentence is being reviewed at the methods meeting.",
-      "stem": "What does the mean-difference confidence interval show about the difference null value in the exhibit?",
+      "complaint": "pilonidal disease study",
+      "presentation": "{patientName}, the colorectal journal-club lead, reviews a new operative closure technique for chronic pilonidal disease. The trial reports recurrence within two years as an absolute risk difference with a confidence interval. One colleague says the range establishes an important benefit. The report provides no threshold for what difference would matter to patients, and the team is reviewing that interpretation.",
+      "stem": "Which statement is justified by the constructed two-year recurrence risk difference of -4 percentage points with a 95% interval from -6 to -2?",
       "correct": {
         "id": "correct_difference-excludes",
         "label": "The interval excludes the null value 0",
@@ -2597,10 +2654,10 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         }
       ],
       "teachingPoint": "For a difference, the no-difference value is 0, rather than the ratio null of 1. Every value from -6 to -2 lies below zero, so this interval excludes the null. That describes the estimate's uncertainty on its stated scale; it does not alone establish clinical importance or a probability of benefit.",
-      "explanation": "The interval from -6 to -2 excludes zero, the null for a mean difference. Excluding zero does not by itself establish a clinically important effect.",
+      "explanation": "The interval from -6 to -2 excludes zero, the null for a risk difference. Excluding zero does not by itself establish a clinically important effect.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Mean difference. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational pilonidal closure technique: invented two-year recurrence risk difference, percentage points (new minus control), for practice. No real efficacy or clinical-importance threshold.",
         "items": [
           {
             "label": "Estimate",
@@ -2611,13 +2668,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "-6 to -2"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "pilonidal"
     },
     {
       "slug": "precision-width",
-      "complaint": "Precision-comparison review",
-      "presentation": "{patientName}, the journal-club lead, compares two intervals before writing a review. The estimates are the same, with confidence level, method, and scale held constant. The report designer says there is no space for uncertainty, although his biography occupies a full page. The team is comparing the displayed precision of the two results using the interval limits below.",
-      "stem": "Which confidence interval displays greater precision when method, confidence level, and estimate scale are the same as in the exhibit?",
+      "complaint": "lactational breast abscess study",
+      "presentation": "{patientName}, the breast-service research lead, reviews two studies of a new aspiration device for lactational breast abscesses. Both report repeat drainage within thirty days on the same scale. A colleague prefers the paper with the most confident title; its author underlined 'definitive' twice. The intervals use the same method and confidence level, and the team is comparing precision.",
+      "stem": "Which constructed repeat-drainage risk-difference interval is more precise when method, confidence level and measurement scale are the same?",
       "correct": {
         "id": "correct_precision-width",
         "label": "The 4-to-6 interval is more precise",
@@ -2644,7 +2702,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The 4-to-6 interval is more precise because it is narrower under the same method and scale. Both estimates being 5 does not equalize the interval widths.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Same method and estimate scale. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational lactational-abscess aspiration device: invented thirty-day repeat-drainage risk difference, percentage points (new minus control), for practice. No real efficacy or clinical-importance threshold.",
         "items": [
           {
             "label": "Interval A, 95%",
@@ -2659,13 +2717,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "5"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "lactational-abscess"
     },
     {
       "slug": "repeated-sampling",
-      "complaint": "Confidence-level wording",
-      "presentation": "{patientName}, the staff-teaching lead, reviews an explanation of 95% confidence before a briefing. The presenter promises to cover uncertainty completely in a session advertised as 'No Questions Needed'; registration requires submitting questions in advance. The exhibit specifies a standard frequentist procedure. The team has proposed several descriptions of what its stated confidence level means for the planned lesson.",
-      "stem": "Which interpretation of 95% confidence is accurate for the standard frequentist interval procedure in the exhibit?",
+      "complaint": "gastric adenocarcinoma study",
+      "presentation": "{patientName}, the upper-GI journal-club lead, reviews a new biologic after resection of gastric adenocarcinoma. Its trial reports a three-year recurrence risk difference with a frequentist interval. The presenter lists an invited lecture on his CV; the invitation came from the seminar series he organizes himself. The team is reviewing what the stated confidence level describes across repeated studies.",
+      "stem": "What does a 95% confidence level describe for repeated use of the stated frequentist three-year recurrence risk-difference interval procedure?",
       "correct": {
         "id": "correct_repeated-sampling",
         "label": "The method covers the true value in 95% of repetitions",
@@ -2692,7 +2751,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "The 95% refers to long-run coverage of intervals produced by the procedure under its assumptions. It does not assign a 95% truth probability to this particular interval.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Interval procedure. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational gastric-cancer biologic: invented three-year recurrence risk-difference procedure, percentage points (new minus control), for practice. No real efficacy or clinical-importance threshold.",
         "items": [
           {
             "label": "Framework",
@@ -2703,15 +2762,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "95%"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "gastric-cancer"
     }
   ],
   "errors-power": [
     {
       "slug": "type-one",
-      "complaint": "Testing-error discussion",
-      "presentation": "{patientName}, the journal-club lead, prepares a testing-error exercise before a staff lesson. The course evaluator has marked his own teaching outstanding and left a helpful note saying independent feedback would delay publication. The exhibit supplies the underlying truth and the analysis decision. The course notes contain conflicting labels for that combination, and staff are reviewing them before the session.",
-      "stem": "Which testing error is described when the analysis rejects a true null hypothesis in the exhibit?",
+      "complaint": "DCIS study",
+      "presentation": "{patientName}, the breast-oncology research lead, reviews a new local treatment device for DCIS. A simulation concerns recurrence within five years and stipulates the underlying state. The investigator lists one conference abstract as a presentation, publication and public-engagement project on his appraisal. The analysis rejects its null, and the team is reviewing how to classify that simulated result.",
+      "stem": "Which testing error occurs in the simulated DCIS-recurrence analysis when the null is true but the analysis rejects it?",
       "correct": {
         "id": "correct_type-one",
         "label": "Type I error",
@@ -2738,7 +2798,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Rejecting a true null is a type I error. The exhibit supplies the true state and testing decision, not evidence of a measurement or recruitment mechanism.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Design exercise. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Simulated unnamed investigational local DCIS treatment device trial: the underlying state for five-year recurrence is stipulated for practice. It is not learned from a p-value or asserted for a real intervention.",
         "items": [
           {
             "label": "Underlying state",
@@ -2749,13 +2809,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "Reject the null hypothesis"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "dcis"
     },
     {
       "slug": "type-two",
-      "complaint": "Missed-alternative discussion",
-      "presentation": "{patientName}, the methods discussion lead, reviews a testing-error exercise before a staff lesson. The exercise states that a specified alternative is true and that the analysis failed to reject the null hypothesis. The team has proposed different labels for that combination. The exhibit records the supplied truth and decision, and no unequal sampling or measurement process is described.",
-      "stem": "Which testing error is described when the analysis fails to reject while the specified alternative is true in the exhibit?",
+      "complaint": "hepatocellular carcinoma study",
+      "presentation": "{patientName}, the liver-surgery discussion lead, reviews a new resection instrument for solitary hepatocellular carcinoma in a favorable operative profile. A simulation concerns recurrence within three years and stipulates that a specified difference exists. The analysis fails to reject its null model. The team has the underlying state and analysis decision available and is reviewing the testing-error classification.",
+      "stem": "Which testing error occurs in the simulated HCC-recurrence analysis when the specified alternative is true but the analysis fails to reject the null?",
       "correct": {
         "id": "correct_type-two",
         "label": "Type II error",
@@ -2782,7 +2843,7 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "This is a type II error: the specified alternative is true, yet the test fails to reject the null. Nonrejection does not establish that no effect exists.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Design exercise. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Simulated unnamed investigational hepatic resection instrument trial: the underlying state for three-year HCC recurrence is stipulated for practice. It is not learned from a p-value or asserted for a real intervention.",
         "items": [
           {
             "label": "Underlying state",
@@ -2793,13 +2854,14 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
             "value": "Fail to reject the null hypothesis"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "hcc"
     },
     {
       "slug": "power",
-      "complaint": "Power-planning discussion",
-      "presentation": "{patientName}, the study-planning lead, reviews a sample-size proposal before data collection. The sponsor wants the project completed ahead of schedule and suggests recruiting participants from next year's projected attendance list. The plan specifies the effect, variability, alpha, and sampling design. The exhibit describes the assumptions used for power, and the team is checking its explanation in the proposal.",
-      "stem": "What does planned power describe under the specified alternative and design assumptions in the exhibit?",
+      "complaint": "pancreatic cancer study",
+      "presentation": "{patientName}, the pancreatic-oncology research lead, reviews a new radiation-delivery technique after pancreatic tail cancer resection. Its trial is planned around recurrence within two years. The grant writer wants a guaranteed discovery and asks whether 'statistically likely' can be upgraded in the budget justification. The calculation specifies the effect, variability and sampling assumptions before any outcomes are collected.",
+      "stem": "What does prospective power describe under the specified alternative in the constructed pancreatic-cancer recurrence trial?",
       "correct": {
         "id": "correct_power",
         "label": "Chance of rejection if that alternative is true",
@@ -2826,15 +2888,16 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Planned power is the chance of rejecting the null under the specified true alternative and design assumptions. It is not the truth probability of a positive result.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Sample-size plan: observations for practice",
-        "body": "The plan specifies an effect, variability, alpha, and sampling design before data collection. Power is calculated under that specified alternative. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Recurrence trial — illustrative analysis",
+        "body": "An unnamed investigational pancreatic-cancer radiation technique study of two-year recurrence. Before collecting data, investigators specify the recurrence effect, variability, alpha and sampling design. Power is calculated under that alternative. These study conditions are invented for practice, not real efficacy findings."
+      },
+      "clinicalAnchor": "pancreatic-cancer"
     },
     {
       "slug": "post-hoc",
-      "complaint": "Post-hoc-power review",
-      "presentation": "{patientName}, the journal-club review lead, checks a conclusion before it enters the staff bulletin. The study did not reject its null model, and its authors subsequently calculated low post-hoc power. Their draft states that no effect exists. The team is reviewing whether the later calculation establishes that statement; no effect estimate or clinical threshold is supplied in the exercise.",
-      "stem": "Which response best addresses the claim that low post-hoc power proves no effect after the null was not rejected?",
+      "complaint": "basal cell carcinoma study",
+      "presentation": "{patientName}, the skin-oncology journal-club lead, reviews a new topical agent for basal cell carcinoma. The trial evaluates recurrence within two years and does not reject its null model. After seeing the results, authors calculate low power and conclude the agent has no effect. The team is reviewing that conclusion alongside the reported effect estimate and uncertainty.",
+      "stem": "Which statement is justified when the constructed basal-cell-carcinoma recurrence trial fails to reject its null and reports low post-hoc power?",
       "correct": {
         "id": "correct_post-hoc",
         "label": "Post-hoc power does not prove no effect",
@@ -2861,17 +2924,18 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Low post-hoc power does not prove no effect. It neither gives the probability of the null nor makes the observed p-value equal to power.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Draft study conclusion: observations for practice",
-        "body": "The study did not reject its null model. A post-hoc power calculation was low, and the draft concludes that no effect exists. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Recurrence trial — illustrative analysis",
+        "body": "An unnamed investigational basal-cell-carcinoma topical agent study of two-year recurrence. The trial does not reject its recurrence null model. Authors calculate low post-hoc power and claim that no recurrence effect exists. These study conditions are invented for practice, not real efficacy findings."
+      },
+      "clinicalAnchor": "bcc"
     }
   ],
   "pdsa-act": [
     {
       "slug": "adopt-next",
-      "complaint": "Reminder-cycle decision",
-      "presentation": "{patientName}, the improvement-cycle lead, brings results from a small reminder test to a planning meeting. The pilot met its stated aim and its balancing measure did not worsen. The sponsor wants a national launch and asks whether the local success story can mention locations that have not tried it. The team is considering the next cycle after this test.",
-      "stem": "What is the best next action after the small reminder test met its aim without worsening balance in the tested setting?",
+      "complaint": "celiac disease study",
+      "presentation": "{patientName}, the GI improvement lead, reviews an authorized pilot of a new dietitian care pathway for celiac disease. Its symptom aim is met without worsening workload. The project director has booked the national rollout speech; the pilot team has seven minutes to discuss whether a national rollout is warranted. The results describe only the tested local setting.",
+      "stem": "Which Act-step decision fits the authorized celiac pathway pilot when its symptom aim is met and the balancing measure does not worsen?",
       "correct": {
         "id": "correct_adopt-next",
         "label": "Adopt locally and plan the next test",
@@ -2890,82 +2954,84 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
         },
         {
           "id": "d3_adopt-next",
-          "label": "Adapt the reminder before another local test",
+          "label": "Adapt the pathway before another local test",
           "rationale": "The findings identify no feature requiring revision before local adoption. Adaptation needs a reason in the learning, rather than a change for its own sake."
         }
       ],
-      "teachingPoint": "The Act step turns learning into a decision and a next test. This reminder version met its aim without worsening the balancing measure, supporting local adoption and a linked next cycle. Keep the scope of action tied to the scope of the evidence: a successful small test does not automatically establish performance at every clinic.",
-      "explanation": "Adopt the successful reminder locally and plan the next linked test. The favorable aim and balancing findings apply to the tested setting, not an untested wider rollout.",
+      "teachingPoint": "The Act step turns learning into a decision and a next test. This pathway version met its aim without worsening the balancing measure, supporting local adoption and a linked next cycle. Keep the scope of action tied to the scope of the evidence: a successful small test does not automatically establish performance at every clinic.",
+      "explanation": "Adopt the successful pathway locally and plan the next linked test. The favorable aim and balancing findings apply to the tested setting, not an untested wider rollout.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Reminder cycle: observations for practice",
-        "body": "A small reminder test met its stated aim. Its balancing measure did not worsen. The results apply to the tested setting. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational care pathway — illustrative local cycle",
+        "body": "An authorized local pilot of an unnamed investigational celiac dietitian pathway meets its symptom-improvement aim without worsening care-planning workload. Findings apply to the tested setting. These observations are invented for practice, not real pathway effectiveness."
+      },
+      "clinicalAnchor": "celiac"
     },
     {
       "slug": "adapt-burden",
-      "complaint": "Checklist-cycle decision",
-      "presentation": "{patientName}, the checklist-project lead, reviews a pilot at a video meeting before the next version is approved. The intended delay improved, while staff rework doubled. The sponsor asks everyone to turn cameras on so he can see their enthusiasm; his own camera stays off. The team has the exhibit's results and is discussing the next improvement-cycle action.",
-      "stem": "What is the best next action when the checklist test shortens the target delay but doubles staff rework, as shown in the exhibit?",
+      "complaint": "venous leg ulcer study",
+      "presentation": "{patientName}, the wound-service improvement lead, reviews an authorized new compression-device pilot for venous leg ulcers after adequate arterial assessment. Healing is faster, but application rework doubles. The manager calls the pilot paperless; staff print one online form to enter it into another. The team has the healing and workload findings available while planning the next local cycle.",
+      "stem": "Which Act-step decision fits the authorized venous-ulcer device pilot when healing is faster but application rework doubles?",
       "correct": {
         "id": "correct_adapt-burden",
-        "label": "Adapt the checklist and retest",
-        "rationale": "Delay improved but rework doubled. Revise the checklist to address that burden and use the next test to study the adapted version."
+        "label": "Adapt device use and retest locally",
+        "rationale": "Healing improved but rework doubled. Revise device use to address that burden and use the next test to study the adapted version."
       },
       "distractors": [
         {
           "id": "d1_adapt-burden",
-          "label": "Adopt the checklist and monitor rework",
+          "label": "Adopt device use and monitor application rework",
           "rationale": "Adopting this version unchanged accepts the documented worsening of rework. The balancing finding calls for adaptation before adoption."
         },
         {
           "id": "d2_adapt-burden",
-          "label": "Abandon the checklist and test another idea",
+          "label": "Abandon device use and test another local idea",
           "rationale": "The target improvement supports retaining and adapting the idea. The supplied findings do not require discarding it instead of addressing the added burden."
         },
         {
           "id": "d3_adapt-burden",
-          "label": "Repeat the checklist test without revision",
-          "rationale": "Repeating the same checklist unchanged does not respond to the increased rework already observed. The next cycle should use that learning."
+          "label": "Repeat device use without revising the process",
+          "rationale": "Repeating the same device unchanged does not respond to the increased rework already observed. The next cycle should use that learning."
         }
       ],
-      "teachingPoint": "Improvement needs both the intended result and a check for shifted burden. This checklist shortened delay but doubled rework, so adapt it and retest rather than adopting the current version unchanged. The Act step can preserve a promising idea while changing the part that caused trouble. Learning should change the next cycle.",
-      "explanation": "Adapt the checklist to address increased rework, then retest. The improved target supports keeping the idea, while the worsened balancing measure argues against adopting this version unchanged.",
+      "teachingPoint": "Improvement needs both the intended result and a check for shifted burden. This device shortened wound-closure time but doubled rework, so adapt its use and retest rather than adopting the current version unchanged. The Act step can preserve a promising idea while changing the part that caused trouble. Learning should change the next cycle.",
+      "explanation": "Adapt device use to address increased rework, then retest. The improved healing target supports keeping the idea, while the worsened balancing measure argues against adopting this version unchanged.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Checklist cycle. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational venous-ulcer compression device pilot: invented wound closure and application rework findings for practice. Results belong only to this authorized local test, not real intervention efficacy.",
         "items": [
           {
-            "label": "Target delay",
+            "label": "Wound-closure time",
             "value": "Shorter"
           },
           {
-            "label": "Staff rework",
+            "label": "Application rework",
             "value": "Doubled"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "venous-ulcer"
     },
     {
       "slug": "abandon-harm",
-      "complaint": "Bin-version decision",
-      "presentation": "{patientName}, the supply-project lead, brings a color-bin pilot to the staff meeting before more bins are ordered. The tested version missed its aim and made retrieval slower. The vendor says the problem is insufficient enthusiasm and offers a paid enthusiasm refresher. The team is considering the next cycle using the aim and retrieval findings recorded in the exhibit.",
-      "stem": "What is the best next action for the color-bin version that missed its aim and lengthened retrieval time in the exhibit?",
+      "complaint": "gastroparesis study",
+      "presentation": "{patientName}, the foregut improvement lead, reviews an authorized new nutrition-pathway pilot for gastroparesis after obstruction was excluded. Its symptom aim is not met and planning takes longer. The vendor insists the pathway saves time after staff complete extra training on saving time. No specific correctable defect has emerged from review, and the next cycle has not been planned.",
+      "stem": "Which Act-step decision fits the authorized gastroparesis pathway pilot when its symptom aim is not met and care planning takes longer, with no specific correctable defect identified?",
       "correct": {
         "id": "correct_abandon-harm",
         "label": "Abandon this version and test another idea",
-        "rationale": "This version missed its stated aim and worsened retrieval time. Abandoning the version and testing another idea follows both unfavorable findings."
+        "rationale": "This version missed its stated aim and worsened care-planning time. Abandoning the version and testing another idea follows both unfavorable findings."
       },
       "distractors": [
         {
           "id": "d1_abandon-harm",
-          "label": "Adapt the bin labels and repeat this version",
+          "label": "Adapt the pathway labels and repeat this version",
           "rationale": "The observations do not identify a labeling problem to fix. That specific adaptation invents an explanation rather than using the supplied findings."
         },
         {
           "id": "d2_abandon-harm",
-          "label": "Adopt the bins and monitor the next cycle",
-          "rationale": "The tested version missed the aim and slowed retrieval, so the evidence does not support adopting it while monitoring later."
+          "label": "Adopt the pathway and monitor the next cycle",
+          "rationale": "The tested version missed the aim and increased care-planning time, so the evidence does not support adopting it while monitoring later."
         },
         {
           "id": "d3_abandon-harm",
@@ -2973,28 +3039,29 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
           "rationale": "The stated findings already support changing direction from this version. An unchanged repeat does not use the unfavorable learning to choose the next idea."
         }
       ],
-      "teachingPoint": "The Act step permits abandoning a tested version when its findings are unfavorable. These bins missed the aim and slowed retrieval, supporting a different idea for the next test. That is a decision about this version, not a claim that all bins fail. Do not invent a labeling defect that the observations never identified.",
-      "explanation": "Abandon this unsuccessful bin version and test another idea. The supplied findings miss the aim and worsen retrieval; they do not identify a labeling fix for this version.",
+      "teachingPoint": "The Act step permits abandoning a tested version when findings are unfavorable. This pathway missed its symptom aim and increased planning time, supporting another idea for the next test. Remember that the verdict concerns this version. The observations do not establish that every nutrition pathway fails or identify a specific defect to repair.",
+      "explanation": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
       "exhibit": {
         "kind": "keyValue",
-        "caption": "Color-bin cycle. Values and assumptions are for practice, not patient-specific predictions.",
+        "caption": "Unnamed investigational gastroparesis nutrition pathway pilot: invented symptom relief and care-planning time findings for practice. Results belong only to this authorized local test, not real intervention efficacy.",
         "items": [
           {
-            "label": "Stated aim",
+            "label": "Symptom-relief aim",
             "value": "Not met"
           },
           {
-            "label": "Retrieval time",
+            "label": "Care-planning time",
             "value": "Longer"
           }
         ]
-      }
+      },
+      "clinicalAnchor": "gastroparesis"
     },
     {
       "slug": "incomplete-data",
-      "complaint": "Incomplete-cycle decision",
-      "presentation": "{patientName}, the improvement review lead, brings a clipboard pilot to the staff meeting before its renewal decision. Too many observations are missing to judge the stated aim. Some staff want to adopt the intervention, while others want to abandon it. The exhibit describes the incomplete results available to the team, and the next improvement-cycle action remains under discussion.",
-      "stem": "What is the best next action when missing observations prevent judging whether the clipboard change met its stated aim?",
+      "complaint": "carpal tunnel syndrome study",
+      "presentation": "{patientName}, the hand-service improvement lead, reviews an authorized new wrist-bracing pathway for carpal tunnel syndrome. The pilot intended to improve hand function, but too many follow-up observations are missing to judge its aim. Colleagues suggest continuing, changing or stopping the pathway. The team has the incomplete records and is preparing its next cycle before deciding about broader use.",
+      "stem": "Which Act-step decision fits the authorized wrist-bracing pathway pilot when missing hand-function observations prevent judging its stated aim?",
       "correct": {
         "id": "correct_incomplete-data",
         "label": "Fix data capture and repeat a bounded test",
@@ -3021,151 +3088,1415 @@ export const STATISTICS_VARIANTS: Record<string, FourVariants> = {
       "explanation": "Fix data capture and repeat a bounded test. The missing observations prevent judging this intervention; they do not establish either success or failure.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Clipboard cycle: observations for practice",
-        "body": "Too many observations are missing to judge whether the change met its stated aim. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational care pathway — illustrative local cycle",
+        "body": "An authorized local pilot of an unnamed investigational carpal-tunnel wrist-bracing pathway lacks too many hand-function observations to judge its stated aim. These observations are invented for practice, not real pathway effectiveness."
+      },
+      "clinicalAnchor": "carpal-tunnel"
     }
   ],
   "qi-measures": [
     {
       "slug": "check-in",
-      "complaint": "Check-in measurement plan",
-      "presentation": "{patientName}, the check-in project lead, reviews measures before testing an express button. It aims to shorten delay, with concern that correction work could move to staff. The launch manager wants a 'one-click experience' and asks staff to complete six approval screens before trying it. The team has proposed measurement sets for the pilot described in the exhibit.",
-      "stem": "Which set covers process, intended outcome, and balancing burden for the express check-in button project in the exhibit?",
+      "complaint": "high-output ileostomy study",
+      "presentation": "{patientName}, the stoma-service improvement lead, reviews a proposed rehydration delivery device for high-output ileostomy after stabilization. The pilot aims to reduce dehydration while tracking use and workload. The committee wants fewer forms; its proposal requires a form for each form removed. The team is preparing the measurement plan before testing the new device in its authorized local pilot.",
+      "stem": "Which set lists a process measure, the intended clinical outcome measure and a balancing measure, in that order, for the ileostomy rehydration device pilot?",
       "correct": {
         "id": "correct_check-in",
-        "label": "Button use; check-in delay; correction workload",
-        "rationale": "Button use shows process, check-in delay shows the intended outcome, and correction workload checks the possible burden shifted to staff."
+        "label": "Device use as planned; dehydration episodes; application workload",
+        "rationale": "Device use tracks implementation, dehydration episodes track the clinical aim, and application workload checks an unwanted tradeoff in delivering the intervention."
       },
       "distractors": [
         {
           "id": "d1_check-in",
-          "label": "Button use; staff training; button availability",
-          "rationale": "Use, training, and availability all concern implementation. This set leaves both the target delay and correction burden unmeasured."
+          "label": "Dehydration episodes; device use as planned; application workload",
+          "rationale": "Dehydration episodes measure the clinical outcome, while device use measures implementation. This ordering reverses process and outcome."
         },
         {
           "id": "d2_check-in",
-          "label": "Check-in delay; waiting delay; total visit delay",
-          "rationale": "These measures concentrate on delays. They do not establish button uptake or detect the specific correction burden the project could shift to staff."
+          "label": "Device use as planned; application workload; dehydration episodes",
+          "rationale": "Application workload checks a tradeoff, while dehydration episodes is the aim; this ordering swaps outcome and balancing measures."
         },
         {
           "id": "d3_check-in",
-          "label": "Correction workload; error reports; rework minutes",
-          "rationale": "These measures concentrate on possible burden. They omit whether the button was used and whether its intended check-in delay improved."
+          "label": "Application workload; dehydration episodes; device use as planned",
+          "rationale": "Application workload belongs in the balancing position, while device use as planned belongs first; this ordering places both incorrectly."
         }
       ],
-      "teachingPoint": "Use three measurement questions: did we do it, did it help the intended target, and did something else worsen? Button use tracks process, check-in delay tracks the intended outcome, and correction workload checks shifted burden. Three measurements of only one category cannot replace this spread, even if each is easy to collect.",
-      "explanation": "Track button use, check-in delay, and correction workload. Together they show implementation, the intended outcome, and a plausible burden transferred to staff.",
+      "teachingPoint": "A process measure asks whether planned care happened; an outcome measure asks whether patients experienced the intended result. A balancing measure checks an unwanted tradeoff. Here device use, dehydration and workload answer those three questions. Remember: delivery, result, tradeoff. More device applications alone would not establish that dehydration improved.",
+      "explanation": "Device use tracks implementation, dehydration episodes track the clinical aim, and application workload checks a tradeoff. Counting applications alone does not establish a clinical improvement.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Express check-in project: observations for practice",
-        "body": "The button is intended to shorten check-in delay. The team is concerned that faster entry could shift correction work to staff. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational clinical pilot — illustrative measurement plan",
+        "body": "An authorized pilot of an unnamed investigational ileostomy rehydration device for high-output ileostomy aims to improve dehydration episodes. The team is concerned about application workload. This protocol is invented for practice and supplies no real efficacy, diagnostic accuracy or patient-specific prediction."
+      },
+      "clinicalAnchor": "ileostomy"
     },
     {
       "slug": "preprocedure-reminder",
-      "complaint": "Reminder measurement plan",
-      "presentation": "{patientName}, the reminder-project lead, reviews measures before testing a preparation message. The aim is fewer missed preparation steps, with concern about excess messages and interruptions. Communications requests a reminder for staff to read the reminder about reducing reminders, then asks why nobody has replied. The team is discussing measurement sets for the pilot described in the exhibit.",
-      "stem": "Which set covers process, intended outcome, and balancing burden for the preparation-reminder project in the exhibit?",
+      "complaint": "hidradenitis suppurativa study",
+      "presentation": "{patientName}, the skin-service improvement lead, reviews a new dressing device for hidradenitis suppurativa. The pilot aims to shorten closure time for draining skin lesions while tracking device use and application burden. The coordinator promises real-time documentation, provided staff first leave the room to find a computer. The team is preparing the pilot's measures before any results are collected.",
+      "stem": "Which set lists a process measure, the intended clinical outcome measure and a balancing measure, in that order, for the hidradenitis dressing device pilot?",
       "correct": {
         "id": "correct_preprocedure-reminder",
-        "label": "Reminder delivery; missed steps; message burden",
-        "rationale": "Delivery measures the process, missed steps measure the intended preparation outcome, and message burden checks the possible unintended cost."
+        "label": "Protocol dressing applications; time to lesion closure; extra application work",
+        "rationale": "Applications track delivery, lesion-closure time tracks the healing aim, and extra application work checks the unwanted burden of delivering the new dressing."
       },
       "distractors": [
         {
           "id": "d1_preprocedure-reminder",
-          "label": "Reminder delivery; opening rate; acknowledgment rate",
-          "rationale": "Delivery, opening, and acknowledgment concentrate on message processes. They do not measure missed preparation steps or the identified message burden."
+          "label": "Patients enrolled; protocol dressing applications; extra application work",
+          "rationale": "Enrollment and application counts both track study or delivery activity. This set leaves out the clinical healing outcome the pilot intends to improve."
         },
         {
           "id": "d2_preprocedure-reminder",
-          "label": "Missed steps; delayed steps; corrected steps",
-          "rationale": "These measures concentrate on step outcomes. They omit reminder delivery and the balancing concern about messages and interruptions."
+          "label": "Protocol dressing applications; extra application work; time to lesion closure",
+          "rationale": "Extra application work checks burden, not the healing aim. This ordering swaps the clinical outcome and balancing positions."
         },
         {
           "id": "d3_preprocedure-reminder",
-          "label": "Message burden; alert count; interruption minutes",
-          "rationale": "These measures concentrate on message burden. They omit both whether reminders were delivered and whether preparation steps improved."
+          "label": "Time to lesion closure; extra application work; protocol dressing applications",
+          "rationale": "Lesion-closure time is the clinical outcome, while applications track delivery. This ordering moves both outside their requested positions."
         }
       ],
-      "teachingPoint": "A reminder project needs more than evidence that messages were sent or opened. Delivery tracks whether the process happened; missed steps show the intended outcome; message burden checks a possible unintended cost. Remember: process, outcome, balance. An impressive delivery dashboard alone cannot tell whether preparation improved or interruptions became excessive.",
-      "explanation": "Reminder delivery is the process, missed steps are the intended outcome, and message burden is the balancing measure. Sets confined to one category leave the other questions unanswered.",
+      "teachingPoint": "A completed application is evidence of delivery, not evidence that a lesion closed sooner. Keep the clinical outcome separate from implementation counts, and check added work alongside both. Remember: doing the intervention and benefiting from it are different measurements. A balanced set can show whether better healing came with an application burden.",
+      "explanation": "Track dressing applications as process, lesion-closure time as outcome, and extra application work as balance. Enrollment and delivery counts cannot replace the intended clinical result.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Preprocedure reminder project: observations for practice",
-        "body": "Reminders aim to reduce missed preparation steps. The team is concerned about excess messages and interruptions. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational clinical pilot — illustrative measurement plan",
+        "body": "An authorized pilot of an unnamed investigational hidradenitis dressing device for hidradenitis suppurativa aims to improve time to lesion closure. The team is concerned about application workload. This protocol is invented for practice and supplies no real efficacy, diagnostic accuracy or patient-specific prediction."
+      },
+      "clinicalAnchor": "hidradenitis"
     },
     {
       "slug": "supply-cart",
-      "complaint": "Cart-map measurement plan",
-      "presentation": "{patientName}, the supply-map project lead, reviews measures before introducing a cart map. It aims to shorten retrieval time, with concern about restocking errors. The designer requires approval for every map revision, but the approval form asks for the location of the current approval form. The team is discussing the proposed measurement sets for the pilot in the exhibit.",
-      "stem": "Which set covers process, intended outcome, and balance for the supply-cart map project in the exhibit?",
+      "complaint": "spontaneous pneumothorax study",
+      "presentation": "{patientName}, the thoracic improvement lead, reviews a new pleural device for recurrence prevention after spontaneous pneumothorax. The pilot will track recurrence and extra procedure time. The supplier offers every dashboard measure except the one requested; adding it requires the advanced transparency package. The team is preparing the measurement plan before the authorized test begins, with outcomes still unobserved.",
+      "stem": "Which set lists a process measure, the intended clinical outcome measure and a balancing measure, in that order, for the pleural recurrence-prevention device pilot?",
       "correct": {
         "id": "correct_supply-cart",
-        "label": "Map use; retrieval time; restocking errors",
-        "rationale": "Map use shows uptake, retrieval time shows the intended outcome, and restocking errors check a possible problem created elsewhere by the change."
+        "label": "Protocol device use; recurrence at follow-up; extra procedure time",
+        "rationale": "Device use records implementation, recurrence records the prevention aim, and extra procedure time checks the burden added by the intervention."
       },
       "distractors": [
         {
           "id": "d1_supply-cart",
-          "label": "Map use; map availability; staff map training",
-          "rationale": "Availability, training, and use describe implementation. They do not show whether retrieval improved or restocking errors increased."
+          "label": "Protocol device use; completed procedures; extra procedure time",
+          "rationale": "Completed procedures count delivery activity rather than recurrence prevention. The intended clinical outcome is missing from this otherwise organized set."
         },
         {
           "id": "d2_supply-cart",
-          "label": "Retrieval time; search time; delayed retrievals",
-          "rationale": "These measures concentrate on retrieval outcomes. They do not measure map uptake or the specified restocking-error concern."
+          "label": "Patients enrolled; completed procedures; protocol device use",
+          "rationale": "Enrollment, procedure completion and device use all describe participation or delivery. This set omits both the recurrence result and the extra-time tradeoff."
         },
         {
           "id": "d3_supply-cart",
-          "label": "Restocking errors; stockouts; correction minutes",
-          "rationale": "These measures concentrate on inventory burden. They leave map use and the intended retrieval-time outcome out of the evaluation."
+          "label": "Recurrence at follow-up; protocol device use; extra procedure time",
+          "rationale": "Recurrence is the outcome and device use is process. This set reverses those first two positions while keeping the time tradeoff last."
         }
       ],
-      "teachingPoint": "Separate using the change from achieving its purpose. Map use measures uptake, retrieval time measures the intended improvement, and restocking errors check a plausible unintended problem. Remember to ask what might worsen elsewhere while the target improves. Training or availability can describe implementation, but cannot alone establish faster retrieval or acceptable restocking performance.",
-      "explanation": "Track map use, retrieval time, and restocking errors. They respectively cover process, the target outcome, and a possible consequence of changing the arrangement.",
+      "teachingPoint": "Recurrence at follow-up is the clinical result; completing a procedure is a delivery event. Device use therefore belongs among process measures, while extra procedure time checks added burden. Remember to keep the result after treatment distinct from the act of treatment. A busy procedure list cannot by itself establish recurrence prevention.",
+      "explanation": "Record protocol device use, recurrence at follow-up and extra procedure time as process, outcome and balance. Completed procedures alone cannot establish that recurrence was prevented.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Supply-cart map project: observations for practice",
-        "body": "The map aims to shorten supply retrieval time. The team is concerned that the new arrangement could increase restocking errors. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational clinical pilot — illustrative measurement plan",
+        "body": "An authorized pilot of an unnamed investigational pleural recurrence-prevention device for spontaneous pneumothorax aims to improve recurrence at protocol follow-up. The team is concerned about extra procedure time. This protocol is invented for practice and supplies no real efficacy, diagnostic accuracy or patient-specific prediction."
+      },
+      "clinicalAnchor": "pneumothorax"
     },
     {
       "slug": "handoff-template",
-      "complaint": "Handoff measurement plan",
-      "presentation": "{patientName}, the handoff-template lead, reviews a measurement proposal before the next improvement test. The template aims to reduce omitted information, while extra fields could lengthen handoffs. One proposal tracks only whether fields are completed, and another tracks only delay. The team is considering which measurement set to use for the pilot described in the exhibit before starting data collection.",
-      "stem": "Which set covers process, intended outcome, and balance for the handoff-template project in the exhibit?",
+      "complaint": "lung-cancer screening study",
+      "presentation": "{patientName}, the lung-screening improvement lead, reviews a new lung-cancer screening program for eligible adults. The pilot aims to reduce missed lung cancers at protocol follow-up and may require extra diagnostic visits. Colleagues propose different combinations of measures for the report. The team is planning what to record before testing the unnamed program; no benefit or screening-test performance is supplied.",
+      "stem": "Which set lists a process measure, the intended clinical outcome measure and a balancing measure, in that order, for the lung-cancer screening program pilot?",
       "correct": {
         "id": "correct_handoff-template",
-        "label": "Template completion; omissions; handoff duration",
-        "rationale": "Completion shows the template process, omissions show the intended information outcome, and duration checks the possible extra time burden."
+        "label": "Completed program screening; missed cancers at follow-up; extra diagnostic visits",
+        "rationale": "Completed screening tracks delivery, missed cancers track the program’s diagnostic aim, and extra diagnostic visits check the additional assessment burden."
       },
       "distractors": [
         {
           "id": "d1_handoff-template",
-          "label": "Template use; field completion; staff training",
-          "rationale": "These measures concentrate on implementation. They omit both the intended omission outcome and the possible increase in handoff duration."
+          "label": "Screening invitations sent; screening visits completed; extra diagnostic visits",
+          "rationale": "Invitations and completed screening visits both track program activity. This set does not measure missed cancers, the stated clinical aim."
         },
         {
           "id": "d2_handoff-template",
-          "label": "Omissions; corrected omissions; repeated omissions",
-          "rationale": "These measures concentrate on omissions. They omit whether the template was completed and whether handoffs became longer."
+          "label": "Completed program screening; extra diagnostic visits; missed cancers at follow-up",
+          "rationale": "Extra diagnostic visits check burden, while missed cancers measure the aim. This ordering swaps the outcome and balancing positions."
         },
         {
           "id": "d3_handoff-template",
-          "label": "Handoff duration; overtime minutes; queue delay",
-          "rationale": "These measures concentrate on time burden. They leave template use and the intended reduction in omitted information unmeasured."
+          "label": "Missed cancers at follow-up; completed program screening; extra diagnostic visits",
+          "rationale": "Missed cancers are the outcome and completed screening is process. This set places those two measures in the reverse order requested."
         }
       ],
-      "teachingPoint": "Completing a template is not the same as improving the information transferred. Template completion is the process measure, omissions are the intended outcome, and handoff duration checks added burden. Remember the three separate questions: was it used, did the target improve, and what else changed? Repeating one category leaves gaps in the learning.",
-      "explanation": "Use template completion, omissions, and handoff duration. These cover use of the intervention, its intended information outcome, and the possible time burden.",
+      "teachingPoint": "Screening activity and screening success need different measures. Completed screens track delivery; missed cancers at follow-up track the stated diagnostic aim; extra diagnostic visits check burden. Remember to count both what the program does and what it misses. Invitation or attendance totals alone do not establish that the clinical aim improved.",
+      "explanation": "Use completed program screening as process, missed cancers at follow-up as outcome, and extra diagnostic visits as balance. Attendance counts do not substitute for the diagnostic aim.",
       "exhibit": {
         "kind": "abstract",
-        "title": "Handoff-template project: observations for practice",
-        "body": "The template aims to reduce omitted information. The team is concerned that extra fields could lengthen handoffs. This is an illustrative methods exercise, not a patient-specific estimate."
-      }
+        "title": "Investigational clinical pilot — illustrative measurement plan",
+        "body": "An authorized pilot of an unnamed investigational lung-cancer screening program for lung-cancer screening aims to improve missed cancers at protocol follow-up. The team is concerned about extra diagnostic visits. This protocol is invented for practice and supplies no real efficacy, diagnostic accuracy or patient-specific prediction."
+      },
+      "clinicalAnchor": "lung-screening"
     }
   ]
+};
+
+// Existing catalog context only; these are not new clinical claims or objectives.
+export const CLINICAL_ANCHORS = {
+  "venous-ulcer": {
+    "label": "Venous leg ulcer",
+    "diagnosisKey": "venous-ulcer",
+    "storyTerm": "venous leg ulcer",
+    "claimIds": [
+      "claim.venous-leg-ulcer.arterial-assessment-before-compression",
+      "claim.venous-leg-ulcer.compression-after-adequate-arterial-assessment"
+    ],
+    "sourceLabels": [
+      "ESVS 2022 Clinical Practice Guidelines on Chronic Venous Disease of the Lower Limbs"
+    ]
+  },
+  "lactational-abscess": {
+    "label": "Lactational breast abscess",
+    "diagnosisKey": "lactational-abscess",
+    "storyTerm": "lactational breast abscess",
+    "claimIds": [
+      "claim.lactational-breast-abscess.targeted-ultrasound",
+      "claim.lactational-breast-abscess.selected-drainage"
+    ],
+    "sourceLabels": [
+      "ACR Appropriateness Criteria Breast Imaging During Lactation",
+      "Academy of Breastfeeding Medicine Clinical Protocol #36: The Mastitis Spectrum, Revised 2022"
+    ]
+  },
+  "burn": {
+    "label": "Superficial partial-thickness burn",
+    "diagnosisKey": "burn",
+    "storyTerm": "superficial partial-thickness burn",
+    "claimIds": [
+      "claim.burn.superficial-partial-depth"
+    ],
+    "sourceLabels": [
+      "ABA Guidelines for Burn Patient Referral",
+      "2024 Guidelines for First Aid"
+    ]
+  },
+  "chronic-fissure": {
+    "label": "Chronic anal fissure",
+    "diagnosisKey": "chronic-fissure",
+    "storyTerm": "chronic anal fissure",
+    "claimIds": [
+      "claim.chronic-anal-fissure.topical-ccb-first-line"
+    ],
+    "sourceLabels": [
+      "ASCRS Clinical Practice Guidelines for the Management of Anal Fissures",
+      "SIUCP guidelines for the management of anal fissure"
+    ]
+  },
+  "hidradenitis": {
+    "label": "Hidradenitis suppurativa",
+    "diagnosisKey": "hidradenitis",
+    "storyTerm": "hidradenitis suppurativa",
+    "claimIds": [
+      "claim.hs.pattern-recognition",
+      "claim.hs.multimodal-planning"
+    ],
+    "sourceLabels": [
+      "Australasian hidradenitis suppurativa management guidelines",
+      "North American HS management guidelines Part I"
+    ]
+  },
+  "cutaneous-abscess": {
+    "label": "Uncomplicated cutaneous abscess",
+    "diagnosisKey": "cutaneous-abscess",
+    "storyTerm": "cutaneous abscess",
+    "claimIds": [
+      "claim.bread-butter.cutaneous-abscess.incision-drainage"
+    ],
+    "sourceLabels": [
+      "Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update",
+      "Abscess Evaluation"
+    ]
+  },
+  "pilonidal": {
+    "label": "Chronic pilonidal sinus disease",
+    "diagnosisKey": "pilonidal",
+    "storyTerm": "pilonidal disease",
+    "claimIds": [
+      "claim.pilonidal-disease.chronic-sinus-recognition",
+      "claim.pilonidal-disease.off-midline-closure-planning"
+    ],
+    "sourceLabels": [
+      "Consensus statement of the Italian society of colorectal surgery (SICCR): management and treatment of pilonidal disease",
+      "Pilonidal Disease"
+    ]
+  },
+  "donor-wound": {
+    "label": "Split-thickness skin-graft donor wound",
+    "diagnosisKey": "donor-wound",
+    "storyTerm": "skin-graft donor wound",
+    "claimIds": [
+      "claim.gs028f.reconstruction.donor-retained-epithelium"
+    ],
+    "sourceLabels": [
+      "Skin Grafting, Cryopreservation, and Diseases: A Review Article"
+    ]
+  },
+  "diabetic-ulcer": {
+    "label": "Clinically uninfected diabetic foot ulcer",
+    "diagnosisKey": "diabetic-ulcer",
+    "storyTerm": "diabetic foot ulcer",
+    "claimIds": [
+      "claim.dfu.no-antibiotics-uninfected"
+    ],
+    "sourceLabels": [
+      "IWGDF/IDSA diabetes-related foot infection guideline"
+    ]
+  },
+  "keloid": {
+    "label": "Keloid scar",
+    "diagnosisKey": "keloid",
+    "storyTerm": "keloid",
+    "claimIds": [
+      "claim.gs028e.scar_extent"
+    ],
+    "sourceLabels": [
+      "Scars"
+    ]
+  },
+  "perianal-abscess": {
+    "label": "Acute superficial perianal abscess",
+    "diagnosisKey": "perianal-abscess",
+    "storyTerm": "perianal abscess",
+    "claimIds": [
+      "claim.bread-butter.perianal-abscess.prompt-drainage"
+    ],
+    "sourceLabels": [
+      "The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula"
+    ]
+  },
+  "ards": {
+    "label": "Adult acute respiratory distress syndrome",
+    "diagnosisKey": "ards",
+    "storyTerm": "ARDS",
+    "claimIds": [
+      "claim.gs028d.ards.permeability-edema",
+      "claim.gs028d.ards.predicted-body-weight-ventilation"
+    ],
+    "sourceLabels": [
+      "ESICM guidelines on acute respiratory distress syndrome: definition, phenotyping and respiratory support strategies"
+    ]
+  },
+  "achalasia": {
+    "label": "Achalasia after exclusion of structural obstruction",
+    "diagnosisKey": "achalasia",
+    "storyTerm": "achalasia",
+    "claimIds": [
+      "claim.achalasia.high-resolution-manometry",
+      "claim.achalasia.manometric-recognition"
+    ],
+    "sourceLabels": [
+      "2019 Seoul Consensus on Esophageal Achalasia Guidelines"
+    ]
+  },
+  "gastroparesis": {
+    "label": "Gastroparesis after exclusion of mechanical obstruction",
+    "diagnosisKey": "gastroparesis",
+    "storyTerm": "gastroparesis",
+    "claimIds": [
+      "claim.gastroparesis.diagnostic-framework",
+      "claim.gastroparesis.four-hour-solid-meal-scintigraphy"
+    ],
+    "sourceLabels": [
+      "ACG Clinical Guideline: Gastroparesis",
+      "AGA Clinical Practice Guideline on Management of Gastroparesis",
+      "Gastroparesis"
+    ]
+  },
+  "carpal-tunnel": {
+    "label": "Carpal tunnel syndrome",
+    "diagnosisKey": "carpal-tunnel",
+    "storyTerm": "carpal tunnel syndrome",
+    "claimIds": [
+      "claim.gs028f.nerve.median-carpal-localization",
+      "claim.gs028f.nerve.median-wrist-symptoms"
+    ],
+    "sourceLabels": [
+      "Carpal tunnel syndrome"
+    ]
+  },
+  "postherniorrhaphy-pain": {
+    "label": "Neuropathic pain after inguinal hernia repair",
+    "diagnosisKey": "postherniorrhaphy-pain",
+    "storyTerm": "postherniorrhaphy pain",
+    "claimIds": [
+      "claim.php.recognition"
+    ],
+    "sourceLabels": [
+      "International HerniaSurge guideline update"
+    ]
+  },
+  "graves": {
+    "label": "Graves hyperthyroidism",
+    "diagnosisKey": "graves",
+    "storyTerm": "Graves disease",
+    "claimIds": [
+      "claim.graves-rai-appropriate-candidate.graves-context",
+      "claim.graves-rai-appropriate-candidate.preference-sensitive-options"
+    ],
+    "sourceLabels": [
+      "Graves’ Disease"
+    ]
+  },
+  "hyperparathyroidism": {
+    "label": "Primary hyperparathyroidism with renal involvement",
+    "diagnosisKey": "hyperparathyroidism",
+    "storyTerm": "primary hyperparathyroidism",
+    "claimIds": [
+      "claim.primary-hyperparathyroidism.biochemical-pattern",
+      "claim.primary-hyperparathyroidism.renal-bone-surgery-assessment"
+    ],
+    "sourceLabels": [
+      "Primary Hyperparathyroidism",
+      "Hyperparathyroidism Treatment"
+    ]
+  },
+  "adult-neck-mass": {
+    "label": "Persistent unexplained adult neck mass",
+    "diagnosisKey": "adult-neck-mass",
+    "storyTerm": "persistent neck mass",
+    "claimIds": [
+      "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+      "claim.gs028f.neck.needle-before-open"
+    ],
+    "sourceLabels": [
+      "Head and Neck Cancer: United Kingdom National Multidisciplinary Guidelines, Sixth Edition"
+    ]
+  },
+  "cubital-tunnel": {
+    "label": "Cubital tunnel syndrome",
+    "diagnosisKey": "cubital-tunnel",
+    "storyTerm": "cubital tunnel syndrome",
+    "claimIds": [
+      "claim.gs028f.nerve.ulnar-cubital-localization"
+    ],
+    "sourceLabels": [
+      "Hand Therapy – Cubital Tunnel Syndrome"
+    ]
+  },
+  "appendix": {
+    "label": "Uncomplicated adult appendicitis with appendicolith",
+    "diagnosisKey": "appendix",
+    "storyTerm": "appendicitis",
+    "claimIds": [
+      "claim.gs028c.appendicitis.appendicolith-operative-pathway"
+    ],
+    "sourceLabels": [
+      "SAGES guideline for appendicitis",
+      "CODA appendicitis evidence update"
+    ]
+  },
+  "gallstones": {
+    "label": "Recurrent symptomatic gallstones",
+    "diagnosisKey": "gallstones",
+    "storyTerm": "gallstones",
+    "claimIds": [
+      "claim.gallstones.symptomatic-referral"
+    ],
+    "sourceLabels": [
+      "Treatment for Gallstones",
+      "Evidence-based clinical practice guidelines for cholelithiasis 2021"
+    ]
+  },
+  "anal-scc": {
+    "label": "Biopsy-confirmed localized anal-canal squamous cell carcinoma",
+    "diagnosisKey": "anal-scc",
+    "storyTerm": "anal-canal SCC",
+    "claimIds": [
+      "claim.analscc.biopsy-and-explicit-staging",
+      "claim.analscc.localized-chemoradiation-referral"
+    ],
+    "sourceLabels": [
+      "Anal Cancer Treatment (PDQ®)–Health Professional Version"
+    ]
+  },
+  "carotid": {
+    "label": "Symptomatic severe carotid stenosis",
+    "diagnosisKey": "carotid",
+    "storyTerm": "carotid stenosis",
+    "claimIds": [
+      "claim.carotid-stenosis.symptomatic-endarterectomy-selection"
+    ],
+    "sourceLabels": [
+      "Canadian Stroke Best Practice Recommendations: Management of Extracranial Carotid Disease and Intracranial Atherosclerosis",
+      "European Stroke Organisation guideline on endarterectomy and stenting for carotid artery stenosis"
+    ]
+  },
+  "gist": {
+    "label": "Gastric gastrointestinal stromal tumor",
+    "diagnosisKey": "gist",
+    "storyTerm": "gastric GIST",
+    "claimIds": [
+      "claim.gastric-gist.selected-eus-core-molecular-testing"
+    ],
+    "sourceLabels": [
+      "2023 GEIS Guidelines for gastrointestinal stromal tumors",
+      "Gastrointestinal Stromal Tumors Treatment (PDQ®), Health Professional Version"
+    ]
+  },
+  "rectal-prolapse": {
+    "label": "External full-thickness rectal prolapse",
+    "diagnosisKey": "rectal-prolapse",
+    "storyTerm": "rectal prolapse",
+    "claimIds": [
+      "claim.brief.rectal-prolapse.surgical-referral"
+    ],
+    "sourceLabels": [
+      "Clinical Practice Guidelines for the Treatment of Rectal Prolapse"
+    ]
+  },
+  "ectopic": {
+    "label": "Suspected ectopic pregnancy",
+    "diagnosisKey": "ectopic",
+    "storyTerm": "ectopic pregnancy",
+    "claimIds": [
+      "claim.gs028f.ectopic.hcg-does-not-locate",
+      "claim.gs028f.ectopic.symptoms-require-assessment"
+    ],
+    "sourceLabels": [
+      "Early pregnancy loss",
+      "Pregnancy Test",
+      "Ectopic Pregnancy",
+      "Ectopic pregnancy"
+    ]
+  },
+  "contact-dermatitis": {
+    "label": "Confirmed allergic contact dermatitis",
+    "diagnosisKey": "contact-dermatitis",
+    "storyTerm": "allergic contact dermatitis",
+    "claimIds": [
+      "claim.gs028e.type_iv"
+    ],
+    "sourceLabels": [
+      "Immunopathogenesis and immunoregulatory mechanisms in allergic contact dermatitis",
+      "Immunotoxicity Testing Guidance"
+    ]
+  },
+  "inguinal": {
+    "label": "Symptomatic reducible inguinal hernia",
+    "diagnosisKey": "inguinal",
+    "storyTerm": "inguinal hernia",
+    "claimIds": [
+      "claim.inguinal-hernia.symptomatic-elective-repair"
+    ],
+    "sourceLabels": [
+      "International guidelines for groin hernia management",
+      "Inguinal Hernia"
+    ]
+  },
+  "colon": {
+    "label": "Localized resectable colon cancer",
+    "diagnosisKey": "colon",
+    "storyTerm": "colon cancer",
+    "claimIds": [
+      "claim.colorectal.histology-confirms",
+      "claim.colon-cancer.oncologic-regional-resection"
+    ],
+    "sourceLabels": [
+      "Screening Tests to Detect Colorectal Cancer and Polyps",
+      "ASCRS Clinical Practice Guidelines for the Management of Colon Cancer",
+      "Colon Cancer Treatment (PDQ), Health Professional Version"
+    ]
+  },
+  "ulcer-bleeding": {
+    "label": "Peptic ulcer bleeding",
+    "diagnosisKey": "ulcer-bleeding",
+    "storyTerm": "peptic ulcer bleeding",
+    "claimIds": [
+      "claim.peptic-ulcer-bleeding.high-risk-stigmata-require-hemostasis"
+    ],
+    "sourceLabels": [
+      "ACG Clinical Guideline: Upper Gastrointestinal and Ulcer Bleeding",
+      "Endoscopic diagnosis and management of peptic ulcer bleeding: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2026"
+    ]
+  },
+  "gerd": {
+    "label": "Gastroesophageal reflux disease under evaluation",
+    "diagnosisKey": "gerd",
+    "storyTerm": "reflux disease",
+    "claimIds": [
+      "claim.early.gerd.off-ppi-reflux-monitoring"
+    ],
+    "sourceLabels": [
+      "ACG Clinical Guideline: Guidelines for the Diagnosis and Management of Gastroesophageal Reflux Disease",
+      "How to select patients for antireflux surgery? The ICARUS guidelines"
+    ]
+  },
+  "incisional": {
+    "label": "Stable reducible midline incisional hernia",
+    "diagnosisKey": "incisional",
+    "storyTerm": "incisional hernia",
+    "claimIds": [
+      "claim.ventral-hernia.elective-pulmonary-optimization"
+    ],
+    "sourceLabels": [
+      "Midline incisional hernia guidelines: the European Hernia Society"
+    ]
+  },
+  "thyroglossal": {
+    "label": "Symptomatic thyroglossal duct cyst",
+    "diagnosisKey": "thyroglossal",
+    "storyTerm": "thyroglossal duct cyst",
+    "claimIds": [
+      "claim.brief.thyroglossal-duct-cyst.sistrunk-referral"
+    ],
+    "sourceLabels": [
+      "Thyroglossal Duct Cyst Excision"
+    ]
+  },
+  "dvt": {
+    "label": "Surgery-provoked proximal deep vein thrombosis",
+    "diagnosisKey": "dvt",
+    "storyTerm": "postoperative DVT",
+    "claimIds": [
+      "claim.postoperative-dvt.prompt-venous-duplex"
+    ],
+    "sourceLabels": [
+      "Testing and Diagnosis for Venous Thromboembolism",
+      "Venous Thromboembolism: Deep Vein Thrombosis (DVT)"
+    ]
+  },
+  "mh": {
+    "label": "Documented malignant-hyperthermia susceptibility",
+    "diagnosisKey": "mh",
+    "storyTerm": "malignant-hyperthermia susceptibility",
+    "claimIds": [
+      "claim.gs028d.mh.trigger-free-plan"
+    ],
+    "sourceLabels": [
+      "JSA guideline for management of malignant hyperthermia in 2025",
+      "Perioperative Management of MH Suspected or Susceptible Patients"
+    ]
+  },
+  "breast": {
+    "label": "Accessible suspicious solid breast mass",
+    "diagnosisKey": "breast",
+    "storyTerm": "breast mass",
+    "claimIds": [
+      "claim.bread-butter.breast-mass.image-guided-core-biopsy"
+    ],
+    "sourceLabels": [
+      "ACR Appropriateness Criteria Palpable Breast Masses: 2022 Update"
+    ]
+  },
+  "h-pylori": {
+    "label": "Uncomplicated duodenal ulcer and H. pylori evaluation",
+    "diagnosisKey": "h-pylori",
+    "storyTerm": "H. pylori",
+    "claimIds": [
+      "claim.brief.h-pylori.active-infection-testing",
+      "claim.brief.h-pylori.test-of-cure-plan"
+    ],
+    "sourceLabels": [
+      "ACG Clinical Guideline: Treatment of Helicobacter pylori Infection",
+      "Peptic Ulcer Disease"
+    ]
+  },
+  "cutaneous-scc": {
+    "label": "Suspected or confirmed cutaneous squamous cell carcinoma",
+    "diagnosisKey": "cutaneous-scc",
+    "storyTerm": "cutaneous SCC",
+    "claimIds": [
+      "claim.cutaneous-scc.biopsy-for-diagnosis-and-risk",
+      "claim.cutaneous-scc.risk-directed-surgery"
+    ],
+    "sourceLabels": [
+      "Guidelines of care for the management of cutaneous squamous cell carcinoma",
+      "Choosing Wisely recommendations"
+    ]
+  },
+  "ptld": {
+    "label": "Suspected post-transplant lymphoproliferative disorder",
+    "diagnosisKey": "ptld",
+    "storyTerm": "post-transplant lymphoproliferative disorder",
+    "claimIds": [
+      "claim.ptld.pattern",
+      "claim.ptld.tissue"
+    ],
+    "sourceLabels": [
+      "AST PTLD and EBV guideline",
+      "Comprehensive review of PTLD after solid organ transplantation"
+    ]
+  },
+  "pigmented-lesion": {
+    "label": "Small accessible pigmented lesion concerning for melanoma",
+    "diagnosisKey": "pigmented-lesion",
+    "storyTerm": "pigmented lesion",
+    "claimIds": [
+      "claim.pigmented-skin-lesion.complete-diagnostic-biopsy"
+    ],
+    "sourceLabels": [
+      "Melanoma Treatment (PDQ), Health Professional Version",
+      "Melanoma clinical guideline (Guideline highlights)"
+    ]
+  },
+  "pancreatic-cancer": {
+    "label": "Resectable pancreatic body or tail adenocarcinoma",
+    "diagnosisKey": "pancreatic-cancer",
+    "storyTerm": "pancreatic tail cancer",
+    "claimIds": [
+      "claim.pancreatic-adenocarcinoma.body-tail-distal-pancreatectomy"
+    ],
+    "sourceLabels": [
+      "Multidisciplinary consensus statement on the clinical management of patients with pancreatic cancer",
+      "Pancreatic Cancer Treatment (PDQ): Health Professional Version"
+    ]
+  },
+  "thyroid-nodule": {
+    "label": "Suspicious thyroid nodule meeting biopsy criteria",
+    "diagnosisKey": "thyroid-nodule",
+    "storyTerm": "thyroid nodule",
+    "claimIds": [
+      "claim.thyroid-nodule.fna-after-selected-ultrasound"
+    ],
+    "sourceLabels": [
+      "Thyroid Nodules"
+    ]
+  },
+  "aldosteronism": {
+    "label": "Primary aldosteronism",
+    "diagnosisKey": "aldosteronism",
+    "storyTerm": "primary aldosteronism",
+    "claimIds": [
+      "claim.primary-aldosteronism.prepared-arr-screening"
+    ],
+    "sourceLabels": [
+      "Primary Aldosteronism: An Endocrine Society Clinical Practice Guideline"
+    ]
+  },
+  "cholecystitis": {
+    "label": "Acute calculous cholecystitis in a fit adult",
+    "diagnosisKey": "cholecystitis",
+    "storyTerm": "cholecystitis",
+    "claimIds": [
+      "claim.gs028c.cholecystitis.index-admission-cholecystectomy"
+    ],
+    "sourceLabels": [
+      "WSES acute calculous cholecystitis guideline"
+    ]
+  },
+  "gastric-cancer": {
+    "label": "Resectable proximal gastric adenocarcinoma",
+    "diagnosisKey": "gastric-cancer",
+    "storyTerm": "gastric adenocarcinoma",
+    "claimIds": [
+      "claim.gastric-adenocarcinoma.prophylactic-splenectomy-no-survival-benefit"
+    ],
+    "sourceLabels": [
+      "Korean Practice Guidelines for Gastric Cancer 2024: An Evidence-based, Multidisciplinary Approach",
+      "Japanese Gastric Cancer Treatment Guidelines 2021",
+      "Randomized Controlled Trial to Evaluate Splenectomy in Total Gastrectomy for Proximal Gastric Carcinoma"
+    ]
+  },
+  "merkel": {
+    "label": "Merkel cell carcinoma",
+    "diagnosisKey": "merkel",
+    "storyTerm": "Merkel cell carcinoma",
+    "claimIds": [
+      "claim.gs028g.merkel-cell.integrated-diagnosis"
+    ],
+    "sourceLabels": [
+      "Merkel Cell Carcinoma Treatment (PDQ), Health Professional Version"
+    ]
+  },
+  "marginal-ulcer": {
+    "label": "Marginal ulcer after gastric bypass",
+    "diagnosisKey": "marginal-ulcer",
+    "storyTerm": "marginal ulcer",
+    "claimIds": [
+      "claim.gs028c.marginal-ulcer.h-pylori"
+    ],
+    "sourceLabels": [
+      "ASMBS marginal-ulcer treatment review"
+    ]
+  },
+  "pneumothorax": {
+    "label": "Primary spontaneous pneumothorax",
+    "diagnosisKey": "pneumothorax",
+    "storyTerm": "spontaneous pneumothorax",
+    "claimIds": [
+      "claim.gs028d.psp.recurrence-referral"
+    ],
+    "sourceLabels": [
+      "Joint ERS/EACTS/ESTS clinical practice guidelines on adults with spontaneous pneumothorax"
+    ]
+  },
+  "gastric-malt": {
+    "label": "Localized low-grade gastric MALT lymphoma associated with H. pylori",
+    "diagnosisKey": "gastric-malt",
+    "storyTerm": "gastric MALT lymphoma",
+    "claimIds": [
+      "claim.gastric-malt.hpylori-eradication-initial-localized"
+    ],
+    "sourceLabels": [
+      "Gastric mucosa-associated lymphoid tissue lymphoma and Helicobacter pylori infection: a review of current diagnosis and management",
+      "Clinical Management of Patients with Gastric MALT Lymphoma: A Gastroenterologist's Point of View",
+      "Guideline for the diagnosis and management of marginal zone lymphomas: A British Society of Haematology Guideline",
+      "Indolent B-Cell Non-Hodgkin Lymphoma Treatment (PDQ): Health Professional Version"
+    ]
+  },
+  "meckel": {
+    "label": "Symptomatic Meckel diverticulum involving adjacent ileum",
+    "diagnosisKey": "meckel",
+    "storyTerm": "Meckel diverticulum",
+    "claimIds": [
+      "claim.meckel-diverticulum.resection-extent-base-and-ileum"
+    ],
+    "sourceLabels": [
+      "Meckel's Diverticulum in Adults: Surgical Concerns",
+      "Laparoscopic Management of Perforated Meckel's Diverticulum in Adults",
+      "Meckel's diverticulectomy: a multi-centre 19-year retrospective study"
+    ]
+  },
+  "femoral": {
+    "label": "Stable reducible femoral hernia",
+    "diagnosisKey": "femoral",
+    "storyTerm": "femoral hernia",
+    "claimIds": [
+      "claim.bread-butter.femoral-hernia.timely-repair"
+    ],
+    "sourceLabels": [
+      "International guidelines for groin hernia management"
+    ]
+  },
+  "dcis": {
+    "label": "Pure ductal carcinoma in situ",
+    "diagnosisKey": "dcis",
+    "storyTerm": "DCIS",
+    "claimIds": [
+      "claim.gs028c.dcis.margin-two-mm"
+    ],
+    "sourceLabels": [
+      "Resource Guide on Breast Cancer Breast Conservation Surgery Margins",
+      "DCIS margin consensus guideline"
+    ]
+  },
+  "hcc": {
+    "label": "Solitary hepatocellular carcinoma in a favorable resection profile",
+    "diagnosisKey": "hcc",
+    "storyTerm": "hepatocellular carcinoma",
+    "claimIds": [
+      "claim.hcc.resection.favorable-compensated-cirrhosis-profile"
+    ],
+    "sourceLabels": [
+      "AASLD Practice Guidance on prevention, diagnosis, and treatment of hepatocellular carcinoma"
+    ]
+  },
+  "bcc": {
+    "label": "Basal cell carcinoma",
+    "diagnosisKey": "bcc",
+    "storyTerm": "basal cell carcinoma",
+    "claimIds": [
+      "claim.bcc.pattern",
+      "claim.bcc.local-invasion"
+    ],
+    "sourceLabels": [
+      "NCI Skin Cancer Treatment PDQ",
+      "S2k basal cell carcinoma guideline update"
+    ]
+  },
+  "celiac": {
+    "label": "Biopsy-confirmed celiac disease",
+    "diagnosisKey": "celiac",
+    "storyTerm": "celiac disease",
+    "claimIds": [
+      "claim.celiac.adult-biopsy",
+      "claim.celiac.gluten-free-treatment"
+    ],
+    "sourceLabels": [
+      "Celiac Disease Tests",
+      "Diagnosis of Celiac Disease",
+      "Treatment for Celiac Disease",
+      "Celiac Disease"
+    ]
+  },
+  "ileostomy": {
+    "label": "Persistently high-output ileostomy after stabilization",
+    "diagnosisKey": "ileostomy",
+    "storyTerm": "high-output ileostomy",
+    "claimIds": [
+      "claim.bread-butter.high-output-ileostomy.renal-electrolyte-magnesium-assessment",
+      "claim.bread-butter.high-output-ileostomy.sodium-glucose-oral-rehydration"
+    ],
+    "sourceLabels": [
+      "Managing a High Output Stoma",
+      "The Use of Oral Rehydration Solutions for the Management of High Output Stomas and Fistulas"
+    ]
+  },
+  "lung-screening": {
+    "label": "Lung-cancer screening in eligible adults",
+    "diagnosisKey": "lung-screening",
+    "storyTerm": "lung-cancer screening",
+    "claimIds": [
+      "claim.gs028d.lung-screening.eligibility"
+    ],
+    "sourceLabels": [
+      "Screening for Lung Cancer"
+    ]
+  },
+  "varicose": {
+    "label": "Symptomatic axial superficial venous reflux",
+    "diagnosisKey": "varicose",
+    "storyTerm": "varicose veins",
+    "claimIds": [
+      "claim.varicose.intervention-referral"
+    ],
+    "sourceLabels": [
+      "SVS/AVF/AVLS varicose veins guideline Part II"
+    ]
+  },
+  "nephrolithiasis": {
+    "label": "Recurrent nephrolithiasis",
+    "diagnosisKey": "nephrolithiasis",
+    "storyTerm": "recurrent kidney stones",
+    "claimIds": [
+      "claim.nephrolithiasis.recurrent-metabolic"
+    ],
+    "sourceLabels": [
+      "Diagnosis of Kidney Stones",
+      "Treatment for Kidney Stones"
+    ]
+  },
+  "enterotomy": {
+    "label": "Recognized securely repaired enterotomy during incisional-hernia repair",
+    "diagnosisKey": "incisional",
+    "storyTerm": "enterotomy",
+    "claimIds": [
+      "claim.ventral-hernia.controlled-enterotomy-selected-single-stage-repair"
+    ],
+    "sourceLabels": [
+      "EHS Guidelines on the Management of Primary Ventral and Incisional Hernias Under Emergency Conditions",
+      "2017 update of the WSES guidelines for emergency repair of complicated abdominal wall hernias",
+      "SAGES guidelines for laparoscopic ventral hernia repair"
+    ]
+  },
+  "breast-cyst": {
+    "label": "Painful unequivocally simple breast cyst",
+    "diagnosisKey": "breast-cyst",
+    "storyTerm": "simple breast cyst",
+    "claimIds": [
+      "claim.breast-cyst.simple-symptomatic.aspiration"
+    ],
+    "sourceLabels": [
+      "The American Society of Breast Surgeons—Benign Breast Disease: Five Things Physicians and Patients Should Question",
+      "Benign Breast Conditions"
+    ]
+  },
+  "dialysis-access": {
+    "label": "Arteriovenous dialysis-access dysfunction",
+    "diagnosisKey": "dialysis-access",
+    "storyTerm": "dialysis-access dysfunction",
+    "claimIds": [
+      "claim.gs028d.access.dysfunction-referral"
+    ],
+    "sourceLabels": [
+      "UK Kidney Association Clinical Practice Guideline on vascular access for haemodialysis"
+    ]
+  },
+  "barrett": {
+    "label": "Biopsy-confirmed Barrett esophagus",
+    "diagnosisKey": "barrett",
+    "storyTerm": "Barrett esophagus",
+    "claimIds": [
+      "claim.barrett-esophagus.intestinal-metaplasia"
+    ],
+    "sourceLabels": [
+      "Diagnosis of Barrett's Esophagus",
+      "Barrett's Esophagus"
+    ]
+  },
+  "desmoid": {
+    "label": "Stable minimally symptomatic desmoid tumor",
+    "diagnosisKey": "desmoid",
+    "storyTerm": "desmoid tumor",
+    "claimIds": [
+      "claim.desmoid.initial-active-surveillance-selected-noncritical"
+    ],
+    "sourceLabels": [
+      "Current Management of Desmoid Tumors: A Review",
+      "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)"
+    ]
+  },
+  "anemia": {
+    "label": "Anemia in the perioperative setting",
+    "diagnosisKey": "anemia",
+    "storyTerm": "perioperative anemia",
+    "claimIds": [
+      "claim.gs028f.oxygen.anemia-content-limit",
+      "claim.gs028f.oxygen.hemoglobin-carriage"
+    ],
+    "sourceLabels": [
+      "NHLBI anemia diagnosis: hemoglobin oxygen carriage",
+      "FDA pulse-oximetry executive summary: measurement background"
+    ]
+  },
+  "fhh": {
+    "label": "Confirmed uncomplicated familial hypocalciuric hypercalcemia",
+    "diagnosisKey": "fhh",
+    "storyTerm": "familial hypocalciuric hypercalcemia",
+    "claimIds": [
+      "claim.fhh.reassurance-observation-avoid-parathyroid-surgery"
+    ],
+    "sourceLabels": [
+      "European expert consensus on practical management of specific aspects of parathyroid disorders in adults and in pregnancy: recommendations of the ESE Educational Program of Parathyroid Disorders (PARAT 2021)",
+      "Evaluation and Management of Primary Hyperparathyroidism: Summary Statement and Guidelines from the Fifth International Workshop"
+    ]
+  },
+  "adrenal": {
+    "label": "Adrenal incidentaloma",
+    "diagnosisKey": "adrenal",
+    "storyTerm": "adrenal incidentaloma",
+    "claimIds": [
+      "claim.brief.adrenal-incidentaloma.one-mg-dst"
+    ],
+    "sourceLabels": [
+      "European Society of Endocrinology clinical practice guidelines on the management of adrenal incidentalomas",
+      "American Association of Endocrine Surgeons Guidelines for Adrenalectomy: Executive Summary"
+    ]
+  },
+  "mondor": {
+    "label": "Uncomplicated Mondor disease",
+    "diagnosisKey": "mondor",
+    "storyTerm": "Mondor disease",
+    "claimIds": [
+      "claim.mondor-disease.classic-clinical-phenotype",
+      "claim.mondor-disease.supportive-management-and-boundaries"
+    ],
+    "sourceLabels": [
+      "Mondor Disease",
+      "Mondor's Disease: A Review of the Literature"
+    ]
+  },
+  "foreign-body": {
+    "label": "Confirmed sharp esophageal foreign body",
+    "diagnosisKey": "foreign-body",
+    "storyTerm": "sharp esophageal foreign body",
+    "claimIds": [
+      "claim.gs028f.foreign-body.sharp-esophageal-emergency"
+    ],
+    "sourceLabels": [
+      "WSES esophageal emergencies guideline: foreign bodies",
+      "ESGE adult upper gastrointestinal foreign-body guideline"
+    ]
+  },
+  "transplant": {
+    "label": "Human renal allograft with immunosuppression",
+    "diagnosisKey": "transplant",
+    "storyTerm": "renal allograft",
+    "claimIds": [
+      "claim.gs028f.transplant.different-human",
+      "claim.gs028f.tacrolimus.t-cell-activation"
+    ],
+    "sourceLabels": [
+      "Definition of allograft",
+      "PROGRAF prescribing information: mechanism of action"
+    ]
+  },
+  "asplenia": {
+    "label": "Fever with asplenia",
+    "diagnosisKey": "asplenia",
+    "storyTerm": "fever with asplenia",
+    "claimIds": [
+      "claim.asplenia.fever-immediate-emergency-care"
+    ],
+    "sourceLabels": [
+      "Fever in Patients with Impaired Spleen Function"
+    ]
+  },
+  "allergy-label": {
+    "label": "Unverified preoperative penicillin-allergy label",
+    "diagnosisKey": "allergy-label",
+    "storyTerm": "penicillin-allergy label",
+    "claimIds": [
+      "claim.variety3.allergy.label-not-confirmation",
+      "claim.variety3.allergy.characterize-reaction"
+    ],
+    "sourceLabels": [
+      "Clinical Features of Penicillin Allergy",
+      "Management of Penicillin Allergy in the Perioperative Setting"
+    ]
+  },
+  "child-groin": {
+    "label": "Childhood intermittent groin bulge concerning for inguinal hernia",
+    "diagnosisKey": "inguinal",
+    "storyTerm": "inguinal hernia",
+    "claimIds": [
+      "claim.pediatric-clinic.dynamic-groin-bulge",
+      "claim.pediatric-clinic.clinical-groin-hernia-referral"
+    ],
+    "sourceLabels": [
+      "Hernia",
+      "Paediatric Surgery"
+    ]
+  },
+  "child-node": {
+    "label": "Uncomplicated reactive childhood cervical lymphadenopathy",
+    "diagnosisKey": "child-node",
+    "storyTerm": "reactive cervical nodes",
+    "claimIds": [
+      "claim.pediatric-clinic.reactive-child-neck-nodes",
+      "claim.pediatric-clinic.well-child-node-observation"
+    ],
+    "sourceLabels": [
+      "Cervical Lymphadenopathy in Children"
+    ]
+  }
+} as const;
+export type ClinicalAnchorKey = keyof typeof CLINICAL_ANCHORS;
+
+export const STATISTICS_CLINICAL_ANCHOR_BY_QUESTION = Object.fromEntries(
+  Object.entries(STATISTICS_VARIANTS).flatMap(([topic, variants]) => variants.map((variant, index) => [
+    `${topic === "pdsa-act" ? "question.quality-improvement.pdsa-act-and-iterate" : `question.statistics-ethics.${topic}`}.v${index + 1}`,
+    variant.clinicalAnchor,
+  ])),
+) as Record<string, ClinicalAnchorKey>;
+
+// Editorial registry: repeated premises share one key across diagnoses.
+export const RESEARCH_PREMISES = {
+  "compression-device": {
+    "label": "Compression device",
+    "kind": "device"
+  },
+  "topical-agent": {
+    "label": "Topical wound or skin agent",
+    "kind": "drug"
+  },
+  "burn-dressing": {
+    "label": "Burn cooling dressing",
+    "kind": "device"
+  },
+  "abscess-irrigator": {
+    "label": "Abscess irrigation instrument",
+    "kind": "device"
+  },
+  "pilonidal-excision": {
+    "label": "Pilonidal excision or closure technique",
+    "kind": "technique"
+  },
+  "donor-dressing": {
+    "label": "Skin-graft donor-site dressing",
+    "kind": "device"
+  },
+  "offloading-device": {
+    "label": "Diabetic-ulcer offloading device",
+    "kind": "device"
+  },
+  "scar-agent": {
+    "label": "Injectable scar preparation",
+    "kind": "drug"
+  },
+  "abscess-drain": {
+    "label": "Abscess drainage adjunct",
+    "kind": "device"
+  },
+  "ventilation": {
+    "label": "Ventilation technique for ARDS",
+    "kind": "technique"
+  },
+  "achalasia-endoscopy": {
+    "label": "Endoscopic technique for achalasia",
+    "kind": "technique"
+  },
+  "prokinetic": {
+    "label": "Gastric motility agent",
+    "kind": "drug"
+  },
+  "wrist-brace": {
+    "label": "Wrist-bracing device",
+    "kind": "device"
+  },
+  "nerve-block": {
+    "label": "Targeted nerve-block delivery device",
+    "kind": "device"
+  },
+  "thyroid-agent": {
+    "label": "Thyroid-directed agent",
+    "kind": "drug"
+  },
+  "calcium-agent": {
+    "label": "Calcium-lowering agent",
+    "kind": "drug"
+  },
+  "neck-biopsy": {
+    "label": "Neck needle-biopsy technique",
+    "kind": "technique"
+  },
+  "elbow-brace": {
+    "label": "Elbow-bracing device",
+    "kind": "device"
+  },
+  "appendix-technique": {
+    "label": "Appendectomy technique",
+    "kind": "technique"
+  },
+  "gallbladder-instrument": {
+    "label": "Gallbladder dissection instrument",
+    "kind": "device"
+  },
+  "anal-radiation": {
+    "label": "Anal-cancer radiation delivery device",
+    "kind": "device"
+  },
+  "carotid-monitor": {
+    "label": "Carotid-operation monitoring device",
+    "kind": "device"
+  },
+  "gist-instrument": {
+    "label": "GIST resection instrument",
+    "kind": "device"
+  },
+  "prolapse-fixation": {
+    "label": "Rectal-prolapse fixation technique",
+    "kind": "technique"
+  },
+  "early-pregnancy-pathway": {
+    "label": "Early-pregnancy diagnostic pathway",
+    "kind": "care pathway"
+  },
+  "barrier-film": {
+    "label": "Skin barrier film for contact dermatitis",
+    "kind": "device"
+  },
+  "hernia-reinforcement": {
+    "label": "Hernia reinforcement material or technique",
+    "kind": "device"
+  },
+  "oncology-biologic": {
+    "label": "Cancer recurrence-prevention biologic",
+    "kind": "drug"
+  },
+  "hemostasis-device": {
+    "label": "Endoscopic hemostasis device",
+    "kind": "device"
+  },
+  "reflux-test": {
+    "label": "Wearable reflux assessment device",
+    "kind": "test"
+  },
+  "cyst-dissection": {
+    "label": "Thyroglossal-cyst dissection technique",
+    "kind": "technique"
+  },
+  "calf-stimulation": {
+    "label": "Calf-stimulation device",
+    "kind": "device"
+  },
+  "anesthesia-monitor": {
+    "label": "Anesthesia monitoring sensor",
+    "kind": "device"
+  },
+  "blood-test": {
+    "label": "Diagnostic or screening blood test",
+    "kind": "test"
+  },
+  "breath-test": {
+    "label": "Active-infection breath test",
+    "kind": "test"
+  },
+  "optical-test": {
+    "label": "Optical skin-lesion test",
+    "kind": "test"
+  },
+  "urine-test": {
+    "label": "Urinary adrenal-disease assay",
+    "kind": "test"
+  },
+  "anastomosis": {
+    "label": "Bowel anastomosis technique or instrument",
+    "kind": "technique"
+  },
+  "ulcer-agent": {
+    "label": "Marginal-ulcer protective agent",
+    "kind": "drug"
+  },
+  "pleural-device": {
+    "label": "Pleural recurrence-prevention device",
+    "kind": "device"
+  },
+  "pancreatic-radiation": {
+    "label": "Pancreatic-cancer radiation delivery technique",
+    "kind": "technique"
+  },
+  "lymphoma-agent": {
+    "label": "Gastric lymphoma recurrence-prevention agent",
+    "kind": "drug"
+  },
+  "dcis-device": {
+    "label": "Local DCIS treatment device",
+    "kind": "device"
+  },
+  "hepatic-instrument": {
+    "label": "Hepatic resection instrument",
+    "kind": "device"
+  },
+  "celiac-pathway": {
+    "label": "Dietitian care pathway for celiac disease",
+    "kind": "care pathway"
+  },
+  "nutrition-pathway": {
+    "label": "Nutrition care pathway for gastroparesis",
+    "kind": "care pathway"
+  },
+  "rehydration-device": {
+    "label": "Ileostomy rehydration delivery device",
+    "kind": "device"
+  },
+  "hs-dressing": {
+    "label": "Hidradenitis dressing device",
+    "kind": "device"
+  },
+  "lung-program": {
+    "label": "Lung-cancer screening program",
+    "kind": "screening program"
+  },
+  "barrett-test": {
+    "label": "Optical Barrett-esophagus study test",
+    "kind": "test"
+  },
+  "desmoid-agent": {
+    "label": "Desmoid-tumor study agent",
+    "kind": "drug"
+  },
+  "anemia-pathway": {
+    "label": "Perioperative anemia assessment pathway",
+    "kind": "care pathway"
+  },
+  "reflux-delivery": {
+    "label": "Reflux treatment delivery device",
+    "kind": "device"
+  },
+  "carpal-pathway": {
+    "label": "Wrist-bracing care pathway",
+    "kind": "care pathway"
+  }
+} as const;
+export const RESEARCH_PREMISE_BY_QUESTION: Record<string, keyof typeof RESEARCH_PREMISES | null> = {
+  "question.statistics-ethics.independent-t.v1": "compression-device",
+  "question.statistics-ethics.independent-t.v2": "topical-agent",
+  "question.statistics-ethics.independent-t.v3": "burn-dressing",
+  "question.statistics-ethics.independent-t.v4": "topical-agent",
+  "question.statistics-ethics.paired-t.v1": "topical-agent",
+  "question.statistics-ethics.paired-t.v2": "abscess-irrigator",
+  "question.statistics-ethics.paired-t.v3": "pilonidal-excision",
+  "question.statistics-ethics.paired-t.v4": "donor-dressing",
+  "question.statistics-ethics.one-way-anova.v1": "offloading-device",
+  "question.statistics-ethics.one-way-anova.v2": "scar-agent",
+  "question.statistics-ethics.one-way-anova.v3": "abscess-drain",
+  "question.statistics-ethics.one-way-anova.v4": "ventilation",
+  "question.statistics-ethics.rank-sum.v1": "achalasia-endoscopy",
+  "question.statistics-ethics.rank-sum.v2": "prokinetic",
+  "question.statistics-ethics.rank-sum.v3": "wrist-brace",
+  "question.statistics-ethics.rank-sum.v4": "nerve-block",
+  "question.statistics-ethics.signed-rank.v1": "thyroid-agent",
+  "question.statistics-ethics.signed-rank.v2": "calcium-agent",
+  "question.statistics-ethics.signed-rank.v3": "neck-biopsy",
+  "question.statistics-ethics.signed-rank.v4": "elbow-brace",
+  "question.statistics-ethics.chi-square.v1": "appendix-technique",
+  "question.statistics-ethics.chi-square.v2": "gallbladder-instrument",
+  "question.statistics-ethics.chi-square.v3": "anal-radiation",
+  "question.statistics-ethics.chi-square.v4": "carotid-monitor",
+  "question.statistics-ethics.fisher-exact.v1": "gist-instrument",
+  "question.statistics-ethics.fisher-exact.v2": "prolapse-fixation",
+  "question.statistics-ethics.fisher-exact.v3": "early-pregnancy-pathway",
+  "question.statistics-ethics.fisher-exact.v4": "barrier-film",
+  "question.statistics-ethics.study-design.v1": "hernia-reinforcement",
+  "question.statistics-ethics.study-design.v2": "oncology-biologic",
+  "question.statistics-ethics.study-design.v3": "hemostasis-device",
+  "question.statistics-ethics.study-design.v4": "reflux-test",
+  "question.statistics-ethics.bias-confounding.v1": "hernia-reinforcement",
+  "question.statistics-ethics.bias-confounding.v2": "cyst-dissection",
+  "question.statistics-ethics.bias-confounding.v3": "calf-stimulation",
+  "question.statistics-ethics.bias-confounding.v4": "anesthesia-monitor",
+  "question.statistics-ethics.sensitivity-specificity.v1": "blood-test",
+  "question.statistics-ethics.sensitivity-specificity.v2": "breath-test",
+  "question.statistics-ethics.sensitivity-specificity.v3": "optical-test",
+  "question.statistics-ethics.sensitivity-specificity.v4": "blood-test",
+  "question.statistics-ethics.predictive-value-prevalence.v1": "optical-test",
+  "question.statistics-ethics.predictive-value-prevalence.v2": "blood-test",
+  "question.statistics-ethics.predictive-value-prevalence.v3": "blood-test",
+  "question.statistics-ethics.predictive-value-prevalence.v4": "urine-test",
+  "question.statistics-ethics.risk-ratio-odds-ratio.v1": "gallbladder-instrument",
+  "question.statistics-ethics.risk-ratio-odds-ratio.v2": "anastomosis",
+  "question.statistics-ethics.risk-ratio-odds-ratio.v3": "oncology-biologic",
+  "question.statistics-ethics.risk-ratio-odds-ratio.v4": "ulcer-agent",
+  "question.statistics-ethics.arr-nnt.v1": "oncology-biologic",
+  "question.statistics-ethics.arr-nnt.v2": "topical-agent",
+  "question.statistics-ethics.arr-nnt.v3": "pleural-device",
+  "question.statistics-ethics.arr-nnt.v4": "oncology-biologic",
+  "question.statistics-ethics.p-value.v1": "gallbladder-instrument",
+  "question.statistics-ethics.p-value.v2": "prolapse-fixation",
+  "question.statistics-ethics.p-value.v3": "lymphoma-agent",
+  "question.statistics-ethics.p-value.v4": "anastomosis",
+  "question.statistics-ethics.confidence-interval.v1": "hernia-reinforcement",
+  "question.statistics-ethics.confidence-interval.v2": "pilonidal-excision",
+  "question.statistics-ethics.confidence-interval.v3": "abscess-drain",
+  "question.statistics-ethics.confidence-interval.v4": "oncology-biologic",
+  "question.statistics-ethics.errors-power.v1": "dcis-device",
+  "question.statistics-ethics.errors-power.v2": "hepatic-instrument",
+  "question.statistics-ethics.errors-power.v3": "pancreatic-radiation",
+  "question.statistics-ethics.errors-power.v4": "topical-agent",
+  "question.quality-improvement.pdsa-act-and-iterate.v1": "celiac-pathway",
+  "question.quality-improvement.pdsa-act-and-iterate.v2": "compression-device",
+  "question.quality-improvement.pdsa-act-and-iterate.v3": "nutrition-pathway",
+  "question.quality-improvement.pdsa-act-and-iterate.v4": "carpal-pathway",
+  "question.statistics-ethics.qi-measures.v1": "rehydration-device",
+  "question.statistics-ethics.qi-measures.v2": "hs-dressing",
+  "question.statistics-ethics.qi-measures.v3": "pleural-device",
+  "question.statistics-ethics.qi-measures.v4": "lung-program",
+  "question.statistics-ethics.qualified-interpreter.v1": null,
+  "question.statistics-ethics.qualified-interpreter.v2": null,
+  "question.statistics-ethics.qualified-interpreter.v3": null,
+  "question.statistics-ethics.qualified-interpreter.v4": null,
+  "question.statistics-ethics.informed-consent.v1": null,
+  "question.statistics-ethics.informed-consent.v2": null,
+  "question.statistics-ethics.informed-consent.v3": null,
+  "question.statistics-ethics.informed-consent.v4": null,
+  "question.statistics-ethics.capacity-refusal.v1": null,
+  "question.statistics-ethics.capacity-refusal.v2": null,
+  "question.statistics-ethics.capacity-refusal.v3": null,
+  "question.statistics-ethics.capacity-refusal.v4": null,
+  "question.statistics-ethics.surrogate-decisions.v1": null,
+  "question.statistics-ethics.surrogate-decisions.v2": null,
+  "question.statistics-ethics.surrogate-decisions.v3": null,
+  "question.statistics-ethics.surrogate-decisions.v4": null,
+  "question.statistics-ethics.perioperative-dnr.v1": null,
+  "question.statistics-ethics.perioperative-dnr.v2": null,
+  "question.statistics-ethics.perioperative-dnr.v3": null,
+  "question.statistics-ethics.perioperative-dnr.v4": null,
+  "question.statistics-ethics.error-disclosure.v1": null,
+  "question.statistics-ethics.error-disclosure.v2": null,
+  "question.statistics-ethics.error-disclosure.v3": null,
+  "question.statistics-ethics.error-disclosure.v4": null,
+  "question.statistics-ethics.impaired-colleague.v1": null,
+  "question.statistics-ethics.impaired-colleague.v2": null,
+  "question.statistics-ethics.impaired-colleague.v3": null,
+  "question.statistics-ethics.impaired-colleague.v4": null,
+  "question.statistics-ethics.research-consent.v1": "oncology-biologic",
+  "question.statistics-ethics.research-consent.v2": "barrett-test",
+  "question.statistics-ethics.research-consent.v3": "desmoid-agent",
+  "question.statistics-ethics.research-consent.v4": "topical-agent",
+  "question.statistics-ethics.qi-versus-research.v1": "anemia-pathway",
+  "question.statistics-ethics.qi-versus-research.v2": "reflux-delivery",
+  "question.statistics-ethics.qi-versus-research.v3": null,
+  "question.statistics-ethics.qi-versus-research.v4": "anesthesia-monitor",
+  "question.statistics-ethics.confidentiality.v1": null,
+  "question.statistics-ethics.confidentiality.v2": null,
+  "question.statistics-ethics.confidentiality.v3": null,
+  "question.statistics-ethics.confidentiality.v4": null,
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v1": null,
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v2": null,
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v3": null,
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v4": null,
+  "question.pediatric-clinic.child-asks-about-examination.v1": null,
+  "question.pediatric-clinic.child-wants-plan-explained.v2": null
 };

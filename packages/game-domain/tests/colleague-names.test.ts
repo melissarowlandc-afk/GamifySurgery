@@ -56,15 +56,16 @@ describe("owner-requested colleague Easter-egg names", () => {
   ("uses the configured rate for age %i, %s (%s)", (ageYears, sexLabel, group) => {
     let selected = 0;
     const seen = new Set<string>();
-    for (let index = 0; index < 10_000; index++) {
+    const drawCount = 50_000;
+    for (let index = 0; index < drawCount; index++) {
       const name = selectColleagueDisplayName(`rate.${index}`, `actor.${index}`, { ageYears, sexLabel });
       if (!name) continue;
       selected++; seen.add(name);
       expect(COLLEAGUE_NAMES.find(n => `${n.given} ${n.family}` === name)).toMatchObject({ group, sex: sexLabel.toLowerCase() });
     }
-    expect(COLLEAGUE_NAME_EDITORIAL_WEIGHT).toBe(0.05);
-    expect(selected / 10_000).toBeGreaterThan(COLLEAGUE_NAME_EDITORIAL_WEIGHT - 0.01);
-    expect(selected / 10_000).toBeLessThan(COLLEAGUE_NAME_EDITORIAL_WEIGHT + 0.01);
+    expect(COLLEAGUE_NAME_EDITORIAL_WEIGHT).toBe(0.01);
+    expect(selected / drawCount).toBeGreaterThan(COLLEAGUE_NAME_EDITORIAL_WEIGHT - 0.0015);
+    expect(selected / drawCount).toBeLessThan(COLLEAGUE_NAME_EDITORIAL_WEIGHT + 0.0015);
     expect(seen.size).toBe(COLLEAGUE_NAMES.filter(n => n.group === group && n.sex === sexLabel.toLowerCase()).length);
   });
 

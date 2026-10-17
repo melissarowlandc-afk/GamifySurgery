@@ -7393,3 +7393,5 @@ refresh is the next lane. Opening paths stay `START_GAME.cmd` -> exact
 (`location.origin = http://127.0.0.1:4173`) and the canonical remote
 `https://melissarowlandc-afk.github.io/GamifySurgery/`; their saves remain separate.
 No owner pathway or served build was changed by this worker.
+
+Owner follow-up (2026-10-16): reduced the colleague editorial rate to **0.01** and tightened the seeded rate check to 50,000 draws per compatible sex/group (±0.0015); focused colleague tests **18/18 PASS** and root typecheck **PASS**.

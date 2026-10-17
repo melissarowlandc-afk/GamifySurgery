@@ -2475,3 +2475,5 @@ Manager next action / acceptance limitation:
 - Review/backup/publication remain the manager's lane. LOCAL ONLY: no GitHub
   backup or publication of the colleague pool exists yet. Manager owns the
   **"push to GitHub"** reminder/checkpoint under the owner's existing direction.
+- 2026-10-16: colleague name pool published. origin/main = c08e9bff (accepted name pool + Level 5 evidence rebind 2; manager reran game-domain 4245 passed/2 skipped, player 2166 passed, typecheck clean, Level 5 e2e 100 + 8 rerun after QA-server warm-up). Pages run 38982127152 succeeded; live site shows invitation-only sign-in without page errors.
+- 2026-10-16 owner: colleague names should be "more of a treat" -> manager sets COLLEAGUE_NAME_EDITORIAL_WEIGHT to 0.01. Owner closed both test items (feedback 2974dcf7 -> done). Closing the test question flag failed: service_role lacks EXECUTE on the flag-validation function `valid_flag_choices` (fold a grant into the next owner-run SQL).

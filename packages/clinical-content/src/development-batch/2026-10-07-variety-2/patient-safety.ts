@@ -1,6 +1,9 @@
 import { buildFamily } from "./family-builder";
 import { variants } from "./spec-utils";
 import { REMAINING10_SOURCES as S } from "./source-catalog-remaining10";
+import { CLINICAL_ANCHORS } from "../2026-09-29-statistics-ethics/statistics-variants";
+
+export const SAFETY_CLINICAL_ANCHOR_KEYS = ["foreign-body", "transplant", "asplenia", "allergy-label"] as const;
 
 const RCA = "claim.gs028f.safety.rca-retrospective";
 const FMEA = "claim.gs028f.safety.fmea-prospective";
@@ -8,12 +11,12 @@ const FMEA = "claim.gs028f.safety.fmea-prospective";
 const safetyVariants = variants([
   {
     "slug": "wrong-medicine-close-call",
-    "complaint": "Medication handoff review",
-    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, comes for follow-up after an outside procedure. Another person's medication bag was nearly handed over at discharge, but the mismatch was caught. The center is reconstructing that particular event and examining identification and handoff processes. The patient has received a letter about the review and asks what kind of investigation the center is conducting.",
-    "stem": "Which safety method fits reconstruction of {patientName}'s completed medication-handoff close call and its contributing systems problems?",
+    "complaint": "Referral close-call review",
+    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, returns after hospital removal of a sharp esophageal foreign body. During referral, an emergency request nearly entered a routine queue, but the mismatch was caught before delay. The hospital is reconstructing that close call and examining referral and handoff processes. The patient brings its letter and asks what kind of investigation is underway.",
+    "stem": "Which safety method fits reconstruction of {patientName}'s completed emergency-referral close call and its contributing systems problems?",
     "correct": [
       "Root cause analysis",
-      "The review starts with a specific completed close call and reconstructs how identification and handoff systems contributed. That is the retrospective purpose of RCA."
+      "The review starts with a specific completed close call and reconstructs how referral-priority and handoff systems contributed. That is the retrospective purpose of RCA."
     ],
     "wrong": [
       [
@@ -22,7 +25,7 @@ const safetyVariants = variants([
       ],
       [
         "Individual performance audit",
-        "The described review examines contributing identification and handoff systems. An individual performance judgment alone does not describe that event-centered systems purpose."
+        "The described review examines contributing referral-priority and handoff systems. An individual performance judgment alone does not describe that event-centered systems purpose."
       ],
       [
         "Patient satisfaction survey",
@@ -32,7 +35,8 @@ const safetyVariants = variants([
     "explanation": "This is root cause analysis: reconstruction of a completed close call to identify systems contributors. The review is retrospective, rather than a prospective assessment of possible future failures.",
     "claims": [
       "claim.gs028f.safety.rca-retrospective",
-      "claim.gs028f.safety.fmea-prospective"
+      "claim.gs028f.safety.fmea-prospective",
+      "claim.gs028f.foreign-body.sharp-esophageal-emergency"
     ],
     "ageYears": [
       40,
@@ -45,9 +49,9 @@ const safetyVariants = variants([
   },
   {
     "slug": "future-handoff",
-    "complaint": "Discharge-process questions",
-    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, is preparing for care at an outside procedural center. The center plans a new discharge-medication handoff and has not started using it. Its safety team will examine each step for possible failures and consider safeguards in advance. The patient asks about the review mentioned in the center's letter before the planned care visit.",
-    "stem": "Which safety method fits advance assessment of possible failures in {patientName}'s planned discharge-medication handoff process?",
+    "complaint": "Planned transplant handoff",
+    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has a renal allograft and is attending follow-up. The hospital plans a new immunosuppression handoff that has not started. Its safety team will examine process steps for potential failures and consider safeguards in advance. The patient brings the notice and asks about the review before the medication-coordination workflow is introduced locally.",
+    "stem": "Which safety method fits advance assessment of possible failures in {patientName}'s planned immunosuppression handoff process?",
     "correct": [
       "Healthcare FMEA",
       "The team is anticipating ways a process might fail before using it. That prospective process-centered task fits healthcare FMEA."
@@ -69,7 +73,9 @@ const safetyVariants = variants([
     "explanation": "Healthcare FMEA fits the prospective assessment of possible handoff failures before the workflow starts. The starting point is a planned process, not a completed event to reconstruct.",
     "claims": [
       "claim.gs028f.safety.rca-retrospective",
-      "claim.gs028f.safety.fmea-prospective"
+      "claim.gs028f.safety.fmea-prospective",
+      "claim.gs028f.transplant.different-human",
+      "claim.gs028f.tacrolimus.t-cell-activation"
     ],
     "ageYears": [
       33,
@@ -82,9 +88,9 @@ const safetyVariants = variants([
   },
   {
     "slug": "delayed-report-purpose",
-    "complaint": "Delayed report review",
-    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, brings an outside center's completed investigation after a biopsy report reached the wrong inbox and follow-up was delayed. The document calls the review root cause analysis and discusses the reporting and handoff systems involved. The patient asks what that label means before discussing the center's findings and the proposed changes at today's follow-up visit.",
-    "stem": "What is root cause analysis intended to assess in {patientName}'s completed delayed-report event?",
+    "complaint": "Delayed fever assessment",
+    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, returns after hospital assessment of fever with asplenia. A message reached the wrong inbox and urgent assessment was delayed. Current care is arranged. The completed investigation, labeled root cause analysis, examines message-routing and escalation systems. The patient asks what that label means before discussing the findings from the hospital's review.",
+    "stem": "What is root cause analysis intended to assess in {patientName}'s completed delayed-message event?",
     "correct": [
       "Reconstruct the event and its systems contributors",
       "RCA works backward from the completed routing event to examine how systems contributed. It is broader than assigning an individual performance verdict."
@@ -96,17 +102,18 @@ const safetyVariants = variants([
       ],
       [
         "Compare satisfaction scores across completed clinic visits",
-        "Comparing satisfaction does not reconstruct the delayed-report event or identify its contributing systems problems. It answers a different review question."
+        "Comparing satisfaction does not reconstruct the delayed-message event or identify its contributing systems problems. It answers a different review question."
       ],
       [
         "Judge an individual worker's performance in isolation",
         "Individual blame is not RCA's central purpose. Restricting the review to one worker leaves its contributing systems question unanswered."
       ]
     ],
-    "explanation": "RCA reconstructs the completed delayed-report event and examines systems contributors. It does not primarily forecast a new workflow or decide blame for one worker in isolation.",
+    "explanation": "RCA reconstructs the completed delayed-message event and examines systems contributors. It does not primarily forecast a new workflow or decide blame for one worker in isolation.",
     "claims": [
       "claim.gs028f.safety.rca-retrospective",
-      "claim.gs028f.safety.fmea-prospective"
+      "claim.gs028f.safety.fmea-prospective",
+      "claim.asplenia.fever-immediate-emergency-care"
     ],
     "ageYears": [
       47,
@@ -119,31 +126,33 @@ const safetyVariants = variants([
   },
   {
     "slug": "fmea-question",
-    "complaint": "Labeling-process questions",
-    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, asks about an outside clinic's safety meeting before a planned specimen-labeling workflow starts. The team says it is using healthcare FMEA and plans to examine possible failures in each step. No completed labeling event is being reconstructed. The patient has brought the meeting notice and asks what the planned review is intended to do.",
-    "stem": "Which discussion focus fits healthcare FMEA of the planned specimen-labeling workflow that {patientName} asks about?",
+    "complaint": "Allergy-record review",
+    "presentation": "{patientName}, a {patientAge}-year-old {patientSex}, has an unverified penicillin-allergy label and is discussing the original reaction history. The center will introduce a new allergy-record workflow. Its safety team announces healthcare FMEA and will examine possible failures before launch. The patient brings the notice and asks about its purpose; no completed recording event prompted this review.",
+    "stem": "Which discussion focus fits healthcare FMEA of the planned allergy-record workflow that {patientName} asks about?",
     "correct": [
       "Potential failures before a problem occurs",
       "Healthcare FMEA examines how the planned process could fail before those problems occur. It does not require a completed event as its starting point."
     ],
     "wrong": [
       [
-        "Contributors to a completed labeling event",
+        "Contributors to a completed allergy-recording event",
         "That focus starts with a past event and fits the retrospective purpose of RCA. The described meeting is about a planned workflow."
       ],
       [
-        "Individual blame for a completed labeling error",
+        "Individual blame for a completed allergy-recording error",
         "Blame for a past error neither describes the prospective process task nor supplies its focus on potential failures."
       ],
       [
-        "Prior patients' satisfaction with the labeling encounter",
+        "Prior patients' satisfaction with the allergy-recording encounter",
         "Satisfaction may be another question, but it does not describe healthcare FMEA's stated task of anticipating potential process failures."
       ]
     ],
-    "explanation": "Focus on potential failures before the labeling workflow starts. That prospective process purpose defines the healthcare FMEA task described here, without requiring a previous labeling error.",
+    "explanation": "Focus on potential failures before the allergy-recording workflow starts. That prospective process purpose defines the healthcare FMEA task described here, without requiring a previous allergy-recording error.",
     "claims": [
       "claim.gs028f.safety.rca-retrospective",
-      "claim.gs028f.safety.fmea-prospective"
+      "claim.gs028f.safety.fmea-prospective",
+      "claim.variety3.allergy.label-not-confirmation",
+      "claim.variety3.allergy.characterize-reaction"
     ],
     "ageYears": [
       29,
@@ -156,7 +165,7 @@ const safetyVariants = variants([
   }
 ]);
 
-// Wording revision: 2026-10-15, round 2 Phase 2A.
+// Wording revision: 2026-10-16, round 3 revision 1 diverse clinical anchors.
 const family = buildFamily({
   slug: "patient-safety", label: "Which safety review fits?", sources: [S.rca, S.fmea],
   claims: [
@@ -173,10 +182,10 @@ const family = buildFamily({
 // This batch's older builder does not forward teachingPoint. Attach the existing
 // optional field locally to both authoring questions and runtime nodes.
 const lessons: Record<string, string> = {
-  "question.gs028f.outcomes.rca-versus-fmea-purpose.v1": "Root cause analysis starts with an event or close call that already happened and reconstructs contributing systems problems. Here the medication handoff is the starting event. Remember: start with what happened and examine how the process contributed. Healthcare FMEA instead looks ahead for possible process failures; neither label is a verdict of individual blame.",
-  "question.gs028f.outcomes.rca-versus-fmea-purpose.v2": "Healthcare FMEA looks ahead at a process to identify potential failures before those problems occur. Here the planned discharge handoff is being examined before use. Remember the starting point: a process to anticipate, rather than an event to reconstruct. That purpose differs from retrospective RCA and does not guarantee that all risk will disappear.",
-  "question.gs028f.outcomes.rca-versus-fmea-purpose.v3": "An RCA label identifies a retrospective systems question: what happened in this event, and which process problems contributed? The delayed routing event is its starting point. Remember to look beyond a worker in isolation. The method's purpose does not, by itself, establish legal liability, assign individual blame, or guarantee that improvement has occurred.",
-  "question.gs028f.outcomes.rca-versus-fmea-purpose.v4": "Healthcare FMEA asks how a planned process might fail before those problems occur. This meeting therefore focuses on potential labeling failures, rather than reconstructing a past event. Remember: look ahead at the process. That is a method classification, not a promise of zero risk or a complete set of scoring and safeguard instructions."
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v1": "Root cause analysis starts with an event or close call that already happened and reconstructs contributing systems problems. Here the referral handoff is the starting event. Remember: start with what happened and examine how the process contributed. Healthcare FMEA instead looks ahead for possible process failures; neither label is a verdict of individual blame.",
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v2": "Healthcare FMEA looks ahead at a process to identify potential failures before those problems occur. Here the planned immunosuppression handoff is being examined before use. Remember the starting point: a process to anticipate, rather than an event to reconstruct. That purpose differs from retrospective RCA and does not guarantee that all risk will disappear.",
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v3": "An RCA label identifies a retrospective systems question: what happened in this event, and which process problems contributed? The delayed message event is its starting point. Remember to look beyond a worker in isolation. The method's purpose does not, by itself, establish legal liability, assign individual blame, or guarantee that improvement has occurred.",
+  "question.gs028f.outcomes.rca-versus-fmea-purpose.v4": "Healthcare FMEA asks how a planned process might fail before those problems occur. This meeting therefore focuses on potential allergy-recording failures, rather than reconstructing a past event. Remember: look ahead at the process. That is a method classification, not a promise of zero risk or a complete set of scoring and safeguard instructions."
 };
 const choiceRationales = new Map(safetyVariants.flatMap(variant => [variant.correct, ...variant.distractors]).map(choice => [choice.id, choice.rationale]));
 export const PATIENT_SAFETY_FAMILY = {
@@ -188,10 +197,12 @@ export const PATIENT_SAFETY_FAMILY = {
       distractorRationale: choice.isCorrect ? null : choiceRationales.get(choice.id)!,
     })),
   })),
-  cases: family.cases.map(clinicalCase => ({
+  cases: family.cases.map((clinicalCase, index) => ({
     ...clinicalCase,
+    sourceLabels: [...new Set([...clinicalCase.sourceLabels, ...CLINICAL_ANCHORS[SAFETY_CLINICAL_ANCHOR_KEYS[index]!].sourceLabels])],
     decisionNodes: clinicalCase.decisionNodes.map(node => ({
       ...node, teachingPoint: lessons[node.questionVariantId]!,
+      sourceLabels: [...new Set([...node.sourceLabels, ...CLINICAL_ANCHORS[SAFETY_CLINICAL_ANCHOR_KEYS[index]!].sourceLabels])],
       answerChoices: node.answerChoices.map(choice => ({ ...choice, rationale: choiceRationales.get(choice.id)! })),
     })),
   })),

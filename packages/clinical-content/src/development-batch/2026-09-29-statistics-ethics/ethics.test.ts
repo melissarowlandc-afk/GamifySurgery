@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { syntheticClinicalCaseSchema } from "../../schema";
 import { ETHICS_FAMILIES } from "./ethics";
+import { EXISTING_ANCHOR_CLAIMS, EXISTING_ANCHOR_SOURCES } from "./clinical-anchor-test-catalog";
 
 const cases = ETHICS_FAMILIES.flatMap((family) => family.cases);
 const questions = ETHICS_FAMILIES.flatMap((family) => family.questions);
-const claimsById = new Map(ETHICS_FAMILIES.flatMap((family) => family.claims).map((claim) => [claim.id, claim]));
-const sources = ETHICS_FAMILIES.flatMap((family) => family.sources);
+const claimsById = new Map([...ETHICS_FAMILIES.flatMap((family) => family.claims), ...EXISTING_ANCHOR_CLAIMS].map((claim) => [claim.id, claim]));
+const sources = [...ETHICS_FAMILIES.flatMap((family) => family.sources), ...EXISTING_ANCHOR_SOURCES];
 
 describe("GS028 patient-centered ethics overhaul", () => {
   it("retains ten concepts and forty questions in thirty-six patient cases", () => {
@@ -73,8 +74,12 @@ describe("GS028 patient-centered ethics overhaul", () => {
         for (const id of authored.supportingEvidenceClaimIds) {
           const claim = claimsById.get(id);
           expect(claim, `${authored.id}: unresolved evidence ${id}`).toBeDefined();
-          expect(claim!.reviewStatus).toBe("needs_clinician_review");
-          expect(claim!.lastCheckedOn).toBe("2026-09-29");
+          if (id.startsWith("claim.gs028se.")) expect(claim!.reviewStatus).toBe("needs_clinician_review");
+          else if (claim!.reviewStatus === "clinically_approved") {
+            expect(claim!.lastClinicianReview?.reviewer).toBeTruthy();
+          } else expect(claim!.reviewStatus).toBe("needs_clinician_review");
+          if (id.startsWith("claim.gs028se.")) expect(claim!.lastCheckedOn).toBe("2026-09-29");
+          else expect(claim!.lastCheckedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
           expect(claim!.sourceIds.length).toBeGreaterThan(0);
           for (const sourceId of claim!.sourceIds) {
             expect(sources.some((source) => source.id === sourceId && source.evidenceClaimIds.includes(id)), `${id}: missing reciprocal source ${sourceId}`).toBe(true);

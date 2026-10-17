@@ -1,7 +1,9 @@
 import { buildFamily, type ConceptSpec } from "./batch-helpers";
 import { labelsForClaims } from "./evidence-claims";
 
-// Wording revision: 2026-10-15, round 2 Phase 2A. Constrained child and parent identities retained.
+export const ASSENT_CLINICAL_ANCHOR_KEYS = ["child-groin", "child-node"] as const;
+
+// Wording revision: 2026-10-16, round 3 revision 1 diverse clinical anchors. Constrained child and parent identities retained.
 const specs: ConceptSpec[] = [
   {
     "id": "concept.pediatric-clinic.developmental-assent-discussion",
@@ -22,9 +24,9 @@ const specs: ConceptSpec[] = [
         "artProfile": "girl6",
         "parentName": "Susan Walker",
         "parentRelationship": "mother",
-        "chiefComplaint": "Examination questions",
-        "findings": "At this nonurgent examination visit, Lily asks what will happen. Susan agrees to the examination. 'Does Mum get homework for this visit too?' Lily asks. The clinician has time to explain before starting.",
-        "stem": "Which communication approach should be used before Lily Walker's nonurgent examination when her mother agrees but Lily has questions?",
+        "chiefComplaint": "Groin-examination questions",
+        "findings": "An intermittent groin bulge prompts nonurgent hernia assessment. Lily asks what the examination involves. 'Mum has already answered, but she hasn't done the examining,' she says. Susan agrees; there is time to explain.",
+        "stem": "Which communication approach should be used before Lily Walker's nonurgent groin examination when her mother agrees but Lily has questions?",
         "choices": [
           {
             "slug": "include",
@@ -70,7 +72,9 @@ const specs: ConceptSpec[] = [
         "evidence": {
           "presentation": [
             "claim.pediatric-clinic.developmentally-appropriate-information",
-            "claim.pediatric-clinic.invite-child-participation-and-assent"
+            "claim.pediatric-clinic.invite-child-participation-and-assent",
+            "claim.pediatric-clinic.dynamic-groin-bulge",
+            "claim.pediatric-clinic.clinical-groin-hernia-referral"
           ],
           "stem": [
             "claim.pediatric-clinic.developmentally-appropriate-information",
@@ -96,9 +100,9 @@ const specs: ConceptSpec[] = [
         "artProfile": "girl11",
         "parentName": "Thomas Anderson",
         "parentRelationship": "father",
-        "chiefComplaint": "Visit-plan questions",
-        "findings": "During this nonurgent review, Thomas has agreed to the clinic plan and done most of the talking. Ruby says, 'I don't understand what happens next. Can I ask?' There is time for discussion before the plan goes ahead.",
-        "stem": "Which approach best supports Ruby Anderson's participation before a nonurgent clinic plan she does not understand goes ahead?",
+        "chiefComplaint": "Neck-node plan questions",
+        "findings": "Ruby is well with small mobile reactive cervical nodes and no concerning findings. At this nonurgent visit, she asks what observation means and wants the plan explained to her. Thomas asks whether his agreement is enough.",
+        "stem": "Which communication approach should be used for Ruby Anderson's nonurgent neck-node observation plan when her father agrees but she wants the plan explained?",
         "choices": [
           {
             "slug": "include",
@@ -144,7 +148,9 @@ const specs: ConceptSpec[] = [
         "evidence": {
           "presentation": [
             "claim.pediatric-clinic.developmentally-appropriate-information",
-            "claim.pediatric-clinic.invite-child-participation-and-assent"
+            "claim.pediatric-clinic.invite-child-participation-and-assent",
+            "claim.pediatric-clinic.reactive-child-neck-nodes",
+            "claim.pediatric-clinic.well-child-node-observation"
           ],
           "stem": [
             "claim.pediatric-clinic.developmentally-appropriate-information",
