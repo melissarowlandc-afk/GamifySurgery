@@ -2478,3 +2478,10 @@ Manager next action / acceptance limitation:
 - 2026-10-16: colleague name pool published. origin/main = c08e9bff (accepted name pool + Level 5 evidence rebind 2; manager reran game-domain 4245 passed/2 skipped, player 2166 passed, typecheck clean, Level 5 e2e 100 + 8 rerun after QA-server warm-up). Pages run 38982127152 succeeded; live site shows invitation-only sign-in without page errors.
 - 2026-10-16 owner: colleague names should be "more of a treat" -> manager sets COLLEAGUE_NAME_EDITORIAL_WEIGHT to 0.01. Owner closed both test items (feedback 2974dcf7 -> done). Closing the test question flag failed: service_role lacks EXECUTE on the flag-validation function `valid_flag_choices` (fold a grant into the next owner-run SQL).
 - 2026-10-17: round 3 stats/ethics content + colleague names at 1% published. origin/main = 14ed058b. Release-copy validation: npm test exit 0 (player 2166, game-domain 4245 + 2 skipped, clinical 638, others green); Level 5 e2e 104/104 with no retries. Pages run 39002455167 succeeded; live sign-in page loads without page errors.
+- 2026-10-17: published b3b24bd6 (P2-E pairings, DEFECT-M9-1 fix + bounded M9-2, Level 5 garden/offsite save-load fix and inspector route determinism, evidence rebind 5, flag-validation grant migration file (not yet applied live), Beta 2 plan). Release-copy npm test exit 0 (player 2166, game-domain 4271, clinical 698, others green); Level 5 e2e 104/104 no retries. Pages run 39045354337 succeeded; live sign-in loads without page errors. GitHub now holds the full real-path source on main/release (backup).
+
+### Tester flag fix a09b77ff (2026-10-17)
+
+- Before: “Which entry misses the thiamine precaution in this patient's high-risk restart?” Key: “Withhold thiamine until new symptoms appear.”
+- After: “Which revision should replace that checklist entry for this patient's high-risk restart?” Key: “Give thiamine before nutrition restarts.”
+- Scoped to `plan-entry-audit` v4 wording and rationale; concept, claims, ID, slug, age range and clinician-review status stay the same. Level 5 evidence was not changed.

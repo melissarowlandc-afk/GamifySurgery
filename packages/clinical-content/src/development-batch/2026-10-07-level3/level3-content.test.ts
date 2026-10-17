@@ -46,7 +46,9 @@ describe("GS028 twenty level3-plus concepts",()=>{
   expect([protectedIntake.concepts.length,protectedIntake.cases.length,protectedIntake.cases.flatMap(c=>c.decisionNodes).length]).toEqual([303,900,1183]);
   // Round 3 full pass: restoring only the four RCA/FMEA cases
   // reproduces a5108ca5...; all unrelated records retain cf76b84d....
-  expect(sha(protectedIntake)).toBe("284dc7a272a79f441e834f81c33a3027587eec57d1d37929bca986c61661694c");
+  // Tester-flag fix 2026-10-17: only nutrition refeeding-thiamine v4 wording changed
+  // (release copy with the prior nutrition.ts passes 284dc7a2...).
+  expect(sha(protectedIntake)).toBe("af009e5f25adeae51e9900ad8978eb03ef821e3bd0cd97e460909c5af6be377a");
   expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1383]);
  });
  it("has unique IDs, reciprocal atomic claims/sources and explicit evidence limitations",()=>{

@@ -1,3 +1,4 @@
+import { captureBeforeGameRetirement, captureGameEvent, captureGameReceipt } from "./game-evidence-capture";
 import { advanceFacilityInspection, bookFacilityInspection, cancelFacilityInspection, observeInspectionQuestions, observeInspectionFirstAnswer, observeInspectionPatientEnd, observeInspectionReceipt, observeInspectionSettlement, observeInspectionExpensePosting } from "./facility-inspection";
 import { advanceInspectionPresentation } from "./inspection-presentation";
 import { getAverageEffectiveStaffMorale, getEmployeeEffectiveMorale } from "./level-five-support";
@@ -1742,6 +1743,7 @@ function recordReceipt(
     message,
     facilityTick: state.facilityTick,
   };
+  captureGameReceipt(state.operationReceipts[command.operationId]!);
   if (command.type === "ADVANCE_TICK") {
     const tickReceiptIds = Object.keys(state.operationReceipts).filter(
       (receiptId) =>
@@ -1781,6 +1783,7 @@ function rejectCommand(
 
 function appendEvent(state: GameState, event: DomainEvent): void {
   if (!state.events.some((existing) => existing.id === event.id)) {
+    captureGameEvent(event);
     state.events.push(event);
     if (state.events.length > MAX_TRANSIENT_EVENTS) {
       state.events.splice(0, state.events.length - MAX_TRANSIENT_EVENTS);
@@ -9097,6 +9100,7 @@ function reduceAdvanceTick(
   // Observe the settled minute before any detailed evidence can retire.
   advanceFacilityInspection(next, context);
   advanceInspectionPresentation(next, context);
+  captureBeforeGameRetirement(next);
   retireDepartedEncounters(next, context);
   retireFinishedServiceHistory(next, context);
   retireFinishedRetailHistory(next);

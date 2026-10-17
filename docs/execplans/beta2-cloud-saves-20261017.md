@@ -881,3 +881,1309 @@ Owner in chat: "Go with your recommendations." Binding:
 3. Stay on the Supabase free plan while measured usage fits; capacity warnings and a safe pause if limits approach; discuss any paid plan before purchase.
 4. Signing out keeps that account's local recovery copy on the device, with an explicit "clear this device" option and a shared-device warning.
 Manager: B2.1 dispatched 2026-10-17, concurrently with the game-domain Level 5 latent-bug worker (disjoint lanes; B2.1 reads domain only).
+
+## B2.1 handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol. **Baseline codec and offline contract ready for manager
+review; live evidence export stopped at the documented domain gap.** This is
+not acceptance of cloud gameplay, physical capacity, SQL validation or rollout.
+The binding Owner decisions above remain in effect.
+
+New files in the assigned lane:
+
+- `apps/player/src/session/cloud/codec.ts`: cloud/evidence/protocol version 1,
+  explicit baseline-only envelope/import preparation, immutable exact-byte
+  request receipts, verified hydration and capacity measurements.
+- `codecJson.ts`: bounded lossless JSON/Unicode/number checks, exact UTF-8
+  SHA-256 and independent logical equality.
+- `codecOwnership.ts`: exhaustive GameState, campaign and profile field
+  ownership; nested frozen/review/card/money/inspection contract.
+- `codecGoldenVectors.json` and `codecGoldenVectors.sql`: four pinned JS/SQL
+  vectors and a rollback-only disposable PostgreSQL assertion file.
+- `codec.test.ts`, `codec.fixtures.test.ts`, `codecTestSupport.ts`: focused
+  tests, complete fixture/migration comparisons and explicitly simulated text
+  reordering. The helper is not a PostgreSQL oracle.
+- [Short contract/gap note](beta2-b2-1-codec-notes.md).
+
+Only this appended handoff and those new files were written. Domain/session
+sources, fixtures, existing local saves, launchers, UI and server configuration
+were not edited. No Git commands, installs, network, Supabase access, agents,
+external messages, publication or deployment were used. No clinical statements,
+approval status, concept IDs, balance or FSRS meaning were authored or changed.
+The manager retains the current-thread handoff and GitHub checkpoint reminder;
+this work is local only.
+
+### Contract and fidelity result
+
+All original parsed state is retained in an immutable import baseline before
+the public deserializer normalizes it; exact source-recovery bytes/hash/size are
+returned unchanged for the caller to retain durably. The snapshot caches the
+entire supported migrated state. Load verifies both exact stored text hashes
+before parsing, checks expected campaign/baseline/revision and compares all
+logical fields to the authoritative migrated baseline. No shallow assertions
+replace full equality. Hashes do not themselves enforce server immutability.
+
+The complete request digest covers every material argument of the B2.1 import
+request. Stored JSONB canonical text requires a separately computed server
+hash; JS stringify is never compared byte-for-byte with reordered JSONB.
+Revisions stay decimal strings, including values above JS safe integer range.
+A later RPC adding writer/lifecycle/usage arguments must extend/version the
+complete-request digest and remeasure its actual transport wrapper.
+
+The suite covers all 11 planning checkpoints, existing pre-M9 Level 0-4
+synthetic saves across schemas 5-9 and their saved next-120-minute states,
+synthetic compatibility inputs for schemas 1-9, fresh levels 0-5, a recorded v1
+review-intent migration and the concurrent domain worker's serialized
+garden/offsite fixture. Full frozen content/choice order, cards/reviews and
+times, money/accrual state, operations, pins, seed/RNG inputs/counters,
+inspection state and retired summaries are compared. No fixture was changed.
+Version 1's existing domain migration reconstructs card/review projections;
+the original intents remain the baseline and the projections are explicitly
+marked as reconstructed, not observed evidence. Historical question-count
+credit is always zero; no usage receipts are minted.
+
+### Remeasured envelope sizes
+
+Decimal bytes; no compression. These receipts supersede the earlier planning
+sizes for this inspection. The integration file is now 12,538,766 bytes with
+SHA-256 `0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501`;
+the legacy/economy fixture hashes still match the earlier table. Complete
+source hashes, migration field names and per-fixture results are in the exact
+test output below.
+
+| Fixture | Compact source | Migrated game | JS envelope | Baseline evidence | B2.1 body | Reordered test envelope |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| level-four-legacy-pre-m3.json | 130,872 | 133,840 | 134,401 | 131,353 | 292,907 | 145,846 |
+| level-five-economy-checkpoint-20261012.json | 1,429,974 | 1,430,026 | 1,430,586 | 1,430,455 | 3,141,559 | 1,524,512 |
+| integration-l4 | 795,214 | 795,266 | 795,838 | 795,706 | 1,761,597 | 855,598 |
+| integration-build | 803,955 | 804,007 | 804,579 | 804,447 | 1,782,494 | 865,769 |
+| integration-preparing | 1,323,057 | 1,323,109 | 1,323,681 | 1,323,550 | 2,910,759 | 1,412,663 |
+| integration-running | 1,397,231 | 1,397,257 | 1,397,829 | 1,397,724 | 3,075,145 | 1,493,023 |
+| integration-final | 1,527,601 | 1,527,627 | 1,528,199 | 1,528,094 | 3,356,999 | 1,629,920 |
+| integration-finish | 1,513,484 | 1,513,510 | 1,514,082 | 1,513,977 | 3,321,258 | 1,612,683 |
+| integration-repeat-final | 1,724,322 | 1,724,322 | 1,724,894 | 1,724,815 | 3,774,644 | 1,833,631 |
+| integration-repeat | 1,625,220 | 1,625,220 | 1,625,792 | 1,625,713 | 3,558,810 | 1,728,545 |
+| integration-lower-repeat | 1,828,472 | 1,828,398 | 1,828,970 | 1,828,965 | 4,003,116 | 1,945,481 |
+
+All 11 JS envelopes and reordered test envelopes fit the 2,000,000-byte target
+and 3,000,000-byte ceiling. All measured B2.1 bodies fit 6,000,000 bytes.
+**Capacity failure: eight of 11 immutable baselines exceed the
+1,000,000-byte/campaign evidence allowance.** The largest is 1,828,965 bytes
+(1,945,462 in reordered test text); two such baselines exceed the
+2,000,000-byte/account evidence budget. This temporary full-fidelity layout
+counts duplicated evidence and is not eligible for rollout. No history was
+truncated to meet a budget. The 8 MB retained-snapshot account budget, actual
+canonical SQL bytes, 7 MB recovery record, real ingress wrappers, physical
+DB/index/TOAST/transient allocation and egress remain later integration gates;
+these client text measurements are not database-capacity proof.
+
+### Domain gap and manager next action
+
+Current public state contains bounded event/receipt views, retired encounter
+and service summaries, and latest/best/first inspection projections. It cannot
+export all intervening frozen episodes, exact auditable money deltas, immutable
+reviews/scored decisions and inspection attempts before retirement. Comparing
+snapshots cannot recover missing evidence. No live checkpoint encoder, invented
+ledger/history or relational delta exporter was added.
+
+After the Level 5 worker hands back, the manager must explicitly assign a
+separate domain evidence-capture/export lane with stable identities, complete
+ordered pre-retirement deltas and exact money/card reconciliation. Then assign
+the corresponding live codec mode/version and a lossless representation that
+passes the evidence budget. Do not enable this baseline-only mode as cloud play.
+
+**SQL gate pending:** no psql command was available, and database/network access
+was outside this brief. The JS side verifies four pinned expected SQL-text
+vectors; actual PostgreSQL execution is unverified. B2.2 must run
+`apps/player/src/session/cloud/codecGoldenVectors.sql` in the manager-approved
+disposable database and attach its real PASS output before accepting that gate.
+
+### Final validation: exact output
+
+From repository root, existing dependencies, final exit code **0** for each:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/cloud
+npm.cmd run typecheck
+```
+
+The preload is an absolute file URL so npm's workspace cwd change cannot resolve
+it under apps/player. The requested focused tests pass **113/113 in 2 files**;
+all **seven workspace typechecks pass**. No domain tests were required because
+this worker made no domain change; default-pool/browser/DB/hosted/phone checks
+were not run or claimed.
+
+Focused test stdout/stderr (exit 0):
+
+```text
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads src/session/cloud
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+B2.1 MEASURE {"fixture":"level-four-legacy-pre-m3.json","file":"level-four-legacy-pre-m3.json","fileBytes":194747,"fileSha256":"9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3","sourceBytes":130872,"decodedStateBytes":133840,"snapshotBytes":134401,"baselineEvidenceBytes":131353,"transportBytes":292907,"reorderedSnapshotBytes":145846,"reorderedEvidenceBytes":142518,"withinTarget":true,"capacityFailures":[],"migrationFields":["emergencyGlp1","employees","environment","learningHistories","nextExternalRetailOpportunityTick","nextServiceIncomeReceiptSequence"]}
+B2.1 MEASURE {"fixture":"level-five-economy-checkpoint-20261012.json","file":"level-five-economy-checkpoint-20261012.json","fileBytes":1429975,"fileSha256":"813572d7ecaa6ffb232b7bed92c72a14067f96927f42219750c1343b111d6582","sourceBytes":1429974,"decodedStateBytes":1430026,"snapshotBytes":1430586,"baselineEvidenceBytes":1430455,"transportBytes":3141559,"reorderedSnapshotBytes":1524512,"reorderedEvidenceBytes":1524361,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-l4","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":795214,"decodedStateBytes":795266,"snapshotBytes":795838,"baselineEvidenceBytes":795706,"transportBytes":1761597,"reorderedSnapshotBytes":855598,"reorderedEvidenceBytes":855446,"withinTarget":true,"capacityFailures":[],"migrationFields":["encounters","retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-build","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":803955,"decodedStateBytes":804007,"snapshotBytes":804579,"baselineEvidenceBytes":804447,"transportBytes":1782494,"reorderedSnapshotBytes":865769,"reorderedEvidenceBytes":865617,"withinTarget":true,"capacityFailures":[],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-preparing","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1323057,"decodedStateBytes":1323109,"snapshotBytes":1323681,"baselineEvidenceBytes":1323550,"transportBytes":2910759,"reorderedSnapshotBytes":1412663,"reorderedEvidenceBytes":1412512,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-running","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1397231,"decodedStateBytes":1397257,"snapshotBytes":1397829,"baselineEvidenceBytes":1397724,"transportBytes":3075145,"reorderedSnapshotBytes":1493023,"reorderedEvidenceBytes":1492900,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-final","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1527601,"decodedStateBytes":1527627,"snapshotBytes":1528199,"baselineEvidenceBytes":1528094,"transportBytes":3356999,"reorderedSnapshotBytes":1629920,"reorderedEvidenceBytes":1629797,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-finish","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1513484,"decodedStateBytes":1513510,"snapshotBytes":1514082,"baselineEvidenceBytes":1513977,"transportBytes":3321258,"reorderedSnapshotBytes":1612683,"reorderedEvidenceBytes":1612560,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-repeat-final","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1724322,"decodedStateBytes":1724322,"snapshotBytes":1724894,"baselineEvidenceBytes":1724815,"transportBytes":3774644,"reorderedSnapshotBytes":1833631,"reorderedEvidenceBytes":1833536,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":[]}
+B2.1 MEASURE {"fixture":"integration-repeat","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1625220,"decodedStateBytes":1625220,"snapshotBytes":1625792,"baselineEvidenceBytes":1625713,"transportBytes":3558810,"reorderedSnapshotBytes":1728545,"reorderedEvidenceBytes":1728450,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":[]}
+B2.1 MEASURE {"fixture":"integration-lower-repeat","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1828472,"decodedStateBytes":1828398,"snapshotBytes":1828970,"baselineEvidenceBytes":1828965,"transportBytes":4003116,"reorderedSnapshotBytes":1945481,"reorderedEvidenceBytes":1945462,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations","serviceOperations"]}
+
+ Test Files  2 passed (2)
+      Tests  113 passed (113)
+   Start at  11:25:47
+   Duration  26.32s (transform 9.04s, setup 0ms, import 13.01s, tests 24.07s, environment 0ms)
+```
+
+Workspace typecheck stdout/stderr (exit 0):
+
+```text
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+
+## B2.1b handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol. **Domain evidence export/import and format 2 codec delivered
+for manager review.** Existing local save behavior is preserved. Verified
+compression and sealed-page measurements address the earlier baseline
+duplication/capacity problem; this is not a server, UI or cloud rollout.
+
+### Files and public API
+
+New domain modules:
+
+- `packages/game-domain/src/game-evidence.ts`: public
+  `createGameEvidenceCheckpoint`, `applyGameEvidenceCommand`,
+  `importGameEvidence`, `exportGameEvidence` and
+  `restoreGameEvidenceImportSource`, with separate immutable archive and
+  operational snapshot types.
+- `game-evidence-json.ts`: portable lossless JSON, complete operational patches,
+  logical comparison, safe property writes and immutable value helpers.
+- `game-evidence-capture.ts`: synchronous opt-in read-only observations.
+- `packages/game-domain/tests/game-evidence.test.ts`: 21 tests covering all
+  measured fixtures, complete source recovery, real scored review/card changes,
+  money/card/pin reconciliation, inspection completion/cancellation, actual
+  retirement, receipt trimming/retries and unchanged ordinary reducer bytes.
+
+Existing domain edits are exactly one public export in `index.ts` plus four
+lines in `reducer.ts`: an import and observations before retirement, event
+trimming and operation-receipt trimming. A read-only audit removed those lines
+in memory and reproduced the starting file hashes exactly. No other recorded
+domain input changed. **`persistence.ts` is unchanged**, SHA-256
+`2489168f74e18a94f1acf86eedb9b4fd2480333527528dcd8e27d0f86dba0b50`.
+
+New player modules/tests under `apps/player/src/session/cloud/`:
+
+- `codecEvidence.ts` / `codecEvidence.test.ts`: cloud format **2**, domain
+  evidence contract **1**, request protocol **2**, immutable row/header packing,
+  verified hydration, prefix/high-water support and acknowledged evidence deltas.
+- `codecCompression.ts` / `codecCompression.test.ts`: native browser gzip/
+  deflate with immediate lossless verification and bounded streaming decode.
+- `codecEvidencePages.ts` / `codecEvidencePages.test.ts`: losslessly evaluated
+  immutable sealed-page storage candidate; no applied database schema.
+
+Existing player edits: `codec.ts` exports the shared metadata validator and
+marks format 1 import preparation deprecated; `codecOwnership.ts` points to the
+new public capture API; `codec.test.ts` retains the original assertions;
+`codecGoldenVectors.json/sql` preserve all four original vectors and add a
+format 2 reference-layout vector. The [contract note](beta2-b2-1-codec-notes.md)
+has a B2.1b amendment. This plan change is append-only. No fixture, clinical
+release, balance data, approval, save key, launcher, UI, dependency or server
+configuration was changed.
+
+### Evidence and fidelity contract
+
+The archive holds the complete available original import with immutable fact
+references, historical limitations, opening finance/learning and version pins,
+and a canonical append-only fact dictionary. Exact duplicate facts share a
+record. Card pointers are mutable projections of immutable card versions.
+Frozen cases/order, identities, scored answers, reviews, income/settlements,
+receipts/events and inspection evidence are separate from operational snapshots.
+
+A snapshot holds the complete current operational projection as patches against
+the immutable import source, references and a journal cursor. It does not copy
+the immutable payloads or replay gameplay. Full original imported logical state
+remains recoverable after later commands and retirement; exact source text/hash
+is retained separately for device recovery. Missing pre-adoption events remain
+unknown. Version 1's preexisting reconstructed review projections stay marked
+as such, and historical import question-count credit remains zero.
+
+The opt-in command wrapper observes facts before retirement/trimming and records
+actual before/after finance, exact integer-cent deltas and command identities.
+It does not fabricate itemized transactions that the runtime never exposed.
+Hydration reconciles the finance chain, complete card/review projections and
+immutable pins. It preserves all existing game state, clinical review status,
+concept IDs, frozen choice order, money, seed/RNG inputs/counters and operational
+timing. Existing serializers/deserializers remain untouched; observed/ordinary
+command outputs are compared byte-for-byte, including 65 simulated minutes, a
+real scored answer and final/cancelled inspections. The ordinary reducer path
+does not install a capture scope.
+
+A future cloud coordinator must route all cloud commands through this opt-in
+boundary and commit snapshot plus appended facts atomically. Existing local
+callers are unchanged. The codec sends only new rows after an acknowledged
+high-water mark and an immutable header hash. Prior snapshots share the same
+archive and load only their exact prefix. Format 1 remains compatibility-only.
+
+### Verified compression and updated capacity table
+
+All figures are **decimal UTF-8/binary bytes**, measured with Node's native
+CompressionStream/DecompressionStream implementations. No dependency was
+installed. Both gzip and deflate outputs are immediately decompressed and
+checked against SHA-256 of the **uncompressed canonical bytes**. Compressed
+byte identity is not assumed portable across browsers. Decoded sizes and hashes
+are verified before JSON parsing, with bounded per-value/aggregate decoding and
+bounded reference expansion.
+
+The following supersedes B2.1's duplicated baseline layout for new format 2
+work. Evidence raw includes header and immutable record payload metadata; the
+whole-archive raw JSON differs slightly because of its container. Page costs
+include the immutable header once and every sealed page once. Wire body is the
+implemented gzip row protocol, including base64 and JSON metadata.
+
+| Fixture | Snapshot raw / gzip | Evidence raw | Gzip rows | Gzip sealed pages | Deflate sealed pages | Gzip row-transport body |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| level-four-legacy-pre-m3.json | 4,813 / 1,384 | 108,067 | 19,683 | 18,604 | 18,580 | 31,179 |
+| level-five-economy-checkpoint-20261012.json | 30,082 / 3,517 | 1,637,098 | 676,435 | 164,524 | 164,308 | 1,362,471 |
+| integration-l4 | 13,063 / 2,102 | 854,362 | 318,733 | 85,723 | 85,615 | 635,555 |
+| integration-build | 12,959 / 2,056 | 863,103 | 318,515 | 86,434 | 86,326 | 635,202 |
+| integration-preparing | 17,377 / 2,845 | 1,460,018 | 585,625 | 143,159 | 142,967 | 1,158,292 |
+| integration-running | 17,850 / 2,682 | 1,536,926 | 600,377 | 151,152 | 150,948 | 1,184,530 |
+| integration-final | 23,153 / 3,036 | 1,688,925 | 672,083 | 167,158 | 166,942 | 1,324,486 |
+| integration-finish | 23,151 / 3,038 | 1,609,025 | 649,362 | 157,013 | 156,797 | 1,281,690 |
+| integration-repeat-final | 788 / 494 | 1,851,315 | 754,764 | 185,013 | 184,761 | 1,483,045 |
+| integration-repeat | 788 / 493 | 1,770,160 | 731,711 | 174,605 | 174,353 | 1,439,612 |
+| integration-lower-repeat | 124,923 / 10,680 | 1,998,490 | 804,888 | 195,238 | 194,962 | 1,590,918 |
+
+All 11 initial snapshots satisfy the 2 MB target and 3 MB ceiling; reconstructed
+games remain below the 3 MB decoded-game ceiling and actual row-transport bodies
+below 6 MB. **Raw evidence still exceeds the 1 MB/campaign allowance in eight
+fixtures.** Individual gzip rows fit all 11 imported checkpoints, with a maximum
+of **804,888 bytes**. The largest initial sealed gzip-page evidence set is
+**195,238 bytes**. Whole-archive gzip reaches **178,656 bytes** at that checkpoint,
+but is not mislabeled as the cost of separately stored rows.
+
+Continuation from `integration-lower-repeat` runs **360 additional facility
+minutes = six simulated facility hours**, not six wall-clock player hours.
+No answers or history were replayed, no accepted row was edited/dropped and the
+original import remained fully recoverable:
+
+| Continued-play quantity | Bytes / count |
+| --- | ---: |
+| Reconstructed full game | 1,856,608 |
+| Operational snapshot raw / gzip | 311,075 / 30,255 |
+| Complete immutable evidence raw | 2,478,063 |
+| Individual gzip rows + header | **1,071,025** |
+| Sealed gzip pages + header | **252,915** |
+| Immutable facts / sealed pages | 3,511 / 34 |
+| New facts / new individual-row gzip bytes | 930 / 266,137 |
+| Actual acknowledged row save body | 577,541 |
+
+**Capacity failure preserved:** individual-row gzip exceeds the starting
+1 MB/campaign evidence allowance after this continuation; two equivalent
+campaigns exceed the 2 MB/account evidence budget. Sealed pages pass the same
+payload-byte allowance. Growth seals six successive batches of 60 commands,
+retains each previously accepted partial page unchanged and round-trips every
+row exactly once. No compression or quota claim relies on deleting history.
+
+### Storage recommendation and remaining gates
+
+Recommend **immutable sealed gzip pages in bytea**, with normalized owned
+identity/index metadata and a bounded trusted inflater/validator, rather than
+assuming individual gzip-row sizes equal whole-file gzip sizes. Operational
+snapshots can also use the agreed bytea/canonical-byte contract if that route is
+accepted. The new page utility evaluates the physical candidate; it is not an
+applied schema or a different live transport.
+
+A JSONB + server TOAST/lz4 alternative makes direct SQL validation/querying
+simpler. Verify actual lz4 availability/settings and physical results; short
+rows may not compress and gzip bytes must not be credited for another assumed
+TOAST saving. Format 2 bytea loads require the agreed canonical text/base64
+contract. A JSONB alternative needs the separate server-canonical text/hash
+contract or an explicitly versioned adapter; JSONB text is not the same bytes
+as JS canonical text. Core TOAST does not provide a tested client-gzip
+inflation/validation RPC by itself.
+
+For perspective only, using the largest observed continued-play gzip snapshot
+and page set for all 30 accounts, two campaigns each, current + prior snapshots:
+
+- Payload plus the inherited 50 MB shared allowance =
+  `30 * (4 * 30,255 + 2 * 252,915) + 50,000,000` =
+  **68,805,500 bytes (68.806 MB)**.
+- Budgeting snapshots at their raw 311,075 bytes instead, without assuming
+  TOAST savings, gives **102,503,900 bytes (102.504 MB)**.
+
+These are payload/planning calculations, **not measured PostgreSQL capacity or
+a rollout PASS**. The 500 MB provider limit, 400 MB working ceiling, 8 MB retained
+snapshots/account, 2 MB evidence/account and two campaigns/account remain
+unchanged. Actual tuple/FK/index/TOAST/dead-row costs, Auth/other application
+data, transient reservations, backups and real ingress/egress remain B2.2/B2.5
+gates. All metadata/history must be charged; an uncounted side table is not a
+capacity fix. History remains unbounded, so even pages require warnings and a
+safe pause at a tested limit. The 6 MB decoded processing bound is separate
+from physical compressed-storage accounting.
+
+B2.2 must provide bounded trusted decompression before structural/invariant
+validation, hash checking, ownership/RLS and atomic writes. Client hash success
+alone is insufficient. It must also complete the actual request contract with
+writer generation/token, lifecycle and any eligible usage arguments and hash
+every material RPC argument. The five SQL golden vectors have **not** been
+executed on PostgreSQL; the manager's disposable SQL run remains required.
+No real browser/Safari/phone, hosted ingress, physical database or rollback/
+backup acceptance is claimed by these Node codec tests.
+
+### Exact recorded-input changes; no evidence rebind
+
+| Existing recorded input | Before | After |
+| --- | --- | --- |
+| packages/game-domain/src/index.ts | `3045ff30cb0cf9701d6220ac506135db811a206e112fba788fa90c58b18bfa7b` | `1389c04a3c49479ce6d0bdea427a290d791f437b62f9d271856517e0e0d4e879` |
+| packages/game-domain/src/reducer.ts | `daf3be68ec8134205113fc7be6136b5a0fdcf7b3d93149a9ffeab83c7599d1f6` | `d4424125c52ba7f9a494f221b7c2933bcdace971ff3d34f22380f77bc3f6f19e` |
+
+These are the **only existing recorded domain inputs changed**. The full suite's
+binding assertion stops at `index.ts`; the independent source audit also
+identifies `reducer.ts`. The manager must review the additive observations and
+exports, include the new modules in the next binding and rebind/rerun the Level
+5 evidence through its authorized lane. No test, recorded hash or evidence
+artifact was weakened or rebound by this worker.
+
+### Final validation and exact output
+
+Existing dependencies, the approved absolute preload, no Git/install/network:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/cloud
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+npm.cmd run typecheck
+```
+
+- Player focused: **145 passed in 5 files, exit 0**.
+- Full game-domain: **4,291 passed / 1 failed, 159 passed files / 1 failed file,
+  exit 1**. The sole failure is the permitted Level 5 recorded-input binding
+  assertion for the changed `index.ts` SHA-256. All 21 new domain tests pass.
+- All **seven workspace typechecks pass, exit 0**.
+- Scoped source/JSON/SQL/docs are UTF-8 without BOM and LF-only. The existing
+  reducer/index edits were audited against their starting byte hashes.
+- No Git, installs, network, Supabase, browser/owner storage, external messages,
+  agents, publication or deployment. Local-only checkpoint; manager owns the
+  current-thread handoff, acceptance, input rebind, physical-capacity gates and
+  the **"push to GitHub"** backup reminder.
+
+Player stdout/stderr (exit 0; includes retained format 1 receipts and new
+format 2 row/page/continuation receipts):
+
+```text
+
+> @gamify-surgery/player@0.0.1 test
+> vitest run --pool=threads src/session/cloud
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/apps/player
+
+B2.1 MEASURE {"fixture":"level-four-legacy-pre-m3.json","file":"level-four-legacy-pre-m3.json","fileBytes":194747,"fileSha256":"9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3","sourceBytes":130872,"decodedStateBytes":133840,"snapshotBytes":134401,"baselineEvidenceBytes":131353,"transportBytes":292907,"reorderedSnapshotBytes":145846,"reorderedEvidenceBytes":142518,"withinTarget":true,"capacityFailures":[],"migrationFields":["emergencyGlp1","employees","environment","learningHistories","nextExternalRetailOpportunityTick","nextServiceIncomeReceiptSequence"]}
+B2.1b MEASURE {"fixture":"level-four-legacy-pre-m3.json","file":"level-four-legacy-pre-m3.json","fileSha256":"9e806c67b15e08ab03760e84206faad89423496a2d80d38a2c0030c84d547ae3","sourceBytes":130872,"decodedGameBytes":133840,"snapshotRawBytes":4813,"snapshotStoredBytes":1384,"evidenceRawBytes":108067,"evidenceStoredBytes":19683,"evidenceArchiveRawBytes":107950,"rawJsonBodyBytes":124163,"transportBodyBytes":31179,"immutableRecords":13,"newEvidenceUploadRows":13,"newEvidenceUploadBytes":19683,"deflateSnapshotBytes":1372,"deflateEvidenceRowsBytes":19515,"deflateTransportBodyBytes":30979,"aggregateEvidenceGzipBytes":18366,"aggregateEvidenceDeflateBytes":18354,"gzipPagesEvidenceBytes":18604,"deflatePagesEvidenceBytes":18580,"immutablePages":1,"rawCapacityFailures":[],"compressedCapacityFailures":[]}
+B2.1 MEASURE {"fixture":"level-five-economy-checkpoint-20261012.json","file":"level-five-economy-checkpoint-20261012.json","fileBytes":1429975,"fileSha256":"813572d7ecaa6ffb232b7bed92c72a14067f96927f42219750c1343b111d6582","sourceBytes":1429974,"decodedStateBytes":1430026,"snapshotBytes":1430586,"baselineEvidenceBytes":1430455,"transportBytes":3141559,"reorderedSnapshotBytes":1524512,"reorderedEvidenceBytes":1524361,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-l4","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":795214,"decodedStateBytes":795266,"snapshotBytes":795838,"baselineEvidenceBytes":795706,"transportBytes":1761597,"reorderedSnapshotBytes":855598,"reorderedEvidenceBytes":855446,"withinTarget":true,"capacityFailures":[],"migrationFields":["encounters","retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-build","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":803955,"decodedStateBytes":804007,"snapshotBytes":804579,"baselineEvidenceBytes":804447,"transportBytes":1782494,"reorderedSnapshotBytes":865769,"reorderedEvidenceBytes":865617,"withinTarget":true,"capacityFailures":[],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-preparing","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1323057,"decodedStateBytes":1323109,"snapshotBytes":1323681,"baselineEvidenceBytes":1323550,"transportBytes":2910759,"reorderedSnapshotBytes":1412663,"reorderedEvidenceBytes":1412512,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1b MEASURE {"fixture":"level-five-economy-checkpoint-20261012.json","file":"level-five-economy-checkpoint-20261012.json","fileSha256":"813572d7ecaa6ffb232b7bed92c72a14067f96927f42219750c1343b111d6582","sourceBytes":1429974,"decodedGameBytes":1430026,"snapshotRawBytes":30082,"snapshotStoredBytes":3517,"evidenceRawBytes":1637098,"evidenceStoredBytes":676435,"evidenceArchiveRawBytes":1639303,"rawJsonBodyBytes":1863965,"transportBodyBytes":1362471,"immutableRecords":2336,"newEvidenceUploadRows":2336,"newEvidenceUploadBytes":676435,"deflateSnapshotBytes":3505,"deflateEvidenceRowsBytes":648391,"deflateTransportBodyBytes":1332056,"aggregateEvidenceGzipBytes":156098,"aggregateEvidenceDeflateBytes":156086,"gzipPagesEvidenceBytes":164524,"deflatePagesEvidenceBytes":164308,"immutablePages":17,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1 MEASURE {"fixture":"integration-running","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1397231,"decodedStateBytes":1397257,"snapshotBytes":1397829,"baselineEvidenceBytes":1397724,"transportBytes":3075145,"reorderedSnapshotBytes":1493023,"reorderedEvidenceBytes":1492900,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-final","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1527601,"decodedStateBytes":1527627,"snapshotBytes":1528199,"baselineEvidenceBytes":1528094,"transportBytes":3356999,"reorderedSnapshotBytes":1629920,"reorderedEvidenceBytes":1629797,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1b MEASURE {"fixture":"integration-l4","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":795214,"decodedGameBytes":795266,"snapshotRawBytes":13063,"snapshotStoredBytes":2102,"evidenceRawBytes":854362,"evidenceStoredBytes":318733,"evidenceArchiveRawBytes":855299,"rawJsonBodyBytes":974112,"transportBodyBytes":635555,"immutableRecords":1067,"newEvidenceUploadRows":1067,"newEvidenceUploadBytes":318733,"deflateSnapshotBytes":2090,"deflateEvidenceRowsBytes":305917,"deflateTransportBodyBytes":621643,"aggregateEvidenceGzipBytes":80456,"aggregateEvidenceDeflateBytes":80444,"gzipPagesEvidenceBytes":85723,"deflatePagesEvidenceBytes":85615,"immutablePages":8,"rawCapacityFailures":[],"compressedCapacityFailures":[]}
+B2.1 MEASURE {"fixture":"integration-finish","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1513484,"decodedStateBytes":1513510,"snapshotBytes":1514082,"baselineEvidenceBytes":1513977,"transportBytes":3321258,"reorderedSnapshotBytes":1612683,"reorderedEvidenceBytes":1612560,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations"]}
+B2.1 MEASURE {"fixture":"integration-repeat-final","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1724322,"decodedStateBytes":1724322,"snapshotBytes":1724894,"baselineEvidenceBytes":1724815,"transportBytes":3774644,"reorderedSnapshotBytes":1833631,"reorderedEvidenceBytes":1833536,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":[]}
+B2.1b MEASURE {"fixture":"integration-build","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":803955,"decodedGameBytes":804007,"snapshotRawBytes":12959,"snapshotStoredBytes":2056,"evidenceRawBytes":863103,"evidenceStoredBytes":318515,"evidenceArchiveRawBytes":864040,"rawJsonBodyBytes":984446,"transportBodyBytes":635202,"immutableRecords":1067,"newEvidenceUploadRows":1067,"newEvidenceUploadBytes":318515,"deflateSnapshotBytes":2044,"deflateEvidenceRowsBytes":305699,"deflateTransportBodyBytes":621290,"aggregateEvidenceGzipBytes":81128,"aggregateEvidenceDeflateBytes":81116,"gzipPagesEvidenceBytes":86434,"deflatePagesEvidenceBytes":86326,"immutablePages":8,"rawCapacityFailures":[],"compressedCapacityFailures":[]}
+B2.1 MEASURE {"fixture":"integration-repeat","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1625220,"decodedStateBytes":1625220,"snapshotBytes":1625792,"baselineEvidenceBytes":1625713,"transportBytes":3558810,"reorderedSnapshotBytes":1728545,"reorderedEvidenceBytes":1728450,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":[]}
+B2.1 MEASURE {"fixture":"integration-lower-repeat","file":"level-five-integration-checkpoints-20261012.json","fileBytes":12538766,"fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1828472,"decodedStateBytes":1828398,"snapshotBytes":1828970,"baselineEvidenceBytes":1828965,"transportBytes":4003116,"reorderedSnapshotBytes":1945481,"reorderedEvidenceBytes":1945462,"withinTarget":true,"capacityFailures":["baseline-evidence-allowance"],"migrationFields":["retailOperations","serviceOperations"]}
+B2.1b MEASURE {"fixture":"integration-preparing","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1323057,"decodedGameBytes":1323109,"snapshotRawBytes":17377,"snapshotStoredBytes":2845,"evidenceRawBytes":1460018,"evidenceStoredBytes":585625,"evidenceArchiveRawBytes":1461803,"rawJsonBodyBytes":1650790,"transportBodyBytes":1158292,"immutableRecords":1916,"newEvidenceUploadRows":1916,"newEvidenceUploadBytes":585625,"deflateSnapshotBytes":2833,"deflateEvidenceRowsBytes":562621,"deflateTransportBodyBytes":1133332,"aggregateEvidenceGzipBytes":134184,"aggregateEvidenceDeflateBytes":134172,"gzipPagesEvidenceBytes":143159,"deflatePagesEvidenceBytes":142967,"immutablePages":15,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-running","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1397231,"decodedGameBytes":1397257,"snapshotRawBytes":17850,"snapshotStoredBytes":2682,"evidenceRawBytes":1536926,"evidenceStoredBytes":600377,"evidenceArchiveRawBytes":1538746,"rawJsonBodyBytes":1736874,"transportBodyBytes":1184530,"immutableRecords":1951,"newEvidenceUploadRows":1951,"newEvidenceUploadBytes":600377,"deflateSnapshotBytes":2670,"deflateEvidenceRowsBytes":576953,"deflateTransportBodyBytes":1159111,"aggregateEvidenceGzipBytes":141020,"aggregateEvidenceDeflateBytes":141008,"gzipPagesEvidenceBytes":151152,"deflatePagesEvidenceBytes":150948,"immutablePages":16,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-final","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1527601,"decodedGameBytes":1527627,"snapshotRawBytes":23153,"snapshotStoredBytes":3036,"evidenceRawBytes":1688925,"evidenceStoredBytes":672083,"evidenceArchiveRawBytes":1690970,"rawJsonBodyBytes":1910545,"transportBodyBytes":1324486,"immutableRecords":2176,"newEvidenceUploadRows":2176,"newEvidenceUploadBytes":672083,"deflateSnapshotBytes":3024,"deflateEvidenceRowsBytes":645959,"deflateTransportBodyBytes":1296146,"aggregateEvidenceGzipBytes":156802,"aggregateEvidenceDeflateBytes":156790,"gzipPagesEvidenceBytes":167158,"deflatePagesEvidenceBytes":166942,"immutablePages":17,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-finish","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1513484,"decodedGameBytes":1513510,"snapshotRawBytes":23151,"snapshotStoredBytes":3038,"evidenceRawBytes":1609025,"evidenceStoredBytes":649362,"evidenceArchiveRawBytes":1611006,"rawJsonBodyBytes":1821994,"transportBodyBytes":1281690,"immutableRecords":2112,"newEvidenceUploadRows":2112,"newEvidenceUploadBytes":649362,"deflateSnapshotBytes":3026,"deflateEvidenceRowsBytes":624006,"deflateTransportBodyBytes":1254182,"aggregateEvidenceGzipBytes":146355,"aggregateEvidenceDeflateBytes":146343,"gzipPagesEvidenceBytes":157013,"deflatePagesEvidenceBytes":156797,"immutablePages":17,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-repeat-final","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1724322,"decodedGameBytes":1724322,"snapshotRawBytes":788,"snapshotStoredBytes":494,"evidenceRawBytes":1851315,"evidenceStoredBytes":754764,"evidenceArchiveRawBytes":1853624,"rawJsonBodyBytes":2062103,"transportBodyBytes":1483045,"immutableRecords":2440,"newEvidenceUploadRows":2440,"newEvidenceUploadBytes":754764,"deflateSnapshotBytes":482,"deflateEvidenceRowsBytes":725472,"deflateTransportBodyBytes":1451271,"aggregateEvidenceGzipBytes":173762,"aggregateEvidenceDeflateBytes":173750,"gzipPagesEvidenceBytes":185013,"deflatePagesEvidenceBytes":184761,"immutablePages":20,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-repeat","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1625220,"decodedGameBytes":1625220,"snapshotRawBytes":788,"snapshotStoredBytes":493,"evidenceRawBytes":1770160,"evidenceStoredBytes":731711,"evidenceArchiveRawBytes":1772404,"rawJsonBodyBytes":1972157,"transportBodyBytes":1439612,"immutableRecords":2375,"newEvidenceUploadRows":2375,"newEvidenceUploadBytes":731711,"deflateSnapshotBytes":481,"deflateEvidenceRowsBytes":703199,"deflateTransportBodyBytes":1408683,"aggregateEvidenceGzipBytes":160240,"aggregateEvidenceDeflateBytes":160228,"gzipPagesEvidenceBytes":174605,"deflatePagesEvidenceBytes":174353,"immutablePages":20,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b MEASURE {"fixture":"integration-lower-repeat","file":"level-five-integration-checkpoints-20261012.json","fileSha256":"0ba7e974fb60d6926be7bdb8d9642a12cf3b85bce3de714c5646f4d3467b1501","sourceBytes":1828472,"decodedGameBytes":1828398,"snapshotRawBytes":124923,"snapshotStoredBytes":10680,"evidenceRawBytes":1998490,"evidenceStoredBytes":804888,"evidenceArchiveRawBytes":2000940,"rawJsonBodyBytes":2366004,"transportBodyBytes":1590918,"immutableRecords":2581,"newEvidenceUploadRows":2581,"newEvidenceUploadBytes":804888,"deflateSnapshotBytes":10668,"deflateEvidenceRowsBytes":773904,"deflateTransportBodyBytes":1557304,"aggregateEvidenceGzipBytes":178656,"aggregateEvidenceDeflateBytes":178644,"gzipPagesEvidenceBytes":195238,"deflatePagesEvidenceBytes":194962,"immutablePages":22,"rawCapacityFailures":["evidence-allowance"],"compressedCapacityFailures":[]}
+B2.1b GROWTH {"fixture":"integration-lower-repeat","additionalFacilityMinutes":360,"initialEvidenceBytes":804888,"decodedGameBytes":1856608,"snapshotRawBytes":311075,"snapshotStoredBytes":30255,"evidenceRawBytes":2478063,"evidenceStoredBytes":1071025,"evidenceArchiveRawBytes":2481443,"rawJsonBodyBytes":893820,"transportBodyBytes":577541,"immutableRecords":3511,"newEvidenceUploadRows":930,"newEvidenceUploadBytes":266137,"gzipPagesEvidenceBytes":252915,"immutablePages":34,"sealedUploadBatches":6,"compressedCapacityFailures":["evidence-allowance"],"rawCapacityFailures":["evidence-allowance"]}
+
+ Test Files  5 passed (5)
+      Tests  145 passed (145)
+   Start at  12:09:47
+   Duration  99.18s (transform 4.18s, setup 0ms, import 5.89s, tests 110.75s, environment 0ms)
+```
+
+Full game-domain stdout/stderr (exit 1, permitted binding failure only):
+
+```text
+
+> @gamify-surgery/game-domain@0.0.1 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v4.1.10 C:/Users/rowla/Projects/GamifySurgery/packages/game-domain
+
+ ❯ tests/level-five-integration.test.ts (36 tests | 1 failed) 272285ms
+     × binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash
+AssertionError: packages/game-domain/src/index.ts: expected '1389c04a3c49479ce6d0bdea427a290d791f4…' to be '3045ff30cb0cf9701d6220ac506135db811a2…' // Object.is equality
+
+Expected: "3045ff30cb0cf9701d6220ac506135db811a206e112fba788fa90c58b18bfa7b"
+Received: "1389c04a3c49479ce6d0bdea427a290d791f437b62f9d271856517e0e0d4e879"
+
+ ❯ tests/level-five-integration.test.ts:47:71
+     45|           .replace("        nextFacilityLevel: 5,\n      },\n      LEV…
+     46|       }
+     47|       expect(createHash("sha256").update(source).digest("hex"), file).…
+       |                                                                       ^
+     48|     }
+     49|     expect(run.commandsReconciled).toBeGreaterThan(20_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 159 passed (160)
+      Tests  1 failed | 4291 passed (4292)
+   Start at  12:03:52
+   Duration  977.00s (transform 4.15s, setup 0ms, import 67.31s, tests 898.68s, environment 8ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GamifySurgery\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1
+```
+
+Workspace typecheck stdout/stderr (exit 0):
+
+```text
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+
+## Owner decision (2026-10-17): test database
+
+Owner chose **"Test on the live project"** (over a local PostgreSQL install or pausing the ergonomics project). Manager rules: the B2.2 schema is additive and unused until the client is enabled; SQL validation uses rollback-only synthetic tests in the established Beta 1 style (simulated roles/JWT claims inside a transaction, PASS row at the end), run in the live project's SQL editor by the manager or owner; no synthetic data persists. Two-session concurrency is proven by (a) lock/generation logic tested in rollback-only scripts and (b) the B2.6 owner desktop -> phone -> desktop trial. The migration is reviewed before it is applied. B2.1b accepted 2026-10-17 (reducer.ts change = three read-only no-op observer hooks); the Level 5 evidence rebind is deferred to the next publish.
+
+## B2.2 handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol, transactional SQL lane. **Implementation prepared and
+source-reviewed; no SQL was executed and no database PASS is claimed.** The
+binding live-game-project test decision immediately above governs the manager's
+validation. This handoff does not enable cloud play or accept B2.2/B2.5/B2.6.
+
+Files changed, only in the assigned lane:
+
+- `supabase/migrations/20261018000100_beta2_cloud_saves.sql`: new additive,
+  transactional migration; eleven tables, RLS on each, nine public INVOKER
+  wrappers, private validated DEFINER RPCs, explicit EXECUTE ACLs, no direct
+  player/service table grants and no anon access. Both project flags and account
+  capabilities default off. Pure SQL/PLpgSQL, no new extension dependency.
+- `supabase/tests/beta2_cloud_saves.sql`: one `BEGIN ... ROLLBACK` synthetic
+  suite, actual roles/claims, one final PASS row only after all assertions.
+- `supabase/tests/README.md`: exact SQL Editor procedure, expected output,
+  pending acceptance gates and historical Beta 1 instructions retained.
+- This append-only handoff. No other plan text or source lane was changed.
+
+No Git commands, installs, network, database/browser access, agents, external
+messages, commits, push, deployment or publication were used. The concurrent
+B2.3 session lane was read for its codec contract only and was not edited.
+No clinical material, approval, FSRS meaning, frozen content, game balance,
+launcher, browser origin or owner save was changed. Work is local only; the
+manager owns acceptance, the current-thread handoff and the GitHub checkpoint
+reminder under the existing rules.
+
+### Storage and transaction result
+
+`public.beta2_campaigns` owns summaries, monotonic bigint revision/generation,
+stable string IDs, normalized unique names, journal head and import provenance.
+Owned composite FKs cover compressed snapshots, immutable headers and immutable
+sealed evidence pages. Private tables own account capability/quota, versioned
+consent, writer hashes/expiry, immutable operation receipts, bounded rate buckets,
+the project reservation and the protected deletion ledger. These objects are
+separate from Beta 1 usage/report roles; an AAL2 count-report owner gains no
+other player's campaign access. `gamify_private` must remain unexposed.
+
+The selected B2.1b storage route is **sealed gzip bytea pages plus a gzip bytea
+operational snapshot/header**. The decoder is a private, bounded PLpgSQL RFC
+1951/1952 implementation: stored/fixed/dynamic blocks, checked distances,
+CRC-32/ISIZE, no concatenated members, and a hard actual-output bound independent
+of the client-declared size. Protocol 3 accepts single-member browser gzip with
+FLG=0; optional gzip headers and deflate transport are rejected. Parsed JSON is
+walked before JSONB key collapse, checks duplicate keys, size/depth/nodes and
+safe numbers, and must match the codec's sorted UTF-16-key canonical bytes.
+Hashes cover **uncompressed canonical UTF-8**; accepted compressed bytes are
+stored once and returned in base64. Compressed byte identity is not assumed
+portable between clients. The SQL test embeds independently generated Node
+zlib fixed/dynamic vectors as well as standard CRC and malformed-size cases.
+
+Server validation reconstructs the complete evidence prefix and current
+projection, checks stable IDs/kinds/ownership, backwards-only fact references,
+duplicate facts, patch parents/paths, immutable pins and the archive manifest.
+Its 79-key game-field allowlist matches `CLOUD_GAME_FIELD_OWNERSHIP` exactly;
+profile/outbox/Auth keys cannot ride along as extra top-level game fields.
+It reconciles the finance journal and card/review projection back to the opening
+baseline, rejects a journal rewind/branch and limits reconstructed game text to
+3 MB. This is structural/basic-invariant validation of browser-computed state,
+not a server game engine, anti-cheat proof or clinician approval. Original local
+file SHA/byte provenance is a client declaration: exact original recovery bytes
+remain on the device, so SQL cannot independently prove their pre-migration
+file hash. It does prove the received canonical storage bytes and invariants.
+
+Lock order is membership -> account -> global quota -> campaign -> writer.
+This reuses Beta 1 revocation/deletion authority without requiring usage consent.
+Fresh Auth admission accepts provider invitations or the trusted setup marker,
+never user metadata. Revision and generation/token are checked under locks.
+Lease acquisition/explicit takeover advances generation, renew/release require
+the exact generation/token, and expiry uses wall time after locks. Saves recheck
+expiry after validation and immediately before snapshot acceptance. No state is
+merged and no client chooses the next revision. The global lock serializes
+cross-account reservations; purge skips locked memberships/accounts to avoid
+waiting behind a writer while retaining that global lock.
+
+Snapshot, newly sealed pages, eligible already-issued question receipts through
+the existing Beta 1 deduplication path, quota reservation, pointer advancement
+and receipt are one transaction. Imports cannot submit usage receipts. Current
+and one server-validated prior snapshot remain; older snapshot bytes are pruned
+only within successful replacement transactions. Prior loads return only their
+own complete sealed-page prefix. No accepted evidence/header can be edited,
+extended in place, dropped or purged while its campaign exists.
+
+### RPC/transport contract for B2.3/B2.4 integration
+
+**The new server adapter is protocol 3**, cloud envelope format 2 / evidence
+contract 1. B2.1b's protocol 2 individual-row request is not directly accepted:
+it lacks fencing/lifecycle/usage arguments and uses a different physical
+transport. The codec files were not changed to disguise that distinction.
+The manager must hand this contract to B2.3/B2.4 before transport integration.
+
+All player calls go through the corresponding `public` functions:
+
+| Function | Arguments / result |
+| --- | --- |
+| `beta2_cloud_access` | `p_protocol = 3`; capability, gates, notice and quota. Does not imply notice acceptance or enrollment. |
+| `beta2_accept_cloud_notice` | `p_protocol = 3`, `p_version = 'beta2.cloud.v1'`; separate from `beta1.usage.v1`. Publish the reviewed notice before using this. |
+| `beta2_cloud_list` | `p_protocol = 3`; small own summaries, decimal-string revision/generation, active lease/expiry, quota and server time. Opening a list never takes a lease. |
+| `beta2_cloud_load` | `p_protocol`, `p_campaign_id`, nullable `p_revision`; packed snapshot/header/pages for current or retained prior. Decode/verify/hydrate before playing. |
+| `beta2_cloud_lease` | `p_protocol`, `p_campaign_id`, `p_action` (`acquire`, `takeover`, `renew`, `release`), decimal-string `p_expected_revision`, decimal-string `p_writer_generation`, `p_writer_token` (64 lowercase random hex characters). Client mints/retains the unpredictable token; only its SHA-256 is stored. Returns accepted revision/generation, server time and expiry/release receipt; never echoes the token. |
+| `beta2_cloud_write` | Exactly `p_request_text`, `p_request_sha256`; details below. Returns a small immutable receipt. |
+| `beta2_cloud_operation` | `p_protocol`, `p_operation_id`; own `accepted` receipt or explicit `unknown`. Unknown is not permission to replay expired work. |
+| `beta2_delete_my_data` | `p_scope = 'all-account-data.v1'`, `p_notice_version = 'beta2.cloud.v1'`; only after the new full-data confirmation. Does not require an unexpired writer, enabled capability or live membership admission. |
+
+The write text contains exactly these fields:
+
+```text
+protocolVersion: 3
+action: "import" | "save"
+operationId: nonempty string, <=256 UTF-8 bytes
+issuedAt: immutable ISO timestamp with timezone, within 7 days / +1 minute
+expectedRevision: decimal bigint string ("0" for import)
+writerGeneration: decimal bigint string ("0" for import)
+writerToken: 64 lowercase random hex characters
+campaignId: stable string, <=256 UTF-8 bytes
+snapshot: CloudCompressedText from the format 2 envelope, encoding "gzip"
+evidence: import {header, fromRecord:0, toRecord, pages}
+          save   {headerSha256, fromRecord, toRecord, pages}
+usageReceipts: [] for import; optional already-issued opaque question receipts
+```
+
+`pages` use the existing `CloudEvidencePage` shape (`firstRecord`, `recordCount`,
+`content`). Pack only new canonical record texts, starting exactly at the last
+accepted high-water. Even an accepted partial page is permanently sealed.
+`snapshot` includes all campaign metadata, so rename/archive/restore use the
+same fenced write. Restart creates another baseline/campaign and retains its
+archive/slot; there is no destructive campaign-removal shortcut.
+
+SHA-256 is over the **exact full `p_request_text` UTF-8**, including every token,
+generation, lifecycle field, timestamp, evidence and usage argument. Freeze both
+RPC arguments for retries; do not regenerate issuedAt, recompress bytes or reuse
+an in-flight ID for a changed request. The same ID/hash returns its original
+receipt even after takeover, subject to current admission/notice/capability.
+The read-only outcome RPC remains usable when writes are disabled. Ordinary
+receipts remain for eight days (longer than the immutable seven-day request
+window); import receipts/provenance remain for the campaign's life.
+
+An import creates revision 1/generation 1 and a 60-second lease for its token.
+Refetch/verify before enabling commands and use the returned/current revision
+when acquiring. Identical acquire/takeover retries preserve their original
+expiry; they do not extend lease time. A changed takeover generation is a
+conflict, requiring a fresh check and explicit decision. Save receipts contain
+`operationId`, `requestSha256`, decimal `revision` / `writerGeneration`, snapshot
+SHA/decoded/stored bytes, evidence high-water and server `acceptedAt`.
+
+Expected SQLSTATE categories: `42501` access/notice/unavailable owned campaign;
+`22023` invalid/unsupported bytes/protocol/identity; `40001` stale revision;
+`55000` fenced/expired writer or server write gate; `54000` capacity; `P0001`
+throttle with a JSON `DETAIL.retryAfterSeconds`. Conflict recovery must preserve
+pending bytes and refetch; do not reinterpret these as a fresh empty campaign.
+
+### Quotas, deletion and existing-object changes
+
+Two cloud campaigns per account include archives. Snapshot ceiling is 3 MB;
+snapshot plus account/campaign/rate/lease/receipt allowances share the 8 MB
+account budget. Immutable header/page payload and per-page row/index allowances
+share 1 MB/campaign and 2 MB/account. Binary allocations reserve payload + 12.5%
+and 2 KiB/row; receipt composite size plus 1 KiB is charged separately. Fixed
+account/rate/notice overhead is 8 KiB, campaign/writer overhead 4 KiB, and active
+deletion-ledger rows reserve 1 KiB globally. Thus compression is not credited
+while moving metadata into an uncounted table. Byte allowances are conservative
+engineering reservations, not measured physical costs or a guarantee that the
+measured fixture plus all future receipt/history overhead fits.
+
+Processing bound is 6 MB including snapshot/header/all required decoded pages;
+new decoded save evidence is capped at 1 MB. The 6 MB request check includes the
+actual two-argument JSON wrapper/escaping; it cannot stop HTTP parsing before
+PostgREST receives the body. Server rate windows permit 30 successful mutation/
+lease calls including identical retries, 12 account / 6 campaign new checkpoints,
+6 full loads and 120 metadata reads per 60-second server window. Failed RPCs
+roll back their rate increments; ingress abuse limits remain a hosted gate.
+
+Account warnings start at 80%; owner inspection warns at 300 MB actual database
+size. Every new save reserves transient third-copy/evidence/index headroom and
+cleanup margin against the 400 MB working ceiling. Deleted tuple estimates are
+retained in the global reservation. The service-only `beta2_admin_cloud` supports
+`inspect`, `configure`, `account`, `purge`, `acknowledge_cleanup`; the last requires
+`{"vacuumVerified":true}` after the owner actually verifies cleanup outside a
+transaction. It is an explicit operational attestation, not automatic proof of
+space reclamation. Routine owner inspection returns aggregate counts/sizes,
+not campaign contents. No player can enable capability or change limits.
+
+Exactly two **existing Beta 1 objects** are replaced, with their signatures,
+public wrapper/grants and existing Cron target preserved:
+
+1. `gamify_private.request_usage_data_deletion()`: cloud-enrolled accounts get
+   update-required `55000`, without deletion. Non-enrolled Beta 1 accounts retain
+   the existing usage/flag/feedback deletion behavior and membership blocker.
+2. `gamify_private.purge_beta1_retained_data()`: every existing Beta 1 retention
+   statement remains; a new private cloud-purge call is added. Active campaigns,
+   archived campaigns, current/prior snapshots, immutable evidence and live
+   import receipts never inherit the 90-day usage retention rule.
+
+The new full-data endpoint blocks membership, fences writers, removes cloud
+account/consent/campaign/snapshot/page/operation/rate/quota state plus existing
+usage/flags/feedback, and retains a minimal SHA-256-of-Auth-UUID ledger for 30
+days, beyond the owner's 14-day backup retention. Auth cascades also record this
+ledger and reconcile reservations. No email or payload enters it. Current
+deletion records must be reconciled when restoring a backup; the ledger alone
+inside an older backup cannot prove later deletions. Auth/invitation/private
+export cleanup remains the owner's seven-day task. Setup-code cleanup stays out
+of this transaction to avoid reversing the existing email -> membership lock
+order; setup finalization cannot override the protected membership tombstone.
+
+### Manual two-session lock/generation procedure (two SQL Editor tabs)
+
+Use the **live game project**, role **postgres**, after reviewed migration
+application; do not use real tester UUIDs or persist synthetic seeds. Complete
+queries keep transaction/backend affinity even if the editor pools connections.
+
+1. In tab A, run this whole query. While it sleeps, start tab B:
+
+   ```sql
+   begin;
+   set local statement_timeout = '30s';
+   select singleton from gamify_private.beta2_cloud_quota where singleton for update;
+   select pg_sleep(20);
+   rollback;
+   ```
+
+2. In tab B, run this whole query during A's sleep:
+
+   ```sql
+   begin;
+   set local lock_timeout = '3s';
+   do $lock_probe$
+   begin
+     begin
+       perform 1 from gamify_private.beta2_cloud_quota where singleton for update;
+       raise exception 'Expected lock contention was absent; repeat while tab A sleeps';
+     exception when lock_not_available then
+       raise notice 'Expected shared quota lock contention observed; rollback follows';
+     end;
+   end;
+   $lock_probe$;
+   rollback;
+   ```
+
+   Expect the notice after about three seconds and successful rollback. A missing
+   contention error means the runs did not overlap; repeat. No quota value or
+   tester data is modified. On any unexpected error, issue `ROLLBACK;` in that
+   connection before continuing.
+
+3. After A finishes, tab B runs the **complete** `beta2_cloud_saves.sql` from the
+   README. Its generation checks prove takeover from 1 -> 2 without a new save,
+   denial of the displaced token's save/renew/release and stale takeover,
+   expiry/reacquisition to 3, immutable receipt retry, monotonic revision and
+   prior-prefix retention. Capture its real final PASS row, not this recipe.
+
+Uncommitted synthetic campaigns are invisible to the other editor session.
+This procedure proves the shared reservation lock and the rollback suite proves
+generation outcomes; it does **not** claim a concurrently committed shared-
+campaign save/takeover race. Under the binding owner decision, actual same-
+campaign device contention is the B2.6 desktop -> phone -> desktop trial. No
+temporary committed synthetic campaign is required or authorized by this recipe.
+
+### Validation and next action
+
+Offline source checks verify UTF-8 without BOM, LF-only lines, final newlines,
+balanced SQL lexical delimiters, eleven RLS-enabled/revoked tables, nine paired
+wrapper/body signatures and matching explicit grants, exactly the two intended
+Beta 1 replacements, rollback termination and a single final test result SELECT.
+Independent fixed/dynamic gzip fixture bytes were generated using existing Node
+zlib; no SQL interpreter/parser, PostgreSQL, psql, Supabase CLI or database was
+used. These are source checks and prepared assertions, not a database execution.
+
+Recorded offline checks (existing Node, inline scripts; each final exit **0**):
+
+```text
+STATIC CHECKS OK: 11 tables; 9 paired RPCs/grants; 2 Beta 1 replacements; balanced SQL delimiters; rollback-only single PASS SELECT; documentation fences; assignment declarations. SQL NOT EXECUTED.
+FIELD CONTRACT OK: 79 server allowlist keys exactly match codec top-level ownership properties.
+GZIP FIXTURES OK: 2 independently decoded Node vectors (fixed and dynamic), exact lengths/SHA-256. SQL NOT EXECUTED.
+```
+
+Manager next action: inspect the actual files, review the custom decoder and
+byte/lock contract, apply the additive migration through the approved route,
+run the full new rollback suite and five golden SQL vectors, and record actual
+output. The historical Beta 1 usage/feedback suites include global assertions
+that assume an otherwise empty disposable DB; manager live regression copies
+must filter those assertions to the synthetic UUIDs while retaining their
+expected values and permission checks. Historical test files remain unchanged.
+All four Beta 1 regressions remain acceptance gates. Then prove real Data API grants, browser gzip
+and byte contracts, ingress maximum, decoder latency comfortably below lease
+expiry, 30-account physical/metadata/dead-row capacity, retention Cron, and
+deletion-aware backup restore before enabling capability. Do not claim rollout
+readiness from static review. The B2.3 handoff appended below reports reading
+this migration and implementing the protocol 3 adapter. Manager review should
+compare its actual arguments/receipts with this final SQL contract. This worker
+did not send external messages or modify the B2.3 lane.
+
+## B2.3 handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol, shared cache/coordinator lane. **Delivered for manager
+review; cloud mode remains OFF by default.** This is client/offline protocol
+validation, not hosted SQL, browser/phone, capacity or rollout acceptance.
+The full plan, binding owner decisions, B2.1/B2.1b handoffs and the concurrent
+B2.2 migration/handoff were read. No agents were spawned.
+
+### Changed files and boundaries
+
+New under `apps/player/src/session/cloud/`:
+
+- `transport.ts`: account-bound transport contract, capability default OFF,
+  immutable operations/receipts, lease/cadence/grace/recovery constants and
+  redacted failure categories.
+- `cache.ts`: schema-versioned `gamify-surgery.cloud-cache.v1` IndexedDB cache,
+  backend/account/campaign namespace, transaction compare-and-swap, SHA-256/
+  UTF-8 verification and readback, Web Locks when available, bounded recovery,
+  explicit failure results and a fault-injectable memory cache.
+- `coordinator.ts`: read-only verified open; explicit acquisition/takeover and
+  Resume; 60 s lease, 15 s renewal; about 60 s ordinary dirty checkpoints and
+  early coalescing with a 10 s automatic minimum cadence; fenced release;
+  account/campaign lifetime guards; pending/retry/conflict/re-auth/expiry;
+  shared asynchronous Save & Close and checked recovery-copy adoption.
+- `gameSession.ts`: every cloud command goes through
+  `applyGameEvidenceCommand`; current state/evidence and opaque question
+  receipts are staged together. Synchronous command sequences coalesce, while
+  the evidence wrapper observes each command. No gameplay replay on recovery.
+- `supabaseTransport.ts`: thin named B2.2 RPC adapter and the sealed-page
+  protocol-3 packing boundary described below.
+- `fakeTransport.ts`: account-isolated deterministic server simulator with
+  before/after-call failures, delayed replies, operation lookup, fencing and
+  atomic fake save/evidence/count outcomes. It is not a SQL/RLS oracle.
+- `index.ts`: public integration exports.
+- `syncTestSupport.ts`, `cache.test.ts`, `coordinator.test.ts`,
+  `gameSession.test.tsx`, `supabaseTransport.test.ts`: synthetic helpers and
+  **74 new tests in four files**.
+
+Existing source edits are limited to `accountStorageKey.ts` (new three-part
+cloud namespace helper; original function/keys retained) and
+`usePrototypeSession.ts` (optional, captured account/campaign cloud binding,
+command and lifecycle guards, async cloud status/close fields, metadata
+staging, focus/pagehide/unmount protection). No shell/App/UI redesign.
+
+`localCampaignRepository.ts` is deliberately byte-unchanged: its global legacy
+database cannot safely become an account/backend cache. The new repository
+opens a separate database and never adopts/migrates that global data or the
+historical prototype localStorage keys. No original local bytes were migrated,
+claimed or deleted. Camera preferences remain device-local. Current callers
+pass no cloud session and retain their local path; the full regression passes.
+
+### Durability, recovery and wire contract
+
+Each campaign cache entry atomically contains the last verified confirmation
+and at most one recovery record: one immutable in-flight operation plus at
+most one coalesced following candidate/evidence/count tail. The actual UTF-8
+recovery envelope, including escaping, namespace, metadata and any wire
+representation, must fit **7,000,000 bytes**. The 3 MB decoded snapshot/game,
+1 MB new evidence/tail, 100-count-receipt and 6 MB actual RPC-wrapper checks
+reject/pause instead of truncating history or growing an unbounded queue.
+Browser quota/security/blocked/transaction/readback failure stops commands and
+uploads and retains the attempted bytes in memory for checked recovery.
+
+No request is sent before its immutable ID, exact bytes/hash and candidate
+are committed/read back. Lost replies query the original operation first.
+An accepted receipt advances only its covered snapshot/evidence/counts; a
+newer following candidate is rebased without replaying commands. Prefixes are
+compared by immutable IDs/uncompressed hashes, not assumed gzip-byte identity.
+A missing operation may be rebound to a new lease/ID only after fresh admission
+and an unchanged server revision/generation; an expired unknown operation
+stops. An expired or taken-over branch cannot acquire permission by timestamp.
+
+Detected connection/save/renewal failure gets at most 30 s grace, capped by the
+conservative remaining server-confirmed lease. Independent wall/monotonic
+deadlines, clock-discontinuity checks and elapsed-response subtraction prevent
+sleep, clock changes or a late renewal from extending authority. Revocation,
+expiry, storage/capacity failure and conflict block actual commands/ticks.
+Focus/recovery requires fresh checks and explicit Resume; it cannot push a
+cached paused state or silently start local play. Sign-out/switch/disposal
+invalidate later callbacks and keep their original scoped recovery.
+
+The actual B2.2 migration appeared during implementation and is used directly:
+
+- `beta2_cloud_access(p_protocol)` / `beta2_cloud_list(p_protocol)`;
+- `beta2_cloud_load(p_protocol, p_campaign_id, p_revision)`;
+- `beta2_cloud_lease(p_protocol, p_campaign_id, p_action,
+  p_expected_revision, p_writer_generation, p_writer_token)`;
+- `beta2_cloud_write(p_request_text, p_request_sha256)`;
+- `beta2_cloud_operation(p_protocol, p_operation_id)`.
+
+The in-memory format-2 row candidate is an internal codec representation.
+The real adapter seals only NEW canonical rows into existing
+`CloudEvidencePage` objects and freezes the **protocol 3** full request:
+`protocolVersion`, `action:"save"`, `operationId`, `issuedAt`,
+`expectedRevision`, `writerGeneration`, `writerToken`, `campaignId`,
+`snapshot`, `evidence:{headerSha256,fromRecord,toRecord,pages}` and
+`usageReceipts`. Both exact RPC arguments persist in the frozen record;
+retries never regenerate timestamps, tokens, compressed pages or hashes.
+The duplicate local codec/wire representations are charged to the recovery
+cap; they are not duplicate uploads. Loaded sealed pages are converted locally
+to canonical rows for the existing format-2 verifier, with aggregate decode
+bounds; accepted server pages are never repacked for upload.
+
+Writer capabilities are random 64-character hex tokens, scoped to this
+campaign/session. Auth/service credentials never enter the cache/payload.
+RPCs check their captured account before and after each callback. The server
+receipt's request digest covers every material wire field. B2.2 receipts omit
+campaign/count-ID lists: the adapter reconstructs those only from the matching
+durable request, while the coordinator checks its digest, operation, revision,
+snapshot hash/bytes and evidence high-water. Unknown operations older than the
+immutable seven-day request window are blocked, not reminted blindly.
+
+New cloud answer counts use ONLY the cloud save's existing Beta 1 ingestion
+path. They never enter the local usage outbox. Already-issued Beta 1 staged
+IDs retain their old deduplication path; historical/imported history creates
+no receipts. The real scored-answer test proves one durable opaque receipt,
+zero retrospective/replayed count and one accepted upload contribution.
+
+### B2.4 integration and remaining decisions
+
+1. Keep the flag OFF until the manager accepts the remaining server/browser/
+   notice/capacity gates. Supply a stable backend ID and the authenticated
+   account ID; construct the Supabase adapter with an account-ID reader that
+   returns null on session expiry. Call `open()` for a verified read-only view;
+   opening never acquires/takes over. Call `startWriter(true)` only for the
+   explicit takeover choice, then explicit `resume()` when the player continues.
+2. Construct `CloudGameSession.create(coordinator, switchCallback)` from the
+   verified state, build the matching loaded profile with its campaign tutorial
+   metadata, and pass it as `usePrototypeSession(loadedProfile, cloudSession)`.
+   Keep this one owner above entry and both shells, keyed/remounted on account
+   or campaign change. `cloudSyncView` is shared by both layouts.
+3. Use `saveCloudAndClose()` and await true for confirmed save + fenced release.
+   The old synchronous `saveAndPause()` returns confirmation-required in cloud
+   mode, never a false "safe to close" success. Duplicate close calls share one
+   promise; Resume/new commands are blocked through release. Campaign switch
+   invokes its supplied navigation callback only after successful close.
+4. On conflict, preserve/download a checked recovery via `exportRecovery()` or
+   `useAccountSave(keepRecoveryCopy)`. Adopting the account state must create a
+   fresh coordinator/session/keyed mount from that verified state; do not keep
+   the old in-memory game projection. Failed copy/export leaves recovery intact.
+5. **Resolve before enabling: current build Undo is whole-state replacement,
+   outside the domain evidence-command API.** Cloud mode safely refuses it
+   instead of rewinding accepted finance/learning evidence. A separately owned
+   domain command and its UI integration are needed to retain Undo for cloud
+   campaigns. Ordinary local Undo is unchanged. No game-domain file was edited.
+6. Entry/import opt-in, notice/deletion/clear-device UI, creation/restart/archive
+   routing and shell status/choices remain the explicitly separate B2.4 lane.
+   This save adapter does not enroll/import campaigns automatically. Manager
+   validation of real Data API calls, SQL/gzip/capacity, browser lifecycle and
+   physical-phone handoff remains required; these offline fakes cannot prove it.
+
+### Validation and exact results
+
+Existing installed dependencies and the already-approved narrow Windows
+`net use` EPERM preload; no installation, network, Git or default-pool bypass:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+```
+
+All final command exits **0**:
+
+```text
+Focused session: Test Files 93 passed (93)
+                 Tests      964 passed (964)
+                 Duration   100.88s
+Full player:     Test Files 254 passed (254)
+                 Tests      2385 passed (2385)
+                 Duration   108.02s
+Typecheck:       all seven workspaces passed
+```
+
+Coverage includes backend/A/B/prototype namespace preservation, IndexedDB CAS
+and verification/abort boundaries, bounded frozen request/following state,
+lost acknowledgments before/after server commit, refresh, old/new generation,
+simultaneous takeovers, delayed release/renewal, focus during upload, sleep and
+clock jumps, grace/expiry, re-auth/account switch/deletion, protocol/capability/
+notice/capacity/throttle failures, actual blocked commands/ticks through the
+shared React hook (including StrictMode), real scored-answer count staging and
+the exact named protocol-3 RPC boundary. No test was skipped/weakened.
+
+Raw logs, initial owned-file baselines and the final source manifest are under
+ignored `.local-dev/beta2-b23/`: `session-tests-verified.log`, `player-full.log`,
+`typecheck.log`, `baseline.json`, `owned-files.json`, `final-manifest.json`.
+Scoped source/tests/docs are UTF-8 without BOM, LF-only, with final newlines;
+credential-pattern scan passes. No clinical content, approval, concept IDs,
+balance, FSRS semantics, fixtures, original saves, launcher or opening path
+changed. B2.2 owns `supabase/**`; this worker only read those files.
+
+**LOCAL ONLY:** no Git, installs, network, SQL execution, browser/owner storage,
+agents, external messages, push, deployment or publication. The canonical owner
+path stays `START_GAME.cmd` -> `http://127.0.0.1:4173` in its persistent profile;
+remote remains `https://melissarowlandc-afk.github.io/GamifySurgery/`. No current
+player save crosses origins/devices merely from this disabled implementation.
+The manager owns acceptance, the current-thread handoff, the audited GitHub
+checkpoint/reminder (**"push to GitHub"**) and release/enablement.
+
+## Manager review of B2.2 (2026-10-17): simplify server validation
+
+Not accepted as written. The migration implements gzip inflation (Huffman/CRC32), canonical JSON, patch replay and game-field validation in PL/pgSQL. Bit-level PL/pgSQL loops over 250 KB-1.8 MB payloads would take seconds per save and exceed Supabase's request statement timeout for the authenticated role (about 8 s by default), and the plan treats integrity as tamper-tolerant, not anti-cheat. **Manager decision:** the server stores compressed snapshot/evidence payloads OPAQUELY and validates only envelope metadata: declared and actual compressed byte lengths; pgcrypto sha256 of the compressed bytes against the declared hash; the declared uncompressed size within limits; revision/base-revision, writer generation/token and lease fencing; idempotent operation IDs; campaign count, quota, rate limits; atomicity; retention and deletion. Content validation is client-side: the codec verifies hashes and decodes on load, and on failure the client falls back to the prior verified revision and reports it. Build Undo must keep working unchanged for players: an Undo is checkpointed as a new revision; undone build receipts are marked reverted in evidence (append-only), never erased.
+
+## B2.2 revision 1 (2026-10-17): opaque transactional server
+
+**Status: revised offline for manager review; SQL has NOT run.** This section
+supersedes the B2.2 handoff's server decompression, canonicalization, content,
+finance/journal, patch/replay and domain-validation claims, and its old wire
+examples/test output. The binding manager review immediately above governs.
+The owner decision to validate on the live game project with rollback-only
+synthetic SQL remains binding. No database, network, Git, install, deployment,
+agent or player-source operation was used. This lane remains `supabase/**`
+and this plan only; B2.3/player edits and all historical Beta 1 files survive.
+
+Changed files:
+
+- `supabase/migrations/20261018000100_beta2_cloud_saves.sql`
+- `supabase/tests/beta2_cloud_saves.sql`
+- `supabase/tests/README.md`
+- New `supabase/tests/live/beta1_usage_and_flags.sql`,
+  `beta1_owner_invite_admin.sql`, `beta1_tester_feedback.sql`, and
+  `beta1_setup_links.sql`.
+
+The migration is an unapplied, reviewed-file replacement, not an upgrade script
+for an installed rejected draft. If that draft has been applied, the manager
+must produce a forward migration that removes its obsolete helpers/types.
+Do not rerun this CREATE-only migration against an existing Beta 2 schema.
+
+### Server boundary and retained guarantees
+
+Removed all 20 content/decompression helpers and the two custom composite types:
+no inflater, Huffman/bit/CRC logic, canonical JSON, recursive JSON traversal,
+UTF-16 ordering, evidence-reference resolver, patch replay, checkpoint/game-field
+validator, finance/learning interpretation or tutorial interpretation remains.
+No payload is converted to text or parsed by SQL. Stored snapshots, headers and
+sealed pages are opaque `bytea`; uncompressed SHA-256 and byte counts remain
+client declarations, bounded and returned unchanged for codec verification.
+
+The 34 functions have fixed empty `search_path`. The only digest operations
+are fully qualified native `extensions.digest(...,'sha256')`: one helper for
+exact UTF-8 request/token/deletion identities and one for compressed payloads.
+There are no per-byte PL/pgSQL loops. Each new payload is base64-decoded and
+hashed natively; write loops visit at most 512 new page envelopes, twice (one
+validation pass and one storage pass). Previously accepted evidence contributes
+only indexed metadata counts and declared sizes; it is never fetched/decoded
+by a save. A load returns its selected snapshot and sealed prefix unchanged.
+
+Envelope checks are protocol 3 / cloud format 2 / evidence contract 1, exact key
+sets/types, gzip encoding declaration, compressed actual versus declared length
+and hash, declared uncompressed bounds, campaign summary/identity, immutable
+operation ID/request digest and issue window, expected base revision, current
+writer generation/token and server lease. Blob validity does not establish
+that it is actually gzip or meaningful game data. The client codec must verify
+bounded decompression, uncompressed length/hash, identities, manifests and all
+content before hydration/confirmation. Tamper tolerance is not anti-cheat.
+
+Preserved: two cloud campaigns/account including archives; account and project
+reservations/warnings; all five rate buckets; membership -> account -> global
+quota -> campaign -> writer lock order; monotonic bigint revisions/generations
+serialized as decimal strings; wall-clock 60-second leases checked after locks
+and again before acceptance; takeover fencing even without a new revision;
+immutable retries; atomic page/snapshot/operation/optional Beta 1 usage receipts;
+current plus immediately prior accepted snapshot; prior loads containing exactly
+that revision's accepted evidence prefix; deletion/revocation and retention.
+Snapshot/evidence limits and conservative row/index allowances remain as in the
+original handoff. Operation accounting is deterministic from bounded identity
+and receipt sizes so insertion/TOAST representation cannot change its purge cost.
+Warnings cover 80% of account/campaign allowances and 300 MB measured or
+accounted project usage; writes reserve below the 400 MB working ceiling.
+
+The prior snapshot is available for **client verification**, not SQL-certified
+content. On current-load failure the client must verify the prior revision and
+report recovery. Recovery must preserve the actual server head/base revision
+and append-only evidence high-water; it cannot decrement revisions or rewrite
+sealed pages. Build Undo remains a normal higher-revision checkpoint whose
+new evidence records mark undone build receipts reverted. There is no SQL
+journal-sequence or game-value monotonicity rule to block it. Codec/Undo/recovery
+acceptance remains in the player lane and the manager's integration review.
+
+All 11 new tables have RLS and explicit raw-table revokes for PUBLIC/anon,
+authenticated and service_role. Nine public wrappers are INVOKER; their private
+RPC bodies are constrained DEFINER functions. Authenticated receives explicit
+EXECUTE on the eight player wrappers/bodies and own-access RLS helper; only
+service_role receives the aggregate/configuration owner tool. Internal helpers
+are ungranted. Neither owner tools nor usage-report MFA confer payload reads.
+
+**Only existing Beta 1 function replacements (both unavoidable and additive):**
+
+1. `gamify_private.request_usage_data_deletion()`: lock/check cloud enrollment
+   and reject old usage-only confirmation with SQLSTATE `55000`; otherwise
+   preserve every original Beta 1 deletion/blocking statement and clean an unused
+   cloud capability row. Its wrapper and prior EXECUTE grants survive.
+2. `gamify_private.purge_beta1_retained_data()`: preserve all six original
+   DELETE statements and add the private cloud metadata purge. Wrapper, Cron
+   target, grants and pending setup-code nonexpiry survive.
+
+No other historical migration/object definition changes. Schema USAGE grants
+for authenticated/service_role are explicit. The new full-scope delete removes
+cloud plus usage/flags/feedback, leaves the membership blocker and a hash-only
+30-day restore ledger (including Auth cascade), and remains available after
+revocation. Save receipts/rate rows expire after eight days; imports remain
+idempotent for campaign life; expired writer tokens clear without generation
+reset. Functional campaign/evidence/snapshot data does not expire at 90 days.
+Deleted rows are not credited as reclaimed PostgreSQL space; explicit owner
+VACUUM verification is still required before clearing the conservative dead
+estimate. The owner's Auth/invitation/private-export cleanup remains seven days.
+
+### Exact B2.3/B2.4 adapter changes required (no player files edited)
+
+Inspected the current `supabaseTransport.ts`, `transport.ts`,
+`codecCompression.ts`, `codecEvidencePages.ts` and codec metadata contract.
+Keep `CLOUD_SYNC_PROTOCOL = 3`, all nine RPC names/signatures, lease arguments,
+receipt keys, decimal revision strings and `evidence.pages` sealing/order.
+The pre-enable wire envelope now requires these additions:
+
+1. In `SupabaseCloudTransport.prepare`, put these three fields at the root:
+   `cloudFormatVersion: 2`, `evidenceContractVersion: 1`, and
+   `campaign: { campaignId: request.campaign.campaignId,
+   name: request.campaign.name, status: request.campaign.status }`.
+   This is exactly the three-key summary, not the full tutorial/timestamp object.
+   The historical `codec.ts` `CLOUD_FORMAT_VERSION` is 1; use the format-2
+   evidence constant or literal 2 here, not that deprecated format-1 constant.
+2. Add `compressedSha256` to the outgoing snapshot and every page's content;
+   the import adapter must also add it to the immutable header. Compute native
+   Web Crypto SHA-256 over the exact bytes decoded from `dataBase64`, producing
+   64 lowercase hex characters. Preserve `encoding`, `dataBase64`,
+   `compressedBytes`, `uncompressedBytes`, `uncompressedSha256` unchanged.
+   A transport-local extended wire type/helper is sufficient; changing the
+   codec's stored canonical/uncompressed identity is unnecessary.
+3. Freeze the new full JSON text and its request hash once, BEFORE durable cache
+   commit/send, as the existing coordinator already requires. Apply the 6 MB
+   encoded RPC argument-body check after these fields are present. Identical
+   retries must reuse those exact bytes and IDs. Do not mutate existing frozen
+   requests; resolve their outcome first. Since this is a pre-enable revision
+   of protocol 3, old bodies missing the additions fail `22023`; no deployed
+   client should be enabled until the adapter is updated. Rebase/rebuild a
+   confirmed-unaccepted old operation with a fresh ID and current head rather
+   than silently changing an ambiguous in-flight request.
+4. `load` returns the same packed fields plus `compressedSha256`. Validate
+   its shape and compressed length/hash before decoding, then retain all codec
+   uncompressed/content checks. This can use an async transport helper without
+   changing `CloudCompressedText`'s uncompressed logical identity. Selective
+   response `list.baselineId` is removed (the inspected adapter never read it);
+   `CloudConfirmed.baselineId` still comes from the verified snapshot envelope.
+   No baseline/manifest/journal fields need new write arguments.
+5. Expose/parse list's existing `priorRevision: string | null` in the client
+   head/summary and use the already supported `load(campaignId, revision)` /
+   `p_revision` path for reported prior recovery when current verification
+   fails. Preserve real server base/high-water fencing during subsequent work.
+   Receipts still return `snapshotSha256`/`snapshotBytes` as the declared
+   uncompressed identity/size; they confirm byte storage, not decoded content.
+   Keep Undo's append-only reverted receipts and ordinary new-revision behavior.
+
+### Rollback tests, filtered Beta 1 regression and manual contention
+
+The rewritten Beta 2 suite has exactly one final PASS result row. It covers
+A/B/anon, actual RLS and ACLs, trusted versus user metadata, consent separation,
+wrong compressed hashes/lengths and envelope versions, size/page/prefix/body
+limits, stale base/generation/token, takeover/expiry/release/retry fencing,
+atomic late usage failure, prior prefix retention, bigint revisions, quotas and
+warnings, all rate buckets, retention, mixed-client/full deletion, fresh Auth
+revocation/bans, Auth cascade and deletion-ledger expiry/accounting. Opaque
+non-gzip fixtures deliberately prove that SQL does not interpret content.
+
+One accepted checkpoint uses 1.5 MB of native set-generated MD5 blocks (little
+repetition), yielding an approximately 2 MB request. Generation and caller-side
+request hashing occur outside the timed RPC. The RPC must finish in less than
+one second without contention; otherwise the test raises before PASS. The test
+prints NOTICE `B2.2 2 MB cloud write elapsed_ms=<measured value>`. No actual
+value or live latency result is available in this worker environment.
+
+Expected final row (recipe only, not observed):
+
+```text
+PASS: Beta 2 synthetic isolation/fencing/leases/opaque-integrity/atomicity/quotas/limits/retention/deletion/grants/search_path checks; rollback follows
+```
+
+README now gives the complete SQL Editor sequence, expected output and exact
+live Beta 1 variant files/PASS strings. Run each entire file as postgres in a
+separate query; never select fragments or replace ROLLBACK. On any error issue
+ROLLBACK immediately in that connection. No Beta 1 assertion is skipped:
+39 usage / 20 invite / 35 feedback / 40 setup original assertions survive, with
+additional fixture collision guards. Owner-wide usage totals, flag edits/read,
+retention/global receipt assertions and feedback owner/service totals are
+synthetic-filtered with unchanged expected values. Own-account RLS counts remain
+unfiltered to catch leaks. Setup emails now use example.invalid, with guards
+for pending-code-only fixture emails too. Actual retention routines still
+visit expired live rows under rollback; document/capture their temporary locks
+and run in a quiet window. Original historical test files are unchanged.
+
+Short two-editor-tab procedure, still wholly rollback-only, after the reviewed
+migration is applied (postgres, same live game project):
+
+1. Tab A runs the entire query below; start B while A sleeps:
+
+   ```sql
+   begin;
+   set local statement_timeout = '30s';
+   select singleton from gamify_private.beta2_cloud_quota where singleton for update;
+   select pg_sleep(20);
+   rollback;
+   ```
+
+2. Tab B runs the entire query during that sleep:
+
+   ```sql
+   begin;
+   set local lock_timeout = '3s';
+   do $probe$ begin
+     begin
+       perform 1 from gamify_private.beta2_cloud_quota where singleton for update;
+       raise exception 'No overlapping lock observed: repeat while A sleeps';
+     exception when lock_not_available then
+       raise notice 'Expected quota lock contention observed; rollback follows';
+     end;
+   end $probe$;
+   rollback;
+   ```
+
+   Expect the notice after about three seconds. On unexpected error run
+   ROLLBACK in that connection. Neither query changes any quota value/user row.
+3. After A finishes, run the entire revised Beta 2 suite in B and capture its
+   actual timing notice and final PASS. Its generation assertions prove takeover
+   1 -> 2 without a save, stale-token rejection, expiry/reacquisition to 3,
+   original receipt retries and monotonic revisions. Invisible uncommitted
+   synthetic campaigns cannot be shared between tabs; this procedure proves
+   shared-lock contention plus deterministic generation outcomes, not a committed
+   same-campaign race. The binding owner decision assigns the actual device
+   race to B2.6 desktop -> phone -> desktop. No committed synthetic seed is used.
+
+### Validation and handback
+
+Local source-only check (Node built-ins, PowerShell, exit 0):
+
+```text
+PASS source-only: 7 files UTF-8/no-BOM/LF; SQL quotes/dollar blocks/parentheses balanced.
+PASS source-only: 11 RLS-scoped tables; 34 fixed-path functions; 9 invoker wrappers; 2 existing replacements.
+PASS source-only: zero content/decompression helpers; 2 fully qualified pgcrypto calls; only bounded new-page envelope loops in writes.
+PASS source-only: rollback suites have one final SELECT/PASS; representative 2 MB write has a <1 s live assertion.
+PASS source-only: all 6 historical purge DELETE statements and 39/20/35/40 Beta 1 assertions retained.
+NOT RUN: PostgreSQL, Supabase/Data API, RPC timings, SQL assertions.
+```
+
+The source review checked PostgreSQL 15/17 row/composite expressions, native
+bytea digest/base64 handling, bigint string arithmetic, function volatility and
+empty paths, SQL role versus JWT claim enforcement, RLS/ACLs, statement rollback,
+lock ordering, wall-clock expiry, deterministic receipt accounting and retention
+boundaries. Deliberate `22023` errors preserve their constant messages (including
+operation expiry for the adapter); native JSON/cast errors are sanitized.
+Lexical/source checks are not a PostgreSQL parse or database PASS.
+This appended handoff is UTF-8 without BOM/LF as well. No SQL/browser/player
+regression result is claimed and no clinical content or owner save was touched.
+
+**Next action:** manager reviews the actual changed files and required adapter
+follow-up, applies only the reviewed migration, runs revised Beta 2 + all four
+live-filtered Beta 1 suites and the two-tab probe, captures real timing/Data API
+and capacity results, and reviews client verification/prior fallback/Undo before
+B2.4 enablement/B2.6. Server flags and client default remain off. The manager owns
+acceptance, current-thread handoff, audited GitHub checkpoint/reminder and rollout.
+This checkpoint remains local only; no Git command was used by this worker.

@@ -1,4 +1,145 @@
-# Beta 1 SQL verification
+# Supabase SQL verification
+
+## Beta 2 cloud saves: B2.2 revision 1 (2026-10-17)
+
+The binding owner decision is **test on the live GamifySurgery game project**
+with rollback-only synthetic SQL. The worker has **not run SQL**, contacted a
+project, installed anything, or measured a database PASS or RPC latency.
+The manager's later review replaces server content validation with opaque
+compressed-byte storage. Keep the cloud client and server enrollment/write
+capabilities off until the revised adapter and live validation are accepted.
+
+Run this sequence in the Supabase Dashboard SQL Editor:
+
+1. Select the **GamifySurgery game project**, create a new query, and choose the
+   **postgres** role. Confirm the seven Beta 1 migrations through
+   `20261017000100_beta1_owner_tool_flag_validation.sql` are already applied.
+   The ergonomics project is outside scope. Do not reapply historical migrations.
+2. After manager review, paste the **entire**
+   [migration](../migrations/20261018000100_beta2_cloud_saves.sql), including
+   `BEGIN ... COMMIT`, and click **Run**. This persists the additive schema;
+   expected completion has no result rows. Apply this reviewed, previously
+   unapplied migration once. If the rejected earlier version was applied,
+   stop and have the manager prepare a forward migration rather than rerunning
+   this file. pgcrypto must already exist as `extensions.digest(bytea,text)`.
+   No extension installation or automatic table grants are used. All gates and
+   account capabilities start off. Keep `gamify_private` out of exposed schemas.
+3. Open a **new query**, paste the **entire**
+   [Beta 2 suite](beta2_cloud_saves.sql), including `BEGIN` and the final
+   `ROLLBACK`, and click **Run** once. Never run a selected fragment, substitute
+   real identities, remove assertions or change `ROLLBACK` to `COMMIT`.
+   The transaction creates reserved synthetic UUIDs and `example.invalid`
+   emails, temporarily enables its configuration, exercises real SQL roles/JWT
+   claims, then rolls back data, capabilities, grants and temporary helpers.
+   Fixture collisions fail closed. Use a quiet window: the shared quota row is
+   locked until the rollback, and the real retention routines can temporarily
+   lock/delete expired live rows **within this transaction only**.
+4. Expect **one result row**, column `result`, exactly:
+
+   ```text
+   PASS: Beta 2 synthetic isolation/fencing/leases/opaque-integrity/atomicity/quotas/limits/retention/deletion/grants/search_path checks; rollback follows
+   ```
+
+   A separate NOTICE reports `B2.2 2 MB cloud write elapsed_ms=<measured value>`.
+   Its no-contention write must finish below 1000 ms or the suite raises before
+   PASS. Capture the actual value; this offline handoff has no timing result.
+   A NOTICE alone is not PASS. On **any error or missing PASS**, immediately run
+   `ROLLBACK;` in that connection and retain the redacted error. Do not bypass
+   the real 400,000,000-byte ceiling or relax the latency/behavior assertions.
+5. Run each **complete** live-filtered Beta 1 suite below, in order, as postgres
+   in its own query. Each ends in rollback. No historical assertion is skipped,
+   and the original expected synthetic values and permission tests remain.
+   Then run provider security/performance advisors, check the unchanged retention
+   Cron target, and run the plan's two-editor-tab contention procedure.
+
+| Live-project regression file | Expected final `result` row |
+| --- | --- |
+| [live/beta1_usage_and_flags.sql](live/beta1_usage_and_flags.sql) | `PASS: Beta 1 synthetic grants/RLS/notice/dedup/limits/report/retention/deletion checks; rollback follows` |
+| [live/beta1_owner_invite_admin.sql](live/beta1_owner_invite_admin.sql) | `PASS: Beta 1 owner-only invite/roster/RLS/revocation/deletion-marker checks; rollback follows` |
+| [live/beta1_tester_feedback.sql](live/beta1_tester_feedback.sql) | `PASS: Beta 1 feedback grants/RLS/validation/idempotency/quota/owner/retention/deletion checks; rollback follows` |
+| [live/beta1_setup_links.sql](live/beta1_setup_links.sql) | `PASS: Beta 1 setup grants/hash-only/attempts/nonexpiry/single-use/admission/revoke/retention checks; rollback follows` |
+
+These four files preserve 39 / 20 / 35 / 40 original assertions respectively,
+plus collision guards. Usage owner totals (6 questions), owner flag edits/read,
+retention assertions and the receipt-content check are explicitly scoped to
+synthetic UUIDs/flag IDs. Feedback owner/service totals remain 21, filtered to
+the three synthetic users; player own-RLS counts remain unfiltered to detect
+leaks. Invite/setup tests already scoped their roster assertions. Setup emails
+now use `example.invalid`, including pending-code-only identities, and all
+fixtures have preflight collision guards. Non-result RPC/config calls use DO /
+PERFORM, so each variant prints only its final PASS row. The original four
+historical scripts remain unchanged for disposable-database use. Their older
+instructions below do not supersede this live-project procedure.
+
+The live variants execute the **actual** purge function under rollback; they do
+not replace it with a fixture-specific implementation. It may visit expired
+usage/flags/feedback/setup rows and, after Beta 2, cloud metadata from other
+accounts. Those changes roll back. Run the files separately during a quiet
+window and issue `ROLLBACK;` immediately after any error.
+
+The Beta 2 suite covers A/B/anon isolation and actual RLS, trusted setup versus
+user metadata, role/claim spoofing, separate cloud/usage consent, compressed
+length/hash mismatches, unsupported envelope versions, declared size/body/page
+limits, stale base revision/generation/token, takeover and delayed release,
+server-time 60-second expiry/reacquisition, exact retries, atomic page/snapshot/
+receipt/usage/quota acceptance, retained prior prefixes, bigint revision strings,
+name/two-slot limits including archives, quota warnings and all five rate buckets,
+rollout-off reads, terminal retention, mixed-client/full-scope deletion, fresh
+revocation/bans, Auth cascade, ledger accounting, grants and empty search paths.
+Its bytes are deliberately opaque/non-gzip software fixtures. They are not
+playable saves, clinical content or codec fidelity tests. SQL never inflates,
+parses or reconciles game/evidence content. Declared uncompressed hashes/sizes
+are bounded metadata; only compressed hashes/lengths are verified by SQL.
+
+RPC names, signatures, protocol 3, revision strings, lease and receipt fields,
+and sealed-page order remain. **The B2.3 adapter needs these wire additions:**
+
+- `cloudFormatVersion: 2`, `evidenceContractVersion: 1`, and
+  `campaign: { campaignId, name, status }` at the write root (exactly these
+  three campaign summary keys, selected from `request.campaign`).
+- `compressedSha256` on every snapshot/header/page-content object: lowercase
+  SHA-256 of the exact base64-decoded compressed bytes, calculated before
+  freezing the full request text/hash. Keep all five existing blob fields.
+- Load returns that extra hash. Verify it before decoding, then retain the
+  codec's bounded inflation, uncompressed hash/length, identity, manifest and
+  content checks. Use list's existing `priorRevision` and load's existing
+  `p_revision` to verify/fall back to the prior revision and report recovery.
+
+These changes are documented precisely in the plan's **B2.2 revision 1** handoff.
+No player files were edited in this lane. Existing frozen request bytes/IDs must
+not be silently rewritten. This pre-enable protocol-3 shape now rejects older
+bodies missing the required fields. The client must also keep Build Undo as a
+new revision with append-only reverted receipts; SQL imposes no game-state or
+journal monotonicity rule. The historical `codecGoldenVectors.sql` can still
+check its JSONB examples, but does not test the opaque server or gzip decoding.
+
+Only two existing Beta 1 functions are replaced:
+
+- `gamify_private.request_usage_data_deletion()`: enrolled cloud accounts
+  receive SQLSTATE `55000` without deletion; non-enrolled accounts keep their
+  original Beta 1 behavior, plus cleanup of any unused cloud capability row.
+- `gamify_private.purge_beta1_retained_data()`: all six original DELETE
+  statements survive, followed by the private cloud metadata purge. Existing
+  wrapper, grants, setup-link nonexpiry and Cron target survive.
+
+The new `beta2_delete_my_data('all-account-data.v1','beta2.cloud.v1')` removes
+cloud and Beta 1 data, retains a membership blocker and a 30-day hash-only
+restore ledger, and permits deletion after revocation. Auth/invitation/private
+export cleanup remains the owner's seven-day task. Ordinary save receipts and
+stale rate rows expire after eight days; import receipts last for campaign life.
+Expired tokens are cleared without resetting generation. Campaigns/evidence
+and retained snapshots do not inherit Beta 1's 90-day expiry. Deleted bytes
+remain charged as dead-row estimates until verified owner cleanup; DELETE is
+not VACUUM. No cloud enablement, deployment or Cron change occurs here.
+
+Source review does not establish live SQL, Data API ACLs, hosted request limits,
+2 MB runtime latency, TOAST/dead-row growth, 30-account capacity, browser codec
+verification/fallback/Undo, or deletion-aware backup restoration. These remain
+manager validation gates, together with the B2.6 desktop -> phone -> desktop
+trial. Failed RPC rate increments roll back; successful calls/retries are
+throttled, while gateway abuse protection remains an integration check.
+
+## Historical Beta 1 procedures
 
 These SQL checks are prepared for the owner/manager; **they have not run in the
 worker environment**. No PostgreSQL, psql, Supabase CLI or disposable database is

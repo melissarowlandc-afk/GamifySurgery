@@ -74,6 +74,9 @@ describe("GS028 second October 7 remaining-ten original draft content", () => {
         expect(question.explanation.trim().split(/\s+/).length, question.id).toBeGreaterThanOrEqual(20);
         expect(question.explanation, question.id).toMatch(/RCA|root cause analysis|FMEA/i);
         expect(question.teachingPoint, question.id).toMatch(/retrospective|prospective|already happened|look ahead/i);
+      } else if (question.id === "question.gs028f.nutrition.high-risk-refeeding-thiamine-planning.v4") {
+        expect(question.explanation, question.id).toContain("Plan thiamine before nutrition restarts");
+        expect(question.explanation, question.id).not.toContain("The correct answer is");
       } else {
         expect(question.explanation, question.id).toContain(`“${correct.label}.”`);
       }

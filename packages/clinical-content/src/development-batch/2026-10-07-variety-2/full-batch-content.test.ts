@@ -117,6 +117,9 @@ describe("GS-028 second October 7 complete accepted authoring packet", () => {
         expect(node.explanation).toBe(byId.get(node.questionVariantId)!.explanation);
         expect(feedbackNode.teachingPoint).toBe(byId.get(node.questionVariantId)!.teachingPoint);
         expect(feedbackNode.teachingPoint).toMatch(/retrospective|prospective|already happened|look ahead/i);
+      } else if (node.questionVariantId === "question.gs028f.nutrition.high-risk-refeeding-thiamine-planning.v4") {
+        expect(node.explanation).toContain("Plan thiamine before nutrition restarts");
+        expect(node.explanation).not.toContain("The correct answer is");
       } else {
         expect(node.explanation).toContain(`The correct answer is “${keys[0]!.label}.”`);
       }

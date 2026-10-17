@@ -17,7 +17,9 @@ describe("manager-selected Variety-3 prototype admission", () => {
     // reproduces a559b47f... exactly; every unrelated release record is
     // unchanged. Full restoration/hash receipt: GS-028 plan, 2026-10-17.
     expect(createHash("sha256").update(`${JSON.stringify(prior, null, 2)}\n`).digest("hex"))
-      .toBe("94898aae463e483b0a414e14beebbf51b00478ed109db73da43df7d72948f14a");
+      // Tester-flag fix 2026-10-17: only nutrition refeeding-thiamine v4 wording changed
+      // (release copy with the prior nutrition.ts passes 94898aae...).
+      .toBe("182e919202f58a3a4d178da34e9bce384bb973483cc1d54e72a8c12c5460dafb");
   });
 
   it("registers exact concepts, cases and identities once at their declared earliest levels and settings", () => {

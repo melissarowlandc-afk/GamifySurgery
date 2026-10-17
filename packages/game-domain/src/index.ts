@@ -65,3 +65,4 @@ export * from "./periop-nurse-attention";
 export * from "./procedural-staffing";
 export * from "./rolling-income";
 export * from "./app-appointments";
+export * from "./game-evidence";
