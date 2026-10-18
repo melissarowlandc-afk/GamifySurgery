@@ -2187,3 +2187,890 @@ and capacity results, and reviews client verification/prior fallback/Undo before
 B2.4 enablement/B2.6. Server flags and client default remain off. The manager owns
 acceptance, current-thread handoff, audited GitHub checkpoint/reminder and rollout.
 This checkpoint remains local only; no Git command was used by this worker.
+
+## B2.2 live application (2026-10-17, manager)
+
+Owner signed in to the dashboard in the manager's browser pane. Applied in the live SQL editor, each from a SHA-256-verified copy of the repository file: 20261017000100 (service_role EXECUTE on gamify_private.valid_flag_choices) and 20261018000100_beta2_cloud_saves.sql. The first application attempt of 20261018000100 failed atomically (begin/commit; nothing applied) on a PL/pgSQL parser quirk: an unparenthesized `case when ... then ... end` inside an IF condition ends the condition at the inner THEN. The manager parenthesized the two affected expressions (lines 480 and 516; a scan found no others) and reapplied: success. Final file SHA-256 prefix a20d18f8df94af64. The dashboard's static "creates tables without RLS" warning is a false positive (RLS is enabled by a dynamic loop); ran exactly as reviewed. Verified live: 11 beta2 tables, 0 without RLS, 32 beta2 functions, 0 anon table grants. Rollback-only tests in the live SQL editor: supabase/tests/beta2_cloud_saves.sql PASS; live-filtered Beta 1 suites PASS (usage_and_flags, owner_invite_admin, setup_links, tester_feedback). Tester flag a09b77ff marked fixed_in_version 1865337f; the owner test flag was closed as no_change. Cloud client remains OFF.
+
+## B2.4 handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol, entry/import and both-shell lane. **Implementation is
+complete for manager review; final regression results are recorded below.**
+Cloud saving remains OFF by default. No Git, installation, network, Supabase,
+browser launch, agent, external message, deployment or publication was used.
+The applied migration was read, not edited or accessed remotely; its file SHA-256
+is `a20d18f8df94af647382bd415ce8d5a7f07cfd0e32e0136aef8d3c94489ed1d8`.
+This handoff does not accept hosted, physical-phone, capacity or rollout gates.
+
+### Files and integration
+
+Existing owned player edits:
+
+- `App.tsx`, `AppShell.tsx`: one account router/coordinator above entry and
+  either shell, verified cloud-session mounts, explicit local/account selection,
+  fresh account creation, fenced archive/restart/restore, async close/switch,
+  recovery adoption via a new session mount, and desktop account controls.
+- `mobile/MobileShell.tsx`, `mobile/MobileTopBar.tsx`: the same save controls and
+  states in the phone header and More adapter. The desktop and phone share the
+  `AppShell`/`PrototypeShellProps` contract; no separate sync implementation.
+- `ui/AccountMenu.tsx`, `ui/CampaignManager.tsx`, `ui/RestartDialog.tsx`,
+  `ui/ResourceBar.tsx`:
+  versioned notice, two-slot/archive wording, full-data deletion, ordinary
+  sign-out retaining recovery, explicit clear-this-device confirmation and
+  shared-device warning. Local campaign-manager behavior remains the old path.
+- `auth/AuthAccountContext.tsx`, `auth/AuthGate.tsx`: an additive durable-save
+  sign-out guard, explicit sign-out result and flag-dependent entry wording.
+- `playtime/playtimeTracker.ts`: optional full-deletion callback; unchanged
+  no-argument Beta 1 usage-only deletion path.
+- `session/usePrototypeSession.ts`: additive cloud Undo, cloud mode-entry gates,
+  phone hallway persistence routing, and a scoped local writer/export boundary
+  so clear-device cannot be undone by pagehide/unmount. Prototype keys and
+  ordinary local Undo still use their existing behavior.
+- `session/cloud/transport.ts`, `supabaseTransport.ts`, `coordinator.ts`,
+  `gameSession.ts`, `cache.ts`, `fakeTransport.ts`, plus the existing
+  `supabaseTransport.test.ts` and `gameSession.test.tsx`: opaque-server adapter,
+  reported prior recovery, session rebind guard, scoped clearing, import API and
+  additive Undo support. Ordinary B2.3 frozen-operation/recovery limits survive.
+
+New player modules/tests:
+
+- `session/cloud/CloudAccount.tsx` and `CloudAccount.test.tsx`: OFF-by-default
+  account capability owner, account lifetime fencing, notice/deletion controls,
+  checked export and scoped clearing; late entry/import callbacks cannot restore
+  records after sign-out/clear. The separate cache database remains unchanged.
+- `session/cloud/entryStorage.ts`, `importCampaigns.ts`,
+  `importCampaigns.test.ts`, `priorRecovery.test.ts`: verified account/backend
+  IndexedDB raw sources, frozen import journals, additive enrollment markers,
+  original-byte inspection, source/name/ID/version/size checks and idempotent
+  import/readback. This never opens the legacy global IndexedDB repository.
+- `ui/CloudSaveControls.tsx`, `CloudSaveControls.test.tsx`,
+  `CloudCampaignEntry.tsx`, `CloudCampaignEntry.test.tsx`, `cloudEntryError.ts`,
+  `cloudSaves.css`: identical shared status/dialog/action states, compact local
+  labels, native keyboard modal behavior, focus restoration, live announcements,
+  44px touch targets, wrapping and bounded scrollable dialogs.
+  Recovery preparation is distinct from a verified device write and account
+  acknowledgement, and disabled playback controls state the actual sync reason.
+- `cloud-saves-qa.html`, `src/qa/cloudSavesQa.tsx`, and
+  `tests/e2e/cloud-saves.spec.ts`: dev-only disposable fake-transport entry and
+  five two-context scenarios (10 listed desktop/phone project cases). The entry
+  requires test-runner authentication/transport bindings; it cannot fall through
+  to live Supabase and is not an input to the release build. Existing e2e files
+  and Playwright configuration were not edited. Listing is not execution.
+
+The sole domain source edit is `packages/game-domain/src/game-evidence.ts`;
+new `packages/game-domain/tests/game-evidence-undo.test.ts` covers its additive
+boundary. No reducer, persistence, index, balance, clinical content, approval,
+concept ID, fixture, launcher, dependency or owner save was edited. Scoped
+before/after sources and the actual unified diff are under ignored
+`.local-dev/beta2-b24/` (`baseline/`, `baseline.json`, `changes.patch`,
+`owned-files.json`, `final-manifest.json`). The manager owns the current-thread
+handoff and final diff acceptance; this worker did not change that document.
+
+### Opaque adapter and prior recovery
+
+Protocol 3 now sends exactly the migration's root `cloudFormatVersion:2`,
+`evidenceContractVersion:1` and three-key `{campaignId,name,status}` summary.
+Snapshot, every sealed page and the import header carry SHA-256 over their
+exact compressed bytes. Loaded blobs are checked for shape, compressed bounds,
+length and hash before any decoding; existing bounded uncompressed hash,
+manifest, identity, finance/card/pin and logical hydration checks remain. The
+decoded current campaign summary is checked against its declared server head.
+The exact complete wire text/hash is frozen before cache commit and measured
+with the final RPC argument wrapper. Imports use the applied `action:"import"`
+shape, no usage receipts and the unchanged nine public RPC signatures; full
+deletion sends only `all-account-data.v1` / `beta2.cloud.v1`.
+
+List/head expose `priorRevision`. If current content verification fails, the
+client verifies that exact prior and reports it. A recovered prior is **view and
+export only**: its verified revision, actual server head and actual head evidence
+high-water stay separate. It cannot acquire a writer, decrement the server base,
+truncate sealed pages or silently replace newer evidence. Current/prior failure
+preserves bytes and blocks. A later repaired current save is checked again.
+Returning to a different accepted revision also requires a fresh game-session
+projection; a newly verified cache cannot authorize the old in-memory game.
+
+### Import, usage and privacy behavior
+
+Sign-in never uploads campaigns. Entry separates account and device lists with
+names/status, account-save time and local level/serialized size; the applied
+small summary RPC does not provide a facility level for an unopened remote
+campaign, so none is invented or downloaded just to fill a card. Archived and
+recovery campaigns count toward the two cloud slots. Extra local campaigns stay
+intact; archive/restart does not free a slot. New account creation durably keeps
+its generated source before import, and failed creation remains a retryable
+device source. Account restore is a fenced metadata checkpoint, not a new copy.
+
+Exact own-account profile/legacy strings are retained before parsing. Unowned
+sources are inspected only on explicit selection and copied only after a
+separate claim to the displayed account; another account's keys are never read.
+Copy selection and optional unique name are explicit. Every frozen operation,
+timestamp, token and body survives retry. A crash/lost acknowledgement after
+server acceptance queries that same operation and verifies the accepted full
+logical state/evidence prefix before an additive enrollment marker. ID/name
+collisions, changed branches, invalid/future/oversized data, partial batches,
+quota or storage failure preserve the original bytes. Raw-source retention is
+subject to browser capacity; the 7 MB limit still applies to pending operational
+recovery/import requests, not to the whole existing local profile.
+
+Import history creates zero question counts. Already-minted, current own-account
+Beta 1 staging receipts finish through the existing usage outbox with their
+original IDs and existing usage consent. An additive bounded promotion marker
+avoids resubmitting them on every entry; original profile bytes stay unchanged.
+Unowned staging IDs are never claimed, and no receipt is derived from FSRS or
+clinical history. New cloud answers retain the B2.3 cloud receipt path alone.
+
+The notice is `beta2.cloud.v1` and distinguishes full functional campaign storage
+from the owner's count-only report. It states synthetic-only input, support use,
+campaign versus 90-day usage retention, weekly/two-copy/14-day backup policy,
+seven-day remaining account administration and 30-day hash-only restore ledger.
+`VITE_CLOUD_SAVES_ENABLED` is unset/false by default; no flag/env was enabled or
+read from a populated environment file. Before enablement the manager must
+publish the **verified** service region in `VITE_CLOUD_SAVES_REGION` and accept
+the B2.5 backup/restore/capacity gates. Missing region blocks new notice
+acceptance; this worker did not invent a region or claim a running backup.
+
+Ordinary sign-out preserves scoped recovery. The explicit clear choice requires
+confirmation that unsent work is account-confirmed or exported, warns about
+shared devices/other tabs and stops old writers before deletion. Clearing is
+checked while the account UI can still report failure, before sign-out. Device
+exports include current in-memory local/cloud work; unreadable stored copies
+are reported. Clear affects only this account at this backend/origin; other
+accounts and the unowned prototype remain. Full deletion has a new confirmation
+and stops commands/uploads immediately, including when hosted deletion is not
+confirmed; retry stays available. The old endpoint is never silently widened.
+
+### Build Undo and Level 5 rebind
+
+`applyGameEvidenceBuildUndo` restores the exact same whole-state build target
+used by local Undo, while appending a compensating transition and
+`build-reversion` records referencing the original immutable receipt records.
+It checks pause, clock, identity/pins and unchanged learning history. The journal
+head advances; finance reconciliation remains intact; accepted evidence is never
+removed. The client checkpoints Undo as a higher cloud revision, including an
+already-saved build. Desktop Undo labels/count/history and phone hallway strokes
+remain the existing player-facing behavior. Long strokes locate all reversed
+receipts in the journal, including those trimmed out of the runtime's 96-receipt
+view; previously reverted commands are not marked again.
+
+Only one existing Level 5 hashed input changed in this lane:
+
+| Recorded input | Before / recorded | After |
+| --- | --- | --- |
+| `packages/game-domain/src/game-evidence.ts` | `fe67f56bba365dc6f3a459fd6c06f907784f92ee483cbe6a1041347af045a714` | `82b9af0c1e70bf6d6bfd7b10dd2075093ebce2294b76a3a211839912ec8568e0` |
+
+`index.ts`, `reducer.ts` and `persistence.ts` are byte-unchanged by this worker.
+The manager rebinds through its authorized lane after reviewing the additive
+Undo evidence. No recorded hash, fixture, test or evidence artifact was weakened
+or rebound here. Focused domain Undo validation passes **4/4**, including a real
+101-command build/sell sequence, receipt trimming, exact restore and no duplicate
+reversion. Ordinary reducer/save byte fidelity remains covered by B2.1b tests.
+
+### Validation and manager next action
+
+Final required regression results: **player 2,474/2,474 in 259 files, exit 0;
+all seven workspace typechecks, exit 0; domain 4,295 passed / one permitted
+recorded-input failure in 161 files, exit 1**.
+The requested commands run unchanged, with the existing approved narrow
+Windows preload only for the player suite:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1
+npm.cmd run typecheck
+```
+
+Final logs are `player-final.log`, `domain-final.log` and
+`typecheck-final.log` under `.local-dev/beta2-b24/`. Player-focused integration
+passes **103/103 in six files** before the final long-stroke addition; focused
+domain Undo passes **4/4** after it. A final import/entry check passes **21/21 in
+two files** after the metadata validation/type adjustment. All seven typechecks pass after the final
+source change. UTF-8/no-BOM/LF and scoped source checks are recorded with the
+final manifest. A Node subprocess logging helper hit sandbox `spawn EPERM`;
+the required commands run directly via PowerShell/npm.cmd and their logs use a
+UTF-8/no-BOM StreamWriter. No dependency or sandbox bypass was installed.
+
+Exact final summaries from the required commands:
+
+```text
+Player: Test Files 259 passed (259)
+        Tests      2474 passed (2474)
+        Duration   117.14s
+        Exit       0
+Domain: Test Files 1 failed | 160 passed (161)
+        Tests      1 failed | 4295 passed (4296)
+        Duration   1052.76s
+        Exit       1
+Typecheck: all seven workspaces passed; exit 0
+```
+
+The only domain failure is
+`tests/level-five-integration.test.ts:47`, the unmodified recorded-input check:
+
+```text
+Expected: fe67f56bba365dc6f3a459fd6c06f907784f92ee483cbe6a1041347af045a714
+Received: 82b9af0c1e70bf6d6bfd7b10dd2075093ebce2294b76a3a211839912ec8568e0
+Input:    packages/game-domain/src/game-evidence.ts
+```
+
+No other failure or skipped/weakened test was introduced. The PowerShell log's
+`System.Management.Automation.RemoteException` separators are stderr-stream
+wrappers around this same Vitest/npm failure, not additional failed tests.
+Final audit covers **38 owned files**, all UTF-8 without BOM, LF-only, with a
+final newline; scoped credential-pattern checks pass. No unexpected existing
+source outside this lane changed relative to the worker's captured baseline.
+
+Playwright discovery (exit 0) lists **10 tests in one file** across the desktop
+and phone projects. **No Playwright, physical phone, real Auth/Data API, ingress,
+database-capacity or hosted save acceptance is claimed.** The manager runs the
+new flows and existing e2e regressions in its capable environment, checks actual
+phone suspension/touch/keyboard behavior, reviews the diff and rebinds Level 5.
+
+For those manager tests only, use the disposable QA server/profile at exact
+`http://127.0.0.1:5184` (`location.origin`), with `cloud-saves-qa.html` loaded by
+the e2e runner's fake bindings. It has separate storage and cannot move owner
+saves. This worker did not start or reconfigure a server or opening pathway.
+
+```powershell
+$env:GAMIFY_E2E_EXTERNAL_SERVER = '1'
+$env:GAMIFY_E2E_BASE_URL = 'http://127.0.0.1:5184'
+node node_modules/@playwright/test/cli.js test tests/e2e/cloud-saves.spec.ts --project=desktop-chrome --project=phone-chrome
+```
+
+The owner pathway remains `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in
+the usual persistent browser profile; prototype campaigns stay local. Remote
+remains `https://melissarowlandc-afk.github.io/GamifySurgery/` with separate
+origin-local storage. No save crossed origins/devices from this OFF build.
+
+**LOCAL ONLY:** the manager owns acceptance, the current-thread handoff, the
+audited checkpoint and **"push to GitHub"** reminder, rollout and publication.
+Do not enable the client on this worker's mocked evidence alone.
+
+### Manager QA of B2.4 (2026-10-17)
+
+Ran tests/e2e/cloud-saves.spec.ts against the 5184 QA server (fake transport, no live Supabase): 16/20 initially. The four failures (one scenario x four projects) were a real UI race: CloudSaveControls reset its local `closed` flag on any non-closed phase update, so a status update arriving after the Save & Close promise could hide "Safe to close this tab" although the save and fenced release succeeded. Manager fix: derive `showClosed = closed && view.phase === "closed"` and stop resetting on intermediate phases. The unit test now models the coordinator's closed phase. Rerun: CloudSaveControls 51/51 (and MobileShell); cloud-saves e2e 20/20 with no retries.
+
+## B2.5 handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol, capacity/backup/integrated-recovery lane. **Local tools and
+recovery assertions delivered for manager review. This is not live capacity,
+backup/restore, browser or rollout acceptance.** The full plan, binding owner
+decisions, applied opaque B2.2 migration, B2.4 handoff and manager QA were read.
+No Git, installations, network, Supabase access, browser launch, agents or
+external messages were used. Cloud remains OFF; no real key/env or owner save
+was read. No clinical content, approval, balance, game source, player source,
+launcher or shared Level 5 evidence/checkpoint was changed.
+
+### Delivered files and boundaries
+
+- `tools/cloud-capacity/capacity.mjs`, `capacity.test.mjs`, `README.md` and
+  `results-20261017.json`: Node-only synthetic measurement with the actual
+  format-2 codec, protocol-3 packed load shape and immutable sealed gzip pages.
+  Imports the existing source loader and reducer journey; no installs/builds.
+  Fetch is refused by the CLI. Only the explicitly requested JSON report is
+  written; fixtures and real saves are read-only/out of scope.
+- `tools/cloud-capacity/capacity-monitor.sql`: **read-only**, one SQL Editor
+  result set covering per-account compressed payload/reservations, all eleven
+  Beta 2 table allocations with `pg_total_relation_size`, actual database size,
+  cleanup estimates and 80% / 300 MB / 400 MB warning/stop thresholds. Physical
+  per-account tuple/index attribution is deliberately not invented.
+- `scripts/beta-backup/beta-backup.mjs`, `verify-codec.mjs` and
+  `beta-backup.test.mjs`: private owner-PC export, disk/hash verification,
+  two-copy/14-day pruning, deletion cleanup, scoped default-dry-run restore and
+  read-only live codec readback. Uses the existing ignored admin env, injected
+  fetch in tests, HTTPS-only fixed project, no redirects or secret/error-body
+  output, checked real paths and a local job lock. No dependencies were added.
+- `scripts/beta-backup/install-backup-rpcs.sql` and
+  `backup-restore.test.sql`: **new optional service-only helpers**, plus a
+  rollback-only synthetic live-project rehearsal. The applied B2.2 SQL and its
+  existing grants/RLS are unchanged. Manager must review/apply/test these files;
+  no SQL execution is claimed here.
+- `docs/setup/BETA2_BACKUP_RESTORE.md`: weekly export and daily expiry task
+  setup, private encrypted-volume requirement, recovery point, deletion-aware
+  restore/readback, limits and exact owner/manager actions.
+- `tests/e2e/cloud-recovery.spec.ts`: eight desktop/phone fake-transport cases:
+  unavailable service while browser stays online, read-only service gate,
+  approaching-capacity warning/hard pause, and verified-prior view/export with
+  the actual server head/evidence preserved. Real command blocking, pending
+  recovery, no false Safe to close, downloads and no usage replay are asserted.
+  Existing QA entry/hooks and existing e2e files are unchanged.
+
+Only this appended handoff and those twelve new files belong to the lane.
+The manager retains `CURRENT_THREAD_HANDOFF.md`, Level 5 rebind/evidence,
+acceptance, checkpoint, publication and capability/region enablement.
+
+### Capacity results: estimates, not physical database measurements
+
+Reproduction, from the repository root with installed Node 24:
+
+```powershell
+node tools/cloud-capacity/capacity.mjs --days 1 --seal-every-minutes 60 --max-wall-seconds 180 --out tools/cloud-capacity/results-20261017.json
+```
+
+The JSON records exact fixture/code SHA-256 receipts and every measurement.
+The integration input read here is **12,538,464 bytes**, SHA-256
+`8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73`.
+It was read once into memory and was not regenerated by this worker. This
+receipt replaces neither the concurrent worker's evidence nor its acceptance.
+
+Decimal MB/GB throughout. Account figures model **two** equivalent campaigns,
+each with current plus prior snapshot, one header, all sealed pages, 4 KiB
+campaign/writer allowance, a lifetime import receipt and eight days of saves;
+the account also reserves 8 KiB. SQL binary cost is payload + ceil(12.5%) +
+2 KiB per row. Estimated operation cost uses a 64-byte ID, actual campaign-ID
+length and 1 KiB receipt plus the SQL identity/index allowance; the SQL maximum
+operation shape is separately recorded as 4,096 bytes. Imports estimate the
+prior at current size; continuation uses the previous measured checkpoint.
+
+| Synthetic checkpoint | Current snapshot gzip B | Header + sealed pages gzip B | Evidence SQL reservation B/campaign | All retained bytes + operations MB/account | 30 accounts/60 campaigns + 50 MB shared reserve |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Legacy Level 3 | 1,384 | 18,604 | 25,026 | 1.376 | 91.267 MB |
+| Level 5 economy | 3,517 | 164,524 | 221,963 | 1.778 | 103.337 MB |
+| integration-l4 | 2,102 | 85,723 | 114,875 | 1.571 | 97.137 MB |
+| integration-build | 2,056 | 86,434 | 115,673 | 1.573 | 97.178 MB |
+| integration-preparing | 2,845 | 143,159 | 193,828 | 1.732 | 101.974 MB |
+| integration-running | 2,682 | 151,152 | 204,870 | 1.754 | 102.615 MB |
+| integration-final | 3,036 | 167,158 | 224,922 | 1.796 | 103.866 MB |
+| integration-finish | 3,038 | 157,013 | 213,510 | 1.773 | 103.181 MB |
+| integration-repeat-final | 494 | 185,013 | 251,156 | 1.837 | 105.096 MB |
+| integration-repeat | 493 | 174,605 | 239,447 | 1.813 | 104.394 MB |
+| integration-lower-repeat | 10,678 | 195,202 | 266,714 | 1.913 | **107.405 MB** |
+| Same campaign +204 facility minutes | 29,870 | 238,747 | 330,041 | 2.123 | **113.694 MB** |
+
+All eleven starting fixtures and the observed continuation fit the applied
+8 MB snapshot/auxiliary, 2 MB account-evidence and 1 MB campaign-evidence
+reservations. The observed continuation decodes a 1,797,220-byte game and
+2,622,742-byte complete snapshot/header/page load, below the 3 MB game and
+6 MB processing ceilings. That does not bound future growth.
+
+**Long-play coverage is explicitly partial:** requested one 600-minute
+operating day; completed **204 minutes = 0.34 facility days**, 217 actual
+evidence-routed commands, at the configured 180-second continuation budget
+(180.559 seconds recorded before final-tail verification). Reused the existing
+journey's chart selection, real answer actions, review clock and day boundaries;
+did not rerun the whole expensive Level 4/5 journey. Pages sealed at each
+60-minute checkpoint and the final tail (29 total) remained unchanged. Every
+original record prefix and all decoded sealed rows were compared exactly.
+No history was truncated. Larger `--days` / `--max-wall-seconds` runs are
+available to the manager; a full-day or indefinite-play PASS is **not** claimed.
+
+The database estimate leaves the 50 MB shared allowance, the original target's
+50 MB below the 400 MB working ceiling, and 100 MB between that ceiling and
+the 500 MB provider cap. Actual table/TOAST/index/dead-row and transient bytes
+still require the live monitor; client gzip is not credited as another TOAST
+saving or proof of physical free space.
+
+| Conservative repeated-write scenario | Mature starting checkpoint | +204-minute checkpoint | Working-budget outcome |
+| --- | ---: | ---: | --- |
+| Steady reservations + shared reserve | 107.405 MB | 113.694 MB | Below 400 MB |
+| One day unverified snapshot/receipt cleanup + 30-account transient margin | 145.634 MB | 199.856 MB | Below 400 MB estimate |
+| Eight days unverified cleanup + same transient margin | 392.438 MB | **773.115 MB** | Continued-play model exceeds both 400 and 500 MB |
+
+**Lossless operating condition:** review capacity/cleanup **daily** while the
+cohort is active, confirm actual VACUUM/reusable-space behavior, and only then
+use the existing explicit `acknowledge_cleanup` attestation. Purging is not proof
+of reclamation. Keep the server's conservative safe pause and reservation guard;
+an eight-day unattended-cleanup promise fails this model. Further lossless
+options are coalescing redundant checkpoints while retaining every evidence
+fact, avoiding unchanged uploads, reviewing bounded operation-receipt overhead,
+and a smaller staged active cohort. Immutable page caching/delta downloads or
+future page layout improvements need a separately reviewed protocol change;
+never repack accepted sealed pages or truncate FSRS/money/inspection history.
+Discuss an owner-approved paid plan only if measured usage requires it.
+
+### Monthly transfer
+
+Assumptions are exposed in JSON: 30 accounts, 30 active days, two 30-minute
+sessions/account/day, 36 checkpoints/session (including early coalesced saves),
+15-second renewals, 60-second metadata checks and 2 KiB small-response/header
+allowance. Demand is per account and split across two campaigns. Five weekly
+exports cover a long billing month; private export JSON doubles binary bytes
+for `bytea` hex and includes modeled metadata/operations plus an explicit,
+unmeasured **50 MB other-table export allowance**. Failed exports, extra manual
+exports and other project traffic consume additional allowance. No HTTP gzip,
+immutable download caching or provider billing discount is assumed.
+
+| Full selected-campaign downloads/session | Downloads/account/day | Mature checkpoint egress/month | +204-minute checkpoint egress/month | Against 5 GB |
+| --- | ---: | ---: | ---: | --- |
+| 1 | 2 | 1.796 GB | 2.001 GB | Fits estimate |
+| 2 | 4 | 2.307 GB | 2.666 GB | Fits estimate |
+| 3 | 6 | 2.818 GB | 3.332 GB | Fits estimate |
+
+The continued case includes **0.700 GB** small RPC replies and **0.634 GB**
+private exports before its 0.666 / 1.331 / 1.997 GB full loads. Only the selected
+current campaign/prefix is downloaded, never both retained snapshots on normal
+opens. Checkpoint uploads are **ingress**, excluded from every egress total.
+The separate snapshot-only ingress estimate excludes new evidence/imports and
+is labeled accordingly. Provider dashboard/billing and real transfer remain
+manager checks, including growth beyond this short continuation.
+
+### Backup and restore contract
+
+The applied server provides no raw campaign-table service grants or private
+Data API schema. Therefore the reviewed optional SQL adds two service-only
+public-invoker/private-definer operational RPCs, plus one ungranted row helper.
+It does not alter the applied migration or expose private tables. Export covers
+all eight Beta 1 and eleven Beta 2 application tables. Native bigint fields
+become decimal strings, blobs remain opaque hex, and per-account membership
+locks give coherent account exports without a long-lived whole-project copy.
+Beginning/end catalogs include current deletion metadata. Auth passwords,
+identities/configuration/schema and an entire lost project are separate recovery
+work; these are application-data exports, not an Auth backup.
+
+The Node tool never prints keys, payloads, rosters or provider error bodies.
+It uses the existing ignored `.local-dev/beta-admin.env`, writes checksummed
+dated `.local-dev/beta-backups/` generations, serializes jobs, retains two
+verified copies, removes incomplete/corrupt copies, and expires at 14 days even
+before a failed network call. Weekly backup plus daily local prune tasks are
+documented, **not installed or running**. Exports require a private encrypted
+owner-PC volume; the tool does not pretend file modes supply Windows encryption.
+
+Restore defaults to a server-checked **dry run**. Explicit apply confirms the
+original project/account/campaign and permits only an **absent** campaign. It
+never overwrites a present campaign, restores membership/consent/owner/setup
+state, replays usage, restores old writer tokens, or replaces the live ledger.
+Current Auth admission/ban/deletion, membership, cloud consent and the **live**
+30-day deletion ledger are checked under normal lock order. Project write and
+enrollment gates must be closed. Slots, complete current/prior sealed prefixes,
+compressed hashes, declared processing sizes, quotas and transient headroom are
+rechecked; apply reserves through the existing B2.2 accounting atomically.
+The restored head is backup head +1, writer generation +1 with no active token;
+prior content and accepted pages remain preserved. An ambiguous apply response
+requires inspection, never an automatic retry/overwrite.
+
+`verify-live --account ... --campaign ...` reads that account into memory and
+passes both retained revisions through the **actual client adapter and codec**
+while project gates remain closed. It acquires no writer and writes no file or
+database data. This avoids the disabled ordinary-entry buttons during
+maintenance. After accepted readback, restore only the recorded gate values,
+then check the paused client UI before explicit Continue. Confirmed deletion
+uses `forget-account` to remove matching private generations within the existing
+seven-day administration target, followed by the existing Auth/invite cleanup.
+
+### Validation and manager next action
+
+Existing installed dependencies only. New script/formula/codec tests pass
+**15/15, exit 0**:
+
+```powershell
+node --test --test-isolation=none --test-reporter=tap scripts/beta-backup/beta-backup.test.mjs tools/cloud-capacity/capacity.test.mjs
+```
+
+The requested plain `node --test scripts/beta-backup/beta-backup.test.mjs`
+first failed before executing tests with sandbox **spawn EPERM**. The supported
+no-isolation Node test mode above executes the same assertions without a child
+process. Tests inject every fetch and env read; no real endpoint/key is used.
+Coverage includes genuine sealed gzip/current-codec readback, rejection of
+non-gzip/changed blobs, huge bigint revision strings, scope, no Beta 1 replay,
+dry-run/explicit apply, live deletion refusal, ambiguity, exact 14-day expiry,
+two-copy policy, corrupt/incomplete generations, forgotten accounts, path/link
+checks, overlapping jobs, wrong project and secret/error redaction.
+
+All **seven workspace typechecks pass, exit 0**:
+
+```powershell
+npm.cmd run typecheck
+```
+
+The exact required full player command ran with the already-approved narrow
+Windows `net use` EPERM preload:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+```
+
+Observed **2,462 passed / 12 timed out in eight files**, 251 passed files / eight
+failed (259), duration 487.44 seconds, exit 1. Every failure is an existing test
+timeout (5 / 30 / 60 / 180 seconds); no assertion failure was reported. The
+machine also ran the capacity continuation and concurrent rebind work. All
+571 captured existing player/admin/migration source paths remained byte-equal.
+No test/timeout/assertion was changed. A serial rerun with only
+`--maxWorkers=1` added reduces failures to **2,472 passed / two timed out**,
+258 passed files / one failed (259), duration **716.19 seconds**, exit 1:
+
+```powershell
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1
+```
+
+Remaining failures are exactly `src/session/cloud/codecEvidence.test.ts`:
+"measures six further hours of real mature-facility commands without discarding
+immutable rows" (180,000 ms) and "hashes the entire encoded request, rejects
+identity/row corruption, and verifies uncompressed canonical bytes" (5,000 ms).
+Both are timeouts, not failed equality/invariant assertions. Shared CPU
+contention is a plausible cause, not independently proven. The manager must
+rerun this unchanged file/full suite after the concurrent workload settles;
+the regression gate is **not green**. PowerShell's `RemoteException` separators
+wrap these same Vitest/npm errors and do not indicate extra test failures.
+
+Exact final summaries:
+
+```text
+New Node tests: tests 15 / pass 15 / fail 0; exit 0
+Typecheck:     all seven workspaces passed; exit 0
+Player:        8 failed | 251 passed files (259)
+               12 timed out | 2462 passed tests (2474); exit 1
+Player serial: 1 failed | 258 passed files (259)
+               2 timed out | 2472 passed tests (2474); exit 1
+E2E discovery: 16 tests in one file; exit 0 (not execution)
+```
+
+Source-only SQL checks cover balanced lexical delimiters, five fixed-path
+helper/wrapper definitions with service-only RPC entry points, no raw table grants, dry-run/deletion/
+reservation guards, rollback-only single PASS result and a read-only monitor.
+These are **not a PostgreSQL parse or SQL PASS**. No browser was launched.
+Playwright **discovery only** exits 0 and lists **16** cases for the new file
+across desktop-chrome/phone-chrome (eight scenarios, each also exercises an
+explicit desktop or phone context). The manager runs actual browser checks:
+
+```powershell
+$env:GAMIFY_E2E_EXTERNAL_SERVER = '1'
+$env:GAMIFY_E2E_BASE_URL = 'http://127.0.0.1:5184'
+node node_modules/@playwright/test/cli.js test tests/e2e/cloud-recovery.spec.ts --project=desktop-chrome --project=phone-chrome
+```
+
+Final source audit passes: **13 owned paths**, UTF-8 without BOM, LF-only and
+final newlines; scoped credential-pattern scan; **571** protected existing
+player/admin/migration paths byte-unchanged; the prior plan is an exact byte
+prefix (append-only); report fixture receipt matches the current shared fixture.
+Logs/baselines and the scoped manifest are ignored under
+`.local-dev/beta2-b25/`: `node-tests-final.log`, `player-final.log`,
+`player-serial.log`, `typecheck-final.log`, `source-checks.log`,
+`baseline.json`, `owned-files.json` and `final-manifest.json`.
+Manager next: inspect actual owned files; run/apply the
+new operational helpers and complete rollback rehearsal in the approved live
+SQL Editor; measure actual physical capacity/cleanup/egress; perform an
+authorized synthetic backup/dry-run/apply/live-codec-readback/paused-client drill;
+run the new browser scenarios and required regression after concurrent work
+settles. Full-day/extended growth and hosted ingress remain unproven. Accept
+those gates before enabling a cohort; no Free-plan rollout PASS is claimed.
+
+The owner pathway stays `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in
+the usual persistent profile (`location.origin = http://127.0.0.1:4173`); remote
+stays `https://melissarowlandc-afk.github.io/GamifySurgery/` with separate local
+storage. Only manager tests use disposable `http://127.0.0.1:5184` and fake QA
+bindings. This worker did not start/change a server or opening path.
+
+**LOCAL ONLY:** the manager owns final acceptance, the current-thread handoff,
+the audited checkpoint and **"push to GitHub"** reminder, SQL application,
+capability/region enablement and publication. No GitHub backup or live private
+backup exists merely from this delivery.
+
+### Manager acceptance of B2.5 and live helper application (2026-10-17)
+
+Reviewed scripts/beta-backup/install-backup-rpcs.sql (service_role-only export/restore, JWT role guard, revoke-all + service_role execute; dry-run default). Filed it as supabase/migrations/20261018000200_beta2_backup_rpcs.sql and applied it live from a SHA-verified copy. The rollback test exposed a real PL/pgSQL ambiguity in beta2_backup_restore (`u.id = id`, where `id` is a declared variable; function-name qualification is not valid for DECLARE variables). The manager changed the comparison to the locked membership row (`u.id = m.user_id`) in both copies and reapplied (final SHA-256 prefix 9e2f4f214313fcf0). scripts/beta-backup/backup-restore.test.sql then reported "PASS: B2.5 backup/restore dry-run, opaque bytes, bigint, scope, deletion, admission, gates, capacity". The capacity monitor runs (12 rows; beta2 storage is empty before enablement). Capacity model: about 113.7 MB with reserves; egress 1.8-3.3 GB/month against 5 GB.
+
+
+## B2.6 prerequisites handoff (2026-10-17)
+
+Worker: GPT-6.1 Sol, cohort enablement safety and owner-tool lane. Delivered
+locally for manager review; live cohort enablement, SQL application, publication
+and the physical-device trial remain manager gates. Read all prior handoffs,
+manager acceptances and B2.2 live application. The applied migrations and all
+clinical/game-domain content, fixtures, approval states, concept IDs, FSRS
+meaning, original save keys and launchers were not edited.
+
+### Implementation and owned files
+
+- `apps/player/src/session/cloud/CloudAccount.tsx`: the build flag permits an
+  initial access check, not entry into cloud mode. Pending, disabled and failed
+  initial checks expose a null cloud context, preserving the existing Beta 1
+  router, account menu, notice, local session and storage namespace. No cloud
+  source inspection, campaign-list fetch, enrollment, sign-out guard, timer,
+  automatic retry or focus check is installed for those accounts. StrictMode
+  replay shares one access promise. An affirmative enabled account alone exposes
+  cloud entry. Later failures in an already admitted cloud session retain the
+  existing error/recovery controls and bytes; they do not reopen a local branch.
+- `auth/AuthGate.tsx`: retain the exact Beta 1 sign-in copy regardless of the
+  build flag. An unauthenticated screen cannot know cohort membership.
+- `session/cloud/transport.ts`, `supabaseTransport.ts`, `coordinator.ts`
+  and `ui/CloudCampaignEntry.tsx`: separate per-account `enabled` from
+  project `writesEnabled`. Closing writes keeps an enabled owner in cloud
+  entry with play/import/create unavailable; it does not turn a cloud campaign
+  into local play. Coordinator admission also checks the write switch.
+- `qa/cloudSavesQa.tsx`: dev-only QA tools tolerate the intentional null
+  context while the initial check is unresolved. No hosted route was added.
+- Tests: new `apps/player/src/App.cloudAccess.test.tsx` runs the actual router,
+  local session and both real shells (only map drawing is replaced). Compares
+  entry text/controls, complete saved profiles, local Save & Close and keys to
+  the flag-OFF path for disabled and failed checks; preserves another account,
+  unowned prototype and legacy bytes; verifies one access RPC, zero cloud-store
+  methods, no new fetch and no cloud sign-out guard. Also covers an access reply
+  arriving after local Resume, StrictMode, enabled notice entry and write-off
+  owner entry. Existing `CloudAccount.test.tsx` fixture now waits for admission;
+  `auth/AuthGate.test.tsx` and `supabaseTransport.test.ts` add sign-in parity
+  and independent cohort/write-switch assertions. No existing assertion was
+  removed or softened. App.tsx and both shell sources remain byte-unchanged.
+- `scripts/beta-invites/beta-invites.mjs`, new `beta-cloud.mjs` and
+  `beta-cloud.test.mjs`: CLI and double-click prompts support `cloud status`,
+  `cloud enable <email>`, `cloud disable <email>`, `cloud writes on|off`
+  and `cloud enrollments on|off`. Reuse the existing ignored admin-env/key
+  path, SDK client and output/error redaction. Emails resolve through the existing
+  membership RPC; cloud operations use only `beta2_admin_cloud`. No Auth
+  account, invitation, notice or campaign is created. Validate responses before
+  printing success; never dump provider objects/errors. Each global toggle
+  preserves the inspected opposite value under the existing two-field configure
+  contract; owner commands must run sequentially, then verify status.
+- `scripts/beta-invites/README.md`: commands, private configuration, SQL
+  prerequisite, staged owner-only setup, build/region semantics and save origins.
+- `.github/workflows/deploy-pages.yml`: Pages build now reads public GitHub
+  repository VARIABLES `vars.VITE_CLOUD_SAVES_ENABLED` (default `false`)
+  and `vars.VITE_CLOUD_SAVES_REGION` (default empty). Existing hosted-auth
+  configuration is retained. Nothing is enabled or deployed by this worker.
+
+### Necessary forward SQL prerequisite
+
+The applied `beta2_admin_cloud('inspect')` returns only an account COUNT;
+there is no read-only per-account status action and service_role has no raw-table
+SELECT grant. Therefore `cloud status` cannot truthfully list enabled accounts
+using the deployed contract alone. New
+`scripts/beta-invites/install-cloud-status-rpc.sql` replaces ONLY that existing
+private function, adding an ordered `accountSettings:[{userId,enabled}]` result.
+All existing account/configure/cleanup statements, JWT-role guard, fixed empty
+search path, signature and wrapper are retained; service-only execution is
+reasserted. A Node source-contract test removes the added expression and proves
+the remaining function is byte-equal to the applied migration's body. No applied
+migration was edited, and no SQL was executed. This prepared forward update can
+be filed as a migration by the manager using its normal tooling.
+
+The manager must review/apply that SQL, then run the entire
+`scripts/beta-invites/cloud-status.test.sql` as postgres. It compares the exact
+stored enabled list/switches, retains the original configure pair and checks
+service-only ACL/JWT boundaries inside ROLLBACK, without enabling real accounts.
+Capture its actual PASS and rerun the existing Beta 2 SQL suite. This is a
+prepared rehearsal, not a PostgreSQL parse, SQL PASS or live status claim.
+Missing/malformed accountSettings produces an explicit CLI failure; it never
+prints an invented empty cohort. No installed Supabase CLI was available and the
+brief forbids network/install; existing local SQL is the contract used here.
+
+### Build region and owner trial checklist
+
+`VITE_CLOUD_SAVES_REGION` expects a nonempty, trimmed human-readable string
+identifying the VERIFIED hosting region of this Supabase project, preferably the
+dashboard display name plus region identifier. It is shown verbatim in
+`CloudNoticeDetails`; it is not a credential, URL or enforced region enum.
+Copy the actual dashboard value, never a guessed/example region. Empty blocks
+new cloud-notice acceptance. Set it and the exact enable value `true` as
+GitHub repository VARIABLES, then build/publish through the manager's authorized
+release path. Build variables alone do not enable any account. This worker did
+not inspect a populated env, change GitHub variables or select the actual region.
+
+Short owner trial, after manager acceptance of code, release, backup and capacity
+checks:
+
+1. Apply/test the status RPC update; run `cloud status`. Enable only the
+   owner's invited email, turn writes/enrollments on and verify status again:
+   exactly the owner is `yes`. A non-enabled account must still see the usual
+   Beta 1 local entry on desktop and phone, including when the access RPC fails.
+2. **Desktop:** open exact
+   `https://melissarowlandc-afk.github.io/GamifySurgery/` in the intended
+   persistent profile, sign in as the owner and verify the published service
+   region before accepting the cloud notice. Create a small synthetic account
+   clinic, or explicitly choose one local source to copy. Keep its original bytes.
+   Sign-in alone must upload nothing. Record campaign name, progress, cash and
+   learning/answer history; play and wait for confirmed Saved to account.
+3. **Phone:** use the same exact Pages URL and account in its normal browser.
+   Open the matching campaign and verify desktop's confirmed progress. Leave the
+   desktop tab open; choose Continue on this device explicitly if takeover is
+   offered. Opening alone must not take the writer. Play once and confirm the
+   desktop cannot overwrite/release the phone writer or claim its old cache is
+   saved. Phone Save & Close must confirm before leaving it.
+4. **Desktop again:** focus the old tab, verify pause/fresh-check behavior and
+   continue from the phone's last confirmed state. Compare campaign identity,
+   cash, purchases, frozen choice order and learning history; verify no duplicate
+   answer, FSRS review or usage count. No hidden-time catch-up is expected.
+5. Repeat once with the desktop hidden and the phone briefly suspended. Check
+   touch/keyboard dialogs and honest pending/error state after a brief outage;
+   no Safe to close until a confirmed save and fenced release. Preserve recovery
+   if a failure occurs; do not replace it with a fresh campaign.
+6. Recheck `cloud status`; exercise enrollments off (new imports/creation
+   blocked, existing saves available) and writes off (enabled owner paused).
+   Restore only the manager's intended switch values and record results. Keep
+   every other account disabled until the owner handoff is accepted. Do not use
+   per-account disable to erase or migrate a cloud campaign.
+
+Local owner opening remains `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the usual persistent profile
+(`location.origin = http://127.0.0.1:4173`). The trial uses Pages on both
+devices (`location.origin = https://melissarowlandc-afk.github.io`). Each
+origin/profile/account retains separate local saves; setup/sign-in does not move
+4173 campaigns to Pages. Only explicit copying can enroll a source available at
+that origin. No server, launcher, browser storage or opening pathway was changed.
+
+### Validation and manager next action
+
+**Final local validation passes.** Required full player command finishes with
+**260 passed files / 2,488 passed tests, zero failures, exit 0**, duration
+**114.64 seconds**. Final focused cohort/auth/transport checks pass **79/79 in
+four files**, duration **9.94 seconds**, exit 0. All **seven workspace
+typechecks pass, exit 0**. Owner-tool tests pass **135/135 in seven suites**,
+including **42 new cloud tests**, exit 0 (mocked fetch/env only).
+
+Exact successful command contract from repository root:
+
+```powershell
+# Existing approved narrow Vite Windows network-drive-probe preload only.
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/App.cloudAccess.test.tsx src/session/cloud/CloudAccount.test.tsx src/session/cloud/supabaseTransport.test.ts src/auth/AuthGate.test.tsx
+node --test --test-isolation=none --test-reporter=tap scripts/beta-invites/*.test.mjs
+npm.cmd run typecheck
+```
+
+The requested plain `node --test scripts/beta-invites/*.test.mjs` was attempted
+first and failed before running assertions with sandbox **spawn EPERM**, exit 1.
+The supported in-process `--test-isolation=none` mode runs all the same tests;
+no test, fetch handler or assertion is skipped. The command-line `--help` was
+also run successfully and lists every new cloud action without loading keys.
+
+Exact final summaries (retained raw logs, no inferred PASS):
+
+```text
+Full player: Test Files 260 passed (260)
+             Tests      2488 passed (2488)
+             Duration   114.64s; exit 0
+Focused:     Test Files 4 passed (4)
+             Tests      79 passed (79)
+             Duration   9.94s; exit 0
+Owner tool:  tests 135 / suites 7 / pass 135 / fail 0 / skipped 0
+             duration_ms 595.447; exit 0
+Typecheck:   all seven workspace typechecks passed; exit 0
+```
+
+Earlier full runs during concurrent heavy Node work are retained for audit:
+normal four-worker default **2,477 passed / 11 timed out in seven files**, exit 1,
+**475.45 s**; a full `--maxWorkers=1` rerun **2,482 passed / six timed out in
+four files**, exit 1, **915.93 s**. Every failure was Test timed out, not an
+assertion failure. The six serial failures were the unchanged evidence-codec
+360-minute growth (180 s) and complete-request/hash case (5 s), Level 4 specialty
+projection (30 s), gift routes at 1x and 4x (5 s each), and Level 3 three-nurse
+view (5 s). The default run also timed out the backless-stool pixel case,
+peri-op companion footprints, both Level 5 report QA cases and the Level 2
+nurse view. These seven test sources and their underlying unowned player
+sources stayed byte-equal to the captured baseline. Heavy processes observed
+during those runs had ended before the final run. **No source, timeout,
+assertion or fixture was changed between the failing and final passing full
+runs.** This is consistent with host contention; its exact contribution was not
+independently profiled. The final required full-suite gate is green.
+
+Scoped audit: **19 owned paths**, all UTF-8 without BOM, LF-only, with final
+newlines and a clean scoped credential-pattern scan. **561 protected existing
+player/admin/migration/workflow paths remain byte-unchanged** out of 573 captured
+baseline paths; the twelve changed existing paths are the assigned files listed
+above. The prior ExecPlan is an exact byte prefix, including all manager
+acceptances. README links resolve. SQL transaction/delimiter/one-PASS source
+checks pass; these do not substitute for SQL execution. Validated source hashes
+stayed unchanged throughout the final runs.
+
+Actual before/after diff and source copies, owned-path manifest, final SHA-256
+manifest, raw validation logs and checks are in ignored
+`.local-dev/beta2-b26-prerequisites/`: `baseline/`, `baseline.json`,
+`changes.patch`, `owned-files.json`, `final-manifest.json`,
+`source-checks.log`, `player-final.log`, `player-focused-final.log`,
+`player-full.log`, `player-serial.log`, `node-exact.log`,
+`node-final.log` and `typecheck-final.log`.
+
+Manager next: inspect the actual scoped diff/new files and logs; file/review and
+apply the prepared forward status-RPC SQL, run its rollback check plus existing
+Beta 2 SQL regression, confirm the real project region and repository variables,
+verify status has only the owner enabled, then perform the owner trial above
+through the approved publication/enablement path. Unit/mocked-fetch results do
+not establish live SQL/Data API or physical-phone acceptance. The worker did
+not run a Pages build, start a server or access a browser, real credentials,
+owner storage, GitHub or Supabase.
+
+**LOCAL ONLY:** no Git, installs, network, agents, external messages, commits,
+push, deployment, publication, server/GitHub setting changes or clinical-content
+changes occurred. The manager retains acceptance, CURRENT_THREAD_HANDOFF.md,
+the audited GitHub checkpoint and **"push to GitHub"** reminder, SQL application,
+cohort enablement and release. This bounded prerequisites implementation is
+complete for manager handoff; live application and the owner trial are next.
+
+### Manager regression comparison (2026-10-17)
+
+Full Playwright suite, retries 0, default config: published release b3b24bd6/1865337f tree 299 failed / 267 passed / 458 skipped / 112 did not run; B2.4 live tree 301 failed / 285 passed (the extra 18 passes are the new cloud specs). Failure sets differ by four tests in B2.4 and two in the release. All four B2.4-only failures pass on targeted rerun (approved-room-interactions:123 2/2 on both trees, room-capacity-sales:221, founder-activity-chart-endoscopy:427, cloud-saves:138 x3 on laptop), so they are flaky, not regressions. **B2.4 introduces no e2e regression.** Separate finding: about 300 legacy e2e tests are stale relative to Levels 4-5/mobile (pre-existing on the published release). Queued as a post-Beta-2 e2e-suite repair milestone.
+
+## B2.6 revision 1
+
+Manager QA found a B2.6 regression: the pending access gate mounted
+`AuthenticatedPrototype`, whose profile loader can write an empty account-local
+profile before an enabled account enters cloud mode. This section supersedes
+the prerequisites handoff's statement that pending access uses the Beta 1 entry.
+The first access decision must finish before either campaign path mounts.
+
+Changes in this revision (shared tree, Sol worker; six owned paths):
+
+- `apps/player/src/session/cloud/CloudAccount.tsx`: initial pending access now
+  renders the existing sign-in loading style and "Checking your sign-in…" text,
+  with no children, local session, cloud entry or campaign-storage writes.
+  Initial disabled/failed checks select the exact Beta 1 path; initial enabled
+  checks select cloud entry. The single StrictMode-safe access request remains.
+  Cloud admission is retained for this account mount: a later disabled response
+  preserves the cloud controls, verified summaries/slots and sign-out durability
+  guard rather than mounting a local campaign. Later failures retain the cloud
+  error/recovery path. Re-entry after sign-in/reload performs a new cohort check.
+- `apps/player/src/App.cloudAccess.test.tsx`: retains the desktop/phone exact
+  Beta 1 entry/session/save/key comparisons for initial disabled and network
+  failure outcomes. Pending assertions now require neutral loading and no storage
+  activity. Resume coverage begins after the local decision. Four new cases
+  cover fresh desktop/phone accounts, before and after notice acceptance:
+  pending and enabled entry make zero localStorage set/remove calls, create no
+  account-local profile, preserve all other bytes and perform only expected RPCs.
+- `apps/player/src/session/cloud/CloudAccount.test.tsx`: two new cases retain
+  admitted cloud context, both campaign slots (including an archive), summaries
+  and the sign-out guard after a later disabled or failed check. Neither case
+  makes a follow-up list request while unavailable.
+- `scripts/beta-invites/README.md`: corrects pending behavior and documents
+  preservation of cloud recovery controls after a later disabled response.
+- `tests/e2e/cloud-recovery.spec.ts`: repairs only the `details` helper's race.
+  It rechecks the visible modal if automatic opening blocks a status-button
+  click (one-second click attempt within the existing five-second assertion
+  budget). All recovery/content/state/server assertions remain intact; product
+  dialog behavior is unchanged. No forced clicks, skipped cases or longer test
+  timeouts were added.
+- This plan: appended this revision; all prior handoffs and the manager's
+  regression comparison are preserved verbatim.
+
+The full supplied `.local-dev/qa-probe/cloud-e2e-b26-failures.txt` was reviewed:
+four fresh-phone profile-write failures, four two-slot/disabled-service failures
+and twelve recovery timeouts. The first two groups match the gating defects
+above. Recovery logs show the auto-opened modal intercepting the status click;
+the two reports masked by `browserContext.close` were checked in their local
+traces and show the same interception. The helper previously tested visibility
+once, then waited behind that modal until the entire test expired. These are
+distinct from campaign persistence failures. Browser confirmation is still due.
+
+Validation from the repository root, all final commands **exit 0**:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/App.cloudAccess.test.tsx src/session/cloud/CloudAccount.test.tsx src/session/cloud/supabaseTransport.test.ts src/auth/AuthGate.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+```
+
+Observed results: focused **4 files / 85 tests passed**, **4.05 s**; full player
+**260 files / 2,494 tests passed**, **107.37 s**, zero failures; all **seven
+workspace typechecks passed**. Before the production fix, the revised account
+tests reproduced the regression: **13 failed / 10 passed in two files**, exit 1
+(pending Beta 1 mounting and loss of admitted context on disable). Final source
+hashes stayed fixed through successful validation. The existing narrow Vite
+Windows `net use` EPERM preload was reused; no dependencies or test timeouts
+were changed.
+
+Evidence is retained in ignored `.local-dev/beta2-b26-revision1/`: original
+six-file `baseline/`, 686-path `baseline.json`, `owned-files.json`, actual
+`changes.patch`, `validated-source.json`, `final-manifest.json`,
+`source-checks.log`, `player-red.log`, `player-focused.log`, `player-full.log`
+and `typecheck.log`. The final audit confirms UTF-8 without BOM, LF-only files
+with final newlines and no unowned changes among captured source/config paths.
+
+Manager next: inspect the actual revision diff and logs, then rerun
+`tests/e2e/cloud-saves.spec.ts` and `tests/e2e/cloud-recovery.spec.ts` against a
+fresh disposable QA server. **No Playwright PASS is claimed by this worker.**
+The earlier owner tooling, workflow variables, SQL prerequisite and owner trial
+remain as handed off; no real cohort or global switch was changed. No Git,
+installs, network, agents, server start/restart, deployment, owner storage or
+clinical-content changes occurred. Existing owner opening pathways remain
+unchanged. Manager retains acceptance, CURRENT_THREAD_HANDOFF.md and the GitHub
+checkpoint/reminder.

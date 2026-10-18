@@ -10,6 +10,7 @@ interface ResourceBarProps {
   buildMode?: boolean;
   managementMode?: boolean;
   pauseLocked?: boolean;
+  pauseLockReason?: string;
   simulationSpeed?: SimulationSpeed;
   onTogglePause: () => void;
   onSimulationSpeedChange?: (speed: SimulationSpeed) => void;
@@ -59,6 +60,7 @@ export function ResourceBar({
   buildMode = false,
   managementMode = false,
   pauseLocked = false,
+  pauseLockReason,
   simulationSpeed = 1,
   onTogglePause,
   onSimulationSpeedChange,
@@ -72,10 +74,10 @@ export function ResourceBar({
     : managementMode
       ? "management"
       : null;
-  const timeControlLockMessage =
+  const timeControlLockMessage = pauseLockReason ?? (
     controlledMode === "build"
       ? "Build Mode controls the pause. Exit Build Mode to resume."
-      : "Management Mode controls the pause. Exit Management Mode to resume.";
+      : "Management Mode controls the pause. Exit Management Mode to resume.");
   const xpProgressPercent = clampPercent(view.xpProgressPercent);
   const moneyDelta =
     view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel;

@@ -1,13 +1,13 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { PrototypeShellProps } from "../shellContract";
 import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
 import "../ui/betaAccount.css";
 
 export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, buildMode, managementMode,
-  onTogglePause, onSimulationSpeedChange, referenceLocked = false, onCash, onMore,
+  onTogglePause, onSimulationSpeedChange, referenceLocked = false, referenceLockReason, onCash, onMore, cloudStatus,
 }: Pick<PrototypeShellProps, "resourceBar" | "paused" | "simulationSpeed" | "buildMode" |
   "managementMode" | "onTogglePause" | "onSimulationSpeedChange"> & {
-  referenceLocked?: boolean; onCash: () => void; onMore: () => void;
+  referenceLocked?: boolean; referenceLockReason?: string; onCash: () => void; onMore: () => void; cloudStatus?: ReactNode;
 }) {
   const locked = buildMode || managementMode || referenceLocked;
   const requested = useRef(false);
@@ -17,7 +17,7 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
     requested.current = true; onTogglePause();
   };
   const lockReason = buildMode ? "Exit Build Mode to resume." : managementMode
-    ? "Exit Management Mode to resume." : "Close this dialog to resume.";
+    ? "Exit Management Mode to resume." : referenceLockReason ?? "Close this dialog to resume.";
   const progress = Number.isFinite(view.xpProgressPercent) ? Math.max(0, Math.min(100, view.xpProgressPercent ?? 0)) : 0;
   return <header className="mobile-top-bar" aria-label="Clinic resources">
     <div className="mobile-resource-row">
@@ -53,6 +53,7 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
     </div>
     {locked ? <small className="mobile-clock-lock" role="status">{lockReason}</small> : null}
     <ClinicalContentNotice />
+    {cloudStatus ?? <small className="cloud-local-status">Local only</small>}
   </header>;
 }
 

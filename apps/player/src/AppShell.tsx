@@ -5,6 +5,8 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
 import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
 import { ClinicHeadline } from "./ui/ClinicHeadline";
+import { CloudSaveControls, cloudStatusText, type CloudShellSave } from "./ui/CloudSaveControls";
+import { AccountMenu } from "./ui/AccountMenu";
 import { FinishedGamePage } from "./ui/FinishedGamePage";
 import type {
   EmployeeDiscussionTabView,
@@ -82,6 +84,7 @@ import type {
 } from "./session";
 
 interface AppShellProps {
+  cloudSave?: CloudShellSave;
   resourceBar: ResourceBarView;
   paused: boolean;
   simulationSpeed: SimulationSpeed;
@@ -209,6 +212,7 @@ function clampZoom(value: number): number {
  * domain/session layers; this component coordinates visible workspaces.
  */
 export function AppShell({
+  cloudSave,
   resourceBar,
   paused,
   simulationSpeed,
@@ -720,15 +724,16 @@ export function AppShell({
         paused={paused}
         buildMode={buildMode}
         managementMode={managementMode}
-        pauseLocked={buildMode || managementMode || finishReportOpen}
+        pauseLocked={buildMode || managementMode || finishReportOpen || Boolean(cloudSave && !cloudSave.view.canExecute)}
+        pauseLockReason={cloudSave && !cloudSave.view.canExecute ? cloudStatusText(cloudSave.view) : undefined}
         simulationSpeed={simulationSpeed}
         onTogglePause={onTogglePause}
         onSimulationSpeedChange={onSimulationSpeedChange}
         endControls={
-          <SaveCloseDialog
+          cloudSave ? <CloudSaveControls save={cloudSave} /> : <><span className="cloud-local-status">Local only</span><SaveCloseDialog
             onSaveAndPause={onSaveAndPause}
             onClearLocalCampaigns={onClearLocalCampaigns}
-          />
+          /></>
         }
       />
 
@@ -1100,6 +1105,7 @@ export function AppShell({
           </p>
         ) : null}
         <div className="footer-actions">
+            <AccountMenu />
           <TesterFeedbackMenu level={campaigns.find(campaign => campaign.active)?.facilityLevel ??
             Number(progression.facilityLevelLabel.match(/\d+/)?.[0] ?? 0)} />
           <HelpDialog
@@ -1120,10 +1126,12 @@ export function AppShell({
           ) : null}
           <CampaignManager
             campaigns={campaigns}
+            accountMode={Boolean(cloudSave)}
             onCreateCampaign={onCreateCampaign}
             onSwitchCampaign={onSwitchCampaign}
           />
           <RestartDialog
+            accountMode={Boolean(cloudSave)}
             paused={paused}
             onTogglePause={onTogglePause}
             onRestart={onRestart}

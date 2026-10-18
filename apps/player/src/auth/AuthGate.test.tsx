@@ -189,6 +189,17 @@ describe("invite-only shared auth gate", () => {
     expect(mock.recover).not.toHaveBeenCalled(); expect(mock.signIn).not.toHaveBeenCalled();
   });
 
+  it.each(["desktop", "phone"])("keeps the same %s sign-in copy when the cloud build flag is on", async layout => {
+    vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "false");
+    const baseline = await setup("", layout), copy = baseline.element.textContent;
+    await cleanupPhoneTests();
+    vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "true");
+    const enabledBuild = await setup("", layout);
+    expect(enabledBuild.element.textContent).toBe(copy);
+    expect(enabledBuild.element.textContent).not.toContain("accept the cloud notice");
+    expect(mock.network).not.toHaveBeenCalled();
+  });
+
   it("signs in, signs out, then remounts under another account without retaining the first clinic", async () => {
     const env = await setup();
     await input(env, "email", "account-a@example.invalid"); await input(env, "password", "synthetic sign-in passphrase"); await submit(env);

@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { createClient } from "@supabase/supabase-js";
 import { compileFeedback, setFeedbackStatus, FeedbackToolError, FEEDBACK_STATUSES } from "./beta-feedback.mjs";
+import { runCloudCommand, CloudToolError } from "./beta-cloud.mjs";
 
 export const GAME_URL = "https://melissarowlandc-afk.github.io/GamifySurgery/";
 export const ADMIN_ENV_FILE = fileURLToPath(new URL("../../.local-dev/beta-admin.env", import.meta.url));
@@ -24,6 +25,11 @@ const HELP = `Beta 1 owner invite tool (no automatic emails)
   node scripts/beta-invites/beta-invites.mjs revoke <email>
   node scripts/beta-invites/beta-invites.mjs feedback [--all]
   node scripts/beta-invites/beta-invites.mjs feedback-status <id> <status> [note]
+  node scripts/beta-invites/beta-invites.mjs cloud status
+  node scripts/beta-invites/beta-invites.mjs cloud enable <email>
+  node scripts/beta-invites/beta-invites.mjs cloud disable <email>
+  node scripts/beta-invites/beta-invites.mjs cloud writes on|off
+  node scripts/beta-invites/beta-invites.mjs cloud enrollments on|off
   Feedback statuses: new, discussed, planned, done, wont_do (owner decision only).
   Double-click scripts/beta-invites/BETA_INVITES.cmd for prompts.
   Credentials: .local-dev/beta-admin.env (ignored, owner PC only).`;
@@ -41,6 +47,14 @@ function normalizeEmail(value) {
 export function parseCommand(args) {
   if (args.length === 0 || (args.length === 1 && ["--help", "-h"].includes(args[0]))) return { command: "help" };
   const [command, ...rest] = args;
+  if (command === "cloud") {
+    if (rest.length === 1 && rest[0] === "status") return { command, action: "status" };
+    if (rest.length === 2 && ["enable", "disable"].includes(rest[0])) return { command, action: rest[0], email: normalizeEmail(rest[1]) };
+    if (rest.length === 2 && ["writes", "enrollments"].includes(rest[0]) && ["on", "off"].includes(rest[1])) {
+      return { command, action: rest[0], enabled: rest[1] === "on" };
+    }
+    fail("Use cloud status, cloud enable <email>, cloud disable <email>, cloud writes on|off, or cloud enrollments on|off.");
+  }
   if (command === "list" && rest.length === 0) return { command };
   if (command === "feedback" && (rest.length === 0 || (rest.length === 1 && rest[0] === "--all"))) {
     return { command, all: rest[0] === "--all" };
@@ -141,6 +155,10 @@ export async function runBetaInvites(args, {
       output(await setFeedbackStatus(client, options));
       return 0;
     }
+    if (options.command === "cloud") {
+      output(await runCloudCommand(client, options));
+      return 0;
+    }
     async function rpc(action, userId, owner = false) {
       const { data, error } = await client.rpc(RPC, {
         p_action: action, ...(userId ? { p_user_id: userId, p_owner: owner } : {}),
@@ -230,7 +248,7 @@ export async function runBetaInvites(args, {
   } catch (error) {
     // Never print an SDK error, stack, request, config or provider response:
     // those can contain credentials, tokens and other people's account details.
-    output(`Beta 1 admin tool: ${error instanceof OwnerToolError || error instanceof FeedbackToolError ? error.message : "The request could not be completed. No provider details are printed. Check connectivity/setup with the manager, then retry the command."}`);
+    output(`Beta 1 admin tool: ${error instanceof OwnerToolError || error instanceof FeedbackToolError || error instanceof CloudToolError ? error.message : "The request could not be completed. No provider details are printed. Check connectivity/setup with the manager, then retry the command."}`);
     return 1;
   }
 }
@@ -238,7 +256,14 @@ export async function runBetaInvites(args, {
 async function interactiveArgs() {
   const prompt = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    const command = (await prompt.question("Action: invite, reset, cancel, list, revoke, feedback, or feedback-status [invite]: ")).trim().toLowerCase() || "invite";
+    const command = (await prompt.question("Action: invite, reset, cancel, list, revoke, feedback, feedback-status, or cloud [invite]: ")).trim().toLowerCase() || "invite";
+    if (command === "cloud") {
+      const action = (await prompt.question("Cloud action: status, enable, disable, writes, or enrollments [status]: ")).trim().toLowerCase() || "status";
+      if (action === "status") return [command, action];
+      if (["enable", "disable"].includes(action)) return [command, action, (await prompt.question("Account email: ")).trim()];
+      if (["writes", "enrollments"].includes(action)) return [command, action, (await prompt.question("on or off: ")).trim().toLowerCase()];
+      fail("Choose cloud status, enable, disable, writes, or enrollments.");
+    }
     if (command === "list") return [command];
     if (command === "feedback") return [command, ...((await prompt.question("Include all statuses? [y/N]: ")).trim().toLowerCase() === "y" ? ["--all"] : [])];
     if (command === "feedback-status") return [command, (await prompt.question("Feedback ID: ")).trim(),

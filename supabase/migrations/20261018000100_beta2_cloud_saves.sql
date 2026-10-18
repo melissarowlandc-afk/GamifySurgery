@@ -477,7 +477,7 @@ begin
   if jsonb_array_length(evidence->'pages') > 512 then raise exception 'Cloud page count limit' using errcode = '54000'; end if;
   from_record := gamify_private.beta2_uint(evidence->>'fromRecord',50000)::integer;
   to_record := gamify_private.beta2_uint(evidence->>'toRecord',50000)::integer;
-  if from_record <> case when kind = 'import' then 0 else c.evidence_high_water end or to_record < from_record then
+  if from_record <> (case when kind = 'import' then 0 else c.evidence_high_water end) or to_record < from_record then
     raise exception 'Cloud evidence prefix conflict' using errcode = '22023'; end if;
   snapshot_data := gamify_private.beta2_blob(req->'snapshot',3000000,3000000);
   declared_total := (req->'snapshot'->>'uncompressedBytes')::bigint;
@@ -514,7 +514,7 @@ begin
   end loop;
   if cursor_record <> to_record then raise exception 'Cloud evidence suffix mismatch' using errcode = '22023'; end if;
   if declared_total is null or declared_total > 6000000 or (kind = 'save' and new_declared > 1000000)
-    or new_evidence_cost + case when kind = 'save' then c.evidence_bytes else 0 end > 1000000
+    or new_evidence_cost + (case when kind = 'save' then c.evidence_bytes else 0 end) > 1000000
     or stored_pages + jsonb_array_length(evidence->'pages') > 512 then
     raise exception 'Cloud evidence capacity reached' using errcode = '54000'; end if;
   if kind = 'save' then

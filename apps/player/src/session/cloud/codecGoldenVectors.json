@@ -1,0 +1,51 @@
+{
+  "formatVersion": 1,
+  "sqlValidation": "pending-manager-disposable-postgresql-run",
+  "vectors": [
+    {
+      "id": "unicode-whitespace-scale",
+      "inputText": " {\n \"longKey\": \"caf\\u00e9 🩺\", \"b\": [1e-7, 1.2300], \"a\": \"O'Reilly\\nline\" \n}",
+      "storedText": "{\"a\": \"O'Reilly\\nline\", \"b\": [0.0000001, 1.2300], \"longKey\": \"café 🩺\"}",
+      "inputSha256": "96b488395fa4574f5935b169b99cecf6089a51eb154897515391ac6febe699e8",
+      "inputUtf8Bytes": 78,
+      "storedSha256": "da71416d68835350d04fcb7fe8eff3e5f1db1ceb627b135883827766e3d4d0e2",
+      "storedUtf8Bytes": 74
+    },
+    {
+      "id": "utf8-key-order",
+      "inputText": "{\"aa\":2,\"b\":1,\"é\":3,\"😀\":4,\"a\":5}",
+      "storedText": "{\"a\": 5, \"b\": 1, \"aa\": 2, \"é\": 3, \"😀\": 4}",
+      "inputSha256": "1cb2d9e318f5c5cf6f27a15a0899385a4001cb347ae40ce36062fe9e3b1b53ab",
+      "inputUtf8Bytes": 36,
+      "storedSha256": "319c5807806ea1e3127c31e940f75214baa0504ec06a89d1cd5c7666249f1d25",
+      "storedUtf8Bytes": 45
+    },
+    {
+      "id": "safe-number-extremes",
+      "inputText": "{\"tiny\":5e-324,\"fraction\":0.30000000000000004,\"min\":-9007199254740991,\"max\":9007199254740991,\"exp\":1e-7,\"money\":123456789.01}",
+      "storedText": "{\"exp\": 0.0000001, \"max\": 9007199254740991, \"min\": -9007199254740991, \"tiny\": 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005, \"money\": 123456789.01, \"fraction\": 0.30000000000000004}",
+      "inputSha256": "b1e36c21ca971b91d5c3767624e17e5e6723be28a8c044385c505f626d55127e",
+      "inputUtf8Bytes": 125,
+      "storedSha256": "77135e54da07e797f59b64bacf11011a8d7924d161949ee882ef5b6c058a698a",
+      "storedUtf8Bytes": 461
+    },
+    {
+      "id": "escaped-and-distinct-unicode",
+      "inputText": "{\"z\":\"quote\\\" slash\\\\ tab\\t\",\"a\":\"e\\u0301\",\"n\":\"\\u00e9\",\"unicode\":\"日本\"}",
+      "storedText": "{\"a\": \"é\", \"n\": \"é\", \"z\": \"quote\\\" slash\\\\ tab\\t\", \"unicode\": \"日本\"}",
+      "inputSha256": "76f812c52ea7a30a60b83309f929a88b258a7049f9aa3bfe4b42ab48cb73cbf9",
+      "inputUtf8Bytes": 75,
+      "storedSha256": "22039c483785013d6ea67589e8d3b2963c315ed6e410cf0dc4afd640bd321d60",
+      "storedUtf8Bytes": 74
+    },
+    {
+      "id": "normalized-evidence-reference-layout",
+      "inputText": "{\"cloudFormatVersion\":2,\"evidenceContractVersion\":1,\"operational\":{\"version\":1,\"campaignId\":\"campaign.synthetic\",\"gameSchemaVersion\":9,\"patches\":[{\"path\":[\"learningHistories\",\"concept.synthetic\",\"card\"],\"present\":true,\"value\":{\"$e\":\"e2\"}}],\"head\":{\"sequence\":0,\"transitionId\":null}},\"evidenceHighWater\":2}",
+      "storedText": "{\"operational\": {\"head\": {\"sequence\": 0, \"transitionId\": null}, \"patches\": [{\"path\": [\"learningHistories\", \"concept.synthetic\", \"card\"], \"value\": {\"$e\": \"e2\"}, \"present\": true}], \"version\": 1, \"campaignId\": \"campaign.synthetic\", \"gameSchemaVersion\": 9}, \"evidenceHighWater\": 2, \"cloudFormatVersion\": 2, \"evidenceContractVersion\": 1}",
+      "inputSha256": "8012f802284590fc0e944722fd385d1a8961777e5b0dcf27372f6a73dd8566bf",
+      "inputUtf8Bytes": 305,
+      "storedSha256": "ab9409a6ff3f88861db1f65a41ccc932e384fcc27dd383712f32e382835ff5ce",
+      "storedUtf8Bytes": 332
+    }
+  ]
+}

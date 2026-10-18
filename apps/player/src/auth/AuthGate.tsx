@@ -62,6 +62,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   // Supabase clears the callback fragment during initialization.
   const callback = useMemo(readAuthCallback, []);
   const callbackFlowRef = useRef(callback.hasError ? null : callback.flow);
+  const signOutGuard = useRef<(() => Promise<void>) | null>(null);
   const hostedConfiguration = useMemo(hostedAuthConfiguration, []);
   const authClient = useMemo(() => getSupabaseAuthClient(hostedConfiguration), [hostedConfiguration]);
   const bypassEnabled = localPrototypeBypassEnabled();
@@ -187,16 +188,19 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     setPending(true);
     setMessage(null);
     try {
+      await signOutGuard.current?.();
       const { error } = await authClient.auth.signOut({ scope: "local" });
-      if (error) { setMessage(requestError(error)); return; }
+      if (error) { setMessage(requestError(error)); return false; }
       if (hostedSession) saveAuthPasswordFlow(hostedSession.user.id, null);
       setHostedSession(null);
       setCandidateSession(null);
       setCheckingSession(false);
       setScreen("sign_in");
       setPassword("");
+      return true;
     } catch (error) {
       setMessage(requestError(error));
+      return false;
     } finally { setPending(false); }
   };
 
@@ -209,7 +213,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     return (
       <AuthAccountContext.Provider key={admittedSession?.user.id ?? "local_prototype"} value={admittedSession?.user.id ?? null}>
         <AuthAccountActionsContext.Provider value={authClient && admittedSession ? {
-          email: admittedSession.user.email ?? "", signOut, pending, message,
+          email: admittedSession.user.email ?? "", signOut, signOutGuard, pending, message,
         } : null}>
         {children}
         {authClient && admittedSession ? (

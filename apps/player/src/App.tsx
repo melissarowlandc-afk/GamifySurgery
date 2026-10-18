@@ -1,4 +1,5 @@
-import { lazy, Suspense, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
 import { PrototypeShell } from "./PrototypeShell";
 import { getTutorialClockMultiplier } from "./session/tutorialTiming";
 import {
@@ -11,6 +12,7 @@ import {
   restoreLocalCampaign,
   savePrototypeProfileResult,
   selectLocalCampaign,
+  createFreshProfile,
   type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
   usePrototypeSession,
@@ -22,10 +24,20 @@ import { usePresentationLayout } from "./shellPresentation";
 import { UsageProvider } from "./playtime/UsageProvider";
 import { UsageNotice } from "./ui/AccountMenu";
 import { QuestionFlagProvider } from "./session/QuestionFlagProvider";
+import { CloudAccountProvider, downloadCloudRecovery, useCloudAccount } from "./session/cloud/CloudAccount";
+import { CloudSyncCoordinator } from "./session/cloud/coordinator";
+import { CloudGameSession, cloudCampaignMetadata } from "./session/cloud/gameSession";
+import { importLocalCloudCampaign, profileForCloudCampaign, type LocalCloudSource } from "./session/cloud/importCampaigns";
+import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
+import { cloudEntryError } from "./ui/cloudEntryError";
+import { AccountMenu } from "./ui/AccountMenu";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
 interface ActivePrototypeGameProps {
+  cloudSession?: CloudGameSession;
+  onCloudReload?: () => Promise<void>;
+  onCloudCampaigns?: () => void;
   loadedProfile: LoadedPrototypeProfile;
   onRequestNewCampaign: (profile: LocalPrototypeProfile, guidanceEnabled?: boolean) => void;
   onRequestRestart: (
@@ -34,12 +46,21 @@ interface ActivePrototypeGameProps {
   ) => void;
 }
 
-function ActivePrototypeGame({
+export function ActivePrototypeGame({
+  cloudSession,
+  onCloudReload,
+  onCloudCampaigns,
   loadedProfile,
   onRequestNewCampaign,
   onRequestRestart,
 }: ActivePrototypeGameProps) {
-  const session = usePrototypeSession(loadedProfile);
+  const session = usePrototypeSession(loadedProfile, cloudSession);
+  const cloudAccount = useCloudAccount();
+  useEffect(() => {
+    if (!cloudSession || !cloudAccount) return;
+    cloudAccount.attach(cloudSession);
+    return () => cloudAccount.attach(null);
+  }, [cloudSession, cloudAccount?.runtime]);
   const view = useMemo(
     () =>
       createPrototypePlayerView(
@@ -68,6 +89,28 @@ function ActivePrototypeGame({
   return (
     <>
     <PrototypeShell
+      cloudSave={cloudSession && session.cloudSyncView ? {
+        campaignName: cloudSession.metadata.name, view: session.cloudSyncView, writerElsewhere: Boolean(session.cloudSyncView.writerElsewhere),
+        onContinue: async takeover => {
+          if (cloudSession.needsReload) { await onCloudReload?.(); return false; }
+          const coordinator = cloudSession.coordinator;
+          if (coordinator.view.phase !== "ready" && !await coordinator.startWriter(takeover)) return false;
+          if (!coordinator.resume()) return false;
+          if (cloudSession.metadata.status === "archived") {
+            cloudSession.updateMetadata({ ...cloudSession.metadata, status: "resumable" });
+            return await cloudSession.durable() && await coordinator.checkpoint("campaign-switch");
+          }
+          return true;
+        },
+        onRetry: () => cloudSession.coordinator.retry(),
+        onUseAccountSave: async () => {
+          const ok = await cloudSession.coordinator.useAccountSave(async bytes => downloadCloudRecovery(bytes));
+          if (ok) await onCloudReload?.(); return ok;
+        },
+        onKeepRecovery: async () => { downloadCloudRecovery(cloudSession.exportRecovery()); return true; },
+        onSaveAndClose: () => cloudSession.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT),
+        onCampaigns: () => onCloudCampaigns?.(),
+      } : undefined}
       resourceBar={view.resourceBar}
       paused={session.state.paused}
       simulationSpeed={session.state.simulationSpeed}
@@ -177,7 +220,7 @@ function ActivePrototypeGame({
       onTutorialsEnabledChange={session.setTutorialsEnabled}
       onReferencePauseLockedChange={session.setReferencePauseLocked}
       onTutorialTopicExposure={session.recordTutorialTopicExposure}
-      onReplayFirstShift={() => { const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); }}
+      onReplayFirstShift={() => { if (cloudSession) { onCloudCampaigns?.(); return; } const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); }}
       onSaveAndPause={session.saveAndPause}
       onClinicAlertAction={session.runClinicAlertAction}
       onClearLocalCampaigns={session.clearLocalCampaigns}
@@ -215,9 +258,16 @@ function initialLaunchState(accountId: string | null): LaunchState {
   };
 }
 
-function AuthenticatedPrototype() {
+export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignId?: string } = {}) {
   const accountId = useAuthAccountId();
-  const [launch, setLaunch] = useState<LaunchState>(() => initialLaunchState(accountId));
+  const [launch, setLaunch] = useState<LaunchState>(() => {
+    const initial = initialLaunchState(accountId);
+    if (initialCampaignId && initial.mode === "opening") {
+      const restored = initial.profile.campaigns.find(row => row.campaignId === initialCampaignId)?.status === "archived" ? restoreLocalCampaign(initial.profile, initialCampaignId) : initial.profile;
+      return { mode: "game", loadedProfile: { profile: selectLocalCampaign(restored, initialCampaignId), notice: "This device only. Account progress is separate." } };
+    }
+    return initial;
+  });
 
   const requestOpening = (
     profile: LocalPrototypeProfile,
@@ -366,6 +416,83 @@ function AuthenticatedPrototype() {
   );
 }
 
+export function AccountCampaignRouter() {
+  const cloud = useCloudAccount();
+  if (!cloud) return <AuthenticatedPrototype />;
+  return <CloudCampaignRouter />;
+}
+
+function CloudCampaignRouter() {
+  const cloud = useCloudAccount()!, { runtime } = cloud;
+  const [route, setRoute] = useState<"entry" | "local" | "checking" | "cloud" | "founder">("entry");
+  const [localCampaignId, setLocalCampaignId] = useState<string | undefined>();
+  const [active, setActive] = useState<{ session: CloudGameSession; profile: LoadedPrototypeProfile; sequence: number } | null>(null);
+  const [notice, setNotice] = useState("");
+  const live = useRef(true), generation = useRef(0), current = useRef(active);
+  current.current = active;
+  useEffect(() => { live.current = true; return () => { live.current = false; generation.current++; }; }, []);
+  const openCampaign = async (campaignId: string) => {
+    const epoch = ++generation.current; setRoute("checking"); setNotice("");
+    const coordinator = new CloudSyncCoordinator({ scope: { backendId: runtime.backendId, accountId: runtime.accountId, campaignId }, transport: runtime.transport, cache: runtime.cache, enabled: true });
+    try {
+      if (!await coordinator.open()) throw new Error(coordinator.view.failure ?? "network");
+      const session = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); });
+      if (!live.current || epoch !== generation.current) { session.dispose(); return; }
+      const metadata = session.metadata;
+      const profile = profileForCloudCampaign(session.state, { ...metadata, status: "resumable" });
+      setActive({ session, profile: { profile, notice: "Verified account save. Continue on this device to play." }, sequence: epoch }); setRoute("cloud");
+    } catch {
+      coordinator.dispose();
+      if (live.current && epoch === generation.current) { setNotice("The account campaign could not be verified or opened. Its saved bytes and local recovery have been preserved. Retry or contact the owner; no fresh campaign replaced it."); setRoute("entry"); }
+    }
+  };
+  const enterCampaignScreen = async () => {
+    const session = current.current?.session;
+    if (session && route === "cloud") {
+      if (!await session.durable()) { setNotice("Recovery storage could not be verified. Keep this tab open and retry."); return; }
+      if (["ready", "saving"].includes(session.coordinator.view.phase) && !await session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)) return;
+      session.coordinator.pause();
+    }
+    if (!live.current) return;
+    generation.current++; setActive(null); setRoute("entry"); await cloud.refresh();
+  };
+  useEffect(() => {
+    cloud.setCampaignNavigation(() => { void enterCampaignScreen(); });
+    return () => cloud.setCampaignNavigation(null);
+  }, [runtime, route]);
+  const restart = async () => {
+    const session = current.current?.session;
+    if (!session?.canExecute) return;
+    session.updateMetadata({ ...session.metadata, status: "archived" });
+    if (!await session.durable() || !await session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)) return;
+    if (!live.current) return;
+    setNotice("Your account clinic was archived and still uses its cloud slot. Create another account clinic if a slot is free, or create a device-only clinic.");
+    setActive(null); setRoute("entry"); await cloud.refresh();
+  };
+  if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} onLocalCampaign={() => {}} onLocalOnly={() => {}} />;
+  if (route === "local") return <AuthenticatedPrototype key={localCampaignId ?? "local-opening"} initialCampaignId={localCampaignId} />;
+  if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p><AccountMenu /></main>;
+  if (route === "cloud" && active) return <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
+    loadedProfile={active.profile} cloudSession={active.session}
+    onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudCampaigns={() => { void enterCampaignScreen(); }}
+    onRequestNewCampaign={() => { void enterCampaignScreen(); }} onRequestRestart={() => { void restart(); }} />;
+  if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to account campaigns</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
+    onBeginClinic={(founder, name, seed, guidance) => { void (async () => {
+      const epoch = ++generation.current;
+      try {
+        const created = appendLocalCampaign(createFreshProfile(), founder, name, Date.now(), seed, guidance);
+        const serializedState = serializeGameState(created.campaign.state), campaign = cloudCampaignMetadata(created.profile);
+        const source: LocalCloudSource = { id: `created:${campaign.campaignId}`, sourceKey: `created:${campaign.campaignId}`, unowned: false,
+          campaign, serializedState, bytes: new TextEncoder().encode(serializedState).length, facilityLevel: created.campaign.state.facilityLevel, error: null };
+        await runtime.entryStore.create(`created:${campaign.campaignId}`, source);
+        await importLocalCloudCampaign(source, name, runtime.transport, runtime.entryStore);
+        if (live.current && epoch === generation.current) { await cloud.refresh(); if (live.current && epoch === generation.current) await openCampaign(campaign.campaignId); }
+      } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setRoute("entry"); } }
+    })(); }} /></>;
+  return <CloudCampaignEntry key={notice} notice={notice} onOpen={openCampaign} onCreate={() => setRoute("founder")}
+    onLocalCampaign={id => { setLocalCampaignId(id); setRoute("local"); }} onLocalOnly={() => { setLocalCampaignId(undefined); setRoute("local"); }} />;
+}
+
 export function App() {
   const layout = usePresentationLayout();
   return (
@@ -374,8 +501,10 @@ export function App() {
       <AuthGate>
         <UsageProvider>
           <QuestionFlagProvider>
+            <CloudAccountProvider>
             <UsageNotice />
-            <AuthenticatedPrototype />
+            <AccountCampaignRouter />
+            </CloudAccountProvider>
           </QuestionFlagProvider>
         </UsageProvider>
       </AuthGate>

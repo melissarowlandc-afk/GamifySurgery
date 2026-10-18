@@ -87,6 +87,9 @@ import { trimMobileBuildHistory } from "../mobile/performance/buildHistory";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import { isFirstScoredAnswer } from "../playtime/scoredQuestionUsage";
 import { boundUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
+import { CloudGameSession, cloudCampaignMetadata } from "./cloud/gameSession";
+import type { CloudSyncView } from "./cloud/coordinator";
+import { useCloudAccount } from "./cloud/CloudAccount";
 
 type GameCommandInput = {
   [CommandType in GameCommand["type"]]: Omit<
@@ -104,6 +107,10 @@ interface ExecuteOptions {
 }
 
 export interface PrototypeSession {
+  /** Explicit B2.4 binding only; existing callers stay entirely local. */
+  cloudSession: CloudGameSession | null;
+  cloudSyncView: CloudSyncView | null;
+  saveCloudAndClose: (() => Promise<boolean>) | null;
   mobileBuildActions: MobileBuildActions;
   profile: LocalPrototypeProfile;
   state: GameState;
@@ -288,11 +295,21 @@ function alertDefinition(definitionId: string) {
 
 export function usePrototypeSession(
   initialLoadedProfile?: LoadedPrototypeProfile,
+  cloudSession?: CloudGameSession,
 ): PrototypeSession {
   // Captured for this mounted session; old cleanup/autosave writers can never
   // start saving under another account when AuthGate remounts its provider.
   const accountId = useRef(useAuthAccountId()).current;
+  const cloud = useRef(cloudSession ?? null).current;
+  const cloudAccount = useCloudAccount();
+  if (cloud && (!initialLoadedProfile || accountId === null || cloud.coordinator.scope.accountId !== accountId ||
+    cloud.coordinator.scope.campaignId !== initialLoadedProfile.profile.activeCampaignId)) {
+    throw new Error("A cloud session requires its verified, account-bound campaign profile.");
+  }
   const usage = useUsageTracking();
+  const cloudUsageRef = useRef(usage);
+  cloudUsageRef.current = usage;
+  const cloudBindingGenerationRef = useRef(0);
   const loadedRef = useRef<ReturnType<typeof loadPrototypeProfile> | null>(
     null,
   );
@@ -305,7 +322,7 @@ export function usePrototypeSession(
   );
   const profileRef = useRef(profile);
   const [state, setState] = useState<GameState>(
-    requireActiveCampaign(loadedRef.current.profile).state,
+    cloud?.state ?? requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
   const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
@@ -521,6 +538,11 @@ export function usePrototypeSession(
 
   const attemptSaveProfile = useCallback(
     (nextProfile: LocalPrototypeProfile): PrototypeSaveResult => {
+      if (cloud) {
+        cloud.updateMetadata(cloudCampaignMetadata(nextProfile));
+        return { ok: false, failure: { category: "unavailable", operation: "write", name: "CloudConfirmationRequired",
+          message: "Account save is pending. Wait for account confirmation before closing." } };
+      }
       const result = campaignWriteGateRef.current.save(nextProfile);
       lastSaveResultRef.current = result;
       lastSaveSucceededRef.current = result.ok;
@@ -534,7 +556,7 @@ export function usePrototypeSession(
       }
       return result;
     },
-    [promoteCommittedQuestions],
+    [cloud, promoteCommittedQuestions],
   );
 
   const stageActiveState = useCallback((nextState: GameState) => {
@@ -566,8 +588,42 @@ export function usePrototypeSession(
     pendingAutosaveProfileRef.current = null;
     const nextProfile = stageActiveState(nextState);
     setProfile(nextProfile);
+    if (cloud) return false;
     return attemptSaveProfile(nextProfile).ok;
-  }, [attemptSaveProfile, cancelScheduledAutosave, stageActiveState]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, cloud, stageActiveState]);
+
+  useEffect(() => {
+    if (!cloud) return;
+    const generation = ++cloudBindingGenerationRef.current;
+    const sync = () => {
+      const next = cloud.state;
+      stateRef.current = next;
+      setState(next);
+      setProfile(stageActiveState(next));
+      cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
+    };
+    const unsubscribe = cloud.subscribe(sync);
+    const timer = window.setInterval(() => { void cloud.coordinator.pulse(); }, 1_000);
+    const focus = () => { void cloud.coordinator.focus(); };
+    window.addEventListener("focus", focus);
+    sync();
+    return () => {
+      unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus); cloud.coordinator.pause();
+      // React StrictMode may immediately bind the same owner again.
+      queueMicrotask(() => { if (cloudBindingGenerationRef.current === generation) cloud.dispose(); });
+    };
+  }, [cloud, stageActiveState]);
+
+  useEffect(() => {
+    if (cloud || !cloudAccount?.registerLocalWriter) return;
+    cloudAccount.registerLocalWriter(mode => {
+      if (mode === "export") return JSON.stringify(profileRef.current);
+      campaignWriteGateRef.current.suppress(); cameraPreferencesRef.current!.discard();
+      cancelScheduledAutosave(); pendingAutosaveProfileRef.current = null;
+      stateRef.current = { ...stateRef.current, paused: true }; setState(stateRef.current);
+    });
+    return () => cloudAccount.registerLocalWriter?.(null);
+  }, [cloud, cloudAccount?.runtime, cancelScheduledAutosave]);
 
   const flushScheduledAutosave = useCallback(() => {
     autosaveTaskRef.current = null;
@@ -606,12 +662,27 @@ export function usePrototypeSession(
       commandInput: GameCommandInput,
       options: ExecuteOptions = {},
     ): OperationReceipt["status"] => {
+      if (!cloud && campaignWriteGateRef.current.isSuppressed()) { setAnnouncement("This device session has been closed."); return "rejected"; }
       const operationId = `${sessionIdRef.current}.${++sequenceRef.current}`;
       const command = {
         ...commandInput,
         operationId,
       } as GameCommand;
       const previous = stateRef.current;
+      if (cloud) {
+        const next = cloud.execute(command, { ...PROTOTYPE_DOMAIN_CONTEXT,
+          guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds,
+          guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked }, () => {
+          usage?.activity();
+          return usage?.createQuestionReceipt() ?? null;
+        });
+        if (!next) { setAnnouncement("Account saving must be checked before continuing."); return "rejected"; }
+        stateRef.current = next; setState(next); setProfile(stageActiveState(next));
+        const receipt = next.operationReceipts[operationId];
+        lastCommandReceiptRef.current = receipt;
+        if (receipt && options.announceReceipt !== false) setAnnouncement(receipt.message);
+        return receipt?.status ?? "rejected";
+      }
       const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
         guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked });
       if (usage && isFirstScoredAnswer(previous, next, command)) {
@@ -682,6 +753,7 @@ export function usePrototypeSession(
       return receipt?.status ?? "rejected";
     },
     [
+      cloud,
       persistActiveState,
       publishSystemNotice,
       scheduleActiveStateAutosave,
@@ -692,6 +764,7 @@ export function usePrototypeSession(
 
   useEffect(
     () => () => {
+      if (cloud) return;
       const pendingProfile = pendingAutosaveProfileRef.current;
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
@@ -701,7 +774,7 @@ export function usePrototypeSession(
         attemptSaveProfile(accountId === null ? pendingProfile! : profileRef.current);
       }
     },
-    [attemptSaveProfile, cancelScheduledAutosave],
+    [attemptSaveProfile, cancelScheduledAutosave, cloud],
   );
 
   const executeBuildCommand = useCallback(
@@ -745,12 +818,13 @@ export function usePrototypeSession(
       return;
     }
     const previous = buildHistoryRef.current.at(-1)!;
+    if (cloud && !cloud.undoBuild(previous)) { setAnnouncement("Check the account save before undoing this build action."); return; }
     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
     buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
     setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
     stateRef.current = previous;
     setState(previous);
-    persistActiveState(previous);
+    if (!cloud) persistActiveState(previous);
     setBuildUndoCount(buildHistoryRef.current.length);
     setBuildExitBlockedReason(null);
     setBuildExitBlockedIssues([]);
@@ -759,7 +833,7 @@ export function usePrototypeSession(
     }
     setMovingRoomInstanceId(null);
     setAnnouncement("The last build action was undone.");
-  }, [buildMode, persistActiveState, selectedRoomDefinitionId]);
+  }, [buildMode, cloud, persistActiveState, selectedRoomDefinitionId]);
 
   useEffect(() => {
     if (!buildMode) {
@@ -783,6 +857,7 @@ export function usePrototypeSession(
   }, [buildMode, state]);
 
   useEffect(() => {
+    if (cloud) return;
     const result = attemptSaveProfile(profileRef.current);
     if (!result.ok) {
       saveWarningShownRef.current = true;
@@ -791,12 +866,13 @@ export function usePrototypeSession(
         describePrototypeStorageFailure(result.failure),
       );
     }
-  }, [attemptSaveProfile, publishSystemNotice]);
+  }, [attemptSaveProfile, cloud, publishSystemNotice]);
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
+    const handleVisibilityChange = (event?: Event) => {
       const visible = document.visibilityState === "visible";
       setDocumentVisible(visible);
+      if (cloud && visible && event) void cloud.coordinator.focus();
       if (!visible && !stateRef.current.paused) {
         execute(
           {
@@ -816,6 +892,7 @@ export function usePrototypeSession(
     };
 
     const handlePageHide = () => {
+      if (cloud) { cloud.coordinator.pause(); return; }
       // Idle autosaves optimize live animation, but a refresh or navigation
       // must still synchronously commit the latest staged tick before the old
       // document is discarded.
@@ -834,7 +911,7 @@ export function usePrototypeSession(
       );
       window.removeEventListener("pagehide", handlePageHide);
     };
-  }, [attemptSaveProfile, cancelScheduledAutosave, execute, publishSystemNotice]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, cloud, execute, publishSystemNotice]);
 
   const campaignGuidance = getCampaignTutorialGuidance(profile, { campaignId: state.campaignId, state });
   const tutorialsEnabled = campaignGuidance.mode === "guided";
@@ -869,6 +946,7 @@ export function usePrototypeSession(
       return;
     }
     setManagementMode(false);
+    if (cloud) void cloud.checkpointNow("mode-exit");
     if (!preManagementPausedRef.current && stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: false },
@@ -880,9 +958,10 @@ export function usePrototypeSession(
         ? "Management Mode closed. The clinic remains paused."
         : "Management Mode closed. Facility operations resumed.",
     );
-  }, [execute, managementMode]);
+  }, [cloud, execute, managementMode]);
 
   const enterManagementMode = useCallback(() => {
+    if (cloud && !cloud.canExecute) { setAnnouncement("Check the account save before entering Management Mode."); return; }
     if (managementMode || buildMode) {
       return;
     }
@@ -912,7 +991,7 @@ export function usePrototypeSession(
     setAnnouncement(
       "Management Mode opened. Facility time is paused while you manage staff.",
     );
-  }, [buildMode, execute, managementMode]);
+  }, [buildMode, cloud, execute, managementMode]);
 
   const closeEmployeeDiscussion = useCallback(() => {
     const discussionId = stateRef.current.openEmployeeDiscussionId;
@@ -1243,7 +1322,7 @@ export function usePrototypeSession(
         setBuildExitBlockedReason(null);
         setBuildExitBlockedIssues([]);
         setAnnouncement(`Built ${applied} hallway cell${applied === 1 ? "" : "s"}. Undo reverses this stroke.`);
-        const saved = persistActiveState(stateRef.current);
+        const saved = cloud ? true : persistActiveState(stateRef.current);
         if (!saved && !saveWarningShownRef.current) {
           saveWarningShownRef.current = true;
           publishSystemNotice("alert.system.save-failed", lastSaveResultRef.current.ok
@@ -1253,7 +1332,7 @@ export function usePrototypeSession(
       }
     }
     return applied > 0;
-  }, [buildMode, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
+  }, [buildMode, cloud, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
 
   const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) =>
     previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation),
@@ -1262,6 +1341,7 @@ export function usePrototypeSession(
   const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
 
   const enterBuildMode = useCallback(() => {
+    if (cloud && !cloud.canExecute) { setAnnouncement("Check the account save before entering Build Mode."); return; }
     if (buildMode) {
       return;
     }
@@ -1304,7 +1384,7 @@ export function usePrototypeSession(
     setAnnouncement(
       "Build Mode opened. Facility time is paused while you remodel.",
     );
-  }, [buildMode, execute, exitManagementMode, managementMode]);
+  }, [buildMode, cloud, execute, exitManagementMode, managementMode]);
 
   const exitBuildMode = useCallback(() => {
     if (!buildMode) {
@@ -1321,6 +1401,7 @@ export function usePrototypeSession(
       return;
     }
     setBuildMode(false);
+    if (cloud) void cloud.checkpointNow("mode-exit");
     buildHistoryRef.current = [];
     buildHistoryLabelsRef.current = [];
     setBuildUndoCount(0);
@@ -1342,7 +1423,7 @@ export function usePrototypeSession(
         ? "Build Mode closed. The clinic remains paused."
         : "Build Mode closed. Facility operations resumed.",
     );
-  }, [buildMode, execute]);
+  }, [buildMode, cloud, execute]);
 
   const selectRoom = useCallback((roomInstanceId: string) => {
     setSelectedRoomInstanceId(roomInstanceId);
@@ -1719,11 +1800,14 @@ export function usePrototypeSession(
       return;
     }
     const current = stateRef.current;
+    if (cloud && current.paused && !cloud.coordinator.resume()) {
+      setAnnouncement("Check the account save before resuming."); return;
+    }
     execute({
       type: "SET_PAUSED",
       paused: !current.paused,
     });
-  }, [buildMode, execute, managementMode]);
+  }, [buildMode, cloud, execute, managementMode]);
 
   const setSimulationSpeed = useCallback(
     (speed: SimulationSpeed) => {
@@ -1747,6 +1831,12 @@ export function usePrototypeSession(
   const saveAndPause = useCallback((): PrototypeSaveResult => {
     usage?.endSession();
     cameraPreferencesRef.current!.flush();
+    if (cloud) {
+      void cloud.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT);
+      setAnnouncement("Account save is pending. Wait for account confirmation before closing.");
+      return { ok: false, failure: { category: "unavailable", operation: "write", name: "CloudConfirmationRequired",
+        message: "Account save is pending. Wait for account confirmation before closing." } };
+    }
     if (!stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: true },
@@ -1778,7 +1868,7 @@ export function usePrototypeSession(
         : describePrototypeStorageFailure(result.failure),
     );
     return result;
-  }, [execute, persistActiveState, publishSystemNotice, usage]);
+  }, [cloud, execute, persistActiveState, publishSystemNotice, usage]);
 
   const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
     const problem = getClinicAlertActionProblem(stateRef.current, action);
@@ -1816,6 +1906,7 @@ export function usePrototypeSession(
   }, [buildMode, execute, executeBuildCommand, exitBuildMode, openPatient, openEmployeeDiscussion, saveAndPause]);
 
   const clearLocalCampaigns = useCallback((): boolean => {
+    if (cloud) { setAnnouncement("Use the account controls to manage account saves and recovery copies."); return false; }
     // This must happen before deleting keys: pagehide/unmount can otherwise
     // synchronously put the in-memory whole-profile snapshot back.
     campaignWriteGateRef.current.suppress();
@@ -1832,9 +1923,10 @@ export function usePrototypeSession(
     }
     window.location.reload();
     return true;
-  }, [cancelScheduledAutosave, publishSystemNotice]);
+  }, [cancelScheduledAutosave, cloud, publishSystemNotice]);
 
   const switchCampaign = useCallback((campaignId: string) => {
+    if (cloud) { void cloud.switchCampaign(campaignId, PROTOTYPE_DOMAIN_CONTEXT); return; }
     const currentProfile = profileRef.current;
     const selectedCampaign = currentProfile.campaigns.find(
       (campaign) => campaign.campaignId === campaignId,
@@ -1893,7 +1985,7 @@ export function usePrototypeSession(
         ? `${selectedCampaign.name} opened. Its learning history is unchanged.`
         : `${selectedCampaign.name} opened, but ${describePrototypeStorageFailure(saveResult.failure)}`,
     );
-  }, [attemptSaveProfile, cancelScheduledAutosave, publishSystemNotice]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, cloud, publishSystemNotice]);
 
   const tutorialIntroDismissed =
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
@@ -1952,10 +2044,12 @@ export function usePrototypeSession(
       nextProfile: LocalPrototypeProfile,
       successAnnouncement: string,
     ) => {
+      if (cloud && !cloud.canExecute) return;
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
       profileRef.current = nextProfile;
       setProfile(nextProfile);
+      if (cloud) { cloud.updateMetadata(cloudCampaignMetadata(nextProfile)); setAnnouncement(successAnnouncement); return; }
       const saveResult = attemptSaveProfile(nextProfile);
       const saved = saveResult.ok;
       saveWarningShownRef.current = !saved;
@@ -1965,7 +2059,7 @@ export function usePrototypeSession(
           : `${successAnnouncement} ${describePrototypeStorageFailure(saveResult.failure)}`,
       );
     },
-    [attemptSaveProfile, cancelScheduledAutosave],
+    [attemptSaveProfile, cancelScheduledAutosave, cloud],
   );
 
   useEffect(() => {
@@ -2190,6 +2284,9 @@ export function usePrototypeSession(
     );
 
   return {
+    cloudSession: cloud,
+    cloudSyncView: cloud?.syncView ?? null,
+    saveCloudAndClose: cloud ? () => cloud.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT) : null,
     profile,
     state,
     campaigns,

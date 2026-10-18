@@ -18,6 +18,7 @@ import { MobileHelpTopic } from "./MobileHelpTopic";
 import { MobileManage } from "./manage/MobileManage";
 import { QuestionReviewQueueDialog } from "../ui/QuestionReviewQueueDialog";
 import { SaveFailureRecovery } from "../ui/SaveCloseDialog";
+import { CloudSaveControls, cloudStatusText } from "../ui/CloudSaveControls";
 import type { ClinicAlertAction, MessageBoardTargetType, NeedsYouItemView, ProcedureSetupRequirementView } from "../ui/types";
 import { MobileCampaignManager, MobileRestartDialog } from "./desktopPanelAdapters";
 import { MobileBuildCatalog } from "./build/MobileBuildCatalog";
@@ -91,6 +92,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
   const [saveResult, setSaveResult] = useState<PrototypeSaveResult | null>(null);
+  const [cloudCloseRequest, setCloudCloseRequest] = useState(0);
   const [confirmClear, setConfirmClear] = useState(false);
   const [previewRequests, setPreviewRequests] = useState<{ campaignId?: string; ids: readonly string[] }>({ campaignId: props.facility.campaignId, ids: [] });
   const previewRoomIds = previewRequests.campaignId === props.facility.campaignId ? previewRequests.ids : [];
@@ -333,6 +335,7 @@ export default function MobileShell(props: PrototypeShellProps) {
     navigator.replaceTop("help");
   };
   const showSave = () => {
+    if (props.cloudSave) { navigator.dismiss("more"); setCloudCloseRequest(value => value + 1); return; }
     setSaveResult(props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save");
   };
   const panel = (id: MobileSheetId): { title: string; kind?: "bottom"; content: ReactNode } | null => {
@@ -399,8 +402,8 @@ export default function MobileShell(props: PrototypeShellProps) {
         {feedback ? <button type="button" onClick={() => navigator.open("feedback")}>Send feedback</button> : null}
         <AccountMenu />
         <VersionLabel />
-        <MobileCampaignManager campaigns={props.campaigns} onCreateCampaign={props.onCreateCampaign} onSwitchCampaign={props.onSwitchCampaign} />
-        <MobileRestartDialog paused={props.paused} onTogglePause={props.onTogglePause} onRestart={props.onRestart} onOpenChange={setRestartOpen} />
+        <MobileCampaignManager campaigns={props.campaigns} accountMode={Boolean(props.cloudSave)} onCreateCampaign={props.onCreateCampaign} onSwitchCampaign={props.onSwitchCampaign} />
+        <MobileRestartDialog paused={props.paused} accountMode={Boolean(props.cloudSave)} onTogglePause={props.onTogglePause} onRestart={props.onRestart} onOpenChange={setRestartOpen} />
         <button type="button" onClick={() => navigator.replaceTop("goals")}>Goals</button>
         {props.progression.inspection ? <button type="button" onClick={() => navigator.replaceTop("inspection")}>Inspection</button> : null}
         {props.progression.inspection?.finish && props.onViewFinishReport ? <button type="button" onClick={props.onViewFinishReport}>View finish report</button> : null}
@@ -429,7 +432,9 @@ export default function MobileShell(props: PrototypeShellProps) {
   const mapFocus = top === undefined || top === "inspector" ? tutorialTarget?.mapFocus ?? alertFocus : null;
 
   return <div className="mobile-shell" ref={shellRef}>
-    <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")} />
+    <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen || Boolean(props.cloudSave && !props.cloudSave.view.canExecute)} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")}
+      referenceLockReason={props.cloudSave && !props.cloudSave.view.canExecute ? cloudStatusText(props.cloudSave.view) : undefined}
+      cloudStatus={props.cloudSave ? <CloudSaveControls save={props.cloudSave} closeRequest={cloudCloseRequest} /> : undefined} />
     <main className="mobile-content" aria-label="Clinic workspace">
       <div className="mobile-workspace" style={{ "--mobile-build-control-height": `${build.controlsHeight}px` } as CSSProperties}>
       <div className="mobile-map" data-phone-anchor="map" ref={hostRef} style={props.buildMode ? { bottom: build.controlsHeight } : undefined}>

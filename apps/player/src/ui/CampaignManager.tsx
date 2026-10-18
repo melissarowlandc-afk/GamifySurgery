@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import type { CampaignListItemView } from "./types";
 
 interface CampaignManagerProps {
+  accountMode?: boolean;
   campaigns: CampaignListItemView[];
   onCreateCampaign: () => void;
   onSwitchCampaign: (campaignId: string) => void;
@@ -16,6 +17,7 @@ function formatCreatedAt(createdAtRealMs: number): string {
 }
 
 export function CampaignManager({
+  accountMode = false,
   campaigns,
   onCreateCampaign,
   onSwitchCampaign,
@@ -28,6 +30,7 @@ export function CampaignManager({
   const archivedCampaigns = campaigns.filter(
     (campaign) => campaign.status === "archived",
   );
+  if (accountMode) return <button className="text-button" type="button" onClick={onCreateCampaign}>Account campaigns</button>;
 
   return (
     <>

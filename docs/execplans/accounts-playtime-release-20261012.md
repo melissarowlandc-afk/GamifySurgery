@@ -2485,3 +2485,4 @@ Manager next action / acceptance limitation:
 - Before: “Which entry misses the thiamine precaution in this patient's high-risk restart?” Key: “Withhold thiamine until new symptoms appear.”
 - After: “Which revision should replace that checklist entry for this patient's high-risk restart?” Key: “Give thiamine before nutrition restarts.”
 - Scoped to `plan-entry-audit` v4 wording and rationale; concept, claims, ID, slug, age range and clinician-review status stay the same. Level 5 evidence was not changed.
+- 2026-10-17: published 1865337f (tester-flag fix a09b77ff, Beta 2 inactive groundwork; cloud client modules and save-path session edits deliberately withheld until B2.4/B2.5 acceptance). npm test exit 0 in release copy (game-domain 4292, player 2166, clinical 698); Level 5 e2e 104/104. Pages run 39069621342 succeeded. Flag a09b77ff to be marked fixed once 20261017000100 (service_role EXECUTE on valid_flag_choices) is applied live.

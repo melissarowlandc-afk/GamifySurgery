@@ -166,12 +166,12 @@ export class PlaytimeTracker {
 
   endSession(): void { this.sample(); this.cut(); this.sessionId = null; void this.flush(); }
 
-  async requestDeletion(): Promise<void> {
+  async requestDeletion(fullAccountDeletion?: () => Promise<void>): Promise<void> {
     // Freeze immediately, including retries, even if delivery fails. The UI may retry.
     this.sample(); this.interval = null; this.access.deletion_requested = true; this.state = "blocked"; this.publish();
     this.outbox.markDeletionRequested();
     this.outbox.clear();
-    await this.transport.requestDeletion();
+    await (fullAccountDeletion ? fullAccountDeletion() : this.transport.requestDeletion());
     this.outbox.clear(); this.state = "deleted"; this.publish();
   }
 

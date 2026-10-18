@@ -5,7 +5,9 @@ export const AuthAccountContext = createContext<string | null>(null);
 
 export interface AuthAccountActions {
   email: string;
-  signOut: () => Promise<void>;
+  signOut: () => Promise<boolean | void>;
+  /** An account-scoped save owner may finish local durability before auth leaves. */
+  signOutGuard?: { current: (() => Promise<void>) | null };
   pending: boolean;
   message: string | null;
 }

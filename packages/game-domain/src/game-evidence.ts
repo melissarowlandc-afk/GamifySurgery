@@ -13,7 +13,7 @@ export type GameEvidenceKind = "frozen-case" | "answer" | "review" | "card-state
   "settlement" | "income" | "operation" | "event" | "completion-witness" | "inspection-report" |
   "inspection-preparation" | "inspection-question" | "inspection-unlock" | "transition" |
   "retired-encounter" | "retired-service" | "retired-retail" | "retired-actor" | "retired-order" | "inspection-end" |
-  "episode-identity" | "decision-identity" | "frozen-work" | "frozen-order" | "frozen-result-text";
+  "episode-identity" | "decision-identity" | "frozen-work" | "frozen-order" | "frozen-result-text" | "build-reversion";
 export interface GameEvidenceRecord {
   readonly id: string;
   readonly kind: GameEvidenceKind;
@@ -60,7 +60,7 @@ export interface GameEvidenceCheckpoint {
 const kinds: readonly GameEvidenceKind[] = ["frozen-case", "answer", "review", "card-state", "review-intent",
   "settlement", "income", "operation", "event", "completion-witness", "inspection-report", "inspection-preparation",
   "inspection-question", "inspection-unlock", "transition", "retired-encounter", "retired-service", "retired-retail",
-  "retired-actor", "retired-order", "inspection-end", "episode-identity", "decision-identity", "frozen-work", "frozen-order", "frozen-result-text"];
+  "retired-actor", "retired-order", "inspection-end", "episode-identity", "decision-identity", "frozen-work", "frozen-order", "frozen-result-text", "build-reversion"];
 const reference = (id: string): EvidenceObject => ({ $e: id });
 function isReference(value: unknown): value is Reference {
   return jsonObject(value) && Object.keys(value).length === 1 && typeof value.$e === "string";
@@ -341,6 +341,11 @@ export function applyGameEvidenceCommand(checkpoint: GameEvidenceCheckpoint, com
       priorPreparation: before.levelFive ? asObject(asObject(before.levelFive).inspection!).preparation ?? null : null,
       report: projected.levelFive ? asObject(asObject(projected.levelFive).inspection!).lastReport ?? null : null });
   }
+  return finishEvidenceTransition(checkpoint, builder, state, next, projected, oldLearning, newLearning, asJson(command));
+}
+
+function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, builder: EvidenceBuilder, state: GameState, next: GameState,
+  projected: EvidenceObject, oldLearning: LearningProjection, newLearning: LearningProjection, command: EvidenceJson) {
   if (Object.keys(oldLearning).length !== Object.keys(newLearning).length) throw new GameEvidenceError("concept-set-change");
   const learningChanges: EvidenceJson[] = [];
   for (const [conceptId, current] of Object.entries(newLearning)) {
@@ -351,7 +356,7 @@ export function applyGameEvidenceCommand(checkpoint: GameEvidenceCheckpoint, com
     if (previous.card !== current.card || appendedReviews.length) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews });
   }
   const sequence = checkpoint.snapshot.head.sequence + 1;
-  const transitionId = builder.put("transition", { sequence, previous: checkpoint.snapshot.head.transitionId, command: asJson(command),
+  const transitionId = builder.put("transition", { sequence, previous: checkpoint.snapshot.head.transitionId, command,
     before: asJson(finance(state)), after: asJson(finance(next)),
     cashDeltaCents: (BigInt(next.cashCents) - BigInt(state.cashCents)).toString(), learningChanges });
   const evidence: GameEvidenceArchive = freezeEvidence({ ...checkpoint.evidence, records: builder.records });
@@ -362,6 +367,45 @@ export function applyGameEvidenceCommand(checkpoint: GameEvidenceCheckpoint, com
   // Always reconcile the complete cards/reviews/money chain before returning an uploadable checkpoint.
   importGameEvidence(snapshot, evidence);
   return { checkpoint: result, state: next, appendedEvidence: evidence.records.slice(checkpoint.evidence.records.length), replayed: false };
+}
+
+/**
+ * The existing Build Undo restores the exact saved in-memory build state.
+ * Keep that projection, while appending a compensating journal transition and
+ * explicit receipt reversions to the SAME immutable archive. Never rewind its head.
+ */
+export function applyGameEvidenceBuildUndo(checkpoint: GameEvidenceCheckpoint, target: GameState, operationId: string): {
+  checkpoint: GameEvidenceCheckpoint; state: GameState; appendedEvidence: readonly GameEvidenceRecord[]; replayed: boolean;
+} {
+  const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
+  if (!operationId || checkpoint.evidence.records.some(fact => fact.kind === "transition" && asObject(asObject(fact.value).command).operationId === operationId)) {
+    throw new GameEvidenceError("operation-id-reuse");
+  }
+  if (!state.paused || !target.paused || state.facilityTick !== target.facilityTick || !jsonEqual(pins(state), pins(target)) ||
+    !jsonEqual(asJson(state.learningHistories), asJson(target.learningHistories))) throw new GameEvidenceError("unsafe-build-undo");
+  const builder = new EvidenceBuilder(checkpoint.evidence); builder.origin = "observed-transition";
+  const before = asObject(builder.project(asJson(state))), projected = asObject(builder.project(asJson(target)));
+  const revertedReceipts: EvidenceJson[] = [];
+  const commandSequences = new Map<string, number>(), alreadyReverted = new Set<string>();
+  for (const fact of checkpoint.evidence.records) {
+    if (fact.kind === "transition") { const value = asObject(fact.value); commandSequences.set(String(asObject(value.command).operationId), Number(value.sequence)); }
+    else if (fact.kind === "build-reversion") alreadyReverted.add(String(asObject(fact.value).revertedOperationId));
+  }
+  // Runtime receipts are bounded. The target's latest retained command locates
+  // its journal boundary; the archive also contains receipts trimmed during a
+  // long hallway stroke. Previously undone commands stay reverted exactly once.
+  let targetSequence = 0;
+  for (const id of Object.keys(target.operationReceipts)) targetSequence = Math.max(targetSequence, commandSequences.get(id) ?? 0);
+  for (const fact of checkpoint.evidence.records) {
+    if (fact.kind !== "operation" || fact.origin !== "observed-transition") continue;
+    const id = String(asObject(fact.value).operationId);
+    if ((commandSequences.get(id) ?? 0) <= targetSequence || Object.hasOwn(target.operationReceipts, id) || alreadyReverted.has(id)) continue;
+    builder.put("build-reversion", { undoOperationId: operationId, revertedOperationId: id, receiptEvidenceId: fact.id, status: "reverted" });
+    alreadyReverted.add(id);
+    revertedReceipts.push(id);
+  }
+  return finishEvidenceTransition(checkpoint, builder, state, target, projected, learning(before), learning(projected),
+    { type: "UNDO_BUILD", operationId, revertedReceipts });
 }
 
 /** Transport/export owns immutable rows separately; snapshots contain references and operational patches only. */
