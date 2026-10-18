@@ -7,6 +7,8 @@ import { compressCloudText, decompressCloudText } from "./codecCompression";
 import { codecTestCampaign } from "./codecTestSupport";
 import { logicalJsonText } from "./codecJson";
 import { compressCloudEvidencePages, decompressCloudEvidencePages } from "./codecEvidencePages";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const root = new URL("../../../../../tests/fixtures/", import.meta.url);
 const measured: Array<{ name: string; source: string; file: string; fileSha256: string }> = [];
@@ -55,7 +57,7 @@ describe("cloud format 2 normalized evidence and compressed storage", () => {
       deflatePagesEvidenceBytes: deflate.packedEvidence.header.compressedBytes + deflatePages.reduce((sum, page) => sum + page.content.compressedBytes, 0),
       immutablePages: gzipPages.length,
       rawCapacityFailures: prepared.rawCapacity.failures, compressedCapacityFailures: prepared.compressedCapacity.failures })}\n`);
-  }, 120_000);
+  }, hostedTime(120_000));
 
   it.each([1, 2, 3, 4, 5, 6, 7, 8, 9])("keeps source schema %i and its complete public migration with the new layout", async version => {
     const raw = JSON.parse(fresh()); raw.schemaVersion = version;
@@ -65,7 +67,7 @@ describe("cloud format 2 normalized evidence and compressed storage", () => {
     expect(loaded.originalSource).toEqual(raw);
     expect(JSON.parse(serializeGameState(loaded.state))).toEqual(JSON.parse(serializeGameState(deserializeGameState(source))));
     expect(loaded.checkpoint.evidence.baseline.legacyReviewProjection).toBe(version === 1);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("shares an immutable header/row prefix across later snapshots and restores a prior revision without a second evidence copy", async () => {
     const original = await prepare(), first = await hydrate(original);
@@ -119,7 +121,7 @@ describe("cloud format 2 normalized evidence and compressed storage", () => {
       gzipPagesEvidenceBytes: initial.packedEvidence.header.compressedBytes + sealedPages.reduce((sum, page) => sum + page.content.compressedBytes, 0),
       immutablePages: sealedPages.length, sealedUploadBatches: 6,
       compressedCapacityFailures: encoded.compressedCapacity.failures, rawCapacityFailures: encoded.rawCapacity.failures })}\n`);
-  }, 180_000);
+  }, hostedTime(180_000));
 
   it("hashes the entire encoded request, rejects identity/row corruption, and verifies uncompressed canonical bytes", async () => {
     const prepared = await prepare(), input = { snapshot: prepared.snapshot, evidence: prepared.packedEvidence, revision: "1",

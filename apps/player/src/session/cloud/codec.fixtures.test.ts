@@ -5,6 +5,8 @@ import { createInitialGameState, deserializeGameState, serializeGameState } from
 import { assessCloudCodecCapacity, loadCloudBaselineImport, prepareCloudBaselineImport } from "./codec";
 import { CLOUD_GAME_FIELD_OWNERSHIP } from "./codecOwnership";
 import { codecTestCampaign, reorderedStoredText, testTextReceipt } from "./codecTestSupport";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const fixtureRoot = new URL("../../../../../tests/fixtures/", import.meta.url);
 const legacy = JSON.parse(readFileSync(new URL("level-five-legacy-behavior-20261012.json", fixtureRoot), "utf8")) as {
@@ -51,7 +53,7 @@ describe("B2.1 complete fixture round trips and capacity receipts", () => {
       ...prepared.sizes, reorderedSnapshotBytes: snapshot.utf8Bytes, reorderedEvidenceBytes: evidence.utf8Bytes,
       withinTarget: storedCapacity.withinSnapshotTarget, capacityFailures: storedCapacity.failures,
       migrationFields: prepared.migration.changedFields })}\n`);
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it.each([0, 1, 2, 3, 4, 5] as const)("round-trips a fresh synthetic facility at level %i without creating earned evidence", async level => {
     const state = createInitialGameState(undefined, { campaignId: `campaign.codec.fresh.${level}`,

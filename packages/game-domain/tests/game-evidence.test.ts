@@ -5,6 +5,8 @@ import {
   exportGameEvidence, gameReducer, getCurrentQuestion, importGameEvidence, restoreGameEvidenceImportSource, serializeGameState,
   type GameCommand, type GameEvidenceCheckpoint, type GameState,
 } from "../src";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const copy = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 const initial = () => createInitialGameState(undefined, { campaignId: "campaign.evidence.synthetic", campaignSeed: "evidence.synthetic", createdAtRealMs: 0 });
@@ -66,7 +68,7 @@ describe("separate immutable game evidence", () => {
       expect(observed.checkpoint.evidence.records.slice(0, checkpoint.evidence.records.length)).toEqual(checkpoint.evidence.records);
       checkpoint = observed.checkpoint;
     }
-  }, 30_000);
+  }, hostedTime(30_000));
 
   it("captures the actual final record before retirement and keeps it after raw state removes it", () => {
     const state = initial(), template = Object.values(state.encounters)[0]!;

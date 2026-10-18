@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, createInitialGameState,
   gameReducer, importGameEvidence, serializeGameState, type GameCommand } from "../src";
+// Hosted CI runners run long simulations up to ten times slower.
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 function fixture() {
   const state = createInitialGameState(undefined, { campaignId: "undo.synthetic", campaignSeed: "undo", createdAtRealMs: 0 });
@@ -51,7 +53,7 @@ describe("append-only Build Undo evidence", () => {
     const again = applyGameEvidenceBuildUndo(built.checkpoint, f.state, "undo.after-long-undo");
     expect(again.appendedEvidence.filter(row => row.kind === "build-reversion")).toHaveLength(1);
     expect(again.state).toEqual(f.state);
-  }, 30_000);
+  }, hostedTime(30_000));
   it("rejects unpaused, changed-clock, changed-learning and changed-identity replacements", () => {
     const f = fixture(), built = applyGameEvidenceCommand(f.checkpoint, f.command);
     for (const target of [{ ...f.state, paused: false }, { ...f.state, facilityTick: 1 }, { ...f.state, campaignId: "other" },
