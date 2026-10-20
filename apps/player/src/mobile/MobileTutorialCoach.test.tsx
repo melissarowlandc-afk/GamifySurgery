@@ -16,6 +16,14 @@ describe("phone tutorial coach", () => {
     expect(mobileTutorialBody({ ...step, id: "open-second-chart" })).toBe("Go to Patients, or tap the patient on the map, to open their chart.");
     expect(mobileTutorialBody({ ...step, id: "first-patient-arriving" })).toBe(step.body);
   });
+  it("explains the map advertising pin and cycling phone speed button without desktop locations", () => {
+    const advertising = mobileTutorialBody({ ...step, id: "advertising-tour" });
+    expect(advertising).toContain("top middle of the Clinic map"); expect(advertising).toContain("+ / −");
+    expect(advertising).toContain("Level 1"); expect(advertising).not.toContain("patient folders");
+    const speed = mobileTutorialBody({ ...step, id: "speed-controls-tour" });
+    expect(speed).toContain("Pause and Play in the top bar"); expect(speed).toContain("cycle 1×, 2×, 4×");
+    expect(speed).toContain("Time only runs while unpaused"); expect(speed).toContain("does not press Play");
+  });
   it.each([
     ["waiting-patient", "patients"], ["existing-patient", "patients"], ["answer-choices", "patients"],
     ["chart-feedback", "patients"], ["alerts", "alerts"], ["build-mode", "build"], ["management", "manage"],

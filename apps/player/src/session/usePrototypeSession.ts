@@ -53,6 +53,7 @@ import {
 } from "./prototypeStorage";
 import {
   createTutorialStepView,
+  isClinicControlsTutorialStepId,
   type TutorialActionId,
   type TutorialStepView,
 } from "./tutorialViewModels";
@@ -2109,7 +2110,7 @@ export function usePrototypeSession(
     );
   }, [buildMode, execute, managementMode, referencePauseLocked, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
 
-  const acknowledgeDailyRoutineTip = useCallback((stepId: string) => {
+  const acknowledgeTutorialTip = useCallback((stepId: string) => {
     const campaignId = stateRef.current.campaignId;
     const currentProfile = profileRef.current;
     const existing = currentProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? [];
@@ -2195,8 +2196,8 @@ export function usePrototypeSession(
           if (tutorialStep.id === "alerts-tour") {
             execute({ type: "ACKNOWLEDGE_ALERTS_TUTORIAL" });
           }
-          if (isDailyRoutineTipId(tutorialStep.id)) {
-            acknowledgeDailyRoutineTip(tutorialStep.id);
+          if (isDailyRoutineTipId(tutorialStep.id) || isClinicControlsTutorialStepId(tutorialStep.id)) {
+            acknowledgeTutorialTip(tutorialStep.id);
             return;
           }
           setAcknowledgedTutorialStepIds((current) => {
@@ -2249,7 +2250,7 @@ export function usePrototypeSession(
     },
     [
       acknowledgeTerminalFeedback,
-      acknowledgeDailyRoutineTip,
+      acknowledgeTutorialTip,
       advanceTutorialResult,
       beginPlacement,
       closeChart,

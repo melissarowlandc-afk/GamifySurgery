@@ -16,6 +16,13 @@ describe("per-campaign guidance compatibility", () => {
     expect(getCampaignTutorialGuidance(profile, campaigns[0]!)).toEqual(profile.tutorialGuidanceByCampaign.first);
     expect(getCampaignTutorialGuidance(profile, {campaignId: "new", state: {facilityLevel: 0}}).mode).toBe("guided");
   });
+  it("keeps completed Level 0 guidance closed when new optional step IDs are introduced", () => {
+    expect(normalizeTutorialGuidanceRecords({ first: { version: 2, mode: "complete", exposedTopicIds: ["pause-speed"] } }, campaigns, true).first)
+      .toEqual({ version: 2, mode: "complete", exposedTopicIds: ["pause-speed"] });
+    expect(getCampaignTutorialGuidance({ tutorialsEnabled: true, tutorialDailyRoutineTipAcknowledgments: {
+      first: ["speed-controls-tour", "advertising-tour"],
+    } }, campaigns[0]!).mode).toBe("guided");
+  });
   it("normalizes malformed/future records without losing campaign data or inventing progress", () => {
     expect(normalizeTutorialGuidanceRecords({first: {version: 99, mode: "complete"}, later: null, unrelated: {}}, campaigns, true).first?.mode).toBe("guided");
     expect(normalizeTutorialGuidanceRecords({first: {version: 2, mode: "guided", exposedTopicIds: ["management", 5, "management"]}}, campaigns, true).first?.exposedTopicIds).toEqual(["management"]);

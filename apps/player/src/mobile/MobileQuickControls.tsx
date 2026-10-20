@@ -1,8 +1,15 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import type { AdvertisingView, EmergencyGlp1View } from "../ui/types";
 
+export function MobileAdvertisingChip({ view, onOpen }: { view: AdvertisingView; onOpen: () => void }) {
+  return <button type="button" className="mobile-advertising-chip mobile-map-top-middle" data-phone-anchor="advertising-chip"
+    aria-label={`Advertising · Level ${view.currentLevel} · ${view.hourlyCostLabel}`} onClick={onOpen}>
+    <strong>Advertising</strong><small>Level {view.currentLevel} · {view.hourlyCostLabel}</small>
+  </button>;
+}
+
 export function MobileAdvertising({ view, onLevelChange }: { view: AdvertisingView; onLevelChange: (level: number) => void }) {
-  return <section className="mobile-quick-control" aria-label="Advertising controls" data-advertising-control>
+  return <section className="mobile-quick-control" aria-label="Advertising controls" data-advertising-control data-phone-anchor="advertising">
     <div className="mobile-advertising-controls">
       <button type="button" disabled={!view.canDecrease} onClick={() => onLevelChange(view.currentLevel - 1)} aria-label="Decrease advertising" data-advertising-adjust="decrease">−</button>
       <div aria-live="polite"><strong>Level {view.currentLevel}</strong><span>{view.currentDisplayName}</span></div>

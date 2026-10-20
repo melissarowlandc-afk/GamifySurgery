@@ -1,4 +1,5 @@
 import {
+  PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
   getFacilityAccessValidation,
@@ -35,6 +36,8 @@ export type TutorialTarget =
   | "existing-patient"
   | "facility-entrance"
   | "facility-clock"
+  | "speed-controls"
+  | "advertising"
   | "chart-feedback"
   | "encounter-summary"
   | "flip-chart"
@@ -56,9 +59,15 @@ export interface TutorialActionView {
   label: string;
 }
 
+export function isClinicControlsTutorialStepId(id: string): boolean {
+  return id === "speed-controls-tour" || id === "advertising-tour";
+}
+
 export interface TutorialStepView {
   id:
     | "welcome"
+    | "speed-controls-tour"
+    | "advertising-tour"
     | "first-patient-arriving"
     | "open-first-chart"
     | "first-patient-walking-to-care"
@@ -298,7 +307,36 @@ function buildStep(input: TutorialViewInput): TutorialStepView {
     topicIds: ["manual-advancement"] };
 }
 
-/** Native game state drives every beat; old acknowledgments are exposure only. */
+/** Optional controls lessons yield immediately to an open chart or native setup work. */
+function clinicControlsStep(input: TutorialViewInput): TutorialStepView | null {
+  const { state } = input;
+  if (input.buildMode || state.openChartEncounterId !== null ||
+    state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle !== "resolved") return null;
+  const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+  if (second?.lifecycle === "resolved") return null;
+  const beforeSecondChart = !second || second.firstOpenedAtTick === null;
+  const secondAway = second?.lifecycle === "active_pending_result" && second.patientLocation === null &&
+    second.patientMovement === null && !second.steps.some((step) => step.status === "feedback_pending");
+  if (!beforeSecondChart && !secondAway) return null;
+  const acknowledged = (id: string) => input.acknowledgedStepIds.has(`${state.campaignId}:${id}`);
+  const base = { eyebrow: "Running the clinic", primaryAction: { id: "acknowledge-step", label: "Got it" } as const };
+  if (!acknowledged("speed-controls-tour")) return { ...base, id: "speed-controls-tour", title: "Set your pace",
+    body: "Use Pause / Play and 1×, 2× or 4× at the top right to choose the pace. Time only runs while unpaused; choosing a speed does not resume the clinic. Speed up while waiting, or pause to think.",
+    note: "Build and Management also pause the clinic. The guided second visit fast-forwards its wait; Pause still works.",
+    target: "speed-controls", targetSelector: ".time-control-group", topicIds: ["pause-speed"] };
+  if (!acknowledged("advertising-tour")) {
+    const levels = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.advertising.levels;
+    const current = levels.find((level) => level.level === state.advertisingLevel) ?? levels[0]!;
+    const firstPaid = levels.find((level) => level.hourlyCost > 0);
+    return { ...base, id: "advertising-tour", title: "Bring in more patients",
+      body: "Advertising makes regular patients arrive more often once Level 1 opens; the two introductory visits keep their own schedule. Use + / − in Advertising below the patient folders. Raise it when quiet and you have capacity; lower it when busy or money is tight.",
+      note: `Current advertising costs $${current.hourlyCost} per game hour.${firstPaid ? ` The first paid tier costs $${firstPaid.hourlyCost} per game hour.` : ""} Costs accrue only while facility time runs.`,
+      target: "advertising", targetSelector: "[data-advertising-control]", topicIds: ["tip.advertising.increase", "tip.advertising.reduce"] };
+  }
+  return null;
+}
+
+/** Native state drives required work; receipts only dismiss optional controls lessons. */
 export function createTutorialStepView(input: TutorialViewInput): TutorialStepView | null {
   if (!input.tutorialsEnabled || input.state.facilityLevel >= 1 || input.managementMode) return null;
   const { state } = input;
@@ -309,6 +347,8 @@ export function createTutorialStepView(input: TutorialViewInput): TutorialStepVi
         : input.buildExitBlockedIssues?.[0] ?? access.issues[0] ?? access.reason ?? "Fix the listed access problems before returning to the clinic.",
       target: "exit-build-mode", targetSelector: "[data-tutorial-anchor='build-done']", topicIds: ["exam-access"]};
   }
+  const controls = clinicControlsStep(input);
+  if (controls) return controls;
   for (const [id, second] of [[TUTORIAL_ENCOUNTER_ID, false], [SECOND_TUTORIAL_ENCOUNTER_ID, true]] as const) {
     const encounter = state.encounters[id];
     if (!encounter) {

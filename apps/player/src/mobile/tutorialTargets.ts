@@ -23,6 +23,8 @@ const TARGETS = {
   "resolve-chart": { tab: "patients", anchors: ["primary"], label: "the pinned chart action" },
   "facility-entrance": { tab: "clinic", anchors: ["map"], label: "the Front Desk", map: "entrance" },
   "facility-clock": { tab: "clinic", anchors: ["pause"], label: "the clock controls" },
+  "speed-controls": { tab: "clinic", anchors: ["speed", "pause"], label: "Pause, Play and speed in the top bar" },
+  advertising: { tab: "clinic", anchors: ["advertising-chip"], label: "Advertising at the top middle of the Clinic map" },
   alerts: { tab: "alerts", anchors: ["alerts"], label: "Alerts" },
   "waiting-actions": { tab: "clinic", anchors: ["emergency"], label: "GLP-1 consult" },
   goals: { tab: "clinic", anchors: ["goals", "goals-chip"], label: "Goals" },
@@ -48,7 +50,11 @@ export function resolveMobileTutorialTarget(step: TutorialStepView | null,
   const chartVisible = context.sheet === "chart" || context.sheet === "discussion";
   const mapVisible = context.sheet === undefined || context.sheet === "inspector";
   const buildVisible = context.buildMode && (mapVisible || context.sheet === "room" || context.sheet === "build");
-  const alwaysVisible = step.target === "facility-clock";
+  const alwaysVisible = step.target === "facility-clock" || step.target === "speed-controls";
+  if (step.target === "advertising") {
+    if (context.sheet === "advertising") return { kind: "control", tab: "clinic", selector: phoneAnchorSelector("advertising"), label: "the advertising level controls" };
+    if (!mapVisible || context.buildMode) return tabTarget("clinic");
+  }
   const visible = alwaysVisible || (spec.map ? mapVisible : spec.tab === "build" ? buildVisible
     : spec.tab === "patients" ? context.sheet === "patients" || chartVisible
       : spec.tab === "clinic" ? mapVisible || context.sheet === "goals" || context.sheet === "emergency"

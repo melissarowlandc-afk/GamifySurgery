@@ -74,4 +74,13 @@ describe("tutorial surfaces absorb map gestures", () => {
     expect(event.cancelBubble).toBe(true);
     expect(event.defaultPrevented).toBe(false);
   });
+  it.each(["speed-controls-tour", "advertising-tour"] as const)("dismisses optional %s through the supplied action without capturing map input", (id) => {
+    const action = vi.fn();
+    const tree = TutorialCoach({ step: { ...step, id, primaryAction: { id: "acknowledge-step", label: "Got it" } }, onAction: action });
+    const event = new Event("click", { bubbles: true, cancelable: true });
+    findElement(tree, "button-secondary").props.onClick!(event);
+    findElement(tree, "tutorial-coach").props.onClick!(event);
+    expect(action).toHaveBeenCalledExactlyOnceWith("acknowledge-step");
+    expect(event.cancelBubble).toBe(true); expect(event.defaultPrevented).toBe(false);
+  });
 });

@@ -46,7 +46,7 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
         <button type="button" className="mobile-play" aria-label="Resume facility time" aria-pressed={!paused}
           disabled={locked} title={locked ? lockReason : undefined} onClick={() => choosePaused(false)}>▶ Play</button>
       </div>
-      <button type="button" className="mobile-speed" aria-label={`Facility speed ${simulationSpeed}x. Cycle speed`}
+      <button type="button" className="mobile-speed" data-phone-anchor="speed" aria-label={`Facility speed ${simulationSpeed}x. Cycle speed`}
         disabled={locked} title={locked ? lockReason : undefined}
         onClick={() => onSimulationSpeedChange(simulationSpeed === 1 ? 2 : simulationSpeed === 2 ? 4 : 1)}>{simulationSpeed}×</button>
       <button type="button" onClick={onMore} aria-label="More clinic options">More</button>

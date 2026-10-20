@@ -30,7 +30,7 @@ import { MobileChart, MobileTeamDiscussion } from "./MobileChart";
 import { MobileAlerts } from "./MobileAlerts";
 import { MobileGoals, MobileGoalsChip } from "./MobileGoals";
 import { MobileInspection, MobileFinishedGamePage } from "./MobileInspection";
-import { MobileAdvertising, MobileGlp1ConsultChip, MobileGlp1ConsultInfo } from "./MobileQuickControls";
+import { MobileAdvertising, MobileAdvertisingChip, MobileGlp1ConsultChip, MobileGlp1ConsultInfo } from "./MobileQuickControls";
 import { MobileTutorialCoach } from "./MobileTutorialCoach";
 import { resolveMobileTutorialTarget, type PhoneMapFocus } from "./tutorialTargets";
 import { usePhoneTutorialAnchor } from "./usePhoneTutorialAnchor";
@@ -449,12 +449,13 @@ export default function MobileShell(props: PrototypeShellProps) {
       </div>
       <div className="mobile-map-chips">
         <MobileGoalsChip key={`goals:${props.facility.campaignId}`} view={props.progression} onLevelUp={props.onLevelUp} onShowGoals={() => navigator.open("goals")} />
+        <MobileAdvertisingChip view={props.advertising} onOpen={() => navigator.open("advertising")} />
         <MobileGlp1ConsultChip key={`consult:${props.facility.campaignId}`} view={props.emergencyGlp1} onConsult={props.onRunEmergencyGlp1Consultation}
           blockedReason={props.buildMode ? "Exit Build Mode before running the emergency consultation." : undefined} />
+        {dire ? <div className="mobile-dire-banner" role="status"><strong>Needs you · {dire.title}</strong>
+          <button type="button" onClick={() => runAction(dire.id, dire.action)}>{dire.actionLabel}</button>
+          {failures[dire.id] ? <p>{failures[dire.id]}</p> : null}</div> : null}
       </div>
-      {dire ? <div className="mobile-dire-banner" role="status"><strong>Needs you · {dire.title}</strong>
-        <button type="button" onClick={() => runAction(dire.id, dire.action)}>{dire.actionLabel}</button>
-        {failures[dire.id] ? <p>{failures[dire.id]}</p> : null}</div> : null}
       {mapHint ? <p className="mobile-map-toast" role="status">{mapHint.text}</p> : null}
       {props.buildMode && build.doorNotice ? <div className="mobile-map-toast mobile-door-toast" role="status">
         <span>{build.doorNotice.text}{build.doorNotice.undo ? " · " : ""}</span>

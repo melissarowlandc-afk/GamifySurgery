@@ -6,9 +6,10 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import type {
-  TutorialActionId,
-  TutorialStepView,
+import {
+  isClinicControlsTutorialStepId,
+  type TutorialActionId,
+  type TutorialStepView,
 } from "../session/tutorialViewModels";
 import {
   positionTutorialCoach,
@@ -246,6 +247,7 @@ interface TutorialCoachProps {
 
 export function TutorialCoach({
   step = null,
+  onAction,
   onDisableTutorials,
   onTopicExposure,
   visible = false,
@@ -785,6 +787,11 @@ export function TutorialCoach({
           <p className="tutorial-coach-flavor">{step.flavor}</p>
         ) : null}
         <div className="tutorial-coach-actions">
+          {isClinicControlsTutorialStepId(step.id) && step.primaryAction?.id === "acknowledge-step" && onAction ? (
+            <button className="button button-secondary" type="button" onClick={() => onAction(step.primaryAction!.id)}>
+              {step.primaryAction.label}
+            </button>
+          ) : null}
           {onDisableTutorials ? (
             <button className="text-button tutorial-disable-button" type="button" onClick={onDisableTutorials}>
               Skip guidance

@@ -8,6 +8,7 @@ import {
   getCurrentQuestion,
   getRoomDefinition,
   getEmergencyGlp1Status,
+  PROTOTYPE_DOMAIN_CONTEXT,
   type GameCommand,
   type GameState,
 } from "@gamify-surgery/game-domain";
@@ -21,6 +22,7 @@ import { createPrototypePlayerView } from "./viewModels";
 import { getTutorialClockMultiplier, getTutorialTickIntervalMs } from "./tutorialTiming";
 
 let sequence = 0;
+const controlTipAcknowledgments = ["speed-controls-tour", "advertising-tour"];
 type WithoutOperationId =
   GameCommand extends infer Command
     ? Command extends { operationId: string }
@@ -113,6 +115,49 @@ function view(
 }
 
 describe("first shift derived from native state", () => {
+  it("offers speed then advertising after the first filed visit without changing native state", () => {
+    const state = filedFirst();
+    const before = structuredClone(state);
+    const speed = view(state)!;
+    expect(speed).toMatchObject({ id: "speed-controls-tour", target: "speed-controls", targetSelector: ".time-control-group",
+      primaryAction: { id: "acknowledge-step", label: "Got it" } });
+    expect(speed.body).toContain("1×, 2× or 4×"); expect(speed.body).toContain("Time only runs while unpaused");
+    const advertising = view(state, { acknowledged: [speed.id] })!;
+    expect(advertising).toMatchObject({ id: "advertising-tour", target: "advertising", targetSelector: "[data-advertising-control]",
+      primaryAction: { id: "acknowledge-step", label: "Got it" } });
+    expect(advertising.body).toContain("below the patient folders");
+    expect(advertising.body).toContain("once Level 1 opens"); expect(advertising.body).toContain("introductory visits keep their own schedule");
+    expect(advertising.body).toContain("when quiet"); expect(advertising.body).toContain("when busy or money is tight");
+    const firstPaid = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.advertising.levels.find((level) => level.hourlyCost > 0)!;
+    expect(advertising.note).toContain(`first paid tier costs $${firstPaid.hourlyCost} per game hour`);
+    expect(view(state, { acknowledged: controlTipAcknowledgments })?.id).not.toMatch(/speed-controls-tour|advertising-tour/);
+    expect(state).toEqual(before);
+  });
+
+  it("allows the second visit, Build and a paused clock without dismissing either optional controls tip", () => {
+    let state = filedFirst();
+    state = reduce(state, { type: "SET_PAUSED", paused: true });
+    expect(view(state)?.id).toBe("speed-controls-tour");
+    expect(state.paused).toBe(true);
+    expect(view(state, { buildMode: true })?.id).toBe("exit-build-mode");
+    state = advanceUntil(reduce(state, { type: "SET_PAUSED", paused: false }), (s) => s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]?.checkInStatus === "checked_in");
+    expect(view(state)?.id).toBe("speed-controls-tour");
+    state = reduce(state, { type: "OPEN_CHART", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID });
+    expect(view(state)?.id).toBe("second-first-decision");
+    state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);
+    expect(view(state)?.id).toBe("enact-second-plan");
+  });
+
+  it("never backfills controls tips after both visits are filed or replays old lessons in a completed clinic", () => {
+    const state = filedVisits();
+    expect(view(state)?.id).not.toMatch(/speed-controls-tour|advertising-tour/);
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.firstOpenedAtTick = null; // Old completion metadata still wins.
+    expect(view(state)?.id).not.toMatch(/speed-controls-tour|advertising-tour/);
+    expect(createTutorialStepView({ state: filedFirst(), tutorialsEnabled: false, introDismissed: true,
+      acknowledgedStepIds: new Set(), buildMode: false, selectedRoomDefinitionId: null })).toBeNull();
+    expect(view({ ...state, facilityLevel: 1 })).toBeNull();
+  });
+
   it("points arrivals at Waiting and explains automatic founder recovery", () => {
     const state = createTutorialState();
     expect(view(state)?.targetSelector).toBe(".patient-folder.is-waiting");
@@ -177,8 +222,10 @@ describe("first shift derived from native state", () => {
     expect(restored.reviewIntents).toEqual(state.reviewIntents);
     expect(restored.learningHistories).toEqual(state.learningHistories);
     expect(view(restored)).toEqual(view(state));
-    expect(view(restored)?.body).toContain("Resume");
-    expect(view(restored)?.body).toContain("8×");
+    expect(view(restored)?.id).toBe("speed-controls-tour");
+    expect(view(restored, { acknowledged: ["speed-controls-tour"] })?.id).toBe("advertising-tour");
+    expect(view(restored, { acknowledged: controlTipAcknowledgments })?.body).toContain("Resume");
+    expect(view(restored, { acknowledged: controlTipAcknowledgments })?.body).toContain("8×");
     expect(getTutorialTickIntervalMs(restored, true)).toBe(125);
     expect(getTutorialTickIntervalMs(restored, false)).toBe(250);
     expect(tick(restored).facilityTick).toBe(restored.facilityTick); // A manual pause still wins.
@@ -318,8 +365,10 @@ describe("first shift derived from native state", () => {
     expect(view(state)?.id).toBe("second-sendout-wait");
     state = reduce(state, { type: "CLOSE_CHART", encounterId: state.openChartEncounterId! });
     state = advanceUntil(state, (s) => s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.patientLocation === null && s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.patientMovement === null);
-    expect(view(state)?.id).toBe("sendout-management");
-    expect(createTutorialStepView({state, tutorialsEnabled: true, introDismissed: false, acknowledgedStepIds: new Set(),
+    expect(view(state)?.id).toBe("speed-controls-tour");
+    expect(view(state, { acknowledged: controlTipAcknowledgments })?.id).toBe("sendout-management");
+    expect(createTutorialStepView({state, tutorialsEnabled: true, introDismissed: false,
+      acknowledgedStepIds: new Set(controlTipAcknowledgments.map((id) => `${state.campaignId}:${id}`)),
       buildMode: false, selectedRoomDefinitionId: null, exposedTopicIds: ["management"]})?.id).toBe("second-sendout-wait");
     const saved = deserializeGameState(serializeGameState(state));
     expect(saved.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult).toEqual(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult);
@@ -396,11 +445,13 @@ function openedFirst(): GameState {
   let state = advanceUntil(createTutorialState(), (s) => s.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus === "checked_in");
   return reduce(state, { type: "OPEN_CHART", encounterId: TUTORIAL_ENCOUNTER_ID });
 }
-function openedSecond(): GameState {
+function filedFirst(): GameState {
   let state = answerCorrect(openedFirst(), TUTORIAL_ENCOUNTER_ID);
   state = reduce(state, { type: "ACKNOWLEDGE_TERMINAL_FEEDBACK", encounterId: TUTORIAL_ENCOUNTER_ID });
-  state = reduce(state, { type: "CLOSE_CHART", encounterId: TUTORIAL_ENCOUNTER_ID });
-  state = advanceUntil(state, (s) => s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]?.checkInStatus === "checked_in");
+  return reduce(state, { type: "CLOSE_CHART", encounterId: TUTORIAL_ENCOUNTER_ID });
+}
+function openedSecond(): GameState {
+  const state = advanceUntil(filedFirst(), (s) => s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]?.checkInStatus === "checked_in");
   return reduce(state, { type: "OPEN_CHART", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID });
 }
 function filedVisits(): GameState {

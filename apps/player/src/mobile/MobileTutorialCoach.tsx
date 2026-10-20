@@ -28,6 +28,8 @@ const stopMapGesture = (event: { stopPropagation: () => void }) => event.stopPro
 const PHONE_BODY: Partial<Record<string, string>> = {
   "open-first-chart": "Go to Patients, or tap the patient on the map, to open their chart. The exclamation point means they need you.",
   "open-second-chart": "Go to Patients, or tap the patient on the map, to open their chart.",
+  "speed-controls-tour": "Use Pause and Play in the top bar. Tap the speed button to cycle 1×, 2×, 4×, then back to 1×. Time only runs while unpaused; changing speed does not press Play. Speed up while waiting, or pause to think.",
+  "advertising-tour": "Tap Advertising at the top middle of the Clinic map, then use + / −. It makes regular patients arrive more often once Level 1 opens; the two introductory visits keep their own schedule. Raise it when quiet and you have capacity; lower it when busy or money is tight.",
 };
 export const mobileTutorialBody = (step: TutorialStepView) => PHONE_BODY[step.id] ?? step.body;
 

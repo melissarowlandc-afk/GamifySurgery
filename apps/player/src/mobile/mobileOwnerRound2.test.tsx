@@ -19,16 +19,22 @@ describe("MB10 map owner feedback", () => {
     expect(env.element.textContent).toBe(""); expect(allElements(env.element, node => node.tagName === "BUTTON")).toHaveLength(0);
     expect(consult).not.toHaveBeenCalled();
   });
-  it("pins the consult to top-left and Goals to top-right, without advertising in the map controls", async () => {
+  it("pins consult, Advertising and Goals in three separate top columns at 390px, inside the shell safe area", async () => {
     const env = phoneTestDom(); await env.render(<MobileShell {...phoneFixture()} />);
+    expect(env.browser.innerWidth).toBe(390);
     expect(env.find(node => node.attributes["data-phone-anchor"] === "emergency").attributes.class).toContain("mobile-map-top-left");
+    expect(env.find(node => node.attributes["data-phone-anchor"] === "advertising-chip").attributes.class).toContain("mobile-map-top-middle");
     expect(env.find(node => node.attributes["data-phone-anchor"] === "goals-chip").attributes.class).toContain("mobile-map-top-right");
     const chips = env.find(node => node.attributes.class === "mobile-map-chips");
-    expect(allElements(chips, node => node.tagName === "BUTTON")).toHaveLength(2); expect(chips.textContent).not.toContain("Advertising");
+    expect(allElements(chips, node => node.tagName === "BUTTON")).toHaveLength(3); expect(chips.textContent).toContain("Advertising");
+    expect(chips.parentNode?.attributes.class).toBe("mobile-workspace");
     const css = readFileSync(new URL("./mobileShell.css", import.meta.url), "utf8");
     expect(css).toMatch(/\.mobile-map-chips\s*\{[^}]*top: 8px;[^}]*left: 8px;[^}]*right: 8px;/);
+    expect(css).toMatch(/\.mobile-map-chips\s*\{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
     expect(css).toMatch(/\.mobile-map-top-left\s*\{[^}]*grid-column: 1;[^}]*grid-row: 1;[^}]*justify-self: start;/);
-    expect(css).toMatch(/\.mobile-map-top-right\s*\{[^}]*grid-column: 2;[^}]*grid-row: 1;[^}]*justify-self: end;/);
+    expect(css).toMatch(/\.mobile-map-top-middle\s*\{[^}]*grid-column: 2;[^}]*grid-row: 1;[^}]*justify-self: center;/);
+    expect(css).toMatch(/\.mobile-map-top-right\s*\{[^}]*grid-column: 3;[^}]*grid-row: 1;[^}]*justify-self: end;/);
+    for (const edge of ["top", "left", "right"]) expect(css).toContain(`padding-${edge}: env(safe-area-inset-${edge}, 0px)`);
   });
   it("keeps covered GLP-1 information reachable in both More and Alerts", async () => {
     const env = phoneTestDom(); const view = { ...phoneFixture().emergencyGlp1, visible: false, automationCapacity: 1, statusLabel: "Fixture staffed coverage" };
@@ -41,10 +47,36 @@ describe("MB10 map owner feedback", () => {
     const change = vi.fn(); const env = phoneTestDom();
     const props = phoneFixture({ ...createManageFixture(), paused: true, advertising: { ...createManageFixture().advertising, currentLevel: 1, canIncrease: true }, onAdvertisingLevelChange: change });
     await env.render(<MobileShell {...props} />);
-    expect(env.find(node => node.attributes.class === "mobile-map-chips").textContent).not.toContain("Advertising");
+    expect(env.find(node => node.attributes.class === "mobile-map-chips").textContent).toContain("Advertising");
     await env.click("Money"); expect(env.button("Advertising").attributes["data-money-tile"]).toBe("advertising");
     expect(allElements(env.element, node => node.attributes["data-advertising-control"] !== undefined)).toHaveLength(0);
     await env.click("Advertising"); await env.click("Increase advertising"); expect(change.mock.calls).toEqual([[2]]);
+  });
+  it("opens the existing advertising controls from the map pin, updates its cost, and preserves disabled limits and consult cooldown", async () => {
+    const env = phoneTestDom(); const change = vi.fn(); const pause = vi.fn();
+    const base = phoneFixture({ onAdvertisingLevelChange: change, onTogglePause: pause });
+    const props = { ...base, advertising: { ...base.advertising, currentLevel: 1, hourlyCostLabel: "$4/hr", canDecrease: true, canIncrease: true } };
+    await env.render(<MobileShell {...props} />);
+    const consult = env.find(node => node.attributes["data-phone-anchor"] === "emergency");
+    const cooldown = allElements(consult, node => node.attributes.role === "progressbar")[0]!.attributes["aria-valuenow"];
+    await env.click("Advertising · Level 1 · $4/hr");
+    expect(env.element.textContent).toContain(props.advertising.arrivalFrequencyLabel);
+    await env.click("Increase advertising"); await env.click("Decrease advertising"); expect(change.mock.calls).toEqual([[2], [0]]);
+    await env.render(<MobileShell {...props} advertising={{ ...props.advertising, currentLevel: 2, hourlyCostLabel: "$8/hr", canIncrease: false, canDecrease: false }} />);
+    expect(env.find(node => node.attributes["data-phone-anchor"] === "advertising-chip").textContent).toContain("Level 2 · $8/hr");
+    for (const label of ["Increase advertising", "Decrease advertising"]) expect(env.button(label).attributes.disabled).toBe("");
+    await env.click("Close Advertising");
+    expect(allElements(consult, node => node.attributes.role === "progressbar")[0]!.attributes["aria-valuenow"]).toBe(cooldown);
+    expect(pause).not.toHaveBeenCalled();
+  });
+  it("keeps the Needs you banner below the whole pin row when pin labels wrap", async () => {
+    const env = phoneTestDom();
+    await env.render(<MobileShell {...phoneFixture({ needsYou: [{ id: "risk", kind: "payroll", title: "Payroll risk", why: "Fixture", sortKey: 1,
+      actionLabel: "Emergency consultation", action: { kind: "emergency_consult" } }] })} />);
+    const banner = env.find(node => node.attributes.class === "mobile-dire-banner");
+    expect(banner.parentNode?.attributes.class).toBe("mobile-map-chips");
+    const css = readFileSync(new URL("./mobileShell.css", import.meta.url), "utf8");
+    expect(css).toMatch(/\.mobile-dire-banner\s*\{[^}]*grid-column: 1 \/ -1;[^}]*grid-row: 2;/);
   });
 });
 

@@ -9,6 +9,7 @@ import type { MobileSheetId } from "./navigation";
 // Every declared first-visit, timed-visit, daily-routine and setup ID, including
 // saved/legacy beats. `satisfies` makes additions to the shared union fail typecheck.
 const STEPS = {
+  "speed-controls-tour": "speed-controls", "advertising-tour": "advertising",
   welcome: "waiting-patient", "first-patient-arriving": "waiting-patient", "open-first-chart": "waiting-patient",
   "first-patient-walking-to-care": "facility-clock", "reopen-first-chart": "existing-patient", "chart-tour": "chart",
   "first-decision": "answer-choices", "off-site-result": "facility-clock", "results-ready": "existing-patient",
@@ -58,6 +59,15 @@ describe("complete phone tutorial target resolver", () => {
     expect(resolveMobileTutorialTarget(step("sendout-trash", "facility-entrance"))?.mapFocus?.kind).toBe("litter");
     expect(resolveMobileTutorialTarget(step("sendout-water", "facility-entrance"))?.mapFocus?.kind).toBe("water");
     expect(resolveMobileTutorialTarget(step("first-decision", "answer-choices"), { sheet: "alerts" })).toMatchObject({ kind: "tab", tab: "patients" });
+  });
+  it("points advertising at the map pin or open sheet, and speed at the top bar from every sheet", () => {
+    const advertising = step("advertising-tour", "advertising");
+    expect(resolveMobileTutorialTarget(advertising)).toMatchObject({ kind: "control", selector: '[data-phone-anchor="advertising-chip"]' });
+    expect(resolveMobileTutorialTarget(advertising, { sheet: "advertising" })).toMatchObject({ kind: "control", selector: '[data-phone-anchor="advertising"]' });
+    for (const sheet of ["patients", "chart", "goals", "emergency", "build", "manage"] as const) {
+      expect(resolveMobileTutorialTarget(advertising, { sheet })).toMatchObject({ kind: "tab", tab: "clinic" });
+      expect(resolveMobileTutorialTarget(step("speed-controls-tour", "speed-controls"), { sheet })).toMatchObject({ kind: "control", selector: '[data-phone-anchor="speed"], [data-phone-anchor="pause"]' });
+    }
   });
   it("queries only the supplied phone root, rejects hidden nodes, and prefers the named patient", () => {
     const node = (id: string, width = 100) => ({ dataset: { patientId: id }, closest: () => null,

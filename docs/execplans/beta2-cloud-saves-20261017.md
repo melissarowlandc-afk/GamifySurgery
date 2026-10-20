@@ -3074,3 +3074,7 @@ installs, network, agents, server start/restart, deployment, owner storage or
 clinical-content changes occurred. Existing owner opening pathways remain
 unchanged. Manager retains acceptance, CURRENT_THREAD_HANDOFF.md and the GitHub
 checkpoint/reminder.
+
+## B2.6 owner-only enablement published (2026-10-18)
+
+Owner approved setting GitHub repository variables and publishing. Set VITE_CLOUD_SAVES_ENABLED=true and VITE_CLOUD_SAVES_REGION="Canada (Central) · ca-central-1" (region from the owner's dashboard General settings screenshot). Server cohort: writes on, enrollments on, only the owner account enabled (`cloud status`). Published 7acf23e4 (Beta 2) + 05017add (CI-only 10x deadlines for the four new long cloud/evidence tests; the first run timed out at 180 s on hosted CI). Release-copy validation: npm test exit 0 (player 2494, game-domain 4296, clinical 698, others green); cloud-saves + cloud-recovery e2e 52/52 after the B2.6 revision-1 gating fix. Pages run 39168570540 succeeded. Next: owner desktop -> phone -> desktop trial.
