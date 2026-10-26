@@ -9,7 +9,7 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
   const server = new FakeCloudServer(), contexts: BrowserContext[] = [];
   const authenticated = new Map<Page, string | null>(), transport = server.transport("qa-account-a");
   let unavailable: CloudFailureCode | null = null;
-  const page = async () => {
+  const page = async (deviceCampaigns = 0) => {
     const context = await browser.newContext({ viewport: layout === "phone" ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, isMobile: layout === "phone", hasTouch: layout === "phone", acceptDownloads: true });
     contexts.push(context); const tab = await context.newPage();
     await tab.exposeBinding("__cloudQaAuthenticate", ({ page }, account: string | null) => { authenticated.set(page, account); });
@@ -22,20 +22,18 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
         return { value: await (action as (...args: unknown[]) => Promise<unknown>)(...args) };
       } catch (error) { return { error: { code: error instanceof CloudSyncError ? error.code : "network" } }; }
     });
-    await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=qa-account-a`);
-    await expect(tab.getByRole("heading", { name: "Clinic campaigns", exact: true })).toBeVisible(); return tab;
+    await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=qa-account-a&device-campaigns=${deviceCampaigns}`);
+    await expect(tab.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible(); return tab;
   };
   return { server, page, fail: (code: CloudFailureCode | null) => { unavailable = code; }, close: async () => { await Promise.all(contexts.map(c => c.close())); } };
 }
 const snapshot = (page: Page) => page.evaluate(() => window.__cloudQa!.snapshot());
 async function importAndOpen(page: Page) {
-  await page.getByRole("button", { name: "Create synthetic device campaign", exact: true }).click();
-  await page.getByRole("checkbox", { name: "Copy Synthetic clinic 1 to my account", exact: true }).check();
-  await page.getByRole("button", { name: "Copy selected local campaigns to my account", exact: true }).click();
-  await expect(page.getByText("Copied and verified in your account. The original bytes remain on this device.", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Open Synthetic clinic 1", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toBeEnabled();
+  await page.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
   await page.getByRole("button", { name: "Continue on this device", exact: true }).click();
   await expect.poll(async () => (await snapshot(page)).phase).toBe("ready");
+  await expect(page.getByRole("button", { name: /Account save status:/ })).toHaveCount(0);
 }
 async function details(page: Page) {
   const dialog = page.getByRole("dialog");
@@ -52,7 +50,7 @@ for (const layout of ["desktop", "phone"] as const) {
   test(`${layout}: unavailable service while navigator is online preserves pending work and blocks real commands`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      const page = await f.page(); await importAndOpen(page);
+      const page = await f.page(1); await importAndOpen(page);
       const before = (await snapshot(page)).state!, original = await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       f.fail("network");
       expect(await page.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
@@ -75,7 +73,7 @@ for (const layout of ["desktop", "phone"] as const) {
   test(`${layout}: service read-only gate safely pauses an open writer and retains the confirmed account save`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      const page = await f.page(); await importAndOpen(page);
+      const page = await f.page(1); await importAndOpen(page);
       const id = (await snapshot(page)).state!.campaignId, confirmed = structuredClone(f.server.account("qa-account-a").campaigns.get(id)!.confirmed);
       await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }));
       f.server.setAccess("qa-account-a", { enabled: false });
@@ -90,7 +88,7 @@ for (const layout of ["desktop", "phone"] as const) {
   test(`${layout}: capacity warning precedes the hard limit; a rejected checkpoint keeps history and offers recovery`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      f.server.setAccess("qa-account-a", { quotaWarning: true }); const page = await f.page();
+      f.server.setAccess("qa-account-a", { quotaWarning: true }); const page = await f.page(1);
       await expect(page.getByText("Account storage is nearly full.", { exact: false })).toBeVisible();
       await importAndOpen(page);
       const id = (await snapshot(page)).state!.campaignId, before = structuredClone(f.server.account("qa-account-a").campaigns.get(id)!.confirmed);
@@ -109,7 +107,7 @@ for (const layout of ["desktop", "phone"] as const) {
   test(`${layout}: a corrupt current revision reports verified-prior recovery, exports it and never rewinds the server`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      const first = await f.page(); await importAndOpen(first);
+      const first = await f.page(1); await importAndOpen(first);
       const id = (await snapshot(first)).state!.campaignId;
       expect(await first.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(true);
       await first.getByRole("button", { name: "Save & Close", exact: true }).click();
@@ -120,7 +118,7 @@ for (const layout of ["desktop", "phone"] as const) {
         revision: prior.revision, expectedRevision: prior.revision, expectedCampaignId: id, expectedBaselineId: prior.baselineId })).state;
       row.confirmed = { ...row.confirmed, snapshot: { ...row.confirmed.snapshot, uncompressedSha256: "0".repeat(64) } };
       const head = structuredClone(row.confirmed), operationCount = f.server.operationCount("qa-account-a"), generation = row.generation;
-      const second = await f.page(); await second.getByRole("button", { name: "Open Synthetic clinic 1", exact: true }).click();
+      const second = await f.page(); await second.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
       const dialog = await details(second);
       await expect(dialog.getByText("The latest save failed verification.", { exact: false })).toBeVisible();
       expect((await snapshot(second)).revision).toBe(prior.revision);

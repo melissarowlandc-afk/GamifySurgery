@@ -725,7 +725,7 @@ export function AppShell({
         buildMode={buildMode}
         managementMode={managementMode}
         pauseLocked={buildMode || managementMode || finishReportOpen || Boolean(cloudSave && !cloudSave.view.canExecute)}
-        pauseLockReason={cloudSave && !cloudSave.view.canExecute ? cloudStatusText(cloudSave.view) : undefined}
+        pauseLockReason={cloudSave && !cloudSave.view.canExecute ? cloudStatusText(cloudSave.view) ?? "Check your account save before resuming." : undefined}
         simulationSpeed={simulationSpeed}
         onTogglePause={onTogglePause}
         onSimulationSpeedChange={onSimulationSpeedChange}

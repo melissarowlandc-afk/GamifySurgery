@@ -170,7 +170,7 @@ describe("first shift derived from native state", () => {
     expect(view(state)?.targetSelector).toBe(".pause-button");
   });
 
-  it.each([true, false])("keeps the guided second physical wait within 1–2 minutes at selected 1x (correct=%s)", (correct) => {
+  it.each([true, false])("shortens only the guided second physical wait at selected 1x (correct=%s)", (correct) => {
     let state = openedSecond();
     const question = getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID)!;
     expect(getTutorialTickIntervalMs(state, true)).toBe(1000);
@@ -182,10 +182,10 @@ describe("first shift derived from native state", () => {
     const frozen = structuredClone(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase);
     const plan = structuredClone(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult!);
     const reviews = structuredClone(state.reviewIntents);
-    expect(getTutorialTickIntervalMs(state, true)).toBe(500);
+    expect(getTutorialTickIntervalMs(state, true)).toBe(250);
     expect(getTutorialTickIntervalMs(state, false)).toBe(1000);
     expect(view(state)?.body).toContain("First-shift fast-forward");
-    expect(view(state)?.body).toContain("2×");
+    expect(view(state)?.body).toContain("4×");
     let realWaitMs = 0;
     let ordinaryWaitMs = 0;
     for (let ticks = 0; !getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID) && ticks < 500; ticks += 1) {
@@ -194,16 +194,36 @@ describe("first shift derived from native state", () => {
       state = tick(state);
     }
     expect(getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID)).not.toBeNull();
-    expect(realWaitMs).toBeGreaterThanOrEqual(60_000);
-    expect(realWaitMs).toBeLessThanOrEqual(120_000);
-    expect(realWaitMs).toBe(75_500); // Includes physical return/check-in, not just the 150-minute test.
-    expect(ordinaryWaitMs).toBe(realWaitMs * 2);
+    expect(realWaitMs).toBe(37_750); // Actual 151-minute physical wait at guided 4x, including return/check-in.
+    expect(ordinaryWaitMs).toBe(realWaitMs * 4);
     expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.steps[0]!.result?.durationTicks).toBe(plan.durationTicks);
     expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase).toEqual(frozen);
     expect(state.reviewIntents).toEqual(reviews);
     expect(getTutorialClockMultiplier(state, true)).toBe(1);
     expect(getTutorialTickIntervalMs(state, true)).toBe(1000);
   });
+
+  it.each([[1, 4, 250], [2, 4, 125], [4, 2, 125]] as const)(
+    "caps guided pending time at 8x with selected %sx", (speed, multiplier, interval) => {
+      let state = reduce(openedSecond(), { type: "SET_SIMULATION_SPEED", speed });
+      const effectiveRate = 1000 / interval;
+      expect(view(state)?.body).toContain(`runs at ${effectiveRate}×`);
+      expect(getTutorialClockMultiplier(state, true)).toBe(1);
+      state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);
+      expect(getTutorialClockMultiplier(state, true)).toBe(1);
+      state = reduce(state, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+        decisionNodeId: state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.steps[0]!.decisionNodeId });
+      expect(getTutorialClockMultiplier(state, true)).toBe(multiplier);
+      expect(getTutorialTickIntervalMs(state, true)).toBe(interval);
+      expect(view(state)?.body).toContain(`runs at ${effectiveRate}×`);
+      expect(getTutorialTickIntervalMs(state, false)).toBe(1000 / speed);
+      for (const facilityLevel of [1, 2, 3, 4, 5] as const)
+        expect(getTutorialTickIntervalMs({ ...state, facilityLevel }, true)).toBe(1000 / speed);
+      const delivered = structuredClone(state);
+      delivered.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.pendingResult!.deliveredAtTick = delivered.facilityTick;
+      expect(getTutorialTickIntervalMs(delivered, true)).toBe(1000 / speed);
+    },
+  );
 
   it("resumes a saved accelerated wait without changing the plan, speed, pause or learning", () => {
     let state = answerCorrect(openedSecond(), SECOND_TUTORIAL_ENCOUNTER_ID);

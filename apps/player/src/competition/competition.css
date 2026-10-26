@@ -1,0 +1,20 @@
+.clinic-competition { flex: 1 1 auto; min-width: 0; min-height: 0; overflow: auto; padding: 12px; font-size: 0.85rem; line-height: 1.45; }
+.clinic-competition header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.clinic-competition h3 { margin: 0; }
+.clinic-competition p { margin: 10px 0; }
+.clinic-competition button { font: inherit; padding: 8px; cursor: pointer; }
+.clinic-competition button:disabled { cursor: default; opacity: 0.6; }
+.clinic-competition .competition-visibility { text-align: left; width: 100%; border: 2px solid var(--ink); background: var(--panel); color: var(--ink); }
+.clinic-competition .competition-visibility::before { content: "Off "; font-weight: 700; }
+.clinic-competition .competition-visibility[aria-checked="true"]::before { content: "On "; }
+.competition-table-wrap { max-width: 100%; overflow-x: auto; }
+.clinic-competition table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.clinic-competition th, .clinic-competition td { padding: 8px 4px; border-bottom: 1px solid var(--ink-soft); overflow-wrap: anywhere; text-align: left; vertical-align: top; }
+.clinic-competition th:first-child { width: 14%; }
+.clinic-competition th:nth-child(3) { width: 13%; }
+.clinic-competition th:last-child { width: 31%; }
+.clinic-competition th:last-child, .clinic-competition td:last-child { text-align: right; }
+.clinic-competition small { display: block; font-size: 0.75em; font-weight: 400; }
+.clinic-competition .competition-self { background: var(--panel); outline: 2px solid var(--ink); outline-offset: -2px; }
+.mobile-shell .clinic-competition { padding: 4px; font-size: 15px; }
+.mobile-shell .clinic-competition button { min-height: 48px; }

@@ -1,6 +1,7 @@
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
-import { loadCloudEvidenceCheckpoint } from "./codecEvidence";
-import { sha256Utf8, utf8Bytes } from "./codecJson";
+import { utf8Bytes } from "./codecJson";
+import { cloudCodec } from "./codecWorker";
+import type { CloudCodecExecutor } from "./codecTasks";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
 import {
   CLOUD_CHECKPOINT_MS, CLOUD_GRACE_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CLOUD_SAVES_ENABLED_BY_DEFAULT,
@@ -22,7 +23,9 @@ export interface CloudSyncView {
   priorRecovery?: { verifiedRevision: string; serverRevision: string };
   writerElsewhere?: boolean;
 }
-export type CloudCheckpointReason = "ordinary" | "scored-answer" | "purchase" | "pause" | "mode-exit" | "campaign-switch" | "save-close";
+// Legacy explicit callers may label a checkpoint; these labels never schedule early uploads.
+export type CloudCheckpointReason = "ordinary" | "hidden" | "pagehide" | "save-close" |
+  "scored-answer" | "purchase" | "pause" | "mode-exit" | "campaign-switch";
 interface TimePair { wall: number; mono: number }
 interface LeaseWindow { lease: CloudLease; until: TimePair }
 const clone = <T>(value: T): T => structuredClone(value);
@@ -44,7 +47,6 @@ export class CloudSyncCoordinator {
   private epoch = 0;
   private stopped = false;
   private resumeAuthorized = false;
-  private durabilityBusy = false;
   private localDurable = true;
   private uploading: Promise<boolean> | null = null;
   private closing: Promise<boolean> | null = null;
@@ -56,22 +58,26 @@ export class CloudSyncCoordinator {
   private lastSample: TimePair;
   private lastRenew: TimePair;
   private lastHead: TimePair;
-  private lastCheckpoint: TimePair;
   private dirtySince: TimePair | null = null;
-  private urgentSince: TimePair | null = null;
   private coveredUsage = new Set<string>();
   private writerElsewhere = false;
 
   constructor(private readonly options: {
     scope: CloudScope; transport: CloudTransport; cache: CloudCache; enabled?: boolean;
-    clock?: CloudClock; newOperationId?: () => string;
+    clock?: CloudClock; newOperationId?: () => string; codec?: CloudCodecExecutor;
   }) {
     this.scope = Object.freeze({ ...options.scope });
     this.enabled = options.enabled ?? CLOUD_SAVES_ENABLED_BY_DEFAULT;
     this.phase = this.enabled ? "checking" : "off";
     this.clock = options.clock ?? { wallNow: () => Date.now(), monotonicNow: () => performance.now() };
     this.newId = options.newOperationId ?? (() => crypto.randomUUID());
-    this.lastSample = this.now(); this.lastRenew = this.now(); this.lastHead = this.now(); this.lastCheckpoint = this.now();
+    this.lastSample = this.now(); this.lastRenew = this.now(); this.lastHead = this.now();
+  }
+  get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
+  get confirmedRevision(): string | null { return this.record?.entry.confirmed.revision ?? null; }
+  get encodingBase(): { revision: string; headerSha256: string; records: number } | null {
+    const confirmed = this.record?.entry.confirmed;
+    return confirmed ? { revision: confirmed.revision, headerSha256: confirmed.evidence.header.uncompressedSha256, records: confirmed.evidence.records.length } : null;
   }
   private now(): TimePair { return { wall: this.clock.wallNow(), mono: this.clock.monotonicNow() }; }
   private elapsed(start: TimePair): number { const now = this.now(); return Math.max(0, now.wall - start.wall, now.mono - start.mono); }
@@ -98,7 +104,7 @@ export class CloudSyncCoordinator {
         serverRevision: this.record.entry.confirmed.priorRecovery.serverRevision } } : {}), writerElsewhere: this.writerElsewhere };
   }
   private allowed(): boolean {
-    return this.enabled && !this.stopped && !this.closingRequested && this.resumeAuthorized && this.localDurable && !this.durabilityBusy &&
+    return this.enabled && !this.stopped && !this.closingRequested && this.resumeAuthorized && this.localDurable &&
       this.window !== null && this.remaining(this.window.until) > 0 &&
       ["ready", "saving", "waiting"].includes(this.phase) && (!this.grace || this.remaining(this.grace) > 0);
   }
@@ -157,9 +163,8 @@ export class CloudSyncCoordinator {
   }
   private async verify(confirmed: CloudConfirmed, summary?: { name?: string; status?: "resumable" | "archived" }): Promise<void> {
     if (confirmed.campaignId !== this.scope.campaignId) throw new CloudSyncError("corrupt");
-    try { const loaded = await loadCloudEvidenceCheckpoint({ ...confirmed, expectedRevision: confirmed.revision,
-      expectedCampaignId: this.scope.campaignId, expectedBaselineId: confirmed.baselineId });
-      if (loaded.checkpoint.evidence.records.length !== confirmed.evidence.records.length) throw new CloudSyncError("corrupt");
+    try { const loaded = await this.codec.run({ kind: "verify", input: { ...confirmed, expectedRevision: confirmed.revision,
+      expectedCampaignId: this.scope.campaignId, expectedBaselineId: confirmed.baselineId } });
       if (summary?.name !== undefined && loaded.campaign.name !== summary.name || summary?.status !== undefined && loaded.campaign.status !== summary.status) throw new CloudSyncError("corrupt"); }
     catch { throw new CloudSyncError("corrupt"); }
   }
@@ -231,7 +236,7 @@ export class CloudSyncCoordinator {
   /** Explicit player Resume after checking/recovery; it never changes gameplay itself. */
   resume(): boolean {
     this.checkTime();
-    if (this.closingRequested || this.phase !== "ready" || !this.window || !this.localDurable || this.durabilityBusy || this.remaining(this.window.until) <= 0) return false;
+    if (this.closingRequested || this.phase !== "ready" || !this.window || !this.localDurable || this.remaining(this.window.until) <= 0) return false;
     this.resumeAuthorized = true; this.emit(); return true;
   }
   pause(): void { this.resumeAuthorized = false; this.emit(); }
@@ -239,11 +244,11 @@ export class CloudSyncCoordinator {
     this.resumeAuthorized = false; this.window = null; this.phase = "paused"; this.failure = "account-save-changed"; this.emit();
   }
 
-  /** Synchronously closes the command gate until this candidate is verified on disk. */
-  stage(candidate: CloudCandidate, reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
+  /** Local persistence starts immediately; only an actual failure closes the command gate. */
+  stage(candidate: CloudCandidate, _reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
     this.checkTime();
     if (!this.allowed() || !this.record || !this.window) return Promise.resolve(false);
-    this.durabilityBusy = true; const epoch = this.epoch;
+    const epoch = this.epoch;
     let frozen = clone(candidate);
     this.emit();
     return this.queue(async () => {
@@ -262,31 +267,13 @@ export class CloudSyncCoordinator {
         writerGeneration: prior?.writerGeneration ?? this.window.lease.writerGeneration,
         inFlight: prior?.inFlight ?? null, following: frozen };
       this.attempted = clone({ ...this.record.entry, recovery });
-      this.validateCandidate(frozen, this.record.entry.confirmed);
-      await this.verify({ ...this.record.entry.confirmed, snapshot: frozen.snapshot, evidence: {
-        header: this.record.entry.confirmed.evidence.header,
-        records: [...this.record.entry.confirmed.evidence.records, ...frozen.evidence.records] } });
+      await this.codec.run({ kind: "candidate", input: { candidate: frozen, confirmed: this.record.entry.confirmed, scope: this.scope } });
       await this.persist({ ...this.record.entry, recovery });
       this.dirtySince ??= this.now();
-      if (reason !== "ordinary") this.urgentSince ??= this.now();
       return true;
     }).catch(error => { if (this.live(epoch)) this.fail(error); return false; }).finally(() => {
-      this.durabilityBusy = false; if (this.live(epoch)) this.emit();
+      if (this.live(epoch)) this.emit();
     });
-  }
-  private validateCandidate(candidate: CloudCandidate, confirmed: CloudConfirmed): void {
-    const delta = candidate.evidence, accepted = confirmed.evidence;
-    if (candidate.campaign.campaignId !== this.scope.campaignId || delta.headerSha256 !== accepted.header.uncompressedSha256 ||
-      delta.fromRecord !== accepted.records.length || delta.toRecord !== delta.fromRecord + delta.records.length ||
-      delta.records.some((row, i) => row.id !== `e${(delta.fromRecord + i + 1).toString(36)}`)) throw new CloudSyncError("corrupt");
-    if (candidate.snapshot.uncompressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes ||
-      delta.records.reduce((sum, row) => sum + row.content.uncompressedBytes, 0) > 1_000_000 || candidate.usageQuestions.length > 100 ||
-      utf8Bytes(JSON.stringify(delta)) + utf8Bytes(JSON.stringify(candidate.usageQuestions)) > 1_000_000) throw new CloudSyncError("capacity");
-    const ids = new Set<string>();
-    for (const receipt of candidate.usageQuestions) {
-      if (ids.has(receipt.receipt_id)) throw new CloudSyncError("corrupt");
-      ids.add(receipt.receipt_id);
-    }
   }
   private async freeze(): Promise<CloudFrozenOperation | null> {
     return this.queue(async () => {
@@ -297,10 +284,9 @@ export class CloudSyncCoordinator {
       const request: CloudCommitRequest = { ...recovery.following, protocolVersion: 2, operationId: this.newId(),
         campaignId: this.scope.campaignId, expectedRevision: recovery.baseRevision,
         writerGeneration: recovery.writerGeneration, writerToken: this.window.lease.writerToken };
-      const requestText = JSON.stringify(request);
-      if (utf8Bytes(requestText) > CLOUD_CAPACITY_LIMITS.transportBodyBytes) throw new CloudSyncError("capacity");
+      const frozen = await this.codec.run({ kind: "freeze", input: request });
       const operation: CloudFrozenOperation = { operationId: request.operationId, createdAtMs: this.clock.wallNow(),
-        requestText, requestSha256: await sha256Utf8(requestText) };
+        ...frozen };
       if (this.options.transport.prepare) operation.wireRequest = await this.options.transport.prepare(request, operation.createdAtMs);
       if (operation.wireRequest && utf8Bytes(operation.wireRequest.text) > CLOUD_CAPACITY_LIMITS.transportBodyBytes) throw new CloudSyncError("capacity");
       await this.persist({ ...this.record.entry, recovery: { ...recovery, inFlight: operation, following: null } });
@@ -338,7 +324,9 @@ export class CloudSyncCoordinator {
         writerGeneration: recovery.writerGeneration, inFlight: null, following } : null });
       this.coveredUsage = new Set(receipt.usageReceiptIds);
       for (const listener of this.receiptListeners) listener(receipt);
-      if (!following) { this.dirtySince = null; this.urgentSince = null; }
+      // New commands can arrive throughout encoding/upload. Give that following
+      // state its own quiet interval instead of uploading it on every pulse.
+      this.dirtySince = following ? this.now() : null;
     });
   }
   checkpoint(_reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
@@ -353,7 +341,6 @@ export class CloudSyncCoordinator {
       try {
         const operation = await this.freeze();
         if (!operation || !this.live(epoch)) return false;
-        this.lastCheckpoint = this.now();
         const receipt = await this.options.transport.commit(operation);
         if (!this.live(epoch)) return false;
         await this.acknowledge(operation, receipt);
@@ -436,7 +423,6 @@ export class CloudSyncCoordinator {
     if (this.stopped) return false;
     return this.window || this.recovery() ? this.retry() : this.open();
   }
-  requestEarlyCheckpoint(): void { if (this.recovery()) this.urgentSince ??= this.now(); }
   reportLocalFailure(error: unknown): void { this.fail(error instanceof CloudSyncError ? error : new CloudSyncError("corrupt")); }
   async pulse(): Promise<void> {
     if (!this.enabled || this.stopped) return;
@@ -462,8 +448,7 @@ export class CloudSyncCoordinator {
         if (this.live(epoch) && head.revision !== this.record?.entry.confirmed.revision) { this.phase = "paused"; this.failure = "account-save-changed"; } }
       catch (error) { if (this.live(epoch)) this.fail(error); }
     }
-    if (this.dirtySince && this.elapsed(this.lastCheckpoint) >= 10_000 &&
-      (this.elapsed(this.dirtySince) >= CLOUD_CHECKPOINT_MS || this.urgentSince && this.elapsed(this.urgentSince) >= 2_000)) await this.checkpoint();
+    if (this.dirtySince && this.elapsed(this.dirtySince) >= CLOUD_CHECKPOINT_MS) await this.checkpoint();
   }
   saveAndClose(): Promise<boolean> {
     if (this.closing) return this.closing;

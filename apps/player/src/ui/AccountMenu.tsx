@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useAuthAccountActions, useAuthAccountId } from "../auth/AuthAccountContext";
 import { VersionLabel } from "../appVersion";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import { USAGE_NOTICE_TEXT, USAGE_NOTICE_VERSION } from "../playtime/usageTypes";
+import { COMPETITION_PRIVACY_NOTICE } from "../competition/types";
 import { useQuestionFlags } from "../session/QuestionFlagProvider";
 import { saveQuestionReviewFlags } from "../session/questionReviewFlags";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
@@ -21,13 +22,15 @@ function PrivacyInfo() {
   const cloud = useCloudAccount();
   return <>
     <p>{USAGE_NOTICE_TEXT}</p>
+    <p>{COMPETITION_PRIVACY_NOTICE}</p>
+    <p>Competition revenue snapshots are retained for 90 days. Pending competition submissions stay in this browser for at most seven days. Your hide preference remains until account data deletion.</p>
     <p>The owner sees only total active play time and total questions for the last 90 days. Time stops when the game is hidden, paused, or unused for five minutes. Help, Build and Management pause time recording. First scored patient and team questions each count once, right or wrong.</p>
     <p>Question flags are voluntary and separate from usage counts. A flag sends question IDs and versions, displayed choice order, your chosen answer and your comment. The owner and manager review reports manually, using Claude Code and Codex to investigate issues. Please do not enter real patient information.</p>
     <p>Send feedback stores your voluntary comment with your account, game release/build version, facility level, desktop or phone layout, and time. It sends no saved clinic contents. The manager compiles comments privately for the game owner, who decides what to do with each comment. You can send feedback even while usage recording is off; a deletion request stops further submissions.</p>
     <p>Supabase hosts accounts, usage, question flags and feedback comments; the owner emails account links personally, and GitHub Pages hosts the game. These providers may keep security logs. Hosted usage, flags and feedback are retained for 90 days. Pending usage and flag uploads stay in this browser for at most seven days and may be lost if storage is blocked or full. Unsent feedback stays in the open comment box for you to retry; it is not uploaded automatically.</p>
     <p>Contact the owner who invited you for support or deletion. After an in-game deletion request, recording stops immediately; remaining account administration and private report copies are handled by the owner within seven days.</p>
     {cloud ? <CloudNoticeDetails region={cloud.runtime.region} /> : <p>Saves stay on this device until cloud saves arrive.</p>}
-    {cloud ? <p>Device-only campaigns belong to this browser profile and site address. Copying them to an account is optional. A remote deletion request cannot erase offline local copies on other devices.</p> : <p>Local campaigns belong to this browser profile and site address. Signing in elsewhere does not move them. A remote deletion request cannot erase offline local copies on other devices.</p>}
+    {cloud ? <p>Account campaigns can be resumed on another device after signing into the same account. Older copies retained on this device belong to this browser profile and site address. A remote deletion request cannot erase offline local copies on other devices.</p> : <p>Local campaigns belong to this browser profile and site address. Signing in elsewhere does not move them. A remote deletion request cannot erase offline local copies on other devices.</p>}
   </>;
 }
 
@@ -66,7 +69,7 @@ export function UsageNotice() {
   </aside>;
 }
 
-export function AccountMenu() {
+export function AccountMenu({ children }: { children?: ReactNode } = {}) {
   const cloud = useCloudAccount();
   const account = useAuthAccountActions();
   const accountId = useAuthAccountId();
@@ -78,7 +81,7 @@ export function AccountMenu() {
   const [error, setError] = useState("");
   const [requested, setRequested] = useState(false);
   if (!account || !accountId) return null;
-  if (cloud) return <CloudAccountMenu />;
+  if (cloud) return <CloudAccountMenu>{children}</CloudAccountMenu>;
   const removeUsage = async () => {
     if (!tracker || pending) return;
     setPending(true); setError(""); setRequested(true);
@@ -91,7 +94,7 @@ export function AccountMenu() {
   return <details className="beta-account">
     <summary>Account &amp; privacy</summary>
     <p>Signed in as {account.email}</p>
-    <PrivacyInfo />
+    <PrivacyInfo />{children}
     <AcceptUsageNotice />
     <p role="status">{status?.state === "deleted" ? "Usage and submitted flags deleted. Recording is off for this account. Feedback comments are also deleted." :
       status?.state === "blocked" ? "Recording is off for this account." : status?.state === "unavailable" ? "Usage uploads are unavailable. Pending records are waiting to send." :
@@ -120,7 +123,7 @@ export function AccountMenu() {
 export function CloudNoticeDetails({ region }: { region: string }) {
   return <div className="cloud-notice-details">
     <p>Cloud save notice · {CLOUD_NOTICE_VERSION}</p>
-    <p>When you choose account campaigns, Supabase stores your full functional clinic: synthetic cases and displayed choices, answers and learning history, facility state, finances and inspection history. Device-only campaigns upload only when you choose to copy them.</p>
+    <p>Supabase stores your full functional clinic for account play: synthetic cases and displayed choices, answers and learning history, facility state, finances and inspection history. After you accept this notice, previous campaigns for this account on this device are added automatically when there is room. If there are too many, you choose which to keep in your account. Original device copies stay here.</p>
     <p>The owner's routine usage report still contains only total active play time and question counts. Cloud saves are used to continue and recover your game, and for owner support when needed. They are not clinical research or campaign analytics and are not sent to the feedback review pipeline. Optional usage recording has its own notice.</p>
     <p>Service region: {region || "not yet published — enrollment unavailable"}. GitHub Pages hosts the game. The beta private-backup policy is weekly, with two copies kept for up to 14 days, alongside a prior cloud save. A total service loss could lose progress since the last weekly backup.</p>
     <p>Cloud campaigns and evidence remain for account gameplay until approved removal or account deletion; they do not expire with the 90-day usage, flag and feedback retention. Ordinary save operations are retained for eight days; import provenance remains with its campaign.</p>
@@ -130,7 +133,7 @@ export function CloudNoticeDetails({ region }: { region: string }) {
   </div>;
 }
 
-function CloudAccountMenu() {
+function CloudAccountMenu({ children }: { children?: ReactNode }) {
   const cloud = useCloudAccount()!, account = useAuthAccountActions()!, tracker = useUsageTracking(), flags = useQuestionFlags();
   const [confirm, setConfirm] = useState(false), [pending, setPending] = useState(false), [error, setError] = useState("");
   const [clearDevice, setClearDevice] = useState(false), [exported, setExported] = useState(false), [downloaded, setDownloaded] = useState(false);
@@ -164,7 +167,7 @@ function CloudAccountMenu() {
   };
   return <details className="beta-account cloud-account">
     <summary>Account &amp; privacy</summary><p>Signed in as {account.email}</p>
-    <PrivacyInfo /><AcceptUsageNotice />
+    <PrivacyInfo />{children}<AcceptUsageNotice />
     <button type="button" disabled={pending} onClick={cloud.showCampaigns}>Account campaign screen</button>
     <p>Sign out keeps this account's recovery copy on this device. On a shared device, stored game data can remain accessible to people using this browser profile.</p>
     <button type="button" disabled={pending} onClick={() => void keepRecovery()}>Download device recovery copy</button>

@@ -1,6 +1,6 @@
 import { act, StrictMode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
+import { importGameEvidence, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
 import { AuthAccountContext } from "../../auth/AuthAccountContext";
 import { cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
 import { scoredPatientFixture } from "../../playtime/usageTestFixtures";
@@ -12,10 +12,12 @@ import { prepareCloudEvidenceImport, loadCloudEvidenceCheckpoint } from "./codec
 import { CloudSyncCoordinator } from "./coordinator";
 import { FakeCloudServer } from "./fakeTransport";
 import { CloudGameSession } from "./gameSession";
-import { syncFixture, TestCloudClock } from "./syncTestSupport";
+import { deferred, syncFixture, TestCloudClock } from "./syncTestSupport";
 import { decompressCloudText } from "./codecCompression";
+import { CloudCodecWorker } from "./codecWorker";
+import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
 
-afterEach(cleanupPhoneTests);
+afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 async function pendingText(session: CloudGameSession): Promise<string> {
   return (await Promise.all((session.coordinator.pendingCandidate?.evidence.records ?? []).map(row => decompressCloudText(row.content)))).join("\n");
 }
@@ -33,6 +35,89 @@ async function fixture(state?: GameState) {
   return { session, coordinator, server, cache, clock, prepared, confirmed };
 }
 describe("cloud commands through the shared domain evidence boundary", () => {
+  it("keeps real ticks and commands running while a routine worker checkpoint is in progress", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
+    vi.spyOn(f.coordinator, "codec", "get").mockReturnValue(codec);
+    f.session.execute({ type: "SET_PAUSED", paused: false, operationId: "live.resume" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await Promise.resolve();
+    expect(worker.messages[0]?.task.kind).toBe("encode");
+    expect(f.session.canExecute).toBe(true); expect(f.session.state.paused).toBe(false);
+    expect(f.session.syncView).toMatchObject({ canExecute: true, pending: true, localDurable: false });
+    const tick = f.session.state.facilityTick;
+    expect(f.session.execute({ type: "ADVANCE_TICK", operationId: "live.tick", advancedAtRealMs: f.clock.wall }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    expect(f.session.state.facilityTick).toBe(tick + 1);
+    worker.release(); expect(await f.session.durable()).toBe(true);
+    expect(f.session.canExecute).toBe(true); expect(f.session.state.paused).toBe(false);
+    const gate = deferred();
+    f.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
+    const saving = f.session.checkpointNow("ordinary");
+    await vi.waitFor(() => expect(f.coordinator.view.phase).toBe("saving"));
+    expect(f.session.canExecute).toBe(true); expect(f.session.state.paused).toBe(false);
+    expect(f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "live.speed" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    const recovery = JSON.parse(f.session.exportRecovery());
+    expect(importGameEvidence(recovery.checkpoint.snapshot, recovery.checkpoint.evidence).simulationSpeed).toBe(2);
+    expect(recovery.pendingRecovery).not.toBeNull();
+    await f.session.durable(); gate.resolve(); expect(await saving).toBe(true);
+    expect(f.session.state.simulationSpeed).toBe(2); expect(f.session.canExecute).toBe(true);
+    expect(worker.messages.map(message => message.task.kind)).toEqual(expect.arrayContaining(["encode", "candidate", "freeze", "verify"]));
+    codec.dispose();
+  });
+  it("keeps new scored receipts with the matching snapshot when an answer arrives during encoding", async () => {
+    const f = await fixture(scoredPatientFixture()); await f.coordinator.startWriter(); f.coordinator.resume();
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker), stage = vi.spyOn(f.coordinator, "stage");
+    vi.spyOn(f.coordinator, "codec", "get").mockReturnValue(codec);
+    f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "receipt.speed" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await Promise.resolve();
+    const encounter = Object.values(f.session.state.encounters)[0]!, node = encounter.frozenCase.decisionNodes[encounter.currentNodeIndex]!;
+    const receipt = { receipt_id: "00000000-0000-4000-8000-000000000002", kind: "question" as const, occurred_at: new Date(f.clock.wall).toISOString() };
+    expect(f.session.execute({ type: "SUBMIT_ANSWER", encounterId: encounter.id, decisionNodeId: node.id,
+      answerChoiceId: node.answerChoices[0]!.id, reviewedAtMs: f.clock.wall, operationId: "receipt.answer" }, PROTOTYPE_DOMAIN_CONTEXT, () => receipt)).not.toBeNull();
+    worker.release(); expect(await f.session.durable()).toBe(true);
+    expect(stage.mock.calls[0]?.[0].usageQuestions).toEqual([]);
+    expect(stage.mock.calls.at(-1)?.[0].usageQuestions).toEqual([receipt]);
+    expect(f.server.operationCount("account-a")).toBe(0);
+    expect(await f.session.checkpointNow("hidden")).toBe(true); expect(f.server.usageCount("account-a")).toBe(1);
+    codec.dispose();
+  });
+  it.each(["visibilitychange", "pagehide"])("checkpoints on %s without pausing or waiting for the interval", async event => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    const env = phoneTestDom();
+    Object.assign(env.doc, { visibilityState: "visible" });
+    Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });
+    const state = f.session.state, profile = { ...createFreshProfile(), activeCampaignId: state.campaignId, tutorialsEnabled: false,
+      tutorialGuidanceByCampaign: { [state.campaignId]: { version: 2 as const, mode: "off" as const, exposedTopicIds: [] } },
+      campaigns: [{ campaignId: state.campaignId, name: "Visible clinic", createdAtRealMs: 0, updatedAtRealMs: 0, status: "resumable" as const, state }] };
+    function Game() { const session = usePrototypeSession({ profile, notice: "Verified." }, f.session); return <p>{session.state.facilityTick}</p>; }
+    await env.render(<AuthAccountContext.Provider value="account-a"><Game /></AuthAccountContext.Provider>);
+    await act(async () => {
+      f.session.execute({ type: "SET_PAUSED", paused: false, operationId: `lifecycle.${event}` }, PROTOTYPE_DOMAIN_CONTEXT);
+      await f.session.durable();
+    });
+    const checkpoint = vi.spyOn(f.session, "checkpointNow"), pause = vi.spyOn(f.coordinator, "pause");
+    expect(f.server.operationCount("account-a")).toBe(0);
+    await act(async () => {
+      if (event === "visibilitychange") { Object.assign(env.doc, { visibilityState: "hidden" }); env.doc.dispatchEvent(new Event(event)); }
+      else env.browser.dispatchEvent(new Event(event));
+      await checkpoint.mock.results[0]?.value;
+    });
+    expect(checkpoint).toHaveBeenCalledExactlyOnceWith(event === "visibilitychange" ? "hidden" : "pagehide");
+    expect(pause).not.toHaveBeenCalled(); expect(f.session.state.paused).toBe(false); expect(f.session.canExecute).toBe(true);
+    expect(f.server.operationCount("account-a")).toBe(1);
+    expect(env.browser.localStorage.setItem).not.toHaveBeenCalled();
+  });
+  it("Save & Close pauses immediately while an earlier worker encode is still pending", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
+    vi.spyOn(f.coordinator, "codec", "get").mockReturnValue(codec);
+    f.session.execute({ type: "SET_PAUSED", paused: false, operationId: "closing.resume" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await Promise.resolve();
+    const closing = f.session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT);
+    expect(f.session.state.paused).toBe(true); expect(f.session.canExecute).toBe(false);
+    expect(f.session.execute({ type: "ADVANCE_TICK", operationId: "closing.tick" }, PROTOTYPE_DOMAIN_CONTEXT)).toBeNull();
+    expect(f.server.calls.some(call => call.method === "release")).toBe(false);
+    worker.release(); expect(await closing).toBe(true); expect(f.server.calls.at(-1)?.method).toBe("release"); codec.dispose();
+  });
   it("requires a fresh session projection when focus loads a different account revision", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
     expect(await f.session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);

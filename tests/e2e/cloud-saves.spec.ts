@@ -7,7 +7,7 @@ import { CloudSyncError, type CloudTransport } from "../../apps/player/src/sessi
 async function rig(browser: Browser, baseURL: string) {
   const server = new FakeCloudServer(), contexts: BrowserContext[] = [], authenticated = new Map<Page, string | null>();
   const transports = new Map<string, CloudTransport>();
-  const page = async (layout: "desktop" | "phone", accountId = "qa-account-a", sameContext?: BrowserContext) => {
+  const page = async (layout: "desktop" | "phone", accountId = "qa-account-a", sameContext?: BrowserContext, deviceCampaigns = 0) => {
     const context = sameContext ?? await browser.newContext({ viewport: layout === "phone" ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, isMobile: layout === "phone", hasTouch: layout === "phone" });
     if (!sameContext) contexts.push(context);
     const tab = await context.newPage();
@@ -24,26 +24,38 @@ async function rig(browser: Browser, baseURL: string) {
         const value = await (action as (...args: unknown[]) => Promise<unknown>)(...args); return { value };
       } catch (error) { return { error: { code: error instanceof CloudSyncError ? error.code : "network" } }; }
     });
-    await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=${accountId}`);
-    await expect(tab.getByRole("heading", { name: "Clinic campaigns", exact: true })).toBeVisible();
+    await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=${accountId}&device-campaigns=${deviceCampaigns}`);
+    await expect(tab.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
     return tab;
   };
   return { server, page, close: async () => { await Promise.all(contexts.map(context => context.close())); } };
 }
 const snapshot = (page: Page) => page.evaluate(() => window.__cloudQa!.snapshot());
-async function createAndCopy(page: Page, name = "Synthetic clinic 1") {
-  await page.getByRole("button", { name: "Create synthetic device campaign" }).click();
-  const raw = await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
-  await page.getByRole("checkbox", { name: `Copy ${name} to my account`, exact: true }).check();
-  await page.getByRole("button", { name: "Copy selected local campaigns to my account", exact: true }).click();
-  await expect(page.getByText("Copied and verified in your account. The original bytes remain on this device.", { exact: true }).last()).toBeVisible();
-  expect(await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(raw);
+async function expectAutomaticEnrollment(page: Page, name = "Synthetic clinic 1", accountId = "qa-account-a") {
+  const key = `gamify-surgery.prototype.profile.v1.account.${encodeURIComponent(accountId)}`;
+  const raw = await page.evaluate(key => localStorage.getItem(key), key);
+  expect(raw).not.toBeNull();
+  await expect(page.getByRole("button", { name: `Resume ${name}`, exact: true })).toBeEnabled();
+  expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(raw);
+}
+async function createAccountCampaign(page: Page, name: string, fromFounder = false) {
+  if (!fromFounder) await page.getByRole("button", { name: "Start a new campaign", exact: true }).click();
+  await page.getByRole("textbox", { name: "Founder name", exact: true }).fill("Synthetic Founder");
+  await page.getByRole("textbox", { name: "Clinic name", exact: true }).fill(name);
+  await page.getByRole("checkbox", { name: "First-shift guidance", exact: true }).uncheck();
+  await page.getByRole("button", { name: "Open the Clinic", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Not now", exact: true }).click();
+  await page.getByText("Account & privacy", { exact: true }).click();
+  await page.getByRole("button", { name: "Account campaign screen", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
 }
 async function openAndContinue(page: Page, name = "Synthetic clinic 1") {
-  await page.getByRole("button", { name: `Open ${name}`, exact: true }).click();
+  await page.getByRole("button", { name: `Resume ${name}`, exact: true }).click();
   await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Continue on this device", exact: true }).click();
   await expect.poll(async () => (await snapshot(page)).phase).toBe("ready");
+  await expect(page.getByRole("button", { name: /Account save status:/ })).toHaveCount(0);
 }
 async function closeSaved(page: Page) {
   await page.getByRole("button", { name: "Save & Close", exact: true }).click();
@@ -52,18 +64,16 @@ async function closeSaved(page: Page) {
 }
 
 test.describe("Beta 2 disposable fake transport across desktop and phone", () => {
-  test("opt-in import retains raw bytes, then desktop → phone → desktop preserves the complete saved game", async ({ browser, baseURL }) => {
+  test("automatic enrollment retains raw bytes, then desktop → phone → desktop preserves the complete saved game", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
       f.server.setAccess("qa-account-a", { noticeAccepted: false });
-      const desktop = await f.page("desktop");
-      await desktop.getByRole("button", { name: "Create synthetic device campaign" }).click();
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 1);
       expect(f.server.operationCount("qa-account-a")).toBe(0);
-      await desktop.getByRole("button", { name: "Accept cloud save notice", exact: true }).click();
-      await desktop.getByRole("checkbox", { name: "Copy Synthetic clinic 1 to my account", exact: true }).check();
+      await desktop.getByText("Account & privacy", { exact: true }).click();
+      await desktop.getByRole("button", { name: "Accept account save notice", exact: true }).click();
       const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
-      await desktop.getByRole("button", { name: "Copy selected local campaigns to my account", exact: true }).click();
-      await expect(desktop.getByText("Copied and verified in your account. The original bytes remain on this device.", { exact: true })).toBeVisible();
+      await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toBeEnabled();
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       await openAndContinue(desktop);
       await desktop.getByRole("button", { name: "Set facility speed to 2x", exact: true }).click();
@@ -85,13 +95,13 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
   test("opening is read-only, takeover fences a visible old writer and cannot release the phone session", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
-      const desktop = await f.page("desktop"); await createAndCopy(desktop); await openAndContinue(desktop);
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       const campaignId = (await snapshot(desktop)).state!.campaignId;
       await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); await window.__cloudQa!.checkpoint(); });
       await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }); });
       const phone = await f.page("phone");
       const before = f.server.account("qa-account-a").campaigns.get(campaignId)!.generation;
-      await phone.getByRole("button", { name: "Open Synthetic clinic 1", exact: true }).click();
+      await phone.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
       await expect(phone.getByRole("heading", { name: "Continue on this device?" })).toBeVisible();
       expect(f.server.account("qa-account-a").campaigns.get(campaignId)!.generation).toBe(before);
       await phone.getByRole("button", { name: "Continue on this device", exact: true }).click();
@@ -113,7 +123,7 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
   test("lost acknowledgement uses one immutable operation; offline progress pauses and recovers without replay", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
-      const desktop = await f.page("desktop"); await createAndCopy(desktop); await openAndContinue(desktop);
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       f.server.faults.push({ method: "commit", at: "after", error: new CloudSyncError("network") });
       expect(await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
       const accepted = f.server.operationCount("qa-account-a");
@@ -121,7 +131,7 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await desktop.getByRole("button", { name: "Retry account save", exact: true }).click();
       expect(f.server.operationCount("qa-account-a")).toBe(accepted);
       expect(f.server.calls.filter(call => call.method === "commit")).toHaveLength(1);
-      await desktop.getByRole("button", { name: /Account save status:/ }).click();
+      await desktop.getByRole("button", { name: "Resume clinic", exact: true }).click();
       await desktop.getByRole("button", { name: "Resume checked campaign", exact: true }).click();
       await desktop.context().setOffline(true);
       expect(await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
@@ -138,13 +148,13 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
   test("same-profile second tab is fenced; full deletion blocks the other context while account B survives", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
-      const desktop = await f.page("desktop"); await createAndCopy(desktop); await openAndContinue(desktop);
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       const tab = await f.page("phone", "qa-account-a", desktop.context()); await openAndContinue(tab);
       await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
       expect((await snapshot(desktop)).phase).toBe("conflict");
-      const other = await f.page("desktop", "qa-account-b");
-      await expect(other.getByRole("heading", { name: "Account campaigns (0/2)" })).toBeVisible();
-      await createAndCopy(other);
+      const other = await f.page("desktop", "qa-account-b", undefined, 1);
+      await expect(other.getByRole("heading", { name: "Resume a previous campaign (0/2)" })).toBeVisible();
+      await expectAutomaticEnrollment(other, "Synthetic clinic 1", "qa-account-b");
       await tab.getByRole("button", { name: "More clinic options", exact: true }).click();
       await tab.getByText("Account & privacy", { exact: true }).click();
       await tab.getByRole("button", { name: "Delete my data/account", exact: true }).click();
@@ -160,20 +170,61 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
   test("two cloud slots include archives; disabled service preserves all device originals", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
-      const desktop = await f.page("desktop"); await createAndCopy(desktop); await openAndContinue(desktop);
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       await desktop.getByRole("button", { name: "Restart Campaign", exact: true }).click();
       await desktop.getByRole("button", { name: "Archive and restart", exact: true }).click();
-      await expect(desktop.getByRole("heading", { name: "Clinic campaigns", exact: true })).toBeVisible();
-      await expect(desktop.getByText("Account · Archived — still uses a slot", { exact: true })).toBeVisible();
-      await createAndCopy(desktop, "Synthetic clinic 2");
-      await expect(desktop.getByRole("button", { name: "Create account campaign", exact: true })).toBeDisabled();
-      await expect(desktop.getByText("Both cloud slots are in use.", { exact: false })).toBeVisible();
+      await expect(desktop.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
+      await expect(desktop.getByText("Archived — still counts toward your 2 campaigns", { exact: false })).toBeVisible();
+      await createAccountCampaign(desktop, "Synthetic clinic 2");
+      await expect(desktop.getByRole("button", { name: "Start a new campaign", exact: true })).toBeEnabled();
+      await expect(desktop.getByText("Your account holds 2 campaigns.", { exact: false })).toBeVisible();
+      await desktop.getByRole("button", { name: "Start a new campaign", exact: true }).click();
+      await expect(desktop.getByText("You can have two campaigns in your account. Starting a new one replaces one of them, and the replaced campaign is deleted.", { exact: true })).toBeVisible();
+      await desktop.getByRole("button", { name: "Cancel starting a new campaign", exact: true }).click();
       const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       f.server.setAccess("qa-account-a", { enabled: false });
-      await desktop.getByRole("button", { name: "Refresh account campaigns", exact: true }).click();
-      await expect(desktop.getByText("Cloud saving is currently disabled.", { exact: false })).toBeVisible();
+      await desktop.evaluate(() => window.dispatchEvent(new Event("focus")));
+      await expect(desktop.getByText("Account saving is currently unavailable.", { exact: false })).toBeVisible();
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+    } finally { await f.close(); }
+  });
+  test("one over-slots choice retains originals, then named double confirmation replaces only the chosen campaign", async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!);
+    try {
+      const desktop = await f.page("desktop", "qa-account-a", undefined, 3);
+      await expect(desktop.getByRole("heading", { name: "Your account holds two campaigns. Choose which to keep in your account.", exact: true })).toBeVisible();
+      const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
+      expect(f.server.operationCount("qa-account-a")).toBe(0);
+      await desktop.getByRole("checkbox", { name: "Keep Synthetic clinic 1 in my account", exact: true }).check();
+      await desktop.getByRole("checkbox", { name: "Keep Synthetic clinic 3 in my account", exact: true }).check();
+      await expect(desktop.getByRole("checkbox", { name: "Keep Synthetic clinic 2 in my account", exact: true })).toBeDisabled();
+      await desktop.getByRole("button", { name: "Keep selected campaigns", exact: true }).click();
+      await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 3", exact: true })).toBeEnabled();
+      const kept = [...f.server.account("qa-account-a").campaigns].find(([, row]) => row.summary?.name === "Synthetic clinic 3")![0];
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+      await desktop.getByRole("button", { name: "Start a new campaign", exact: true }).click();
+      await desktop.getByRole("button", { name: "Replace Synthetic clinic 1", exact: true }).click();
+      await expect(desktop.getByRole("heading", { name: "Delete Synthetic clinic 1 permanently?", exact: true })).toBeVisible();
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+      await desktop.getByRole("button", { name: "Keep Synthetic clinic 1", exact: true }).click();
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+      await desktop.getByRole("button", { name: "Start a new campaign", exact: true }).click();
+      await desktop.getByRole("button", { name: "Replace Synthetic clinic 1", exact: true }).click();
+      await desktop.getByRole("button", { name: "Delete Synthetic clinic 1 permanently", exact: true }).click();
+      await expect(desktop.getByRole("heading", { name: "Open Your Clinic", exact: true })).toBeVisible();
+      expect([...f.server.account("qa-account-a").campaigns.keys()]).toEqual([kept]);
+      await createAccountCampaign(desktop, "New account campaign", true);
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+      expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
+      await desktop.reload();
+      await expect(desktop.getByRole("button", { name: "Resume New account campaign", exact: true })).toBeEnabled();
+      await expect(desktop.getByRole("checkbox", { name: /Keep Synthetic clinic/ })).toHaveCount(0);
+      await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toHaveCount(0);
+      const phone = await f.page("phone");
+      await expect(phone.getByRole("button", { name: "Resume Synthetic clinic 3", exact: true })).toBeEnabled();
+      await expect(phone.getByRole("button", { name: "Resume New account campaign", exact: true })).toBeEnabled();
+      expect(await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBeNull();
     } finally { await f.close(); }
   });
 });

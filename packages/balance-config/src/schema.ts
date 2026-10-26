@@ -776,6 +776,22 @@ export const prototypeBalanceReleaseSchema = z
         firstArrivalMaximumMinutes: z.number().int().positive(),
         routineBaseIntervalMinutes: z.number().int().positive(),
         routineVariationMinutes: z.number().int().nonnegative(),
+        levelOneRoutineCadence: z
+          .object({
+            baseIntervalMinutes: z.number().int().positive(),
+            variationMinutes: z.number().int().nonnegative(),
+          })
+          .strict()
+          .superRefine((cadence, context) => {
+            if (cadence.variationMinutes >= cadence.baseIntervalMinutes) {
+              context.addIssue({
+                code: "custom",
+                message: "Arrival variation must be smaller than the base interval.",
+                path: ["variationMinutes"],
+              });
+            }
+          })
+          .optional(),
       })
       .strict()
       .superRefine((arrivals, context) => {

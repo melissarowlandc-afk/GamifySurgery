@@ -165,6 +165,16 @@ export class FakeCloudServer {
         account.access.deletionRequested = true; account.access.admitted = false;
         account.campaigns.clear(); account.operations.clear(); account.usage.clear();
       }),
+      deleteCampaign: input => run("deleteCampaign", () => {
+        if (account.access.writesEnabled === false) throw new CloudSyncError("disabled");
+        if (!input.campaignId || !/^[1-9][0-9]*$/.test(input.expectedRevision)) throw new CloudSyncError("corrupt");
+        const row = account.campaigns.get(input.campaignId);
+        if (!row) return; // Repeating an acknowledged or lost-ack delete is harmless.
+        if (row.confirmed.revision !== input.expectedRevision) throw new CloudSyncError("revision");
+        if (row.token && row.expiry > this.now()) throw new CloudSyncError("writer");
+        account.campaigns.delete(input.campaignId);
+        for (const [key, operation] of account.operations) if (operation.receipt.campaignId === input.campaignId) account.operations.delete(key);
+      }),
     };
   }
 }

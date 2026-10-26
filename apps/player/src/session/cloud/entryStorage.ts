@@ -6,6 +6,7 @@ export interface CloudEntryStore {
   read<T>(key: string): Promise<T | null>;
   write<T>(key: string, value: T): Promise<T>;
   create<T>(key: string, value: T): Promise<T>;
+  compareAndSet<T>(key: string, expected: T, value: T): Promise<T>;
   entries(): Promise<{ key: string; value: unknown }[]>;
   clear(): Promise<void>;
 }
@@ -71,6 +72,17 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
   }
   write<T>(key: string, value: T): Promise<T> { return this.put(key, value, false); }
   create<T>(key: string, value: T): Promise<T> { return this.put(key, value, true); }
+  async compareAndSet<T>(key: string, expected: T, value: T): Promise<T> {
+    const expectedText = JSON.stringify(expected), text = JSON.stringify(value);
+    const expectedHash = await sha256Utf8(expectedText), sha256 = await sha256Utf8(text);
+    const db = await this.open(), tx = db.transaction(STORE, "readwrite"), done = completion(tx), store = tx.objectStore(STORE);
+    const prior = await request(store.get(this.prefix + key)) as Stored | undefined;
+    if (prior?.text === expectedText && prior.sha256 === expectedHash) await request(store.put({ key: this.prefix + key, text, sha256 }));
+    if (!await done) throw new CloudSyncError("storage");
+    const selected = await this.read<T>(key);
+    if (selected === null) throw new CloudSyncError("storage");
+    return selected;
+  }
   async entries(): Promise<{ key: string; value: unknown }[]> {
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
     const rows = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(this.prefix, this.prefix + "\uffff"))) as Stored[];
@@ -88,6 +100,11 @@ export class MemoryCloudEntryStore implements CloudEntryStore {
   async read<T>(key: string): Promise<T | null> { return clone(this.records.get(key) as T ?? null); }
   async write<T>(key: string, value: T): Promise<T> { this.records.set(key, clone(value)); return clone(value); }
   async create<T>(key: string, value: T): Promise<T> { return this.records.has(key) ? clone(this.records.get(key) as T) : this.write(key, value); }
+  async compareAndSet<T>(key: string, expected: T, value: T): Promise<T> {
+    if (JSON.stringify(this.records.get(key)) === JSON.stringify(expected)) this.records.set(key, clone(value));
+    if (!this.records.has(key)) throw new CloudSyncError("storage");
+    return clone(this.records.get(key) as T);
+  }
   async entries(): Promise<{ key: string; value: unknown }[]> { return [...this.records].map(([key, value]) => ({ key, value: clone(value) })); }
   async clear(): Promise<void> { this.records.clear(); }
 }

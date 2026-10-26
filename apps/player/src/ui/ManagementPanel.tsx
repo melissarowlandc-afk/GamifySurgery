@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { StaffPanel } from "./StaffPanel";
 import { ServiceIncomePanel } from "./ServiceIncomePanel";
 import { MoneyPanel } from "./MoneyPanel";
+import { ClinicCompetitionPanel } from "../competition/ClinicCompetitionPanel";
 import type {
   ServiceIncomeView,
   ServiceSetupActionView,
@@ -30,12 +31,13 @@ interface ManagementPanelProps {
   onSetupAction?: (action: ServiceSetupActionView) => void;
 }
 
-type ManagementTab = "employees" | "services" | "money";
+type ManagementTab = "employees" | "services" | "money" | "competition";
 
 const TABS: { id: ManagementTab; label: string }[] = [
   { id: "employees", label: "Employees" },
   { id: "services", label: "Services" },
   { id: "money", label: "Money" },
+  { id: "competition", label: "Clinic Competition" },
 ];
 
 /** Desk-owned staff, services and money views shown while facility time is paused. */
@@ -128,6 +130,8 @@ export function ManagementPanel({
           onStartLaboratoryProcessing={onStartLaboratoryProcessing}
           onSetupAction={onSetupAction}
         />
+      ) : activeTab === "competition" ? (
+        <ClinicCompetitionPanel />
       ) : (
         <MoneyPanel serviceIncome={serviceIncome} />
       )}

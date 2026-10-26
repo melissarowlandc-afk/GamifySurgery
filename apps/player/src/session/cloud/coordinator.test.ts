@@ -32,10 +32,10 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     expect(h.coordinator.resume()).toBe(true); expect(h.coordinator.view.canExecute).toBe(true);
     expect(h.server.calls.some(call => call.method === "commit")).toBe(false);
   });
-  it("stops commands synchronously until the candidate's verified local commit", async () => {
+  it("keeps commands enabled while the candidate is verified and committed locally", async () => {
     const h = await playing(), candidate = await h.candidate(h.first);
     const staging = h.coordinator.stage(candidate);
-    expect(h.coordinator.view.canExecute).toBe(false);
+    expect(h.coordinator.view.canExecute).toBe(true);
     expect(await staging).toBe(true); expect(h.coordinator.view.canExecute).toBe(true);
     const saved = await h.cache.read(h.scope);
     expect(saved?.entry.recovery?.inFlight).toBeNull(); expect(saved?.entry.recovery?.following).toEqual(candidate);
@@ -191,16 +191,43 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     gate.resolve(); expect(await closing).toBe(false);
     expect((await h.server.transport(h.scope.accountId).head(h.scope.campaignId)).writerActive).toBe(true);
   });
-  it.each(["scored-answer", "purchase", "pause", "mode-exit", "campaign-switch", "save-close"] as const)("coalesces the early %s checkpoint within the rate cadence", async reason => {
+  it.each(["scored-answer", "purchase", "pause", "mode-exit", "campaign-switch"] as const)("does not schedule an early upload for a staged %s", async reason => {
     const h = await playing(); await h.coordinator.stage(await h.candidate(h.first), reason);
     advance(h.clock, 9_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
-    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
-  });
-  it("checkpoints ordinary dirty work at about 60 s", async () => {
-    const h = await playing(); await h.coordinator.stage(await h.candidate(h.first));
-    for (let index = 0; index < 3; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    for (let index = 0; index < 4; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
     expect(h.server.operationCount(h.scope.accountId)).toBe(0);
-    advance(h.clock, 15_000); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+  });
+  it("checkpoints dirty work after five minutes, renews with no snapshots, and stays quiet when clean", async () => {
+    const h = await playing(); await h.coordinator.stage(await h.candidate(h.first));
+    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+    expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(19);
+    advance(h.clock, 14_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    expect(h.coordinator.view.canExecute).toBe(true);
+    for (let index = 0; index < 20; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+  });
+  it("gives work arriving during an upload a fresh five-minute interval after acknowledgment", async () => {
+    const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
+    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+    h.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
+    const saving = h.coordinator.checkpoint("hidden");
+    await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
+    const second = h.command(h.first, { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "interval.following" });
+    await h.coordinator.stage(await h.candidate(second)); gate.resolve(); expect(await saving).toBe(true);
+    expect(h.coordinator.view.pending).toBe(true);
+    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    advance(h.clock, 15_000); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(2);
+  });
+  it("stops play on a corrupted worker-verified candidate rather than treating it as an offline grace period", async () => {
+    const h = await playing(), candidate = await h.candidate(h.first);
+    const snapshot = { ...candidate.snapshot, uncompressedSha256: "0".repeat(64) };
+    expect(await h.coordinator.stage({ ...candidate, snapshot })).toBe(false);
+    expect(h.coordinator.view).toMatchObject({ phase: "blocked", failure: "corrupt", canExecute: false });
+    expect(h.server.operationCount(h.scope.accountId)).toBe(0); expect(h.coordinator.exportRecovery()).not.toBeNull();
   });
   it("awaits the confirmed checkpoint before releasing on Save & Close", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));

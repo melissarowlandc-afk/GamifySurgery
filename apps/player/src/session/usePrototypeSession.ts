@@ -86,6 +86,7 @@ import type { MobileBuildActions } from "../mobile/build/types";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { trimMobileBuildHistory } from "../mobile/performance/buildHistory";
 import { useUsageTracking } from "../playtime/UsageProvider";
+import { useCompetitionSubmission } from "../competition/useCompetition";
 import { isFirstScoredAnswer } from "../playtime/scoredQuestionUsage";
 import { boundUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
 import { CloudGameSession, cloudCampaignMetadata } from "./cloud/gameSession";
@@ -326,6 +327,7 @@ export function usePrototypeSession(
     cloud?.state ?? requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
+  useCompetitionSubmission(state, cloud?.metadata.name ?? profile.campaigns.find(campaign => campaign.campaignId === state.campaignId)?.name ?? "");
   const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
   const [
     selectedRoomDefinitionId,
@@ -874,6 +876,7 @@ export function usePrototypeSession(
       const visible = document.visibilityState === "visible";
       setDocumentVisible(visible);
       if (cloud && visible && event) void cloud.coordinator.focus();
+      if (cloud && !visible) { void cloud.checkpointNow("hidden"); return; }
       if (!visible && !stateRef.current.paused) {
         execute(
           {
@@ -893,7 +896,7 @@ export function usePrototypeSession(
     };
 
     const handlePageHide = () => {
-      if (cloud) { cloud.coordinator.pause(); return; }
+      if (cloud) { void cloud.checkpointNow("pagehide"); return; }
       // Idle autosaves optimize live animation, but a refresh or navigation
       // must still synchronously commit the latest staged tick before the old
       // document is discarded.
@@ -947,7 +950,6 @@ export function usePrototypeSession(
       return;
     }
     setManagementMode(false);
-    if (cloud) void cloud.checkpointNow("mode-exit");
     if (!preManagementPausedRef.current && stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: false },
@@ -1402,7 +1404,6 @@ export function usePrototypeSession(
       return;
     }
     setBuildMode(false);
-    if (cloud) void cloud.checkpointNow("mode-exit");
     buildHistoryRef.current = [];
     buildHistoryLabelsRef.current = [];
     setBuildUndoCount(0);

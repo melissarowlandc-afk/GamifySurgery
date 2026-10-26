@@ -1,119 +1,212 @@
-import { useEffect, useRef, useState } from "react";
-import { useAuthAccountActions } from "../auth/AuthAccountContext";
+import { useEffect, useId, useRef, useState } from "react";
 import { useCloudAccount } from "../session/cloud/CloudAccount";
-import { importLocalCloudCampaign, inspectLocalCloudSources, promoteExistingLocalQuestions, type LocalCloudSource } from "../session/cloud/importCampaigns";
+import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
+import { chooseAutomaticCampaignEnrollment, finishAutomaticCampaignEnrollment, inspectLocalCloudSources,
+  prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
+import { CloudSyncError, type CloudCampaignSummary } from "../session/cloud/transport";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
+import { usePresentationLayout } from "../shellPresentation";
 import { cloudEntryError } from "./cloudEntryError";
-import { AccountMenu, CloudNoticeDetails } from "./AccountMenu";
+import { AccountMenu } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import "./cloudSaves.css";
 
-export function CloudCampaignEntry({ onOpen, onLocalCampaign, onLocalOnly, onCreate, notice = "" }: {
+function ClinicTime({ value }: { value: number }) {
+  const date = new Date(value);
+  return Number.isFinite(date.getTime()) ? <time dateTime={date.toISOString()}>{date.toLocaleString()}</time> : <>Time unavailable</>;
+}
+
+export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = false }: {
   onOpen(campaignId: string): Promise<void>;
-  onLocalCampaign(campaignId: string): void;
-  onLocalOnly(): void;
   onCreate(): void;
   notice?: string;
+  preparing?: boolean;
 }) {
-  const cloud = useCloudAccount()!, account = useAuthAccountActions(), { runtime } = cloud;
-  const usage = useUsageTracking();
+  const cloud = useCloudAccount()!, { runtime } = cloud;
+  const usage = useUsageTracking(), layout = usePresentationLayout(), id = useId();
   const [pendingQuestions, setPendingQuestions] = useState<QuestionUsageReceipt[]>([]);
-  const [includeUnowned, setIncludeUnowned] = useState(false), [claim, setClaim] = useState(false);
-  const [sources, setSources] = useState<LocalCloudSource[]>([]), [problems, setProblems] = useState<string[]>([]);
-  const [selected, setSelected] = useState<string[]>([]), [names, setNames] = useState<Record<string, string>>({});
-  const [results, setResults] = useState<Record<string, string>>({}), [busy, setBusy] = useState(false), [error, setError] = useState("");
-  const mounted = useRef(true);
+  const [problems, setProblems] = useState<string[]>([]), [enrollment, setEnrollment] = useState<AutomaticCampaignEnrollment | null>(null);
+  const [selected, setSelected] = useState<string[]>([]), [enrollmentError, setEnrollmentError] = useState("");
+  const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const [replace, setReplace] = useState(false), [target, setTarget] = useState<CloudCampaignSummary | null>(null);
+  const [levels, setLevels] = useState<Record<string, number | null>>({});
+  const levelRequests = useRef(new Map<string, Promise<number | null>>());
+  const mounted = useRef(true), working = useRef(false), opened = useRef(false), started = useRef(false);
+  const latest = useRef(cloud); latest.current = cloud;
+  const replacement = useRef<HTMLElement | null>(null);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useEffect(() => {
-    let current = true;
-    void (async () => {
-      const inspection = await inspectLocalCloudSources(runtime.accountId, window.localStorage, runtime.entryStore, includeUnowned);
-      const created = (await runtime.entryStore.entries()).filter(entry => entry.key.startsWith("created:")).map(entry => entry.value as LocalCloudSource);
-      if (current) { setSources([...inspection.sources, ...created]); setProblems(inspection.problems); setPendingQuestions(inspection.pendingUsageQuestions); }
-    })().catch(() => { if (current) setProblems(["Browser recovery storage is unavailable. Original saves have not been replaced."]); });
-    return () => { current = false; };
-  }, [runtime, includeUnowned]);
+    const update = () => {
+      if (["deleted", "deletion-requested"].includes(latest.current.phase)) return;
+      void latest.current.refresh().catch(() => { /* The account provider reports unavailable saves. */ });
+    };
+    if (!opened.current) { opened.current = true; update(); }
+    window.addEventListener("focus", update);
+    return () => window.removeEventListener("focus", update);
+  }, []);
+  useEffect(() => { if (replace) replacement.current?.focus(); }, [replace, target]);
+  const runEnrollment = async (choice?: readonly string[]) => {
+    if (working.current) return;
+    working.current = true; setBusy(true); setEnrollmentError("");
+    try {
+      let next: AutomaticCampaignEnrollment;
+      if (choice) {
+        const summaries = await runtime.transport.list();
+        next = await chooseAutomaticCampaignEnrollment(choice, Math.max(0, 2 - summaries.length), runtime.entryStore);
+      } else {
+        const inspection = await inspectLocalCloudSources(runtime.accountId, window.localStorage, runtime.entryStore);
+        if (!mounted.current) return;
+        setProblems([...inspection.problems, ...inspection.sources.filter(source => source.error).map(source => `${source.campaign.name} could not be saved to your account. Its original copy is kept on this device.`)]);
+        setPendingQuestions(inspection.pendingUsageQuestions);
+        next = await prepareAutomaticCampaignEnrollment(inspection.sources, latest.current.summaries, runtime.entryStore);
+      }
+      if (!mounted.current) return;
+      setEnrollment(next);
+      if (next.phase === "saving") next = await finishAutomaticCampaignEnrollment(runtime.transport, runtime.entryStore);
+      if (!mounted.current) return;
+      // Update the shared account list before enabling Resume or new creation.
+      if (next.phase === "complete" && next.selectedIds.length) await latest.current.refresh();
+      if (mounted.current) setEnrollment(next);
+    } catch (failure) {
+      if (mounted.current) {
+        setEnrollmentError(cloudEntryError(failure));
+        // A batch may have saved its first campaign before another failed.
+        // Keep every confirmed account campaign visible and resumable.
+        await latest.current.refresh();
+      }
+    }
+    finally { working.current = false; if (mounted.current) setBusy(false); }
+  };
+  useEffect(() => {
+    if (started.current || busy || working.current || cloud.phase !== "available" || !cloud.access?.enabled || cloud.access.writesEnabled === false || !cloud.access.noticeAccepted) return;
+    started.current = true; void runEnrollment();
+  }, [runtime, cloud.phase, cloud.access?.enabled, cloud.access?.writesEnabled, cloud.access?.noticeAccepted, busy]);
   useEffect(() => {
     if (!usage || !pendingQuestions.length) return;
     let active = true, promoting = false;
     const promote = () => {
       if (!active || promoting) return; promoting = true;
-      void promoteExistingLocalQuestions(pendingQuestions, usage, runtime.entryStore).catch(() => { /* The original staging and existing outbox remain retryable. */ }).finally(() => { promoting = false; });
+      void promoteExistingLocalQuestions(pendingQuestions, usage, runtime.entryStore).catch(() => { /* Existing staging stays retryable. */ }).finally(() => { promoting = false; });
     };
     const unsubscribe = usage.subscribe(promote); promote();
     return () => { active = false; unsubscribe(); };
   }, [usage, pendingQuestions, runtime]);
-  const canUseCloud = cloud.phase === "available" && cloud.access?.enabled && cloud.access.writesEnabled !== false && cloud.access.noticeAccepted;
-  const copySelected = async () => {
-    if (busy || !canUseCloud || selected.length === 0 || selected.some(id => sources.find(source => source.id === id)?.unowned) && !claim) return;
-    setBusy(true); setError("");
-    for (const id of selected) {
-      if (!mounted.current) break;
-      const source = sources.find(row => row.id === id); if (!source) continue;
-      try {
-        await importLocalCloudCampaign(source, names[id] ?? source.campaign.name, runtime.transport, runtime.entryStore);
-        if (mounted.current) setResults(current => ({ ...current, [id]: "Copied and verified in your account. The original bytes remain on this device." }));
-      } catch (failure) { if (mounted.current) setResults(current => ({ ...current, [id]: cloudEntryError(failure) })); }
+  // List metadata has no level field. These verified reads never acquire a
+  // writer. The real Resume path retains its explicit continuation/takeover.
+  const listedRevisions = JSON.stringify(cloud.summaries.map(campaign => [campaign.campaignId, campaign.revision]));
+  useEffect(() => {
+    if (cloud.phase !== "available" || !cloud.access?.enabled || !cloud.access.noticeAccepted || busy) return;
+    let current = true;
+    for (const [campaignId, revision] of JSON.parse(listedRevisions) as [string, string][]) {
+      const key = JSON.stringify([campaignId, revision]);
+      let request = levelRequests.current.get(key);
+      if (!request) {
+        request = (async () => {
+          const cached = await runtime.cache.read({ backendId: runtime.backendId, accountId: runtime.accountId, campaignId }).catch(() => null);
+          const enrolled = await runtime.entryStore.read<{ revision: string; facilityLevel?: number }>(`enrolled:${campaignId}`).catch(() => null);
+          if (enrolled?.revision === revision && Number.isInteger(enrolled.facilityLevel)) return enrolled.facilityLevel!;
+          const loaded = cached?.entry.confirmed.revision === revision ? cached.entry.confirmed : await runtime.transport.load(campaignId, revision);
+          const verified = await loadCloudEvidenceCheckpoint({ ...loaded, expectedCampaignId: campaignId, expectedRevision: revision, expectedBaselineId: loaded.baselineId });
+          return verified.state.facilityLevel;
+        })().catch(() => { levelRequests.current.delete(key); return null; });
+        levelRequests.current.set(key, request);
+      }
+      void request.then(level => { if (current) setLevels(previous => ({ ...previous, [key]: level })); });
     }
-    if (mounted.current) { await cloud.refresh(); setBusy(false); }
-  };
+    return () => { current = false; };
+  }, [runtime, listedRevisions, cloud.phase, cloud.access?.enabled, cloud.access?.noticeAccepted, busy]);
+  const canUseCloud = cloud.phase === "available" && cloud.access?.enabled && cloud.access.writesEnabled !== false && cloud.access.noticeAccepted;
+  const migrationReady = enrollment?.phase === "complete", full = cloud.summaries.length >= 2;
+  const accountReason = cloud.phase === "checking" ? "Checking your account…" :
+    cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? "Account play has stopped." :
+    cloud.phase === "error" ? "Your account campaigns are unavailable. Check your connection and return to this page to try again." :
+    !cloud.access?.enabled || cloud.access.writesEnabled === false ? "Account saving is currently unavailable. Try again later." :
+    !cloud.access.noticeAccepted ? "Read and accept the notice in Account & privacy below to continue." : "";
   const action = async (run: () => Promise<void>) => {
-    if (busy) return; setBusy(true); setError("");
+    if (working.current) return; working.current = true; setBusy(true); setError("");
     try { await run(); } catch (failure) { if (mounted.current) setError(cloudEntryError(failure)); }
-    finally { if (mounted.current) setBusy(false); }
+    finally { working.current = false; if (mounted.current) setBusy(false); }
   };
-  return <main className="cloud-entry">
-    <h1>Clinic campaigns</h1><AccountMenu /><ClinicalContentNotice />
+  const deleteAndCreate = () => void action(async () => {
+    if (!target || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false) return;
+    if (!runtime.transport.deleteCampaign) { setError("Campaign replacement is unavailable. Contact the owner."); return; }
+    // Keep a durable local exclusion BEFORE deletion. Even a lost reply or
+    // interrupted new-campaign setup must not resurrect the retained original.
+    await runtime.entryStore.create(`retired:${target.campaignId}`, { revision: target.revision });
+    try { await runtime.transport.deleteCampaign({ campaignId: target.campaignId, expectedRevision: target.revision }); }
+    catch (failure) {
+      setError(failure instanceof CloudSyncError && failure.code === "writer" ? "This campaign is open on another device. Use Save & Close there before replacing it." :
+        failure instanceof CloudSyncError && failure.code === "revision" ? "This campaign has a newer save. Cancel and choose it again before deciding what to delete." :
+        "Deletion is not confirmed. Try again to check the same campaign, or cancel. A new campaign has not been started.");
+      await latest.current.refresh(); return;
+    }
+    if (!mounted.current) return;
+    await latest.current.refresh();
+    if (mounted.current) { setTarget(null); setReplace(false); onCreate(); }
+  });
+  return <main className={`cloud-entry cloud-entry--${layout}`}>
+    <header><h1>Your campaigns</h1><ClinicalContentNotice /></header>
     {notice ? <p role="status">{notice}</p> : null}
-    <p>Use the same invited account on desktop and phone. Account campaigns continue from the last confirmed account save.</p>
-    <p><strong>Two cloud campaigns per account, including archived clinics and recovery campaigns.</strong> Archives keep their slot. Extra campaigns stay on this device. Storage limits may pause a large campaign; history is never removed to make it fit.</p>
-    {cloud.phase === "checking" ? <p role="status">Checking account campaigns…</p> : null}
-    {cloud.phase === "error" ? <p role="alert">Account campaigns are unavailable. No empty campaign has replaced your save. Retry, or choose a device-only campaign explicitly.</p> : null}
+    {accountReason ? <p id={`${id}-account-reason`} role={cloud.phase === "error" ? "alert" : "status"}>{accountReason}</p> : null}
     {cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? <p role="alert">{cloud.phase === "deleted" ? "Account data deletion is confirmed. Play and uploads have stopped." : "Account deletion is not confirmed. Play and uploads are stopped here; retry from Account & privacy."}</p> : null}
-    {cloud.access && (!cloud.access.enabled || cloud.access.writesEnabled === false) ? <p role="status">Cloud saving is currently disabled. Existing account campaigns remain paused; device-only copies have separate progress.</p> : null}
-    {cloud.access && !cloud.access.noticeAccepted && cloud.phase === "available" ? <section aria-label="Cloud save notice">
-      <h2>Before using cloud saves</h2><CloudNoticeDetails region={runtime.region} />
-      {!runtime.region ? <p role="alert">The service region has not been published. Cloud enrollment is unavailable until the owner completes this notice.</p> : null}
-      <button type="button" disabled={busy || !runtime.region || !cloud.access.enabled} onClick={() => void action(cloud.acceptNotice)}>Accept cloud save notice</button>
-      <button type="button" disabled={busy} onClick={onLocalOnly}>Later — use this device only</button>
+    {cloud.access?.quotaWarning ? <p role="status">Account storage is nearly full. Contact the owner before adding more progress.</p> : null}
+    {preparing || busy && !replace && !enrollmentError && !migrationReady ? <p role="status">Getting your campaigns ready…</p> : null}
+    {enrollmentError ? <div role="alert"><p>{enrollmentError}</p><button type="button" disabled={busy || !canUseCloud} onClick={() => void runEnrollment()}>Try saving my campaigns again</button></div> : null}
+    {enrollment?.phase === "choose" ? <section className="cloud-entry-chooser" aria-label="Choose account campaigns">
+      <h2>Your account holds two campaigns. Choose which to keep in your account.</h2>
+      <p>{enrollment.freeSlots ? `Choose up to ${Math.min(enrollment.freeSlots, Math.max(0, 2 - cloud.summaries.length))} from this device. The others stay safely on this device and will be hidden.` : "Both places are already in use. Your current account campaigns will stay. The other copies stay safely on this device and will be hidden."}</p>
+      {enrollment.candidates.map(({ source }) => <label key={source.id}><input type="checkbox" aria-label={`Keep ${source.campaign.name} in my account`} checked={selected.includes(source.id)}
+        disabled={busy || !selected.includes(source.id) && selected.length >= Math.min(enrollment.freeSlots, Math.max(0, 2 - cloud.summaries.length))}
+        onChange={event => setSelected(previous => event.target.checked ? [...previous, source.id] : previous.filter(value => value !== source.id))} />
+        {source.campaign.name} · Level {source.facilityLevel} · Last played: <ClinicTime value={source.campaign.updatedAtRealMs} /></label>)}
+      <button type="button" className="button button-primary" disabled={busy || !canUseCloud} onClick={() => void runEnrollment(selected)}>Keep selected campaigns</button>
     </section> : null}
-    {cloud.access?.quotaWarning ? <p role="status">Account storage is nearly full. Keep a recovery copy and contact the owner before adding more history.</p> : null}
-    <button type="button" disabled={busy} onClick={() => void action(cloud.refresh)}>Refresh account campaigns</button>
-    <div className="cloud-entry-lists">
-      <section aria-label="Account campaigns" tabIndex={-1}><h2>Account campaigns ({cloud.summaries.length}/2)</h2>
-        {cloud.summaries.length === 0 ? <p>No account campaigns are listed. Nothing uploads on sign-in alone.</p> : null}
-        {cloud.summaries.map(campaign => <article key={campaign.campaignId}>
-          <h3>{campaign.name}</h3><p>Account · {campaign.status === "archived" ? "Archived — still uses a slot" : "Resumable"}</p>
-          <p>Last account save: {new Date(campaign.acceptedAtMs).toLocaleString()}</p>
-          {campaign.writerActive ? <p>Open on another device. Opening here does not take over.</p> : null}
-          <button type="button" disabled={busy || !canUseCloud} onClick={() => void action(() => onOpen(campaign.campaignId))}>{campaign.status === "archived" ? "Restore" : "Open"} {campaign.name}</button>
-        </article>)}
-        <button type="button" disabled={busy || !canUseCloud || cloud.access?.enrollmentsEnabled === false || cloud.summaries.length >= 2} onClick={onCreate}>Create account campaign</button>
-        {cloud.summaries.length >= 2 ? <p>Both cloud slots are in use. You can create another clinic on this device; archiving does not free a slot.</p> : null}
-        <button type="button" disabled={busy} onClick={onLocalOnly}>Use this device only</button>
-      </section>
-      <section aria-label="Device-only campaigns"><h2>This device only</h2>
-        <p>Copying is optional. We keep the exact original bytes and never delete the local campaign. Historical questions do not add new usage counts.</p>
-        <label><input type="checkbox" checked={includeUnowned} disabled={busy} onChange={event => { setIncludeUnowned(event.target.checked); setSelected([]); setClaim(false); }} />Inspect unowned legacy campaigns on this site</label>
-        {problems.map((problem, index) => <p key={index} role="alert">{problem}</p>)}
-        {sources.map(source => <article key={source.id}>
-          <h3>{source.campaign.name}</h3><p>This device only{source.unowned ? " · Unowned source" : " · This account's local source"} · Level {source.facilityLevel} · {source.campaign.status} · {source.bytes.toLocaleString()} bytes</p>
-          {cloud.summaries.some(row => row.campaignId === source.campaign.campaignId) ? <p>An account campaign with this ID exists. The original stays here; an unfinished identical copy can be verified again.</p> : null}
-          {source.error ? <p role="alert">{source.error}</p> : <>
-            <label><input type="checkbox" checked={selected.includes(source.id)} disabled={busy || !canUseCloud || cloud.access?.enrollmentsEnabled === false}
-              onChange={event => setSelected(current => event.target.checked ? [...current, source.id] : current.filter(id => id !== source.id))} />Copy {source.campaign.name} to my account</label>
-            <label>Name in account<input type="text" maxLength={160} value={names[source.id] ?? source.campaign.name} disabled={busy} onChange={event => setNames(current => ({ ...current, [source.id]: event.target.value }))} /></label>
-          </>}
-          {!source.unowned && !source.error && !source.sourceKey.startsWith("created:") && !cloud.summaries.some(row => row.campaignId === source.campaign.campaignId) ? <button type="button" disabled={busy} onClick={() => onLocalCampaign(source.campaign.campaignId)}>Play {source.campaign.name} on this device</button> : null}
-          {results[source.id] ? <p role="status">{results[source.id]}</p> : null}
-        </article>)}
-        {selected.some(id => sources.find(source => source.id === id)?.unowned) ? <label><input type="checkbox" checked={claim} onChange={event => setClaim(event.target.checked)} disabled={busy} />Copy these unowned campaigns to {account?.email ?? "the signed-in account"}. Their original bytes remain unowned on this device.</label> : null}
-        <button type="button" disabled={busy || !canUseCloud || !selected.length || selected.some(id => sources.find(source => source.id === id)?.unowned) && !claim} onClick={() => void copySelected()}>{busy ? "Checking copies…" : "Copy selected local campaigns to my account"}</button>
-        <button type="button" disabled={busy || !cloud.access?.noticeAccepted} onClick={() => document.querySelector<HTMLElement>('[aria-label="Account campaigns"]')?.focus()}>Use account campaigns</button>
-      </section>
+    <section aria-label="Resume a previous campaign">
+      <h2>Resume a previous campaign ({cloud.summaries.length}/2)</h2>
+      {cloud.summaries.length === 0 ? <p>No previous campaigns yet.</p> : null}
+      {cloud.summaries.map(campaign => {
+        const level = levels[JSON.stringify([campaign.campaignId, campaign.revision])];
+        return <article className="cloud-clinic-row" key={campaign.campaignId} aria-label={campaign.name}>
+          <div className="cloud-clinic-info"><h3>{campaign.name}</h3>
+            <p>{level === undefined ? "Checking level…" : level === null ? "Level unavailable" : `Level ${level}`}{campaign.status === "archived" ? " · Archived — still counts toward your 2 campaigns" : ""}</p>
+            <p>Last saved: <ClinicTime value={campaign.acceptedAtMs} /></p>
+            {campaign.writerActive ? <p>Open on another device. You can choose to continue here.</p> : null}
+          </div>
+          <button type="button" className="button button-primary" aria-label={`Resume ${campaign.name}`} disabled={preparing || busy || !canUseCloud || !migrationReady && !enrollmentError}
+            aria-describedby={accountReason ? `${id}-account-reason` : undefined} onClick={() => void action(() => onOpen(campaign.campaignId))}>Resume</button>
+        </article>;
+      })}
+    </section>
+    <div className="cloud-entry-actions">
+      <button type="button" className="button button-primary" disabled={preparing || busy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
+        onClick={() => { setError(""); if (full) { setTarget(null); setReplace(true); } else onCreate(); }}>Start a new campaign</button>
+      {full ? <p>Your account holds 2 campaigns. Starting a new one requires choosing one to replace.</p> : null}
+      {cloud.access?.enrollmentsEnabled === false ? <p>Starting a new campaign is currently unavailable. Try again later.</p> : null}
     </div>
+    {replace ? <section className="cloud-entry-replace" aria-label="Replace an account campaign" tabIndex={-1} ref={replacement}>
+      {target ? <><h2>Delete {target.name} permanently?</h2><p>The account campaign will be deleted before you start a new one. This cannot be undone.</p>
+        <button type="button" className="button button-danger" aria-label={`Delete ${target.name} permanently`} disabled={busy || !canUseCloud} onClick={deleteAndCreate}>Delete permanently</button>
+        <button type="button" className="button button-secondary" aria-label={`Keep ${target.name}`} disabled={busy} onClick={() => { setTarget(null); setReplace(false); setError(""); }}>Keep this campaign</button>
+      </> : <><h2>Start a new campaign?</h2><p>You can have two campaigns in your account. Starting a new one replaces one of them, and the replaced campaign is deleted.</p>
+        {cloud.summaries.map(campaign => <button type="button" className="button button-secondary" key={campaign.campaignId} aria-label={`Replace ${campaign.name}`} disabled={busy} onClick={() => setTarget(campaign)}>Replace {campaign.name}</button>)}
+        <button type="button" className="button button-secondary" disabled={busy} onClick={() => { setReplace(false); setError(""); }}>Cancel starting a new campaign</button>
+      </>}
+    </section> : null}
     {error ? <p role="alert">{error}</p> : null}
-    <p className="cloud-origin">Device storage belongs to {typeof location === "undefined" ? "this site" : location.origin} and this browser profile. Other sites and profiles have separate local copies.</p>
+    <AccountMenu>
+      <section aria-label="Account campaign storage"><h3>Campaign storage</h3>
+        <p>You can have 2 campaigns in your account, including archived campaigns. Starting a new one when both places are in use requires choosing a campaign to delete and confirming its name.</p>
+        <p>Campaigns already saved for this account on this device are added to your account automatically when there is room. Original copies stay on this device. If there are too many, you choose once which to keep in your account; the others stay here and are hidden.</p>
+        <p>Storage limits may pause a large campaign. Your history is never removed to make it fit. Campaigns from before you signed in are kept on this device and are not added automatically.</p>
+      </section>
+      {cloud.access && !cloud.access.noticeAccepted && cloud.phase === "available" ? <section aria-label="Account save notice"><h3>Before using account saves</h3>
+        <p>Read the notice above. After you accept, previous campaigns for this account on this device will be saved to your account automatically when there is room.</p>
+        {!runtime.region ? <p role="alert">The service region has not been published. Account saving is unavailable until the owner completes this notice.</p> : null}
+        <button type="button" disabled={busy || !runtime.region || !cloud.access.enabled || cloud.access.writesEnabled === false} onClick={() => void action(cloud.acceptNotice)}>Accept account save notice</button>
+      </section> : null}
+      {problems.map((problem, index) => <p key={index} role="alert">{problem}</p>)}
+      <p className="cloud-origin">Retained device copies belong to {typeof location === "undefined" ? "this site" : location.origin} and this browser profile. They are kept separately from the account campaigns you can resume above.</p>
+    </AccountMenu>
   </main>;
 }

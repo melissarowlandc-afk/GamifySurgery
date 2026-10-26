@@ -6,7 +6,7 @@ import { readCloudCampaignMetadata, type CloudCampaignMetadata } from "./codec";
 import { loadCloudEvidenceCheckpoint, prepareCloudEvidenceImport } from "./codecEvidence";
 import { logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
 import type { CloudEntryStore } from "./entryStorage";
-import { CloudSyncError, type CloudFrozenOperation, type CloudImportRequest, type CloudTransport } from "./transport";
+import { CloudSyncError, type CloudCampaignSummary, type CloudFrozenOperation, type CloudImportRequest, type CloudTransport } from "./transport";
 import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../../playtime/usageTypes";
 
 export interface LocalCloudSource {
@@ -81,7 +81,7 @@ export async function promoteExistingLocalQuestions(receipts: readonly QuestionU
   await usage.flush();
 }
 interface ImportJournal { sourceDigest: string; operation: CloudFrozenOperation; verified: boolean }
-export interface CloudEnrollmentMarker { sourceDigest: string; operationId: string; campaignId: string; revision: string }
+export interface CloudEnrollmentMarker { sourceDigest: string; operationId: string; campaignId: string; revision: string; facilityLevel?: number }
 export async function importLocalCloudCampaign(source: LocalCloudSource, name: string, transport: CloudTransport, store: CloudEntryStore) {
   if (source.error || !transport.importCampaign) throw new CloudSyncError("corrupt");
   const campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify({ ...source.campaign, name: name.trim() })));
@@ -91,7 +91,7 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
   const access = await transport.capabilities();
   if (!access.admitted || access.deletionRequested) throw new CloudSyncError("deleted");
   if (!access.noticeAccepted) throw new CloudSyncError("notice");
-  if (!access.enabled || access.enrollmentsEnabled === false) throw new CloudSyncError("disabled");
+  if (!access.enabled || access.writesEnabled === false || access.enrollmentsEnabled === false) throw new CloudSyncError("disabled");
   if (!journal) {
     const summaries = await transport.list();
     if (summaries.some(row => row.campaignId === campaign.campaignId)) throw new CloudSyncError("revision");
@@ -127,12 +127,90 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
     if (logicalJsonText(JSON.parse(JSON.stringify(expected.checkpoint))) !== logicalJsonText(JSON.parse(JSON.stringify(verified.checkpoint))) ||
       logicalJsonText(JSON.parse(JSON.stringify(campaign))) !== logicalJsonText(JSON.parse(JSON.stringify(verified.campaign)))) throw new CloudSyncError("corrupt");
   }
-  const marker: CloudEnrollmentMarker = { sourceDigest, operationId: operation.operationId, campaignId: campaign.campaignId, revision: loaded.revision };
+  const marker: CloudEnrollmentMarker = { sourceDigest, operationId: operation.operationId, campaignId: campaign.campaignId, revision: loaded.revision, facilityLevel: verified.state.facilityLevel };
   await store.write(`enrolled:${campaign.campaignId}`, marker);
   await store.write(journalKey, { ...journal, verified: true });
   // An import's writer is used only for enrollment. A later open makes an explicit continuation choice.
   try { await transport.head(campaign.campaignId); await transport.release({ campaignId: campaign.campaignId, writerGeneration: "1", writerToken: request.writerToken }); } catch { /* A newer fenced writer remains untouched. */ }
   return { marker, loaded, verified };
+}
+
+export const AUTOMATIC_ENROLLMENT_KEY = "automatic-account-campaigns.v1";
+export interface AutomaticCampaignEnrollment {
+  version: 1;
+  phase: "choose" | "saving" | "complete";
+  candidates: { source: LocalCloudSource; name: string }[];
+  selectedIds: string[];
+  freeSlots: number;
+}
+const enrollmentJobs = new WeakMap<CloudEntryStore, Promise<unknown>>();
+function enrollmentJob<T>(store: CloudEntryStore, run: () => Promise<T>): Promise<T> {
+  const result = (enrollmentJobs.get(store) ?? Promise.resolve()).catch(() => {}).then(run);
+  enrollmentJobs.set(store, result); return result;
+}
+function availableName(name: string, taken: Set<string>): string {
+  let result = name, suffix = 1;
+  while (taken.has(result.toLowerCase())) {
+    const ending = ` (${++suffix})`, letters = Array.from(name);
+    while (utf8Bytes(letters.join("") + ending) > 160) letters.pop();
+    result = letters.join("") + ending;
+  }
+  taken.add(result.toLowerCase()); return result;
+}
+/** Freeze this device's first account migration before any upload. Originals
+ * are never edited; omitted campaigns remain retained and hidden after choice.
+ * EntryStore is already scoped to the signed-in account and backend. */
+export function prepareAutomaticCampaignEnrollment(sources: readonly LocalCloudSource[], summaries: readonly CloudCampaignSummary[], store: CloudEntryStore) {
+  return enrollmentJob(store, async (): Promise<AutomaticCampaignEnrollment> => {
+    const prior = await store.read<AutomaticCampaignEnrollment>(AUTOMATIC_ENROLLMENT_KEY), entries = await store.entries();
+    if (prior && prior.version !== 1) throw new CloudSyncError("storage");
+    const known = new Set(summaries.map(row => row.campaignId)), seen = new Set<string>();
+    const pending = [...sources, ...entries.filter(row => row.key.startsWith("created:")).map(row => row.value as LocalCloudSource)]
+      .filter(source => {
+        const campaignId = source.campaign.campaignId;
+        if (source.unowned || source.error || seen.has(campaignId) || entries.some(row => row.key === `enrolled:${campaignId}` || row.key === `retired:${campaignId}`)) return false;
+        seen.add(campaignId);
+        return source.sourceKey.startsWith("created:") || !known.has(campaignId);
+      });
+    // A deliberately created account campaign may have failed before receipt.
+    // Retry that frozen creation even after the first-sign-in migration ended.
+    const candidates = prior?.phase === "complete" ? pending.filter(source => source.sourceKey.startsWith("created:")) : pending;
+    if (prior && (prior.phase !== "complete" || !candidates.length)) return prior;
+    const taken = new Set(summaries.map(row => row.name.toLowerCase()));
+    const freeSlots = Math.max(0, 2 - summaries.length), choose = !prior && candidates.length > freeSlots;
+    const next: AutomaticCampaignEnrollment = { version: 1, phase: choose ? "choose" : candidates.length ? "saving" : "complete",
+      candidates: candidates.map(source => ({ source, name: summaries.find(row => row.campaignId === source.campaign.campaignId)?.name ?? availableName(source.campaign.name, taken) })),
+      selectedIds: choose ? [] : candidates.map(source => source.id), freeSlots };
+    return prior ? store.compareAndSet(AUTOMATIC_ENROLLMENT_KEY, prior, next) : store.create(AUTOMATIC_ENROLLMENT_KEY, next);
+  });
+}
+/** The first confirmed chooser wins across tabs. Never replace a prior choice. */
+export function chooseAutomaticCampaignEnrollment(ids: readonly string[], freeSlots: number, store: CloudEntryStore) {
+  return enrollmentJob(store, async () => {
+    const current = await store.read<AutomaticCampaignEnrollment>(AUTOMATIC_ENROLLMENT_KEY);
+    if (!current || current.version !== 1) throw new CloudSyncError("storage");
+    if (current.phase !== "choose") return current;
+    const selectedIds = [...new Set(ids)];
+    if (selectedIds.length > Math.max(0, Math.min(current.freeSlots, freeSlots)) || selectedIds.some(id => !current.candidates.some(row => row.source.id === id))) throw new CloudSyncError("capacity");
+    return store.compareAndSet(AUTOMATIC_ENROLLMENT_KEY, current, { ...current, selectedIds, phase: "saving" as const });
+  });
+}
+/** Uses the existing durable immutable import path; a retry never mints history
+ * counts, overwrites a campaign, deletes an original, or enrolls an unowned save. */
+export function finishAutomaticCampaignEnrollment(transport: CloudTransport, store: CloudEntryStore) {
+  return enrollmentJob(store, async () => {
+    const current = await store.read<AutomaticCampaignEnrollment>(AUTOMATIC_ENROLLMENT_KEY);
+    if (!current || current.version !== 1) throw new CloudSyncError("storage");
+    if (current.phase !== "saving") return current;
+    for (const id of current.selectedIds) {
+      const candidate = current.candidates.find(row => row.source.id === id);
+      if (!candidate || candidate.source.unowned) throw new CloudSyncError("storage");
+      const campaignId = candidate.source.campaign.campaignId;
+      if (await store.read(`enrolled:${campaignId}`) || await store.read(`retired:${campaignId}`)) continue;
+      await importLocalCloudCampaign(candidate.source, candidate.name, transport, store);
+    }
+    return store.compareAndSet(AUTOMATIC_ENROLLMENT_KEY, current, { ...current, phase: "complete" as const });
+  });
 }
 
 export function profileForCloudCampaign(state: ReturnType<typeof deserializeGameState>, campaign: CloudCampaignMetadata): LocalPrototypeProfile {

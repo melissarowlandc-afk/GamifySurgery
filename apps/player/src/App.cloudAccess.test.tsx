@@ -10,6 +10,7 @@ import { CloudAccountProvider, configuredCloudRuntime } from "./session/cloud/Cl
 import { MemoryCloudCache } from "./session/cloud/cache";
 import { MemoryCloudEntryStore } from "./session/cloud/entryStorage";
 import { deferred } from "./session/cloud/syncTestSupport";
+import { CompetitionClientContext } from "./competition/useCompetition";
 
 const sdk = vi.hoisted(() => ({ rpc: vi.fn(), session: vi.fn() }));
 vi.mock("./auth/prototypeAuth", async original => ({ ...await original<typeof import("./auth/prototypeAuth")>(),
@@ -18,7 +19,9 @@ vi.mock("./auth/prototypeAuth", async original => ({ ...await original<typeof im
 vi.mock("./auth/supabaseAuth", async original => ({ ...await original<typeof import("./auth/supabaseAuth")>(),
   getSupabaseAuthClient: () => ({ rpc: sdk.rpc, auth: { getSession: sdk.session } }),
 }));
-// Keep both real shells and the actual session/router; only drawing is replaced.
+// Keep both real shells and the actual session/router; replace drawing only.
+// The independent competition client is injected OFF below: its module-wide
+// singleton otherwise retains the first fixture's synthetic storage across DOMs.
 vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
 vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
 
@@ -72,7 +75,7 @@ async function mount(layout: "desktop" | "phone", outcome: Outcome, raw?: string
   const guard = { current: null as (() => Promise<void>) | null };
   const children = <StrictMode><AuthAccountContext.Provider value="account-a"><AuthAccountActionsContext.Provider value={{
     email: "a@example.invalid", pending: false, message: null, signOut: async () => true, signOutGuard: guard,
-  }}><CloudAccountProvider runtime={runtime}><AccountCampaignRouter /></CloudAccountProvider></AuthAccountActionsContext.Provider></AuthAccountContext.Provider></StrictMode>;
+  }}><CompetitionClientContext.Provider value={null}><CloudAccountProvider runtime={runtime}><AccountCampaignRouter /></CloudAccountProvider></CompetitionClientContext.Provider></AuthAccountActionsContext.Provider></AuthAccountContext.Provider></StrictMode>;
   await env.render(children);
   return { env, stored, original, storageCalls, localStorage, guard, unexpectedFetch, async settle() { await act(async () => { wait.resolve(); await wait.promise; }); } };
 }
@@ -123,29 +126,29 @@ describe.each(["desktop", "phone"] as const)("%s cohort gate against the Beta 1 
     await resumeAndSave(f, layout);
     expect(sdk.rpc).toHaveBeenCalledOnce(); for (const spy of f.storageCalls) expect(spy).not.toHaveBeenCalled();
   });
-  it("shows cloud entry only for an affirmative account check and uploads nothing on sign-in", async () => {
+  it("shows cloud entry only for an affirmative account check and uploads nothing before notice acceptance", async () => {
     const f = await mount(layout, "enabled"); expectPending(f); await f.settle();
-    await vi.waitFor(() => expect(f.env.element.textContent).toContain("Before using cloud saves"));
-    expect(f.env.element.textContent).toContain("Accept cloud save notice"); expect(f.env.element.textContent).toContain("Synthetic QA region");
+    await vi.waitFor(() => expect(f.env.element.textContent).toContain("Before using account saves"));
+    expect(f.env.element.textContent).toContain("Accept account save notice"); expect(f.env.element.textContent).toContain("Synthetic QA region");
     expect(f.stored.get(profileKey)).toBe(f.original);
     expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();
-    expect(sdk.rpc).toHaveBeenCalledExactlyOnceWith("beta2_cloud_access", { p_protocol: 3 });
+    expect(sdk.rpc.mock.calls).toEqual([["beta2_cloud_access", { p_protocol: 3 }], ["beta2_cloud_access", { p_protocol: 3 }]]);
     expect(f.unexpectedFetch).not.toHaveBeenCalled();
   });
   it.each([false, true])("never creates a fresh device profile while pending or enabled (notice accepted: %s)", async noticeAccepted => {
     const f = await mount(layout, "enabled", null, noticeAccepted), original = [...f.stored];
     expectPending(f);
     await f.settle();
-    await vi.waitFor(() => expect(f.env.element.textContent).toContain(noticeAccepted ? "Account campaigns (0/2)" : "Before using cloud saves"));
+    await vi.waitFor(() => expect(f.env.element.textContent).toContain(noticeAccepted ? "Resume a previous campaign (0/2)" : "Before using account saves"));
     expect(f.stored.has(profileKey)).toBe(false); expect([...f.stored]).toEqual(original);
     expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();
-    expect(sdk.rpc.mock.calls.map(([name]) => name)).toEqual(noticeAccepted ? ["beta2_cloud_access", "beta2_cloud_list"] : ["beta2_cloud_access"]);
+    expect(sdk.rpc.mock.calls.map(([name]) => name)).toEqual(noticeAccepted ? ["beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_access", "beta2_cloud_list"] : ["beta2_cloud_access", "beta2_cloud_access"]);
     expect(f.unexpectedFetch).not.toHaveBeenCalled();
   });
   it("keeps an enabled owner in cloud entry while the global write switch is off", async () => {
     const f = await mount(layout, "writes-off"); await f.settle();
-    await vi.waitFor(() => expect(f.env.element.textContent).toContain("Cloud saving is currently disabled"));
-    expect(f.env.button("Create account campaign").attributes.disabled).toBeDefined();
+    await vi.waitFor(() => expect(f.env.element.textContent).toContain("Account saving is currently unavailable"));
+    expect(f.env.button("Start a new campaign").attributes.disabled).toBeDefined();
     expect(f.stored.get(profileKey)).toBe(f.original);
   });
 });

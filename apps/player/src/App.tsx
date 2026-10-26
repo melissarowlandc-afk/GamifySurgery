@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
-import { PrototypeShell } from "./PrototypeShell";
+import { preloadPrototypeShell, PrototypeShell } from "./PrototypeShell";
 import { getTutorialClockMultiplier } from "./session/tutorialTiming";
 import {
   appendLocalCampaign,
@@ -31,6 +31,7 @@ import { importLocalCloudCampaign, profileForCloudCampaign, type LocalCloudSourc
 import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
 import { cloudEntryError } from "./ui/cloudEntryError";
 import { AccountMenu } from "./ui/AccountMenu";
+import { cloudCodec } from "./session/cloud/codecWorker";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
@@ -424,8 +425,20 @@ export function AccountCampaignRouter() {
 
 function CloudCampaignRouter() {
   const cloud = useCloudAccount()!, { runtime } = cloud;
-  const [route, setRoute] = useState<"entry" | "local" | "checking" | "cloud" | "founder">("entry");
-  const [localCampaignId, setLocalCampaignId] = useState<string | undefined>();
+  const layout = usePresentationLayout();
+  const [preparingEntry, setPreparingEntry] = useState(true);
+  useEffect(() => {
+    let current = true; setPreparingEntry(true);
+    // Start the selected presentation and save worker during account entry.
+    // The empty hash warms processing without reading a campaign or acquiring
+    // a writer, so Resume still requires the existing takeover decision.
+    void Promise.allSettled([preloadPrototypeShell(layout), cloudCodec.run({ kind: "hash", input: "" })]).then(() => {
+      // A startup failure must still reach the normal open/recovery error path.
+      if (current) setPreparingEntry(false);
+    });
+    return () => { current = false; };
+  }, [layout, runtime]);
+  const [route, setRoute] = useState<"entry" | "checking" | "cloud" | "founder">("entry");
   const [active, setActive] = useState<{ session: CloudGameSession; profile: LoadedPrototypeProfile; sequence: number } | null>(null);
   const [notice, setNotice] = useState("");
   const live = useRef(true), generation = useRef(0), current = useRef(active);
@@ -443,7 +456,7 @@ function CloudCampaignRouter() {
       setActive({ session, profile: { profile, notice: "Verified account save. Continue on this device to play." }, sequence: epoch }); setRoute("cloud");
     } catch {
       coordinator.dispose();
-      if (live.current && epoch === generation.current) { setNotice("The account campaign could not be verified or opened. Its saved bytes and local recovery have been preserved. Retry or contact the owner; no fresh campaign replaced it."); setRoute("entry"); }
+      if (live.current && epoch === generation.current) { setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner."); setRoute("entry"); }
     }
   };
   const enterCampaignScreen = async () => {
@@ -466,17 +479,16 @@ function CloudCampaignRouter() {
     session.updateMetadata({ ...session.metadata, status: "archived" });
     if (!await session.durable() || !await session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)) return;
     if (!live.current) return;
-    setNotice("Your account clinic was archived and still uses its cloud slot. Create another account clinic if a slot is free, or create a device-only clinic.");
+    setNotice("Your campaign was archived and still counts toward your 2 account campaigns. Resume it or start a new campaign.");
     setActive(null); setRoute("entry"); await cloud.refresh();
   };
-  if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} onLocalCampaign={() => {}} onLocalOnly={() => {}} />;
-  if (route === "local") return <AuthenticatedPrototype key={localCampaignId ?? "local-opening"} initialCampaignId={localCampaignId} />;
+  if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} />;
   if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p><AccountMenu /></main>;
   if (route === "cloud" && active) return <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
     loadedProfile={active.profile} cloudSession={active.session}
     onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudCampaigns={() => { void enterCampaignScreen(); }}
     onRequestNewCampaign={() => { void enterCampaignScreen(); }} onRequestRestart={() => { void restart(); }} />;
-  if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to account campaigns</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
+  if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to your clinics</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
     onBeginClinic={(founder, name, seed, guidance) => { void (async () => {
       const epoch = ++generation.current;
       try {
@@ -489,8 +501,7 @@ function CloudCampaignRouter() {
         if (live.current && epoch === generation.current) { await cloud.refresh(); if (live.current && epoch === generation.current) await openCampaign(campaign.campaignId); }
       } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setRoute("entry"); } }
     })(); }} /></>;
-  return <CloudCampaignEntry key={notice} notice={notice} onOpen={openCampaign} onCreate={() => setRoute("founder")}
-    onLocalCampaign={id => { setLocalCampaignId(id); setRoute("local"); }} onLocalOnly={() => { setLocalCampaignId(undefined); setRoute("local"); }} />;
+  return <CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry} onOpen={openCampaign} onCreate={() => setRoute("founder")} />;
 }
 
 export function App() {

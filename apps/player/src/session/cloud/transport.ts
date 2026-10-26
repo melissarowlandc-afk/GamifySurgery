@@ -8,7 +8,7 @@ export const CLOUD_SAVES_ENABLED_BY_DEFAULT = false;
 export const CLOUD_SYNC_PROTOCOL = 3;
 export const CLOUD_LEASE_MS = 60_000;
 export const CLOUD_RENEW_MS = 15_000;
-export const CLOUD_CHECKPOINT_MS = 60_000;
+export const CLOUD_CHECKPOINT_MS = 5 * 60_000;
 export const CLOUD_GRACE_MS = 30_000;
 export const CLOUD_RECOVERY_BYTES = 7_000_000;
 
@@ -131,5 +131,6 @@ export interface CloudTransport {
   acceptNotice?(version: string): Promise<void>;
   prepareImport?(request: CloudImportRequest, issuedAtMs: number): Promise<{ text: string; sha256: string }>;
   importCampaign?(operation: CloudFrozenOperation): Promise<CloudCommitReceipt>;
+  deleteCampaign?(input: { campaignId: string; expectedRevision: string }): Promise<void>;
   deleteMyData?(): Promise<void>;
 }

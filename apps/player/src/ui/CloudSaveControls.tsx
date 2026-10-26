@@ -13,23 +13,20 @@ export interface CloudShellSave {
   onSaveAndClose(): Promise<boolean>;
   onCampaigns(): void;
 }
-export function cloudStatusText(view: CloudSyncView): string {
-  if (view.priorRecovery) return "Recovered prior account save · play paused";
-  if (view.failure === "writer") return "Continued on another device · play paused";
-  if (view.failure === "deleted" || view.failure === "revoked") return "Account access stopped · play paused";
-  if (view.phase === "checking") return "Checking account save…";
-  if (view.phase === "saving") return "Saving to account…";
-  if (view.phase === "closed") return view.pending ? "Session stopped; changes wait on this device" : view.failure ? "Account session stopped" : "Saved to account · session closed";
-  if (view.phase === "readonly") return "Account campaign · read only";
-  if (view.phase === "storage") return "Browser recovery storage unavailable · play paused";
-  if (view.phase === "capacity") return "Account capacity reached · play paused";
-  if (view.phase === "auth") return "Sign in again · play paused";
-  if (view.phase === "blocked") return "Account saving unavailable · play paused";
-  if (view.phase === "conflict") return "Newer account save · play paused";
-  if (view.phase === "paused") return "Account save needs checking · play paused";
-  if (view.phase === "waiting") return view.canExecute ? "Connection interrupted · changes waiting here" : "Connection unavailable · play paused";
-  if (view.pending) return view.localDurable ? "Saved on this device; account save waiting" : "Preparing recovery on this device…";
-  return "Saved to account";
+/** No indicator for healthy saves, including background encoding and queued changes. */
+export function cloudStatusText(view: CloudSyncView): string | null {
+  if (view.priorRecovery) return "Your latest save could not be opened. Review recovery options.";
+  if (view.failure === "writer") return "This clinic continued on another device. Play is paused here.";
+  if (view.failure === "deleted" || view.failure === "revoked") return "Account access has stopped. Contact the owner.";
+  if (view.phase === "storage") return "This browser could not save your progress. Keep this tab open and retry.";
+  if (view.phase === "capacity") return "Account storage is full. Keep a recovery copy and contact the owner.";
+  if (view.phase === "auth") return "Sign in again to save your progress.";
+  if (view.phase === "blocked") return "Your account save failed. Retry or contact the owner.";
+  if (view.phase === "conflict") return "A newer account save is available. Review your options.";
+  if (view.phase === "waiting") return "Cannot connect to save your progress. Check your connection and retry.";
+  if (view.phase === "paused" && view.failure) return "Your account save needs checking before play can continue.";
+  if (view.phase === "closed" && view.pending) return "Some changes have not saved to your account. Keep this tab open and retry.";
+  return null;
 }
 export function CloudDialog({ title, children, onClose }: { title: string; children: ReactNode; onClose(): void }) {
   const dialog = useRef<HTMLDialogElement>(null), heading = useRef<HTMLHeadingElement>(null), previous = useRef<Element | null>(null);
@@ -73,19 +70,23 @@ export function CloudSaveControls({ save, closeRequest = 0 }: { save: CloudShell
     if (closeRequest && closeRequest !== lastCloseRequest.current) { lastCloseRequest.current = closeRequest; close(); }
   }, [closeRequest]);
   const needsDecision = view.phase === "readonly" && !view.priorRecovery;
+  const needsResume = view.phase === "ready" && !view.canExecute && !view.pending;
   // A late status update must not hide a confirmed close: show it whenever the
   // requested close succeeded and the session is actually closed.
   const showClosed = closed && view.phase === "closed";
+  const status = cloudStatusText(view);
   const title = showClosed ? "Safe to close this tab" : needsDecision ? "Continue on this device?" : "Account save";
   return <div className="cloud-save-controls">
-    <button type="button" className="cloud-sync-status" onClick={() => setOpen(true)} aria-label={`Account save status: ${cloudStatusText(view)}`}>
-      <span role="status" aria-live="polite" aria-atomic="true">{cloudStatusText(view)}</span>
-    </button>
+    {status ? <button type="button" className="cloud-sync-status" onClick={() => setOpen(true)} aria-label={`Account save status: ${status}`}>
+      <span role="status" aria-live="polite" aria-atomic="true">{status}</span>
+    </button> : null}
+    {needsDecision ? <button type="button" className="button button-secondary" onClick={() => setOpen(true)}>Continue clinic</button> : null}
+    {needsResume ? <button type="button" className="button button-secondary" onClick={() => setOpen(true)}>Resume clinic</button> : null}
     <button type="button" className="button button-secondary save-close-button" disabled={busy} onClick={close}>Save &amp; Close</button>
     {open ? <CloudDialog title={title} onClose={() => setOpen(false)}>
       <p className="cloud-campaign-name">{save.campaignName} · Account</p>
       {showClosed ? <p>Your clinic is saved to your account and paused, and this device has released its session. You may close this tab.</p> : <>
-        <p>{cloudStatusText(view)}</p>
+        {status ? <p>{status}</p> : null}
         {view.confirmedAtMs !== null ? <p>Last confirmed account save: <time dateTime={new Date(view.confirmedAtMs).toISOString()}>{new Date(view.confirmedAtMs).toLocaleString()}</time>.</p> : null}
         {view.failure === "writer" ? <p>You continued on another device. Recent changes here have not replaced your account save.</p> : null}
         {view.failure === "revision" || view.failure === "account-save-changed" ? <p>A newer account save is available. Changes waiting here are preserved separately; choose a recovery copy before using the account save.</p> : null}
@@ -109,7 +110,7 @@ export function CloudSaveControls({ save, closeRequest = 0 }: { save: CloudShell
           {!view.priorRecovery ? <button type="button" disabled={busy} onClick={() => void action(save.onUseAccountSave)}>Use account save</button> : null}
         </> : null}
         {view.phase === "closed" ? <button type="button" onClick={save.onCampaigns}>Choose a campaign</button> : null}
-        <p>Local recovery and account confirmation are separate. Wait for a confirmed account save before changing devices.</p>
+        <p>Use Save &amp; Close before switching devices.</p>
       </>}
       {busy ? <p role="status">Waiting for account confirmation…</p> : null}
       {error ? <p role="alert">{error}</p> : null}

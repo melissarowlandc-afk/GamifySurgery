@@ -6,7 +6,12 @@ import {
 } from "@gamify-surgery/game-domain";
 
 /** Presentation pacing only: the frozen plan and every ordinary tick stay intact. */
-export const GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER = 2;
+export const GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER = 4;
+export const GUIDED_SECOND_VISIT_MAX_CLOCK_RATE = 8;
+
+export function getGuidedSecondVisitClockRate(speed: GameState["simulationSpeed"]): number {
+  return Math.min(speed * GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER, GUIDED_SECOND_VISIT_MAX_CLOCK_RATE);
+}
 
 export function getTutorialClockMultiplier(state: GameState, guidanceEnabled: boolean): number {
   const encounter = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
@@ -16,7 +21,7 @@ export function getTutorialClockMultiplier(state: GameState, guidanceEnabled: bo
     encounter?.lifecycle === "active_pending_result" && pending &&
     pending.deliveredAtTick === null &&
     encounter.steps[pending.originatingNodeIndex]?.status === "result_pending"
-    ? GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER : 1;
+    ? getGuidedSecondVisitClockRate(state.simulationSpeed) / state.simulationSpeed : 1;
 }
 
 export function getTutorialTickIntervalMs(state: GameState, guidanceEnabled: boolean): number {

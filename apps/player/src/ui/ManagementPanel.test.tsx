@@ -88,7 +88,8 @@ describe("ManagementPanel", () => {
     expect(markup).toContain(">Services<");
     expect(markup).toContain(">Money<");
     expect(markup).toContain("Clinic paused");
-    expect(markup.match(/role="tab"/g)).toHaveLength(3);
+    expect(markup).toContain(">Clinic Competition<");
+    expect(markup.match(/role="tab"/g)).toHaveLength(4);
     expect(markup).toContain('aria-selected="true"');
     expect(markup).not.toContain("Scheduled appointments");
   });

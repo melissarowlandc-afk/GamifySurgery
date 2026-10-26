@@ -1,7 +1,10 @@
-import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
+import { cloudCodec } from "./codecWorker";
+import { compressedHash } from "./codecWire";
+export { cloudWireBlob, type CloudWireBlob } from "./codecWire";
+import { assertCloudRevision } from "./codec";
 import { compressCloudText, decompressCloudText, type CloudCompressedText } from "./codecCompression";
-import { compressCloudEvidencePages, decompressCloudEvidencePages, type CloudEvidencePage } from "./codecEvidencePages";
-import { logicalJsonText, parseCodecJson, sha256Utf8, utf8Bytes } from "./codecJson";
+import { decompressCloudEvidencePages, type CloudEvidencePage } from "./codecEvidencePages";
+import { logicalJsonText, parseCodecJson } from "./codecJson";
 import {
   CLOUD_SYNC_PROTOCOL, CloudSyncError, type CloudCapabilities, type CloudCampaignHead, type CloudCampaignSummary,
   type CloudCommitRequest, type CloudCommitReceipt, type CloudConfirmed, type CloudFrozenOperation,
@@ -21,19 +24,6 @@ function string(value: unknown): string { if (typeof value !== "string" || !valu
 function integer(value: unknown): number { if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 0) throw new CloudSyncError("corrupt"); return value; }
 function timestamp(value: unknown): number { const ms = Date.parse(string(value)); if (!Number.isFinite(ms)) throw new CloudSyncError("corrupt"); return ms; }
 function revision(value: unknown): string { assertCloudRevision(value, true); return value; }
-export interface CloudWireBlob extends CloudCompressedText { compressedSha256: string }
-async function compressedHash(value: CloudCompressedText): Promise<string> {
-  if (value.encoding !== "gzip" || !Number.isSafeInteger(value.compressedBytes) || value.compressedBytes < 1 || value.compressedBytes > 6_000_000 ||
-    value.dataBase64.length > Math.ceil(value.compressedBytes / 3) * 4 || value.dataBase64.length % 4 || !/^[A-Za-z0-9+/]*={0,2}$/.test(value.dataBase64)) throw new CloudSyncError("corrupt");
-  let bytes: Uint8Array<ArrayBuffer>;
-  try { bytes = Uint8Array.from(atob(value.dataBase64), character => character.charCodeAt(0)); } catch { throw new CloudSyncError("corrupt"); }
-  if (bytes.byteLength !== value.compressedBytes) throw new CloudSyncError("corrupt");
-  return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), byte => byte.toString(16).padStart(2, "0")).join("");
-}
-export async function cloudWireBlob(value: CloudCompressedText): Promise<CloudWireBlob> {
-  return { encoding: value.encoding, dataBase64: value.dataBase64, compressedBytes: value.compressedBytes,
-    uncompressedBytes: value.uncompressedBytes, uncompressedSha256: value.uncompressedSha256, compressedSha256: await compressedHash(value) };
-}
 async function packed(value: unknown): Promise<CloudCompressedText> {
   const result = object(value);
   if (Object.keys(result).sort().join(",") !== ["encoding", "dataBase64", "compressedBytes", "compressedSha256", "uncompressedBytes", "uncompressedSha256"].sort().join(",")) throw new CloudSyncError("corrupt");
@@ -164,39 +154,23 @@ export class SupabaseCloudTransport implements CloudTransport {
     await this.leaseCall(input.campaignId, "release", head.revision, input.writerGeneration, input.writerToken);
   }
   async prepare(request: CloudCommitRequest, issuedAtMs: number): Promise<{ text: string; sha256: string }> {
-    const recordTexts: string[] = [];
-    for (const row of request.evidence.records) recordTexts.push(await decompressCloudText(row.content));
-    const pages = await compressCloudEvidencePages(recordTexts, request.evidence.fromRecord);
-    return this.freezeWire({ protocolVersion: CLOUD_SYNC_PROTOCOL, cloudFormatVersion: 2, evidenceContractVersion: 1,
-      campaign: { campaignId: request.campaign.campaignId, name: request.campaign.name, status: request.campaign.status }, action: "save", operationId: request.operationId,
-      issuedAt: new Date(issuedAtMs).toISOString(), expectedRevision: request.expectedRevision, writerGeneration: request.writerGeneration,
-      writerToken: request.writerToken, campaignId: request.campaignId, snapshot: await cloudWireBlob(request.snapshot),
-      evidence: { headerSha256: request.evidence.headerSha256, fromRecord: request.evidence.fromRecord, toRecord: request.evidence.toRecord,
-        pages: await Promise.all(pages.map(async page => ({ ...page, content: await cloudWireBlob(page.content) }))) },
-      usageReceipts: request.usageQuestions });
-  }
-  private async freezeWire(request: Record<string, unknown>): Promise<{ text: string; sha256: string }> {
-    const text = JSON.stringify(request);
-    const sha256 = await sha256Utf8(text);
-    if (utf8Bytes(JSON.stringify({ p_request_text: text, p_request_sha256: sha256 })) + 8 > CLOUD_CAPACITY_LIMITS.transportBodyBytes) throw new CloudSyncError("capacity");
-    return { text, sha256 };
+    return cloudCodec.run({ kind: "wire", input: { request, issuedAtMs } });
   }
   async prepareImport(request: CloudImportRequest, issuedAtMs: number): Promise<{ text: string; sha256: string }> {
-    const texts: string[] = [];
-    for (const record of request.evidence.records) texts.push(await decompressCloudText(record.content));
-    const pages = await compressCloudEvidencePages(texts);
-    return this.freezeWire({ protocolVersion: CLOUD_SYNC_PROTOCOL, cloudFormatVersion: 2, evidenceContractVersion: 1,
-      campaign: { campaignId: request.campaign.campaignId, name: request.campaign.name, status: request.campaign.status },
-      action: "import", operationId: request.operationId, issuedAt: new Date(issuedAtMs).toISOString(), expectedRevision: "0", writerGeneration: "0",
-      writerToken: request.writerToken, campaignId: request.campaignId, snapshot: await cloudWireBlob(request.snapshot),
-      evidence: { header: await cloudWireBlob(request.evidence.header), fromRecord: 0, toRecord: request.evidence.records.length,
-        pages: await Promise.all(pages.map(async page => ({ ...page, content: await cloudWireBlob(page.content) }))) }, usageReceipts: [] });
+    return cloudCodec.run({ kind: "importWire", input: { request, issuedAtMs } });
   }
   async acceptNotice(version: string): Promise<void> {
     await this.call("beta2_accept_cloud_notice", { p_protocol: CLOUD_SYNC_PROTOCOL, p_version: version });
   }
   async deleteMyData(): Promise<void> {
     await this.call("beta2_delete_my_data", { p_scope: "all-account-data.v1", p_notice_version: "beta2.cloud.v1" });
+  }
+  async deleteCampaign(input: { campaignId: string; expectedRevision: string }): Promise<void> {
+    assertCloudRevision(input.expectedRevision);
+    const data = object(await this.call("beta2_cloud_delete_campaign", { p_protocol: CLOUD_SYNC_PROTOCOL,
+      p_campaign_id: input.campaignId, p_expected_revision: input.expectedRevision }));
+    if (data.campaignId !== input.campaignId || data.deleted !== true) throw new CloudSyncError("corrupt");
+    this.heads.delete(input.campaignId);
   }
   private receipt(value: unknown, campaignId: string, operation: CloudFrozenOperation): CloudCommitReceipt {
     const data = object(value), request = JSON.parse(operation.requestText) as CloudCommitRequest;
@@ -210,7 +184,7 @@ export class SupabaseCloudTransport implements CloudTransport {
   }
   async commit(operation: CloudFrozenOperation): Promise<CloudCommitReceipt> {
     const wire = operation.wireRequest;
-    if (!wire || await sha256Utf8(wire.text) !== wire.sha256) throw new CloudSyncError("corrupt");
+    if (!wire || await cloudCodec.run({ kind: "hash", input: wire.text }) !== wire.sha256) throw new CloudSyncError("corrupt");
     const request = JSON.parse(operation.requestText) as CloudCommitRequest;
     return this.receipt(await this.call("beta2_cloud_write", { p_request_text: wire.text, p_request_sha256: wire.sha256 }), request.campaignId, operation);
   }

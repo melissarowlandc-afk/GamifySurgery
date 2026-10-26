@@ -1,6 +1,8 @@
 import { cloudCampaignStorageKey } from "../accountStorageKey";
-import { sha256Utf8, utf8Bytes } from "./codecJson";
-import { CLOUD_RECOVERY_BYTES, CloudSyncError, type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
+import { cloudCodec } from "./codecWorker";
+import { CloudCacheError, type StoredCache } from "./codecCache";
+export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
+import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
 
 export const CLOUD_CACHE_DATABASE = "gamify-surgery.cloud-cache.v1";
 const STORE = "campaigns";
@@ -23,40 +25,9 @@ export interface CloudCache {
   accountEntries?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]>;
   clearAccount?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void>;
 }
-export class CloudCacheError extends CloudSyncError {
-  constructor(readonly reason: "unavailable" | "blocked" | "transaction" | "checksum" | "version" | "conflict" | "capacity") {
-    super(reason === "capacity" ? "capacity" : "storage");
-  }
-}
-interface StoredCache { key: string; cacheRevision: number; text: string; sha256: string; utf8Bytes: number }
 const copy = <T>(value: T): T => structuredClone(value);
-
-export function cloudRecoveryBytes(entry: CloudCacheEntry): number {
-  return utf8Bytes(JSON.stringify({ schemaVersion: entry.schemaVersion, scope: entry.scope, recovery: entry.recovery }));
-}
-async function pack(entry: CloudCacheEntry, expected: number | null): Promise<StoredCache> {
-  if (entry.schemaVersion !== 1) throw new CloudCacheError("version");
-  if (entry.confirmed.campaignId !== entry.scope.campaignId) throw new CloudCacheError("checksum");
-  if (cloudRecoveryBytes(entry) > CLOUD_RECOVERY_BYTES) throw new CloudCacheError("capacity");
-  const text = JSON.stringify(entry);
-  return { key: cloudCampaignStorageKey(entry.scope), cacheRevision: (expected ?? 0) + 1,
-    text, sha256: await sha256Utf8(text), utf8Bytes: utf8Bytes(text) };
-}
-async function unpack(raw: StoredCache, scope: CloudScope): Promise<CloudCacheRead> {
-  try {
-    if (raw.key !== cloudCampaignStorageKey(scope) || !Number.isSafeInteger(raw.cacheRevision) || raw.cacheRevision < 1 ||
-      typeof raw.text !== "string" || raw.text.length > 24_000_000 || raw.utf8Bytes !== utf8Bytes(raw.text) ||
-      raw.sha256 !== await sha256Utf8(raw.text)) throw new CloudCacheError("checksum");
-    const entry = JSON.parse(raw.text) as CloudCacheEntry;
-    if (entry.schemaVersion !== 1) throw new CloudCacheError("version");
-    if (cloudCampaignStorageKey(entry.scope) !== raw.key || entry.confirmed.campaignId !== scope.campaignId ||
-      cloudRecoveryBytes(entry) > CLOUD_RECOVERY_BYTES) throw new CloudCacheError("checksum");
-    return { cacheRevision: raw.cacheRevision, entry };
-  } catch (error) {
-    if (error instanceof CloudCacheError) throw error;
-    throw new CloudCacheError("checksum");
-  }
-}
+const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run({ kind: "packCache", input: { entry, expected } });
+const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "unpackCache", input: { raw, scope } });
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
     value.onsuccess = () => resolve(value.result);
@@ -101,12 +72,13 @@ export class IndexedDbCloudCache implements CloudCache {
     this.database.catch(() => { this.database = null; });
     return this.database;
   }
-  async read(scope: CloudScope): Promise<CloudCacheRead | null> {
+  async read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
     const db = await this.open();
     try {
       const tx = db.transaction(STORE, "readonly"), done = completion(tx);
       const raw = await request(tx.objectStore(STORE).get(cloudCampaignStorageKey(scope))) as StoredCache | undefined;
       if (!await done) throw new CloudCacheError("transaction");
+      if (expectedText !== undefined && raw?.text !== expectedText) throw new CloudCacheError("conflict");
       return raw ? unpack(raw, scope) : null;
     } catch (error) {
       if (error instanceof CloudCacheError) throw error;
@@ -124,8 +96,8 @@ export class IndexedDbCloudCache implements CloudCache {
         this.hooks.beforeCommit?.(tx);
         if (!await done) throw new CloudCacheError("transaction");
         await this.hooks.afterCommit?.();
-        const readback = await this.read(entry.scope);
-        if (!readback || readback.cacheRevision !== stored.cacheRevision || JSON.stringify(readback.entry) !== stored.text) {
+        const readback = await this.read(entry.scope, stored.text);
+        if (!readback || readback.cacheRevision !== stored.cacheRevision) {
           throw new CloudCacheError("conflict");
         }
         return readback;

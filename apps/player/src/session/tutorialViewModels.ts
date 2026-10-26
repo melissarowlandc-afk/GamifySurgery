@@ -11,7 +11,7 @@ import {
   type EncounterState,
   type GameState,
 } from "@gamify-surgery/game-domain";
-import { getTutorialClockMultiplier, GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER } from "./tutorialTiming";
+import { getTutorialClockMultiplier, getGuidedSecondVisitClockRate } from "./tutorialTiming";
 
 export type TutorialActionId =
   | "open-first-chart"
@@ -250,7 +250,7 @@ function encounterStep(input: TutorialViewInput, encounter: EncounterState, seco
     return { ...base, id: firstChoice ? (second ? "second-first-decision" : "first-decision")
         : (second ? "second-follow-up-decision" : "follow-up-decision"),
       title: firstChoice ? (second ? "This plan takes time" : "Make the decision") : "New findings, next decision",
-      body: firstChoice ? (second ? `Test choices show game-time estimates. During this guided wait, facility time runs at ${state.simulationSpeed * GUIDED_SECOND_VISIT_CLOCK_MULTIPLIER}×. Choose using the clinical information.`
+      body: firstChoice ? (second ? `Test choices show game-time estimates. During this guided wait, facility time runs at ${getGuidedSecondVisitClockRate(state.simulationSpeed)}×. Choose using the clinical information.`
         : "Read the presentation, then choose. The answer is recorded; the chart will explain the result.")
         : "Read the new update, then choose. Your earlier decision is still there if you need it.",
       target: "answer-choices", targetSelector: "[data-tutorial-anchor='current-answer-choices']",

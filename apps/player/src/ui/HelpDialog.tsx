@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "./HelpDialog.css";
-import { AccountMenu } from "./AccountMenu";
 import { VersionLabel } from "../appVersion";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 
@@ -65,7 +64,6 @@ export function HelpDialog({paused, onTogglePause, onOpenChange, onShowGuidance,
       <h2 id="help-title" ref={headingRef} tabIndex={-1}>How this clinic works</h2>
       <p className="help-pause-note">The facility is paused while Help is open.</p>
       <ClinicalContentNotice />
-      <AccountMenu />
       <VersionLabel />
       {topic ? <><HelpReferenceTopic topic={topic} /><button className="text-button" type="button" onClick={() => setTopicId(null)}>All topics</button></>
         : <nav className="help-topic-list" aria-label="Help topics">{HELP_TOPICS.map((item) =>

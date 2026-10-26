@@ -3078,3 +3078,568 @@ checkpoint/reminder.
 ## B2.6 owner-only enablement published (2026-10-18)
 
 Owner approved setting GitHub repository variables and publishing. Set VITE_CLOUD_SAVES_ENABLED=true and VITE_CLOUD_SAVES_REGION="Canada (Central) · ca-central-1" (region from the owner's dashboard General settings screenshot). Server cohort: writes on, enrollments on, only the owner account enabled (`cloud status`). Published 7acf23e4 (Beta 2) + 05017add (CI-only 10x deadlines for the four new long cloud/evidence tests; the first run timed out at 180 s on hosted CI). Release-copy validation: npm test exit 0 (player 2494, game-domain 4296, clinical 698, others green); cloud-saves + cloud-recovery e2e 52/52 after the B2.6 revision-1 gating fix. Pages run 39168570540 succeeded. Next: owner desktop -> phone -> desktop trial.
+
+## Owner trial feedback (2026-10-25)
+
+Owner signed in on desktop Chrome (live Pages). She expected the campaign from her phone app to appear; it did not, because cloud enrollment is opt-in per device: the phone campaign was never copied to the account. She found the entry page confusing (screenshot: "Clinic campaigns" with "Refresh account campaigns", "Inspect unowned legacy campaigns on this site", "exact original bytes", "Use this device only", "Use account campaigns"). Manager direction: redesign the cloud entry into a plain, minimal "Your clinics" page (B2.4 follow-up), and make the phone-to-account path obvious.
+
+## Owner decision (2026-10-25): automatic account campaigns
+
+Owner: "assume that any campaign that someone is playing they may want to play on a different device rather than having the user select it. Like after they sign in the options should just be resume previous campaign (#/2) or start new campaign. And the previous campaign options should be the same on any device. Maybe just have a warning that they can only have two active campaigns on their account at a time so if they choose to make a new one when they are 2/2 then a warning pops up that says if they start a new campaign one of their old ones must be deleted and then they are given the choice of which (if any) they want to overwrite."
+
+This supersedes the opt-in import design (owner decision 1 is kept: 2 campaigns per account). Binding UX:
+- After sign-in, every device shows the same two choices: "Resume a previous campaign (N/2)" (account campaigns, identical on all devices) or "Start a new campaign".
+- Every campaign is an account campaign; no "this device only" mode and no per-campaign save choice.
+- On first cloud sign-in on a device, existing local campaigns for that account are enrolled automatically, up to the free slots; original local bytes are kept, never deleted. Only if a device has more campaigns than free slots is the player asked once which to keep in the account (the rest stay retained locally, hidden).
+- At 2/2, "Start a new campaign" shows a warning that one existing campaign must be replaced (deleted from the account); the player chooses which, or cancels; a second confirmation precedes the irreversible deletion.
+- Takeover/fencing, Save & Close and the Beta 1 fallback for non-enabled accounts are unchanged.
+
+## Owner feedback (2026-10-25): freezing and status text
+
+Owner: a top status reads "Saved on this device; account save waiting" and "Preparing recovery on this device..."; "This needs to go away and the game can't be pausing and freezing every time it pushes to save. Probably only save upon closing the app or going off the page if that's possible."
+
+Manager decision (owner intent, feasible form): unload-only saving is unreliable (mobile browsers suspend or kill background tabs; keepalive request bodies are limited to about 64 KB, below the compressed snapshot size), so:
+- Move snapshot serialization, compression and hashing off the main thread (Web Worker); routine checkpoints must never pause the game or block a frame noticeably.
+- Cloud checkpoint triggers: page hidden (visibilitychange -> hidden), pagehide/close (best effort), Save & Close (explicit; may pause), and a quiet background interval of 5 minutes while dirty. Remove the per-scored-answer/purchase early checkpoints and the 60 s cadence. The local device save stays immediate as today.
+- The status indicator is hidden during normal operation; show it only for actionable problems (offline or failed account save, takeover, capacity), in plain language.
+- Lease renewal stays lightweight (no snapshot); keep fencing semantics.
+
+## Entry redesign handoff
+
+2026-10-25, bounded Sol worker. Implemented the manager's assigned **explicit
+per-clinic saving** brief and reviewed the actual scoped diff. This is local
+work for manager review, not an accepted or published owner design.
+
+**Concurrent direction change:** the "Owner decision (2026-10-25): automatic
+account campaigns" and freezing/status sections were appended while this
+worker was running. Automatic enrollment, removal of device-only play, and
+replacement/deletion at 2/2 conflict with this worker's binding brief. Those
+new sections are preserved. This milestone does not implement or authorize
+those new systems. The manager must reconcile the superseding owner direction
+before integrating/publishing this explicit-save UI; no automatic enrollment,
+campaign deletion or save-scheduling changes were made here.
+
+Implementation and owned files:
+
+- `apps/player/src/ui/CloudCampaignEntry.tsx`: "Your clinics"; vertically ordered
+  account/device sections; one named Continue or Save to my account action per
+  clinic; verified level and saved/played time; device section only when local
+  sources exist; explicit saving of exactly the selected row; originals retained;
+  new account clinic and device-only entry actions; two-clinic capacity reasons.
+  Refresh on entry and focus replaces the manual refresh button. Successful level
+  reads are reused by campaign/revision for this entry lifetime; unavailable
+  levels leave Continue available for the existing recovery flow. Invalid older
+  timestamps show "Time unavailable" instead of breaking entry.
+- `apps/player/src/ui/CloudCampaignEntry.test.tsx`: both presentation layouts,
+  empty device section, explicit one-clinic save, original preservation,
+  two-clinic/archive limit, level display without writer acquisition, unavailable
+  level, refresh/listener lifetime, terminal deletion, collapsed privacy,
+  unpublished region, older-source ownership confirmation, identical-operation
+  retry after an unconfirmed import, and invalid older timestamps.
+- `apps/player/src/ui/AccountMenu.tsx`: optional children place entry-specific
+  storage limits, notice acceptance and "Show older campaigns from before you
+  signed in" inside the existing collapsed bottom Account & privacy control.
+  Existing region/notice, deletion, export and clear-device controls stay there.
+  Older-source discovery still requires a separate per-clinic ownership
+  confirmation before saving it to the signed-in account.
+- `apps/player/src/ui/cloudSaves.css`: shared entry styles, horizontal desktop
+  clinic rows, stacked phone rows and full-width phone buttons. Small secondary
+  device-only action. No shell gameplay styling changes.
+- `apps/player/src/ui/cloudEntryError.ts`: plain-language entry failure messages;
+  byte, recovery and protocol details are absent from the main entry view.
+- `apps/player/src/App.tsx`: minimal shared router wiring for the new entry
+  actions and plain-language entry notices. New clinic creation still enters
+  founder setup then creates an account campaign through the existing verified
+  import path. Continue still uses the existing read-only open and explicit
+  continuation/takeover confirmation. Save & Close is unchanged in both shells.
+- `apps/player/src/App.cloudAccess.test.tsx`: entry labels and exact expected
+  access/list requests reflect automatic entry refresh; all cohort gating,
+  no-upload, no-fresh-profile and Beta 1 fallback assertions remain.
+- `tests/e2e/cloud-saves.spec.ts` and `tests/e2e/cloud-recovery.spec.ts`: new entry
+  names, explicit privacy opening for notice acceptance, per-row Save/Continue,
+  and a focus event instead of Refresh. All **47 + 45 behavioral assertions**
+  are retained, including complete cross-device state, takeover/fencing,
+  immutable retry, offline blocking, deletion isolation, archive capacity,
+  originals, rejected saves, download recovery and corrupt-current/prior reads.
+
+Validation:
+
+- Initial focused command without the existing preload hit Vite's known Windows
+  `net use` probe `spawn EPERM` before tests ran. No config/dependency change was
+  needed. Subsequent test commands use the existing narrowly scoped preload:
+  `$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'`.
+- Focused entry/router: `npm.cmd run test --workspace @gamify-surgery/player --
+  --pool=threads src/ui/CloudCampaignEntry.test.tsx src/App.cloudAccess.test.tsx`
+  passed **2 files / 32 tests**, exit 0, before the final timestamp regression.
+- Full player: `npm.cmd run test --workspace @gamify-surgery/player --
+  --pool=threads` initially passed **261 files / 2,522 tests**, exit 0. Final
+  rerun after the timestamp fallback/regression passed **261 files / 2,523
+  tests**, exit 0, duration 149.26 seconds. Raw final summary:
+  `Test Files 261 passed (261)`; `Tests 2523 passed (2523)`.
+- `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0, including a
+  rerun after the final timestamp change.
+- Source audit: the nine scoped code/test files are UTF-8 without BOM, LF only.
+  Both e2e assertion counts were checked against captured baselines. No
+  assertions were removed or skipped. Manager owns Playwright and screenshots;
+  **no browser or visual PASS is claimed** by this worker.
+
+Review evidence: ignored `.local-dev/entry-redesign-20261025/` contains the
+nine-file `baseline/`, `owned-files.json`, actual `review.diff`, final full
+player log, typecheck log and `validated-source.json` SHA-256 manifest. Final
+audit confirms all nine code/test files and both appended handoff documents
+are UTF-8 without BOM, LF only, with final newlines. The manager should inspect
+that diff and rerun
+both cloud e2e specs against a disposable QA origin, including desktop/phone
+screenshots and the older-clinic discovery/confirmation path.
+
+No balance-config/game-domain files, balance goldens, clinical content, sources,
+dependencies, credentials, server switches, launchers, owner browser saves or
+served builds were edited. No Git, installs, network, agents, external messages,
+server starts, deployment or publication. **LOCAL ONLY**: manager owns design
+reconciliation, acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+Opening pathways remain `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the
+intended persistent profile and
+`https://melissarowlandc-afk.github.io/GamifySurgery/`; their origins/profiles
+retain separate local saves. This worker did not open or substitute either path.
+
+
+## Save performance handoff
+
+2026-10-25, bounded Sol worker for the Claude Code manager. Implemented the
+freezing/status decision above in the assigned save lane. **Ready for manager
+review; final shared-tree validation is blocked by concurrent entry-lane work.**
+No entry redesign or balance/domain implementation was changed by this worker.
+
+### Implementation and ownership
+
+- New `apps/player/src/session/cloud/codec.worker.ts`, `codecWorker.ts` and
+  `codecTasks.ts`: a lazy Vite module worker using
+  `new Worker(new URL("./codec.worker.ts", import.meta.url), { type: "module" })`.
+  Snapshot serialization/canonicalization, gzip, SHA-256, evidence validation,
+  frozen request serialization/hash, sealed evidence-page packing and transport
+  hashes run there. The worker returns only the compressed candidate suffix,
+  never a second hydrated game/full archive. Request IDs match replies; typed
+  cache/sync/codec errors survive the boundary. Worker crashes reject pending
+  work and allow a fresh worker on retry. The inline fallback is restricted to
+  non-browser tests (or explicitly injected test use); unsupported browser
+  workers fail visibly instead of silently encoding on the main thread.
+- New `codecCache.ts` and `codecWire.ts` extract the existing pure local-cache
+  and transport encoding algorithms. `cache.ts` offloads local serialization,
+  checksums and read verification while retaining IndexedDB transactions,
+  compare-and-swap, Web Locks and exact stored-text/readback checks.
+  `supabaseTransport.ts` offloads commit/import wire pages and the final wire
+  hash recheck. No server contract, snapshot format or saved bytes were migrated.
+- `coordinator.ts`: routine staging/verification no longer closes the command
+  gate. Actual storage, auth, capacity, fencing and lease failures retain their
+  existing safety gates. Fencing, expected revisions, frozen operation IDs and
+  bytes, committed-operation lookup, one in-flight/one following queue and
+  suffix/usage rebasing remain. Successful acknowledgment gives any following
+  work a fresh five-minute dirty window; otherwise continuous play could cause
+  a new upload on every pulse. Small revision/evidence-base getters avoid
+  cloning all confirmed data just to compare revisions.
+- `gameSession.ts`: worker encoding leaves commands and facility ticks enabled.
+  Immutable checkpoints are structured-cloned once when sent; new commands
+  coalesce into the following candidate. Question receipts are captured with
+  their matching snapshot and filtered against acknowledgments. Save & Close
+  pauses immediately, before waiting for an outstanding encode, then awaits
+  local durability, confirmation and fenced release. Recovery export includes
+  the latest in-memory checkpoint and pending frozen recovery if encoding has
+  not finished. Local saving is still scheduled immediately on dirty commands;
+  it is not deferred to the cloud upload interval.
+- `transport.ts`: dirty cadence is five minutes. Removed answer/purchase/pause/
+  mode-exit urgency and Build Undo's automatic upload. Legacy reason labels
+  remain accepted by explicit callers/QA, but never schedule an early upload.
+- Minimal necessary lifecycle edits in
+  `apps/player/src/session/usePrototypeSession.ts`: hidden visibility and
+  pagehide request best-effort checkpoints without pausing cloud gameplay;
+  removed the two mode-exit early-checkpoint calls. The local/Beta 1 path is
+  unchanged. Existing focus/freshness revalidation and failure fencing still
+  require explicit Resume; saving itself no longer adds a pause.
+- `CloudSaveControls.tsx` and its tests: healthy/encoding/pending/saving/checked/
+  closed states have no status indicator. Only failures, connectivity,
+  takeover/revocation, capacity, auth and recovery problems show plain-language
+  status. Initial continuation and a checked session needing Resume use action
+  buttons, not healthy-save status text. Save & Close remains available.
+  `AppShell.tsx` and `mobile/MobileShell.tsx` each have just one nullable-message
+  fallback edit for the existing pause-lock explanation.
+- New `codecWorker.test.ts` and `codecWorkerTestSupport.ts`, plus coordinator and
+  game-session tests: fake worker offload/no caller serialization; compact
+  result; reply matching; typed errors/crashes; browser fallback refusal;
+  exact five-minute dirty policy, clean renewal, following-window reset;
+  corrupt-candidate hard stop; live commands/ticks during encoding and upload;
+  receipt/snapshot matching; current recovery export; hidden/pagehide triggers;
+  and immediate Save & Close pause while encoding is held.
+- Both cloud e2e specs: status assertions only. Each asserts the healthy status
+  button is absent. The retry scenario opens the new Resume clinic action
+  instead of a healthy status button. Existing behavioral assertions remain.
+  Concurrent entry-label/wiring changes belong to the entry worker.
+
+**21 owned source/test paths** are enumerated in the evidence manifest. The
+four tiny lifecycle hunks above are the necessary addition outside the main
+cloud/controls lane. Entry components, App entry wiring, AccountMenu/CSS,
+CloudAccount, entryStorage, fakeTransport and importCampaigns received concurrent
+edits and are excluded from this worker's manifest/diff. They were preserved.
+
+### Before/after profile
+
+Offline Node **v24.19.0**, same machine, three warm samples per implementation;
+1 ms timer heartbeat plus `performance.eventLoopUtilization`. This measures the
+save codec/verification/cache pipeline on the calling JS thread and the real
+module-worker implementation in a Node worker adapter. It is **not a browser
+frame-rate or physical-phone acceptance claim**. No browser, server, owner save
+or real endpoint was accessed.
+
+Fixture: existing synthetic
+`tests/fixtures/level-five-economy-checkpoint-20261012.json`, SHA-256
+`813572d7ecaa6ffb232b7bed92c72a14067f96927f42219750c1343b111d6582`,
+plus Resume and 30 real evidence-wrapped facility ticks. Hydrated game:
+**1,419,998 UTF-8 bytes**; checkpoint input: **1,925,339 bytes**; **2,414**
+evidence records, **78** new rows sealed into **3** pages; wire **44,979 bytes**.
+No synthetic clinical prose or owner data was authored for the measurement.
+
+| Measurement (median ms) | Before, caller thread | After, worker path |
+| --- | ---: | ---: |
+| Main-thread active time for measured pipeline | 1,013.48 | 20.31 |
+| Longest heartbeat gap per sample | 243.19 | 17.30 |
+| Standalone main-thread state serializer call | 3.35 | 0 (worker owns serialization) |
+| Encode/canonicalize/compress/hash, elapsed | 588.65 | 841.04 (worker) |
+| Evidence pages + wire compression/hash, elapsed | 18.89 | 24.13 (worker) |
+| Verify/decompress/rehydrate/hash, elapsed | 398.21 | 596.17 (worker) |
+| Cache serialization/hash/read verification, elapsed | 13.34 | 20.67 (worker) |
+| Whole measured pipeline, elapsed | 1,035.76 | 1,493.87 |
+
+Worst observed heartbeat gaps across the three samples: **254.35 -> 19.81 ms**.
+Calling-thread active time fell about **98%**; total completion time did not
+improve in this Node harness. Compression, verification and hashing retain the
+same algorithms; their waits happen away from the game thread. The standalone
+serializer row describes the removed caller call, not zero serialization work.
+
+Transfer comparison, 12 samples: input JSON serialization **3.96 ms**, cloning
+an already serialized string **0.78 ms**, serialization-plus-string-clone
+**4.74 ms**, whole-object structured clone **8.80 ms** (medians). An already
+serialized string is cheaper, but this live cloud path has none: making one
+would put serialization back on the caller. Chose one structured clone of the
+immutable checkpoint. Actual encode `postMessage` medians in the Node worker
+adapter were **5.51 ms**; only the compressed result crosses back. The manager
+must measure this copy and cold worker startup on the real phone/browser.
+
+Reproduction code and raw reports are retained in ignored
+`.local-dev/beta2-save-performance/`: `profile-before.test.ts`,
+`profile.test.ts`, `profile.config.ts`, `build-worker.mjs`, `node-worker.mjs`,
+`before.json`, `after.json`, `profile-before.log` and `profile-after.log`.
+The before harness must use the captured original source. Worker-adapter build
+uses the production worker entry; no mocks replace its codec work.
+
+### Validation and open integration gate
+
+Commands ran from the repository root. Test commands reuse the existing narrow
+Windows Vite `net use` EPERM preload; no dependencies/config/timeouts changed:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/cloud/coordinator.test.ts src/session/cloud/gameSession.test.tsx src/session/cloud/cache.test.ts src/session/cloud/supabaseTransport.test.ts src/session/cloud/codecWorker.test.ts src/ui/CloudSaveControls.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+```
+
+- **Final save-lane focused: 6 files / 153 tests passed**, exit 0, **9.02 s**,
+  including after all save edits and concurrent entry implementation changes.
+- Earlier full run: **262 files / 2,538 tests passed**, exit 0, **125.50 s**.
+  It preceded the final three added regression cases and concurrent automatic
+  entry rewiring; it does not establish the final shared-tree gate.
+- **Final full run: exit 1, 260 files passed / 2 failed; 2,523 tests passed /
+  18 failed (2,541 total), 134.94 s.** All failures are in the concurrent entry
+  lane: **14** in `CloudCampaignEntry.test.tsx`, **4** in
+  `App.cloudAccess.test.tsx`. The running UI has automatic account enrollment
+  and the new resume/create choices; those loaded tests still expect the
+  previous explicit-save/device-only entry. No save-lane test failed. Raw
+  failures are retained, not softened or skipped.
+- Earlier root typecheck passed all seven workspaces. **Final root typecheck
+  exits 1** with exactly two player errors in the concurrent entry test:
+  `CloudCampaignEntry.test.tsx:35` TS2322 and `:51` TS2353, both passing the
+  removed `onLocalOnly` prop. Other workspace typechecks pass. The worker did
+  not edit that file or restore the removed API.
+- Isolated production Vite build at Pages base **PASS, exit 0**, including
+  a generated `assets/codec.worker-*.js` of about **4.03 MB** raw. Used
+  `envDir:false`, scratch output and no public-asset copying; real env files,
+  served dist and owner opening pathways were untouched. Existing large-chunk
+  warnings remain. An intermediate retry without the preload hit the known
+  `net use` spawn EPERM; the final rerun with it passes.
+
+Actual original snapshots, filesystem hashes (no Git), the **21-path** diff
+including new files, owned-path manifest, validated source hashes, concurrent
+path list and raw logs are in `.local-dev/beta2-save-performance/`:
+`baseline/`, `baseline.json`, `changes.patch`, `owned-files.json`,
+`validated-source.json`, `concurrent-changes.json`, `player-focused-final.log`,
+`player-full.log`, `player-full-final.log`, `typecheck.log`,
+`typecheck-final.log`, `player-build-final.log`. All owned files are UTF-8
+without BOM, LF-only, with final newlines. This worker has not claimed the
+concurrent entry files as its work.
+
+Manager next: inspect the scoped actual diff/logs; finish/reconcile the entry
+lane and rerun both required full commands on a stable integrated tree. Then
+run the cloud e2e specs and real-browser/phone profiling (warm and cold worker,
+commands/ticks continuing during save, hidden/pagehide interruption/recovery,
+Save & Close confirmation/release, offline/auth/takeover/capacity status).
+Pagehide remains best effort; no unload receipt or guaranteed remote save is
+claimed. Existing focus/recovery fencing gates remain intentional.
+
+**LOCAL ONLY:** no Git, installs, network, sub-agents, external messages, live
+SQL, server starts, owner browser/storage access, publication or clinical-content
+changes. Manager owns acceptance and the audited **"push to GitHub"** checkpoint
+reminder. Opening pathways remain `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the intended persistent profile and
+`https://melissarowlandc-afk.github.io/GamifySurgery/`; their local origins/profiles
+retain separate saves. No owner pathway was opened, replaced or restarted.
+
+## Entry redesign revision 1 (automatic account campaigns)
+
+2026-10-25, bounded Sol worker. Manager reconciliation explicitly supersedes
+the earlier explicit-save brief and its historical handoff. This revision
+implements the newer automatic-account-campaign decision. Local work is ready
+for manager review, SQL execution and browser acceptance; final validation is
+recorded below.
+
+### Behavior and safeguards
+
+- Both shells use the shared **Resume a previous campaign (N/2)** list with
+  campaign name, level, last-saved time and a named Resume action, plus **Start
+  a new campaign**. Device-only entry, On this device, per-campaign Save actions
+  and manual refresh are removed. Account & privacy stays collapsed at the
+  bottom. Phone rows stack and buttons span the width.
+- After account-notice acceptance, first cloud-enabled entry freezes an
+  account/backend/device-scoped migration journal. Valid own-account local
+  campaigns enroll automatically through the existing durable, verified import
+  path. Exact original profile/state strings stay unchanged. Unowned and other-
+  account saves are never enrolled automatically. Existing account campaign IDs
+  keep their authoritative account save rather than uploading an old local branch.
+- If candidates exceed free slots, one chooser uses the binding wording. Its
+  first confirmed selection is atomic across tabs. Omitted campaigns remain
+  locally retained and hidden; the choice does not recur on this device. A
+  full account can keep its existing campaigns and retain all extra locals hidden.
+- Imports retry the same immutable operation after a lost reply. Partial
+  success refreshes the list so a confirmed first campaign stays resumable
+  when a later import fails. Deliberately created account campaigns can recover
+  from their retained `created:` source after a failed initial import. Duplicate
+  local names receive a deterministic account-only suffix; originals are intact.
+- At 2/2, Start opens the exact warning. Choosing a campaign opens **Delete
+  <name> permanently?**; cancellation at either stage leaves campaigns alone.
+  Only the second confirmation sends deletion with the originally chosen
+  revision. Founder setup starts only after a matching confirmed response.
+  Live lease, revision conflict and lost reply are handled without starting a
+  third campaign. A durable local retirement marker precedes deletion to prevent
+  this device's retained original from re-enrolling after an interrupted replacement.
+- Resume retains the existing read-only open and explicit continuation/takeover
+  confirmation. Save & Close and writer fencing are unchanged. Level display
+  reuses verified enrollment metadata or a matching account cache before another
+  read-only load. Invalid older timestamps retain the safe display fallback.
+
+### Files and shared-lane accounting
+
+Twenty-one code/test/SQL paths changed:
+
+- UI: `apps/player/src/ui/CloudCampaignEntry.tsx`, its test, `cloudSaves.css`,
+  `cloudEntryError.ts`, `AccountMenu.tsx`.
+- Entry wiring: `apps/player/src/App.tsx`, `App.cloudAccess.test.tsx`, and
+  dev-only `qa/cloudSavesQa.tsx` (synthetic local sources may be seeded before
+  sign-in with `device-campaigns=0..3`; the guarded fake bridge supports deletion).
+- Session: `session/cloud/importCampaigns.ts`, its test, `entryStorage.ts`,
+  `CloudAccount.tsx`, `transport.ts`, `fakeTransport.ts`, `supabaseTransport.ts`,
+  and new `fakeTransport.deleteCampaign.test.ts` /
+  `supabaseTransport.deleteCampaign.test.ts`.
+- The two cloud e2e specs and the new migration / SQL test named below.
+
+The **only additive transport typing** is optional
+`deleteCampaign({ campaignId, expectedRevision }): Promise<void>`. The
+CloudAccount change only adds `compareAndSet` to the scoped mutation fence.
+SupabaseTransport receives the delete method only: exact RPC arguments,
+account fence, confirmation/identity check and removal of the deleted cached
+head. The save worker's concurrent removal of its unused `CloudWireBlob` type
+import is preserved. No coordinator, codec, gameSession, CloudSaveControls or
+top-bar implementation was edited by this worker.
+
+The cloud-access fixture explicitly injects the independent competition client
+OFF: its new module singleton otherwise retains the first synthetic DOM's
+storage when the fixture remounts. All cohort gate, original/storage isolation,
+no-fresh-profile and Beta 1 fallback assertions remain. No competition
+implementation or ManagementPanel file was edited here.
+
+The cloud e2e flows now use automatic first sign-in, Resume, and actual founder
+setup for new account campaigns. Added over-slots / double-confirmation /
+cross-device list coverage. All original complete-state, raw-original,
+takeover/fencing, immutable retry, offline, full-account deletion, isolation,
+quota and prior-recovery assertions remain. The superseded disabled-at-2/2
+assertion now checks enabled Start, the warning and cancellation with both
+campaigns retained. Assertion totals against this revision's baseline:
+**48 -> 70** (cloud-saves), **46 -> 46** (cloud-recovery). The save worker's
+normal-status visibility assertion is retained.
+
+### SQL for manager execution
+
+- New migration: `supabase/migrations/20261026000100_beta2_delete_campaign.sql`.
+  Private SECURITY DEFINER implementation, thin public SECURITY INVOKER wrapper,
+  fixed empty search paths, explicit authenticated EXECUTE only, and revoked
+  PUBLIC/anon/service-role access. `beta2_require_cloud` supplies the same
+  membership, notice, protocol, write and capacity guards as existing writes.
+  Every campaign lookup/mutation is restricted to the signed-in owner's namespace.
+  Missing own IDs return the same idempotent acknowledgement without probing others.
+- Existing membership -> account -> quota -> campaign -> writer lock order.
+  Revision is checked under lock; any live lease refuses deletion using the
+  clock after blocking locks. Existing FKs remove all snapshots, headers, pages,
+  writers and operations atomically. Campaign rate rows are removed. Current /
+  prior snapshot costs, evidence, operations and campaign allowance release
+  account/global logical quota. Deleted costs remain in the dead-space estimate.
+- New rollback-only synthetic test: `supabase/tests/beta2_delete_campaign.sql`,
+  exactly one final PASS row. Covers actual roles/ACL/search_path, guards,
+  cross-owner same-ID isolation, lease/revision refusals, every child cascade,
+  quota reconciliation, idempotent retry and use of the freed slot. New IF/ELSIF
+  conditions contain no CASE expression. Existing migrations/tests are untouched.
+- No local psql, Supabase CLI or PL/pgSQL parser is available. **No SQL execution
+  PASS is claimed.** The user reserves application/testing for the manager and
+  prohibits network, overriding the Supabase skill's hosted-doc/CLI steps.
+
+### Validation and evidence
+
+- Focused final command (existing Windows `net use` EPERM preload):
+  `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+  src/ui/CloudCampaignEntry.test.tsx src/App.cloudAccess.test.tsx
+  src/session/cloud/importCampaigns.test.ts src/session/cloud/supabaseTransport.test.ts
+  src/session/cloud/supabaseTransport.deleteCampaign.test.ts
+  src/session/cloud/fakeTransport.deleteCampaign.test.ts`:
+  **6 files / 91 tests PASS**, exit 0. Includes notice-acceptance timing, partial
+  imports, 0/1/2 slots, one chooser, both confirmations, lease/revision refusals,
+  ownership, auth fencing, receipt validation, lost replies and shared-tab storage.
+- Final `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0.
+- Initial full run: 264 files, 2,562 passed / 2 failed, exit 1. One was the
+  cloud-access fixture singleton described above, now fixed and focused-green.
+  The other was unrelated `ManagementPanel.test.tsx:91`: expected 3 tabs,
+  concurrent UI renders 4. This worker did not edit that file.
+- Final full player rerun: **265 passed files / 4 failed files (269 total);
+  2,592 passed / 4 failed tests (2,596 total)**, exit 1, duration 190.91 seconds.
+  All entry/cloud tests pass. The four failures are outside this lane:
+  `competition/competitionClient.test.ts:60` (new concurrent test calls
+  `client.leaderboard`, which was not a function in that run),
+  `ui/ManagementPanel.test.tsx:91` (expects 3 tabs, renders 4),
+  `session/levelFourIntegration.test.ts:20` (30,000 ms timeout), and
+  `session/periopNurseOwnerFeedback.test.ts:16` (Level-3 case, 5,000 ms timeout).
+  No failure was skipped, weakened or patched outside this lane. The shared
+  full suite is **NOT GREEN**.
+- Rechecked the two timeout files together once with
+  `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+  src/session/levelFourIntegration.test.ts
+  src/session/periopNurseOwnerFeedback.test.ts`: **4 passed / 2 timed out**,
+  2 failed files, exit 1, duration 48.15 seconds. The same timeout limits fail
+  outside the full run too; this worker did not raise them or claim flakiness.
+- Repeated root typecheck after those new concurrent failures: **all seven
+  workspaces PASS**, exit 0 (`typecheck-final.log`). The final scoped source
+  hash check shows no source changes since the full-validation snapshot.
+
+Ignored evidence: `.local-dev/entry-redesign-revision1-20261025/` contains the
+18-file baseline, owned/changed path lists, actual `review.diff`, SHA-256 source
+manifest and focused/full/initial-red/typecheck/timeout-recheck logs. Scoped files pass UTF-8
+without BOM, LF-only and final-newline checks.
+
+Manager next: inspect source and SQL; apply the migration and run its rollback-
+only test plus existing SQL safety checks; resolve unrelated shared-tree test
+failures; run both cloud e2e specs and desktop/phone screenshots. **No Playwright
+or visual PASS is claimed.** Check automatic first sign-in, over-slots choice,
+cross-device lists, replacement cancellation, live-lease refusal and the named
+final confirmation. No server switches were changed.
+
+**LOCAL ONLY:** no Git, installs, network, agents, external messages, live SQL,
+server starts, owner browser/storage access, publication, old migration,
+domain/balance/golden/clinical or dependency edits. Manager owns acceptance and
+the audited **"push to GitHub"** checkpoint/reminder. Owner pathways remain
+`START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the intended persistent
+profile and `https://melissarowlandc-afk.github.io/GamifySurgery/`. The new query
+only seeds the disposable QA entry on 127.0.0.1:5184; no owner pathway was
+opened/substituted. Local origins/profiles retain separate local saves.
+
+### Live SQL for automatic campaigns and Clinic Competition (2026-10-26, manager)
+
+Applied from SHA-verified copies in the live SQL editor (owner session in the manager pane): 20261026000100_beta2_delete_campaign.sql (prefix 8d85f257) and 20261026000200_competition.sql (prefix 2bc2e392). Rollback-only tests: beta2_delete_campaign.sql PASS; competition.sql PASS. Because competition replaced the delete-my-data and retention functions, the manager re-ran beta2_cloud_saves.sql (PASS) and all four live-filtered Beta 1 suites (each returned its single PASS row; a failing assertion raises instead). Integrated local validation: player 269 files / 2601 passed; game-domain 4303 passed with 3 timeouts that also time out identically on the published release on this machine today (the Level 5 integration-running continuation takes 32 s against a 30 s local deadline), and the latent-bug file passes 6/6 alone on both trees.
+
+## Integration fixes (2026-10-26)
+
+Bounded Sol worker integration of the automatic-account entry, save-performance
+and Clinic Competition work. Reviewed the manager's 19-failed / 37-passed log
+at `.local-dev/qa-probe/cloud-e2e-integration-20261026.txt` and the saved local
+Playwright traces. No browser, hosted service or owner storage was opened.
+
+### Causes and changes
+
+- The four fresh-profile failures came from the disposable QA entry's fixture
+  scan. It called `loadPrototypeProfile(accountId)` even when
+  `device-campaigns=0`; that local-session loader persists a fresh empty profile.
+  Production automatic discovery already uses read-only `getItem` calls and
+  retains original strings. The new `qa/cloudSavesQaSeed.ts` helper does no
+  storage reads or writes when no fixtures are requested. With an explicit
+  positive fixture count it checks for existing bytes without loading a local
+  session, preserves any existing profile (including empty/incompatible bytes),
+  and seeds only an absent synthetic profile. Fixture setup runs before the
+  disposable sign-in. Explicit QA creation writes a populated profile directly,
+  avoiding an intermediate empty profile. Account/legacy originals stay intact.
+- The eight strict-selector failures came from the desktop shell's account
+  menu plus a second `AccountMenu` always mounted inside its hidden Help dialog.
+  Removed the Help copy. The shell footer / phone More menu and entry retain
+  their one collapsed disclosure. Competition privacy and retention text were
+  already in shared `AccountMenu.PrivacyInfo`; tests now verify that the one
+  disclosure contains that notice, clear-device and deletion controls.
+- Sampled traces for the remaining seven failures show cold account verification
+  or `Loading phone layout…`; the recovery trace eventually shows the correct
+  recovery modal after the assertion deadline. Entry now preloads the selected
+  presentation and starts the existing save worker using an empty hash. This
+  processes no account data and acquires no writer. Resume / Start stay disabled
+  with `Getting your campaigns ready…` until startup settles. A startup rejection
+  releases this preparation gate so the existing open/recovery error path can
+  report it. The explicit continuation / takeover decision, healthy-save status
+  policy and Save & Close behavior remain in their existing implementations.
+
+### Files and safety
+
+Changed source: `App.tsx`, `PrototypeShell.tsx`,
+`ui/CloudCampaignEntry.tsx`, `ui/CloudCampaignEntry.test.tsx`,
+`ui/HelpDialog.tsx`, `qa/cloudSavesQa.tsx`, and new
+`qa/cloudSavesQaSeed.ts` / `qa/cloudSavesQaSeed.test.ts` under
+`apps/player/src`. No new transport typing. Competition submission, coordinator,
+codec, game session, CloudSaveControls, SQL, domain, balance and goldens are
+unchanged by this integration worker. Both cloud e2e specs are byte-for-byte
+unchanged from the received tree: every behavior assertion, selector and timeout
+is preserved. Automatic enrollment, retained originals, the two places,
+replacement confirmations, live-lease refusal and deletion behavior remain.
+
+### Validation
+
+- Focused final command, with the existing Windows `net use` EPERM preload:
+  `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+  src/qa/cloudSavesQaSeed.test.ts src/ui/CloudCampaignEntry.test.tsx
+  src/ui/CloudSaveControls.test.tsx src/ui/HelpDialog.test.tsx
+  src/App.cloudAccess.test.tsx`: **5 files / 110 tests PASS**, exit 0.
+  Includes fresh-context no-profile/no-write checks, exact original preservation,
+  explicit fixture setup, one collapsed competition/account disclosure per
+  shell, preparation gating and existing cohort / takeover / recovery behavior.
+- `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0.
+- Initial full player run before the final preparation gate: **270 files /
+  2,613 tests PASS**, exit 0, duration 155.41 seconds.
+- Final full player run after the preparation gate, using
+  `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`
+  with the same existing preload: **270 files / 2,614 tests PASS**, exit 0,
+  duration 155.49 seconds. No failure, skipped test or timeout increase.
+
+Ignored evidence: `.local-dev/cloud-integration-fixes-20261026/` contains scoped
+before-images, SHA-256 source manifests, actual `review.diff`, focused / full /
+typecheck logs and the sampled recovery-trace screenshot. Changed source passes
+UTF-8 without BOM, LF-only and final-newline checks.
+
+Manager next: inspect this scoped diff, rerun both cloud e2e specs against the
+fresh disposable QA server, and take desktop / phone screenshots. Check the
+fresh-phone absent profile, one disclosure, first Resume / takeover and prior
+recovery as well as all existing safety assertions. **No Playwright PASS is
+claimed by this worker.** Live SQL test results above belong to the manager.
+
+LOCAL ONLY: no Git, installs, network, agents, publication or server changes.
+Manager owns acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+Owner opening pathways remain `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the intended persistent profile and
+`https://melissarowlandc-afk.github.io/GamifySurgery/`; local saves stay separate
+by origin/profile. The disposable fixture setup remains only on the QA entry.

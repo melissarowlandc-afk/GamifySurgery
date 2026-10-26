@@ -33,10 +33,15 @@ const states: Partial<CloudSyncView>[] = [
 ];
 describe("identical account save states in desktop and phone shells", () => {
   for (const [layout, Shell] of [["desktop", AppShell], ["phone", MobileShell]] as const) {
-    it.each(states)(`${layout} exposes persistent, text-labelled $phase / $failure state`, view => {
+    it.each(states)(`${layout} shows only actionable $phase / $failure status`, view => {
       phoneTestDom(); const control = save(view);
       const markup = renderToStaticMarkup(<Shell {...phoneFixture({ cloudSave: control })} />);
-      expect(markup).toContain(cloudStatusText(control.view)); expect(markup).toContain('aria-live="polite"');
+      const text = cloudStatusText(control.view);
+      if (text) {
+        expect(markup).toContain(text); expect(markup).toContain('aria-label="Account save status:');
+      } else expect(markup).not.toContain('aria-label="Account save status:');
+      expect(markup).not.toContain("Preparing recovery on this device");
+      expect(markup).not.toContain("account save waiting");
       expect(markup).toContain("Save &amp; Close"); expect(markup).not.toContain("Safe to close this tab");
       if (!control.view.canExecute) expect(markup).toMatch(/aria-label="(?:Resume facility time|Resume facility clock)[^>]*disabled|disabled[^>]*aria-label="(?:Resume facility time|Resume facility clock)/);
     });
@@ -44,6 +49,17 @@ describe("identical account save states in desktop and phone shells", () => {
       phoneTestDom(); expect(renderToStaticMarkup(<Shell {...phoneFixture()} />)).toContain("Local only");
     });
   }
+  it.each([
+    { phase: "ready", pending: false }, { phase: "ready", pending: true },
+    { phase: "ready", pending: true, localDurable: false }, { phase: "saving", pending: true },
+    { phase: "checking", canExecute: false }, { phase: "closed", canExecute: false },
+  ] as const)("hides normal status for $phase / pending $pending", async view => {
+    const env = phoneTestDom(), control = save(view);
+    await env.render(<CloudSaveControls save={control} />);
+    expect(cloudStatusText(control.view)).toBeNull();
+    expect(env.element.textContent).toBe("Save & Close");
+    expect(control.onSaveAndClose).not.toHaveBeenCalled();
+  });
   it("uses one explicit takeover choice and restores keyboard focus when dismissed", async () => {
     const env = phoneTestDom(), control = save({ phase: "readonly", canExecute: false });
     await env.render(<CloudSaveControls save={control} />);
@@ -51,7 +67,7 @@ describe("identical account save states in desktop and phone shells", () => {
     expect(env.element.textContent).toContain("Only progress saved to your account can move here.");
     expect(env.doc.activeElement.tagName).toBe("H2");
     await env.click("Not now"); expect(control.onContinue).not.toHaveBeenCalled();
-    const trigger = env.button(`Account save status: ${cloudStatusText(control.view)}`); trigger.focus(); await env.clickElement(trigger);
+    const trigger = env.button("Continue clinic"); trigger.focus(); await env.clickElement(trigger);
     const dialog = env.find(node => node.tagName === "DIALOG");
     await act(async () => { (testElementProps(dialog).onCancel as (event: { preventDefault(): void }) => void)({ preventDefault() {} }); });
     expect(env.doc.activeElement).toBe(trigger);

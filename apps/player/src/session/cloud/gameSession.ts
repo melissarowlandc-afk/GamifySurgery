@@ -1,12 +1,10 @@
-import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, importGameEvidence, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
+import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
 import type { LocalPrototypeProfile } from "../prototypeStorage";
 import { type CloudCampaignMetadata } from "./codec";
-import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint, type CloudSourceProvenance } from "./codecEvidence";
+import { loadCloudEvidenceCheckpoint, type CloudSourceProvenance } from "./codecEvidence";
 import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } from "./coordinator";
-import type { CloudCandidate } from "./transport";
-import { CloudSyncError } from "./transport";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -30,8 +28,8 @@ export class CloudGameSession {
   private flushing: Promise<boolean> | null = null;
   private encoding = false;
   private dirty = false;
-  private reason: CloudCheckpointReason = "ordinary";
   private stopped = false;
+  private closing: Promise<boolean> | null = null;
   private readonly unsubscribe: () => void;
   private readonly unsubscribeReceipts: () => void;
   private boundRevision: string;
@@ -39,10 +37,10 @@ export class CloudGameSession {
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
     private readonly switchTo?: (campaignId: string) => Promise<void>) {
     this.checkpoint = loaded.checkpoint; this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
-    this.boundRevision = coordinator.confirmed!.revision;
+    this.boundRevision = coordinator.confirmedRevision!;
     for (const receipt of coordinator.pendingCandidate?.usageQuestions ?? []) this.questions.set(receipt.receipt_id, receipt);
     this.unsubscribe = coordinator.subscribe(() => {
-      if (!this.reloadRequired && coordinator.confirmed?.revision !== this.boundRevision) {
+      if (!this.reloadRequired && coordinator.confirmedRevision !== this.boundRevision) {
         this.reloadRequired = true; coordinator.requireSessionReload();
       }
       this.emit();
@@ -66,7 +64,7 @@ export class CloudGameSession {
     const view = this.coordinator.view, preparing = this.dirty || this.encoding;
     return { ...view, canExecute: this.canExecute, pending: view.pending || preparing, localDurable: view.localDurable && !preparing };
   }
-  get canExecute(): boolean { return !this.stopped && !this.reloadRequired && !this.encoding && this.coordinator.view.canExecute; }
+  get canExecute(): boolean { return !this.stopped && !this.reloadRequired && !this.closing && this.coordinator.view.canExecute; }
   get state(): GameState { return !this.reloadRequired && this.coordinator.view.canExecute ? this.current : { ...this.current, paused: true }; }
   get metadata(): CloudCampaignMetadata { return structuredClone(this.campaign); }
 
@@ -81,9 +79,7 @@ export class CloudGameSession {
     if (isFirstScoredAnswer(before, result.state, command)) {
       const receipt = createQuestionReceipt?.();
       if (receipt) this.questions.set(receipt.receipt_id, receipt);
-      this.reason = "scored-answer";
-    } else if (command.type === "SET_PAUSED" && command.paused) this.reason = "pause";
-    else if (["PLACE_ROOM", "UPGRADE_ROOM", "HIRE_STAFF", "TRAIN_EMPLOYEE", "BOOK_INSPECTION", "PLACE_DOOR", "INCREASE_EMPLOYEE_SALARY"].includes(command.type)) this.reason = "purchase";
+    }
     this.dirty = true; this.scheduleFlush(); this.emit(); return this.current;
   }
   updateMetadata(campaign: CloudCampaignMetadata): void {
@@ -100,25 +96,22 @@ export class CloudGameSession {
       let success = true;
       while (this.dirty && !this.stopped) {
         this.dirty = false;
-        const checkpoint = this.checkpoint, campaign = this.campaign, reason = this.reason;
-        this.reason = "ordinary";
+        const checkpoint = this.checkpoint, campaign = this.campaign, usageQuestions = [...this.questions.values()];
         // An acknowledgment can land while compression is running. Re-encode
         // its suffix against the NEW confirmed prefix; never upload it twice.
-        let candidate: CloudCandidate;
+        let encoded;
         for (;;) {
-          const confirmed = this.coordinator.confirmed;
+          const confirmed = this.coordinator.encodingBase;
           if (!confirmed) return false;
-          const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint, campaign, source: this.source,
+          encoded = await this.coordinator.codec.run({ kind: "encode", input: { checkpoint, campaign, source: this.source,
             operationId: "local-candidate", expectedRevision: confirmed.revision,
-            acknowledgedEvidence: { headerSha256: confirmed.evidence.header.uncompressedSha256, records: confirmed.evidence.records.length } });
-          if (encoded.sizes.decodedGameBytes > 3_000_000) throw new CloudSyncError("capacity");
-          if (this.coordinator.confirmed?.revision !== confirmed.revision) continue;
-          const delta = encoded.request.evidence;
-          if (!("headerSha256" in delta)) return false;
-          candidate = { campaign, snapshot: encoded.snapshot, evidence: { ...delta, headerSha256: delta.headerSha256! }, usageQuestions: [...this.questions.values()] };
+            acknowledgedEvidence: { headerSha256: confirmed.headerSha256, records: confirmed.records } } });
+          if (this.coordinator.confirmedRevision !== confirmed.revision) continue;
           break;
         }
-        success = await this.coordinator.stage(candidate, reason);
+        if (this.stopped) return false;
+        success = await this.coordinator.stage({ campaign, snapshot: encoded.snapshot, evidence: encoded.evidence,
+          usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) });
         if (!success) return false;
       }
       return success;
@@ -127,14 +120,17 @@ export class CloudGameSession {
   async durable(): Promise<boolean> { return this.flushing ? this.flushing : this.coordinator.view.localDurable; }
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
     if (!await this.durable()) return false;
-    if (reason === "mode-exit") { this.coordinator.requestEarlyCheckpoint(); return true; }
     return this.coordinator.checkpoint(reason);
   }
-  async saveAndClose(context: DomainContext): Promise<boolean> {
-    if (!await this.durable()) return false;
-    if (!this.current.paused && !this.execute({ type: "SET_PAUSED", paused: true, operationId: crypto.randomUUID() }, context)) return false;
-    if (!await this.durable()) return false;
-    return this.coordinator.saveAndClose();
+  saveAndClose(context: DomainContext): Promise<boolean> {
+    if (this.closing) return this.closing;
+    // Stop live ticks before awaiting encoding; routine recovery work never pauses play.
+    if (!this.current.paused && !this.execute({ type: "SET_PAUSED", paused: true, operationId: crypto.randomUUID() }, context)) return Promise.resolve(false);
+    this.closing = (async () => {
+      if (!await this.durable()) return false;
+      return this.coordinator.saveAndClose();
+    })().finally(() => { this.closing = null; this.emit(); });
+    this.emit(); return this.closing;
   }
   async switchCampaign(campaignId: string, context: DomainContext): Promise<boolean> {
     if (!this.switchTo || !await this.saveAndClose(context)) return false;
@@ -145,19 +141,16 @@ export class CloudGameSession {
     try {
       const result = applyGameEvidenceBuildUndo(this.checkpoint, state, crypto.randomUUID());
       this.checkpoint = result.checkpoint; this.current = result.state;
-      this.dirty = true; this.reason = "purchase"; this.scheduleFlush(); this.emit();
-      // Undo is a new account revision, including when the build was already saved.
-      void this.durable().then(async ok => {
-        if (!ok) return;
-        while (!this.stopped && this.coordinator.view.pending) if (!await this.coordinator.checkpoint("purchase")) break;
-      });
+      this.dirty = true; this.scheduleFlush(); this.emit();
       return this.current;
     } catch (error) { this.coordinator.reportLocalFailure(error); return null; }
   }
   canReplaceState(state: GameState): boolean { return state === this.current; }
   exportRecovery(): string {
-    return this.coordinator.exportRecovery() ?? JSON.stringify({ schemaVersion: 1, scope: this.coordinator.scope,
-      checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
+    const pendingRecovery = this.coordinator.exportRecovery();
+    return !this.dirty && !this.encoding && pendingRecovery ? pendingRecovery : JSON.stringify({ schemaVersion: 1, scope: this.coordinator.scope,
+      checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
+      priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
   dispose(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.coordinator.dispose(); }
 }

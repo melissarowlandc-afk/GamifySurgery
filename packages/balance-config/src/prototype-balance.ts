@@ -1151,6 +1151,10 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     firstArrivalMaximumMinutes: 75,
     routineBaseIntervalMinutes: 60,
     routineVariationMinutes: 15,
+    levelOneRoutineCadence: {
+      baseIntervalMinutes: 50,
+      variationMinutes: 12,
+    },
   },
   economy: {
     expenseIntervalTicks: 10,

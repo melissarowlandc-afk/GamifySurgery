@@ -93,7 +93,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
       },
     });
     return { ...runtime, transport: guard(runtime.transport, () => true),
-      cache: guard(runtime.cache, name => name === "write"), entryStore: guard(runtime.entryStore, name => ["write", "create"].includes(name)) };
+      cache: guard(runtime.cache, name => name === "write"), entryStore: guard(runtime.entryStore, name => ["write", "create", "compareAndSet"].includes(name)) };
   }, [runtime]);
   const refresh = async (accessRequest?: Promise<CloudCapabilities>) => {
     const epoch = ++generation.current; setPhase("checking"); setError(null);

@@ -6165,7 +6165,13 @@ function getNextRoutineArrivalTick(
       )
     );
   }
-  const variation = arrivals.routineVariationMinutes;
+  // Preserve saved deadlines; the current stage applies only when sampling
+  // the next interval. Older balance releases omit the optional override.
+  const cadence =
+    state.facilityLevel === 1 ? arrivals.levelOneRoutineCadence : undefined;
+  const baseInterval =
+    cadence?.baseIntervalMinutes ?? arrivals.routineBaseIntervalMinutes;
+  const variation = cadence?.variationMinutes ?? arrivals.routineVariationMinutes;
   const offset =
     deterministicInteger(
       state.campaignSeed,
@@ -6178,7 +6184,7 @@ function getNextRoutineArrivalTick(
       (level) => level.level === state.advertisingLevel,
     ) ?? context.balanceRelease.advertising.levels[0]!;
   const adjustedInterval = Math.round(
-    ((arrivals.routineBaseIntervalMinutes + offset) *
+    ((baseInterval + offset) *
       advertising.arrivalIntervalMultiplierPercent) /
       100,
   );

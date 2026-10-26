@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
+import { PROTOTYPE_DOMAIN_CONTEXT, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { AccountCampaignRouter } from "../App";
 import { AuthAccountActionsContext, AuthAccountContext } from "../auth/AuthAccountContext";
-import { appendLocalCampaign, loadPrototypeProfile, savePrototypeProfileResult } from "../session/prototypeStorage";
+import { createQaDeviceCampaign, seedQaDeviceCampaigns } from "./cloudSavesQaSeed";
 import { CloudAccountProvider, useCloudAccount, type CloudAccountRuntime } from "../session/cloud/CloudAccount";
 import { IndexedDbCloudCache } from "../session/cloud/cache";
 import { IndexedDbCloudEntryStore } from "../session/cloud/entryStorage";
@@ -34,7 +34,16 @@ function QaApp() {
   const [authenticated, setAuthenticated] = useState(false), [entryKey, setEntryKey] = useState(0);
   const currentAccount = useRef(accountId), signOutGuard = useRef<(() => Promise<void>) | null>(null);
   currentAccount.current = accountId;
-  useEffect(() => { let live = true; void window.__cloudQaAuthenticate!(accountId).then(() => { if (live) setAuthenticated(true); }); return () => { live = false; }; }, []);
+  useEffect(() => {
+    let live = true;
+    // Explicit synthetic fixtures represent campaigns already on this device
+    // before sign-in. Fresh contexts do not read or create a local profile.
+    if (accountId) seedQaDeviceCampaigns(accountId, new URLSearchParams(location.search).get("device-campaigns"));
+    void window.__cloudQaAuthenticate!(accountId).then(() => {
+      if (live) setAuthenticated(true);
+    });
+    return () => { live = false; };
+  }, []);
   const runtime = useMemo<CloudAccountRuntime | null>(() => {
     if (!accountId) return null;
     const call = async (method: string, args: unknown[]) => {
@@ -44,7 +53,7 @@ function QaApp() {
       if (currentAccount.current !== accountId) throw new CloudSyncError("auth");
       if (response.error) throw new CloudSyncError(response.error.code); return response.value;
     };
-    const transport = Object.fromEntries(["capabilities", "list", "head", "load", "acquire", "renew", "release", "commit", "operation", "acceptNotice", "importCampaign", "deleteMyData"]
+    const transport = Object.fromEntries(["capabilities", "list", "head", "load", "acquire", "renew", "release", "commit", "operation", "acceptNotice", "importCampaign", "deleteCampaign", "deleteMyData"]
       .map(method => [method, (...args: unknown[]) => call(method, args)])) as unknown as CloudTransport;
     const scope = { backendId: "disposable-fake-cloud-qa", accountId };
     return { ...scope, region: "Disposable QA backend — no hosted storage", transport, cache: new IndexedDbCloudCache(), entryStore: new IndexedDbCloudEntryStore(scope) };
@@ -83,13 +92,7 @@ function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void })
   }, [cloud?.active, cloud?.phase]);
   if (!cloud) return null;
   const create = () => {
-    const profile = loadPrototypeProfile(cloud.runtime.accountId).profile;
-    const count = profile.campaigns.length + 1;
-    const founder = createInitialGameState().founder;
-    const created = appendLocalCampaign(profile, founder, `Synthetic clinic ${count}`, Date.now(), `cloud-qa-${count}`, false);
-    created.campaign.state.paused = true;
-    const saved = savePrototypeProfileResult(created.profile, cloud.runtime.accountId);
-    if (!saved.ok) throw new Error("Disposable QA local storage failed");
+    createQaDeviceCampaign(cloud.runtime.accountId);
     onCreate();
   };
   return <aside aria-label="Disposable cloud QA controls" style={{ padding: 8 }}>

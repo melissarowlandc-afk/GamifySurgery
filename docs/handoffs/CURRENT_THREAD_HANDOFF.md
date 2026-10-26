@@ -7395,3 +7395,159 @@ refresh is the next lane. Opening paths stay `START_GAME.cmd` -> exact
 No owner pathway or served build was changed by this worker.
 
 Owner follow-up (2026-10-16): reduced the colleague editorial rate to **0.01** and tightened the seeded rate check to 50,000 draws per compatible sex/group (±0.0015); focused colleague tests **18/18 PASS** and root typecheck **PASS**.
+
+## Entry redesign handoff (2026-10-25)
+
+Bounded Sol worker implemented the assigned explicit-save "Your clinics" entry
+redesign in the shared tree. Details, nine owned code/test paths, actual diff
+location and validation are appended as **Entry redesign handoff** in
+`docs/execplans/beta2-cloud-saves-20261017.md`. Original saves, the two-clinic
+limit, explicit older-source ownership confirmation, takeover and Save & Close
+are retained. Both cloud e2e specs retain all 47 + 45 behavioral assertions.
+
+The manager appended a newer automatic-account-campaign owner decision during
+this turn. That conflicts with this worker's explicit-saving brief; this UI
+requires manager reconciliation before acceptance/publication. Automatic
+enrollment, device-only removal, account replacement/deletion and checkpoint
+scheduling changes are outside this lane and were not implemented here.
+
+Focused entry/router passed 32 tests; final full player after the older-timestamp
+display regression passed **261 files / 2,523 tests**, exit 0. All seven
+workspace typechecks pass, exit 0. Manager retains Playwright and
+screenshots. Evidence: `.local-dev/entry-redesign-20261025/`. No balance/domain,
+clinical-content or golden edits; no Git, installs, network, agents, owner storage,
+server start, deployment or publication. LOCAL ONLY: manager owns acceptance and
+the audited **"push to GitHub"** checkpoint/reminder after design reconciliation.
+Owner opening pathways are unchanged: `START_GAME.cmd` -> exact
+`http://127.0.0.1:4173` in the intended persistent profile; canonical remote
+`https://melissarowlandc-afk.github.io/GamifySurgery/`. Their local saves remain
+separate by origin/profile; this worker did not open or substitute either path.
+
+
+## Save performance handoff (2026-10-25)
+
+Bounded Sol worker implemented worker-based routine cloud encoding/verification,
+evidence-page and request hashing, immediate local recovery without save-induced
+command gates, five-minute dirty checkpoints plus hidden/pagehide/Save & Close,
+and problem-only status in both shells. Save & Close alone pauses for saving;
+existing failure/focus/fencing gates remain. Full file ownership, before/after
+profiling, raw evidence and manager next actions are appended as **Save
+performance handoff** in `docs/execplans/beta2-cloud-saves-20261017.md`.
+
+Offline large-fixture Node profile (three samples): median calling-thread active
+time **1,013.48 -> 20.31 ms**; median longest timer gap **243.19 -> 17.30 ms**.
+Browser/phone and Playwright acceptance remain with the manager. Final focused
+save tests **153/153 PASS in 6 files**; isolated Pages-base Vite worker build PASS.
+Final full player **2,523 passed / 18 failed in two concurrent entry test files**;
+final root typecheck has **two removed-onLocalOnly-prop errors in the entry
+test**, other workspaces pass. Earlier full run/typecheck were green before that
+concurrent automatic-entry rewrite. The final shared-tree gates are not green;
+finish the entry lane, then rerun both required commands. Those files were not
+edited by this save worker.
+
+Evidence/diff/21-path manifest: `.local-dev/beta2-save-performance/`. Minimal
+additional shared hooks are four lifecycle hunks in `usePrototypeSession.ts`;
+each shell has one top-bar message fallback. No entry/domain/balance/clinical
+edits, Git, installs, network, agents, owner storage, server changes or release.
+LOCAL ONLY: manager owns acceptance and the **"push to GitHub"** checkpoint.
+Opening pathways remain `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the
+intended profile and `https://melissarowlandc-afk.github.io/GamifySurgery/`; their
+local saves remain separate by origin/profile. No pathway was substituted.
+
+## Entry redesign revision 1 (automatic account campaigns)
+
+2026-10-25 bounded Sol worker: manager reconciliation supersedes the earlier
+explicit-save handoff. Shared entry now offers Resume a previous campaign (N/2)
+and Start a new campaign. Own-account local campaigns enroll automatically
+through the existing verified import path, originals remain exact, and one
+durable over-slots chooser keeps omitted campaigns hidden locally. At 2/2,
+replacement requires selecting a campaign and a second named permanent-delete
+confirmation. Live lease and stale revision refuse deletion safely. Device-only
+entry and per-campaign Save actions are removed.
+
+New migration `supabase/migrations/20261026000100_beta2_delete_campaign.sql` and
+rollback-only `supabase/tests/beta2_delete_campaign.sql` are ready for manager
+review/application/execution. Private owner-scoped guarded implementation,
+public invoker wrapper, atomic child deletion, quota release and idempotence.
+SQL and browser execution remain with the manager; neither was run. Additive
+transport typing: optional deleteCampaign(input) only. No coordinator, codec,
+gameSession, CloudSaveControls or top-bar implementation edits by this worker.
+
+Focused final validation: **6 files / 91 tests PASS**. Final root typecheck:
+**all seven workspaces PASS**, exit 0. Shared full suite is NOT green: final
+run had **265 passed files / 4 failed files; 2,592 passed / 4 failed tests**,
+exit 1. Failures: competitionClient.test.ts (leaderboard method missing in that
+run), ManagementPanel.test.tsx (3 expected tabs / 4 rendered), and Level-4 /
+peri-op Level-3 simulation timeouts. Both timeouts reproduced on one isolated
+two-file rerun (4 tests passed / 2 timed out); limits and assertions were not
+changed. Final root typecheck again passes all seven workspaces, exit 0. Exact
+details/logs are in the plan's section with this same title. The cloud-
+access singleton fixture failure from the initial full run is fixed, with all
+its storage/cohort assertions retained. No unrelated test was weakened.
+
+Evidence: `.local-dev/entry-redesign-revision1-20261025/` contains source
+baselines, actual diff, manifests and raw logs. Manager next: inspect diff and
+SQL, reconcile unrelated concurrent failures, run SQL tests and both cloud e2e
+specs, and take desktop/phone screenshots. LOCAL ONLY: no Git, installs,
+network, agents, owner storage, server changes, deployment or release. Manager
+owns acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+Owner pathways unchanged: START_GAME.cmd -> exact http://127.0.0.1:4173 in the
+usual persistent profile; canonical remote
+https://melissarowlandc-afk.github.io/GamifySurgery/. Their local saves remain
+separate by origin/profile. No owner pathway was opened or substituted.
+
+
+## Pace implementation handoff (2026-10-25)
+
+Bounded Sol worker implemented the two owner-approved pace changes: Level 1 only
+50 +/-12 routine minutes and guided second-visit multiplier 4 capped at effective
+8x (selected 1/2/4 -> effective 4/8/8). Saved deadlines are kept; the new cadence
+applies at the next existing scheduling point. Frozen visits and learning stay
+intact. Zero-failure gate OPEN: domain 4,302 passed/4 timeouts; latest player
+2,600 passed/1 timeout; balance and typecheck pass. Full exact outputs,
+files, every golden/evidence comparison and manager next action are appended in
+[tester pace plan](../execplans/tester-pace-and-tutorial-20261020.md#pace-implementation-handoff-2026-10-25).
+
+The fresh Level 5 run preserves every measured value and all 9 checkpoint bytes;
+three input hashes changed, prior 7 histories retained, eighth appended. Actual
+Level 1 goldens were replayed, retaining prior frozen inputs and after-image.
+Concurrent cloud/account work was preserved. UTF-8/no BOM/LF; no Git, installs,
+network, agents, browser/owner-storage access, served build or publication.
+Opening pathway remains START_GAME.cmd -> http://127.0.0.1:4173 (same origin/
+profile); remote Pages saves remain separate. LOCAL ONLY: manager owns review,
+acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+
+## Integration fixes (2026-10-26)
+
+Bounded Sol worker reconciled the automatic account entry, save-performance and
+Clinic Competition changes against the manager's 19-failed / 37-passed e2e log.
+The fresh-phone empty profile came from QA fixture discovery calling the local
+profile loader at zero requested fixtures. Discovery now leaves absent and
+existing profiles untouched; explicit synthetic fixtures are prepared before
+QA sign-in and never stage an empty profile. The duplicate account disclosure
+was the second AccountMenu in the hidden desktop Help dialog; it is removed.
+The shared collapsed account disclosure retains the competition privacy line,
+clear-device and deletion controls in both shells.
+
+Entry preloads the selected presentation and the existing save worker with an
+empty hash, then enables Resume / Start when startup settles. This addresses
+the sampled cold-start traces while preserving explicit takeover, recovery and
+Save & Close. Both cloud e2e specs, all their assertions and all their timeouts
+are byte-for-byte unchanged. No competition, coordinator, codec, game-session,
+CloudSaveControls, transport typing, SQL, domain, balance or golden edits.
+
+Validation: final player **270 files / 2,614 tests PASS**, exit 0; focused
+**5 files / 110 tests PASS**; root typecheck **all seven workspaces PASS**,
+exit 0. Source passes UTF-8/no-BOM/LF checks. Full changed-file list, causes,
+exact commands, log evidence and next checks are in
+[the cloud plan](../execplans/beta2-cloud-saves-20261017.md#integration-fixes-2026-10-26).
+Ignored evidence: `.local-dev/cloud-integration-fixes-20261026/`.
+
+Manager next: inspect the scoped diff, rerun both cloud e2e specs against the
+fresh disposable QA server and take desktop/phone screenshots. No browser
+execution PASS is claimed by this worker. LOCAL ONLY: no Git, installs,
+network, agents, owner storage, server changes, publication or release.
+Manager owns acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+Owner pathways remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual
+persistent profile, and https://melissarowlandc-afk.github.io/GamifySurgery/;
+their local saves stay separate by origin/profile. No pathway was substituted.

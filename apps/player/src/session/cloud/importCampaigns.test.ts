@@ -3,7 +3,7 @@ import { IDBFactory, IDBKeyRange } from "fake-indexeddb";
 import { accountStorageKey } from "../accountStorageKey";
 import { PROTOTYPE_PROFILE_KEY } from "../prototypeStorage";
 import { IndexedDbCloudEntryStore, MemoryCloudEntryStore } from "./entryStorage";
-import { importLocalCloudCampaign, inspectLocalCloudSources, promoteExistingLocalQuestions } from "./importCampaigns";
+import { AUTOMATIC_ENROLLMENT_KEY, chooseAutomaticCampaignEnrollment, finishAutomaticCampaignEnrollment, importLocalCloudCampaign, inspectLocalCloudSources, prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions } from "./importCampaigns";
 import { FakeCloudServer } from "./fakeTransport";
 import { sha256Utf8 } from "./codecJson";
 import { syncFixture } from "./syncTestSupport";
@@ -126,6 +126,17 @@ describe("explicit local campaign enrollment", () => {
 });
 
 describe("account-scoped durable import storage", () => {
+  it("atomically freezes the first chooser decision across tabs", async () => {
+    vi.stubGlobal("IDBKeyRange", IDBKeyRange);
+    try {
+      const factory = new IDBFactory(), scope = { backendId: "backend", accountId: "account-a" };
+      const first = new IndexedDbCloudEntryStore(scope, factory), second = new IndexedDbCloudEntryStore(scope, factory);
+      const original = { phase: "choose", ids: [] as string[] }; await first.create("choice", original);
+      const results = await Promise.all([first.compareAndSet("choice", original, { phase: "saving", ids: ["first"] }), second.compareAndSet("choice", original, { phase: "saving", ids: ["second"] })]);
+      expect(results[0]).toEqual(results[1]); expect(results[0]!.phase).toBe("saving");
+      expect(await first.compareAndSet("choice", original, { phase: "saving", ids: ["late"] })).toEqual(results[0]);
+    } finally { vi.unstubAllGlobals(); }
+  });
   it("preserves exact UTF-8 source text and atomically shares frozen imports across tabs, with scoped clearing", async () => {
     vi.stubGlobal("IDBKeyRange", IDBKeyRange);
     const factory = new IDBFactory(), scope = { backendId: "backend", accountId: "account-a" };
@@ -138,5 +149,50 @@ describe("account-scoped durable import storage", () => {
     await b.write("raw", { text: "other account" }); await a.clear();
     expect(await tab.entries()).toEqual([]); expect(await b.read("raw")).toEqual({ text: "other account" });
     vi.unstubAllGlobals();
+  });
+});
+
+describe("durable automatic account campaign enrollment", () => {
+  it("freezes the chooser once, imports only selected sources, and keeps omitted originals hidden", async () => {
+    const first = await fixture("first", "First"), second = await fixture("second", "Second"), third = await fixture("third", "Third");
+    const sources = [first.source, second.source, third.source];
+    expect((await prepareAutomaticCampaignEnrollment(sources, [], first.store)).phase).toBe("choose");
+    await chooseAutomaticCampaignEnrollment([second.source.id], 2, first.store);
+    expect((await chooseAutomaticCampaignEnrollment([first.source.id], 2, first.store)).selectedIds).toEqual([second.source.id]);
+    await finishAutomaticCampaignEnrollment(first.transport, first.store);
+    expect((await first.transport.list()).map(row => row.name)).toEqual(["Second"]);
+    expect((await prepareAutomaticCampaignEnrollment(sources, await first.transport.list(), first.store)).phase).toBe("complete");
+    expect(first.storage.values().next().value).toBe(first.raw); expect(third.storage.values().next().value).toBe(third.raw);
+    expect(first.server.calls.filter(call => call.method === "deleteCampaign")).toHaveLength(0);
+  });
+  it("uses only remaining slots and refuses an oversized chooser selection", async () => {
+    const first = await fixture("first", "First"), second = await fixture("second", "Second"), third = await fixture("third", "Third");
+    first.server.seed("account-a", first.confirmed);
+    expect((await prepareAutomaticCampaignEnrollment([second.source, third.source], await first.transport.list(), first.store)).freeSlots).toBe(1);
+    await expect(chooseAutomaticCampaignEnrollment([second.source.id, third.source.id], 1, first.store)).rejects.toMatchObject({ code: "capacity" });
+    expect((await first.store.read<{ phase: string }>(AUTOMATIC_ENROLLMENT_KEY))?.phase).toBe("choose");
+  });
+  it("retains durable decisions after deleting a chosen account campaign, without re-enrolling its original", async () => {
+    const f = await fixture(); await prepareAutomaticCampaignEnrollment([f.source], [], f.store); await finishAutomaticCampaignEnrollment(f.transport, f.store);
+    await f.store.create(`retired:${f.source.campaign.campaignId}`, { revision: "1" });
+    await f.transport.deleteCampaign!({ campaignId: f.source.campaign.campaignId, expectedRevision: "1" });
+    await prepareAutomaticCampaignEnrollment([f.source], [], f.store); await finishAutomaticCampaignEnrollment(f.transport, f.store);
+    expect(await f.transport.list()).toEqual([]); expect(f.storage.values().next().value).toBe(f.raw);
+  });
+  it("names colliding local campaigns uniquely without changing their original names", async () => {
+    const first = await fixture("first", "Same name"), second = await fixture("second", "Same name");
+    await prepareAutomaticCampaignEnrollment([first.source, second.source], [], first.store); await finishAutomaticCampaignEnrollment(first.transport, first.store);
+    expect((await first.transport.list()).map(row => row.name)).toEqual(["Same name", "Same name (2)"]);
+    expect(second.source.campaign.name).toBe("Same name"); expect(second.storage.values().next().value).toBe(second.raw);
+  });
+  it("retries a deliberately created account campaign after its initial import failed", async () => {
+    const f = await fixture(); await prepareAutomaticCampaignEnrollment([], [], f.store);
+    const source = { ...f.source, sourceKey: `created:${f.source.campaign.campaignId}` };
+    await f.store.create(source.sourceKey, source);
+    f.server.faults.push({ method: "importCampaign", at: "after", error: new CloudSyncError("network") });
+    await expect(importLocalCloudCampaign(source, source.campaign.name, f.transport, f.store)).rejects.toMatchObject({ code: "network" });
+    expect((await prepareAutomaticCampaignEnrollment([], await f.transport.list(), f.store)).phase).toBe("saving");
+    await finishAutomaticCampaignEnrollment(f.transport, f.store);
+    expect(f.server.operationCount("account-a")).toBe(1); expect((await f.store.read<{ phase: string }>(AUTOMATIC_ENROLLMENT_KEY))?.phase).toBe("complete");
   });
 });
