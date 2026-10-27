@@ -3885,3 +3885,7 @@ subsequent audited "push to GitHub" checkpoint/reminder. Owner pathways remain
 START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile
 and https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
 by origin/profile. No opening pathway was used or substituted.
+
+### Published (2026-10-27): compact session links
+
+Published acc0d925 (phone Sign out / Save & Close as compact links beside recenter; desktop as footer links). Player 2632 passed; cloud e2e 55/56, with the one failure passing 8/8 on repeat. Pages run 40502090063 succeeded. Withheld: 20261027000100_beta2_default_enabled migration and the `cloud default` tool command. The auto-mode safety check blocked live application without explicit owner confirmation; the manager recommended enabling new testers individually as they sign up (owner decision pending). Cloud enabled: owner, amelia.najor, danielle.hurst, tyler.kowalczyk.

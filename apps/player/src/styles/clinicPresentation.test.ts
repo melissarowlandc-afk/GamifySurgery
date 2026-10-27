@@ -57,6 +57,38 @@ describe("clinic presentation contrast and geometry", () => {
 });
 
 describe("compact Goals and Alerts spacing", () => {
+  const desktopRailCss = css.slice(css.indexOf("/* Goals keep their full content height"), css.indexOf("@media (min-width: 1181px)", css.indexOf("/* Goals keep their full content height")));
+
+  it("keeps desktop goals and their list at content height without clipping or shrinking", () => {
+    expect(css.slice(0, css.indexOf(desktopRailCss)).lastIndexOf("@media (min-width: 761px)")).toBeGreaterThan(css.slice(0, css.indexOf(desktopRailCss)).lastIndexOf("@media (max-width: 760px)"));
+    expect(declarations(".game-shell .operations-column > .goals-panel", desktopRailCss)).toMatchObject({
+      height: "auto", "min-height": "max-content", "max-height": "none", overflow: "visible", flex: "0 0 auto",
+    });
+    expect(declarations(".game-shell .operations-column > .goals-panel .goal-list", desktopRailCss)).toMatchObject({
+      "min-height": "max-content", overflow: "visible", flex: "0 0 auto",
+    });
+    expect(declarations(".game-shell .operations-column > .goals-panel .goal-secondary-label", desktopRailCss)).toMatchObject({
+      overflow: "visible", "white-space": "normal", "overflow-wrap": "anywhere",
+    });
+    expect(declarations(".game-shell .operations-column > .goals-panel .goal-secondary-progress", desktopRailCss)["flex-shrink"]).toBe("0");
+    expect(desktopRailCss).not.toContain(".has-procedure-setup");
+  });
+
+  it("gives desktop Alerts the remaining height and its own scroll surface, with rail overflow as a fallback", () => {
+    expect(declarations(".game-shell .operations-column", desktopRailCss)).toMatchObject({
+      "overflow-x": "hidden", "overflow-y": "auto", "overscroll-behavior": "contain",
+    });
+    expect(declarations(".game-shell .operations-column > .first-shift-goal-note", desktopRailCss).flex).toBe("0 0 auto");
+    expect(declarations(".game-shell .operations-column > .event-message-board", desktopRailCss)).toMatchObject({
+      "min-height": "0", "max-height": "none", flex: "1 1 auto", "overflow-y": "auto", "overflow-anchor": "none",
+    });
+    expect(declarations(".game-shell .operations-column > .event-message-board > .panel-heading", desktopRailCss)).toMatchObject({
+      position: "sticky", top: "0",
+    });
+    expect(declarations(".game-shell .operations-column > .event-message-board > .message-board-feed", desktopRailCss).flex).toBe("0 0 auto");
+    expect(desktopRailCss).toMatch(/\.game-shell \.operations-column > \.event-message-board > \.message-board-feed\s*\{\s*overflow: visible;/);
+  });
+
   it("packs every level's goal rows to their content without shrinking labels, progress or the optional chip", () => {
     expect(declarations(".goals-panel.panel", goalsCss)).toMatchObject({
       "--goal-row-gap": "3px", "--goal-inset-block": "4px", "--goal-inset-inline": "6px",

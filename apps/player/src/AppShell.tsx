@@ -1088,6 +1088,7 @@ export function AppShell({
               onNeedAction={(item) => runClinicAction(item.id, item.action)}
               onAction={(id, target) => { const item = clinicFeed.find((candidate) => candidate.id === id); if (item?.action) runClinicAction(id, item.action); else handleMessageAction(id, target); }}
               mode="ticker"
+              scrollWholePanel
               maximumVisibleItems={7}
             />
         </aside>

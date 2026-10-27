@@ -27,6 +27,8 @@ interface EventMessageBoardProps {
   onNeedAction?: (item: NeedsYouItemView) => void;
   failures?: Readonly<Record<string, string>>;
   compact?: boolean;
+  /** Desktop rail: scroll urgent cards and history together in the panel. */
+  scrollWholePanel?: boolean;
 }
 
 interface FeedScrollSnapshot {
@@ -89,8 +91,12 @@ export function EventMessageBoard({
   onNeedAction,
   failures,
   compact = false,
+  scrollWholePanel = false,
 }: EventMessageBoardProps) {
-  const feedRef = useRef<HTMLDivElement | null>(null);
+  const feedRef = useRef<HTMLElement | null>(null);
+  const setScrollContainer = useCallback((element: HTMLElement | null) => {
+    feedRef.current = element;
+  }, []);
   // Seed every supplied ID, including rows outside the current display cap.
   // A remount therefore treats restored history as history rather than news.
   const knownIdsRef = useRef(new Set(items.map((item) => item.id)));
@@ -302,6 +308,9 @@ export function EventMessageBoard({
     <aside
       className={`panel event-message-board is-${mode}${compact ? " is-build-tray" : ""}`}
       aria-labelledby="event-board-title"
+      ref={scrollWholePanel ? setScrollContainer : undefined}
+      onScroll={scrollWholePanel ? handleFeedScroll : undefined}
+      tabIndex={scrollWholePanel ? 0 : undefined}
     >
       <div className="panel-heading">
         <span id="event-board-title">
@@ -323,13 +332,13 @@ export function EventMessageBoard({
       <NeedsYouTray items={needsYou} onAction={onNeedAction} failures={failures} compact={compact} />
       <div className="clinic-zone-label clinic-feed-label" hidden={compact}><span>Around the clinic</span><small>Newest first</small></div>
       <div
-        ref={feedRef}
+        ref={scrollWholePanel ? undefined : setScrollContainer}
         className="message-board-feed"
         role="log"
-        tabIndex={0}
+        tabIndex={scrollWholePanel ? undefined : 0}
         aria-live="polite"
         aria-relevant="additions"
-        onScroll={handleFeedScroll}
+        onScroll={scrollWholePanel ? undefined : handleFeedScroll}
         hidden={compact}
       >
         {listItems.length === 0 ? (

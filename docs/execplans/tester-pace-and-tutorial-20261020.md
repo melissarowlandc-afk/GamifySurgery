@@ -399,3 +399,132 @@ Owned runtime files: `packages/balance-config/src/{schema,prototype-balance}.ts`
 Review evidence in ignored `.local-dev/pace-implementation-20261025/`: filesystem baseline/hashes, `review.diff`, `final-audit.json`, `evidence-delta.json`, `supply-golden-delta.json`, the exact generator/validation logs and metadata finalization checks. The unchanged Level 5 driver/helper/guard and protected clinical sources are explicitly audited. All delivered changed files are UTF-8 without BOM and LF.
 
 Manager next: inspect the actual scoped diff and logs. **Do not accept the zero-failure gate until the exact required domain and player commands complete cleanly.** Serialize CPU-heavy validation and rerun with the existing preload, unchanged assertions and limits. This worker did not stop or alter other jobs. A coordination request was raised after native samples continued to show CPU-active Node jobs starting in the shared workspace. Their presence is observed context; a causal explanation for the timeouts has not been proven. No opening pathway changed: `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the intended persistent profile (`location.origin = http://127.0.0.1:4173`); canonical remote `https://melissarowlandc-afk.github.io/GamifySurgery/` remains separate storage. This worker did not start/rebuild a served game or open owner saves. **LOCAL ONLY checkpoint:** manager owns acceptance and the audited **"push to GitHub"** reminder/backup. No worker GitHub backup, commit, push, deployment or publication exists for this milestone.
+
+## Tester feedback (2026-10-27, Danielle via owner): desktop goals squished
+
+Danielle (desktop) said the level objectives were getting squished, so she couldn't read them. The goals panel in the desktop right rail is non-scrolling by design. Fix direction: the goals panel always shows every goal in full; the Alerts & Events panel below takes the remaining height and scrolls. Verify at 1280x720, 1366x768, 1440x900, 1536x864 and 1920x1080, at levels with the most goals.
+
+
+## Desktop goals layout handoff (2026-10-27)
+
+**Milestone:** Danielle's desktop goals readability fix. The assigned Sol worker
+completed the desktop rail implementation and offline validation. Manager browser
+acceptance remains outstanding. This work used no Git, installs, network,
+sub-agents, browser automation, running game server, or owner save storage.
+
+### Cause and resulting layout
+
+The desktop goals panel had a `max-height: min(34%, 330px)` cap (60% / 520 px
+with setup expanded), `flex: 0 1 auto`, and a shrinking, internally scrolling
+list. Alerts also reserved a 140 px minimum. The competing height constraints
+could compress or hide the goals.
+
+In the existing `min-width: 761px` desktop rule, Goals and its list now use
+`flex: 0 0 auto`, `min-height: max-content`, visible overflow and no height cap.
+Labels, progress and the optional goal stay readable; optional labels may wrap.
+Expanded procedure setup grows the same panel. The Level 0 explanatory note
+also cannot shrink. The rail allows vertical scrolling when its content cannot
+fit, preserving the complete goals at exceptionally short heights.
+
+Alerts & Events uses `flex: 1 1 auto`, `min-height: 0`, no maximum height and its
+own vertical scroll surface. Its heading stays sticky, while urgent cards and
+event history scroll together. `AppShell` opts into the new `scrollWholePanel`
+mode on `EventMessageBoard`; the existing anchor preservation, new-message
+count and Jump to newest handlers use that actual scroll surface. The default
+component behavior remains the existing feed-only scroll mode. Phone source,
+phone presentation rules, game-domain and balance content were not edited.
+The left rail and center column implementation is unchanged.
+
+### Changed files and review evidence
+
+- `apps/player/src/styles/global.css`: desktop rail sizing and overflow rules.
+- `apps/player/src/AppShell.tsx`: opt the desktop alerts panel into whole-panel scrolling.
+- `apps/player/src/ui/EventMessageBoard.tsx`: select the actual scroll ref, scroll handler and keyboard focus target by the desktop opt-in.
+- `apps/player/src/styles/clinicPresentation.test.ts`: two layout regression cases for goals, alerts and fallback rail scrolling.
+- `apps/player/src/ui/EventMessageBoard.scrolling.test.tsx` (new): two functional cases covering both scroll modes, preserving a surviving history row after insertion, and Jump to newest targeting the active container.
+- `tests/e2e/edge-anchored-layout.spec.ts`: Level 0 and Level 4/5 text geometry, viewport containment and independent scrolling assertions; screenshots and tiny-height fallback coverage.
+- This plan and `docs/handoffs/CURRENT_THREAD_HANDOFF.md`: appended handoff records.
+
+Before-images, a filesystem-based unified diff (no Git), source hashes and logs
+are in ignored `.local-dev/desktop-goals-20261027/`. The final audit checks all
+246 baseline files under `apps/player/src/mobile`, `packages/game-domain/src`
+and `packages/balance-config/src` for byte equality. Source edits are UTF-8,
+without BOM, with LF line endings. No clinical teaching, source corpus,
+progression rules, saves, fixture data or clinical approval state changed.
+
+### Validation and actual output
+
+The first direct focused Vitest command failed before collecting tests because
+Vite's Windows `net use` probe throws synchronous `spawn EPERM` in this sandbox.
+Validation then used the existing narrowly scoped preload, which preserves
+Vite's documented local-path fallback for only that probe. No test configuration,
+timeout, assertion, exclusion or retry was changed. The first functional test
+attempt exposed missing `dataset` support in the minimal DOM harness; the test
+now supplies the data attributes it measures. That failed run is retained in
+`focused.log`; subsequent focused and full runs pass.
+
+```powershell
+$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/styles/clinicPresentation.test.ts src/ui/EventMessageBoard.test.tsx src/ui/EventMessageBoard.scrolling.test.tsx src/ui/GoalsPanel.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/desktop-goals-20261027/e2e-tsconfig.json
+```
+
+Focused, exit **0** ([log](../../.local-dev/desktop-goals-20261027/focused-final.log)):
+
+```text
+Test Files  4 passed (4)
+     Tests  30 passed (30)
+  Duration  2.01s
+```
+
+Full requested player command, exit **0** ([log](../../.local-dev/desktop-goals-20261027/player-full.log)):
+
+```text
+Test Files  273 passed (273)
+     Tests  2636 passed (2636)
+  Duration  146.61s (transform 15.10s, setup 0ms, import 164.27s, tests 386.59s, environment 19ms)
+```
+
+Root `npm.cmd run typecheck`, exit **0**: all seven workspaces pass
+([complete output](../../.local-dev/desktop-goals-20261027/typecheck.log)).
+The isolated TypeScript check of the modified e2e spec and its imports also exits
+**0**, with no diagnostics ([log](../../.local-dev/desktop-goals-20261027/e2e-typecheck.log)).
+The temporary e2e tsconfig is evidence-only; repository configuration is unchanged.
+Player implementation did not change after its full passing validation.
+
+### Manager next action and acceptance limits
+
+Inspect the actual scoped diff and rerun the browser spec. **No Playwright run,
+screenshot review, or browser layout PASS is claimed by this worker.** The new
+Level 4 (`?level5=l4-ready`, five goals) and Level 5
+(`?level5=goals-unlocked`, three goals plus inspection controls) cases measure
+label and progress text rectangles, content containment and reachability at
+**1280x720, 1366x768, 1440x900, 1536x864 and 1920x1080**. They verify alerts
+scrolling leaves Goals fixed, validate both other columns and map sizing, and
+exercise last-resort rail scrolling at 1280x280. Existing fresh Level 0 desktop
+coverage now checks readable goals too. The existing phone zoom test remains.
+Canvas resize checks poll for matching canvas bitmap and host dimensions.
+
+Use the existing disposable QA server and a Playwright-created disposable
+browser context. For example, with `node tools/qa/level-four-rooms.mjs` already
+serving the QA entry:
+
+```powershell
+$env:GAMIFY_E2E_EXTERNAL_SERVER = '1'
+$env:GAMIFY_E2E_BASE_URL = 'http://127.0.0.1:5184'
+node node_modules/@playwright/test/cli.js test tests/e2e/edge-anchored-layout.spec.ts --project=desktop-chrome
+```
+
+That validation is explicitly disposable QA at `location.origin =
+http://127.0.0.1:5184`, using `/level4-rooms-qa.html?level5=...&layout=desktop`
+for seeded states. It neither moves nor shares owner saves. Owner playtesting
+still uses `START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the intended
+persistent profile. The canonical remote
+`https://melissarowlandc-afk.github.io/GamifySurgery/` retains separate storage.
+No launch pathway, server or existing save was changed by this worker.
+
+**LOCAL ONLY:** manager owns browser acceptance and the audited **"push to
+GitHub"** checkpoint reminder/backup. No commit, push, deployment, publication
+or release was performed or authorized by this worker milestone.

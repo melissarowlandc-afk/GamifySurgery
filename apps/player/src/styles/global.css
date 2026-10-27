@@ -6645,18 +6645,65 @@ body {
     max-height: none;
   }
 
-  .operations-column > .goals-panel {
-    max-height: min(34%, 330px);
-    flex: 0 1 auto;
+  /* Goals keep their full content height; only an exceptionally short rail scrolls. */
+  .game-shell .operations-column {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
-  .operations-column > .goals-panel.has-procedure-setup {
-    max-height: min(60%, 520px);
+  .game-shell .operations-column > .first-shift-goal-note {
+    flex: 0 0 auto;
   }
 
-  .operations-column > .event-message-board {
-    min-height: 140px;
+  .game-shell .operations-column > .goals-panel {
+    height: auto;
+    min-height: max-content;
+    max-height: none;
+    overflow: visible;
+    flex: 0 0 auto;
+  }
+
+  .game-shell .operations-column > .goals-panel .goal-list {
+    min-height: max-content;
+    overflow: visible;
+    flex: 0 0 auto;
+  }
+
+  .game-shell .operations-column > .goals-panel .goal-label,
+  .game-shell .operations-column > .goals-panel .goal-secondary-label {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .game-shell .operations-column > .goals-panel .goal-secondary-progress {
+    flex-shrink: 0;
+  }
+
+  /* One desktop scroll surface keeps urgent cards and event history reachable. */
+  .game-shell .operations-column > .event-message-board {
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+    overflow-anchor: none;
+    overscroll-behavior: contain;
     flex: 1 1 auto;
+  }
+
+  .game-shell .operations-column > .event-message-board > .panel-heading {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+  }
+
+  .game-shell .operations-column > .event-message-board > .clinic-feed-label,
+  .game-shell .operations-column > .event-message-board > .message-board-feed {
+    flex: 0 0 auto;
+  }
+
+  .game-shell .operations-column > .event-message-board > .message-board-feed {
+    overflow: visible;
   }
 }
 

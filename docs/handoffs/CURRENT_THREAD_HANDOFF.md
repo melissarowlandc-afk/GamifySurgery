@@ -7636,3 +7636,37 @@ owns the audited "push to GitHub" checkpoint/reminder. Owner pathways remain
 START_GAME.cmd -> http://127.0.0.1:4173 in the intended persistent profile and
 https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
 by origin/profile. No pathway was used or substituted.
+
+
+## Desktop goals layout handoff (2026-10-27)
+
+Assigned Sol worker removed the desktop Goals height caps and shrinking. Goals
+and its list size to full content; Alerts & Events takes the remaining height
+and scrolls all urgent cards/history internally. The rail can scroll at extreme
+heights. Desktop-only scroll ownership preserves history anchors and Jump to
+newest. Phone source/presentation rules, domain and balance were not changed.
+
+Files: `AppShell.tsx`, `styles/global.css`, `ui/EventMessageBoard.tsx`,
+`styles/clinicPresentation.test.ts`, new `ui/EventMessageBoard.scrolling.test.tsx`
+under `apps/player/src`; `tests/e2e/edge-anchored-layout.spec.ts`; and this plan
+handoff documentation. All 246 protected phone/domain/balance baseline files
+remain byte-identical. Source files are UTF-8/no-BOM/LF.
+
+Validation: focused **4 files / 30 tests PASS**; requested full player **273
+files / 2,636 tests PASS**, exit 0; root typecheck **all seven workspaces PASS**,
+exit 0; isolated e2e spec typecheck exits 0 with no diagnostics. Vitest uses the
+existing narrow Vite `net use` EPERM preload. Before-images, actual scoped diff,
+hashes and complete logs: `.local-dev/desktop-goals-20261027/`.
+
+Manager next: review the diff and run Playwright. Level 4/5 fixtures cover
+1280x720, 1366x768, 1440x900, 1536x864, 1920x1080, plus the short-rail fallback;
+fresh Level 0 coverage also measures readable goal text. No browser PASS or
+screenshot review is claimed. Exact commands, changed files, causes and limits:
+[Desktop goals layout handoff](../execplans/tester-pace-and-tutorial-20261020.md#desktop-goals-layout-handoff-2026-10-27).
+
+LOCAL ONLY: no Git, installs, network, agents, browser/server/storage changes,
+deployment or publication. Manager owns acceptance and the audited "push to
+GitHub" checkpoint/reminder. Future browser validation uses disposable 5184 QA
+storage. Owner pathway remains START_GAME.cmd -> exact http://127.0.0.1:4173
+in the intended persistent profile; the canonical GitHub Pages origin remains
+separate storage. No pathway was substituted by this worker.
