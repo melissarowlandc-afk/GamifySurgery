@@ -104,8 +104,8 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
   if (await resumeCampaign.isVisible()) await resumeCampaign.click();
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
-  await expect(page.locator(".goal-list")).toContainText("Build Ultrasound Room");
-  await expect(page.locator(".goal-list")).not.toContainText("X-ray");
+  await expect(page.locator(".compact-goals")).toContainText("Build Ultrasound Room");
+  await expect(page.locator(".compact-goals")).not.toContainText("X-ray");
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
   const ultrasound = page.getByRole("button", { name: /Ultrasound Room/ });
   await expect(ultrasound).toBeVisible();
@@ -134,7 +134,7 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
     [34, 25.5], [34, 26.5], [34, 27.5],
     [37, 25.5], [37, 26.5], [37, 27.5],
     [34.5, 25], [35.5, 25], [36.5, 25],
-  ]) {
+  ] as const) {
     await canvas.click({ position: {
       x: layout.originX + tileX * layout.tileSize,
       y: layout.originY + tileY * layout.tileSize,
@@ -152,7 +152,7 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
   const preparedState = (await getActiveState(page)) as unknown as GameState;
   expect(preparedState.doors.filter((door) => door.roomId === "room.gs020.ultrasound"))
     .toHaveLength(2);
-  await expect(page.locator(".goal-list")).toContainText("Build Ultrasound Room1/1");
+  await expect(page.locator('.goal-row[data-goal-id="progression.room.room.ultrasound"] .goal-progress')).toHaveText("1/1");
   await page.screenshot({ path: `${SHOTS}/gs-020-ultrasound-build-goals.png`, animations: "disabled" });
   await expect(page.getByRole("button", { name: "Advance to Level 2" })).toBeVisible();
   await page.getByRole("button", { name: "Advance to Level 2" }).click();

@@ -528,3 +528,196 @@ No launch pathway, server or existing save was changed by this worker.
 **LOCAL ONLY:** manager owns browser acceptance and the audited **"push to
 GitHub"** checkpoint reminder/backup. No commit, push, deployment, publication
 or release was performed or authorized by this worker milestone.
+
+## Owner decision (2026-10-27): compact goals panel
+
+Owner: the goals take too much vertical space; chose all three manager ideas: (1) one line per goal, with progress right-aligned on the same line; (2) completed goals collapse into one summary line ("✓ N of M done", expandable); (3) shorter goal display names. Interim readable fix published first.
+
+## Compact goals panel handoff (2026-10-27)
+
+**Milestone:** the assigned Sol worker implemented the owner's compact goals
+decision in both desktop and phone presentations. Offline validation passes.
+Manager browser acceptance, screenshots and actual pixel measurements remain
+outstanding. No browser execution or measured height PASS is claimed here.
+
+### Result and session behavior
+
+- Both shells use `ui/GoalList.tsx`: status, short label and right-aligned
+  progress share one grid row. Progress uses tabular numbers and never wraps;
+  labels wrap at their available width without truncation or ellipsis.
+- Incomplete required goals remain individually listed. Completed required
+  goals sit behind a native button reading `✓ N of M done`, with
+  `aria-expanded`, `aria-controls` and a hidden completed list. Optional goals
+  do not enter that count. All-complete levels show the summary and their
+  existing Advance/inspection controls; optional Quality review stays a chip.
+- Expansion is remembered in tab-scoped `sessionStorage`, under
+  `gamify-surgery.goals.completed-expanded`, with an in-memory fallback when
+  storage is unavailable. Closing/reopening the phone sheet, changing shells
+  or levels retains the preference. Campaign/profile serialization is untouched.
+- `ProgressionGoalView.label` and `progressLabel` retain the full text.
+  `displayLabel` and optional `displayProgressLabel` are player-only fields.
+  Full names are native title tooltips and `aria-describedby` descriptions on
+  focusable labels. Level 5 retains its full progress/workforce context in the
+  description/title while displaying compact numeric progress.
+- Phone setup checklists now use native, initially closed `details` so the
+  goal starts compact. Their summaries and action buttons retain 44 px targets.
+  Checklist items explicitly remain blocks rather than inheriting desktop list
+  flex styling. Existing Build/Hire callbacks and all setup guidance remain.
+- The prior readable desktop rail rules and all Alerts scroll ownership are
+  preserved byte-for-byte in `styles/global.css`, `AppShell.tsx` and
+  `ui/EventMessageBoard.tsx`: Goals cannot shrink; Alerts takes the remaining
+  height and scrolls; the rail can scroll at extreme heights.
+- Tutorial/coach references were checked in player tutorial projection and
+  domain progression guidance. The short names retain the referenced room,
+  procedure, visit, XP and morale meanings; no tutorial or domain text needed
+  editing.
+
+### Full display-label inventory
+
+Every live Level 0–5 label below is at most 28 characters. Full names remain
+available as described above. Matching uses the full player label, with a
+full-name fallback for future/unrecognized objectives rather than truncation.
+
+| Level(s) | Full name | Player display label |
+| --- | --- | --- |
+| 0–4 | Clinical XP | Clinical XP |
+| 0–5 | Satisfaction above 90% | Satisfaction above 90% |
+| 0 | Build Examination Room | Build Examination Room |
+| 0, alternate graduation goal | Complete both tutorial patients | Both tutorial patients |
+| 1 | Build Ultrasound Room | Build Ultrasound Room |
+| 1 | Build Minor-Procedure Room | Build Minor-Procedure Room |
+| 1 | Hire Imaging Technician | Hire Imaging Technician |
+| 2 | Complete your first endoscopy | First endoscopy |
+| 3 | Hire Pharmacist | Hire Pharmacist |
+| 3 | Complete your first ambulatory operation | First ambulatory operation |
+| 4 | Keep an APP assigned to an operational room | APP in an operating room |
+| 4 | Complete a pediatric visit with its parent | Pediatric visit with parent |
+| 4 | Complete a wound/ostomy care visit | Wound/ostomy visit |
+| 5 | Current-level Clinical XP | Current-level Clinical XP |
+| 5 | Average staff morale at least 85 | Average staff morale ≥85 |
+| 3–5, optional | Complete the first administrative quality review | Quality review |
+
+The generic/legacy `Completed patients` label, if present, also remains
+`Completed patients`. Level 5 full player XP wording predates this change;
+its domain requirement still says `Clinical XP`. Level 5 visible progress is
+`current/2,000` for XP, `current%` for satisfaction, and `current/85` for morale
+(or `No staff`); full progress wording and its existing floor/precision behavior
+remain unchanged in `progressLabel`.
+
+### Files changed and preservation evidence
+
+Under `apps/player/src`:
+
+- New `ui/GoalList.tsx`, `ui/goalList.css`, `ui/GoalList.test.tsx`.
+- New `session/goalDisplayLabels.ts`, `session/goalDisplayLabels.test.tsx`.
+- `ui/GoalsPanel.tsx`, `ui/goalsPanel.css`, `ui/types.ts`,
+  `ui/GoalsPanel.test.tsx`.
+- `mobile/MobileGoals.tsx`, `mobile/mobileScreens.css`,
+  `mobile/MobileScreens.test.tsx`, `mobile/levelFiveGoals.test.tsx`.
+- `session/viewModels.ts`, `session/levelFiveProgressionView.ts`,
+  `styles/clinicPresentation.test.ts`.
+
+Related browser specs:
+
+- `tests/e2e/edge-anchored-layout.spec.ts`: compact structure, disclosure
+  keyboard controls, full descriptions, same-line/right-aligned/tabular progress,
+  height comparison, expanded/collapsed screenshots, phone widths and reopening.
+- `tests/e2e/level-three-goals.spec.ts` and
+  `tests/e2e/endoscopy-goal-setup.spec.ts`: explicitly reveal completed goals
+  before interacting with their setup controls; update direct-child selectors.
+- `tests/e2e/ultrasound-first-imaging.spec.ts`: avoid assuming a single list and
+  address the stable goal ID/progress directly. Its existing coordinate tuple
+  loop also gains `as const` to satisfy the isolated strict TypeScript check;
+  coordinate values and behavior are unchanged.
+
+This plan and `docs/handoffs/CURRENT_THREAD_HANDOFF.md` append worker handoffs.
+Before-images, the actual filesystem-based unified diff, SHA-256 manifest and
+logs are in ignored `.local-dev/compact-goals-20261027/`. The source audit
+confirms all **138** baseline files in `packages/game-domain/src` and
+`packages/balance-config/src` remain byte-identical. Changed source passes
+UTF-8/no-BOM/LF checks. No clinical content, progression requirements, domain
+IDs/hashes, balance, evidence fixtures, frozen encounters or saves were edited.
+Unrelated source remains preserved relative to this worker's filesystem baseline.
+
+### Validation and exact output
+
+Use the existing narrow sandbox-only preload for Vite's Windows `net use`
+`spawn EPERM` probe, as documented in the preceding handoff. No configuration,
+timeouts, exclusions or retries were altered. Initial focused failures were an
+unclosed mapping wrapper (corrected by sharing the two identical goal
+projections), two guessed room display names in the new test (corrected to the
+actual names), and the former phone no-tooltip assertion (updated for the shared
+accessible optional chip). Failed logs are retained. No failing test is skipped.
+
+```powershell
+$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/ui/GoalsPanel.test.tsx src/ui/GoalList.test.tsx src/session/goalDisplayLabels.test.tsx src/mobile/MobileScreens.test.tsx src/mobile/levelFiveGoals.test.tsx src/session/levelFiveProgressionViews.test.tsx src/styles/clinicPresentation.test.ts
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/compact-goals-20261027/e2e-tsconfig.json
+python .local-dev/compact-goals-20261027/audit.py
+```
+
+Full requested player suite: **exit 0**, [player-full.log](../../.local-dev/compact-goals-20261027/player-full.log):
+
+```text
+Test Files  275 passed (275)
+     Tests  2657 passed (2657)
+  Duration  146.59s (transform 16.82s, setup 0ms, import 167.49s, tests 386.20s, environment 19ms)
+```
+
+Root typecheck: **exit 0**, all seven workspaces pass
+([typecheck.log](../../.local-dev/compact-goals-20261027/typecheck.log)).
+
+Final focused suite: **exit 0**, **7 files / 65 tests PASS**
+([focused-final.log](../../.local-dev/compact-goals-20261027/focused-final.log)).
+This final focused run follows the final phone checklist CSS correction and
+desktop JSX indentation cleanup. The full suite preceded those CSS/whitespace
+changes; no runtime logic changed afterward.
+
+All four modified e2e specs and their imports pass the isolated strict TypeScript
+check: **exit 0**, no diagnostics
+([e2e-typecheck.log](../../.local-dev/compact-goals-20261027/e2e-typecheck.log)).
+The evidence-only tsconfig does not change repository configuration.
+
+### Manager next action: actual browser measurements and acceptance
+
+Inspect the actual diff and run Playwright in the manager environment. With the
+existing disposable QA server already serving on 5184:
+
+```powershell
+$env:GAMIFY_E2E_EXTERNAL_SERVER = '1'
+$env:GAMIFY_E2E_BASE_URL = 'http://127.0.0.1:5184'
+node node_modules/@playwright/test/cli.js test tests/e2e/edge-anchored-layout.spec.ts --project=desktop-chrome --project=phone-chrome
+```
+
+Desktop cases cover Level 4 `l4-ready` (5/5), Level 4 `launch-unmet` (4/5), and
+Level 5 `goals-unlocked` (3/3), collapsed and expanded at **1280×720,
+1366×768, 1440×900, 1536×864 and 1920×1080**, plus the expanded tiny-height rail
+fallback. Phone checks **320×568, 390×844 and 393×851**, 44 px disclosure targets,
+accessible full names, optional chips and remembering expansion on reopening.
+Also inspect Level 2/3 phone setup details and rerun the related goal specs.
+
+**Pixel report is pending the manager's Playwright run.** At 1280×720, each Level
+4 case reconstructs the pre-compaction DOM (full labels, stacked progress, every
+goal listed) in an inert offscreen clone in the same rail, with the same loaded
+fonts and unchanged global CSS. It removes that clone after measuring. This is
+test-only baseline reconstruction, not a run of an earlier build. The spec
+asserts that both collapsed and expanded compact panels are shorter, logs
+`before ...px, after ...px (...px expanded); reduction ...px`, and attaches JSON
+named `level-4-goals-height-1280x720-<scenario>` with `beforePx`, `afterPx`,
+`expandedPx` and `reductionPx`. Manager must report these actual numbers and
+review the generated expanded/collapsed desktop and phone screenshots before
+acceptance. No pixel values have been invented or reported as measured here.
+
+This future browser check uses a disposable Playwright context at
+`location.origin = http://127.0.0.1:5184`; it does not share owner saves.
+Owner playtesting remains `START_GAME.cmd` → exact `http://127.0.0.1:4173` in
+the intended persistent profile. The canonical remote
+`https://melissarowlandc-afk.github.io/GamifySurgery/` retains separate storage.
+No server, launcher, profile, origin, owner storage or playtest pathway was used
+or substituted by this worker.
+
+**LOCAL ONLY:** no Git, installs, network, sub-agents, external messages,
+browser/server execution, deployment or publication. Manager owns acceptance
+and the audited **"push to GitHub"** checkpoint/reminder after acceptance.

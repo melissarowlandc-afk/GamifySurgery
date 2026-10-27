@@ -131,16 +131,15 @@ function assertDesktopLayout(metrics: LayoutMetrics): void {
 
 async function assertReadableGoals(page: Page, expectedCount: number): Promise<void> {
   const panel = page.locator(".operations-column > .goals-panel");
-  const rows = panel.locator(":scope > .goal-list > li");
+  const rows = panel.locator(".goal-row:visible");
   await expect(rows).toHaveCount(expectedCount);
   await expect(panel).toHaveCSS("flex-shrink", "0");
   await expect(panel).toHaveCSS("max-height", "none");
-  await expect(panel.locator(":scope > .goal-list")).toHaveCSS("flex-shrink", "0");
+  for (const list of await panel.locator(".goal-list:visible").all()) await expect(list).toHaveCSS("flex-shrink", "0");
   const measurements = await panel.evaluate(element => {
     const panel = element as HTMLElement;
-    const list = panel.querySelector<HTMLElement>(".goal-list")!;
+    const lists = [...panel.querySelectorAll<HTMLElement>(".goal-list")].filter(list => !list.hidden);
     const panelBounds = panel.getBoundingClientRect();
-    const listBounds = list.getBoundingClientRect();
     const textFits = (node: HTMLElement) => {
       const bounds = node.getBoundingClientRect();
       const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
@@ -157,20 +156,31 @@ async function assertReadableGoals(page: Page, expectedCount: number): Promise<v
     };
     return {
       panelFitsContent: panel.scrollHeight <= panel.clientHeight + 1,
-      listFitsContent: list.scrollHeight <= list.clientHeight + 1,
+      listFitsContent: lists.every(list => list.scrollHeight <= list.clientHeight + 1),
       panelScrollTop: panel.scrollTop,
-      listScrollTop: list.scrollTop,
-      rows: [...list.children].map(row => {
+      listScrollTops: lists.map(list => list.scrollTop),
+      rows: lists.flatMap(list => [...list.children].map(row => {
+        const listBounds = list.getBoundingClientRect();
         const bounds = row.getBoundingClientRect();
         const label = row.querySelector<HTMLElement>(".goal-label")!;
-        const progress = label.querySelector<HTMLElement>("small")!;
+        const progress = row.querySelector<HTMLElement>(".goal-progress")!;
+        const labelRange = document.createRange(); labelRange.selectNodeContents(label);
+        const progressRange = document.createRange(); progressRange.selectNodeContents(progress);
+        const labelLines = [...labelRange.getClientRects()];
+        const progressBounds = progressRange.getBoundingClientRect();
         return {
           text: label.textContent,
           labelFits: textFits(label), progressFits: textFits(progress),
+          labelLines: labelLines.length,
+          sameLine: Boolean(labelLines[0] && progressBounds.top < labelLines[0].bottom + 1 && progressBounds.bottom > labelLines[0].top - 1),
+          tabularProgress: getComputedStyle(progress).fontVariantNumeric.includes("tabular-nums"),
+          rightAligned: Math.abs(progress.getBoundingClientRect().right - row.querySelector(".goal-line")!.getBoundingClientRect().right) <= 1,
+          fullName: label.title,
+          description: document.getElementById(label.getAttribute("aria-describedby")!)?.textContent,
           insideList: bounds.top >= listBounds.top - 1 && bounds.bottom <= listBounds.bottom + 1,
           insidePanel: bounds.top >= panelBounds.top - 1 && bounds.bottom <= panelBounds.bottom + 1,
         };
-      }),
+      })),
       optionalGoals: [...panel.querySelectorAll<HTMLElement>(".goal-secondary-chip")].map(chip => {
         const bounds = chip.getBoundingClientRect();
         const label = chip.querySelector<HTMLElement>(".goal-secondary-label")!;
@@ -185,15 +195,16 @@ async function assertReadableGoals(page: Page, expectedCount: number): Promise<v
   expect(measurements.panelFitsContent, JSON.stringify(measurements)).toBe(true);
   expect(measurements.listFitsContent, JSON.stringify(measurements)).toBe(true);
   expect(measurements.panelScrollTop).toBe(0);
-  expect(measurements.listScrollTop).toBe(0);
+  expect(measurements.listScrollTops.every(top => top === 0)).toBe(true);
   for (const row of measurements.rows) {
-    expect(row, row.text ?? "Goal").toMatchObject({ labelFits: true, progressFits: true, insideList: true, insidePanel: true });
+    expect(row, row.text ?? "Goal").toMatchObject({ labelFits: true, progressFits: true, insideList: true, insidePanel: true, sameLine: true, rightAligned: true, tabularProgress: true });
+    expect(row.description).toContain(row.fullName);
   }
   for (const goal of measurements.optionalGoals) {
     expect(goal, goal.text ?? "Optional goal").toMatchObject({ labelFits: true, progressFits: true, insidePanel: true });
   }
   // When the content exceeds even the entire rail, each full row stays reachable there.
-  for (const row of await panel.locator(":scope > .goal-list > li, .goal-secondary-chip").all()) {
+  for (const row of await panel.locator(".goal-row:visible, .goal-secondary-chip").all()) {
     await row.scrollIntoViewIfNeeded();
     expect(await row.evaluate(element => {
       const label = element.getBoundingClientRect();
@@ -202,6 +213,33 @@ async function assertReadableGoals(page: Page, expectedCount: number): Promise<v
     })).toBe(true);
   }
   await page.locator(".operations-column").evaluate(element => { element.scrollTop = 0; });
+}
+
+/** Test-only reconstruction of the prior Level 4 panel: full labels and stacked
+ * progress, every required goal listed. Global rail/typography CSS is unchanged;
+ * these are the original classes and DOM, without the new compact-goals wrapper.
+ * Measure in the same rail at the same width/font, then remove the inert clone. */
+async function measurePreviousLevelFourPanel(page: Page): Promise<number> {
+  return page.locator(".operations-column > .goals-panel").evaluate(source => {
+    const previous = source.cloneNode(true) as HTMLElement;
+    previous.inert = true;
+    previous.setAttribute("aria-hidden", "true");
+    previous.style.cssText = `position:fixed;left:-10000px;top:0;width:${source.getBoundingClientRect().width}px;visibility:hidden;margin:0`;
+    for (const node of previous.querySelectorAll("[id]")) node.removeAttribute("id");
+    const list = document.createElement("ul"); list.className = "goal-list";
+    for (const goal of source.querySelectorAll<HTMLElement>(".goal-row")) {
+      const row = document.createElement("li"); row.className = goal.classList.contains("is-complete") ? "is-complete" : "";
+      const icon = document.createElement("span"); icon.textContent = row.className ? "■" : "□"; icon.setAttribute("aria-hidden", "true");
+      const content = document.createElement("div"); content.className = "goal-content";
+      const label = document.createElement("span"); label.className = "goal-label"; label.textContent = goal.querySelector<HTMLElement>(".goal-label")!.title;
+      const progress = document.createElement("small"); progress.textContent = goal.querySelector<HTMLElement>(".goal-progress")!.title;
+      label.append(progress); content.append(label); row.append(icon, content); list.append(row);
+    }
+    previous.querySelector(".compact-goals")!.replaceWith(list);
+    source.parentElement!.append(previous);
+    try { return previous.getBoundingClientRect().height; }
+    finally { previous.remove(); }
+  });
 }
 
 test.beforeAll(() => mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true }));
@@ -224,7 +262,7 @@ test("anchors desktop rails to viewport edges and gives all extra width to the c
   expect(zoomHitTarget).toBe(true);
 
   const metricsByViewport: LayoutMetrics[] = [];
-  const introductoryGoalCount = await page.locator(".goals-panel > .goal-list > li").count();
+  const introductoryGoalCount = await page.locator(".goals-panel .goal-row:visible").count();
   expect(introductoryGoalCount).toBeGreaterThan(0);
   for (const viewport of desktopViewports) {
     await page.setViewportSize(viewport);
@@ -291,22 +329,49 @@ test.describe("desktop goals in the disposable Level 4/5 QA shell", () => {
     { width: 1920, height: 1080 },
   ];
   for (const scenario of [
-    { id: "l4-ready", level: 4, count: 5 },
-    { id: "goals-unlocked", level: 5, count: 3 },
+    { id: "l4-ready", level: 4, count: 5, completed: 5, campaign: "Level 5 M6 goals" },
+    { id: "launch-unmet", level: 4, count: 5, completed: 4, campaign: "Level 5 M10 ordinary launch" },
+    { id: "goals-unlocked", level: 5, count: 3, completed: 3, campaign: "Level 5 M6 goals" },
   ]) {
-    test(`Level ${scenario.level} goals stay readable while Alerts scrolls independently`, async ({ page }, testInfo) => {
+    test(`Level ${scenario.level} compact goals (${scenario.id}) stay readable while Alerts scrolls independently`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name !== "desktop-chrome", "One controlled desktop browser checks every desktop viewport.");
       await installRememberedLocalAccess(page);
       await page.goto(`${qaOrigin}/level4-rooms-qa.html?level5=${scenario.id}&layout=desktop`);
       expect(await page.evaluate(() => location.origin)).toBe(qaOrigin);
-      await page.getByRole("button", { name: `Resume Level 5 M6 goals (${scenario.id})`, exact: true }).click();
+      await page.getByRole("button", { name: `Resume ${scenario.campaign} (${scenario.id})`, exact: true }).click();
       await expect(page.getByTestId("facility-canvas")).toBeVisible();
       await expect(page.locator(".goals-panel > .panel-heading")).toContainText(`Level ${scenario.level} goals`);
       await page.evaluate(() => document.fonts.ready);
+      const panel = page.locator(".operations-column > .goals-panel");
+      const toggle = panel.getByRole("button", { name: `✓ ${scenario.completed} of ${scenario.count} done` });
+      await expect(panel.locator(".goal-row")).toHaveCount(scenario.count);
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
       for (const viewport of goalViewports) {
         await page.setViewportSize(viewport);
         assertDesktopLayout(await readMetrics(page));
+        await assertReadableGoals(page, scenario.count - scenario.completed);
+        await expect(panel.locator(".completed-goal-list")).toBeHidden();
+        const beforePx = scenario.level === 4 && viewport.width === 1280 ? await measurePreviousLevelFourPanel(page) : undefined;
+        const afterPx = (await panel.boundingBox())!.height;
+        // The native button must respond to both keyboard activation keys.
+        await toggle.focus(); await page.keyboard.press("Enter");
+        await expect(toggle).toHaveAttribute("aria-expanded", "true");
         await assertReadableGoals(page, scenario.count);
+        if (beforePx !== undefined) {
+          const expandedPx = (await panel.boundingBox())!.height;
+          expect(beforePx).toBeGreaterThan(afterPx);
+          expect(beforePx).toBeGreaterThan(expandedPx);
+          const report = {
+            viewport, scenario: scenario.id, beforePx, afterPx, expandedPx, reductionPx: beforePx - afterPx,
+            baseline: "Prior full-label, stacked-progress DOM reconstructed in the same rail with unchanged global CSS and loaded fonts",
+          };
+          await testInfo.attach(`level-4-goals-height-1280x720-${scenario.id}`, { body: JSON.stringify(report, null, 2), contentType: "application/json" });
+          console.info(`Level 4 goals (${scenario.id}) at 1280x720: before ${beforePx}px, after ${afterPx}px (${expandedPx}px expanded); reduction ${report.reductionPx}px.`);
+        }
+        await page.screenshot({ path: testInfo.outputPath(`goals-level-${scenario.level}-${scenario.id}-${viewport.width}x${viewport.height}-expanded.png`), animations: "disabled" });
+        await toggle.focus(); await page.keyboard.press("Space");
+        await expect(toggle).toHaveAttribute("aria-expanded", "false");
+        if (scenario.id === "l4-ready") await expect(panel.getByRole("button", { name: "Advance to Level 5" })).toBeVisible();
         const alerts = page.locator(".operations-column > .event-message-board");
         await expect(alerts).toHaveCSS("min-height", "0px");
         await expect(alerts).toHaveCSS("flex-grow", "1");
@@ -331,20 +396,59 @@ test.describe("desktop goals in the disposable Level 4/5 QA shell", () => {
         expect(await page.locator(".operations-column").evaluate(element => element.scrollTop)).toBe(0);
         expect(await page.locator(".goals-panel").boundingBox()).toEqual(goalsBefore);
         await alerts.evaluate(element => { element.scrollTop = 0; });
-        await page.screenshot({ path: testInfo.outputPath(`goals-level-${scenario.level}-${viewport.width}x${viewport.height}.png`), animations: "disabled" });
+        await page.screenshot({ path: testInfo.outputPath(`goals-level-${scenario.level}-${scenario.id}-${viewport.width}x${viewport.height}-collapsed.png`), animations: "disabled" });
       }
       // Deliberately shorter than the content: only the rail may scroll the goals.
       await page.setViewportSize({ width: 1280, height: 280 });
+      // Some QA saves restore an open chart sheet, which overlays the rail at this height.
+      if (await page.locator("aside.chart-sheet").count()) await page.keyboard.press("Escape");
+      await toggle.click();
       await assertReadableGoals(page, scenario.count);
       const rail = page.locator(".operations-column");
       expect(await rail.evaluate(element => element.scrollHeight > element.clientHeight)).toBe(true);
-      const lastGoal = rail.locator(".goal-list > li").last();
+      const lastGoal = rail.locator(".goal-row:visible").last();
       await lastGoal.scrollIntoViewIfNeeded();
       // Either the rail or the page may scroll at this extreme height; the
       // requirement is that the final goal becomes fully visible, unclipped.
       await expect(lastGoal).toBeInViewport({ ratio: 1 });
     });
   }
+
+  test("phone goals use compact rows, 44px disclosures and remember expansion after reopening", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "phone-chrome", "The manager checks the phone shell with the Pixel 7 project.");
+    await installRememberedLocalAccess(page);
+    await page.goto(`${qaOrigin}/level4-rooms-qa.html?level5=launch-unmet&layout=phone`);
+    expect(await page.evaluate(() => location.origin)).toBe(qaOrigin);
+    await page.getByRole("button", { name: "Resume Level 5 M10 ordinary launch (launch-unmet)", exact: true }).click();
+    await page.locator(".mobile-goals-chip").click();
+    const goals = page.locator(".mobile-goals");
+    const toggle = goals.getByRole("button", { name: "✓ 4 of 5 done" });
+    for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 393, height: 851 }]) {
+      await page.setViewportSize(viewport);
+      await expect(goals.locator(".goal-row:visible")).toHaveCount(1);
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      expect((await toggle.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const row = goals.locator(".goal-row:visible");
+      await expect(row.locator(".goal-label")).toHaveText("Clinical XP");
+      await expect(row.locator(".goal-progress")).toHaveText("749/750");
+      await expect(row.locator(".goal-progress")).toHaveCSS("font-variant-numeric", "tabular-nums");
+      const label = (await row.locator(".goal-label").boundingBox())!;
+      const progress = (await row.locator(".goal-progress").boundingBox())!;
+      expect(progress.x).toBeGreaterThan(label.x);
+      expect(Math.abs(label.y - progress.y)).toBeLessThanOrEqual(1);
+      await expect(goals.locator(".goal-secondary-label")).toHaveText("Optional: Quality review");
+      await page.screenshot({ path: testInfo.outputPath(`phone-compact-goals-${viewport.width}x${viewport.height}.png`), animations: "disabled" });
+    }
+    await toggle.click();
+    await expect(goals.locator(".goal-row:visible")).toHaveCount(5);
+    await expect(goals.locator('.goal-label[title="Complete a pediatric visit with its parent"]')).toHaveAccessibleDescription("Complete a pediatric visit with its parent");
+    await page.goBack();
+    await expect(goals).toHaveCount(0);
+    await page.locator(".mobile-goals-chip").click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await page.screenshot({ path: testInfo.outputPath("phone-compact-goals-expanded.png"), animations: "disabled" });
+  });
 });
 
 test("keeps the titleless zoom overlay usable and contained on Pixel 7", async ({ page }, testInfo) => {

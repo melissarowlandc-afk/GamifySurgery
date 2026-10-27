@@ -8,10 +8,14 @@ const numberLabel = (value: number) => (Math.floor(value * 100) / 100).toLocaleS
 export function levelFiveGoalView(state: GameState, requirement: ProgressionRequirementStatus): ProgressionGoalView {
   const base = { id: requirement.id, label: requirement.label, complete: requirement.met };
   if (requirement.id === "progression.clinical_xp") return { ...base, label: "Current-level Clinical XP",
+    displayProgressLabel: `${numberLabel(requirement.current)}/${numberLabel(requirement.required)}`,
     progressLabel: `${numberLabel(requirement.current)}/${numberLabel(requirement.required)} XP` };
   if (requirement.id === "progression.satisfaction") return { ...base,
+    displayProgressLabel: `${numberLabel(requirement.current)}%`,
     progressLabel: `${numberLabel(requirement.current)}% · goal above ${requirement.required - 1}%` };
-  return { ...base, progressLabel: state.employees.length
+  return { ...base,
+    displayProgressLabel: state.employees.length ? `${numberLabel(requirement.current)}/${numberLabel(requirement.required)}` : "No staff",
+    progressLabel: state.employees.length
     ? `${numberLabel(requirement.current)}/${numberLabel(requirement.required)} · ${state.employees.length} ${state.employees.length === 1 ? "employee" : "employees"}`
     : "No employees · hire staff to establish an average" };
 }

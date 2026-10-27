@@ -91,11 +91,14 @@ describe("phone Goals and quick chips", () => {
       { id: "fixture-staff", label: "Fixture staff", detail: "Fixture staff quote", met: false, action: { label: "Hire", target: "staff", id: "staff.endoscopy_nurse" } },
       { id: "fixture-provider", label: "Fixture provider", detail: "Fixture ready detail", met: true },
     ], secondaryGoals: [{ id: "secondary.level_three_first_qi_review", label: "Complete a fixture quality review", complete: false, progressLabel: "0/1" }] };
-  it("shows progress, setup checklists and optional tooltip wording inline; dispatches Build/Hire and Advance", async () => {
+  it("shows compact progress, a collapsed setup checklist and optional tooltip; dispatches Build/Hire and Advance", async () => {
     const env = phoneTestDom(); const setup = vi.fn(); const advance = vi.fn();
     await env.render(<MobileGoals view={goals} onSetupAction={setup} onLevelUp={advance} />);
     for (const text of ["Current requirements", "0/1", "Setup checklist", "Fixture room quote", "Fixture ready detail", "Ready ✓", "Optional objective: Complete a fixture quality review. 0/1."]) expect(env.element.textContent).toContain(text);
-    expect(allElements(env.element, (node) => node.attributes.role === "tooltip")).toHaveLength(0);
+    expect(allElements(env.element, (node) => node.attributes.role === "tooltip")).toHaveLength(1);
+    const checklist = env.find(node => node.tagName === "DETAILS" && node.attributes.class === "mobile-goal-setup");
+    expect(checklist.attributes.open).toBeUndefined();
+    expect(allElements(checklist, node => node.tagName === "SUMMARY")[0]!.textContent).toBe("Setup checklist");
     await env.click("Build Fixture room"); await env.click("Hire Fixture staff");
     expect(setup.mock.calls).toEqual(goals.endoscopySetupRequirements!.slice(0, 2).map((requirement) => [requirement.action]));
     await env.click("Advance to Level 3"); expect(advance).toHaveBeenCalledOnce();

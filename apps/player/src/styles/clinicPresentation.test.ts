@@ -95,9 +95,10 @@ describe("compact Goals and Alerts spacing", () => {
       "min-height": "0", "padding-bottom": "0",
     });
     const list = declarations(".goals-panel .goal-list", goalsCss);
-    expect(list).toMatchObject({ "align-content": "start", "grid-auto-rows": "max-content", flex: "0 1 auto", gap: "var(--goal-row-gap)" });
+    expect(list).toMatchObject({ "align-content": "start", "grid-auto-rows": "max-content", flex: "0 0 auto", gap: "var(--goal-row-gap)" });
     expect(list.font).toBeUndefined(); expect(list["font-size"]).toBeUndefined();
-    expect(declarations(".goals-panel .goal-label", goalsCss)["row-gap"]).toBe("0");
+    expect(declarations(".goals-panel .goal-completion-toggle", goalsCss)).toMatchObject({ "min-height": "0", padding: "2px 4px" });
+    expect(declarations(".goals-panel .goal-progress", goalsCss)["font-size"]).toBe("0.78rem");
     expect(declarations(".goals-panel .goal-secondary-chip", goalsCss)).toMatchObject({ padding: "2px 6px", font: "12px/1.3 var(--font-pixel)" });
     expect(declarations(".goals-panel .goals-advance-area", goalsCss).gap).toBe("4px");
   });

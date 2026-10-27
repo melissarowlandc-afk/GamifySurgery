@@ -3,6 +3,7 @@ import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
 import { createExecutiveManagementView } from "./executiveViewModels";
 import { createGiftShopView, giftShopFee } from "./giftShopViewModels";
 import { createInspectionUnlockView, levelFiveGoalView } from "./levelFiveProgressionView";
+import { withGoalDisplayLabel } from "./goalDisplayLabels";
 import { createFacilityInspectionView } from "./inspectionViewModels";
 import { createInspectionActorViews } from "./inspectionActorViewModels";
 import { giftContactAtLocation } from "@gamify-surgery/game-domain";
@@ -1494,6 +1495,13 @@ export function createPrototypePlayerView(
   );
   const workload = getWorkloadSnapshot(state);
   const progressionStatus = getFacilityProgressionStatus(state);
+  const progressionGoals = progressionStatus.requirements.map((requirement) => withGoalDisplayLabel(state.facilityLevel === 5
+    ? levelFiveGoalView(state, requirement) : {
+      id: requirement.id,
+      label: requirement.label,
+      complete: requirement.met,
+      progressLabel: `${Math.min(requirement.current, requirement.required)}/${requirement.required}`,
+    }));
   const facilityBalance =
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
   const usedStaffStills = new Set([...state.employees, ...(state.departingEmployees ?? [])].map(employee => employee.appearance.stillId));
@@ -1976,16 +1984,7 @@ export function createPrototypePlayerView(
         explanation: finances.incomeWindowExplanation,
       },
       dayTimeLabel: clock.displayLabel,
-      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
-        ? levelFiveGoalView(state, requirement) : ({
-        id: requirement.id,
-        label: requirement.label,
-        complete: requirement.met,
-        progressLabel: `${Math.min(
-          requirement.current,
-          requirement.required,
-        )}/${requirement.required}`,
-      })),
+      goals: progressionGoals,
       contentNoticeLabel:
         "DEMONSTRATION CONTENT ONLY — not clinically approved or medical advice.",
     },
@@ -2570,22 +2569,13 @@ export function createPrototypePlayerView(
         progressionStatus.nextFacilityLevel === null
           ? null
           : `Level ${progressionStatus.nextFacilityLevel}`,
-      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
-        ? levelFiveGoalView(state, requirement) : ({
-        id: requirement.id,
-        label: requirement.label,
-        complete: requirement.met,
-        progressLabel: `${Math.min(
-          requirement.current,
-          requirement.required,
-        )}/${requirement.required}`,
-      })),
-      ...(state.facilityLevel >= 3 ? { secondaryGoals: [{
+      goals: progressionGoals,
+      ...(state.facilityLevel >= 3 ? { secondaryGoals: [withGoalDisplayLabel({
         id: "secondary.level_three_first_qi_review",
         label: "Complete the first administrative quality review",
         complete: levelThreeSupport.completedQiReviewCount > 0,
         progressLabel: `${Math.min(levelThreeSupport.completedQiReviewCount, 1)}/1`,
-      }] } : {}),
+      })] } : {}),
       canLevelUp: progressionStatus.eligible,
       prototypeComplete: progressionStatus.terminalComplete,
       ...(state.facilityLevel === 5 ? { inspectionUnlock: createInspectionUnlockView(state), inspection: createFacilityInspectionView(state) } : {}),

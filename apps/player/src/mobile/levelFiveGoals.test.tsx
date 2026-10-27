@@ -88,7 +88,8 @@ describe("M6 phone Goals chip and sheet through the shared session", () => {
 
   it("keeps the Level 5 sheet compact and 44px actions scoped to the phone", () => {
     const css = readFileSync(new URL("./mobileScreens.css", import.meta.url), "utf8");
-    expect(css).toContain(".mobile-shell .mobile-inspection-goals .mobile-goal-card { padding: 8px; margin-bottom: 6px; }");
+    expect(css).toContain(".mobile-shell .mobile-goal-card { padding: 4px 8px; margin-bottom: 4px;");
+    expect(css).toContain(".mobile-shell .goal-completion-toggle { min-height: 44px;");
     expect(css).toContain(".mobile-shell .mobile-inspection-unlock button { min-height: 44px; width: 100%; white-space: normal; }");
   });
 });

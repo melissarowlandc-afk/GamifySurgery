@@ -7670,3 +7670,43 @@ GitHub" checkpoint/reminder. Future browser validation uses disposable 5184 QA
 storage. Owner pathway remains START_GAME.cmd -> exact http://127.0.0.1:4173
 in the intended persistent profile; the canonical GitHub Pages origin remains
 separate storage. No pathway was substituted by this worker.
+
+
+## Compact goals panel handoff (2026-10-27)
+
+Assigned Sol worker implemented compact required-goal rows in both desktop and
+phone: label left, tabular progress right, completed goals behind a native
+`✓ N of M done` button with `aria-expanded`, and optional Quality review as a
+single chip. Expansion uses tab-session storage with an in-memory fallback;
+campaign saves are untouched. Player-only short labels preserve full names as
+tooltips/accessible descriptions. Phone setup checklists start closed and retain
+44 px summaries/actions. Prior desktop Goals sizing and Alerts scrolling remain.
+
+Full short-label inventory, all 20 changed source/test files, behavior, exact
+commands, logs and manager acceptance steps are in
+[Compact goals panel handoff](../execplans/tester-pace-and-tutorial-20261020.md#compact-goals-panel-handoff-2026-10-27).
+Evidence and actual filesystem diff: `.local-dev/compact-goals-20261027/`.
+All 138 baseline domain/balance source files remain byte-identical; changed
+source is UTF-8/no-BOM/LF. No clinical content, domain/balance requirements,
+evidence fixtures or existing saves were edited.
+
+Validation: full player **275 files / 2,657 tests PASS**, exit 0; root typecheck
+**all seven workspaces PASS**, exit 0; final focused **7 files / 65 tests PASS**;
+all four modified e2e specs pass isolated strict TypeScript checking. Tests use
+the preceding handoff's narrow Vite net-use EPERM preload. The final focused run
+follows a phone checklist CSS correction and JSX indentation cleanup; the full
+suite preceded those CSS/whitespace-only changes.
+
+Manager next: inspect the diff, run the updated edge-anchored layout spec on
+desktop and phone, take/review screenshots and report the actual Level 4
+1280×720 before/after/expanded pixel heights from its console/JSON attachments.
+**No browser run, screenshot review or measured pixel result is claimed by this
+worker.** The e2e comparison uses a test-only reconstruction of the previous
+full-label, stacked-progress DOM in the same rail and font environment.
+
+LOCAL ONLY: no Git, installs, network, agents, external messages, browser/server
+or owner storage operations, deployment or publication. Manager owns acceptance
+and the audited **"push to GitHub"** checkpoint/reminder. Future browser QA uses
+disposable `location.origin = http://127.0.0.1:5184`; owner playtesting still uses
+START_GAME.cmd → exact http://127.0.0.1:4173 in the intended persistent profile.
+The canonical GitHub Pages origin retains separate saves. No pathway changed.

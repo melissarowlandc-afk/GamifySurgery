@@ -611,9 +611,13 @@ export interface StaffTrainingOverviewView {
 
 export interface ProgressionGoalView {
   id: string;
+  /** Full objective, retained as the accessible description and tooltip. */
   label: string;
+  displayLabel?: string;
   complete: boolean;
   progressLabel: string;
+  /** Compact progress; the full progressLabel remains available to assistive technology. */
+  displayProgressLabel?: string;
 }
 
 export interface ProcedureSetupRequirementView {

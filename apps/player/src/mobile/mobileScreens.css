@@ -99,28 +99,34 @@
 .mobile-shell .mobile-feed-row.is-day-summary > button { background: #fff; color: var(--ink); }
 .mobile-shell .mobile-goal-list,
 .mobile-shell .mobile-goal-setup ul { list-style: none; margin: 0; padding: 0; }
-.mobile-shell .mobile-goal-card { padding: 12px; margin-bottom: 12px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); }
+.mobile-shell .mobile-goal-list { gap: 0; overflow: visible; }
+.mobile-shell .mobile-goal-card { padding: 4px 8px; margin-bottom: 4px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); }
 .mobile-shell .mobile-goal-card.is-complete { background: #e2e9d4; }
-.mobile-shell .mobile-goal-card h4 { margin: 0 0 6px; font-size: 16px; }
-.mobile-shell .mobile-goal-progress { margin: 0; font-weight: 700; }
-.mobile-shell .mobile-goal-setup { margin-top: 14px; padding-top: 12px; border-top: var(--mobile-border); }
-.mobile-shell .mobile-goal-setup li { margin-top: 12px; }
+.mobile-shell .mobile-goal-card .goal-line { font-size: 15px; line-height: 1.4; }
+.mobile-shell .mobile-goal-card .goal-progress { font-weight: 700; }
+.mobile-shell .mobile-goal-setup { margin-top: 4px; border-top: var(--mobile-border); }
+.mobile-shell .mobile-goal-setup > summary { display: flex; min-height: 44px; align-items: center; cursor: pointer; }
+.mobile-shell .mobile-goal-setup > summary::before { content: "▸"; margin-right: 6px; }
+.mobile-shell .mobile-goal-setup[open] > summary::before { content: "▾"; }
+.mobile-shell .mobile-goal-setup li { display: block; margin-top: 12px; }
 .mobile-shell .mobile-goal-setup p { margin-block: 4px 8px; font-size: 14px; }
 .mobile-shell .mobile-goal-setup button { width: 100%; }
-.mobile-shell .mobile-optional-goals { margin-top: 22px; }
+.mobile-shell .mobile-optional-goals { margin-top: 8px; }
+.mobile-shell .goal-completion-toggle { min-height: 44px; padding: 4px 8px; margin-bottom: 4px; }
+.mobile-shell .goal-secondary-chip { position: relative; display: flex; gap: 6px; align-items: baseline; padding: 4px 8px; border: var(--mobile-border); border-radius: 8px; background: var(--paper); font-size: 14px; }
+.mobile-shell .goal-secondary-label { min-width: 0; overflow-wrap: anywhere; }
+.mobile-shell .goal-secondary-progress { margin-left: auto; }
+.mobile-shell .goal-secondary-chip:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.mobile-shell .goal-secondary-tooltip { position: absolute; z-index: 4; bottom: calc(100% + 4px); left: 0; right: 0; padding: 8px; border: var(--mobile-border); background: var(--paper-raised); visibility: hidden; overflow-wrap: anywhere; }
+.mobile-shell .goal-secondary-chip:hover .goal-secondary-tooltip,
+.mobile-shell .goal-secondary-chip:focus .goal-secondary-tooltip { visibility: visible; }
 .mobile-shell .mobile-goals-advance { position: sticky; bottom: -10px; padding: 10px 0; background: var(--paper-raised); }
 .mobile-shell .mobile-level-complete { padding: 12px; border: 2px solid var(--ink); border-radius: 8px; font-weight: 700; }
-.mobile-shell .mobile-inspection-goals .mobile-goal-card { padding: 8px; margin-bottom: 6px; }
-.mobile-shell .mobile-inspection-goals .mobile-goal-card h4 { margin-bottom: 4px; font-size: 15px; }
-.mobile-shell .mobile-inspection-goals .mobile-optional-goals { margin-top: 10px; }
 .mobile-shell .mobile-inspection-unlock { display: grid; gap: 5px; padding: 8px; border: var(--mobile-border); border-radius: 8px; overflow-wrap: anywhere; }
 .mobile-shell .mobile-inspection-unlock h3,
 .mobile-shell .mobile-inspection-unlock p { margin: 0; }
 .mobile-shell .mobile-inspection-unlock p { font-size: 14px; }
 .mobile-shell .mobile-inspection-unlock button { min-height: 44px; width: 100%; white-space: normal; }
-.mobile-shell .mobile-inspection-optional { margin-top: 8px; font-size: 14px; }
-.mobile-shell .mobile-inspection-optional summary { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.mobile-shell .mobile-inspection-optional p { margin: 4px 0; }
 .mobile-shell .mobile-advertising-controls { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 10px; }
 .mobile-shell .mobile-advertising-controls > div { display: grid; gap: 4px; text-align: center; }
 .mobile-shell .mobile-advertising-controls > button { min-height: 48px !important; font-size: 22px; }

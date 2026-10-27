@@ -42,7 +42,7 @@ async function fixture(page: Page, level: 2 | 3): Promise<GameState> {
 test("condensed Level 3 goals expand to the real setup and navigate without purchases", async ({ page }, testInfo) => {
   const state = await fixture(page, 3);
   const panel = page.locator(".goals-panel");
-  const goals = panel.locator(":scope > .goal-list > li");
+  const goals = panel.locator(".goal-row");
   await expect(goals).toHaveCount(4);
   await expect(goals.nth(0)).toContainText("Clinical XP125/500");
   await expect(goals.nth(1)).toContainText("Satisfaction above 90%");
@@ -92,9 +92,11 @@ test("retired first-operation credit survives reload while missing setup remains
   };
   await installState(page, state, "Level 3 Goal Review", "level-3.completed");
   const panel = page.locator(".goals-panel");
-  const goal = panel.locator(":scope > .goal-list > li").filter({ hasText: "Complete your first ambulatory operation" });
+  const goal = panel.locator(".goal-row").filter({ hasText: "Complete your first ambulatory operation" });
   await expect(goal).toContainText("1/1");
   await expect(goal).toHaveClass(/is-complete/);
+  await expect(goal).toBeHidden();
+  await panel.getByRole("button", { name: "✓ 1 of 4 done" }).click();
   await panel.getByRole("button", { name: "View setup requirements" }).click();
   const setup = panel.getByRole("list", { name: "Ambulatory operation setup requirements" });
   const missing = setup.getByRole("listitem").filter({ hasText: "Ambulatory OR" });
@@ -111,7 +113,7 @@ test("retired first-operation credit survives reload while missing setup remains
 test("Level 2 keeps its endoscopy goal and expandable setup navigation", async ({ page }) => {
   const state = await fixture(page, 2);
   const panel = page.locator(".goals-panel");
-  await expect(panel.locator(":scope > .goal-list > li")).toHaveCount(3);
+  await expect(panel.locator(".goal-row")).toHaveCount(3);
   await expect(panel).toContainText("Complete your first endoscopy");
   await expect(panel).not.toContainText("Complete your first ambulatory operation");
   await panel.getByRole("button", { name: "View setup requirements" }).click();

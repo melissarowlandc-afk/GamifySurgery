@@ -195,9 +195,11 @@ test("historical completed endoscopy evidence remains 1/1 after reload without s
   state.serviceOperations = [completedHistoricalEndoscopy(state.facilityTick)];
   await installState(page, state, "Historical Endoscopy Clinic", "endoscopy-goal.history.completed.seed");
 
-  const completionGoal = page.locator(".goal-list > li").filter({ hasText: "Complete your first endoscopy" });
+  const completionGoal = page.locator(".goal-row").filter({ hasText: "Complete your first endoscopy" });
   await expect(completionGoal).toContainText("1/1");
   await expect(completionGoal).toHaveClass(/is-complete/);
+  await expect(completionGoal).toBeHidden();
+  await page.getByRole("button", { name: "✓ 1 of 3 done" }).click();
   await expect(page.getByRole("button", { name: "Advance to Level 3" })).toHaveCount(0);
   await expandSetup(page);
   for (const label of [...MISSING_SETUP_LABELS, "Endoscopist or founder"] as const) {

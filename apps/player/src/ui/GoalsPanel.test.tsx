@@ -7,7 +7,7 @@ const view: ProgressionView = {
   facilityLevelLabel: "Level 3",
   nextLevelLabel: "Level 4",
   goals: [{ id: "progression.ambulatory_operation_completion", label: "Complete your first ambulatory operation", complete: false, progressLabel: "0/1" }],
-  secondaryGoals: [{ id: "secondary.level_three_first_qi_review", label: "Complete the first administrative quality review", complete: false, progressLabel: "0/1" }],
+  secondaryGoals: [{ id: "secondary.level_three_first_qi_review", label: "Complete the first administrative quality review", displayLabel: "Quality review", complete: false, progressLabel: "0/1" }],
   canLevelUp: false,
   prototypeComplete: false,
 };
@@ -19,12 +19,12 @@ const render = (overrides: Partial<ProgressionView> = {}) => renderToStaticMarku
 describe("GoalsPanel secondary objectives", () => {
   it("keeps one main goal list and attaches a compact optional review to the advance area", () => {
     const markup = render();
-    expect(markup.match(/class="goal-list"/g)).toHaveLength(1);
+    expect(markup.match(/class="goal-list incomplete-goal-list"/g)).toHaveLength(1);
     expect(markup).not.toContain("Secondary objectives");
     expect(markup).toContain("Optional: Quality review");
     expect(markup).toContain("Complete the first administrative quality review");
     expect(markup.indexOf("goals-advance-area")).toBeGreaterThan(markup.indexOf("Complete your first ambulatory operation"));
-    expect(markup).toMatch(/tabindex="0" aria-describedby="[^"]+"/);
+    expect(markup).toMatch(/tabindex="0" title="[^"]+" aria-describedby="[^"]+"/);
     expect(markup).toContain('role="tooltip"');
     expect(markup).not.toContain("level-up-button");
   });
@@ -43,7 +43,7 @@ describe("GoalsPanel secondary objectives", () => {
     expect(markup).toContain("1/1 ✓");
     expect(markup).toContain("Level 4 goals complete.");
     expect(markup).not.toContain("level-up-button");
-    expect(markup.match(/class="goal-list"/g)).toHaveLength(1);
+    expect(markup.match(/class="goal-list incomplete-goal-list"/g)).toHaveLength(1);
   });
 
   it("keeps earlier-level progression controls without an optional chip", () => {

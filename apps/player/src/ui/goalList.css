@@ -1,0 +1,55 @@
+.compact-goals {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.compact-goals .goal-list[hidden] {
+  display: none;
+}
+
+.compact-goals .goal-row > [hidden] {
+  display: none;
+}
+
+.compact-goals .goal-row {
+  display: block;
+  min-width: 0;
+}
+
+.compact-goals .goal-line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 6px;
+}
+
+.compact-goals .goal-line .goal-label {
+  display: block;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.compact-goals .goal-progress,
+.goal-secondary-chip .goal-secondary-progress {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.goal-completion-toggle {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-goals .goal-label:focus-visible,
+.goal-completion-toggle:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
