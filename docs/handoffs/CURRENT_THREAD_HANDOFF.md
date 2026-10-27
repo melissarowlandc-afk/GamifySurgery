@@ -7710,3 +7710,37 @@ and the audited **"push to GitHub"** checkpoint/reminder. Future browser QA uses
 disposable `location.origin = http://127.0.0.1:5184`; owner playtesting still uses
 START_GAME.cmd → exact http://127.0.0.1:4173 in the intended persistent profile.
 The canonical GitHub Pages origin retains separate saves. No pathway changed.
+
+## Prominent notice fix (2026-10-27)
+
+Assigned Sol follow-up addressed the tester entry screenshot. Both layouts now
+show the account-save notice summary and primary **Accept and continue** at the
+top of Your campaigns; full text is one tap away. Account & privacy stays closed
+and retains its full notice and controls. Resume / Start have a disabled reason
+before consent. Accepting immediately runs the existing automatic enrollment
+and refresh; real-provider/fake-transport tests show the waiting clinic at 1/2
+without changing its local bytes or acquiring a writer. The gentle empty-account
+line appears only after enrollment finishes.
+
+Files: CloudCampaignEntry.tsx / its tests, cloudSaves.css and
+App.cloudAccess.test.tsx under apps/player/src; tests/e2e/cloud-saves.spec.ts;
+and these handoff documents. The e2e uses visible acceptance and adds a phone
+regression; all 70 existing assertion lines remain (80 total expect calls).
+Cloud recovery spec and all 254 protected phone/domain/balance/cloud source
+files remain byte-identical. No runtime provider/import or Supabase API change.
+
+Validation: full player **275 files / 2,662 tests PASS**, exit 0; root typecheck
+**all seven workspaces PASS**, exit 0; focused **3 files / 64 tests PASS**;
+separate strict cloud e2e TypeScript check PASS. UTF-8/no-BOM/LF checks pass.
+Exact commands, file list, evidence and manager checks are in
+[Prominent notice fix](../execplans/beta2-cloud-saves-20261017.md#prominent-notice-fix).
+Before-images, actual diff and complete logs:
+`.local-dev/prominent-notice-20261027/`.
+
+Manager next: inspect the diff, run cloud e2e and take desktop/phone screenshots.
+No browser PASS or real tester storage recovery is claimed. LOCAL ONLY: no Git,
+installs, network, agents, owner storage, server changes, deployment or release.
+Manager owns acceptance and the audited **"push to GitHub"** checkpoint/reminder.
+Owner pathways remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the
+intended persistent profile and the canonical GitHub Pages origin; their local
+saves stay separate. No pathway was opened or substituted.

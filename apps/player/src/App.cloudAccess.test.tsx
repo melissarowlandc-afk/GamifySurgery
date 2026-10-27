@@ -130,6 +130,8 @@ describe.each(["desktop", "phone"] as const)("%s cohort gate against the Beta 1 
     const f = await mount(layout, "enabled"); expectPending(f); await f.settle();
     await vi.waitFor(() => expect(f.env.element.textContent).toContain("Before using account saves"));
     expect(f.env.element.textContent).toContain("Accept account save notice"); expect(f.env.element.textContent).toContain("Synthetic QA region");
+    expect(f.env.button("Accept and continue").parentNode!.attributes.class).toBe("cloud-entry-notice");
+    expect(f.env.find(node => node.tagName === "SUMMARY" && node.textContent === "Account & privacy").parentNode!.attributes.open).toBeUndefined();
     expect(f.stored.get(profileKey)).toBe(f.original);
     expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();
     expect(sdk.rpc.mock.calls).toEqual([["beta2_cloud_access", { p_protocol: 3 }], ["beta2_cloud_access", { p_protocol: 3 }]]);

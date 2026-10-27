@@ -38,6 +38,13 @@ async function expectAutomaticEnrollment(page: Page, name = "Synthetic clinic 1"
   await expect(page.getByRole("button", { name: `Resume ${name}`, exact: true })).toBeEnabled();
   expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(raw);
 }
+async function acceptAccountNotice(page: Page) {
+  await expect(page.getByRole("heading", { name: "Before using account saves", exact: true })).toBeVisible();
+  await expect(page.locator("details.cloud-account")).not.toHaveAttribute("open");
+  await expect(page.getByRole("button", { name: "Accept and continue", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start a new campaign", exact: true })).toBeDisabled();
+  await page.getByRole("button", { name: "Accept and continue", exact: true }).click();
+}
 async function createAccountCampaign(page: Page, name: string, fromFounder = false) {
   if (!fromFounder) await page.getByRole("button", { name: "Start a new campaign", exact: true }).click();
   await page.getByRole("textbox", { name: "Founder name", exact: true }).fill("Synthetic Founder");
@@ -70,9 +77,8 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       f.server.setAccess("qa-account-a", { noticeAccepted: false });
       const desktop = await f.page("desktop", "qa-account-a", undefined, 1);
       expect(f.server.operationCount("qa-account-a")).toBe(0);
-      await desktop.getByText("Account & privacy", { exact: true }).click();
-      await desktop.getByRole("button", { name: "Accept account save notice", exact: true }).click();
       const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
+      await acceptAccountNotice(desktop);
       await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toBeEnabled();
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       await openAndContinue(desktop);
@@ -90,6 +96,21 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await expect.poll(async () => (await snapshot(desktop)).state?.simulationSpeed).toBe(4);
       expect((await snapshot(desktop)).state).toEqual(phoneSaved);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
+    } finally { await f.close(); }
+  });
+  test("phone accepts the visible notice and immediately lists its waiting local campaign", async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!);
+    try {
+      f.server.setAccess("qa-account-a", { noticeAccepted: false });
+      const phone = await f.page("phone", "qa-account-a", undefined, 1);
+      const original = await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
+      expect(f.server.operationCount("qa-account-a")).toBe(0);
+      await acceptAccountNotice(phone); await expectAutomaticEnrollment(phone);
+      await expect(phone.getByRole("heading", { name: "Resume a previous campaign (1/2)", exact: true })).toBeVisible();
+      await expect(phone.getByRole("button", { name: "Accept and continue", exact: true })).toHaveCount(0);
+      await expect(phone.locator("details.cloud-account")).not.toHaveAttribute("open");
+      expect(await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
+      expect(f.server.operationCount("qa-account-a")).toBe(1);
     } finally { await f.close(); }
   });
   test("opening is read-only, takeover fences a visible old writer and cannot release the phone session", async ({ browser, baseURL }) => {

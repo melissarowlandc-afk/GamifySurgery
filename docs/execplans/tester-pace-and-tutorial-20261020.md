@@ -721,3 +721,7 @@ or substituted by this worker.
 **LOCAL ONLY:** no Git, installs, network, sub-agents, external messages,
 browser/server execution, deployment or publication. Manager owns acceptance
 and the audited **"push to GitHub"** checkpoint/reminder after acceptance.
+
+## Published (2026-10-27): readable and compact goals
+
+e8b8ae9a (goals never compressed; Alerts scrolls) and 83ad95b9 (compact goals: one line each, collapsed completions, short display labels in the player view model). Level 4 at 1280x720: 323 px -> 149 px. Validation: player 2657 passed; edge-anchored goals e2e 3/3 (manager fixed the extreme-height test to close a restored chart sheet before clicking); Level 5 e2e 104/104. Pages runs succeeded (latest 40552664850); live sign-in loads without page errors.

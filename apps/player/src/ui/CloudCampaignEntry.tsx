@@ -8,7 +8,7 @@ import { useUsageTracking } from "../playtime/UsageProvider";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
 import { usePresentationLayout } from "../shellPresentation";
 import { cloudEntryError } from "./cloudEntryError";
-import { AccountMenu } from "./AccountMenu";
+import { AccountMenu, CloudNoticeDetails } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import "./cloudSaves.css";
 
@@ -117,12 +117,13 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     return () => { current = false; };
   }, [runtime, listedRevisions, cloud.phase, cloud.access?.enabled, cloud.access?.noticeAccepted, busy]);
   const canUseCloud = cloud.phase === "available" && cloud.access?.enabled && cloud.access.writesEnabled !== false && cloud.access.noticeAccepted;
+  const needsNotice = cloud.access !== null && !cloud.access.noticeAccepted;
   const migrationReady = enrollment?.phase === "complete", full = cloud.summaries.length >= 2;
   const accountReason = cloud.phase === "checking" ? "Checking your account…" :
     cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? "Account play has stopped." :
     cloud.phase === "error" ? "Your account campaigns are unavailable. Check your connection and return to this page to try again." :
     !cloud.access?.enabled || cloud.access.writesEnabled === false ? "Account saving is currently unavailable. Try again later." :
-    !cloud.access.noticeAccepted ? "Read and accept the notice in Account & privacy below to continue." : "";
+    !cloud.access.noticeAccepted ? "Accept the notice above to resume or start a campaign." : "";
   const action = async (run: () => Promise<void>) => {
     if (working.current) return; working.current = true; setBusy(true); setError("");
     try { await run(); } catch (failure) { if (mounted.current) setError(cloudEntryError(failure)); }
@@ -147,6 +148,15 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
   });
   return <main className={`cloud-entry cloud-entry--${layout}`}>
     <header><h1>Your campaigns</h1><ClinicalContentNotice /></header>
+    {needsNotice && cloud.phase === "available" ? <section className="cloud-entry-notice" aria-labelledby={`${id}-notice-title`}>
+      <h2 id={`${id}-notice-title`}>Before using account saves</h2>
+      <p>Supabase will store your clinic, answers and learning history so you can continue on your phone or computer.</p>
+      <p>After you accept, campaigns already saved for this account on this device are added automatically when there is room. Original device copies stay here.</p>
+      <details><summary>Read the full account save notice</summary><CloudNoticeDetails region={runtime.region} /></details>
+      {!runtime.region ? <p role="alert">The service region has not been published. Account saving is unavailable until the owner completes this notice.</p> : null}
+      <button type="button" className="button button-primary" disabled={busy || !runtime.region || !cloud.access?.enabled || cloud.access.writesEnabled === false}
+        onClick={() => void action(cloud.acceptNotice)}>Accept and continue</button>
+    </section> : null}
     {notice ? <p role="status">{notice}</p> : null}
     {accountReason ? <p id={`${id}-account-reason`} role={cloud.phase === "error" ? "alert" : "status"}>{accountReason}</p> : null}
     {cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? <p role="alert">{cloud.phase === "deleted" ? "Account data deletion is confirmed. Play and uploads have stopped." : "Account deletion is not confirmed. Play and uploads are stopped here; retry from Account & privacy."}</p> : null}
@@ -164,7 +174,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     </section> : null}
     <section aria-label="Resume a previous campaign">
       <h2>Resume a previous campaign ({cloud.summaries.length}/2)</h2>
-      {cloud.summaries.length === 0 ? <p>No previous campaigns yet.</p> : null}
+      {cloud.summaries.length === 0 && cloud.phase === "available" && migrationReady && !busy && !enrollmentError ? <p>No campaigns saved to your account yet. Campaigns from before today stay on the device where you played them.</p> : null}
       {cloud.summaries.map(campaign => {
         const level = levels[JSON.stringify([campaign.campaignId, campaign.revision])];
         return <article className="cloud-clinic-row" key={campaign.campaignId} aria-label={campaign.name}>
@@ -180,6 +190,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     </section>
     <div className="cloud-entry-actions">
       <button type="button" className="button button-primary" disabled={preparing || busy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
+        aria-describedby={accountReason ? `${id}-account-reason` : undefined}
         onClick={() => { setError(""); if (full) { setTarget(null); setReplace(true); } else onCreate(); }}>Start a new campaign</button>
       {full ? <p>Your account holds 2 campaigns. Starting a new one requires choosing one to replace.</p> : null}
       {cloud.access?.enrollmentsEnabled === false ? <p>Starting a new campaign is currently unavailable. Try again later.</p> : null}
@@ -200,7 +211,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
         <p>Campaigns already saved for this account on this device are added to your account automatically when there is room. Original copies stay on this device. If there are too many, you choose once which to keep in your account; the others stay here and are hidden.</p>
         <p>Storage limits may pause a large campaign. Your history is never removed to make it fit. Campaigns from before you signed in are kept on this device and are not added automatically.</p>
       </section>
-      {cloud.access && !cloud.access.noticeAccepted && cloud.phase === "available" ? <section aria-label="Account save notice"><h3>Before using account saves</h3>
+      {cloud.access && !cloud.access.noticeAccepted && cloud.phase === "available" ? <section aria-label="Account save notice"><h3>Account save notice</h3>
         <p>Read the notice above. After you accept, previous campaigns for this account on this device will be saved to your account automatically when there is room.</p>
         {!runtime.region ? <p role="alert">The service region has not been published. Account saving is unavailable until the owner completes this notice.</p> : null}
         <button type="button" disabled={busy || !runtime.region || !cloud.access.enabled || cloud.access.writesEnabled === false} onClick={() => void action(cloud.acceptNotice)}>Accept account save notice</button>

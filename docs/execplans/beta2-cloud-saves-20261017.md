@@ -3889,3 +3889,95 @@ by origin/profile. No opening pathway was used or substituted.
 ### Published (2026-10-27): compact session links
 
 Published acc0d925 (phone Sign out / Save & Close as compact links beside recenter; desktop as footer links). Player 2632 passed; cloud e2e 55/56, with the one failure passing 8/8 on repeat. Pages run 40502090063 succeeded. Withheld: 20261027000100_beta2_default_enabled migration and the `cloud default` tool command. The auto-mode safety check blocked live application without explicit owner confirmation; the manager recommended enabling new testers individually as they sign up (owner decision pending). Cloud enabled: owner, amelia.najor, danielle.hurst, tyler.kowalczyk.
+
+## Tester issue (2026-10-27, Amelia via owner): "Why can't I resume my previous game??"
+
+Her phone showed "Your campaigns", "Read and accept the notice in Account & privacy below to continue", "Resume a previous campaign (0/2)" and "No previous campaigns yet." Automatic enrollment waits for the cloud notice, which is hidden inside the collapsed Account & privacy disclosure. A second possible cause: her local campaign was last played 2026-10-17 on iPhone, and Safari ITP may have cleared script-writable storage after 7 days without interaction (unrecoverable). Fix: show the notice prominently at the top with an "Accept and continue" button whenever acceptance is required; after acceptance, automatic enrollment runs immediately.
+
+## Prominent notice fix
+
+2026-10-27 bounded Sol follow-up. Read the tester issue and owner-provided
+`.local-dev/qa-probe/amelia-entry-notice-20261027.png`. The shared desktop/phone
+entry now puts a bordered notice card immediately below the Your campaigns
+header. It summarizes what is stored and automatic enrollment, offers the
+unchanged full account-save notice one tap away, and provides the primary
+**Accept and continue** button outside any collapsed disclosure.
+
+Resume and Start remain disabled before acceptance, with the one-line reason
+"Accept the notice above to resume or start a campaign." Both controls reference
+that reason for accessibility. The existing guarded acceptance action refreshes
+account access; its notice/busy effect then immediately performs automatic
+enrollment and refreshes the list. Real-provider/fake-transport tests confirm a
+waiting campaign appears at 1/2 without a focus event or manual refresh, with
+the original local string unchanged and no writer acquired.
+
+Account & privacy remains collapsed at the bottom and retains its full notice,
+secondary acceptance control, competition privacy, storage and deletion/clear-
+device controls. The top full-text disclosure reuses CloudNoticeDetails, so the
+notice version, scope, retention and region policy do not diverge. Existing
+missing-region and service-write guards apply to the new button. Acceptance
+failure preserves campaigns and leaves play disabled.
+
+The 0/2 message now appears after enrollment has finished, avoiding a misleading
+empty-account message while consent or a local import is pending. Its text is:
+"No campaigns saved to your account yet. Campaigns from before today stay on the
+device where you played them." Fresh-device tests also confirm no local profile
+is written. Both layouts share this component; the notice uses existing primary
+button/touch-size styles and phone full-width behavior, with keyboard-visible
+focus on the full-text summary.
+
+Changed source/test files:
+
+- `apps/player/src/ui/CloudCampaignEntry.tsx`
+- `apps/player/src/ui/cloudSaves.css`
+- `apps/player/src/ui/CloudCampaignEntry.test.tsx`
+- `apps/player/src/App.cloudAccess.test.tsx`
+- `tests/e2e/cloud-saves.spec.ts`
+
+The e2e desktop acceptance flow now uses the prominent button with Account &
+privacy closed. Added a phone acceptance/enrollment regression. All **70**
+original cloud-save assertion lines remain verbatim; expect calls increase
+**70 -> 80**. Original bytes are now captured before acceptance in the existing
+cross-device test. `cloud-recovery.spec.ts` is byte-for-byte unchanged because
+it has no notice-acceptance flow. No assertion, timeout or safety behavior was
+weakened. Retained originals, two slots, the chooser, replacement confirmations,
+takeover and Save & Close remain under the existing tests.
+
+Validation:
+
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`:
+  **275 files / 2,662 tests PASS**, exit 0, duration 147.99 seconds.
+- `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0.
+- Focused `--pool=threads src/ui/CloudCampaignEntry.test.tsx
+  src/App.cloudAccess.test.tsx src/session/cloud/importCampaigns.test.ts`:
+  **3 files / 64 tests PASS**, exit 0. Covers both layouts, acceptance without
+  expansion, immediate enrollment/list refresh, failed acceptance, disabled
+  actions, full privacy notice and fresh-device storage preservation.
+- Separate strict TypeScript check of both cloud e2e specs and their QA entry:
+  `node_modules/.bin/tsc.cmd --noEmit -p
+  .local-dev/prominent-notice-20261027/e2e-tsconfig.json`: PASS, exit 0,
+  no diagnostics. No browser execution is claimed.
+- Vitest uses the existing narrow Vite `net use` EPERM preload through
+  NODE_OPTIONS. Test configuration and timeouts are unchanged.
+
+Evidence: `.local-dev/prominent-notice-20261027/` contains before-images, actual
+`review.diff`, validated-source hashes, complete validation logs, e2e assertion
+preservation results and the final audit. Changed files are UTF-8 without BOM,
+LF-only, with final newlines. All 254 protected baseline source files remain
+byte-identical, including phone, domain/balance, account provider/import logic,
+coordinator, game session, save controls, AccountMenu and router wiring.
+
+Manager next: inspect the scoped diff, run the updated cloud e2e and phone/
+desktop screenshots, checking visible acceptance with both disclosures closed
+and the waiting campaign appearing after acceptance. No real tester storage
+was inspected and no claim is made about whether Amelia's original local bytes
+are still present. Supabase skill guidance was read; this task used only local
+code and fake transports, honoring the explicit no-network constraint. No
+Supabase API, schema, consent version or hosted state was changed.
+
+LOCAL ONLY: no Git, installs, network, agents, owner browser/storage, server
+changes, publication or release. Manager owns acceptance and the audited
+**"push to GitHub"** checkpoint/reminder. Owner pathways remain START_GAME.cmd
+-> exact http://127.0.0.1:4173 in the intended persistent profile and
+https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
+by origin/profile. No pathway was opened or substituted.

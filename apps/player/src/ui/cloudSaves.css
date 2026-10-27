@@ -4,7 +4,7 @@
 .cloud-dialog::backdrop { background: #121827b8; }
 .cloud-dialog button, .cloud-entry button, .cloud-account button { min-height: 44px; margin: 0.25rem; white-space: normal; }
 .cloud-dialog h2:focus, .cloud-entry h1:focus { outline: 2px solid currentColor; outline-offset: 3px; }
-.cloud-dialog button:focus-visible, .cloud-entry button:focus-visible, .cloud-entry input:focus-visible, .cloud-account button:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+.cloud-dialog button:focus-visible, .cloud-entry button:focus-visible, .cloud-entry input:focus-visible, .cloud-entry summary:focus-visible, .cloud-account button:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
 .cloud-entry { width: min(52rem, 100%); margin: auto; padding: 2rem 1.25rem; overflow-wrap: anywhere; }
 .cloud-entry header { margin-bottom: 1.75rem; }
 .cloud-entry h1 { margin-bottom: 0.4rem; }
@@ -21,7 +21,9 @@
 .cloud-entry > .cloud-account { border-top: 1px solid var(--shade-3); padding-top: 0.75rem; }
 .cloud-entry .cloud-account > summary { min-height: 44px; }
 .cloud-entry .cloud-account section { margin-block: 1rem; }
-.cloud-entry-chooser, .cloud-entry-replace { border: 2px solid var(--ink); border-radius: 0.6rem; padding: 1rem; margin-bottom: 1.5rem; background: var(--paper-raised); }
+.cloud-entry-notice, .cloud-entry-chooser, .cloud-entry-replace { border: 2px solid var(--ink); border-radius: 0.6rem; padding: 1rem; margin-bottom: 1.5rem; background: var(--paper-raised); }
+.cloud-entry-notice > details > summary { min-height: 44px; padding-block: 0.65rem; cursor: pointer; }
+.cloud-entry .cloud-entry-notice > button { margin: 0.5rem 0 0; }
 .cloud-entry-replace:focus { outline: 3px solid var(--focus); outline-offset: 3px; }
 .cloud-entry label { display: block; padding: 0.35rem 0; }
 .cloud-entry input[type="checkbox"], .cloud-account input[type="checkbox"] { width: 1.4rem; height: 1.4rem; vertical-align: middle; margin-right: 0.5rem; }
