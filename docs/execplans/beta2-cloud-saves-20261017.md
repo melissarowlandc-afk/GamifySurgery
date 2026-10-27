@@ -3643,3 +3643,245 @@ Owner opening pathways remain `START_GAME.cmd` -> exact
 `http://127.0.0.1:4173` in the intended persistent profile and
 `https://melissarowlandc-afk.github.io/GamifySurgery/`; local saves stay separate
 by origin/profile. The disposable fixture setup remains only on the QA entry.
+
+## Published (2026-10-26): automatic campaigns, save performance, Clinic Competition, early pace
+
+Owner said "Publish" after reviewing the entry and replace-warning screenshots. Published ac364cc9 (77 files; nested .local-dev folders explicitly excluded after the copy script's ignore check missed them). Release-copy npm test: all green except Level 5 timeouts under local load; those 42 tests pass with CI deadlines on this machine. Cloud e2e 55/56, with the single failure passing 8/8 on repeat. Pages run 40373788828 succeeded; live sign-in loads without page errors. Live SQL for delete-campaign and competition applied and PASS earlier the same day.
+
+## Owner acceptance and broad enablement (2026-10-27)
+
+Owner: "Yeah it works so it can be switched on for the other testers. Make sure all testers have all the changes we have made so far based on feedback." Manager enabled cloud for amelia.najor and danielle.hurst (confirmed accounts); the owner was already enabled. Pending invitees have no account yet, so a default-on setting for newly admitted accounts is dispatched. All feedback changes are already live on Pages.
+
+Owner phone feedback (screenshot .local-dev/qa-probe/owner-phone-rows-20261027.jpg): the phone shows full-width rows for "Sign out" (above the HUD) and "Save & Close" (below the HUD). "Those rows should completely go away. Put those options as little links to click on at the bottom of the screen where there is a little space without adding anything that takes up vertical space on the phone."
+
+Owner desktop feedback (2026-10-27, screenshot .local-dev/qa-probe/owner-desktop-signout-20261027.jpg): on desktop the "Sign out" control floats as a boxed button overlapping the bottom link row (Privacy · Send feedback · Help · Account campaigns · Restart...). It should be integrated into that bottom row as a plain link. Queued for the phone-links worker after its current turn (same Sign out wiring).
+
+
+## Phone links handoff (2026-10-27)
+
+Bounded Sol worker completed the owner's phone-only layout correction from
+`.local-dev/qa-probe/owner-phone-rows-20261027.jpg`.
+
+### Implementation and owned files
+
+- `apps/player/src/mobile/MobileShell.tsx`: Save & Close and signed-in Sign out
+  are compact, explicitly named button links in an absolute map overlay, just
+  left of Recenter. They add no shell/grid height. The map region already ends
+  above bottom navigation, its safe-area padding and any docked guidance;
+  Build's existing map inset keeps the links above Build controls. Covering
+  sheets hide the map links, with existing More/account actions retained.
+  Local prototype mode shows only Save & Close.
+- `mobile/mobileShell.css`: small 12 px underlined text with 44 px minimum hit
+  height, a quiet readable background, and the same bottom alignment as
+  Recenter. Map and door notices sit above the links to avoid overlap. Sign-out
+  errors use an overlay and do not create a layout row.
+- `mobile/mobileEntry.css`: removed the rule that reserved a 48 px strip above
+  the phone HUD for the shared auth button.
+- Minimal shared wiring in `auth/AuthAccountContext.tsx` / `auth/AuthGate.tsx`:
+  the mounted phone shell owns Sign out and its error display, so the old
+  shared button and message do not render there. Unmounting the phone shell
+  restores the existing shared control. The original signOut action, pending
+  state, local-scope auth request and durability guard are unchanged.
+- `ui/CloudSaveControls.tsx`: optional presentation props let the phone omit
+  the inline close button and its wrapper entirely while retaining HUD warning
+  actions, existing closeRequest processing, busy state and all dialogs. The
+  bottom link uses that existing close request and disables while busy. Cloud
+  saving/release must still succeed before "Safe to close this tab" appears.
+  Local saving uses the unchanged onSaveAndPause / save sheet path.
+- New `mobile/mobileSessionLinks.test.tsx`: seven regression tests cover both
+  accessible names, no old rows or controls, local-only applicability, actual
+  AuthGate ownership/restoration, asynchronous cloud close and guarded sign-out,
+  pending names, error display, HUD warnings, covering sheets and overlay CSS.
+
+Desktop finding: AppShell places Save & Close in ResourceBar's endControls;
+AuthGate places Sign out in a fixed bottom-right button. Desktop has neither
+phone-specific full-width strip. AppShell, ResourceBar, AccountMenu, desktop CSS
+and their confirmations are untouched. Shared defaults preserve desktop markup.
+No clinical content, saves, domain rules, cloud transport/coordinator, SQL,
+`supabase/**` or `scripts/beta-invites/**` were edited.
+
+### Validation and evidence
+
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`:
+  **271 files / 2,621 tests PASS**, exit 0, duration 154.87 seconds.
+- `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0.
+- Focused command with `--pool=threads src/mobile/mobileSessionLinks.test.tsx
+  src/mobile/MobileShell.test.tsx src/ui/CloudSaveControls.test.tsx
+  src/auth/AuthGate.test.tsx`: **4 files / 121 tests PASS**, exit 0.
+- Initial focused startup hit the known sandbox EPERM in Vite's optional
+  `net use` probe before any tests ran. Successful test runs set NODE_OPTIONS
+  to `--require=C:/Users/rowla/Projects/GamifySurgery/.local-dev/phone-links-20261027/vite-net-use-preload.cjs`.
+  The test-only preload forwards only that synchronous EPERM to Vite's existing
+  error callback. It does not change source/config, pool, assertions or timeouts,
+  does not enumerate network drives successfully and does not allow a process.
+- Reviewed actual diffs against scoped before-images without Git. Seven changed
+  source files pass UTF-8/no-BOM/LF/final-newline checks. Evidence is in
+  `.local-dev/phone-links-20261027/`: baseline before-images, `review.diff`,
+  `validated-source.json`, `final-audit.json`, focused/full and typecheck logs.
+
+Manager next: inspect the scoped diff, take phone screenshots (normal map,
+notched/small portrait, landscape, Build and guidance), and run cloud e2e.
+Check restored map height, link/Recenter separation, exact accessible names,
+confirmed close and existing account confirmations. No browser/e2e or visual
+PASS is claimed by this worker; those checks belong to the manager.
+
+LOCAL ONLY: no Git, installs, network, agents, server changes, owner-browser or
+storage access, deployment or publication. Manager owns acceptance and the
+subsequent audited "push to GitHub" checkpoint/reminder. Owner opening pathways
+remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent
+profile, and https://melissarowlandc-afk.github.io/GamifySurgery/. Their local saves
+remain separate by origin/profile. No pathway was opened or substituted.
+
+
+## Cloud default-on handoff (2026-10-27)
+
+Bounded Sol worker, server/tool lane only. The concurrent phone worker's source
+and handoff are preserved. No clinical content or player code was changed.
+
+Files added:
+- supabase/migrations/20261027000100_beta2_default_enabled.sql
+- supabase/tests/beta2_default_enabled.sql
+
+Files updated:
+- scripts/beta-invites/beta-cloud.mjs
+- scripts/beta-invites/beta-cloud.test.mjs
+- scripts/beta-invites/beta-invites.mjs
+- scripts/beta-invites/README.md
+
+The migration adds the NOT NULL default_account_enabled=false singleton switch.
+An admitted account without a cloud row inherits it in access; an explicit false
+always wins. Access creates no account, consent or quota row. The existing
+require-cloud guard lazily creates an enabled row on first notice acceptance,
+using the membership lock and the same 8192-byte allowance/capacity checks as
+admin-created accounts. Existing enabled rows survive switching the default off.
+The deletion ledger also denies access, so a rowless deleted account cannot
+inherit the default. Revocation and all existing admission checks still apply.
+
+Exactly three private functions are CREATE OR REPLACE; signatures, empty search
+paths, wrappers and ACLs survive. An offline before/after comparison confirmed
+every original require-cloud line/guard remains; access differs only by the
+default fallback and deletion guard; admin status differs only by optional-default
+validation/update. Both source migrations remain unchanged. No CASE expression
+was introduced into an IF condition; new test variables avoid column names.
+
+Admin configure accepts the third defaultAccountEnabled boolean while retaining
+the original required writesEnabled/enrollmentsEnabled pair. Omitting the third
+setting preserves its stored value. Inspect reports default_account_enabled
+inside quota, alongside the existing accountSettings result. The owner tool now
+supports cloud default on|off in CLI/help/prompts and displays all three switches
+in status/toggle results. Each toggle preserves and confirms all three values;
+missing/malformed defaults and mismatched acknowledgements fail explicitly.
+Status errors and README point to the new migration, rather than recommending
+reinstallation of the historical status function over it.
+
+Rollback-only SQL test: one final PASS query, no COMMIT. It covers default off,
+default on, unchanged access-side rows, separate notice acceptance, first-use
+account accounting exactly once, a real opaque import, explicit opt-out, legacy
+configure with both defaults, malformed settings, protocol/write/notice/ACL/JWT
+guards, revoked/deleting/soft-deleted/hard-deleted/ledger-suppressed accounts,
+untrusted signup metadata, unconfirmed/banned/anonymous/missing users, and full
+data deletion without resurrection. SQL was authored and reviewed offline only;
+NO SQL execution PASS is claimed.
+
+Validation:
+- node --test scripts/beta-invites/*.test.mjs: exit 1, sandbox spawn EPERM for
+  all four test files before tests could execute.
+- node --test --test-isolation=none scripts/beta-invites/*.test.mjs: final exit 0,
+  163 tests / 7 suites, 163 passed, 0 failed, 0 cancelled/skipped/todo;
+  duration_ms 151.8916. All provider calls use mocked fetch. The pre-existing
+  MODULE_TYPELESS_PACKAGE_JSON warning for the setup endpoint is non-failing.
+- Six changed source/tool files pass UTF-8/no-BOM/LF/final-newline checks;
+  offline function-preservation and SQL-shape checks pass. These are not SQL
+  parser/runtime validation.
+
+Apply-copy SHA-256:
+- Migration: 86c26941757647ac3a1a8a2808e1dda14b8fcf750984449cb57c54bed870376d
+- SQL test: 4c8a1d5bb11da1b290713f875a938cfac0037cb1f671a81d34bbfaab62d4767c
+
+Manager next: inspect the scoped diff; apply the migration; execute the entire
+new rollback-only test and existing cloud/status regression suites; then run
+cloud default on and cloud status to activate/confirm the approved rollout.
+The migration itself leaves the new switch OFF. Run legacy default-off cohort
+SQL checks before activation, since their original fixtures assume that default.
+Do not reapply install-cloud-status-rpc.sql over this migration. No unresolved
+implementation decision; SQL application/runtime acceptance remains the manager's.
+
+LOCAL ONLY: no Git, installs, network, agents, live SQL/server changes, owner
+browser/storage access, deployment or publication. Manager owns acceptance and
+the audited "push to GitHub" checkpoint/reminder. Owner pathways remain
+START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile,
+and https://melissarowlandc-afk.github.io/GamifySurgery/. Local saves remain
+separate by origin/profile. No pathway was opened or substituted.
+
+
+## Desktop sign-out link (2026-10-27)
+
+Bounded Sol follow-up completed the desktop footer correction requested with
+`.local-dev/qa-probe/owner-desktop-signout-20261027.jpg`. The screenshot's boxed
+Sign out was AuthGate's fixed bottom-right control. Cloud Save & Close was
+separately mounted in ResourceBar's endControls.
+
+### Changes and files
+
+- `apps/player/src/AppShell.tsx`: the desktop shell now uses the existing
+  setShellOwnsSignOut presentation ownership while mounted. AuthGate's floating
+  button does not render in the game. Sign out is a `text-button` at the very
+  end of the existing footer-actions row, with cloud Save & Close immediately
+  before it. Their accessible names stay exactly "Sign out" and "Save & Close",
+  including while pending. The footer displays sign-out errors in normal flow.
+  Leaving either game shell for entry restores the gate's original entry control.
+- Cloud Save & Close uses the existing closeRequest / busy presentation props
+  from the phone milestone. The inline HUD close button and wrapper are omitted;
+  actionable cloud status/continuation buttons stay in the HUD. The same
+  asynchronous save and session release must succeed before "Safe to close this
+  tab" appears. Local prototype Save & Close retains its existing HUD control.
+- `apps/player/src/styles/global.css`: desktop-only `.game-shell` overrides let
+  footer actions shrink and wrap, with auto-height footer tracks bounded by
+  minmax(0, ...). The existing two-track narrow desktop / three-track wider
+  desktop structure is preserved. New session links are static, transparent,
+  unboxed text controls; their hover state adds no box. No mobile selector or
+  rule is changed.
+- `apps/player/src/auth/AuthAccountContext.tsx`: comment only, clarifying that
+  either mounted game shell may supply the sign-out control. The interface,
+  original guarded signOut function, local-scope auth request and confirmations
+  are unchanged; no Supabase API, auth verification or server change is needed.
+- New `apps/player/src/AppShell.sessionLinks.test.tsx`: 11 tests cover placement
+  and link order at 1024 / 1180 / 1280 / 1440 px fixture widths, no floating
+  control or cloud HUD close button, guarded/pending/failed sign-out, confirmed
+  and failed cloud close, recovery/status actions, local applicability, footer
+  wrapping rules, phone/desktop switches and entry-control restoration. The
+  width cases verify DOM structure; physical geometry remains browser QA.
+
+All 108 files under `apps/player/src/mobile/**` plus AuthGate.tsx and
+CloudSaveControls.tsx are byte-for-byte unchanged from this follow-up's baseline
+(110 preserved files). The phone links and their earlier tests remain intact.
+AccountMenu, ResourceBar, SaveCloseDialog, clinical content, saved state, domain,
+cloud transport/coordinator, SQL, dependencies and other worker lanes are untouched.
+
+### Validation and evidence
+
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`:
+  **272 files / 2,632 tests PASS**, exit 0, duration 150.62 seconds.
+- `npm.cmd run typecheck`: **all seven workspaces PASS**, exit 0.
+- Focused player command with `--pool=threads src/AppShell.sessionLinks.test.tsx
+  src/AppShell.chartHighlight.test.tsx src/mobile/mobileSessionLinks.test.tsx
+  src/ui/CloudSaveControls.test.tsx src/auth/AuthGate.test.tsx
+  src/styles/clinicPresentation.test.ts`: **6 files / 130 tests PASS**, exit 0.
+- Test runs used the same narrow Vite net-use EPERM preload from the Phone links
+  handoff via NODE_OPTIONS. No test pool, assertion or timeout was changed.
+- Scoped before-images, actual `review.diff`, source/phone preservation hashes,
+  full/focused/typecheck logs and `final-audit.json` are in
+  `.local-dev/desktop-signout-link-20261027/`. Four changed source files pass
+  UTF-8/no-BOM/LF/final-newline checks; hashes are unchanged since validation.
+
+Manager next: inspect the diff and take desktop screenshots at 1024, 1180, 1280
+and 1440 px, checking footer wrapping, no overlap, link order, confirmed cloud
+close and unchanged account confirmations. Recheck phone layout and run the
+existing cloud e2e. No browser/e2e or visual PASS is claimed by this worker.
+
+LOCAL ONLY: no Git, installs, network, agents, server changes, owner-browser or
+storage access, deployment or publication. Manager owns acceptance and the
+subsequent audited "push to GitHub" checkpoint/reminder. Owner pathways remain
+START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile
+and https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
+by origin/profile. No opening pathway was used or substituted.

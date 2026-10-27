@@ -72,12 +72,17 @@
 .mobile-shell .mobile-dire-banner strong { flex: 1 1 120px; }
 .mobile-shell .mobile-dire-banner p { width: 100%; margin: 0; }
 .mobile-shell .mobile-map-recenter { position: absolute; z-index: 3; bottom: 10px; right: 8px; width: 44px; min-height: 44px; padding: 4px; border-radius: 10px; background: var(--paper-raised); box-shadow: 0 2px 8px #0004; font-size: 24px; }
+/* Inside the map, above the safe-area-aware navigation/coach and beside Recenter. */
+.mobile-shell .mobile-session-links { position: absolute; z-index: 3; bottom: 10px; right: 60px; display: flex; align-items: center; gap: 4px; max-width: calc(100% - 68px); border-radius: 6px; background: color-mix(in srgb, var(--paper-raised) 92%, transparent); }
+.mobile-shell .mobile-session-links[hidden] { display: none; }
+.mobile-shell .mobile-session-link { flex: 0 0 auto; min-height: 44px; padding: 4px 8px; border: 0; background: transparent; color: var(--ink); box-shadow: none; font-size: 12px; font-weight: 400; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.mobile-shell .mobile-session-error { position: absolute; bottom: 100%; right: 0; width: min(280px, calc(100vw - 76px)); margin: 0 0 4px; padding: 8px; border: var(--mobile-border); border-radius: 6px; background: var(--paper-raised); font-size: 12px; overflow-wrap: anywhere; }
 .mobile-shell .mobile-consult-chip { position: relative; overflow: hidden; isolation: isolate; text-align: left; }
 .mobile-shell .mobile-consult-fill { position: absolute; inset: 0 auto 0 0; z-index: -1; width: var(--mobile-consult-progress); background: #c6d7b5; }
 .mobile-shell .mobile-consult-chip.is-ready .mobile-consult-fill { background: #aac78d; }
 .mobile-shell .mobile-consult-chip small { display: block; max-width: 220px; font-size: 10px; }
-.mobile-shell .mobile-map-toast { position: absolute; z-index: 6; bottom: 12px; left: 8px; right: 60px; margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--paper-raised); box-shadow: 0 2px 8px #0004; pointer-events: none; }
-.mobile-shell .mobile-door-toast { bottom: calc(var(--mobile-build-control-height, 136px) + 8px); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.mobile-shell .mobile-map-toast { position: absolute; z-index: 6; bottom: 64px; left: 8px; right: 60px; margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--paper-raised); box-shadow: 0 2px 8px #0004; pointer-events: none; }
+.mobile-shell .mobile-door-toast { bottom: calc(var(--mobile-build-control-height, 136px) + 64px); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
 .mobile-shell .mobile-door-toast button { pointer-events: auto; min-width: 44px; min-height: 44px; }
 .mobile-shell .mobile-build-map-controls { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 76px; display: flex; flex-wrap: wrap; gap: 6px; }
 .mobile-shell .mobile-build-map-controls p { width: 100%; margin: 0; padding: 6px; background: var(--paper-raised); }

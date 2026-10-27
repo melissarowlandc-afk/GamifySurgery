@@ -1,4 +1,5 @@
 import { AccountMenu } from "../ui/AccountMenu";
+import { useAuthAccountActions } from "../auth/AuthAccountContext";
 import { TesterFeedbackForm, useTesterFeedback } from "../feedback/TesterFeedback";
 import { VersionLabel } from "../appVersion";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
@@ -68,6 +69,12 @@ export const direMobileNeed = (needs: readonly NeedsYouItemView[]) =>
   needs.find((need) => need.kind === "save" || need.kind === "patient" || need.kind === "payroll");
 
 export default function MobileShell(props: PrototypeShellProps) {
+  const account = useAuthAccountActions();
+  const setShellOwnsSignOut = account?.setShellOwnsSignOut;
+  useEffect(() => {
+    setShellOwnsSignOut?.(true);
+    return () => setShellOwnsSignOut?.(false);
+  }, [setShellOwnsSignOut]);
   const feedback = useTesterFeedback();
   const shellRef = useRef<HTMLDivElement>(null);
   const [alertFocus, setAlertFocus] = useState<PhoneMapFocus | null>(null);
@@ -93,6 +100,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const [restartOpen, setRestartOpen] = useState(false);
   const [saveResult, setSaveResult] = useState<PrototypeSaveResult | null>(null);
   const [cloudCloseRequest, setCloudCloseRequest] = useState(0);
+  const [cloudSaveBusy, setCloudSaveBusy] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
   const [previewRequests, setPreviewRequests] = useState<{ campaignId?: string; ids: readonly string[] }>({ campaignId: props.facility.campaignId, ids: [] });
   const previewRoomIds = previewRequests.campaignId === props.facility.campaignId ? previewRequests.ids : [];
@@ -434,7 +442,8 @@ export default function MobileShell(props: PrototypeShellProps) {
   return <div className="mobile-shell" ref={shellRef}>
     <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen || Boolean(props.cloudSave && !props.cloudSave.view.canExecute)} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")}
       referenceLockReason={props.cloudSave && !props.cloudSave.view.canExecute ? cloudStatusText(props.cloudSave.view) ?? "Check your account save before resuming." : undefined}
-      cloudStatus={props.cloudSave ? <CloudSaveControls save={props.cloudSave} closeRequest={cloudCloseRequest} /> : undefined} />
+      cloudStatus={props.cloudSave ? <CloudSaveControls save={props.cloudSave} closeRequest={cloudCloseRequest}
+        showCloseButton={false} onBusyChange={setCloudSaveBusy} /> : undefined} />
     <main className="mobile-content" aria-label="Clinic workspace">
       <div className="mobile-workspace" style={{ "--mobile-build-control-height": `${build.controlsHeight}px` } as CSSProperties}>
       <div className="mobile-map" data-phone-anchor="map" ref={hostRef} style={props.buildMode ? { bottom: build.controlsHeight } : undefined}>
@@ -446,6 +455,13 @@ export default function MobileShell(props: PrototypeShellProps) {
           onSeatFounderInChair={props.onSeatFounderInChair} onDescribeCharacter={props.onDescribeCharacter}
           onPraiseEmployee={props.onPraiseEmployee} onMoveFounder={props.onMoveFounder}
           onMobileSelection={selectMapTarget} />
+        <div className="mobile-session-links" hidden={Boolean(visiblePanel) || restartOpen || reviewOpen} role="group" aria-label="Session actions">
+          <button type="button" className="mobile-session-link" aria-label="Save & Close" disabled={Boolean(props.cloudSave) && cloudSaveBusy}
+            onClick={showSave}>Save &amp; Close</button>
+          {account ? <button type="button" className="mobile-session-link" aria-label="Sign out" disabled={account.pending}
+            onClick={() => void account.signOut()}>{account.pending ? "Signing out…" : "Sign out"}</button> : null}
+          {account?.message ? <p className="mobile-session-error" role="alert">{account.message}</p> : null}
+        </div>
       </div>
       <div className="mobile-map-chips">
         <MobileGoalsChip key={`goals:${props.facility.campaignId}`} view={props.progression} onLevelUp={props.onLevelUp} onShowGoals={() => navigator.open("goals")} />

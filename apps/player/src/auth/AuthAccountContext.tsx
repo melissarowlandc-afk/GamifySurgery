@@ -8,6 +8,8 @@ export interface AuthAccountActions {
   signOut: () => Promise<boolean | void>;
   /** An account-scoped save owner may finish local durability before auth leaves. */
   signOutGuard?: { current: (() => Promise<void>) | null };
+  /** A mounted game shell supplies its own sign-out control and error display. */
+  setShellOwnsSignOut?: (owns: boolean) => void;
   pending: boolean;
   message: string | null;
 }

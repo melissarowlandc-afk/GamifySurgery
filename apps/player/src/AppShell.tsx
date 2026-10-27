@@ -7,6 +7,7 @@ import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
 import { ClinicHeadline } from "./ui/ClinicHeadline";
 import { CloudSaveControls, cloudStatusText, type CloudShellSave } from "./ui/CloudSaveControls";
 import { AccountMenu } from "./ui/AccountMenu";
+import { useAuthAccountActions } from "./auth/AuthAccountContext";
 import { FinishedGamePage } from "./ui/FinishedGamePage";
 import type {
   EmployeeDiscussionTabView,
@@ -319,6 +320,14 @@ export function AppShell({
   onClearLocalCampaigns,
   onRestart,
 }: AppShellProps) {
+  const account = useAuthAccountActions();
+  const setShellOwnsSignOut = account?.setShellOwnsSignOut;
+  useEffect(() => {
+    setShellOwnsSignOut?.(true);
+    return () => setShellOwnsSignOut?.(false);
+  }, [setShellOwnsSignOut]);
+  const [cloudCloseRequest, setCloudCloseRequest] = useState(0);
+  const [cloudSaveBusy, setCloudSaveBusy] = useState(false);
   const clinicWorkspaceRef = useRef<HTMLElement>(null);
   const [workspaceMapShare, setWorkspaceMapShare] = useState(() =>
     readWorkspaceMapShare(getWorkspaceStorage()),
@@ -730,7 +739,8 @@ export function AppShell({
         onTogglePause={onTogglePause}
         onSimulationSpeedChange={onSimulationSpeedChange}
         endControls={
-          cloudSave ? <CloudSaveControls save={cloudSave} /> : <><span className="cloud-local-status">Local only</span><SaveCloseDialog
+          cloudSave ? <CloudSaveControls save={cloudSave} closeRequest={cloudCloseRequest}
+            showCloseButton={false} onBusyChange={setCloudSaveBusy} /> : <><span className="cloud-local-status">Local only</span><SaveCloseDialog
             onSaveAndPause={onSaveAndPause}
             onClearLocalCampaigns={onClearLocalCampaigns}
           /></>
@@ -1105,7 +1115,7 @@ export function AppShell({
           </p>
         ) : null}
         <div className="footer-actions">
-            <AccountMenu />
+          <AccountMenu />
           <TesterFeedbackMenu level={campaigns.find(campaign => campaign.active)?.facilityLevel ??
             Number(progression.facilityLevelLabel.match(/\d+/)?.[0] ?? 0)} />
           <HelpDialog
@@ -1136,7 +1146,12 @@ export function AppShell({
             onTogglePause={onTogglePause}
             onRestart={onRestart}
           />
+          {cloudSave ? <button className="text-button footer-session-link" type="button" aria-label="Save & Close"
+            disabled={cloudSaveBusy} onClick={() => setCloudCloseRequest(value => value + 1)}>Save &amp; Close</button> : null}
+          {account ? <button className="text-button footer-session-link" type="button" aria-label="Sign out" disabled={account.pending}
+            onClick={() => void account.signOut()}>{account.pending ? "Signing out…" : "Sign out"}</button> : null}
         </div>
+        {account?.message ? <p className="footer-session-error" role="alert">{account.message}</p> : null}
       </footer>
 
       <p className="screen-reader-only" role="status" aria-live="polite">

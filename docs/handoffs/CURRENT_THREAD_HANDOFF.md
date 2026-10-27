@@ -7551,3 +7551,88 @@ Manager owns acceptance and the audited **"push to GitHub"** checkpoint/reminder
 Owner pathways remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the usual
 persistent profile, and https://melissarowlandc-afk.github.io/GamifySurgery/;
 their local saves stay separate by origin/profile. No pathway was substituted.
+
+
+## Phone links handoff (2026-10-27)
+
+Bounded Sol worker removed both phone HUD strips. Save & Close and Sign out are
+small links with 44 px hit targets over the bottom of the map beside Recenter,
+within the existing safe-area-aware shell. Local prototype shows only Save &
+Close. Existing save confirmation, guarded sign-out and account confirmations
+remain; desktop keeps its existing toolbar/fixed-corner controls. Minimal shared
+presentation wiring restores the default auth control when phone layout exits.
+
+Validation: player **271 files / 2,621 tests PASS**, exit 0; focused **4 files /
+121 tests PASS**; root typecheck **all seven workspaces PASS**, exit 0. Tests use
+the narrow Vite net-use EPERM preload described in the full handoff. Seven source
+files pass UTF-8/no-BOM/LF checks. Exact file list, behavior, commands and manager
+next checks: [Phone links handoff](../execplans/beta2-cloud-saves-20261017.md#phone-links-handoff-2026-10-27).
+Before-images, actual scoped diff and logs: `.local-dev/phone-links-20261027/`.
+
+Manager owns screenshots/e2e and acceptance; no browser PASS is claimed. LOCAL
+ONLY: no Git, installs, network, agents, live service, storage, deployment or
+publication changes. Manager owns the audited "push to GitHub" checkpoint and
+reminder. Owner pathways remain START_GAME.cmd -> http://127.0.0.1:4173 in the
+intended persistent profile and https://melissarowlandc-afk.github.io/GamifySurgery/;
+local saves remain separate by origin/profile. No pathway was substituted.
+
+
+## Cloud default-on handoff (2026-10-27)
+
+Server/tool worker added the default-off singleton switch and create-or-replace
+access/guard/admin update in
+supabase/migrations/20261027000100_beta2_default_enabled.sql, plus the one-PASS,
+rollback-only supabase/tests/beta2_default_enabled.sql. Admitted accounts with no
+cloud row inherit the default; explicit false wins; revoked/deleted accounts
+remain denied. Access creates no row. First notice acceptance creates an enabled
+account with the existing quota allowance. Prior function guards/ACLs survive;
+old two-switch configure callers preserve the new default.
+
+Updated beta-cloud.mjs, beta-cloud.test.mjs, beta-invites.mjs and README.md under
+scripts/beta-invites: cloud default on|off, status output, all-three-switch
+preservation/acknowledgement and mocked-fetch regression coverage. No old SQL,
+clinical content or player/mobile source edits by this worker.
+
+Final node --test --test-isolation=none scripts/beta-invites/*.test.mjs:
+163 passed / 0 failed, 7 suites, exit 0 (151.8916 ms). The standard runner was
+blocked by sandbox spawn EPERM; no test was weakened/skipped. Offline source
+preservation and UTF-8/no-BOM/LF checks pass. SQL was NOT applied or executed.
+Full behavior, hashes, validation and next action are in the cloud plan's
+"Cloud default-on handoff" section.
+
+Manager next: inspect diff, apply/test SQL and existing cloud/status suites,
+then cloud default on and cloud status. New migration alone leaves the default
+off; never replay the historical install-cloud-status-rpc.sql over it. LOCAL
+ONLY: no Git, installs, network, agents or live service/publication changes.
+Manager owns acceptance and the audited "push to GitHub" checkpoint/reminder.
+Owner pathways remain START_GAME.cmd -> http://127.0.0.1:4173 in the intended
+persistent profile and https://melissarowlandc-afk.github.io/GamifySurgery/;
+local saves remain separate by origin/profile. No pathway was substituted.
+
+
+## Desktop sign-out link (2026-10-27)
+
+Sol follow-up integrates desktop Sign out into the end of the existing footer
+link row, with cloud Save & Close immediately before it. The floating auth box
+and cloud HUD close button are absent from the game; guarded sign-out, exact
+accessible names and confirmed cloud save/release behavior remain. The desktop
+footer can shrink/wrap at narrower widths. Local HUD saving is unchanged.
+
+Files: AppShell.tsx, styles/global.css, AuthAccountContext.tsx (comment only),
+and new AppShell.sessionLinks.test.tsx under apps/player/src. All 110 baseline
+phone/shared files checked are byte-for-byte preserved, including all mobile
+files, AuthGate and CloudSaveControls. No server, clinical or dependency edits.
+
+Validation: player **272 files / 2,632 tests PASS**, exit 0; focused **6 files /
+130 tests PASS**; root typecheck **all seven workspaces PASS**, exit 0. Tests use
+the existing narrow Vite net-use EPERM preload. Full details and exact commands:
+[Desktop sign-out link](../execplans/beta2-cloud-saves-20261017.md#desktop-sign-out-link-2026-10-27).
+Evidence, before-images and actual diff: `.local-dev/desktop-signout-link-20261027/`.
+
+Manager owns screenshots at 1024-1440 px, browser wrap/overlap checks, phone
+recheck, e2e and acceptance; no browser PASS is claimed. LOCAL ONLY: no Git,
+installs, network, agents, owner storage, deployment or publication. Manager
+owns the audited "push to GitHub" checkpoint/reminder. Owner pathways remain
+START_GAME.cmd -> http://127.0.0.1:4173 in the intended persistent profile and
+https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
+by origin/profile. No pathway was used or substituted.

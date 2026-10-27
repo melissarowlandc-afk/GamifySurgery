@@ -44,12 +44,15 @@ export function CloudDialog({ title, children, onClose }: { title: string; child
   </dialog>;
 }
 
-export function CloudSaveControls({ save, closeRequest = 0 }: { save: CloudShellSave; closeRequest?: number }) {
+export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = true, onBusyChange }: {
+  save: CloudShellSave; closeRequest?: number; showCloseButton?: boolean; onBusyChange?: (busy: boolean) => void;
+}) {
   const { view } = save;
   const [open, setOpen] = useState(false), [busy, setBusy] = useState(false);
   const [closed, setClosed] = useState(false), [error, setError] = useState("");
   const mounted = useRef(true), lastCloseRequest = useRef(0);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  useEffect(() => { onBusyChange?.(busy); }, [busy, onBusyChange]);
   useEffect(() => {
     if (["readonly", "conflict", "auth", "blocked", "storage", "capacity"].includes(view.phase) || view.phase === "paused" && view.failure) setOpen(true);
   }, [view.phase, view.failure]);
@@ -76,13 +79,13 @@ export function CloudSaveControls({ save, closeRequest = 0 }: { save: CloudShell
   const showClosed = closed && view.phase === "closed";
   const status = cloudStatusText(view);
   const title = showClosed ? "Safe to close this tab" : needsDecision ? "Continue on this device?" : "Account save";
-  return <div className="cloud-save-controls">
+  const controls = <>
     {status ? <button type="button" className="cloud-sync-status" onClick={() => setOpen(true)} aria-label={`Account save status: ${status}`}>
       <span role="status" aria-live="polite" aria-atomic="true">{status}</span>
     </button> : null}
     {needsDecision ? <button type="button" className="button button-secondary" onClick={() => setOpen(true)}>Continue clinic</button> : null}
     {needsResume ? <button type="button" className="button button-secondary" onClick={() => setOpen(true)}>Resume clinic</button> : null}
-    <button type="button" className="button button-secondary save-close-button" disabled={busy} onClick={close}>Save &amp; Close</button>
+    {showCloseButton ? <button type="button" className="button button-secondary save-close-button" disabled={busy} onClick={close}>Save &amp; Close</button> : null}
     {open ? <CloudDialog title={title} onClose={() => setOpen(false)}>
       <p className="cloud-campaign-name">{save.campaignName} · Account</p>
       {showClosed ? <p>Your clinic is saved to your account and paused, and this device has released its session. You may close this tab.</p> : <>
@@ -115,5 +118,6 @@ export function CloudSaveControls({ save, closeRequest = 0 }: { save: CloudShell
       {busy ? <p role="status">Waiting for account confirmation…</p> : null}
       {error ? <p role="alert">{error}</p> : null}
     </CloudDialog> : null}
-  </div>;
+  </>;
+  return showCloseButton ? <div className="cloud-save-controls">{controls}</div> : controls;
 }

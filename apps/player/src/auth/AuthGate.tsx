@@ -76,6 +76,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(callback.hasError ? LINK_ERROR : null);
+  const [shellOwnsSignOut, setShellOwnsSignOut] = useState(false);
 
   useEffect(() => {
     if (!authClient) return;
@@ -213,10 +214,10 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     return (
       <AuthAccountContext.Provider key={admittedSession?.user.id ?? "local_prototype"} value={admittedSession?.user.id ?? null}>
         <AuthAccountActionsContext.Provider value={authClient && admittedSession ? {
-          email: admittedSession.user.email ?? "", signOut, signOutGuard, pending, message,
+          email: admittedSession.user.email ?? "", signOut, signOutGuard, pending, message, setShellOwnsSignOut,
         } : null}>
         {children}
-        {authClient && admittedSession ? (
+        {authClient && admittedSession && !shellOwnsSignOut ? (
           <>
             <button className="auth-signout-button" type="button" disabled={pending} onClick={() => void signOut()}>
               {pending ? "Signing out…" : "Sign out"}
