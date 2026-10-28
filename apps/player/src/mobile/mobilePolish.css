@@ -38,9 +38,16 @@
   .mobile-shell .mobile-xp-ring > span { width: 26px; height: 26px; font-size: 9px; }
   .mobile-shell .mobile-satisfaction { font-size: 13px; }
   .mobile-shell .mobile-content { grid-area: content; }
-  .mobile-shell .mobile-tab-bar { grid-area: tabs; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(5, minmax(44px, 1fr)); padding: 2px; border-top: 0; border-right: var(--mobile-border); }
-  .mobile-shell .mobile-tab-bar button { flex-direction: column; gap: 2px; font-size: 11px; }
-  .mobile-shell .mobile-tab-symbol { font-size: 17px; }
+  /* Fit the safe-area grid row; unusually short viewports/errors scroll this column. */
+  .mobile-shell .mobile-navigation { grid-area: tabs; min-height: 0; height: 100%; max-height: 100%; padding: 2px; border-top: 0; border-right: var(--mobile-border); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scroll-padding-block: 2px; }
+  /* Five 36px tabs + two 28px links + 4px padding = a 240px minimum budget. */
+  .mobile-shell .mobile-tab-bar { min-height: 180px; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(5, minmax(36px, 1fr)); flex: 1 1 180px; }
+  .mobile-shell .mobile-tab-bar button { min-height: 36px !important; flex-direction: column; gap: 1px; padding: 1px 2px; font-size: 11px; line-height: 1.1; }
+  .mobile-shell .mobile-session-strip { min-height: 0; }
+  .mobile-shell .mobile-session-row { min-height: 0; width: 100%; flex-direction: column; gap: 0; }
+  .mobile-shell .mobile-session-link { min-height: 28px !important; padding: 0 2px; }
+  .mobile-shell .mobile-session-error { margin-inline: 0; padding-inline: 2px; }
+  .mobile-shell .mobile-tab-symbol { font-size: 15px; }
   .mobile-shell .mobile-sheet-heading { min-height: 48px; padding-block: 2px; }
   .mobile-shell .mobile-chart-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: 4px; }
   .mobile-shell .mobile-chart-actions > :only-child { grid-column: 1 / -1; }

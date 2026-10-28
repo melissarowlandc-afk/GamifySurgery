@@ -21,7 +21,7 @@ body[data-phone-entry="true"] .founder-preset-row { grid-template-columns: 48px 
 body[data-phone-entry="true"] .auth-signout-button { top: env(safe-area-inset-top, 0px); bottom: auto; right: max(8px, env(safe-area-inset-right, 0px)); min-width: 44px; min-height: 44px; font-size: 13px; padding: 8px 12px; }
 body[data-phone-entry="true"]:has(.auth-signout-button) .opening-screen { padding-top: calc(52px + env(safe-area-inset-top, 0px)); }
 @media (orientation: landscape) and (max-height: 500px) {
-  body[data-phone-entry="true"] .opening-screen { align-content: start; padding-block: 10px; }
+  body[data-phone-entry="true"] .opening-screen { align-content: start; padding-block: max(10px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-bottom, 0px)); }
   body[data-phone-entry="true"] .founder-creator-screen .founder-creator { width: min(100%, 720px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
   body[data-phone-entry="true"] .founder-creator h1,
   body[data-phone-entry="true"] .founder-creator .opening-overhead-copy,

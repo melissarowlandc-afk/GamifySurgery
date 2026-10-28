@@ -7,7 +7,7 @@
 .opening-beta-info { width: min(560px, 100%); text-align: center; }
 .opening-beta-info .beta-account { text-align: left; }
 .beta-clinical-notice { margin: 4px 0; font-size: 11px; line-height: 1.25; }
-.beta-usage-notice { position: fixed; z-index: 120; inset: auto 12px 12px; max-width: 560px; max-height: 72dvh;
+.beta-usage-notice { position: fixed; z-index: 120; inset: auto max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); max-width: 560px; max-height: min(72dvh, calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
   overflow: auto; margin-inline: auto; padding: 16px; border: 2px solid var(--ink, #30291e);
   border-radius: 12px; background: var(--paper-raised, #faf1dc); color: var(--ink, #30291e); box-shadow: 0 4px 20px #0004; }
 .question-flag-control { max-width: 100%; margin-left: auto; }
@@ -33,6 +33,3 @@
 .tester-feedback-form textarea { display: block; width: 100%; box-sizing: border-box; margin: 6px 0; padding: 8px;
   font: inherit; color: inherit; background: var(--paper-raised, #faf1dc); resize: vertical; }
 .tester-feedback-form p { margin: 8px 0; overflow-wrap: anywhere; }
-@media (max-width: 760px) {
-  .beta-usage-notice { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
-}

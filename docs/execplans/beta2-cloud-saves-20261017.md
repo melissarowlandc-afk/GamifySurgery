@@ -3991,3 +3991,312 @@ by origin/profile. No pathway was opened or substituted.
 
 Owner (answering the recommendation to apply the default-on setting before 35 residents sign up): "Yes turn on cloud saves the way you recommend." The manager is applying 20261027000100 and running `cloud default on`. Owner will send the invitations personally ("I don't want you sending emails, I'll just do it myself. I just need the links"). 35 setup links were generated privately (.local-dev/invites/, ignored). Ann Karmo is administration: not added to the name pool (owner may choose not to send her link). The other four new names are not added to the name pool.
 - 2026-10-28: applied 20261027000100_beta2_default_enabled.sql live (SHA prefix 86c26941) with explicit owner approval; beta2_default_enabled.sql PASS; restored the default-aware tool; `cloud default on` -> Cloud account default: on (writes/enrollments on). Newly admitted accounts get cloud saves automatically; explicit per-account disables still win. The migration and tool files ship to the repository with the next release.
+
+
+## Home Screen app install (2026-10-27)
+
+Assigned Sol worker implemented the install metadata for the owner's report that
+an iPhone Home Screen launch still had browser chrome. Implementation is local;
+release and a physical iPhone install check remain the manager's acceptance work.
+
+### Implementation, ownership and URL handling
+
+Nine source/test files changed by this milestone, plus this appended handoff
+(**10 deliverable files**):
+
+- `apps/player/index.html`
+- new `apps/player/public/manifest.webmanifest`
+- new `apps/player/src/homeScreenInstall.test.ts`
+- `apps/player/src/mobile/build/mobileBuild.css`
+- `apps/player/src/mobile/mobileEntry.css`
+- `apps/player/src/styles/global.css`
+- `apps/player/src/ui/betaAccount.css`
+- `apps/player/src/ui/cloudSaves.css`
+- `apps/player/src/ui/finishedGamePage.css`
+- `docs/execplans/beta2-cloud-saves-20261017.md` (append only)
+
+The manifest has name/short_name `Stitchin' Time`, `display: standalone`,
+`start_url: ./`, `scope: ./`, `id: ./`, and no orientation lock. Its background
+is the existing paper token `#e0ded0`; its theme is the panel token `#f0eddd`.
+The existing 192/512 PNGs are declared with relative `./app-icon/...` URLs and
+purpose `any`; no maskable-art suitability is claimed.
+
+HTML declares the manifest, both mobile-web-app-capable flags, theme colour,
+and `width=device-width, initial-scale=1.0, viewport-fit=cover`. Zoom stays
+available. The Apple status-bar style is `default`: the light paper/panel
+palette suits the normal dark status text without a translucent overlay.
+Standalone mode removes browser chrome while retaining normal OS status UI.
+
+Confirmed against the installed Vite implementation and real production output:
+Vite's HTML public-asset transform detects public-file hrefs and prefixes the
+configured base; public files themselves are copied as-is. The source manifest
+link therefore follows the existing root-relative apple-touch-icon link:
+
+| Build base | Built manifest href | Built Apple icon href |
+| --- | --- | --- |
+| `/` | `/manifest.webmanifest` | `/app-icon/apple-touch-icon.png` |
+| `/GamifySurgery/` | `/GamifySurgery/manifest.webmanifest` | `/GamifySurgery/app-icon/apple-touch-icon.png` |
+
+Inside the manifest, `start_url`, `scope`, and icon URLs resolve relative to the
+manifest location. Tests assert the requested literal `id: ./` separately.
+The three tested URL contexts were `http://127.0.0.1:4173/`,
+`http://127.0.0.1:5184/`, and
+`https://melissarowlandc-afk.github.io/GamifySurgery/`. These were offline URL
+resolution/build checks; no browser or live site was opened.
+
+The small test uses Vite's actual HTML/public-asset production transforms with a
+no-op entry module, no env-file loading, no output writes and no listening port.
+It verifies built metadata/zoom, valid manifest JSON, scope/start resolution,
+palette tokens, both PNG signatures and their actual 192/512 dimensions, plus
+favicon/Apple icon paths for all three URL contexts. Separate checks also read
+the full production builds' actual copied manifests and icons.
+
+### Safe-area audit
+
+This is a source/cascade audit, not a physical notch/home-indicator screenshot
+PASS. Existing inset handling and containment were checked for each active
+phone edge surface, including elements whose position is relative/absolute
+inside the fixed shell rather than independently fixed to the viewport.
+
+| Element | Protection and result |
+| --- | --- |
+| Fixed `.mobile-shell`, top bar and clock | `mobileShell.css:13` pads the shell top/left/right with safe-area env values. The bar is a grid child inside that padding. Preserved. |
+| Bottom tabs and Save & Close / Sign out strip | `mobileShell.css:84-96` derives `--mobile-bottom-inset` from the bottom env value and reserves `max(32px, var(--mobile-bottom-inset))` below the tabs. Session links intentionally occupy the right-hand strip with central home-indicator clearance. Landscape shell padding in `mobilePolish.css:30` protects the bottom when tabs move to the side. Preserved; physical link clearance belongs to the concurrent phone worker's acceptance. |
+| Full/bottom/inspector/chart/feedback sheets, sheet headers, sticky Manage segments and Goals action | Sheets occupy `.mobile-workspace` inside `.mobile-content`, between the inset top bar and navigation. Their own scroll/sticky regions stay inside that protected workspace; they do not need to add the device inset again. Preserved. |
+| Build controls, map recenter, chips, dire banner, map toast and door toast | Absolutely positioned within the same protected workspace/map, above navigation. Build controls reserve measured map height; toast offsets are relative to that workspace. Preserved. |
+| Tutorial coach | The active `.mobile-tutorial-coach` is a bounded relative flex row inside `.mobile-content` (`mobileScreens.css:135`), above navigation, with its own scrollable copy. It is not the old fixed desktop coach. Preserved. |
+| Campaign/restart/build modal backdrops and their sticky actions | The existing phone `.dialog-backdrop` override in `mobilePolish.css:15` supplies all four safe-area paddings before its full-height scrollable child. Generic desktop backdrops now also take the max of their existing padding and each inset. |
+| Fixed build sale confirmation | `mobileBuild.css:37` lacked viewport inset padding. Added max(existing 8px, each of the four safe-area values); capped its scrollable section to the available padded height as well as 85dvh. |
+| Entry, auth, founder and fixed entry sign-out | Existing phone entry padding covers all four edges; fixed sign-out already uses safe top/right. The landscape `padding-block: 10px` override discarded top/bottom protection, so it now takes max(10px, the corresponding inset). |
+| Cloud campaign entry | Existing phone padding covered left/right/bottom but omitted top. Added max(existing 1.25rem, safe top) to both the explicit phone class and narrow-width fallback. |
+| Native cloud / developer review dialogs | Native `showModal()` dialogs enter the top layer and cannot inherit shell padding. Added `body[data-phone-entry="true"] dialog.confirm-dialog` safe-area offsets and viewport bounds in `global.css:1398`; specificity wins over shell sizing rules. This also covers native phone confirm dialogs without changing their contents or handlers. |
+| Fixed usage notice | Previously only narrow portrait widths added a bottom inset. The base rule now protects left/right/bottom at every width and limits its height by both top/bottom safe areas, including landscape. |
+| Finished-game page, footer and new-campaign confirmation | Existing full-screen phone dialog already pads top/bottom; heading, report and footer already pad safe left/right. Added missing left/right inset padding to the confirmation branch. |
+| Desktop shell | Added four-edge env padding to `.game-shell`; it is zero on an ordinary desktop. Desktop content and footer remain within that shell. No desktop layout direction changed. |
+
+No active missing inset fix was identified that requires editing the three
+reserved files. This worker never edited `MobileShell.tsx`, `mobileShell.css`
+or `mobilePolish.css`. The first file and associated session-link tests changed
+concurrently and were preserved. The old viewport-string assertion in
+`MobileShell.test.tsx` and missing `targetSelector` fixture were corrected in
+the concurrent lane, not by this milestone.
+
+### Validation and evidence
+
+Commands ran from the repository root unless stated. Existing installed
+dependencies only; test/build commands reuse the documented narrow Windows
+Vite `net use` EPERM preload:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/homeScreenInstall.test.ts
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/homeScreenInstall.test.ts src/AppShell.sessionLinks.test.tsx src/mobile/MobileShell.test.tsx src/mobile/mobileSessionLinks.test.tsx src/mobile/phonePolish.test.tsx src/mobile/mobileEntry.test.tsx src/session/finishedGameFlow.test.tsx src/ui/CloudSaveControls.test.tsx src/ui/CloudCampaignEntry.test.tsx src/styles/clinicPresentation.test.ts
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/session/periopNurseOwnerFeedback.test.ts
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2
+npm.cmd run typecheck
+npm.cmd run build --workspace @gamify-surgery/player
+npm.cmd run build --workspace @gamify-surgery/player -- --base=/GamifySurgery/ --outDir ../../.local-dev/home-screen-install-20261027/pages-qa/apps/player/dist
+node scripts/verify-launcher-contract.mjs
+```
+
+- New focused test: **1 file / 3 tests PASS**, exit 0. Final rerun 228ms.
+- Focused regressions: **10 files / 170 tests PASS**, exit 0, 30.01 seconds.
+- Root typecheck: **all seven workspaces PASS**, exit 0. Earlier player failure
+  was the concurrent missing `targetSelector` fixture; its final rerun passes.
+- Root player and isolated Pages production builds: **both PASS**, exit 0,
+  **803 modules** transformed. Existing chunk-size/plugin-timing warnings are
+  non-failing. Pages output stays in scratch; normal `apps/player/dist` still
+  has root-base URLs for the canonical local pathway.
+- Existing Pages verifier, invoked by absolute script path with cwd
+  `.local-dev/home-screen-install-20261027/pages-qa`: **PASS**, exit 0,
+  `Verified 5 Pages asset reference(s) and 3285 public build file(s) under /GamifySurgery/.`
+- Full-build HTML/manifest/icon checks: **all three URL contexts PASS**, exit 0.
+- Launcher verifier: **PASS**, exit 0, application `gamify-surgery-player`,
+  protocol **1**.
+- Required `npm.cmd run test:boundaries`: **exit 1** because the checker invokes
+  `git ls-files -z`, while this brief expressly forbids Git. A scratch preload
+  rejects that invocation before any Git process can run. The only reported
+  boundary failure is the unavailable tracked-path check; dependency/source
+  scans complete without reported violations. Launcher verification was run
+  separately because the combined command short-circuits. This is not a full
+  boundary PASS; manager must rerun that command with Git permitted.
+- First full player run: **279 passed files / 2 failed files; 2,731 passed /
+  2 failed tests (2,733 total)**, 165.32 seconds, exit 1. Both obsolete shared
+  assertions (viewport and session-link placement) were subsequently corrected
+  in the concurrent lane; all focused regressions then pass.
+- Second requested full run: **280 passed files / 1 failed file; 2,732 passed /
+  1 timed-out test (2,733 total)**, 182.63 seconds, exit 1. The Level-3 case in
+  `periopNurseOwnerFeedback.test.ts` exceeded the existing 5-second timeout.
+  Immediate isolated rerun: **1 file / 3 tests PASS**, exit 0, 7.35 seconds.
+- Final reduced-concurrency full run: **281 files / 2,733 tests PASS**, exit 0,
+  **298.91 seconds**, with `--pool=threads --maxWorkers=2`; assertions, test
+  timeouts and repository config are unchanged. No failed or skipped tests.
+
+Evidence in ignored `.local-dev/home-screen-install-20261027/` includes the
+4,303-path baseline, original HTML/CSS/plan copies, actual scoped filesystem
+diff, owned source list, SHA-256/UTF-8/no-BOM/LF audits, safe-area source
+inventory, complete validation logs and the isolated Pages build. All **266**
+baseline game-domain files and **52** balance-config files remain byte-identical.
+No clinical content, game-domain, saves, SQL, dependencies or source assets
+were edited by this worker.
+
+### iOS installation, storage and manager acceptance
+
+After this release, testers who already added an icon must delete that old
+Home Screen icon and re-add it from Safari: **Share -> Add to Home Screen**,
+keeping **Open as Web App** on. Confirm a launch from the new icon has no
+Safari address/navigation border, uses the correct icon/title, and preserves
+accessible controls in portrait and landscape on a device with a notch and
+home indicator. Check cloud/recovery dialogs, build sale, entry/auth,
+finished-game confirmation, and the concurrent bottom session links.
+
+An installed iOS Home Screen app keeps browser storage separately from Safari.
+Local-only Safari progress therefore does not appear automatically in the
+installed app. With cloud saves enabled, signing into the same account
+restores its account campaigns. Confirm progress has saved to the account
+before deleting an older installation if it contains progress to keep.
+
+Owner opening pathways remain **START_GAME.cmd -> exact
+http://127.0.0.1:4173** in the intended persistent profile, and
+**https://melissarowlandc-afk.github.io/GamifySurgery/**. QA
+`location.origin = http://127.0.0.1:5184`, owner local
+`location.origin = http://127.0.0.1:4173`, and Pages
+`location.origin = https://melissarowlandc-afk.github.io` have separate browser
+storage; profiles and the installed iOS container further separate local data.
+No real browser's origin/storage was inspected or changed by this worker.
+
+Manager next: review the scoped diff, rerun the complete boundary command with
+Git permitted, accept physical iPhone/desktop safe-area and reinstallation
+checks, and own the audited **"push to GitHub"** checkpoint/reminder. This is a
+local-only implementation, with **no Git, installs, network, agents, external
+messages, deployment or publication**. No service worker, offline cache,
+install prompt or new game UI was introduced. This assigned plan append is the
+handoff; the manager's current-thread handoff remains outside this worker lane.
+
+
+## Phone session links under tabs
+
+2026-10-27 bounded Sol milestone, following the owner's iPhone feedback. Session
+links now belong to the bottom navigation footer, after the five tab buttons.
+The map overlay is removed; Recenter remains on the map. No runtime copy,
+desktop implementation, save/domain/SQL or clinical-content changes by this worker.
+
+The footer reuses the bottom inset through a strip of max(32px, inset), with
+11px underlined links and 32px minimum button heights. The row is right-aligned
+under Manage/Build and moves farther right when an inset is present, reserving
+the centre for the home indicator. Long/pending labels can wrap within their
+buttons. At a normal 34px inset the strip replaces the previous padding; at zero
+inset it adds 32px. The strip stays reserved while its group is hidden, so sheets
+do not shift the map. Account errors retain role="alert" in normal flow above
+the link row, below the tabs. Existing hidden condition, cloud-save busy state,
+guarded sign-out, pending label and disabled states are unchanged.
+
+The outer footer occupies the existing auto-sized shell row and the landscape
+"tabs" grid area. Map/workspace, tutorial coach, measured Build control inset and
+sheets continue to follow the content area. Landscape links stack below the
+five 44px-minimum tabs; the column can scroll at short heights.
+
+Files changed by this milestone (seven including this handoff):
+- apps/player/src/mobile/MobileShell.tsx
+- apps/player/src/mobile/mobileShell.css
+- apps/player/src/mobile/mobilePolish.css
+- apps/player/src/mobile/mobileSessionLinks.test.tsx
+- apps/player/src/mobile/MobileShell.test.tsx
+- apps/player/src/AppShell.sessionLinks.test.tsx (phone-switch assertions only)
+- docs/execplans/beta2-cloud-saves-20261017.md (this appended section)
+
+The foundation test now requires the exact shared viewport string including
+viewport-fit=cover, matching the concurrent Home Screen installation lane.
+index.html and that lane's source changes were preserved. All CSS scope,
+44px general-target and four safe-area checks remain. No e2e spec asserted the
+old map placement: none was edited; all 100 baseline e2e files are unchanged.
+
+Final validation, all exit 0, using the documented sandbox preload:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --require=C:/Users/rowla/Projects/GamifySurgery/.local-dev/phone-links-20261027/vite-net-use-preload.cjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/mobile src/AppShell.sessionLinks.test.tsx src/ui/CloudSaveControls.test.tsx src/auth/AuthGate.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
+npm.cmd run typecheck
+```
+
+Focused: **51 files / 653 tests PASS**, 22.30s. Full player: **281 files / 2,733
+tests PASS**, 165.63s. Typecheck: **all seven workspaces PASS**. An earlier full
+run hit the existing 5000ms Level-3 nurse simulation timeout in
+src/session/periopNurseOwnerFeedback.test.ts (2,732 passed / 1 timed out).
+Its unchanged file then passed isolated **1 file / 3 tests**, followed by the
+fully green repeat above. No timeout, assertion or test configuration was relaxed.
+
+Evidence: .local-dev/phone-links-under-tabs-20261027/ contains scoped before-images,
+review.diff, source hashes, concurrent-file notes, raw validation logs and the
+final audit. All six changed source/test files pass UTF-8/no-BOM/LF checks.
+
+Manager next: inspect the scoped diff, rerun browser checks and screenshots at
+390x844 with zero and 34px bottom inset, plus 844x390 landscape. For the simulated
+portrait inset set --mobile-bottom-inset: 34px on .mobile-navigation (0px for
+comparison). Check normal/pending/local-only links, account error, covering
+sheets, tutorial coach and Build controls. No browser/geometry PASS is claimed.
+
+LOCAL ONLY: no Git, installs, network, agents, external messages, browser/server,
+owner storage, deployment or publication actions. Manager owns acceptance and
+the audited "push to GitHub" checkpoint/reminder. Owner pathways remain
+START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent profile,
+and https://melissarowlandc-afk.github.io/GamifySurgery/; saves remain separate by
+origin/profile. No opening pathway was used or substituted.
+
+
+### Landscape correction after manager review (2026-10-27)
+
+Manager accepted portrait at 390x844 with zero/34px bottom inset, measuring the
+links at x272-386 without overlap. The 667x375 landscape check cut Sign out off
+at y401. This follow-up changes only the existing landscape media block and
+its related tests. MobileShell.tsx, mobileShell.css and every byte before that
+media block are unchanged from the accepted portrait baseline.
+
+The five tabs can now shrink to 36px, keeping 11px labels and 15px symbols; the
+two full-width stacked links use 28px targets with no intervening gap. Their
+minimum budget is 240px including column padding, reduced from 290px. The tab
+grid can flex down to 180px instead of reserving 220px. The navigation's height
+and max-height are explicitly 100% of the minmax(0, 1fr) grid row. If a short
+320px viewport, larger header, text wrapping or account error exceeds this
+budget, the bounded tab column scrolls vertically; the document need not scroll.
+The shell's existing top/left/right and landscape bottom env() padding keeps
+the scrollport inside all safe-area edges, including the 21px bottom inset.
+Account errors remain normal-flow alerts above the links and scroll with them.
+
+Changed files (four including this handoff):
+
+- apps/player/src/mobile/mobilePolish.css
+- apps/player/src/mobile/mobileSessionLinks.test.tsx
+- apps/player/src/mobile/phonePolish.test.tsx
+- docs/execplans/beta2-cloud-saves-20261017.md (this appended correction)
+
+The new CSS budget test reads actual minimum sizes, requires the !important
+overrides against the general 44px rule, caps the minimum budget at 240px and
+checks the bounded scrollport, shrinking tab grid and safe-area constraints.
+Existing portrait, general touch-target, visibility, save/sign-out, sheet,
+Build and tutorial assertions remain. No e2e specs or runtime copy were edited.
+
+Final validation uses the same exact focused/full commands and documented
+preload shown above, with --pool=threads. All exits are 0:
+
+- Focused: **51 files / 654 tests PASS**, 19.70s.
+- Full player: **281 files / 2,734 tests PASS**, 147.60s.
+- npm.cmd run typecheck: **all seven workspaces PASS**.
+
+Evidence: .local-dev/phone-links-landscape-20261027/ contains the before-images,
+scoped review.diff, source hashes, complete logs and final-audit.json. Changed
+source/tests are UTF-8/no-BOM/LF. The accepted portrait source is byte-identical.
+
+Manager next: rerun 667x375, 844x390, 932x430 and a 320px-high landscape viewport,
+with zero insets and with 21px bottom plus realistic left/right insets. Simulate
+landscape insets on .mobile-shell (e.g. padding-bottom: 21px; padding-inline:
+44px), which owns that layout's safe-area budget. Include pending sign-out and
+a long account error; verify touch/keyboard scrolling reaches every control
+inside the rail. Recheck the accepted portrait pair. No new browser measurement
+or screenshot PASS is claimed by this worker.
+
+LOCAL ONLY: no Git, installs, network, agents, browser/server, owner storage,
+clinical content, saves, domain or SQL changes. Opening pathways remain
+unchanged. Manager owns acceptance and the audited "push to GitHub" checkpoint.

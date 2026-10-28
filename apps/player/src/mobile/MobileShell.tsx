@@ -456,13 +456,6 @@ export default function MobileShell(props: PrototypeShellProps) {
           onSeatFounderInChair={props.onSeatFounderInChair} onDescribeCharacter={props.onDescribeCharacter}
           onPraiseEmployee={props.onPraiseEmployee} onMoveFounder={props.onMoveFounder}
           onMobileSelection={selectMapTarget} />
-        <div className="mobile-session-links" hidden={Boolean(visiblePanel) || restartOpen || reviewOpen} role="group" aria-label="Session actions">
-          <button type="button" className="mobile-session-link" aria-label="Save & Close" disabled={Boolean(props.cloudSave) && cloudSaveBusy}
-            onClick={showSave}>Save &amp; Close</button>
-          {account ? <button type="button" className="mobile-session-link" aria-label="Sign out" disabled={account.pending}
-            onClick={() => void account.signOut()}>{account.pending ? "Signing out…" : "Sign out"}</button> : null}
-          {account?.message ? <p className="mobile-session-error" role="alert">{account.message}</p> : null}
-        </div>
       </div>
       <div className="mobile-map-chips">
         <MobileGoalsChip key={`goals:${props.facility.campaignId}`} view={props.progression} onLevelUp={props.onLevelUp} onShowGoals={() => navigator.open("goals")} />
@@ -491,16 +484,29 @@ export default function MobileShell(props: PrototypeShellProps) {
         targetLabel={tutorialTarget?.label} onNavigate={requestTutorialTab} onAction={props.onTutorialAction}
         onDisableTutorials={() => props.onTutorialsEnabledChange(false)} onTopicExposure={props.onTutorialTopicExposure} />
     </main>
-    <nav className="mobile-tab-bar" aria-label="Clinic tabs">
-      {TABS.map((tab) => { const badge = tab.id === "patients" ? waitingCount : tab.id === "alerts" ? needs.length : 0;
-        return <button type="button" key={tab.id} aria-current={(props.buildMode ? "build" : navigation.tab) === tab.id ? "page" : undefined}
-          data-mobile-tab={tab.id} data-mobile-tutorial-target={tutorialTab === tab.id ? "true" : undefined}
-          disabled={restartOpen || reviewOpen}
-          aria-label={`${tab.label}${badge ? `, ${badge} ${tab.id === "patients" ? "waiting" : "Needs you"}` : ""}`} onClick={() => requestTab(tab.id)}>
-          <span className="mobile-tab-symbol" aria-hidden="true">{tab.symbol}</span><span>{tab.label}</span>
-          {badge ? <span className="mobile-tab-badge" aria-hidden="true">{badge}</span> : null}
-        </button>; })}
-    </nav>
+    <footer className="mobile-navigation">
+      <nav className="mobile-tab-bar" aria-label="Clinic tabs">
+        {TABS.map((tab) => { const badge = tab.id === "patients" ? waitingCount : tab.id === "alerts" ? needs.length : 0;
+          return <button type="button" key={tab.id} aria-current={(props.buildMode ? "build" : navigation.tab) === tab.id ? "page" : undefined}
+            data-mobile-tab={tab.id} data-mobile-tutorial-target={tutorialTab === tab.id ? "true" : undefined}
+            disabled={restartOpen || reviewOpen}
+            aria-label={`${tab.label}${badge ? `, ${badge} ${tab.id === "patients" ? "waiting" : "Needs you"}` : ""}`} onClick={() => requestTab(tab.id)}>
+            <span className="mobile-tab-symbol" aria-hidden="true">{tab.symbol}</span><span>{tab.label}</span>
+            {badge ? <span className="mobile-tab-badge" aria-hidden="true">{badge}</span> : null}
+          </button>; })}
+      </nav>
+      <div className="mobile-session-strip">
+        <div className="mobile-session-links" hidden={Boolean(visiblePanel) || restartOpen || reviewOpen} role="group" aria-label="Session actions">
+          {account?.message ? <p className="mobile-session-error" role="alert">{account.message}</p> : null}
+          <div className="mobile-session-row">
+            <button type="button" className="mobile-session-link" aria-label="Save & Close" disabled={Boolean(props.cloudSave) && cloudSaveBusy}
+              onClick={showSave}>Save &amp; Close</button>
+            {account ? <button type="button" className="mobile-session-link" aria-label="Sign out" disabled={account.pending}
+              onClick={() => void account.signOut()}>{account.pending ? "Signing out…" : "Sign out"}</button> : null}
+          </div>
+        </div>
+      </div>
+    </footer>
     <p className="screen-reader-only" role="status" aria-live="polite">{props.announcement}</p>
     {props.finishReportOpen && props.progression.inspection && props.onCloseFinishReport ? <MobileFinishedGamePage
       key={props.progression.inspection.finish?.report.runId} inspection={props.progression.inspection}

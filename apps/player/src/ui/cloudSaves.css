@@ -29,12 +29,12 @@
 .cloud-entry input[type="checkbox"], .cloud-account input[type="checkbox"] { width: 1.4rem; height: 1.4rem; vertical-align: middle; margin-right: 0.5rem; }
 .cloud-entry input[type="text"] { display: block; width: 100%; min-height: 44px; }
 .cloud-origin { overflow-wrap: anywhere; font-size: 0.8rem; }
-.cloud-entry--phone { padding: 1.25rem max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); }
+.cloud-entry--phone { padding: max(1.25rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); }
 .cloud-entry--phone .cloud-clinic-row { grid-template-columns: minmax(0, 1fr); }
 .cloud-entry--phone button { width: 100%; margin-inline: 0; }
 .cloud-entry--phone .cloud-entry-actions { justify-items: stretch; }
 @media (max-width: 600px) {
-  .cloud-entry { padding: 1.25rem max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); }
+  .cloud-entry { padding: max(1.25rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); }
   .cloud-entry .cloud-clinic-row { grid-template-columns: minmax(0, 1fr); }
   .cloud-entry button { width: 100%; margin-inline: 0; }
   .cloud-entry-actions { justify-items: stretch; }

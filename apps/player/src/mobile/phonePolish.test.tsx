@@ -71,14 +71,15 @@ describe("manager phone polish", () => {
     expect(open).toHaveBeenCalledExactlyOnceWith("patient-id");
     await env.click("Find water"); expect(env.button("Clinic").attributes["aria-current"]).toBe("page");
   });
-  it("uses one top row and a left tab rail at 844x390 while keeping scrolling sheets and 44px targets", async () => {
+  it("uses one top row and a compact left tab rail at 844x390 while keeping scrolling sheets and general 44px targets", async () => {
     const env = phoneTestDom(); env.browser.innerWidth = 844; env.browser.innerHeight = 390;
     await env.render(<MobileShell {...phoneFixture({ onTogglePause: noop })} />); await env.click("More clinic options"); await env.click("Help");
     expect(env.find(node => node.attributes["aria-label"] === "Help").attributes.class).toContain("is-full");
     const css = readFileSync(new URL("./mobilePolish.css", import.meta.url), "utf8");
     expect(css).toContain('(orientation: landscape) and (min-width: 600px) and (max-height: 500px)');
     expect(css).toContain('grid-template-areas: "top top" "tabs content"'); expect(css).toContain('display: contents');
-    expect(css).toContain('repeat(5, minmax(44px, 1fr))'); expect(css).toContain('max-height: none'); expect(css).toContain('overflow: auto');
+    expect(css).toContain('repeat(5, minmax(36px, 1fr))'); expect(css).toContain('max-height: none'); expect(css).toContain('overflow: auto');
+    expect(css).toMatch(/\.mobile-tab-bar button\s*\{[^}]*min-height: 36px !important/);
     expect(css).toMatch(/\.is-collapsed\s*\{[^}]*max-height:\s*48px/);
     const base = readFileSync(new URL("./mobileShell.css", import.meta.url), "utf8");
     expect(base).toContain('min-height: 44px !important');

@@ -369,3 +369,21 @@ Git, install, network or browser work. Manager next: check hosted desktop/phone
 with transient access failures and no online event, offline reopen with each
 remembered mode, visibility recovery, and sign-out/account switching. No open
 implementation decision; browser acceptance remains with the manager.
+
+## Manager acceptance and release (2026-10-27)
+
+- `20261028000100_casual_mode.sql` applied live; `supabase/tests/casual_mode.sql`
+  PASS live (seed values raised so the test works with real board rows);
+  `supabase/tests/live/beta1_setup_links.sql` PASS live. `competition.sql`
+  assumes an empty board and was not rerun live (auto-mode blocked an
+  in-transaction board clear); awaiting owner decision.
+- Access-retry follow-up accepted after diff review; focused tests 144/144.
+- Release tree full `CI=true npm test` passed (player 2,723; game-domain 4,306),
+  typecheck all seven, owner tool 203, cloud e2e 60/60 on rerun (recovery
+  spec timing flake 32/32 on repeat). Released as `2b2acb37` on
+  `release/beta1-20261016` and `main`; Pages run 40608821731 succeeded and the
+  live bundle contains the new features.
+- Nine casual invite links generated with `--casual` (private list in
+  `.local-dev/invites/`).
+- Owner decision (2026-10-27): no further live leaderboard test; `competition.sql`
+  stays a disposable-database test and is not rerun on the live project.

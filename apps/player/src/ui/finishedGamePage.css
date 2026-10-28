@@ -22,6 +22,7 @@
 .finished-game-dialog.is-phone .finished-game-lines p { margin: 3px 0; }
 .finished-game-dialog.is-phone .finished-game-report { padding: 8px max(10px, env(safe-area-inset-right, 0px)) 6px max(10px, env(safe-area-inset-left, 0px)); }
 .finished-game-dialog.is-phone .finished-game-footer { padding: 8px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px)); }
+.finished-game-dialog.is-phone .finished-game-confirmation { padding-inline: max(24px, env(safe-area-inset-left, 0px)) max(24px, env(safe-area-inset-right, 0px)); }
 .finished-game-dialog.is-phone .finished-game-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .finished-game-dialog.is-phone .finished-game-actions button { font-size: 13px; padding: 8px 6px; }
 @media (max-height: 520px) {

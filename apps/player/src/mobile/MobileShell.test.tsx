@@ -103,7 +103,7 @@ describe("MobileShell foundation", () => {
     expect(markup).toMatch(/class="mobile-speed"[^>]*disabled/);
     expect(markup).toContain("Exit Build Mode to resume.");
   });
-  it("keeps all CSS scoped, with 44px targets and safe-area insets, and leaves index.html unchanged", () => {
+  it("keeps all CSS scoped, with 44px targets, safe-area insets and the shared viewport-fit setting", () => {
     const css = readFileSync(new URL("./mobileShell.css", import.meta.url), "utf8");
     const selectors = css.replace(/\/\*[\s\S]*?\*\//g, "").matchAll(/([^{}]+)\{/g);
     for (const [_, selector] of selectors) if (!selector!.trim().startsWith("@")) {
@@ -111,7 +111,7 @@ describe("MobileShell foundation", () => {
     }
     expect(css).toContain("min-height: 44px");
     for (const area of ["top", "bottom", "left", "right"]) expect(css).toContain(`safe-area-inset-${area}`);
-    expect(readFileSync(new URL("../../index.html", import.meta.url), "utf8")).toContain('content="width=device-width, initial-scale=1.0"');
+    expect(readFileSync(new URL("../../index.html", import.meta.url), "utf8")).toContain('content="width=device-width, initial-scale=1.0, viewport-fit=cover"');
   });
   it("hosts desktop portals inline without changing their contents or handlers", async () => {
     const { createPortal } = await import("react-dom"); const doc = new TestDocument();

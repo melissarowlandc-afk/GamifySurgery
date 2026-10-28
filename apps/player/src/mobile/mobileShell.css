@@ -72,11 +72,6 @@
 .mobile-shell .mobile-dire-banner strong { flex: 1 1 120px; }
 .mobile-shell .mobile-dire-banner p { width: 100%; margin: 0; }
 .mobile-shell .mobile-map-recenter { position: absolute; z-index: 3; bottom: 10px; right: 8px; width: 44px; min-height: 44px; padding: 4px; border-radius: 10px; background: var(--paper-raised); box-shadow: 0 2px 8px #0004; font-size: 24px; }
-/* Inside the map, above the safe-area-aware navigation/coach and beside Recenter. */
-.mobile-shell .mobile-session-links { position: absolute; z-index: 3; bottom: 10px; right: 60px; display: flex; align-items: center; gap: 4px; max-width: calc(100% - 68px); border-radius: 6px; background: color-mix(in srgb, var(--paper-raised) 92%, transparent); }
-.mobile-shell .mobile-session-links[hidden] { display: none; }
-.mobile-shell .mobile-session-link { flex: 0 0 auto; min-height: 44px; padding: 4px 8px; border: 0; background: transparent; color: var(--ink); box-shadow: none; font-size: 12px; font-weight: 400; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
-.mobile-shell .mobile-session-error { position: absolute; bottom: 100%; right: 0; width: min(280px, calc(100vw - 76px)); margin: 0 0 4px; padding: 8px; border: var(--mobile-border); border-radius: 6px; background: var(--paper-raised); font-size: 12px; overflow-wrap: anywhere; }
 .mobile-shell .mobile-consult-chip { position: relative; overflow: hidden; isolation: isolate; text-align: left; }
 .mobile-shell .mobile-consult-fill { position: absolute; inset: 0 auto 0 0; z-index: -1; width: var(--mobile-consult-progress); background: #c6d7b5; }
 .mobile-shell .mobile-consult-chip.is-ready .mobile-consult-fill { background: #aac78d; }
@@ -86,11 +81,20 @@
 .mobile-shell .mobile-door-toast button { pointer-events: auto; min-width: 44px; min-height: 44px; }
 .mobile-shell .mobile-build-map-controls { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 76px; display: flex; flex-wrap: wrap; gap: 6px; }
 .mobile-shell .mobile-build-map-controls p { width: 100%; margin: 0; padding: 6px; background: var(--paper-raised); }
-.mobile-shell .mobile-tab-bar { position: relative; z-index: 10; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px)); border-top: var(--mobile-border); background: var(--panel); }
+.mobile-shell .mobile-navigation { --mobile-bottom-inset: env(safe-area-inset-bottom, 0px); position: relative; z-index: 10; display: flex; min-width: 0; flex-direction: column; padding: 4px; border-top: var(--mobile-border); background: var(--panel); }
+.mobile-shell .mobile-tab-bar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); flex: 0 0 auto; }
 .mobile-shell .mobile-tab-bar button { position: relative; display: flex; min-width: 0; min-height: 56px; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 2px; border: 0; background: transparent; font-size: 12px; }
 .mobile-shell .mobile-tab-bar button[aria-current="page"] { background: var(--paper-raised); color: var(--ink); box-shadow: inset 0 -3px var(--focus); font-weight: 700; }
 .mobile-shell .mobile-tab-symbol { font-size: 20px; line-height: 1; }
 .mobile-shell .mobile-tab-badge { position: absolute; top: 0; right: 4px; padding: 1px 5px; border-radius: 10px; background: #8c392d; color: white; font-size: 11px; }
+/* Reuse the bottom inset; reserve the same strip while panels hide its links. */
+.mobile-shell .mobile-session-strip { flex: 0 0 auto; min-height: max(32px, var(--mobile-bottom-inset)); }
+.mobile-shell .mobile-session-links { display: flex; min-width: 0; flex-direction: column; }
+.mobile-shell .mobile-session-links[hidden] { display: none; }
+/* Under Manage/Build, with extra centre clearance when a home indicator is present. */
+.mobile-shell .mobile-session-row { display: flex; min-width: 0; min-height: 32px; width: min(40%, calc(50% - min(72px, calc(var(--mobile-bottom-inset) * 3)))); align-self: flex-end; align-items: stretch; justify-content: flex-end; gap: 2px; }
+.mobile-shell .mobile-session-link { flex: 0 1 auto; min-width: 0 !important; min-height: 32px !important; padding: 2px; border: 0; background: transparent; color: var(--ink); box-shadow: none; font-size: 11px; line-height: 1.2; font-weight: 400; text-decoration: underline; text-underline-offset: 2px; white-space: normal; }
+.mobile-shell .mobile-session-error { margin: 2px 4px; padding: 4px 6px; border: var(--mobile-border); border-radius: 6px; background: var(--paper-raised); font-size: 12px; overflow-wrap: anywhere; }
 .mobile-shell .mobile-sheet { position: absolute; z-index: 5; inset: 0; display: flex; min-width: 0; min-height: 0; flex-direction: column; overflow: hidden; background: var(--paper-raised); }
 .mobile-shell .mobile-sheet.is-bottom { top: auto; max-height: 78%; border-top: 2px solid var(--ink); border-radius: 16px 16px 0 0; box-shadow: 0 -5px 20px #0004; }
 .mobile-shell .mobile-sheet-heading { display: flex; min-height: 52px; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 10px; border-bottom: var(--mobile-border); background: var(--panel); }

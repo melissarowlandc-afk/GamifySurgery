@@ -121,9 +121,14 @@ describe("desktop footer session links", () => {
     await env.render(<AuthGate><AppShell {...phoneFixture({ cloudSave: control })} /></AuthGate>);
     await env.render(<AuthGate><MobileShell {...phoneFixture({ cloudSave: control })} /></AuthGate>);
     const group = env.find(node => node.attributes["aria-label"] === "Session actions");
-    expect(group.parentNode?.attributes.class).toBe("mobile-map");
-    expect(env.button("Sign out").parentNode).toBe(group);
-    expect(env.button("Save & Close").parentNode).toBe(group);
+    const row = env.find(node => node.attributes.class === "mobile-session-row");
+    const tabs = env.find(node => node.attributes["aria-label"] === "Clinic tabs");
+    expect(group.parentNode?.attributes.class).toBe("mobile-session-strip");
+    expect(group.parentNode?.parentNode?.attributes.class).toBe("mobile-navigation");
+    expect(tabs.nextSibling).toBe(group.parentNode);
+    expect(row.parentNode).toBe(group);
+    expect(env.button("Sign out").parentNode).toBe(row);
+    expect(env.button("Save & Close").parentNode).toBe(row);
     expect(allElements(env.element, node => node.attributes.class === "auth-signout-button")).toHaveLength(0);
     await env.render(<AuthGate><AppShell {...phoneFixture({ cloudSave: control })} /></AuthGate>);
     expect(footerLink(env, "Sign out").parentNode?.attributes.class).toBe("footer-actions");
