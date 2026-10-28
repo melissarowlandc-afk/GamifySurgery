@@ -1066,6 +1066,7 @@ export function ChartPanel({
             </section>
 
             <section className="cs-decisions" aria-label="Encounter decisions and results">
+              {chart.answerChoicesPending ? <p role="status">Checking your account mode...</p> : null}
               {steps.length === 0 ? (
                 <div className="cs-empty">
                   <strong>Encounter complete</strong>

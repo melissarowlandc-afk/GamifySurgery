@@ -109,6 +109,7 @@ export interface EmployeeDiscussionView {
   /** Short authored topic shown in the chart's chief-complaint slot. */
   topicLabel?:string;
   presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[];
+  answerChoicesPending?: boolean;
   feedbackTitle?:"Correct"|"Incorrect"; feedback?:string; correctAnswerText?:string;
   exhibit?: CaseExhibit;
   teachingPoint?: string;
@@ -206,6 +207,8 @@ export interface ChartClinicalReviewView {
 }
 
 export interface ChartView {
+  /** Account access is pending; choices remain hidden until mode is known. */
+  answerChoicesPending?: boolean;
   id: string;
   /** Team discussions reuse the chart sheet; omitted means a patient chart. */
   subjectKind?: "patient" | "team_discussion";

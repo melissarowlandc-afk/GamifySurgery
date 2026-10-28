@@ -387,6 +387,8 @@ describe("first shift derived from native state", () => {
     state = advanceUntil(state, (s) => s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.patientLocation === null && s.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.patientMovement === null);
     expect(view(state)?.id).toBe("speed-controls-tour");
     expect(view(state, { acknowledged: controlTipAcknowledgments })?.id).toBe("sendout-management");
+    expect(view(state, { acknowledged: controlTipAcknowledgments })?.body).toContain("Clinic Competition");
+    expect(view(state, { acknowledged: controlTipAcknowledgments })?.primaryAction).toEqual({ id: "open-management", label: "Explore Management" });
     expect(createTutorialStepView({state, tutorialsEnabled: true, introDismissed: false,
       acknowledgedStepIds: new Set(controlTipAcknowledgments.map((id) => `${state.campaignId}:${id}`)),
       buildMode: false, selectedRoomDefinitionId: null, exposedTopicIds: ["management"]})?.id).toBe("second-sendout-wait");

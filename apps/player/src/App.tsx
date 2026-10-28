@@ -21,7 +21,7 @@ import { OpeningSequence } from "./ui";
 import { AuthGate } from "./auth/AuthGate";
 import { useAuthAccountId } from "./auth/AuthAccountContext";
 import { usePresentationLayout } from "./shellPresentation";
-import { UsageProvider } from "./playtime/UsageProvider";
+import { UsageProvider, useCasualMode } from "./playtime/UsageProvider";
 import { UsageNotice } from "./ui/AccountMenu";
 import { QuestionFlagProvider } from "./session/QuestionFlagProvider";
 import { CloudAccountProvider, downloadCloudRecovery, useCloudAccount } from "./session/cloud/CloudAccount";
@@ -57,6 +57,7 @@ export function ActivePrototypeGame({
 }: ActivePrototypeGameProps) {
   const session = usePrototypeSession(loadedProfile, cloudSession);
   const cloudAccount = useCloudAccount();
+  const casualMode = useCasualMode();
   useEffect(() => {
     if (!cloudSession || !cloudAccount) return;
     cloudAccount.attach(cloudSession);
@@ -74,6 +75,7 @@ export function ActivePrototypeGame({
         session.placementOrientation,
         session.facilityCamera,
         session.questionReviewFlags,
+        casualMode,
       ),
     [
       session.buildMode,
@@ -84,6 +86,7 @@ export function ActivePrototypeGame({
       session.selectedRoomInstanceId,
       session.state,
       session.summaryVisible,
+      casualMode,
     ],
   );
 

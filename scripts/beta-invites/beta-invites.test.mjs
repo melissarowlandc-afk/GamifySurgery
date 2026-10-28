@@ -15,9 +15,9 @@ const ID = "11111111-1111-4111-8111-111111111111";
 const EMAIL = "tester@example.org";
 const TIMESTAMP = "2026-10-14T00:00:00Z";
 const member = (overrides = {}) => ({ user_id: ID, email: EMAIL, invited_at: TIMESTAMP,
-  confirmed_at: null, revoked_at: null, deletion_requested_at: null, banned_until: null, is_owner: false, ...overrides });
+  confirmed_at: null, revoked_at: null, deletion_requested_at: null, banned_until: null, is_owner: false, casual: false, ...overrides });
 const setupCode = (overrides = {}) => ({ id: ID, email: EMAIL, purpose: "invite", created_at: TIMESTAMP,
-  used_at: null, cancelled_at: null, failed_attempts: 0, ...overrides });
+  used_at: null, cancelled_at: null, failed_attempts: 0, casual: false, ...overrides });
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
 function fixture({ roster = [], codes = [], intercept = () => undefined, env = ENV, file = `${EMAIL}\nsecond@example.org\n`,
@@ -44,7 +44,7 @@ function fixture({ roster = [], codes = [], intercept = () => undefined, env = E
       if (custom !== undefined) return custom;
       if (url.pathname === "/rest/v1/rpc/beta1_setup_admin") {
         assert.equal(init.method, "POST");
-        if (body.p_action === "issue") return json({ id: ID, issued: true, purpose: body.p_purpose });
+        if (body.p_action === "issue") return json({ id: ID, issued: true, purpose: body.p_purpose, casual: body.p_casual === true });
         if (body.p_action === "list") return json(codes);
         if (body.p_action === "cancel") return json({ cancelled: true });
       }
@@ -63,6 +63,35 @@ function fixture({ roster = [], codes = [], intercept = () => undefined, env = E
 }
 
 describe("personal setup link tool, mocked fetch only", () => {
+  it("assigns casual mode at issue time for a single invite and each private batch address", async () => {
+    for (const args of [["invite", EMAIL, "--casual"], ["invite", "--file", "synthetic-private-list.txt", "--casual"]]) {
+      const f = fixture(); assert.equal(await f.run(args), 0);
+      assert.equal(f.requests.length, args.includes("--file") ? 2 : 1);
+      for (const request of f.requests) {
+        assert.equal(request.url.pathname, "/rest/v1/rpc/beta1_setup_admin");
+        assert.equal(request.body.p_casual, true); assert.equal(request.body.p_purpose, "invite");
+        assert.equal(request.body.p_owner, false);
+      }
+      assert.equal(f.output.length, f.requests.length); assert.ok(f.text().includes("#setup="));
+    }
+  });
+  it("withholds the entire casual batch if any issue acknowledgement omits the mode", async () => {
+    let issued = 0;
+    const f = fixture({ intercept: r => r.body?.p_action === "issue" && ++issued === 2 ? json({ id: ID, issued: true, purpose: "invite" }) : undefined });
+    assert.equal(await f.run(["invite", "--file", "synthetic-private-list.txt", "--casual"]), 1);
+    assert.equal(f.requests.length, 2); assert.ok(!f.text().includes("#setup=")); assert.match(f.text(), /Casual invitation could not be confirmed/);
+  });
+  for (const args of [["reset", EMAIL, "--casual"], ["invite", EMAIL, "--casual", "--casual"], ["list", "--casual"], ["cancel", EMAIL, "--casual"]]) {
+    it(`rejects unsupported casual options before requests: ${args.join(" ")}`, async () => {
+      const f = fixture(); assert.equal(await f.run(args), 1); assert.equal(f.requests.length, 0);
+    });
+  }
+  it("marks casual pending setup links before a member exists", async () => {
+    const f = fixture({ roster: [], codes: [setupCode({ casual: true })] });
+    assert.equal(await f.run(["list"]), 0);
+    assert.match(f.text(), /Failed attempts \| Casual/);
+    assert.ok(f.text().includes(`${EMAIL} | invite | pending | ${TIMESTAMP} | 0 | yes`));
+  });
   for (const command of ["invite", "reset"]) {
     it(`${command} stores only a SHA-256 hash of 32 random bytes and prints exactly the Pages link`, async () => {
       const lengths = [];

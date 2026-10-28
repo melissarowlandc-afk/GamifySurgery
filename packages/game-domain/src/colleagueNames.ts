@@ -91,6 +91,7 @@ export const COLLEAGUE_NAMES: readonly ColleagueName[] = [
   { given: "Tyler", family: "Kowalczyk", sex: "male", group: "resident" },
   { given: "Desirae", family: "Dowding", sex: "female", group: "resident" },
   { given: "Logan", family: "Butler", sex: "male", group: "resident" },
+  { given: "Melissa", family: "Rowland", sex: "female", group: "resident" },
 ];
 
 /** Cosmetic/editorial frequency only. Never a clinical or demographic weight. */

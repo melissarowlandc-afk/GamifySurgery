@@ -327,7 +327,6 @@ export function usePrototypeSession(
     cloud?.state ?? requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
-  useCompetitionSubmission(state, cloud?.metadata.name ?? profile.campaigns.find(campaign => campaign.campaignId === state.campaignId)?.name ?? "");
   const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
   const [
     selectedRoomDefinitionId,
@@ -538,6 +537,12 @@ export function usePrototypeSession(
       autosaveTaskRef.current = null;
     }
   }, []);
+
+  useCompetitionSubmission(state, cloud?.metadata.name ?? profile.campaigns.find(campaign => campaign.campaignId === state.campaignId)?.name ?? "", change => {
+    if (stateRef.current.campaignId === change.campaignId) {
+      publishSystemNotice("alert.system.competition-rank", change.message, "Clinic Competition");
+    }
+  });
 
   const attemptSaveProfile = useCallback(
     (nextProfile: LocalPrototypeProfile): PrototypeSaveResult => {

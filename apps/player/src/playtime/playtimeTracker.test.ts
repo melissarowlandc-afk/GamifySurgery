@@ -1,13 +1,13 @@
-import { describe, expect, it, vi } from "vitest";
-import { PlaytimeTracker } from "./playtimeTracker";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { PlaytimeTracker, type CasualModeMemory } from "./playtimeTracker";
 import { UsageOutbox, type UsageStorage } from "./usageOutbox";
-import { USAGE_IDLE_MS, USAGE_MAX_AGE_MS, USAGE_NOTICE_VERSION, USAGE_QUEUE_BYTES, type UsageReceipt, type UsageTransport } from "./usageTypes";
+import { USAGE_IDLE_MS, USAGE_MAX_AGE_MS, USAGE_NOTICE_VERSION, USAGE_QUEUE_BYTES, type UsageAccess, type UsageReceipt, type UsageTransport } from "./usageTypes";
 
 export function memoryUsageStorage(): UsageStorage & { values: Map<string, string> } {
   const values = new Map<string, string>();
   return { values, getItem: (key) => values.get(key) ?? null, setItem: (key, value) => { values.set(key, value); }, removeItem: (key) => { values.delete(key); } };
 }
-export function usageFixture(options: { storage?: UsageStorage; account?: string; start?: number; accepted?: boolean } = {}) {
+export function usageFixture(options: { storage?: UsageStorage; account?: string; start?: number; accepted?: boolean; modeMemory?: CasualModeMemory } = {}) {
   let mono = 0, wall = options.start ?? Date.UTC(2026, 9, 13, 12), sequence = 0;
   const storage = options.storage ?? memoryUsageStorage();
   const transport: UsageTransport = {
@@ -18,7 +18,7 @@ export function usageFixture(options: { storage?: UsageStorage; account?: string
   const clock = { monotonic: () => mono, wall: () => Math.floor(wall) };
   const uuid = () => `00000000-0000-4000-8000-${String(++sequence).padStart(12, "0")}`;
   const outbox = new UsageOutbox(options.account ?? "account-a", storage, clock.wall);
-  const tracker = new PlaytimeTracker(outbox, transport, clock, uuid);
+  const tracker = new PlaytimeTracker(outbox, transport, clock, uuid, options.modeMemory);
   const advance = (ms: number) => { mono += ms; wall += ms; };
   async function ready() {
     await tracker.refreshAccess(); tracker.setLease(true); tracker.setVisible(true);
@@ -28,6 +28,120 @@ export function usageFixture(options: { storage?: UsageStorage; account?: string
   return { tracker, outbox, transport, clock, storage, uuid, advance, ready, observe, jumpWall: (ms: number) => { wall += ms; } };
 }
 const activeMs = (receipts: readonly UsageReceipt[]) => receipts.reduce((sum, r) => sum + (r.kind === "playtime" ? r.active_ms : 0), 0);
+
+describe("account access recovery", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+  const admitted = (casual: boolean): UsageAccess => ({ admitted: true, notice_accepted: true, deletion_requested: false, casual });
+
+  it("recovers an unknown mode without an online event, using one capped backoff timer until success", async () => {
+    const f = usageFixture();
+    vi.mocked(f.transport.access).mockRejectedValue(new Error("temporarily unavailable"));
+    await f.tracker.refreshAccess();
+    expect(f.tracker.casualMode()).toBeNull(); expect(f.tracker.canRecordQuestions()).toBe(false);
+    expect(f.transport.access).toHaveBeenCalledTimes(1);
+    for (const [index, delay] of [2_000, 5_000, 15_000, 30_000].entries()) {
+      expect(vi.getTimerCount()).toBe(1);
+      await vi.advanceTimersByTimeAsync(delay - 1);
+      expect(f.transport.access).toHaveBeenCalledTimes(index + 1);
+      await vi.advanceTimersByTimeAsync(1);
+      expect(f.transport.access).toHaveBeenCalledTimes(index + 2);
+    }
+    vi.mocked(f.transport.access).mockResolvedValue(admitted(true));
+    await vi.advanceTimersByTimeAsync(29_999);
+    expect(f.transport.access).toHaveBeenCalledTimes(5);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(f.transport.access).toHaveBeenCalledTimes(6);
+    expect(f.tracker.casualMode()).toBe(true); expect(f.tracker.canRecordQuestions()).toBe(true);
+    expect(vi.getTimerCount()).toBe(0);
+    await vi.advanceTimersByTimeAsync(120_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(6);
+    f.tracker.stop();
+  });
+
+  it("deduplicates in-flight reads and replaces a pending retry with a manual refresh", async () => {
+    const f = usageFixture();
+    let reject!: (error: Error) => void, resolve!: (value: UsageAccess) => void;
+    vi.mocked(f.transport.access).mockReturnValueOnce(new Promise((_, fail) => { reject = fail; }))
+      .mockReturnValueOnce(new Promise(done => { resolve = done; }));
+    const first = f.tracker.refreshAccess();
+    expect(f.tracker.refreshAccess()).toBe(first);
+    await vi.advanceTimersByTimeAsync(60_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(1); expect(vi.getTimerCount()).toBe(0);
+    reject(new Error("offline")); await first;
+    expect(vi.getTimerCount()).toBe(1);
+    const second = f.tracker.refreshAccess();
+    expect(f.tracker.refreshAccess()).toBe(second);
+    expect(vi.getTimerCount()).toBe(0);
+    await vi.advanceTimersByTimeAsync(60_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(2);
+    resolve(admitted(false)); await second;
+    expect(f.tracker.casualMode()).toBe(false); expect(vi.getTimerCount()).toBe(0);
+    f.tracker.stop();
+  });
+
+  it("cancels retry on stop and ignores a later access success or failure", async () => {
+    const f = usageFixture();
+    vi.mocked(f.transport.access).mockRejectedValue(new Error("offline"));
+    await f.tracker.refreshAccess(); expect(vi.getTimerCount()).toBe(1);
+    f.tracker.stop(); expect(vi.getTimerCount()).toBe(0);
+    await vi.advanceTimersByTimeAsync(60_000); await f.tracker.refreshAccess();
+    expect(f.transport.access).toHaveBeenCalledTimes(1);
+
+    for (const succeeds of [false, true]) {
+      const remember = vi.fn(), pending = usageFixture({ modeMemory: { initial: null, remember } });
+      let finish!: () => void;
+      vi.mocked(pending.transport.access).mockReturnValueOnce(new Promise((resolve, reject) => {
+        finish = () => succeeds ? resolve(admitted(true)) : reject(new Error("offline"));
+      }));
+      const request = pending.tracker.refreshAccess(); await Promise.resolve();
+      pending.tracker.stop(); finish(); await request;
+      expect(pending.tracker.casualMode()).toBeNull(); expect(remember).not.toHaveBeenCalled();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  });
+
+  it("does not start transport work after an immediate cleanup", async () => {
+    const f = usageFixture(); const request = f.tracker.refreshAccess(); f.tracker.stop(); await request;
+    expect(f.transport.access).not.toHaveBeenCalled(); expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it.each([false, true])("uses remembered %s only for presentation and replaces it after fresh server access", async (initial) => {
+    const remember = vi.fn(), f = usageFixture({ modeMemory: { initial, remember } });
+    expect(f.tracker.casualMode()).toBe(initial); expect(f.tracker.createQuestionReceipt()).toBeNull();
+    vi.mocked(f.transport.access).mockRejectedValue(new Error("offline"));
+    await f.tracker.refreshAccess(); await vi.advanceTimersByTimeAsync(2_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(2);
+    expect(f.tracker.casualMode()).toBe(initial); expect(remember).not.toHaveBeenCalled();
+    expect(f.tracker.canRecordQuestions()).toBe(false); expect(f.transport.ingest).not.toHaveBeenCalled();
+    vi.mocked(f.transport.access).mockResolvedValue(admitted(!initial));
+    await f.tracker.refreshAccess();
+    expect(f.tracker.casualMode()).toBe(!initial); expect(remember).toHaveBeenLastCalledWith(!initial);
+    expect(f.tracker.canRecordQuestions()).toBe(true); expect(vi.getTimerCount()).toBe(0);
+    vi.mocked(f.transport.access).mockRejectedValue(new Error("later outage"));
+    await f.tracker.refreshAccess(); await vi.advanceTimersByTimeAsync(60_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(4);
+    expect(f.tracker.casualMode()).toBe(!initial); expect(remember).toHaveBeenCalledTimes(1);
+    expect(vi.getTimerCount()).toBe(0);
+    f.tracker.stop();
+  });
+
+  it("clears remembered mode on deletion without letting a late access result restore it", async () => {
+    const remember = vi.fn(), storage = memoryUsageStorage();
+    const f = usageFixture({ storage, modeMemory: { initial: true, remember } });
+    let resolve!: (value: UsageAccess) => void;
+    vi.mocked(f.transport.access).mockReturnValueOnce(new Promise(done => { resolve = done; }));
+    const request = f.tracker.refreshAccess(); await Promise.resolve();
+    await f.tracker.requestDeletion();
+    expect(remember).toHaveBeenLastCalledWith(null);
+    resolve(admitted(true)); await request;
+    expect(remember.mock.calls.every(([value]) => value === null)).toBe(true);
+    expect(f.tracker.canRecordQuestions()).toBe(false); expect(vi.getTimerCount()).toBe(0);
+    const reloaded = usageFixture({ storage, modeMemory: { initial: true, remember } });
+    expect(reloaded.tracker.casualMode()).toBeNull(); expect(remember).toHaveBeenLastCalledWith(null);
+    f.tracker.stop(); reloaded.tracker.stop();
+  });
+});
 
 describe("shared active playtime accounting", () => {
   it("records no time/count before the full notice and fresh server admission", async () => {

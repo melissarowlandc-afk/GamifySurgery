@@ -7,13 +7,30 @@ afterEach(() => vi.unstubAllGlobals());
 const receipt: QuestionUsageReceipt = { kind: "question", receipt_id: "11111111-1111-4111-8111-111111111111", occurred_at: "2026-10-13T12:00:00.000Z" };
 function transportFixture() {
   const getSession = vi.fn(async () => ({ data: { session: { user: { id: "a" }, access_token: "synthetic-session-token" } }, error: null }));
-  const setHeader = vi.fn(async (_name: string, _value: string) => ({ data: { acknowledged_receipt_ids: [receipt.receipt_id] }, error: null }));
+  const setHeader = vi.fn(async (_name: string, _value: string) => ({ data: { acknowledged_receipt_ids: [receipt.receipt_id] } as unknown, error: null }));
   const rpc = vi.fn(() => ({ setHeader }));
   const transport = createSupabaseUsageTransport({ auth: { getSession }, rpc } as unknown as SupabaseClient,
     { supabaseUrl: "https://usage.example.invalid/", supabaseAnonKey: "synthetic-public-key" }, "a");
   return { transport, getSession, setHeader, rpc };
 }
 describe("count-only Supabase transport", () => {
+  it.each([true, false, undefined])("maps read-only casual access %s without a write RPC", async casual => {
+    const f = transportFixture();
+    f.setHeader.mockResolvedValue({ data: { admitted: true, notice_accepted: false, deletion_requested: false, casual }, error: null });
+    expect(await f.transport.access()).toEqual({ admitted: true, notice_accepted: false, deletion_requested: false, casual: casual === true });
+    expect(f.rpc).toHaveBeenCalledExactlyOnceWith("get_usage_access", {});
+    expect(f.transport).not.toHaveProperty("setCasualMode");
+  });
+  it.each(["true", 1, null, {}])("rejects malformed casual mode %s", async casual => {
+    const f = transportFixture();
+    f.setHeader.mockResolvedValue({ data: { admitted: true, notice_accepted: true, deletion_requested: false, casual }, error: null });
+    await expect(f.transport.access()).rejects.toThrow("Usage access unavailable");
+  });
+  it.each([{ admitted: false, deletion_requested: false }, { admitted: true, deletion_requested: true }])("does not enable casual mode for denied/deleted access %s", async access => {
+    const f = transportFixture();
+    f.setHeader.mockResolvedValue({ data: { ...access, notice_accepted: false, casual: true }, error: null });
+    expect((await f.transport.access()).casual).toBe(false);
+  });
   it("pins the expected account token and sends only metric version and opaque time/count receipts", async () => {
     const f = transportFixture();
     expect(await f.transport.ingest([receipt], false)).toEqual([receipt.receipt_id]);

@@ -28,11 +28,15 @@ export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, br
   };
   const pagehide = () => { tracker.pagehide(); relinquish(); };
   const online = () => { void tracker.refreshAccess().then(() => tracker.flush()); };
+  const visibilityChange = () => {
+    visibility();
+    if (doc.visibilityState === "visible") online();
+  };
   const activityEvents = ["pointerdown", "click", "pointermove", "touchstart", "keydown", "wheel"];
   for (const type of activityEvents) doc.addEventListener(type, input, { capture: true, passive: true });
-  doc.addEventListener("visibilitychange", visibility);
+  doc.addEventListener("visibilitychange", visibilityChange);
   browser.addEventListener("pagehide", pagehide);
-  browser.addEventListener("pageshow", visibility);
+  browser.addEventListener("pageshow", visibilityChange);
   browser.addEventListener("online", online);
   const timer = browser.setInterval(() => { takeLease(); tracker.tick(); }, 1_000);
   visibility();
@@ -40,9 +44,9 @@ export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, br
     disposed = true;
     browser.clearInterval(timer);
     for (const type of activityEvents) doc.removeEventListener(type, input, true);
-    doc.removeEventListener("visibilitychange", visibility);
+    doc.removeEventListener("visibilitychange", visibilityChange);
     browser.removeEventListener("pagehide", pagehide);
-    browser.removeEventListener("pageshow", visibility);
+    browser.removeEventListener("pageshow", visibilityChange);
     browser.removeEventListener("online", online);
     relinquish();
   };

@@ -1,11 +1,13 @@
 import {
   USAGE_HEARTBEAT_MS, USAGE_IDLE_MS, USAGE_INTERVAL_MS, USAGE_MAX_OBSERVATION_GAP_MS,
-  type PlaytimeUsageReceipt, type UsageStatus, type UsageTransport, type QuestionUsageReceipt,
+  type PlaytimeUsageReceipt, type UsageAccess, type UsageStatus, type UsageTransport, type QuestionUsageReceipt,
 } from "./usageTypes";
 import { UsageOutbox } from "./usageOutbox";
 
 export interface UsageClock { monotonic(): number; wall(): number; }
 export interface TrackedGame { campaignId: string | null; paused: boolean; finishReportOpen: boolean; }
+export interface CasualModeMemory { initial: boolean | null; remember(mode: boolean | null): void; }
+const ACCESS_RETRY_DELAYS_MS = [2_000, 5_000, 15_000, 30_000];
 
 /** Pure accounting/controller; browser lifecycle and React each bind it once. */
 export class PlaytimeTracker {
@@ -20,31 +22,78 @@ export class PlaytimeTracker {
   private interval: { start: number; end: number; active: number } | null = null;
   private timelineEnd: number | null = null;
   private fractionalActive = 0;
-  private access = { admitted: false, notice_accepted: false, deletion_requested: false };
+  private access: UsageAccess = { admitted: false, notice_accepted: false, deletion_requested: false };
+  private accessKnown = false;
+  private provisionalCasualMode: boolean | null;
+  private accessInFlight: Promise<void> | null = null;
+  private accessRetry: ReturnType<typeof setTimeout> | null = null;
+  private accessRetryStep = 0;
   private state: UsageStatus["state"] = "requires-notice";
   private stopped = false;
   private inFlight: Promise<void> | null = null;
   private listeners = new Set<() => void>();
 
   constructor(readonly outbox: UsageOutbox, private transport: UsageTransport,
-    private clock: UsageClock, private uuid: () => string) {
+    private clock: UsageClock, private uuid: () => string, private modeMemory?: CasualModeMemory) {
     this.lastMono = clock.monotonic(); this.lastWall = clock.wall(); this.heartbeatAt = this.lastMono;
+    this.provisionalCasualMode = modeMemory?.initial ?? null;
+    if (outbox.deletionRequested()) this.clearRememberedMode();
   }
 
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => this.listeners.delete(listener); };
   private publish() { for (const listener of this.listeners) listener(); }
   status(): UsageStatus { return { state: this.state, ...this.outbox.status(), countingHere: this.lease && this.canRecordQuestions() }; }
+  /** Remembered server assignment is presentation only; it never grants usage access. */
+  casualMode = (): boolean | null => this.accessKnown
+    ? this.access.admitted && !this.access.deletion_requested && this.access.casual === true : this.provisionalCasualMode;
 
-  async refreshAccess(): Promise<void> {
-    if (this.stopped) return;
-    try {
-      const access = await this.transport.access();
-      if (this.stopped) return;
-      this.sample(); this.seal(); this.access = { ...access, deletion_requested: access.deletion_requested || this.outbox.deletionRequested() };
-      this.state = access.deletion_requested ? "deleted" : this.outbox.deletionRequested() || !access.admitted ? "blocked" :
-        !access.notice_accepted ? "requires-notice" : this.outbox.status().pendingReceipts ? "pending" : "ready";
-      if (access.deletion_requested) this.outbox.clear();
-    } catch { if (!this.stopped) this.state = "unavailable"; }
+  refreshAccess(): Promise<void> {
+    if (this.stopped) return Promise.resolve();
+    if (this.accessInFlight) return this.accessInFlight;
+    this.clearAccessRetry();
+    const request = (async () => {
+      // Assign the in-flight promise before even a synchronous transport failure.
+      await Promise.resolve();
+      try {
+        if (this.stopped) return;
+        const access = await this.transport.access();
+        if (this.stopped) return;
+        this.sample(); this.seal(); this.access = { ...access, deletion_requested: access.deletion_requested || this.outbox.deletionRequested() };
+        this.accessKnown = true;
+        this.accessRetryStep = 0;
+        this.clearAccessRetry();
+        this.state = access.deletion_requested ? "deleted" : this.outbox.deletionRequested() || !access.admitted ? "blocked" :
+          !access.notice_accepted ? "requires-notice" : this.outbox.status().pendingReceipts ? "pending" : "ready";
+        if (this.access.deletion_requested) this.clearRememberedMode();
+        else this.modeMemory?.remember(this.casualMode());
+        if (access.deletion_requested) this.outbox.clear();
+      } catch {
+        if (!this.stopped) { this.state = "unavailable"; this.scheduleAccessRetry(); }
+      } finally { this.accessInFlight = null; this.publish(); }
+    })();
+    this.accessInFlight = request;
+    return request;
+  }
+
+  private clearAccessRetry(): void {
+    if (this.accessRetry !== null) clearTimeout(this.accessRetry);
+    this.accessRetry = null;
+  }
+
+  private scheduleAccessRetry(): void {
+    if (this.stopped || this.accessKnown || this.access.deletion_requested || this.outbox.deletionRequested() || this.accessRetry !== null) return;
+    const delay = ACCESS_RETRY_DELAYS_MS[Math.min(this.accessRetryStep, ACCESS_RETRY_DELAYS_MS.length - 1)]!;
+    this.accessRetryStep += 1;
+    this.accessRetry = setTimeout(() => {
+      this.accessRetry = null;
+      void this.refreshAccess().then(() => this.flush());
+    }, delay);
+  }
+
+  /** Existing deletion and sign-out paths discard this account's display cache. */
+  clearRememberedMode(): void {
+    this.provisionalCasualMode = null;
+    this.modeMemory?.remember(null);
     this.publish();
   }
 
@@ -170,6 +219,7 @@ export class PlaytimeTracker {
     // Freeze immediately, including retries, even if delivery fails. The UI may retry.
     this.sample(); this.interval = null; this.access.deletion_requested = true; this.state = "blocked"; this.publish();
     this.outbox.markDeletionRequested();
+    this.clearAccessRetry(); this.clearRememberedMode();
     this.outbox.clear();
     await (fullAccountDeletion ? fullAccountDeletion() : this.transport.requestDeletion());
     this.outbox.clear(); this.state = "deleted"; this.publish();
@@ -177,5 +227,6 @@ export class PlaytimeTracker {
 
   stop(): void {
     this.sample(); this.seal(); this.stopped = true; this.lease = false; this.publish();
+    this.clearAccessRetry();
   }
 }

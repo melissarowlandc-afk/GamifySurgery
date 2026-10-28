@@ -27,6 +27,7 @@ export function employeeDiscussionChartView(discussion: EmployeeDiscussionView):
     statusLabel: STATUS_LABELS[discussion.status],
     presentation: discussion.presentation,
     answerChoices: [],
+    answerChoicesPending: discussion.answerChoicesPending,
     terminalFeedbackNeedsAcknowledgment: discussion.status === "feedback",
     summaryAvailable: false,
     summaryVisible: false,

@@ -1,14 +1,16 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { bindBrowserUsage } from "./browserUsage";
 import { PlaytimeTracker } from "./playtimeTracker";
 import { UsageOutbox } from "./usageOutbox";
-import type { UsageReceipt, UsageTransport } from "./usageTypes";
+import type { UsageAccess, UsageReceipt, UsageTransport } from "./usageTypes";
+
+afterEach(() => vi.useRealTimers());
 
 function browserFixture(locks?: LockManager) {
   let now = Date.UTC(2026, 9, 13, 12), mono = 0, sequence = 0;
   const values = new Map<string, string>();
   const storage = { getItem: (k: string) => values.get(k) ?? null, setItem: (k: string, v: string) => { values.set(k, v); }, removeItem: (k: string) => { values.delete(k); } };
-  const transport: UsageTransport = { access: async () => ({ admitted: true, notice_accepted: true, deletion_requested: false }),
+  const transport: UsageTransport = { access: vi.fn(async () => ({ admitted: true, notice_accepted: true, deletion_requested: false })),
     acceptNotice: async () => undefined, requestDeletion: async () => undefined,
     ingest: vi.fn(async (rs: readonly UsageReceipt[]) => rs.map((r) => r.receipt_id)) };
   const tracker = new PlaytimeTracker(new UsageOutbox("a", storage, () => now), transport,
@@ -34,6 +36,27 @@ function testLocks(): LockManager {
 }
 
 describe("browser usage binding", () => {
+  it("retries access on returning visible and deduplicates simultaneous visibility, pageshow and online events", async () => {
+    vi.useFakeTimers();
+    const f = browserFixture();
+    let resolve!: (access: UsageAccess) => void;
+    vi.mocked(f.transport.access).mockRejectedValueOnce(new Error("no signal"))
+      .mockReturnValueOnce(new Promise(done => { resolve = done; }));
+    await f.tracker.refreshAccess(); const unbind = f.bind();
+    expect(f.transport.access).toHaveBeenCalledTimes(1); expect(vi.getTimerCount()).toBe(1);
+    f.doc.visibilityState = "hidden"; f.emit("visibilitychange");
+    expect(f.transport.access).toHaveBeenCalledTimes(1);
+    f.doc.visibilityState = "visible"; f.emit("visibilitychange"); f.emit("pageshow"); f.emit("online");
+    await vi.advanceTimersByTimeAsync(60_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(2); expect(vi.getTimerCount()).toBe(0);
+    resolve({ admitted: true, notice_accepted: true, deletion_requested: false, casual: false });
+    await f.tracker.refreshAccess();
+    expect(f.tracker.casualMode()).toBe(false); expect(vi.getTimerCount()).toBe(0);
+    unbind(); f.tracker.stop(); f.emit("visibilitychange"); f.emit("online");
+    await vi.advanceTimersByTimeAsync(60_000);
+    expect(f.transport.access).toHaveBeenCalledTimes(2);
+  });
+
   it("uses one account/origin Web Lock across tabs; hide/pagehide releases it and cleanup removes listeners", async () => {
     const locks = testLocks(), a = browserFixture(locks), b = browserFixture(locks);
     for (const f of [a, b]) { await f.tracker.refreshAccess(); f.tracker.setGame({ campaignId: "clinic", paused: false, finishReportOpen: false }); }

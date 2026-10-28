@@ -11,7 +11,7 @@ import { scoredEmployeeFixture, scoredPatientFixture } from "./usageTestFixtures
 import type { UsageReceipt, UsageTransport } from "./usageTypes";
 
 const testContext = vi.hoisted(() => ({ tracker: null as PlaytimeTracker | null }));
-vi.mock("./UsageProvider", () => ({ useUsageTracking: () => testContext.tracker }));
+vi.mock("./UsageProvider", () => ({ useUsageTracking: () => testContext.tracker, useCasualMode: () => testContext.tracker?.casualMode() ?? false }));
 const accountId = "11111111-1111-4111-8111-111111111111";
 afterEach(async () => { await cleanupPhoneTests(); testContext.tracker?.stop(); testContext.tracker = null; });
 

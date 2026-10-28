@@ -7,16 +7,40 @@ import { accountStorageKey } from "../session/accountStorageKey";
 import { USAGE_OUTBOX_KEY } from "../playtime/usageOutbox";
 import { cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
 import { CompetitionClient } from "./competitionClient";
+import type { CompetitionRankChange } from "./competitionClient";
 import { CompetitionClientContext, useCompetitionSubmission } from "./useCompetition";
 import { fakeTransport, memoryStorage, receipt, revenueState } from "./testFixtures";
 
-const hosted = vi.hoisted(() => ({ getClient: vi.fn(), usage: null as PlaytimeTracker | null }));
+const hosted = vi.hoisted(() => ({ getClient: vi.fn(), usage: null as PlaytimeTracker | null, casual: false as boolean | null }));
 vi.mock("../auth/supabaseAuth", () => ({ getSupabaseAuthClient: hosted.getClient }));
-vi.mock("../playtime/UsageProvider", () => ({ useUsageTracking: () => hosted.usage }));
-function Observe({ state }: { state: GameState }) { useCompetitionSubmission(state, "Clinic"); return <span>Game continues</span>; }
-afterEach(() => { vi.unstubAllEnvs(); hosted.getClient.mockReset(); hosted.usage = null; return cleanupPhoneTests(); });
+vi.mock("../playtime/UsageProvider", () => ({ useUsageTracking: () => hosted.usage, useCasualMode: () => hosted.casual }));
+function Observe({ state, onRankChange }: { state: GameState; onRankChange?: (change: CompetitionRankChange) => void }) { useCompetitionSubmission(state, "Clinic", onRankChange); return <span>Game continues</span>; }
+afterEach(() => { vi.unstubAllEnvs(); hosted.getClient.mockReset(); hosted.usage = null; hosted.casual = false; return cleanupPhoneTests(); });
 
 describe("nonblocking day completion hook", () => {
+  it("reads rank after submission, publishes a changed rank once, and retries offline reads", async () => {
+    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "rank-hook"), notify = vi.fn();
+    const order: string[] = []; let rank = 3;
+    transport.submit.mockImplementation(async () => { order.push("submit"); });
+    transport.leaderboard.mockImplementation(async () => { order.push("rank"); return { hidden: false, rows: [{ rank, isSelf: true, clinicName: "Clinic", facilityLevel: 0, averageDailyRevenueCents: 0, daysCounted: 1 }] }; });
+    const render = (day: number) => env.render(<StrictMode><CompetitionClientContext.Provider value={client}><Observe state={revenueState(day)} onRankChange={notify} /></CompetitionClientContext.Provider></StrictMode>);
+    await render(1); expect(order).toEqual(["submit", "rank"]); expect(notify).not.toHaveBeenCalled();
+    rank = 2; await render(2);
+    expect(order).toEqual(["submit", "rank", "submit", "rank"]);
+    expect(notify).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ message: "You moved up to #2 in Clinic Competition!" }));
+    await render(2); expect(notify).toHaveBeenCalledTimes(1);
+    rank = 4; transport.leaderboard.mockRejectedValueOnce(new Error("offline")); await render(3);
+    expect(notify).toHaveBeenCalledTimes(1); expect(env.element.textContent).toBe("Game continues");
+    await act(async () => { env.browser.dispatchEvent(new Event("online")); });
+    expect(notify).toHaveBeenCalledTimes(2); expect(notify.mock.calls[1]![0].message).toBe("Another clinic passed yours — you're now #4.");
+  });
+  it.each([true, null])("makes no rank request/alert when casual access is %s", async casual => {
+    hosted.casual = casual;
+    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, null, "casual-rank"), notify = vi.fn();
+    await env.render(<CompetitionClientContext.Provider value={client}><Observe state={revenueState()} onRankChange={notify} /></CompetitionClientContext.Provider>);
+    await act(async () => { env.browser.dispatchEvent(new Event("online")); });
+    expect(transport.leaderboard).not.toHaveBeenCalled(); expect(notify).not.toHaveBeenCalled();
+  });
   it("submits once per completed day across pauses, ordinary ticks, strict effects and remounts", async () => {
     const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "a");
     const render = (state: GameState) => env.render(<StrictMode><CompetitionClientContext.Provider value={client}><Observe state={state} /></CompetitionClientContext.Provider></StrictMode>);
@@ -51,9 +75,11 @@ describe("nonblocking day completion hook", () => {
   it("never creates an auth client or queue in the local prototype, even with an account-shaped fixture", async () => {
     vi.stubEnv("VITE_SUPABASE_URL", ""); vi.stubEnv("VITE_SUPABASE_ANON_KEY", "");
     const env = phoneTestDom();
-    await env.render(<AuthAccountContext.Provider value="fixture"><Observe state={revenueState()} /></AuthAccountContext.Provider>);
+    const notify = vi.fn();
+    await env.render(<AuthAccountContext.Provider value="fixture"><Observe state={revenueState()} onRankChange={notify} /></AuthAccountContext.Provider>);
     await act(async () => { env.browser.dispatchEvent(new Event("online")); env.browser.dispatchEvent(new Event("focus")); });
     expect(hosted.getClient).not.toHaveBeenCalled(); expect(env.browser.localStorage.setItem).not.toHaveBeenCalled();
+    expect(notify).not.toHaveBeenCalled();
     expect(env.element.textContent).toBe("Game continues");
   });
   it("does not submit in a configured hosted build without a signed-in account", async () => {

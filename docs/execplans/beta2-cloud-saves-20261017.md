@@ -3981,3 +3981,13 @@ changes, publication or release. Manager owns acceptance and the audited
 -> exact http://127.0.0.1:4173 in the intended persistent profile and
 https://melissarowlandc-afk.github.io/GamifySurgery/; local saves remain separate
 by origin/profile. No pathway was opened or substituted.
+
+### Published (2026-10-27): prominent cloud notice
+
+1227288f (notice at the top with Accept and continue; acceptance enrolls waiting local campaigns). Player 2662 passed; cloud e2e 58/60, with the two recovery-spec failures passing 12/12 on repeat (recovery spec has recurring timing flakiness; queued with the e2e-suite repair milestone). Pages run 40584798070 succeeded; live sign-in loads.
+- 2026-10-27: the unapplied default-on tool changes broke `cloud status` against the live server. Manager parked the default-on migration/test and tool versions in ignored .local-dev/default-enabled-pending/ and restored the published tool files. New testers are enabled individually on sign-up until the owner decides.
+
+## Owner approval (2026-10-28): default-on cloud for new accounts; residents invited
+
+Owner (answering the recommendation to apply the default-on setting before 35 residents sign up): "Yes turn on cloud saves the way you recommend." The manager is applying 20261027000100 and running `cloud default on`. Owner will send the invitations personally ("I don't want you sending emails, I'll just do it myself. I just need the links"). 35 setup links were generated privately (.local-dev/invites/, ignored). Ann Karmo is administration: not added to the name pool (owner may choose not to send her link). The other four new names are not added to the name pool.
+- 2026-10-28: applied 20261027000100_beta2_default_enabled.sql live (SHA prefix 86c26941) with explicit owner approval; beta2_default_enabled.sql PASS; restored the default-aware tool; `cloud default on` -> Cloud account default: on (writes/enrollments on). Newly admitted accounts get cloud saves automatically; explicit per-account disables still win. The migration and tool files ship to the repository with the next release.

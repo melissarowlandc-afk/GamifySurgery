@@ -1,5 +1,5 @@
 import { act } from "react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { ManagementPanel } from "../ui/ManagementPanel";
 import { MobileManage } from "../mobile/manage/MobileManage";
 import { createManageFixture } from "../mobile/manage/testFixtures";
@@ -9,7 +9,9 @@ import { CompetitionClientContext } from "./useCompetition";
 import { COMPETITION_PRIVACY_NOTICE, type CompetitionBoard } from "./types";
 import { fakeTransport } from "./testFixtures";
 
-afterEach(cleanupPhoneTests);
+const access = vi.hoisted(() => ({ casual: false as boolean | null }));
+vi.mock("../playtime/UsageProvider", () => ({ useCasualMode: () => access.casual, useUsageTracking: () => null }));
+afterEach(() => { access.casual = false; return cleanupPhoneTests(); });
 const sampleBoard: CompetitionBoard = { hidden: false, rows: [
   { rank: 1, clinicName: "Other clinic", facilityLevel: 4, averageDailyRevenueCents: 123456, daysCounted: 3, isSelf: false },
   { rank: 2, clinicName: "My clinic", facilityLevel: 2, averageDailyRevenueCents: 10001, daysCounted: 2, isSelf: true },
@@ -30,6 +32,19 @@ async function open(shell: "desktop" | "phone", client: CompetitionClient | null
   return env;
 }
 describe.each(["desktop", "phone"] as const)("%s Management competition tab", shell => {
+  it("lets casual accounts view/refresh the board with a note and no entry or ranking toggle", async () => {
+    access.casual = true;
+    const transport = fakeTransport({ ...sampleBoard, rows: sampleBoard.rows.slice(0, 1) });
+    const env = await open(shell, new CompetitionClient(transport, null, "casual"));
+    expect(env.element.textContent).toContain("Casual players aren't ranked");
+    expect(env.element.textContent).toContain("Other clinic");
+    expect(env.element.textContent).not.toContain("Your clinic will appear");
+    expect(allElements(env.element, node => node.attributes.role === "switch")).toHaveLength(0);
+    await env.click("Refresh competition");
+    expect(transport.leaderboard).toHaveBeenCalledTimes(2);
+    expect(transport.submit).not.toHaveBeenCalled();
+    expect(transport.setHidden).not.toHaveBeenCalled();
+  });
   it("shows a sign-in explanation without a network client in prototype mode", async () => {
     const env = await open(shell, null);
     expect(env.element.textContent).toContain("available when signed in");

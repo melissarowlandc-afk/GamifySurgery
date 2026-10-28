@@ -1025,6 +1025,7 @@ export function AppShell({
             />
             <ManagementPanel
               managementMode={managementMode}
+              competitionTutorial={{ campaignId: facility.campaignId ?? "", enabled: tutorialsEnabled }}
               showInactiveTrigger={!chart && !employeeDiscussion && !buildMode}
               roles={staffRoles}
               staffTraining={staffTraining}

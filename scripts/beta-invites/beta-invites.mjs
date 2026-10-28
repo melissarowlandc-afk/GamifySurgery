@@ -6,6 +6,7 @@ import { createInterface } from "node:readline/promises";
 import { createClient } from "@supabase/supabase-js";
 import { compileFeedback, setFeedbackStatus, FeedbackToolError, FEEDBACK_STATUSES } from "./beta-feedback.mjs";
 import { runCloudCommand, CloudToolError } from "./beta-cloud.mjs";
+import { setCasualMode, compileUsageReport, CasualToolError } from "./beta-casual.mjs";
 
 export const GAME_URL = "https://melissarowlandc-afk.github.io/GamifySurgery/";
 export const ADMIN_ENV_FILE = fileURLToPath(new URL("../../.local-dev/beta-admin.env", import.meta.url));
@@ -17,11 +18,13 @@ const SETUP_RPC = "beta1_setup_admin";
 export const LOCAL_GAME_URL = "http://127.0.0.1:4173/";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const HELP = `Beta 1 owner invite tool (no automatic emails)
-  node scripts/beta-invites/beta-invites.mjs invite <email> [--owner] [--local]
-  node scripts/beta-invites/beta-invites.mjs invite --file <path> [--local]
+  node scripts/beta-invites/beta-invites.mjs invite <email> [--owner] [--casual] [--local]
+  node scripts/beta-invites/beta-invites.mjs invite --file <path> [--casual] [--local]
   node scripts/beta-invites/beta-invites.mjs reset <email> [--local]
   node scripts/beta-invites/beta-invites.mjs cancel <email>
   node scripts/beta-invites/beta-invites.mjs list
+  node scripts/beta-invites/beta-invites.mjs casual on|off <email>
+  node scripts/beta-invites/beta-invites.mjs report
   node scripts/beta-invites/beta-invites.mjs revoke <email>
   node scripts/beta-invites/beta-invites.mjs feedback [--all]
   node scripts/beta-invites/beta-invites.mjs feedback-status <id> <status> [note]
@@ -30,6 +33,7 @@ const HELP = `Beta 1 owner invite tool (no automatic emails)
   node scripts/beta-invites/beta-invites.mjs cloud disable <email>
   node scripts/beta-invites/beta-invites.mjs cloud writes on|off
   node scripts/beta-invites/beta-invites.mjs cloud enrollments on|off
+  node scripts/beta-invites/beta-invites.mjs cloud default on|off
   Feedback statuses: new, discussed, planned, done, wont_do (owner decision only).
   Double-click scripts/beta-invites/BETA_INVITES.cmd for prompts.
   Credentials: .local-dev/beta-admin.env (ignored, owner PC only).`;
@@ -50,12 +54,16 @@ export function parseCommand(args) {
   if (command === "cloud") {
     if (rest.length === 1 && rest[0] === "status") return { command, action: "status" };
     if (rest.length === 2 && ["enable", "disable"].includes(rest[0])) return { command, action: rest[0], email: normalizeEmail(rest[1]) };
-    if (rest.length === 2 && ["writes", "enrollments"].includes(rest[0]) && ["on", "off"].includes(rest[1])) {
+    if (rest.length === 2 && ["writes", "enrollments", "default"].includes(rest[0]) && ["on", "off"].includes(rest[1])) {
       return { command, action: rest[0], enabled: rest[1] === "on" };
     }
-    fail("Use cloud status, cloud enable <email>, cloud disable <email>, cloud writes on|off, or cloud enrollments on|off.");
+    fail("Use cloud status, cloud enable <email>, cloud disable <email>, cloud writes on|off, cloud enrollments on|off, or cloud default on|off.");
   }
-  if (command === "list" && rest.length === 0) return { command };
+  if (["list", "report"].includes(command) && rest.length === 0) return { command };
+  if (command === "casual") {
+    if (rest.length === 2 && ["on", "off"].includes(rest[0])) return { command, enabled: rest[0] === "on", email: normalizeEmail(rest[1]) };
+    fail("Use casual on <email> or casual off <email>.");
+  }
   if (command === "feedback" && (rest.length === 0 || (rest.length === 1 && rest[0] === "--all"))) {
     return { command, all: rest[0] === "--all" };
   }
@@ -67,17 +75,17 @@ export function parseCommand(args) {
     return { command, email: normalizeEmail(rest[0]) };
   }
   if (["invite", "reset"].includes(command)) {
-    const local = rest.includes("--local"), owner = rest.includes("--owner");
-    if (rest.filter(arg => arg === "--local").length > 1 || rest.filter(arg => arg === "--owner").length > 1 || (owner && command !== "invite")) {
-      fail("Use each option once; --owner is for a single invite only.");
+    const local = rest.includes("--local"), owner = rest.includes("--owner"), casual = rest.includes("--casual");
+    if (["--local", "--owner", "--casual"].some(flag => rest.filter(arg => arg === flag).length > 1) || ((owner || casual) && command !== "invite")) {
+      fail("Use each option once; --owner and --casual are for invites only (--owner is single-account only).");
     }
-    const positional = rest.filter(arg => !["--local", "--owner"].includes(arg));
+    const positional = rest.filter(arg => !["--local", "--owner", "--casual"].includes(arg));
     if (command === "invite" && positional.length === 2 && positional[0] === "--file" && positional[1] && !owner) {
-      return { command, file: positional[1], local, owner: false };
+      return { command, file: positional[1], local, owner: false, ...(casual ? { casual: true } : {}) };
     }
-    if (positional.length === 1 && !positional[0].startsWith("--")) return { command, email: normalizeEmail(positional[0]), local, owner };
+    if (positional.length === 1 && !positional[0].startsWith("--")) return { command, email: normalizeEmail(positional[0]), local, owner, ...(casual ? { casual: true } : {}) };
   }
-  fail("Use invite <email> [--owner] [--local], invite --file <path> [--local], reset <email> [--local], cancel <email>, list, revoke <email>, feedback [--all], or feedback-status <id> <status> [note]. Use --help for details.");
+  fail("Use invite <email> [--owner] [--local], invite --file <path> [--local], reset <email> [--local], cancel <email>, list, casual on|off <email>, report, revoke <email>, feedback [--all], or feedback-status <id> <status> [note]. Use --help for details.");
 }
 
 /** Parse only the two owner settings; never execute an env file as shell code. */
@@ -159,6 +167,10 @@ export async function runBetaInvites(args, {
       output(await runCloudCommand(client, options));
       return 0;
     }
+    if (options.command === "report") {
+      output(await compileUsageReport(client));
+      return 0;
+    }
     async function rpc(action, userId, owner = false) {
       const { data, error } = await client.rpc(RPC, {
         p_action: action, ...(userId ? { p_user_id: userId, p_owner: owner } : {}),
@@ -184,10 +196,11 @@ export async function runBetaInvites(args, {
         if (!/^[A-Za-z0-9_-]{43}$/.test(code)) fail("A setup code could not be generated; no links were printed.");
         const hash = createHash("sha256").update(code).digest("hex");
         const result = await setupRpc({ p_action: "issue", p_email: address, p_code_hash: hash,
-          p_purpose: options.command, p_owner: options.owner });
+          p_purpose: options.command, p_owner: options.owner, ...(options.casual ? { p_casual: true } : {}) });
         if (result?.issued !== true || !UUID.test(result.id ?? "") || result.purpose !== options.command) {
           fail("Setup-link storage could not be confirmed. No links were printed; retry the whole batch with the manager.");
         }
+        if (options.casual && result.casual !== true) fail("Casual invitation could not be confirmed. No links were printed; check migration 20261028000100 with the manager and retry the whole batch.");
         const link = `${options.local ? LOCAL_GAME_URL : GAME_URL}#setup=${code}&email=${encodeURIComponent(address)}`;
         lines.push(options.file ? `${address}\t${link}` : link);
       }
@@ -201,23 +214,30 @@ export async function runBetaInvites(args, {
       fail("The membership roster response was unexpected. Check the reviewed admin migration with the manager.");
     }
     const { command, email } = options;
+    if (command === "casual") {
+      output(await setCasualMode(client, members, options));
+      return 0;
+    }
     if (command === "feedback") {
       output(await compileFeedback(client, members, { ...feedbackOptions, all: options.all, redact }));
       return 0;
     }
     if (command === "list") {
-      output("Email | Invite/confirmed status | Owner");
-      for (const member of members) output(`${member.email} | ${memberStatus(member)} | ${member.is_owner ? "yes" : "no"}`);
+      if (members.some(member => typeof member.casual !== "boolean")) {
+        fail("The membership roster is missing casual mode. Check migration 20261028000100 with the manager.");
+      }
+      output("Email | Invite/confirmed status | Owner | Casual");
+      for (const member of members) output(`${member.email} | ${memberStatus(member)} | ${member.is_owner ? "yes" : "no"} | ${member.casual ? "yes" : "no"}`);
       if (!members.length) output("No game members yet.");
       const codes = await setupRpc({ p_action: "list" });
       if (!Array.isArray(codes) || codes.some(row => !row || !UUID.test(row.id ?? "") ||
         typeof row.email !== "string" || /[\x00-\x1f\x7f]/.test(row.email) ||
         !["invite", "reset"].includes(row.purpose) || !Number.isFinite(Date.parse(row.created_at)) ||
-        !Number.isInteger(row.failed_attempts) || row.failed_attempts < 0 || row.failed_attempts > 10)) {
+        !Number.isInteger(row.failed_attempts) || row.failed_attempts < 0 || row.failed_attempts > 10 || typeof row.casual !== "boolean")) {
         fail("The setup-link roster response was unexpected. No hashes or provider details are printed.");
       }
-      output("Email | Purpose | Setup link status | Created (UTC) | Failed attempts");
-      for (const code of codes) output(`${code.email} | ${code.purpose} | ${code.cancelled_at ? "cancelled" : code.used_at ? "used" : "pending"} | ${code.created_at} | ${code.failed_attempts}`);
+      output("Email | Purpose | Setup link status | Created (UTC) | Failed attempts | Casual");
+      for (const code of codes) output(`${code.email} | ${code.purpose} | ${code.cancelled_at ? "cancelled" : code.used_at ? "used" : "pending"} | ${code.created_at} | ${code.failed_attempts} | ${code.casual ? "yes" : "no"}`);
       if (!codes.length) output("No setup links yet.");
       return 0;
     }
@@ -248,7 +268,7 @@ export async function runBetaInvites(args, {
   } catch (error) {
     // Never print an SDK error, stack, request, config or provider response:
     // those can contain credentials, tokens and other people's account details.
-    output(`Beta 1 admin tool: ${error instanceof OwnerToolError || error instanceof FeedbackToolError || error instanceof CloudToolError ? error.message : "The request could not be completed. No provider details are printed. Check connectivity/setup with the manager, then retry the command."}`);
+    output(`Beta 1 admin tool: ${error instanceof OwnerToolError || error instanceof FeedbackToolError || error instanceof CloudToolError || error instanceof CasualToolError ? error.message : "The request could not be completed. No provider details are printed. Check connectivity/setup with the manager, then retry the command."}`);
     return 1;
   }
 }
@@ -256,15 +276,16 @@ export async function runBetaInvites(args, {
 async function interactiveArgs() {
   const prompt = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    const command = (await prompt.question("Action: invite, reset, cancel, list, revoke, feedback, feedback-status, or cloud [invite]: ")).trim().toLowerCase() || "invite";
+    const command = (await prompt.question("Action: invite, reset, cancel, list, casual, report, revoke, feedback, feedback-status, or cloud [invite]: ")).trim().toLowerCase() || "invite";
+    if (command === "casual") return [command, (await prompt.question("Casual mode: on or off: ")).trim().toLowerCase(), (await prompt.question("Account email: ")).trim()];
     if (command === "cloud") {
-      const action = (await prompt.question("Cloud action: status, enable, disable, writes, or enrollments [status]: ")).trim().toLowerCase() || "status";
+      const action = (await prompt.question("Cloud action: status, enable, disable, writes, enrollments, or default [status]: ")).trim().toLowerCase() || "status";
       if (action === "status") return [command, action];
       if (["enable", "disable"].includes(action)) return [command, action, (await prompt.question("Account email: ")).trim()];
-      if (["writes", "enrollments"].includes(action)) return [command, action, (await prompt.question("on or off: ")).trim().toLowerCase()];
-      fail("Choose cloud status, enable, disable, writes, or enrollments.");
+      if (["writes", "enrollments", "default"].includes(action)) return [command, action, (await prompt.question("on or off: ")).trim().toLowerCase()];
+      fail("Choose cloud status, enable, disable, writes, enrollments, or default.");
     }
-    if (command === "list") return [command];
+    if (["list", "report"].includes(command)) return [command];
     if (command === "feedback") return [command, ...((await prompt.question("Include all statuses? [y/N]: ")).trim().toLowerCase() === "y" ? ["--all"] : [])];
     if (command === "feedback-status") return [command, (await prompt.question("Feedback ID: ")).trim(),
       (await prompt.question("Owner-decided status (new, discussed, planned, done, wont_do): ")).trim(),
@@ -272,7 +293,8 @@ async function interactiveArgs() {
     if (!["invite", "reset", "cancel", "revoke"].includes(command)) fail("Choose invite, reset, cancel, list, revoke, feedback, or feedback-status.");
     const email = (await prompt.question("Tester's email: ")).trim();
     const owner = command === "invite" && (await prompt.question("Also add this person to the owner allowlist? [y/N]: ")).trim().toLowerCase() === "y";
-    return [command, email, ...(owner ? ["--owner"] : [])];
+    const casual = command === "invite" && (await prompt.question("Casual mode from the first sign-in? [y/N]: ")).trim().toLowerCase() === "y";
+    return [command, email, ...(owner ? ["--owner"] : []), ...(casual ? ["--casual"] : [])];
   } finally { prompt.close(); }
 }
 

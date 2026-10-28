@@ -364,6 +364,7 @@ export default function MobileShell(props: PrototypeShellProps) {
           else if (item.targetType) handleTarget({ type: item.targetType, id: item.targetId });
         }} /><MobileGlp1ConsultInfo view={props.emergencyGlp1} /></> };
       case "manage": return { title: "Manage", content: <MobileManage {...props} highlightedEmployeeId={highlightedEmployee}
+        competitionTutorial={{ campaignId: props.facility.campaignId ?? "", enabled: props.tutorialsEnabled }}
         highlightedRoleId={highlightedRole} requestedTraining={requestedTraining} onDetailBackChange={registerManageBack}
         onSetupAction={(action) => setSetupAction({ ...action, label: action.target === "room" ? "Build" : "Hire" })} /> };
       case "build": return { title: "Build", kind: "bottom", content: <MobileBuildCatalog props={props}

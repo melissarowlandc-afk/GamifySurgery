@@ -9,10 +9,10 @@ const EMAIL = "owner@example.invalid";
 const member = (user_id = ID, email = EMAIL) => ({ user_id, email, confirmed_at: "2026-10-17T00:00:00Z", revoked_at: null, deletion_requested_at: null });
 const json = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: { "Content-Type": "application/json" } });
 function fixture({ roster = [member(), member(OTHER, "tester@example.invalid")], accounts = [{ userId: ID, enabled: true }, { userId: OTHER, enabled: false }],
-  writes = false, enrollments = false, intercept = () => undefined, envError = false } = {}) {
+  writes = false, enrollments = false, defaultEnabled = false, intercept = () => undefined, envError = false } = {}) {
   const requests = [], output = [], reads = [];
-  let currentWrites = writes, currentEnrollments = enrollments;
-  const status = () => ({ quota: { writes_enabled: currentWrites, enrollments_enabled: currentEnrollments }, accountSettings: accounts });
+  let currentWrites = writes, currentEnrollments = enrollments, currentDefault = defaultEnabled;
+  const status = () => ({ quota: { writes_enabled: currentWrites, enrollments_enabled: currentEnrollments, default_account_enabled: currentDefault }, accountSettings: accounts });
   const run = args => runBetaInvites(args, {
     readFileImpl: async (path, encoding) => { reads.push([path, encoding]); assert.equal(path, ADMIN_ENV_FILE); if (envError) throw new Error(KEY); return `SUPABASE_URL=${BASE}\nSUPABASE_SERVICE_ROLE_KEY=${KEY}\n`; },
     write: text => output.push(text),
@@ -27,6 +27,7 @@ function fixture({ roster = [member(), member(OTHER, "tester@example.invalid")],
       if (request.body.p_action === "account") return json({ userId: request.body.p_user_id, enabled: request.body.p_settings.enabled });
       assert.equal(request.body.p_action, "configure");
       currentWrites = request.body.p_settings.writesEnabled; currentEnrollments = request.body.p_settings.enrollmentsEnabled;
+      currentDefault = request.body.p_settings.defaultAccountEnabled;
       return json(status());
     },
   });
@@ -37,26 +38,35 @@ describe("cloud cohort owner commands, mocked fetch only", () => {
   it("parses exactly the supported commands and normalizes a single email", () => {
     assert.deepEqual(parseCommand(["cloud", "status"]), { command: "cloud", action: "status" });
     for (const action of ["enable", "disable"]) assert.deepEqual(parseCommand(["cloud", action, " Owner@Example.Invalid "]), { command: "cloud", action, email: EMAIL });
-    for (const action of ["writes", "enrollments"]) for (const value of ["on", "off"]) {
+    for (const action of ["writes", "enrollments", "default"]) for (const value of ["on", "off"]) {
       assert.deepEqual(parseCommand(["cloud", action, value]), { command: "cloud", action, enabled: value === "on" });
     }
   });
   for (const args of [["cloud"], ["cloud", "status", EMAIL], ["cloud", "enable"], ["cloud", "enable", "bad address"],
-    ["cloud", "disable", EMAIL, "extra"], ["cloud", "writes", "true"], ["cloud", "enrollments", "ON"], ["cloud", "purge"], ["cloud", "enable", "all"]]) {
+    ["cloud", "disable", EMAIL, "extra"], ["cloud", "writes", "true"], ["cloud", "enrollments", "ON"],
+    ["cloud", "default"], ["cloud", "default", "true"], ["cloud", "default", "ON"], ["cloud", "default", "on", "extra"],
+    ["cloud", "purge"], ["cloud", "enable", "all"]]) {
     it(`rejects unsupported arguments before reading credentials: ${args.join(" ")}`, async () => {
       const f = fixture(); assert.equal(await f.run(args), 1); assert.equal(f.reads.length, 0); assert.equal(f.requests.length, 0);
     });
   }
-  it("reports both global switches and each configured account without dumping provider data", async () => {
+  it("reports all three switches and each configured account without dumping provider data", async () => {
     const f = fixture({ writes: true }); assert.equal(await f.run(["cloud", "status"]), 0);
-    assert.equal(f.text(), `Cloud writes: on\nCloud enrollments: off\nEmail / account | Cloud enabled\n${EMAIL} | yes\ntester@example.invalid | no`);
+    assert.equal(f.text(), `Cloud writes: on\nCloud enrollments: off\nCloud account default: off\nEmail / account | Cloud enabled\n${EMAIL} | yes\ntester@example.invalid | no`);
     assert.deepEqual(f.requests.map(r => r.body), [{ p_action: "inspect" }, { p_action: "list" }]);
     assert.deepEqual(f.reads, [[ADMIN_ENV_FILE, "utf8"]]); assert.ok(!f.text().includes(KEY));
   });
-  it("reports an empty cohort explicitly without enabling or enrolling anyone", async () => {
-    const f = fixture({ accounts: [], roster: [] }); assert.equal(await f.run(["cloud", "status"]), 0);
-    assert.match(f.text(), /No cloud accounts configured. All accounts use Beta 1/);
-    assert.ok(f.requests.every(r => ["inspect", "list"].includes(r.body.p_action)));
+  for (const defaultEnabled of [false, true]) {
+    it(`reports an empty cohort with default ${defaultEnabled} without enabling or enrolling anyone`, async () => {
+      const f = fixture({ accounts: [], roster: [], defaultEnabled }); assert.equal(await f.run(["cloud", "status"]), 0);
+      assert.match(f.text(), /No cloud accounts configured. Admitted accounts use the default/);
+      assert.ok(f.text().includes(`Cloud account default: ${defaultEnabled ? "on" : "off"}`));
+      assert.ok(f.requests.every(r => ["inspect", "list"].includes(r.body.p_action)));
+    });
+  }
+  it("reports an explicit disabled override alongside a default-on setting", async () => {
+    const f = fixture({ defaultEnabled: true }); assert.equal(await f.run(["cloud", "status"]), 0);
+    assert.match(f.text(), /Cloud account default: on/); assert.match(f.text(), /tester@example.invalid \| no/);
   });
   it("shows a UUID when a configured account is absent from the membership roster", async () => {
     const f = fixture({ roster: [] }); assert.equal(await f.run(["cloud", "status"]), 0); assert.match(f.text(), new RegExp(`${ID} \\| yes`));
@@ -80,16 +90,30 @@ describe("cloud cohort owner commands, mocked fetch only", () => {
       assert.equal(f.requests.length, 1); assert.match(f.text(), /unexpected or ambiguous/);
     });
   }
-  for (const action of ["writes", "enrollments"]) for (const initialOther of [false, true]) for (const value of ["on", "off"]) {
-    it(`${action} ${value} preserves the opposite switch (${initialOther})`, async () => {
-      const f = fixture({ writes: action === "enrollments" ? initialOther : value === "off", enrollments: action === "writes" ? initialOther : value === "off" });
+  for (const action of ["writes", "enrollments"]) for (const initialOther of [false, true]) for (const defaultEnabled of [false, true]) for (const value of ["on", "off"]) {
+    it(`${action} ${value} preserves the opposite switch (${initialOther}) and account default (${defaultEnabled})`, async () => {
+      const f = fixture({ writes: action === "enrollments" ? initialOther : value === "off", enrollments: action === "writes" ? initialOther : value === "off", defaultEnabled });
       assert.equal(await f.run(["cloud", action, value]), 0);
-      const settings = { writesEnabled: action === "writes" ? value === "on" : initialOther, enrollmentsEnabled: action === "enrollments" ? value === "on" : initialOther };
+      const settings = { writesEnabled: action === "writes" ? value === "on" : initialOther, enrollmentsEnabled: action === "enrollments" ? value === "on" : initialOther, defaultAccountEnabled: defaultEnabled };
       assert.deepEqual(f.requests.map(r => r.body), [{ p_action: "inspect" }, { p_action: "configure", p_settings: settings }]);
       assert.match(f.text(), /Cloud writes: (on|off)\nCloud enrollments: (on|off)/); assert.ok(!f.text().includes(KEY));
     });
   }
-  for (const payload of [{}, { quota: { writes_enabled: "false", enrollments_enabled: false } }, { quota: { writes_enabled: false } }]) {
+  for (const writes of [false, true]) for (const enrollments of [false, true]) for (const value of ["on", "off"]) {
+    it(`default ${value} preserves writes (${writes}) and enrollments (${enrollments})`, async () => {
+      const f = fixture({ writes, enrollments, defaultEnabled: value === "off" });
+      assert.equal(await f.run(["cloud", "default", value]), 0);
+      assert.deepEqual(f.requests.map(r => r.body), [{ p_action: "inspect" }, { p_action: "configure", p_settings: {
+        writesEnabled: writes, enrollmentsEnabled: enrollments, defaultAccountEnabled: value === "on",
+      } }]);
+      assert.equal(f.text(), `Cloud writes: ${writes ? "on" : "off"}\nCloud enrollments: ${enrollments ? "on" : "off"}\nCloud account default: ${value}`);
+      assert.ok(!f.text().includes(KEY));
+    });
+  }
+  for (const payload of [{}, { quota: { writes_enabled: "false", enrollments_enabled: false, default_account_enabled: false } },
+    { quota: { writes_enabled: false } }, { quota: { writes_enabled: false, enrollments_enabled: false } },
+    { quota: { writes_enabled: false, enrollments_enabled: false, default_account_enabled: "false" } },
+    { quota: { writes_enabled: false, enrollments_enabled: false, default_account_enabled: null } }]) {
     it("does not guess a missing or malformed project setting", async () => {
       const f = fixture({ intercept: r => r.body.p_action === "inspect" ? json(payload) : undefined });
       assert.equal(await f.run(["cloud", "writes", "on"]), 1); assert.equal(f.requests.length, 1); assert.match(f.text(), /settings response was unexpected/);
@@ -98,17 +122,26 @@ describe("cloud cohort owner commands, mocked fetch only", () => {
   for (const accounts of [null, [{ userId: ID }], [{ userId: "bad", enabled: true }], [{ userId: ID, enabled: true }, { userId: ID, enabled: false }]]) {
     it("fails status closed if the account list is missing or malformed", async () => {
       const f = fixture({ accounts }); assert.equal(await f.run(["cloud", "status"]), 1); assert.equal(f.requests.length, 1);
-      assert.match(f.text(), /install-cloud-status-rpc\.sql/); assert.ok(!f.text().includes(EMAIL));
+      assert.match(f.text(), /20261027000100_beta2_default_enabled\.sql/); assert.ok(!f.text().includes(EMAIL));
     });
   }
   it("does not report success for a mismatched account acknowledgement", async () => {
     const f = fixture({ intercept: r => r.body.p_action === "account" ? json({ userId: OTHER, enabled: true }) : undefined });
     assert.equal(await f.run(["cloud", "enable", EMAIL]), 1); assert.match(f.text(), /could not be confirmed/); assert.ok(!f.text().includes(`enabled for ${EMAIL}`));
   });
-  it("does not report success if configure fails to acknowledge the requested pair", async () => {
-    const f = fixture({ intercept: r => r.body.p_action === "configure" ? json({ quota: { writes_enabled: false, enrollments_enabled: false } }) : undefined });
+  it("does not report success if configure fails to acknowledge the requested writes setting", async () => {
+    const f = fixture({ intercept: r => r.body.p_action === "configure" ? json({ quota: { writes_enabled: false, enrollments_enabled: false, default_account_enabled: false } }) : undefined });
     assert.equal(await f.run(["cloud", "writes", "on"]), 1); assert.match(f.text(), /could not be confirmed/);
   });
+  for (const field of ["writes_enabled", "enrollments_enabled", "default_account_enabled"]) {
+    it(`does not confirm default on if configure acknowledges a different ${field}`, async () => {
+      const f = fixture({ writes: true, enrollments: true, intercept: r => r.body.p_action === "configure" ? json({ quota: {
+        writes_enabled: true, enrollments_enabled: true, default_account_enabled: true, [field]: false,
+      } }) : undefined });
+      assert.equal(await f.run(["cloud", "default", "on"]), 1); assert.match(f.text(), /could not be confirmed/);
+      assert.ok(!f.text().includes("Cloud account default: on"));
+    });
+  }
   for (const mode of ["provider", "transport"]) {
     it(`redacts ${mode} failures without reflecting keys or error bodies`, async () => {
       const f = fixture({ intercept: () => { if (mode === "transport") throw new Error(KEY + " private payload"); return json({ code: "42501", message: KEY + " private payload" }, 403); } });

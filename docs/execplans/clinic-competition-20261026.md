@@ -112,3 +112,71 @@ After this final client correction: focused **6 files / 38 tests PASS** (36 new 
 SQL is prepared and statically reviewed only; the manager still owns applying it and executing new/prior SQL tests and browser acceptance. The legacy/new-device revenue-history limitation is documented above and in `competition/README.md`. No active worker validation processes remain from this task.
 
 Final audit rechecked all **22 implementation files** against their manifest after the last full run: unchanged, strict UTF-8/no-BOM/LF; all three original SQL function body line sequences preserved; PASS stays inside the rollback-only test transaction. The plan is the 23rd documentation-only changed path. Diff, baselines, hashes and raw logs are in `.local-dev/competition-20261026/`. No Git, network, installs, agents, live data, owner save or launcher changes. **LOCAL ONLY**; manager owns acceptance, current-thread handoff and the audited **"push to GitHub"** checkpoint reminder.
+
+## Owner decision (2026-10-28): make the leaderboard more visible
+
+Owner chose idea 2 (rank-change alerts) plus "show people it specifically during the tutorial with a joke". Not chosen: an always-visible rank badge, a top-level button, an end-of-day recap.
+- At each game-day end, if the player's competition rank changed, add an Alerts & Events entry (moved up / passed by another clinic). Ranked players only; casual players get none.
+- Add a tutorial step pointing to Clinic Competition in Management (both shells) with a light joke (for example "Surgeons are famously non-competitive. Here's a leaderboard anyway."); offer 3 options for the manager to pick.
+Queued after the casual-mode worker (shared competition files).
+
+## Follow-ups: invite-time casual + leaderboard visibility
+
+Sol worker implementation and offline validation are complete. The full file
+inventory, decisions, SQL test coverage, commands and acceptance steps are in
+[the matching casual-mode handoff](casual-mode-20261028.md#follow-ups-invite-time-casual--leaderboard-visibility).
+
+Rank checks follow the active campaign's acknowledged day-end submission. The
+first rank establishes a silent baseline; later up/down changes add the requested
+Clinic Competition message to the shared desktop/phone Alerts & Events feed.
+Rank and last-checked day persist in the existing account/backend/campaign local
+competition cache, never in game saves. Repeated ticks/reloads/StrictMode do not
+duplicate successful checks. Casual/pending access makes no rank request or
+notification; hidden/unranked accounts produce no alert and reset the baseline.
+Prototype mode still has no competition client, queue, timer or request. Offline
+submission/read failures preserve the last rank for existing retry paths, without
+blocking gameplay or inventing an alert. Stale campaign results cannot publish.
+
+The guided Management pointer mentions Clinic Competition and offers Explore
+Management. Both Management shells show the same dismissible introduction with
+View Clinic Competition (opens the board) and Got it. Dismissal persists per
+account/campaign outside saves and across layouts, with storage-failure fallback.
+Casual wording says "Casual clinics aren't ranked. You can still cheer from the
+sidelines." Guidance off hides the tip. No game rule, required progression gate,
+permanent top-level button, always-visible rank badge or recap is added.
+
+Three joke options for manager selection:
+
+1. **Implemented default:** "Surgeons are famously non-competitive. Here's a leaderboard anyway."
+2. "A little friendly competition. The word 'friendly' is doing some work."
+3. "Your clinic can now be number one at something besides paperwork."
+
+The same follow-up extends the still-unapplied casual migration with the private
+setup-code marker, compatible five/six-argument owner issue RPCs, atomic first
+admission assignment, pending-link marking and `invite ... --casual` for single
+and private-file batches. Resets and finish retries preserve later owner account
+assignments. No real roster was opened and no links were generated.
+
+Validation, all exit 0:
+
+- Required full player command with threads and the existing narrow Vite
+  `net use` EPERM preload: **280 files / 2,702 tests PASS**, 149.92 s.
+- Required owner-tool command with mocked fetch: **203 tests PASS**, 8 suites.
+- Root typecheck: **all seven workspaces PASS**.
+- Focused player regression: **10 files / 90 tests PASS**, 3.96 s.
+- Static SQL/source audit passes; all 88 protected game-domain source files
+  remain byte-identical. No clinical, balance, save-schema/codec or game-rule edit.
+
+Actual before-images, scoped diff, manifest and raw logs are in
+`.local-dev/casual-followups-20261028/`. This handoff and the casual plan append
+are the only planning-document changes. The manager must review/apply the
+extended SQL, run the rollback-only casual test and prior SQL suites/advisors,
+then check first-sign-in casual, rank-alert ordering and tutorial navigation,
+dismissal, wrapping/scroll and casual copy on desktop/phone. No worker SQL or
+browser PASS is claimed. Manager owns current-thread handoff and acceptance.
+
+LOCAL ONLY: no Git, installs, network, agents, live service/admin operations,
+browser/server/owner-storage changes, backup or publication. Manager owns the
+audited **"push to GitHub"** checkpoint/reminder. Owner opening pathways remain
+`START_GAME.cmd` -> exact `http://127.0.0.1:4173` in the usual persistent profile
+and the canonical GitHub Pages URL; local saves remain separate by origin/profile.

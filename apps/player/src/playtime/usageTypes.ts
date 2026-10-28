@@ -31,6 +31,8 @@ export interface UsageAccess {
   admitted: boolean;
   notice_accepted: boolean;
   deletion_requested: boolean;
+  /** Read-only server assignment; absent on older servers means standard play. */
+  casual?: boolean;
 }
 export type UsageUploadState = "requires-notice" | "ready" | "pending" | "unavailable" | "blocked" | "deleted";
 export interface UsageStatus {

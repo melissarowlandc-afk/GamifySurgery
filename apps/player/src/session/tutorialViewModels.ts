@@ -211,7 +211,8 @@ function encounterStep(input: TutorialViewInput, encounter: EncounterState, seco
     if (!state.paused && !open && encounter.patientLocation === null && encounter.patientMovement === null &&
       !(input.exposedTopicIds ?? []).includes("management")) {
       return { ...base, id: "sendout-management", title: "While they're away",
-        body: "Management handles staff and income, and pauses the clinic. Apparently overhead needs supervision.",
+        body: "Management handles staff and income, and pauses the clinic. Open it to meet Clinic Competition and its suspiciously competitive clinics.",
+        primaryAction: { id: "open-management", label: "Explore Management" },
         ...(fastForwardNote ? { note: fastForwardNote } : {}),
         target: "management", targetSelector: ".management-mode-trigger", topicIds: ["management"] };
     }

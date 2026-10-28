@@ -30,10 +30,12 @@ export function createSupabaseUsageTransport(client: SupabaseClient, configurati
   return {
     async access() {
       const data = await rpc("get_usage_access") as Partial<UsageAccess> | null;
-      if (typeof data?.admitted !== "boolean" || typeof data.notice_accepted !== "boolean" || typeof data.deletion_requested !== "boolean") {
+      if (typeof data?.admitted !== "boolean" || typeof data.notice_accepted !== "boolean" || typeof data.deletion_requested !== "boolean" ||
+          (data.casual !== undefined && typeof data.casual !== "boolean")) {
         throw new Error("Usage access unavailable");
       }
-      return data as UsageAccess;
+      return { admitted: data.admitted, notice_accepted: data.notice_accepted, deletion_requested: data.deletion_requested,
+        casual: data.admitted && !data.deletion_requested && data.casual === true };
     },
     async acceptNotice(version) { await rpc("accept_usage_notice", { p_version: version }); },
     async ingest(receipts: readonly UsageReceipt[], keepalive) {

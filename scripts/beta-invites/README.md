@@ -1,3 +1,49 @@
+# Owner casual mode and usage reports
+
+After the manager applies `supabase/migrations/20261028000100_casual_mode.sql`,
+use the existing private owner credentials and the same invitation/setup links:
+
+```powershell
+node scripts/beta-invites/beta-invites.mjs casual on tester@example.invalid
+node scripts/beta-invites/beta-invites.mjs casual off tester@example.invalid
+node scripts/beta-invites/beta-invites.mjs invite tester@example.invalid --casual
+node scripts/beta-invites/beta-invites.mjs invite --file C:\private\casual-emails.txt --casual
+node scripts/beta-invites/beta-invites.mjs list
+node scripts/beta-invites/beta-invites.mjs report
+```
+
+`invite --casual` stores the owner's mode on the protected setup code, so its
+first successful account admission is already casual. Batch invitations apply
+it to every address. `list` marks pending casual links even before an Auth
+account exists. Plain invites default to standard; password reset links preserve
+the existing account mode and do not accept `--casual`. A finish retry cannot
+override a later owner mode change. The legacy five-argument setup RPC remains
+available; casual issuance uses six required arguments to avoid overload ambiguity.
+
+The double-click tool also offers `casual` and `report`. Casual mode defaults off
+and is assigned only by the owner through a service-role RPC. Players cannot
+toggle it; local prototype play stays standard. Reload open games after changing
+an account's mode. On every device, casual players see only each question's
+correct choice, submit it normally, and keep the story, exhibits and feedback.
+
+Casual players can view Clinic Competition but are excluded from rankings.
+Turning casual on removes existing competition rows; casual submissions are
+acknowledged without storing a row. Turning it off requires a subsequent normal
+submission to re-enter. The server enforces exclusion even for a stale client.
+This is independent of cloud enrollment and voluntary usage consent.
+
+`list` includes a Casual column. `report` prints email, total play time in seconds,
+questions, and Casual for the retained 90 UTC days, including zero-usage members.
+It includes casual usage and marks the account's **current** mode; switching modes
+does not relabel individual past receipts or change saved campaigns. Revoked
+accounts' retained usage is still reported; deletion-requested/deleted accounts
+are omitted. Reports do not store a roster or totals in the repository. Admin
+errors and malformed responses fail without printing provider details or secrets.
+
+Run the rollback-only `supabase/tests/casual_mode.sql` as postgres and capture
+its final PASS row before rollout. The worker authors SQL offline; the manager
+applies it and checks desktop/phone browsers.
+
 # Owner cloud cohort controls
 
 Run from the repository root. These commands share the invite tool's existing
@@ -13,6 +59,8 @@ node scripts/beta-invites/beta-invites.mjs cloud writes on
 node scripts/beta-invites/beta-invites.mjs cloud writes off
 node scripts/beta-invites/beta-invites.mjs cloud enrollments on
 node scripts/beta-invites/beta-invites.mjs cloud enrollments off
+node scripts/beta-invites/beta-invites.mjs cloud default on
+node scripts/beta-invites/beta-invites.mjs cloud default off
 ```
 
 Replace the synthetic example address with the intended invited account.
@@ -20,30 +68,46 @@ The double-click tool also offers `cloud` and prompts for its action.
 
 All cloud settings use `public.beta2_admin_cloud`. The existing
 `beta1_admin_members` RPC resolves emails; there are no direct table queries.
-`status` shows both global switches and yes/no for every configured cloud
-account. Accounts without a cloud row are disabled. An unlisted membership is
-shown by its UUID rather than guessed. Enable/disable changes only that account's
+`status` shows writes, enrollments, the account default, and yes/no for every
+configured cloud account. Admitted accounts without a cloud row inherit the
+account default. An explicit `enabled=false` row stays disabled even with the
+default on; an explicit `enabled=true` row stays enabled with the default off.
+The account list contains stored settings, not every account using the default.
+An unlisted membership is shown by its UUID rather than guessed. Enable/disable
+changes only that account's
 `enabled` field; existing campaigns, consent, usage and local bytes survive.
 The server continues to enforce current membership/admission and deletion.
 
-Before first use of `status`, the manager must review and apply
-[`install-cloud-status-rpc.sql`](install-cloud-status-rpc.sql) after the applied
-Beta 2 migration. This small forward update adds `accountSettings` to the
-existing service-only RPC's result; it retains its signature, guards, fixed
-search path and all existing administration behavior. No switch or account is
-enabled by applying it. The worker has not applied this SQL. Missing/unexpected
-status data causes an explicit failure, never an inferred enabled list.
-Then run the entire [`cloud-status.test.sql`](cloud-status.test.sql) as postgres;
-it checks the exact stored cohort/switches and service-only boundaries under
-rollback without enabling accounts. Capture its actual PASS row and rerun the
-existing Beta 2 SQL suite. No live SQL result is claimed by the worker.
+Before using this tool version, the manager must review and apply
+[`20261027000100_beta2_default_enabled.sql`](../../supabase/migrations/20261027000100_beta2_default_enabled.sql)
+after the Beta 2 cloud migration and `20261018000300_beta2_admin_cloud_status.sql`.
+The historical [`install-cloud-status-rpc.sql`](install-cloud-status-rpc.sql)
+contains that earlier status function; do not reapply it over the new migration.
+The new migration retains signatures, ACLs, guards and the fixed search paths.
+It adds `default_account_enabled=false`; applying it alone enables no account.
+Missing or malformed switch/status data causes an explicit failure.
+Run the entire rollback-only
+[`beta2_default_enabled.sql`](../../supabase/tests/beta2_default_enabled.sql) as
+postgres, capture its one PASS row, then rerun
+[`cloud-status.test.sql`](cloud-status.test.sql) and the existing Beta 2 SQL suite.
+The worker has not applied or executed SQL.
 
-Run owner commands sequentially. The existing configure RPC takes both switches;
-each toggle inspects and preserves the other switch. Concurrent administrators
-must coordinate to avoid overwriting a switch changed between those two calls.
+Run owner commands sequentially. Each toggle inspects and submits all three
+switches, preserving the other two. The server still accepts the original
+two-switch configure request and preserves the account default when omitted.
+Concurrent administrators must coordinate to avoid overwriting a switch changed
+between those two calls.
 Confirm every change with `cloud status`, particularly after a failed or lost
 response. `writes off` pauses account writes/leases. `enrollments off` prevents
 new campaign imports/creation while existing enabled campaigns can still save.
+
+`default on` enables cloud access for currently admitted accounts without a
+cloud row, including future admitted testers. It does not admit users or accept
+their cloud notice. Access checks create no account row. First notice acceptance
+creates an enabled row and reserves the existing account allowance under the
+normal quota checks. Once created, that row keeps its explicit setting when the
+default changes. Use `cloud disable <email>` for an individual opt-out; use the
+write/enrollment switches to pause those operations globally.
 
 ## Pages build variables and region
 
@@ -77,17 +141,20 @@ global write switch is separate, so maintenance does not turn a cloud campaign
 into local play. A subsequent disabled response or failure while already using
 cloud mode preserves its paused/error recovery controls and saved bytes.
 
-## Owner-only trial setup
+## Tester rollout
 
-After manager acceptance of the release/backup gates, check `cloud status`,
-enable only the owner's invited email, turn writes and enrollments on, and check
-status again: exactly the owner should show `yes`. Do not enable other testers
-until the owner's desktop -> phone -> desktop checklist in
-[`beta2-cloud-saves-20261017.md`](../../docs/execplans/beta2-cloud-saves-20261017.md)
-passes. This worker has not changed GitHub variables, server settings or a build.
+The owner accepted the trial and authorized broader tester enablement on
+2026-10-27, recorded in
+[`beta2-cloud-saves-20261017.md`](../../docs/execplans/beta2-cloud-saves-20261017.md).
+After manager review/application and SQL validation, run `cloud status`, then
+`cloud default on`, and confirm the default and the intended write/enrollment
+switches with `cloud status` again. Explicit disabled rows remain opt-outs.
+This worker has not changed GitHub variables, live server settings or a build.
 
 Use `https://melissarowlandc-afk.github.io/GamifySurgery/` on both devices for the
 trial. Local owner play remains `START_GAME.cmd` -> `http://127.0.0.1:4173` in
 the usual persistent browser profile. Local campaigns belong to their exact
-origin/profile/account; signing in does not move them between origins. Cloud
-copying is explicit, and the original local bytes remain on their source device.
+origin/profile/account; signing in does not move them between origins. After the
+separate cloud notice is accepted, the approved account entry can automatically
+import eligible campaigns from that account on the same origin. The original
+local bytes remain on their source device.

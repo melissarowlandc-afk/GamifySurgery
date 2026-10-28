@@ -41,11 +41,11 @@ function admit(seed: string, overrides: Partial<SyntheticClinicalCase> = {}, dis
 }
 
 describe("owner-requested colleague Easter-egg names", () => {
-  it("contains 81 unique names, with the exact unusual spellings and no contact data", () => {
-    expect(COLLEAGUE_NAMES).toHaveLength(81);
-    expect(names.size).toBe(81);
+  it("contains 82 unique names, with the exact unusual spellings and no contact data", () => {
+    expect(COLLEAGUE_NAMES).toHaveLength(82);
+    expect(names.size).toBe(82);
     expect(COLLEAGUE_NAMES.filter(n => n.group === "attending")).toHaveLength(46);
-    expect(COLLEAGUE_NAMES.filter(n => n.group === "resident")).toHaveLength(35);
+    expect(COLLEAGUE_NAMES.filter(n => n.group === "resident")).toHaveLength(36);
     expect(COLLEAGUE_NAMES).toContainEqual({ given: "O. William", family: "Brown", sex: "male", group: "attending" });
     expect(COLLEAGUE_NAMES).toContainEqual({ given: "Pragathi", family: "Pathanjeli", sex: "female", group: "resident" });
     for (const name of COLLEAGUE_NAMES) expect(Object.keys(name).sort()).toEqual(["family", "given", "group", "sex"]);

@@ -1,4 +1,5 @@
 import { questionReviewContext } from "./questionReviewContext";
+import { visibleQuestionChoices } from "./questionChoices";
 import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
 import { createExecutiveManagementView } from "./executiveViewModels";
 import { createGiftShopView, giftShopFee } from "./giftShopViewModels";
@@ -813,7 +814,7 @@ function toPatientTab(
   };
 }
 
-export function employeeDiscussionView(state: GameState, flags: readonly QuestionReviewFlag[] = []): EmployeeDiscussionView | null {
+export function employeeDiscussionView(state: GameState, flags: readonly QuestionReviewFlag[] = [], casualMode: boolean | null = false): EmployeeDiscussionView | null {
   const discussion = state.openEmployeeDiscussionId
     ? state.employeeDiscussions?.[state.openEmployeeDiscussionId] : undefined;
   if (!discussion || ["resolved", "cancelled", "waiting_unopened"].includes(discussion.lifecycle)) return null;
@@ -838,8 +839,10 @@ export function employeeDiscussionView(state: GameState, flags: readonly Questio
     question: node.stem,
     exhibit: node.exhibit,
     teachingPoint: answer ? node.teachingPoint : undefined,
-    // The key is revealed only after an answer exists, as on patient charts.
-    choices: node.answerChoices.map((choice) => ({
+    answerChoicesPending: casualMode === null,
+    // Standard play reveals the key only after submission. Casual play filters
+    // the presentation while retaining the exact IDs used by normal scoring.
+    choices: visibleQuestionChoices(node.answerChoices, casualMode).map((choice) => ({
       id: choice.id, label: choice.label, selected: choice.id === answer?.answerChoiceId, disabled: !answerable,
       ...(answer ? {revealedCorrect: choice.isCorrect} : {}),
       ...(answer && choice.rationale ? { rationale: choice.rationale } : {}),
@@ -931,6 +934,7 @@ function createChartView(
   encounterId: string | null,
   summaryVisible: boolean,
   questionReviewFlags: readonly QuestionReviewFlag[],
+  casualMode: boolean | null,
 ): ChartView | null {
   if (encounterId === null) {
     return null;
@@ -1136,7 +1140,7 @@ function createChartView(
           : undefined,
         exhibit: questionIsVisible ? node.exhibit : undefined,
         teachingPoint: answer ? node.teachingPoint : undefined,
-        answerChoices: questionIsVisible ? node.answerChoices.map((choice) => {
+        answerChoices: questionIsVisible ? visibleQuestionChoices(node.answerChoices, casualMode).map((choice) => {
           const preview =
             isCurrent && answer === null
               ? getAnswerChoiceServicePreview(
@@ -1380,7 +1384,7 @@ function createChartView(
         ).question
       : undefined,
     answerChoices:
-      question?.node.answerChoices.map((choice) => {
+      (question ? visibleQuestionChoices(question.node.answerChoices, casualMode) : []).map((choice) => {
         const preview =
           answerForQuestion === undefined
             ? getAnswerChoiceServicePreview(
@@ -1400,7 +1404,8 @@ function createChartView(
           ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
           ...(answerForQuestion && choice.rationale ? { rationale: choice.rationale } : {}),
         };
-      }) ?? [],
+      }),
+    answerChoicesPending: casualMode === null,
     feedbackTitle,
     feedbackBody,
     terminalOutcomeTitle: terminalConsequence ? "What happened" : undefined,
@@ -1480,6 +1485,7 @@ export function createPrototypePlayerView(
     panY: 0,
   },
   questionReviewFlags: readonly QuestionReviewFlag[] = [],
+  casualMode: boolean | null = false,
 ): PrototypePlayerView {
   const lists = getPatientLists(state);
   // One pass over service history instead of one pass per resolved patient.
@@ -1897,7 +1903,7 @@ export function createPrototypePlayerView(
 
   return {
     employeeDiscussionRows: employeeDiscussionRows(state),
-    employeeDiscussion: employeeDiscussionView(state, questionReviewFlags),
+    employeeDiscussion: employeeDiscussionView(state, questionReviewFlags, casualMode),
     emergencyGlp1: {
       // A built but inaccessible/unstaffed suite cannot replace the founder.
       visible: glp1AutomationCapacity === 0,
@@ -1994,6 +2000,7 @@ export function createPrototypePlayerView(
       selectedEncounterId,
       summaryVisible,
       questionReviewFlags,
+      casualMode,
     ),
     facility: {
       facilityTitle: progressionStatus.displayName,

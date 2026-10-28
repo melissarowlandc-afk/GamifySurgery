@@ -11,10 +11,10 @@ async function call(client, name, args) {
 }
 function switches(result) {
   const quota = result?.quota;
-  if (typeof quota?.writes_enabled !== "boolean" || typeof quota?.enrollments_enabled !== "boolean") {
-    fail("The cloud settings response was unexpected. No setting change was confirmed; check the reviewed admin RPC with the manager.");
+  if (typeof quota?.writes_enabled !== "boolean" || typeof quota?.enrollments_enabled !== "boolean" || typeof quota?.default_account_enabled !== "boolean") {
+    fail("The cloud settings response was unexpected. No setting change was confirmed; ask the manager to check 20261027000100_beta2_default_enabled.sql and the reviewed admin RPC.");
   }
-  return { writesEnabled: quota.writes_enabled, enrollmentsEnabled: quota.enrollments_enabled };
+  return { writesEnabled: quota.writes_enabled, enrollmentsEnabled: quota.enrollments_enabled, defaultAccountEnabled: quota.default_account_enabled };
 }
 async function members(client) {
   const rows = await call(client, "beta1_admin_members", { p_action: "list" });
@@ -42,26 +42,25 @@ export async function runCloudCommand(client, options) {
   }
   const inspected = await call(client, RPC, { p_action: "inspect" });
   const settings = switches(inspected);
-  if (["writes", "enrollments"].includes(options.action)) {
-    const key = options.action === "writes" ? "writesEnabled" : "enrollmentsEnabled";
-    // The existing configure contract requires BOTH switches. Preserve the
-    // inspected opposite value; owner commands must be run sequentially.
+  if (["writes", "enrollments", "default"].includes(options.action)) {
+    const key = { writes: "writesEnabled", enrollments: "enrollmentsEnabled", default: "defaultAccountEnabled" }[options.action];
+    // Preserve every inspected setting; owner commands must run sequentially.
     settings[key] = options.enabled;
     const updated = switches(await call(client, RPC, { p_action: "configure", p_settings: settings }));
-    if (updated.writesEnabled !== settings.writesEnabled || updated.enrollmentsEnabled !== settings.enrollmentsEnabled) {
+    if (updated.writesEnabled !== settings.writesEnabled || updated.enrollmentsEnabled !== settings.enrollmentsEnabled || updated.defaultAccountEnabled !== settings.defaultAccountEnabled) {
       fail("The cloud switch change could not be confirmed. Run cloud status before retrying.");
     }
-    return `Cloud writes: ${onOff(updated.writesEnabled)}\nCloud enrollments: ${onOff(updated.enrollmentsEnabled)}`;
+    return `Cloud writes: ${onOff(updated.writesEnabled)}\nCloud enrollments: ${onOff(updated.enrollmentsEnabled)}\nCloud account default: ${onOff(updated.defaultAccountEnabled)}`;
   }
   if (options.action !== "status") fail("Unknown cloud command.");
   const accounts = inspected.accountSettings;
   if (!Array.isArray(accounts) || accounts.some(row => !row || !UUID.test(row.userId ?? "") || typeof row.enabled !== "boolean") ||
     new Set(accounts.map(row => row.userId.toLowerCase())).size !== accounts.length) {
-    fail("The cloud account list is unavailable or unexpected. Ask the manager to apply scripts/beta-invites/install-cloud-status-rpc.sql, then retry cloud status.");
+    fail("The cloud account list is unavailable or unexpected. Ask the manager to check 20261027000100_beta2_default_enabled.sql and the reviewed status RPC, then retry cloud status.");
   }
   const roster = await members(client), emails = new Map(roster.map(row => [row.user_id.toLowerCase(), row.email]));
-  const lines = [`Cloud writes: ${onOff(settings.writesEnabled)}`, `Cloud enrollments: ${onOff(settings.enrollmentsEnabled)}`, "Email / account | Cloud enabled"];
+  const lines = [`Cloud writes: ${onOff(settings.writesEnabled)}`, `Cloud enrollments: ${onOff(settings.enrollmentsEnabled)}`, `Cloud account default: ${onOff(settings.defaultAccountEnabled)}`, "Email / account | Cloud enabled"];
   for (const row of accounts) lines.push(`${emails.get(row.userId.toLowerCase()) ?? row.userId} | ${row.enabled ? "yes" : "no"}`);
-  if (!accounts.length) lines.push("No cloud accounts configured. All accounts use Beta 1.");
+  if (!accounts.length) lines.push("No cloud accounts configured. Admitted accounts use the default.");
   return lines.join("\n");
 }

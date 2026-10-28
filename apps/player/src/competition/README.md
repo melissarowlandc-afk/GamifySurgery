@@ -4,6 +4,24 @@ The shared Management panel shows each admitted player's best submitted clinic.
 It works independently of cloud-save enrollment and usage-recording consent.
 Prototype sessions allocate no competition transport, queue or retry timer.
 
+After a completed game-day submission is acknowledged, the shared session
+checks the player's rank. A first ranked result establishes a silent baseline;
+subsequent up/down changes add one Clinic Competition entry to Alerts & Events.
+Unchanged, hidden/unranked and casual accounts generate no rank alert. Casual or
+pending access causes no rank request. Failed submissions/reads keep the last
+known rank for online/focus/minute retries and never block gameplay. Rank and
+checked-day fields share the existing account/backend/campaign aggregate cache,
+outside game saves. A reload does not duplicate the same day's check or alert.
+The rank is the player's best-clinic rank, as returned by the existing board.
+
+The guided Management prompt introduces Clinic Competition. In either shell,
+the first guided Management visit includes a short joke, View Clinic Competition
+and Got it. View opens the actual board; either button dismisses the tip.
+Casual copy explains that casual clinics are unranked. Dismissal is an
+account/campaign local preference with session-storage/tab-memory fallback;
+it neither changes a game rule nor writes a campaign save. Guidance off hides
+the tip. The UI adds no permanent navigation button or rank badge.
+
 Revenue means **gross earned income**, in cents:
 
 - Patient settlement `completionRevenue + qualityRevenueBonus`.

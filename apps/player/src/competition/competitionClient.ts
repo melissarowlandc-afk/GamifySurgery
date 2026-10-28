@@ -13,13 +13,18 @@ interface RecordEntry extends RevenueHistory {
   touchedAt: number;
   pending?: CompetitionSubmission;
   sentDay?: number;
+  lastRank?: number;
+  rankCheckedDay?: number;
 }
+
+export interface CompetitionRankChange { campaignId: string; completedDay: number; message: string; }
 
 /** Small aggregate-only outbox; no campaign, patient, answer, token or email data. */
 export class CompetitionClient {
   private records = new Map<string, RecordEntry>();
   private flushing: Promise<void> | null = null;
   private blocked = false;
+  private rankChecks = new Map<string, Promise<CompetitionRankChange | null>>();
   constructor(private transport: CompetitionTransport, private storage: CompetitionStorage | null,
     readonly storageKey: string, private now = () => Date.now()) {
     try {
@@ -34,6 +39,8 @@ export class CompetitionClient {
         this.records.set(r.campaignId, { campaignId: r.campaignId, boundaryDay: r.boundaryDay,
           boundaryGrossCents: r.boundaryGrossCents, days: r.days, touchedAt: r.touchedAt,
           ...(Number.isInteger(r.sentDay) ? { sentDay: r.sentDay } : {}),
+          ...(Number.isSafeInteger(r.lastRank) && r.lastRank! > 0 ? { lastRank: r.lastRank } : {}),
+          ...(Number.isSafeInteger(r.rankCheckedDay) && r.rankCheckedDay! >= 1 && r.rankCheckedDay! <= (r.sentDay ?? 0) ? { rankCheckedDay: r.rankCheckedDay } : {}),
           ...(isCompetitionSubmission(r.pending) && r.pending.campaignId === r.campaignId && r.touchedAt > now() - QUEUE_MAX_AGE_MS ? { pending: r.pending } : {}) });
       }
     } catch { /* Storage unavailable/corrupt: keep a bounded in-memory queue. */ }
@@ -47,7 +54,8 @@ export class CompetitionClient {
     // Restoring an older save must not move the queued/server day backwards.
     if (previous && previous.boundaryDay > history.boundaryDay) return;
     const record: RecordEntry = { ...history, campaignId: state.campaignId, touchedAt: this.now(),
-      sentDay: previous?.sentDay, pending: previous?.pending };
+      sentDay: previous?.sentDay, pending: previous?.pending,
+      lastRank: previous?.lastRank, rankCheckedDay: previous?.rankCheckedDay };
     const average = averageDailyRevenue(history);
     if (average && history.boundaryDay > (previous?.sentDay ?? 0)) {
       const submission = { campaignId: state.campaignId, clinicName: clinicName.trim(), facilityLevel: state.facilityLevel,
@@ -77,6 +85,36 @@ export class CompetitionClient {
     if (this.blocked) throw new CompetitionAccessError("Competition access stopped");
     try { await this.transport.setHidden(hidden); }
     catch (error) { if (error instanceof CompetitionAccessError) this.clear(); throw error; }
+  }
+  /** Read only after this campaign's day is acknowledged. Failure is retryable.
+   * Rank history belongs to the aggregate account/campaign cache, never saves. */
+  async rankChange(campaignId: string, completedDay: number, casualMode: boolean | null): Promise<CompetitionRankChange | null> {
+    if (this.blocked || casualMode !== false || !Number.isSafeInteger(completedDay) || completedDay < 1) return null;
+    const inFlight = this.rankChecks.get(campaignId);
+    if (inFlight) { await inFlight; return this.rankChange(campaignId, completedDay, casualMode); }
+    const record = this.records.get(campaignId);
+    if (!record || (record.sentDay ?? 0) < completedDay || (record.rankCheckedDay ?? 0) >= completedDay) return null;
+    const request = this.readRankChange(campaignId, completedDay);
+    this.rankChecks.set(campaignId, request);
+    try { return await request; }
+    finally { if (this.rankChecks.get(campaignId) === request) this.rankChecks.delete(campaignId); }
+  }
+  private async readRankChange(campaignId: string, completedDay: number): Promise<CompetitionRankChange | null> {
+    try {
+      const board = await this.leaderboard();
+      const record = this.records.get(campaignId);
+      if (this.blocked || !record || (record.rankCheckedDay ?? 0) >= completedDay) return null;
+      const rank = board.hidden ? undefined : board.rows.find(row => row.isSelf)?.rank ?? undefined;
+      const previous = record.lastRank;
+      record.lastRank = rank; record.rankCheckedDay = completedDay;
+      this.persist();
+      // Establish a baseline silently. Hidden, absent and casual clinics have
+      // no rank; re-entry establishes a fresh baseline instead of a false move.
+      if (rank === undefined || previous === undefined || rank === previous) return null;
+      return { campaignId, completedDay, message: rank < previous
+        ? `You moved up to #${rank} in Clinic Competition!`
+        : `Another clinic passed yours — you're now #${rank}.` };
+    } catch { return null; } // Offline reads never consume the day's rank check.
   }
   flush(): Promise<void> {
     if (this.blocked) return Promise.resolve();

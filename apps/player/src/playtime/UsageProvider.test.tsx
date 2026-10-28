@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { AuthAccountContext } from "../auth/AuthAccountContext";
 import { cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
 import { getSupabaseAuthClient } from "../auth/supabaseAuth";
-import { UsageNoticePlaceholder, UsageProvider, useUsageTracking } from "./UsageProvider";
+import { UsageNoticePlaceholder, UsageProvider, useUsageTracking, useCasualMode } from "./UsageProvider";
 
 vi.mock("../auth/supabaseAuth", () => ({ getSupabaseAuthClient: vi.fn(() => { throw new Error("Unconfigured usage must not create a client"); }) }));
 afterEach(async () => { await cleanupPhoneTests(); vi.unstubAllEnvs(); vi.clearAllMocks(); });
@@ -14,7 +14,7 @@ describe("unconfigured usage path in either shell", () => {
     const env = phoneTestDom(); env.browser.location.search = phone ? "?layout=phone" : "";
     const setInterval = vi.fn(); Object.assign(env.browser, { setInterval, clearInterval: vi.fn() });
     const fetch = vi.fn(() => { throw new Error("Unexpected network"); }); vi.stubGlobal("fetch", fetch);
-    function Game() { const tracker = useUsageTracking(); return <p>{tracker === null ? "Local game" : "Tracked game"}</p>; }
+    function Game() { const tracker = useUsageTracking(); expect(useCasualMode()).toBe(false); return <p>{tracker === null ? "Local game" : "Tracked game"}</p>; }
     await env.render(<StrictMode><AuthAccountContext.Provider value={null}><UsageProvider><Game /><UsageNoticePlaceholder /></UsageProvider></AuthAccountContext.Provider></StrictMode>);
     expect(env.element.textContent).toBe("Local game");
     expect(getSupabaseAuthClient).not.toHaveBeenCalled(); expect(fetch).not.toHaveBeenCalled();

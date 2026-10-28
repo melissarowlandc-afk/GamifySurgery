@@ -148,6 +148,7 @@ export function MobileChart(props: MobileChartProps) {
           {chart.vitals?.length ? <dl className="mobile-vitals" aria-label="Vital signs">{chart.vitals.map((vital) => <div key={vital.id}><dt>{vital.label}</dt><dd>{vital.value}</dd></div>)}</dl> : null}
           {(current?.currentUpdate ?? chart.presentationUpdate) ? <div className="mobile-chart-update"><strong>Current update</strong><p>{current?.currentUpdate ?? chart.presentationUpdate}</p></div> : null}
         </section>
+        {chart.answerChoicesPending ? <p role="status">Checking your account mode...</p> : null}
         {steps.map((step) => step.current ? <section className="mobile-decision is-current" key={step.id} aria-label={step.heading}><Decision {...props} step={step} /></section>
           : <details className="mobile-decision is-past" key={step.id} open={!step.complete && !chart.pendingLabel && Boolean(step.feedbackBody || step.teachingPoint || step.resultBody) || undefined}>
             <summary>{step.heading} · {step.collapsedResultLabel ?? step.feedbackTitle ?? (step.complete ? "Completed" : step.statusLabel ?? "In progress")}</summary>

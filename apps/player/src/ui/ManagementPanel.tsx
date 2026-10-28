@@ -3,6 +3,7 @@ import { StaffPanel } from "./StaffPanel";
 import { ServiceIncomePanel } from "./ServiceIncomePanel";
 import { MoneyPanel } from "./MoneyPanel";
 import { ClinicCompetitionPanel } from "../competition/ClinicCompetitionPanel";
+import { CompetitionTutorialTip } from "../competition/CompetitionTutorialTip";
 import type {
   ServiceIncomeView,
   ServiceSetupActionView,
@@ -12,6 +13,7 @@ import type {
 
 interface ManagementPanelProps {
   managementMode: boolean;
+  competitionTutorial?: { campaignId: string; enabled: boolean };
   showInactiveTrigger?: boolean;
   roles: StaffRoleGroupView[];
   staffTraining?: StaffTrainingOverviewView | null;
@@ -43,6 +45,7 @@ const TABS: { id: ManagementTab; label: string }[] = [
 /** Desk-owned staff, services and money views shown while facility time is paused. */
 export function ManagementPanel({
   managementMode,
+  competitionTutorial,
   showInactiveTrigger = true,
   roles,
   staffTraining = null,
@@ -110,6 +113,7 @@ export function ManagementPanel({
           </button>
         ))}
       </div>
+      {competitionTutorial ? <CompetitionTutorialTip {...competitionTutorial} onShowBoard={() => setActiveTab("competition")} /> : null}
       {activeTab === "employees" ? (
         <StaffPanel
           roles={roles}

@@ -18,3 +18,8 @@
 .clinic-competition .competition-self { background: var(--panel); outline: 2px solid var(--ink); outline-offset: -2px; }
 .mobile-shell .clinic-competition { padding: 4px; font-size: 15px; }
 .mobile-shell .clinic-competition button { min-height: 48px; }
+.competition-tutorial-tip { flex: 0 0 auto; margin: 8px; padding: 10px; border: 2px solid var(--ink); background: var(--panel); color: var(--ink); font-size: 0.85rem; line-height: 1.4; }
+.competition-tutorial-tip p { margin: 6px 0; }
+.competition-tutorial-tip > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.competition-tutorial-tip button { min-height: 44px; padding: 8px; font: inherit; cursor: pointer; }
+.mobile-shell .competition-tutorial-tip { font-size: 15px; }

@@ -6,6 +6,7 @@ import type { ManageBackRegistration } from "./MobileManageSheet";
 import { MobileServices } from "./MobileServices";
 import { MobileMoney } from "./MobileMoney";
 import { ClinicCompetitionPanel } from "../../competition/ClinicCompetitionPanel";
+import { CompetitionTutorialTip } from "../../competition/CompetitionTutorialTip";
 import "./mobileManage.css";
 
 export type MobileManageProps = Pick<PrototypeShellProps,
@@ -16,6 +17,7 @@ export type MobileManageProps = Pick<PrototypeShellProps,
   "onPraiseEmployee" | "onServiceAppointmentsEnabledChange" |
   "onStartLaboratoryProcessing" | "onAdvertisingLevelChange"
 > & {
+  competitionTutorial?: { campaignId: string; enabled: boolean };
   highlightedRoleId?: string | null;
   highlightedEmployeeId?: string | null;
   requestedTraining?: { employeeId: string; requestKey: number } | null;
@@ -55,6 +57,7 @@ export function MobileManage(props: MobileManageProps) {
         onClick={() => setSection(name)}>{name}</button>)}
     </div>
     </div>
+    {props.competitionTutorial ? <CompetitionTutorialTip {...props.competitionTutorial} onShowBoard={() => setSection("Clinic Competition")} /> : null}
     <div role="tabpanel" id={`mobile-manage-${sectionId(section)}`} aria-labelledby={`mobile-manage-tab-${sectionId(section)}`}>
       {section === "Employees" ? <MobileEmployees {...props} onDetailBackChange={registerDetailBack} />
         : section === "Services" ? <MobileServices view={props.serviceIncome}
