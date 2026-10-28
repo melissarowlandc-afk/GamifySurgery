@@ -31,6 +31,7 @@ import { QuestionFlagProvider } from "./QuestionFlagProvider";
 import { loadQuestionReviewFlags, QUESTION_REVIEW_FLAGS_STORAGE_KEY } from "./questionReviewFlags";
 import { usePrototypeSession, type PrototypeSession } from "./usePrototypeSession";
 import { createPrototypePlayerView } from "./viewModels";
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 const context = vi.hoisted(() => ({ tracker: null as PlaytimeTracker | null, transport: null as FlagTransport | null }));
 vi.mock("../playtime/UsageProvider", () => ({ useUsageTracking: () => context.tracker, useCasualMode: () => context.tracker?.casualMode() ?? false }));
@@ -257,7 +258,7 @@ describe("reported hosted flag recovery boundaries", () => {
       limitBytes: limit, level5ProfileUtf16Bytes: originalProfile.length * 2, beforeFlagBytes: beforeFlag,
       failedCloudWrites: f.budget.failedCloudWrites, afterRecoveryBytes: f.localBytes() };
     if (process.env.FLAG_FREEZE_EVIDENCE) writeFileSync(`${process.env.FLAG_FREEZE_EVIDENCE}/quota-${layout}.json`, JSON.stringify(measurements, null, 2));
-  }, 30_000);
+  }, hostedTime(30_000));
 
   for (const layout of ["phone", "desktop"] as const) {
     it.each([false, true])(`automatically reopens the newest flagged ${layout} progress after a silent kill (team=%s)`, async employee => {
