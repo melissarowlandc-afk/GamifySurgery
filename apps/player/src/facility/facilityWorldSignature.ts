@@ -24,7 +24,7 @@ export function getFacilityWorldSignature(
   const doors = (model.doors ?? [])
     .map(
       (door) =>
-        `${door.instanceId}:${door.roomInstanceId}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}`,
+        `${door.instanceId}:${door.roomInstanceId}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}:${door.connectionValid ?? "legacy"}:${door.adjacentRoomInstanceId ?? "-"}:${door.blockedReason ?? "-"}`,
     )
     .join("|");
   const doorSlots = (

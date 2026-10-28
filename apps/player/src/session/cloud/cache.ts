@@ -1,5 +1,6 @@
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCodec } from "./codecWorker";
+import { isStorageQuotaError } from "../storagePressure";
 import { CloudCacheError, type StoredCache } from "./codecCache";
 export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
 import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
@@ -31,7 +32,7 @@ const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
     value.onsuccess = () => resolve(value.result);
-    value.onerror = () => reject(new CloudCacheError("transaction"));
+    value.onerror = () => reject(new CloudCacheError(isStorageQuotaError(value.error) ? "quota" : "transaction"));
   });
 }
 function completion(tx: IDBTransaction): Promise<boolean> {
@@ -66,6 +67,7 @@ export class IndexedDbCloudCache implements CloudCache {
       opening.onsuccess = () => {
         if (blocked) { opening.result.close(); return; }
         opening.result.onversionchange = () => { opening.result.close(); this.database = null; };
+        opening.result.onclose = () => { this.database = null; };
         resolve(opening.result);
       };
     });
@@ -94,7 +96,7 @@ export class IndexedDbCloudCache implements CloudCache {
         if ((current?.cacheRevision ?? null) !== expected) throw new CloudCacheError("conflict");
         await request(store.put(stored));
         this.hooks.beforeCommit?.(tx);
-        if (!await done) throw new CloudCacheError("transaction");
+        if (!await done) throw new CloudCacheError(isStorageQuotaError(tx.error) ? "quota" : "transaction");
         await this.hooks.afterCommit?.();
         const readback = await this.read(entry.scope, stored.text);
         if (!readback || readback.cacheRevision !== stored.cacheRevision) {
@@ -105,7 +107,7 @@ export class IndexedDbCloudCache implements CloudCache {
         try { tx.abort(); } catch { /* already completed */ }
         await done;
         if (error instanceof CloudCacheError) throw error;
-        throw new CloudCacheError("transaction");
+        throw new CloudCacheError(isStorageQuotaError(error) ? "quota" : "transaction");
       }
     };
     // The IDB compare-and-swap also fences tabs when Web Locks is unavailable.

@@ -53,6 +53,7 @@ export function MobileBuildExitSheet({ props, onClose }: { props: PrototypeShell
   return <MobileSheet title="Finish room access" kind="bottom" onClose={onClose}>
     <p role="status">{props.buildExitBlockedReason}</p>
     {props.buildExitBlockedIssues.length ? <ul>{props.buildExitBlockedIssues.map((issue, index) => <li key={`${index}:${issue}`}>{issue}</li>)}</ul> : null}
+    <p>Open Doors on the named room and tap the specified wall section. A red × marks a door that does not connect.</p>
     <button type="button" onClick={onClose}>Continue Renovating</button>
   </MobileSheet>;
 }

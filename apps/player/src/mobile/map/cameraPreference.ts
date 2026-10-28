@@ -2,6 +2,7 @@ import {
   createFacilityCameraPreferenceSession, FACILITY_CAMERA_PREFERENCE_KEY,
   facilityCameraPreferenceKey, readFacilityCameraPreference,
 } from "../../session/facilityCameraPreference";
+import { setAuxiliaryItem } from "../../session/storagePressure";
 
 export const PHONE_CAMERA_PREFERENCE_KEY = "gamify-surgery.prototype.phone-facility-camera.v1";
 type CameraStorage = Pick<Storage, "getItem" | "setItem">;
@@ -16,7 +17,7 @@ function phoneStorage(storage: CameraStorage | null): CameraStorage | null {
   if (!storage) return null;
   const key = (desktopKey: string) => desktopKey.replace(FACILITY_CAMERA_PREFERENCE_KEY, PHONE_CAMERA_PREFERENCE_KEY);
   return { getItem: (desktopKey) => storage.getItem(key(desktopKey)),
-    setItem: (desktopKey, value) => storage.setItem(key(desktopKey), value) };
+    setItem: (desktopKey, value) => setAuxiliaryItem(storage, key(desktopKey), value) };
 }
 export const readPhoneCameraPreference = (campaignId: string, storage: CameraStorage | null = browserStorage()) =>
   readFacilityCameraPreference(campaignId, phoneStorage(storage));

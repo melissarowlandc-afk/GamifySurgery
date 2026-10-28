@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { APP_BUILD_VERSION } from "../appVersion";
 import { accountStorageKey } from "./accountStorageKey";
+import { AUXILIARY_ITEM_BYTES, setAuxiliaryItem } from "./storagePressure";
 import type { QuestionReviewFlagInput } from "./questionReviewFlags";
 
 export const HOSTED_FLAGS_KEY = "gamify-surgery.question-flag-outbox.v1";
@@ -117,6 +118,7 @@ export class QuestionFlagQueue {
   private entries: FlagEntry[] = [];
   private listeners = new Set<() => void>();
   private inFlight: Promise<void> | null = null;
+  private statusesInFlight: Promise<void> | null = null;
   private stopped = false;
   private generation = 0;
   storageAvailable = true;
@@ -142,25 +144,46 @@ export class QuestionFlagQueue {
     const previous = this.entries.length;
     this.entries = this.entries.filter((entry) => Date.parse(entry.payload.flagged_at) > this.now() -
       (entry.delivery === "pending" ? MAX_FLAG_AGE_MS : 90 * 86_400_000) && Date.parse(entry.payload.flagged_at) <= this.now() + 60_000);
-    while (this.entries.length > MAX_PENDING_FLAGS || new TextEncoder().encode(JSON.stringify(this.entries)).length > MAX_FLAG_QUEUE_BYTES - 256) this.entries.shift();
+    // Pending reports must survive queue pressure. Old acknowledged receipts
+    // may roll out; their hosted report and separate review history remain.
+    while (this.entries.length > MAX_PENDING_FLAGS || new TextEncoder().encode(JSON.stringify(this.entries)).length > MAX_FLAG_QUEUE_BYTES - 256 ||
+      JSON.stringify({ schemaVersion: 1, entries: this.entries }).length * 2 > AUXILIARY_ITEM_BYTES - 256) {
+      const sent = this.entries.findIndex(entry => entry.delivery === "sent");
+      if (sent < 0) break;
+      this.entries.splice(sent, 1);
+    }
     this.dropped += previous - this.entries.length;
   }
   private persist() {
     this.bound();
     try {
       if (!this.storage) throw new Error("No flag storage");
-      this.storage.setItem(this.key(), JSON.stringify({ schemaVersion: 1, entries: this.entries }));
+      setAuxiliaryItem(this.storage, this.key(), JSON.stringify({ schemaVersion: 1, entries: this.entries }));
       this.storageAvailable = true;
     } catch { this.storageAvailable = false; }
     this.publish();
   }
-  async submit(payload: HostedQuestionFlag, input: QuestionReviewFlagInput) {
+  /** Accept locally before starting delivery; the composer need not wait on HTTP. */
+  enqueue(payload: HostedQuestionFlag, input: QuestionReviewFlagInput) {
     if (this.stopped || !this.allowed() || !isHostedQuestionFlag(payload) || payload.user_id !== this.accountId) throw new Error("Flag submission is unavailable");
     const existing = this.entries.find((entry) => entry.payload.flag_id === payload.flag_id);
     if (existing && (JSON.stringify(existing.payload) !== JSON.stringify(payload) || existing.contextKey !== contextKey(input))) throw new Error("Flag identity conflict");
     if (!existing) {
-      this.entries.push({ payload, contextKey: contextKey(input), delivery: "pending" }); this.persist();
+      const entry: FlagEntry = { payload, contextKey: contextKey(input), delivery: "pending" };
+      const pending = [...this.entries.filter(item => item.delivery === "pending"), entry];
+      if (pending.length > MAX_PENDING_FLAGS || JSON.stringify({ schemaVersion: 1, entries: pending }).length * 2 > AUXILIARY_ITEM_BYTES - 256)
+        throw new Error("Flag queue is full; existing unsent reports are retained");
+      while (this.entries.length && (this.entries.length >= MAX_PENDING_FLAGS ||
+        JSON.stringify({ schemaVersion: 1, entries: [...this.entries, entry] }).length * 2 > AUXILIARY_ITEM_BYTES - 256)) {
+        const sent = this.entries.findIndex(item => item.delivery === "sent");
+        if (sent < 0) break;
+        this.entries.splice(sent, 1);
+      }
+      this.entries.push(entry); this.persist();
     }
+  }
+  async submit(payload: HostedQuestionFlag, input: QuestionReviewFlagInput) {
+    this.enqueue(payload, input);
     await this.flush();
   }
   flush(): Promise<void> {
@@ -183,18 +206,31 @@ export class QuestionFlagQueue {
     this.inFlight = request;
     return request;
   }
-  async refreshStatuses() {
-    if (this.stopped || !this.allowed()) return;
+  refreshStatuses(): Promise<void> {
+    if (this.stopped || !this.allowed()) return Promise.resolve();
+    if (this.statusesInFlight) return this.statusesInFlight;
+    const ids = this.entries.filter((entry) => entry.delivery === "sent").map((entry) => entry.payload.flag_id);
+    if (!ids.length) return Promise.resolve();
     const generation = this.generation;
-    try {
-      const rows = await this.transport.read(this.entries.filter((entry) => entry.delivery === "sent").map((entry) => entry.payload.flag_id));
-      if (this.stopped || !this.allowed() || generation !== this.generation) return;
-      for (const row of rows) {
-        const entry = this.entries.find((item) => item.payload.flag_id === row.flag_id);
-        if (entry) { entry.status = row.status; entry.fixedInVersion = row.fixed_in_version; }
-      }
-      this.persist();
-    } catch { /* Last acknowledged status remains available; no false disposition. */ }
+    const request = (async () => {
+      await Promise.resolve();
+      try {
+        const rows = await this.transport.read(ids);
+        if (this.stopped || !this.allowed() || generation !== this.generation) return;
+        let changed = false;
+        for (const row of rows) {
+          const entry = this.entries.find((item) => item.payload.flag_id === row.flag_id);
+          if (entry && (entry.status !== row.status || (entry.fixedInVersion ?? null) !== row.fixed_in_version)) {
+            entry.status = row.status; entry.fixedInVersion = row.fixed_in_version; changed = true;
+          }
+        }
+        // Reading receipts on mount must not rewrite recovered storage or cause
+        // another render unless a disposition actually changed.
+        if (changed || !this.storageAvailable) this.persist();
+      } catch { /* Last acknowledged status remains available; no false disposition. */ }
+    })().finally(() => { this.statusesInFlight = null; });
+    this.statusesInFlight = request;
+    return request;
   }
   clear() { this.generation += 1; this.entries = []; this.persist(); }
   stop() { this.stopped = true; this.generation += 1; }

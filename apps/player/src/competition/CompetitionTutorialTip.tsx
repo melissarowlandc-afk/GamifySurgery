@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { accountStorageKey } from "../session/accountStorageKey";
+import { setAuxiliaryItem } from "../session/storagePressure";
 import { useCasualMode } from "../playtime/UsageProvider";
 import "./competition.css";
 
@@ -18,7 +19,7 @@ function wasDismissed(key: string): boolean {
 function dismiss(key: string) {
   dismissedInMemory.add(key);
   for (const kind of ["localStorage", "sessionStorage"] as const) {
-    try { window[kind]?.setItem(key, "dismissed"); } catch { /* Tab memory still avoids repeating the tip. */ }
+    try { if (window[kind]) setAuxiliaryItem(window[kind], key, "dismissed"); } catch { /* Tab memory still avoids repeating the tip. */ }
   }
 }
 

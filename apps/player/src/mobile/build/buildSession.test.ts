@@ -125,6 +125,20 @@ describe("hallway preview versus actual unchanged desktop cell painting", () => 
 });
 
 describe("one-tile door sections, reciprocal walls and command guards", () => {
+  it("keeps an invalid saved doorway red while allowing its removal", () => {
+    const state = fixture();
+    state.rooms.push({ id: "isolated.waiting", roomDefinitionId: "room.waiting", x: 3, y: 3,
+      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.doors.push({ id: "isolated.door", roomId: "isolated.waiting", side: "east", offset: 1, exterior: false });
+    const model = createPrototypePlayerView(state, null, false, null, true).facility;
+    const saved = model.doors!.find(door => door.instanceId === "isolated.door")!;
+    // The fallback for legacy/test adapters must agree with the map too.
+    delete saved.connectionValid; delete saved.adjacentRoomInstanceId;
+    const section = phoneDoorSections(model, { previewDoor: request => previewMobileDoor(state, request) })
+      .find(section => section.request.kind === "remove" && section.request.doorId === saved.instanceId)!;
+    expect(section.connectionInvalid).toBe(true);
+    expect(section.validation.valid).toBe(true);
+  });
   it("legal sections match PLACE_DOOR; illegal and immutable sections retain exact reasons", () => {
     const state = fixture();
     const front = state.rooms.find(room => room.roomDefinitionId === "room.front_desk")!;

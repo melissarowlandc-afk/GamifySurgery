@@ -8,24 +8,89 @@ import { MemoryCloudEntryStore } from "./entryStorage";
 import { FakeCloudServer } from "./fakeTransport";
 import { CloudSyncError } from "./transport";
 import { deferred, syncFixture } from "./syncTestSupport";
+import { CLOUD_CHECK_TIMEOUT_MS } from "./checkDeadline";
 import { createInitialGameState } from "@gamify-surgery/game-domain";
 import { createFreshProfile } from "../prototypeStorage";
 import { usePrototypeSession } from "../usePrototypeSession";
 
-afterEach(async () => { await cleanupPhoneTests(); vi.unstubAllEnvs(); });
-async function fixture() {
+afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); vi.unstubAllEnvs(); });
+async function fixture(options: { retainedCloud?: boolean; initialNetworkFailure?: boolean } = {}) {
   const env = phoneTestDom(), server = new FakeCloudServer(), cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore();
   const runtime: CloudAccountRuntime = { backendId: "synthetic", accountId: "account-a", region: "Disposable QA", transport: server.transport("account-a"), cache, entryStore };
+  if (options.retainedCloud) {
+    const data = await syncFixture(), scope = { backendId: runtime.backendId, accountId: runtime.accountId, campaignId: data.confirmed.campaignId };
+    server.seed(runtime.accountId, data.confirmed);
+    await cache.write({ schemaVersion: 1, scope, confirmed: data.confirmed, recovery: null }, null);
+  }
+  if (options.initialNetworkFailure) server.faults.push({ method: "capabilities", at: "before", error: new CloudSyncError("network") });
   let current!: CloudAccountValue;
   const guard = { current: null as (() => Promise<void>) | null };
   function Probe() { const cloud = useCloudAccount(); if (cloud) current = cloud; return <p>{cloud?.phase ?? "Beta 1"}</p>; }
   await env.render(<AuthAccountContext.Provider value="account-a"><AuthAccountActionsContext.Provider value={{ email: "a@example.invalid", signOut: async () => true, signOutGuard: guard, pending: false, message: null }}>
     <CloudAccountProvider runtime={runtime}><Probe /></CloudAccountProvider>
   </AuthAccountActionsContext.Provider></AuthAccountContext.Provider>);
-  await vi.waitFor(() => expect(current?.phase).toBe("available"));
+  await vi.waitFor(() => expect(current?.phase).toBe(options.initialNetworkFailure ? "error" : "available"));
   return { env, server, cache, entryStore, runtime, guard, get current() { return current; } };
 }
 describe("account entry lifetime and privacy", () => {
+  it("bounds cold admission and an unreadable recovery inventory without selecting an older local campaign", async () => {
+    const env = phoneTestDom(), server = new FakeCloudServer(), data = await syncFixture(); server.seed("account-a", data.confirmed);
+    const cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore(), transport = server.transport("account-a");
+    const runtime: CloudAccountRuntime = { backendId: "synthetic", accountId: "account-a", region: "Disposable QA", cache, entryStore, transport };
+    const held = deferred(), inventory = deferred(), started = deferred(), capabilities = transport.capabilities.bind(transport);
+    vi.spyOn(transport, "capabilities").mockImplementation(async () => { started.resolve(); await held.promise; return { ...await capabilities(), enabled: false }; });
+    vi.spyOn(cache, "accountEntries").mockImplementation(async () => { await inventory.promise; return []; });
+    let current: CloudAccountValue | null = null;
+    function Probe() { current = useCloudAccount(); return <p>{current?.phase ?? "Beta 1"}</p>; }
+    vi.useFakeTimers();
+    await env.render(<AuthAccountContext.Provider value="account-a"><CloudAccountProvider runtime={runtime}><Probe /></CloudAccountProvider></AuthAccountContext.Provider>);
+    await started.promise;
+    expect(env.element.textContent).toContain("Checking your sign-in");
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS + 1_500); });
+    expect(env.element.textContent).toBe("error"); expect((current as CloudAccountValue | null)?.error).toBe("network");
+    vi.useRealTimers(); vi.restoreAllMocks();
+    await act(async () => { await current!.refresh(); });
+    expect(env.element.textContent).toBe("available"); expect(current!.summaries).toHaveLength(1);
+    await act(async () => { held.resolve(); inventory.resolve(); await held.promise; });
+    expect(env.element.textContent).toBe("available"); expect(current!.summaries).toHaveLength(1);
+    expect(server.calls.some(call => ["acquire", "commit"].includes(call.method))).toBe(false);
+  });
+  it.each(["capabilities", "deletion-requested", "list"] as const)("bounds a missing %s response and fences it after a successful retry", async boundary => {
+    const f = await fixture({ retainedCloud: true }), held = deferred(), started = deferred();
+    if (boundary === "capabilities") {
+      const real = f.runtime.transport.capabilities.bind(f.runtime.transport); let first = true;
+      vi.spyOn(f.runtime.transport, "capabilities").mockImplementation(async () => { if (first) { first = false; started.resolve(); await held.promise; } return real(); });
+    } else if (boundary === "list") {
+      const real = f.runtime.transport.list.bind(f.runtime.transport); let first = true;
+      vi.spyOn(f.runtime.transport, "list").mockImplementation(async () => { if (first) { first = false; started.resolve(); await held.promise; return []; } return real(); });
+    } else {
+      const real = f.entryStore.read.bind(f.entryStore); let first = true;
+      vi.spyOn(f.entryStore, "read").mockImplementation(async key => {
+        if (key === "deletion-requested" && first) { first = false; started.resolve(); await held.promise; return { requested: true } as never; }
+        return real(key);
+      });
+    }
+    vi.useFakeTimers(); let checking!: Promise<void>;
+    await act(async () => { checking = f.current.refresh(); }); await started.promise;
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); await checking; });
+    expect(f.current.phase).toBe("error"); expect(f.current.error).toBe("network"); expect(f.current.active).toBeNull();
+    vi.useRealTimers(); await act(async () => { await f.current.refresh(); });
+    expect(f.current.phase).toBe("available"); expect(f.current.summaries).toHaveLength(1);
+    await act(async () => { held.resolve(); await held.promise; });
+    expect(f.current.phase).toBe("available"); expect(f.current.summaries).toHaveLength(1);
+    expect((await f.cache.accountEntries(f.runtime))).toHaveLength(1);
+    expect(f.server.calls.some(call => ["acquire", "commit"].includes(call.method))).toBe(false);
+  });
+  it("keeps known cloud recovery on a cold network failure and refreshes automatically on online", async () => {
+    const f = await fixture({ retainedCloud: true, initialNetworkFailure: true });
+    expect(f.env.element.textContent).toBe("error"); expect(f.current.error).toBe("network");
+    expect((await f.cache.accountEntries(f.runtime))).toHaveLength(1);
+    await act(async () => { f.env.browser.dispatchEvent(new Event("online")); });
+    await vi.waitFor(() => expect(f.current.phase).toBe("available"));
+    expect(f.current.summaries).toHaveLength(1);
+    expect((await f.cache.accountEntries(f.runtime))).toHaveLength(1);
+    expect(f.server.calls.some(call => ["acquire", "commit"].includes(call.method))).toBe(false);
+  });
   it("fences late entry/import callbacks and new local writes after sign-out starts", async () => {
     const f = await fixture(), wait = deferred(), scoped = f.current.runtime;
     f.server.faults.push({ method: "list", at: "after", wait: wait.promise });
@@ -112,5 +177,11 @@ describe("account entry lifetime and privacy", () => {
     await f.guard.current?.();
     expect(await f.entryStore.read("raw")).toEqual({ text: "exact original" });
     expect(f.server.calls.some(call => call.method === "deleteMyData")).toBe(false);
+  });
+  it("requires an exported recovery copy before clearing retained conflict branches", async () => {
+    const f = await fixture(); await f.entryStore.write("conflict:synthetic", { device: "original local bytes", account: "verified remote bytes" });
+    await expect(f.current.clearDevice(false)).rejects.toMatchObject({ code: "storage" });
+    expect(await f.entryStore.read("conflict:synthetic")).not.toBeNull();
+    await f.current.clearDevice(true); expect(await f.entryStore.read("conflict:synthetic")).toBeNull();
   });
 });

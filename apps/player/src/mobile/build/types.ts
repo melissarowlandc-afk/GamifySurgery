@@ -26,6 +26,8 @@ export interface DoorSection {
   offset: number;
   request: DoorRequest;
   validation: BuildValidation;
+  /** Separate from removal permission: an invalid saved door is still removable. */
+  connectionInvalid?: boolean;
 }
 export type MobileBuildIntent = { kind: "ghost"; point: GridPoint } |
   { kind: "hallway"; cells: readonly GridPoint[] } | { kind: "door"; id: string | null };

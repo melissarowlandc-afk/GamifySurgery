@@ -16,6 +16,7 @@ import { deferred, syncFixture, TestCloudClock } from "./syncTestSupport";
 import { decompressCloudText } from "./codecCompression";
 import { CloudCodecWorker } from "./codecWorker";
 import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
+import { logicalJsonText } from "./codecJson";
 
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 async function pendingText(session: CloudGameSession): Promise<string> {
@@ -35,6 +36,50 @@ async function fixture(state?: GameState) {
   return { session, coordinator, server, cache, clock, prepared, confirmed };
 }
 describe("cloud commands through the shared domain evidence boundary", () => {
+  it("does not queue an unchanged canonical metadata projection after reopening", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    const metadata = f.session.metadata;
+    // The wire codec sorts keys; profile projections build those same fields
+    // in a different order, including nested tutorial objects.
+    const projected = { campaignId: metadata.campaignId, name: metadata.name, status: metadata.status,
+      createdAtRealMs: metadata.createdAtRealMs, updatedAtRealMs: metadata.updatedAtRealMs + 1000,
+      tutorial: { guidance: metadata.tutorial.guidance ? { version: metadata.tutorial.guidance.version,
+        mode: metadata.tutorial.guidance.mode, exposedTopicIds: metadata.tutorial.guidance.exposedTopicIds } : null,
+        introDismissed: metadata.tutorial.introDismissed, dailyRoutineTipAcknowledgments: metadata.tutorial.dailyRoutineTipAcknowledgments,
+        dailyRoutinePause: metadata.tutorial.dailyRoutinePause } };
+    expect(logicalJsonText(JSON.parse(JSON.stringify({ ...projected, updatedAtRealMs: 0 })))).toBe(logicalJsonText(JSON.parse(JSON.stringify({ ...metadata, updatedAtRealMs: 0 }))));
+    f.session.updateMetadata(projected);
+    expect(f.session.syncView.pending).toBe(false);
+    await f.session.durable(); f.clock.advance(15_000); await f.coordinator.pulse();
+    expect(f.server.operationCount("account-a")).toBe(0);
+    f.session.updateMetadata({ ...projected, name: "Renamed clinic" });
+    expect(f.session.syncView.pending).toBe(true); expect(await f.session.checkpointNow("purchase")).toBe(true);
+    expect(f.server.operationCount("account-a")).toBe(1);
+  });
+  it("keeps remount timestamp-only projections quiet and dates actual accepted progress", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    f.session.updateMetadata({ ...f.session.metadata, updatedAtRealMs: f.session.metadata.updatedAtRealMs + 1000 });
+    expect(f.session.syncView.pending).toBe(false);
+    vi.spyOn(Date, "now").mockReturnValue(f.session.metadata.updatedAtRealMs + 2000);
+    f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "dated.progress" }, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(await f.session.durable()).toBe(true);
+    expect(f.coordinator.pendingCandidate?.campaign.updatedAtRealMs).toBe(Date.now());
+  });
+  it("re-encodes and uploads accepted commands after a worker is lost, before reopening the command gate", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    const lost = new FakeCloudCodecWorker(), recovered = new FakeCloudCodecWorker(); recovered.release();
+    const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(lost).mockReturnValueOnce(recovered));
+    vi.spyOn(f.coordinator, "codec", "get").mockReturnValue(codec);
+    f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "worker.accepted" }, PROTOTYPE_DOMAIN_CONTEXT);
+    const saving = f.session.durable(); await Promise.resolve();
+    lost.onerror?.({ preventDefault() {} } as ErrorEvent);
+    expect(await saving).toBe(false);
+    expect(f.coordinator.view).toMatchObject({ canExecute: false, failure: "processing" });
+    expect(await f.session.reconnect()).toBe(true);
+    expect(f.session.state.simulationSpeed).toBe(2); expect(f.session.canExecute).toBe(true);
+    expect(f.coordinator.view.pending).toBe(false); expect(f.coordinator.confirmedRevision).toBe("2");
+    codec.dispose();
+  });
   it("keeps real ticks and commands running while a routine worker checkpoint is in progress", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
     const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
@@ -118,7 +163,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     expect(f.server.calls.some(call => call.method === "release")).toBe(false);
     worker.release(); expect(await closing).toBe(true); expect(f.server.calls.at(-1)?.method).toBe("release"); codec.dispose();
   });
-  it("requires a fresh session projection when focus loads a different account revision", async () => {
+  it("requires a fresh projection when reopening a closed session with a different account revision", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
     expect(await f.session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
     const otherCoordinator = new CloudSyncCoordinator({ scope: f.coordinator.scope, transport: f.server.transport("account-a"), cache: new MemoryCloudCache(), clock: f.clock, enabled: true });
@@ -126,7 +171,8 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     await otherCoordinator.startWriter(); otherCoordinator.resume();
     other.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "other.speed" }, PROTOTYPE_DOMAIN_CONTEXT);
     await other.durable(); await other.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT);
-    expect(await f.coordinator.focus()).toBe(true);
+    expect(await f.coordinator.focus()).toBe(false); // Save & Close stays closed.
+    expect(await f.coordinator.open()).toBe(true);
     expect(f.session.needsReload).toBe(true); expect(f.session.canExecute).toBe(false);
     expect(f.coordinator.view.failure).toBe("account-save-changed");
     const fresh = await CloudGameSession.create(f.coordinator);

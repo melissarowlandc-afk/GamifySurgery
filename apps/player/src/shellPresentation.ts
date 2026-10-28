@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { setAuxiliaryItem } from "./session/storagePressure";
 
 export type PresentationLayout = "phone" | "desktop";
 export const PRESENTATION_PREFERENCE_KEY = "gamify-surgery.presentation-layout.v1";
@@ -43,7 +44,7 @@ export function setPresentationPreference(layout: PresentationLayout): void {
   const url = new URL(window.location.href);
   url.searchParams.delete("layout");
   try {
-    window.localStorage.setItem(PRESENTATION_PREFERENCE_KEY, layout);
+    setAuxiliaryItem(window.localStorage, PRESENTATION_PREFERENCE_KEY, layout);
   } catch {
     // Still honor the choice in this tab when browser storage is unavailable.
     url.searchParams.set("layout", layout);

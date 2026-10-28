@@ -10,13 +10,14 @@ import { CloudAccountContext, CloudAccountProvider, type CloudAccountValue } fro
 import { MemoryCloudCache } from "../session/cloud/cache";
 import { MemoryCloudEntryStore } from "../session/cloud/entryStorage";
 import { FakeCloudServer } from "../session/cloud/fakeTransport";
-import { syncFixture } from "../session/cloud/syncTestSupport";
+import { deferred, syncFixture } from "../session/cloud/syncTestSupport";
+import { CLOUD_CHECK_TIMEOUT_MS } from "../session/cloud/checkDeadline";
 import { CloudSyncError } from "../session/cloud/transport";
 import { AccountMenu } from "./AccountMenu";
 import { CloudCampaignEntry } from "./CloudCampaignEntry";
 
 vi.mock("../facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
-afterEach(cleanupPhoneTests);
+afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); });
 function account() {
   const server = new FakeCloudServer(), store = new MemoryCloudEntryStore();
   const cloud: CloudAccountValue = { runtime: { accountId: "account-a", backendId: "synthetic", region: "Disposable QA", transport: server.transport("account-a"), cache: new MemoryCloudCache(), entryStore: store },
@@ -62,6 +63,21 @@ async function accountCampaigns(f: ReturnType<typeof account>, count: number) {
   f.cloud.summaries = await f.cloud.runtime.transport.list(); refreshAccount(f);
 }
 describe("automatic account campaign entry shared by both layouts", () => {
+  it.each(["phone", "desktop"])("%s: a level preview has a deadline and cannot block Resume or replace the timeout with a late result", async layout => {
+    const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); env.browser.location.search = `?layout=${layout}`;
+    await accountCampaigns(f, 1);
+    const held = deferred(), started = deferred(), load = f.cloud.runtime.transport.load.bind(f.cloud.runtime.transport);
+    vi.spyOn(f.cloud.runtime.transport, "load").mockImplementation(async (...args) => { started.resolve(); await held.promise; return load(...args); });
+    vi.useFakeTimers(); await env.render(wrap(entry({ onOpen: open }), f)); await started.promise;
+    expect(env.element.textContent).toContain("Checking level");
+    expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined();
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    expect(env.element.textContent).toContain("Level unavailable");
+    vi.useRealTimers(); await act(async () => { held.resolve(); await held.promise; });
+    expect(env.element.textContent).toContain("Level unavailable"); await env.click("Resume Account 1");
+    expect(open).toHaveBeenCalledExactlyOnceWith("account.0");
+    expect(f.server.calls.some(call => ["acquire", "commit"].includes(call.method))).toBe(false);
+  });
   it.each(["desktop", "phone"])("%s: shows the two account choices at 0/2 without device-only play", async layout => {
     const env = phoneTestDom(), f = account(), create = vi.fn(); env.browser.location.search = `?layout=${layout}`;
     await env.render(wrap(entry({ onCreate: create }), f));

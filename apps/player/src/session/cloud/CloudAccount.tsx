@@ -1,10 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useAuthAccountActions, useAuthAccountId } from "../../auth/AuthAccountContext";
+import { accountStorageKey } from "../accountStorageKey";
+import { clearArchivedReviewFlags, readArchivedReviewFlags } from "../storagePressure";
 import { hostedAuthConfiguration } from "../../auth/prototypeAuth";
 import { getSupabaseAuthClient } from "../../auth/supabaseAuth";
 import { ClinicalContentNotice } from "../../ui/ClinicalContentNotice";
 import type { CloudCache } from "./cache";
 import { IndexedDbCloudCache } from "./cache";
+import { cloudCheckDeadline } from "./checkDeadline";
 import type { CloudEntryStore } from "./entryStorage";
 import { IndexedDbCloudEntryStore } from "./entryStorage";
 import type { CloudGameSession } from "./gameSession";
@@ -97,28 +100,40 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
   }, [runtime]);
   const refresh = async (accessRequest?: Promise<CloudCapabilities>) => {
     const epoch = ++generation.current; setPhase("checking"); setError(null);
+    let cancelled = false;
+    const current = () => !cancelled && live.current && epoch === generation.current;
     try {
-      if (deletion.current) { setPhase("deletion-requested"); return; }
-      // Do not mount either session until the initial cohort check settles:
-      // even the Beta 1 opening screen can initialize a local profile.
-      const next = await (accessRequest ?? runtime.transport.capabilities());
-      if (!live.current || epoch !== generation.current) return;
-      if (next.accountId !== runtime.accountId || !next.admitted || next.deletionRequested) throw new CloudSyncError("auth");
-      setAccess(next);
-      // Once admitted to cloud, retain its recovery UI if access is later
-      // disabled. A maintenance check must never switch to a local session.
-      setEntry(current => current === "checking" ? next.enabled ? "cloud" : "local" : current);
-      if (!next.enabled) { setPhase("available"); return; }
-      if (await runtime.entryStore.read("deletion-requested")) {
-        deletion.current = true; if (live.current && epoch === generation.current) setPhase("deletion-requested"); return;
-      }
-      if (!live.current || epoch !== generation.current) return;
-      const list = next.noticeAccepted ? await runtime.transport.list() : [];
-      if (!live.current || epoch !== generation.current) return;
-      setSummaries(list); setPhase("available");
+      await cloudCheckDeadline((async () => {
+        if (deletion.current) { setPhase("deletion-requested"); return; }
+        // Do not mount either session until the initial cohort check settles:
+        // even the Beta 1 opening screen can initialize a local profile.
+        const next = await (accessRequest ?? runtime.transport.capabilities());
+        if (!current()) return;
+        if (next.accountId !== runtime.accountId || !next.admitted || next.deletionRequested) throw new CloudSyncError("auth");
+        setAccess(next);
+        // Once admitted to cloud, retain its recovery UI if access is later
+        // disabled. A maintenance check must never switch to a local session.
+        setEntry(current => current === "checking" ? next.enabled ? "cloud" : "local" : current);
+        if (!next.enabled) { setPhase("available"); return; }
+        if (await runtime.entryStore.read("deletion-requested")) {
+          if (current()) { deletion.current = true; setPhase("deletion-requested"); } return;
+        }
+        if (!current()) return;
+        const list = next.noticeAccepted ? await runtime.transport.list() : [];
+        if (!current()) return;
+        setSummaries(list); setPhase("available");
+      })(), undefined, () => { cancelled = true; });
     } catch (failure) {
       if (!live.current || epoch !== generation.current) return;
-      setEntry(current => current === "checking" ? "local" : current);
+      let retainedCloudCampaign = false;
+      if (entry === "checking") {
+        try { retainedCloudCampaign = Boolean((await cloudCheckDeadline(Promise.resolve(runtime.cache.accountEntries?.(runtime)), 1_500))?.length); }
+        catch { retainedCloudCampaign = true; /* Unreadable recovery must not select an older local campaign. */ }
+      }
+      if (!live.current || epoch !== generation.current) return;
+      // A cold admission outage must not reopen the stale Beta 1 profile when
+      // this account already has cloud recovery. This grants no offline play.
+      setEntry(current => current === "checking" ? retainedCloudCampaign ? "cloud" : "local" : current);
       setError(failure instanceof CloudSyncError ? failure.code : "network"); setPhase("error");
     }
   };
@@ -132,6 +147,12 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     void refresh(initialAccess.current.request);
     return () => { live.current = false; stopped.current = true; generation.current++; activeRef.current?.coordinator.pause(); };
   }, [runtime]);
+  useEffect(() => {
+    if (entry !== "cloud") return;
+    const online = () => { if (!stopped.current && !deletion.current) void refresh(); };
+    window.addEventListener("online", online);
+    return () => window.removeEventListener("online", online);
+  }, [runtime, entry]);
   useEffect(() => {
     const guard = account?.signOutGuard; if (!guard || entry !== "cloud") return;
     const prepare = async () => {
@@ -159,9 +180,13 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
       stopped.current = true;
       activeRef.current?.coordinator.dispose("deleted");
       setPhase("deletion-requested");
+      const archiveCleanup = clearArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId))
+        .then(() => null, failure => failure);
       try { await runtime.entryStore.write("deletion-requested", { version: CLOUD_NOTICE_VERSION }); } catch { /* A full browser must not prevent hosted deletion. */ }
       if (!runtime.transport.deleteMyData) throw new CloudSyncError("disabled");
       await runtime.transport.deleteMyData();
+      const archiveFailure = await archiveCleanup;
+      if (archiveFailure) throw archiveFailure;
       if (live.current) { setPhase("deleted"); setSummaries([]); }
     },
     async exportDeviceRecovery() {
@@ -176,6 +201,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
       try { campaigns = await runtime.cache.accountEntries?.(runtime) ?? []; } catch { storageReadComplete = false; }
       try { entry = await runtime.entryStore.entries(); } catch { storageReadComplete = false; }
       return JSON.stringify({ version: 1, backendId: runtime.backendId, accountId: runtime.accountId, accountLocal, storageReadComplete,
+        archivedQuestionFlags: await readArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId)),
         localSessionProfile: localWriter.current?.("export") ?? null,
         campaigns, entry,
         activeRecovery: activeRef.current?.exportRecovery() ?? null });
@@ -183,13 +209,15 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     async clearDevice(recoveryExported) {
       if (!runtime.cache.clearAccount || !runtime.cache.accountEntries) throw new CloudSyncError("storage");
       const entries = await runtime.cache.accountEntries(runtime), imports = await runtime.entryStore.entries();
-      if (!recoveryExported && (entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("import:") && !(entry.value as { verified: boolean }).verified))) throw new CloudSyncError("storage");
+      if (!recoveryExported && (entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("conflict:") ||
+        entry.key.startsWith("import:") && !(entry.value as { verified: boolean }).verified))) throw new CloudSyncError("storage");
       stopped.current = true;
       activeRef.current?.coordinator.dispose("sign-out");
       // A local account session may not have unmounted yet when auth resolves.
       // Fence its pagehide/unmount writer BEFORE removing any account keys.
       localWriter.current?.("clear");
       await runtime.cache.clearAccount(runtime); await runtime.entryStore.clear();
+      await clearArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId));
       // Only this account's keys, at this origin. Unowned/other-account bytes survive.
       const storage = window.localStorage, suffix = `.account.${encodeURIComponent(runtime.accountId)}`;
       const keys: string[] = [];

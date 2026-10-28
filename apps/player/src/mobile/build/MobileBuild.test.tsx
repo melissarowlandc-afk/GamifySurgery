@@ -2,7 +2,7 @@ import { act } from "react";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createInitialGameState, getRoomDefinition, getRoomResaleValue, type GameState } from "@gamify-surgery/game-domain";
+import { createInitialGameState, getFacilityAccessValidation, getRoomDefinition, getRoomResaleValue, type GameState } from "@gamify-surgery/game-domain";
 import { appendLocalCampaign, createFreshProfile, PROTOTYPE_PROFILE_KEY } from "../../session/prototypeStorage";
 import { usePrototypeSession, type PrototypeSession } from "../../session/usePrototypeSession";
 import { createPrototypePlayerView } from "../../session/viewModels";
@@ -387,6 +387,36 @@ describe("native phone Build through the real shared session", () => {
     expect(env.find(node => node.attributes["aria-label"] === "Finish room access").textContent).toContain(env.session.buildExitBlockedReason!);
     await env.click("Continue Renovating"); await env.click("Undo (1)"); await env.click("Done");
     expect(env.session.buildMode).toBe(false); expect(env.session.state.paused).toBe(true);
+  });
+  it("repairs the owner's Waiting Room–Hallway–Front Desk bottleneck through the actual phone tool and Undo", async () => {
+    const state = initial(); state.facilityLevel = 1;
+    const front = state.rooms.find(room => room.roomDefinitionId === "room.front_desk")!;
+    const waitingSize = getRoomDefinition("room.waiting")!;
+    state.rooms.push({ id: "owner.waiting", roomDefinitionId: waitingSize.id,
+      x: front.x - waitingSize.width - 1, y: front.y + 4 - waitingSize.height,
+      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    for (let y = front.y - 1; y < front.y + 4; y += 1) state.rooms.push({ id: `owner.hall.${y}`,
+      roomDefinitionId: "room.hallway", x: front.x - 1, y, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.doors.push({ id: "owner.waiting.door", roomId: "owner.waiting", side: "east", offset: 1, exterior: false });
+    const env = await mount(state); await env.click("Build"); await env.click("Done");
+    const sheet = env.find(node => node.attributes["aria-label"] === "Finish room access");
+    expect(sheet.textContent).toContain("Add a door between Hallway and Front Desk");
+    expect(sheet.textContent).toContain("Front Desk west wall");
+    expect(sheet.textContent).toContain("Open Doors on the named room");
+    await env.click("Continue Renovating");
+    await act(async () => env.map.onSelectRoom!(front.id)); await env.click("Doors");
+    const add = () => env.map.mobileBuild!.doors.find(section => section.roomId === front.id && section.side === "west" &&
+      section.offset === 2 && section.request.kind === "add")!;
+    expect(add().validation.valid).toBe(true);
+    await env.intent({ kind: "door", id: add().id });
+    expect(getFacilityAccessValidation(env.session.state).valid).toBe(true);
+    expect(env.session.state.doors.find(door => door.roomId === front.id && door.side === "west" && !door.exterior)).toMatchObject({ offset: 2 });
+    await env.click("Undo (1)");
+    expect(getFacilityAccessValidation(env.session.state).valid).toBe(false);
+    expect(add().validation.valid).toBe(true);
+    await env.intent({ kind: "door", id: add().id }); await env.click("Done");
+    expect(env.session.buildMode).toBe(false);
+    expect(env.session.state.doors.some(door => door.id === "owner.waiting.door")).toBe(true);
   });
   it("valid Done restores a clinic that was running before Build", async () => {
     const state = initial(); state.paused = false; const env = await mount(state);

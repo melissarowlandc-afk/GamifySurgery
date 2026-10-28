@@ -100,6 +100,18 @@ describe("facility static-world signature", () => {
     );
   });
 
+  it("invalidates when an existing door's validation or resolved neighbor changes", () => {
+    const before = model();
+    before.doors = [{ instanceId: "door", roomInstanceId: "room.front", side: "west", offset: 1, exterior: false,
+      connectionValid: true, adjacentRoomInstanceId: "hall.a" }];
+    const invalid = structuredClone(before);
+    invalid.doors![0]!.connectionValid = false;
+    const neighbor = structuredClone(before);
+    neighbor.doors![0]!.adjacentRoomInstanceId = "hall.b";
+    expect(getFacilityWorldSignature(invalid)).not.toBe(getFacilityWorldSignature(before));
+    expect(getFacilityWorldSignature(neighbor)).not.toBe(getFacilityWorldSignature(before));
+  });
+
   it("invalidates when an Endoscopy room changes its approved covered-table state", () => {
     const before = model();
     const after = structuredClone(before);

@@ -5,6 +5,7 @@ import { CloudCacheError, packCloudCache, unpackCloudCache, type StoredCache } f
 import { prepareCloudImportWire, prepareCloudWire } from "./codecWire";
 import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
+import { cloudProgress, type CloudProgressSummary } from "./progress";
 
 export type CloudCodecTask =
   | { kind: "encode"; input: Parameters<typeof encodeCloudEvidenceCheckpoint>[0] }
@@ -18,7 +19,7 @@ export type CloudCodecTask =
   | { kind: "unpackCache"; input: { raw: StoredCache; scope: CloudScope } };
 export interface CloudCodecResults {
   encode: { snapshot: CloudCandidate["snapshot"]; evidence: CloudCandidate["evidence"]; decodedGameBytes: number };
-  verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number };
+  verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number; progress: CloudProgressSummary };
   candidate: void;
   freeze: { requestText: string; requestSha256: string };
   hash: string;
@@ -34,7 +35,7 @@ export interface CloudCodecExecutor {
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {
   const loaded = await loadCloudEvidenceCheckpoint(input);
   if (loaded.checkpoint.evidence.records.length !== input.evidence.records.length) throw new CloudSyncError("corrupt");
-  return { campaign: loaded.campaign, evidenceRecords: loaded.checkpoint.evidence.records.length };
+  return { campaign: loaded.campaign, evidenceRecords: loaded.checkpoint.evidence.records.length, progress: cloudProgress(loaded.state) };
 }
 
 /** Pure codec work. Both the module worker and the non-browser test fallback use this boundary. */
@@ -96,7 +97,7 @@ export function unpackCodecFailure(error: CloudCodecFailure): Error {
   return new CloudCodecError(error.code, error.message);
 }
 export interface CloudCodecMessage { id: number; task: CloudCodecTask }
-export type CloudCodecReply = { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
+export type CloudCodecReply = { ready: true } | { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
   try { return { id: message.id, result: await runCloudCodecTask(message.task) }; }

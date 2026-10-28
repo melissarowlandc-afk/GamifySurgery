@@ -16,6 +16,41 @@ async function playing() {
 const question = (id: number) => ({ kind: "question" as const, receipt_id: `00000000-0000-4000-8000-${String(id).padStart(12, "0")}`, occurred_at: "2027-01-15T08:00:00.000Z" });
 function advance(clock: TestCloudClock, ms: number) { clock.advance(ms); }
 describe("shared cloud coordinator durable and fenced protocol", () => {
+  it("keeps pending visible until a server acknowledgment is durable on this device", async () => {
+    const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
+    const write = h.cache.write.bind(h.cache); let acknowledging = false;
+    vi.spyOn(h.cache, "write").mockImplementation(async (entry, expected) => {
+      if (entry.confirmed.revision === "2") { acknowledging = true; await gate.promise; }
+      return write(entry, expected);
+    });
+    const saving = h.coordinator.checkpoint();
+    await vi.waitFor(() => expect(acknowledging).toBe(true));
+    expect(h.coordinator.view.pending).toBe(true); expect(h.coordinator.confirmedRevision).toBe("1");
+    gate.resolve(); expect(await saving).toBe(true);
+    expect(h.coordinator.view.pending).toBe(false); expect(h.coordinator.confirmedRevision).toBe("2");
+  });
+  it("rechecks its own suspended writer after a clock jump without requiring takeover", async () => {
+    const h = await playing();
+    h.clock.wall += 10_000;
+    expect(h.coordinator.view).toMatchObject({ canExecute: false, phase: "paused", failure: "clock" });
+    expect(h.coordinator.resume()).toBe(false);
+    expect(await h.coordinator.retry()).toBe(true);
+    expect(h.coordinator.view.canExecute).toBe(false);
+    expect(h.coordinator.resume()).toBe(true);
+    expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
+  });
+
+  it("does not recover a suspended writer after another device takes it over", async () => {
+    const h = await playing(); h.clock.wall += 10_000;
+    expect(h.coordinator.view.canExecute).toBe(false);
+    const other = new CloudSyncCoordinator({ scope: h.scope, transport: h.server.transport(h.scope.accountId),
+      cache: new MemoryCloudCache(), clock: h.clock, enabled: true });
+    expect(await other.open()).toBe(true); expect(await other.startWriter(true)).toBe(true);
+    expect(await h.coordinator.retry()).toBe(false);
+    expect(h.coordinator.view).toMatchObject({ canExecute: false, failure: "writer" });
+    other.dispose();
+  });
+
   it("defaults OFF and makes no cache or transport call", async () => {
     const h = await syncHarness();
     const transport = h.server.transport(h.scope.accountId), cache = new MemoryCloudCache();
@@ -165,13 +200,13 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     advance(h.clock, 61_000); expect(h.coordinator.view.canExecute).toBe(false);
     gate.resolve(); await renewal; expect(h.coordinator.resume()).toBe(false);
   });
-  it("revalidates focus after an upload already in progress, requiring an explicit Resume", async () => {
+  it("revalidates focus after an upload already in progress and automatically restores authority", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
     h.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
     const upload = h.coordinator.checkpoint(); await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
     const focus = h.coordinator.focus(); expect(h.coordinator.view.canExecute).toBe(false);
     gate.resolve(); expect(await upload).toBe(true); expect(await focus).toBe(true);
-    expect(h.coordinator.view.canExecute).toBe(false); expect(h.coordinator.resume()).toBe(true);
+    expect(h.coordinator.view.canExecute).toBe(true);
   });
   it("fences two simultaneous takeovers against the generation they both observed", async () => {
     const h = await playing();
@@ -195,32 +230,28 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     const h = await playing(); await h.coordinator.stage(await h.candidate(h.first), reason);
     advance(h.clock, 9_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
-    for (let index = 0; index < 4; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
-    expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    advance(h.clock, 4_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
   });
-  it("checkpoints dirty work after five minutes, renews with no snapshots, and stays quiet when clean", async () => {
+  it("checkpoints dirty work after 15 seconds, renews with no snapshots, and stays quiet when clean", async () => {
     const h = await playing(); await h.coordinator.stage(await h.candidate(h.first));
-    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
-    expect(h.server.operationCount(h.scope.accountId)).toBe(0);
-    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(19);
     advance(h.clock, 14_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(1);
     expect(h.coordinator.view.canExecute).toBe(true);
     for (let index = 0; index < 20; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
     expect(h.server.operationCount(h.scope.accountId)).toBe(1);
   });
-  it("gives work arriving during an upload a fresh five-minute interval after acknowledgment", async () => {
+  it("gives work arriving during an upload a fresh 15-second interval after acknowledgment", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
-    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
     h.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
     const saving = h.coordinator.checkpoint("hidden");
     await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
     const second = h.command(h.first, { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "interval.following" });
     await h.coordinator.stage(await h.candidate(second)); gate.resolve(); expect(await saving).toBe(true);
     expect(h.coordinator.view.pending).toBe(true);
-    for (let index = 0; index < 19; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
-    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
-    advance(h.clock, 15_000); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(2);
+    advance(h.clock, 14_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(2);
   });
   it("stops play on a corrupted worker-verified candidate rather than treating it as an offline grace period", async () => {
     const h = await playing(), candidate = await h.candidate(h.first);

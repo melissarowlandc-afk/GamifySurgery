@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getDoorPresentationOpenings, getDoorPresentationRun } from "./doorPresentation";
+import { getDoorPresentationDestination, getDoorPresentationOpenings, getDoorPresentationRun } from "./doorPresentation";
 
 const source = { instanceId: "front-desk", tileX: 10, tileY: 10, width: 5, height: 4 };
 const door = (offset: number) => ({ instanceId: `door-${offset}`, roomInstanceId: source.instanceId, side: "north" as const, offset });
@@ -82,5 +82,31 @@ describe("reciprocal door presentation openings", () => {
     ];
     expect(getDoorPresentationOpenings(rotatedTarget, doors, [rotatedSource, rotatedTarget]))
       .toEqual([{ side: "west", offset: 1 }]);
+  });
+});
+
+describe("invalid saved door presentation", () => {
+  const target = { instanceId: "target", tileX: 10, tileY: 9, width: 5, height: 1 };
+  it.each([-1, 5, 1.5, NaN])("does not cut either wall for an out-of-range offset %s", offset => {
+    const candidate = door(offset);
+    for (const room of [source, target]) expect(getDoorPresentationOpenings(room, [candidate], [source, target])).toEqual([]);
+  });
+  it("does not open either wall or merge a run when domain validation rejects a door", () => {
+    const doors = [{ ...door(1), connectionValid: false }, door(2)];
+    expect(getDoorPresentationOpenings(source, doors, [source, target])).toEqual([{ side: "north", offset: 2 }]);
+    expect(getDoorPresentationOpenings(target, doors, [source, target])).toEqual([{ side: "south", offset: 2 }]);
+    expect(getDoorPresentationRun(doors[0]!, doors, [source, target])).toBeUndefined();
+    expect(getDoorPresentationRun(doors[1]!, doors, [source, target])).toMatchObject({ startOffset: 2, endOffset: 2 });
+  });
+  it("does not invent a neighbor for a valid-but-null legacy projection or missing metadata destination", () => {
+    expect(getDoorPresentationDestination({ ...door(1), connectionValid: true, adjacentRoomInstanceId: null }, [source, target])).toBeUndefined();
+    expect(getDoorPresentationOpenings(source, [{ ...door(1), adjacentRoomInstanceId: "elsewhere" }], [source, target])).toEqual([]);
+    expect(getDoorPresentationOpenings(source, [door(1)], [source])).toEqual([]);
+  });
+  it("keeps only a validated public exterior opening", () => {
+    const exterior = { ...door(2), exterior: true, side: "south" as const };
+    expect(getDoorPresentationOpenings(source, [exterior], [source])).toEqual([{ side: "south", offset: 2 }]);
+    expect(getDoorPresentationOpenings(source, [{ ...exterior, connectionValid: false }], [source])).toEqual([]);
+    expect(getDoorPresentationOpenings(source, [{ ...exterior, side: "north" }], [source])).toEqual([]);
   });
 });

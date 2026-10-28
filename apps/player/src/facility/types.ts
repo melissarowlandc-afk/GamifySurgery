@@ -141,6 +141,10 @@ export interface FacilityDoorView {
   side: CardinalDirection;
   offset: number;
   exterior: boolean;
+  /** Current domain validation, never persisted; invalid saved doors remain repairable. */
+  connectionValid?: boolean;
+  adjacentRoomInstanceId?: string | null;
+  blockedReason?: string;
 }
 
 export type BuildDoorTool = "place" | "remove" | null;

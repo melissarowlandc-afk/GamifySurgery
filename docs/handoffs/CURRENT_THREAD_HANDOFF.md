@@ -7744,3 +7744,484 @@ Manager owns acceptance and the audited **"push to GitHub"** checkpoint/reminder
 Owner pathways remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the
 intended persistent profile and the canonical GitHub Pages origin; their local
 saves stay separate. No pathway was opened or substituted.
+
+
+## Hosted question flag / inert-command recovery handoff (2026-10-28)
+
+Assigned worker completed the P0 flag-freeze milestone and the manager's
+expanded storage/recovery scope. Full evidence, file inventory, source lines,
+exact commands, limitations and browser acceptance checklist are in
+[Flag freeze ExecPlan](../execplans/flag-freeze-20261028.md).
+
+The reproduced failure is the cloud command gate: a local cache quota error
+sets localDurable=false, and CloudGameSession.execute returns null while the
+chart still scrolls and receives taps. An isolated test imported the actual
+pre-edit coordinator/flag writers from saved before-images and used a real
+Level 5 profile plus identical legacy flag writes and a modeled shared 5 MiB
+quota. Before: hosted flag received, checkpoint failed, later commands refused,
+relaunch open failed. After: reclaim/retry succeeds, commands work and relaunch
+opens; original profile and flags survive. Profile size was 3,091,180 UTF-16
+bytes. Cloud saves use IndexedDB: localStorage-only exhaustion independently
+passes and is not proof of the tester's actual quota. No live device/backend
+was inspected; actual incident attribution remains a manager browser check.
+
+Also reproduced/fixed clock-suspension recovery losing its own writer token.
+Retry now revalidates that token against the server, without silently resuming
+or taking over another generation. Other writer/auth/revision gates stay
+fenced. Healthy acknowledged submissions, the reported v4 variant, employee
+discussions and casual filtering pass in both actual shells.
+
+Implementation: nonblocking hosted flag delivery; bounded auxiliary writes
+with campaign headroom; quota reclaim/retry for local profiles, cloud cache
+and enrollment; verified, account-keyed archival of large review snapshots
+with bounded new growth and late-deletion fencing; no eviction of campaign,
+auth, pending cloud recovery or unsent flags; and a visible recovery alert
+portaled above charts/HUDs for every blocked cloud gate. Pending flags retain
+their immutable UUID across reload. Full queues reject new reports instead of
+evicting pending ones. New full-copy archive writes can decline at their budget
+while hosted IDs/comments remain owned by the outbox/server. Software usage
+receipts use the existing retention/drop accounting with a smaller 64 KiB cap.
+
+Changed: 25 existing + 3 new player files (listed in the ExecPlan), this plan
+and this appended handoff. No game-domain, campaign/cloud save-format, balance,
+clinical-content, SQL, server, dependency or launcher change. All 88 domain,
+354 clinical-content and 50 balance source files are byte-identical to the
+baseline, as are package/Vite configuration and unrelated player files.
+
+Final validation (documented Vite net-use EPERM preload; --pool=threads):
+
+- Full player: **283 files / 2,778 tests PASS**, exit 0, 158.68s.
+- Final targeted corrections: **7 files / 195 tests PASS**, exit 0, 27.69s.
+- Earlier broad focused run: **41 files / 585 tests PASS**, exit 0.
+- Root typecheck: **all seven workspaces PASS**, exit 0.
+- Before/after original-code quota comparison: **1 file / 2 tests PASS**.
+
+The first full run found two new-helper compatibility issues; both were fixed
+in runtime code and the existing assertions were preserved. Final source is
+UTF-8/no-BOM/LF; secret-pattern scan has no hits. Before-images, actual
+review.diff, baseline/final hashes, audit, measurements and complete logs are
+in `.local-dev/flag-freeze-20261028/`.
+
+Manager next: inspect the diff, rerun browser checks on desktop and iOS Home
+Screen/Safari, verify the banner and native dialog above an open chart/team
+discussion in portrait/landscape with safe areas and keyboard, simulate quota
+and suspension/focus/reload, retry/resume, and confirm takeover fencing. No
+browser, screenshot or real tester-device recovery PASS is claimed. Keep the
+campaign/recovery; no reset, reinstall or site-data deletion is part of this
+fix. A store containing only protected data, denied IDB or another writer must
+remain safely blocked with the visible recovery action.
+
+LOCAL ONLY: no Git, installs, network, external messages, agents, live browser
+or owner-storage operations, deployment or publication. Manager owns acceptance
+and the audited **"push to GitHub"** backup checkpoint/reminder. Owner pathways
+remain START_GAME.cmd -> exact http://127.0.0.1:4173 in the intended persistent
+profile and https://melissarowlandc-afk.github.io/GamifySurgery/. For remote
+persistence diagnosis record location.origin =
+https://melissarowlandc-afk.github.io and the Home Screen/Safari container; local,
+remote and browser/container saves remain separate. No pathway changed.
+
+
+## Hosted-session lifecycle and reopen prompt handoff (2026-10-28)
+
+Same assigned Codex worker, continuing the manager-authorized flag-freeze lane.
+Lifecycle repairs are implemented and sandbox validated. The unrestricted
+true-conflict keep-device upload is explicitly BLOCKED on a save-protocol
+choice; do not accept that part as complete. Active details and exact
+before/current source evidence: docs/execplans/flag-freeze-20261028.md,
+"Lifecycle and reopen prompt". The owner decision is recorded in
+beta2-cloud-saves-20261017.md.
+
+Reproduced causes: routine focus removed command permission and successful
+retry never restored it; a pending local descendant could open an Account save
+dialog with no Resume/Retry/status; five-minute uploads could be starved by
+short sessions killed without close events; the ordinary local candidate did
+not retain the prior launch's writer token. iOS wall/monotonic suspension and
+lease expiry compounded these gates. An isolated actual-original-UI comparison
+reproduces the screenshot rendering. The owner's specific October 25 account
+confirmation gap remains unverified without device/request telemetry; do not
+claim quota, an evidence allowance or a particular failed RPC was established
+on that device.
+
+Implemented: automatic fenced same-device reconnect; a small scoped
+acquisition/lease journal retained before requesting a writer; renew/prove then
+rotate the old lease even if only an acquisition intent survived; automatic
+legacy-tokenless wait/retry without taking an unknown active writer; last-active
+selection plus single-cached-campaign upgrade recovery; fresh candidate checks
+before granting commands; play resumes before the reopen upload completes;
+15-second foreground checkpoints and hidden/pagehide/freeze attempts;
+coalesced visible/focus/pageshow/online/resume handling; missed-event recovery
+on pulse; 30-second RPC/auth and worker deadlines; retained/re-encoded accepted
+commands after worker loss; reconnect versus copy-choice serialization;
+renewal/upload race handling; browser-closed IDB handle reopening; cold network
+failure preserves known cloud recovery rather than opening a stale Beta 1
+profile. Save & Close remains closed. Newer account/writer generations,
+revocation/deletion, expired operations and verified-prior recovery still fence.
+
+The body-portal blocked-command notice stays above phone/desktop charts.
+Blocked dialogs always explain the status; ready/pending has Resume; routine
+reopen has no confirmation modal. Real conflicts show verified device/account
+day/time/money/level/XP and recommend the copy further ahead in clinic time.
+Compatible-prefix keep-device works after preserving both original copies with
+readback. A changed account head requires a fresh choice. Protected conflict
+copies require export before Clear this device.
+
+BLOCKED: truly divergent numbered immutable evidence cannot be uploaded over
+the account branch through the current append-only protocol. game-evidence.ts
+requires ordinal IDs (:128) and validates transition/finance/learning chains;
+codecTasks.ts requires the exact account prefix and sequential suffix IDs.
+Renumbering/replacing those facts or creating a separate campaign is a design
+choice outside the no-domain/save-format-change constraint. The UI disables
+that unsupported upload and explains recovery/support; original local and
+account bytes remain retained. The manager question asks for a separate blocked
+follow-up, a separate account campaign, or a reviewed branch protocol with an
+unapplied migration. No SQL/RPC/schema/domain/save-format change was authored
+or applied. No existing safety guarantee was bypassed to manufacture a PASS.
+
+Changed lane: 21 modified + 5 new player files. App + App.cloudLifecycle test;
+usePrototypeSession and flagFreeze tests; CloudSaveControls + test; cloud
+coordinator/gameSession/transport/supabaseTransport/fakeTransport/cache/
+entryStorage/CloudAccount/codecTasks/codecWorker and tests; new cloud
+writerIdentity.ts/test, progress.ts, lifecycle.test.ts. Both ExecPlans and this
+append-only handoff are updated. Previous flag/quota changes are preserved.
+The scoped filesystem diff and exact file list are in
+.local-dev/flag-lifecycle-20261028/review.diff and audit.json. No Git was used.
+
+Validation, exit 0:
+- Original prompt comparison: 1 file / 2 tests PASS, 2.37s.
+- Broad focused: 12 files / 262 tests PASS, 36.73s.
+- Final navigation/identity focused: 3 files / 47 tests PASS, 8.22s (overlapping).
+- Final full player: 286 files / 2,840 tests PASS, 169.01s; no failures/skips.
+- Final root typecheck: all seven workspaces PASS, 6.75s.
+All player tests used the documented ignore-net-use-eperm.mjs NODE_OPTIONS
+preload and --pool=threads. Logs and before-images live in
+.local-dev/flag-lifecycle-20261028/. The initial three lifecycle regressions
+failed before the fix; their red output is retained. Test counts add 62 tests /
+3 files to the previous 2,778 / 283. Real-Level-5 tests retain their individual
+30-second budget; global timeouts/configuration are unchanged.
+
+Modeled shared quota: 5,242,880 bytes; Level 5 legacy profile 3,090,738 UTF-16
+bytes, unchanged. Phone/desktop each have one failed cache write followed by
+optional reclamation, successful retry, rapid relaunch and newest-snapshot
+confirmation with the flag retained. Before-flag local bytes 4,055,236 /
+4,055,232; after recovery 3,093,366 / 3,093,446. This is a localStorage UTF-16 +
+cloud-cache UTF-8 model, not a physical WebKit quota measurement. A
+localStorage-only failure does not prove IDB exhaustion.
+
+Audit: 607 player files match the final validation snapshot. All 523 protected
+baseline files are unchanged: 88 game-domain, 354 clinical-content, 50 balance,
+28 SQL/tests and three package/Vite configs. No missing files, encoding failure
+or added-line secret-pattern hit. The existing handoff bytes remain an exact
+prefix. The final validation source hashes and audit are retained locally.
+
+Manager next: inspect the actual diff, choose the divergent-branch route,
+rerun browser/e2e cloud-saves and cloud-recovery, and verify iOS standalone
+rapid open/close, silent kill, held upload with continuing play, storage
+pressure, chart/team-dialog reachability, notch/keyboard layout, manual
+campaign navigation during optional lookup, changed-head choices and real
+two-device fencing. Capture the actual phase/failure, storage availability,
+operation outcome and last-confirmed timestamp after 15 seconds to diagnose the
+owner's real confirmation gap. No browser or real tester-device PASS is claimed.
+Do not reset, reinstall or clear campaign/site data as part of recovery.
+
+LOCAL ONLY: no Git, installs, network, agents, external messages, browser/
+owner-storage operations, deployment or publication. Manager owns acceptance
+and the audited "push to GitHub" checkpoint/reminder. Opening pathways stay
+START_GAME.cmd -> exact http://127.0.0.1:4173 in the persistent profile, and
+https://melissarowlandc-afk.github.io/GamifySurgery/. Diagnose remote persistence
+with location.origin = https://melissarowlandc-afk.github.io and record Home
+Screen versus Safari; those containers and the local origin have separate
+storage. The fixed client must be published/loaded before live recovery can
+be assessed. No pathway changed.
+
+
+## Cloud browser flows and separate divergent campaign handoff (2026-10-28)
+
+Continuation of `docs/execplans/flag-freeze-20261028.md`, after manager acceptance
+of the preceding 2,840-test lifecycle source. Manager browser evidence for that
+source was 4 PASS / 56 FAIL, mostly stale routine prompts. The manager's new
+approved branch decision is implemented and recorded in
+`docs/execplans/beta2-cloud-saves-20261017.md`. Earlier "divergence blocked"
+notes are superseded by this approved separate-campaign path.
+
+Completed within the assigned lane:
+
+- Browser flows use automatic routine open/reopen/retry and retain ALL prior
+  safety assertions. Fresh visible writers and takeover choices are explicit.
+  No fixed sleeps. Same-context auto-open and explicit chooser navigation are
+  handled. Added both-layout hidden/pagehide + pending local reopen, true
+  two-device comparison, keeping both/reopening the new branch, and full slot
+  plus export/account-copy/takeover coverage: 21 scenarios / 84 project cases.
+- Two real product bugs fixed: a fresh competing device waited without opening
+  the explicit takeover choice; a stale released writer token rejected a clean
+  cold reopen after the latest account revision was already verified. Captured
+  old modules reproduce both. Pending branches/live old documents stay fenced.
+- A divergent branch is imported as `<name> (this device)` through the existing
+  frozen import journal/RPC. It carries the complete normalized checkpoint,
+  including retired facts and the original immutable row IDs/values/transition
+  chain. Only the new campaign identity changes. Verified protected original
+  copies precede import; loaded verification precedes clearing the old pending
+  cache. Slot exhaustion keeps the branch protected/exportable. Lost import
+  acknowledgement/cold reload reuses one immutable operation, including when
+  its import occupies the final slot. No existing account writer/revision is
+  overwritten or released, no historical usage replay, no SQL/RPC/domain or
+  save-format change, and no clinical-content edits.
+
+Changed player files for this follow-up (existing earlier milestone edits stay):
+`App.tsx`, `App.cloudLifecycle.test.tsx`, `qa/cloudSavesQa.tsx`,
+`session/cloud/{coordinator,importCampaigns,lifecycle.test,progress}.ts`,
+`ui/CloudSaveControls.tsx`, `ui/CloudSaveControls.test.tsx`; new
+`session/cloud/separateCampaign.test.ts`. Root e2e: `cloud-saves.spec.ts`,
+`cloud-recovery.spec.ts`, new `cloud-qa-helpers.ts`. Both plans updated; this
+handoff is appended with all original bytes retained.
+
+Final sandbox evidence under `.local-dev/flag-e2e-branch-20261028/`:
+
+- Old-product reproduction: 1 file / 2 tests PASS, 2.62s.
+- Focused: 6 files / 186 tests PASS, 12.20s.
+- Full player: 287 files / 2,864 tests PASS, 167.64s; zero failed/skipped.
+- Typecheck: all seven workspaces PASS, 6.14s.
+- Separate e2e + QA bridge TypeScript config: PASS, exit 0, 1.16s.
+- All commands use the documented sandbox preload and threads where relevant.
+  Logs, before snapshots, manifests and review.diff are retained. Final e2e-only
+  ready/offline-precondition review was re-typechecked; tested player source
+  did not change after its full test run.
+
+Manager next: inspect actual diff, rerun cloud-saves/cloud-recovery on the fresh
+QA server (84 project cases), and inspect true conflict choices above an open
+phone chart. No Playwright/browser/iOS-device result is claimed here. The
+existing canonical local `http://127.0.0.1:4173` and hosted
+`https://melissarowlandc-afk.github.io/GamifySurgery/` pathways and separate
+storage remain unchanged; QA is disposable `http://127.0.0.1:5184` only. The
+actual October 25 confirmation gap still needs affected-device diagnostics.
+
+LOCAL ONLY. No Git, agents, installs, network, browser spawning, migration,
+deployment, publication, external messages or owner-storage operations. Manager
+owns acceptance and the audited "push to GitHub" backup checkpoint/reminder.
+
+Final audit: 532 protected baseline files unchanged; 608 player files match full-test source and four e2e/harness roots match final typecheck. Original bytes of both plans and this handoff remain exact prefixes. No missing files, encoding failures or added-line secret-pattern hits. See audit.json, review.diff and e2e-assertion-audit.json in the evidence directory.
+
+
+## Follow-up for manager 71/84 browser result (2026-10-28)
+
+Active plan: `docs/execplans/flag-freeze-20261028.md`, section "Manager browser
+follow-up: 71/84 and timing races". It classifies every one of the 13 project
+failures and links offline trace evidence. This is a continuation in the same
+worker thread, per manager direction. No Git or external services used.
+
+Manager integration is preserved byte-for-byte: `syncFixtureSupport.ts` is the
+pure fixture; `syncTestSupport.ts` re-exports it, and cloud-recovery e2e still
+imports the pure module. An offline relative runtime import audit (13 modules)
+confirms neither coordinator nor codec worker is reachable from either spec.
+No Playwright loader/browser execution is claimed in this sandbox.
+
+Real product bug found and fixed: `CloudGameSession.updateMetadata` treated
+canonical cloud JSON and profile metadata as different because object key order
+changed. This created needless pending snapshots/revisions on reopen. The new
+regression fails before the fix (pending=true), passes afterward, and verifies
+an actual rename still saves exactly once. It compares logical JSON, continuing
+to ignore only the volatile updatedAtRealMs. No domain, save format, evidence,
+RPC, SQL, clinical content, command gate or lease/revision policy was changed.
+
+Test/QA fixes: bounded short Resume attempts tolerate automatic removal of the
+button while the same-profile tab opens; readiness polls have a 20-second state
+boundary rather than five seconds; healthy play and confirmed upload are
+asserted separately (all confirmation requirements remain). A tiny `status()`
+harness projection exposes gate/failure/durability/reload fields without
+serializing the entire campaign each poll. Phone account-menu lookup uses the
+actual `More clinic options` accessible name. No fixed sleeps or forced clicks.
+New held-warmup phone/desktop unit cases prove disabled entry transitions to
+automatic play/upload with the original pending campaign intact. All original
+fencing, usage/no replay, immutable operation, corrupt recovery, deletion,
+capacity, slots/archives and double-confirmation assertions remain.
+
+Changed player files: `session/cloud/gameSession.ts`, its test,
+`App.cloudLifecycle.test.tsx`, `qa/cloudSavesQa.tsx`. Root e2e: both cloud specs
+and `cloud-qa-helpers.ts`. Active plan updated and this handoff appended; no
+other source edit. Existing previous milestone changes remain intact.
+
+Final validation, exit 0: focused **8 files / 236 tests PASS** (14.72s); full
+player **287 files / 2,867 tests PASS** (172.42s), zero failed/skipped; all
+**seven workspace typechecks PASS** (6.12s); dedicated e2e/QA tsc PASS (1.34s).
+Full tests use the documented sandbox preload and `--pool=threads`.
+Evidence: `.local-dev/flag-e2e-races-20261028/` contains logs, exact before/input
+hashes, source diff/audit, import graph, trace status summaries and copies of
+all 13 manager error contexts. 532 protected files and the two manager integration
+modules remain unchanged; 717 validated source files (609 player) match their
+hashes. Original plan/handoff bytes are retained.
+
+Manager next: review the actual diff and rerun **84 browser project cases** on
+the fresh disposable QA server. The reopen traces did not show a terminal gate
+failure before their five-second expiry; if a 20-second poll still fails, use
+the newly exposed phase/failure/reload/local-durability diagnostics rather than
+assuming startup. Browser acceptance remains pending. No live recovery or
+October 25 confirmation-gap attribution is claimed. Canonical owner URLs and
+separate storage remain unchanged. LOCAL ONLY; manager owns acceptance and the
+audited GitHub backup checkpoint/reminder. No commits, installs, network,
+agents, browser launches, SQL application, deployment or external messages.
+
+
+## Door reachability and owner phone report (2026-10-28)
+
+Assigned Codex worker milestone implemented. Plan, full file list, file:line
+investigation, reproduction limits and exact validation are in
+`docs/execplans/door-reachability-20261028.md`. Manager acceptance remains pending;
+full suites are NOT green. No agents were used.
+
+Two presentation defects reproduced before fixing: saved doors invalidated by a
+move still cut wall openings, and a hallway south of a room omitted their shared
+partition without a door. Current worktree already rejects valid-but-null
+interior doors; no domain reachability-rule bug was reproduced. The screenshot
+core layout is reachable with both real doors, including five touching hallway
+pieces. A missing Front Desk west door reproduces the two affected room types.
+The screenshot alone cannot identify its saved doors, shipped version or three
+Undo actions. Exact owner-incident attribution remains unverified. Its blue
+strip is corridor floor-runner art.
+
+Implemented authoritative, cached door validation/destination projection;
+validated source and reciprocal cutouts; closed walls plus a red X for invalid
+saved doors in phone/desktop play/Build; consistent removal targets even after
+rotation; corrected hallway-backed north partitions and implicit Front Desk
+entrance gaps; and room/wall/section repair guidance that points upstream to the
+Front Desk bottleneck. Phone tool dispatch/Undo regression uses the actual shared
+session. Existing doors survive reload; no save-format/schema or clinical
+content change. All prior unrelated/shared-tree edits were preserved.
+
+Exactly 16 code/test files authored (13 modified, 3 new), listed in the plan.
+The only game-domain changes are:
+- `packages/game-domain/src/doors.ts`
+- new `packages/game-domain/tests/door-reachability.test.ts`
+
+Manager must schedule the Level 5 source-input evidence rebind. The raw-byte
+378-input audit finds ONLY doors.ts mismatching its bound hash:
+old `15e10458911fbf15360b2e3f88021ec48f815e2653bb9c30d1b0bb7fc82375f0`,
+new `2ae1179bf1a82b0eb35120610895feb0b4347cb33c401e2bcf175242d9b42faa`.
+No evidence/provenance/fixture edit. Graph/BFS and door legality are unchanged;
+the domain change adds positional diagnostic text and legal-wall repair hints.
+
+Sandbox validation (npm.cmd, threads; documented net-use EPERM preload for player):
+- Focused player: 7 files / 107 tests PASS, 12.03s.
+- Final focused domain: 4 files / 52 tests PASS, 3.88s.
+- Full domain: 163 files (161 pass, 2 fail); 4,307 pass / 5 fail = 4,312 tests,
+  435.83s. One expected Level 5 input-hash failure; four simulation timeouts.
+- Isolated door + garden tests: 2 files / 12 tests PASS, 9.43s. Both garden
+  timeout cases resolve with one worker and unchanged deadlines/assertions.
+- Selected integration rerun: 1 pass / 1 fail / 34 unselected, 334.68s.
+  integration-running save/reload passes; lower retry still exceeds the unchanged
+  300,000 ms limit (304,861 ms). This timing risk remains unresolved; no claim
+  that it predates or was caused by this patch, and no before-code long-run test.
+- Full player: 289 files (287 pass, 2 fail); 2,906 pass / 13 fail = 2,919 tests,
+  192.20s. All owned-lane tests pass. Twelve are cloud sign-in text failures in
+  App.cloudAccess tests: the tested CloudAccount.tsx:233 has the mojibake code
+  points U+00E2 U+20AC U+00A6 instead of U+2026. This belongs to the concurrent
+  cloud lane and was left untouched. The remaining failure is a 5s periop-nurse
+  simulation timeout; its isolated rerun is 1 file / 3 tests PASS, 10.64s.
+- Final root typecheck: all seven workspaces PASS, 6.52s.
+
+No test deadlines/assertions/configuration files changed. An initial overlapped
+full-suite attempt is retained separately; the player attempt was interrupted
+through its own execution session and has no full-count/PASS claim. All 1,266
+full-player start/end input hashes matched; all 16 owned files still match the
+full-run source. Other cloud/auth/UI changes since the initial baseline are
+observed separately in audit.json, never attributed to this worker.
+
+Evidence under `.local-dev/door-reachability-20261028/`: before-images, baseline
+and run hashes, actual review.diff, source/encoding/secret-pattern audit, red
+regressions and every validation log. Baseline source checks show 87 of 88 domain
+src files unchanged (doors.ts is the one edit), all 350 recorded clinical src
+files unchanged, and all 50 balance src files unchanged. No secret-pattern or
+UTF-8 decode failures in added lane content. This handoff was appended while
+preserving its immediately preceding bytes.
+
+Manager next: review the scoped diff; handle the cloud-lane text failures with
+its owner and rerun integrated tests; rebind Level 5 evidence; investigate the
+remaining lower-retry timeout; rerun phone/desktop browser/screenshots in play,
+Build and Doors, including room/neighbor moves, rotation, Undo (3), backed
+hallway walls, valid reciprocal gaps, red-X tap alignment and narrow exit-sheet
+scrolling. No browser/iOS or live-owner-save validation is claimed.
+
+LOCAL ONLY. No commits/push, installs, network, browser launch, deployment,
+publication or external messages. One initial read-only Git status call was
+mistakenly made despite the no-Git brief and was disclosed; no later Git calls
+or Git mutations. Manager owns acceptance and the audited "push to GitHub"
+checkpoint/reminder. Owner pathways remain START_GAME.cmd -> exact
+http://127.0.0.1:4173 in the intended persistent profile and
+https://melissarowlandc-afk.github.io/GamifySurgery/ with separate storage.
+No pathway or save storage was changed; do not reset/reinstall/clear the
+owner's campaign to investigate this report.
+
+
+## 2026-10-28 worker handoff - bounded opening and explicit other-writer choice
+
+Status: implementation and sandbox validation complete; manager browser
+acceptance pending. Continue the same flag-freeze/lifecycle lane. Read the
+"Opening-check deadline and visible-writer follow-up" section of
+`docs/execplans/flag-freeze-20261028.md` and inspect the shared dirty tree.
+No Git was used. Evidence: `.local-dev/flag-opening-hang-20261028/`.
+
+The saved repeat traces refute a minute-long coordinator check: Resume waited
+about 30 seconds while disabled during cold phone preparation. A 30-second
+worker task timer included module loading, killed the cold dev worker, and
+App's allSettled swallowed the failure and enabled Resume. Opening then
+started another cold worker near the test deadline. Separately, a deterministic
+unit test found that a cached clean account copy caused an unknown active
+writer to wait for lease expiry instead of offering the explicit choice.
+Before-source evidence and expected failing reproductions are in the plan.
+
+Fixes: separate bounded worker startup/readiness from task processing; visible
+preparation Retry/Reload; bounded campaign open plus hydration with Back;
+bounded/fenced coordinator open/startWriter/retry/focus, durable writes and
+relevant transport waits; late events cannot revive checks. Already accepted
+commands queued behind an upload remain recoverable across check timeout.
+Clean cached copies with an unproven active writer now promptly show the
+explicit takeover dialog. Existing same-device token proof/reclaim remains
+automatic; pending legacy recovery and true conflicts remain protected.
+Worker-unavailable errors report processing instead of false corruption.
+Hosted sign-in and level-preview reads are also bounded, with a visible
+recovery action or a nonblocking unavailable level. No domain/save contract
+or SQL/RPC change was made by this worker.
+
+E2E: prepare the phone before making the local branch offline, then freshly
+check the old writer and assert it is active. Poll readonly/writer-elsewhere
+and require the explicit prompt. All existing fencing, no replay, immutable
+operation, deletion, capacity, archives/slots, corrupt recovery and double
+confirmation assertions remain. Cold startup has a separate bounded budget;
+no fixed sleep/forced click or implicit takeover. QA status includes
+entryHeading. The manager's coordinator-free fixture split is untouched.
+
+Owned source files (18 total): App; auth/AuthGate and its test;
+qa/cloudSavesQa; session/cloud/CloudAccount and its test, checkDeadline (new),
+codec.worker, codecTasks, codecWorker and its test, coordinator,
+openingDeadline.test (new); ui/CloudCampaignEntry and its test; and the two
+cloud e2e specs plus cloud-qa-helpers. The scoped diff is review.diff. Preserve
+concurrent door/build/view-model work, including the manager's
+packages/game-domain/src/doors.ts change; 15 such source changes are separately
+listed in audit.json and excluded from this lane's diff.
+
+Validation:
+
+- Focused: 14 files / 372 tests PASS, 50.89 s.
+- Full player: 289 files / 2,919 tests PASS, 302.43 s, preload + threads +
+  maxWorkers=2, zero failures/skips; no changed test timeout/assertion.
+- All 7 workspace typechecks PASS, 6.69 s.
+- E2E/QA TypeScript PASS, 1.40 s; relative import audit 13 modules PASS with
+  no coordinator or worker import into e2e specs.
+- Expected before-fix reproductions: worker/preparation 3 failures; clean
+  cached active-writer wait 1 failure. Full first run caught a heading encoding
+  mistake (fixed) and one unrelated simulation timeout; affected files passed
+  17/17, then the complete full suite passed above.
+- Source audit: 1,506 validated files, all 613 player files, no source change
+  during final validation, no missing/encoding/mojibake/secret-pattern issue.
+  Manager fixture files are byte identical and original plan/handoff bytes
+  are preserved. Exact commands and logs are in the ExecPlan.
+
+Manager next: review the actual scoped diff; rerun the full 84-case browser
+suite against the fresh disposable http://127.0.0.1:5184 QA origin; repeat
+visible-other-writer across all four projects. If a wait fails, use the status
+entryHeading, preparation error UI and trace timeline. Browser acceptance and
+any real iOS/device confirmation remain unverified in this sandbox. No claim
+is made about the owner's October 25 confirmation gap without device evidence.
+
+LOCAL ONLY: no Git, installs, network, agents, Playwright/browser/server,
+SQL application, release/deployment, clinical-content edits or external
+messages. Canonical owner origins and distinct storage pathways are unchanged.
+Manager owns final acceptance and the audited GitHub backup/reminder.

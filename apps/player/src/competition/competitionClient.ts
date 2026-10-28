@@ -1,4 +1,5 @@
 import type { GameState } from "@gamify-surgery/game-domain";
+import { setAuxiliaryItem } from "../session/storagePressure";
 import { averageDailyRevenue, readRevenueHistory, type RevenueHistory } from "./revenue";
 import { CompetitionAccessError, CompetitionValidationError, isCompetitionSubmission,
   type CompetitionSubmission, type CompetitionTransport } from "./types";
@@ -70,7 +71,7 @@ export class CompetitionClient {
   private persist(): void {
     for (const [key, record] of this.records) if (record.touchedAt <= this.now() - RETENTION_MS) this.records.delete(key);
     while (this.records.size > MAX_CLINICS) this.records.delete(this.records.keys().next().value!);
-    try { this.storage?.setItem(this.storageKey, JSON.stringify([...this.records.values()])); } catch { /* Never block gameplay. */ }
+    try { if (this.storage) setAuxiliaryItem(this.storage, this.storageKey, JSON.stringify([...this.records.values()])); } catch { /* Never block gameplay. */ }
   }
   clear(): void {
     this.blocked = true; this.records.clear();

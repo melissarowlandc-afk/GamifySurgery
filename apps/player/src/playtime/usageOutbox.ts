@@ -1,4 +1,5 @@
 import { accountStorageKey } from "../session/accountStorageKey";
+import { setAuxiliaryItem } from "../session/storagePressure";
 import { boundUsageReceipts, isUsageReceipt, USAGE_BATCH_SIZE, type UsageReceipt } from "./usageTypes";
 
 export const USAGE_OUTBOX_KEY = "gamify-surgery.usage.outbox.v1";
@@ -40,7 +41,7 @@ export class UsageOutbox {
     this.memory = bounded.receipts;
     try {
       if (!this.storage) throw new Error("Storage unavailable");
-      this.storage.setItem(this.key, JSON.stringify(this.memory));
+      setAuxiliaryItem(this.storage, this.key, JSON.stringify(this.memory));
       this.storageOk = true;
       return true;
     } catch {

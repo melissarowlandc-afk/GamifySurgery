@@ -325,6 +325,75 @@ export interface FacilityAccessValidation {
   unreachableRoomIds: string[];
 }
 
+function doorWallLabel(door: Pick<DoorState, "side" | "offset">): string {
+  const from = door.side === "north" || door.side === "south" ? "west" : "north";
+  return `${door.side} wall, ${Number.isSafeInteger(door.offset) && door.offset >= 0
+    ? `section ${door.offset + 1} from the ${from}` : "invalid section"}`;
+}
+
+/** Point to an actual legal shared-wall slot, including an upstream bottleneck. */
+function getAccessRepairHints(
+  rooms: readonly PlacedRoom[],
+  doors: readonly DoorState[],
+  adjacency: ReadonlyMap<string, ReadonlySet<string>>,
+  visited: ReadonlySet<string>,
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+  gridWidth: number,
+  gridHeight: number,
+  protectedRoomDefinitionIds: ReadonlySet<string>,
+): Map<string, string> {
+  const components = new Map<string, Set<string>>();
+  for (const room of rooms) {
+    const start = roomNode(room.id);
+    if (visited.has(start) || components.has(start)) continue;
+    const component = new Set([start]);
+    const queue = [start];
+    for (let index = 0; index < queue.length; index += 1) {
+      for (const neighbor of adjacency.get(queue[index]!) ?? []) {
+        if (!component.has(neighbor)) { component.add(neighbor); queue.push(neighbor); }
+      }
+    }
+    for (const node of component) components.set(node, component);
+  }
+  const hints = new Map<Set<string>, { priority: number; text: string }>();
+  const name = (room: PlacedRoom) => getDefinition(room.roomDefinitionId)?.displayName ?? room.roomDefinitionId;
+  let previewId = "door.access-preview";
+  while (doors.some(door => door.id === previewId)) previewId += ".next";
+  for (const owner of rooms) {
+    const definition = getDefinition(owner.roomDefinitionId);
+    if (!definition || definition.kind === "hallway") continue;
+    for (const side of ["north", "east", "south", "west"] as const) {
+      for (let offset = 0; offset < getWallLength(owner, definition, side); offset += 1) {
+        const door: DoorState = { id: previewId, roomId: owner.id, side, offset, exterior: false };
+        const cells = getDoorCells(door, owner, definition)!;
+        const neighbor = getRoomContainingPoint(cells.outside, rooms, getDefinition, owner.id);
+        if (!neighbor) continue;
+        const ownerComponent = components.get(roomNode(owner.id));
+        const neighborComponent = components.get(roomNode(neighbor.id));
+        if (ownerComponent === neighborComponent) continue;
+        const validation = validateDoorPlacement(door, rooms, doors, getDefinition,
+          gridWidth, gridHeight, protectedRoomDefinitionIds);
+        if (!validation.valid || validation.adjacentRoomId !== neighbor.id) continue;
+        for (const [component, inside, outside] of [
+          [ownerComponent, owner, neighbor], [neighborComponent, neighbor, owner],
+        ] as const) {
+          if (!component) continue;
+          const connectsToEntrance = visited.has(roomNode(outside.id));
+          const priority = connectsToEntrance ? 0 : 1;
+          if ((hints.get(component)?.priority ?? Infinity) <= priority) continue;
+          hints.set(component, { priority,
+            text: `Add a door between ${name(inside)} and ${name(outside)} on the ${name(owner)} ${doorWallLabel(door)}.${
+              connectsToEntrance ? "" : ` Then connect ${name(outside)} to the Front Desk.`}` });
+        }
+      }
+    }
+  }
+  return new Map([...components].flatMap(([node, component]) => {
+    const hint = hints.get(component);
+    return hint ? [[node, hint.text]] : [];
+  }));
+}
+
 export function validateFacilityAccess(
   rooms: readonly PlacedRoom[],
   doors: readonly DoorState[],
@@ -355,7 +424,10 @@ export function validateFacilityAccess(
       protectedRoomDefinitionIds,
     );
     if (!validation.valid) {
-      issues.push(validation.reason ?? "A door is invalid.");
+      const owner = rooms.find(room => room.id === door.roomId);
+      const name = owner ? getDefinition(owner.roomDefinitionId)?.displayName ?? owner.roomDefinitionId : door.roomId;
+      issues.push(`${name} ${doorWallLabel(door)}: ${validation.reason ?? "This door is invalid."} ${door.exterior
+        ? "Restore the Front Desk exterior entrance." : "Reposition or remove this door with the Doors tool."}`);
       continue;
     }
     const connections = doorConnections.get(door.roomId) ?? [];
@@ -441,12 +513,19 @@ export function validateFacilityAccess(
         !visited.has(roomNode(room.id)),
     )
     .map((room) => room.id);
+  const repairHints = unreachableRoomIds.length > 0 && starts.length > 0
+    ? getAccessRepairHints(rooms, doors, adjacency, visited, getDefinition,
+      gridWidth, gridHeight, protectedRoomDefinitionIds)
+    : new Map<string, string>();
   for (const roomId of unreachableRoomIds) {
     const room = rooms.find((candidate) => candidate.id === roomId)!;
     const displayName =
       getDefinition(room.roomDefinitionId)?.displayName ??
       room.roomDefinitionId;
-    issues.push(`${displayName} needs a reachable door.`);
+    const hint = repairHints.get(roomNode(roomId)) ?? (starts.length === 0
+      ? "Restore the Front Desk exterior entrance first."
+      : "Move this room or build a hallway beside it, then add doors along the route to the Front Desk.");
+    issues.push(`${displayName} needs a reachable door. ${hint}`);
   }
 
   const uniqueIssues = [...new Set(issues)];

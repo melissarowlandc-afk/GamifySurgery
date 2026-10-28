@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useCloudAccount } from "../session/cloud/CloudAccount";
+import { cloudCheckDeadline } from "../session/cloud/checkDeadline";
 import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
 import { chooseAutomaticCampaignEnrollment, finishAutomaticCampaignEnrollment, inspectLocalCloudSources,
   prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
@@ -102,14 +103,14 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       const key = JSON.stringify([campaignId, revision]);
       let request = levelRequests.current.get(key);
       if (!request) {
-        request = (async () => {
+        request = cloudCheckDeadline((async () => {
           const cached = await runtime.cache.read({ backendId: runtime.backendId, accountId: runtime.accountId, campaignId }).catch(() => null);
           const enrolled = await runtime.entryStore.read<{ revision: string; facilityLevel?: number }>(`enrolled:${campaignId}`).catch(() => null);
           if (enrolled?.revision === revision && Number.isInteger(enrolled.facilityLevel)) return enrolled.facilityLevel!;
           const loaded = cached?.entry.confirmed.revision === revision ? cached.entry.confirmed : await runtime.transport.load(campaignId, revision);
           const verified = await loadCloudEvidenceCheckpoint({ ...loaded, expectedCampaignId: campaignId, expectedRevision: revision, expectedBaselineId: loaded.baselineId });
           return verified.state.facilityLevel;
-        })().catch(() => { levelRequests.current.delete(key); return null; });
+        })()).catch(() => { levelRequests.current.delete(key); return null; });
         levelRequests.current.set(key, request);
       }
       void request.then(level => { if (current) setLevels(previous => ({ ...previous, [key]: level })); });

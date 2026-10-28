@@ -31,13 +31,16 @@ import { importLocalCloudCampaign, profileForCloudCampaign, type LocalCloudSourc
 import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
 import { cloudEntryError } from "./ui/cloudEntryError";
 import { AccountMenu } from "./ui/AccountMenu";
-import { cloudCodec } from "./session/cloud/codecWorker";
+import { cloudCodec, CLOUD_WORKER_STARTUP_TIMEOUT_MS, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./session/cloud/codecWorker";
+import { cloudCheckDeadline } from "./session/cloud/checkDeadline";
+import { readOptionalCloudEntry } from "./session/cloud/writerIdentity";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
 interface ActivePrototypeGameProps {
   cloudSession?: CloudGameSession;
   onCloudReload?: () => Promise<void>;
+  onCloudOpen?: (campaignId: string) => Promise<void>;
   onCloudCampaigns?: () => void;
   loadedProfile: LoadedPrototypeProfile;
   onRequestNewCampaign: (profile: LocalPrototypeProfile, guidanceEnabled?: boolean) => void;
@@ -50,6 +53,7 @@ interface ActivePrototypeGameProps {
 export function ActivePrototypeGame({
   cloudSession,
   onCloudReload,
+  onCloudOpen,
   onCloudCampaigns,
   loadedProfile,
   onRequestNewCampaign,
@@ -106,10 +110,26 @@ export function ActivePrototypeGame({
           }
           return true;
         },
-        onRetry: () => cloudSession.coordinator.retry(),
+        onRetry: async () => {
+          if (cloudSession.needsReload) { await onCloudReload?.(); return true; }
+          return cloudSession.reconnect();
+        },
         onUseAccountSave: async () => {
+          if (!await cloudSession.durable()) return false;
           const ok = await cloudSession.coordinator.useAccountSave(async bytes => downloadCloudRecovery(bytes));
           if (ok) await onCloudReload?.(); return ok;
+        },
+        onKeepDevice: async () => {
+          if (!await cloudSession.durable()) return false;
+          const ok = await cloudSession.coordinator.keepDeviceProgress();
+          if (ok) await onCloudReload?.(); return ok;
+        },
+        onKeepBoth: async () => {
+          if (!await cloudSession.durable()) return false;
+          const id = await cloudSession.coordinator.keepBothProgress();
+          if (!id) return false;
+          await cloudAccount?.refresh();
+          await onCloudOpen?.(id); return true;
         },
         onKeepRecovery: async () => { downloadCloudRecovery(cloudSession.exportRecovery()); return true; },
         onSaveAndClose: () => cloudSession.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT),
@@ -430,38 +450,84 @@ function CloudCampaignRouter() {
   const cloud = useCloudAccount()!, { runtime } = cloud;
   const layout = usePresentationLayout();
   const [preparingEntry, setPreparingEntry] = useState(true);
+  const [preparationError, setPreparationError] = useState(false), [preparationAttempt, setPreparationAttempt] = useState(0);
   useEffect(() => {
-    let current = true; setPreparingEntry(true);
+    let current = true; setPreparingEntry(true); setPreparationError(false);
     // Start the selected presentation and save worker during account entry.
     // The empty hash warms processing without reading a campaign or acquiring
-    // a writer, so Resume still requires the existing takeover decision.
-    void Promise.allSettled([preloadPrototypeShell(layout), cloudCodec.run({ kind: "hash", input: "" })]).then(() => {
-      // A startup failure must still reach the normal open/recovery error path.
+    // a writer. Opening the chosen campaign reconnects its checked session.
+    void cloudCheckDeadline(Promise.all([preloadPrototypeShell(layout), cloudCodec.run({ kind: "hash", input: "" })]),
+      CLOUD_WORKER_STARTUP_TIMEOUT_MS + CLOUD_WORKER_TASK_TIMEOUT_MS).then(() => {
       if (current) setPreparingEntry(false);
+    }, () => {
+      if (current) { setPreparingEntry(false); setPreparationError(true); }
     });
     return () => { current = false; };
-  }, [layout, runtime]);
+  }, [layout, runtime, preparationAttempt]);
   const [route, setRoute] = useState<"entry" | "checking" | "cloud" | "founder">("entry");
   const [active, setActive] = useState<{ session: CloudGameSession; profile: LoadedPrototypeProfile; sequence: number } | null>(null);
   const [notice, setNotice] = useState("");
   const live = useRef(true), generation = useRef(0), current = useRef(active);
+  const opening = useRef<CloudSyncCoordinator | null>(null);
+  const attemptedAutomaticOpen = useRef(false);
   current.current = active;
-  useEffect(() => { live.current = true; return () => { live.current = false; generation.current++; }; }, []);
+  useEffect(() => { live.current = true; return () => { live.current = false; generation.current++; opening.current?.dispose(); }; }, []);
   const openCampaign = async (campaignId: string) => {
     const epoch = ++generation.current; setRoute("checking"); setNotice("");
-    const coordinator = new CloudSyncCoordinator({ scope: { backendId: runtime.backendId, accountId: runtime.accountId, campaignId }, transport: runtime.transport, cache: runtime.cache, enabled: true });
+    const coordinator = new CloudSyncCoordinator({ scope: { backendId: runtime.backendId, accountId: runtime.accountId, campaignId }, transport: runtime.transport, cache: runtime.cache, entryStore: runtime.entryStore, enabled: true });
+    opening.current?.dispose(); opening.current = coordinator;
     try {
-      if (!await coordinator.open()) throw new Error(coordinator.view.failure ?? "network");
-      const session = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); });
+      const session = await cloudCheckDeadline((async () => {
+        if (!await coordinator.open()) throw new Error(coordinator.view.failure ?? "network");
+        if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
+        const created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); });
+        if (!live.current || epoch !== generation.current || opening.current !== coordinator) { created.dispose(); throw new Error("Opening cancelled"); }
+        return created;
+      })(), undefined, () => coordinator.dispose());
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
+      opening.current = null;
       const metadata = session.metadata;
       const profile = profileForCloudCampaign(session.state, { ...metadata, status: "resumable" });
-      setActive({ session, profile: { profile, notice: "Verified account save. Continue on this device to play." }, sequence: epoch }); setRoute("cloud");
+      setActive({ session, profile: { profile, notice: "Verified account save." }, sequence: epoch }); setRoute("cloud");
+      void runtime.entryStore.write("last-active-campaign", { campaignId }).catch(() => {});
+      // The checked local projection can play while its account upload runs.
+      // Reconnection grants commands only after fresh admission/head/lease and
+      // pending-copy verification; all failures remain visible in the shell.
+      void session.reconnect().then(async connected => {
+        if (!connected || !live.current || epoch !== generation.current) return;
+        if (session.metadata.status === "archived") {
+          session.updateMetadata({ ...session.metadata, status: "resumable" });
+          await session.durable();
+        }
+      }).catch(error => { if (live.current && epoch === generation.current) coordinator.reportLocalFailure(error); });
     } catch {
       coordinator.dispose();
       if (live.current && epoch === generation.current) { setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner."); setRoute("entry"); }
-    }
+    } finally { if (opening.current === coordinator) opening.current = null; }
   };
+  useEffect(() => {
+    if (attemptedAutomaticOpen.current || preparingEntry || preparationError || cloud.phase !== "available" || !cloud.access?.enabled ||
+      cloud.access.writesEnabled === false || !cloud.access.admitted || !cloud.access.noticeAccepted || route !== "entry") return;
+    attemptedAutomaticOpen.current = true;
+    let cancelled = false, finished = false;
+    const epoch = generation.current;
+    void (async () => {
+      try {
+        const selected = await readOptionalCloudEntry<{ campaignId: string }>(runtime.entryStore, "last-active-campaign");
+        let id = cloud.summaries.find(row => row.status === "resumable" && row.campaignId === selected?.campaignId)?.campaignId;
+        if (!id) {
+          // Upgrade recovery: old builds had no selection marker. Prefer the
+          // single retained resumable campaign, never an ambiguous pair.
+          const cached = await cloudCheckDeadline(Promise.resolve(runtime.cache.accountEntries?.(runtime))) ?? [];
+          const resumable = cloud.summaries.filter(row => row.status === "resumable" && cached.some(copy => copy.scope.campaignId === row.campaignId));
+          if (resumable.length === 1) id = resumable[0]!.campaignId;
+        }
+        if (!cancelled && live.current && generation.current === epoch && id) { finished = true; await openCampaign(id); }
+      } catch { /* Optional selection cannot prevent normal campaign entry. */ }
+      finally { finished = true; }
+    })();
+    return () => { cancelled = true; if (!finished && generation.current === epoch) attemptedAutomaticOpen.current = false; };
+  }, [cloud.phase, cloud.access, cloud.summaries, preparingEntry, preparationError, runtime, route]);
   const enterCampaignScreen = async () => {
     const session = current.current?.session;
     if (session && route === "cloud") {
@@ -486,10 +552,13 @@ function CloudCampaignRouter() {
     setActive(null); setRoute("entry"); await cloud.refresh();
   };
   if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} />;
-  if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p><AccountMenu /></main>;
+  if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p>
+    <button type="button" className="button button-secondary" onClick={() => {
+      generation.current++; opening.current?.dispose(); opening.current = null; setRoute("entry");
+    }}>Back to your clinics</button><AccountMenu /></main>;
   if (route === "cloud" && active) return <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
     loadedProfile={active.profile} cloudSession={active.session}
-    onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudCampaigns={() => { void enterCampaignScreen(); }}
+    onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudOpen={openCampaign} onCloudCampaigns={() => { void enterCampaignScreen(); }}
     onRequestNewCampaign={() => { void enterCampaignScreen(); }} onRequestRestart={() => { void restart(); }} />;
   if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to your clinics</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
     onBeginClinic={(founder, name, seed, guidance) => { void (async () => {
@@ -504,7 +573,11 @@ function CloudCampaignRouter() {
         if (live.current && epoch === generation.current) { await cloud.refresh(); if (live.current && epoch === generation.current) await openCampaign(campaign.campaignId); }
       } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setRoute("entry"); } }
     })(); }} /></>;
-  return <CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry} onOpen={openCampaign} onCreate={() => setRoute("founder")} />;
+  return <>{preparationError ? <div role="alert" className="cloud-entry">
+    <p>Clinic preparation could not finish. Your saved copies have been kept. Check your connection and retry.</p>
+    <button type="button" className="button button-primary" onClick={() => setPreparationAttempt(value => value + 1)}>Retry clinic preparation</button>
+    <button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload app</button>
+  </div> : null}<CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} onOpen={openCampaign} onCreate={() => setRoute("founder")} /></>;
 }
 
 export function App() {

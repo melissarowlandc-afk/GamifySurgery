@@ -9,6 +9,7 @@ import {
 import { normalizeTutorialGuidanceRecords, type CampaignTutorialGuidance } from "./tutorialGuidance";
 import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
 import { accountStorageKey } from "./accountStorageKey";
+import { isStorageQuotaError, reclaimOptionalStorage } from "./storagePressure";
 import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
 
 export const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
@@ -655,7 +656,12 @@ export function savePrototypeProfileResult(
   }
 
   try {
-    storageResult.storage.setItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId), serialized);
+    try { storageResult.storage.setItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId), serialized); }
+    catch (error) {
+      if (!isStorageQuotaError(error)) throw error;
+      if (!reclaimOptionalStorage(storageResult.storage)) throw error;
+      storageResult.storage.setItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId), serialized);
+    }
     return { ok: true, profileCharacters: serialized.length };
   } catch (error) {
     return {

@@ -6,6 +6,7 @@ import { useAuthAccountId } from "./AuthAccountContext";
 import { createLocalPrototypeSession } from "./prototypeAuth";
 import { cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
 import { testElementProps } from "../mobile/testDom";
+import { CLOUD_CHECK_TIMEOUT_MS } from "../session/cloud/checkDeadline";
 
 const mock = vi.hoisted(() => ({
   configured: true, bypass: false, local: null as ReturnType<typeof createLocalPrototypeSession> | null,
@@ -354,6 +355,31 @@ describe("invite-only shared auth gate", () => {
     expect(mock.cleanups).not.toHaveBeenCalled();
     await act(async () => { await vi.advanceTimersByTimeAsync(1000); });
     expect(mock.mounts).toHaveBeenCalledTimes(1); expect(mock.signOut).not.toHaveBeenCalled();
+  });
+
+  it("bounds a missing remembered session and ignores its late reply", async () => {
+    vi.useFakeTimers(); let resolve!: (value: unknown) => void;
+    mock.getSession.mockImplementation(() => new Promise(done => { resolve = done; }));
+    const env = await setup(); expect(env.element.textContent).toContain("Checking your sign-in");
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    expect(env.element.textContent).toContain("Sign In"); expect(mock.mounts).not.toHaveBeenCalled();
+    await act(async () => { resolve({ data: { session: session() }, error: null }); });
+    expect(env.element.textContent).toContain("Sign In"); expect(mock.mounts).not.toHaveBeenCalled();
+    expect(mock.signOut).not.toHaveBeenCalled();
+  });
+
+  it("bounds a missing server verification, explains recovery and ignores the late result after retry", async () => {
+    vi.useFakeTimers(); let resolve!: (value: unknown) => void;
+    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
+    mock.getUser.mockImplementationOnce(() => new Promise(done => { resolve = done; }));
+    const env = await setup();
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    expect(env.element.textContent).toContain("Your sign-in could not be verified"); expect(env.button("Reload app")).toBeDefined();
+    expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
+    await act(async () => { env.browser.dispatchEvent(new Event("online")); });
+    expect(env.element.textContent).toContain("Clinic account-a");
+    await act(async () => { resolve({ data: { user: null }, error: { status: 401 } }); });
+    expect(env.element.textContent).toContain("Clinic account-a"); expect(mock.signOut).not.toHaveBeenCalled();
   });
 
   it("does not let a late remembered-session response undo sign-out", async () => {

@@ -1,6 +1,7 @@
 import { test, expect, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import { FakeCloudServer } from "../../apps/player/src/session/cloud/fakeTransport";
 import { CloudSyncError, type CloudTransport } from "../../apps/player/src/session/cloud/transport";
+import { accountMenu, campaignScreen, expectPlaying, expectResumeReady, openAndContinue, saveDetails, snapshot, status, CLOUD_QA_WAIT_MS } from "./cloud-qa-helpers";
 
 // These contexts authenticate independently to one disposable in-process fake.
 // No Supabase credentials, real Auth, copied localStorage or copied latest saves.
@@ -25,17 +26,17 @@ async function rig(browser: Browser, baseURL: string) {
       } catch (error) { return { error: { code: error instanceof CloudSyncError ? error.code : "network" } }; }
     });
     await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=${accountId}&device-campaigns=${deviceCampaigns}`);
-    await expect(tab.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
+    await expect.poll(async () => (await status(tab)).hasState || await tab.getByRole("heading", { name: "Your campaigns", exact: true }).isVisible(),
+      { timeout: CLOUD_QA_WAIT_MS }).toBe(true);
     return tab;
   };
   return { server, page, close: async () => { await Promise.all(contexts.map(context => context.close())); } };
 }
-const snapshot = (page: Page) => page.evaluate(() => window.__cloudQa!.snapshot());
 async function expectAutomaticEnrollment(page: Page, name = "Synthetic clinic 1", accountId = "qa-account-a") {
   const key = `gamify-surgery.prototype.profile.v1.account.${encodeURIComponent(accountId)}`;
   const raw = await page.evaluate(key => localStorage.getItem(key), key);
   expect(raw).not.toBeNull();
-  await expect(page.getByRole("button", { name: `Resume ${name}`, exact: true })).toBeEnabled();
+  await expectResumeReady(page, name);
   expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(raw);
 }
 async function acceptAccountNotice(page: Page) {
@@ -51,18 +52,8 @@ async function createAccountCampaign(page: Page, name: string, fromFounder = fal
   await page.getByRole("textbox", { name: "Clinic name", exact: true }).fill(name);
   await page.getByRole("checkbox", { name: "First-shift guidance", exact: true }).uncheck();
   await page.getByRole("button", { name: "Open the Clinic", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Not now", exact: true }).click();
-  await page.getByText("Account & privacy", { exact: true }).click();
-  await page.getByRole("button", { name: "Account campaign screen", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
-}
-async function openAndContinue(page: Page, name = "Synthetic clinic 1") {
-  await page.getByRole("button", { name: `Resume ${name}`, exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Continue on this device", exact: true }).click();
-  await expect.poll(async () => (await snapshot(page)).phase).toBe("ready");
-  await expect(page.getByRole("button", { name: /Account save status:/ })).toHaveCount(0);
+  await expectPlaying(page);
+  await campaignScreen(page);
 }
 async function closeSaved(page: Page) {
   await page.getByRole("button", { name: "Save & Close", exact: true }).click();
@@ -71,6 +62,9 @@ async function closeSaved(page: Page) {
 }
 
 test.describe("Beta 2 disposable fake transport across desktop and phone", () => {
+  // Several independent cold contexts share the disposable dev server. Each
+  // preparation is bounded separately; this is not the writer-choice deadline.
+  test.setTimeout(180_000);
   test("automatic enrollment retains raw bytes, then desktop → phone → desktop preserves the complete saved game", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
@@ -89,10 +83,9 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await openAndContinue(phone); expect((await snapshot(phone)).state).toEqual(desktopSaved);
       await phone.getByRole("button", { name: "Facility speed 2x. Cycle speed", exact: true }).click();
       await closeSaved(phone); const phoneSaved = (await snapshot(phone)).state!;
-      await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
-      await expect(desktop.getByText("A newer account save is available.", { exact: false })).toBeVisible();
-      await desktop.getByRole("button", { name: "Use account save", exact: true }).click();
-      await desktop.getByRole("button", { name: "Continue on this device", exact: true }).click();
+      // Save & Close remains closed on focus. A cold reopen checks the latest
+      // account copy and resumes without a routine continuation dialog.
+      await desktop.reload(); await expectPlaying(desktop);
       await expect.poll(async () => (await snapshot(desktop)).state?.simulationSpeed).toBe(4);
       expect((await snapshot(desktop)).state).toEqual(phoneSaved);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
@@ -113,21 +106,35 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect(f.server.operationCount("qa-account-a")).toBe(1);
     } finally { await f.close(); }
   });
-  test("opening is read-only, takeover fences a visible old writer and cannot release the phone session", async ({ browser, baseURL }) => {
+  test("a visible other writer requires explicit takeover, fences the old writer and cannot release the phone session", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
       const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       const campaignId = (await snapshot(desktop)).state!.campaignId;
       await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); await window.__cloudQa!.checkpoint(); });
-      await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }); });
-      const phone = await f.page("phone");
+      const phone = await f.page("phone"); await expectResumeReady(phone, "Synthetic clinic 1");
+      // Cold preparation may outlast a backgrounded page's lease. Recheck the
+      // old writer now, then test the visible-writer choice within that window.
+      expect(await desktop.evaluate(() => window.__cloudQa!.focus())).toBe(true); await expectPlaying(desktop);
+      // Keep this branch local even if opening the phone triggers a hide save.
+      await desktop.context().setOffline(true);
+      expect(await desktop.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
+      expect((await f.server.transport("qa-account-a").head(campaignId)).writerActive).toBe(true);
       const before = f.server.account("qa-account-a").campaigns.get(campaignId)!.generation;
-      await phone.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
-      await expect(phone.getByRole("heading", { name: "Continue on this device?" })).toBeVisible();
+      await phone.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click({ timeout: 1_000 });
+      // Poll the actual checked writer classification, not an enabled entry
+      // button or the final screenshot of an unfinished opening.
+      await expect.poll(() => status(phone), { timeout: CLOUD_QA_WAIT_MS }).toMatchObject({ hasState: true, phase: "readonly", failure: "writer-elsewhere", canExecute: false });
+      await expect(phone.getByRole("heading", { name: "Continue on this device?" })).toBeVisible({ timeout: CLOUD_QA_WAIT_MS });
+      await expect(phone.getByRole("dialog", { name: "Continue on this device?", exact: true })).toContainText("This campaign is open somewhere else.");
+      expect((await snapshot(phone)).canExecute).toBe(false);
+      expect(await phone.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
       expect(f.server.account("qa-account-a").campaigns.get(campaignId)!.generation).toBe(before);
       await phone.getByRole("button", { name: "Continue on this device", exact: true }).click();
+      await expectPlaying(phone);
       const generation = f.server.account("qa-account-a").campaigns.get(campaignId)!.generation;
       expect(generation).toBeGreaterThan(before);
+      await desktop.context().setOffline(false);
       await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
       await expect(desktop.getByText("You continued on another device. Recent changes here have not replaced your account save.", { exact: true })).toBeVisible();
       const tick = (await snapshot(desktop)).state!.facilityTick;
@@ -148,19 +155,16 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       f.server.faults.push({ method: "commit", at: "after", error: new CloudSyncError("network") });
       expect(await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
       const accepted = f.server.operationCount("qa-account-a");
-      await desktop.getByRole("button", { name: /Account save status:/ }).click();
-      await desktop.getByRole("button", { name: "Retry account save", exact: true }).click();
+      await (await saveDetails(desktop)).getByRole("button", { name: "Retry account save", exact: true }).click();
+      await expectPlaying(desktop);
       expect(f.server.operationCount("qa-account-a")).toBe(accepted);
       expect(f.server.calls.filter(call => call.method === "commit")).toHaveLength(1);
-      await desktop.getByRole("button", { name: "Resume clinic", exact: true }).click();
-      await desktop.getByRole("button", { name: "Resume checked campaign", exact: true }).click();
       await desktop.context().setOffline(true);
       expect(await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
       await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
       expect(await desktop.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
       await desktop.context().setOffline(false);
-      await desktop.getByRole("button", { name: /Account save status:/ }).click();
-      await desktop.getByRole("button", { name: "Retry account save", exact: true }).click();
+      await expectPlaying(desktop); // the online event performs the fresh check
       await expect.poll(async () => (await snapshot(desktop)).pending).toBe(false);
       expect((await snapshot(desktop)).state!.simulationSpeed).toBe(4);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
@@ -174,11 +178,9 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
       expect((await snapshot(desktop)).phase).toBe("conflict");
       const other = await f.page("desktop", "qa-account-b", undefined, 1);
-      await expect(other.getByRole("heading", { name: "Resume a previous campaign (0/2)" })).toBeVisible();
       await expectAutomaticEnrollment(other, "Synthetic clinic 1", "qa-account-b");
-      await tab.getByRole("button", { name: "More clinic options", exact: true }).click();
-      await tab.getByText("Account & privacy", { exact: true }).click();
-      await tab.getByRole("button", { name: "Delete my data/account", exact: true }).click();
+      await expect(other.getByRole("heading", { name: "Resume a previous campaign (1/2)" })).toBeVisible();
+      await (await accountMenu(tab)).getByRole("button", { name: "Delete my data/account", exact: true }).click();
       await tab.getByRole("button", { name: "Confirm delete all my account data", exact: true }).click();
       await expect(tab.getByText("Account data deletion is confirmed. Play and uploads have stopped.", { exact: true })).toBeVisible();
       await desktop.evaluate(async () => { await window.__cloudQa!.focus(); });
@@ -239,6 +241,7 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       await desktop.reload();
+      await expectPlaying(desktop); await campaignScreen(desktop);
       await expect(desktop.getByRole("button", { name: "Resume New account campaign", exact: true })).toBeEnabled();
       await expect(desktop.getByRole("checkbox", { name: /Keep Synthetic clinic/ })).toHaveCount(0);
       await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toHaveCount(0);

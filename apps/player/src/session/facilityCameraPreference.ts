@@ -1,4 +1,5 @@
 import type { FacilityCameraView } from "../facility/types";
+import { setAuxiliaryItem } from "./storagePressure";
 import { isValidFacilityCamera } from "../facility/facilityCameraBounds";
 
 export const FACILITY_CAMERA_PREFERENCE_KEY = "gamify-surgery.prototype.facility-camera.v1";
@@ -48,7 +49,7 @@ export function writeFacilityCameraPreference(
 ): boolean {
   if (!storage || !isValidFacilityCamera(camera)) return false;
   try {
-    storage.setItem(facilityCameraPreferenceKey(campaignId), JSON.stringify({
+    setAuxiliaryItem(storage, facilityCameraPreferenceKey(campaignId), JSON.stringify({
       schemaVersion: SCHEMA_VERSION,
       camera: copyCamera(camera),
     }));

@@ -1,14 +1,32 @@
 import { IDBFactory } from "fake-indexeddb";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { cloudCampaignStorageKey, accountStorageKey } from "../accountStorageKey";
 import { CloudCacheError, IndexedDbCloudCache, MemoryCloudCache, cloudRecoveryBytes, type CloudCacheEntry } from "./cache";
 import { syncFixture } from "./syncTestSupport";
+import { IndexedDbCloudEntryStore } from "./entryStorage";
 
 async function entry(): Promise<CloudCacheEntry> {
   const fixture = await syncFixture();
   return { schemaVersion: 1, scope: { backendId: "backend-a", accountId: "account-a", campaignId: fixture.confirmed.campaignId }, confirmed: fixture.confirmed, recovery: null };
 }
 describe("versioned account/backend/campaign cloud cache", () => {
+  it.each(["campaign", "entry"] as const)("reopens a %s database connection closed by the browser during suspension", async kind => {
+    const factory = new IDBFactory(), open = factory.open.bind(factory); let connection!: IDBDatabase;
+    vi.spyOn(factory, "open").mockImplementation((name, version) => {
+      const request = open(name, version); request.addEventListener("success", () => { connection = request.result; }); return request;
+    });
+    const initial = await entry();
+    if (kind === "campaign") {
+      const cache = new IndexedDbCloudCache(factory); await cache.write(initial, null);
+      connection.close(); connection.onclose?.call(connection, new Event("close"));
+      expect((await cache.read(initial.scope))?.entry).toEqual(initial);
+    } else {
+      const store = new IndexedDbCloudEntryStore(initial.scope, factory); await store.write("retained", { original: "exact bytes" });
+      connection.close(); connection.onclose?.call(connection, new Event("close"));
+      expect(await store.read("retained")).toEqual({ original: "exact bytes" });
+    }
+    expect(factory.open).toHaveBeenCalledTimes(2); vi.restoreAllMocks();
+  });
   it("keeps prototype keys unchanged and requires three unambiguous namespace components", () => {
     expect(accountStorageKey("gamify-surgery.prototype.profile.v1")).toBe("gamify-surgery.prototype.profile.v1");
     expect(() => cloudCampaignStorageKey({ backendId: "", accountId: "a", campaignId: "b" })).toThrow();

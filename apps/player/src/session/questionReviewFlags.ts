@@ -1,4 +1,5 @@
 import { accountStorageKey } from "./accountStorageKey";
+import { archiveReviewFlags, readArchivedReviewFlags, setAuxiliaryItem } from "./storagePressure";
 
 const QUESTION_REVIEW_FLAGS_STORAGE_KEY =
   "gamify-surgery.question-review-flags.v1";
@@ -261,9 +262,7 @@ export function recordQuestionReviewFlag(
 
   const createdFlag: QuestionReviewFlag = {
     schemaVersion: QUESTION_REVIEW_FLAGS_SCHEMA_VERSION,
-    id: `question-review.${flaggedAtRealMs.toString(36)}.${
-      current.length + 1
-    }`,
+    id: `question-review.${flaggedAtRealMs.toString(36)}.${globalThis.crypto?.randomUUID?.() ?? current.length + 1}`,
     identityKey,
     status: "open",
     firstFlaggedAtRealMs: flaggedAtRealMs,
@@ -375,7 +374,7 @@ export function saveQuestionReviewFlags(
     flags: [...flags],
   };
   try {
-    storage.setItem(
+    setAuxiliaryItem(storage,
       accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, accountId),
       JSON.stringify(envelope),
     );
@@ -383,6 +382,25 @@ export function saveQuestionReviewFlags(
   } catch {
     return false;
   }
+}
+
+/** Full historic review snapshots spill to IDB instead of competing with saves. */
+export async function saveQuestionReviewFlagsDurably(flags: readonly QuestionReviewFlag[],
+  storage: StorageLike | null = browserStorage(), accountId: string | null = null): Promise<boolean> {
+  if (saveQuestionReviewFlags(flags, storage, accountId)) return true;
+  return archiveReviewFlags(accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, accountId),
+    JSON.stringify({ schemaVersion: 1, flags }), storage);
+}
+export async function loadArchivedQuestionReviewFlags(accountId: string | null): Promise<QuestionReviewFlag[]> {
+  return parseQuestionReviewFlags(await readArchivedReviewFlags(accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, accountId)));
+}
+export function mergeQuestionReviewFlags(archived: readonly QuestionReviewFlag[], current: readonly QuestionReviewFlag[]): QuestionReviewFlag[] {
+  const flags = new Map(archived.map(flag => [flag.id, flag]));
+  for (const flag of current) {
+    const prior = flags.get(flag.id);
+    if (!prior || flag.lastFlaggedAtRealMs >= prior.lastFlaggedAtRealMs) flags.set(flag.id, flag);
+  }
+  return [...flags.values()];
 }
 
 export function createQuestionReviewExport(

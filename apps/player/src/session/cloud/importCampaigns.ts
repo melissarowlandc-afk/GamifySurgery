@@ -1,12 +1,12 @@
-import { deserializeGameState } from "@gamify-surgery/game-domain";
+import { deserializeGameState, type GameEvidenceCheckpoint } from "@gamify-surgery/game-domain";
 import { accountStorageKey } from "../accountStorageKey";
 import { LEGACY_PROTOTYPE_SAVE_KEY, PROTOTYPE_PROFILE_KEY, createFreshProfile, type LocalPrototypeProfile } from "../prototypeStorage";
 import { normalizeTutorialGuidanceRecords } from "../tutorialGuidance";
 import { readCloudCampaignMetadata, type CloudCampaignMetadata } from "./codec";
-import { loadCloudEvidenceCheckpoint, prepareCloudEvidenceImport } from "./codecEvidence";
+import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint, prepareCloudEvidenceImport } from "./codecEvidence";
 import { logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
 import type { CloudEntryStore } from "./entryStorage";
-import { CloudSyncError, type CloudCampaignSummary, type CloudFrozenOperation, type CloudImportRequest, type CloudTransport } from "./transport";
+import { CloudSyncError, type CloudCampaignSummary, type CloudConfirmed, type CloudFrozenOperation, type CloudImportRequest, type CloudTransport } from "./transport";
 import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../../playtime/usageTypes";
 
 export interface LocalCloudSource {
@@ -86,6 +86,14 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
   if (source.error || !transport.importCampaign) throw new CloudSyncError("corrupt");
   const campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify({ ...source.campaign, name: name.trim() })));
   const sourceDigest = await sha256Utf8(JSON.stringify({ serializedState: source.serializedState, campaign }));
+  return importPreparedCampaign(campaign, sourceDigest, operationId => prepareCloudEvidenceImport({ serializedState: source.serializedState, campaign, operationId }), transport, store);
+}
+
+/** Both initial enrollment and an explicit separate branch use the same frozen
+ * import, receipt verification and readback. No historical usage is minted. */
+async function importPreparedCampaign(campaign: CloudCampaignMetadata, sourceDigest: string,
+  prepare: (operationId: string) => Promise<Awaited<ReturnType<typeof encodeCloudEvidenceCheckpoint>>>, transport: CloudTransport, store: CloudEntryStore) {
+  if (!transport.importCampaign) throw new CloudSyncError("protocol");
   const journalKey = `import:${sourceDigest}`;
   let journal = await store.read<ImportJournal>(journalKey);
   const access = await transport.capabilities();
@@ -98,7 +106,7 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
     if (summaries.some(row => row.name.toLowerCase() === campaign.name.toLowerCase())) throw new CloudSyncError("corrupt");
     if (summaries.length >= 2) throw new CloudSyncError("capacity");
     const operationId = `import.${sourceDigest}`;
-    const prepared = await prepareCloudEvidenceImport({ serializedState: source.serializedState, campaign, operationId });
+    const prepared = await prepare(operationId);
     if (prepared.sizes.decodedGameBytes > 3_000_000) throw new CloudSyncError("capacity");
     const request: CloudImportRequest = { operationId, campaignId: campaign.campaignId, campaign, snapshot: prepared.snapshot,
       evidence: prepared.packedEvidence, baselineId: prepared.envelope.baselineId,
@@ -130,9 +138,52 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
   const marker: CloudEnrollmentMarker = { sourceDigest, operationId: operation.operationId, campaignId: campaign.campaignId, revision: loaded.revision, facilityLevel: verified.state.facilityLevel };
   await store.write(`enrolled:${campaign.campaignId}`, marker);
   await store.write(journalKey, { ...journal, verified: true });
-  // An import's writer is used only for enrollment. A later open makes an explicit continuation choice.
+  // An import's writer is used only for enrollment. A later open checks its own session.
   try { await transport.head(campaign.campaignId); await transport.release({ campaignId: campaign.campaignId, writerGeneration: "1", writerToken: request.writerToken }); } catch { /* A newer fenced writer remains untouched. */ }
   return { marker, loaded, verified };
+}
+
+export async function separateCloudCampaignId(device: CloudConfirmed): Promise<string> {
+  return `branch.${await sha256Utf8(JSON.stringify([device.campaignId, device.snapshot.uncompressedSha256, device.evidence.header.uncompressedSha256]))}`;
+}
+
+/** Preserve the entire normalized checkpoint, including retired facts and the
+ * transition chain. Only the new campaign's identity changes; immutable rows
+ * and all their IDs/bytes stay intact. This is not a game-state reimport. */
+export async function importSeparateCloudCampaign(device: CloudConfirmed, transport: CloudTransport, store: CloudEntryStore) {
+  if (device.priorRecovery) throw new CloudSyncError("corrupt");
+  const original = await loadCloudEvidenceCheckpoint({ ...device, expectedRevision: device.revision,
+    expectedCampaignId: device.campaignId, expectedBaselineId: device.baselineId });
+  const campaignId = await separateCloudCampaignId(device), key = `separate:${campaignId}`;
+  let campaign = await store.read<CloudCampaignMetadata>(key);
+  if (!campaign) {
+    const summaries = await transport.list();
+    if (summaries.length >= 2) throw new CloudSyncError("capacity");
+    const ending = " (this device)", letters = Array.from(original.campaign.name);
+    while (utf8Bytes(letters.join("") + ending) > 160) letters.pop();
+    campaign = await store.create(key, { ...original.campaign, campaignId, status: "resumable",
+      name: availableName(letters.join("") + ending, new Set(summaries.map(row => row.name.toLowerCase()))) });
+  }
+  campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify(campaign)));
+  if (campaign.campaignId !== campaignId) throw new CloudSyncError("storage");
+  const sourceDigest = await sha256Utf8(logicalJsonText(JSON.parse(JSON.stringify({ device, campaign }))));
+  return importPreparedCampaign(campaign, sourceDigest, async operationId => {
+    const { snapshot, evidence } = original.checkpoint;
+    const checkpoint: GameEvidenceCheckpoint = {
+      snapshot: { ...snapshot, campaignId, patches: snapshot.patches.filter(patch => !(patch.path.length === 1 && patch.path[0] === "campaignId")) },
+      evidence: { ...evidence, campaignId, baseline: { ...evidence.baseline,
+        source: { ...evidence.baseline.source, campaignId }, pins: { ...evidence.baseline.pins, campaignId } } },
+    };
+    const sourceText = logicalJsonText({ ...original.originalSource, campaignId });
+    const prepared = await encodeCloudEvidenceCheckpoint({ checkpoint, campaign, operationId, expectedRevision: "0",
+      source: { sha256: await sha256Utf8(sourceText), utf8Bytes: utf8Bytes(sourceText), schemaVersion: original.source.schemaVersion } });
+    // Verify the complete hydrated projection as well as every immutable row.
+    const verified = await loadCloudEvidenceCheckpoint({ snapshot: prepared.snapshot, evidence: prepared.packedEvidence, revision: "1",
+      expectedRevision: "1", expectedCampaignId: campaignId, expectedBaselineId: prepared.envelope.baselineId });
+    if (logicalJsonText(JSON.parse(JSON.stringify(verified.state))) !== logicalJsonText(JSON.parse(JSON.stringify({ ...original.state, campaignId }))) ||
+      logicalJsonText(JSON.parse(JSON.stringify(verified.checkpoint.evidence.records))) !== logicalJsonText(JSON.parse(JSON.stringify(evidence.records)))) throw new CloudSyncError("corrupt");
+    return prepared;
+  }, transport, store);
 }
 
 export const AUTOMATIC_ENROLLMENT_KEY = "automatic-account-campaigns.v1";

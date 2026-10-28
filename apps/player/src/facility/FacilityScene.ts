@@ -302,7 +302,7 @@ import {
   getDoorInteractionGeometry,
   type DoorInteractionGeometry,
 } from "./doorInteractionGeometry";
-import { getDoorPresentationOpenings } from "./doorPresentation";
+import { getDoorPresentationOpenings, isDoorPresentationConnected } from "./doorPresentation";
 import { rasterizeGridLine } from "./hallwayPainting";
 import { getFacilityWorldSignature } from "./facilityWorldSignature";
 import { characterRefFromKey, patientChartIdForCharacter, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
@@ -1607,6 +1607,7 @@ export class FacilityScene extends Phaser.Scene {
       );
     }
     this.drawBuildDoorHighlights(this.architectureGraphics ?? graphics);
+    this.drawInvalidDoorMarkers();
     this.drawEnvironment();
     this.drawExterior(this.architectureGraphics ?? graphics);
     this.removeInactiveGraphics(
@@ -2039,10 +2040,10 @@ export class FacilityScene extends Phaser.Scene {
     const expanded = (runs: readonly { offset: number; length: number }[]) => new Set(
       runs.flatMap((run) => Array.from({ length: run.length }, (_, index) => run.offset + index)),
     );
-    const north = expanded(this.exposedBoundaryRuns(room, "north"));
+    const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms));
+    const north = new Set([...expanded(this.exposedBoundaryRuns(room, "north")), ...backed]);
     const west = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "west"));
     const east = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "east"));
-    const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, openings));
     const openingAt = (side: "north" | "south" | "west" | "east", offset: number) =>
       openings.some((opening) => opening.side === side && opening.offset === offset);
     const paintNorth = (offset: number) => {
@@ -3503,7 +3504,8 @@ export class FacilityScene extends Phaser.Scene {
       // The room on the south side owns a shared horizontal boundary through
       // its short north wall. Do not repeat this room's foreground lip.
       if (backedSouth.has(offset)) continue;
-      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+      if (room.definitionId === "room.front_desk" && offset === 2 &&
+        openings.some(door => door.side === "south" && door.offset === offset)) continue;
       const left = rectangle.x + offset * this.layout.tileSize;
       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
       const paintSouth = (x: number, width: number) => {
@@ -3581,7 +3583,8 @@ export class FacilityScene extends Phaser.Scene {
       // Match the base-cap ownership rule so the foreground repaint cannot
       // restore a south lip over the southern room's short north wall.
       if (backedSouth.has(offset)) continue;
-      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+      if (room.definitionId === "room.front_desk" && offset === 2 &&
+        openings.some(door => door.side === "south" && door.offset === offset)) continue;
       const left = rectangle.x + offset * this.layout.tileSize;
       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
       if (!opening) { paint(left, this.layout.tileSize); continue; }
@@ -3590,7 +3593,8 @@ export class FacilityScene extends Phaser.Scene {
       graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
       graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
     }
-    if (room.definitionId === "room.front_desk") {
+    if (room.definitionId === "room.front_desk" &&
+      openings.some(door => door.side === "south" && door.offset === 2)) {
       const entryLeft = rectangle.x + this.layout.tileSize * 2;
       // The entrance threshold is floor, not wall: keep it under everyone
       // walking through the front door (above only the sidewalk edge line).
@@ -3808,14 +3812,18 @@ export class FacilityScene extends Phaser.Scene {
       tileY: room.tileY,
       ...orientedSize(room),
     });
+    // Saved offsets can stop fitting after rotation; marker and removal target
+    // must use the same wall section, including its north-wall height.
+    const safeOffset = Math.max(0, Math.min((side === "north" || side === "south" ? room.width : room.height) - 1,
+      Number.isFinite(offset) ? Math.floor(offset) : 0));
     return getDoorInteractionGeometry({
       room: rectangle,
       side,
-      offset,
+      offset: safeOffset,
       tileSize: this.layout.tileSize,
       exposedNorthWall:
         side === "north" &&
-        this.hasExposedNorthWallAt(room, offset),
+        this.hasExposedNorthWallAt(room, safeOffset),
       northWallHeight: this.roomWallFaceHeight(rectangle),
     });
   }
@@ -3899,6 +3907,28 @@ export class FacilityScene extends Phaser.Scene {
     });
   }
 
+  /** A saved invalid door is a closed wall with a red X, in both play and Build. */
+  private drawInvalidDoorMarkers(): void {
+    const model = this.bridge.viewModel;
+    for (const door of model.doors ?? []) {
+      if (isDoorPresentationConnected(door, model.rooms)) continue;
+      const room = model.rooms.find(candidate => candidate.instanceId === door.roomInstanceId);
+      if (!room) continue;
+      const length = door.side === "north" || door.side === "south" ? room.width : room.height;
+      const offset = Math.max(0, Math.min(length - 1, Number.isFinite(door.offset) ? Math.floor(door.offset) : 0));
+      const { center } = this.getDoorGeometry(room, door.side, offset);
+      const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `invalid-door:${door.instanceId}`);
+      const size = Math.max(7, this.layout.tileSize * 0.24);
+      graphics.fillStyle(0xfaf1de, 1);
+      graphics.fillRect(center.x - size, center.y - size, size * 2, size * 2);
+      graphics.lineStyle(Math.max(2, this.layout.tileSize * 0.06), 0xb3382c, 1);
+      graphics.strokeRect(center.x - size, center.y - size, size * 2, size * 2);
+      graphics.lineBetween(center.x - size * 0.55, center.y - size * 0.55, center.x + size * 0.55, center.y + size * 0.55);
+      graphics.lineBetween(center.x + size * 0.55, center.y - size * 0.55, center.x - size * 0.55, center.y + size * 0.55);
+      graphics.setDepth(FACILITY_DEPTH_UI - 1);
+    }
+  }
+
   private drawBuildDoorHighlights(
     graphics: Phaser.GameObjects.Graphics,
   ): void {
@@ -3906,7 +3936,8 @@ export class FacilityScene extends Phaser.Scene {
     targets.forEach((target) => {
       const { hitRegion, center, horizontal } = target.geometry;
       const place = target.kind === "place";
-      const outerColor = place
+      const invalid = !place && !isDoorPresentationConnected(target.door, this.bridge.viewModel.rooms);
+      const outerColor = invalid ? 0xb3382c : place
         ? PIXEL_PALETTE_NUMBER.highlight
         : PIXEL_PALETTE_NUMBER.ink;
       const innerColor = place
@@ -8150,7 +8181,7 @@ export class FacilityScene extends Phaser.Scene {
       const room = model.rooms.find(candidate => candidate.instanceId === section.roomId); if (!room) continue;
       const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
       const selected = section.id === state.selectedDoorId;
-      graphics.lineStyle(selected ? 4 : 2, selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
+      graphics.lineStyle(selected ? 4 : 2, section.connectionInvalid ? 0xc94b43 : selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
       graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
     }
   }

@@ -8,6 +8,58 @@ import { CloudCacheError } from "./cache";
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe("cloud codec module worker boundary", () => {
+  it("ignores queued readiness/error events from a terminated worker during retry", async () => {
+    vi.useFakeTimers();
+    try {
+      const old = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
+      const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(old).mockReturnValueOnce(next));
+      const rejected = expect(codec.run({ kind: "hash", input: "first" })).rejects.toMatchObject({ code: "worker_unavailable" });
+      const lateReply = old.onmessage!, lateError = old.onerror!;
+      await vi.advanceTimersByTimeAsync(30_000); await rejected;
+      const retry = codec.run({ kind: "hash", input: "retry" });
+      lateReply({ data: { ready: true } } as MessageEvent); lateError({ preventDefault() {} } as ErrorEvent);
+      expect(next.terminated).toBe(false);
+      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "checked digest" });
+      expect(await retry).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0); codec.dispose();
+    } finally { vi.useRealTimers(); }
+  });
+  it("does not spend the processing deadline loading a cold module worker", async () => {
+    vi.useFakeTimers();
+    try {
+      const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker, 60_000);
+      let result = "pending";
+      const completion = codec.run({ kind: "hash", input: "cold startup" }).then(value => { result = value; }, () => { result = "failed"; });
+      await vi.advanceTimersByTimeAsync(30_000);
+      expect(result).toBe("pending"); expect(worker.terminated).toBe(false);
+      worker.reply({ ready: true });
+      await vi.advanceTimersByTimeAsync(29_999); expect(result).toBe("pending");
+      worker.reply({ id: worker.messages[0]!.id, result: "checked digest" }); await completion;
+      expect(result).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0); codec.dispose();
+    } finally { vi.useRealTimers(); }
+  });
+  it("bounds task processing after the worker reports ready and can retry", async () => {
+    vi.useFakeTimers();
+    try {
+      const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
+      const rejected = expect(codec.run({ kind: "hash", input: "held task" })).rejects.toMatchObject({ code: "worker_unavailable" });
+      await vi.advanceTimersByTimeAsync(20_000); worker.reply({ ready: true });
+      await vi.advanceTimersByTimeAsync(29_999); expect(worker.terminated).toBe(false);
+      await vi.advanceTimersByTimeAsync(1); await rejected;
+      expect(worker.terminated).toBe(true); expect(vi.getTimerCount()).toBe(0); codec.dispose();
+    } finally { vi.useRealTimers(); }
+  });
+  it("replaces a suspended worker after its bounded deadline and clears all task timers", async () => {
+    vi.useFakeTimers();
+    try {
+      const suspended = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker(); next.release();
+      const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(suspended).mockReturnValueOnce(next));
+      const rejected = expect(codec.run({ kind: "hash", input: "suspended" })).rejects.toMatchObject({ code: "worker_unavailable" });
+      await vi.advanceTimersByTimeAsync(30_000); await rejected;
+      expect(suspended.terminated).toBe(true);
+      expect(await codec.run({ kind: "hash", input: "recovered" })).toBe(await sha256Utf8("recovered"));
+      expect(vi.getTimerCount()).toBe(0); codec.dispose();
+    } finally { vi.useRealTimers(); }
+  });
   it("uses the Vite module-worker URL and keeps serialization out of the caller", async () => {
     const worker = new FakeCloudCodecWorker(), create = vi.fn(function (_url: URL, _options: WorkerOptions) { return worker; });
     vi.stubGlobal("Worker", create);

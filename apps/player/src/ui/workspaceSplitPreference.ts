@@ -1,3 +1,4 @@
+import { setAuxiliaryItem } from "../session/storagePressure";
 export const WORKSPACE_SPLIT_PREFERENCE_KEY = "gamify-surgery.ui.workspace-split.v1";
 export const DEFAULT_WORKSPACE_MAP_SHARE = 0.44;
 export const MINIMUM_MAP_HEIGHT = 220;
@@ -87,7 +88,7 @@ export function writeWorkspaceMapShare(
     return;
   }
   try {
-    storage.setItem(WORKSPACE_SPLIT_PREFERENCE_KEY, String(share));
+    setAuxiliaryItem(storage, WORKSPACE_SPLIT_PREFERENCE_KEY, String(share));
   } catch {
     // Storage is optional UI polish.
   }

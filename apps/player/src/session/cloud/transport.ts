@@ -8,13 +8,13 @@ export const CLOUD_SAVES_ENABLED_BY_DEFAULT = false;
 export const CLOUD_SYNC_PROTOCOL = 3;
 export const CLOUD_LEASE_MS = 60_000;
 export const CLOUD_RENEW_MS = 15_000;
-export const CLOUD_CHECKPOINT_MS = 5 * 60_000;
+export const CLOUD_CHECKPOINT_MS = 15_000;
 export const CLOUD_GRACE_MS = 30_000;
 export const CLOUD_RECOVERY_BYTES = 7_000_000;
 
 export interface CloudScope { backendId: string; accountId: string; campaignId: string }
 export type CloudFailureCode = "network" | "auth" | "revoked" | "deleted" | "disabled" | "notice" |
-  "protocol" | "writer" | "revision" | "capacity" | "throttled" | "corrupt" | "storage" | "operation-expired";
+  "protocol" | "writer" | "revision" | "capacity" | "throttled" | "corrupt" | "storage" | "processing" | "operation-expired";
 export class CloudSyncError extends Error {
   constructor(readonly code: CloudFailureCode, readonly retryAfterMs = 0) {
     super(`Cloud save unavailable (${code}).`);
@@ -123,7 +123,7 @@ export interface CloudTransport {
   list(): Promise<readonly CloudCampaignSummary[]>;
   head(campaignId: string): Promise<CloudCampaignHead>;
   load(campaignId: string, revision?: string): Promise<CloudConfirmed>;
-  acquire(input: { campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string }): Promise<CloudLease>;
+  acquire(input: { campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string; writerToken?: string }): Promise<CloudLease>;
   renew(input: { campaignId: string; writerToken: string; writerGeneration: string }): Promise<CloudLease>;
   release(input: { campaignId: string; writerToken: string; writerGeneration: string }): Promise<void>;
   commit(operation: CloudFrozenOperation): Promise<CloudCommitReceipt>;

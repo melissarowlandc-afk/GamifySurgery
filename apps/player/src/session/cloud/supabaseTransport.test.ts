@@ -49,6 +49,24 @@ async function rpcFixture() {
   return { ...fixture, transport, rpc, clock, wireSnapshot, wireHeader, wirePages, loseAck: () => { lostAck = true; }, switchAccount: () => { account = "account-b"; } };
 }
 describe("Supabase protocol-3 sealed-page adapter (offline RPC contract tests)", () => {
+  it("uses a durably supplied writer token instead of generating a new identity on relaunch", async () => {
+    const f = await rpcFixture(), writerToken = "a".repeat(64);
+    await f.transport.acquire({ campaignId: f.confirmed.campaignId, expectedRevision: "1", expectedWriterGeneration: "1",
+      operationId: "retained.identity", takeover: false, writerToken });
+    expect(f.rpc.mock.calls.at(-1)?.[1]).toMatchObject({ p_writer_token: writerToken, p_writer_generation: "1", p_action: "acquire" });
+  });
+  it("bounds a suspended/hung RPC so a fresh retry can recover without waiting forever", async () => {
+    vi.useFakeTimers();
+    try {
+      const wait = new Promise<{ data: unknown; error: unknown }>(() => {});
+      const rpc = vi.fn().mockReturnValueOnce(wait).mockResolvedValue({ data: { protocolVersion: 3, enabled: true, writesEnabled: true, noticeAccepted: true }, error: null });
+      const transport = new SupabaseCloudTransport({ rpc }, "a", async () => "a");
+      const first = expect(transport.capabilities()).rejects.toMatchObject({ code: "network" });
+      await vi.advanceTimersByTimeAsync(30_000); await first;
+      expect(await transport.capabilities()).toMatchObject({ enabled: true });
+      expect(vi.getTimerCount()).toBe(0);
+    } finally { vi.useRealTimers(); }
+  });
   it.each([false, true])("keeps account admission separate from the project writes switch (%s)", async enabled => {
     const rpc = vi.fn(async (_name: string, _args: Record<string, unknown>) => ({ data: { protocolVersion: 3, enabled, writesEnabled: false, noticeAccepted: true }, error: null }));
     const transport = new SupabaseCloudTransport({ rpc }, "account-a", async () => "account-a");

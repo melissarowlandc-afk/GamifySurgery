@@ -15,6 +15,8 @@ export interface DoorPresentationDoor {
   side: CardinalDirection;
   offset: number;
   exterior?: boolean;
+  connectionValid?: boolean;
+  adjacentRoomInstanceId?: string | null;
 }
 
 export interface DoorPresentationRun {
@@ -43,13 +45,27 @@ export function getDoorPresentationDestination(
   rooms: readonly DoorPresentationRoom[],
 ): string | undefined {
   const source = rooms.find((room) => room.instanceId === door.roomInstanceId);
-  if (!source || door.exterior) return undefined;
+  if (!source || door.exterior || door.connectionValid === false || !isDoorSlotInBounds(door, source)) return undefined;
   const point = destinationPoint(source, door.side, door.offset);
-  return rooms.find((room) =>
+  const destination = rooms.find((room) =>
     room.instanceId !== source.instanceId &&
     point.x >= room.tileX && point.x < room.tileX + room.width &&
     point.y >= room.tileY && point.y < room.tileY + room.height,
   )?.instanceId;
+  // Actual player projections use the same resolved neighbor as access validation.
+  if (door.adjacentRoomInstanceId !== undefined && door.adjacentRoomInstanceId !== destination) return undefined;
+  return destination;
+}
+
+function isDoorSlotInBounds(door: DoorPresentationDoor, room: DoorPresentationRoom): boolean {
+  const length = door.side === "north" || door.side === "south" ? room.width : room.height;
+  return Number.isSafeInteger(door.offset) && door.offset >= 0 && door.offset < length;
+}
+
+export function isDoorPresentationConnected(door: DoorPresentationDoor, rooms: readonly DoorPresentationRoom[]): boolean {
+  const source = rooms.find(room => room.instanceId === door.roomInstanceId);
+  return Boolean(source && isDoorSlotInBounds(door, source) && door.connectionValid !== false &&
+    (door.exterior ? door.side === "south" : getDoorPresentationDestination(door, rooms)));
 }
 
 function oppositeSide(side: CardinalDirection): CardinalDirection {
@@ -63,7 +79,7 @@ function oppositeSide(side: CardinalDirection): CardinalDirection {
 
 /**
  * Returns every wall tile that is visibly open for this room. Persisted doors
- * own their source slot, while a door landing in this room removes the exact
+ * own their source slot only while valid; a door landing in this room removes the exact
  * reciprocal target-wall slot too. This is renderer-only: door records and
  * domain legality remain unchanged.
  */
@@ -77,6 +93,7 @@ export function getDoorPresentationOpenings(
     openings.set(`${side}:${offset}`, { side, offset });
   };
   for (const door of doors) {
+    if (!isDoorPresentationConnected(door, rooms)) continue;
     if (door.roomInstanceId === room.instanceId) {
       add(door.side, door.offset);
       continue;

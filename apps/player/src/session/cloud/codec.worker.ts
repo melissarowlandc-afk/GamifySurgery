@@ -6,3 +6,6 @@ const worker = globalThis as unknown as {
   postMessage(reply: CloudCodecReply): void;
 };
 worker.onmessage = event => { void handleCloudCodecMessage(event.data).then(reply => worker.postMessage(reply)); };
+// Module evaluation (and the unbundled development import graph) precedes any
+// task. Tell the caller when processing can actually start.
+worker.postMessage({ ready: true });

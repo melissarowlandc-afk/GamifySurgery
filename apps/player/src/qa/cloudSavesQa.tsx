@@ -13,12 +13,25 @@ import "@fontsource/atkinson-hyperlegible/latin-700.css";
 import "../styles/tokens.css";
 import "../styles/global.css";
 
+interface CloudQaStatus {
+  hasState: boolean;
+  revision: string | null;
+  phase: string;
+  pending: boolean;
+  canExecute: boolean;
+  localDurable: boolean;
+  needsReload: boolean;
+  failure: string | null;
+  accountPhase: string;
+  entryHeading: string | null;
+}
 declare global {
   interface Window {
     __cloudQaAuthenticate?: (accountId: string | null) => Promise<void>;
     __cloudQaCall?: (accountId: string, method: string, args: unknown[]) => Promise<{ value?: unknown; error?: { code: CloudFailureCode } }>;
     __cloudQa?: {
-      snapshot(): { state: GameState | null; revision: string | null; phase: string; pending: boolean };
+      status(): CloudQaStatus;
+      snapshot(): { state: GameState | null; revision: string | null; phase: string; pending: boolean; canExecute: boolean; failure: string | null };
       command(input: Omit<GameCommand, "operationId"> & Record<string, unknown>): Promise<boolean>;
       checkpoint(): Promise<boolean>;
       focus(): Promise<boolean>;
@@ -76,9 +89,18 @@ function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void })
   useEffect(() => {
     if (!cloud) return;
     const active = cloud.active;
+    const status = (): CloudQaStatus => {
+      const view = active?.syncView;
+      return { hasState: Boolean(active), revision: view?.revision ?? null, phase: view?.phase ?? cloud.phase,
+        pending: view?.pending ?? false, canExecute: view?.canExecute ?? false, localDurable: view?.localDurable ?? false,
+        needsReload: active?.needsReload ?? false, failure: view?.failure ?? cloud.error, accountPhase: cloud.phase,
+        entryHeading: document.querySelector("main h1")?.textContent ?? null };
+    };
     window.__cloudQa = {
+      status,
       snapshot: () => ({ state: active?.state ?? null, revision: active?.coordinator.confirmed?.revision ?? null,
-        phase: active?.coordinator.view.phase ?? cloud.phase, pending: active?.coordinator.view.pending ?? false }),
+        phase: active?.coordinator.view.phase ?? cloud.phase, pending: active?.syncView.pending ?? false,
+        canExecute: active?.canExecute ?? false, failure: active?.coordinator.view.failure ?? cloud.error }),
       async command(input) {
         if (!active) return false;
         const result = active.execute({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT);

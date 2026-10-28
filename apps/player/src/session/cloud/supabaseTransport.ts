@@ -64,13 +64,17 @@ export class SupabaseCloudTransport implements CloudTransport {
   constructor(private readonly client: CloudRpcClient, private readonly accountId: string,
     private readonly currentAccountId: () => Promise<string | null>, private readonly now: () => number = () => Date.now()) {}
   private async call(name: string, args: Record<string, unknown>): Promise<unknown> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
     try {
-      if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
-      const { data, error } = await this.client.rpc(name, args);
-      if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
-      if (error) throw error;
-      return data;
+      return await Promise.race([(async () => {
+        if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
+        const { data, error } = await this.client.rpc(name, args);
+        if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
+        if (error) throw error;
+        return data;
+      })(), new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new CloudSyncError("network")), 30_000); })]);
     } catch (error) { throw mappedError(error); }
+    finally { clearTimeout(timer); }
   }
   async capabilities(): Promise<CloudCapabilities> {
     const data = object(await this.call("beta2_cloud_access", { p_protocol: CLOUD_SYNC_PROTOCOL }));
@@ -131,7 +135,7 @@ export class SupabaseCloudTransport implements CloudTransport {
     const head = input.expectedWriterGeneration === undefined ? await this.head(input.campaignId) :
       { ...this.heads.get(input.campaignId), revision: input.expectedRevision, writerGeneration: input.expectedWriterGeneration };
     if (head.revision !== input.expectedRevision) throw new CloudSyncError("revision");
-    let token = this.tokens.get(input.operationId);
+    let token = input.writerToken ?? this.tokens.get(input.operationId);
     if (!token) { token = Array.from(crypto.getRandomValues(new Uint8Array(32)), value => value.toString(16).padStart(2, "0")).join(""); this.tokens.set(input.operationId, token); }
     return this.leaseCall(input.campaignId, input.takeover ? "takeover" : "acquire", input.expectedRevision, head.writerGeneration!, token);
   }

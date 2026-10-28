@@ -1,4 +1,5 @@
 import { questionReviewContext } from "./questionReviewContext";
+import { createFacilityDoorViews } from "./buildViewModels";
 import { visibleQuestionChoices } from "./questionChoices";
 import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
 import { createExecutiveManagementView } from "./executiveViewModels";
@@ -2397,13 +2398,7 @@ export function createPrototypePlayerView(
             ]
           : [];
       }),
-      doors: state.doors.map((door) => ({
-        instanceId: door.id,
-        roomInstanceId: door.roomId,
-        side: door.side,
-        offset: door.offset,
-        exterior: door.exterior,
-      })),
+      doors: createFacilityDoorViews(state),
       staff: [
         ...state.employees,
         ...(state.departingEmployees ?? []),

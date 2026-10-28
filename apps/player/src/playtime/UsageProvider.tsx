@@ -3,6 +3,7 @@ import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
 import { getSupabaseAuthClient } from "../auth/supabaseAuth";
 import { accountStorageKey } from "../session/accountStorageKey";
+import { setAuxiliaryItem } from "../session/storagePressure";
 import { PlaytimeTracker, type CasualModeMemory } from "./playtimeTracker";
 import { UsageOutbox, type UsageStorage } from "./usageOutbox";
 import { createSupabaseUsageTransport } from "./supabaseUsage";
@@ -24,7 +25,7 @@ function casualModeMemory(accountId: string, storage: UsageStorage | null): Casu
   return { initial, remember(mode) {
     try {
       if (mode === null) storage?.removeItem(key);
-      else storage?.setItem(key, String(mode));
+      else if (storage) setAuxiliaryItem(storage, key, String(mode));
     } catch { /* Presentation can still use the current server response. */ }
   } };
 }

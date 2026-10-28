@@ -1,5 +1,6 @@
 import type { CardinalDirection } from "@gamify-surgery/game-domain";
 import type { FacilityRoomView, FacilityViewModel } from "../../facility/types";
+import { isDoorPresentationConnected } from "../../facility/doorPresentation";
 import type { DoorSection, MobileBuildActions } from "./types";
 
 /** One key per physical one-tile wall section, including reciprocal room walls. */
@@ -18,6 +19,7 @@ export function phoneDoorSections(model: FacilityViewModel, actions: Pick<Mobile
     const request = { kind: "remove" as const, doorId: door.instanceId };
     const id = wallSectionKey(room, door.side, door.offset);
     sections.set(id, { id, roomId: room.instanceId, side: door.side, offset: door.offset, request,
+      connectionInvalid: !isDoorPresentationConnected(door, model.rooms),
       validation: actions.previewDoor(request) });
   }
   const rooms = [...model.rooms].sort((a, b) => Number(b.instanceId === model.selectedRoomInstanceId) - Number(a.instanceId === model.selectedRoomInstanceId));

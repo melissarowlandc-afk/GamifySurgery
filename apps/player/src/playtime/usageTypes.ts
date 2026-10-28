@@ -6,8 +6,8 @@ export const USAGE_HEARTBEAT_MS = 60_000;
 export const USAGE_INTERVAL_MS = 30_000;
 export const USAGE_MAX_OBSERVATION_GAP_MS = 5_000;
 export const USAGE_MAX_AGE_MS = 7 * 86_400_000;
-// The outbox and the atomic campaign staging field each get half the 1 MiB budget.
-export const USAGE_QUEUE_BYTES = 512 * 1_024 - 256; // Reserve envelope/stop-marker overhead.
+// Small aggregate outbox; reserve local storage for campaign checkpoints.
+export const USAGE_QUEUE_BYTES = 64 * 1_024 - 256; // Reserve envelope/stop-marker overhead.
 export const USAGE_BATCH_SIZE = 100;
 
 export interface QuestionUsageReceipt {

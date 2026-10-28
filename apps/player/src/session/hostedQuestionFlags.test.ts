@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { scoredPatientFixture, scoredEmployeeFixture } from "../playtime/usageTestFixtures";
 import { questionReviewContext } from "./questionReviewContext";
-import { createHostedQuestionFlag, HOSTED_FLAGS_KEY, MAX_FLAG_AGE_MS, QuestionFlagQueue, type FlagTransport } from "./hostedQuestionFlags";
+import { createHostedQuestionFlag, HOSTED_FLAGS_KEY, MAX_FLAG_AGE_MS, MAX_PENDING_FLAGS, QuestionFlagQueue, type FlagTransport } from "./hostedQuestionFlags";
 import { accountStorageKey } from "./accountStorageKey";
 
 const now = Date.UTC(2026, 9, 13, 12);
@@ -22,6 +22,27 @@ function fixture() {
 }
 
 describe("voluntary hosted flags", () => {
+  it("does not read or rewrite the outbox when there are no sent receipts", async () => {
+    const f = fixture(), write = vi.spyOn(f.storage, "setItem"), listener = vi.fn();
+    f.queue.subscribe(listener);
+    await f.queue.refreshStatuses();
+    expect(f.transport.read).not.toHaveBeenCalled(); expect(write).not.toHaveBeenCalled(); expect(listener).not.toHaveBeenCalled();
+  });
+
+  it("coalesces concurrent disposition reads and publishes only actual changes", async () => {
+    const f = fixture(), payload = await createHostedQuestionFlag(input(), "account-a", "Review this", id(1), now);
+    await f.queue.submit(payload, input());
+    const write = vi.spyOn(f.storage, "setItem"), listener = vi.fn();
+    write.mockClear(); f.queue.subscribe(listener);
+    vi.mocked(f.transport.read).mockResolvedValue([{ flag_id: payload.flag_id, status: "open", fixed_in_version: null }]);
+    await Promise.all([f.queue.refreshStatuses(), f.queue.refreshStatuses(), f.queue.refreshStatuses()]);
+    expect(f.transport.read).toHaveBeenCalledOnce(); expect(write).not.toHaveBeenCalled(); expect(listener).not.toHaveBeenCalled();
+    vi.mocked(f.transport.read).mockResolvedValue([{ flag_id: payload.flag_id, status: "fixed_in_version", fixed_in_version: "beta.2" }]);
+    await f.queue.refreshStatuses();
+    expect(write).toHaveBeenCalledOnce(); expect(listener).toHaveBeenCalledOnce();
+    expect(f.queue.find(input())).toMatchObject({ delivery: "sent", status: "fixed_in_version", fixedInVersion: "beta.2" });
+  });
+
   it("sends only the SQL contract, actual frozen order/selected ID and bounded comment", async () => {
     const context = input(); context.answerChoices.reverse(); context.selectedAnswerChoiceId = context.answerChoices[1]!.id;
     const payload = await createHostedQuestionFlag(context, "account-a", "x".repeat(510), id(1), now);
@@ -78,12 +99,18 @@ describe("voluntary hosted flags", () => {
   it("bounds the offline queue to fifty and seven days without touching historic exports", async () => {
     const f = fixture(); vi.mocked(f.transport.send).mockRejectedValue(new Error("Offline"));
     f.map.set("gamify-surgery.question-review-flags.v1", "Unowned historic export");
-    for (let n = 1; n <= 55; n++) await f.queue.submit(await createHostedQuestionFlag(input(), "account-a", "x".repeat(500), id(n), now), input());
-    expect(f.queue.list()).toHaveLength(50); expect(f.queue.dropped).toBe(5);
+    let rejected = 0;
+    for (let n = 1; n <= 55; n++) {
+      try { await f.queue.submit(await createHostedQuestionFlag(input(), "account-a", "x".repeat(500), id(n), now), input()); }
+      catch { rejected++; }
+    }
+    const retained = f.queue.list().length;
+    expect(retained).toBeGreaterThan(0); expect(retained).toBeLessThanOrEqual(MAX_PENDING_FLAGS);
+    expect(rejected).toBe(55 - retained); expect(f.queue.dropped).toBe(0);
     const encoded = f.map.get(accountStorageKey(HOSTED_FLAGS_KEY, "account-a"))!;
     expect(new TextEncoder().encode(encoded).length).toBeLessThanOrEqual(1_024 * 1_024);
     const expired = new QuestionFlagQueue("account-a", f.storage, f.transport, () => true, () => now + MAX_FLAG_AGE_MS);
-    expect(expired.list()).toEqual([]); expect(expired.dropped).toBe(50);
+    expect(expired.list()).toEqual([]); expect(expired.dropped).toBe(retained);
     expect(f.map.get("gamify-surgery.question-review-flags.v1")).toBe("Unowned historic export");
   });
 

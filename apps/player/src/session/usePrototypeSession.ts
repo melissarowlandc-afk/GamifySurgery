@@ -65,12 +65,15 @@ import {
 } from "./prototypeAutosave";
 import {
   loadQuestionReviewFlags,
+  loadArchivedQuestionReviewFlags,
+  mergeQuestionReviewFlags,
   recordQuestionReviewFlag,
-  saveQuestionReviewFlags,
+  saveQuestionReviewFlagsDurably,
   setQuestionReviewFlagStatus,
   type QuestionReviewFlag,
   type QuestionReviewFlagStatus,
 } from "./questionReviewFlags";
+import { reclaimAuxiliaryStorage } from "./storagePressure";
 import { getChartFeedbackAcknowledgmentCommand } from "./chartCloseBehavior";
 import { getDailyRoutinePauseTransition, isDailyRoutineTipId } from "./dailyRoutineTutorialPause";
 import { describeBuildUndoAction } from "./buildModePresentation";
@@ -427,6 +430,17 @@ export function usePrototypeSession(
     QuestionReviewFlag[]
   >(() => loadQuestionReviewFlags(undefined, accountId));
   const questionReviewFlagsRef = useRef(questionReviewFlags);
+  const reviewFlagsLiveRef = useRef(true);
+  useEffect(() => {
+    reviewFlagsLiveRef.current = true;
+    void loadArchivedQuestionReviewFlags(accountId).then(archived => {
+      if (!reviewFlagsLiveRef.current || !archived.length) return;
+      const merged = mergeQuestionReviewFlags(archived, questionReviewFlagsRef.current);
+      questionReviewFlagsRef.current = merged; setQuestionReviewFlags(merged);
+    });
+    void reclaimAuxiliaryStorage(undefined, true);
+    return () => { reviewFlagsLiveRef.current = false; };
+  }, [accountId]);
   const [documentVisible, setDocumentVisible] = useState(
     () =>
       typeof document === "undefined" ||
@@ -612,11 +626,17 @@ export function usePrototypeSession(
     };
     const unsubscribe = cloud.subscribe(sync);
     const timer = window.setInterval(() => { void cloud.coordinator.pulse(); }, 1_000);
-    const focus = () => { void cloud.coordinator.focus(); };
+    const focus = () => { void cloud.reconnect(); };
     window.addEventListener("focus", focus);
+    window.addEventListener("pageshow", focus);
+    window.addEventListener("online", focus);
+    document.addEventListener("resume", focus);
     sync();
+    if (cloud.coordinator.reconnectsAutomatically && !cloud.canExecute && !cloud.needsReload) void cloud.reconnect();
     return () => {
-      unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus); cloud.coordinator.pause();
+      unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus);
+      window.removeEventListener("pageshow", focus); window.removeEventListener("online", focus);
+      document.removeEventListener("resume", focus); cloud.coordinator.pause();
       // React StrictMode may immediately bind the same owner again.
       queueMicrotask(() => { if (cloudBindingGenerationRef.current === generation) cloud.dispose(); });
     };
@@ -880,7 +900,7 @@ export function usePrototypeSession(
     const handleVisibilityChange = (event?: Event) => {
       const visible = document.visibilityState === "visible";
       setDocumentVisible(visible);
-      if (cloud && visible && event) void cloud.coordinator.focus();
+      if (cloud && visible && event) void cloud.reconnect();
       if (cloud && !visible) { void cloud.checkpointNow("hidden"); return; }
       if (!visible && !stateRef.current.paused) {
         execute(
@@ -912,6 +932,7 @@ export function usePrototypeSession(
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pagehide", handlePageHide);
+    document.addEventListener("freeze", handlePageHide);
     handleVisibilityChange();
     return () => {
       document.removeEventListener(
@@ -919,6 +940,7 @@ export function usePrototypeSession(
         handleVisibilityChange,
       );
       window.removeEventListener("pagehide", handlePageHide);
+      document.removeEventListener("freeze", handlePageHide);
     };
   }, [attemptSaveProfile, cancelScheduledAutosave, cloud, execute, publishSystemNotice]);
 
@@ -1139,10 +1161,16 @@ export function usePrototypeSession(
       }, Date.now());
       questionReviewFlagsRef.current = result.flags;
       setQuestionReviewFlags(result.flags);
-      const persisted = saveQuestionReviewFlags(result.flags, undefined, accountId);
-      setAnnouncement(persisted ? "Question flagged for developer review." : "Question flagged for this session, but browser storage was unavailable.");
+      // A pending campaign candidate has priority over auxiliary history.
+      void (cloud ? cloud.durable() : Promise.resolve(true)).then(durable => {
+        if (!durable || !reviewFlagsLiveRef.current || accountId && usage && !usage.canRecordQuestions()) return false;
+        return saveQuestionReviewFlagsDurably(result.flags, undefined, accountId);
+      }).then(persisted => {
+        if (reviewFlagsLiveRef.current && questionReviewFlagsRef.current === result.flags)
+          setAnnouncement(persisted ? "Question flagged for developer review." : "Question flagged for this session, but browser storage was unavailable.");
+      });
     },
-    [accountId],
+    [accountId, cloud, usage],
   );
 
   const setQuestionReviewStatus = useCallback(
@@ -1154,14 +1182,16 @@ export function usePrototypeSession(
       );
       questionReviewFlagsRef.current = next;
       setQuestionReviewFlags(next);
-      const persisted = saveQuestionReviewFlags(next, undefined, accountId);
-      setAnnouncement(
-        persisted
-          ? status === "reviewed"
-            ? "Question review marked complete."
-            : "Question returned to the developer review queue."
-          : "Question review status changed for this session only.",
-      );
+      void saveQuestionReviewFlagsDurably(next, undefined, accountId).then(persisted => {
+        if (!reviewFlagsLiveRef.current || questionReviewFlagsRef.current !== next) return;
+        setAnnouncement(
+          persisted
+            ? status === "reviewed"
+              ? "Question review marked complete."
+              : "Question returned to the developer review queue."
+            : "Question review status changed for this session only.",
+        );
+      });
     },
     [],
   );

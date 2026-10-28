@@ -99,10 +99,13 @@ export class FakeCloudServer {
         const prior = grants.get(input.operationId);
         if (prior) { if (prior.input !== JSON.stringify(input)) throw new CloudSyncError("corrupt"); return prior.lease; }
         const row = campaign(input.campaignId);
-        if (input.expectedWriterGeneration !== undefined && input.expectedWriterGeneration !== String(row.generation)) throw new CloudSyncError("writer");
         if (row.confirmed.revision !== input.expectedRevision) throw new CloudSyncError("revision");
+        // Match the deployed RPC's idempotent token proof across transport instances.
+        if (input.writerToken && row.token === input.writerToken && row.expiry > this.now() &&
+          (input.expectedWriterGeneration === String(row.generation) || BigInt(input.expectedWriterGeneration ?? "-2") + 1n === row.generation)) return lease(row);
+        if (input.expectedWriterGeneration !== undefined && input.expectedWriterGeneration !== String(row.generation)) throw new CloudSyncError("writer");
         if (row.token && row.expiry > this.now() && !input.takeover) throw new CloudSyncError("writer");
-        row.generation++; row.token = `writer.${accountId}.${row.generation}`; row.expiry = this.now() + CLOUD_LEASE_MS;
+        row.generation++; row.token = input.writerToken ?? `writer.${accountId}.${row.generation}`; row.expiry = this.now() + CLOUD_LEASE_MS;
         const granted = lease(row); grants.set(input.operationId, { input: JSON.stringify(input), lease: granted }); return granted;
       }, { operationId: input.operationId }),
       renew: input => run("renew", () => { const row = campaign(input.campaignId); writer(row, input); row.expiry = this.now() + CLOUD_LEASE_MS; return lease(row); }),

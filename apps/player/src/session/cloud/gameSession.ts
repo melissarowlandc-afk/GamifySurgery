@@ -5,6 +5,7 @@ import type { LocalPrototypeProfile } from "../prototypeStorage";
 import { type CloudCampaignMetadata } from "./codec";
 import { loadCloudEvidenceCheckpoint, type CloudSourceProvenance } from "./codecEvidence";
 import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } from "./coordinator";
+import { logicalJsonText } from "./codecJson";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -32,6 +33,7 @@ export class CloudGameSession {
   private closing: Promise<boolean> | null = null;
   private readonly unsubscribe: () => void;
   private readonly unsubscribeReceipts: () => void;
+  private readonly unsubscribeRecovery: () => void;
   private boundRevision: string;
   private reloadRequired = false;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
@@ -46,6 +48,7 @@ export class CloudGameSession {
       this.emit();
     });
     this.unsubscribeReceipts = coordinator.onAcknowledged(receipt => { this.boundRevision = receipt.revision; for (const id of receipt.usageReceiptIds) this.questions.delete(id); });
+    this.unsubscribeRecovery = coordinator.beforeReconnect(async () => await this.durable() || !this.dirty);
   }
   static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>): Promise<CloudGameSession> {
     const confirmed = coordinator.confirmed;
@@ -69,13 +72,14 @@ export class CloudGameSession {
   get metadata(): CloudCampaignMetadata { return structuredClone(this.campaign); }
 
   execute(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null): GameState | null {
-    if (!this.canExecute) return null;
+    if (!this.canExecute) { this.emit(); return null; }
     const before = this.current;
     let result: ReturnType<typeof applyGameEvidenceCommand>;
     try { result = applyGameEvidenceCommand(this.checkpoint, command, context); }
     catch (error) { this.coordinator.reportLocalFailure(error); return null; }
     if (result.replayed) return this.state;
     this.checkpoint = result.checkpoint; this.current = result.state;
+    this.campaign = { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) };
     if (isFirstScoredAnswer(before, result.state, command)) {
       const receipt = createQuestionReceipt?.();
       if (receipt) this.questions.set(receipt.receipt_id, receipt);
@@ -84,7 +88,8 @@ export class CloudGameSession {
   }
   updateMetadata(campaign: CloudCampaignMetadata): void {
     if (this.stopped || campaign.campaignId !== this.coordinator.scope.campaignId || !this.coordinator.view.canExecute ||
-      JSON.stringify(campaign) === JSON.stringify(this.campaign)) return;
+      logicalJsonText(JSON.parse(JSON.stringify({ ...campaign, updatedAtRealMs: 0 }))) ===
+      logicalJsonText(JSON.parse(JSON.stringify({ ...this.campaign, updatedAtRealMs: 0 })))) return;
     this.campaign = structuredClone(campaign); this.dirty = true; this.scheduleFlush();
   }
   private scheduleFlush(): void {
@@ -111,13 +116,22 @@ export class CloudGameSession {
         }
         if (this.stopped) return false;
         success = await this.coordinator.stage({ campaign, snapshot: encoded.snapshot, evidence: encoded.evidence,
-          usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) });
+          usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) }, "ordinary", true);
         if (!success) return false;
       }
       return success;
-    }).catch(error => { this.coordinator.reportLocalFailure(error); return false; }).finally(() => { this.encoding = false; this.flushing = null; this.emit(); });
+    }).catch(error => { this.dirty = !this.stopped; this.coordinator.reportLocalFailure(error); return false; }).finally(() => { this.encoding = false; this.flushing = null; this.emit(); });
   }
-  async durable(): Promise<boolean> { return this.flushing ? this.flushing : this.coordinator.view.localDurable; }
+  async durable(): Promise<boolean> {
+    if (this.dirty && !this.flushing && !this.stopped) this.scheduleFlush();
+    return this.flushing ? this.flushing : this.coordinator.view.localDurable;
+  }
+  async reconnect(): Promise<boolean> {
+    // Finish persisting commands already accepted before changing lease/base.
+    // A failed write remains in coordinator.attempted for its quota retry.
+    await this.durable();
+    return !this.stopped && this.coordinator.focus();
+  }
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
     if (!await this.durable()) return false;
     return this.coordinator.checkpoint(reason);
@@ -137,10 +151,11 @@ export class CloudGameSession {
     await this.switchTo(campaignId); return true;
   }
   undoBuild(state: GameState): GameState | null {
-    if (!this.canExecute) return null;
+    if (!this.canExecute) { this.emit(); return null; }
     try {
       const result = applyGameEvidenceBuildUndo(this.checkpoint, state, crypto.randomUUID());
       this.checkpoint = result.checkpoint; this.current = result.state;
+      this.campaign = { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) };
       this.dirty = true; this.scheduleFlush(); this.emit();
       return this.current;
     } catch (error) { this.coordinator.reportLocalFailure(error); return null; }
@@ -152,5 +167,5 @@ export class CloudGameSession {
       checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
       priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
-  dispose(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.coordinator.dispose(); }
+  dispose(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.coordinator.dispose(); }
 }

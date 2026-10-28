@@ -26,7 +26,7 @@ export function QuestionFlagControl({ step, onSubmit, compact = false }: {
     if (step.reviewFlagInput && queue) void queue.refreshStatuses();
   }, [queue, step.reviewFlagInput?.clinicalCaseId, step.questionVariantId]);
   const entry = step.reviewFlagInput ? queue?.find(step.reviewFlagInput) : undefined;
-  const alreadyFlagged = Boolean(entry || (!accountId && step.flaggedForDeveloperReview));
+  const alreadyFlagged = Boolean(entry || step.flaggedForDeveloperReview);
   const cancel = () => { setCaptured(null); setComment(""); triggerRef.current?.focus(); };
   const submit = async () => {
     if (!captured || submittingRef.current) return;
@@ -39,10 +39,13 @@ export function QuestionFlagControl({ step, onSubmit, compact = false }: {
         }
         const payload = await createHostedQuestionFlag(captured.input, accountId, comment);
         if (!usage.canRecordQuestions()) throw new Error("Flag submission stopped");
-        // Preserve the old local review/export path, but only explicit new flags upload.
-        onSubmit(captured.id, comment, captured.input);
-        await queue.submit(payload, captured.input);
+        // The account outbox owns delivery independently of the optional local
+        // review/export copy. A slow/lost acknowledgement must not hold the UI.
+        queue.enqueue(payload, captured.input);
+        try { onSubmit(captured.id, comment, captured.input); }
+        catch { /* The queued hosted report remains recoverable on reload. */ }
         setMessage(""); cancel();
+        void queue.flush();
       } else {
         if (captured.input) onSubmit(captured.id, comment, captured.input);
         else if (comment) onSubmit(captured.id, comment);

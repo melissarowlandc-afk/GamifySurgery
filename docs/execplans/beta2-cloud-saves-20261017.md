@@ -4300,3 +4300,74 @@ or screenshot PASS is claimed by this worker.
 LOCAL ONLY: no Git, installs, network, agents, browser/server, owner storage,
 clinical content, saves, domain or SQL changes. Opening pathways remain
 unchanged. Manager owns acceptance and the audited "push to GitHub" checkpoint.
+
+### Manager release: Home Screen app + phone links under tabs (2026-10-27)
+
+Accepted after browser measurements (portrait 390x844 with/without simulated
+34px inset; landscape 844x390, 667x375, 932x430, 568x320: tabs and both links
+inside the viewport). Release tree `CI=true npm test` passed (player 2,734;
+game-domain 4,306), typecheck seven, player build includes the manifest;
+cloud e2e 60/60. Released as `07e27e3c` on `release/beta1-20261016` and
+`main`; Pages run 40624049400 succeeded. Live index has the manifest link,
+apple-mobile-web-app-capable and viewport-fit=cover; manifest serves 200 as
+application/manifest+json with display standalone. Pathway note: installed
+iOS Home Screen apps keep storage separate from Safari; testers delete and
+re-add the icon from Safari, then sign in (cloud saves restore campaigns).
+
+## Owner decision: automatic same-device reopen (2026-10-28)
+
+The owner does not want an Account save confirmation on every Home Screen
+reopen. When this device's durable local progress descends from its last
+confirmed account revision and that account head has not changed, check
+admission/lease ownership behind the scenes, resume automatically and upload
+the newer local progress in the background. Only a real competing account save
+requires a choice. Show both copies' day/time/money, prefer the newer progress,
+and offer "Keep playing with this device's progress" (upload it) alongside
+using the account save. Necessary messages/actions must remain above phone
+charts/sheets. Keep verified recovery copies, revision/lease fencing and
+revoked/deleted handling; never silently overwrite another device's newer save.
+
+This supersedes the earlier routine explicit continuation/Resume and exact
+five-minute dirty-upload policies. iOS can suspend its monotonic clock and kill
+without close events; foreground checkpoints and next-launch recovery must not
+depend on pagehide. Implementation and evidence are tracked in
+`docs/execplans/flag-freeze-20261028.md`, "Lifecycle and reopen prompt".
+
+The lifecycle implementation keeps existing campaign/evidence formats. A
+true divergent history cannot use the ordinary append-only RPC to upload the
+device branch: ordinal evidence IDs can conflict. That requirement is explicitly
+blocked pending a manager decision about preserving a separate campaign versus
+a separately reviewed branch protocol. Compatible local descendants resume
+automatically; real conflicts retain both copies and show verified progress
+comparisons. No silent overwrite, domain-format change or SQL application was
+introduced. See the active plan for the exact boundary and validation.
+
+
+## Manager decision: preserve divergent device progress separately (2026-10-28)
+
+The manager approved the existing import/enrollment option for true divergent
+histories. This resolves the prior section's blocked decision. Offer `Use the
+account save` or `Keep both — save this device's progress as a separate campaign`,
+named `<name> (this device)`. Recommend the newer verified progress. Both copies'
+day/time/money must be visible above phone charts/sheets. Routine compatible
+same-device reopen still resumes and uploads behind the scenes; a visible
+other writer/takeover still requires an explicit choice.
+
+Preserve the complete normalized local checkpoint and its immutable evidence
+through the existing account import journal/RPC. A plain game-state reimport
+would lose retired history and is not acceptable. Only the separate campaign
+identity changes; no existing account evidence is renumbered or overwritten,
+no history is replayed or counted, and no game-domain/save-format change is
+introduced. Retain and read back protected original copies before import; verify
+the new account campaign before clearing the original pending cache. A lost
+acknowledgement must reuse the same immutable import and campaign identity.
+
+The existing two-account-campaign limit includes archives. With no free slot,
+explain the limit, keep the protected pending local copy and offer export plus
+using the account save. Do not silently replace/delete a campaign. No new SQL,
+RPC or migration is required or applied. Implementation, exact sandbox results
+and pending manager browser acceptance are recorded in
+`docs/execplans/flag-freeze-20261028.md`, "Browser flow alignment and separate
+divergent campaign". The earlier October 25 live-confirmation gap remains
+unattributed without the affected device's actual diagnostics; this decision
+does not add live evidence about that gap.

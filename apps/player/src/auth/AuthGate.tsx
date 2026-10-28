@@ -23,6 +23,7 @@ import {
 } from "./supabaseAuth";
 import { AuthAccountActionsContext, AuthAccountContext } from "./AuthAccountContext";
 import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
+import { cloudCheckDeadline } from "../session/cloud/checkDeadline";
 import { clearAuthCallback, loadAuthPasswordFlow, readAuthCallback, saveAuthPasswordFlow } from "./authPasswordFlow";
 import { takeSetupLink } from "./setupLink";
 import { SetupAccountForm } from "./SetupAccountForm";
@@ -70,6 +71,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   const [candidateSession, setCandidateSession] = useState<Session | null>(null);
   const [hostedSession, setHostedSession] = useState<Session | null>(null);
   const [checkingSession, setCheckingSession] = useState(authClient !== null);
+  const [sessionCheckUnavailable, setSessionCheckUnavailable] = useState(false);
   const [screen, setScreen] = useState<AuthScreen>(callback.hasError ? "sign_in" : callback.flow ?? "sign_in");
   const [linkErrorBlocking, setLinkErrorBlocking] = useState(callback.hasError);
   const [email, setEmail] = useState("");
@@ -106,7 +108,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
       }
       // Never await/call another auth API inside this provider callback.
     });
-    void loadHostedSession(authClient).then((session) => {
+    void cloudCheckDeadline(loadHostedSession(authClient)).then((session) => {
       if (!active || authEventReceived) return;
       setCandidateSession(session);
       if (!session) {
@@ -123,6 +125,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
 
   useEffect(() => {
     if (!authClient || !candidateSession) return;
+    setSessionCheckUnavailable(false);
     let active = true;
     let finished = false;
     let inFlight = false;
@@ -147,6 +150,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     };
     const retry = () => {
       if (!active || finished) return;
+      setSessionCheckUnavailable(true);
       setCheckingSession(true);
       timer = setTimeout(() => { timer = undefined; void verify(); },
         AUTH_RETRY_DELAYS[Math.min(attempts++, AUTH_RETRY_DELAYS.length - 1)]);
@@ -155,13 +159,14 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
       if (!active || finished || inFlight) return;
       inFlight = true;
       try {
-        const { data, error } = await authClient.auth.getUser(candidateSession.access_token);
+        const { data, error } = await cloudCheckDeadline(authClient.auth.getUser(candidateSession.access_token));
         if (!active) return;
         if (error && isTransientAuthFailure(error)) { retry(); return; }
         if (error || !data.user || !isInvitedVerifiedUser(data.user) || data.user.id !== candidateSession.user.id) {
           rejectSession();
         } else {
           finished = true;
+          setSessionCheckUnavailable(false);
           setHostedSession({ ...candidateSession, user: data.user });
           setCheckingSession(false);
         }
@@ -278,6 +283,10 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
       <main className="opening-screen auth-gate-screen">
         <section className="founder-creator auth-gate-card" role="status">
           <span className="opening-wordmark">Stitchin&apos; Time</span><h1>Checking your sign-in…</h1>
+          {sessionCheckUnavailable ? <>
+            <p role="alert">Your sign-in could not be verified. Check your connection. This app will retry automatically.</p>
+            <button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload app</button>
+          </> : null}
           <ClinicalContentNotice />
         </section>
       </main>

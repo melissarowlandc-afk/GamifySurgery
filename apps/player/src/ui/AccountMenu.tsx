@@ -6,6 +6,8 @@ import { USAGE_NOTICE_TEXT, USAGE_NOTICE_VERSION } from "../playtime/usageTypes"
 import { COMPETITION_PRIVACY_NOTICE } from "../competition/types";
 import { useQuestionFlags } from "../session/QuestionFlagProvider";
 import { saveQuestionReviewFlags } from "../session/questionReviewFlags";
+import { accountStorageKey } from "../session/accountStorageKey";
+import { clearArchivedReviewFlags } from "../session/storagePressure";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { CLOUD_NOTICE_VERSION, downloadCloudRecovery, useCloudAccount } from "../session/cloud/CloudAccount";
 import { cloudEntryError } from "./cloudEntryError";
@@ -87,7 +89,7 @@ export function AccountMenu({ children }: { children?: ReactNode } = {}) {
     setPending(true); setError(""); setRequested(true);
     flags?.clear();
     saveQuestionReviewFlags([], undefined, accountId);
-    try { await tracker.requestDeletion(); setConfirm(false); }
+    try { await tracker.requestDeletion(); await clearArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", accountId)); setConfirm(false); }
     catch { setError("Deletion could not reach the service. Recording is off on this device. Retry when you are online; hosted deletion is not yet confirmed."); }
     finally { setPending(false); }
   };
