@@ -41,6 +41,7 @@ export class CloudGameSession {
   private boundRevision: string;
   private reloadRequired = false;
   private reconnecting: Promise<boolean> | null = null;
+  private foregrounding: Promise<boolean> | null = null;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
     private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
     this.checkpoint = loaded.checkpoint; this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
@@ -132,12 +133,22 @@ export class CloudGameSession {
     if (this.dirty && !this.flushing && !this.stopped) this.scheduleFlush();
     return this.flushing ? this.flushing : this.coordinator.view.localDurable;
   }
+  foreground(online = false): Promise<boolean> {
+    if (this.foregrounding) return this.foregrounding;
+    if (this.stopped || this.closing || this.coordinator.hasPriorRecovery) return Promise.resolve(false);
+    this.foregrounding = (async () => {
+      const checked = await this.coordinator.foreground(online);
+      if (this.stopped) return false;
+      return checked === null || this.needsReload ? this.reconnect() : checked;
+    })().finally(() => { this.foregrounding = null; });
+    return this.foregrounding;
+  }
   reconnect(): Promise<boolean> {
     // Foregrounding an account clinic, including after Save & Close, goes
     // through the router's full automatic selection and fencing. Recovery
     // export stays stable; a bare coordinator has no authority to reopen itself.
     if (this.stopped || this.closing || this.coordinator.view.phase === "closed" && !this.automaticReconnect ||
-      this.coordinator.confirmed?.priorRecovery) return Promise.resolve(false);
+      this.coordinator.hasPriorRecovery) return Promise.resolve(false);
     if (this.reconnecting) return this.reconnecting;
     this.reconnecting = this.reconnectChecked().finally(() => { this.reconnecting = null; });
     return this.reconnecting;

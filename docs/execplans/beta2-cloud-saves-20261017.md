@@ -4559,3 +4559,42 @@ three-case event interleaving was not observed directly in the sandbox; manager
 repeat-each runs remain required. See the active flag-freeze ExecPlan's Recovery
 operation count and paused divergence fixtures section for evidence and counts.
 No SQL/RPC, game-domain, save-format or clinical-content change is involved.
+
+
+## Reaffirmed owner cadence and cheap iOS foreground handling (2026-10-29)
+
+P0 after ab857add: owner, Amelia and Dustin report repeated Home Screen freezes.
+The Oct 25/26 decision at lines 3097-3105 is binding: worker encoding, immediate
+local durability, dirty account checkpoints every FIVE MINUTES and on hidden /
+pagehide / freeze / explicit Save & Close. The later 15-second ordinary upload
+cadence was a regression and is restored to five minutes. The independent
+15-second writer lease renewal remains a tiny scalar-only RPC, with no campaign
+cache/codec work on success.
+
+Frequent focus/pageshow/visible/resume events do not reopen or inspect all saved
+copies. A fresh checked lease needs no work; meaningful background returns,
+near-expiry leases and real network returns use coalesced small checks. Only
+changed/uncertain authority or actual open/reopen invokes full recovery/automatic
+selection. The approved automatic most-progress reopen, protected older bytes,
+fenced takeover, verified-prior export and revoked/deleted handling remain.
+The worker also removed stable one-second pulse notifications that forced
+unnecessary session/profile rendering.
+
+Measurements, remaining command-level full-copy costs, regression coverage,
+validation and manager native-browser/iOS acceptance are documented in
+flag-freeze-20261028.md, section "P0 iOS repeated-save/focus hitches after
+ab857add (2026-10-29)". No domain/save format, RPC/SQL, clinical content or
+question-tooling change is authorized by this performance repair.
+
+
+The manager's added 2026-10-29 sustained-stall evidence also requires that a
+valid unexpired lease keeps commands and the facility clock running during slow
+routine foreground checks. A 20-second held transport is now tested through the
+real phone/desktop App hooks. Actual writer/head changes, revoked/deleted,
+expired authority and failed local durability still fence immediately with a
+visible status/action. Forward-only wall elapsed time while iOS pauses its
+monotonic clock consumes the original earlier lease deadline instead of being
+classified as an attack; rollback checks and server fencing remain. Light-check
+network timeouts preserve only the existing valid window/grace and cannot let
+late replies extend it. Focus/pageshow/resume also update the hook's visible flag
+so a missing visible visibilitychange event cannot leave its clock stopped.

@@ -625,17 +625,26 @@ export function usePrototypeSession(
       cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
     };
     const unsubscribe = cloud.subscribe(sync);
-    const timer = window.setInterval(() => { void cloud.coordinator.pulse(); }, 1_000);
-    const focus = () => { void cloud.reconnect(); };
+    const timer = window.setInterval(() => { if (document.visibilityState !== "hidden") void cloud.coordinator.pulse(); }, 1_000);
+    const focus = () => {
+      const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
+      if (visible) void cloud.foreground();
+    };
+    const online = () => {
+      const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
+      if (visible) void cloud.foreground(true);
+    };
+    const offline = () => { cloud.coordinator.markOffline(); };
     window.addEventListener("focus", focus);
     window.addEventListener("pageshow", focus);
-    window.addEventListener("online", focus);
+    window.addEventListener("online", online);
+    window.addEventListener("offline", offline);
     document.addEventListener("resume", focus);
     sync();
     if (cloud.coordinator.reconnectsAutomatically && !cloud.canExecute && !cloud.needsReload) void cloud.reconnect();
     return () => {
       unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus);
-      window.removeEventListener("pageshow", focus); window.removeEventListener("online", focus);
+      window.removeEventListener("pageshow", focus); window.removeEventListener("online", online); window.removeEventListener("offline", offline);
       document.removeEventListener("resume", focus);
       // React StrictMode may immediately bind the same owner again.
       // Do not revoke a checked lease for that synchronous rebind. Real
@@ -902,8 +911,8 @@ export function usePrototypeSession(
     const handleVisibilityChange = (event?: Event) => {
       const visible = document.visibilityState === "visible";
       setDocumentVisible(visible);
-      if (cloud && visible && event) void cloud.reconnect();
-      if (cloud && !visible) { void cloud.checkpointNow("hidden"); return; }
+      if (cloud && visible && event) void cloud.foreground();
+      if (cloud && !visible) { cloud.coordinator.markBackground(); void cloud.checkpointNow("hidden"); return; }
       if (!visible && !stateRef.current.paused) {
         execute(
           {
@@ -923,7 +932,7 @@ export function usePrototypeSession(
     };
 
     const handlePageHide = () => {
-      if (cloud) { void cloud.checkpointNow("pagehide"); return; }
+      if (cloud) { cloud.coordinator.markBackground(); void cloud.checkpointNow("pagehide"); return; }
       // Idle autosaves optimize live animation, but a refresh or navigation
       // must still synchronously commit the latest staged tick before the old
       // document is discarded.

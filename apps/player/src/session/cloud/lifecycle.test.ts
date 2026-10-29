@@ -1,11 +1,13 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
 import { MemoryCloudEntryStore } from "./entryStorage";
 import { MemoryCloudCache } from "./cache";
 import { CloudSyncCoordinator } from "./coordinator";
 import { CloudGameSession } from "./gameSession";
 import { deferred, syncHarness } from "./syncTestSupport";
-import { CloudSyncError } from "./transport";
+import { CLOUD_CHECKPOINT_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CloudSyncError } from "./transport";
+
+afterEach(() => vi.restoreAllMocks());
 
 async function device() {
   const h = await syncHarness(), entryStore = new MemoryCloudEntryStore();
@@ -64,13 +66,178 @@ describe("standalone hosted lifecycle", () => {
     session.dispose();
   });
 
-  it("confirms foreground progress within 15 seconds without needing a close event", async () => {
+  it("confirms dirty foreground progress every five minutes while renewing only the lease every 15 seconds", async () => {
     const h = await syncHarness(); await h.coordinator.open(); await h.coordinator.startWriter(); h.coordinator.resume();
     await h.coordinator.stage(await h.candidate(h.command(h.prepared.checkpoint,
       { type: "SET_PAUSED", paused: false, operationId: "standalone.play" })));
-    h.clock.advance(15_000); await h.coordinator.pulse();
+    expect(CLOUD_CHECKPOINT_MS).toBe(300_000);
+    const cacheRead = vi.spyOn(h.cache, "read"), cacheWrite = vi.spyOn(h.cache, "write"), codec = vi.spyOn(h.coordinator.codec, "run");
+    for (let elapsed = CLOUD_RENEW_MS; elapsed < CLOUD_CHECKPOINT_MS; elapsed += CLOUD_RENEW_MS) {
+      h.clock.advance(CLOUD_RENEW_MS); await h.coordinator.pulse();
+      expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: true });
+      expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    }
+    expect(cacheRead).not.toHaveBeenCalled(); expect(cacheWrite).not.toHaveBeenCalled(); expect(codec).not.toHaveBeenCalled();
+    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(19);
+    h.clock.advance(CLOUD_RENEW_MS); await h.coordinator.pulse();
     expect(h.server.operationCount(h.scope.accountId)).toBe(1);
     expect(h.coordinator.view.pending).toBe(false);
+    h.clock.advance(CLOUD_RENEW_MS); await h.coordinator.pulse();
+    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+  });
+
+  it("makes repeated fresh focus/pageshow/online/resume events free of RPC, cache, codec and session notifications", async () => {
+    const h = await device(), notify = vi.fn(); h.session.subscribe(notify);
+    const cacheRead = vi.spyOn(h.cache, "read"), cacheWrite = vi.spyOn(h.cache, "write"), codec = vi.spyOn(h.coordinator.codec, "run");
+    const calls = h.server.calls.length;
+    for (let second = 0; second < 60; second++) {
+      h.clock.advance(1_000); await h.coordinator.pulse();
+      expect(await h.session.foreground()).toBe(true);
+      expect(await h.session.foreground(true)).toBe(true); // spurious online without offline
+    }
+    expect(h.server.calls.slice(calls).map(call => call.method)).toEqual(["renew", "renew", "renew", "renew"]);
+    expect(cacheRead).not.toHaveBeenCalled(); expect(cacheWrite).not.toHaveBeenCalled(); expect(codec).not.toHaveBeenCalled();
+    expect(notify).not.toHaveBeenCalled(); h.session.dispose();
+  });
+
+  it("checks a meaningful background return with small RPCs, preserving dirty progress without an early checkpoint", async () => {
+    const h = await device(); h.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "cheap.dirty" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await h.session.durable(); const before = h.session.state;
+    const cacheWrite = vi.spyOn(h.cache, "write"), cacheRead = vi.spyOn(h.cache, "read"), journal = vi.spyOn(h.entryStore, "write"), codec = vi.spyOn(h.coordinator.codec, "run");
+    h.coordinator.markBackground(); h.clock.advance(10_000); const calls = h.server.calls.length;
+    expect(await Promise.all(Array.from({ length: 20 }, () => h.session.foreground()))).toEqual(Array(20).fill(true));
+    expect(h.server.calls.slice(calls).map(call => call.method)).toEqual(["capabilities", "head", "renew"]);
+    expect(h.session.state).toBe(before); expect(h.session.syncView).toMatchObject({ canExecute: true, pending: true, failure: null });
+    expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    expect(cacheRead).not.toHaveBeenCalled(); expect(cacheWrite).not.toHaveBeenCalled(); expect(journal).not.toHaveBeenCalled(); expect(codec).not.toHaveBeenCalled();
+    h.session.dispose();
+  });
+
+  it("renews a still-owned lease after iOS monotonic suspension without re-encoding pending commands", async () => {
+    const h = await device(); h.coordinator.markBackground(); h.clock.wall += 10_000;
+    const codec = vi.spyOn(h.coordinator.codec, "run"), cacheWrite = vi.spyOn(h.cache, "write");
+    expect(await h.session.foreground()).toBe(true);
+    expect(h.session.canExecute).toBe(true); expect(codec).not.toHaveBeenCalled(); expect(cacheWrite).not.toHaveBeenCalled();
+    h.session.dispose();
+  });
+
+  it("uses full checked recovery after an expired lease, never inventing authority from the old window", async () => {
+    const h = await device(); h.coordinator.markBackground(); h.clock.wall += 120_000;
+    const full = vi.spyOn(h.coordinator, "focus"); expect(await h.session.foreground()).toBe(true);
+    expect(full).toHaveBeenCalledOnce(); expect(h.session.canExecute).toBe(true); h.session.dispose();
+  });
+
+  it.each(["revoked", "deleted"] as const)("checks %s access on a meaningful return and never falls through into automatic selection", async failure => {
+    const h = await device(), full = vi.spyOn(h.session, "reconnect"); h.coordinator.markBackground(); h.clock.advance(10_000);
+    h.server.setAccess(h.scope.accountId, failure === "revoked" ? { admitted: false } : { deletionRequested: true });
+    expect(await h.session.foreground()).toBe(false); expect(h.coordinator.view).toMatchObject({ canExecute: false, failure });
+    expect(full).not.toHaveBeenCalled(); h.session.dispose();
+  });
+
+  it("reproduces the old routine-focus freeze through the still-explicit full-reconnect API", async () => {
+    const h = await device(), gate = deferred();
+    h.session.execute({ type: "SET_PAUSED", paused: false, operationId: "old.focus.play" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await h.session.durable(); const tick = h.session.state.facilityTick;
+    h.server.faults.push({ method: "head", at: "before", wait: gate.promise });
+    // Before this fix every focus/visible/pageshow event called this full API.
+    const repairing = h.session.reconnect();
+    await vi.waitFor(() => expect(h.server.calls.at(-1)?.method).toBe("head"));
+    h.clock.advance(20_000); // Lease is still valid, but the old check gated it.
+    expect(h.session.canExecute).toBe(false); expect(h.session.state.paused).toBe(true);
+    expect(h.session.execute({ type: "ADVANCE_TICK", operationId: "old.focus.dead.tap" }, PROTOTYPE_DOMAIN_CONTEXT)).toBeNull();
+    expect(h.session.state.facilityTick).toBe(tick);
+    gate.resolve(); expect(await repairing).toBe(true); expect(h.session.state.paused).toBe(false);
+    h.session.dispose();
+  });
+
+  it("keeps commands and facility time advancing during a 20-second foreground check with a valid lease", async () => {
+    const h = await device(), gate = deferred();
+    expect(h.session.execute({ type: "SET_PAUSED", paused: false, operationId: "play.before.check" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    await h.session.durable(); const tick = h.session.state.facilityTick;
+    h.coordinator.markBackground(); h.clock.wall += 10_000; // monotonic clock stopped in iOS
+    h.server.faults.push({ method: "head", at: "before", wait: gate.promise });
+    const checking = h.session.foreground();
+    await vi.waitFor(() => expect(h.server.calls.at(-1)?.method).toBe("head"));
+    h.clock.advance(20_000); // Slow transport, still inside the ORIGINAL lease.
+    expect(h.session.state.paused).toBe(false);
+    expect(h.session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "while.checking" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    expect(h.session.execute({ type: "ADVANCE_TICK", operationId: "tick.while.checking" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    expect(h.session.state.facilityTick).toBe(tick + 1);
+    await h.session.durable(); gate.resolve(); expect(await checking).toBe(true);
+    expect(h.session.state.simulationSpeed).toBe(4); expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: true }); h.session.dispose();
+  });
+
+  it("keeps the tiny heartbeat running during a slow foreground read so the lease does not expire needlessly", async () => {
+    const h = await device(), gate = deferred(); h.clock.advance(45_000);
+    h.server.faults.push({ method: "head", at: "before", wait: gate.promise });
+    const checking = h.session.foreground();
+    await vi.waitFor(() => expect(h.server.calls.at(-1)?.method).toBe("head"));
+    const codec = vi.spyOn(h.coordinator.codec, "run"), writes = vi.spyOn(h.cache, "write");
+    await h.coordinator.pulse(); // Tiny renewal must not wait behind the head read.
+    h.clock.advance(20_000); expect(h.session.canExecute).toBe(true); // past the old deadline, inside the renewed one
+    expect(codec).not.toHaveBeenCalled(); expect(writes).not.toHaveBeenCalled();
+    gate.resolve(); expect(await checking).toBe(true); h.session.dispose();
+  });
+
+  it("cannot let a late small foreground check undo an explicit authority pause", async () => {
+    const h = await device(), gate = deferred(); h.coordinator.markBackground(); h.clock.advance(10_000);
+    h.server.faults.push({ method: "head", at: "before", wait: gate.promise });
+    const checking = h.session.foreground();
+    await vi.waitFor(() => expect(h.server.calls.at(-1)?.method).toBe("head"));
+    h.coordinator.pause(); gate.resolve(); expect(await checking).toBe(false);
+    expect(h.session.canExecute).toBe(false); h.session.dispose();
+  });
+
+  it("times out only a missing foreground RPC while preserving the original valid lease and fencing its late reply", async () => {
+    const h = await device(), gate = deferred(); h.coordinator.markBackground(); h.clock.advance(10_000);
+    h.server.faults.push({ method: "head", at: "before", wait: gate.promise });
+    vi.useFakeTimers();
+    try {
+      const checking = h.coordinator.foreground();
+      h.clock.advance(30_000); await vi.advanceTimersByTimeAsync(30_000);
+      expect(await checking).toBe(true); expect(h.coordinator.view).toMatchObject({ canExecute: true, failure: "network" });
+      gate.resolve(); await vi.advanceTimersByTimeAsync(0);
+      expect(h.coordinator.view).toMatchObject({ canExecute: true, failure: "network" });
+      h.clock.advance(20_000); // The old deadline, not a late renewal, is binding.
+      expect(h.coordinator.view.canExecute).toBe(false);
+    } finally { vi.useRealTimers(); h.session.dispose(); }
+  });
+
+  it("does not turn a transient foreground network failure into a full command-fencing reconnect", async () => {
+    const h = await device(), full = vi.spyOn(h.session, "reconnect"); h.coordinator.markBackground(); h.clock.advance(10_000);
+    h.server.faults.push({ method: "head", at: "before", error: new CloudSyncError("network") });
+    expect(await h.session.foreground()).toBe(true);
+    expect(h.coordinator.view).toMatchObject({ canExecute: true, phase: "waiting", failure: "network" });
+    const calls = h.server.calls.length;
+    expect(await h.session.foreground()).toBe(true); expect(h.server.calls).toHaveLength(calls); expect(full).not.toHaveBeenCalled();
+    h.coordinator.markOffline();
+    expect(await h.session.foreground(true)).toBe(true);
+    expect(h.coordinator.view).toMatchObject({ canExecute: true, failure: null, phase: "ready" }); expect(full).not.toHaveBeenCalled();
+    h.session.dispose();
+  });
+
+  it("fences a reported other writer before awaiting any slow local preparation for full recovery", async () => {
+    const h = await device(), gate = deferred();
+    const other = new CloudSyncCoordinator({ scope: h.scope, transport: h.server.transport(h.scope.accountId), cache: new MemoryCloudCache(), clock: h.clock, enabled: true });
+    await other.open(); await other.startWriter(true);
+    vi.spyOn(h.session, "durable").mockImplementation(async () => { await gate.promise; return true; });
+    h.coordinator.markBackground(); h.clock.advance(10_000);
+    const checking = h.session.foreground();
+    await vi.waitFor(() => expect(h.coordinator.view).toMatchObject({ canExecute: false, failure: "writer" }));
+    expect(h.session.execute({ type: "ADVANCE_TICK", operationId: "fenced.immediately" }, PROTOTYPE_DOMAIN_CONTEXT)).toBeNull();
+    gate.resolve(); expect(await checking).toBe(false); h.session.dispose(); other.dispose();
+  });
+
+  it("preserves accepted local bytes when a different writer appears during a small foreground check", async () => {
+    const h = await device(); h.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "fenced.focus" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await h.session.durable(); const recovery = h.coordinator.exportRecovery();
+    const other = new CloudSyncCoordinator({ scope: h.scope, transport: h.server.transport(h.scope.accountId), cache: new MemoryCloudCache(), clock: h.clock, enabled: true });
+    await other.open(); expect(await other.startWriter(true)).toBe(true);
+    h.coordinator.markBackground(); h.clock.advance(10_000);
+    expect(await h.session.foreground()).toBe(false); expect(h.session.canExecute).toBe(false);
+    expect(h.coordinator.exportRecovery()).toBe(recovery); expect(await h.coordinator.saveAndClose()).toBe(false);
+    expect((await h.server.transport(h.scope.accountId).head(h.scope.campaignId)).writerActive).toBe(true);
+    h.session.dispose(); other.dispose();
   });
 
   it.each([10_000, 120_000, 3 * 86_400_000])("automatically rechecks an iOS suspension of %i ms while performance.now is paused", async elapsed => {
@@ -78,7 +245,7 @@ describe("standalone hosted lifecycle", () => {
     h.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "sleep.speed" }, PROTOTYPE_DOMAIN_CONTEXT);
     await h.session.durable(); const before = serializeGameState(h.session.state);
     h.clock.wall += elapsed;
-    expect(h.coordinator.view.canExecute).toBe(false);
+    expect(h.coordinator.view.canExecute).toBe(elapsed < CLOUD_LEASE_MS);
     expect(await h.session.reconnect()).toBe(true);
     expect(serializeGameState(h.session.state)).toBe(before);
     expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: false, failure: null });
@@ -299,7 +466,7 @@ describe("standalone hosted lifecycle", () => {
     expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "background.continue" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
     await session.durable(); gate.resolve(); expect(await connecting).toBe(true);
     expect(session.state.simulationSpeed).toBe(4); expect(reopened.view.pending).toBe(true);
-    h.clock.advance(15_000); await reopened.pulse();
+    for (let elapsed = 0; elapsed < CLOUD_CHECKPOINT_MS; elapsed += CLOUD_RENEW_MS) { h.clock.advance(CLOUD_RENEW_MS); await reopened.pulse(); }
     expect(reopened.view.pending).toBe(false); expect(reopened.confirmedRevision).toBe("3");
   });
 

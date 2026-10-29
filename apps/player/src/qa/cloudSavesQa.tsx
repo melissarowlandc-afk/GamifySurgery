@@ -39,6 +39,7 @@ declare global {
       commands(inputs: readonly (Omit<GameCommand, "operationId"> & Record<string, unknown>)[]): Promise<GameState | null>;
       checkpoint(): Promise<boolean>;
       focus(): Promise<boolean>;
+      foreground(): Promise<boolean>;
       checkAuthority(): Promise<boolean>;
       closeLease(): Promise<boolean>;
       retainedCopies(): Promise<{ key: string; value: ProtectedClinicCopy }[]>;
@@ -109,7 +110,7 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
     };
     window.__cloudQa = {
       status,
-      snapshot: () => ({ state: active?.state ?? null, revision: active?.coordinator.confirmed?.revision ?? null,
+      snapshot: () => ({ state: active?.state ?? null, revision: active?.coordinator.confirmedRevision ?? null,
         phase: active?.coordinator.view.phase ?? cloud.phase, pending: active?.syncView.pending ?? false,
         canExecute: active?.canExecute ?? false, failure: active?.coordinator.view.failure ?? cloud.error }),
       async command(input) {
@@ -127,6 +128,7 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
       },
       checkpoint: async () => Boolean(cloud.active) && await cloud.active!.checkpointNow("purchase"),
       focus: async () => Boolean(active) && await active!.reconnect(),
+      foreground: async () => Boolean(active) && await active!.foreground(),
       // Authority observation does not request reopening/taking over. It models
       // the old writer learning that its token was fenced by another device.
       checkAuthority: async () => Boolean(active) && await active!.coordinator.focus(),

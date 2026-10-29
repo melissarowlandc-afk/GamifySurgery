@@ -48,6 +48,22 @@ for (const layout of ["desktop", "phone"] as const) {
       const page = await f.page(1); await importAndOpen(page);
       const original = await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       const id = (await snapshot(page)).state!.campaignId;
+      // Standalone focus/pageshow/visible/resume bursts must not turn local
+      // progress into an early account checkpoint or reopen the current owner.
+      expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
+      const beforeFocus = (await snapshot(page)).state!, operations = f.server.operationCount("qa-account-a");
+      expect(await page.evaluate(async () => {
+        const qa = window.__cloudQa!;
+        for (let i = 0; i < 20; i++) {
+          window.dispatchEvent(new Event("focus")); window.dispatchEvent(new Event("pageshow"));
+          document.dispatchEvent(new Event("visibilitychange")); document.dispatchEvent(new Event("resume"));
+        }
+        return qa.foreground(); // await the event work, never a fixed sleep
+      })).toBe(true);
+      await expectPlaying(page);
+      expect((await snapshot(page)).state).toEqual(beforeFocus);
+      expect((await snapshot(page)).pending).toBe(true);
+      expect(f.server.operationCount("qa-account-a")).toBe(operations);
       f.failPage(page, "network");
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }))).toBe(true);
       const pending = (await snapshot(page)).state!;

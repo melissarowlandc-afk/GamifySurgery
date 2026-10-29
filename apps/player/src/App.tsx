@@ -35,8 +35,6 @@ import { cloudCodec, CLOUD_WORKER_STARTUP_TIMEOUT_MS, CLOUD_WORKER_TASK_TIMEOUT_
 import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
 import { rememberCampaignToReopen, selectCampaignToReopen, type CampaignReopenDecision } from "./session/cloud/reopenSelection";
 import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution";
-import { cloudCopyFamily } from "./session/cloud/copySelection";
-import { retainedProgressIsNewer } from "./session/cloud/retainedCopies";
 import { CloudSyncError } from "./session/cloud/transport";
 import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
 
@@ -116,7 +114,7 @@ export function ActivePrototypeGame({
           return true;
         },
         onRetry: async () => {
-          if (cloudSession.needsReload || cloudSession.coordinator.view.phase === "closed" || cloudSession.coordinator.confirmed?.priorRecovery) {
+          if (cloudSession.needsReload || cloudSession.coordinator.view.phase === "closed" || cloudSession.coordinator.hasPriorRecovery) {
             await onCloudReload?.(); return true;
           }
           return cloudSession.reconnect();
@@ -531,12 +529,11 @@ function CloudCampaignRouter() {
         opening.current = coordinator;
         openingStage = "hydrate";
         const selectedId = coordinator.scope.campaignId;
-        const checkedCoordinator = coordinator;
         const created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
           if (entryRequested.current) return false;
-          if (checked && checkedCoordinator.confirmed && !await retainedProgressIsNewer({ scope: checkedCoordinator.scope,
-            family: await cloudCopyFamily(selectedId), codec: cloudCodec, store: runtime.entryStore,
-            entries: await runtime.cache.accountEntries?.(runtime) ?? [], account: [checkedCoordinator.confirmed], storage: optionalLocalCloudStorage }, checkedCoordinator.confirmed)) return true;
+          // Checked same-head authority does not need another scan of retained
+          // copies. Full selection remains at open/reopen or changed authority.
+          if (checked) return true;
           await openCampaign(selectedId); return true;
         });
         if (!live.current || epoch !== generation.current || opening.current !== coordinator) { created.dispose(); throw new Error("Opening cancelled"); }

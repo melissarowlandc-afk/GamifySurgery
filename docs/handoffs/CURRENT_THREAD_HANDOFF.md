@@ -8669,3 +8669,66 @@ http://127.0.0.1:4173; live https://melissarowlandc-afk.github.io/GamifySurgery/
 QA http://127.0.0.1:5184. No Git, network, install, browser, agent, publication,
 SQL/RPC or external-message action. Local changes only; manager owns acceptance,
 integration, release and the audited GitHub-backup checkpoint reminder.
+
+
+## 2026-10-29 P0 iOS repeated freezes: cadence, foreground gate and clock
+
+Worker milestone complete locally; manager acceptance/native iOS/browser checks
+pending. Active plan: docs/execplans/flag-freeze-20261028.md, section P0 iOS
+repeated-save/focus hitches after ab857add. Beta 2 policy decision reaffirmed in
+beta2-cloud-saves-20261017.md. Shared clinical/question work preserved.
+
+Restored dirty account checkpoints to FIVE MINUTES plus hidden/pagehide/freeze
+and explicit Save & Close. Verified 15-second renewal is a tiny scalar RPC with
+no codec/cache work. Routine foreground events are coalesced/throttled and keep
+valid lease authority while small checks run; no full reconnect, retained-copy
+scan or early upload on healthy focus. Transient failure/timeout preserves only
+the original valid window/grace. Actual changed heads/writers gate immediately.
+The tiny heartbeat remains independent of slow foreground reads. Stable
+one-second pulses no longer force session/profile rendering.
+
+Two sustained-stall causes are reproduced: old focus invoked full reconnect,
+revoking command authority and presenting a paused state for a 20-second held
+check; and hidden followed by focus without visible visibilitychange left the
+hook's actual clock timer stopped. The new phone/desktop tests drive real timer
+callbacks during held checks: valid lease keeps commands and ticks, expired
+lease immediately shows one visible status/Retry and denies ticks until checked.
+Forward-only wall elapsed time during iOS monotonic suspension consumes the
+original earlier lease deadline instead of revoking a valid window; backward/
+unexplained monotonic checks and server fencing remain. No game-domain or save
+format change. Full refusal predicate/list and file:line evidence are in plan.
+
+Validation: final focused **5 files / 233 PASS (44.19 s)**; full player
+**296 files / 3,064 PASS (339.70 s)**, JSON success:true, zero failures/pending/
+todo; **seven workspace typechecks PASS**; **e2e/QA TypeScript PASS**; import
+boundary **12 modules PASS**. **21 cases added.** All 1,486 monitored inputs
+unchanged through final validation and benchmark. Controlled clock-before test:
+**2 failed / 2 passed / 26 filtered** (6.15 s); current actual-QA suite **30 PASS**.
+PowerShell full wrapper returned 1 from redirected existing React act warnings;
+Vitest JSON reports success and no npm failure. Native-exit-0/stderr probe
+reproduces that wrapper quirk; details and exact reports are in the plan.
+
+Final isolated Level 5 benchmark **1 PASS (80.71 s), native exit 0**:
+1,405,053 UTF-8 source bytes (~2.81 MB UTF-16), 1,960 evidence records;
+main checkpoint clone/JSON CPU **14.08 -> 14.46 ms** (same per-copy cost).
+Twenty flushed commands/five minutes: account uploads **10 -> 1**, worker posts
+**150 -> 87**, clone calls **350 -> 215**. Six focus bursts/minute: **18 posts /
+144 clones / 6 scans -> zero**. Production-like clone boundary + real codecs /
+async fake-IDB; not Safari timings or real disk/worker-result latency. Mandatory
+command-level full evidence application/local durability still costs work
+(instrumented synchronous command 237-305 ms); manager native profiling must
+include it. Do not claim all full-copy work drops twentyfold.
+
+Source lane: App.tsx; usePrototypeSession.ts; cloud/{transport,coordinator,
+gameSession}.ts and coordinator/lifecycle tests; flagFreeze.test.tsx;
+qa/cloudSavesQa.tsx + integration test; tests/e2e/cloud-recovery.spec.ts. No new
+runtime files. E2e stays **108 cases**, existing reopen scenario strengthened;
+all safety assertions remain. No codec-worker-reaching import in e2e specs.
+Evidence/diff/hashes: .local-dev/flag-ios-hotpaths-20261029/ (ignored, local-only).
+
+Manager reruns 108 browser cases and native iPhone/Home Screen long-task checks.
+No browser, Git, install, network, SQL/RPC, clinical/question-tooling, domain/
+save-format, agent or external-message action. No opening pathway/origin change
+(local START_GAME.cmd at http://127.0.0.1:4173; live GitHub Pages; QA :5184).
+Local-only, not backed up by this worker; manager owns integration, acceptance,
+release and the audited GitHub-backup checkpoint reminder.

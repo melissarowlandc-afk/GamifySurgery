@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { MemoryCloudCache } from "./cache";
 import { CloudSyncCoordinator } from "./coordinator";
-import { CloudSyncError, type CloudCommitRequest, type CloudFrozenOperation } from "./transport";
+import { CLOUD_CHECKPOINT_MS, CLOUD_RENEW_MS, CloudSyncError, type CloudCommitRequest, type CloudFrozenOperation } from "./transport";
 import { deferred, syncHarness, type TestCloudClock } from "./syncTestSupport";
 import { sha256Utf8 } from "./codecJson";
 
@@ -15,6 +15,9 @@ async function playing() {
 }
 const question = (id: number) => ({ kind: "question" as const, receipt_id: `00000000-0000-4000-8000-${String(id).padStart(12, "0")}`, occurred_at: "2027-01-15T08:00:00.000Z" });
 function advance(clock: TestCloudClock, ms: number) { clock.advance(ms); }
+async function pulseFor(h: Awaited<ReturnType<typeof playing>>, ms: number) {
+  while (ms > 0) { const part = Math.min(ms, CLOUD_RENEW_MS); advance(h.clock, part); await h.coordinator.pulse(); ms -= part; }
+}
 describe("shared cloud coordinator durable and fenced protocol", () => {
   it("keeps pending visible until a server acknowledgment is durable on this device", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
@@ -29,9 +32,9 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     gate.resolve(); expect(await saving).toBe(true);
     expect(h.coordinator.view.pending).toBe(false); expect(h.coordinator.confirmedRevision).toBe("2");
   });
-  it("rechecks its own suspended writer after a clock jump without requiring takeover", async () => {
+  it("rechecks its own suspended writer after a backward clock jump without requiring takeover", async () => {
     const h = await playing();
-    h.clock.wall += 10_000;
+    h.clock.wall -= 10_000;
     expect(h.coordinator.view).toMatchObject({ canExecute: false, phase: "paused", failure: "clock" });
     expect(h.coordinator.resume()).toBe(false);
     expect(await h.coordinator.retry()).toBe(true);
@@ -41,7 +44,7 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
   });
 
   it("does not recover a suspended writer after another device takes it over", async () => {
-    const h = await playing(); h.clock.wall += 10_000;
+    const h = await playing(); h.clock.wall -= 10_000;
     expect(h.coordinator.view.canExecute).toBe(false);
     const other = new CloudSyncCoordinator({ scope: h.scope, transport: h.server.transport(h.scope.accountId),
       cache: new MemoryCloudCache(), clock: h.clock, enabled: true });
@@ -176,12 +179,21 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     await h.coordinator.checkpoint(); advance(h.clock, 30_001); await h.coordinator.pulse();
     expect(h.coordinator.view.canExecute).toBe(false); expect(h.coordinator.exportRecovery()).not.toBeNull();
   });
-  it.each(["backward", "forward", "sleep"])("never extends a lease after a %s clock discontinuity", async kind => {
+  it.each(["backward", "monotonic-forward", "sleep"])("never extends a lease after a %s clock discontinuity", async kind => {
     const h = await playing();
     if (kind === "backward") h.clock.wall -= 10_000;
-    else if (kind === "forward") h.clock.wall += 10_000;
+    else if (kind === "monotonic-forward") h.clock.mono += 10_000;
     else advance(h.clock, 65_000);
     await h.coordinator.pulse(); expect(h.coordinator.view.canExecute).toBe(false); expect(h.coordinator.resume()).toBe(false);
+  });
+  it("keeps an unexpired lease through forward-only iOS suspension without extending its original deadline", async () => {
+    const h = await playing(); h.clock.wall += 20_000;
+    expect(h.coordinator.view).toMatchObject({ canExecute: true, failure: null });
+    // No fresh server proof or renewal. Either original clock deadline still
+    // expires authority; accepting this suspension cannot add lease time.
+    h.clock.wall += 40_000;
+    expect(h.coordinator.view).toMatchObject({ canExecute: false, failure: "lease-expired" });
+    expect(h.coordinator.resume()).toBe(false);
   });
   it("renews every 15 s and never checkpoints a clean writer", async () => {
     const h = await playing(); advance(h.clock, 14_999); await h.coordinator.pulse();
@@ -231,18 +243,19 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     advance(h.clock, 9_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     advance(h.clock, 4_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
-    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    await pulseFor(h, CLOUD_CHECKPOINT_MS - 15_000); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
   });
-  it("checkpoints dirty work after 15 seconds, renews with no snapshots, and stays quiet when clean", async () => {
+  it("checkpoints dirty work after five minutes, renews with no snapshots, and stays quiet when clean", async () => {
     const h = await playing(); await h.coordinator.stage(await h.candidate(h.first));
-    advance(h.clock, 14_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+    await pulseFor(h, CLOUD_CHECKPOINT_MS - 1); expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
-    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(1);
+    expect(h.server.calls.filter(call => call.method === "renew")).toHaveLength(20);
     expect(h.coordinator.view.canExecute).toBe(true);
     for (let index = 0; index < 20; index++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
     expect(h.server.operationCount(h.scope.accountId)).toBe(1);
   });
-  it("gives work arriving during an upload a fresh 15-second interval after acknowledgment", async () => {
+  it("gives work arriving during an upload a fresh five-minute interval after acknowledgment", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
     h.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
     const saving = h.coordinator.checkpoint("hidden");
@@ -250,7 +263,7 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     const second = h.command(h.first, { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "interval.following" });
     await h.coordinator.stage(await h.candidate(second)); gate.resolve(); expect(await saving).toBe(true);
     expect(h.coordinator.view.pending).toBe(true);
-    advance(h.clock, 14_999); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    await pulseFor(h, CLOUD_CHECKPOINT_MS - 1); expect(h.server.operationCount(h.scope.accountId)).toBe(1);
     advance(h.clock, 1); await h.coordinator.pulse(); expect(h.server.operationCount(h.scope.accountId)).toBe(2);
   });
   it("stops play on a corrupted worker-verified candidate rather than treating it as an offline grace period", async () => {

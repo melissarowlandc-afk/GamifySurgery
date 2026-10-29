@@ -2472,3 +2472,462 @@ Work is local-only. No Git, installs, network, browser, agents, external message
 SQL/RPC/schema, game-domain/save-format or clinical-content action was taken.
 Manager owns integration, browser/iOS acceptance, release and the audited
 GitHub-backup checkpoint reminder.
+
+## Manager release: automatic reopen and same-device fix (2026-10-29)
+
+Manager real-browser diagnosis drove the last rounds: reopen race (early empty
+list consumed the attempt), same-device open failing on the previous
+document's late checkpoint, and a codec-worker DataCloneError (runtime proxy
+in task payloads) found with a temporary console probe (reverted). Final
+acceptance: cloud e2e 108/108 and 120/120 repeats of the divergence and
+unavailable-service scenarios; release tree `CI=true npm test` (player 3,043;
+game-domain 4,312), typecheck seven, build, boundaries. Released as `ab857add`
+excluding all question-quality pilot files (clinical-content, game-domain
+bindings/tests, tools/question-quality, docs/research, docs/clinical,
+package.json lint scripts, two pilot player test updates). Pages run
+40876551971 succeeded; the live bundle contains the reopen marker logic.
+
+
+## P0 iOS repeated-save/focus hitches after ab857add (2026-10-29)
+
+### Scope and binding decision
+
+Manager reports owner, Amelia and Dustin experiencing frequent freezes in the
+signed-in iPhone Home Screen app after ab857add. This is a performance regression
+milestone in the same worker lane. Preserve the accepted automatic-reopen,
+most-progress selection, branch retention, capacity, verified-prior export,
+immutable operation/evidence, writer fencing and revoked/deleted guarantees.
+No Git, installs, network, browsers, SQL, domain/save-format, clinical-content or
+question-tooling edits. Working tree and concurrent content work are shared.
+Before-edit hashes and source copies are in
+.local-dev/flag-ios-hotpaths-20261029/baseline-sha256.json and before/.
+
+The owner's Oct 25/26 worker-encoding/five-minute policy remains binding
+(beta2-cloud-saves-20261017.md:3097-3105). The newer 15-second foreground
+checkpoint choice was a regression; restore five minutes first, then make
+frequent lifecycle events cheap. Immediate local durability is retained.
+
+### Root causes and evidence
+
+The before/ source snapshot preserves the exact released-path evidence:
+
+- transport.ts:11 set CLOUD_CHECKPOINT_MS to 15_000; coordinator.ts:793
+  used it for dirty remote checkpoints. This scheduled ordinary account work
+  up to four times/minute rather than once/five minutes.
+- usePrototypeSession.ts:628-633 subscribed every focus/pageshow/online/resume
+  to CloudGameSession.reconnect; :905 did the same on visible. These were not
+  conditional on an actual suspension, lease age or network transition.
+- gameSession.ts:135-156 forced durable preparation and coordinator.focus;
+  coordinator.ts:709-735 revoked the command gate during a full retry. That
+  retry rechecked cached candidates and wrote/read writer proof, even when the
+  current lease/head had not changed. App.tsx:537-539 then called
+  cache.accountEntries and retainedProgressIsNewer after successful checks.
+  cache.ts:121-129 unpacked every account cache; retainedCopies.ts:168-170
+  verified/discovered retained copies. Large task arguments still cross
+  postMessage's synchronous main-thread structured-clone boundary.
+- coordinator.ts:758 emitted on every one-second pulse even when nothing had
+  changed. Its subscriber (usePrototypeSession.ts:620-625) staged a new profile
+  and notified React/usage on every such pulse. The map preserves state refs,
+  but the new profile object still forces unnecessary rendering/derivation.
+- confirmed is a defensive full compressed-copy clone (coordinator.ts:128).
+  gameSession.ts:140 called it just to inspect priorRecovery on every reconnect;
+  the App success callback called it three times; QA snapshot polling cloned it
+  just to read revision. Scalar getters remove those unnecessary copies.
+
+These are code-supported repeated-work/gating causes, reproduced by controlled
+lifecycle tests and the real Level 5 benchmark. The sandbox cannot establish
+which individual iPhone freeze was dominated by each cost; native iOS long-task
+and browser acceptance remain with the manager.
+
+### Implementation and safety
+
+- transport.ts:11 now sets 5 * 60_000. Explicit Save & Close, hidden, pagehide
+  and freeze remain checkpoints (usePrototypeSession.ts:914-946); overlapping
+  lifecycle events share the existing immutable upload. Already accepted
+  commands still finish local durability before a hide/close attempt.
+- coordinator.ts:718-784 and gameSession.ts:136-145 add a coalesced foreground
+  path. A healthy lease with more than 15 seconds left needs no RPC. A real
+  hidden interval of at least five seconds triggers a small check, throttled
+  to one per 15 seconds while authority remains valid. A near-expiry lease or
+  actual offline-to-online transition also checks admission/head/token. An
+  unchanged, owned lease is renewed without codec, cache, retained-copy scans,
+  candidate verification, new journals or an early account checkpoint.
+- Ordinary 15-second renewal remains tiny: coordinator.ts:849-870 calls only
+  transport.renew; supabaseTransport.ts:142-153 sends one beta2_cloud_lease RPC
+  with protocol/campaign/revision/generation/token scalars. No IDB, codec,
+  whole-state serialization or durable identity rewrite occurs on success.
+  The server checks admission and fences the token; a failed/changed check
+  retains the existing recovery path. Offline probes remain small admission
+  requests, with full selection only after service actually returns.
+- No temporary gate is introduced by a healthy foreground check. Backward or
+  unexplained monotonic clocks, expired/changed authority, uncertain operations
+  and local persistence errors still require verified recovery. Forward-only
+  wall progress during iOS monotonic suspension consumes the existing earlier
+  deadline instead of revoking a still-valid window. A missing small check has
+  a 30-second deadline; network failure keeps an original valid window/grace
+  rather than entering full reconnect. Per-check cancellation/version guards
+  reject late replies without invalidating accepted local/save work.
+- App.tsx:533-538 now returns directly after successful checked reconnect.
+  Full retained-copy discovery stays at actual open/reopen/changed authority;
+  App.tsx:526 still uses openAutomaticCloudCampaign and :553 still uploads
+  selected pending progress in the background. Save & Close followed by
+  same-document foreground or a fresh document still reopens automatically.
+- coordinator.ts:835-837 emits only a changed clock/authority status; successful
+  routine renewal does not emit. Readonly head changes now emit when discovered
+  (:875). The one-second pulse does not run while the document is hidden
+  (usePrototypeSession.ts:628). Failure/status notifications remain immediate.
+- hasPriorRecovery/confirmedRevision replace full-copy getters for tiny checks
+  and QA polling. Explicit Retry/Open here still uses full reconnect; the
+  dev-only QA foreground hook awaits the same cheap event work as the shell.
+
+### Main-thread hot-path audit
+
+| Path | Trigger and size | Result |
+| --- | --- | --- |
+| Account freeze/ack, wire preparation, IDB pack/readback | Dirty five-minute checkpoint or hide/close; compressed full confirmed evidence accompanies some tasks | Restored cadence; immutable protocol, verified readback and worker encoding unchanged |
+| Normal lease renewal | Four/minute; small token/revision RPC | No cache/codec/whole-state clone; tests assert zero such calls |
+| Healthy focus/pageshow/visible/resume | Often on standalone | Coalesced no-op with fresh lease; meaningful return performs only small checks |
+| Full copy selection/accountEntries | Actual open/reopen or changed/uncertain recovery | Removed from successful routine foreground checks; all protected copies still discovered at open |
+| One-second cloud pulse | Status/time bookkeeping | No stable-status notification and no hidden pulse |
+| Accepted game command/local recovery | Per command, synchronous batches coalesce; full GameEvidenceCheckpoint passed to worker, compressed candidate verified/packed/read back | Still O(checkpoint size); intentionally retains immediate durability and existing evidence semantics |
+| Domain evidence application | Per command; gameSession.ts:85 calls applyGameEvidenceCommand | Synchronous O(state/evidence) work remains; audited/read only, no domain edits |
+| Metadata projection | Hook notifications; small campaign/tutorial fields | Canonical comparisons touch metadata, not serialized game state |
+| Usage | 1-second scalar sampling/lock checks; 60-second aggregate heartbeat | Separate outbox bounded to 65,280 bytes/100-request batch; no campaign data |
+| Hosted flags | Submit and 60-second status/retry | Small bounded auxiliary queue; no campaign serialization or account checkpoint trigger |
+| Competition | Day boundary aggregate observation; 60-second/focus retry | Reads income history at day/mount, not every tick; stores at most 32 small clinic summaries |
+| Tutorial position, camera/layout, render models | Existing visual/input work | No newly introduced save timer; tutorial/casual/rank preferences stay small auxiliary stores |
+
+The local evidence encode/stage chain still sends encode, candidate, packCache
+and unpackCache tasks per durably flushed command. It is not accurate to claim
+all full-copy work drops twentyfold: this task removes extra account/focus work
+while preserving that command-level recovery guarantee. A different evidence
+application/storage design needs a separately scoped decision; none was made
+silently here.
+
+### Regression coverage
+
+lifecycle.test.ts covers the exact five-minute threshold with continuous
+15-second renewals, no premature command-type uploads, a fresh interval for
+following work, one minute of cheap events with zero notifications/cache/codec,
+coalesced meaningful return without uploading dirty work, paused monotonic
+clock recovery with a still-owned lease, full expired-lease repair, revoked and
+deleted access, responsive commands during a held small check, deadline/late
+reply fencing, explicit pause versus a late response, and a competing writer
+with protected pending bytes. Existing recovery/fencing tests remain.
+
+cloudSavesQa.integration.test.tsx:64 exercises actual App/coordinator/gameSession
+and async IndexedDB in phone and desktop: 120 same-turn focus/pageshow/resume/
+visible events do no RPC/cache/codec/reopen work; hidden/pagehide/freeze upload
+once; meaningful return renews without scanning or repacking. Existing tests
+still cover cold/warm Save & Close reopen, retained winner, corrupt prior export,
+network/operation recovery and exact single Account & privacy section.
+
+cloud-recovery.spec.ts:51-68 strengthens the existing desktop/phone reopen
+scenario: dirty progress remains playable/pending through a focus burst and
+uploads on hide/reopen. The QA promise is awaited; no fixed sleep. All existing
+safety/equality/count assertions remain. No coordinator/codec-worker-reaching
+module is added to Playwright imports.
+
+
+### Level 5 measurements and limits
+
+Evidence: .local-dev/flag-ios-hotpaths-20261029/benchmark.test.ts,
+benchmark.config.mts, benchmark.log and benchmark-results.json. The before/
+source snapshot and final source run in independent coordinator/session/IDB
+instances; no network or browser is used. The last isolated benchmark is
+1 file / 1 passing measurement test, 80.71 seconds (77.30 seconds test work).
+Node v24.19.0 on the sandbox's Windows host. Do not treat these as iPhone times.
+
+The exact quota-test profile is integration-running plus the same synthetic
+flag encounter used by flagFreeze.test.tsx: 1,405,053 UTF-8 bytes; 2,809,466
+UTF-16 bytes (~2.81 MB localStorage payload before profile envelope); 1,960
+immutable evidence records. The normalized checkpoint worker input is
+1,547,593 UTF-8 JSON bytes; compressed-evidence JSON is 1,185,915 bytes.
+The checkpoint is paused, so measurement does not depend on a live game clock.
+
+The executor simulates production postMessage's one synchronous structured
+clone then runs real codec logic on a later turn. AsyncLocalStorage separates
+codec/fake-server CPU from client serialization counters. IndexedDbCloudCache
+runs against async fake-indexeddb, with verified pack/unpack/readback. Hosted
+wire preparation is included (real wire codec; the in-process fake receipt
+projects the wire hash). No test/dev double-clone guard is charged to the
+production simulation. Native worker result deserialization, real IDB disk/
+quota latency, Safari scheduling/GC/render and RPC latency are NOT measured.
+Numbers are explicit client clone/serialization costs and operation counts,
+not an end-to-end native main-thread profile.
+
+| Measurement | Before | After |
+| --- | ---: | ---: |
+| One remote checkpoint after local durability: client clone + JSON CPU | 14.08 ms | 14.46 ms |
+| Included postMessage input-clone time (part of preceding row) | 6.56 ms | 6.20 ms |
+| Explicit/main-post/IDB clone calls per remote checkpoint | 15 | 15 |
+| Worker task posts per remote checkpoint (freeze, wire, pack x2, unpack x2, verify) | 7 | 7 |
+| Five-minute workload: 20 separately flushed commands, account operations | 10 | 1 |
+| Same workload: worker task posts | 150 | 87 |
+| Same workload: explicit/main-post/IDB clone calls | 350 | 215 |
+| Same workload: cache writes | 40 | 22 |
+| Same workload: coordinator notifications | 360 | 42 |
+| Six independent 10-event focus bursts/minute: full account scans | 6 | 0 |
+| Same focus workload: worker posts / clone calls | 18 / 144 | 0 / 0 |
+| Same focus workload: measured clone + JSON CPU | 260.70 ms | 0 ms |
+
+The per-checkpoint copy cost is unchanged within noise; the repair changes when
+it runs. In the measured four-command/minute workload, uploads/minute are
+2 -> 0.2, posts/minute 30 -> 17.4, clones/minute 70 -> 43, writes/minute
+8 -> 4.4 and coordinator notifications/minute 72 -> 8.4. That old timer is
+under its maximum because dirty work starts again between acknowledgments.
+Configured continuous-dirty ordinary account cadence is at most 4/minute
+before and 0.2/minute after (twentyfold frequency reduction). Independently,
+the minute-long unit test with one-second pulses proves four tiny renewals and
+ZERO unchanged-session notifications/cache/codec tasks after the fix; previously
+stable pulses alone emitted 60 notifications/minute.
+
+The mandatory command/local-durability chain is unchanged: four task posts and
+10 measured clone calls per separately flushed command. At four commands/minute
+that alone accounts for 16 posts and 40 clones/minute. Live ticks can create
+more commands; do not generalize the four-command workload to all gameplay.
+The instrumented Level 5 SET_SIMULATION_SPEED call itself took 305.48 ms before
+and 236.81 ms after, with 394,854 JSON.stringify invocations and 764 JSON.parse
+invocations in the main-thread domain application. The different times are
+warmup/noise, not a claimed optimization; counting every small serializer call
+also adds profiling overhead. Command+local-save elapsed times were 1,379.46 /
+1,422.18 ms, including asynchronous codec work. These are a remaining main-thread
+risk in applyGameEvidenceCommand, separate from the repaired periodic/focus
+regression. No game-domain/evidence/save-format changes were made. Manager
+native measurements must include command application and local encoding, in
+addition to the restored five-minute remote cadence and frequent focus events.
+
+Benchmark reproduction (isolated from tests/builds for useful CPU timings):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+node node_modules/vitest/vitest.mjs run --config .local-dev/flag-ios-hotpaths-20261029/benchmark.config.mts --pool=threads --maxWorkers=1
+```
+
+This ignored evidence directory is local-only. It contains fixture bytes and
+source snapshots, not account/player data. The manager should retain the scoped
+measurement artifact before cleanup. No benchmark file is imported by player
+runtime or by e2e specs.
+
+
+### Command-gate stall investigation (manager interruption, 2026-10-29)
+
+New live detail: this is a sustained 5-10+ second apparent freeze until app close,
+not simply a brief frame hitch. The released full focus path explains that
+symptom directly. Before/coordinator.ts:725 set resumeAuthorized=false before
+awaiting admission, head, local candidate/codec and lease checks. Before/
+gameSession.ts:72/76/81 refused every command; :77 returned a paused UI
+projection. The hook's clock effect (before/usePrototypeSession.ts:954-975)
+then stopped ADVANCE_TICK because state.paused was true. A full check can take
+its 30-second deadline; repeated relaunch starts verification again. There is
+no native trace proving every reported freeze's exact cause, but the same
+client-only stall is deterministic with held transport and a valid lease.
+
+lifecycle.test.ts:137 explicitly reproduces the former focus behavior through
+the still-available full repair API: after 20 simulated seconds, the original
+lease is unexpired yet a tick returns null and the exposed state is paused.
+The companion :153 uses the cheap foreground API with the same held head read,
+a ten-second wall-only iOS suspension and another 20-second delay: commands
+apply synchronously, the facility tick advances, and the state stays unpaused.
+The explicit full API retains its fence for genuine repair; routine events no
+longer call it.
+
+Additional product fixes from this evidence:
+
+1. coordinator.ts:155-169 no longer treats a nonnegative wall-only elapsed gap
+   as a clock attack. `remaining` (:126) always takes the earlier of the
+   original wall and monotonic deadlines. Such a gap only consumes authority;
+   it cannot add a millisecond. A new test holds the old lease through a
+   20-second monotonic suspension, then proves it expires at the ORIGINAL
+   60-second wall deadline without a renewal. Backward wall/monotonic changes
+   and unexplained forward monotonic discontinuities still revoke authority
+   and retain token proof for a fresh server check. Older clock tests now use
+   actual rollback/monotonic-leap cases, retaining fencing and takeover checks.
+2. coordinator.ts:723-784 keeps the valid lease while admission/head/renew are
+   pending. A transient network failure or missing reply preserves only the
+   existing window plus the existing bounded grace, and shows offline status.
+   A timeout cancels this light check, not the entire session epoch. Repeated
+   focus does not fall through into a full reconnect during that valid grace.
+   A real online return can clear it with another small check. Late replies
+   cannot renew/authorize anything after cancellation. The original lease's
+   deadline remains binding; no grace extends beyond it.
+3. A reported writer/head change is fenced and emitted immediately (:759-762),
+   before slow local preparation or automatic recovery. Own in-flight uploads
+   and acknowledged revision changes are distinguished, preserving the earlier
+   same-device/late-ack race fix. Genuine expired authority is gated immediately
+   and repaired through the existing checked path.
+4. usePrototypeSession.ts:629-637 also synchronizes documentVisible on
+   focus/pageshow/resume/online. Previously, hidden visibilitychange followed
+   by focus alone left the hook's clock permanently marked hidden even when
+   document.visibilityState was visible. The new integration test deliberately
+   omits visible visibilitychange and drives the hook's REAL interval callbacks.
+   With a valid lease its clock timer advances during the held check; with an
+   expired lease no tick is applied. This is a separate supported clock-stall
+   path, in addition to the paused command projection.
+
+Actual App/coordinator/gameSession/async-IDB integration at
+cloudSavesQa.integration.test.tsx:98 runs phone and desktop, valid and expired
+leases. At the start of a held check, and after 20 simulated seconds, the valid
+session has no blocked notice, accepts commands and advances through its real
+clock timer. An expired session immediately has one visible role=alert Clinic
+status, a plain connection-check sentence and one Retry action. Commands/timer
+ticks are refused until fresh authority is checked; then the notice disappears
+and play resumes automatically. The existing flagged-chart tests retain the
+phone/desktop over-chart notice and recovery assertions, now using a real
+backward-clock gate rather than ordinary iOS forward elapsed time.
+
+### Exhaustive command-refusal conditions: before versus final code
+
+The authoritative predicates are gameSession.ts:77 and coordinator.ts:150-153.
+`execute` (:82) and build undo (:188) emit before returning null when denied;
+usePrototypeSession.ts:705-717 publishes the rejection and synchronizes the
+session. All rows below apply before and after unless stated otherwise.
+
+| Refusal condition | Before | After / recovery and exact evidence |
+| --- | --- | --- |
+| Ordinary focus/pageshow/visible/resume | Unconditionally entered full reconnect; resumeAuthorized=false for its entire check | Removed. gameSession.ts:136-145 and coordinator.ts:723 keep the original valid window; no gate while a light read is pending |
+| Forward wall-only elapsed gap >5 seconds (iOS monotonic suspension) | Revoked window as clock failure even while its original wall deadline was valid | Removed for nonnegative wall-only gaps. coordinator.ts:155-169 consumes the earlier original deadline; never extends it |
+| Network/throttled error during a routine light check, or its missing reply | Routine event had already revoked resumeAuthorized; timeout revoked the session epoch | coordinator.ts:737/772 keeps existing valid authority/grace, shows offline status; late result canceled; fence only if the original window/grace is no longer valid |
+| Session detached/disposed/stopped (sign-out, old owner, switch, deletion) | Denied | Unchanged. gameSession.ts:77/204; coordinator.ts:150/996; stale callback cannot revive the session |
+| Session projection needsReload after an unacknowledged change of confirmed revision | Denied | Unchanged. gameSession.ts:50-53/77, coordinator.ts:493; automatic open selects/hydrates the verified replacement |
+| Save & Close or campaign switch is in progress | Denied deliberately; clock paused before save/release | Unchanged. gameSession.ts:173-184; coordinator.ts:880. Visible Saving dialog, then automatic reopen on later foreground |
+| Cloud coordinator disabled/off, or stopped, or closingRequested | Denied | Unchanged. coordinator.ts:150; capability changes mapped by :171-200, scope disposal by :996 |
+| resumeAuthorized=false during initial open/readonly, explicit pause or genuine full repair | Denied | Unchanged for these real transitions. coordinator.ts:367/411/426/431/802; ordinary healthy focus is no longer a full repair |
+| localDurable=false after actual storage/checksum/codec persistence failure | Denied until accepted pending bytes are durable | Unchanged. coordinator.ts:150/197/221; gameSession.ts:130. Storage/processing status plus Retry, retained attempted/cache bytes; auxiliary eviction repair remains |
+| No valid lease window, or either original lease deadline has expired | Denied unless explicitly verified offlineLocal mode | Unchanged. coordinator.ts:126/152/165. Fresh admission/head/token proof required; old token expiry never grants time |
+| Existing network/throttle grace expired | Denied even if another predicate would allow | Unchanged. coordinator.ts:153/186-191. Grace is min(30 seconds, original lease remaining), never lease extension; checked retry/offline recovery |
+| Backward wall or monotonic time, or unexplained monotonic leap >5 seconds | Revoked and denied | Retained. coordinator.ts:155-164; fresh fenced proof required, token retained for recovery |
+| Phase outside ready/saving/waiting | Denied | Unchanged. coordinator.ts:153: off/checking/readonly/paused/conflict/auth/blocked/storage/capacity/closed all deny |
+| Server reports writer/revision change, auth/revoked/deleted/disabled/notice/protocol, capacity, corrupt data or expired immutable operation | Failure phase/authority denies | Unchanged failure mapping, now actual light-check contradictions emit BEFORE slow recovery (:759-762). All codes: transport.ts:16-17 and coordinator.ts:181-200 |
+| Domain/evidence application throws | Current call returns null and reports local corrupt/processing failure | Unchanged. gameSession.ts:85-86/195. No domain or save-format change |
+
+Dirty/encoding flags alone DO NOT deny commands: gameSession.ts:73-77 marks the
+save pending but uses coordinator authority, and ordinary saving phase is
+allowed. Verified offlineLocal mode is the explicit no-server-write exception
+(coordinator.ts:432-452); it still requires durable verified bytes and a clean
+account stop/deletion gate. A normal user Pause, hidden document or finish report
+can stop the clock without revoking command authority; the clock effect is
+usePrototypeSession.ts:962-984. That is independent of these refusal predicates.
+
+Every actual gate maps to CloudSaveControls.tsx:20-32/46-51/101: a role=alert
+Clinic status with one applicable action (or the intentional Saving dialog).
+MobileShell.tsx:444-447 places it inline in reserved header space above sheets;
+desktop portals it outside chart stacking. Existing CloudSaveControls and
+flagFreeze tests cover both layouts and an open flagged chart. Revoked/deleted
+has no misleading Retry; writer movement has Open here; other recoverable gates
+have Retry. Full opening/repair still has bounded deadlines; a routine light
+check's 30-second limit never cancels otherwise valid local play.
+
+
+A final lease-maintenance check also proved that the small heartbeat must remain
+independent of a slow foreground head read. pulse no longer skips renewal merely
+because foregrounding is pending. The lifecycle regression starts the held read
+at 45 seconds, completes a tiny heartbeat, then proves commands still work at
+65 seconds (inside the freshly proven window, beyond the old one), with zero
+codec/cache work. Both checks still coalesce individually and share only small
+lease metadata; server generation/token fencing and late-result cancellation
+remain authoritative.
+
+Controlled clock before/after proof: clock-before.config.mts transforms ONLY the
+two foreground setDocumentVisible calls out of the loaded hook, without editing
+working-tree source. Running the final 20-second QA cases under that transform
+produces **2 failed / 2 passed / 26 filtered** (1 file, 6.15 seconds): phone and
+desktop both stay at tick 0 instead of 1 despite valid command authority. With
+the final real hook, the actual QA entry suite passes **30/30** (1 file,
+33.32 seconds), including all four slow-valid/expired layout cases. The final
+five-file focused run includes these exact assertions. The explicit old full-
+reconnect reproduction independently demonstrates the command-gate/paused-
+projection stall. Neither reproduction depends on real sleeps or browser load.
+
+The manager interruption stopped the first full run; intermediate full runs
+were not accepted while later clock/heartbeat corrections were still in flight.
+Their reports are retained as full-pre-visibility* and full-pre-heartbeat*.
+Final validation below uses frozen source, a fresh Vitest process, and a
+before/after hash comparison. No partial/intermediate result is reported as a
+passing final full suite.
+
+
+### Final P0 validation and handoff (2026-10-29)
+
+- Final focused: **5 files / 233 PASS**, zero failed/skipped, **44.19 seconds**.
+  Covers coordinator, standalone lifecycle, actual phone/desktop QA entry,
+  hosted flag freeze/quota/reload and rendered cloud controls. Source frozen
+  before this run. The earlier broad 31-file pass was 641 tests before the
+  later manager interruption; it is historical progress, not the final count.
+- Full player: **296 files / 3,064 PASS / 3,064 total**, **339.70 seconds**;
+  Vitest JSON `success: true`, 683 suites passed, zero failed/pending/todo and
+  no snapshot or unhandled-error failures. Full report: full-results.json;
+  exact console output: full-final.log.
+- **All seven workspace typechecks PASS**; cloud e2e/QA TypeScript **PASS**;
+  e2e runtime import audit **12 modules PASS**, no coordinator/codec-worker
+  import. The e2e case count stays **108**; one existing desktop/phone recovery
+  scenario was strengthened with cheap-focus assertions, with all safety
+  assertions retained. Playwright was not run in the sandbox.
+- Final isolated Level 5 benchmark: **1 file / 1 PASS**, **80.71 seconds**,
+  explicitly captured native exit **0**. The table above uses this FINAL-source
+  run. Counts remain 10 -> 1 account operations, 150 -> 87 worker posts and
+  350 -> 215 client/post/IDB clone calls for twenty commands/five minutes;
+  focus bursts are 18 posts/144 clones/six scans -> zero.
+- **21 regression cases added** overall (3,043 -> 3,064), alongside updated
+  cadence and true-clock-rollback cases. Clock/domain simulation expectations,
+  saved pause state, immutable requests/evidence, no replay, quota recovery,
+  no-data-loss, active-writer fencing, capacity, deletion, prior export and
+  automatic cold/warm reopen are retained.
+
+PowerShell wrapper detail: the full test tool returned shell exit 1 because
+redirected pre-existing React `act` warning stderr becomes a NativeCommandError
+record in Windows PowerShell. Vitest reports success:true/3,064 passed, and npm
+prints no failed-script result. A controlled native program exiting 0 while
+writing stderr reproduces wrapper 1; capturing LASTEXITCODE and explicitly
+exiting it yields 0 (native-status-probe.log / native-status-wrapper.log).
+This is documented rather than concealed as a clean shell exit. The final
+benchmark captures native status explicitly. Manager's native/default runner
+can rerun without this sandbox/PowerShell reporting quirk.
+
+Exact commands (repository root; use explicit native exit capture for a clean
+PowerShell process status when React emits warning stderr):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud/coordinator.test.ts src/session/cloud/lifecycle.test.ts src/qa/cloudSavesQa.integration.test.tsx src/session/flagFreeze.test.tsx src/ui/CloudSaveControls.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-ios-hotpaths-20261029/full-results.json
+$playerTestExit = $LASTEXITCODE
+# Record $playerTestExit and use exit $playerTestExit when this is the last command.
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-ios-hotpaths-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+node node_modules/vitest/vitest.mjs run --config .local-dev/flag-ios-hotpaths-20261029/clock-before.config.mts --pool=threads --maxWorkers=1 -t 'foreground transport takes 20 seconds'
+# The preceding controlled-before proof is expected to fail two valid-clock cases.
+node node_modules/vitest/vitest.mjs run --config .local-dev/flag-ios-hotpaths-20261029/benchmark.config.mts --pool=threads --maxWorkers=1
+```
+
+Final source lane (no new runtime files): App.tsx; session/usePrototypeSession.ts;
+session/cloud/{transport,coordinator,gameSession}.ts; coordinator/lifecycle tests;
+session/flagFreeze.test.tsx; qa/cloudSavesQa.tsx and integration test;
+tests/e2e/cloud-recovery.spec.ts. Docs: this ExecPlan, the Beta 2 policy decision
+record and CURRENT_THREAD_HANDOFF.md. Other player files, all game-domain/save
+formats, RPC/SQL, clinical content and question tooling are untouched.
+
+Evidence directory: .local-dev/flag-ios-hotpaths-20261029/. review.diff,
+changed.json, audit.json, benchmark-results.json, validation-start-sha256.json
+and reports document exact scope and outcomes. **All 1,486 monitored source/
+config/test inputs remained unchanged through final focused/full validation
+and the final isolated benchmark.** Prior document text is preserved. Earlier
+shared edits and manager integration fixes remain.
+
+Manager next: rerun the **108 browser cases** against a fresh QA server and
+measure native browser/iPhone Home Screen long tasks and responsiveness. Check
+repeated focus/pageshow/visible/resume, 20-second head/renew latency, actual
+clock ticks after a missing visible event, independent 15-second tiny lease
+renewals, five-minute dirty account cadence and hide/pagehide/freeze overlap.
+Keep accountEntries/retained-copy discovery out of routine focus. Include the
+remaining synchronous Level 5 domain-command work (instrumented 237-305 ms)
+and immediate local checkpoint crossings in native profiling; this patch does
+not claim they are free or that every live iOS freeze is proven resolved.
+
+No canonical origin/opening pathway changed: owner local START_GAME.cmd at
+http://127.0.0.1:4173; live https://melissarowlandc-afk.github.io/GamifySurgery/;
+disposable QA http://127.0.0.1:5184. No browser, Git, install, network, agent,
+external message, SQL/RPC or publication action was taken. Work is local-only
+and not backed up by this worker. Manager owns acceptance, browser/iOS checks,
+integration, release and the audited GitHub-backup checkpoint reminder.

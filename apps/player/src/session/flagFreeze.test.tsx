@@ -340,10 +340,10 @@ describe("reported hosted flag recovery boundaries", () => {
     expect(allElements(f.env.element, node => node.attributes["aria-label"] === "Clinic status")).toHaveLength(0);
   });
 
-  it.each(["phone", "desktop"] as const)("recovers a suspend-clock gate over an open %s flagged chart without takeover or losing flags", async layout => {
+  it.each(["phone", "desktop"] as const)("recovers a backward-clock gate over an open %s flagged chart without takeover or losing flags", async layout => {
     const f = await fixture(layout, false, false);
     await f.submitFlag(); const before = JSON.parse(serializeGameState(f.current().state));
-    f.clock.wall += 10_000;
+    f.clock.wall -= 10_000;
     await act(async () => { await f.cloud().coordinator.pulse(); });
     expect(f.cloud().canExecute).toBe(false);
     expect(f.env.find(node => node.attributes["aria-label"] === "Clinic status").textContent).toContain("connection check to continue");

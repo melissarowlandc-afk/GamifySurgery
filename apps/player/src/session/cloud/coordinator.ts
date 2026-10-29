@@ -58,6 +58,11 @@ export class CloudSyncCoordinator {
   private acquisition: WriterAcquisition | null = null;
   private writerFromStorage = false;
   private reconnecting: Promise<boolean> | null = null;
+  private foregrounding: Promise<boolean | null> | null = null;
+  private foregroundVersion = 0;
+  private backgroundedAt: TimePair | null = null;
+  private lastForeground: TimePair | null = null;
+  private wasOffline = false;
   private autoReconnect = false;
   private lastReconnect: TimePair;
   private retryAfterMs = 0;
@@ -101,6 +106,7 @@ export class CloudSyncCoordinator {
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
   get confirmedRevision(): string | null { return this.record?.entry.confirmed.revision ?? null; }
+  get hasPriorRecovery(): boolean { return Boolean(this.record?.entry.confirmed.priorRecovery); }
   get hasLocalCacheConflict(): boolean { return this.localCacheConflict; }
   get reconnectsAutomatically(): boolean { return this.autoReconnect; }
   beforeReconnect(prepare: () => Promise<boolean>): () => void {
@@ -149,7 +155,10 @@ export class CloudSyncCoordinator {
   private checkTime(): void {
     const now = this.now(), wall = now.wall - this.lastSample.wall, mono = now.mono - this.lastSample.mono;
     this.lastSample = now;
-    if (this.window && (wall < 0 || mono < 0 || Math.abs(wall - mono) > 5_000)) {
+    // iOS may stop performance.now while suspended. Forward-only wall time
+    // consumes the EARLIER deadline (remaining uses min), never extends it.
+    // Revoke on rollback/unexplained monotonic leaps, not ordinary suspension.
+    if (this.window && (wall < 0 || mono < 0 || mono - wall > 5_000)) {
       this.suspendedLease = this.window.lease;
       this.window = null; this.resumeAuthorized = false; this.phase = "paused"; this.failure = "clock";
     }
@@ -419,7 +428,7 @@ export class CloudSyncCoordinator {
     if (this.closingRequested || this.phase !== "ready" || !this.window || !this.localDurable || this.remaining(this.window.until) <= 0) return false;
     this.resumeAuthorized = true; this.emit(); return true;
   }
-  pause(): void { this.resumeAuthorized = false; this.emit(); }
+  pause(): void { this.foregroundVersion++; this.resumeAuthorized = false; this.emit(); }
   /** Verified device play during a network outage has no server lease, cannot
    * freeze/commit an operation, and must pass full selection/CAS on reconnect. */
   async restoreVerifiedOffline(copy: CloudConfirmed, usageQuestions: CloudCandidate["usageQuestions"] = []): Promise<boolean> {
@@ -706,9 +715,77 @@ export class CloudSyncCoordinator {
     } catch (error) { await this.failChecked(error, epoch); return false; }
     finally { if (this.live(epoch)) this.checking = false; }
   }
+  markBackground(): void { this.backgroundedAt ??= this.now(); }
+  markOffline(): void { this.wasOffline = true; }
+  /** Frequent standalone focus/pageshow events are not opens. A fresh lease is
+   * enough; after a real suspension check only admission/head/our small token.
+   * null requests the existing full recovery path for changed/uncertain data. */
+  foreground(online = false): Promise<boolean | null> {
+    if (this.foregrounding) return this.foregrounding;
+    const reconnectedNetwork = online && this.wasOffline;
+    if (online) this.wasOffline = false;
+    const hiddenFor = this.backgroundedAt ? this.elapsed(this.backgroundedAt) : 0;
+    this.backgroundedAt = null;
+    const before = `${this.phase}:${this.failure}:${this.allowed()}`;
+    this.checkTime();
+    if (before !== `${this.phase}:${this.failure}:${this.allowed()}`) this.emit();
+    if (this.stopped || !this.enabled || this.closingRequested || this.hasPriorRecovery) return Promise.resolve(false);
+    if (this.reconnecting || this.checking || this.renewing || this.uploading) return Promise.resolve(this.allowed());
+    if (this.phase === "closed") return Promise.resolve(null);
+    if (this.failure && !["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure)) return Promise.resolve(false);
+    const transient = this.failure === "network" || this.failure === "throttled";
+    if (transient && this.allowed() && !reconnectedNetwork) return Promise.resolve(true);
+    if (this.offlineBase || !this.localDurable || this.grace && !this.allowed() ||
+      this.failure && !["clock", "lease-expired"].includes(this.failure) && !(transient && this.allowed())) {
+      return Promise.resolve(reconnectedNetwork || this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs) ? null : false);
+    }
+    const lease = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter;
+    if (!lease || !this.record) return Promise.resolve(null);
+    const meaningfulReturn = hiddenFor >= 5_000 && (!this.lastForeground || this.elapsed(this.lastForeground) >= CLOUD_RENEW_MS);
+    if (!reconnectedNetwork && !meaningfulReturn && this.allowed() && this.window && this.remaining(this.window.until) > CLOUD_RENEW_MS) return Promise.resolve(true);
+    this.lastForeground = this.now();
+    const epoch = this.epoch, version = this.foregroundVersion;
+    let cancelled = false, timedOut = false;
+    const current = () => !cancelled && this.live(epoch) && version === this.foregroundVersion;
+    const check = async () => {
+      // No snapshot/cache/codec work and no temporary command gate for a healthy
+      // lease. The server CAS still fences revocation, changed heads and tokens.
+      await this.admitted(); if (!current()) return false;
+      const revision = this.confirmedRevision;
+      const head = await this.options.transport.head(this.scope.campaignId); if (!current()) return false;
+      // Our own hide/periodic upload may acknowledge while this small read is
+      // in flight. Its receipt is authoritative; do not call it another writer.
+      if (this.uploading || revision !== this.confirmedRevision) return this.allowed();
+      if (head.revision !== revision || head.writerGeneration !== lease.writerGeneration) {
+        this.fail(new CloudSyncError(head.revision !== revision ? "revision" : "writer")); return false;
+      }
+      if (!head.writerActive) { this.resumeAuthorized = false; this.phase = "paused"; this.failure = "lease-expired"; this.emit(); return false; }
+      const sent = this.now(), renewed = await this.options.transport.renew(lease);
+      if (!current() || this.closingRequested || !this.localDurable) return false;
+      if (renewed.revision !== this.confirmedRevision || renewed.writerGeneration !== lease.writerGeneration) throw new CloudSyncError("writer");
+      this.installLease(renewed, sent);
+      const changed = !this.allowed() || this.phase !== "ready" || this.failure !== null;
+      this.resumeAuthorized = true; this.grace = null; this.phase = "ready"; this.failure = null;
+      if (changed) this.emit();
+      return true;
+    };
+    this.foregrounding = cloudCheckDeadline(check(), undefined, () => {
+      if (!current()) return;
+      // A missing light RPC is not proof of takeover. Keep the original valid
+      // window/grace and cancel only THIS check, not accepted local/save work.
+      timedOut = true; cancelled = true; this.fail(new CloudSyncError("network"));
+    }).then(checked => !current() ? false : checked ? true : null).catch(error => {
+      if (!this.live(epoch) || version !== this.foregroundVersion || !timedOut && !current()) return false;
+      if (!timedOut) { cancelled = true; this.fail(error); }
+      if (this.allowed()) return true;
+      return ["auth", "revoked", "deleted", "disabled", "protocol", "notice"].includes(this.failure ?? "") ? false : null;
+    }).finally(() => { this.foregrounding = null; });
+    return this.foregrounding;
+  }
   focus(): Promise<boolean> {
     if (this.reconnecting) return this.reconnecting;
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed") return Promise.resolve(false);
+    this.foregroundVersion++; // A late small check cannot bypass full recovery.
     if (this.offlineBase && !this.localDurable) {
       this.reconnecting = (async () => {
         // Repair an accepted offline checkpoint before asking the resolver to
@@ -755,10 +832,18 @@ export class CloudSyncCoordinator {
       } finally { if (this.live(epoch)) this.checking = false; }
       return;
     }
-    this.checkTime(); this.emit();
+    const before = `${this.phase}:${this.failure}:${this.allowed()}`;
+    this.checkTime();
+    if (before !== `${this.phase}:${this.failure}:${this.allowed()}`) this.emit();
     if (this.autoReconnect && !this.closingRequested && !this.allowed() &&
       ["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure ?? "") &&
-      this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) { await this.focus(); return; }
+      this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) {
+      if (["clock", "lease-expired"].includes(this.failure ?? "")) {
+        const checked = await this.foreground();
+        if (checked !== null) return;
+      }
+      await this.focus(); return;
+    }
     if (this.checking || this.renewing || this.grace || !this.localDurable) return;
     const epoch = this.epoch;
     if (this.window && ["ready", "saving"].includes(this.phase) && this.elapsed(this.lastRenew) >= CLOUD_RENEW_MS) {
@@ -787,7 +872,7 @@ export class CloudSyncCoordinator {
       this.lastHead = this.now();
       try { await this.admitted(); if (!this.live(epoch)) return;
         const head = await this.options.transport.head(this.scope.campaignId);
-        if (this.live(epoch) && head.revision !== this.record?.entry.confirmed.revision) { this.phase = "paused"; this.failure = "account-save-changed"; } }
+        if (this.live(epoch) && head.revision !== this.record?.entry.confirmed.revision) { this.phase = "paused"; this.failure = "account-save-changed"; this.emit(); } }
       catch (error) { if (this.live(epoch)) this.fail(error); }
     }
     if (this.dirtySince && this.elapsed(this.dirtySince) >= CLOUD_CHECKPOINT_MS) await this.checkpoint();

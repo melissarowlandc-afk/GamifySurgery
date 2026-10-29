@@ -10,7 +10,7 @@ import { CloudGameSession } from "../session/cloud/gameSession";
 import { IndexedDbCloudCache, type CloudCacheEntry } from "../session/cloud/cache";
 import { cloudCodec, CloudCodecWorker } from "../session/cloud/codecWorker";
 import { FakeCloudCodecWorker } from "../session/cloud/codecWorkerTestSupport";
-import { TestCloudClock } from "../session/cloud/syncTestSupport";
+import { deferred, TestCloudClock } from "../session/cloud/syncTestSupport";
 import { CloudSyncCoordinator } from "../session/cloud/coordinator";
 import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
 import { IndexedDbCloudEntryStore } from "../session/cloud/entryStorage";
@@ -24,6 +24,7 @@ async function fixture(layout: "phone" | "desktop") {
   const env = phoneTestDom(), values = new Map<string, string>(), server = new FakeCloudServer(), transport = server.transport("qa-account-a");
   const intervals = new Map<number, { callback(): void; ms: number }>(), commits: CloudFrozenOperation[] = [];
   let intervalId = 0, unavailable = false;
+  const holds = new Map<string, Promise<void>>();
   // Include native structured cloning, not just the pure inline codec. The
   // guarded account runtime contains proxies that cannot cross postMessage.
   const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker); worker.release(); codecs.push(codec);
@@ -43,6 +44,7 @@ async function fixture(layout: "phone" | "desktop") {
   browser.__cloudQaCall = async (_account, method, args) => {
     if (method === "commit") commits.push(structuredClone(args[0] as CloudFrozenOperation));
     if (unavailable) return { error: { code: "network" } };
+    await holds.get(method);
     // A browser binding and its remote response cross task boundaries. Do not
     // collapse admission, list publication and IDB work into one act commit.
     await new Promise<void>(resolve => setImmediate(resolve));
@@ -57,10 +59,81 @@ async function fixture(layout: "phone" | "desktop") {
   }, { timeout: 5_000 });
   await playing();
   await vi.waitFor(async () => { await act(async () => {}); expect(browser.__cloudQa?.status().pending).toBe(false); });
-  return { env, server, browser, playing, intervals, commits, unavailable: (value: boolean) => { unavailable = value; } };
+  return { env, server, browser, playing, intervals, commits, hold: (method: string, wait: Promise<void>) => { holds.set(method, wait); }, unavailable: (value: boolean) => { unavailable = value; } };
 }
 
 describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", layout => {
+  it("keeps standalone focus bursts cheap and checkpoints a hidden/pagehide/freeze boundary only once", async () => {
+    const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
+    const f = await fixture(layout), qa = () => f.browser.__cloudQa!;
+    await act(async () => { expect(await qa().command({ type: "SET_SIMULATION_SPEED", speed: 2 })).toBe(true); });
+    const scans = vi.spyOn(IndexedDbCloudCache.prototype, "accountEntries"), writes = vi.spyOn(IndexedDbCloudCache.prototype, "write"), codec = vi.spyOn(cloudCodec, "run");
+    const reconnect = vi.spyOn(CloudGameSession.prototype, "reconnect"); codec.mockClear();
+    const count = f.server.operationCount("qa-account-a"), calls = f.server.calls.length;
+    await act(async () => {
+      for (let i = 0; i < 30; i++) {
+        f.env.browser.dispatchEvent(new Event("focus")); f.env.browser.dispatchEvent(new Event("pageshow"));
+        f.env.doc.dispatchEvent(new Event("resume")); f.env.doc.dispatchEvent(new Event("visibilitychange"));
+      }
+    });
+    expect(f.server.calls).toHaveLength(calls); expect(scans).not.toHaveBeenCalled(); expect(writes).not.toHaveBeenCalled(); expect(codec).not.toHaveBeenCalled(); expect(reconnect).not.toHaveBeenCalled();
+    await act(async () => {
+      Object.assign(f.env.doc, { visibilityState: "hidden" }); f.env.doc.dispatchEvent(new Event("visibilitychange"));
+      f.env.browser.dispatchEvent(new Event("pagehide")); f.env.doc.dispatchEvent(new Event("freeze"));
+    });
+    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status().pending).toBe(false); });
+    expect(f.server.operationCount("qa-account-a")).toBe(count + 1);
+    codec.mockClear(); scans.mockClear(); writes.mockClear();
+    clock.advance(10_000);
+    await act(async () => {
+      Object.assign(f.env.doc, { visibilityState: "visible" }); f.env.doc.dispatchEvent(new Event("visibilitychange"));
+      f.env.browser.dispatchEvent(new Event("focus")); f.env.browser.dispatchEvent(new Event("pageshow")); f.env.doc.dispatchEvent(new Event("resume"));
+    });
+    await f.playing();
+    await vi.waitFor(() => expect(f.server.calls.at(-1)?.method).toBe("renew"));
+    expect(codec).not.toHaveBeenCalled(); expect(scans).not.toHaveBeenCalled(); expect(writes).not.toHaveBeenCalled(); expect(reconnect).not.toHaveBeenCalled();
+    expect(f.server.operationCount("qa-account-a")).toBe(count + 1);
+  });
+
+  it.each([false, true])("shows an immediate fence only for an expired lease=%s while foreground transport takes 20 seconds", async expired => {
+    const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
+    const f = await fixture(layout), qa = () => f.browser.__cloudQa!;
+    await act(async () => { expect(await qa().command({ type: "SET_PAUSED", paused: false })).toBe(true); });
+    // A normal hidden checkpoint finishes first, then iOS suspends its monotonic
+    // clock. This also exercises the phone's real visible status presentation.
+    await act(async () => { Object.assign(f.env.doc, { visibilityState: "hidden" }); f.env.doc.dispatchEvent(new Event("visibilitychange")); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status().pending).toBe(false); });
+    const gate = deferred(); f.hold("head", gate.promise);
+    let checked = false, checking!: Promise<boolean>;
+    clock.wall += expired ? 65_000 : 10_000;
+    await act(async () => {
+      Object.assign(f.env.doc, { visibilityState: "visible" }); f.env.browser.dispatchEvent(new Event("focus"));
+      checking = qa().foreground().then(ok => { checked = true; return ok; });
+    });
+    const notices = () => allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Clinic status");
+    try {
+      expect(checked).toBe(false);
+      if (expired) {
+        expect(qa().status().canExecute).toBe(false); expect(qa().snapshot().state!.paused).toBe(true);
+        expect(notices()).toHaveLength(1); expect(notices()[0]!.textContent).toContain("Your clinic needs a connection check to continue.");
+        expect(allElements(notices()[0]!, node => node.tagName === "BUTTON").map(node => node.textContent)).toEqual(["Retry"]);
+      } else {
+        expect(qa().status().canExecute).toBe(true); expect(qa().snapshot().state!.paused).toBe(false); expect(notices()).toHaveLength(0);
+      }
+      clock.advance(20_000);
+      const tick = qa().snapshot().state!.facilityTick;
+      // No visible visibilitychange was sent above: focus must refresh the
+      // hook's visible flag, otherwise its real tick timer stays stopped.
+      await act(async () => { for (const timer of [...f.intervals.values()]) if (timer.ms < 60_000) timer.callback(); });
+      expect(qa().snapshot().state!.facilityTick).toBe(tick + (expired ? 0 : 1));
+      await act(async () => { expect(await qa().command({ type: "ADVANCE_TICK" })).toBe(!expired); });
+      expect(qa().snapshot().state!.facilityTick).toBe(tick + (expired ? 0 : 2));
+      expect(checked).toBe(false);
+    } finally { gate.resolve(); }
+    await act(async () => { expect(await checking).toBe(true); });
+    await f.playing(); expect(notices()).toHaveLength(0);
+  });
+
   it("uploads offline progress once and keeps its unsubmitted frozen ancestor locally without an account archive", async () => {
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
     const f = await fixture(layout), qa = () => f.browser.__cloudQa!, id = qa().snapshot().state!.campaignId;
