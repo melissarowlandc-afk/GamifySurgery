@@ -1,3 +1,4 @@
+import { bindProblemDiagnostics, problemDiagnostics } from "./diagnostics/problemDiagnostics";
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
 import { preloadPrototypeShell, PrototypeShell } from "./PrototypeShell";
@@ -664,6 +665,8 @@ function CloudCampaignRouter() {
 
 export function App() {
   const layout = usePresentationLayout();
+  useEffect(() => problemDiagnostics.source("layout", () => ({ layout })), [layout]);
+  useEffect(() => bindProblemDiagnostics(window, document), []);
   return (
     <>
       {layout === "phone" ? <Suspense fallback={null}><MobileEntryPresentation /></Suspense> : null}

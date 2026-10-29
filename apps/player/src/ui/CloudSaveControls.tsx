@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { ProblemReportButton } from "../feedback/TesterFeedback";
 import type { CloudSyncView } from "../session/cloud/coordinator";
 import "./cloudSaves.css";
 
@@ -45,6 +46,7 @@ function CloudCommandBlockNotice({ view, busy, error, onRetry, placement }: {
   // a fixed top overlay covers More, the only route to recovery export there.
   const notice = <section className={`cloud-command-blocked${placement === "inline" ? " is-inline" : ""}`} role="alert" aria-label="Clinic status">
     <p>{error || cloudCommandBlockText(view)}</p>
+    <ProblemReportButton shell={placement === "inline" ? "phone" : "desktop"} />
     {!["deleted", "revoked"].includes(view.failure ?? "") ? <button type="button" className="button button-primary"
       disabled={busy} onClick={onRetry}>{busy ? "Checking saved progress..." : writer ? "Open here" : "Retry"}</button> : null}
   </section>;

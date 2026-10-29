@@ -1,6 +1,7 @@
+import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { act, StrictMode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { importGameEvidence, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
+import { createInitialGameState, importGameEvidence, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
 import { AuthAccountContext } from "../../auth/AuthAccountContext";
 import { cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
 import { scoredPatientFixture } from "../../playtime/usageTestFixtures";
@@ -65,7 +66,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     expect(await f.session.durable()).toBe(true);
     expect(f.coordinator.pendingCandidate?.campaign.updatedAtRealMs).toBe(Date.now());
   });
-  it("re-encodes and uploads accepted commands after a worker is lost, before reopening the command gate", async () => {
+  it("re-encodes and uploads accepted commands after a worker is lost without closing the command gate", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
     const lost = new FakeCloudCodecWorker(), recovered = new FakeCloudCodecWorker(); recovered.release();
     const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(lost).mockReturnValueOnce(recovered));
@@ -73,12 +74,29 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "worker.accepted" }, PROTOTYPE_DOMAIN_CONTEXT);
     const saving = f.session.durable(); await Promise.resolve();
     lost.onerror?.({ preventDefault() {} } as ErrorEvent);
-    expect(await saving).toBe(false);
-    expect(f.coordinator.view).toMatchObject({ canExecute: false, failure: "processing" });
+    expect(await saving).toBe(true);
+    expect(f.coordinator.view).toMatchObject({ canExecute: true, failure: null, pending: true });
+    expect(await f.session.checkpointNow("ordinary")).toBe(true);
     expect(await f.session.reconnect()).toBe(true);
     expect(f.session.state.simulationSpeed).toBe(2); expect(f.session.canExecute).toBe(true);
     expect(f.coordinator.view.pending).toBe(false); expect(f.coordinator.confirmedRevision).toBe("2");
+    expect(f.server.operationCount("account-a")).toBe(1);
     codec.dispose();
+  });
+  it("keeps an accepted answer durable when optional usage and an observer throw", async () => {
+    const f = await fixture(scoredPatientFixture()); await f.coordinator.startWriter(); f.coordinator.resume();
+    const state = f.session.state, encounter = Object.values(state.encounters)[0]!, node = encounter.frozenCase.decisionNodes[encounter.currentNodeIndex]!;
+    const observed = vi.fn(); f.session.subscribe(() => { throw new Error("Private observer payload"); }); f.session.subscribe(observed);
+    const next = f.session.execute({ type: "SUBMIT_ANSWER", encounterId: encounter.id, decisionNodeId: node.id,
+      answerChoiceId: node.answerChoices[0]!.id, reviewedAtMs: f.clock.wall, operationId: "optional.failure" }, PROTOTYPE_DOMAIN_CONTEXT,
+      () => { throw new Error("Private receipt payload"); });
+    expect(next?.operationReceipts["optional.failure"]?.status).toBe("applied"); expect(observed).toHaveBeenCalled();
+    expect(await f.session.durable()).toBe(true); expect(f.session.canExecute).toBe(true);
+    expect(await pendingText(f.session)).toContain("optional.failure");
+    const report = problemDiagnostics.report();
+    expect(report.current.errors.some(row => row[1] === "usage-receipt")).toBe(true);
+    expect(report.current.errors.some(row => row[1] === "session-observer")).toBe(true);
+    expect(JSON.stringify(report)).not.toContain("Private receipt payload"); f.session.dispose();
   });
   it("keeps real ticks and commands running while a routine worker checkpoint is in progress", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
@@ -150,6 +168,26 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     expect(pause).not.toHaveBeenCalled(); expect(f.session.state.paused).toBe(false); expect(f.session.canExecute).toBe(true);
     expect(f.server.operationCount("account-a")).toBe(1);
     expect(env.browser.localStorage.setItem).not.toHaveBeenCalled();
+  });
+  it("restarts the real facility clock when iOS becomes visible without a visibility/focus event", async () => {
+    const initial = createInitialGameState(); initial.paused = false;
+    const f = await fixture(initial); await f.coordinator.startWriter(); f.coordinator.resume();
+    const env = phoneTestDom(); Object.assign(env.doc, { visibilityState: "hidden" });
+    vi.useFakeTimers(); Object.assign(env.browser, { setInterval, clearInterval, setTimeout, clearTimeout });
+    const state = f.session.state, profile = { ...createFreshProfile(), activeCampaignId: state.campaignId, tutorialsEnabled: false,
+      tutorialGuidanceByCampaign: { [state.campaignId]: { version: 2 as const, mode: "off" as const, exposedTopicIds: [] } },
+      campaigns: [{ campaignId: state.campaignId, name: "Visible clinic", createdAtRealMs: 0, updatedAtRealMs: 0, status: "resumable" as const, state }] };
+    let observed!: PrototypeSession;
+    function Game() { observed = usePrototypeSession({ profile, notice: "Verified." }, f.session); return <p>{observed.state.facilityTick}</p>; }
+    await env.render(<AuthAccountContext.Provider value="account-a"><Game /></AuthAccountContext.Provider>);
+    await act(async () => { await vi.advanceTimersByTimeAsync(3_000); });
+    expect(observed.state.facilityTick).toBe(state.facilityTick);
+    // No event is delivered: React's documentVisible state remains false.
+    Object.assign(env.doc, { visibilityState: "visible" });
+    await act(async () => { await vi.advanceTimersByTimeAsync(4_000); });
+    expect(observed.state.facilityTick).toBeGreaterThan(state.facilityTick);
+    expect(f.session.canExecute).toBe(true); expect(observed.state.paused).toBe(false);
+    await cleanupPhoneTests();
   });
   it("Save & Close pauses immediately while an earlier worker encode is still pending", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();

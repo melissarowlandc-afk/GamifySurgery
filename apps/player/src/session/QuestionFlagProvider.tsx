@@ -1,3 +1,4 @@
+import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
@@ -20,6 +21,8 @@ export function QuestionFlagProvider({ children }: { children: ReactNode }) {
     let storage: FlagStorage | null = null;
     try { storage = window.localStorage; } catch { /* Send from memory if possible. */ }
     const current = new QuestionFlagQueue(accountId, storage, createFlagTransport(client, accountId), () => usage.canRecordQuestions());
+    const unbindDiagnostics = problemDiagnostics.source("flags", () => ({ pending: current.list().filter(row => row.delivery === "pending").length,
+      unavailable: current.unavailable, storageAvailable: current.storageAvailable, dropped: current.dropped }));
     setQueue(current);
     const sync = () => {
       if (["deleted", "blocked"].includes(usage.status().state)) current.clear();
@@ -30,7 +33,7 @@ export function QuestionFlagProvider({ children }: { children: ReactNode }) {
     const timer = window.setInterval(retry, 60_000);
     window.addEventListener("online", retry);
     retry();
-    return () => { unsubscribe(); window.clearInterval(timer); window.removeEventListener("online", retry); current.stop(); };
+    return () => { unbindDiagnostics(); unsubscribe(); window.clearInterval(timer); window.removeEventListener("online", retry); current.stop(); };
   }, [accountId, usage]);
   return <FlagContext.Provider value={queue}>{children}</FlagContext.Provider>;
 }

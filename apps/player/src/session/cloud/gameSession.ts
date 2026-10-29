@@ -1,3 +1,4 @@
+import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
 import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
@@ -23,6 +24,9 @@ export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCamp
 /** Shared desktop/phone command boundary. A verified checkpoint and either a
  * checked server lease or explicitly durable offline authority are required. */
 export class CloudGameSession {
+  private readonly unbindDiagnostics: () => void;
+  private lastCommandMs: number | null = null;
+  private lastCommandAt: number | null = null;
   private checkpoint: GameEvidenceCheckpoint;
   private current: GameState;
   private campaign: CloudCampaignMetadata;
@@ -32,6 +36,9 @@ export class CloudGameSession {
   private flushing: Promise<boolean> | null = null;
   private encoding = false;
   private dirty = false;
+  private changeVersion = 0;
+  private durableVersion = 0;
+  private readonly durabilityWaiters = new Set<{ version: number; resolve(ok: boolean): void }>();
   private stopped = false;
   private closing: Promise<boolean> | null = null;
   private readonly unsubscribe: () => void;
@@ -45,7 +52,12 @@ export class CloudGameSession {
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
     private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
     this.checkpoint = loaded.checkpoint; this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
+    showCommandProblem(null);
     this.boundRevision = coordinator.confirmedRevision!;
+    this.unbindDiagnostics = problemDiagnostics.source("gameSession", () => ({ reloadRequired: this.reloadRequired,
+      closing: Boolean(this.closing), stopped: this.stopped, dirty: this.dirty, encoding: this.encoding, canExecute: this.canExecute,
+      reconnecting: Boolean(this.reconnecting), lastCommandMs: this.lastCommandMs,
+      commandAge: this.lastCommandAt === null ? null : Date.now() - this.lastCommandAt }));
     for (const receipt of coordinator.pendingCandidate?.usageQuestions ?? []) this.questions.set(receipt.receipt_id, receipt);
     this.unsubscribe = coordinator.subscribe(() => {
       if (!this.reloadRequired && coordinator.confirmedRevision !== this.boundRevision) {
@@ -67,7 +79,7 @@ export class CloudGameSession {
       expectedBaselineId: confirmed.baselineId });
     return new CloudGameSession(coordinator, loaded, switchTo, automaticReconnect);
   }
-  private emit(): void { for (const listener of this.listeners) listener(); }
+  private emit(): void { for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("session-observer", error); } } }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   get needsReload(): boolean { return this.reloadRequired; }
   get syncView(): CloudSyncView {
@@ -79,25 +91,28 @@ export class CloudGameSession {
   get metadata(): CloudCampaignMetadata { return structuredClone(this.campaign); }
 
   execute(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null): GameState | null {
-    if (!this.canExecute) { this.emit(); return null; }
+    if (!this.canExecute) { problemDiagnostics.event("command", "refused"); this.emit(); return null; }
     const before = this.current;
     let result: ReturnType<typeof applyGameEvidenceCommand>;
+    const started = performance.now();
     try { result = applyGameEvidenceCommand(this.checkpoint, command, context); }
-    catch (error) { this.coordinator.reportLocalFailure(error); return null; }
+    catch (error) { problemDiagnostics.error("command", error); showCommandProblem("That action could not be completed. Try again or send a problem report."); this.coordinator.reportLocalFailure(error); return null; }
+    finally { this.lastCommandMs = Math.round(performance.now() - started); this.lastCommandAt = Date.now(); }
     if (result.replayed) return this.state;
     this.checkpoint = result.checkpoint; this.current = result.state;
     this.campaign = { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) };
     if (isFirstScoredAnswer(before, result.state, command)) {
-      const receipt = createQuestionReceipt?.();
-      if (receipt) this.questions.set(receipt.receipt_id, receipt);
+      // Optional usage cannot interrupt a command already applied to the clinic.
+      try { const receipt = createQuestionReceipt?.(); if (receipt) this.questions.set(receipt.receipt_id, receipt); }
+      catch (error) { problemDiagnostics.error("usage-receipt", error); }
     }
-    this.dirty = true; this.scheduleFlush(); this.emit(); return this.current;
+    this.changeVersion++; this.dirty = true; this.scheduleFlush(); this.emit(); return this.current;
   }
   updateMetadata(campaign: CloudCampaignMetadata): void {
     if (this.stopped || campaign.campaignId !== this.coordinator.scope.campaignId || !this.coordinator.view.canExecute ||
       logicalJsonText(JSON.parse(JSON.stringify({ ...campaign, updatedAtRealMs: 0 }))) ===
       logicalJsonText(JSON.parse(JSON.stringify({ ...this.campaign, updatedAtRealMs: 0 })))) return;
-    this.campaign = structuredClone(campaign); this.dirty = true; this.scheduleFlush();
+    this.campaign = structuredClone(campaign); this.changeVersion++; this.dirty = true; this.scheduleFlush();
   }
   private scheduleFlush(): void {
     if (this.flushing) return;
@@ -108,7 +123,7 @@ export class CloudGameSession {
       let success = true;
       while (this.dirty && !this.stopped) {
         this.dirty = false;
-        const checkpoint = this.checkpoint, campaign = this.campaign, usageQuestions = [...this.questions.values()];
+        const version = this.changeVersion, checkpoint = this.checkpoint, campaign = this.campaign, usageQuestions = [...this.questions.values()];
         // An acknowledgment can land while compression is running. Re-encode
         // its suffix against the NEW confirmed prefix; never upload it twice.
         let encoded;
@@ -124,14 +139,36 @@ export class CloudGameSession {
         if (this.stopped) return false;
         success = await this.coordinator.stage({ campaign, snapshot: encoded.snapshot, evidence: encoded.evidence,
           usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) }, "ordinary", true);
-        if (!success) return false;
+        if (!success) { this.dirty = true; this.finishDurability(false); return false; }
+        this.durableVersion = version; this.finishDurability(true);
       }
       return success;
-    }).catch(error => { this.dirty = !this.stopped; this.coordinator.reportLocalFailure(error); return false; }).finally(() => { this.encoding = false; this.flushing = null; this.emit(); });
+    }).catch(error => { this.dirty = !this.stopped; this.coordinator.reportLocalFailure(error); this.finishDurability(false); return false; }).finally(() => {
+      this.encoding = false; this.flushing = null; this.emit();
+      // An immediate Retry can register after failure settled its old waiters
+      // but before this cleanup. Give that new barrier a fresh attempt; never
+      // spin-retry a persistent failure when no caller is waiting.
+      if (this.dirty && this.durabilityWaiters.size && !this.stopped) this.scheduleFlush();
+    });
+  }
+  private finishDurability(ok: boolean): void {
+    for (const waiter of this.durabilityWaiters) if (!ok || waiter.version <= this.durableVersion) {
+      this.durabilityWaiters.delete(waiter); waiter.resolve(ok);
+    }
   }
   async durable(): Promise<boolean> {
-    if (this.dirty && !this.flushing && !this.stopped) this.scheduleFlush();
-    return this.flushing ? this.flushing : this.coordinator.view.localDurable;
+    if (this.stopped) return false;
+    if (!this.dirty && !this.flushing || this.durableVersion >= this.changeVersion) return this.coordinator.view.localDurable;
+    const version = this.changeVersion;
+    let resolve!: (ok: boolean) => void;
+    const work = new Promise<boolean>(done => { resolve = done; });
+    const waiter = { version, resolve }; this.durabilityWaiters.add(waiter);
+    if (this.dirty && !this.flushing) this.scheduleFlush();
+    // Wait for commands accepted AT THIS CALL, not an endless stream of future
+    // facility ticks. Every later command retains its own evidence/version.
+    try { return await cloudCheckDeadline(work); }
+    catch (error) { problemDiagnostics.error("durability", error); this.coordinator.reportLocalFailure(new CloudSyncError("processing")); return false; }
+    finally { this.durabilityWaiters.delete(waiter); }
   }
   foreground(online = false): Promise<boolean> {
     if (this.foregrounding) return this.foregrounding;
@@ -156,7 +193,7 @@ export class CloudGameSession {
   private async reconnectChecked(): Promise<boolean> {
     // Finish persisting commands already accepted before changing lease/base.
     // A failed write remains in coordinator.attempted for its quota retry.
-    try { await cloudCheckDeadline(this.durable()); }
+    try { if (!await cloudCheckDeadline(this.durable()) && this.coordinator.view.failure === "processing") return false; }
     catch {
       if (!this.stopped) this.coordinator.reportLocalFailure(new CloudSyncError("processing"));
       return false;
@@ -185,12 +222,12 @@ export class CloudGameSession {
     await this.switchTo(campaignId); return true;
   }
   undoBuild(state: GameState): GameState | null {
-    if (!this.canExecute) { this.emit(); return null; }
+    if (!this.canExecute) { problemDiagnostics.event("command", "refused"); this.emit(); return null; }
     try {
       const result = applyGameEvidenceBuildUndo(this.checkpoint, state, crypto.randomUUID());
       this.checkpoint = result.checkpoint; this.current = result.state;
       this.campaign = { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) };
-      this.dirty = true; this.scheduleFlush(); this.emit();
+      this.changeVersion++; this.dirty = true; this.scheduleFlush(); this.emit();
       return this.current;
     } catch (error) { this.coordinator.reportLocalFailure(error); return null; }
   }
@@ -201,6 +238,6 @@ export class CloudGameSession {
       checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
       priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
-  detach(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); }
+  detach(): void { this.stopped = true; this.finishDurability(false); this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); }
   dispose(): void { this.detach(); this.coordinator.dispose(); }
 }

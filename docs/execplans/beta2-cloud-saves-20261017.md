@@ -4598,3 +4598,10 @@ classified as an attack; rollback checks and server fencing remain. Light-check
 network timeouts preserve only the existing valid window/grace and cannot let
 late replies extend it. Focus/pageshow/resume also update the hook's visible flag
 so a missing visible visibilitychange event cannot leave its clock stopped.
+
+
+## P0 freeze diagnostics and recovery follow-up (2026-10-29)
+
+After live a07296b7 the owner reported two persistent standalone-app freezes, including a small Level-1 clinic. The screenshots alone do not establish whether the JS thread, facility timer, canvas loop or command authority stalled. Add voluntary **Send a problem report** in More/desktop feedback/blocked status, independent of gameplay and cloud writer authority, with explicit consent for technical-only current/prior-session diagnostics through the existing beta feedback channel. Preserve the current feedback privacy/deletion/retention rules; never send clinic contents, answers, patient names, tokens or raw stack/error payloads. A tiny optional prior-session journal supports reporting just after restart. The owner `feedback` tool assembles the numbered reports readably.
+
+Add bounded pure-worker retries and independent facility/canvas loop watchdogs. Commands continue synchronously without awaiting worker/storage; accepted evidence stays protected, and real lease/revocation/deletion/storage gates remain visible. Repair a refused phone playback latch and version durability waits so future ticks cannot keep an earlier save barrier open indefinitely. Keep the approved five-minute account checkpoint cadence, hide/pagehide/freeze and explicit Save & Close, lightweight renewal, automatic newest-copy reopen and immutable evidence/fencing guarantees. This follow-up does not reintroduce normal save-choice dialogs or change game-domain/save formats. Browser/native confirmation remains a manager acceptance step; the ExecPlan records the reproducible hazards and the remaining uncertainty about the live root cause.

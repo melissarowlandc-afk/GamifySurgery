@@ -1,3 +1,4 @@
+import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
@@ -54,13 +55,14 @@ export function UsageProvider({ children }: { children: ReactNode }) {
     const current = new PlaytimeTracker(new UsageOutbox(accountId, storage, clock.wall),
       createSupabaseUsageTransport(client, configuration, accountId), clock, () => crypto.randomUUID(),
       casualModeMemory(accountId, storage));
+    const unbindDiagnostics = problemDiagnostics.source("usage", () => ({ ...current.status() }));
     setTracker(current);
     const unbind = bindBrowserUsage(current, accountId, window, document);
     const { data: { subscription } } = client.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_OUT") { current.stop(); current.clearRememberedMode(); }
     });
     void current.refreshAccess().then(() => current.flush());
-    return () => { subscription.unsubscribe(); unbind(); current.stop(); };
+    return () => { unbindDiagnostics(); subscription.unsubscribe(); unbind(); current.stop(); };
   }, [accountId]);
   return <UsageContext.Provider value={tracker}>{children}</UsageContext.Provider>;
 }

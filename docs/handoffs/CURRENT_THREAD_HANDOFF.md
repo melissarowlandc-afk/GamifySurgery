@@ -8732,3 +8732,14 @@ save-format, agent or external-message action. No opening pathway/origin change
 (local START_GAME.cmd at http://127.0.0.1:4173; live GitHub Pages; QA :5184).
 Local-only, not backed up by this worker; manager owns integration, acceptance,
 release and the audited GitHub-backup checkpoint reminder.
+
+
+## 2026-10-29 - P0 standalone freeze: independent reports and watchdogs
+
+Worker implementation/validation complete; manager browser/native acceptance pending. Live root cause remains unproven. Controlled fixes: future-tick durability barriers, stale React visibility stopping the clock after a no-event return, expired authority not published after a view read, phone playback latch and optional callback exceptions. Pure worker tasks restart/retry once with original payloads; IDB waits are bounded; independent facility/canvas watchdogs respect domain pause and real authority. Five-minute cadence and automatic newest-copy reopen remain.
+
+More/desktop feedback/blocked banners offer Send a problem report without game/session authority. Explicit consent; current/prior technical rings; <=6 KiB optional journal; rate-limited fatal-error flush; existing feedback RPC with exact immutable framed parts; owner feedback digest assembles them readably. No clinic/answer/comment/token/stack payload. A blocked JS thread requires restart to send its previous journal.
+
+Validation: focused **301/301 (14 files)**; full **3,098/3,098 (299 files, 388.46 s)** with preload/threads/maxWorkers=2; owner tools **76/76**; **7** workspace typechecks; e2e/QA tsc; **12-module** import audit. Zero changes during the final full run. No Playwright/network/Git/install, clinical/question-tooling, game-domain/save-format or SQL/RPC changes. Final evidence: .local-dev/flag-freeze-watchdogs-20261029/validation.json and full-validated.*, manifest.json, review.diff. Intermediate/expected-failure logs are not acceptance results.
+
+Details and complete tap/gate audit: docs/execplans/flag-freeze-20261028.md, final diagnostics/watchdogs section. Product/privacy decision: docs/execplans/beta2-cloud-saves-20261017.md. Manager: rerun 108 browser cases, check reports above phone sheets + owner digest, and capture native worker/timer/long-task evidence before attributing the live cause or changing domain evidence CPU work. Canonical origins unchanged: remote https://melissarowlandc-afk.github.io/GamifySurgery/; local owner playtest http://127.0.0.1:4173 via START_GAME.cmd. No storage clearing or campaign reset needed.

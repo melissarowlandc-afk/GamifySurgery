@@ -6,7 +6,7 @@ import { AppShell } from "../AppShell";
 import MobileShell from "../mobile/MobileShell";
 import { cleanupPhoneTests, phoneFixture, phoneTestDom } from "../mobile/screenTestUtils";
 import { testElementProps } from "../mobile/testDom";
-import { TesterFeedbackForm } from "./TesterFeedback";
+import { ProblemReportButton, TesterFeedbackForm } from "./TesterFeedback";
 import { APP_BUILD_VERSION, APP_VERSION } from "../appVersion";
 
 const mock = vi.hoisted(() => ({ configured: true, account: "account-a", getClient: vi.fn(), getSession: vi.fn(),
@@ -138,5 +138,52 @@ describe("feedback in both game menus", () => {
     await comment(env, "Keep deletion stopped"); await send(env);
     expect(env.button("Send").attributes.disabled).toBeDefined();
     expect(transport.send).not.toHaveBeenCalled();
+  });
+});
+
+
+describe("technical problem reporting independently of play", () => {
+  it.each(["desktop", "phone"] as const)("submits a consented %s technical report without changing paused state or dispatching a game command", async layout => {
+    const { env, pause, answer } = await setup(layout);
+    await env.click("Send a problem report");
+    expect(mock.rpc).not.toHaveBeenCalled();
+    expect(env.button("Send problem report").attributes.disabled).toBeDefined();
+    const checkbox = env.find(node => node.attributes["aria-label"] === "Agree to send technical details");
+    await act(async () => { (testElementProps(checkbox).onChange as (event: unknown) => void)({ target: { checked: true } }); });
+    await env.click("Send problem report");
+    expect(env.element.textContent).toContain("Problem report sent to the game owner");
+    expect(mock.rpc.mock.calls.length).toBeGreaterThan(0);
+    for (const [, row] of mock.rpc.mock.calls) {
+      expect(row.p_comment).toMatch(/^\[GS-PROBLEM\/1 /); expect(row.p_comment.length).toBeLessThanOrEqual(1_000); expect(row.p_shell).toBe(layout);
+    }
+    expect(pause).not.toHaveBeenCalled(); expect(answer).not.toHaveBeenCalled();
+  });
+  it("retries the same report part after a lost acknowledgement and prevents duplicate sends", async () => {
+    const env = phoneTestDom(); await env.render(<AuthAccountContext.Provider value="account-a"><ProblemReportButton shell="phone" level={1} /></AuthAccountContext.Provider>);
+    await env.click("Send a problem report");
+    await act(async () => { (testElementProps(env.find(node => node.attributes["aria-label"] === "Agree to send technical details")).onChange as (event: unknown) => void)({ target: { checked: true } }); });
+    mock.header.mockRejectedValueOnce(new TypeError("Failed to fetch"));
+    await env.click("Send problem report"); const first = mock.rpc.mock.calls[0]![1];
+    expect(env.element.textContent).toContain("Your report is kept here");
+    await env.click("Send problem report"); expect(mock.rpc.mock.calls[1]![1]).toEqual(first);
+    expect(env.element.textContent).toContain("Problem report sent");
+  });
+  it("does not submit technical diagnostics without consent or after a deletion request", async () => {
+    const env = phoneTestDom(); mock.usage = { status: () => ({ state: "blocked" }), outbox: { deletionRequested: () => true } } as unknown as PlaytimeTracker;
+    await env.render(<AuthAccountContext.Provider value="account-a"><ProblemReportButton shell="phone" /></AuthAccountContext.Provider>);
+    await env.click("Send a problem report");
+    await act(async () => { (testElementProps(env.find(node => node.attributes["aria-label"] === "Agree to send technical details")).onChange as (event: unknown) => void)({ target: { checked: true } }); });
+    expect(env.button("Send problem report").attributes.disabled).toBeDefined(); expect(mock.rpc).not.toHaveBeenCalled();
+  });
+  it("can send a second fresh report from the same mounted menu, with renewed consent and new immutable IDs", async () => {
+    const env = phoneTestDom(); await env.render(<AuthAccountContext.Provider value="account-a"><ProblemReportButton shell="desktop" /></AuthAccountContext.Provider>);
+    const agree = async () => act(async () => { (testElementProps(env.find(node => node.attributes["aria-label"] === "Agree to send technical details")).onChange as (event: unknown) => void)({ target: { checked: true } }); });
+    await env.click("Send a problem report"); await agree(); await env.click("Send problem report");
+    const first = new Set(mock.rpc.mock.calls.map(([, row]) => row.p_id)), count = mock.rpc.mock.calls.length;
+    await env.click("Close"); await env.click("Send a problem report");
+    expect(env.button("Send problem report").attributes.disabled).toBeDefined(); expect(mock.rpc).toHaveBeenCalledTimes(count);
+    await agree(); await env.click("Send problem report");
+    expect(mock.rpc.mock.calls.length).toBeGreaterThan(count);
+    expect(mock.rpc.mock.calls.slice(count).every(([, row]) => !first.has(row.p_id))).toBe(true);
   });
 });

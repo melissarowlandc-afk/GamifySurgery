@@ -1,4 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+import { getCommandProblem, problemDiagnostics, showCommandProblem, subscribeCommandProblem } from "../diagnostics/problemDiagnostics";
+import { createProblemReport, problemReportDeadline } from "./problemReport";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
 import { getSupabaseAuthClient } from "../auth/supabaseAuth";
@@ -79,10 +82,74 @@ export function TesterFeedbackMenu({ level }: { level: number }) {
   if (!transport) return null;
   const close = () => { setOpen(false); trigger.current?.focus(); };
   return <div className="tester-feedback-menu">
+    <CommandProblemNotice shell="desktop" />
+    <ProblemReportButton level={level} shell="desktop" />
     <button ref={trigger} type="button" className="text-button" aria-expanded={open} onClick={() => setOpen(true)}>Send feedback</button>
     {open ? <section className="tester-feedback-popover" role="dialog" aria-label="Send feedback">
       <h2>Send feedback</h2>
       <TesterFeedbackForm transport={transport} level={level} shell="desktop" onCancel={close} />
     </section> : null}
   </div>;
+}
+
+/** This route never dispatches a game command, pauses the clinic, waits for
+ * local durability, or requires cloud writer authority. */
+export function ProblemReportButton({ level = 0, shell }: { level?: number; shell: "desktop" | "phone" }) {
+  const transport = useTesterFeedback(), usage = useUsageTracking();
+  const [open, setOpen] = useState(false), [consent, setConsent] = useState(false), [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false), [error, setError] = useState("");
+  const submission = useRef<TesterFeedbackSubmission[] | null>(null), pending = useRef(false), completed = useRef(0);
+  const mounted = useRef(true), dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  useEffect(() => {
+    if (!open) return;
+    if (dialog.current?.showModal) dialog.current.showModal(); else dialog.current?.setAttribute("open", "");
+  }, [open]);
+  const stopped = () => Boolean(usage && (["deleted", "blocked"].includes(usage.status().state) || usage.outbox?.deletionRequested()));
+  const close = () => { setOpen(false); trigger.current?.focus(); };
+  const send = async () => {
+    if (!transport || pending.current || !consent || stopped() || sent) return;
+    pending.current = true; setSending(true); setError("");
+    try {
+      submission.current ??= createProblemReport(level, shell);
+      while (completed.current < submission.current.length) {
+        if (stopped()) throw new Error("Feedback stopped");
+        await problemReportDeadline(transport.send(submission.current[completed.current]!));
+        completed.current++;
+      }
+      if (mounted.current && !stopped()) setSent(true);
+    } catch (failure) {
+      problemDiagnostics.error("problem-report", failure);
+      if (mounted.current) setError("Could not finish sending. Your report is kept here. Check your connection and try Send again.");
+    } finally { pending.current = false; if (mounted.current) setSending(false); }
+  };
+  if (!transport) return null;
+  const body = open ? <dialog ref={dialog} className="confirm-dialog problem-report-dialog" aria-label="Send a problem report"
+    onCancel={event => { event.preventDefault(); close(); }}>
+    <h2>Send a problem report</h2>
+    {sent ? <p role="status">Problem report sent to the game owner.</p> : <>
+      <p>This sends technical details about this app and its previous session: timers, saving, storage and errors. No saved clinic contents, answers, comments or patient information are included. The owner reviews it through beta feedback, kept for 90 days.</p>
+      <label><input type="checkbox" aria-label="Agree to send technical details" checked={consent} disabled={sending} onChange={event => setConsent(event.target.checked)} /> I agree to send these technical details to the game owner.</label>
+      {stopped() ? <p role="status">Feedback is off for this account after a deletion request or access change.</p> : null}
+      {error ? <p role="alert">{error}</p> : null}
+      <button type="button" disabled={!consent || sending || stopped()} onClick={() => void send()}>{sending ? "Sending problem report..." : "Send problem report"}</button>
+    </>}
+    <button type="button" onClick={close}>{sent ? "Close" : "Cancel"}</button>
+  </dialog> : null;
+  return <>
+    <button ref={trigger} type="button" className="text-button" onClick={() => {
+      if (sent && !pending.current) { submission.current = null; completed.current = 0; setSent(false); setConsent(false); }
+      setOpen(true); setError("");
+    }}>Send a problem report</button>
+    {body && typeof document !== "undefined" ? createPortal(body, document.body) : body}
+  </>;
+}
+
+export function CommandProblemNotice({ shell }: { shell: "phone" | "desktop" }) {
+  const message = useSyncExternalStore(subscribeCommandProblem, getCommandProblem, () => null);
+  if (!message) return null;
+  return <section role="alert" aria-label="Action could not be completed" className="command-problem-notice">
+    <p>{message}</p><ProblemReportButton shell={shell} />
+    <button type="button" className="text-button" onClick={() => showCommandProblem(null)}>Dismiss</button>
+  </section>;
 }

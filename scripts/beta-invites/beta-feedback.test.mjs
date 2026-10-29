@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 import { readFile } from "node:fs/promises";
 import { ADMIN_ENV_FILE, parseCommand, runBetaInvites } from "./beta-invites.mjs";
-import { FEEDBACK_DIRECTORY, FEEDBACK_STATUSES } from "./beta-feedback.mjs";
+import { FEEDBACK_DIRECTORY, FEEDBACK_STATUSES, assembleProblemReports } from "./beta-feedback.mjs";
 
 const ORIGIN = "https://synthetic.supabase.co";
 const KEY = "synthetic_owner.secret/never-print";
@@ -182,4 +182,40 @@ describe("owner-decided feedback dispositions", () => {
       assert.match(f.text(), /could not be confirmed/); assert.ok(!f.text().includes(KEY));
     });
   }
+});
+
+
+describe("technical problem report feedback parts", () => {
+  const reportId = "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee";
+  const report = { current: { version: 1, at: Date.parse(TIME), build: "beta.test", environment: { layout: "phone", standalone: true },
+    health: { coordinator: { phase: "ready", canExecute: true }, codec: { alive: false, restarts: 1, lastError: "CloudCodecError:worker_unavailable" } },
+    events: [[Date.parse(TIME), "watchdog", "codec-worker-restart"]], errors: [[Date.parse(TIME), "codec", "CloudCodecError:worker_unavailable"]] }, previous: null };
+  const parts = () => {
+    const text = JSON.stringify(report), halfway = Math.ceil(text.length / 2);
+    return [text.slice(0, halfway), text.slice(halfway)].map((text, i) => feedback({ id: uuid(i + 5), comment: `[GS-PROBLEM/1 ${reportId} ${i + 1}/2]\n${text}` }));
+  };
+  it("assembles out-of-order parts and renders readable component states, lifecycle and errors", async () => {
+    const f = fixture({ comments: parts().reverse(), flags: [] });
+    assert.equal(await f.run(["feedback"]), 0);
+    assert.match(f.digest(), /Problem report/); assert.match(f.digest(), /Current session/);
+    assert.match(f.digest(), /Component \| Technical state/); assert.match(f.digest(), /coordinator/);
+    assert.ok(f.digest().includes("worker\\_unavailable")); assert.match(f.digest(), /codec-worker-restart/);
+    assert.equal((f.digest().match(/Current session/g) ?? []).length, 1);
+  });
+  it("never merges users, incomplete fragments, inconsistent totals or invalid JSON", () => {
+    const rows = parts();
+    assert.equal(assembleProblemReports([rows[0]])[0].report, null);
+    assert.ok(assembleProblemReports([rows[0], { ...rows[1], user_id: B }]).every(group => group.report === null));
+    assert.equal(assembleProblemReports([rows[0], { ...rows[1], comment: rows[1].comment.replace("2/2", "2/3") }])[0].report, null);
+    assert.equal(assembleProblemReports([rows[0], { ...rows[1], comment: rows[1].comment + "broken" }])[0].report, null);
+    assert.deepEqual(assembleProblemReports([feedback({ comment: `[GS-PROBLEM/1 ${reportId} 1/999]\ntext` })]), []);
+  });
+  it("preserves whitespace at a framed part boundary through the existing RPC trimming", () => {
+    const value = structuredClone(report); value.current.health.codec.lastError = "technical words with spaces";
+    const text = JSON.stringify(value), cut = text.indexOf(" with spaces") + 1;
+    assert.equal(text[cut - 1], " ");
+    const rows = [text.slice(0, cut), text.slice(cut)].map((part, i) => feedback({ id: uuid(i + 5),
+      comment: `[GS-PROBLEM/1 ${reportId} ${i + 1}/2]\n${part}\n[END]`.trim() }));
+    assert.deepEqual(assembleProblemReports(rows)[0].report, value);
+  });
 });

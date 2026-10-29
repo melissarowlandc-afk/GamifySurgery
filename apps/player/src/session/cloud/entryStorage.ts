@@ -1,3 +1,4 @@
+import { observeStorage, problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { sha256Utf8 } from "./codecJson";
 import { CloudSyncError } from "./transport";
@@ -17,10 +18,17 @@ const DATABASE = "gamify-surgery.cloud-entry.v1";
 const STORE = "records";
 const clone = <T>(value: T): T => structuredClone(value);
 function request<T>(req: IDBRequest<T>): Promise<T> {
-  return new Promise((resolve, reject) => { req.onsuccess = () => resolve(req.result); req.onerror = () => reject(isStorageQuotaError(req.error) ? new CloudCacheError("quota") : new CloudSyncError("storage")); });
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new CloudSyncError("storage")), 10_000);
+    req.onsuccess = () => { clearTimeout(timer); resolve(req.result); };
+    req.onerror = () => { clearTimeout(timer); reject(isStorageQuotaError(req.error) ? new CloudCacheError("quota") : new CloudSyncError("storage")); };
+  });
 }
 function completion(tx: IDBTransaction): Promise<boolean> {
-  return new Promise(resolve => { tx.oncomplete = () => resolve(true); tx.onabort = () => resolve(false); tx.onerror = () => {}; });
+  return new Promise(resolve => {
+    const timer = setTimeout(() => { try { tx.abort(); } catch { /* Already terminal. */ } resolve(false); }, 10_000);
+    tx.oncomplete = () => { clearTimeout(timer); resolve(true); }; tx.onabort = () => { clearTimeout(timer); resolve(false); }; tx.onerror = () => {};
+  });
 }
 
 /** Account/backend-scoped raw sources, frozen imports and additive enrollment markers. */
@@ -36,10 +44,12 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
     this.database = new Promise((resolve, reject) => {
       if (!this.factory) return reject(new CloudSyncError("storage"));
       const opening = this.factory.open(this.databaseName, 1); let blocked = false;
+      const timer = setTimeout(() => { blocked = true; reject(new CloudSyncError("storage")); }, 10_000);
       opening.onupgradeneeded = () => opening.result.createObjectStore(STORE, { keyPath: "key" });
-      opening.onerror = () => reject(new CloudSyncError("storage"));
-      opening.onblocked = () => { blocked = true; reject(new CloudSyncError("storage")); };
+      opening.onerror = () => { clearTimeout(timer); reject(new CloudSyncError("storage")); };
+      opening.onblocked = () => { clearTimeout(timer); blocked = true; reject(new CloudSyncError("storage")); };
       opening.onsuccess = () => {
+        clearTimeout(timer);
         if (blocked) { opening.result.close(); return; }
         opening.result.onversionchange = () => { opening.result.close(); this.database = null; };
         opening.result.onclose = () => { this.database = null; };
@@ -52,7 +62,8 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
     if (!raw.key.startsWith(this.prefix) || typeof raw.text !== "string" || await sha256Utf8(raw.text) !== raw.sha256) throw new CloudSyncError("storage");
     return JSON.parse(raw.text) as T;
   }
-  async read<T>(key: string): Promise<T | null> {
+  read<T>(key: string): Promise<T | null> { return observeStorage("entry.read", () => this.readChecked<T>(key)); }
+  private async readChecked<T>(key: string): Promise<T | null> {
     try {
       const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
       const raw = await request(tx.objectStore(STORE).get(this.prefix + key)) as Stored | undefined;
@@ -76,8 +87,8 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
       throw error instanceof CloudSyncError ? error : new CloudSyncError("storage");
     }
   }
-  write<T>(key: string, value: T): Promise<T> { return this.put(key, value, false); }
-  create<T>(key: string, value: T): Promise<T> { return this.put(key, value, true); }
+  write<T>(key: string, value: T): Promise<T> { return observeStorage("entry.write", () => this.put(key, value, false)); }
+  create<T>(key: string, value: T): Promise<T> { return observeStorage("entry.create", () => this.put(key, value, true)); }
   async compareAndSet<T>(key: string, expected: T, value: T, retryQuota = true): Promise<T> {
     try {
     const expectedText = JSON.stringify(expected), text = JSON.stringify(value);

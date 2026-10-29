@@ -1,3 +1,4 @@
+import { observeStorage, problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCodec } from "./codecWorker";
 import { isStorageQuotaError } from "../storagePressure";
@@ -34,14 +35,16 @@ const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "
   raw, scope: cloudScopeData(scope, scope.campaignId) } });
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
-    value.onsuccess = () => resolve(value.result);
-    value.onerror = () => reject(new CloudCacheError(isStorageQuotaError(value.error) ? "quota" : "transaction"));
+    const timer = setTimeout(() => reject(new CloudCacheError("transaction")), 10_000);
+    value.onsuccess = () => { clearTimeout(timer); resolve(value.result); };
+    value.onerror = () => { clearTimeout(timer); reject(new CloudCacheError(isStorageQuotaError(value.error) ? "quota" : "transaction")); };
   });
 }
 function completion(tx: IDBTransaction): Promise<boolean> {
   return new Promise(resolve => {
-    tx.oncomplete = () => resolve(true);
-    tx.onabort = () => resolve(false);
+    const timer = setTimeout(() => { try { tx.abort(); } catch { /* Already terminal. */ } resolve(false); }, 10_000);
+    tx.oncomplete = () => { clearTimeout(timer); resolve(true); };
+    tx.onabort = () => { clearTimeout(timer); resolve(false); };
     tx.onerror = () => { /* onabort is terminal */ };
   });
 }
@@ -64,10 +67,12 @@ export class IndexedDbCloudCache implements CloudCache {
       try { opening = this.factory.open(this.databaseName, 1); }
       catch { reject(new CloudCacheError("unavailable")); return; }
       let blocked = false;
+      const timer = setTimeout(() => { blocked = true; problemDiagnostics.error("cache-open", new CloudCacheError("blocked")); reject(new CloudCacheError("blocked")); }, 10_000);
       opening.onupgradeneeded = () => { opening.result.createObjectStore(STORE, { keyPath: "key" }); };
-      opening.onerror = () => reject(new CloudCacheError("unavailable"));
-      opening.onblocked = () => { blocked = true; reject(new CloudCacheError("blocked")); };
+      opening.onerror = () => { clearTimeout(timer); reject(new CloudCacheError("unavailable")); };
+      opening.onblocked = () => { clearTimeout(timer); blocked = true; reject(new CloudCacheError("blocked")); };
       opening.onsuccess = () => {
+        clearTimeout(timer);
         if (blocked) { opening.result.close(); return; }
         opening.result.onversionchange = () => { opening.result.close(); this.database = null; };
         opening.result.onclose = () => { this.database = null; };
@@ -77,7 +82,10 @@ export class IndexedDbCloudCache implements CloudCache {
     this.database.catch(() => { this.database = null; });
     return this.database;
   }
-  async read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
+  read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
+    return observeStorage("cache.read", () => this.readChecked(scope, expectedText));
+  }
+  private async readChecked(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
     const db = await this.open();
     try {
       const tx = db.transaction(STORE, "readonly"), done = completion(tx);
@@ -90,7 +98,10 @@ export class IndexedDbCloudCache implements CloudCache {
       throw new CloudCacheError("transaction");
     }
   }
-  async write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
+  write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
+    return observeStorage("cache.write", () => this.writeChecked(entry, expected));
+  }
+  private async writeChecked(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
     const stored = await pack(entry, expected), db = await this.open();
     const write = async () => {
       const tx = db.transaction(STORE, "readwrite"), done = completion(tx);

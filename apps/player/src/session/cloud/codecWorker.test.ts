@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CloudCodecWorker } from "./codecWorker";
+import { CloudCodecWorker, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./codecWorker";
 import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
 import { syncFixture } from "./syncTestSupport";
 import { runCloudCodecTask } from "./codecTasks";
@@ -36,57 +36,58 @@ describe("cloud codec module worker boundary", () => {
       expect(await codec.run({ kind: "hash", input: "retry" })).toBe(await sha256Utf8("retry"));
     } finally { codec.dispose(); }
   });
-  it("ignores queued readiness/error events from a terminated worker during retry", async () => {
+  it("ignores queued readiness/error events from a terminated worker during automatic retry", async () => {
     vi.useFakeTimers();
+    const old = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
+    const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(old).mockReturnValueOnce(next));
     try {
-      const old = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
-      const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(old).mockReturnValueOnce(next));
-      const rejected = expect(codec.run({ kind: "hash", input: "first" })).rejects.toMatchObject({ code: "worker_unavailable" });
+      const request = codec.run({ kind: "hash", input: "first" });
       const lateReply = old.onmessage!, lateError = old.onerror!;
-      await vi.advanceTimersByTimeAsync(30_000); await rejected;
-      const retry = codec.run({ kind: "hash", input: "retry" });
+      old.reply({ ready: true }); await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
       lateReply({ data: { ready: true } } as MessageEvent); lateError({ preventDefault() {} } as ErrorEvent);
-      expect(next.terminated).toBe(false);
+      expect(old.terminated).toBe(true); expect(next.terminated).toBe(false);
+      expect(next.messages).toEqual(old.messages);
       next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "checked digest" });
-      expect(await retry).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0); codec.dispose();
-    } finally { vi.useRealTimers(); }
+      expect(await request).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0);
+    } finally { codec.dispose(); vi.useRealTimers(); }
   });
-  it("does not spend the processing deadline loading a cold module worker", async () => {
+  it("does not spend the processing deadline loading a cold development module worker", async () => {
     vi.useFakeTimers();
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker, 60_000);
     try {
-      const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker, 60_000);
       let result = "pending";
       const completion = codec.run({ kind: "hash", input: "cold startup" }).then(value => { result = value; }, () => { result = "failed"; });
       await vi.advanceTimersByTimeAsync(30_000);
       expect(result).toBe("pending"); expect(worker.terminated).toBe(false);
       worker.reply({ ready: true });
-      await vi.advanceTimersByTimeAsync(29_999); expect(result).toBe("pending");
+      await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS - 1); expect(result).toBe("pending");
       worker.reply({ id: worker.messages[0]!.id, result: "checked digest" }); await completion;
-      expect(result).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0); codec.dispose();
-    } finally { vi.useRealTimers(); }
+      expect(result).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0);
+    } finally { codec.dispose(); vi.useRealTimers(); }
   });
-  it("bounds task processing after the worker reports ready and can retry", async () => {
+  it("bounds two failed worker attempts and leaves no timer or silently pending promise", async () => {
     vi.useFakeTimers();
+    const workers = [new FakeCloudCodecWorker(), new FakeCloudCodecWorker()];
+    const create = vi.fn().mockReturnValueOnce(workers[0]).mockReturnValueOnce(workers[1]), codec = new CloudCodecWorker(create, 100);
     try {
-      const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
       const rejected = expect(codec.run({ kind: "hash", input: "held task" })).rejects.toMatchObject({ code: "worker_unavailable" });
-      await vi.advanceTimersByTimeAsync(20_000); worker.reply({ ready: true });
-      await vi.advanceTimersByTimeAsync(29_999); expect(worker.terminated).toBe(false);
-      await vi.advanceTimersByTimeAsync(1); await rejected;
-      expect(worker.terminated).toBe(true); expect(vi.getTimerCount()).toBe(0); codec.dispose();
-    } finally { vi.useRealTimers(); }
+      await vi.advanceTimersByTimeAsync(200); await rejected;
+      expect(create).toHaveBeenCalledTimes(2); expect(workers.every(worker => worker.terminated)).toBe(true);
+      expect(codec.health).toMatchObject({ alive: false, restarts: 1, inFlight: [], lastError: "CloudCodecError:worker_unavailable" });
+      expect(vi.getTimerCount()).toBe(0);
+    } finally { codec.dispose(); vi.useRealTimers(); }
   });
-  it("replaces a suspended worker after its bounded deadline and clears all task timers", async () => {
+  it("replaces a hung ready worker and completes its exact original task without a caller retry", async () => {
     vi.useFakeTimers();
+    const suspended = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
+    const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(suspended).mockReturnValueOnce(next));
     try {
-      const suspended = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker(); next.release();
-      const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(suspended).mockReturnValueOnce(next));
-      const rejected = expect(codec.run({ kind: "hash", input: "suspended" })).rejects.toMatchObject({ code: "worker_unavailable" });
-      await vi.advanceTimersByTimeAsync(30_000); await rejected;
-      expect(suspended.terminated).toBe(true);
-      expect(await codec.run({ kind: "hash", input: "recovered" })).toBe(await sha256Utf8("recovered"));
-      expect(vi.getTimerCount()).toBe(0); codec.dispose();
-    } finally { vi.useRealTimers(); }
+      const request = codec.run({ kind: "hash", input: "suspended" }); suspended.reply({ ready: true });
+      await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
+      expect(suspended.terminated).toBe(true); expect(next.messages).toEqual(suspended.messages);
+      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "same digest" });
+      expect(await request).toBe("same digest"); expect(vi.getTimerCount()).toBe(0);
+    } finally { codec.dispose(); vi.useRealTimers(); }
   });
   it("uses the Vite module-worker URL and keeps serialization out of the caller", async () => {
     const worker = new FakeCloudCodecWorker(), create = vi.fn(function (_url: URL, _options: WorkerOptions) { return worker; });
@@ -128,15 +129,23 @@ describe("cloud codec module worker boundary", () => {
     worker.reply({ id: 1, error: { kind: "cache", code: "checksum", message: "bad bytes" } }); await rejected;
     codec.dispose();
   });
-  it("rejects every outstanding task on a worker crash and can retry with a fresh worker", async () => {
+  it.each(["error", "messageerror"] as const)("retries every outstanding pure task after worker %s", async failure => {
     const worker = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
     const create = vi.fn().mockReturnValueOnce(worker).mockReturnValueOnce(next), codec = new CloudCodecWorker(create);
-    const first = codec.run({ kind: "hash", input: "first" }), second = codec.run({ kind: "hash", input: "second" });
-    const rejected = Promise.all([expect(first).rejects.toMatchObject({ code: "worker_unavailable" }), expect(second).rejects.toMatchObject({ code: "worker_unavailable" })]);
-    worker.onerror?.({ preventDefault() {} } as ErrorEvent); await rejected;
-    expect(worker.terminated).toBe(true);
-    const retry = codec.run({ kind: "hash", input: "retry" }); next.release();
-    expect(await retry).toBe(await sha256Utf8("retry")); expect(create).toHaveBeenCalledTimes(2); codec.dispose();
+    try {
+      const first = codec.run({ kind: "hash", input: "first" }), second = codec.run({ kind: "hash", input: "second" });
+      if (failure === "error") worker.onerror?.({ preventDefault() {} } as ErrorEvent);
+      else worker.onmessageerror?.({} as MessageEvent);
+      expect(worker.terminated).toBe(true); expect(next.messages).toEqual(worker.messages);
+      next.release();
+      expect(await first).toBe(await sha256Utf8("first")); expect(await second).toBe(await sha256Utf8("second"));
+      expect(create).toHaveBeenCalledTimes(2);
+    } finally { codec.dispose(); }
+  });
+  it("classifies repeated native worker factory/postMessage throws as processing failures rather than corrupt campaign data", async () => {
+    const codec = new CloudCodecWorker(() => { throw new TypeError("Worker could not be created with private URL"); });
+    await expect(codec.run({ kind: "hash", input: "protected checkpoint" })).rejects.toMatchObject({ code: "worker_unavailable" });
+    expect(codec.health).toMatchObject({ alive: false, restarts: 1, inFlight: [] }); codec.dispose();
   });
   it("provides the same checked codec when a non-browser test has no Worker", async () => {
     const codec = new CloudCodecWorker(null);

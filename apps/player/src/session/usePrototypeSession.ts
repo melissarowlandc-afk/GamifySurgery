@@ -1,3 +1,5 @@
+import { startFacilityClock } from "./facilityClock";
+import { problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
 import { questionReviewContext } from "./questionReviewContext";
 import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
 import {
@@ -395,7 +397,17 @@ export function usePrototypeSession(
         ),
       ),
     );
+  const facilityHeartbeatRef = useRef({ tick: stateRef.current.facilityTick, at: Date.now() });
   const [announcement, setAnnouncement] = useState(loadedRef.current.notice);
+  useEffect(() => { showCommandProblem(null); }, [cloud]);
+  useEffect(() => {
+    return problemDiagnostics.source("facility", () => {
+      const current = stateRef.current;
+      return { tick: current.facilityTick, paused: current.paused, speed: current.simulationSpeed,
+        lastTickAt: facilityHeartbeatRef.current.at, tickAge: Date.now() - facilityHeartbeatRef.current.at, finishReportOpen: finishReportOpenRef.current };
+    });
+  }, [cloud]);
+
   const [systemNotices, setSystemNotices] = useState<
     PrototypeSystemNotice[]
   >(() => {
@@ -619,6 +631,7 @@ export function usePrototypeSession(
     const generation = ++cloudBindingGenerationRef.current;
     const sync = () => {
       const next = cloud.state;
+      if (next.facilityTick !== facilityHeartbeatRef.current.tick) facilityHeartbeatRef.current = { tick: next.facilityTick, at: Date.now() };
       stateRef.current = next;
       setState(next);
       setProfile(stageActiveState(next));
@@ -701,7 +714,7 @@ export function usePrototypeSession(
       commandInput: GameCommandInput,
       options: ExecuteOptions = {},
     ): OperationReceipt["status"] => {
-      if (!cloud && campaignWriteGateRef.current.isSuppressed()) { setAnnouncement("This device session has been closed."); return "rejected"; }
+      if (!cloud && campaignWriteGateRef.current.isSuppressed()) { showCommandProblem("This device session has been closed."); setAnnouncement("This device session has been closed."); return "rejected"; }
       const operationId = `${sessionIdRef.current}.${++sequenceRef.current}`;
       const command = {
         ...commandInput,
@@ -715,24 +728,34 @@ export function usePrototypeSession(
           usage?.activity();
           return usage?.createQuestionReceipt() ?? null;
         });
-        if (!next) { setAnnouncement("Account saving must be checked before continuing."); return "rejected"; }
+        if (!next) { problemDiagnostics.event("command", "hosted-refused"); setAnnouncement("Account saving must be checked before continuing."); return "rejected"; }
         stateRef.current = next; setState(next); setProfile(stageActiveState(next));
         const receipt = next.operationReceipts[operationId];
         lastCommandReceiptRef.current = receipt;
         if (receipt && options.announceReceipt !== false) setAnnouncement(receipt.message);
+        if (!receipt || receipt.status === "rejected") {
+          problemDiagnostics.event("command", `rejected:${command.type}`);
+          if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt?.message ?? "That action could not be completed. Try again.");
+        } else if (command.type !== "ADVANCE_TICK") showCommandProblem(null);
         return receipt?.status ?? "rejected";
       }
-      const next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
-        guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked });
-      if (usage && isFirstScoredAnswer(previous, next, command)) {
-        usage.activity(); // Accepted scored input is meaningful game activity, too.
-        const receipt = usage.createQuestionReceipt();
-        if (receipt) profileRef.current = { ...profileRef.current, pendingUsageQuestions:
-          boundUsageReceipts([...(profileRef.current.pendingUsageQuestions ?? []), receipt], Date.now()).receipts };
-      }
+      let next: GameState;
+      try { next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
+        guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked }); }
+      catch (error) { problemDiagnostics.error("command", error); showCommandProblem("That action could not be completed. Try again or send a problem report."); return "rejected"; }
+      if (next.facilityTick !== facilityHeartbeatRef.current.tick) facilityHeartbeatRef.current = { tick: next.facilityTick, at: Date.now() };
+      try {
+        if (usage && isFirstScoredAnswer(previous, next, command)) {
+          usage.activity();
+          const receipt = usage.createQuestionReceipt();
+          if (receipt) profileRef.current = { ...profileRef.current, pendingUsageQuestions:
+            boundUsageReceipts([...(profileRef.current.pendingUsageQuestions ?? []), receipt], Date.now()).receipts };
+        }
+      } catch (error) { problemDiagnostics.error("usage-receipt", error); }
       stateRef.current = next;
       setState(next);
-      usage?.setGame({ campaignId: next.campaignId, paused: next.paused, finishReportOpen: finishReportOpenRef.current });
+      try { usage?.setGame({ campaignId: next.campaignId, paused: next.paused, finishReportOpen: finishReportOpenRef.current }); }
+      catch (error) { problemDiagnostics.error("usage-state", error); }
 
       const shouldPersist = shouldPersistPrototypeCommand(
         command.type,
@@ -750,6 +773,7 @@ export function usePrototypeSession(
       }
       const receipt = next.operationReceipts[operationId];
       lastCommandReceiptRef.current = receipt;
+      if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt?.status === "rejected" ? receipt.message : null);
       const previousEventIds = new Set(
         previous.events.map((event) => event.id),
       );
@@ -853,11 +877,11 @@ export function usePrototypeSession(
 
   const undoBuildAction = useCallback(() => {
     if (!buildMode || buildHistoryRef.current.length === 0) {
-      setAnnouncement("There is no build action to undo.");
+      showCommandProblem("There is no build action to undo."); setAnnouncement("There is no build action to undo.");
       return;
     }
     const previous = buildHistoryRef.current.at(-1)!;
-    if (cloud && !cloud.undoBuild(previous)) { setAnnouncement("Check the account save before undoing this build action."); return; }
+    if (cloud && !cloud.undoBuild(previous)) { showCommandProblem("Check the account save before undoing this build action."); setAnnouncement("Check the account save before undoing this build action."); return; }
     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
     buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
     setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
@@ -960,28 +984,14 @@ export function usePrototypeSession(
   const tutorialTickIntervalMs = getTutorialTickIntervalMs(state, tutorialsEnabled);
 
   useEffect(() => {
-    if (!documentVisible || state.paused || finishReportOpen) {
-      return;
-    }
-
-    const timerId = window.setInterval(() => {
-      execute(
-        {
-          type: "ADVANCE_TICK",
-          advancedAtRealMs: Date.now(),
-        },
-        {
-          announceReceipt: false,
-          announceEvents: true,
-        },
-      );
-    },
-    tutorialTickIntervalMs);
-
-    return () => {
-      window.clearInterval(timerId);
-    };
-  }, [documentVisible, execute, state.paused, finishReportOpen, tutorialTickIntervalMs]);
+    // The watchdog must survive a stale React visibility flag. iOS can return
+    // without visibility/focus events; use the document and current refs inside
+    // this lightweight observer even while no primary tick interval is active.
+    return startFacilityClock(window, tutorialTickIntervalMs,
+      () => ({ tick: stateRef.current.facilityTick, paused: stateRef.current.paused || finishReportOpenRef.current,
+        speed: stateRef.current.simulationSpeed, visible: document.visibilityState !== "hidden", allowed: !cloud || cloud.canExecute }),
+      () => execute({ type: "ADVANCE_TICK", advancedAtRealMs: Date.now() }, { announceReceipt: false, announceEvents: true }));
+  }, [cloud, documentVisible, execute, state.paused, finishReportOpen, tutorialTickIntervalMs]);
 
   const exitManagementMode = useCallback(() => {
     if (!managementMode) {
@@ -1002,7 +1012,7 @@ export function usePrototypeSession(
   }, [cloud, execute, managementMode]);
 
   const enterManagementMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { setAnnouncement("Check the account save before entering Management Mode."); return; }
+    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Management Mode."); setAnnouncement("Check the account save before entering Management Mode."); return; }
     if (managementMode || buildMode) {
       return;
     }
@@ -1057,13 +1067,14 @@ export function usePrototypeSession(
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
-    if (discussion && node) execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()});
+    if (!discussion || !node) { showCommandProblem("Open the team discussion again before answering."); return; }
+    execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()});
   }, [execute]);
   const acknowledgeEmployeeDiscussion = useCallback(() => {
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
-    if (!discussion || !node) return;
+    if (!discussion || !node) { showCommandProblem("Open the team discussion again to continue."); return; }
     if (execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id}) !== "applied") return;
     // The feedback card already holds the teaching text, so the final
     // acknowledgment files the discussion instead of opening a summary page.
@@ -1138,12 +1149,12 @@ export function usePrototypeSession(
       const currentState = stateRef.current;
       const encounterId = currentState.openChartEncounterId;
       if (encounterId === null) {
-        setAnnouncement("Open an action-ready chart before answering.");
+        showCommandProblem("Open an action-ready chart before answering."); setAnnouncement("Open an action-ready chart before answering.");
         return;
       }
       const question = getCurrentQuestion(currentState, encounterId);
       if (!question) {
-        setAnnouncement("This chart does not currently have a question.");
+        showCommandProblem("This chart does not currently have a question."); setAnnouncement("This chart does not currently have a question.");
         return;
       }
       execute({
@@ -1233,7 +1244,7 @@ export function usePrototypeSession(
 
   const beginPlacement = useCallback((roomDefinitionId: string) => {
     if (!buildMode) {
-      setAnnouncement("Enter Build Mode before selecting construction.");
+      showCommandProblem("Enter Build Mode before selecting construction."); setAnnouncement("Enter Build Mode before selecting construction.");
       return;
     }
     setSelectedRoomDefinitionId(roomDefinitionId);
@@ -1256,14 +1267,14 @@ export function usePrototypeSession(
 
   const rotatePlacement = useCallback(() => {
     if (!selectedRoomDefinitionId) {
-      setAnnouncement("Select a room before rotating it.");
+      showCommandProblem("Select a room before rotating it."); setAnnouncement("Select a room before rotating it.");
       return;
     }
     const orientations = getApprovedPlacementOrientations(
       selectedRoomDefinitionId,
     );
     if (orientations.length <= 1) {
-      setAnnouncement("This room has a fixed furniture orientation.");
+      showCommandProblem("This room has a fixed furniture orientation."); setAnnouncement("This room has a fixed furniture orientation.");
       return;
     }
     setPlacementOrientation((current) => {
@@ -1283,7 +1294,7 @@ export function usePrototypeSession(
     ) => {
       const roomDefinitionId = selectedRoomDefinitionId;
       if (!roomDefinitionId) {
-        setAnnouncement("Select a room before choosing its location.");
+        showCommandProblem("Select a room before choosing its location."); setAnnouncement("Select a room before choosing its location.");
         return false;
       }
       if (movingRoomInstanceId) {
@@ -1390,7 +1401,7 @@ export function usePrototypeSession(
   const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
 
   const enterBuildMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { setAnnouncement("Check the account save before entering Build Mode."); return; }
+    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Build Mode."); setAnnouncement("Check the account save before entering Build Mode."); return; }
     if (buildMode) {
       return;
     }
@@ -1482,7 +1493,7 @@ export function usePrototypeSession(
 
   const sellSelectedRoom = useCallback((roomId: string, saleConfirmationToken?: string) => {
     if (!roomId) {
-      setAnnouncement("Select a room to sell.");
+      showCommandProblem("Select a room to sell."); setAnnouncement("Select a room to sell.");
       return;
     }
     const status = executeBuildCommand({
@@ -1497,7 +1508,7 @@ export function usePrototypeSession(
 
   const upgradeSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
-      setAnnouncement("Select a room to upgrade.");
+      showCommandProblem("Select a room to upgrade."); setAnnouncement("Select a room to upgrade.");
       return;
     }
     executeBuildCommand({
@@ -1508,7 +1519,7 @@ export function usePrototypeSession(
 
   const upgradeRoom = useCallback((roomId: string) => {
     if (!buildMode) {
-      setAnnouncement("Enter Build Mode before upgrading a room.");
+      showCommandProblem("Enter Build Mode before upgrading a room."); setAnnouncement("Enter Build Mode before upgrading a room.");
       return;
     }
     executeBuildCommand({ type: "UPGRADE_ROOM", roomId });
@@ -1516,14 +1527,14 @@ export function usePrototypeSession(
 
   const beginMoveSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
-      setAnnouncement("Select a room to move.");
+      showCommandProblem("Select a room to move."); setAnnouncement("Select a room to move.");
       return;
     }
     const room = stateRef.current.rooms.find(
       (candidate) => candidate.id === selectedRoomInstanceId,
     );
     if (!room) {
-      setAnnouncement("That room is no longer available.");
+      showCommandProblem("That room is no longer available."); setAnnouncement("That room is no longer available.");
       return;
     }
     setMovingRoomInstanceId(room.id);
@@ -1541,7 +1552,7 @@ export function usePrototypeSession(
       offset: number,
     ) => {
       if (!buildMode) {
-        setAnnouncement("Enter Build Mode before placing a door.");
+        showCommandProblem("Enter Build Mode before placing a door."); setAnnouncement("Enter Build Mode before placing a door.");
         return;
       }
       const status = executeBuildCommand({
@@ -1811,7 +1822,7 @@ export function usePrototypeSession(
   const setAdvertisingLevel = useCallback(
     (level: number) => {
       if (buildMode) {
-        setAnnouncement("Exit Build Mode before changing advertising.");
+        showCommandProblem("Exit Build Mode before changing advertising."); setAnnouncement("Exit Build Mode before changing advertising.");
         return;
       }
       execute({
@@ -1838,7 +1849,7 @@ export function usePrototypeSession(
   }, [execute]);
 
   const togglePause = useCallback(() => {
-    if (finishReportOpenRef.current) { setAnnouncement("Close the finish report before resuming facility time."); return; }
+    if (finishReportOpenRef.current) { showCommandProblem("Close the finish report before resuming facility time."); setAnnouncement("Close the finish report before resuming facility time."); return; }
     if (buildMode || managementMode) {
       setAnnouncement(
         buildMode
@@ -1849,7 +1860,7 @@ export function usePrototypeSession(
     }
     const current = stateRef.current;
     if (cloud && current.paused && !cloud.coordinator.resume()) {
-      setAnnouncement("Check the account save before resuming."); return;
+      showCommandProblem("Check the account save before resuming."); setAnnouncement("Check the account save before resuming."); return;
     }
     execute({
       type: "SET_PAUSED",
@@ -2092,7 +2103,7 @@ export function usePrototypeSession(
       nextProfile: LocalPrototypeProfile,
       successAnnouncement: string,
     ) => {
-      if (cloud && !cloud.canExecute) return;
+      if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before changing guidance."); return; }
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
       profileRef.current = nextProfile;

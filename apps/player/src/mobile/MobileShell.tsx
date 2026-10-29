@@ -1,6 +1,7 @@
+import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import { AccountMenu } from "../ui/AccountMenu";
 import { useAuthAccountActions } from "../auth/AuthAccountContext";
-import { TesterFeedbackForm, useTesterFeedback } from "../feedback/TesterFeedback";
+import { ProblemReportButton, TesterFeedbackForm, useTesterFeedback } from "../feedback/TesterFeedback";
 import { VersionLabel } from "../appVersion";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { BuildDoorTool } from "../facility";
@@ -117,6 +118,10 @@ export default function MobileShell(props: PrototypeShellProps) {
   const resumeAfterReview = useRef(false);
   const latest = useRef(props);
   latest.current = props;
+  useEffect(() => problemDiagnostics.source("shell", () => ({ layout: "phone", buildMode: latest.current.buildMode,
+    managementMode: latest.current.managementMode, paused: latest.current.paused, speed: latest.current.simulationSpeed,
+    facilityLevel: latest.current.campaigns.find(c => c.active)?.facilityLevel ?? 0 })), []);
+
   const previousModes = useRef({ build: props.buildMode, manage: props.managementMode });
 
   const closeHelp = () => {
@@ -407,6 +412,7 @@ export default function MobileShell(props: PrototypeShellProps) {
         paused={props.paused} tutorialsEnabled={props.tutorialsEnabled} onFastForward={props.onFastForward} onAddMoney={props.onAddMoney}
         onTogglePause={props.onTogglePause} onRestart={props.onRestart} onRestartOpenChange={setRestartOpen} onTutorialsEnabledChange={props.onTutorialsEnabledChange} /> : <p>Prototype tools are unavailable in this build.</p> };
       case "more": return { title: "More", kind: "bottom", content: <div className="mobile-menu">
+        <ProblemReportButton shell="phone" level={props.campaigns.find(campaign => campaign.active)?.facilityLevel ?? 0} />
         <button type="button" onClick={showHelp}>Help</button>
         {feedback ? <button type="button" onClick={() => navigator.open("feedback")}>Send feedback</button> : null}
         <AccountMenu />

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { PrototypeShellProps } from "../shellContract";
 import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
+import { CommandProblemNotice } from "../feedback/TesterFeedback";
 import "../ui/betaAccount.css";
 
 export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, buildMode, managementMode,
@@ -11,10 +12,14 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
 }) {
   const locked = buildMode || managementMode || referenceLocked;
   const requested = useRef(false);
+  const requestedAt = useRef(-Infinity);
   useEffect(() => { requested.current = false; }, [paused, locked]);
   const choosePaused = (target: boolean) => {
-    if (locked || paused === target || requested.current) return;
-    requested.current = true; onTogglePause();
+    // A refused command produces no paused/locked prop change. Do not retain
+    // the duplicate-tap latch forever after authority returns.
+    const elapsed = Date.now() - requestedAt.current;
+    if (locked || paused === target || requested.current && elapsed >= 0 && elapsed < 400) return;
+    requested.current = true; requestedAt.current = Date.now(); onTogglePause();
   };
   const lockReason = buildMode ? "Exit Build Mode to resume." : managementMode
     ? "Exit Management Mode to resume." : referenceLockReason ?? "Close this dialog to resume.";
@@ -54,6 +59,7 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
     {locked ? <small className="mobile-clock-lock" role="status">{lockReason}</small> : null}
     <ClinicalContentNotice />
     {cloudStatus ?? <small className="cloud-local-status">Local only</small>}
+    <CommandProblemNotice shell="phone" />
   </header>;
 }
 

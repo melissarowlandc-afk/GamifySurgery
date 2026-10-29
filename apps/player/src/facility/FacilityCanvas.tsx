@@ -1,3 +1,4 @@
+import { renderLoopWatchdog, wakePresentationLoop } from "../diagnostics/renderLoopWatchdog";
 import {
   useEffect,
   useRef,
@@ -202,6 +203,11 @@ export function FacilityCanvas({
       },
       scene,
     });
+    const renderWatchdog = renderLoopWatchdog(
+      () => document.visibilityState !== "hidden" && scene.sys.isActive() && !bridgeRef.current.mobilePresentation?.hidden,
+      () => wakePresentationLoop(game), Date.now, () => ({ paused: game.isPaused, running: game.loop.running }));
+    game.events.on(Phaser.Core.Events.POST_STEP, renderWatchdog.frame);
+    const renderWatchdogTimer = window.setInterval(renderWatchdog.check, 1_000);
     const ownedCanvas = game.canvas;
     gameRef.current = game;
     let lastCameraLayoutSignature = "";
@@ -284,6 +290,8 @@ export function FacilityCanvas({
     resizeObserver.observe(host);
 
     return () => {
+      game.events.off(Phaser.Core.Events.POST_STEP, renderWatchdog.frame);
+      window.clearInterval(renderWatchdogTimer); renderWatchdog.dispose();
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
       resizeObserver.disconnect();
       if (resizeFrame !== null) {

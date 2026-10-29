@@ -1,3 +1,4 @@
+import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
 import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
@@ -83,6 +84,7 @@ export class CloudSyncCoordinator {
   private grace: TimePair | null = null;
   private lastSample: TimePair;
   private lastRenew: TimePair;
+  private readonly unbindDiagnostics: () => void;
   private lastHead: TimePair;
   private dirtySince: TimePair | null = null;
   private coveredUsage = new Set<string>();
@@ -103,6 +105,13 @@ export class CloudSyncCoordinator {
     this.newId = options.newOperationId ?? (() => crypto.randomUUID());
     this.lastSample = this.now(); this.lastRenew = this.now(); this.lastHead = this.now();
     this.lastReconnect = this.now();
+    this.unbindDiagnostics = problemDiagnostics.source("coordinator", () => {
+      const view = this.view;
+      return { phase: view.phase, failure: view.failure, canExecute: view.canExecute, localDurable: view.localDurable, pending: view.pending,
+        leaseExpiresAt: this.window?.until.wall ?? null, leaseRemainingMs: this.window ? this.remaining(this.window.until) : null,
+        resumeAuthorized: this.resumeAuthorized, stopped: this.stopped, closing: this.closingRequested, checking: this.checking,
+        uploading: Boolean(this.uploading), renewing: this.renewing, offlineLocal: this.offlineLocal };
+    });
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
   get confirmedRevision(): string | null { return this.record?.entry.confirmed.revision ?? null; }
@@ -125,7 +134,12 @@ export class CloudSyncCoordinator {
   private elapsed(start: TimePair): number { const now = this.now(); return Math.max(0, now.wall - start.wall, now.mono - start.mono); }
   private remaining(end: TimePair): number { const now = this.now(); return Math.min(end.wall - now.wall, end.mono - now.mono); }
   private live(epoch: number): boolean { return !this.stopped && epoch === this.epoch; }
-  private emit(): void { for (const listener of this.listeners) listener(); }
+  private lastPublishedStatus: string | null = null;
+  private statusSignature(): string { return `${this.phase}:${this.failure}:${this.allowed()}`; }
+  private emit(): void {
+    this.lastPublishedStatus = this.statusSignature();
+    for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("cloud-observer", error); } }
+  }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   onAcknowledged(listener: (receipt: CloudCommitReceipt) => void): () => void {
     this.receiptListeners.add(listener); return () => { this.receiptListeners.delete(listener); };
@@ -179,6 +193,7 @@ export class CloudSyncCoordinator {
     return access;
   }
   private fail(error: unknown): void {
+    problemDiagnostics.error("coordinator", error);
     if (this.stopped) return;
     const code = error instanceof CloudSyncError ? error.code : "network";
     this.retryAfterMs = error instanceof CloudSyncError ? error.retryAfterMs : 0;
@@ -498,7 +513,9 @@ export class CloudSyncCoordinator {
    * It preserves bytes across suspension; it never grants new commands or lease time. */
   stage(candidate: CloudCandidate, _reason: CloudCheckpointReason = "ordinary", retainAccepted = false): Promise<boolean> {
     this.checkTime();
-    const writer = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter ?? (this.offlineLocal ? { writerGeneration: this.recovery()?.writerGeneration ?? "0" } : null);
+    const retainedGeneration = this.recovery()?.writerGeneration;
+    const writer = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter ??
+      (this.offlineLocal || retainAccepted && retainedGeneration !== undefined ? { writerGeneration: retainedGeneration ?? "0" } : null);
     if (this.stopped || !this.record || !writer || !this.allowed() && !retainAccepted) return Promise.resolve(false);
     const epoch = this.epoch;
     let frozen = clone(candidate);
@@ -542,7 +559,7 @@ export class CloudSyncCoordinator {
       const frozen = await this.codec.run({ kind: "freeze", input: request });
       const operation: CloudFrozenOperation = { operationId: request.operationId, createdAtMs: this.clock.wallNow(),
         ...frozen };
-      if (this.options.transport.prepare) operation.wireRequest = await this.options.transport.prepare(request, operation.createdAtMs);
+      if (this.options.transport.prepare) operation.wireRequest = await cloudCheckDeadline(this.options.transport.prepare(request, operation.createdAtMs));
       if (operation.wireRequest && utf8Bytes(operation.wireRequest.text) > CLOUD_CAPACITY_LIMITS.transportBodyBytes) throw new CloudSyncError("capacity");
       await this.persist({ ...this.record.entry, recovery: { ...recovery, inFlight: operation, following: null } });
       return operation;
@@ -726,9 +743,8 @@ export class CloudSyncCoordinator {
     if (online) this.wasOffline = false;
     const hiddenFor = this.backgroundedAt ? this.elapsed(this.backgroundedAt) : 0;
     this.backgroundedAt = null;
-    const before = `${this.phase}:${this.failure}:${this.allowed()}`;
     this.checkTime();
-    if (before !== `${this.phase}:${this.failure}:${this.allowed()}`) this.emit();
+    if (this.lastPublishedStatus !== this.statusSignature()) this.emit();
     if (this.stopped || !this.enabled || this.closingRequested || this.hasPriorRecovery) return Promise.resolve(false);
     if (this.reconnecting || this.checking || this.renewing || this.uploading) return Promise.resolve(this.allowed());
     if (this.phase === "closed") return Promise.resolve(null);
@@ -786,7 +802,7 @@ export class CloudSyncCoordinator {
     if (this.reconnecting) return this.reconnecting;
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed") return Promise.resolve(false);
     this.foregroundVersion++; // A late small check cannot bypass full recovery.
-    if (this.offlineBase && !this.localDurable) {
+    if (this.offlineBase && (!this.localDurable || !this.offlineLocal)) {
       this.reconnecting = (async () => {
         // Repair an accepted offline checkpoint before asking the resolver to
         // rebase it. offlineBase must continue to deny all server writes.
@@ -832,9 +848,8 @@ export class CloudSyncCoordinator {
       } finally { if (this.live(epoch)) this.checking = false; }
       return;
     }
-    const before = `${this.phase}:${this.failure}:${this.allowed()}`;
     this.checkTime();
-    if (before !== `${this.phase}:${this.failure}:${this.allowed()}`) this.emit();
+    if (this.lastPublishedStatus !== this.statusSignature()) this.emit();
     if (this.autoReconnect && !this.closingRequested && !this.allowed() &&
       ["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure ?? "") &&
       this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) {

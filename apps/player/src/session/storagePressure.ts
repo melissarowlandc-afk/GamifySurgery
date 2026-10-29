@@ -10,7 +10,7 @@ const LOCAL_STORAGE_BUDGET = 5 * 1024 * 1024;
 const REVIEW_KEY = "gamify-surgery.question-review-flags.v1";
 const ARCHIVE_DATABASE = "gamify-surgery.review-archive.v1";
 const archiveGenerations = new Map<string, number>();
-const OPTIONAL_PREFIXES = ["gamify-surgery.competition.v1", "gamify-surgery.competition-tip.v1",
+const OPTIONAL_PREFIXES = ["gamify-surgery.problem-diagnostics.v1", "gamify-surgery.competition.v1", "gamify-surgery.competition-tip.v1",
   "gamify-surgery.casual-mode.v1", "gamify-surgery.prototype.facility-camera.v1",
   "gamify-surgery.prototype.phone-facility-camera.v1", "gamify-surgery.ui.workspace-split.v1",
   "gamify-surgery.presentation-layout.v1"];
