@@ -1,6 +1,7 @@
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCodec } from "./codecWorker";
 import { isStorageQuotaError } from "../storagePressure";
+import { cloudScopeData } from "./scopeData";
 import { CloudCacheError, type StoredCache } from "./codecCache";
 export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
 import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
@@ -27,8 +28,10 @@ export interface CloudCache {
   clearAccount?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void>;
 }
 const copy = <T>(value: T): T => structuredClone(value);
-const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run({ kind: "packCache", input: { entry, expected } });
-const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "unpackCache", input: { raw, scope } });
+const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run({ kind: "packCache", input: {
+  entry: { ...entry, scope: cloudScopeData(entry.scope, entry.scope.campaignId) }, expected } });
+const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "unpackCache", input: {
+  raw, scope: cloudScopeData(scope, scope.campaignId) } });
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
     value.onsuccess = () => resolve(value.result);
@@ -117,19 +120,19 @@ export class IndexedDbCloudCache implements CloudCache {
   async close(): Promise<void> { if (this.database) (await this.database).close(); this.database = null; }
   async accountEntries(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
-    const prefix = cloudCampaignStorageKey({ ...scope, campaignId: "_" }).slice(0, -1);
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const records = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(prefix, prefix + "\uffff"))) as StoredCache[];
     if (!await done) throw new CloudCacheError("transaction");
     const entries: CloudCacheEntry[] = [];
     for (const raw of records.filter(row => row.key.startsWith(prefix))) {
       const campaignId = decodeURIComponent(raw.key.slice(prefix.length));
-      entries.push((await unpack(raw, { ...scope, campaignId })).entry);
+      entries.push((await unpack(raw, cloudScopeData(scope, campaignId))).entry);
     }
     return entries;
   }
   async clearAccount(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void> {
     const db = await this.open(), tx = db.transaction(STORE, "readwrite"), done = completion(tx), store = tx.objectStore(STORE);
-    const prefix = cloudCampaignStorageKey({ ...scope, campaignId: "_" }).slice(0, -1);
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const keys = await request(store.getAllKeys(IDBKeyRange.bound(prefix, prefix + "\uffff")));
     for (const key of keys) if (typeof key === "string" && key.startsWith(prefix)) await request(store.delete(key));
     if (!await done) throw new CloudCacheError("transaction");
@@ -145,7 +148,7 @@ export class MemoryCloudCache implements CloudCache {
     return raw ? unpack(copy(raw), scope) : null;
   }
   async write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
-    const stored = await pack(copy(entry), expected);
+    const stored = await pack(entry, expected);
     if ((this.records.get(stored.key)?.cacheRevision ?? null) !== expected) throw new CloudCacheError("conflict");
     const fault = this.fault; this.fault = null;
     if (fault === "before-commit") throw new CloudCacheError("transaction");
@@ -155,15 +158,15 @@ export class MemoryCloudCache implements CloudCache {
     return (await this.read(entry.scope))!;
   }
   async accountEntries(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
-    const prefix = cloudCampaignStorageKey({ ...scope, campaignId: "_" }).slice(0, -1);
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const result: CloudCacheEntry[] = [];
     for (const row of this.records.values()) if (row.key.startsWith(prefix)) {
-      result.push((await unpack(row, { ...scope, campaignId: decodeURIComponent(row.key.slice(prefix.length)) })).entry);
+      result.push((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry);
     }
     return result;
   }
   async clearAccount(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void> {
-    const prefix = cloudCampaignStorageKey({ ...scope, campaignId: "_" }).slice(0, -1);
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     for (const key of this.records.keys()) if (key.startsWith(prefix)) this.records.delete(key);
   }
 }

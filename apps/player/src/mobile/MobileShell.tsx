@@ -444,7 +444,7 @@ export default function MobileShell(props: PrototypeShellProps) {
     <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen || Boolean(props.cloudSave && !props.cloudSave.view.canExecute)} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")}
       referenceLockReason={props.cloudSave && !props.cloudSave.view.canExecute ? cloudStatusText(props.cloudSave.view) ?? "Check your account save before resuming." : undefined}
       cloudStatus={props.cloudSave ? <CloudSaveControls save={props.cloudSave} closeRequest={cloudCloseRequest}
-        showCloseButton={false} onBusyChange={setCloudSaveBusy} /> : undefined} />
+        showCloseButton={false} blockedNoticePlacement="inline" onBusyChange={setCloudSaveBusy} /> : undefined} />
     <main className="mobile-content" aria-label="Clinic workspace">
       <div className="mobile-workspace" style={{ "--mobile-build-control-height": `${build.controlsHeight}px` } as CSSProperties}>
       <div className="mobile-map" data-phone-anchor="map" ref={hostRef} style={props.buildMode ? { bottom: build.controlsHeight } : undefined}>

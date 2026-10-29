@@ -8,6 +8,34 @@ import { CloudCacheError } from "./cache";
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe("cloud codec module worker boundary", () => {
+  it.each(["callback", "proxy"] as const)("rejects a non-cloneable %s even in the inline test executor", async kind => {
+    const codec = new CloudCodecWorker(null);
+    const task = { kind: "hash" as const, input: "checkpoint", accidentalRuntime: kind === "callback" ?
+      { onOpeningDiagnostic() {} } : new Proxy({ accountId: "account-a" }, {}) };
+    await expect(codec.run(task)).rejects.toMatchObject({ name: "CloudCodecError", code: "worker_data_clone" });
+    expect(await codec.run({ kind: "hash", input: "retry" })).toBe(await sha256Utf8("retry"));
+  });
+  it("rejects only the non-cloneable task, leaving another worker request usable", async () => {
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
+    try {
+      const first = codec.run({ kind: "hash", input: "accepted checkpoint" }).then(value => ({ value }), error => ({ error }));
+      const invalid = { kind: "hash" as const, input: "invalid", callback() {} };
+      await expect(codec.run(invalid)).rejects.toMatchObject({ code: "worker_data_clone" });
+      expect(worker.terminated).toBe(false); expect(worker.messages).toHaveLength(1);
+      worker.release(); expect(await first).toEqual({ value: await sha256Utf8("accepted checkpoint") });
+    } finally { codec.dispose(); }
+  });
+  it("classifies a native postMessage DataCloneError without terminating unrelated work", async () => {
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
+    try {
+      const first = codec.run({ kind: "hash", input: "accepted checkpoint" }).then(value => ({ value }), error => ({ error }));
+      vi.spyOn(worker, "postMessage").mockImplementationOnce(() => { throw new DOMException("private bytes", "DataCloneError"); });
+      await expect(codec.run({ kind: "hash", input: "native rejection" })).rejects.toMatchObject({ code: "worker_data_clone" });
+      expect(worker.terminated).toBe(false);
+      worker.release(); expect(await first).toEqual({ value: await sha256Utf8("accepted checkpoint") });
+      expect(await codec.run({ kind: "hash", input: "retry" })).toBe(await sha256Utf8("retry"));
+    } finally { codec.dispose(); }
+  });
   it("ignores queued readiness/error events from a terminated worker during retry", async () => {
     vi.useFakeTimers();
     try {

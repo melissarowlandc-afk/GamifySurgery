@@ -4,10 +4,12 @@ import { PROTOTYPE_DOMAIN_CONTEXT, type GameCommand, type GameState } from "@gam
 import { AccountCampaignRouter } from "../App";
 import { AuthAccountActionsContext, AuthAccountContext } from "../auth/AuthAccountContext";
 import { createQaDeviceCampaign, seedQaDeviceCampaigns } from "./cloudSavesQaSeed";
-import { CloudAccountProvider, useCloudAccount, type CloudAccountRuntime } from "../session/cloud/CloudAccount";
+import { CloudAccountProvider, useCloudAccount, type CloudAccountRuntime, type CloudOpeningDiagnostic } from "../session/cloud/CloudAccount";
 import { IndexedDbCloudCache } from "../session/cloud/cache";
 import { IndexedDbCloudEntryStore } from "../session/cloud/entryStorage";
 import { CloudSyncError, type CloudFailureCode, type CloudTransport } from "../session/cloud/transport";
+import { sha256Utf8 } from "../session/cloud/codecJson";
+import type { ProtectedClinicCopy } from "../session/cloud/retainedCopies";
 import "@fontsource/atkinson-hyperlegible/latin-400.css";
 import "@fontsource/atkinson-hyperlegible/latin-700.css";
 import "../styles/tokens.css";
@@ -24,6 +26,7 @@ interface CloudQaStatus {
   failure: string | null;
   accountPhase: string;
   entryHeading: string | null;
+  openingFailure: CloudOpeningDiagnostic | null;
 }
 declare global {
   interface Window {
@@ -33,8 +36,13 @@ declare global {
       status(): CloudQaStatus;
       snapshot(): { state: GameState | null; revision: string | null; phase: string; pending: boolean; canExecute: boolean; failure: string | null };
       command(input: Omit<GameCommand, "operationId"> & Record<string, unknown>): Promise<boolean>;
+      commands(inputs: readonly (Omit<GameCommand, "operationId"> & Record<string, unknown>)[]): Promise<GameState | null>;
       checkpoint(): Promise<boolean>;
       focus(): Promise<boolean>;
+      checkAuthority(): Promise<boolean>;
+      closeLease(): Promise<boolean>;
+      retainedCopies(): Promise<{ key: string; value: ProtectedClinicCopy }[]>;
+      retainAndReopenOlderCache(): Promise<void>;
       undo(target: GameState): Promise<boolean>;
     };
   }
@@ -42,10 +50,11 @@ declare global {
 const QA_ACCOUNTS = ["qa-account-a", "qa-account-b"] as const;
 
 /** A dev-only bridge to the test runner's FakeCloudServer. It has no Supabase route. */
-function QaApp() {
+export function QaApp() {
   const [accountId, setAccountId] = useState<string | null>(QA_ACCOUNTS.includes(new URLSearchParams(location.search).get("account") as typeof QA_ACCOUNTS[number]) ? new URLSearchParams(location.search).get("account") : QA_ACCOUNTS[0]);
   const [authenticated, setAuthenticated] = useState(false), [entryKey, setEntryKey] = useState(0);
   const currentAccount = useRef(accountId), signOutGuard = useRef<(() => Promise<void>) | null>(null);
+  const openingFailure = useRef<CloudOpeningDiagnostic | null>(null);
   currentAccount.current = accountId;
   useEffect(() => {
     let live = true;
@@ -58,6 +67,7 @@ function QaApp() {
     return () => { live = false; };
   }, []);
   const runtime = useMemo<CloudAccountRuntime | null>(() => {
+    openingFailure.current = null;
     if (!accountId) return null;
     const call = async (method: string, args: unknown[]) => {
       if (currentAccount.current !== accountId) throw new CloudSyncError("auth");
@@ -69,7 +79,8 @@ function QaApp() {
     const transport = Object.fromEntries(["capabilities", "list", "head", "load", "acquire", "renew", "release", "commit", "operation", "acceptNotice", "importCampaign", "deleteCampaign", "deleteMyData"]
       .map(method => [method, (...args: unknown[]) => call(method, args)])) as unknown as CloudTransport;
     const scope = { backendId: "disposable-fake-cloud-qa", accountId };
-    return { ...scope, region: "Disposable QA backend — no hosted storage", transport, cache: new IndexedDbCloudCache(), entryStore: new IndexedDbCloudEntryStore(scope) };
+    return { ...scope, region: "Disposable QA backend — no hosted storage", transport, cache: new IndexedDbCloudCache(), entryStore: new IndexedDbCloudEntryStore(scope),
+      onOpeningDiagnostic: value => { openingFailure.current = value; } };
   }, [accountId]);
   const authenticate = async (next: string | null) => {
     await signOutGuard.current?.(); await window.__cloudQaAuthenticate!(next);
@@ -79,12 +90,12 @@ function QaApp() {
   if (!accountId || !runtime) return <main><h1>Signed out of disposable QA</h1><button onClick={() => void authenticate(QA_ACCOUNTS[0])}>Sign in synthetic account A</button></main>;
   return <AuthAccountContext.Provider key={accountId} value={accountId}><AuthAccountActionsContext.Provider value={{ email: `${accountId}@example.invalid`, signOut: () => authenticate(null), signOutGuard, pending: false, message: null }}>
     <CloudAccountProvider runtime={runtime}>
-      <QaTools onCreate={() => setEntryKey(value => value + 1)} onSwitch={() => void authenticate(accountId === QA_ACCOUNTS[0] ? QA_ACCOUNTS[1] : QA_ACCOUNTS[0])} />
+      <QaTools openingFailure={() => openingFailure.current} onCreate={() => setEntryKey(value => value + 1)} onSwitch={() => void authenticate(accountId === QA_ACCOUNTS[0] ? QA_ACCOUNTS[1] : QA_ACCOUNTS[0])} />
       <AccountCampaignRouter key={entryKey} />
     </CloudAccountProvider>
   </AuthAccountActionsContext.Provider></AuthAccountContext.Provider>;
 }
-function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void }) {
+function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onSwitch(): void; openingFailure(): CloudOpeningDiagnostic | null }) {
   const cloud = useCloudAccount();
   useEffect(() => {
     if (!cloud) return;
@@ -94,7 +105,7 @@ function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void })
       return { hasState: Boolean(active), revision: view?.revision ?? null, phase: view?.phase ?? cloud.phase,
         pending: view?.pending ?? false, canExecute: view?.canExecute ?? false, localDurable: view?.localDurable ?? false,
         needsReload: active?.needsReload ?? false, failure: view?.failure ?? cloud.error, accountPhase: cloud.phase,
-        entryHeading: document.querySelector("main h1")?.textContent ?? null };
+        entryHeading: document.querySelector("main h1")?.textContent ?? null, openingFailure: openingFailure() };
     };
     window.__cloudQa = {
       status,
@@ -106,8 +117,32 @@ function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void })
         const result = active.execute({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT);
         return Boolean(result) && await active.durable();
       },
+      async commands(inputs) {
+        if (!active) return null;
+        // One fixture turn: no live interval/focus task can interleave between
+        // its unpause, manual ticks and final pause. Check every command and
+        // reject a replaced owner rather than returning its paused UI overlay.
+        for (const input of inputs) if (!active.execute({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT)) return null;
+        return await active.durable() && active.canExecute ? active.state : null;
+      },
       checkpoint: async () => Boolean(cloud.active) && await cloud.active!.checkpointNow("purchase"),
-      focus: async () => Boolean(active) && await active!.coordinator.focus(),
+      focus: async () => Boolean(active) && await active!.reconnect(),
+      // Authority observation does not request reopening/taking over. It models
+      // the old writer learning that its token was fenced by another device.
+      checkAuthority: async () => Boolean(active) && await active!.coordinator.focus(),
+      closeLease: async () => Boolean(active) && await active!.durable() && await active!.coordinator.saveAndClose(),
+      retainedCopies: async () => (await cloud.runtime.entryStore.entries()).filter(row => row.key.startsWith("older-copy:")) as { key: string; value: ProtectedClinicCopy }[],
+      async retainAndReopenOlderCache() {
+        if (!active || !await active.durable()) throw new CloudSyncError("storage");
+        const entry = active.coordinator.recoveryEntry!, value = { scope: entry.scope, device: entry, account: entry.confirmed };
+        const key = `conflict:${entry.scope.campaignId}:${await sha256Utf8(JSON.stringify(value))}`;
+        await cloud.runtime.entryStore.create(key, value);
+        if (JSON.stringify(await cloud.runtime.entryStore.read(key)) !== JSON.stringify(value)) throw new CloudSyncError("storage");
+        active.coordinator.dispose();
+        const current = await cloud.runtime.cache.read(entry.scope);
+        await cloud.runtime.cache.write({ ...entry, recovery: null }, current!.cacheRevision);
+        onCreate();
+      },
       async undo(target) { return Boolean(active?.undoBuild(target)) && await active!.durable(); },
     };
     return () => { delete window.__cloudQa; };
@@ -123,6 +158,8 @@ function QaTools({ onCreate, onSwitch }: { onCreate(): void; onSwitch(): void })
     <button type="button" onClick={onSwitch}>Switch synthetic account</button>
   </aside>;
 }
-const root = document.getElementById("root")!;
-if (!import.meta.env.DEV || !window.__cloudQaCall || !window.__cloudQaAuthenticate) root.textContent = "This disposable QA entry requires the test runner and is unavailable in release builds.";
-else createRoot(root).render(<QaApp />);
+if (import.meta.env.MODE !== "test") {
+  const root = document.getElementById("root")!;
+  if (!import.meta.env.DEV || !window.__cloudQaCall || !window.__cloudQaAuthenticate) root.textContent = "This disposable QA entry requires the test runner and is unavailable in release builds.";
+  else createRoot(root).render(<QaApp />);
+}

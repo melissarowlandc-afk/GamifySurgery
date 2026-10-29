@@ -6,10 +6,12 @@ import { prepareCloudImportWire, prepareCloudWire } from "./codecWire";
 import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
 import { cloudProgress, type CloudProgressSummary } from "./progress";
+import { inspectVerifiedCopy, type VerifiedCopyInspection } from "./copySelection";
 
 export type CloudCodecTask =
   | { kind: "encode"; input: Parameters<typeof encodeCloudEvidenceCheckpoint>[0] }
   | { kind: "verify"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
+  | { kind: "inspectCopy"; input: CloudConfirmed }
   | { kind: "candidate"; input: { candidate: CloudCandidate; confirmed: CloudConfirmed; scope: CloudScope } }
   | { kind: "freeze"; input: CloudCommitRequest }
   | { kind: "hash"; input: string }
@@ -20,6 +22,7 @@ export type CloudCodecTask =
 export interface CloudCodecResults {
   encode: { snapshot: CloudCandidate["snapshot"]; evidence: CloudCandidate["evidence"]; decodedGameBytes: number };
   verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number; progress: CloudProgressSummary };
+  inspectCopy: VerifiedCopyInspection;
   candidate: void;
   freeze: { requestText: string; requestSha256: string };
   hash: string;
@@ -52,6 +55,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
       break;
     }
     case "verify": result = await verify(task.input); break;
+    case "inspectCopy": result = await inspectVerifiedCopy(task.input); break;
     case "candidate": {
       const { candidate, confirmed, scope } = task.input, delta = candidate.evidence, accepted = confirmed.evidence;
       if (candidate.campaign.campaignId !== scope.campaignId || delta.headerSha256 !== accepted.header.uncompressedSha256 ||

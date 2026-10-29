@@ -20,6 +20,11 @@ export interface LocalCloudSource {
   error: string | null;
 }
 export interface LocalCloudInspection { sources: LocalCloudSource[]; problems: string[]; pendingUsageQuestions: QuestionUsageReceipt[] }
+/** LocalStorage may be disabled independently of the verified IDB/account save.
+ * Its absence is not permission to initialize or erase a local profile. */
+export const optionalLocalCloudStorage: Pick<Storage, "getItem"> = {
+  getItem(key) { try { return window.localStorage.getItem(key); } catch { return null; } },
+};
 function metadata(raw: Record<string, any>, campaign: Record<string, any>, facilityLevel = 0): CloudCampaignMetadata {
   const id = campaign.campaignId;
   return readCloudCampaignMetadata(JSON.parse(JSON.stringify({ campaignId: id, name: campaign.name, status: campaign.status,
@@ -150,19 +155,20 @@ export async function separateCloudCampaignId(device: CloudConfirmed): Promise<s
 /** Preserve the entire normalized checkpoint, including retired facts and the
  * transition chain. Only the new campaign's identity changes; immutable rows
  * and all their IDs/bytes stay intact. This is not a game-state reimport. */
-export async function importSeparateCloudCampaign(device: CloudConfirmed, transport: CloudTransport, store: CloudEntryStore) {
+export async function importSeparateCloudCampaign(device: CloudConfirmed, transport: CloudTransport, store: CloudEntryStore,
+  selection?: { campaignId: string; name: string; status: "resumable" | "archived" }) {
   if (device.priorRecovery) throw new CloudSyncError("corrupt");
   const original = await loadCloudEvidenceCheckpoint({ ...device, expectedRevision: device.revision,
     expectedCampaignId: device.campaignId, expectedBaselineId: device.baselineId });
-  const campaignId = await separateCloudCampaignId(device), key = `separate:${campaignId}`;
+  const campaignId = selection?.campaignId ?? await separateCloudCampaignId(device), key = `separate:${campaignId}`;
   let campaign = await store.read<CloudCampaignMetadata>(key);
   if (!campaign) {
     const summaries = await transport.list();
     if (summaries.length >= 2) throw new CloudSyncError("capacity");
     const ending = " (this device)", letters = Array.from(original.campaign.name);
     while (utf8Bytes(letters.join("") + ending) > 160) letters.pop();
-    campaign = await store.create(key, { ...original.campaign, campaignId, status: "resumable",
-      name: availableName(letters.join("") + ending, new Set(summaries.map(row => row.name.toLowerCase()))) });
+    campaign = await store.create(key, { ...original.campaign, campaignId, status: selection?.status ?? "resumable",
+      name: selection?.name ?? availableName(letters.join("") + ending, new Set(summaries.map(row => row.name.toLowerCase()))) });
   }
   campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify(campaign)));
   if (campaign.campaignId !== campaignId) throw new CloudSyncError("storage");

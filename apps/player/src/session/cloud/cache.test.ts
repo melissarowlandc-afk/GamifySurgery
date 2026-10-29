@@ -1,15 +1,42 @@
-import { IDBFactory } from "fake-indexeddb";
+import { IDBFactory, IDBKeyRange } from "fake-indexeddb";
 import { describe, expect, it, vi } from "vitest";
 import { cloudCampaignStorageKey, accountStorageKey } from "../accountStorageKey";
 import { CloudCacheError, IndexedDbCloudCache, MemoryCloudCache, cloudRecoveryBytes, type CloudCacheEntry } from "./cache";
 import { syncFixture } from "./syncTestSupport";
 import { IndexedDbCloudEntryStore } from "./entryStorage";
+import { cloudCodec, CloudCodecWorker } from "./codecWorker";
+import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
 
 async function entry(): Promise<CloudCacheEntry> {
   const fixture = await syncFixture();
   return { schemaVersion: 1, scope: { backendId: "backend-a", accountId: "account-a", campaignId: fixture.confirmed.campaignId }, confirmed: fixture.confirmed, recovery: null };
 }
 describe("versioned account/backend/campaign cloud cache", () => {
+  it.each(["indexeddb", "memory"] as const)("reads account entries through a real cloning boundary with a guarded runtime scope (%s)", async kind => {
+    vi.stubGlobal("IDBKeyRange", IDBKeyRange);
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker); worker.release();
+    const execute = vi.spyOn(cloudCodec, "run").mockImplementation(task => codec.run(task));
+    const cache = kind === "indexeddb" ? new IndexedDbCloudCache(new IDBFactory()) : new MemoryCloudCache();
+    try {
+      const initial = await entry(); await cache.write(initial, null);
+      // CloudAccount passes the structural Pick as the full guarded runtime.
+      // Native postMessage rejects its proxy services and callback; the inline
+      // codec used to ignore those extra properties and concealed the bug.
+      const runtime = { ...initial.scope, region: "qa", cache: new Proxy(cache, {}),
+        transport: new Proxy({ capabilities: async () => null }, {}), onOpeningDiagnostic() {} };
+      expect(() => structuredClone(runtime)).toThrow(expect.objectContaining({ name: "DataCloneError" }));
+      expect(await cache.accountEntries(runtime)).toEqual([initial]);
+      expect((await cache.read(runtime))?.entry).toEqual(initial);
+      const scopes = worker.messages.flatMap(message => message.task.kind === "unpackCache" ? [message.task.input.scope] : []);
+      expect(scopes.length).toBeGreaterThanOrEqual(3);
+      for (const scope of scopes) expect(scope).toEqual(initial.scope);
+      expect((await cache.read(initial.scope))?.cacheRevision).toBe(1);
+      const rewritten = await cache.write({ ...initial, scope: runtime }, 1);
+      expect(rewritten).toEqual({ cacheRevision: 2, entry: initial });
+      expect(worker.messages.filter(message => message.task.kind === "packCache")
+        .every(message => message.task.kind === "packCache" && Object.keys(message.task.input.entry.scope).length === 3)).toBe(true);
+    } finally { execute.mockRestore(); codec.dispose(); vi.unstubAllGlobals(); if (cache instanceof IndexedDbCloudCache) await cache.close(); }
+  });
   it.each(["campaign", "entry"] as const)("reopens a %s database connection closed by the browser during suspension", async kind => {
     const factory = new IDBFactory(), open = factory.open.bind(factory); let connection!: IDBDatabase;
     vi.spyOn(factory, "open").mockImplementation((name, version) => {

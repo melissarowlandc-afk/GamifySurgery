@@ -117,6 +117,14 @@ export class FakeCloudServer {
         const previous = account.operations.get(input.operationId);
         if (previous) { if (previous.digest !== operation.requestSha256) throw new CloudSyncError("corrupt"); return previous.receipt; }
         if (this.expired.has(`${accountId}:${input.operationId}`)) throw new CloudSyncError("operation-expired");
+        // Mirror the deployed unique normalized campaign name. Decode seeded
+        // metadata before the final synchronous authority/commit boundary.
+        for (const [id, other] of account.campaigns) if (id !== input.campaignId && !other.summary) {
+          const metadata = JSON.parse(await decompressCloudText(other.confirmed.snapshot)).campaign;
+          if (!other.summary) other.summary = { name: metadata.name, status: metadata.status };
+        }
+        if ([...account.campaigns].some(([id, other]) => id !== input.campaignId &&
+          other.summary?.name.toLowerCase() === input.campaign.name.toLowerCase())) throw new CloudSyncError("corrupt");
         const row = campaign(input.campaignId);
         writer(row, input);
         if (row.confirmed.revision !== input.expectedRevision) throw new CloudSyncError("revision");

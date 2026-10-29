@@ -144,7 +144,9 @@ describe.each(["desktop", "phone"] as const)("%s cohort gate against the Beta 1 
     await vi.waitFor(() => expect(f.env.element.textContent).toContain(noticeAccepted ? "Resume a previous campaign (0/2)" : "Before using account saves"));
     expect(f.stored.has(profileKey)).toBe(false); expect([...f.stored]).toEqual(original);
     expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();
-    expect(sdk.rpc.mock.calls.map(([name]) => name)).toEqual(noticeAccepted ? ["beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_access", "beta2_cloud_list"] : ["beta2_cloud_access", "beta2_cloud_access"]);
+    // Automatic selection reads its own fresh list after admission/enrollment;
+    // retain the exact read-only RPC sequence and forbid any upload or lease.
+    expect(sdk.rpc.mock.calls.map(([name]) => name)).toEqual(noticeAccepted ? ["beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_list"] : ["beta2_cloud_access", "beta2_cloud_access"]);
     expect(f.unexpectedFetch).not.toHaveBeenCalled();
   });
   it("keeps an enabled owner in cloud entry while the global write switch is off", async () => {

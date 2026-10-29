@@ -3,7 +3,7 @@ import { useCloudAccount } from "../session/cloud/CloudAccount";
 import { cloudCheckDeadline } from "../session/cloud/checkDeadline";
 import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
 import { chooseAutomaticCampaignEnrollment, finishAutomaticCampaignEnrollment, inspectLocalCloudSources,
-  prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
+  optionalLocalCloudStorage, prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
 import { CloudSyncError, type CloudCampaignSummary } from "../session/cloud/transport";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
@@ -56,7 +56,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
         const summaries = await runtime.transport.list();
         next = await chooseAutomaticCampaignEnrollment(choice, Math.max(0, 2 - summaries.length), runtime.entryStore);
       } else {
-        const inspection = await inspectLocalCloudSources(runtime.accountId, window.localStorage, runtime.entryStore);
+        const inspection = await inspectLocalCloudSources(runtime.accountId, optionalLocalCloudStorage, runtime.entryStore);
         if (!mounted.current) return;
         setProblems([...inspection.problems, ...inspection.sources.filter(source => source.error).map(source => `${source.campaign.name} could not be saved to your account. Its original copy is kept on this device.`)]);
         setPendingQuestions(inspection.pendingUsageQuestions);

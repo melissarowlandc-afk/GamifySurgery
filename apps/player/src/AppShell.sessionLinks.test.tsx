@@ -103,7 +103,7 @@ describe("desktop footer session links", () => {
     expect(env.button("Save & Close").attributes["aria-label"]).toBe("Save & Close");
   });
 
-  it("retains failed cloud-close warnings, recovery choices and HUD status actions", async () => {
+  it("retains honest failed cloud-close warnings and HUD retry actions without save choices", async () => {
     const env = phoneTestDom(), control = cloudSave();
     control.view = { ...control.view, phase: "waiting", failure: "network", pending: true };
     control.onSaveAndClose = vi.fn(async () => false);
@@ -111,9 +111,11 @@ describe("desktop footer session links", () => {
     const header = env.find(node => node.attributes["aria-label"] === "Clinic resources");
     expect(allElements(header, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Account save status:") === true)).toHaveLength(1);
     await env.click("Save & Close");
-    expect(env.element.textContent).toContain("Account save and session close are not confirmed");
+    expect(env.element.textContent).toContain("Account save is not confirmed");
     expect(env.element.textContent).not.toContain("Safe to close this tab");
-    await env.click("Keep a recovery copy"); expect(control.onKeepRecovery).toHaveBeenCalledOnce();
+    await env.click("Retry"); expect(control.onSaveAndClose).toHaveBeenCalledTimes(2);
+    expect(env.element.textContent).not.toContain("Use the account save");
+    expect(control.onKeepRecovery).not.toHaveBeenCalled();
   });
 
   it("preserves phone links across layout switches and restores the auth control only on entry", async () => {

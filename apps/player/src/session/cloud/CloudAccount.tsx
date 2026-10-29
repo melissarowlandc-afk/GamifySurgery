@@ -7,12 +7,14 @@ import { getSupabaseAuthClient } from "../../auth/supabaseAuth";
 import { ClinicalContentNotice } from "../../ui/ClinicalContentNotice";
 import type { CloudCache } from "./cache";
 import { IndexedDbCloudCache } from "./cache";
-import { cloudCheckDeadline } from "./checkDeadline";
+import { cloudCheckDeadline, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 import type { CloudEntryStore } from "./entryStorage";
 import { IndexedDbCloudEntryStore } from "./entryStorage";
 import type { CloudGameSession } from "./gameSession";
 import { SupabaseCloudTransport } from "./supabaseTransport";
 import { CloudSyncError, type CloudCapabilities, type CloudCampaignSummary, type CloudTransport } from "./transport";
+import type { CloudOpeningDiagnostic } from "./openingDiagnostic";
+export type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 
 export const CLOUD_NOTICE_VERSION = "beta2.cloud.v1";
 export interface CloudAccountRuntime {
@@ -22,6 +24,8 @@ export interface CloudAccountRuntime {
   transport: CloudTransport;
   cache: CloudCache;
   entryStore: CloudEntryStore;
+  /** Disposable QA observer; receives classifications only, never error text or save/token bytes. */
+  onOpeningDiagnostic?(failure: CloudOpeningDiagnostic | null): void;
 }
 export interface CloudAccountValue {
   runtime: CloudAccountRuntime;
@@ -40,6 +44,8 @@ export interface CloudAccountValue {
   showCampaigns(): void;
   setCampaignNavigation(callback: (() => void) | null): void;
   registerLocalWriter?(callback: ((mode: "clear" | "export") => string | void) | null): void;
+  openCampaign?(campaignId: string): Promise<void>;
+  setCampaignOpening?(callback: ((campaignId: string) => Promise<void>) | null): void;
 }
 export const CloudAccountContext = createContext<CloudAccountValue | null>(null);
 export const useCloudAccount = () => useContext(CloudAccountContext);
@@ -77,6 +83,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
   const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState<CloudGameSession | null>(null);
   const activeRef = useRef<CloudGameSession | null>(null), navigation = useRef<(() => void) | null>(null);
+  const campaignOpening = useRef<((campaignId: string) => Promise<void>) | null>(null);
   const localWriter = useRef<((mode: "clear" | "export") => string | void) | null>(null);
   const generation = useRef(0), live = useRef(true), deletion = useRef(false);
   const stopped = useRef(false);
@@ -107,9 +114,16 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
         if (deletion.current) { setPhase("deletion-requested"); return; }
         // Do not mount either session until the initial cohort check settles:
         // even the Beta 1 opening screen can initialize a local profile.
-        const next = await (accessRequest ?? runtime.transport.capabilities());
+        const next = await (accessRequest ?? cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS));
         if (!current()) return;
-        if (next.accountId !== runtime.accountId || !next.admitted || next.deletionRequested) throw new CloudSyncError("auth");
+        if (next.accountId !== runtime.accountId || !next.admitted || next.deletionRequested) {
+          await runtime.entryStore.write("account-command-block", { failure: next.deletionRequested ? "deleted" : "revoked" }).catch(() => {});
+          throw new CloudSyncError("auth");
+        }
+        if (next.enabled) {
+          try { if (await runtime.entryStore.read("account-command-block")) await runtime.entryStore.write("account-command-block", null); }
+          catch { /* Fresh admission is sufficient online; offline reopen remains gated. */ }
+        }
         setAccess(next);
         // Once admitted to cloud, retain its recovery UI if access is later
         // disabled. A maintenance check must never switch to a local session.
@@ -119,7 +133,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
           if (current()) { deletion.current = true; setPhase("deletion-requested"); } return;
         }
         if (!current()) return;
-        const list = next.noticeAccepted ? await runtime.transport.list() : [];
+        const list = next.noticeAccepted ? await cloudCheckDeadline(runtime.transport.list(), CLOUD_READ_TIMEOUT_MS) : [];
         if (!current()) return;
         setSummaries(list); setPhase("available");
       })(), undefined, () => { cancelled = true; });
@@ -142,7 +156,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     // StrictMode effect replay shares the initial request, including a failure;
     // disabled accounts never acquire a retry loop, timer or focus listener.
     if (initialAccess.current?.runtime !== runtime) initialAccess.current = {
-      runtime, request: Promise.resolve().then(() => runtime.transport.capabilities()),
+      runtime, request: Promise.resolve().then(() => cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS)),
     };
     void refresh(initialAccess.current.request);
     return () => { live.current = false; stopped.current = true; generation.current++; activeRef.current?.coordinator.pause(); };
@@ -209,7 +223,8 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     async clearDevice(recoveryExported) {
       if (!runtime.cache.clearAccount || !runtime.cache.accountEntries) throw new CloudSyncError("storage");
       const entries = await runtime.cache.accountEntries(runtime), imports = await runtime.entryStore.entries();
-      if (!recoveryExported && (entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("conflict:") ||
+      if (!recoveryExported && (entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("older-copy:") || entry.key.startsWith("promotion:") || entry.key.startsWith("conflict:") ||
+        entry.key.startsWith("offline-base:") && Boolean(entry.value) ||
         entry.key.startsWith("import:") && !(entry.value as { verified: boolean }).verified))) throw new CloudSyncError("storage");
       stopped.current = true;
       activeRef.current?.coordinator.dispose("sign-out");
@@ -227,6 +242,8 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     showCampaigns() { navigation.current?.(); },
     setCampaignNavigation(callback) { navigation.current = callback; },
     registerLocalWriter(callback) { localWriter.current = callback; },
+    async openCampaign(id) { await campaignOpening.current?.(id); },
+    setCampaignOpening(callback) { campaignOpening.current = callback; },
   };
   if (entry === "checking") return <main className="opening-screen auth-gate-screen">
     <section className="founder-creator auth-gate-card" role="status">

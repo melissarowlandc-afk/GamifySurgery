@@ -6,6 +6,8 @@ import { type CloudCampaignMetadata } from "./codec";
 import { loadCloudEvidenceCheckpoint, type CloudSourceProvenance } from "./codecEvidence";
 import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } from "./coordinator";
 import { logicalJsonText } from "./codecJson";
+import { cloudCheckDeadline } from "./checkDeadline";
+import { CloudSyncError } from "./transport";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -18,7 +20,8 @@ export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCamp
       dailyRoutinePause: profile.tutorialDailyRoutinePauseByCampaign[id] ?? null } };
 }
 
-/** Shared command boundary for desktop/phone. Construction requires a verified online open. */
+/** Shared desktop/phone command boundary. A verified checkpoint and either a
+ * checked server lease or explicitly durable offline authority are required. */
 export class CloudGameSession {
   private checkpoint: GameEvidenceCheckpoint;
   private current: GameState;
@@ -34,10 +37,12 @@ export class CloudGameSession {
   private readonly unsubscribe: () => void;
   private readonly unsubscribeReceipts: () => void;
   private readonly unsubscribeRecovery: () => void;
+  private readonly unsubscribeAutomatic: () => void;
   private boundRevision: string;
   private reloadRequired = false;
+  private reconnecting: Promise<boolean> | null = null;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
-    private readonly switchTo?: (campaignId: string) => Promise<void>) {
+    private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
     this.checkpoint = loaded.checkpoint; this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
     this.boundRevision = coordinator.confirmedRevision!;
     for (const receipt of coordinator.pendingCandidate?.usageQuestions ?? []) this.questions.set(receipt.receipt_id, receipt);
@@ -49,8 +54,9 @@ export class CloudGameSession {
     });
     this.unsubscribeReceipts = coordinator.onAcknowledged(receipt => { this.boundRevision = receipt.revision; for (const id of receipt.usageReceiptIds) this.questions.delete(id); });
     this.unsubscribeRecovery = coordinator.beforeReconnect(async () => await this.durable() || !this.dirty);
+    this.unsubscribeAutomatic = automaticReconnect ? coordinator.onAutomaticSelection(() => this.reconnect()) : () => {};
   }
-  static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>): Promise<CloudGameSession> {
+  static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>, automaticReconnect?: (checked: boolean) => Promise<boolean>): Promise<CloudGameSession> {
     const confirmed = coordinator.confirmed;
     if (!confirmed || ["off", "checking", "blocked", "auth", "storage"].includes(coordinator.view.phase)) throw new Error("Open and verify the account campaign first.");
     const pending = coordinator.pendingCandidate;
@@ -58,7 +64,7 @@ export class CloudGameSession {
       evidence: pending ? { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } : confirmed.evidence,
       revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: coordinator.scope.campaignId,
       expectedBaselineId: confirmed.baselineId });
-    return new CloudGameSession(coordinator, loaded, switchTo);
+    return new CloudGameSession(coordinator, loaded, switchTo, automaticReconnect);
   }
   private emit(): void { for (const listener of this.listeners) listener(); }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
@@ -126,11 +132,28 @@ export class CloudGameSession {
     if (this.dirty && !this.flushing && !this.stopped) this.scheduleFlush();
     return this.flushing ? this.flushing : this.coordinator.view.localDurable;
   }
-  async reconnect(): Promise<boolean> {
+  reconnect(): Promise<boolean> {
+    // Foregrounding an account clinic, including after Save & Close, goes
+    // through the router's full automatic selection and fencing. Recovery
+    // export stays stable; a bare coordinator has no authority to reopen itself.
+    if (this.stopped || this.closing || this.coordinator.view.phase === "closed" && !this.automaticReconnect ||
+      this.coordinator.confirmed?.priorRecovery) return Promise.resolve(false);
+    if (this.reconnecting) return this.reconnecting;
+    this.reconnecting = this.reconnectChecked().finally(() => { this.reconnecting = null; });
+    return this.reconnecting;
+  }
+  private async reconnectChecked(): Promise<boolean> {
     // Finish persisting commands already accepted before changing lease/base.
     // A failed write remains in coordinator.attempted for its quota retry.
-    await this.durable();
-    return !this.stopped && this.coordinator.focus();
+    try { await cloudCheckDeadline(this.durable()); }
+    catch {
+      if (!this.stopped) this.coordinator.reportLocalFailure(new CloudSyncError("processing"));
+      return false;
+    }
+    if (this.stopped) return false;
+    const checked = await this.coordinator.focus();
+    if (this.stopped) return false;
+    return this.automaticReconnect ? this.automaticReconnect(checked && !this.needsReload) : checked;
   }
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
     if (!await this.durable()) return false;
@@ -167,5 +190,6 @@ export class CloudGameSession {
       checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
       priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
-  dispose(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.coordinator.dispose(); }
+  detach(): void { this.stopped = true; this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); }
+  dispose(): void { this.detach(); this.coordinator.dispose(); }
 }

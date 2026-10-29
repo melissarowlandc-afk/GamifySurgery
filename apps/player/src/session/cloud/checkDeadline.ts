@@ -1,6 +1,7 @@
 import { CloudSyncError } from "./transport";
 
 export const CLOUD_CHECK_TIMEOUT_MS = 30_000;
+export const CLOUD_READ_TIMEOUT_MS = 5_000;
 
 /** A missing browser/transport completion must reach recovery UI. Callers
  * fence late continuations; a timeout never authorizes play or a replacement. */

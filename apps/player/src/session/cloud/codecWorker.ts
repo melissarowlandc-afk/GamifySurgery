@@ -29,6 +29,14 @@ export class CloudCodecWorker implements CloudCodecExecutor {
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
     // Node/unit tests have no Worker. Browser startup/runtime failures must surface, never silently block gameplay with inline work.
     const createWorker = this.createWorker;
+    if (import.meta.env.DEV || import.meta.env.MODE === "test" || !createWorker) {
+      // Exercise the native postMessage boundary in inline tests too. Cloning
+      // also gives that executor the same call-time snapshot as a real worker.
+      // Do this before allocating a worker/task so bad input cannot cancel
+      // unrelated checkpoint work. Never JSON-roundtrip away invalid fields.
+      try { task = structuredClone(task); }
+      catch (error) { return Promise.reject(this.payloadFailure(error)); }
+    }
     if (!createWorker) return runCloudCodecTask(task);
     return new Promise((resolve, reject) => {
       try {
@@ -57,10 +65,20 @@ export class CloudCodecWorker implements CloudCodecExecutor {
         const id = ++this.sequence;
         const timer = this.ready ? setTimeout(() => this.fail(), CLOUD_WORKER_TASK_TIMEOUT_MS) : null;
         this.pending.set(id, { resolve: value => resolve(value as CloudCodecResults[T["kind"]]), reject, timer });
-        // The immutable checkpoint is structured-cloned once. Serialization remains entirely in the worker.
-        this.worker.postMessage({ id, task });
+        // Release postMessage performs its own structured clone. Serialization
+        // remains in the worker; a malformed task never kills another task.
+        try { this.worker.postMessage({ id, task }); }
+        catch (error) {
+          if (!(error instanceof Error) || error.name !== "DataCloneError") throw error;
+          this.pending.delete(id); if (timer !== null) clearTimeout(timer);
+          reject(this.payloadFailure(error));
+        }
       } catch (error) { this.fail(error); reject(error); }
     });
+  }
+  private payloadFailure(error: unknown): CloudCodecError {
+    return new CloudCodecError(error instanceof Error && error.name === "DataCloneError" ? "worker_data_clone" : "worker_payload",
+      "Save processing could not read the checkpoint. Retry the account save.");
   }
   private fail(error: unknown = new CloudCodecError("worker_unavailable", "Save processing is unavailable. Retry the account save.")): void {
     if (this.worker) {

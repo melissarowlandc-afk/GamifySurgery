@@ -24,16 +24,21 @@ import { usePresentationLayout } from "./shellPresentation";
 import { UsageProvider, useCasualMode } from "./playtime/UsageProvider";
 import { UsageNotice } from "./ui/AccountMenu";
 import { QuestionFlagProvider } from "./session/QuestionFlagProvider";
-import { CloudAccountProvider, downloadCloudRecovery, useCloudAccount } from "./session/cloud/CloudAccount";
+import { CloudAccountProvider, downloadCloudRecovery, useCloudAccount, type CloudOpeningDiagnostic } from "./session/cloud/CloudAccount";
 import { CloudSyncCoordinator } from "./session/cloud/coordinator";
 import { CloudGameSession, cloudCampaignMetadata } from "./session/cloud/gameSession";
-import { importLocalCloudCampaign, profileForCloudCampaign, type LocalCloudSource } from "./session/cloud/importCampaigns";
+import { importLocalCloudCampaign, optionalLocalCloudStorage, profileForCloudCampaign, type LocalCloudSource } from "./session/cloud/importCampaigns";
 import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
 import { cloudEntryError } from "./ui/cloudEntryError";
 import { AccountMenu } from "./ui/AccountMenu";
 import { cloudCodec, CLOUD_WORKER_STARTUP_TIMEOUT_MS, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./session/cloud/codecWorker";
-import { cloudCheckDeadline } from "./session/cloud/checkDeadline";
-import { readOptionalCloudEntry } from "./session/cloud/writerIdentity";
+import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
+import { rememberCampaignToReopen, selectCampaignToReopen, type CampaignReopenDecision } from "./session/cloud/reopenSelection";
+import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution";
+import { cloudCopyFamily } from "./session/cloud/copySelection";
+import { retainedProgressIsNewer } from "./session/cloud/retainedCopies";
+import { CloudSyncError } from "./session/cloud/transport";
+import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
@@ -111,7 +116,9 @@ export function ActivePrototypeGame({
           return true;
         },
         onRetry: async () => {
-          if (cloudSession.needsReload) { await onCloudReload?.(); return true; }
+          if (cloudSession.needsReload || cloudSession.coordinator.view.phase === "closed" || cloudSession.coordinator.confirmed?.priorRecovery) {
+            await onCloudReload?.(); return true;
+          }
           return cloudSession.reconnect();
         },
         onUseAccountSave: async () => {
@@ -469,93 +476,171 @@ function CloudCampaignRouter() {
   const [notice, setNotice] = useState("");
   const live = useRef(true), generation = useRef(0), current = useRef(active);
   const opening = useRef<CloudSyncCoordinator | null>(null);
+  const failedOpening = useRef<string | null>(null), currentRoute = useRef(route);
+  const entryRequested = useRef(false);
   const attemptedAutomaticOpen = useRef(false);
-  current.current = active;
+  const automaticDeadline = useRef<ReturnType<typeof setTimeout> | null>(null), automaticRetryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const automaticSelection = useRef<Promise<CampaignReopenDecision> | null>(null);
+  const [automaticRetry, setAutomaticRetry] = useState(0);
+  const stopAutomaticOpen = () => {
+    attemptedAutomaticOpen.current = true;
+    if (automaticDeadline.current !== null) clearTimeout(automaticDeadline.current);
+    if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current);
+    automaticDeadline.current = null; automaticRetryTimer.current = null;
+  };
+  current.current = active; currentRoute.current = route;
   useEffect(() => { live.current = true; return () => { live.current = false; generation.current++; opening.current?.dispose(); }; }, []);
+  useEffect(() => () => {
+    if (automaticDeadline.current !== null) clearTimeout(automaticDeadline.current);
+    if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current);
+    automaticDeadline.current = null; automaticRetryTimer.current = null;
+  }, []);
   const openCampaign = async (campaignId: string) => {
-    const epoch = ++generation.current; setRoute("checking"); setNotice("");
-    const coordinator = new CloudSyncCoordinator({ scope: { backendId: runtime.backendId, accountId: runtime.accountId, campaignId }, transport: runtime.transport, cache: runtime.cache, entryStore: runtime.entryStore, enabled: true });
-    opening.current?.dispose(); opening.current = coordinator;
+    // Manual Resume and a committed automatic decision both cancel all older
+    // selection reads synchronously, before any command durability await.
+    stopAutomaticOpen();
+    entryRequested.current = false;
+    const epoch = ++generation.current;
+    failedOpening.current = null;
+    try { runtime.onOpeningDiagnostic?.(null); } catch { /* QA observation cannot affect play. */ }
+    const previous = current.current?.session;
+    previous?.coordinator.pause();
+    if (previous) {
+      try {
+        if (!await cloudCheckDeadline(previous.durable())) {
+          if (live.current && epoch === generation.current) setNotice("This browser could not save your progress. Retry after freeing storage.");
+          return;
+        }
+      } catch {
+        if (live.current && epoch === generation.current) previous.coordinator.reportLocalFailure(new CloudSyncError("processing"));
+        // Keep the still-mounted owner and its accepted bytes. Unmounting it
+        // while encoding is stalled would dispose the only in-memory copy.
+        return;
+      }
+    }
+    if (!live.current || epoch !== generation.current) return;
+    setRoute("checking"); setNotice("");
+    opening.current?.dispose(); opening.current = null;
+    let coordinator: CloudSyncCoordinator | null = null, openingCancelled = false;
+    let openingStage: CloudOpeningDiagnostic["stage"] = "copies";
     try {
       const session = await cloudCheckDeadline((async () => {
-        if (!await coordinator.open()) throw new Error(coordinator.view.failure ?? "network");
+        coordinator = await openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage,
+          cancelled: () => openingCancelled || !live.current || epoch !== generation.current });
         if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
-        const created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); });
+        opening.current = coordinator;
+        openingStage = "hydrate";
+        const selectedId = coordinator.scope.campaignId;
+        const checkedCoordinator = coordinator;
+        const created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
+          if (entryRequested.current) return false;
+          if (checked && checkedCoordinator.confirmed && !await retainedProgressIsNewer({ scope: checkedCoordinator.scope,
+            family: await cloudCopyFamily(selectedId), codec: cloudCodec, store: runtime.entryStore,
+            entries: await runtime.cache.accountEntries?.(runtime) ?? [], account: [checkedCoordinator.confirmed], storage: optionalLocalCloudStorage }, checkedCoordinator.confirmed)) return true;
+          await openCampaign(selectedId); return true;
+        });
         if (!live.current || epoch !== generation.current || opening.current !== coordinator) { created.dispose(); throw new Error("Opening cancelled"); }
         return created;
-      })(), undefined, () => coordinator.dispose());
+      })(), CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
+      if (!live.current || epoch !== generation.current) { session.dispose(); return; }
+      openingStage = "selection";
+      await rememberCampaignToReopen(runtime, session.coordinator.scope.campaignId);
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
       opening.current = null;
       const metadata = session.metadata;
       const profile = profileForCloudCampaign(session.state, { ...metadata, status: "resumable" });
       setActive({ session, profile: { profile, notice: "Verified account save." }, sequence: epoch }); setRoute("cloud");
-      void runtime.entryStore.write("last-active-campaign", { campaignId }).catch(() => {});
       // The checked local projection can play while its account upload runs.
       // Reconnection grants commands only after fresh admission/head/lease and
       // pending-copy verification; all failures remain visible in the shell.
-      void session.reconnect().then(async connected => {
-        if (!connected || !live.current || epoch !== generation.current) return;
-        if (session.metadata.status === "archived") {
-          session.updateMetadata({ ...session.metadata, status: "resumable" });
-          await session.durable();
-        }
-      }).catch(error => { if (live.current && epoch === generation.current) coordinator.reportLocalFailure(error); });
-    } catch {
-      coordinator.dispose();
-      if (live.current && epoch === generation.current) { setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner."); setRoute("entry"); }
+      void session.checkpointNow("ordinary");
+    } catch (error) {
+      (coordinator as CloudSyncCoordinator | null)?.dispose();
+      if (live.current && epoch === generation.current) {
+        try { runtime.onOpeningDiagnostic?.(cloudOpeningDiagnostic(openingStage, error)); }
+        catch { /* Classification-only QA diagnostics cannot replace recovery UI. */ }
+        failedOpening.current = campaignId;
+        setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner."); setRoute("entry");
+      }
     } finally { if (opening.current === coordinator) opening.current = null; }
   };
   useEffect(() => {
-    if (attemptedAutomaticOpen.current || preparingEntry || preparationError || cloud.phase !== "available" || !cloud.access?.enabled ||
-      cloud.access.writesEnabled === false || !cloud.access.admitted || !cloud.access.noticeAccepted || route !== "entry") return;
-    attemptedAutomaticOpen.current = true;
-    let cancelled = false, finished = false;
+    const online = () => {
+      if (!live.current || currentRoute.current !== "entry" || entryRequested.current) return;
+      if (failedOpening.current) void openCampaign(failedOpening.current);
+      else if (attemptedAutomaticOpen.current) { attemptedAutomaticOpen.current = false; setAutomaticRetry(value => value + 1); }
+    };
+    window.addEventListener("online", online);
+    window.addEventListener("focus", online);
+    return () => { window.removeEventListener("online", online); window.removeEventListener("focus", online); };
+  }, [runtime]);
+  useEffect(() => {
+    const offline = cloud.phase === "error" && ["network", "throttled"].includes(cloud.error ?? "");
+    if (attemptedAutomaticOpen.current || preparingEntry || preparationError || route !== "entry" ||
+      !offline && (cloud.phase !== "available" || !cloud.access?.enabled || cloud.access.writesEnabled === false || !cloud.access.admitted || !cloud.access.noticeAccepted)) return;
+    let cancelled = false;
     const epoch = generation.current;
+    // Provider/list/enrollment updates may invalidate an attempt, but may not
+    // consume it or restart its deadline. No read completion can open after
+    // a manual choice, route change, unmount or this bounded selection window.
+    if (automaticDeadline.current === null) automaticDeadline.current = setTimeout(stopAutomaticOpen, CLOUD_CHECK_TIMEOUT_MS);
+    const retry = () => {
+      if (!cancelled && live.current && epoch === generation.current && !attemptedAutomaticOpen.current)
+        automaticRetryTimer.current = setTimeout(() => setAutomaticRetry(value => value + 1), CLOUD_READ_TIMEOUT_MS);
+    };
     void (async () => {
       try {
-        const selected = await readOptionalCloudEntry<{ campaignId: string }>(runtime.entryStore, "last-active-campaign");
-        let id = cloud.summaries.find(row => row.status === "resumable" && row.campaignId === selected?.campaignId)?.campaignId;
-        if (!id) {
-          // Upgrade recovery: old builds had no selection marker. Prefer the
-          // single retained resumable campaign, never an ambiguous pair.
-          const cached = await cloudCheckDeadline(Promise.resolve(runtime.cache.accountEntries?.(runtime))) ?? [];
-          const resumable = cloud.summaries.filter(row => row.status === "resumable" && cached.some(copy => copy.scope.campaignId === row.campaignId));
-          if (resumable.length === 1) id = resumable[0]!.campaignId;
+        if (!automaticSelection.current) {
+          const request = selectCampaignToReopen(runtime, offline);
+          automaticSelection.current = request;
+          void request.finally(() => { if (automaticSelection.current === request) automaticSelection.current = null; }).catch(() => {});
         }
-        if (!cancelled && live.current && generation.current === epoch && id) { finished = true; await openCampaign(id); }
-      } catch { /* Optional selection cannot prevent normal campaign entry. */ }
-      finally { finished = true; }
+        const decision = await automaticSelection.current;
+        if (cancelled || !live.current || generation.current !== epoch || attemptedAutomaticOpen.current) return;
+        if (decision.kind === "open") await openCampaign(decision.campaignId);
+        else if (decision.kind === "list") stopAutomaticOpen();
+        else retry();
+      } catch { retry(); /* Temporary IDB/access failure is not a no-campaign decision. */ }
     })();
-    return () => { cancelled = true; if (!finished && generation.current === epoch) attemptedAutomaticOpen.current = false; };
-  }, [cloud.phase, cloud.access, cloud.summaries, preparingEntry, preparationError, runtime, route]);
+    return () => { cancelled = true; if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current); automaticRetryTimer.current = null; };
+  }, [cloud.phase, cloud.error, cloud.access, cloud.summaries, preparingEntry, preparationError, runtime, route, automaticRetry]);
   const enterCampaignScreen = async () => {
+    stopAutomaticOpen();
+    entryRequested.current = true;
+    const epoch = ++generation.current;
     const session = current.current?.session;
     if (session && route === "cloud") {
       if (!await session.durable()) { setNotice("Recovery storage could not be verified. Keep this tab open and retry."); return; }
       if (["ready", "saving"].includes(session.coordinator.view.phase) && !await session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)) return;
       session.coordinator.pause();
     }
-    if (!live.current) return;
-    generation.current++; setActive(null); setRoute("entry"); await cloud.refresh();
+    await rememberCampaignToReopen(runtime, null);
+    if (!live.current || generation.current !== epoch) return;
+    setActive(null); setRoute("entry"); await cloud.refresh();
   };
   useEffect(() => {
     cloud.setCampaignNavigation(() => { void enterCampaignScreen(); });
-    return () => cloud.setCampaignNavigation(null);
+    cloud.setCampaignOpening?.(openCampaign);
+    return () => { cloud.setCampaignNavigation(null); cloud.setCampaignOpening?.(null); };
   }, [runtime, route]);
   const restart = async () => {
     const session = current.current?.session;
     if (!session?.canExecute) return;
+    entryRequested.current = true;
     session.updateMetadata({ ...session.metadata, status: "archived" });
     if (!await session.durable() || !await session.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT)) return;
     if (!live.current) return;
+    stopAutomaticOpen(); await rememberCampaignToReopen(runtime, null);
     setNotice("Your campaign was archived and still counts toward your 2 account campaigns. Resume it or start a new campaign.");
     setActive(null); setRoute("entry"); await cloud.refresh();
   };
   if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} />;
   if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p>
-    <button type="button" className="button button-secondary" onClick={() => {
-      generation.current++; opening.current?.dispose(); opening.current = null; setRoute("entry");
-    }}>Back to your clinics</button><AccountMenu /></main>;
+    <button type="button" className="button button-secondary" onClick={() => { void (async () => {
+      stopAutomaticOpen(); entryRequested.current = true; const epoch = ++generation.current; opening.current?.dispose(); opening.current = null;
+      await rememberCampaignToReopen(runtime, null);
+      if (live.current && generation.current === epoch) setRoute("entry");
+    })(); }}>Back to your clinics</button><AccountMenu /></main>;
   if (route === "cloud" && active) return <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
     loadedProfile={active.profile} cloudSession={active.session}
     onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudOpen={openCampaign} onCloudCampaigns={() => { void enterCampaignScreen(); }}
@@ -577,7 +662,7 @@ function CloudCampaignRouter() {
     <p>Clinic preparation could not finish. Your saved copies have been kept. Check your connection and retry.</p>
     <button type="button" className="button button-primary" onClick={() => setPreparationAttempt(value => value + 1)}>Retry clinic preparation</button>
     <button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload app</button>
-  </div> : null}<CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} onOpen={openCampaign} onCreate={() => setRoute("founder")} /></>;
+  </div> : null}<CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} onOpen={openCampaign} onCreate={() => { stopAutomaticOpen(); entryRequested.current = true; generation.current++; setRoute("founder"); }} /></>;
 }
 
 export function App() {

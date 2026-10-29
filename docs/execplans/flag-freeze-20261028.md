@@ -1160,3 +1160,1315 @@ lane. The manager's unrelated domain work was preserved. Owner playtest URLs
 and standalone/Safari storage pathways are unchanged. The manager owns final
 acceptance and the audited GitHub-backup checkpoint/reminder; no Git, network,
 installation, agent, browser, publication or external message was used here.
+
+## Manager release (2026-10-28)
+
+Accepted after manager reruns: full player 2,919/2,919 (default config), cloud
+e2e 84/84, visible-other-writer takeover 24/24 repeats, keep-both 16/16
+repeats; door/wall e2e (backed-north, canonical-hallway, shared-wall) pass.
+Released with the door fix and Level 5 rebind 9 as `1002ef48`; the first Pages
+run failed only on two modeled-quota tests exceeding their explicit 30 s limit
+on the hosted runner, fixed with the existing hostedTime CI multiplier in
+`712c72c8`. Pages run 40775737316 succeeded; live bundle contains the new
+lifecycle/keep-both code. Manager integration fix: syncFixture split into
+`syncFixtureSupport.ts` so Playwright never imports the codec worker.
+
+## Automatic newest-progress resolution (owner decision, 2026-10-28)
+
+The owner supersedes the earlier explicit conflict/takeover choice. Normal open
+and reconnect choose the verified copy with the greatest facility tick. Ties
+use transition sequence, clinical XP, facility level and evidence row count,
+then a canonical identity-independent checkpoint SHA-256; an equivalent account
+head wins a final source tie. Device wall clocks, updatedAtRealMs and accepted
+timestamps never order progress. Preserve every replaced divergent checkpoint
+and raw source in the account/backend-scoped protected entry store before any
+mutation; never evict campaign/recovery bytes as auxiliary data.
+
+The lane owns player cloud resolution/discovery, coordinator/session integration,
+App/router, Account/privacy older-copy support, cloud save presentation and their
+tests, plus cloud QA/e2e flows. Concurrent clinical content, question tooling and
+other unrelated work are excluded. No Git, installs, network, browser execution,
+SQL changes or game-domain/save-format changes are authorized.
+
+Milestones: (1) discover/verify retained sources and rank clinic progress;
+(2) automatic fenced descendant resume and faithful branch import/archive with
+protected local overflow and durable operation journals; (3) simplify ordinary
+status to one recovery action and expose older copies under Account/privacy;
+(4) deterministic unit/integration regressions and e2e flow alignment; (5) focused,
+full sandbox player, seven workspace and e2e/QA typechecks, exact counts.
+
+Evidence so far: inspectLocalCloudSources retains raw profile texts, but reads
+only current localStorage; prepareAutomaticCampaignEnrollment excludes enrolled
+IDs. CloudSyncCoordinator.open loads one cache entry and prefers its following
+candidate, never scanning conflict/raw retained entries. A newer retained Day 2
+copy can therefore remain undiscovered. The live screenshots do not establish
+that those bytes survive on the owner's current standalone origin/profile. A
+re-created Home Screen app or separate Safari storage can also lack unsynced
+bytes. This work searches all account-owned retained sources; it cannot recover
+bytes absent from both device and account.
+
+### Automatic resolution implementation and evidence (2026-10-29 continuation)
+
+The 2026-10-28 owner decision supersedes every earlier requirement for a normal
+copy-comparison or takeover choice. Automatic opening now ranks verified clinic
+progress, protects displaced bytes, and obtains a fenced writer. Ordinary
+players see no account-save choice dialog. A fenced old device shows only
+"This clinic is now open on another device" and "Open here". Errors use one
+short status and at most one retry action, above phone chart sheets. Explicit
+account management (notice, initial over-slots enrollment, named deletion and
+its double confirmation) retains its existing safety checks. Save & Close
+remains honest about account acknowledgement and release.
+
+Supported explanations for the owner's apparent Day 2 -> Day 1 regression:
+
+- The prior low-level pendingCandidate getter chooses following before inFlight
+  (coordinator.ts:121). Opening otherwise reads a single cache/selected campaign;
+  it did not rank all retained copies. A stale following candidate or a stale
+  last-active selection can therefore hide a verified newer projection.
+- inspectLocalCloudSources (importCampaigns.ts:39) captures exact raw strings but
+  normally examines only current localStorage. Enrollment's enrolled/retired-ID
+  filter (importCampaigns.ts:228) excludes already imported clinics. It is not
+  an appropriate recovery-discovery filter. New discovery reads old raw strings
+  even after enrollment, conflict copies, both pending candidates, normalized
+  frozen imports, cache confirmations and protected copies. Malformed historical
+  copies remain retained; only verified projections can win. Storage/processing
+  failure cannot silently choose an older copy.
+- The old Keep-both path may already have put the newer progress in a separate
+  opaque branch ID. retainedCopyParents (retainedCopies.ts:60) proves that parent
+  from the retained original checkpoint's SHA-based branch ID. It does not infer
+  relationships from names or wall clocks. The resolver upgrades that selected
+  branch to a family-bearing ID, so another device can discover it too.
+- A previous explicit Use account save can replace the active cache while
+  leaving the pending branch in a protected conflict entry. New discovery finds
+  that branch. A clean divergent cache is now also protected before a foreground
+  head read replaces its projection.
+- None of this establishes which path occurred on the owner's actual phone.
+  A new Home Screen installation/storage container, cleared site data, another
+  browser profile/account, or another origin can lack the unsynced Day 2 bytes.
+  Those bytes cannot be reconstructed if absent from both account and device.
+  The screenshot proves a closed writer gate, not that another physical device
+  wrote. The October 25 confirmation gap remains unattributed without device
+  diagnostics. Local http://127.0.0.1:4173, the live Pages origin and standalone/
+  Safari storage pathways are unchanged and are not interchangeable backups.
+
+Selection and preservation contract:
+
+1. Greatest facilityTick (the facility day/time), then transition sequence,
+   clinical XP, facility level, immutable evidence row count, then lexicographic
+   canonical checkpoint SHA-256. Cash and all device/server timestamps are
+   excluded as ordering criteria. Identity-only faithful imports normalize to
+   the same comparison hash. Equivalent cross-ID account heads win to avoid
+   importing the same copy repeatedly. For identical gameplay at the same ID,
+   the accepted following metadata intention wins, then in-flight, then account,
+   then the retained source key in deterministic code-point order.
+2. Descendants append their original immutable suffix to the freshly checked
+   account head. Uncertain acknowledgements first use the original operation
+   journal. Fresh acquisition compares both revision and writer generation;
+   no old token can release or append to the new writer.
+3. Divergent winners use the existing faithful normalized import. Only campaign
+   identity/source provenance is rebound; immutable row IDs and contents are
+   unchanged. No command replay, evidence renumbering or historical usage credit
+   occurs. The active clinic keeps its original name. The loser is archived as
+   <name> (older copy), with a numeric suffix only to satisfy unique names.
+4. Before any replacement, protected IDB copies and the full pending operation/
+   usage entry are written and read back. A durable promotion journal records
+   archive, slot reclamation and verified import. With two occupied slots, only
+   the exact archived, released older head may be removed from the account,
+   using its expected revision, after its complete bytes are protected locally.
+   Unrelated campaigns are untouched. The old copy remains available through
+   recovery/export. A kill or lost acknowledgement after deletion resumes that
+   intent and the same immutable import. A racing newer head supersedes the old
+   intent and triggers bounded fresh ranking; it is never overwritten by it.
+5. Automatic IDs auto.<family hash>.<copy hash> are 134 ASCII bytes, within the
+   existing 256-byte ID contract. Their opaque family hash lets other devices
+   find a promoted clinic even when the old account slot was reclaimed. There
+   is no SQL/RPC, domain or serialized save-format change. The existing delete
+   RPC's revision/live-writer checks and account/global quota gates remain.
+6. Network loss with a verified device copy can continue locally. This has no
+   server lease and cannot freeze/upload an operation. An offline-base journal
+   prevents a later low-level retry from using local evidence as an account
+   base. Online selection must verify/rebase/fence again. Known revoked/deleted
+   access, local deletion intent, a known writer fence, and unverified/corrupt
+   heads still deny authority. Verified prior recovery remains read-only; it
+   cannot rewind a corrupt account head.
+7. All opening/check work stays bounded. The automatic protocol has a 30-second
+   deadline and three revision/writer-race attempts; existing worker startup/
+   task deadlines and router Back/retry remain. A timed-out network check may
+   fall back only to verified durable local play. Late checks and a cancelled
+   final offline write cannot replace a newer opening or grant its commands.
+
+Account & privacy now nests Older copies (support), listing verified day/time
+and money, exact export, and restoration as an independent account clinic.
+Restoration never rewinds the current campaign's immutable history and respects
+the same two-slot limit; a full account keeps the bytes and export available.
+Clearing a device still requires the verified/exported-recovery safeguard for
+protected copies and promotion journals. Optional lease/gate markers cannot
+block a freshly admitted writer when their storage write fails. Disabled
+localStorage is independent of IDB/account play and does not create a new local
+profile. Source discovery deduplicates identical verification work in memory.
+
+Additional player files required by this lane: copySelection.ts, retainedCopies.ts,
+automaticResolution.ts, olderCopies.ts, codecTasks.ts (worker inspection),
+gameSession.ts, CloudAccount.tsx, App.tsx, AccountMenu.tsx, CloudCampaignEntry.tsx,
+usePrototypeSession.ts, cloudSavesQa.tsx and their cloud/presentation tests.
+fakeTransport.ts now mirrors SQL's unique normalized-name check for metadata
+commits, before the synchronous authority/commit boundary. The manager fixture
+split/re-export remains untouched; e2e runtime imports do not reach coordinator
+or codecWorker. No clinical/question-tooling file is edited by this lane.
+
+Validation in progress: broad focused 24 files / 535 tests passed before the
+final cancellation and message checks; final focused/full results follow below.
+The first full run had 2,935 pass / 4 fail (290 files, 346.06 s): one stale cloud
+close-copy assertion, now updated, and three unrelated clinical-presentation
+assertions in pediatricChartsViewModels.test.ts and briefEarlyLevelsPresentation
+.test.ts. Those pure presentation tests do not execute automatic cloud resolution
+and their files are untouched. Concurrent clinical-content changes are recorded
+separately in the filesystem audit; the manager/content lane owns reconciliation.
+All seven workspace typechecks and e2e/QA TypeScript currently pass; the runtime
+import audit visits 12 modules with no browser-only worker dependency.
+
+### Background recovery completion (2026-10-29)
+
+Final review caught a new offline-mode liveness gap: locally playable sessions
+would otherwise skip all coordinator pulses and never upload after a backend
+outage unless a browser online/focus event arrived. Offline sessions now probe
+fresh admission every 15 seconds without pausing local commands. When service
+returns, the real session invokes full automatic selection/rebase before any
+account upload. Revocation/deletion still stop play immediately when observed.
+
+Opening metadata/read RPCs (including initial cloud admission) have a five-
+second network deadline within the existing 30-second operation deadline. This
+leaves time for verified-local fallback when navigator remains online but an
+RPC never settles. Mutations retain their existing immutable request, receipt
+and fencing protocol. A failed router opening also remembers its requested
+clinic and retries when online returns, while the campaign entry screen remains
+selected; it never interrupts an explicit founder/campaign-management screen.
+Late replies cannot replace a newer opening, including a cancelled final
+offline cache write. Targeted tests cover these exact paths with controlled
+clocks/promises, without fixed sleeps.
+
+### Final transport and offline safety details
+
+Current evidence anchors (paths under apps/player/src):
+
+- session/cloud/coordinator.ts:126 still exposes the legacy single pending-
+  candidate preference; the normal router now uses retainedCopies.ts:38 and
+  :84 to rank both candidates and every verified retained source instead.
+- copySelection.ts:8 verifies each checkpoint; :24 defines the clock-independent
+  progress comparison. retainedCopies.ts:60 proves legacy branch ancestry.
+- automaticResolution.ts:111 protects/archive-journals promotion; :130 can
+  reclaim only the exact protected older account head. :193 selects the winner
+  and :196 preserves the original name independently of server list ordering.
+  A test deliberately reverses the list so a newer legacy import appearing first
+  cannot change the clinic name to the old '(this device)' suffix.
+- supabaseTransport.ts:103 (unchanged) reports a missing campaign head as corrupt,
+  unlike the fake's deleted result. coordinator.ts:312 now distinguishes that
+  reclaimed/moved ID using fresh admitted account metadata and a related active
+  campaign. The old client stays fenced and shows the plain writer notice; a
+  corrupt head which still exists remains a real read-only recovery error. This
+  is a product adapter mismatch fixed in the coordinator, not a stale test step.
+- coordinator.ts:398 restores verified local authority without a server lease;
+  :422 still requires fresh revision/generation CAS before account authority.
+  :670 repairs a failed offline durable write before selection, so freeing
+  storage and Retry works even while account access is offline. The offline-base
+  marker never becomes permission for a low-level server commit. :701 probes
+  admission in the background and hands successful reconnect to full selection.
+- ui/CloudSaveControls.tsx:36 renders the single-action notice outside the HUD
+  stacking context, above chart sheets; AccountMenu.tsx:195 nests support copies.
+
+Small metadata reads (access/list/head/operation) use five-second network
+deadlines. Full snapshot load retains its 30-second budget because the real
+Supabase adapter decompresses and repacks evidence pages as part of load; a
+large valid campaign must not be misclassified as a five-second network stall.
+The router gives the 30-second protocol an additional five seconds for verified
+local fallback, for a bounded 35-second opening with Back available. Worker
+startup/processing deadlines remain separate and unchanged.
+
+Offline checkpoints remain pending until checked against the account, including
+when their playable projection is stored as a local confirmed base. The clear-
+device safeguard also recognizes that offline-base marker. A quota regression
+checks that Retry repairs accepted local progress after storage is freed, without
+committing/importing against the unverified account base. No destructive
+clearing, false Safe-to-close result, or historical usage replay is introduced.
+
+### Final sandbox validation and manager handoff (2026-10-29)
+
+- Final focused acceptance: **7 files / 184 tests PASS**, 50.55 s, zero
+  failures/skips (focused-final-acceptance.log). Includes all 22 automatic
+  resolution regressions, real Level 5 ~5 MiB modeled quota/hosted flag tests,
+  phone/desktop chart gates, account access, lifecycle, cancellation, original
+  naming under reversed server list order and hosted missing-head handling.
+- Complete player, final frozen source: **290 files; 2,940 PASS / 3 FAIL / 2,943
+  total**, 348.74 s, no skips (full-player-acceptance.log). The three failures
+  are outside this lane: briefEarlyLevelsPresentation.test.ts:22 (one) and
+  pediatricChartsViewModels.test.ts:25 (two, upper-midline-lump and
+  shrinking-mobile-neck-nodes). They compare authored clinical presentation
+  expectations with the concurrent runtime content changes. Both test files
+  and their view-model implementation remain untouched by this worker. All
+  cloud/flag/session regressions pass. Full-suite acceptance needs the manager/
+  content lane to reconcile these three expectations; no assertion was removed,
+  skipped, weakened, or clinical content reverted to manufacture a green run.
+- **All 7 workspaces typecheck PASS**, 6.23 s (typecheck-final.log).
+- **E2E + QA TypeScript PASS**, 1.89 s (typecheck-e2e-final.log). Runtime import
+  audit: **12 relative modules PASS**, zero coordinator/worker imports.
+- Scoped filesystem audit: **26 owned source files** (21 modified, 5 new),
+  zero missing files, encoding/mojibake failures or added-line secret-pattern
+  hits. The **20 concurrent source changes** (clinical content and domain
+  question-order tooling/tests) are preserved and listed separately. Original
+  plan/handoff bytes remain intact, and the manager's pure fixture split and
+  re-export are byte identical. **1,502 files / all 618 player files** have
+  stable hashes through final validation; zero source changes during the run.
+
+Evidence directory: .local-dev/flag-auto-resolution-20261028/. Read review.diff,
+audit.json, outside-lane-failures.json and the exact logs above. baseline-sha256
+.json plus before/ preserve pre-edit files; validation-final-input-sha256.json
+and validated-source-sha256.json establish the final tested tree. Intermediate
+failures and earlier repeated validation are also retained there, including
+tests which caught optional marker/quota regressions before correction.
+
+Exact final commands (PowerShell, no installs):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud/automaticResolution.test.ts src/App.cloudLifecycle.test.tsx src/session/cloud/openingDeadline.test.tsx src/session/cloud/CloudAccount.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-auto-resolution-20261028/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+python .local-dev/flag-auto-resolution-20261028/audit.py
+```
+
+Manager browser work remains: run the updated two cloud specs against the fresh
+disposable QA server, including active-writer takeover/fencing, descendant
+hidden/pagehide reopen, both directions of divergent progress, free/full slots,
+retained older-copy discovery/export and backend recovery without an online
+event. There are **27 scenarios x 4 projects = 108 cases**. No browser,
+Playwright loader, server, network, install or Git operation was run here.
+
+Persistence origins: the reported live URL implies location.origin =
+https://melissarowlandc-afk.github.io (path /GamifySurgery/); the canonical local
+owner origin is http://127.0.0.1:4173 via START_GAME.cmd; the manager's disposable
+QA origin is http://127.0.0.1:5184. These are distinct stores, and standalone
+versus Safari/profile containers may also differ. No origin/pathway was changed
+and no actual phone storage/diagnostics were read. Automatic discovery can
+recover Day 2 only if those verified bytes still survive in the current device
+account/backend stores or account campaign. Its absence cannot be inferred from
+a screenshot, and missing unsynced bytes cannot be invented.
+
+Implementation is complete in the assigned lane, with browser/live iOS and
+full-suite integration acceptance pending the manager. No SQL/RPC, game-domain
+or serialized save-format change was made by this worker. The manager owns
+acceptance, integration, release and the GitHub-backup checkpoint reminder.
+
+
+## Browser rejection follow-up (2026-10-29; manager acceptance pending)
+
+The manager rejected the automatic-resolution milestone after 20/108 browser
+cases passed. This section supersedes the previous implementation-complete
+claim. No Playwright/browser, Git, installs, network, SQL, game-domain or save-
+format changes are authorized for this worker. The clinical/question lane and
+its concurrent e2e fixtures remain untouched.
+
+### Reproductions, root causes and changes
+
+1. **Product: foreground notifications undo an intentional close and replace
+   read-only recovery.** gameSession.ts:135 previously forwarded a closed
+   coordinator's false focus result to the router's automatic-open callback.
+   A verified-prior focus similarly re-opened/remounted its recovery screen,
+   removing the menu while an export was being used. The actual QA entry now
+   reproduces both on phone and desktop with the real provider, coordinator,
+   session, fake transport and IndexedDB. Before correction the close test
+   received ready instead of closed (reproduce-focus-close-export.log).
+   GameSession.reconnect now ignores closed/closing/stopped and verified-prior
+   foreground notifications. App.tsx:117 runs full automatic opening for the
+   explicit Open here/Retry action instead. A fresh document still resumes
+   automatically. Dismissing the intentional Safe-to-close dialog exposes one
+   Open here action; closed controls no longer become silently dead.
+
+2. **Product: a valid same-revision cache masks corrupt remote bytes and loses
+   the recovery screen.** automaticResolution.ts:189 previously called ordinary
+   open after its remote load failed verification. coordinator.ts:359 could
+   satisfy that open from the valid same-revision cache, so the resolver did
+   not see priorRecovery and threw back to entry. Actual QA status reproduced
+   hasState:false, canExecute:false, failure:null, phase:available on both
+   layouts (reproduce-cached-head-before-fix.log: 2 failed / 4 deliberately
+   filtered cases). The corrupt-head branch now explicitly verifies the remote
+   head. The prior revision is read-only, and the complete previous local entry
+   is protected/read back before installing it, including pending/frozen
+   operations and usage. Integration cases cover absent, confirmed and pending
+   current caches, rendered download bytes, refused commands/checkpoints and
+   unchanged server head/prior/generation/operation counts.
+
+3. **Product: durability preparation was outside opening/reconnect deadlines.**
+   App.tsx:489 paused the current coordinator and awaited durable() before
+   starting the opening deadline. GameSession.reconnectChecked also awaited
+   durable() outside its coordinator deadline. A stalled accepted-command
+   encode could therefore leave ready/canExecute:false/failure:null indefinitely.
+   Both preparations now have a 30-second deadline. Timeout keeps the mounted
+   owner and accepted bytes, fences commands and shows a plain processing
+   notice with one Retry. Late encoding may finish local persistence, but does
+   not grant play; Retry checks admission/head/lease and uploads without replay.
+   Four phone/desktop real-session integration cases hold encoding across the
+   deadline, then verify preservation, Retry, playable authority and upload.
+   The subsequent protocol opening retains its 35-second bound; initial worker
+   preparation retains its existing startup/task bounds and visible retry.
+
+4. **Product: a remounted save control replays an old close request.**
+   CloudSaveControls.tsx:77 initialized the consumed counter to zero. Mounting
+   with an already-consumed nonzero shell counter invoked Save & Close again.
+   It now consumes the initial value and responds only to later edges. The
+   regression also proves a subsequent new close request still works. This
+   reproduces the closed-state mechanism; the supplied browser snapshot alone
+   does not establish which remount/event produced that particular dialog.
+
+5. **E2E locator error, not a demonstrated duplicate account section.**
+   OlderCopies adds a nested summary inside the one Account & privacy details.
+   The old descendant-summary locator matches both summaries. Whole-provider
+   and actual-QA integration assert exactly one cloud-account section and one
+   Account & privacy summary on both layouts. The e2e helper now asserts one
+   section, then uses :scope > summary. It will still fail on a real duplicate.
+
+6. **E2E stale session and download error masking.** openAndContinue previously
+   treated hasState:true on a closed projection as a successful open and skipped
+   Resume. It now requires a playing-capable phase. Cold reload/remount first
+   waits for an opened projection using the existing 100-second worker-startup
+   budget; the separate 20-second authority assertion still requires canExecute
+   true, failure null and needsReload false, and now rejects Safe-to-close too.
+   Download helpers resolve the account locator before arming a bounded waiter
+   and await click+download together. A locator failure can no longer leave an
+   unhandled waiter whose context-close error conceals the original failure.
+
+### Remaining attribution limit
+
+The isolated newer-retained-copy failure has **not** been reproduced unchanged
+in this sandbox. That exact scenario passes through the actual QaApp/QaTools,
+real account provider, coordinator/session and fake IndexedDB/transport on both
+layouts, including upload and no close invocation. The confirmed closed-state,
+unbounded preparation and cached-corruption defects above are fixed; their
+mapping to each of the manager's 48 gate failures remains unverified. A cold
+worker can explain some startup-budget failures, but is not assumed to explain
+an already-warm retained-copy remount. The manager was asked for the complete
+status/error-context object (hasState, phase, localDurable, needsReload and
+entryHeading). The browser rerun remains the acceptance check, not a claimed
+pass. Existing React DOM reconciliation harness is used because jsdom is not
+installed and installs are forbidden; native focus events are dispatched and
+native download clicks/Blob bytes are observed at the existing seam.
+
+### Ownership and validation
+
+This follow-up changes App.tsx, gameSession.ts, coordinator.ts,
+automaticResolution.ts, CloudSaveControls.tsx and its tests, the QA entry and a
+new QA integration file, a new App integration file, cloud-qa-helpers.ts and
+cloud-recovery.spec.ts. QaApp is exported for the integration test; only its
+test-mode bootstrap is suppressed. Its DEV/disposable-binding release guard
+is unchanged. The manager's syncFixtureSupport split/re-export remains intact;
+no coordinator/codec-worker-reaching import is introduced into e2e specs.
+
+First broad acceptance: **26 files / 537 tests PASS**, 142.33 seconds, with the
+sandbox preload, --pool=threads and --maxWorkers=2. All seven workspace
+typechecks and e2e/QA TypeScript pass. Static e2e runtime import audit: 12 modules,
+zero coordinator/worker imports. The full-player run and final source audit
+are in progress; exact final counts will be appended below.
+
+Evidence: .local-dev/flag-auto-browser-fix-20261029/{before/,
+baseline-sha256.json,review.diff,review.json,reproduce-focus-close-export.log,
+reproduce-cached-head-before-fix.log,focused-cloud-all.log,full-player.log,
+full-results.json,typecheck-final.log,typecheck-e2e-final.log,
+validation-input-sha256.json}. All prior raw logs are preserved. No normal
+save-choice dialog, safety assertion, immutable operation, deletion/revocation,
+fencing, capacity or named double-confirmation check was removed.
+
+
+### Final sandbox handoff for browser rejection follow-up (2026-10-29)
+
+- Focused cloud/session/QA/shell/flag acceptance: **26 files / 537 PASS**,
+  142.33 s, zero failures/skips (focused-cloud-all.log).
+- Full player, final source: **292 files / 2,964 PASS / 2,964 total**,
+  319.06 s, zero failures/skips (full-player.log and full-results.json).
+  The previous milestone's three clinical-presentation failures are absent in
+  this shared-tree run; those files remain unchanged by this worker.
+- **All 7 workspace typechecks PASS. E2E + QA TypeScript PASS.** Runtime e2e
+  import audit: **12 relative modules**, no coordinator/codec-worker import.
+- **11 owned source files**, including **2 new integration files**. No source
+  change across **1,498 monitored files / 620 player files** during validation;
+  zero foreign baseline changes, missing files, encoding anomalies or added-line
+  secret-pattern hits. The manager's fixture split/re-export is byte identical.
+  Prior document bytes are preserved. See audit.json and review.diff.
+
+Owned source paths for this follow-up:
+
+- apps/player/src/App.tsx
+- apps/player/src/App.cloudBrowserFailures.test.tsx (new, 14 cases)
+- apps/player/src/qa/cloudSavesQa.tsx
+- apps/player/src/qa/cloudSavesQa.integration.test.tsx (new, 6 cases)
+- apps/player/src/session/cloud/automaticResolution.ts
+- apps/player/src/session/cloud/coordinator.ts
+- apps/player/src/session/cloud/gameSession.ts
+- apps/player/src/ui/CloudSaveControls.tsx
+- apps/player/src/ui/CloudSaveControls.test.tsx (1 added case)
+- tests/e2e/cloud-qa-helpers.ts
+- tests/e2e/cloud-recovery.spec.ts
+
+Validation commands (PowerShell, repository root):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud src/App.cloudLifecycle.test.tsx src/App.cloudBrowserFailures.test.tsx src/qa/cloudSavesQa.integration.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-auto-browser-fix-20261029/full-results.json
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-auto-browser-fix-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+```
+
+Manager next: rerun the **108 browser project cases** against the fresh
+DISPOSABLE QA server, especially the exact retained-copy failure, corrupt-prior
+export (now also with the original device's valid same-revision cache), repeated
+foreground notifications and intentional close/reopen. The exact retained-copy
+browser hang remains unconfirmed here; the real-QA integration passes unchanged
+on both layouts. No claim of 108/108 browser acceptance or live-device recovery
+is made. The confirmed product defects and test-helper defects above are fixed
+and the independent safety assertions remain. Native download/inert/top-layer
+behaviour and iOS storage/container effects still require manager browser/live
+checks. This is local-only work; no Git, browser, network or installs were run,
+and no clinical content, SQL, RPC, game-domain or save format was changed.
+
+
+## Asynchronous automatic reopen follow-up (manager evidence, 2026-10-29)
+
+### Goal, decision and scope
+
+The manager's latest native-browser result is **24/108 PASS, 84 FAIL**. Isolated
+probes establish that a basic open becomes playable in about five seconds, but
+both ordinary reload and Save & Close followed by reload remain indefinitely
+on Your campaigns. Codec startup is therefore not the explanation for those
+entry-list failures. This section supersedes the previous acceptance claims and
+the previous decision to keep Save & Close closed on foreground events.
+
+**Manager product clarification:** reopening this device automatically returns
+to its last active campaign after ordinary close/reload **and Save & Close**.
+This includes an iOS app retaining the document while suspended. Show the list
+when there is no unambiguous last campaign or the player explicitly chose
+Choose a campaign / Account campaign screen. Preserve that explicit list
+choice across a later reload. Verified-prior corrupt-head recovery remains a
+stable, genuinely read-only support/export state.
+
+Owned changes in this follow-up: App/router, a new cloud reopen-selection helper
+and its tests, existing cloud game-session lifecycle, phone cloud status
+placement and its tests, real disposable-QA integration tests, the existing
+opening-deadline regression, and cloud-saves.spec.ts. No clinical/question
+content, domain code, save format, SQL/RPC, origin or launcher is changed.
+
+### Confirmed root cause and reproduction
+
+The **pre-fix** App.tsx automatic-open effect (captured verbatim under
+.local-dev/flag-reopen-async-20261029/before/apps/player/src/App.tsx:548) marks
+attemptedAutomaticOpen before reading IndexedDB. It then matches the saved ID
+against the effect closure's cloud.summaries (:554); its upgrade fallback also
+matches cached entries against that same potentially empty list (:563-565).
+Finally always sets finished=true (:570), and cleanup resets the attempt only
+when unfinished (:572). A completed early read with no matching summary is
+therefore terminal. Later summaries never cause a new attempt. The optional
+selection read also treated a read exceeding 1.5 seconds as absence. This is a
+selection failure before any coordinator/session can become active, matching
+the manager's hasState:false / phase:available / Your campaigns capture.
+
+New App.cloudReopenAsync.test.tsx:64 reproduces access available + empty
+summaries, completes the selection/cache read in a separate event-loop job,
+then publishes the delayed summaries. It uses the real coordinator/session and
+fake transport, without a timing sleep. With only the original App restored,
+**all four delayed-summary cases FAIL** (phone/desktop, with/without a saved
+selection). The same controlled run has two failures for the new explicit-list
+reload policy and four passing ordinary fake-IDB relaunch cases: **6 FAIL /
+4 PASS / 6 deliberately filtered cases**. Evidence:
+reproduce-original-router.log. The filtered run is a before-fix experiment,
+not the final validation run. Original bytes were restored after the probe.
+
+The simpler fresh-instance fake-IDB tests can pass on old code. Do not claim
+that fake IndexedDB reproduces every native transaction interleaving. The
+controlled delayed-publication test proves the manager's suspected terminal
+attempt mechanism, while the manager must rerun native reload/retained-copy
+scenarios for acceptance.
+
+### Corrections and bounded lifecycle
+
+- App.tsx:570 only commits a completed open or explicit-list decision. Empty
+  inventory and read errors remain retryable. It coalesces in-flight selection
+  reads, retries after five seconds, and keeps a **single 30-second selection
+  window across access/list rerenders**. Timeout leaves usable manual Resume
+  controls; online/focus may start a fresh bounded window. Manual Resume,
+  opening another campaign, entry navigation, creation and unmount synchronously
+  cancel older selection continuations using the generation/liveness guards.
+- reopenSelection.ts:11 reads the actual account-scoped last-campaign preference
+  under five seconds, rather than using the stale React list closure. A valid
+  ID proceeds to full automatic verification; it grants no command authority.
+  With no marker, fresh transport.list and cached accountEntries run together;
+  one resumable retained family may reopen, multiple families remain on the
+  list, and an empty/transient inventory remains retryable. Slow valid reads
+  exceeding 1.5 seconds are covered without being misclassified as absence.
+- App.tsx:542 waits for the tiny selection preference's durable write/readback
+  before publishing the playable shell. The write is bounded to five seconds
+  and failure is auxiliary: it never rejects/discards the verified campaign.
+  The preference contains only an ID or {campaignId:null}; it is not a game save
+  or a new game save format. Null records an explicit campaign-list choice.
+- App.tsx:600 records explicit entry navigation before awaiting Save & Close,
+  preventing a concurrent foreground callback from undoing that navigation.
+  gameSession.ts:135 lets a closed Root-owned session foreground through full
+  automatic verification/fencing. A bare coordinator still cannot reopen
+  itself, and verified-prior recovery still never remounts during export.
+- Opening, hydration and processing still have their independent deadlines:
+  codec warmup has its existing 60-second startup + 30-second task bound;
+  router automatic opening is 30 + 5 seconds, small metadata RPCs five seconds,
+  and whole account refresh/automatic resolution/coordinator checks 30 seconds.
+  The openingDeadline regression now advances the router's declared **35-second
+  outer deadline**, rather than depending on when an inner 30-second head check
+  happens to start. Late replies must still not attach a session or acquire an
+  extra writer. Back and visible Retry remain available.
+
+### Additional phone product defect
+
+CloudSaveControls.tsx's fixed blocked-state portal used the top 12px of the
+viewport at z-index 1200 (cloudSaves.css:5). Its long message plus recovery button
+covers the phone top-bar More button (MobileTopBar.tsx:52), the only route to
+Account & privacy export on that layout. The desktop account footer remains
+outside that rectangle. This explains a real phone-only actionability defect,
+independent of automatic selection, including capacity/offline/prior-export
+flows. The sandbox DOM cannot prove native geometry; this conclusion follows
+from the explicit CSS geometry and native failures and needs browser rerun.
+
+MobileShell.tsx:446 now puts the notice in the real header layout;
+CloudSaveControls.tsx:38 and cloudSaves.css:7 use an inline, static placement on
+phone. It remains above the phone chart/sheet, reserves space, and leaves More
+reachable. Desktop retains its overlay. Three regressions cover capacity,
+network and verified-prior recovery, parent/layout placement and More opening.
+Both actual-QA layouts continue asserting **exactly one Account & privacy**
+section with a direct child summary; the manager's pure syncFixtureSupport
+split/re-export is preserved unchanged.
+
+### Re-examined failing browser scenarios
+
+| Native failure family | Relevant correction / retained safety checks |
+| --- | --- |
+| Retained copy wins; descendant hidden/pagehide reload; all four divergence cases | Reopen no longer consumes an early empty list. Existing full copy discovery, automatic import/archive, protected bytes, immutable evidence, operation counts, fencing and no replay assertions are unchanged. |
+| Automatic enrollment desktop/phone/desktop; same-profile second tab | Last verified campaign is remembered before the shell appears, then full selection/reclaim/takeover runs after reload. Explicit old-writer fencing/deletion assertions remain. |
+| Corrupt current revision on fresh and original cached device | Automatic reload reaches remote-head verification again; verified-prior screen remains read-only/exportable. Existing cached-head protection, no rewind, evidence and operation-count assertions remain. Phone export also benefits from reachable More. |
+| Unavailable service background recovery; phone capacity warning | Existing authority/offline/capacity assertions stay. Phone More/export no longer sits under the fixed notice. No reconnect grant is added by the selection preference. |
+| Over-slots replacement | createAccountCampaign deliberately ends on Account campaign screen. The stale reload-to-play step now expects that explicitly chosen list; originals, slots, named double confirmation and only-the-chosen deletion assertions remain. |
+| Two slots including archives | Explicit archive/list navigation cancels foreground reopening before asynchronous close/write completion and persists the list choice. Capacity, archive and disabled-service assertions remain. |
+
+No fixed sleep, skipped safety assertion or coordinator/codec-worker-reaching
+runtime import is added to e2e. The browser suite still has **27 scenarios x 4
+projects = 108 cases**. Product corrections take priority over test steps.
+
+### Added verification and evidence
+
+App.cloudReopenAsync.test.tsx adds eight delayed-summary, manual-other-campaign
+cancellation and bounded-unavailable-read cases across phone/desktop. The new
+reopenSelection.test.ts adds seven preference/fresh-list/ambiguous/empty/slow
+read/bounded-write cases. Actual QaApp integration crosses binding/event-loop
+jobs and adds eight cases: cold remount after ordinary play or Save & Close,
+explicit list remount, and retained-document foreground after Save & Close,
+across both layouts. The old lease cannot release the reopened owner. Three
+phone notice regressions check recovery navigation. **26 added tests** overall.
+
+Evidence directory: .local-dev/flag-reopen-async-20261029/. Baseline snapshots
+and hashes precede edits; review.diff is a scoped filesystem diff, with no Git.
+Initial seven-workspace and e2e/QA TypeScript checks pass; the runtime e2e audit
+passes for 12 modules without coordinator/worker imports. Broader focused/full
+validation and final unchanged-source audit are appended below when complete.
+Manager browser/iOS acceptance remains pending; no 108/108 pass is claimed.
+
+
+### Full-run assertion alignment (2026-10-29)
+
+The first full run finished **294 files / 2,988 PASS / 2 FAIL / 2,990 total**,
+324.87 seconds. Both failures are App.cloudAccess.test.tsx:147, phone/desktop,
+for the notice-already-accepted case. Its expected exact RPC sequence omits the
+new selector's final fresh beta2_cloud_list read. The actual sequence adds only
+that read; no profile mutation, enrollment, lease or upload occurs. The test now
+expects all five calls exactly, retaining every no-write/no-fetch/isolation and
+pre-notice gate assertion. This additional owned test file is the only change
+after the first full-source validation snapshot. Focused cohort + async-router
+rerun: **2 files / 22 PASS**, 6.65 seconds. First run/log/JSON remain preserved
+as full-player-before-cohort-assertion.log and
+full-results-before-cohort-assertion.json. A full rerun on the final 13-file
+owned source follows; no failure is skipped or assigned to another lane.
+
+
+### Final sandbox validation and manager handoff (asynchronous reopen, 2026-10-29)
+
+- Broad focused cloud/session/QA/shell/flag run: **28 files / 563 PASS**,
+  150.01 seconds, zero failures/skips (focused-cloud-all.log).
+- Cohort assertion + asynchronous router final run: **2 files / 22 PASS**,
+  6.65 seconds (focused-cohort-final.log). Eight cases overlap the broad run;
+  these counts are separate runs and must not be added as unique tests.
+- Full player on the final source: **294 files / 2,990 PASS / 2,990 total**,
+  326.21 seconds, **zero failures/skips** (full-player.log, full-results.json).
+- **All seven workspace typechecks PASS; e2e + QA TypeScript PASS.**
+  Static e2e runtime audit: **12 modules PASS**, no coordinator/codec-worker
+  import. The manager's syncFixtureSupport split/re-export remains byte identical.
+- **13 owned source paths, 3 new files, 26 added tests.** Filesystem audit:
+  **1,501 source files / 623 player files** unchanged throughout final validation;
+  zero foreign baseline changes, missing files, introduced encoding anomalies
+  or added-line credential-pattern hits. Earlier document bytes are preserved.
+  See audit.json, review.diff, review.json and validated-source-sha256.json.
+
+Commands (PowerShell, repository root; no network/installs):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud src/App.cloudLifecycle.test.tsx src/App.cloudBrowserFailures.test.tsx src/App.cloudReopenAsync.test.tsx src/qa/cloudSavesQa.integration.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/App.cloudAccess.test.tsx src/App.cloudReopenAsync.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-reopen-async-20261029/full-results.json
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-reopen-async-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+```
+
+Next action: manager reviews the scoped diff and reruns all **108 browser
+project cases** on the fresh disposable QA server, prioritizing native ordinary
+reload, Save & Close reload/foreground, retained-copy remount, both divergence
+directions/full slots, and corrupt-head export on phone/desktop. No native
+browser or live iOS pass is claimed. The retained-copy and every remaining
+failure family must be judged by that rerun; they are not excused as load.
+
+No opening pathway or location.origin changed: canonical owner local remains
+http://127.0.0.1:4173 (START_GAME.cmd), live is
+https://melissarowlandc-afk.github.io/GamifySurgery/ (origin
+https://melissarowlandc-afk.github.io), manager disposable QA is
+http://127.0.0.1:5184. Their stores remain independent. No actual owner phone
+storage was read; the October 25 confirmation gap and actual survival of Day 2
+bytes remain unverified. No Git, installs, network, browser execution, SQL/RPC,
+clinical/question content, game-domain/save-format edits, agents or external
+messages were used. Work remains local; manager owns acceptance, integration,
+release and any GitHub-backup checkpoint.
+
+
+## Writer proof and late document checkpoint follow-up (2026-10-29)
+
+### Manager evidence, scope and status
+
+The manager's latest browser run is **32/108 PASS, 76 FAIL**, four failures per
+remaining scenario. Automatic selection now fires, but a native ordinary reload
+can return to Your campaigns with the generic opening-failed notice and a live
+writer row. This milestone investigates that next failure; it does not claim
+that the preceding 2,990-test run established browser acceptance.
+
+Owned source: App.tsx; cloud writerIdentity/coordinator/gameSession/automatic
+resolution and CloudAccount runtime typing; their tests; the disposable QA
+entry/integration tests; cloud-qa-helpers.ts and cloud-recovery.spec.ts. One new
+documentReopen.test.ts uses two separately constructed runtimes, fresh transport
+closures and account-scoped persistent in-memory backing with JSON round-trips
+and task boundaries. It adds no dependency or browser process. Concurrent
+clinical/question-order edits are excluded and preserved. No SQL/RPC,
+game-domain or game-save-format edit is made by this worker.
+
+### Confirmed failed-open mechanism: a late cache commit
+
+**Deterministic reproduction:** documentReopen.test.ts:89 pauses the second
+document's read after it has captured the old cache revision. The first
+document finishes a last checkpoint before that read resolves. The old document
+is then disposed without release; its lease remains live. The second document
+continues automatic opening against the captured cache revision. All three
+cases fail before the correction: **pending, confirmed and lost acknowledgement**
+produce CloudSyncError(code=storage), rather than a playable session.
+reproduce-late-cache-commit.log records **3 FAIL / 10 deliberately filtered**.
+No fixed sleep is used. The frozen request/accepted copy remains in the shared
+backing while independently constructed coordinators/transport instances run.
+
+The ordering is possible with the actual browser cache: cache.ts:77-84 captures
+an IndexedDB record, then asynchronously unpacks/verifies it in the worker. A
+last write can commit between that capture and the opening coordinator's next
+write. Pre-fix coordinator.ts:341 reads the cache and :371 persists the verified
+account projection. cache.ts:96 correctly rejects a changed local revision;
+that is a compare-and-swap conflict, not evidence that campaign storage is full.
+The pre-fix automaticResolution.ts:80 reconstructs a generic CloudSyncError from
+view.failure, losing the cache-conflict reason. Its :275 retry list accepts only
+server writer/revision errors. Root App.tsx then catches the terminal storage
+exception and renders the exact generic notice reported by the manager.
+
+**Correction:** coordinator.ts:211 records the specific local CAS failure and
+preserves both the original record and attempted accepted recovery entry
+(including exact frozen request bytes) before permitting retry. The transient
+hasLocalCacheConflict getter carries the reason through automaticResolution.ts:81,
+:90 and :98. Only CloudCacheError(reason=conflict) is added to the existing
+three-pass fresh selection loop. Each pass re-reads/ranks all copies and the
+fresh head; it never writes an old projection over the newer cache. Genuine
+quota, checksum, unsupported format, admission and deletion failures retain
+their safety gates. The 30-second overall bound and late-continuation guards
+remain. No acquisition occurs if all three local CAS attempts fail.
+
+Additional regression coverage verifies a lost local acknowledgement after the
+server accepted the operation: the original immutable request text/hash is kept
+in protected recovery, only one commit is sent, usage is not replayed, and the
+selected copy becomes playable. Repeated-conflict coverage verifies exactly
+three attempts, unchanged campaign bytes and no new lease. The corrected
+late-commit/automatic-resolution run passes **2 files / 35 tests**.
+
+This reproduces the reported failed-open class and supplies a concrete
+browser-ordering cause. Attribution of **every one of the manager's 76 failures**
+still requires the native rerun; a native exception code was requested rather
+than assuming that the live writer label establishes a token failure.
+
+### Writer identity: confirmed defects and fixes
+
+The original writerIdentity.ts:8-14 returns after 1.5 seconds even when a write
+has not completed, and its :34 caller treats that timeout as successful enough
+to proceed. :23 also turns a slow valid proof read into absence. A controlled
+baseline restoration of writerIdentity.ts/coordinator.ts fails all three new
+proof cases: acquisition starts before its durable intent write; a valid read
+is prematurely treated as absent; and a retained acquisition intent is not
+reclaimed after this same token later confirmed a newer account revision.
+Evidence: reproduce-identity-before-fix.log (**3 FAIL / 6 filtered**). Current
+bytes were restored in finally after the experiment.
+
+The third defect is independent of the timeout: pre-fix coordinator.ts:615-617
+replays acquisition proof only when expectedRevision still equals the head.
+If the lease receipt write failed but a later checkpoint succeeded, that intent
+contains the old revision even though its token remains valid. retry then
+reports writer-elsewhere. The new path renews that token against the freshly
+verified head, then rotates/fences it as usual. It never changes/replays the
+original acquisition request or bypasses server token/generation checks.
+
+writerIdentity.ts:22 now gives real proof reads the bounded five-second storage
+budget. Intent write plus checked readback must finish before acquisition; an
+unsettled write times out without sending a late RPC. The journal remains one
+tiny record per campaign. Generation-aware entry-store CAS prevents a late old
+document from overwriting a newer acquisition/lease. Null and malformed legacy
+proof reads stay tolerant and can be replaced with valid checked proof. If the
+lease receipt write stalls, the already-durable acquisition intent stays usable.
+A completed auxiliary quota denial still does **not** block the independent
+campaign store, retaining the earlier safety requirement and its regression.
+The existing lifecycle fault fixture now applies the same lease-receipt denial
+to CAS as to write; its fencing assertions are unchanged.
+
+No QA fake token mismatch was found. FakeCloudServer.acquire (:103-109) compares
+supplied tokens across transport instances, including an identical acquisition
+retry at the same/next generation; renew/release (:81-82, :111-112) compare exact
+token, generation and expiry. This matches the existing migration's
+beta2_cloud_lease (:353-375): public heads do not expose secret tokens, while the
+lease RPC verifies their hash and fences rotation. Both independent-runtime
+ordinary-reopen cases passed before these fixes when no timing fault was
+injected. The fake's head/summary writerActive is deliberately only a boolean.
+CloudCampaignEntry.tsx:185 labels any such row as another-device activity,
+including this device's own prior lease. That row alone does not prove that
+own-token reclamation failed. Normal automatic admission already authorizes a
+fenced takeover after full verification; no new RPC/SQL is required or applied.
+
+### Ordinary recovery records and disposed documents
+
+The earlier conflict:/older-copy: probe is reproducible, but those keys did not
+mean the resolver detected a true branch. Pre-fix automaticResolution.ts:211
+journaled every pending cache before even trying its normal operation recovery;
+:220 could protect a duplicate import source even when the actual chosen copy
+was the identical account head. coordinator.ts:437 preserved a full conflict
+record on a clean first open. Four QA/synthetic source and pending/confirmed
+cases each find two such records before the first command; all four fail the
+new ordinary-record regression before correction
+(reproduce-ordinary-journals.log).
+
+Ordinary clean opens now replace no bytes and create no conflict copy. An
+ordinary pending descendant remains in its durable cache while its exact
+operation is resolved; it is protected if adoption/replacement or a local CAS
+failure actually requires it. Divergent losers, promotion journals, uncertain
+operations, quota recovery, retained historical copies and frozen/following
+candidates remain protected. **Existing records are not deleted or trimmed.**
+Successful ordinary opens no longer multiply whole-campaign recovery records.
+Genuine two-device divergence/archive/full-slot safety tests still pass.
+
+GameSession.ts:154 also lacked a stopped check after its foreground await. A
+disposed document could still invoke its automatic-opening callback and undo a
+newer navigation/open. A deterministic before-fix case fails
+(reproduce-late-document-callback.log); a second stopped check now fences that
+callback. This is a separate lifecycle defect, not a claim that an actually
+terminated document can execute JavaScript in a new document.
+
+### Native diagnostics and e2e alignment
+
+Root's generic catch previously discarded the exception class/reason, leaving
+hasState:false / failure:null. An optional classification-only QA observer now
+records **stage + kind + code** in window.__cloudQa.status().openingFailure.
+It carries no Error.message, stack, campaign bytes, account identifiers, tokens
+or clinical values and is absent from configured hosted runtimes. QA integration
+on both layouts verifies error classification, no playable projection on error,
+and successful manual retry clearing the diagnostic. The e2e polling output now
+includes this field so remaining native failures identify storage/codec/lease
+causes instead of repeating a null gate.
+
+The existing phone/desktop hidden/pagehide recovery scenarios now also advance
+and pause three facility ticks, then perform an ordinary reload with no
+synthetic hide, network fault or Save & Close. They require automatic play,
+exact state equality, a greater fenced generation, one campaign, exactly one
+additional immutable operation, no usage replay and unchanged original profile
+bytes. Existing hidden/offline/operation checks are retained. No fixed sleep or
+coordinator/codec-worker-reaching spec import was added. Case count remains
+**27 scenarios x 4 projects = 108**.
+
+Re-examined remaining failures: normal/retained reload and same-profile tab
+opening can encounter the now-reproduced local read/write CAS gap; divergence
+and background reconnect also use the same full opener and now retain exact
+requests before fresh selection; corrupt-head recovery still takes verified
+prior read-only/export and never replays or rewinds; archive/capacity/deletion
+and disabled-service gates are unchanged. No assertion is removed on the
+assumption that these are timing flakes. Manager reruns determine which native
+failures remain. The actual owner phone and October 25 confirmation gap remain
+unobserved.
+
+### Validation in progress
+
+Boundary regressions on current source: **4 files / 65 PASS**, 18.80 seconds.
+All seven workspace typechecks pass. The earlier broad run passed **30 files /
+591 tests** before the five new CAS tests. A first broad run's old 1.5-second
+write assertion was updated to verify the new bounded rejection/no-late-RPC
+contract; no test is skipped or weakened. A temporary missing module from the
+concurrent clinical-content lane caused three import failures before that worker
+created it; this lane did not edit or restore those files. Final broad/full
+counts and hashes follow below. Evidence:
+.local-dev/flag-writer-reclaim-20261029/{before/,baseline-sha256.json,
+reproduce-document.log,reproduce-identity-before-fix.log,
+reproduce-ordinary-journals.log,reproduce-late-document-callback.log,
+reproduce-late-cache-commit.log,focused-local-cas.log,
+focused-boundaries-final.log,focused-cloud-all.log,full-player.log,
+full-results.json,review.diff,review.json,validation-input-sha256.json}.
+
+
+### Final worker validation and handoff (writer/cache correction, 2026-10-29)
+
+- Final broad cloud/session/router/QA/shell/flag acceptance: **30 files /
+  596 PASS**, 166.76 seconds, zero failures/skips (focused-cloud-all.log).
+- Final boundary run: **4 files / 65 PASS**, 18.80 seconds. These are contained
+  in the broad run and are not additional unique tests.
+- Full player: **295 files / 3,009 PASS / 3,009 total**, 360.49 seconds,
+  **zero failures/skips** (full-player.log and full-results.json).
+- **All seven workspace typechecks PASS**, rerun after the concurrent module
+  appeared and after the full run. **E2E/QA TypeScript PASS.** Runtime spec
+  import audit: **12 modules PASS**, no coordinator/codec-worker import.
+- **13 owned source paths, one new file, 19 new tests**: 15 independent-document
+  cases, two tolerant-proof cases and two QA diagnostic/retry cases. No source
+  in this owned lane changed during final validation. Manager fixture split/
+  re-export and all earlier document bytes remain intact. No missing file or
+  added-line credential/encoding finding was found.
+
+**Shared-tree qualification:** the input snapshot covers **1,504 source files /
+624 player files**. Seven concurrent clinical-content/question-order paths are
+preserved, including two new source modules. Four clinical-content paths changed
+while validation ran; their exact names/input/end hashes are in audit.json and
+validation-input-sha256.json / validated-source-sha256.json. This worker made
+no edit to those files or game-domain. The full run is green on the actual
+shared-tree execution and the owned cloud source is stable; do not call the
+whole repository an immutable validation snapshot. Manager integration should
+rerun against the settled clinical lane as appropriate.
+
+Owned paths:
+
+- apps/player/src/App.tsx
+- apps/player/src/qa/cloudSavesQa.tsx
+- apps/player/src/qa/cloudSavesQa.integration.test.tsx
+- apps/player/src/session/cloud/CloudAccount.tsx
+- apps/player/src/session/cloud/automaticResolution.ts
+- apps/player/src/session/cloud/coordinator.ts
+- apps/player/src/session/cloud/gameSession.ts
+- apps/player/src/session/cloud/writerIdentity.ts
+- apps/player/src/session/cloud/writerIdentity.test.ts
+- apps/player/src/session/cloud/lifecycle.test.ts
+- apps/player/src/session/cloud/documentReopen.test.ts (new)
+- tests/e2e/cloud-qa-helpers.ts
+- tests/e2e/cloud-recovery.spec.ts
+
+Commands (PowerShell, repo root):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud src/App.cloudLifecycle.test.tsx src/App.cloudBrowserFailures.test.tsx src/App.cloudReopenAsync.test.tsx src/App.cloudAccess.test.tsx src/qa/cloudSavesQa.integration.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-writer-reclaim-20261029/full-results.json
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-writer-reclaim-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+```
+
+Manager next: review review.diff and rerun the **108 browser project cases**.
+Prioritize the ordinary same-device reload extension, retained-copy reopening,
+corrupt-prior export, same-profile tab and both directions/full-slot divergence.
+If any open fails, capture window.__cloudQa.status().openingFailure and the
+server acquisition/renew outcome. The deterministic cache CAS/proof/disposal
+reproductions are fixed; the sandbox cannot establish that every native failure
+has gone. No native browser or live iOS acceptance is claimed. The live
+location.origin remains https://melissarowlandc-afk.github.io; canonical local
+is http://127.0.0.1:4173 via START_GAME.cmd; disposable QA is
+http://127.0.0.1:5184. No storage container or opening pathway changed.
+
+This work is local-only. No Git, install, network, browser, SQL/RPC/schema,
+clinical-content/question-tooling, game-domain/save-format edit, agent or
+external-message action was performed by this worker. Manager owns integration,
+acceptance, release and any audited GitHub-backup checkpoint. The owner's
+actual device data and the October 25 confirmation gap remain unobserved.
+
+
+## Native codec worker payload cloning follow-up (2026-10-29)
+
+Manager supplied the native-browser exception for the ordinary QA open / play /
+reload flow at location.origin `http://127.0.0.1:5184`: `openingFailure` was
+`copies / unknown / unknown`, with `DataCloneError` at `Worker.postMessage`,
+via `IndexedDbCloudCache.accountEntries` and automatic copy selection. This is
+the directly observed cause of that failed reopen. The earlier independently
+reproduced cache CAS / proof timing bugs remain fixed; they did not establish the
+cause of all native-browser failures.
+
+Before-fix evidence (the immutable per-turn source snapshot is
+`.local-dev/flag-worker-clone-20261029/before/`):
+
+- `CloudAccount.tsx:94-109` guards the runtime services with proxies and returns
+  a runtime containing those services and the optional diagnostic callback.
+- `automaticResolution.ts:198` passes that actual runtime into
+  `cache.accountEntries(runtime)`. A TypeScript structural `Pick` constrains
+  allowed field access; it does not project/remove extra runtime fields.
+- `cache.ts:120-126` spreads that runtime into `scope` and forwards it to
+  `unpack`; `cache.ts:31` sends the entire scope in a codec worker task.
+  The native clone algorithm rejects its proxies/functions.
+- `codecWorker.ts:29-32` formerly bypassed cloning in the inline executor used
+  by unit tests, whereas `codecWorker.ts:61` used native `postMessage` in the
+  browser. Thus green inline component tests concealed this boundary defect.
+- `App.tsx:561-564` previously reduced DOMException/unexpected errors to an
+  unknown classification, obscuring the opening failure.
+
+Reproduction before the fix: **2 files / 25 tests: 5 failed, 20 passed**,
+2.54 s, in `reproduce-before.log`. Both cache implementations now execute through
+an actual `structuredClone` message boundary with the same proxy/callback-bearing
+runtime shape. IndexedDB fails with `DataCloneError: #<IndexedDbCloudCache> could
+not be cloned`; memory fails identically. Two additional tests show the old
+inline executor silently accepting callback/proxy input; a fifth exposes the
+unclassified native failure which also terminated unrelated worker requests.
+No browser or network was used for this reproduction.
+
+Implementation:
+
+- Project scope data explicitly to backend/account/campaign ID strings at all
+  cache pack/unpack boundaries and in coordinator/copy-selection construction.
+  The new pure `scopeData.ts` helper does not serialize or alter campaign bytes.
+  No runtime proxy, callback or service is sent to the worker or serialized as
+  cache scope metadata. Both account enumeration and direct cache reads/writes
+  accept the actual structural runtime argument safely.
+- `CloudCodecWorker.run` clones the whole task in development/tests (including
+  the inline fallback) before allocation/execution. Tests now exercise the same
+  call-time snapshot/clone restriction as native messaging. It never uses a
+  lossy JSON roundtrip to remove invalid input. Release messaging performs the
+  native structured clone; native DataCloneError is classified as
+  `worker_data_clone` and rejects that task without terminating unrelated work.
+  Other preflight payload errors use `worker_payload`.
+- Worker processing failures remain processing failures, not corrupt-history
+  evidence. Retained-copy discovery propagates them rather than skipping a
+  potentially newer copy. Genuine corrupt-copy handling is unchanged.
+- The opening diagnostic uses safe classified codes (`worker_data_clone`,
+  `type_error`, `reference_error`, `unexpected_error`, etc.) for all thrown
+  values. It includes only stage/kind/code; never exception message, stack,
+  save data or writer tokens. The QA status exposes the same classification.
+- The real QA entry integration suite now always uses the cloning worker port
+  with the actual account provider, IndexedDB cache, coordinator, game session
+  and fake transport. Phone/desktop reload, retained copy and corrupt-prior
+  export tests therefore cross the previously missing boundary. Additional
+  rendered tests verify classified unexpected failure and a successful retry.
+
+Worker task call-site audit (all ten task kinds):
+
+| Task kinds | Call sites / payload sources | Finding |
+| --- | --- | --- |
+| packCache / unpackCache | cache.ts | Runtime scope spread was the defect; explicit scalar projection now applies to enumeration, read, and write. Stored rows are IDB or plain memory data. |
+| candidate | coordinator.ts | Scope is explicitly projected in the constructor; candidate/evidence and confirmed bytes come from plain worker/cache data. |
+| encode | gameSession.ts | Checkpoint, metadata, provenance and acknowledged evidence are plain domain data; no session/codec/runtime object or callback is included. |
+| verify / inspectCopy | coordinator.ts, automaticResolution.ts, retainedCopies.ts, olderCopies.ts | Confirmed copies are parsed cache/RPC/retained plain records. Extra scalar revision expectations only; no runtime is forwarded. |
+| freeze / hash | coordinator.ts, App.tsx, supabaseTransport.ts | Plain immutable request or string. |
+| wire / importWire | supabaseTransport.ts | Plain commit/import request and numeric issued-at value. Import preparation callbacks stay on the caller side and never enter the task. |
+
+The dispatcher/replies (`codecTasks.ts`, `codec.worker.ts`) return only plain
+records, arrays, numbers and compressed text; errors use plain failure records.
+The scope projection fixes existing persisted stores without a migration: on
+next launch all retained/cache/account copies can be read/ranked again. There is
+no campaign reset, queue deletion, evidence rewrite or save-format/domain change.
+No approved automatic-resolution product decision or genuine safety assertion
+was weakened; e2e scenarios/fixtures are unchanged in this follow-up.
+
+Early validation: boundary + native-cloning QA integration **4 files / 56 PASS**
+(19.35 s); seven workspace typechecks PASS. Focused/full validation and final
+ownership/hash audit are recorded below when complete. Evidence directory:
+`.local-dev/flag-worker-clone-20261029/`. Manager still owns the 108 native-browser
+project cases and live iOS acceptance; no native browser success is claimed.
+
+
+### Final native-worker correction validation and handoff
+
+Validation completed on the final source (PowerShell, repository root):
+
+- Before-fix deterministic reproduction: **2 files / 25 tests, 5 failed / 20
+  passed**, 2.54 s, `reproduce-before.log`. Both account cache implementations
+  fail with native structured-clone DataCloneError; inline callback/proxy tests
+  expose the missing guard.
+- Initial boundary + actual QA integration: **4 files / 56 PASS**, 19.35 s,
+  `boundary.log`.
+- Broad focused cloud/lifecycle/phone/desktop/flag suite: **31 files / 616 PASS**,
+  180.22 s, `focused-cloud-all.log`.
+- Final targeted run after adding retained-import processing-failure checks:
+  **6 files / 103 PASS**, 31.54 s, `focused-final-boundaries.log`. Includes all
+  changed test files, actual phone/desktop QA entry with a cloning worker,
+  direct IndexedDB/memory reads and writes with runtime-shaped scope, and
+  processing failures preserving the newer current/import copy. Existing
+  unavailable-worker verification coverage is parameterized for both new codes.
+- **Full player: 296 files / 3,035 PASS / 3,035 total**, 343.87 s; zero failed,
+  pending, todo or runtime-error suites. `full-player.log`, `full-results.json`,
+  `validation-summary.json`. This is **26 additional tests** relative to the
+  prior 3,009-test source. The final full run includes the complete focused
+  suite and all final source changes.
+- **Seven workspace typechecks PASS**: clinical-context-workbench (client and
+  server), player, balance-config, clinical-authoring, clinical-content,
+  clinical-research, game-domain. `typecheck-final.log`.
+- **Cloud e2e / QA TypeScript PASS**, `typecheck-e2e-final.log`.
+- **Runtime spec import audit PASS: 12 relative runtime modules**,
+  `e2e-import-audit.log`. The manager's pure `syncFixtureSupport.ts` split and
+  re-export remain byte unchanged; no e2e spec imports coordinator/codecWorker.
+
+Commands:
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud src/App.cloudLifecycle.test.tsx src/App.cloudBrowserFailures.test.tsx src/App.cloudReopenAsync.test.tsx src/App.cloudAccess.test.tsx src/qa/cloudSavesQa.integration.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud/automaticResolution.test.ts src/session/cloud/openingDeadline.test.tsx src/session/cloud/cache.test.ts src/session/cloud/codecWorker.test.ts src/session/cloud/openingDiagnostic.test.ts src/qa/cloudSavesQa.integration.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-worker-clone-20261029/full-results.json
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-worker-clone-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+```
+
+Owned source files in this correction (16; three new):
+
+- App.tsx; qa/cloudSavesQa.integration.test.tsx.
+- session/cloud/automaticResolution.ts and automaticResolution.test.ts.
+- session/cloud/cache.ts and cache.test.ts.
+- session/cloud/CloudAccount.tsx; codecJson.ts.
+- session/cloud/codecWorker.ts and codecWorker.test.ts.
+- session/cloud/coordinator.ts; openingDeadline.test.tsx; retainedCopies.ts.
+- New session/cloud/scopeData.ts, openingDiagnostic.ts,
+  openingDiagnostic.test.ts.
+
+Final review evidence is `.local-dev/flag-worker-clone-20261029/`: exact
+before/ snapshot, baseline/input/validated hashes, review.diff / review.json,
+audit.json, reproduction/focused/full/typecheck logs and full JSON report.
+All 16 owned source files and the full monitored validation input remain stable
+through the full test run. Document updates preserve their earlier byte prefix.
+One concurrent foreign planning document changed during the turn:
+`docs/execplans/question-quality-phase1-20261028.md`; it is preserved and excluded
+from this worker's changes. No clinical-content/question-tooling or game-domain
+source changed in this worker's lane. Existing cloud e2e specs/helpers are byte
+unchanged; their safety assertions have not been relaxed.
+
+Manager next: rerun the **108 native-browser project cases** against the fresh
+QA server, especially ordinary open/play/reload, retained-copy reopening,
+corrupt-prior export, enrollment and both divergence directions/full slots.
+If opening still fails, collect the classified `openingFailure` from the QA
+status. This worker confirms the manager's reported DataClone root cause and
+its deterministic native-cloning reproduction, but cannot claim browser or
+live iOS acceptance from sandbox tests. No owner phone stores or actual October
+25 account confirmation data were accessed.
+
+No origin/pathway changes: canonical local owner entry remains START_GAME.cmd
+at `http://127.0.0.1:4173`, live is
+`https://melissarowlandc-afk.github.io/GamifySurgery/`, disposable QA is
+`http://127.0.0.1:5184`. These storage containers remain separate. No Git,
+install, network, browser, agent, external-message, SQL/RPC/schema,
+game-domain/save-format or clinical-content action was performed. Work is
+local-only; manager owns integration, browser/iOS acceptance, release and the
+audited GitHub-backup checkpoint reminder.
+
+
+## Recovery operation count and paused divergence fixtures (2026-10-29)
+
+Manager's native rerun after the DataClone correction reached **97/108 PASS**.
+The ordinary same-device reload now reopened/playable within 5 seconds (revision
+2, canExecute true, openingFailure null). Remaining A: eight deterministic
+outage/background-recovery cases reported three operations instead of two.
+Remaining B: three intermittent local-newer divergence cases compared a state
+one tick ahead of the captured winner. This follow-up diagnoses the operations
+and the clock/fixture authority separately; browser acceptance remains pending.
+
+### A: real product defect, redundant account archive of an ancestor
+
+Deterministic actual QA entry reproduction, both phone and desktop, uses the
+account provider, IndexedDB, cloning codec worker, real coordinator/game session,
+fake transport and manually controlled lifecycle/pulse clock. The test captures
+all immutable commit attempts before simulated network rejection, verifies their
+complete bodies, loads the compressed snapshots/evidence, and preserves the
+original source/profile. Before the fix it fails at the manager's exact assertion:
+**expected 2, received 3**, in **2 tests / 1 file** (`reproduce-ancestor-archive.log`,
+6.44 s, twenty unrelated tests filtered out). Earlier compact diagnostic output
+is in `trace-operations.log`; no player/owner data or credentials were read.
+
+What the three operations actually were:
+
+| Operation | Campaign/revision | Verified content |
+| --- | --- | --- |
+| Original enrollment | original campaign / 1 | Initial QA copy, 11 evidence rows. |
+| Unnecessary import | new archived campaign / 1 | Earlier local speed-2 ancestor, 13 rows; already contained in the winner. |
+| Winning checkpoint | original campaign / 2 | Latest speed-4 state, original 11-row prefix plus its four-row suffix (15 total). |
+
+The failed pre-outage frozen speed-2 request was **not** replayed/committed.
+Its operation ID/body/hash remain byte-identical in protected local recovery.
+The eventual speed-4 checkpoint contains its history and uploads once. Thus the
+third operation was neither a duplicate gameplay replay nor a 15-second ordinary
+checkpoint; it was an unnecessary archived-campaign import that consumed a slot.
+
+Before-fix root cause: `automaticResolution.ts:247-253` skipped a retained copy
+when the account head already descended from it, but did not test whether the
+**selected winner** descended from it. During offline play, the account head is
+behind both the retained speed-2 ancestor and speed-4 winner, so the ancestor was
+mistaken for a divergent loser and imported with status archived. The complete
+per-turn source snapshot is `.local-dev/flag-recovery-checkpoints-20261029/before/`.
+
+Fix: add `copyDescendsFrom(winner.copy, copy.copy)` to that archive exclusion.
+The existing immutable header/prefix checks prove ancestry; differing branches
+still use the archived keep-both path. Existing protected recovery bytes are
+untouched. This prevents an avoidable slot use without deleting anything or
+relaxing server revision/evidence checks. No SQL/RPC/domain/save-format change.
+
+Both rendered QA regressions pass with exactly **two** operations, one account
+campaign, revisions 1 -> 2, one accepted latest checkpoint, no repeated evidence
+IDs, unchanged evidence prefix, speed 2 -> 4 histories verified by the codec,
+zero usage replay, and exact retention of the unsubmitted frozen operation.
+A second background pulse/renewal leaves the operation count unchanged.
+
+The e2e outage cases keep the original exact count of two and now additionally
+assert the single slot, monotonic revisions, immutable retry bodies, one accepted
+operation, verified evidence prefix/unique IDs and exact hydrated final state.
+No assertion was loosened to accept the extra operation.
+
+### B: fixture authority race reproduced; saved paused copies remain paused
+
+No automatic unpause was reproduced for a verified paused winning copy. Four
+new coordinator/game-session tests cover both winner directions and free/full
+slots, require canExecute true, compare the complete chosen hydrated state
+(except its necessary campaign identity), preserve paused=true, checkpoint, then
+reopen and compare the complete state again. Existing keep-both/fencing/slot
+safety checks continue to run.
+
+The former e2e advance helper (`cloud-recovery.spec.ts:93-100` in before/)
+captured `const qa = window.__cloudQa` once, awaited each individual unpause/tick
+command, ignored **every** Boolean command result (including the final pause),
+and read the captured handle's snapshot. Those awaits allow foreground checks,
+network fallback/reopening, live interval tasks and session replacement between
+fixture commands. The QA methods close over the active session at publication
+(`cloudSavesQa.tsx:101-117` before/).
+
+A deterministic phone/desktop integration reproduction now forces an actual
+same-document network reconnect between the fixture's unpause and final pause:
+
+1. Reconnect replaces the original game session with its verified offline copy.
+2. The old captured QA handle refuses SET_PAUSED (false); its session is fenced.
+3. `CloudGameSession.state` (`gameSession.ts:76-77`) returns a **paused UI overlay**
+   for that fenced owner. That overlay is not a saved pause command.
+4. The current checked session still has its faithfully saved paused=false.
+   Invoking its real presentation clock callback advances exactly one facility
+   tick, reproducing the one-tick mismatch against the old apparent winner.
+
+The game-domain guard (`reducer.ts:8488-8500`, read only) already prevents time
+advancement for a truly paused state; an unchecked interval callback alone does
+not explain the extra facility tick. No gameplay pause/timer/domain rule was
+changed. The exact native event interleaving in the three manager failures is
+not available in this sandbox; the test establishes a concrete unsafe fixture
+race matching the symptom, rather than claiming a directly observed native
+unpause. Manager repeat-each runs must confirm the fix in the browser.
+
+Fix the fixture: add dev-only QA `commands` which executes/checks the entire
+unpause/manual-ticks/final-pause sequence in one JavaScript turn, then awaits its
+one durability boundary and verifies that the owner can still execute. A refused
+command/replaced owner returns null, never a successful paused overlay. The e2e
+helper reads the fresh handle, checks the returned authoritative paused state
+and exact requested tick count, and retains full active/archived byte-for-byte
+state comparisons. The winning/active paused flags are now explicit assertions.
+It does not disable the product clock, add a fixed sleep, tolerate a one-tick
+error, or relax takeover/replay/slot/evidence safety checks.
+
+The phone/desktop same-document regression then uses that checked batch, reopens
+the saved paused copy, drives the remaining live callbacks, and compares its
+entire state without tick/receipt drift. The initial request to pause via the
+fenced handle is explicitly asserted false, demonstrating the distinction
+between the old helper's apparent pause and the real saved state.
+
+Validation in progress: initial focused new paths **2 files / 54 PASS**, 28.52 s
+(`checkpoints-and-pause-final.log`); seven workspace typechecks and e2e/QA types
+PASS, runtime e2e import graph **12 modules PASS**. Final broad/full results and
+source audit will be appended below. Owned source files are only
+session/cloud/automaticResolution.ts and its test; qa/cloudSavesQa.tsx and its
+integration test; tests/e2e/cloud-recovery.spec.ts. No other game or clinical
+source is edited. Native Playwright remains with the manager, including repeated
+B cases; no browser pass count beyond the manager's 97/108 is claimed here.
+
+
+### Final A/B worker validation and manager handoff
+
+- Confirmed pre-fix A reproduction: **1 file / 2 failed / 20 filtered**, expected
+  two operations but received three, 6.44 s, reproduce-ancestor-archive.log.
+  A temporary compact operation classification in trace-operations.log identifies
+  the unnecessary archived import; its console tracing is removed from source.
+- Initial fix check: **1 file / 2 PASS / 20 filtered**, 6.17 s,
+  ancestor-fixed.log. Frozen original retained exactly; only latest descendant
+  uploaded; no second account slot.
+- New-path focused run: **2 files / 54 PASS**, 28.52 s,
+  checkpoints-and-pause-final.log. Includes four exact paused branch/slot tests
+  and both phone/desktop actual-entry outage and same-document stale-handle
+  reproductions. An initial full-slot test fixture used a duplicate campaign
+  name, was corrected to a unique archived name, and is not a product change.
+- Final broad focused suite: **31 files / 630 PASS**, 160.64 s, focused.log.
+- **Full player: 296 files / 3,043 PASS / 3,043 total**, 335.12 s,
+  full-player.log / full-results.json / validation-summary.json. Zero failures,
+  pending or todo tests; eight tests added relative to the 3,035-test source.
+- **Seven workspace typechecks PASS**, typecheck-final.log:
+  clinical-context-workbench client/server, player, balance-config,
+  clinical-authoring, clinical-content, clinical-research, game-domain.
+- **Cloud e2e / QA TypeScript PASS**, typecheck-e2e-final.log.
+- **Runtime e2e import graph PASS: 12 relative modules**,
+  e2e-import-audit-final.log. The manager's pure fixture split/re-export are
+  byte unchanged. No spec imports coordinator/codecWorker-reaching modules.
+
+Final source ownership is five files (no new source file):
+
+- apps/player/src/session/cloud/automaticResolution.ts
+- apps/player/src/session/cloud/automaticResolution.test.ts
+- apps/player/src/qa/cloudSavesQa.tsx
+- apps/player/src/qa/cloudSavesQa.integration.test.tsx
+- tests/e2e/cloud-recovery.spec.ts
+
+The sole gameplay change excludes an immutable ancestor of the selected winner
+from unnecessary archived imports. QA-only batch support makes intended paused
+fixtures authoritative. The complete equality, paused flag, exact operation
+count, immutable operation, evidence-prefix/unique-ID, usage, branch preservation,
+capacity, fencing, corrupt-prior export, deletion and slot assertions remain.
+No game-domain/save-format, SQL/RPC, clinical-content or question-tooling edit.
+
+Evidence and per-turn before/after diff are
+.local-dev/flag-recovery-checkpoints-20261029/. Source hashes cover the full
+monitored validation input and the five owned source files; no source changed
+during final validation. Prior document bytes and all concurrent work are
+preserved. audit.json / review.diff / review.json record final scope and checks.
+
+Commands (PowerShell, repository root):
+
+```powershell
+$env:NODE_OPTIONS = (($env:NODE_OPTIONS + ' --import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs').Trim())
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/cloud src/App.cloudLifecycle.test.tsx src/App.cloudBrowserFailures.test.tsx src/App.cloudReopenAsync.test.tsx src/App.cloudAccess.test.tsx src/qa/cloudSavesQa.integration.test.tsx src/ui/CloudSaveControls.test.tsx src/AppShell.sessionLinks.test.tsx src/session/flagFreeze.test.tsx
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile.json=../../.local-dev/flag-recovery-checkpoints-20261029/full-results.json
+npm.cmd run typecheck
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/flag-recovery-checkpoints-20261029/tsconfig.e2e.json
+node .local-dev/flag-auto-resolution-20261028/check-e2e-imports.cjs
+```
+
+Manager next: rerun all **108 browser project cases**, plus repeated local-newer
+free/full-slot divergence cases across projects. A is a confirmed product fix;
+its expected count remains two. B is a checked fixture correction supported by
+the forced same-document reconnect reproduction; no automatic unpause of a
+verified paused winner was found. The exact native B event order remains
+unobserved in the sandbox, so browser repeat acceptance is required. Do not
+claim 108/108 or live iOS acceptance based on unit tests. No canonical origin or
+opening pathway changed (owner local http://127.0.0.1:4173 via START_GAME.cmd;
+live https://melissarowlandc-afk.github.io/GamifySurgery/;
+disposable QA http://127.0.0.1:5184).
+
+Work is local-only. No Git, installs, network, browser, agents, external messages,
+SQL/RPC/schema, game-domain/save-format or clinical-content action was taken.
+Manager owns integration, browser/iOS acceptance, release and the audited
+GitHub-backup checkpoint reminder.

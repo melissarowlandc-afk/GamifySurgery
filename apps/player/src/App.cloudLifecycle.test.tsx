@@ -12,6 +12,7 @@ import { MemoryCloudEntryStore } from "./session/cloud/entryStorage";
 import { CloudGameSession } from "./session/cloud/gameSession";
 import { deferred, syncFixture, syncHarness } from "./session/cloud/syncTestSupport";
 import { cloudCodec } from "./session/cloud/codecWorker";
+import { encodeCloudEvidenceCheckpoint } from "./session/cloud/codecEvidence";
 
 vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
 vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
@@ -26,6 +27,8 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
       dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null };
     local.updateMetadata({ ...local.metadata, tutorial: noGuidance });
     local.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "app.local-branch" }, PROTOTYPE_DOMAIN_CONTEXT);
+    local.execute({ type: "SET_PAUSED", paused: false, operationId: "app.local-start" }, PROTOTYPE_DOMAIN_CONTEXT);
+    local.execute({ type: "ADVANCE_TICK", advancedAtRealMs: 0, operationId: "app.local-tick" }, PROTOTYPE_DOMAIN_CONTEXT);
     await local.durable(); local.dispose();
     const other = new CloudSyncCoordinator({ scope: h.scope, transport, cache: new MemoryCloudCache(), enabled: true, clock: h.clock });
     await other.open(); await other.startWriter(true); other.resume();
@@ -33,7 +36,13 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
     remote.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "app.remote-branch" }, PROTOTYPE_DOMAIN_CONTEXT);
     expect(await remote.checkpointNow("purchase")).toBe(true);
     const accountSave = structuredClone(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!);
-    if (!freeSlot) h.server.seed(h.scope.accountId, (await syncFixture("app.other-slot")).confirmed);
+    if (!freeSlot) {
+      const unrelated = await syncFixture("app.other-slot");
+      const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
+        campaign: { ...unrelated.prepared.envelope.campaign, name: "Other clinic" }, source: unrelated.prepared.sourceRecovery,
+        operationId: "unrelated.name", expectedRevision: "1" });
+      h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });
+    }
     const env = phoneTestDom(); Object.assign(env.browser.location, { search: `?layout=${layout}`, href: `http://127.0.0.1:4173/?layout=${layout}` });
     Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });
     let active: CloudGameSession | null = null;
@@ -47,21 +56,24 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
     await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
       <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
     </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
-    await vi.waitFor(async () => { await act(async () => {}); expect(env.element.textContent).toContain("These copies have different histories"); }, { timeout: 5_000 });
-    expect(active!.canExecute).toBe(false);
-    const label = "Keep both — save this device's progress as a separate campaign";
+    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+    expect(active!.coordinator.scope.campaignId).not.toBe(h.scope.campaignId);
+    expect(active!.state.simulationSpeed).toBe(2);
+    expect(active!.metadata.name).toBe(h.prepared.envelope.campaign.name);
+    expect(await entryStore.read("last-active-campaign")).toEqual({ campaignId: active!.state.campaignId });
+    expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Clinic status")).toHaveLength(0);
+    expect(env.element.textContent).not.toContain("Keep both");
+    expect((await entryStore.entries()).some(row => row.key.startsWith("conflict:"))).toBe(true);
     if (freeSlot) {
-      await env.click(label);
-      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); expect(active?.coordinator.scope.campaignId).not.toBe(h.scope.campaignId); }, { timeout: 5_000 });
-      expect(active!.state.simulationSpeed).toBe(2); expect(active!.metadata.name).toContain("(this device)");
-      expect(await entryStore.read("last-active-campaign")).toEqual({ campaignId: active!.state.campaignId });
-      expect((await h.cache.read(h.scope))!.entry.recovery).toBeNull();
-      expect((await entryStore.entries()).some(row => row.key.startsWith("conflict:"))).toBe(true);
+      const archived = h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!;
+      expect(archived.confirmed.evidence).toEqual(accountSave.confirmed.evidence);
+      expect((await transport.list()).find(row => row.campaignId === h.scope.campaignId)).toMatchObject({ status: "archived", name: expect.stringContaining("(older copy)") });
     } else {
-      expect(env.button(label).attributes.disabled).toBeDefined(); expect(env.element.textContent).toContain("No slot is free");
-      expect(active!.state.simulationSpeed).toBe(2); expect(active!.coordinator.view.pending).toBe(true);
+      expect(h.server.account(h.scope.accountId).campaigns.has(h.scope.campaignId)).toBe(false);
+      expect(h.server.account(h.scope.accountId).campaigns.has("app.other-slot")).toBe(true);
+      expect((await entryStore.entries()).filter(row => row.key.startsWith("older-copy:")).some(row =>
+        JSON.stringify((row.value as any).copy.evidence) === JSON.stringify(accountSave.confirmed.evidence))).toBe(true);
     }
-    expect(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)).toEqual(accountSave);
     expect(h.server.usageCount(h.scope.accountId)).toBe(0);
   });
 

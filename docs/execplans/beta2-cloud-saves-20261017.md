@@ -4371,3 +4371,191 @@ and pending manager browser acceptance are recorded in
 divergent campaign". The earlier October 25 live-confirmation gap remains
 unattributed without the affected device's actual diagnostics; this decision
 does not add live evidence about that gap.
+
+## Automatic newest-progress resolution (owner decision, 2026-10-28)
+
+The owner supersedes the earlier explicit conflict/takeover choice. Normal open
+and reconnect choose the verified copy with the greatest facility tick. Ties
+use transition sequence, clinical XP, facility level and evidence row count,
+then a canonical identity-independent checkpoint SHA-256; an equivalent account
+head wins a final source tie. Device wall clocks, updatedAtRealMs and accepted
+timestamps never order progress. Preserve every replaced divergent checkpoint
+and raw source in the account/backend-scoped protected entry store before any
+mutation; never evict campaign/recovery bytes as auxiliary data.
+
+The lane owns player cloud resolution/discovery, coordinator/session integration,
+App/router, Account/privacy older-copy support, cloud save presentation and their
+tests, plus cloud QA/e2e flows. Concurrent clinical content, question tooling and
+other unrelated work are excluded. No Git, installs, network, browser execution,
+SQL changes or game-domain/save-format changes are authorized.
+
+Milestones: (1) discover/verify retained sources and rank clinic progress;
+(2) automatic fenced descendant resume and faithful branch import/archive with
+protected local overflow and durable operation journals; (3) simplify ordinary
+status to one recovery action and expose older copies under Account/privacy;
+(4) deterministic unit/integration regressions and e2e flow alignment; (5) focused,
+full sandbox player, seven workspace and e2e/QA typechecks, exact counts.
+
+Evidence so far: inspectLocalCloudSources retains raw profile texts, but reads
+only current localStorage; prepareAutomaticCampaignEnrollment excludes enrolled
+IDs. CloudSyncCoordinator.open loads one cache entry and prefers its following
+candidate, never scanning conflict/raw retained entries. A newer retained Day 2
+copy can therefore remain undiscovered. The live screenshots do not establish
+that those bytes survive on the owner's current standalone origin/profile. A
+re-created Home Screen app or separate Safari storage can also lack unsynced
+bytes. This work searches all account-owned retained sources; it cannot recover
+bytes absent from both device and account.
+
+### Automatic copy selection: final product contract (2026-10-28 decision; implemented 2026-10-29)
+
+The owner supersedes the earlier routine/conflict/takeover choices: open the
+verified copy with the most facility progress automatically, including true
+divergence and a visible other writer. Facility tick orders first; ties use
+transition sequence, clinical XP, facility level, evidence count and a stable
+identity-independent checkpoint hash. No device wall clock orders saves.
+
+Descendants upload normally. Divergent winners keep the original clinic name
+and use the existing faithful import path. Preserve the other branch as an
+archived <name> (older copy), or as protected device recovery/export when no
+slot is free. With two occupied slots, the owner authorizes reclaiming only
+the exact older archived/released account head after its complete bytes have
+been verified, durably protected and read back; never remove an unrelated
+clinic. A durable journal handles interruption/lost acknowledgement and fresh
+revision/generation CAS handles other writers. Existing immutable evidence is
+never renumbered/overwritten, no domain command is replayed, and imports do not
+claim historical usage credit. Revocation/deletion and corrupt-head read-only
+recovery remain real gates. No SQL/RPC or domain/save-format changes are needed.
+
+Normal play has no copy-choice dialog. A fenced old device has one plain notice
+and Open here. Account & privacy contains nested Older copies (support) for
+verified list/export and independent restoration within slot limits. Explicit
+account management and destructive double confirmations remain. Verified local
+progress may continue offline without any account lease/upload authority;
+reconnect performs full selection and fencing again.
+
+Recovery discovery includes old raw enrolled profiles, both frozen/following
+candidates, conflict journals and prior separate imports with provable parent
+identity. This can recover the earlier Day 2 copy if those bytes still exist;
+no claim is made that the actual phone retains them or about the unconfirmed
+October 25 account-save gap. See the active flag-freeze ExecPlan for file/line
+evidence, exact validation, concurrent-lane failures and manager browser work.
+
+
+### Automatic resolution integration correction (2026-10-29)
+
+The October 28 no-normal-save-choices decision is unchanged. A foreground event
+must not undo an explicit Save & Close in the current document or replace a
+verified-prior support/recovery screen while its export is in use. Those screens
+remain stable; Open here or Retry explicitly re-runs automatic selection. Fresh
+launch continues automatically. After dismissing Safe-to-close, one Open here
+notice supplies a visible path back to play.
+
+A corrupt remote head must be verified remotely even when this device has valid
+cached bytes at the same revision. Protect the complete local entry first,
+then show genuine read-only prior recovery with one action and usable Account &
+privacy export. No command or evidence replay, server rewind, clinical-content,
+SQL/RPC, domain or save-format change is part of this correction. Accepted local
+encoding has bounded preparation and keeps the live owner/bytes on timeout.
+
+The manager rejected the previous 108-case browser result. Confirmed product
+reproductions, corrections, attribution limits and exact validation evidence
+are in the flag-freeze ExecPlan's browser rejection follow-up. Acceptance still
+requires the manager's browser rerun.
+
+
+### Reopen automatically after Save & Close (manager clarification, 2026-10-29)
+
+This supersedes the immediately preceding correction's decision to keep an
+explicit close closed on foreground. The owner wants her clinic to open again
+without another routine action: return to this device's last active campaign
+after an ordinary reload **and after Save & Close**, on a fresh document or
+when the suspended Home Screen document foregrounds. Re-run full verified-copy
+selection, fresh account checks and fenced writer takeover/reclaim. Retaining
+a selection ID never grants lease or upload authority.
+
+Keep the campaign list when there is no clear last campaign, or the player
+explicitly chose Choose a campaign / Account campaign screen. Persist that
+navigation choice separately as an auxiliary null selection. Manual Resume
+replaces it and cancels any outstanding automatic selection. Never treat an
+early empty summary list or an unfinished IndexedDB read as a terminal decision;
+selection retries within a bounded window and leaves manual Resume usable.
+
+The verified-prior corrupt-head recovery/export exception stays stable and
+read-only; it cannot overwrite the corrupt account head. Normal operation still
+has no save-choice dialog, and all retained bytes, slot limits, immutable
+operations/evidence, deletion/revocation and other-writer fencing remain.
+Phone blocked-state notices reserve header space so More / Account & privacy
+export remain reachable. See the asynchronous automatic reopen follow-up in
+flag-freeze-20261028.md for the reproduced race, corrections and validation.
+No source of live October 25 confirmation timestamps or the owner's missing
+Day 2 device bytes has been newly observed. Native browser acceptance remains
+the manager's responsibility; origins, storage containers and pathways are
+unchanged.
+
+
+### Automatic reopen: late document checkpoints and proof durability (2026-10-29)
+
+The no-normal-save-choices and newest-verified-progress decisions remain.
+A previous document's final local write can commit after the next document's
+read. A local cache CAS rejection must trigger bounded fresh copy selection,
+with exact frozen/accepted recovery protected before replacement; it must not
+be confused with quota failure or an unrecognised device. Token intents/readback
+use a bounded storage wait, and stale acquisition proof can renew against the
+fresh account head before fenced rotation. Completed auxiliary quota denial
+still cannot block an independent campaign save. No server/RPC/schema or game
+save format changes are needed.
+
+Normal clean/descendant resume need not duplicate full conflict/older-copy
+records. Preserve all existing records and protect bytes when a branch,
+uncertain operation, actual cache race or replacement requires them. The
+manager's writerActive row alone does not classify device identity: lease
+RPCs prove tokens; automatic opening already supports fenced takeover.
+Current reproductions, evidence, exact validation and native acceptance limits
+are in the Writer proof and late document checkpoint follow-up section of
+flag-freeze-20261028.md. QA-only failure classifications contain no token/save/
+clinical values. The manager still reruns all 108 browser project cases.
+
+
+### Native worker boundary correction, 2026-10-29
+
+The approved automatic newest-progress resolution/reopen decision is unchanged.
+Manager captured a native-browser `DataCloneError` on QA reload: account cache
+enumeration spread the actual guarded runtime (including proxies/callback) into
+a codec worker scope. Structural TypeScript Pick types did not remove services.
+Scope projection now sends only backend/account/campaign ID strings; cache/save
+bytes are not reset or migrated. The inline test executor and development worker
+both check structured cloning before execution, and the real QA integration
+suite crosses a cloning message boundary. A bad task cannot cancel unrelated
+worker requests. Worker input faults stay processing faults and never justify
+choosing an older copy as though newer history were corrupt. Opening diagnostics
+classify native/unexpected failures without exposing messages, stack, saves or
+tokens. All task kinds/call sites were audited. Reproduction and exact validation
+are recorded in docs/execplans/flag-freeze-20261028.md under Native codec worker
+payload cloning follow-up. Manager browser/iOS acceptance remains required;
+there is no new SQL/RPC, game-domain, save-format or clinical-content change.
+
+
+### Ancestor archive and deterministic pause-fixture correction, 2026-10-29
+
+The approved rule remains: a verified descendant continues in the same account
+campaign; only divergent history needs another archived campaign. A phone and
+desktop actual-entry reproduction showed offline recovery importing an earlier
+local ancestor into a second archived slot before uploading its later descendant.
+The extra third operation was this archive import, not a duplicate gameplay
+upload or ordinary timer checkpoint. Automatic resolution now checks ancestry
+against the selected winner as well as account heads. The full unsent frozen
+request remains protected locally byte-for-byte. Normal recovery retains one
+campaign and exactly two operations (initial import plus latest checkpoint).
+
+Saved paused winners remain paused. The divergence e2e helper had captured an
+old QA handle, ignored failed commands and could read its fenced paused UI
+overlay after same-document reconnect while the new owner was legitimately
+running. A controlled integration test reproduces that one-tick mismatch. The
+QA fixture now checks a synchronous command batch, then durability/authority,
+and explicitly verifies its paused final state and exact tick count. Gameplay
+clock rules are unchanged. Four paused branch/slot scenarios plus phone and
+desktop reconnect/reopen checks preserve exact state comparisons. The native
+three-case event interleaving was not observed directly in the sandbox; manager
+repeat-each runs remain required. See the active flag-freeze ExecPlan's Recovery
+operation count and paused divergence fixtures section for evidence and counts.
+No SQL/RPC, game-domain, save-format or clinical-content change is involved.

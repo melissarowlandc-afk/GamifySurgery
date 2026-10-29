@@ -132,7 +132,7 @@ async function fixture(layout: "phone" | "desktop", employee: boolean, casual: b
     const props = phoneFixture({ ...view, paused: current.state.paused, campaigns: current.campaigns,
       questionReviewFlags: current.questionReviewFlags, announcement: current.announcement,
       cloudSave: { campaignName: "Synthetic flag clinic", view: cloud.syncView, writerElsewhere: false,
-        onContinue: async () => cloud.coordinator.resume(), onRetry: () => automatic ? cloud.reconnect() : cloud.coordinator.retry(),
+        onContinue: async () => cloud.coordinator.resume(), onRetry: () => cloud.reconnect(),
         onUseAccountSave: async () => false, onKeepRecovery: async () => true,
         onSaveAndClose: () => Promise.resolve(false), onCampaigns: vi.fn() },
       onFlagQuestion: (...args) => {
@@ -163,6 +163,9 @@ async function fixture(layout: "phone" | "desktop", employee: boolean, casual: b
     else { expect(await coordinator.startWriter()).toBe(true); expect(coordinator.resume()).toBe(true); }
     const game = <AuthAccountContext.Provider value={accountId}><QuestionFlagProvider><Game /></QuestionFlagProvider></AuthAccountContext.Provider>;
     await env.render(automatic ? <StrictMode>{game}</StrictMode> : game);
+    // Match the router's background checkpoint after hydrating metadata. This
+    // must not depend on StrictMode tearing down and rechecking a live lease.
+    if (automatic) await act(async () => { await cloud.checkpointNow("ordinary"); });
     if (automatic) await vi.waitFor(() => {
       expect(cloud.canExecute, JSON.stringify(cloud.syncView)).toBe(true);
       expect(cloud.syncView).toMatchObject({ phase: "ready", pending: false });
@@ -323,20 +326,18 @@ describe("reported hosted flag recovery boundaries", () => {
     await f.env.click("Resume facility time");
     await act(async () => { expect(await f.cloud().durable()).toBe(false); });
     expect(f.cloud().canExecute).toBe(false);
-    const blocked = f.env.find(node => node.attributes["aria-label"] === "Play paused for account save");
+    const blocked = f.env.find(node => node.attributes["aria-label"] === "Clinic status");
     expect(blocked.attributes.role).toBe("alert"); expect(blocked.textContent).toContain("could not save your progress");
     expect(allElements(f.env.element, node => node.attributes.class === "mobile-chart" || node.attributes.class?.includes("chart-sheet") === true).length).toBeGreaterThan(0);
     const before = serializeGameState(f.current().state);
     await act(async () => { f.current().submitAnswer(f.answer().id); });
     expect(serializeGameState(f.current().state)).toBe(before);
     expect(f.current().announcement).toContain("must be checked");
-    await f.env.click("Open account save");
     f.budget.denyCloud = false;
-    await f.env.click("Retry account save");
+    await f.env.click("Retry");
     await vi.waitFor(() => expect(f.cloud().coordinator.view.phase).toBe("ready"));
-    await f.env.click("Open account save"); await f.env.click("Resume checked campaign");
     expect(f.cloud().canExecute).toBe(true);
-    expect(allElements(f.env.element, node => node.attributes["aria-label"] === "Play paused for account save")).toHaveLength(0);
+    expect(allElements(f.env.element, node => node.attributes["aria-label"] === "Clinic status")).toHaveLength(0);
   });
 
   it.each(["phone", "desktop"] as const)("recovers a suspend-clock gate over an open %s flagged chart without takeover or losing flags", async layout => {
@@ -345,10 +346,9 @@ describe("reported hosted flag recovery boundaries", () => {
     f.clock.wall += 10_000;
     await act(async () => { await f.cloud().coordinator.pulse(); });
     expect(f.cloud().canExecute).toBe(false);
-    expect(f.env.find(node => node.attributes["aria-label"] === "Play paused for account save").textContent).toContain("clock change or app suspension");
-    await f.env.click("Open account save"); await f.env.click("Retry account save");
+    expect(f.env.find(node => node.attributes["aria-label"] === "Clinic status").textContent).toContain("connection check to continue");
+    await f.env.click("Retry");
     await vi.waitFor(() => expect(f.cloud().coordinator.view.phase).toBe("ready"));
-    await f.env.click("Open account save"); await f.env.click("Resume checked campaign");
     expect(f.cloud().canExecute).toBe(true);
     expect(JSON.parse(serializeGameState(f.current().state))).toEqual(before);
     expect(f.current().questionReviewFlags).toHaveLength(1);

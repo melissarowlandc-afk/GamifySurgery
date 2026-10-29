@@ -11,6 +11,7 @@ import { clearArchivedReviewFlags } from "../session/storagePressure";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { CLOUD_NOTICE_VERSION, downloadCloudRecovery, useCloudAccount } from "../session/cloud/CloudAccount";
 import { cloudEntryError } from "./cloudEntryError";
+import { exportOlderClinicCopy, listOlderClinicCopies, restoreOlderClinicCopy, type OlderClinicCopy } from "../session/cloud/olderCopies";
 import "./betaAccount.css";
 
 function useUsageStatus() {
@@ -169,7 +170,7 @@ function CloudAccountMenu({ children }: { children?: ReactNode }) {
   };
   return <details className="beta-account cloud-account">
     <summary>Account &amp; privacy</summary><p>Signed in as {account.email}</p>
-    <PrivacyInfo />{children}<AcceptUsageNotice />
+    <PrivacyInfo />{children}<AcceptUsageNotice /><OlderCopies />
     <button type="button" disabled={pending} onClick={cloud.showCampaigns}>Account campaign screen</button>
     <p>Sign out keeps this account's recovery copy on this device. On a shared device, stored game data can remain accessible to people using this browser profile.</p>
     <button type="button" disabled={pending} onClick={() => void keepRecovery()}>Download device recovery copy</button>
@@ -187,5 +188,36 @@ function CloudAccountMenu({ children }: { children?: ReactNode }) {
       <button type="button" disabled={pending} onClick={() => setConfirm(false)}>Cancel deletion</button>
     </section> : cloud.phase !== "deleted" ? <button type="button" disabled={pending} onClick={() => setConfirm(true)}>{cloud.phase === "deletion-requested" ? "Retry delete my data/account" : "Delete my data/account"}</button> : <p role="status">Account data deletion is confirmed. Account access and uploads are stopped.</p>}
     {error ? <p role="alert">{error}</p> : null}{account.message ? <p role="alert">{account.message}</p> : null}<VersionLabel />
+  </details>;
+}
+
+/** Deliberately nested support tools, never part of opening/resuming play. */
+function OlderCopies() {
+  const cloud = useCloudAccount()!;
+  const [copies, setCopies] = useState<OlderClinicCopy[] | null>(null), [pending, setPending] = useState(false), [error, setError] = useState("");
+  const run = async (work: () => Promise<void>) => {
+    if (pending) return;
+    setPending(true); setError("");
+    try { await work(); } catch (failure) {
+      setError(failure instanceof Error && "code" in failure && failure.code === "capacity" ? "Both account slots are in use. This older copy is kept here and can be exported." : cloudEntryError(failure));
+    } finally { setPending(false); }
+  };
+  return <details className="cloud-older-copies" onToggle={event => {
+    if (event.currentTarget.open && copies === null && !pending) void run(async () => setCopies(await listOlderClinicCopies(cloud.runtime)));
+  }}>
+    <summary>Older copies (support)</summary>
+    <p>Saved copies on this device can be exported or restored as a separate clinic.</p>
+    {copies?.length === 0 ? <p>No older copies are retained on this device.</p> : null}
+    {copies?.map(copy => <section key={copy.key} aria-label={`Older copy: ${copy.name}`}>
+      <p>{copy.name}: {copy.dayTime} · ${copy.cash.toFixed(2)}</p>
+      <button type="button" disabled={pending} onClick={() => void run(async () => downloadCloudRecovery(await exportOlderClinicCopy(cloud.runtime, copy.key)))}>Export older copy</button>
+      <button type="button" disabled={pending} onClick={() => void run(async () => {
+        if (cloud.active && !await cloud.active.durable()) throw new Error("storage");
+        const id = await restoreOlderClinicCopy(cloud.runtime, copy.key); await cloud.refresh();
+        if (cloud.openCampaign) await cloud.openCampaign(id); else cloud.showCampaigns();
+      })}>Restore as a separate clinic</button>
+    </section>)}
+    {pending ? <p role="status">Checking older copies...</p> : null}
+    {error ? <p role="alert">{error}</p> : null}
   </details>;
 }

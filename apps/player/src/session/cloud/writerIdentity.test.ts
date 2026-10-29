@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { IndexedDbCloudEntryStore, MemoryCloudEntryStore } from "./entryStorage";
 import { readOptionalCloudEntry, readWriterIdentity, writeWriterIdentity } from "./writerIdentity";
 import type { CloudLease } from "./transport";
+import { CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 
 afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 const scope = { backendId: "synthetic", accountId: "a", campaignId: "c" };
@@ -26,13 +27,22 @@ describe("bounded per-campaign writer proof", () => {
     await store.write("writer:c", raw); expect(await readWriterIdentity(store, scope)).toBeNull();
     expect(await store.read("writer:c")).toEqual(raw);
   });
-  it("bounds a suspended auxiliary read/write so it cannot hold campaign startup indefinitely", async () => {
+  it.each([null, "invalid-generation"])("replaces an unusable %s journal with checked writer proof", async legacy => {
+    const store = new MemoryCloudEntryStore();
+    await store.write("writer:c", legacy === null ? null : { scope, lease: { ...lease, writerGeneration: legacy }, acquisition: null });
+    expect(await readWriterIdentity(store, scope)).toBeNull();
+    expect(await writeWriterIdentity(store, scope, lease)).toBe(true);
+    expect((await readWriterIdentity(store, scope))?.lease).toEqual(lease);
+  });
+  it("bounds optional reads and rejects an unsettled writer proof before it can authorize an acquisition", async () => {
     vi.useFakeTimers(); const store = new MemoryCloudEntryStore();
     vi.spyOn(store, "read").mockImplementation(() => new Promise(() => {}));
     vi.spyOn(store, "write").mockImplementation(() => new Promise(() => {}));
     const reading = readOptionalCloudEntry(store, "last-active-campaign"), writing = writeWriterIdentity(store, scope, lease);
+    const rejected = expect(writing).rejects.toMatchObject({ code: "network" });
     await vi.advanceTimersByTimeAsync(1500);
-    expect(await reading).toBeNull(); await expect(writing).resolves.toBeUndefined();
+    expect(await reading).toBeNull();
+    await vi.advanceTimersByTimeAsync(CLOUD_READ_TIMEOUT_MS - 1500); await rejected;
     expect(vi.getTimerCount()).toBe(0);
   });
 });

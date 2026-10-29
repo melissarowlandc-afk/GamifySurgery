@@ -636,8 +636,10 @@ export function usePrototypeSession(
     return () => {
       unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus);
       window.removeEventListener("pageshow", focus); window.removeEventListener("online", focus);
-      document.removeEventListener("resume", focus); cloud.coordinator.pause();
+      document.removeEventListener("resume", focus);
       // React StrictMode may immediately bind the same owner again.
+      // Do not revoke a checked lease for that synchronous rebind. Real
+      // disposal below fences commands; navigation pauses before durability.
       queueMicrotask(() => { if (cloudBindingGenerationRef.current === generation) cloud.dispose(); });
     };
   }, [cloud, stageActiveState]);

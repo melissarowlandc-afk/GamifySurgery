@@ -304,10 +304,17 @@ describe("standalone hosted lifecycle", () => {
   });
 
   it("fences a former document even when only its acquisition intent survived a quota error", async () => {
-    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), write = entryStore.write.bind(entryStore);
-    vi.spyOn(entryStore, "write").mockImplementation(async (key, value) => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), write = entryStore.write.bind(entryStore), cas = entryStore.compareAndSet.bind(entryStore);
+    const rejectLeaseReceipt = (key: string, value: unknown) => {
       if (key.startsWith("writer:") && !(value as { acquisition: unknown }).acquisition) throw new DOMException("quota", "QuotaExceededError");
+    };
+    vi.spyOn(entryStore, "write").mockImplementation(async (key, value) => {
+      rejectLeaseReceipt(key, value);
       return write(key, value);
+    });
+    vi.spyOn(entryStore, "compareAndSet").mockImplementation(async (key, expected, value) => {
+      rejectLeaseReceipt(key, value);
+      return cas(key, expected, value);
     });
     const make = () => new CloudSyncCoordinator({ scope: h.scope, transport: h.server.transport(h.scope.accountId), cache: h.cache, clock: h.clock, entryStore, enabled: true });
     const old = make(); await old.open(); expect(await old.focus()).toBe(true);

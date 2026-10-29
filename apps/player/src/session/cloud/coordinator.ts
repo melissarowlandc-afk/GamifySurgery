@@ -1,13 +1,16 @@
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
-import { CloudCodecError, utf8Bytes } from "./codecJson";
+import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
 import { cloudCodec } from "./codecWorker";
-import { cloudCheckDeadline } from "./checkDeadline";
+import { cloudScopeData } from "./scopeData";
+import { cloudCheckDeadline, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 import type { CloudEntryStore } from "./entryStorage";
 import { newWriterToken, readWriterIdentity, writeWriterIdentity, type WriterAcquisition } from "./writerIdentity";
 import type { CloudConflictCopies } from "./progress";
 import { importSeparateCloudCampaign, separateCloudCampaignId } from "./importCampaigns";
+import { cloudCopyFamily, copyDescendsFrom } from "./copySelection";
 import type { CloudCodecExecutor } from "./codecTasks";
+import { CloudCacheError } from "./codecCache";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
 import {
   CLOUD_CHECKPOINT_MS, CLOUD_GRACE_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CLOUD_SAVES_ENABLED_BY_DEFAULT,
@@ -65,6 +68,7 @@ export class CloudSyncCoordinator {
   private stopped = false;
   private resumeAuthorized = false;
   private localDurable = true;
+  private localCacheConflict = false;
   private uploading: Promise<boolean> | null = null;
   private closing: Promise<boolean> | null = null;
   private closingRequested = false;
@@ -79,12 +83,15 @@ export class CloudSyncCoordinator {
   private coveredUsage = new Set<string>();
   private writerElsewhere = false;
   private conflictCopies: CloudConflictCopies | undefined;
+  private offlineLocal = false;
+  private offlineBase = false;
+  private automaticSelection: (() => Promise<boolean>) | null = null;
 
   constructor(private readonly options: {
     scope: CloudScope; transport: CloudTransport; cache: CloudCache; enabled?: boolean;
     clock?: CloudClock; newOperationId?: () => string; codec?: CloudCodecExecutor; entryStore?: CloudEntryStore;
   }) {
-    this.scope = Object.freeze({ ...options.scope });
+    this.scope = Object.freeze(cloudScopeData(options.scope, options.scope.campaignId));
     this.enabled = options.enabled ?? CLOUD_SAVES_ENABLED_BY_DEFAULT;
     this.phase = this.enabled ? "checking" : "off";
     this.clock = options.clock ?? { wallNow: () => Date.now(), monotonicNow: () => performance.now() };
@@ -94,10 +101,15 @@ export class CloudSyncCoordinator {
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
   get confirmedRevision(): string | null { return this.record?.entry.confirmed.revision ?? null; }
+  get hasLocalCacheConflict(): boolean { return this.localCacheConflict; }
   get reconnectsAutomatically(): boolean { return this.autoReconnect; }
   beforeReconnect(prepare: () => Promise<boolean>): () => void {
     this.prepareLocalRecovery = prepare;
     return () => { if (this.prepareLocalRecovery === prepare) this.prepareLocalRecovery = null; };
+  }
+  onAutomaticSelection(select: () => Promise<boolean>): () => void {
+    this.automaticSelection = select;
+    return () => { if (this.automaticSelection === select) this.automaticSelection = null; };
   }
   get encodingBase(): { revision: string; headerSha256: string; records: number } | null {
     const confirmed = this.record?.entry.confirmed;
@@ -114,6 +126,7 @@ export class CloudSyncCoordinator {
   }
   private recovery(): CloudRecovery | null { return (this.attempted ?? this.record?.entry)?.recovery ?? null; }
   get confirmed(): CloudConfirmed | null { return this.record ? clone(this.record.entry.confirmed) : null; }
+  get recoveryEntry(): CloudCacheEntry | null { return clone(this.attempted ?? this.record?.entry ?? null); }
   get pendingCandidate(): CloudCandidate | null {
     const pending = this.recovery();
     if (pending?.following) return clone(pending.following);
@@ -121,7 +134,7 @@ export class CloudSyncCoordinator {
   }
   get view(): CloudSyncView {
     this.checkTime();
-    return { phase: this.phase, canExecute: this.allowed(), pending: this.recovery() !== null || Boolean(this.record?.entry.recovery),
+    return { phase: this.phase, canExecute: this.allowed(), pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
       localDurable: this.localDurable, revision: this.record?.entry.confirmed.revision ?? null,
       confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure,
       ...(this.record?.entry.confirmed.priorRecovery ? { priorRecovery: { verifiedRevision: this.record.entry.confirmed.revision,
@@ -130,7 +143,7 @@ export class CloudSyncCoordinator {
   }
   private allowed(): boolean {
     return this.enabled && !this.stopped && !this.closingRequested && this.resumeAuthorized && this.localDurable &&
-      this.window !== null && this.remaining(this.window.until) > 0 &&
+      (this.offlineLocal || this.window !== null && this.remaining(this.window.until) > 0) &&
       ["ready", "saving", "waiting"].includes(this.phase) && (!this.grace || this.remaining(this.grace) > 0);
   }
   private checkTime(): void {
@@ -168,11 +181,14 @@ export class CloudSyncCoordinator {
       this.phase = "waiting";
       this.checkTime();
     } else {
+      this.offlineLocal = false;
       this.resumeAuthorized = false;
       this.phase = code === "auth" ? "auth" : code === "writer" || code === "revision" ? "conflict" :
         code === "capacity" ? "capacity" : code === "storage" ? "storage" : "blocked";
       if (code === "storage" || code === "processing") this.localDurable = false;
       if (["auth", "deleted", "revoked", "disabled", "protocol", "notice", "writer"].includes(code)) { this.window = null; this.suspendedLease = null; }
+      if (["auth", "deleted", "revoked", "disabled", "protocol", "writer"].includes(code))
+        void this.options.entryStore?.write(`command-block:${this.scope.campaignId}`, { failure: code }).catch(() => {});
     }
     this.emit();
   }
@@ -195,6 +211,7 @@ export class CloudSyncCoordinator {
   }
   private async persist(entry: CloudCacheEntry): Promise<void> {
     const epoch = this.epoch;
+    this.localCacheConflict = false;
     this.attempted = clone(entry);
     try {
       try {
@@ -219,14 +236,29 @@ export class CloudSyncCoordinator {
         }
       }
       this.attempted = null; this.localDurable = true;
-    } catch (error) { if (this.live(epoch)) this.localDurable = false; throw error; }
+    } catch (error) {
+      if (this.live(epoch)) {
+        this.localDurable = false;
+        if (error instanceof CloudCacheError && error.reason === "conflict") {
+          // A previous document can finish its last local commit after our read.
+          // Keep both the original immutable request and accepted following bytes
+          // before asking the automatic opener to read/rank the new cache again.
+          if (this.options.entryStore) {
+            for (const device of [this.record?.entry, this.attempted]) if (device?.recovery)
+              await this.preserveEntry(device, device.confirmed);
+          }
+          this.localCacheConflict = true;
+        }
+      }
+      throw error;
+    }
   }
   private async verify(confirmed: CloudConfirmed, summary?: { name?: string; status?: "resumable" | "archived" }): Promise<void> {
     if (confirmed.campaignId !== this.scope.campaignId) throw new CloudSyncError("corrupt");
     try { const loaded = await this.codec.run({ kind: "verify", input: { ...confirmed, expectedRevision: confirmed.revision,
       expectedCampaignId: this.scope.campaignId, expectedBaselineId: confirmed.baselineId } });
       if (summary?.name !== undefined && loaded.campaign.name !== summary.name || summary?.status !== undefined && loaded.campaign.status !== summary.status) throw new CloudSyncError("corrupt"); }
-    catch (error) { throw new CloudSyncError(error instanceof CloudCodecError && error.code === "worker_unavailable" ? "processing" : "corrupt"); }
+    catch (error) { throw new CloudSyncError(isCloudCodecProcessingError(error) ? "processing" : "corrupt"); }
   }
   private async verifiedHead(head: Awaited<ReturnType<CloudTransport["head"]>>, cached?: CloudConfirmed): Promise<CloudConfirmed> {
     try {
@@ -262,8 +294,13 @@ export class CloudSyncCoordinator {
   }
   private async rememberWriter(epoch: number): Promise<void> {
     if (!this.live(epoch)) return;
-    this.acquisition = null; this.writerFromStorage = false;
-    await writeWriterIdentity(this.options.entryStore, this.scope, this.retainedWriter);
+    try { if (await writeWriterIdentity(this.options.entryStore, this.scope, this.retainedWriter)) this.acquisition = null; }
+    catch { /* The durable acquisition intent remains valid proof if the receipt write stalls. */ }
+    this.writerFromStorage = false;
+    try {
+      if ((await this.options.entryStore?.read<{ failure: string | null }>(`command-block:${this.scope.campaignId}`))?.failure)
+        await this.options.entryStore?.write(`command-block:${this.scope.campaignId}`, { failure: null });
+    } catch { /* A fresh server lease is authoritative; stale gates only deny offline reopen. */ }
   }
   private deviceCopy(): CloudConfirmed | null {
     const confirmed = this.confirmed, pending = this.pendingCandidate;
@@ -296,14 +333,27 @@ export class CloudSyncCoordinator {
   private async failChecked(error: unknown, epoch: number): Promise<void> {
     if (!this.live(epoch)) return;
     this.fail(error); // Fence immediately; preview work must never extend authority.
+    if (error instanceof CloudSyncError && ["deleted", "corrupt"].includes(error.code)) {
+      try {
+        const access = await cloudCheckDeadline(this.options.transport.capabilities(), 3_000);
+        if (access.admitted && !access.deletionRequested && access.accountId === this.scope.accountId) {
+          const family = await cloudCopyFamily(this.scope.campaignId), summaries = await cloudCheckDeadline(this.options.transport.list(), 3_000);
+          for (const row of summaries) if (!summaries.some(row => row.campaignId === this.scope.campaignId) &&
+            row.campaignId !== this.scope.campaignId && await cloudCopyFamily(row.campaignId) === family) {
+            if (this.live(epoch)) this.fail(new CloudSyncError("writer"));
+            return;
+          }
+        }
+      } catch { /* Revocation/deletion remains fenced if classification is unavailable. */ }
+    }
     if (error instanceof CloudSyncError && ["writer", "revision"].includes(error.code)) {
       await this.compareCopies(epoch); if (this.live(epoch)) this.emit();
     }
   }
 
   /** Opening/metadata polling never acquires a writer and never falls back to a local game. */
-  open(): Promise<boolean> { return this.boundedCheck(epoch => this.openChecked(epoch)); }
-  private async openChecked(epoch: number): Promise<boolean> {
+  open(verifyRemoteHead = false): Promise<boolean> { return this.boundedCheck(epoch => this.openChecked(epoch, verifyRemoteHead)); }
+  private async openChecked(epoch: number, verifyRemoteHead: boolean): Promise<boolean> {
     if (!this.enabled || this.stopped) return false;
     this.phase = "checking"; this.resumeAuthorized = false; this.emit();
     try {
@@ -311,16 +361,29 @@ export class CloudSyncCoordinator {
       await this.admitted(); if (!this.live(epoch)) return false;
       const stored = await this.options.cache.read(this.scope); if (!this.live(epoch)) return false;
       this.record = stored;
+      this.offlineBase = Boolean(await this.options.entryStore?.read(`offline-base:${this.scope.campaignId}`));
       const identity = await readWriterIdentity(this.options.entryStore, this.scope); if (!this.live(epoch)) return false;
       if (identity) { this.retainedWriter = identity.lease; this.acquisition = identity.acquisition; this.writerFromStorage = true; }
       const head = await this.options.transport.head(this.scope.campaignId); if (!this.live(epoch)) return false;
       this.writerElsewhere = head.writerActive;
       this.lastHead = this.now();
-      if (stored?.entry.recovery) {
+      if (stored && (stored.entry.recovery || this.offlineBase)) {
         await this.verify(stored.entry.confirmed); if (!this.live(epoch)) return false;
-        this.phase = "paused"; this.failure = "recovery-pending"; this.emit(); return true;
+        if (!verifyRemoteHead) {
+          this.phase = "paused"; this.failure = "recovery-pending"; this.emit(); return true;
+        }
+        // A corrupt remote head still needs its genuine read-only recovery UI.
+        // Keep the entire pending entry (including frozen requests and usage)
+        // before installing a verified prior projection in the current cache.
+        await this.preserveCopies(stored.entry.confirmed); if (!this.live(epoch)) return false;
       }
-      const confirmed = await this.verifiedHead(head, stored?.entry.confirmed); if (!this.live(epoch)) return false;
+      const confirmed = await this.verifiedHead(head, verifyRemoteHead ? undefined : stored?.entry.confirmed); if (!this.live(epoch)) return false;
+      if (stored && this.options.entryStore && stored.entry.confirmed.snapshot.uncompressedSha256 !== confirmed.snapshot.uncompressedSha256 &&
+        !copyDescendsFrom(confirmed, stored.entry.confirmed)) {
+        // A foreground check must not make an older/divergent clean cached
+        // projection unreachable before the automatic resolver can rank it.
+        await this.preserveCopies(confirmed); if (!this.live(epoch)) return false;
+      }
       if (this.retainedWriter && !this.acquisition && this.retainedWriter.writerGeneration !== head.writerGeneration) {
         // With no pending branch, a cold open has just verified the latest
         // account copy. An old released/fenced token is not a local conflict.
@@ -333,7 +396,7 @@ export class CloudSyncCoordinator {
   }
   startWriter(takeover = false): Promise<boolean> { return this.boundedCheck(epoch => this.startWriterChecked(takeover, epoch)); }
   private async startWriterChecked(takeover: boolean, epoch: number): Promise<boolean> {
-    if (!this.enabled || this.stopped || !this.record || this.record.entry.confirmed.priorRecovery || this.recovery() || this.checking) return false;
+    if (!this.enabled || this.stopped || !this.record || this.offlineBase || this.record.entry.confirmed.priorRecovery || this.recovery() || this.checking) return false;
     this.checkTime();
     if (this.window && this.remaining(this.window.until) > 0 && this.phase === "ready") return true;
     this.checking = true; this.resumeAuthorized = false;
@@ -357,6 +420,67 @@ export class CloudSyncCoordinator {
     this.resumeAuthorized = true; this.emit(); return true;
   }
   pause(): void { this.resumeAuthorized = false; this.emit(); }
+  /** Verified device play during a network outage has no server lease, cannot
+   * freeze/commit an operation, and must pass full selection/CAS on reconnect. */
+  async restoreVerifiedOffline(copy: CloudConfirmed, usageQuestions: CloudCandidate["usageQuestions"] = []): Promise<boolean> {
+    try {
+      if (this.stopped || copy.priorRecovery || !this.options.entryStore) return false;
+      if ((await this.options.entryStore.read<{ failure: string | null }>(`command-block:${this.scope.campaignId}`))?.failure ||
+        await this.options.entryStore.read("deletion-requested") || await this.options.entryStore.read("account-command-block")) return false;
+      this.record = await this.options.cache.read(this.scope);
+      await this.verify(copy);
+      if (this.record) await this.preserveCopies(copy);
+      const loaded = await this.codec.run({ kind: "verify", input: { ...copy, expectedRevision: copy.revision,
+        expectedCampaignId: this.scope.campaignId, expectedBaselineId: copy.baselineId } });
+      await this.options.entryStore.write(`offline-base:${this.scope.campaignId}`, { snapshotSha256: copy.snapshot.uncompressedSha256 });
+      await this.persist({ schemaVersion: 1, scope: this.scope, confirmed: copy, recovery: usageQuestions.length ? {
+        baseRevision: copy.revision, writerGeneration: "0", inFlight: null, following: { campaign: loaded.campaign, snapshot: copy.snapshot,
+          evidence: { headerSha256: copy.evidence.header.uncompressedSha256, fromRecord: copy.evidence.records.length,
+            toRecord: copy.evidence.records.length, records: [] }, usageQuestions } } : null });
+      this.window = null; this.suspendedLease = null; this.offlineLocal = true;
+      this.offlineBase = true;
+      this.autoReconnect = false; this.grace = null; this.phase = "waiting"; this.failure = "network"; this.resumeAuthorized = true;
+      this.emit(); return true;
+    } catch (error) { this.fail(error); return false; }
+  }
+  /** Called before a gameplay projection is mounted. The automatic resolver has
+   * verified/ranked every copy and protected the originals. Acquire is still a
+   * revision+generation CAS; no automatic decision can overwrite a racing head. */
+  adoptAutomaticCopy(account: CloudConfirmed, chosen: CloudConfirmed, usageQuestions: CloudCandidate["usageQuestions"] = []): Promise<boolean> {
+    return this.boundedCheck(async epoch => {
+      this.pause();
+      try {
+        await this.localQueue; await this.admitted();
+        if (!this.live(epoch) || !this.record || !copyDescendsFrom(chosen, account)) throw new CloudSyncError("revision");
+        await this.verify(account); await this.verify(chosen);
+        const head = await this.options.transport.head(this.scope.campaignId);
+        if (!this.live(epoch) || head.revision !== account.revision) throw new CloudSyncError("revision");
+        // A normal clean account open replaces no local branch or uncertain
+        // operation. Preserve whole recovery bytes only when replacing them.
+        if (this.recovery()) await this.preserveCopies(account);
+        const loaded = await this.codec.run({ kind: "verify", input: { ...chosen, expectedRevision: chosen.revision,
+          expectedCampaignId: this.scope.campaignId, expectedBaselineId: chosen.baselineId } });
+        const candidate: CloudCandidate = { campaign: loaded.campaign, snapshot: chosen.snapshot,
+          evidence: { headerSha256: account.evidence.header.uncompressedSha256, fromRecord: account.evidence.records.length,
+            toRecord: chosen.evidence.records.length, records: chosen.evidence.records.slice(account.evidence.records.length) }, usageQuestions };
+        await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
+        const sent = this.now(), lease = await this.acquire(head, head.writerActive, epoch);
+        if (!this.live(epoch)) return false;
+        this.installLease(lease, sent); await this.rememberWriter(epoch);
+        this.offlineLocal = false;
+        const changed = chosen.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256 || candidate.evidence.records.length > 0;
+        await this.persist({ schemaVersion: 1, scope: this.scope, confirmed: account, recovery: changed ? {
+          baseRevision: account.revision, writerGeneration: lease.writerGeneration, inFlight: null, following: candidate } : null });
+        if (this.offlineBase) await this.options.entryStore?.write(`offline-base:${this.scope.campaignId}`, null);
+        this.offlineBase = false;
+        if (!this.live(epoch)) return false;
+        this.writerElsewhere = false; this.conflictCopies = undefined; this.grace = null;
+        this.autoReconnect = true; this.phase = "ready"; this.failure = null; this.resumeAuthorized = true;
+        if (changed) this.dirtySince = this.now();
+        this.emit(); return true;
+      } catch (error) { await this.failChecked(error, epoch); return false; }
+    });
+  }
   requireSessionReload(): void {
     this.resumeAuthorized = false; this.window = null; this.suspendedLease = null; this.phase = "paused"; this.failure = "account-save-changed"; this.emit();
   }
@@ -365,7 +489,7 @@ export class CloudSyncCoordinator {
    * It preserves bytes across suspension; it never grants new commands or lease time. */
   stage(candidate: CloudCandidate, _reason: CloudCheckpointReason = "ordinary", retainAccepted = false): Promise<boolean> {
     this.checkTime();
-    const writer = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter;
+    const writer = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter ?? (this.offlineLocal ? { writerGeneration: this.recovery()?.writerGeneration ?? "0" } : null);
     if (this.stopped || !this.record || !writer || !this.allowed() && !retainAccepted) return Promise.resolve(false);
     const epoch = this.epoch;
     let frozen = clone(candidate);
@@ -479,7 +603,7 @@ export class CloudSyncCoordinator {
   /** Fresh admission/head plus identical-operation lookup precede ANY retry/reacquire. */
   retry(resumeWhenChecked = false): Promise<boolean> { return this.boundedCheck(epoch => this.retryChecked(resumeWhenChecked, epoch)); }
   private async retryChecked(resumeWhenChecked: boolean, epoch: number): Promise<boolean> {
-    if (!this.enabled || this.stopped || this.checking || this.uploading) return false;
+    if (!this.enabled || this.stopped || this.checking || this.uploading || this.offlineBase) return false;
     this.checking = true; this.resumeAuthorized = false;
     this.phase = "checking"; this.emit();
     try {
@@ -514,6 +638,16 @@ export class CloudSyncCoordinator {
       if (this.acquisition && head.writerActive &&
         this.acquisition.expectedRevision === head.revision) {
         const sent = this.now(), lease = await this.options.transport.acquire(this.acquisition);
+        if (!this.live(epoch)) return false;
+        this.installLease(lease, sent); recoveredAcquisition = true;
+      } else if (this.acquisition && head.writerActive &&
+        (BigInt(this.acquisition.expectedWriterGeneration!) === BigInt(head.writerGeneration) ||
+          BigInt(this.acquisition.expectedWriterGeneration!) + 1n === BigInt(head.writerGeneration))) {
+        // The lease receipt journal may have failed while this same token later
+        // confirmed a checkpoint. Renew proves the token against the fresh head;
+        // never mutate/replay the original immutable acquisition request.
+        const sent = this.now(), lease = await this.options.transport.renew({ campaignId: this.scope.campaignId,
+          writerToken: this.acquisition.writerToken, writerGeneration: head.writerGeneration });
         if (!this.live(epoch)) return false;
         this.installLease(lease, sent); recoveredAcquisition = true;
       }
@@ -575,6 +709,17 @@ export class CloudSyncCoordinator {
   focus(): Promise<boolean> {
     if (this.reconnecting) return this.reconnecting;
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed") return Promise.resolve(false);
+    if (this.offlineBase && !this.localDurable) {
+      this.reconnecting = (async () => {
+        // Repair an accepted offline checkpoint before asking the resolver to
+        // rebase it. offlineBase must continue to deny all server writes.
+        const copy = this.deviceCopy(), usage = this.pendingCandidate?.usageQuestions ?? [];
+        if (copy) await this.restoreVerifiedOffline(copy, usage);
+        return false;
+      })().finally(() => { this.reconnecting = null; });
+      return this.reconnecting;
+    }
+    if (this.offlineLocal) return Promise.resolve(false);
     this.autoReconnect = true; this.lastReconnect = this.now();
     this.reconnecting = this.boundedCheck(async epoch => {
       this.resumeAuthorized = false; this.emit();
@@ -590,10 +735,26 @@ export class CloudSyncCoordinator {
     return this.reconnecting;
   }
   reportLocalFailure(error: unknown): void {
-    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(error instanceof CloudCodecError && error.code === "worker_unavailable" ? "processing" : "corrupt"));
+    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecProcessingError(error) ? "processing" : "corrupt"));
   }
   async pulse(): Promise<void> {
     if (!this.enabled || this.stopped) return;
+    if (this.offlineLocal) {
+      if (!this.automaticSelection || this.checking || this.elapsed(this.lastReconnect) < Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) return;
+      this.lastReconnect = this.now(); this.checking = true;
+      const epoch = this.epoch;
+      try {
+        // Probe without pausing verified local play. A restored connection must
+        // use full selection, never the local checkpoint as a server write base.
+        await cloudCheckDeadline(this.admitted(), CLOUD_READ_TIMEOUT_MS);
+        if (this.live(epoch)) await this.automaticSelection?.();
+      } catch (error) {
+        if (!this.live(epoch)) return;
+        if (error instanceof CloudSyncError && ["network", "throttled"].includes(error.code)) this.retryAfterMs = error.retryAfterMs;
+        else this.fail(error);
+      } finally { if (this.live(epoch)) this.checking = false; }
+      return;
+    }
     this.checkTime(); this.emit();
     if (this.autoReconnect && !this.closingRequested && !this.allowed() &&
       ["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure ?? "") &&
@@ -652,8 +813,11 @@ export class CloudSyncCoordinator {
     return entry?.recovery ? JSON.stringify(entry) : null;
   }
   private async preserveCopies(account: CloudConfirmed): Promise<void> {
+    return this.preserveEntry(this.attempted ?? this.record!.entry, account);
+  }
+  private async preserveEntry(device: CloudCacheEntry, account: CloudConfirmed): Promise<void> {
     if (!this.options.entryStore) throw new CloudSyncError("storage");
-    const value = { scope: this.scope, device: this.attempted ?? this.record!.entry, account };
+    const value = { scope: this.scope, device, account };
     const key = `conflict:${this.scope.campaignId}:${await this.codec.run({ kind: "hash", input: JSON.stringify(value) })}`;
     await this.options.entryStore.create(key, value);
     if (!same(await this.options.entryStore.read(key), value)) throw new CloudSyncError("storage");

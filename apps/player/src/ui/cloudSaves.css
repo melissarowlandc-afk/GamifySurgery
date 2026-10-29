@@ -4,6 +4,7 @@
 .cloud-dialog::backdrop { background: #121827b8; }
 .cloud-command-blocked { position: fixed; z-index: 1200; top: max(12px, env(safe-area-inset-top, 0px)); left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); max-width: 38rem; margin-inline: auto; max-height: calc(45dvh - env(safe-area-inset-top, 0px)); overflow: auto; box-sizing: border-box; padding: 0.75rem; border: 2px solid var(--ink, #30291e); border-radius: 0.6rem; color: var(--ink, #30291e); background: var(--paper-raised, #fff9ee); box-shadow: 0 4px 16px #0005; font-size: 1rem; text-align: left; }
 .cloud-command-blocked p { margin: 0 0 0.5rem; }
+.cloud-command-blocked.is-inline { position: static; max-width: none; margin: 0.4rem 0.5rem; }
 .cloud-command-blocked button { min-height: 44px; padding: 0.4rem 0.6rem; }
 .cloud-dialog button, .cloud-entry button, .cloud-account button { min-height: 44px; margin: 0.25rem; white-space: normal; }
 .cloud-dialog h2:focus, .cloud-entry h1:focus { outline: 2px solid currentColor; outline-offset: 3px; }

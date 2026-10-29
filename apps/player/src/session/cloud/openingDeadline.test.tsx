@@ -7,7 +7,7 @@ import { CompetitionClientContext } from "../../competition/useCompetition";
 import { cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
 import { CloudAccountContext, type CloudAccountValue } from "./CloudAccount";
 import { MemoryCloudCache } from "./cache";
-import { CLOUD_CHECK_TIMEOUT_MS } from "./checkDeadline";
+import { CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 import { CloudCodecError } from "./codecJson";
 import { cloudCodec, CLOUD_WORKER_STARTUP_TIMEOUT_MS, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./codecWorker";
 import { CloudSyncCoordinator } from "./coordinator";
@@ -45,12 +45,12 @@ async function renderOtherDevice(layout: "phone" | "desktop", h: Awaited<ReturnT
   </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
   const resume = `Resume ${h.prepared.envelope.campaign.name}`;
   const ready = async () => vi.waitFor(async () => { await act(async () => {}); expect(env.button(resume).attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
-  const choice = async () => vi.waitFor(async () => { await act(async () => {}); expect(env.element.textContent).toContain("This campaign is open somewhere else."); }, { timeout: 5_000 });
+  const choice = async () => vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
   return { env, resume, ready, choice, get active() { return active; } };
 }
 
 describe.each(["phone", "desktop"] as const)("%s bounded account opening", layout => {
-  it("keeps a failed warmup visible and retries before offering the other-writer choice", async () => {
+  it("keeps a failed warmup visible and retries before automatically fencing the other writer", async () => {
     const h = await otherDevice(), run = cloudCodec.run.bind(cloudCodec);
     let fail = true;
     vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
@@ -62,10 +62,8 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     expect(f.env.button(f.resume).attributes.disabled).toBeDefined(); expect(f.active).toBeNull();
     fail = false; await f.env.click("Retry clinic preparation"); await f.ready();
     await f.env.click(f.resume); await f.choice();
-    expect(f.active!.canExecute).toBe(false); expect(f.active!.coordinator.view.failure).toBe("writer-elsewhere");
-    expect(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!.generation).toBe(1n);
-    await f.env.click("Continue on this device");
-    await vi.waitFor(() => expect(f.active!.canExecute).toBe(true));
+    expect(f.active!.canExecute).toBe(true); expect(f.active!.coordinator.view.failure).toBeNull();
+    expect(f.env.element.textContent).not.toContain("Continue on this device?");
     expect(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!.generation).toBe(2n);
     expect(await h.coordinator.focus()).toBe(false); expect(h.coordinator.view.canExecute).toBe(false);
   });
@@ -89,7 +87,7 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
   });
 
-  it.each(["deadline", "back"] as const)("fences an uncompleted opening on %s and a later reply cannot replace the explicit choice", async exit => {
+  it.each(["deadline", "back"] as const)("fences an uncompleted opening on %s and a later reply cannot replace the automatically checked session", async exit => {
     const h = await otherDevice(), f = await renderOtherDevice(layout, h); await f.ready();
     const held = deferred(), started = deferred(), head = h.transport.head.bind(h.transport); let first = true;
     vi.spyOn(h.transport, "head").mockImplementation(async id => {
@@ -99,15 +97,20 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     vi.useFakeTimers(); await f.env.click(f.resume); await started.promise;
     expect(f.env.element.textContent).toContain("Checking account save");
     expect(f.env.button("Back to your clinics").attributes.disabled).toBeUndefined();
-    if (exit === "deadline") await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    // The router bounds the whole open, including the checked-session read,
+    // independently of when the coordinator starts its own 30 second check.
+    if (exit === "deadline") await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS); });
     else await f.env.click("Back to your clinics");
     expect(f.env.element.textContent).toContain("Your campaigns");
     if (exit === "deadline") expect(f.env.element.textContent).toContain("Your saved copies have been kept");
-    vi.useRealTimers(); await f.ready(); await f.env.click(f.resume); await f.choice();
-    const opened = f.active; expect(opened!.canExecute).toBe(false);
+    vi.useRealTimers(); await f.ready();
+    if (exit === "deadline") await act(async () => { f.env.browser.dispatchEvent(new Event("online")); });
+    else await f.env.click(f.resume);
+    await f.choice();
+    const opened = f.active; expect(opened!.canExecute).toBe(true);
     await act(async () => { held.resolve(); await held.promise; });
-    expect(f.active).toBe(opened); expect(f.active!.canExecute).toBe(false);
-    expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
+    expect(f.active).toBe(opened); expect(f.active!.canExecute).toBe(true);
+    expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(2);
   });
 });
 
@@ -157,11 +160,11 @@ describe("bounded coordinator checks", () => {
     next.dispose(); h.coordinator.dispose();
   });
 
-  it("reports an unavailable worker as processing, without misclassifying a valid head as corrupt", async () => {
+  it.each(["worker_unavailable", "worker_data_clone", "worker_payload"])("reports %s as processing, without misclassifying a valid head as corrupt", async code => {
     const h = await otherDevice(), next = h.make(), run = cloudCodec.run.bind(cloudCodec);
     const load = vi.spyOn(h.transport, "load");
     vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
-      if (task.kind === "verify") throw new CloudCodecError("worker_unavailable", "Worker unavailable"); return run(task);
+      if (task.kind === "verify") throw new CloudCodecError(code, "Worker unavailable"); return run(task);
     });
     expect(await next.open()).toBe(false); expect(next.view).toMatchObject({ failure: "processing", canExecute: false });
     expect(load).toHaveBeenCalledExactlyOnceWith(h.scope.campaignId, "2");

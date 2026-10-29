@@ -1,10 +1,9 @@
 import { test, expect, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import { FakeCloudServer } from "../../apps/player/src/session/cloud/fakeTransport";
-import { CloudSyncError, type CloudFailureCode, type CloudTransport } from "../../apps/player/src/session/cloud/transport";
-import { loadCloudEvidenceCheckpoint } from "../../apps/player/src/session/cloud/codecEvidence";
-import { cloudProgress } from "../../apps/player/src/session/cloud/progress";
+import { CloudSyncError, type CloudFailureCode, type CloudFrozenOperation, type CloudTransport } from "../../apps/player/src/session/cloud/transport";
+import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "../../apps/player/src/session/cloud/codecEvidence";
 import { syncFixture } from "../../apps/player/src/session/cloud/syncFixtureSupport";
-import { expectAccountSaved, expectPlaying, expectResumeReady, openAndContinue, saveDetails as details, snapshot, CLOUD_QA_WAIT_MS } from "./cloud-qa-helpers";
+import { accountMenu, expectAccountSaved, expectPlaying, expectResumeReady, openAndContinue, saveDetails as details, snapshot, exportDeviceCopy, CLOUD_QA_WAIT_MS, CLOUD_QA_STARTUP_WAIT_MS } from "./cloud-qa-helpers";
 
 // Manager runs this against the dev-only cloud-saves-qa.html at the disposable
 // 127.0.0.1:5184 origin. No Supabase, Auth keys, copied saves or live endpoints.
@@ -12,6 +11,7 @@ test.setTimeout(180_000); // Independent cold Vite contexts; checks still use bo
 async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone") {
   const server = new FakeCloudServer(), contexts: BrowserContext[] = [];
   const authenticated = new Map<Page, string | null>(), transport = server.transport("qa-account-a");
+  const commitAttempts: CloudFrozenOperation[] = [];
   let unavailable: CloudFailureCode | null = null;
   const unavailablePages = new Map<Page, CloudFailureCode>();
   const page = async (deviceCampaigns = 0) => {
@@ -20,6 +20,7 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
     await tab.exposeBinding("__cloudQaAuthenticate", ({ page }, account: string | null) => { authenticated.set(page, account); });
     await tab.exposeBinding("__cloudQaCall", async ({ page }, account: string, method: keyof CloudTransport, args: unknown[]) => {
       if (account !== "qa-account-a" || authenticated.get(page) !== account) return { error: { code: "auth" } };
+      if (method === "commit") commitAttempts.push(structuredClone(args[0] as CloudFrozenOperation));
       if (unavailable) return { error: { code: unavailable } };
       if (unavailablePages.has(page)) return { error: { code: unavailablePages.get(page)! } };
       try {
@@ -31,7 +32,7 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
     await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=qa-account-a&device-campaigns=${deviceCampaigns}`);
     await expect(tab.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible({ timeout: CLOUD_QA_WAIT_MS }); return tab;
   };
-  return { server, page, fail: (code: CloudFailureCode | null) => { unavailable = code; },
+  return { server, page, commitAttempts, fail: (code: CloudFailureCode | null) => { unavailable = code; },
     failPage: (page: Page, code: CloudFailureCode | null) => { if (code) unavailablePages.set(page, code); else unavailablePages.delete(page); },
     close: async () => { await Promise.all(contexts.map(c => c.close())); } };
 }
@@ -67,116 +68,179 @@ for (const layout of ["desktop", "phone"] as const) {
       expect(f.server.operationCount("qa-account-a")).toBe(2); // import and one immutable checkpoint
       expect(f.server.usageCount("qa-account-a")).toBe(0);
       expect(await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
+      // Also exercise an ordinary reload while this document still owns a live
+      // lease. No synthetic visibility event, network fault or Save & Close.
+      const generation = f.server.account("qa-account-a").campaigns.get(id)!.generation;
+      const ordinary = await page.evaluate(async () => {
+        const qa = window.__cloudQa!;
+        await qa.command({ type: "SET_PAUSED", paused: false });
+        for (let index = 0; index < 3; index++) await qa.command({ type: "ADVANCE_TICK", advancedAtRealMs: Date.now() });
+        await qa.command({ type: "SET_PAUSED", paused: true });
+        return qa.snapshot().state!;
+      });
+      expect(ordinary.facilityTick).toBeGreaterThan(pending.facilityTick);
+      await page.reload(); await expectPlaying(page); await expectAccountSaved(page);
+      expect((await snapshot(page)).state).toEqual(ordinary);
+      expect(f.server.account("qa-account-a").campaigns.get(id)!.generation).toBeGreaterThan(generation);
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(1);
+      expect(f.server.operationCount("qa-account-a")).toBe(3);
+      expect(f.server.usageCount("qa-account-a")).toBe(0);
+      expect(await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
     } finally { await f.close(); }
   });
 
-  for (const freeSlot of [true, false]) {
-    test(`${layout}: true two-device divergence compares both copies and ${freeSlot ? "keeps both account campaigns" : "respects the full account slot limit"}`, async ({ browser, baseURL }) => {
+  for (const localNewer of [true, false]) for (const freeSlot of [true, false]) {
+    test(`${layout}: automatic divergence resolution (${localNewer ? "local" : "account"} newer, ${freeSlot ? "free" : "full"} slots) preserves both copies`, async ({ browser, baseURL }) => {
       const f = await rig(browser, baseURL!, layout);
+      const advance = async (page: Page, speed: 2 | 4, ticks: number) => page.evaluate(async ({ speed, ticks }) => {
+        const before = window.__cloudQa!.snapshot().state!.facilityTick;
+        const state = await window.__cloudQa!.commands([
+          { type: "SET_SIMULATION_SPEED", speed }, { type: "SET_PAUSED", paused: false },
+          ...Array.from({ length: ticks }, (_, index) => ({ type: "ADVANCE_TICK" as const, advancedAtRealMs: index })),
+          { type: "SET_PAUSED", paused: true },
+        ]);
+        if (!state || !state.paused || state.facilityTick !== before + ticks) throw new Error("Divergence fixture must finish with every command accepted and the saved clock paused.");
+        return state;
+      }, { speed, ticks });
       try {
         const device = await f.page(1); await importAndOpen(device);
         const id = (await snapshot(device)).state!.campaignId;
-        // Keep an unuploaded branch on the first device while the other device
-        // explicitly takes over and writes a different immutable transition.
         f.failPage(device, "network");
-        expect(await device.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }))).toBe(true);
-        const local = (await snapshot(device)).state!;
-        const remote = await f.page();
-        await remote.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
-        const takeover = remote.getByRole("dialog", { name: "Continue on this device?", exact: true });
-        await expect(takeover).toBeVisible(); await expect(takeover).toContainText("This campaign is open somewhere else.");
-        expect((await snapshot(remote)).canExecute).toBe(false);
-        await takeover.getByRole("button", { name: "Continue on this device", exact: true }).click();
-        await expectPlaying(remote);
-        expect(await remote.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }); return window.__cloudQa!.checkpoint(); })).toBe(true);
-        const accountRow = f.server.account("qa-account-a").campaigns.get(id)!;
-        const account = structuredClone(accountRow), remoteState = (await snapshot(remote)).state!;
-        const verifiedAccount = await loadCloudEvidenceCheckpoint({ ...account.confirmed, expectedRevision: account.confirmed.revision,
-          expectedCampaignId: id, expectedBaselineId: account.confirmed.baselineId });
+        const local = await advance(device, 2, localNewer ? 3 : 1);
+        const remote = await f.page(); await openAndContinue(remote);
+        const remoteState = await advance(remote, 4, localNewer ? 1 : 3);
+        expect(await remote.evaluate(() => window.__cloudQa!.checkpoint())).toBe(true);
+        const account = structuredClone(f.server.account("qa-account-a").campaigns.get(id)!);
+        let unrelated: Awaited<ReturnType<typeof syncFixture>> | null = null;
         if (!freeSlot) {
-          const extra = await syncFixture("qa.archived-slot"); f.server.seed("qa-account-a", extra.confirmed);
-          f.server.account("qa-account-a").campaigns.get(extra.confirmed.campaignId)!.summary = { name: "Archived slot", status: "archived" };
+          unrelated = await syncFixture("qa.archived-slot");
+          const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
+            campaign: { ...unrelated.prepared.envelope.campaign, name: "Archived slot", status: "archived" },
+            source: unrelated.prepared.sourceRecovery, expectedRevision: "1", operationId: "archive.fixture" });
+          unrelated.confirmed = { ...unrelated.confirmed, snapshot: encoded.snapshot };
+          f.server.seed("qa-account-a", unrelated.confirmed);
         }
         f.failPage(device, null); await device.evaluate(() => window.__cloudQa!.focus());
-        const dialog = await details(device), comparison = dialog.getByRole("region", { name: "Compare saved progress" });
-        await expect(comparison).toBeVisible();
-        // These values come from each verified projection, not server list
-        // metadata. Tied clinic times explicitly identify different changes.
-        for (const [label, progress] of [["On this device:", cloudProgress(local)], ["Account save:", cloudProgress(verifiedAccount.state)]] as const) {
-          await expect(comparison.getByText(new RegExp(`^${label}`))).toContainText(progress.dayTime);
-          await expect(comparison.getByText(new RegExp(`^${label}`))).toContainText(`$${progress.cash.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
-        }
-        await expect(comparison).toContainText("Both copies are at the same clinic time. Their changes differ.");
-        expect((await snapshot(device)).canExecute).toBe(false);
-        expect(await device.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
-        const keepBoth = dialog.getByRole("button", { name: "Keep both — save this device's progress as a separate campaign", exact: true });
-        await expect(dialog.getByRole("button", { name: "Use the account save", exact: true })).toBeEnabled();
+        await expectPlaying(device); await expectAccountSaved(device);
+        await expect(device.getByRole("dialog")).toHaveCount(0);
+        const winner = localNewer ? local : remoteState, loser = localNewer ? remoteState : local;
+        const active = (await snapshot(device)).state!;
+        expect(winner.paused).toBe(true); expect(active.paused).toBe(true);
+        expect(active).toEqual({ ...winner, campaignId: active.campaignId });
+        expect(active.facilityTick).toBeGreaterThan(loser.facilityTick);
+        if (localNewer) expect(active.campaignId).not.toBe(id); else expect(active.campaignId).toBe(id);
+        const activeCopy = f.server.account("qa-account-a").campaigns.get(active.campaignId)!.confirmed;
+        const verified = await loadCloudEvidenceCheckpoint({ ...activeCopy, expectedRevision: activeCopy.revision,
+          expectedCampaignId: active.campaignId, expectedBaselineId: activeCopy.baselineId });
+        expect(verified.campaign.name).toBe("Synthetic clinic 1"); expect(verified.campaign.status).toBe("resumable");
+        const protectedCopies = await device.evaluate(() => window.__cloudQa!.retainedCopies());
+        const loadedCopies = await Promise.all(protectedCopies.map(async row => {
+          const copy = row.value.copy;
+          return loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision, expectedCampaignId: copy.campaignId, expectedBaselineId: copy.baselineId });
+        }));
+        expect(loadedCopies.some(row => row.state.facilityTick === loser.facilityTick && row.state.simulationSpeed === loser.simulationSpeed)).toBe(true);
         if (freeSlot) {
-          await expect(keepBoth).toBeEnabled(); await keepBoth.click(); await expectPlaying(device);
-          const branch = (await snapshot(device)).state!; expect(branch.campaignId).not.toBe(id);
-          expect(branch).toEqual({ ...local, campaignId: branch.campaignId });
-          const copy = f.server.account("qa-account-a").campaigns.get(branch.campaignId)!.confirmed;
-          const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision, expectedCampaignId: branch.campaignId, expectedBaselineId: copy.baselineId });
-          expect(loaded.campaign.name).toBe("Synthetic clinic 1 (this device)");
-          expect(loaded.checkpoint.snapshot.head.sequence).toBeGreaterThan(0);
-          expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
-          // Cold reopen must choose the verified new campaign, not reopen the
-          // old protected divergent branch or mint a second import.
-          const count = f.server.operationCount("qa-account-a"); await device.reload(); await expectPlaying(device);
-          expect((await snapshot(device)).state).toEqual(branch); expect(f.server.operationCount("qa-account-a")).toBe(count);
+          const archived = (await f.server.transport("qa-account-a").list()).find(row => row.status === "archived")!;
+          expect(archived.name).toBe("Synthetic clinic 1 (older copy)");
+          const copy = await f.server.transport("qa-account-a").load(archived.campaignId);
+          const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision, expectedCampaignId: copy.campaignId, expectedBaselineId: copy.baselineId });
+          expect(loaded.state).toEqual({ ...loser, campaignId: copy.campaignId });
+          if (localNewer) expect(copy.evidence).toEqual(account.confirmed.evidence);
         } else {
-          await expect(keepBoth).toBeDisabled(); await expect(dialog).toContainText("No slot is free");
-          await expect(dialog).toContainText("protected copy is retained");
-          const downloaded = device.waitForEvent("download");
-          await dialog.getByRole("button", { name: "Keep a recovery copy", exact: true }).click();
-          expect(await (await downloaded).failure()).toBeNull();
-          expect((await snapshot(device)).pending).toBe(true);
-          expect((await snapshot(device)).state!.simulationSpeed).toBe(2);
-          expect(f.server.calls.filter(call => call.method === "importCampaign")).toHaveLength(1); // original only
-          expect(f.server.calls.some(call => call.method === "deleteCampaign")).toBe(false);
+          expect(await f.server.transport("qa-account-a").load(unrelated!.confirmed.campaignId)).toEqual(unrelated!.confirmed);
+          expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
+          expect(f.server.calls.some(row => row.method === "deleteCampaign")).toBe(localNewer);
+          await exportDeviceCopy(device);
         }
-        const unchanged = f.server.account("qa-account-a").campaigns.get(id)!;
-        expect(unchanged.confirmed).toEqual(account.confirmed); expect(unchanged.prior).toEqual(account.prior);
-        expect(unchanged.generation).toBe(account.generation); expect(unchanged.token).toBe(account.token);
-        expect((await snapshot(remote)).state).toEqual(remoteState);
+        if (!localNewer) expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(account.confirmed);
+        // The old projection cannot append/release after automatic takeover.
+        await remote.evaluate(() => window.__cloudQa!.checkAuthority());
+        expect(await remote.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
+        expect(await remote.evaluate(() => window.__cloudQa!.closeLease())).toBe(false);
+        const count = f.server.operationCount("qa-account-a");
+        await device.reload(); await expectPlaying(device); await expectAccountSaved(device);
+        expect((await snapshot(device)).state).toEqual(active);
+        expect(f.server.operationCount("qa-account-a")).toBe(count);
         expect(f.server.usageCount("qa-account-a")).toBe(0);
-        if (!freeSlot) {
-          const recovery = device.waitForEvent("download");
-          await (await details(device)).getByRole("button", { name: "Use the account save", exact: true }).click();
-          expect(await (await recovery).failure()).toBeNull();
-          // Choosing the account copy does not silently revoke its still-live
-          // writer. Continuing here needs a second, explicit takeover choice.
-          const takeover = device.getByRole("dialog", { name: "Continue on this device?", exact: true });
-          await expect(takeover).toBeVisible(); expect((await snapshot(device)).canExecute).toBe(false);
-          expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(account.confirmed);
-          await takeover.getByRole("button", { name: "Continue on this device", exact: true }).click();
-          await expectPlaying(device); expect((await snapshot(device)).state).toEqual(remoteState);
-        }
       } finally { await f.close(); }
     });
   }
+  test(`${layout}: a newer retained device copy wins over the older current cache`, async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!, layout);
+    try {
+      const page = await f.page(1); await importAndOpen(page);
+      expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
+      const newer = (await snapshot(page)).state!;
+      await page.evaluate(() => window.__cloudQa!.retainAndReopenOlderCache());
+      await expectPlaying(page); await expectAccountSaved(page);
+      expect((await snapshot(page)).state).toEqual(newer);
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      const account = await accountMenu(page), older = account.locator("details.cloud-older-copies");
+      await older.locator("summary").click();
+      await expect(older.getByRole("button", { name: "Export older copy", exact: true }).first()).toBeVisible({ timeout: CLOUD_QA_WAIT_MS });
+      const count = f.server.operationCount("qa-account-a");
+      const [download] = await Promise.all([page.waitForEvent("download", { timeout: CLOUD_QA_WAIT_MS }),
+        older.getByRole("button", { name: "Export older copy", exact: true }).first().click()]);
+      expect(await download.failure()).toBeNull();
+      expect(f.server.operationCount("qa-account-a")).toBe(count);
+      expect(f.server.usageCount("qa-account-a")).toBe(0);
+    } finally { await f.close(); }
+  });
 
-  test(`${layout}: unavailable service while navigator is online preserves pending work and blocks real commands`, async ({ browser, baseURL }) => {
+  test(`${layout}: unavailable service preserves pending work, fences unchecked commands and recovers in the background`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
       const page = await f.page(1); await importAndOpen(page);
       const before = (await snapshot(page)).state!, original = await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
+      const initial = structuredClone(f.server.account("qa-account-a").campaigns.get(before.campaignId)!.confirmed);
       f.fail("network");
-      expect(await page.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
+      expect(await page.evaluate(async () => ({ accepted: await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }),
+        saved: await window.__cloudQa!.checkpoint() }))).toEqual({ accepted: true, saved: false });
+      const frozen = structuredClone(f.commitAttempts.at(-1)!);
       expect(await page.evaluate(() => navigator.onLine)).toBe(true);
-      await page.evaluate(() => window.__cloudQa!.focus());
+      await page.evaluate(() => window.__cloudQa!.checkAuthority());
       const waiting = await snapshot(page); expect(waiting.pending).toBe(true);
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
       expect((await snapshot(page)).state!.facilityTick).toBe(before.facilityTick);
       const dialog = await details(page);
-      await expect(dialog.getByRole("button", { name: "Retry account save", exact: true })).toBeVisible();
-      await expect(dialog.getByRole("button", { name: "Keep a recovery copy", exact: true })).toBeVisible();
-      await dialog.getByRole("button", { name: "Not now", exact: true }).click();
-      await page.getByRole("button", { name: "Save & Close", exact: true }).click();
-      await expect(page.getByText("Account save and session close are not confirmed.", { exact: false })).toBeVisible();
+      await expect(dialog.getByRole("button", { name: "Retry", exact: true })).toBeVisible();
+      await exportDeviceCopy(page);
+      expect(await page.evaluate(() => window.__cloudQa!.closeLease())).toBe(false);
       await expect(page.getByRole("heading", { name: "Safe to close this tab", exact: true })).toHaveCount(0);
       expect(await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       expect(f.server.operationCount("qa-account-a")).toBe(1); // import only
+      // The single retry verifies a playable local copy. Restoring the fake
+      // backend sends no browser online/focus event: background checks must
+      // still select/fence and confirm the account checkpoint without a prompt.
+      await dialog.getByRole("button", { name: "Retry", exact: true }).click();
+      await expect.poll(() => snapshot(page), { timeout: CLOUD_QA_WAIT_MS }).toMatchObject({ canExecute: true, pending: true, failure: "network" });
+      expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
+      const newest = (await snapshot(page)).state!; expect(newest.paused).toBe(true);
+      f.fail(null);
+      await expect.poll(() => snapshot(page), { timeout: 40_000 }).toMatchObject({ canExecute: true, pending: false, failure: null });
+      await expectPlaying(page); await expectAccountSaved(page);
+      expect((await snapshot(page)).state!.simulationSpeed).toBe(4);
+      expect((await snapshot(page)).state).toEqual(newest);
+      expect(f.server.operationCount("qa-account-a")).toBe(2); // import + one combined descendant, no redundant ancestor archive
+      const account = f.server.account("qa-account-a"), copy = account.campaigns.get(before.campaignId)!.confirmed;
+      expect(account.campaigns.size).toBe(1);
+      expect([...account.operations.values()].map(row => row.receipt.revision)).toEqual(["1", "2"]);
+      const immutable = new Map<string, CloudFrozenOperation>();
+      for (const attempt of f.commitAttempts) {
+        if (immutable.has(attempt.operationId)) expect(attempt).toEqual(immutable.get(attempt.operationId));
+        else immutable.set(attempt.operationId, attempt);
+      }
+      expect(immutable.get(frozen.operationId)).toEqual(frozen);
+      expect(account.operations.has(frozen.operationId)).toBe(false);
+      const accepted = [...immutable.values()].filter(operation => account.operations.has(operation.operationId));
+      expect(accepted).toHaveLength(1);
+      expect(account.operations.get(accepted[0]!.operationId)!.digest).toBe(accepted[0]!.requestSha256);
+      expect(copy.evidence.header).toEqual(initial.evidence.header);
+      expect(copy.evidence.records.slice(0, initial.evidence.records.length)).toEqual(initial.evidence.records);
+      expect(new Set(copy.evidence.records.map(row => row.id)).size).toBe(copy.evidence.records.length);
+      const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: "2", expectedCampaignId: before.campaignId, expectedBaselineId: initial.baselineId });
+      expect(loaded.state).toEqual(newest);
+      expect(f.server.usageCount("qa-account-a")).toBe(0);
     } finally { await f.close(); }
   });
   test(`${layout}: service read-only gate safely pauses an open writer and retains the confirmed account save`, async ({ browser, baseURL }) => {
@@ -188,7 +252,7 @@ for (const layout of ["desktop", "phone"] as const) {
       f.server.setAccess("qa-account-a", { enabled: false });
       expect(await page.evaluate(() => window.__cloudQa!.checkpoint())).toBe(false);
       const dialog = await details(page);
-      await expect(dialog.getByText("Account saving is disabled by the service.", { exact: false })).toBeVisible();
+      await expect(dialog).toContainText("This clinic could not be opened. Your saved copies are safe.");
       expect((await snapshot(page)).phase).toBe("blocked"); expect((await snapshot(page)).pending).toBe(true);
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_PAUSED", paused: false }))).toBe(false);
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(confirmed);
@@ -204,12 +268,10 @@ for (const layout of ["desktop", "phone"] as const) {
       f.server.faults.push({ method: "commit", at: "before", error: new CloudSyncError("capacity") });
       expect(await page.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
       const dialog = await details(page);
-      await expect(dialog.getByText("History has not been removed to make space.", { exact: false })).toBeVisible();
+      await expect(dialog).toContainText("Account storage is full. Your progress is safe on this device.");
       expect((await snapshot(page)).phase).toBe("capacity"); expect((await snapshot(page)).pending).toBe(true);
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
-      const downloaded = page.waitForEvent("download");
-      await dialog.getByRole("button", { name: "Keep a recovery copy", exact: true }).click();
-      expect(await (await downloaded).failure()).toBeNull();
+      await exportDeviceCopy(page);
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(before);
     } finally { await f.close(); }
   });
@@ -229,15 +291,27 @@ for (const layout of ["desktop", "phone"] as const) {
       const head = structuredClone(row.confirmed), operationCount = f.server.operationCount("qa-account-a"), generation = row.generation;
       const second = await f.page(); await second.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
       const dialog = await details(second);
-      await expect(dialog.getByText("The latest save failed verification.", { exact: false })).toBeVisible();
+      await expect(dialog).toContainText("The latest save could not be verified. Your older copies are safe.");
       expect((await snapshot(second)).revision).toBe(prior.revision);
       expect((await snapshot(second)).state).toEqual(priorState);
       await expect(dialog.getByRole("button", { name: "Continue on this device", exact: true })).toHaveCount(0);
       await expect(dialog.getByRole("button", { name: "Use the account save", exact: true })).toHaveCount(0);
       expect(await second.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
       expect(await second.evaluate(() => window.__cloudQa!.checkpoint())).toBe(false);
-      const downloaded = second.waitForEvent("download"); await dialog.getByRole("button", { name: "Keep a recovery copy", exact: true }).click();
-      expect(await (await downloaded).failure()).toBeNull();
+      await exportDeviceCopy(second);
+      // The original device also has a valid cache at the corrupt head's
+      // revision. That cache must be protected, rather than masking corruption
+      // and returning to entry with a null failure or losing the export path.
+      await first.reload();
+      await expect.poll(() => snapshot(first), { timeout: CLOUD_QA_STARTUP_WAIT_MS }).toMatchObject({ phase: "readonly", failure: "prior-recovery" });
+      const cachedRecovery = await details(first);
+      await expect(cachedRecovery).toContainText("The latest save could not be verified. Your older copies are safe.");
+      expect(await first.evaluate(() => window.__cloudQa!.status())).toMatchObject({ canExecute: false, phase: "readonly", failure: "prior-recovery" });
+      expect((await snapshot(first)).revision).toBe(prior.revision);
+      expect((await snapshot(first)).state).toEqual(priorState);
+      expect(await first.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
+      expect(await first.evaluate(() => window.__cloudQa!.checkpoint())).toBe(false);
+      await exportDeviceCopy(first);
       expect(row.confirmed).toEqual(head); expect(row.prior).toEqual(prior); expect(row.generation).toBe(generation);
       expect(f.server.operationCount("qa-account-a")).toBe(operationCount);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
