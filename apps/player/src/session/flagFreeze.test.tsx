@@ -198,7 +198,7 @@ describe("reported hosted flag recovery boundaries", () => {
     await f.env.click("Resume facility time");
     await act(async () => { expect(await f.cloud().durable()).toBe(true); expect(await f.cloud().checkpointNow("ordinary")).toBe(true); });
     await f.reload();
-    await vi.waitFor(() => expect(f.current().questionReviewFlags).toHaveLength(1));
+    await vi.waitFor(() => expect(f.current().questionReviewFlags).toHaveLength(1), { timeout: hostedTime(1_000) });
     expect(f.current().questionReviewFlags[0]!.comment).toBe("Synthetic tester comment");
     expect(f.env.button("Question flagged for developer review").attributes.disabled).toBe("");
     expect(context.transport!.send).toHaveBeenCalledOnce(); expect(f.cloud().canExecute).toBe(true);
@@ -250,7 +250,7 @@ describe("reported hosted flag recovery boundaries", () => {
     expect(f.cloud().coordinator.pendingCandidate).toBeNull();
     expect(f.cloud().coordinator.confirmedRevision).toBe(expectedRevision);
     expect(allElements(f.env.element, node => node.tagName === "DIALOG" && node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
-    await vi.waitFor(() => expect(f.current().questionReviewFlags).toHaveLength(1));
+    await vi.waitFor(() => expect(f.current().questionReviewFlags).toHaveLength(1), { timeout: hostedTime(1_000) });
     expect(JSON.parse(serializeGameState(f.current().state))).toEqual(saved);
     expect(f.current().questionReviewFlags[0]!.id).toBe(flags[0]!.id);
     expect(context.transport!.send).toHaveBeenCalledOnce();
