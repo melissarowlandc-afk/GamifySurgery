@@ -17,22 +17,25 @@ describe("responsive commands and self-healing technical boundaries", () => {
     const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(worker).mockReturnValueOnce(next));
     let useWorker = false;
     const coordinator = new CloudSyncCoordinator({ scope: h.scope, cache: h.cache, transport: h.server.transport(h.scope.accountId), clock: h.clock,
-      codec: { run: task => useWorker && task.kind === "encode" ? codec.run(task) : cloudCodec.run(task) }, enabled: true });
+      codec: { run: task => useWorker && task.kind === "journalWarm" ? codec.run(task) : cloudCodec.run(task) }, enabled: true });
     await coordinator.open(); await coordinator.startWriter(); coordinator.resume(); const session = await CloudGameSession.create(coordinator);
     try {
-      useWorker = true; vi.useFakeTimers();
+      useWorker = true;
       const first = session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "watchdog.first" }, PROTOTYPE_DOMAIN_CONTEXT);
       expect(first?.simulationSpeed).toBe(2); expect(session.canExecute).toBe(true);
-      await Promise.resolve(); worker.reply({ ready: true });
-      expect(codec.health.inFlight[0]?.[0]).toBe("encode");
+      expect(await session.durable()).toBe(true);
+      const preparing = session.prepareRecoveryCopy();
+      await vi.waitFor(() => expect(codec.health.inFlight[0]?.[0]).toBe("journalWarm"));
+      vi.useFakeTimers(); worker.reply({ ready: true });
       expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "watchdog.second" }, PROTOTYPE_DOMAIN_CONTEXT)?.simulationSpeed).toBe(4);
-      expect(problemDiagnostics.report().current.health.gameSession).toMatchObject({ encoding: true, canExecute: true });
+      expect(problemDiagnostics.report().current.health.gameSession).toMatchObject({ preparing: true, canExecute: true });
       if (fault === "hung") await vi.advanceTimersByTimeAsync(5_000);
       else if (fault === "killed") worker.onerror?.({ preventDefault() {} } as ErrorEvent);
       else worker.reply({ id: worker.messages[0]!.id, error: { kind: "codec", code: "worker", message: "Unexpected error" } });
       expect(worker.terminated).toBe(true);
       expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 1, operationId: "watchdog.third" }, PROTOTYPE_DOMAIN_CONTEXT)?.simulationSpeed).toBe(1);
-      vi.useRealTimers(); expect(await session.durable()).toBe(true); expect(session.canExecute).toBe(true);
+      vi.useRealTimers(); expect(await preparing).toBe(true);
+      expect(await session.durable()).toBe(true); expect(await session.prepareRecoveryCopy()).toBe(true); expect(session.canExecute).toBe(true);
       const candidate = coordinator.pendingCandidate!;
       expect(candidate.evidence.records.length).toBeGreaterThanOrEqual(3);
       expect(session.state.operationReceipts["watchdog.third"]?.status).toBe("applied");
@@ -43,15 +46,15 @@ describe("responsive commands and self-healing technical boundaries", () => {
   it("accepts commands during slow IndexedDB and bounds an explicit durability wait, with visible classified health", async () => {
     const h = await syncHarness(); await h.coordinator.open(); await h.coordinator.startWriter(); h.coordinator.resume();
     const session = await CloudGameSession.create(h.coordinator), held = deferred();
-    const write = h.cache.write.bind(h.cache); let entered = false;
-    vi.spyOn(h.cache, "write").mockImplementationOnce((...args) => observeStorage("cache.write", async () => { entered = true; await held.promise; return write(...args); }));
+    const journal = h.cache.journal!, write = journal.append.bind(journal); let entered = false;
+    vi.spyOn(journal, "append").mockImplementationOnce((...args) => observeStorage("journal.write", async () => { entered = true; await held.promise; return write(...args); }));
     try {
       session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "storage.first" }, PROTOTYPE_DOMAIN_CONTEXT);
-      await vi.waitFor(() => expect(entered).toBe(true));
+      const barrier = session.durable(); await vi.waitFor(() => expect(entered).toBe(true));
       expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "storage.second" }, PROTOTYPE_DOMAIN_CONTEXT)?.simulationSpeed).toBe(4);
       expect(session.canExecute).toBe(true); expect(session.syncView.pending).toBe(true);
-      expect(problemDiagnostics.report().current.health.storage!.operations).toEqual(expect.arrayContaining([["cache.write", expect.any(Number)]]));
-      held.resolve(); expect(await session.durable()).toBe(true);
+      expect(problemDiagnostics.report().current.health.storage!.operations).toEqual(expect.arrayContaining([["journal.write", expect.any(Number)]]));
+      held.resolve(); expect(await barrier).toBe(true); expect(await session.durable()).toBe(true);
       expect(session.state.operationReceipts["storage.second"]?.status).toBe("applied");
     } finally { held.resolve(); session.dispose(); }
   });
@@ -69,7 +72,7 @@ describe("responsive commands and self-healing technical boundaries", () => {
     const h = await syncHarness(); await h.coordinator.open(); await h.coordinator.startWriter(); h.coordinator.resume();
     const session = await CloudGameSession.create(h.coordinator);
     try {
-      vi.spyOn(h.cache, "write").mockRejectedValueOnce(new CloudCacheError("transaction"));
+      vi.spyOn(h.cache.journal!, "append").mockRejectedValueOnce(new CloudCacheError("transaction"));
       session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "retry.cleanup" }, PROTOTYPE_DOMAIN_CONTEXT);
       expect(await session.durable()).toBe(false);
       // Deliberately no timer/microtask delay before the second barrier.
@@ -77,6 +80,7 @@ describe("responsive commands and self-healing technical boundaries", () => {
       expect(session.state.operationReceipts["retry.cleanup"]?.status).toBe("applied");
       expect(h.server.operationCount(h.scope.accountId)).toBe(0);
       expect(await session.reconnect()).toBe(true); expect(session.canExecute).toBe(true);
+      expect(await session.checkpointNow("purchase")).toBe(true);
       expect(h.server.operationCount(h.scope.accountId)).toBe(1);
     } finally { session.dispose(); }
   });
@@ -94,23 +98,28 @@ describe("responsive commands and self-healing technical boundaries", () => {
     expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "expired.refused" }, PROTOTYPE_DOMAIN_CONTEXT)).toBeNull();
     held.resolve(); await checking; session.dispose();
   });
-  it("finishes a durability barrier at its accepted command version while newer ticks still encode", async () => {
-    const h = await syncHarness(), later = deferred(); let encodes = 0, laterEntered = false;
+  it("finishes a durability barrier at its accepted command version while a later journal commit is held", async () => {
+    const h = await syncHarness(), later = deferred(); let writes = 0, laterEntered = false;
     const coordinator = new CloudSyncCoordinator({ scope: h.scope, cache: h.cache, transport: h.server.transport(h.scope.accountId), clock: h.clock, enabled: true,
-      codec: { run: async task => { if (task.kind === "encode" && ++encodes === 2) { laterEntered = true; await later.promise; } return cloudCodec.run(task); } } });
+      codec: cloudCodec });
     await coordinator.open(); await coordinator.startWriter(); coordinator.resume(); const session = await CloudGameSession.create(coordinator);
-    const held = deferred(), write = h.cache.write.bind(h.cache); let writeEntered = false;
-    vi.spyOn(h.cache, "write").mockImplementationOnce(async (...args) => { writeEntered = true; await held.promise; return write(...args); });
+    const held = deferred(), journal = h.cache.journal!, write = journal.append.bind(journal); let writeEntered = false;
+    vi.spyOn(journal, "append").mockImplementation(async (...args) => {
+      if (++writes === 1) { writeEntered = true; await held.promise; }
+      else { laterEntered = true; await later.promise; }
+      return write(...args);
+    });
     try {
       session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "barrier.before" }, PROTOTYPE_DOMAIN_CONTEXT);
-      await vi.waitFor(() => expect(writeEntered).toBe(true));
       let completed = false; const barrier = session.durable().then(ok => { completed = ok; return ok; });
+      await vi.waitFor(() => expect(writeEntered).toBe(true));
       session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "barrier.after" }, PROTOTYPE_DOMAIN_CONTEXT);
-      held.resolve(); await vi.waitFor(() => expect(laterEntered).toBe(true));
+      held.resolve(); expect(await barrier).toBe(true);
+      const following = session.durable(); await vi.waitFor(() => expect(laterEntered).toBe(true));
       // Before the fix this waited on the while(dirty) loop's LATER encode.
       expect(completed).toBe(true); expect(await barrier).toBe(true);
       expect(session.canExecute).toBe(true); expect(session.syncView.pending).toBe(true);
-      later.resolve(); expect(await session.durable()).toBe(true);
+      later.resolve(); expect(await following).toBe(true); expect(await session.prepareRecoveryCopy()).toBe(true);
       // Each applied command has command + receipt evidence, with no replay.
       expect(coordinator.pendingCandidate!.evidence.records).toHaveLength(4);
     } finally { held.resolve(); later.resolve(); session.dispose(); }

@@ -32,11 +32,12 @@ import { importLocalCloudCampaign, optionalLocalCloudStorage, profileForCloudCam
 import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
 import { cloudEntryError } from "./ui/cloudEntryError";
 import { AccountMenu } from "./ui/AccountMenu";
-import { cloudCodec, CLOUD_WORKER_STARTUP_TIMEOUT_MS, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./session/cloud/codecWorker";
+import { cloudCodec } from "./session/cloud/codecWorker";
 import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
 import { rememberCampaignToReopen, selectCampaignToReopen, type CampaignReopenDecision } from "./session/cloud/reopenSelection";
 import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution";
 import { CloudSyncError } from "./session/cloud/transport";
+import { CloudCacheError } from "./session/cloud/codecCache";
 import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
@@ -250,8 +251,8 @@ export function ActivePrototypeGame({
       onTutorialsEnabledChange={session.setTutorialsEnabled}
       onReferencePauseLockedChange={session.setReferencePauseLocked}
       onTutorialTopicExposure={session.recordTutorialTopicExposure}
-      onReplayFirstShift={() => { if (cloudSession) { onCloudCampaigns?.(); return; } const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); }}
-      onSaveAndPause={session.saveAndPause}
+      onReplayFirstShift={async () => { if (cloudSession) { onCloudCampaigns?.(); return; } if ((await session.saveAndPauseDurably()).ok) { const saved = session.saveForFirstShiftReplay(); if (saved) onRequestNewCampaign(saved, true); } }}
+      onSaveAndPause={session.saveAndPauseDurably}
       onClinicAlertAction={session.runClinicAlertAction}
       onClearLocalCampaigns={session.clearLocalCampaigns}
       onRestart={() =>
@@ -298,6 +299,21 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     }
     return initial;
   });
+  const [localRecovery, setLocalRecovery] = useState<"checking" | "ready" | "failed">(() => typeof indexedDB === "undefined" ? "ready" : "checking");
+  const [localRecoveryAttempt, setLocalRecoveryAttempt] = useState(0);
+  useEffect(() => {
+    if (typeof indexedDB === "undefined") return;
+    let cancelled = false; setLocalRecovery("checking");
+    const profile = launch.mode === "game" ? launch.loadedProfile.profile : launch.profile;
+    void cloudCheckDeadline(import("./session/localProfileJournal").then(module => module.recoverLocalProfile(profile, accountId))).then(profile => {
+      if (cancelled) return;
+      setLaunch(current => current.mode === "game" ? { ...current, loadedProfile: { ...current.loadedProfile, profile } } : { ...current, profile });
+      setLocalRecovery("ready");
+    }).catch(error => { if (!cancelled) { problemDiagnostics.error("local-journal-open", error); setLocalRecovery("failed"); } });
+    return () => { cancelled = true; };
+    // This opening pass completes before any campaign interaction is mounted.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountId, localRecoveryAttempt]);
 
   const requestOpening = (
     profile: LocalPrototypeProfile,
@@ -331,6 +347,8 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     });
   };
 
+  if (localRecovery !== "ready") return <main><p role="status">{localRecovery === "checking" ? "Opening your device save…" : "Your device save could not be read. Your copies have been kept."}</p>
+    {localRecovery === "failed" && <button type="button" onClick={() => setLocalRecoveryAttempt(n => n + 1)}>Retry</button>}</main>;
   if (launch.mode === "opening") {
     return (
       <OpeningSequence
@@ -463,7 +481,7 @@ function CloudCampaignRouter() {
     // The empty hash warms processing without reading a campaign or acquiring
     // a writer. Opening the chosen campaign reconnects its checked session.
     void cloudCheckDeadline(Promise.all([preloadPrototypeShell(layout), cloudCodec.run({ kind: "hash", input: "" })]),
-      CLOUD_WORKER_STARTUP_TIMEOUT_MS + CLOUD_WORKER_TASK_TIMEOUT_MS).then(() => {
+      CLOUD_CHECK_TIMEOUT_MS).then(() => {
       if (current) setPreparingEntry(false);
     }, () => {
       if (current) { setPreparingEntry(false); setPreparationError(true); }
@@ -511,7 +529,7 @@ function CloudCampaignRouter() {
           return;
         }
       } catch {
-        if (live.current && epoch === generation.current) previous.coordinator.reportLocalFailure(new CloudSyncError("processing"));
+        if (live.current && epoch === generation.current) previous.coordinator.reportLocalFailure(new CloudSyncError(previous.coordinator.journal ? "storage" : "processing"));
         // Keep the still-mounted owner and its accepted bytes. Unmounting it
         // while encoding is stalled would dispose the only in-memory copy.
         return;
@@ -524,21 +542,29 @@ function CloudCampaignRouter() {
     let openingStage: CloudOpeningDiagnostic["stage"] = "copies";
     try {
       const session = await cloudCheckDeadline((async () => {
+        for (let attempt = 0; attempt < 3; attempt++) {
         coordinator = await openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage,
           cancelled: () => openingCancelled || !live.current || epoch !== generation.current });
         if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
         opening.current = coordinator;
         openingStage = "hydrate";
         const selectedId = coordinator.scope.campaignId;
-        const created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
+        let created: CloudGameSession;
+        try { created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
           if (entryRequested.current) return false;
           // Checked same-head authority does not need another scan of retained
           // copies. Full selection remains at open/reopen or changed authority.
           if (checked) return true;
           await openCampaign(selectedId); return true;
-        });
+        }); } catch (error) {
+          coordinator.dispose();
+          if (error instanceof CloudCacheError && error.reason === "conflict" && attempt < 2) continue;
+          throw error;
+        }
         if (!live.current || epoch !== generation.current || opening.current !== coordinator) { created.dispose(); throw new Error("Opening cancelled"); }
         return created;
+        }
+        throw new CloudCacheError("conflict");
       })(), CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
       openingStage = "selection";

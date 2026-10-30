@@ -1,5 +1,5 @@
 import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
-import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
+import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
 import type { LocalPrototypeProfile } from "../prototypeStorage";
@@ -9,6 +9,9 @@ import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } 
 import { logicalJsonText } from "./codecJson";
 import { cloudCheckDeadline } from "./checkDeadline";
 import { CloudSyncError } from "./transport";
+import { LocalJournalDrain, LOCAL_COMPACTION_MS, freezeJournalCheckpoint, journalWorkerAddress } from "../localJournal";
+import { bindJournal, prepareJournal } from "./journalCodec";
+import { cloudCampaignStorageKey } from "../accountStorageKey";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -49,14 +52,26 @@ export class CloudGameSession {
   private reloadRequired = false;
   private reconnecting: Promise<boolean> | null = null;
   private foregrounding: Promise<boolean> | null = null;
+  private journalDrain: LocalJournalDrain | null = null;
+  private journalStart = 0;
+  private preparedVersion = 0;
+  private lastCompaction = performance.now();
+  private compacting: Promise<void> | null = null;
+  private compactedThrough = 0;
+  private lastCompactionAttempt = -Infinity;
+  private warming: Promise<boolean> | null = null;
+  private warmThrough = -1;
+  private lastWarmFailure = -Infinity;
+  private backgrounded = false;
+  private readonly unsubscribeCheckpoint: () => void;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
     private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
-    this.checkpoint = loaded.checkpoint; this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
+    this.checkpoint = freezeJournalCheckpoint(loaded.checkpoint); this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
     showCommandProblem(null);
     this.boundRevision = coordinator.confirmedRevision!;
     this.unbindDiagnostics = problemDiagnostics.source("gameSession", () => ({ reloadRequired: this.reloadRequired,
       closing: Boolean(this.closing), stopped: this.stopped, dirty: this.dirty, encoding: this.encoding, canExecute: this.canExecute,
-      reconnecting: Boolean(this.reconnecting), lastCommandMs: this.lastCommandMs,
+      reconnecting: Boolean(this.reconnecting), preparing: Boolean(this.warming), lastCommandMs: this.lastCommandMs,
       commandAge: this.lastCommandAt === null ? null : Date.now() - this.lastCommandAt }));
     for (const receipt of coordinator.pendingCandidate?.usageQuestions ?? []) this.questions.set(receipt.receipt_id, receipt);
     this.unsubscribe = coordinator.subscribe(() => {
@@ -67,9 +82,11 @@ export class CloudGameSession {
     });
     this.unsubscribeReceipts = coordinator.onAcknowledged(receipt => { this.boundRevision = receipt.revision; for (const id of receipt.usageReceiptIds) this.questions.delete(id); });
     this.unsubscribeRecovery = coordinator.beforeReconnect(async () => await this.durable() || !this.dirty);
+    this.unsubscribeCheckpoint = coordinator.beforeCheckpoint(reason => this.prepareCheckpoint(reason));
     this.unsubscribeAutomatic = automaticReconnect ? coordinator.onAutomaticSelection(() => this.reconnect()) : () => {};
   }
-  static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>, automaticReconnect?: (checked: boolean) => Promise<boolean>): Promise<CloudGameSession> {
+  static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>, automaticReconnect?: (checked: boolean) => Promise<boolean>,
+    options: { journal?: boolean } = {}): Promise<CloudGameSession> {
     const confirmed = coordinator.confirmed;
     if (!confirmed || ["off", "checking", "blocked", "auth", "storage"].includes(coordinator.view.phase)) throw new Error("Open and verify the account campaign first.");
     const pending = coordinator.pendingCandidate;
@@ -77,14 +94,31 @@ export class CloudGameSession {
       evidence: pending ? { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } : confirmed.evidence,
       revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: coordinator.scope.campaignId,
       expectedBaselineId: confirmed.baselineId });
-    return new CloudGameSession(coordinator, loaded, switchTo, automaticReconnect);
+    const session = new CloudGameSession(coordinator, loaded, switchTo, automaticReconnect);
+    const journal = coordinator.journal;
+    if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
+      try {
+        const key = cloudCampaignStorageKey(coordinator.scope), owner = crypto.randomUUID();
+        const head = await bindJournal(journal, key, owner, { checkpoint: loaded.checkpoint, campaign: loaded.campaign,
+          source: loaded.source, confirmed, usageQuestions: [...session.questions.values()], writerGeneration: coordinator.journalWriterGeneration }, coordinator.codec);
+        session.journalStart = head.highWater;
+        session.compactedThrough = head.highWater;
+        session.journalDrain = new LocalJournalDrain(journal, key, owner, head.highWater, error => coordinator.reportLocalFailure(new CloudSyncError("storage")));
+        coordinator.bindJournalOwner(owner);
+        session.journalDrain.onCommit = () => { session.emit();
+          if (!session.backgrounded && (typeof document === "undefined" || document.visibilityState !== "hidden")) void session.warmPrepared();
+        };
+      } catch (error) { session.detach(); coordinator.reportLocalFailure(new CloudSyncError("storage")); throw error; }
+    }
+    return session;
   }
   private emit(): void { for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("session-observer", error); } } }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   get needsReload(): boolean { return this.reloadRequired; }
   get syncView(): CloudSyncView {
     const view = this.coordinator.view, preparing = this.dirty || this.encoding;
-    return { ...view, canExecute: this.canExecute, pending: view.pending || preparing, localDurable: view.localDurable && !preparing };
+    return { ...view, canExecute: this.canExecute, pending: view.pending || preparing,
+      localDurable: view.localDurable && (this.journalDrain ? !this.journalDrain.dirty : !preparing) };
   }
   get canExecute(): boolean { return !this.stopped && !this.reloadRequired && !this.closing && this.coordinator.view.canExecute; }
   get state(): GameState { return !this.reloadRequired && this.coordinator.view.canExecute ? this.current : { ...this.current, paused: true }; }
@@ -92,7 +126,9 @@ export class CloudGameSession {
 
   execute(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null): GameState | null {
     if (!this.canExecute) { problemDiagnostics.event("command", "refused"); this.emit(); return null; }
+    if (this.journalDrain && !this.journalDrain.canAccept) { this.coordinator.reportLocalFailure(new CloudSyncError("storage")); return null; }
     const before = this.current;
+    const priorCheckpoint = this.checkpoint;
     let result: ReturnType<typeof applyGameEvidenceCommand>;
     const started = performance.now();
     try { result = applyGameEvidenceCommand(this.checkpoint, command, context); }
@@ -106,13 +142,81 @@ export class CloudGameSession {
       try { const receipt = createQuestionReceipt?.(); if (receipt) this.questions.set(receipt.receipt_id, receipt); }
       catch (error) { problemDiagnostics.error("usage-receipt", error); }
     }
-    this.changeVersion++; this.dirty = true; this.scheduleFlush(); this.emit(); return this.current;
+    this.changeVersion++; this.dirty = true;
+    this.queueLocal(priorCheckpoint, command.type === "ADVANCE_TICK");
+    this.coordinator.noteLocalChange(); this.emit();
+    const minutes = (context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60;
+    if (Math.floor(before.facilityTick / minutes) < Math.floor(this.current.facilityTick / minutes)) void this.checkpointNow("day-end");
+    else if (command.type === "SET_PAUSED" && command.paused) void this.durable();
+    return this.current;
   }
   updateMetadata(campaign: CloudCampaignMetadata): void {
     if (this.stopped || campaign.campaignId !== this.coordinator.scope.campaignId || !this.coordinator.view.canExecute ||
       logicalJsonText(JSON.parse(JSON.stringify({ ...campaign, updatedAtRealMs: 0 }))) ===
       logicalJsonText(JSON.parse(JSON.stringify({ ...this.campaign, updatedAtRealMs: 0 })))) return;
-    this.campaign = structuredClone(campaign); this.changeVersion++; this.dirty = true; this.scheduleFlush();
+    if (this.journalDrain && !this.journalDrain.canAccept) { this.coordinator.reportLocalFailure(new CloudSyncError("storage")); return; }
+    this.campaign = structuredClone(campaign); this.changeVersion++; this.dirty = true; this.queueLocal(); this.coordinator.noteLocalChange();
+  }
+  private queueLocal(before?: GameEvidenceCheckpoint, tick = false): void {
+    if (!this.journalDrain) { this.scheduleFlush(); return; }
+    try { this.journalDrain.accept({ delta: before ? gameEvidenceDelta(before, this.checkpoint) : null,
+      campaign: this.campaign, usageQuestions: [...this.questions.values()], writerGeneration: this.coordinator.journalWriterGeneration }, tick); }
+    catch (error) { problemDiagnostics.error("journal", error); this.coordinator.reportLocalFailure(new CloudSyncError("storage")); }
+  }
+  private warmPrepared(target = this.journalDrain?.committed ?? -1, force = false): Promise<boolean> {
+    const drain = this.journalDrain;
+    if (!drain || this.stopped) return Promise.resolve(false);
+    if (this.warmThrough >= target) return Promise.resolve(true);
+    if (this.warming) return this.warming.then(ok => ok && (this.warmThrough >= target || this.warmPrepared(target, force)));
+    if (!force && performance.now() - this.lastWarmFailure < 60_000) return Promise.resolve(false);
+    this.warming = this.coordinator.codec.run({ kind: "journalWarm", input: { address: journalWorkerAddress(drain.store, drain.key), owner: drain.owner } }).then(result => {
+      this.warmThrough = result.through; this.lastWarmFailure = -Infinity; this.coordinator.preparationRecovered(); return true;
+    }).catch(error => { this.lastWarmFailure = performance.now(); this.coordinator.reportPreparationFailure(error); return false; }).finally(() => {
+      this.warming = null;
+      if (!this.stopped && !this.backgrounded && drain.committed > this.warmThrough && performance.now() - this.lastWarmFailure >= 60_000) void this.warmPrepared();
+    });
+    return this.warming;
+  }
+  private async prepareCheckpoint(reason: CloudCheckpointReason, target = this.changeVersion): Promise<boolean> {
+    if (reason === "hidden" || reason === "pagehide") this.backgrounded = true;
+    if (!this.journalDrain) return this.durable();
+    if (!await this.durable()) return false;
+    // Exit callbacks only drain small rows and use an already staged candidate.
+    // The next open can rebuild the latest one from the committed journal.
+    const leaving = reason === "hidden" || reason === "pagehide";
+    if (leaving) {
+      const ready = await this.journalDrain.store.prepared(this.journalDrain.key);
+      if (!ready || ready.owner !== this.journalDrain.owner || ready.through - this.journalStart <= this.preparedVersion) return true;
+      ready.candidate.usageQuestions = ready.candidate.usageQuestions.filter(r => this.questions.has(r.receipt_id));
+      if (!await this.coordinator.stage(ready.candidate, reason, true)) return false;
+      this.preparedVersion = ready.through - this.journalStart; this.dirty = this.changeVersion > this.preparedVersion;
+      this.coordinator.noteLocalChange(this.dirty); return true;
+    }
+    if (this.preparedVersion >= target) return true;
+    if (this.flushing) {
+      if (!await this.flushing) return false;
+      return this.preparedVersion >= target || this.prepareCheckpoint(reason, target);
+    }
+    this.encoding = true; this.emit();
+    this.flushing = (async () => {
+      const compact = performance.now() - this.lastCompaction >= LOCAL_COMPACTION_MS || reason === "day-end" || reason === "save-close";
+      if (this.journalStart + target > this.journalDrain!.committed) throw new CloudSyncError("storage");
+      if (!await this.warmPrepared(this.journalStart + target, true)) return false;
+      const prepared = await this.journalDrain!.store.prepared(this.journalDrain!.key);
+      if (this.stopped || !prepared || prepared.owner !== this.journalDrain!.owner) return false;
+      prepared.candidate.usageQuestions = prepared.candidate.usageQuestions.filter(r => this.questions.has(r.receipt_id));
+      if (!await this.coordinator.stage(prepared.candidate, reason, true)) return false;
+      if (compact) await prepareJournal(this.journalDrain!.store, this.journalDrain!.key, this.coordinator.codec, { compact: true, encode: false });
+      this.preparedVersion = prepared.through - this.journalStart;
+      this.dirty = this.changeVersion > this.preparedVersion;
+      this.coordinator.noteLocalChange(this.dirty);
+      this.coordinator.preparationRecovered();
+      if (compact) { this.lastCompaction = performance.now(); this.compactedThrough = prepared.through; }
+      return true;
+    })().catch(error => { this.coordinator.reportPreparationFailure(error); return false; }).finally(() => {
+      this.encoding = false; this.flushing = null; this.emit();
+    });
+    return this.flushing;
   }
   private scheduleFlush(): void {
     if (this.flushing) return;
@@ -158,6 +262,10 @@ export class CloudGameSession {
   }
   async durable(): Promise<boolean> {
     if (this.stopped) return false;
+    if (this.journalDrain) {
+      try { const ok = await cloudCheckDeadline(this.journalDrain.drain()); if (ok) this.coordinator.confirmJournalDurability(); return ok; }
+      catch { this.coordinator.reportLocalFailure(new CloudSyncError("storage")); return false; }
+    }
     if (!this.dirty && !this.flushing || this.durableVersion >= this.changeVersion) return this.coordinator.view.localDurable;
     const version = this.changeVersion;
     let resolve!: (ok: boolean) => void;
@@ -171,6 +279,8 @@ export class CloudGameSession {
     finally { this.durabilityWaiters.delete(waiter); }
   }
   foreground(online = false): Promise<boolean> {
+    this.backgrounded = false;
+    if (this.journalDrain?.dirty === false) void this.warmPrepared();
     if (this.foregrounding) return this.foregrounding;
     if (this.stopped || this.closing || this.coordinator.hasPriorRecovery) return Promise.resolve(false);
     this.foregrounding = (async () => {
@@ -193,7 +303,7 @@ export class CloudGameSession {
   private async reconnectChecked(): Promise<boolean> {
     // Finish persisting commands already accepted before changing lease/base.
     // A failed write remains in coordinator.attempted for its quota retry.
-    try { if (!await cloudCheckDeadline(this.durable()) && this.coordinator.view.failure === "processing") return false; }
+    try { if (!await cloudCheckDeadline(this.durable()) && (this.journalDrain || this.coordinator.view.failure === "processing")) return false; }
     catch {
       if (!this.stopped) this.coordinator.reportLocalFailure(new CloudSyncError("processing"));
       return false;
@@ -201,11 +311,34 @@ export class CloudGameSession {
     if (this.stopped) return false;
     const checked = await this.coordinator.focus();
     if (this.stopped) return false;
+    if (checked && !this.needsReload && this.dirty) {
+      if (!await this.prepareCheckpoint("ordinary") || !await this.coordinator.checkpoint("purchase")) return false;
+    }
     return this.automaticReconnect ? this.automaticReconnect(checked && !this.needsReload) : checked;
   }
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
+    if (reason === "hidden" || reason === "pagehide") this.backgrounded = true;
     if (!await this.durable()) return false;
     return this.coordinator.checkpoint(reason);
+  }
+  /** Explicit support/import boundary: materialize local recovery without RPC. */
+  prepareRecoveryCopy(): Promise<boolean> { return this.prepareCheckpoint("campaign-switch"); }
+  async pulse(): Promise<void> {
+    await this.coordinator.pulse();
+    if (typeof document !== "undefined" && document.visibilityState === "visible") this.backgrounded = false;
+    const drain = this.journalDrain;
+    if (drain && !this.stopped && !this.backgrounded && drain.committed > this.warmThrough && performance.now() - this.lastWarmFailure >= 60_000) void this.warmPrepared();
+    if (!drain || this.stopped || this.flushing || this.compacting || drain.highWater <= this.compactedThrough ||
+      performance.now() - this.lastCompaction < LOCAL_COMPACTION_MS || performance.now() - this.lastCompactionAttempt < 60_000) return;
+    this.lastCompactionAttempt = performance.now();
+    // Operational compaction is independent of connectivity/lease authority.
+    // It does not need to prepare a cloud body or change command permission.
+    this.compacting = (async () => {
+      if (!await this.durable() || this.stopped) return;
+      const result = await prepareJournal(drain.store, drain.key, this.coordinator.codec, { compact: true, encode: false });
+      if (result) { this.compactedThrough = result.through; this.lastCompaction = performance.now(); }
+    })().catch(error => { problemDiagnostics.error("journal-compaction", error); }).finally(() => { this.compacting = null; });
+    await this.compacting;
   }
   saveAndClose(context: DomainContext): Promise<boolean> {
     if (this.closing) return this.closing;
@@ -213,6 +346,7 @@ export class CloudGameSession {
     if (!this.current.paused && !this.execute({ type: "SET_PAUSED", paused: true, operationId: crypto.randomUUID() }, context)) return Promise.resolve(false);
     this.closing = (async () => {
       if (!await this.durable()) return false;
+      if (!await this.prepareCheckpoint("save-close")) return false;
       return this.coordinator.saveAndClose();
     })().finally(() => { this.closing = null; this.emit(); });
     this.emit(); return this.closing;
@@ -223,11 +357,13 @@ export class CloudGameSession {
   }
   undoBuild(state: GameState): GameState | null {
     if (!this.canExecute) { problemDiagnostics.event("command", "refused"); this.emit(); return null; }
+    if (this.journalDrain && !this.journalDrain.canAccept) { this.coordinator.reportLocalFailure(new CloudSyncError("storage")); return null; }
     try {
+      const before = this.checkpoint;
       const result = applyGameEvidenceBuildUndo(this.checkpoint, state, crypto.randomUUID());
       this.checkpoint = result.checkpoint; this.current = result.state;
       this.campaign = { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) };
-      this.changeVersion++; this.dirty = true; this.scheduleFlush(); this.emit();
+      this.changeVersion++; this.dirty = true; this.queueLocal(before); this.coordinator.noteLocalChange(); this.emit();
       return this.current;
     } catch (error) { this.coordinator.reportLocalFailure(error); return null; }
   }
@@ -238,6 +374,6 @@ export class CloudGameSession {
       checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
       priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
-  detach(): void { this.stopped = true; this.finishDurability(false); this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); }
+  detach(): void { this.stopped = true; if (this.journalDrain) this.coordinator.releaseJournalOwner(this.journalDrain.owner); this.journalDrain?.stop(); this.finishDurability(false); this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); this.unsubscribeCheckpoint(); }
   dispose(): void { this.detach(); this.coordinator.dispose(); }
 }

@@ -3,6 +3,8 @@ import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCodec } from "./codecWorker";
 import { isStorageQuotaError } from "../storagePressure";
 import { cloudScopeData } from "./scopeData";
+import { IndexedDbJournalStorage, MemoryJournalStorage, type JournalStorage } from "../localJournal";
+import { prepareJournal } from "./journalCodec";
 import { CloudCacheError, type StoredCache } from "./codecCache";
 export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
 import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
@@ -23,10 +25,27 @@ export interface CloudCacheEntry {
 }
 export interface CloudCacheRead { cacheRevision: number; entry: CloudCacheEntry }
 export interface CloudCache {
+  readonly journal?: JournalStorage;
   read(scope: CloudScope): Promise<CloudCacheRead | null>;
   write(entry: CloudCacheEntry, expectedCacheRevision: number | null): Promise<CloudCacheRead>;
   accountEntries?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]>;
   clearAccount?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void>;
+}
+/** Only open/recovery paths hydrate the append journal. Ordinary cache readback
+ * verifies the exact legacy cache bytes without scanning or encoding it. */
+async function withJournal(entry: CloudCacheEntry, journal: JournalStorage): Promise<CloudCacheEntry> {
+  const key = cloudCampaignStorageKey(entry.scope);
+  if (!await journal.head(key)) return entry;
+  const prepared = await prepareJournal(journal, key, cloudCodec, { base: entry.confirmed });
+  if (!prepared?.candidate || !prepared.base) return entry;
+  const candidate = prepared.candidate;
+  const represented = entry.recovery?.following ?? (entry.recovery?.inFlight ? JSON.parse(entry.recovery.inFlight.requestText) as CloudCandidate : null);
+  if (represented?.snapshot.uncompressedSha256 === candidate.snapshot.uncompressedSha256 &&
+    candidate.usageQuestions.every(row => represented.usageQuestions.some(other => other.receipt_id === row.receipt_id))) return entry;
+  const sameBase = prepared.base.revision === entry.confirmed.revision;
+  return { ...entry, confirmed: prepared.base, recovery: { baseRevision: prepared.base.revision,
+    writerGeneration: entry.recovery?.writerGeneration ?? prepared.writerGeneration ?? "0", inFlight: sameBase ? entry.recovery?.inFlight ?? null : null,
+    following: prepared.candidate } };
 }
 const copy = <T>(value: T): T => structuredClone(value);
 const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run({ kind: "packCache", input: {
@@ -55,9 +74,12 @@ export interface CloudCacheTestHooks {
 
 /** Separate database; the original global local repository is never opened/migrated. */
 export class IndexedDbCloudCache implements CloudCache {
+  readonly journal: JournalStorage;
   private database: Promise<IDBDatabase> | null = null;
   constructor(private readonly factory: IDBFactory | null = globalThis.indexedDB ?? null,
-    private readonly databaseName = CLOUD_CACHE_DATABASE, private readonly hooks: CloudCacheTestHooks = {}) {}
+    private readonly databaseName = CLOUD_CACHE_DATABASE, private readonly hooks: CloudCacheTestHooks = {}) {
+    this.journal = new IndexedDbJournalStorage(databaseName === CLOUD_CACHE_DATABASE ? undefined : databaseName + ".journal", factory);
+  }
 
   private open(): Promise<IDBDatabase> {
     if (this.database) return this.database;
@@ -83,7 +105,10 @@ export class IndexedDbCloudCache implements CloudCache {
     return this.database;
   }
   read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
-    return observeStorage("cache.read", () => this.readChecked(scope, expectedText));
+    return observeStorage("cache.read", async () => {
+      const value = await this.readChecked(scope, expectedText);
+      return value && expectedText === undefined ? { ...value, entry: await withJournal(value.entry, this.journal) } : value;
+    });
   }
   private async readChecked(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
     const db = await this.open();
@@ -137,7 +162,7 @@ export class IndexedDbCloudCache implements CloudCache {
     const entries: CloudCacheEntry[] = [];
     for (const raw of records.filter(row => row.key.startsWith(prefix))) {
       const campaignId = decodeURIComponent(raw.key.slice(prefix.length));
-      entries.push((await unpack(raw, cloudScopeData(scope, campaignId))).entry);
+      entries.push(await withJournal((await unpack(raw, cloudScopeData(scope, campaignId))).entry, this.journal));
     }
     return entries;
   }
@@ -147,16 +172,20 @@ export class IndexedDbCloudCache implements CloudCache {
     const keys = await request(store.getAllKeys(IDBKeyRange.bound(prefix, prefix + "\uffff")));
     for (const key of keys) if (typeof key === "string" && key.startsWith(prefix)) await request(store.delete(key));
     if (!await done) throw new CloudCacheError("transaction");
+    await this.journal.clear(prefix);
   }
 }
 
 /** Faults model both sides of the local commit boundary without a browser. */
 export class MemoryCloudCache implements CloudCache {
+  readonly journal = new MemoryJournalStorage();
   readonly records = new Map<string, StoredCache>();
   fault: "before-commit" | "after-commit" | "corrupt" | null = null;
-  async read(scope: CloudScope): Promise<CloudCacheRead | null> {
+  async read(scope: CloudScope, rawOnly = false): Promise<CloudCacheRead | null> {
     const raw = this.records.get(cloudCampaignStorageKey(scope));
-    return raw ? unpack(copy(raw), scope) : null;
+    if (!raw) return null;
+    const value = await unpack(copy(raw), scope);
+    return rawOnly ? value : { ...value, entry: await withJournal(value.entry, this.journal) };
   }
   async write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
     const stored = await pack(entry, expected);
@@ -166,18 +195,19 @@ export class MemoryCloudCache implements CloudCache {
     this.records.set(stored.key, stored);
     if (fault === "after-commit") throw new CloudCacheError("transaction");
     if (fault === "corrupt") stored.text += " ";
-    return (await this.read(entry.scope))!;
+    return (await this.read(entry.scope, true))!;
   }
   async accountEntries(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const result: CloudCacheEntry[] = [];
     for (const row of this.records.values()) if (row.key.startsWith(prefix)) {
-      result.push((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry);
+      result.push(await withJournal((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry, this.journal));
     }
     return result;
   }
   async clearAccount(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void> {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     for (const key of this.records.keys()) if (key.startsWith(prefix)) this.records.delete(key);
+    await this.journal.clear(prefix);
   }
 }

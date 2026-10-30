@@ -56,6 +56,9 @@ export async function encodeCloudEvidenceCheckpoint(input: {
   checkpoint: GameEvidenceCheckpoint; campaign: CloudCampaignMetadata; source: CloudSourceProvenance;
   operationId: string; expectedRevision: string; encoding?: CloudCompression;
   acknowledgedEvidence?: { headerSha256: string; records: number };
+  /** Optional previously verified bytes. Reuse still checks exact decoded text;
+   * it never changes a record, format, digest or immutable operation body. */
+  reuseEvidence?: CloudPackedEvidence;
 }) {
   assertCloudRevision(input.expectedRevision, true);
   checkSource(input.source);
@@ -68,8 +71,15 @@ export async function encodeCloudEvidenceCheckpoint(input: {
   const archiveText = canonical(archive);
   const header: EvidenceHeader = { formatVersion: 1, version: archive.version, campaignId: archive.campaignId, source: input.source, baseline: archive.baseline };
   const headerText = canonical(header), recordTexts = archive.records.map(canonical);
-  const records = await mapBounded(archive.records, async record => ({ id: record.id, content: await compressCloudText(canonical(record), encoding) }));
-  const packedEvidence: CloudPackedEvidence = Object.freeze({ header: await compressCloudText(headerText, encoding), records: Object.freeze(records) });
+  const reuse = async (text: string, previous?: CloudCompressedText) => {
+    if (previous?.encoding === encoding && await decompressCloudText(previous) === text) return previous;
+    return compressCloudText(text, encoding);
+  };
+  const records = await mapBounded(archive.records, async record => {
+    const old = input.reuseEvidence?.records[Number.parseInt(record.id.slice(1), 36) - 1];
+    return { id: record.id, content: await reuse(canonical(record), old?.id === record.id ? old.content : undefined) };
+  });
+  const packedEvidence: CloudPackedEvidence = Object.freeze({ header: await reuse(headerText, input.reuseEvidence?.header), records: Object.freeze(records) });
   const envelope: CloudEvidenceEnvelope = { cloudFormatVersion: CLOUD_EVIDENCE_FORMAT_VERSION, evidenceContractVersion: 1,
     campaign, baselineId: baselineId(input.source), evidenceHighWater: archive.records.length,
     evidenceManifestSha256: await sha256Utf8(archiveText), operational: input.checkpoint.snapshot };

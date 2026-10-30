@@ -199,7 +199,7 @@ interface AppShellProps {
   onReplayFirstShift?: () => void;
   onReferencePauseLockedChange?: (locked: boolean) => void;
   onTutorialTopicExposure?: (topicIds: readonly string[]) => void;
-  onSaveAndPause: () => PrototypeSaveResult;
+  onSaveAndPause: () => PrototypeSaveResult | Promise<PrototypeSaveResult>;
   onClearLocalCampaigns: () => boolean;
   onRestart: () => void;
 }
@@ -698,13 +698,13 @@ export function AppShell({
     ...needsYou,
   ];
   const clinicFeed = clinicFeedForTutorial([...messages, ...systemNotices.filter((notice) => notice.targetType !== "save")], tutorialStep);
-  const runClinicAction = (id: string, action: ClinicAlertAction) => {
-    const result = onClinicAlertAction?.(action) ?? (action.kind === "save_and_pause"
-      ? (() => { const saved = onSaveAndPause(); return { ok: saved.ok, reason: saved.ok ? undefined : "The save failed. Keep this tab open and retry." }; })()
-      : { ok: false, reason: "This action is unavailable in this preview." });
+  const runClinicAction = async (id: string, action: ClinicAlertAction) => {
+    if (action.kind === "save_and_pause" && cloudSave) { await cloudSave.onSaveAndClose(); return; }
+    const result = action.kind === "save_and_pause" ? await onSaveAndPause() :
+      onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
     setClinicActionFailures((current) => {
       const next = { ...current };
-      if (result.ok) delete next[id]; else next[id] = result.reason ?? "The action could not be applied.";
+      if (result.ok) delete next[id]; else next[id] = "reason" in result && result.reason ? result.reason : "The action could not be applied.";
       return next;
     });
     if (!result.ok) return;

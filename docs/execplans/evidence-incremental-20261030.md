@@ -162,3 +162,14 @@ Early exploratory logs are diagnostic, not acceptance results. They found the im
 ## Manager next action
 
 Review the actual scoped diff and final evidence. Resolve the pre-existing paused-pilot artifact drift, then rebind approved inputs using the exact hashes above. Native supported-iPhone acceptance and B remain manager work; no scheme/host/port/profile/launcher change, no save reset or storage clearing is required. Local-only valuable checkpoint: after manager acceptance, remind the owner to say **push to GitHub** for an audited backup. No Git action was authorized or performed here.
+
+## Manager release (2026-10-30)
+
+Accepted after manager checks: release-worktree CI suites (player 3,098;
+game-domain 4,328 + 1 optional skip), typecheck, build, boundaries; cloud e2e
+108/108. Level 5 rebind 10 run in the release worktree (no numeric change) so
+unreleased question-pilot content is not bound into published evidence.
+Released as `ce9ebb14`; the first Pages run failed only on a 1 s Vitest
+waitFor in flagFreeze.test.tsx on the hosted runner, fixed with the hostedTime
+multiplier in `cd071f91` (also applied in the main tree). Pages run
+41082423947 succeeded; live bundle index-DyEIA5GA.js.

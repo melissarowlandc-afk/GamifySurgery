@@ -15,6 +15,7 @@ import { CLOUD_CHECK_TIMEOUT_MS } from "../session/cloud/checkDeadline";
 import { CloudSyncError } from "../session/cloud/transport";
 import { AccountMenu } from "./AccountMenu";
 import { CloudCampaignEntry } from "./CloudCampaignEntry";
+import { AUTOMATIC_ENROLLMENT_KEY } from "../session/cloud/importCampaigns";
 
 vi.mock("../facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
 afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); });
@@ -63,6 +64,29 @@ async function accountCampaigns(f: ReturnType<typeof account>, count: number) {
   f.cloud.summaries = await f.cloud.runtime.transport.list(); refreshAccount(f);
 }
 describe("automatic account campaign entry shared by both layouts", () => {
+  it.each(["phone", "desktop"])("%s: a stalled post-import enrollment write times out, permits Retry and never imports twice", async layout => {
+    const env = phoneTestDom(), f = account(); env.browser.location.search = `?layout=${layout}`;
+    const { raw, key } = await localClinics(env, ["First"]); refreshAccount(f);
+    const held = deferred(), started = deferred(), compare = f.store.compareAndSet.bind(f.store);
+    let block = true;
+    vi.spyOn(f.store, "compareAndSet").mockImplementation(async (...args) => {
+      if (block && args[0] === AUTOMATIC_ENROLLMENT_KEY && (args[2] as { phase?: string }).phase === "complete") {
+        started.resolve(); await held.promise;
+      }
+      return compare(...args);
+    });
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    await env.render(wrap(entry(), f)); await started.promise;
+    expect(f.server.operationCount("account-a")).toBe(1);
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    expect(env.button("Try saving my campaigns again").attributes.disabled).toBeUndefined();
+    expect(env.element.textContent).not.toContain("Getting your campaigns ready");
+    block = false; await env.click("Try saving my campaigns again");
+    await act(async () => { held.resolve(); }); vi.useRealTimers();
+    await settle(() => expect(env.button("Resume First").attributes.disabled).toBeUndefined());
+    expect(f.server.operationCount("account-a")).toBe(1);
+    expect((env.browser.localStorage as unknown as Storage).getItem(key)).toBe(raw);
+  });
   it.each(["phone", "desktop"])("%s: a level preview has a deadline and cannot block Resume or replace the timeout with a late result", async layout => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); env.browser.location.search = `?layout=${layout}`;
     await accountCampaigns(f, 1);

@@ -1,6 +1,6 @@
 import { problemDiagnostics, technicalError } from "../../diagnostics/problemDiagnostics";
 import { CloudCodecError } from "./codecJson";
-import { runCloudCodecTask, unpackCodecFailure, type CloudCodecExecutor, type CloudCodecMessage, type CloudCodecReply, type CloudCodecResults, type CloudCodecTask } from "./codecTasks";
+import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, type CloudCodecMessage, type CloudCodecReply, type CloudCodecResults, type CloudCodecTask } from "./codecTasks";
 
 // Vite development loads the workspace graph as individual modules. Release
 // builds load a bundled worker; neither startup nor processing waits forever.
@@ -42,7 +42,11 @@ export class CloudCodecWorker implements CloudCodecExecutor {
       try { task = structuredClone(task); }
       catch (error) { return Promise.reject(this.payloadFailure(error)); }
     }
-    if (!createWorker) return runCloudCodecTask(task);
+    if (!createWorker) return handleCloudCodecMessage({ id: 0, task }).then(reply => {
+      if ("error" in reply) throw unpackCodecFailure(reply.error);
+      if (!("result" in reply)) throw new CloudCodecError("worker_payload", "Save processing returned no checkpoint.");
+      return reply.result as CloudCodecResults[T["kind"]];
+    });
     this.unregister ??= problemDiagnostics.source("codec", () => this.health);
     return new Promise((resolve, reject) => {
       const id = ++this.sequence;
@@ -109,8 +113,8 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     this.startupTimer = null;
     for (const [id, waiting] of this.pending) {
       if (waiting.timer !== null) clearTimeout(waiting.timer); waiting.timer = null;
-      // All codec tasks are pure; no transport/storage mutation lives in this
-      // worker. Retry the SAME payload once, never mint an operation/evidence ID.
+      // Codec tasks are pure or idempotent journal CAS/derived-cache writes.
+      // No RPC runs here. Retry the SAME payload once, never mint operation IDs.
       if (retry && waiting.retries < 1) { waiting.retries++; }
       else { this.pending.delete(id); waiting.reject(failure); }
     }

@@ -9,7 +9,7 @@ import { testElementProps } from "../mobile/testDom";
 import { CloudGameSession } from "../session/cloud/gameSession";
 import { IndexedDbCloudCache, type CloudCacheEntry } from "../session/cloud/cache";
 import { cloudCodec, CloudCodecWorker } from "../session/cloud/codecWorker";
-import { FakeCloudCodecWorker } from "../session/cloud/codecWorkerTestSupport";
+import { MessageChannelCloudCodecWorker } from "../session/cloud/codecWorkerMessageTestSupport";
 import { deferred, TestCloudClock } from "../session/cloud/syncTestSupport";
 import { CloudSyncCoordinator } from "../session/cloud/coordinator";
 import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
@@ -20,14 +20,15 @@ vi.mock("../mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <di
 const codecs: CloudCodecWorker[] = [];
 afterEach(async () => { await cleanupPhoneTests(); for (const codec of codecs.splice(0)) codec.dispose(); vi.restoreAllMocks(); });
 
-async function fixture(layout: "phone" | "desktop") {
+async function fixture(layout: "phone" | "desktop", needsNotice = false) {
   const env = phoneTestDom(), values = new Map<string, string>(), server = new FakeCloudServer(), transport = server.transport("qa-account-a");
   const intervals = new Map<number, { callback(): void; ms: number }>(), commits: CloudFrozenOperation[] = [];
   let intervalId = 0, unavailable = false;
   const holds = new Map<string, Promise<void>>();
+  if (needsNotice) server.setAccess("qa-account-a", { noticeAccepted: false });
   // Include native structured cloning, not just the pure inline codec. The
   // guarded account runtime contains proxies that cannot cross postMessage.
-  const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker); worker.release(); codecs.push(codec);
+  const worker = new MessageChannelCloudCodecWorker(), codec = new CloudCodecWorker(() => worker); codecs.push(codec);
   vi.spyOn(cloudCodec, "run").mockImplementation(task => codec.run(task));
   vi.stubGlobal("indexedDB", new IDBFactory()); vi.stubGlobal("IDBKeyRange", IDBKeyRange);
   Object.assign(env.browser.location, { search: `?layout=${layout}&prototype-tools=0&account=qa-account-a&device-campaigns=1`,
@@ -52,21 +53,36 @@ async function fixture(layout: "phone" | "desktop") {
     catch (error) { return { error: { code: error instanceof CloudSyncError ? error.code : "network" } }; }
   };
   await env.render(<QaApp />);
+  if (needsNotice) {
+    await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Accept and continue").attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
+    await env.click("Accept and continue");
+  }
   await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
+  const entryStatus = browser.__cloudQa!.status();
   await env.click("Resume Synthetic clinic 1");
   const playing = () => vi.waitFor(async () => { await act(async () => {});
     expect(browser.__cloudQa?.status()).toMatchObject({ hasState: true, canExecute: true, failure: null, needsReload: false });
   }, { timeout: 5_000 });
   await playing();
   await vi.waitFor(async () => { await act(async () => {}); expect(browser.__cloudQa?.status().pending).toBe(false); });
-  return { env, server, browser, playing, intervals, commits, hold: (method: string, wait: Promise<void>) => { holds.set(method, wait); }, unavailable: (value: boolean) => { unavailable = value; } };
+  return { env, server, browser, playing, intervals, commits, codec, entryStatus, hold: (method: string, wait: Promise<void>) => { holds.set(method, wait); }, unavailable: (value: boolean) => { unavailable = value; } };
 }
 
 describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", layout => {
+  it("accepts the notice, completes enrollment and opens through native queued worker messages", async () => {
+    const f = await fixture(layout, true);
+    expect(f.entryStatus.entryPreparation).toMatchObject({ stage: "complete", busy: false, preparing: false, failure: null });
+    expect(f.browser.__cloudQa!.status()).toMatchObject({ hasState: true, canExecute: true, failure: null });
+    expect(f.server.operationCount("qa-account-a")).toBe(1);
+    expect(f.server.calls.filter(call => call.method === "importCampaign")).toHaveLength(1);
+  });
   it("keeps standalone focus bursts cheap and checkpoints a hidden/pagehide/freeze boundary only once", async () => {
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
     const f = await fixture(layout), qa = () => f.browser.__cloudQa!;
     await act(async () => { expect(await qa().command({ type: "SET_SIMULATION_SPEED", speed: 2 })).toBe(true); });
+    // Isolate focus from the small commit's already-started background worker
+    // task. A ready candidate makes this a real leaving-upload assertion.
+    await vi.waitFor(() => expect(f.codec.health.inFlight).toHaveLength(0));
     const scans = vi.spyOn(IndexedDbCloudCache.prototype, "accountEntries"), writes = vi.spyOn(IndexedDbCloudCache.prototype, "write"), codec = vi.spyOn(cloudCodec, "run");
     const reconnect = vi.spyOn(CloudGameSession.prototype, "reconnect"); codec.mockClear();
     const count = f.server.operationCount("qa-account-a"), calls = f.server.calls.length;
@@ -81,7 +97,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
       Object.assign(f.env.doc, { visibilityState: "hidden" }); f.env.doc.dispatchEvent(new Event("visibilitychange"));
       f.env.browser.dispatchEvent(new Event("pagehide")); f.env.doc.dispatchEvent(new Event("freeze"));
     });
-    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status().pending).toBe(false); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status()).toMatchObject({ localDurable: true, pending: false }); });
     expect(f.server.operationCount("qa-account-a")).toBe(count + 1);
     codec.mockClear(); scans.mockClear(); writes.mockClear();
     clock.advance(10_000);
@@ -99,10 +115,10 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
     const f = await fixture(layout), qa = () => f.browser.__cloudQa!;
     await act(async () => { expect(await qa().command({ type: "SET_PAUSED", paused: false })).toBe(true); });
-    // A normal hidden checkpoint finishes first, then iOS suspends its monotonic
+    // A normal hidden local drain finishes first, then iOS suspends its monotonic
     // clock. This also exercises the phone's real visible status presentation.
     await act(async () => { Object.assign(f.env.doc, { visibilityState: "hidden" }); f.env.doc.dispatchEvent(new Event("visibilitychange")); });
-    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status().pending).toBe(false); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(qa().status().localDurable).toBe(true); });
     const gate = deferred(); f.hold("head", gate.promise);
     let checked = false, checking!: Promise<boolean>;
     clock.wall += expired ? 65_000 : 10_000;

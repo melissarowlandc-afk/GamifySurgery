@@ -1,4 +1,6 @@
 import { startFacilityClock } from "./facilityClock";
+import { LocalProfileJournal } from "./localProfileJournal";
+import { cloudCheckDeadline } from "./cloud/checkDeadline";
 import { problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
 import { questionReviewContext } from "./questionReviewContext";
 import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
@@ -221,6 +223,7 @@ export interface PrototypeSession {
   setReferencePauseLocked: (locked: boolean) => void;
   recordTutorialTopicExposure: (topicIds: readonly string[]) => void;
   saveAndPause: () => PrototypeSaveResult;
+  saveAndPauseDurably: () => Promise<PrototypeSaveResult>;
   saveForFirstShiftReplay: () => LocalPrototypeProfile | null;
   clearLocalCampaigns: () => boolean;
 }
@@ -332,6 +335,11 @@ export function usePrototypeSession(
     cloud?.state ?? requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
+  const localJournalRef = useRef<LocalProfileJournal | null>(null);
+  const localJournalOpeningRef = useRef<Promise<LocalProfileJournal> | null>(null);
+  const localJournalGenerationRef = useRef(0);
+  const localJournalBindingRef = useRef(0);
+  const localJournalRequired = !cloud && typeof indexedDB !== "undefined";
   const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
   const [
     selectedRoomDefinitionId,
@@ -581,6 +589,10 @@ export function usePrototypeSession(
       lastSaveResultRef.current = result;
       lastSaveSucceededRef.current = result.ok;
       if (result.ok) {
+        const journal = localJournalRef.current;
+        if (journal && journal.campaignId === nextProfile.activeCampaignId && !campaignWriteGateRef.current.isSuppressed()) {
+          try { journal.record(nextProfile); } catch (error) { problemDiagnostics.error("local-journal-metadata", error); }
+        }
         durableUsageQuestionsRef.current = nextProfile.pendingUsageQuestions ?? [];
         promoteCommittedQuestions();
         // A later verified write makes the previous warning stale and allows
@@ -592,6 +604,36 @@ export function usePrototypeSession(
     },
     [cloud, promoteCommittedQuestions],
   );
+
+  const makeLocalJournal = useCallback((nextProfile: LocalPrototypeProfile) => LocalProfileJournal.create(nextProfile, accountId, error => {
+      problemDiagnostics.error("local-journal", error);
+      lastSaveSucceededRef.current = false;
+      showCommandProblem("Device saving needs attention. Keep the app open and send a problem report.");
+    }, questions => {
+      lastSaveSucceededRef.current = !localJournalRef.current?.dirty;
+      lastSaveResultRef.current = { ok: true, profileCharacters: 0 };
+      durableUsageQuestionsRef.current = questions; promoteCommittedQuestions();
+    }), [accountId, promoteCommittedQuestions]);
+  useEffect(() => {
+    if (!localJournalRequired) return;
+    const generation = ++localJournalGenerationRef.current, binding = ++localJournalBindingRef.current;
+    localJournalOpeningRef.current ??= makeLocalJournal(profileRef.current);
+    void localJournalOpeningRef.current.then(journal => {
+      if (localJournalGenerationRef.current !== generation) return;
+      localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null);
+    }).catch(error => { problemDiagnostics.error("local-journal-open", error); showCommandProblem("Device saving could not start. Keep the app open and send a problem report."); });
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== "hidden") void localJournalRef.current?.compact();
+    }, 1_000);
+    return () => {
+      window.clearInterval(timer);
+      queueMicrotask(() => {
+        if (localJournalBindingRef.current === binding) void localJournalOpeningRef.current?.then(async journal => {
+          await journal.durable(); journal.stop();
+        }).catch(error => problemDiagnostics.error("local-journal-stop", error));
+      });
+    };
+  }, [localJournalRequired, makeLocalJournal]);
 
   const stageActiveState = useCallback((nextState: GameState) => {
     const now = Date.now();
@@ -623,6 +665,10 @@ export function usePrototypeSession(
     const nextProfile = stageActiveState(nextState);
     setProfile(nextProfile);
     if (cloud) return false;
+    if (localJournalRef.current) {
+      localJournalRef.current.record(nextProfile); lastSaveSucceededRef.current = false;
+      void localJournalRef.current.durable(); return false;
+    }
     return attemptSaveProfile(nextProfile).ok;
   }, [attemptSaveProfile, cancelScheduledAutosave, cloud, stageActiveState]);
 
@@ -638,7 +684,7 @@ export function usePrototypeSession(
       cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
     };
     const unsubscribe = cloud.subscribe(sync);
-    const timer = window.setInterval(() => { if (document.visibilityState !== "hidden") void cloud.coordinator.pulse(); }, 1_000);
+    const timer = window.setInterval(() => { if (document.visibilityState !== "hidden") void cloud.pulse(); }, 1_000);
     const focus = () => {
       const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
       if (visible) void cloud.foreground();
@@ -669,10 +715,13 @@ export function usePrototypeSession(
   useEffect(() => {
     if (cloud || !cloudAccount?.registerLocalWriter) return;
     cloudAccount.registerLocalWriter(mode => {
-      if (mode === "export") return JSON.stringify(profileRef.current);
+      if (mode === "export") return JSON.stringify({ ...profileRef.current,
+        ...(localJournalRef.current ? { localEvidenceCheckpoint: localJournalRef.current.recoveryCheckpoint } : {}) });
       campaignWriteGateRef.current.suppress(); cameraPreferencesRef.current!.discard();
       cancelScheduledAutosave(); pendingAutosaveProfileRef.current = null;
       stateRef.current = { ...stateRef.current, paused: true }; setState(stateRef.current);
+      ++localJournalGenerationRef.current;
+      return localJournalOpeningRef.current?.then(journal => { journal.stop(); }, () => {});
     });
     return () => cloudAccount.registerLocalWriter?.(null);
   }, [cloud, cloudAccount?.runtime, cancelScheduledAutosave]);
@@ -715,6 +764,9 @@ export function usePrototypeSession(
       options: ExecuteOptions = {},
     ): OperationReceipt["status"] => {
       if (!cloud && campaignWriteGateRef.current.isSuppressed()) { showCommandProblem("This device session has been closed."); setAnnouncement("This device session has been closed."); return "rejected"; }
+      if (localJournalRequired && (!localJournalRef.current || !localJournalRef.current.canAccept)) {
+        showCommandProblem(localJournalRef.current ? "Device saving needs attention. Keep the app open and send a problem report." : "Preparing your device save. Try again in a moment."); return "rejected";
+      }
       const operationId = `${sessionIdRef.current}.${++sequenceRef.current}`;
       const command = {
         ...commandInput,
@@ -740,8 +792,11 @@ export function usePrototypeSession(
         return receipt?.status ?? "rejected";
       }
       let next: GameState;
-      try { next = gameReducer(previous, command, { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
-        guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked }); }
+      try {
+        const context = { ...PROTOTYPE_DOMAIN_CONTEXT, guidanceTipsDeliveryBlocked: !lastSaveSucceededRef.current,
+          guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds, guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked };
+        next = localJournalRef.current ? localJournalRef.current.execute(command, context) : gameReducer(previous, command, context);
+      }
       catch (error) { problemDiagnostics.error("command", error); showCommandProblem("That action could not be completed. Try again or send a problem report."); return "rejected"; }
       if (next.facilityTick !== facilityHeartbeatRef.current.tick) facilityHeartbeatRef.current = { tick: next.facilityTick, at: Date.now() };
       try {
@@ -762,7 +817,14 @@ export function usePrototypeSession(
         next.facilityTick,
       );
       let saved = true;
-      if (command.type === "ADVANCE_TICK" && shouldPersist) {
+      if (localJournalRef.current) {
+        const staged = stageActiveState(next); setProfile(staged);
+        localJournalRef.current.record(staged, command.type === "ADVANCE_TICK");
+        lastSaveSucceededRef.current = false;
+        const clock = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock, day = (clock.dayEndHour - clock.dayStartHour) * 60;
+        if (Math.floor(previous.facilityTick / day) < Math.floor(next.facilityTick / day)) void localJournalRef.current.compact(true);
+        else if (command.type === "SET_PAUSED" && command.paused) void localJournalRef.current.durable();
+      } else if (command.type === "ADVANCE_TICK" && shouldPersist) {
         // Full localStorage serialization is deliberately deferred away from
         // the route-extension task so it cannot steal the next movement frame.
         scheduleActiveStateAutosave(next);
@@ -828,6 +890,7 @@ export function usePrototypeSession(
   useEffect(
     () => () => {
       if (cloud) return;
+      if (localJournalRequired) return; // The journal lifetime cleanup drains small accepted rows.
       const pendingProfile = pendingAutosaveProfileRef.current;
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
@@ -882,6 +945,10 @@ export function usePrototypeSession(
     }
     const previous = buildHistoryRef.current.at(-1)!;
     if (cloud && !cloud.undoBuild(previous)) { showCommandProblem("Check the account save before undoing this build action."); setAnnouncement("Check the account save before undoing this build action."); return; }
+    if (localJournalRef.current) {
+      if (!localJournalRef.current.canAccept) { showCommandProblem("Device saving needs attention before undoing."); return; }
+      localJournalRef.current.undo(previous);
+    }
     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
     buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
     setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
@@ -920,7 +987,7 @@ export function usePrototypeSession(
   }, [buildMode, state]);
 
   useEffect(() => {
-    if (cloud) return;
+    if (cloud || localJournalRequired) return;
     const result = attemptSaveProfile(profileRef.current);
     if (!result.ok) {
       saveWarningShownRef.current = true;
@@ -953,10 +1020,12 @@ export function usePrototypeSession(
           "Game paused while the page was hidden. Resume when ready.",
         );
       }
+      if (!visible && localJournalRef.current) void localJournalRef.current.durable();
     };
 
     const handlePageHide = () => {
       if (cloud) { cloud.coordinator.markBackground(); void cloud.checkpointNow("pagehide"); return; }
+      if (localJournalRef.current) { void localJournalRef.current.durable(); return; }
       // Idle autosaves optimize live animation, but a refresh or navigation
       // must still synchronously commit the latest staged tick before the old
       // document is discarded.
@@ -1896,14 +1965,25 @@ export function usePrototypeSession(
       return { ok: false, failure: { category: "unavailable", operation: "write", name: "CloudConfirmationRequired",
         message: "Account save is pending. Wait for account confirmation before closing." } };
     }
+    if (localJournalRequired && !localJournalRef.current) return { ok: false, failure: { category: "unavailable", operation: "write",
+      name: "LocalJournalOpening", message: "Preparing your device save. Try Save & Close again in a moment." } };
+    if (localJournalRef.current && !localJournalRef.current.canAccept) {
+      void localJournalRef.current.durable().then(ok => { if (ok) setAnnouncement("Device saving recovered. Try Save & Close again."); });
+      return { ok: false, failure: { category: "unavailable", operation: "write", name: "LocalJournalRetry",
+        message: "Retrying your device save. Keep the app open, then try Save & Close again." } };
+    }
     if (!stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: true },
         {
           announcementOverride:
-            "Campaign saved and paused. It is safe to close this tab.",
+              localJournalRequired ? "Saving on this device…" : "Campaign saved and paused. It is safe to close this tab.",
         },
       );
+      if (localJournalRef.current?.dirty) {
+        void localJournalRef.current.durable();
+        return { ok: false, failure: { category: "unavailable", operation: "write", name: "LocalCommitPending", message: "Device save is pending." } };
+      }
       const result = lastSaveResultRef.current;
       const saved = lastSaveSucceededRef.current;
       publishSystemNotice(
@@ -1916,7 +1996,12 @@ export function usePrototypeSession(
       );
       return result;
     }
-    const saved = persistActiveState(stateRef.current);
+    if (localJournalRef.current?.dirty) {
+      void localJournalRef.current.durable();
+      return { ok: false, failure: { category: "unavailable", operation: "write", name: "LocalCommitPending", message: "Device save is pending." } };
+    }
+    if (localJournalRef.current) { lastSaveSucceededRef.current = true; lastSaveResultRef.current = { ok: true, profileCharacters: 0 }; }
+    const saved = localJournalRef.current ? true : persistActiveState(stateRef.current);
     const result = lastSaveResultRef.current;
     publishSystemNotice(
       saved ? "alert.system.saved" : "alert.system.save-failed",
@@ -1927,7 +2012,26 @@ export function usePrototypeSession(
         : describePrototypeStorageFailure(result.failure),
     );
     return result;
-  }, [cloud, execute, persistActiveState, publishSystemNotice, usage]);
+  }, [cloud, execute, persistActiveState, publishSystemNotice, usage, attemptSaveProfile, stageActiveState]);
+
+  const localClosingRef = useRef<Promise<PrototypeSaveResult> | null>(null);
+  const saveAndPauseDurably = useCallback((): Promise<PrototypeSaveResult> => {
+    if (!localJournalRequired) return Promise.resolve(saveAndPause());
+    if (localClosingRef.current) return localClosingRef.current;
+    localClosingRef.current = (async (): Promise<PrototypeSaveResult> => {
+      try {
+        const journal = await cloudCheckDeadline(localJournalOpeningRef.current ?? Promise.resolve(null));
+        if (!journal || !await cloudCheckDeadline(journal.durable())) throw new Error("Device commit failed");
+        if (!stateRef.current.paused) execute({ type: "SET_PAUSED", paused: true }, { announcementOverride: "Saving on this device…" });
+        if (!await cloudCheckDeadline(journal.durable())) throw new Error("Device commit failed");
+        return saveAndPause();
+      } catch (error) {
+        problemDiagnostics.error("local-save-close", error);
+        return { ok: false, failure: { category: "unavailable", operation: "write", name: "LocalCommitFailed", message: "Device saving needs attention. Keep the app open and retry." } };
+      }
+    })().finally(() => { localClosingRef.current = null; });
+    return localClosingRef.current;
+  }, [localJournalRequired, saveAndPause, execute]);
 
   const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
     const problem = getClinicAlertActionProblem(stateRef.current, action);
@@ -2033,6 +2137,18 @@ export function usePrototypeSession(
     setFacilityCameraView(cameraPreferencesRef.current!.restore(campaignId,
       getInitialFacilityCamera(selectedCampaign.state)));
     setSummaryVisible(false);
+    if (localJournalRequired) {
+      const previous = localJournalOpeningRef.current, generation = ++localJournalGenerationRef.current;
+      localJournalRef.current = null;
+      const opening = (async () => {
+        if (previous) { const journal = await previous; if (!await journal.durable()) throw new Error("Device commit failed"); journal.stop(); }
+        return makeLocalJournal(nextProfile);
+      })();
+      localJournalOpeningRef.current = opening;
+      void opening.then(journal => { if (generation === localJournalGenerationRef.current) { localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null); setAnnouncement(`${selectedCampaign.name} opened. Its learning history is unchanged.`); } })
+        .catch(error => { problemDiagnostics.error("local-journal-switch", error); showCommandProblem("Device saving could not open this clinic. Send a problem report."); });
+      setAnnouncement(`Opening ${selectedCampaign.name}…`); return;
+    }
     const saveResult = attemptSaveProfile(nextProfile);
     const saved = saveResult.ok;
     saveWarningShownRef.current = !saved;
@@ -2044,7 +2160,7 @@ export function usePrototypeSession(
         ? `${selectedCampaign.name} opened. Its learning history is unchanged.`
         : `${selectedCampaign.name} opened, but ${describePrototypeStorageFailure(saveResult.failure)}`,
     );
-  }, [attemptSaveProfile, cancelScheduledAutosave, cloud, publishSystemNotice]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, cloud, publishSystemNotice, localJournalRequired, makeLocalJournal]);
 
   const tutorialIntroDismissed =
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
@@ -2109,6 +2225,15 @@ export function usePrototypeSession(
       profileRef.current = nextProfile;
       setProfile(nextProfile);
       if (cloud) { cloud.updateMetadata(cloudCampaignMetadata(nextProfile)); setAnnouncement(successAnnouncement); return; }
+      if (localJournalRef.current) {
+        try { localJournalRef.current.record(nextProfile); }
+        catch (error) { problemDiagnostics.error("guidance-journal", error); showCommandProblem("Device saving needs attention. Send a problem report."); return; }
+        void localJournalRef.current.durable().then(saved => {
+          saveWarningShownRef.current = !saved;
+          setAnnouncement(saved ? successAnnouncement : `${successAnnouncement} Device saving needs attention.`);
+        });
+        return;
+      }
       const saveResult = attemptSaveProfile(nextProfile);
       const saved = saveResult.ok;
       saveWarningShownRef.current = !saved;
@@ -2437,6 +2562,7 @@ export function usePrototypeSession(
     setReferencePauseLocked,
     recordTutorialTopicExposure,
     saveAndPause,
+    saveAndPauseDurably,
     saveForFirstShiftReplay: () => saveAndPause().ok ? profileRef.current : null,
     clearLocalCampaigns,
   };

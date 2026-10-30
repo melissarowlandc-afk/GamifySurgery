@@ -4,6 +4,7 @@ import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure
 import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
 import { cloudCodec } from "./codecWorker";
 import { cloudScopeData } from "./scopeData";
+import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCheckDeadline, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 import type { CloudEntryStore } from "./entryStorage";
 import { newWriterToken, readWriterIdentity, writeWriterIdentity, type WriterAcquisition } from "./writerIdentity";
@@ -35,7 +36,7 @@ export interface CloudSyncView {
   conflictCopies?: CloudConflictCopies;
 }
 export type CloudCheckpointReason = "ordinary" | "hidden" | "pagehide" | "save-close" |
-  "scored-answer" | "purchase" | "pause" | "mode-exit" | "campaign-switch";
+  "scored-answer" | "purchase" | "pause" | "mode-exit" | "campaign-switch" | "day-end";
 interface TimePair { wall: number; mono: number }
 interface LeaseWindow { lease: CloudLease; until: TimePair }
 const clone = <T>(value: T): T => structuredClone(value);
@@ -93,6 +94,13 @@ export class CloudSyncCoordinator {
   private offlineLocal = false;
   private offlineBase = false;
   private automaticSelection: (() => Promise<boolean>) | null = null;
+  private prepareCheckpoint: ((reason: CloudCheckpointReason) => Promise<boolean>) | null = null;
+  private preparingCheckpoint: Promise<boolean> | null = null;
+  private journalDirty = false;
+  private lastAutomaticCheckpoint: TimePair | null = null;
+  private openedJournalHighWater: number | null = null;
+  private backupRetryAfter: TimePair | null = null;
+  private journalOwner: string | null = null;
 
   constructor(private readonly options: {
     scope: CloudScope; transport: CloudTransport; cache: CloudCache; enabled?: boolean;
@@ -114,6 +122,35 @@ export class CloudSyncCoordinator {
     });
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
+  get journal() { return this.options.cache.journal; }
+  get journalWriterGeneration(): string { return (this.window?.lease ?? this.suspendedLease ?? this.retainedWriter)?.writerGeneration ?? this.recovery()?.writerGeneration ?? "0"; }
+  bindJournalOwner(owner: string): void { this.journalOwner = owner; }
+  releaseJournalOwner(owner: string): void { if (this.journalOwner === owner) this.journalOwner = null; }
+  async journalChangedSinceOpen(): Promise<boolean> {
+    return ((await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null) !== this.openedJournalHighWater;
+  }
+  noteLocalChange(dirty = true): void { this.journalDirty = dirty; if (dirty) this.dirtySince ??= this.now(); }
+  confirmJournalDurability(): void {
+    if (!this.localDurable && !this.attempted && !this.localCacheConflict) {
+      this.localDurable = true; this.emit(); // Phase/lease/resume gates still require their checked recovery.
+    }
+  }
+  reportPreparationFailure(error: unknown): void {
+    this.checkTime();
+    if (!isCloudCodecProcessingError(error) || !this.allowed() || !this.localDurable) { this.reportLocalFailure(error); return; }
+    problemDiagnostics.error("checkpoint-preparation", error);
+    this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit();
+    // The committed journal remains recoverable. No lease/phase/permission is
+    // extended; the tiny renewal and all existing authority gates still apply.
+  }
+  preparationRecovered(): void {
+    this.backupRetryAfter = null;
+    if (this.failure === "processing" && this.localDurable && this.allowed()) { this.failure = null; this.emit(); }
+  }
+  beforeCheckpoint(prepare: (reason: CloudCheckpointReason) => Promise<boolean>): () => void {
+    this.prepareCheckpoint = prepare;
+    return () => { if (this.prepareCheckpoint === prepare) this.prepareCheckpoint = null; };
+  }
   get confirmedRevision(): string | null { return this.record?.entry.confirmed.revision ?? null; }
   get hasPriorRecovery(): boolean { return Boolean(this.record?.entry.confirmed.priorRecovery); }
   get hasLocalCacheConflict(): boolean { return this.localCacheConflict; }
@@ -383,6 +420,7 @@ export class CloudSyncCoordinator {
     try {
       await reclaimAuxiliaryStorage(undefined, true);
       await this.admitted(); if (!this.live(epoch)) return false;
+      this.openedJournalHighWater = (await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null;
       const stored = await this.options.cache.read(this.scope); if (!this.live(epoch)) return false;
       this.record = stored;
       this.offlineBase = Boolean(await this.options.entryStore?.read(`offline-base:${this.scope.campaignId}`));
@@ -538,7 +576,9 @@ export class CloudSyncCoordinator {
       const recovery: CloudRecovery = { baseRevision: prior?.baseRevision ?? this.record.entry.confirmed.revision,
         writerGeneration: prior?.writerGeneration ?? writer.writerGeneration,
         inFlight: prior?.inFlight ?? null, following: frozen };
-      this.attempted = clone({ ...this.record.entry, recovery });
+      // `frozen` is already private, and confirmed bytes are immutable. persist
+      // takes the one durable-attempt copy; don't clone the full prefix twice.
+      this.attempted = { ...this.record.entry, recovery };
       await this.codec.run({ kind: "candidate", input: { candidate: frozen, confirmed: this.record.entry.confirmed, scope: this.scope } });
       await this.persist({ ...this.record.entry, recovery });
       this.dirtySince ??= this.now();
@@ -592,16 +632,34 @@ export class CloudSyncCoordinator {
         following = { ...following, evidence: { ...following.evidence, fromRecord: receipt.evidenceHighWater,
           records: following.evidence.records.slice(covered) }, usageQuestions: following.usageQuestions.filter(r => !coveredUsage.has(r.receipt_id)) };
       }
+      // Record validated usage acknowledgement before removing its immutable
+      // in-flight request. A crash in either direction remains retry-safe.
+      await this.options.cache.journal?.acknowledge(cloudCampaignStorageKey(this.scope), receipt.usageReceiptIds,
+        this.journalOwner ? { owner: this.journalOwner, count: receipt.evidenceHighWater } : undefined);
       await this.persist({ ...this.record.entry, confirmed, recovery: following ? { baseRevision: receipt.revision,
         writerGeneration: recovery.writerGeneration, inFlight: null, following } : null });
       this.coveredUsage = new Set(receipt.usageReceiptIds);
       for (const listener of this.receiptListeners) listener(receipt);
       // New commands can arrive throughout encoding/upload. Give that following
       // state its own quiet interval instead of uploading it on every pulse.
-      this.dirtySince = following ? this.now() : null;
+      this.dirtySince = following || this.journalDirty ? this.now() : null;
     });
   }
-  checkpoint(_reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
+  checkpoint(reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
+    if (this.preparingCheckpoint) return this.preparingCheckpoint;
+    const automatic = ["ordinary", "hidden", "pagehide", "day-end"].includes(reason);
+    if (automatic && this.backupRetryAfter && this.elapsed(this.backupRetryAfter) < 60_000) return Promise.resolve(false);
+    if (automatic && this.lastAutomaticCheckpoint && this.elapsed(this.lastAutomaticCheckpoint) < 60_000 &&
+      this.localDurable && ["ready", "saving"].includes(this.phase) && !this.failure) return Promise.resolve(true);
+    const prepare = this.prepareCheckpoint;
+    if (!prepare) return this.uploadCheckpoint(automatic);
+    this.preparingCheckpoint = (async () => {
+      if (!await prepare(reason)) return false;
+      return this.uploadCheckpoint(automatic);
+    })().finally(() => { this.preparingCheckpoint = null; });
+    return this.preparingCheckpoint;
+  }
+  private uploadCheckpoint(automatic: boolean): Promise<boolean> {
     if (this.uploading) return this.uploading;
     this.checkTime();
     if (!this.enabled || this.stopped || !this.localDurable || !this.window || this.remaining(this.window.until) <= 0 ||
@@ -616,6 +674,7 @@ export class CloudSyncCoordinator {
         const receipt = await cloudCheckDeadline(this.options.transport.commit(operation));
         if (!this.live(epoch)) return false;
         await this.acknowledge(operation, receipt);
+        if (automatic) this.lastAutomaticCheckpoint = this.now();
         if (!this.live(epoch)) return false;
         // A late acknowledgment never grants a new lease or resumes a paused game.
         if (this.phase === "saving") this.phase = "ready";

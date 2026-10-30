@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { PrototypeSaveResult } from "../session/prototypeStorage";
 
 interface SaveCloseDialogProps {
-  onSaveAndPause: () => PrototypeSaveResult;
+  onSaveAndPause: () => PrototypeSaveResult | Promise<PrototypeSaveResult>;
   onClearLocalCampaigns: () => boolean;
 }
 
@@ -21,12 +21,16 @@ export function SaveCloseDialog({
     profileCharacters: 0,
   });
   const [confirmClear, setConfirmClear] = useState(false);
+  const [saving, setSaving] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const saveAndOpen = () => {
-    setSaveResult(onSaveAndPause());
+  const saveAndOpen = async () => {
+    if (saving) return;
+    setSaving(true);
+    try { setSaveResult(await onSaveAndPause()); }
+    finally { setSaving(false); }
     setConfirmClear(false);
     setOpen(true);
   };
@@ -56,6 +60,7 @@ export function SaveCloseDialog({
         className="button button-secondary save-close-button"
         type="button"
         onClick={saveAndOpen}
+        disabled={saving}
       >
         Save &amp; Close
       </button>

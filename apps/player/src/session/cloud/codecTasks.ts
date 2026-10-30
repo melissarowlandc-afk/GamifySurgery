@@ -7,8 +7,14 @@ import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
 import { cloudProgress, type CloudProgressSummary } from "./progress";
 import { inspectVerifiedCopy, type VerifiedCopyInspection } from "./copySelection";
+import { bindJournalInWorker, prepareJournalInWorker } from "./journalCodec";
+import { warmJournalInWorker } from "./journalWarm";
+import { serializeGameState } from "@gamify-surgery/game-domain";
 
 export type CloudCodecTask =
+  | { kind: "journalWarm"; input: Parameters<typeof warmJournalInWorker>[0] }
+  | { kind: "journalBind"; input: Parameters<typeof bindJournalInWorker>[0] }
+  | { kind: "journalPrepare"; input: Parameters<typeof prepareJournalInWorker>[0] }
   | { kind: "encode"; input: Parameters<typeof encodeCloudEvidenceCheckpoint>[0] }
   | { kind: "verify"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
   | { kind: "inspectCopy"; input: CloudConfirmed }
@@ -20,6 +26,9 @@ export type CloudCodecTask =
   | { kind: "packCache"; input: { entry: CloudCacheEntry; expected: number | null } }
   | { kind: "unpackCache"; input: { raw: StoredCache; scope: CloudScope } };
 export interface CloudCodecResults {
+  journalWarm: Awaited<ReturnType<typeof warmJournalInWorker>>;
+  journalBind: Awaited<ReturnType<typeof bindJournalInWorker>>;
+  journalPrepare: Awaited<ReturnType<typeof prepareJournalInWorker>>;
   encode: { snapshot: CloudCandidate["snapshot"]; evidence: CloudCandidate["evidence"]; decodedGameBytes: number };
   verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number; progress: CloudProgressSummary };
   inspectCopy: VerifiedCopyInspection;
@@ -37,14 +46,18 @@ export interface CloudCodecExecutor {
 
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {
   const loaded = await loadCloudEvidenceCheckpoint(input);
+  if (utf8Bytes(serializeGameState(loaded.state)) > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
   if (loaded.checkpoint.evidence.records.length !== input.evidence.records.length) throw new CloudSyncError("corrupt");
   return { campaign: loaded.campaign, evidenceRecords: loaded.checkpoint.evidence.records.length, progress: cloudProgress(loaded.state) };
 }
 
-/** Pure codec work. Both the module worker and the non-browser test fallback use this boundary. */
+/** Codec and idempotent journal work shared by the worker/test boundary. No RPCs. */
 export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
   let result: unknown;
   switch (task.kind) {
+    case "journalWarm": result = await warmJournalInWorker(task.input); break;
+    case "journalBind": result = await bindJournalInWorker(task.input); break;
+    case "journalPrepare": result = await prepareJournalInWorker(task.input); break;
     case "encode": {
       const encoded = await encodeCloudEvidenceCheckpoint(task.input);
       if (encoded.sizes.decodedGameBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
@@ -72,7 +85,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
       try {
         await verify({ snapshot: candidate.snapshot, evidence: { header: accepted.header, records: [...accepted.records, ...delta.records] },
           revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: scope.campaignId, expectedBaselineId: confirmed.baselineId });
-      } catch { throw new CloudSyncError("corrupt"); }
+      } catch (error) { if (error instanceof CloudSyncError && error.code === "capacity") throw error; throw new CloudSyncError("corrupt"); }
       break;
     }
     case "freeze": {
@@ -85,6 +98,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
     case "importWire": result = await prepareCloudImportWire(task.input.request, task.input.issuedAtMs); break;
     case "packCache": result = await packCloudCache(task.input.entry, task.input.expected); break;
     case "unpackCache": result = await unpackCloudCache(task.input.raw, task.input.scope); break;
+    default: throw new CloudCodecError("worker_payload", "Save processing received an unsupported task. Reload the app and retry.");
   }
   return result as CloudCodecResults[T["kind"]];
 }
@@ -93,6 +107,7 @@ export interface CloudCodecFailure { kind: "sync" | "cache" | "codec"; code: str
 export function packCodecFailure(error: unknown): CloudCodecFailure {
   if (error instanceof CloudCacheError) return { kind: "cache", code: error.reason, message: error.message };
   if (error instanceof CloudSyncError) return { kind: "sync", code: error.code, retryAfterMs: error.retryAfterMs, message: error.message };
+  if (error instanceof Error && error.name === "DataCloneError") return { kind: "codec", code: "worker_data_clone", message: "Save processing could not transfer the checkpoint. Retry the account save." };
   return { kind: "codec", code: error instanceof CloudCodecError ? error.code : "worker", message: error instanceof Error ? error.message : "Save processing failed." };
 }
 export function unpackCodecFailure(error: CloudCodecFailure): Error {
@@ -104,6 +119,18 @@ export interface CloudCodecMessage { id: number; task: CloudCodecTask }
 export type CloudCodecReply = { ready: true } | { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
-  try { return { id: message.id, result: await runCloudCodecTask(message.task) }; }
+  try {
+    const reply = { id: message.id, result: await runCloudCodecTask(message.task) };
+    // The inline executor must exercise the return boundary too. Production's
+    // postMessage performs this clone itself, without a second full copy here.
+    return import.meta.env.DEV || import.meta.env.MODE === "test" ? structuredClone(reply) : reply;
+  }
   catch (error) { return { id: message.id, error: packCodecFailure(error) }; }
+}
+
+/** A non-cloneable result must produce a classified reply, never an orphaned task. */
+export async function dispatchCloudCodecMessage(message: CloudCodecMessage, post: (reply: CloudCodecReply) => void): Promise<void> {
+  const reply = await handleCloudCodecMessage(message);
+  try { post(reply); }
+  catch (error) { post({ id: message.id, error: packCodecFailure(error) }); }
 }

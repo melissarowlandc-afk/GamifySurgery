@@ -52,7 +52,9 @@ describe("versioned account/backend/campaign cloud cache", () => {
       connection.close(); connection.onclose?.call(connection, new Event("close"));
       expect(await store.read("retained")).toEqual({ original: "exact bytes" });
     }
-    expect(factory.open).toHaveBeenCalledTimes(2); vi.restoreAllMocks();
+    const names = vi.mocked(factory.open).mock.calls.map(([name]) => name);
+    expect(names.filter(name => !name.includes("journal"))).toHaveLength(2);
+    vi.restoreAllMocks();
   });
   it("keeps prototype keys unchanged and requires three unambiguous namespace components", () => {
     expect(accountStorageKey("gamify-surgery.prototype.profile.v1")).toBe("gamify-surgery.prototype.profile.v1");

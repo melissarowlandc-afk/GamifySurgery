@@ -328,9 +328,11 @@ export default function MobileShell(props: PrototypeShellProps) {
   const handleTarget = (target?: { type: MessageBoardTargetType; id?: string }) => {
     if (target) navigateAlert(phoneAlertTarget(target.type, target.id));
   };
-  const runAction = (id: string, action: ClinicAlertAction) => {
-    const result = props.onClinicAlertAction?.(action) ?? (action.kind === "save_and_pause"
-      ? props.onSaveAndPause() : { ok: false, reason: "This action is unavailable in this preview." });
+  const runAction = async (id: string, action: ClinicAlertAction) => {
+    if (action.kind === "save_and_pause" && props.cloudSave) { await props.cloudSave.onSaveAndClose(); return; }
+    const result = action.kind === "save_and_pause" ? await props.onSaveAndPause() :
+      props.onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
+    if (action.kind === "save_and_pause") setSaveResult(result as PrototypeSaveResult);
     setFailures((current) => {
       const next = { ...current };
       if (result.ok) delete next[id]; else next[id] = "reason" in result && result.reason ? result.reason : "The action could not be applied. Keep this tab open and retry.";
@@ -347,9 +349,9 @@ export default function MobileShell(props: PrototypeShellProps) {
     if (!props.paused) props.onTogglePause();
     navigator.replaceTop("help");
   };
-  const showSave = () => {
+  const showSave = async () => {
     if (props.cloudSave) { navigator.dismiss("more"); setCloudCloseRequest(value => value + 1); return; }
-    setSaveResult(props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save");
+    setSaveResult(await props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save");
   };
   const panel = (id: MobileSheetId): { title: string; kind?: "bottom"; content: ReactNode } | null => {
     switch (id) {

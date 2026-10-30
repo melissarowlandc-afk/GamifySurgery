@@ -1,4 +1,4 @@
-import { APP_BUILD_VERSION, APP_VERSION } from "../appVersion";
+import { APP_BUILD_VERSION, APP_VERSION } from "../buildVersion";
 
 export const DIAGNOSTICS_KEY = "gamify-surgery.problem-diagnostics.v1";
 export const DIAGNOSTICS_MAX_CHARS = 3_072; // At most 6 KiB of optional UTF-16 storage.
@@ -11,6 +11,7 @@ export interface TechnicalSnapshot {
 }
 const HEALTH_KEYS: Record<string, readonly string[]> = {
   layout: ["layout"],
+  entry: ["stage", "elapsedMs", "failure", "busy", "preparing"],
   coordinator: ["phase", "failure", "canExecute", "localDurable", "pending", "leaseExpiresAt", "leaseRemainingMs", "resumeAuthorized", "stopped", "closing", "checking", "uploading", "renewing", "offlineLocal"],
   gameSession: ["reloadRequired", "closing", "stopped", "dirty", "encoding", "canExecute", "reconnecting", "lastCommandMs", "commandAge"],
   facility: ["tick", "paused", "speed", "lastTickAt", "tickAge", "finishReportOpen"],

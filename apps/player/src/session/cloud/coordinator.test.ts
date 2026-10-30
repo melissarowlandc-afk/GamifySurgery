@@ -98,7 +98,7 @@ describe("shared cloud coordinator durable and fenced protocol", () => {
     expect(middle?.entry.confirmed.revision).toBe("2");
     expect(middle?.entry.recovery?.following?.evidence.fromRecord).toBe(h.first.evidence.records.length);
     expect(middle?.entry.recovery?.following?.usageQuestions).toEqual([question(2)]);
-    expect(await h.coordinator.checkpoint()).toBe(true);
+    expect(await h.coordinator.checkpoint("purchase")).toBe(true);
     expect(h.coordinator.view.pending).toBe(false); expect(h.coordinator.confirmed?.revision).toBe("3");
     expect(h.coordinator.confirmed?.evidence.records.length).toBe(third.evidence.records.length);
     expect(h.server.usageCount(h.scope.accountId)).toBe(2);

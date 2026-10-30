@@ -9,7 +9,9 @@ import { IndexedDbCloudCache } from "../session/cloud/cache";
 import { IndexedDbCloudEntryStore } from "../session/cloud/entryStorage";
 import { CloudSyncError, type CloudFailureCode, type CloudTransport } from "../session/cloud/transport";
 import { sha256Utf8 } from "../session/cloud/codecJson";
+import { cloudCampaignStorageKey } from "../session/accountStorageKey";
 import type { ProtectedClinicCopy } from "../session/cloud/retainedCopies";
+import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import "@fontsource/atkinson-hyperlegible/latin-400.css";
 import "@fontsource/atkinson-hyperlegible/latin-700.css";
 import "../styles/tokens.css";
@@ -27,6 +29,8 @@ interface CloudQaStatus {
   accountPhase: string;
   entryHeading: string | null;
   openingFailure: CloudOpeningDiagnostic | null;
+  entryPreparation: Record<string, unknown> | null;
+  codecHealth: Record<string, unknown> | null;
 }
 declare global {
   interface Window {
@@ -106,7 +110,8 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
       return { hasState: Boolean(active), revision: view?.revision ?? null, phase: view?.phase ?? cloud.phase,
         pending: view?.pending ?? false, canExecute: view?.canExecute ?? false, localDurable: view?.localDurable ?? false,
         needsReload: active?.needsReload ?? false, failure: view?.failure ?? cloud.error, accountPhase: cloud.phase,
-        entryHeading: document.querySelector("main h1")?.textContent ?? null, openingFailure: openingFailure() };
+        entryHeading: document.querySelector("main h1")?.textContent ?? null, openingFailure: openingFailure(),
+        entryPreparation: problemDiagnostics.snapshot().health.entry ?? null, codecHealth: problemDiagnostics.snapshot().health.codec ?? null };
     };
     window.__cloudQa = {
       status,
@@ -136,13 +141,16 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
       retainedCopies: async () => (await cloud.runtime.entryStore.entries()).filter(row => row.key.startsWith("older-copy:")) as { key: string; value: ProtectedClinicCopy }[],
       async retainAndReopenOlderCache() {
         if (!active || !await active.durable()) throw new CloudSyncError("storage");
-        const entry = active.coordinator.recoveryEntry!, value = { scope: entry.scope, device: entry, account: entry.confirmed };
+        const entry = (await cloud.runtime.cache.read(active.coordinator.scope))!.entry, value = { scope: entry.scope, device: entry, account: entry.confirmed };
         const key = `conflict:${entry.scope.campaignId}:${await sha256Utf8(JSON.stringify(value))}`;
         await cloud.runtime.entryStore.create(key, value);
         if (JSON.stringify(await cloud.runtime.entryStore.read(key)) !== JSON.stringify(value)) throw new CloudSyncError("storage");
         active.coordinator.dispose();
         const current = await cloud.runtime.cache.read(entry.scope);
         await cloud.runtime.cache.write({ ...entry, recovery: null }, current!.cacheRevision);
+        // This disposable fixture moves the latest bytes into verified retained
+        // storage and deliberately restores an older current cache/journal.
+        await cloud.runtime.cache.journal?.clear(cloudCampaignStorageKey(entry.scope));
         onCreate();
       },
       async undo(target) { return Boolean(active?.undoBuild(target)) && await active!.durable(); },

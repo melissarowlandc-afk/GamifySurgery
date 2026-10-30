@@ -58,6 +58,105 @@ export interface GameEvidenceCheckpoint {
   readonly evidence: GameEvidenceArchive;
 }
 
+/** Local operational journal only; this does not change exported save formats.
+ * Recorded projections are restored without rerunning commands or grading. */
+export interface GameEvidenceDelta {
+  readonly fromSequence: number;
+  readonly fromRecord: number;
+  readonly head: GameEvidenceSnapshot["head"];
+  readonly patches: readonly EvidencePatch[];
+  readonly records: readonly GameEvidenceRecord[];
+}
+/** Local journal dialect only: array indices/length avoid rewriting a whole
+ * operational collection when one actor changes. Account patches stay intact. */
+function journalPatches(before: EvidenceJson, after: EvidenceJson, path: string[] = []): EvidencePatch[] {
+  if (before === after) return [];
+  const patches: EvidencePatch[] = [];
+  if (Array.isArray(before) && Array.isArray(after)) {
+    for (let i = 0; i < Math.min(before.length, after.length); i++) patches.push(...journalPatches(before[i]!, after[i]!, [...path, String(i)]));
+    for (let i = before.length; i < after.length; i++) patches.push({ path: [...path, String(i)], present: true, value: after[i]! });
+    if (after.length < before.length) patches.push({ path: [...path, "length"], present: true, value: after.length });
+    return patches;
+  }
+  if (jsonObject(before) && jsonObject(after)) {
+    for (const key of Object.keys(before)) {
+      if (!Object.hasOwn(after, key)) patches.push({ path: [...path, key], present: false });
+      else patches.push(...journalPatches(before[key]!, after[key]!, [...path, key]));
+    }
+    for (const key of Object.keys(after)) if (!Object.hasOwn(before, key)) patches.push({ path: [...path, key], present: true, value: after[key]! });
+    return patches;
+  }
+  return [{ path, present: true, value: after }];
+}
+function applyJournalOwned(value: EvidenceJson, patches: readonly EvidencePatch[]): EvidenceJson {
+  const index = (key: string) => /^(0|[1-9][0-9]*)$/.test(key) && Number.isSafeInteger(Number(key)) ? Number(key) : -1;
+  for (const patch of patches) {
+    if (!Array.isArray(patch.path) || patch.path.some(key => typeof key !== "string") || typeof patch.present !== "boolean" ||
+      patch.present !== Object.hasOwn(patch, "value")) throw new GameEvidenceError("journal-patch");
+    if (!patch.path.length) { if (!patch.present) throw new GameEvidenceError("journal-patch"); value = jsonCopy(patch.value!); continue; }
+    let parent = value;
+    for (const key of patch.path.slice(0, -1)) {
+      if (Array.isArray(parent)) { const i = index(key); if (i < 0 || i >= parent.length) throw new GameEvidenceError("journal-patch"); parent = parent[i]!; }
+      else { if (!jsonObject(parent) || !Object.hasOwn(parent, key)) throw new GameEvidenceError("journal-patch"); parent = parent[key]!; }
+    }
+    const key = patch.path.at(-1)!;
+    if (Array.isArray(parent)) {
+      if (key === "length" && patch.present && typeof patch.value === "number" && Number.isSafeInteger(patch.value) && patch.value >= 0 && patch.value <= parent.length) parent.length = patch.value;
+      else { const i = index(key); if (i < 0 || i > parent.length || !patch.present) throw new GameEvidenceError("journal-patch"); parent[i] = jsonCopy(patch.value!); }
+    } else {
+      if (!jsonObject(parent)) throw new GameEvidenceError("journal-patch");
+      if (patch.present) Object.defineProperty(parent, key, { value: jsonCopy(patch.value!), enumerable: true, configurable: true, writable: true });
+      else { if (!Object.hasOwn(parent, key)) throw new GameEvidenceError("journal-patch"); delete parent[key]; }
+    }
+  }
+  return value;
+}
+/** Pure private projection update; never mutates the checkpoint or raw rows. */
+export function applyGameEvidenceJournalPatches(base: EvidenceObject, patches: readonly EvidencePatch[]): EvidenceObject {
+  return asObject(applyJournalOwned(jsonCopy(base), patches));
+}
+/** A privately owned worker can maintain this projection from recorded patches.
+ * Hydration/import still performs the complete contract validation. */
+export function gameEvidenceProjection(checkpoint: GameEvidenceCheckpoint): EvidenceObject {
+  return asObject(applyEvidencePatches(checkpoint.evidence.baseline.source, checkpoint.snapshot.patches));
+}
+export function gameEvidenceOperationalSnapshot(base: GameEvidenceCheckpoint, projected: EvidenceObject,
+  head: GameEvidenceSnapshot["head"]): GameEvidenceSnapshot {
+  return { version: base.snapshot.version, campaignId: base.snapshot.campaignId, gameSchemaVersion: base.snapshot.gameSchemaVersion,
+    head, patches: evidencePatches(base.evidence.baseline.source, projected) };
+}
+
+export function gameEvidenceDelta(before: GameEvidenceCheckpoint, after: GameEvidenceCheckpoint): GameEvidenceDelta {
+  const prior = runtimeFor(before), next = runtimeFor(after);
+  const chunks: (readonly GameEvidenceRecord[])[] = [];
+  let cursor: EvidenceLog | undefined = next.log;
+  while (cursor && cursor !== prior.log) { chunks.push(cursor.added); cursor = cursor.parent; }
+  // Hydrated imports can have equivalent, independently indexed prefix logs.
+  // Only trusted descendants created from this checkpoint take the fast path.
+  if (!cursor) throw new GameEvidenceError("journal-branch");
+  const records: GameEvidenceRecord[] = [];
+  for (let i = chunks.length - 1; i >= 0; i--) records.push(...chunks[i]!);
+  return { fromSequence: before.snapshot.head.sequence, fromRecord: prior.log.length,
+    head: after.snapshot.head, patches: journalPatches(prior.projected, next.projected), records };
+}
+
+/** Full validation belongs to recovery/compaction, not every local append. */
+export function restoreGameEvidenceJournal(base: GameEvidenceCheckpoint, deltas: readonly GameEvidenceDelta[]): GameEvidenceCheckpoint {
+  let projected = applyEvidencePatches(base.evidence.baseline.source, base.snapshot.patches);
+  const records = [...base.evidence.records];
+  let head = base.snapshot.head;
+  for (const delta of deltas) {
+    if (delta.fromSequence !== head.sequence || delta.fromRecord !== records.length || delta.head.sequence < head.sequence ||
+      delta.records.some((row, i) => row.id !== `e${(records.length + i + 1).toString(36)}`)) throw new GameEvidenceError("journal-sequence");
+    projected = applyJournalOwned(projected, delta.patches);
+    records.push(...delta.records); head = delta.head;
+  }
+  const checkpoint = freezeEvidence({ snapshot: { ...base.snapshot, head, patches: evidencePatches(base.evidence.baseline.source, projected) },
+    evidence: { ...base.evidence, records } });
+  importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
+  return checkpoint;
+}
+
 const kinds: readonly GameEvidenceKind[] = ["frozen-case", "answer", "review", "card-state", "review-intent",
   "settlement", "income", "operation", "event", "completion-witness", "inspection-report", "inspection-preparation",
   "inspection-question", "inspection-unlock", "transition", "retired-encounter", "retired-service", "retired-retail",

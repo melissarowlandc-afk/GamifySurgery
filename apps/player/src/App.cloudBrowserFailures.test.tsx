@@ -88,29 +88,31 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     expect(allElements(f.env.doc.body, node => node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
   });
 
-  it.each(["opening", "foreground"] as const)("bounds stalled accepted-command encoding before %s and preserves it for Retry", async trigger => {
+  it.each(["opening", "foreground"] as const)("bounds a stalled accepted-command journal commit before %s and preserves it for Retry", async trigger => {
     const f = await fixture(layout), session = await f.open(), held = deferred(), started = deferred();
-    const run = cloudCodec.run.bind(cloudCodec); let hold = true;
-    vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
-      if (task.kind === "encode" && hold) { started.resolve(); await held.promise; }
-      return run(task);
+    const journal = session.coordinator.journal!, append = journal.append.bind(journal); let hold = true;
+    vi.spyOn(journal, "append").mockImplementation(async (...args) => {
+      if (hold) { started.resolve(); await held.promise; }
+      return append(...args);
     });
     await act(async () => { session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "encoding.pending" }, PROTOTYPE_DOMAIN_CONTEXT); });
+    void session.durable();
     await started.promise;
     const revision = session.coordinator.confirmedRevision, operations = f.server.operationCount(f.scope.accountId);
     vi.useFakeTimers(); let checking!: Promise<unknown>;
     await act(async () => { checking = trigger === "opening" ? f.cloud.openCampaign!(session.state.campaignId) : session.reconnect(); });
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
     await checking;
-    expect(session.coordinator.view).toMatchObject({ canExecute: false, failure: "processing" });
+    expect(session.coordinator.view).toMatchObject({ canExecute: false, failure: "storage" });
     expect(f.cloud.active).toBe(session);
     expect(f.server.operationCount(f.scope.accountId)).toBe(operations);
     const notices = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Clinic status");
-    expect(notices).toHaveLength(1); expect(notices[0]!.textContent).toContain("Save processing stopped");
+    expect(notices).toHaveLength(1); expect(notices[0]!.textContent).toContain("storage");
     vi.useRealTimers(); hold = false;
     await act(async () => { held.resolve(); expect(await session.durable()).toBe(true); });
     expect(session.coordinator.confirmedRevision).toBe(revision);
-    expect(session.coordinator.pendingCandidate?.snapshot).toBeDefined();
+    expect(session.syncView.localDurable).toBe(true);
+    expect(session.canExecute).toBe(false); // Fresh authority check still required after the failure.
     await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Retry")[0]!);
     await f.playing();
     expect(f.cloud.active!.state.simulationSpeed).toBe(4);
@@ -128,7 +130,7 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     let pendingSha: string | undefined;
     if (cacheMode === "pending") await act(async () => {
       session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "prior.pending" }, PROTOTYPE_DOMAIN_CONTEXT);
-      expect(await session.durable()).toBe(true); pendingSha = session.coordinator.pendingCandidate!.snapshot.uncompressedSha256;
+      expect(await session.prepareRecoveryCopy()).toBe(true); pendingSha = session.coordinator.pendingCandidate!.snapshot.uncompressedSha256;
     });
     row.confirmed = { ...row.confirmed, snapshot: { ...row.confirmed.snapshot, uncompressedSha256: "0".repeat(64) } };
     const corrupt = structuredClone(row.confirmed);

@@ -105,6 +105,7 @@ describe("independent document lifetimes on one device", () => {
     if (outcome === "confirmed") expect(await old.checkpointNow("ordinary")).toBe(true);
     if (outcome === "lost-ack") {
       server.faults.push({ method: "commit", at: "after", wait: acknowledgement.promise });
+      expect(await old.prepareRecoveryCopy()).toBe(true);
       uploading = old.checkpointNow("pagehide");
       await vi.waitFor(() => expect(server.operationCount("account-a")).toBe(1));
     }

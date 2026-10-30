@@ -14,6 +14,7 @@ import type { CloudGameSession } from "./gameSession";
 import { SupabaseCloudTransport } from "./supabaseTransport";
 import { CloudSyncError, type CloudCapabilities, type CloudCampaignSummary, type CloudTransport } from "./transport";
 import type { CloudOpeningDiagnostic } from "./openingDiagnostic";
+import { IndexedDbJournalStorage } from "../localJournal";
 export type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 
 export const CLOUD_NOTICE_VERSION = "beta2.cloud.v1";
@@ -43,7 +44,7 @@ export interface CloudAccountValue {
   clearDevice(recoveryExported: boolean): Promise<void>;
   showCampaigns(): void;
   setCampaignNavigation(callback: (() => void) | null): void;
-  registerLocalWriter?(callback: ((mode: "clear" | "export") => string | void) | null): void;
+  registerLocalWriter?(callback: ((mode: "clear" | "export") => string | void | Promise<void>) | null): void;
   openCampaign?(campaignId: string): Promise<void>;
   setCampaignOpening?(callback: ((campaignId: string) => Promise<void>) | null): void;
 }
@@ -84,7 +85,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
   const [active, setActive] = useState<CloudGameSession | null>(null);
   const activeRef = useRef<CloudGameSession | null>(null), navigation = useRef<(() => void) | null>(null);
   const campaignOpening = useRef<((campaignId: string) => Promise<void>) | null>(null);
-  const localWriter = useRef<((mode: "clear" | "export") => string | void) | null>(null);
+  const localWriter = useRef<((mode: "clear" | "export") => string | void | Promise<void>) | null>(null);
   const generation = useRef(0), live = useRef(true), deletion = useRef(false);
   const stopped = useRef(false);
   const initialAccess = useRef<{ runtime: CloudAccountRuntime; request: Promise<CloudCapabilities> } | null>(null);
@@ -212,26 +213,36 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
         for (let index = 0; index < storage.length; index++) { const key = storage.key(index); if (key?.startsWith("gamify-surgery.") && key.endsWith(suffix) && !key.includes("auth")) accountLocal.push({ key, text: storage.getItem(key) }); }
       } catch { storageReadComplete = false; }
       let campaigns: unknown[] = [], entry: unknown[] = [];
+      let localJournals: unknown[] = [];
       try { campaigns = await runtime.cache.accountEntries?.(runtime) ?? []; } catch { storageReadComplete = false; }
       try { entry = await runtime.entryStore.entries(); } catch { storageReadComplete = false; }
+      try {
+        if (typeof indexedDB !== "undefined") {
+          const journal = new IndexedDbJournalStorage();
+          for (const key of await journal.keys(`local|${encodeURIComponent(runtime.accountId)}|`)) localJournals.push(await journal.read(key));
+        }
+      } catch { storageReadComplete = false; }
       return JSON.stringify({ version: 1, backendId: runtime.backendId, accountId: runtime.accountId, accountLocal, storageReadComplete,
         archivedQuestionFlags: await readArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId)),
         localSessionProfile: localWriter.current?.("export") ?? null,
-        campaigns, entry,
+        campaigns, entry, localJournals,
         activeRecovery: activeRef.current?.exportRecovery() ?? null });
     },
     async clearDevice(recoveryExported) {
       if (!runtime.cache.clearAccount || !runtime.cache.accountEntries) throw new CloudSyncError("storage");
       const entries = await runtime.cache.accountEntries(runtime), imports = await runtime.entryStore.entries();
-      if (!recoveryExported && (entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("older-copy:") || entry.key.startsWith("promotion:") || entry.key.startsWith("conflict:") ||
+      const localJournal = typeof indexedDB === "undefined" ? null : new IndexedDbJournalStorage();
+      const localPrefix = `local|${encodeURIComponent(runtime.accountId)}|`;
+      if (!recoveryExported && ((await localJournal?.keys(localPrefix))?.length || entries.some(entry => entry.recovery) || imports.some(entry => entry.key.startsWith("older-copy:") || entry.key.startsWith("promotion:") || entry.key.startsWith("conflict:") ||
         entry.key.startsWith("offline-base:") && Boolean(entry.value) ||
         entry.key.startsWith("import:") && !(entry.value as { verified: boolean }).verified))) throw new CloudSyncError("storage");
       stopped.current = true;
       activeRef.current?.coordinator.dispose("sign-out");
       // A local account session may not have unmounted yet when auth resolves.
       // Fence its pagehide/unmount writer BEFORE removing any account keys.
-      localWriter.current?.("clear");
+      await cloudCheckDeadline(Promise.resolve(localWriter.current?.("clear")));
       await runtime.cache.clearAccount(runtime); await runtime.entryStore.clear();
+      await localJournal?.clear(localPrefix);
       await clearArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId));
       // Only this account's keys, at this origin. Unowned/other-account bytes survive.
       const storage = window.localStorage, suffix = `.account.${encodeURIComponent(runtime.accountId)}`;

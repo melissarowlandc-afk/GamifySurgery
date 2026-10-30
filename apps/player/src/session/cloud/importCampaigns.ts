@@ -1,4 +1,4 @@
-import { deserializeGameState, type GameEvidenceCheckpoint } from "@gamify-surgery/game-domain";
+import { deserializeGameState, importGameEvidence, restoreGameEvidenceImportSource, serializeGameState, type GameEvidenceCheckpoint } from "@gamify-surgery/game-domain";
 import { accountStorageKey } from "../accountStorageKey";
 import { LEGACY_PROTOTYPE_SAVE_KEY, PROTOTYPE_PROFILE_KEY, createFreshProfile, type LocalPrototypeProfile } from "../prototypeStorage";
 import { normalizeTutorialGuidanceRecords } from "../tutorialGuidance";
@@ -8,6 +8,10 @@ import { logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
 import type { CloudEntryStore } from "./entryStorage";
 import { CloudSyncError, type CloudCampaignSummary, type CloudConfirmed, type CloudFrozenOperation, type CloudImportRequest, type CloudTransport } from "./transport";
 import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../../playtime/usageTypes";
+import { IndexedDbJournalStorage, type JournalStorage } from "../localJournal";
+import { prepareJournal } from "./journalCodec";
+import { cloudCodec } from "./codecWorker";
+import { cloudCheckDeadline } from "./checkDeadline";
 
 export interface LocalCloudSource {
   id: string;
@@ -18,8 +22,9 @@ export interface LocalCloudSource {
   bytes: number;
   facilityLevel: number;
   error: string | null;
+  localEvidence?: GameEvidenceCheckpoint;
 }
-export interface LocalCloudInspection { sources: LocalCloudSource[]; problems: string[]; pendingUsageQuestions: QuestionUsageReceipt[] }
+export interface LocalCloudInspection { sources: LocalCloudSource[]; problems: string[]; pendingUsageQuestions: QuestionUsageReceipt[]; journalUnavailable?: boolean }
 /** LocalStorage may be disabled independently of the verified IDB/account save.
  * Its absence is not permission to initialize or erase a local profile. */
 export const optionalLocalCloudStorage: Pick<Storage, "getItem"> = {
@@ -37,8 +42,9 @@ function metadata(raw: Record<string, any>, campaign: Record<string, any>, facil
 }
 /** Retain the EXACT storage string before parsing. Never use fresh-profile fallback for imports. */
 export async function inspectLocalCloudSources(accountId: string, storage: Pick<Storage, "getItem">, store: CloudEntryStore,
-  includeUnowned = false): Promise<LocalCloudInspection> {
+  includeUnowned = false, journal: JournalStorage | null = typeof indexedDB === "undefined" ? null : new IndexedDbJournalStorage()): Promise<LocalCloudInspection> {
   const result: LocalCloudInspection = { sources: [], problems: [], pendingUsageQuestions: [] };
+  let pendingUsageOrder = -1;
   const scopes = includeUnowned ? [accountId, null] : [accountId];
   for (const owner of scopes) for (const base of [PROTOTYPE_PROFILE_KEY, LEGACY_PROTOTYPE_SAVE_KEY]) {
     const sourceKey = accountStorageKey(base, owner);
@@ -72,7 +78,42 @@ export async function inspectLocalCloudSources(accountId: string, storage: Pick<
         "A local profile could not be read or is unsupported. It has not been replaced; contact the owner.");
     }
   }
+  if (journal) for (const owner of scopes) {
+    try {
+      for (const key of await journal.keys(`local|${encodeURIComponent(owner ?? "guest")}|`)) {
+        const loaded = await prepareJournal(journal, key, cloudCodec, { local: true, encode: false });
+        if (!loaded?.state || !loaded.seed) continue;
+        const index = result.sources.findIndex(source => source.unowned === (owner === null) && source.campaign.campaignId === loaded.state!.campaignId);
+        if (index < 0) continue; // Explicitly removed profile campaigns stay removed.
+        const source = result.sources[index]!, old = deserializeGameState(source.serializedState), state = loaded.state;
+        if (old.facilityTick > state.facilityTick || old.facilityTick === state.facilityTick &&
+          Object.keys(old.operationReceipts).length > Object.keys(state.operationReceipts).length) continue;
+        const serializedState = serializeGameState(state);
+        result.sources[index] = { ...source, serializedState, campaign: loaded.seed.campaign, localEvidence: loaded.seed.checkpoint,
+          facilityLevel: state.facilityLevel, bytes: utf8Bytes(serializedState), error: null };
+        if (owner === accountId && (loaded.profileOrder ?? 0) > pendingUsageOrder) {
+          pendingUsageOrder = loaded.profileOrder ?? 0; result.pendingUsageQuestions = loaded.seed.usageQuestions;
+        }
+      }
+    } catch {
+      const error = "Browser recovery storage is unavailable. No campaign can be copied until storage works.";
+      result.problems.push(error); result.journalUnavailable = true;
+      // An unreadable journal can be newer than the legacy profile. Preserve
+      // both; never enroll the stale fallback as if inspection had succeeded.
+      result.sources = result.sources.map(source => source.unowned === (owner === null) ? { ...source, error } : source);
+    }
+  }
   return result;
+}
+/** Adopt the complete local evidence archive, rather than rebasing its recorded
+ * transitions away when a legacy profile is enrolled for the first time. */
+export async function prepareLocalCloudSource(source: LocalCloudSource, campaign: CloudCampaignMetadata, operationId: string) {
+  if (!source.localEvidence) return prepareCloudEvidenceImport({ serializedState: source.serializedState, campaign, operationId });
+  const state = importGameEvidence(source.localEvidence.snapshot, source.localEvidence.evidence);
+  if (logicalJsonText(JSON.parse(serializeGameState(state))) !== logicalJsonText(JSON.parse(source.serializedState))) throw new CloudSyncError("corrupt");
+  const original = JSON.stringify(restoreGameEvidenceImportSource(source.localEvidence.evidence));
+  return encodeCloudEvidenceCheckpoint({ checkpoint: source.localEvidence, campaign, operationId, expectedRevision: "0",
+    source: { sha256: await sha256Utf8(original), utf8Bytes: utf8Bytes(original), schemaVersion: Number(JSON.parse(original).schemaVersion) } });
 }
 /** Only already-minted, account-owned Beta 1 staging IDs; never derive receipts from history or an unowned source. */
 export async function promoteExistingLocalQuestions(receipts: readonly QuestionUsageReceipt[], usage: {
@@ -91,7 +132,7 @@ export async function importLocalCloudCampaign(source: LocalCloudSource, name: s
   if (source.error || !transport.importCampaign) throw new CloudSyncError("corrupt");
   const campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify({ ...source.campaign, name: name.trim() })));
   const sourceDigest = await sha256Utf8(JSON.stringify({ serializedState: source.serializedState, campaign }));
-  return importPreparedCampaign(campaign, sourceDigest, operationId => prepareCloudEvidenceImport({ serializedState: source.serializedState, campaign, operationId }), transport, store);
+  return importPreparedCampaign(campaign, sourceDigest, operationId => prepareLocalCloudSource(source, campaign, operationId), transport, store);
 }
 
 /** Both initial enrollment and an explicit separate branch use the same frozen
@@ -202,8 +243,10 @@ export interface AutomaticCampaignEnrollment {
 }
 const enrollmentJobs = new WeakMap<CloudEntryStore, Promise<unknown>>();
 function enrollmentJob<T>(store: CloudEntryStore, run: () => Promise<T>): Promise<T> {
-  const result = (enrollmentJobs.get(store) ?? Promise.resolve()).catch(() => {}).then(run);
-  enrollmentJobs.set(store, result); return result;
+  const result = cloudCheckDeadline((enrollmentJobs.get(store) ?? Promise.resolve()).catch(() => {}).then(run));
+  enrollmentJobs.set(store, result);
+  void result.finally(() => { if (enrollmentJobs.get(store) === result) enrollmentJobs.delete(store); }).catch(() => {});
+  return result;
 }
 function availableName(name: string, taken: Set<string>): string {
   let result = name, suffix = 1;

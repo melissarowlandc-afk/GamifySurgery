@@ -72,7 +72,9 @@ for (const layout of ["desktop", "phone"] as const) {
         document.dispatchEvent(new Event("visibilitychange"));
         window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: true }));
       });
-      await expect.poll(async () => (await snapshot(page)).failure).toBe("network");
+      await expect.poll(async () => page.evaluate(() => window.__cloudQa!.status().localDurable)).toBe(true);
+      // Leaving drains the incremental journal. It does not start a first full
+      // encode/RPC, so this offline departure need not report a transport error.
       expect((await snapshot(page)).pending).toBe(true);
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed.revision).toBe("1");
       // This reload keeps this context's own IndexedDB and writer proof. There

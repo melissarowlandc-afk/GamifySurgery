@@ -12,7 +12,7 @@ import { runCloudCodecTask, type CloudCodecExecutor } from "./codecTasks";
 import { deferred, syncFixture, syncHarness } from "./syncTestSupport";
 import { encodeCloudEvidenceCheckpoint } from "./codecEvidence";
 import { CloudCodecError, logicalJsonText, sha256Utf8 } from "./codecJson";
-import { accountStorageKey } from "../accountStorageKey";
+import { accountStorageKey, cloudCampaignStorageKey } from "../accountStorageKey";
 import { PROTOTYPE_PROFILE_KEY } from "../prototypeStorage";
 import { CLOUD_RENEW_MS, CloudSyncError } from "./transport";
 import { listOlderClinicCopies, exportOlderClinicCopy, restoreOlderClinicCopy } from "./olderCopies";
@@ -33,6 +33,9 @@ async function localBranch(h: Awaited<ReturnType<typeof rig>>, ticks: number, sp
   session.execute({ type: "SET_SIMULATION_SPEED", speed, operationId: `speed.${speed}` }, PROTOTYPE_DOMAIN_CONTEXT);
   for (let index = 0; index < ticks; index++) session.execute({ type: "ADVANCE_TICK", advancedAtRealMs: index, operationId: `tick.${speed}.${index}` }, PROTOTYPE_DOMAIN_CONTEXT);
   expect(await session.durable()).toBe(true);
+  // These compatibility fixtures explicitly exercise the older encoded cache
+  // candidates. Ordinary play now needs only the small journal commit.
+  expect(await session.prepareRecoveryCopy()).toBe(true);
   return { coordinator, session };
 }
 async function divergent(h: Awaited<ReturnType<typeof rig>>, localTicks: number, accountTicks: number) {
@@ -302,6 +305,9 @@ describe("automatic verified clinic progress selection", () => {
     local.session.dispose();
     const cached = await h.cache.read(h.scope);
     await h.cache.write({ ...entry, recovery: null }, cached!.cacheRevision);
+    // Model the older release faithfully: it predates the incremental journal.
+    // The verified branch and exact old cache have already been retained above.
+    await h.cache.journal!.clear(cloudCampaignStorageKey(h.scope));
     const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);
     expect(session.state.facilityTick).toBe(expected); expect(session.metadata.name).toBe(h.prepared.envelope.campaign.name);
     expect(session.state.campaignId).toMatch(/^auto\./); expect(session.canExecute).toBe(true);
@@ -397,6 +403,7 @@ describe("automatic verified clinic progress selection", () => {
     h.runtime.transport.capabilities = async () => { throw new CloudSyncError("network"); };
     const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);
     cache.denied = true;
+    cache.journal.fault = "before-commit";
     expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "offline.quota" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
     expect(await session.durable()).toBe(false); expect(session.canExecute).toBe(false);
     cache.denied = false;

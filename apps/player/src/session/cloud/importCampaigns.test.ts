@@ -8,6 +8,7 @@ import { FakeCloudServer } from "./fakeTransport";
 import { sha256Utf8 } from "./codecJson";
 import { syncFixture } from "./syncTestSupport";
 import { CloudSyncError } from "./transport";
+import { MemoryJournalStorage } from "../localJournal";
 
 async function fixture(id = "import.synthetic", name = "Local synthetic clinic", owner: string | null = "account-a") {
   const f = await syncFixture(id), metadata = { ...f.prepared.envelope.campaign, name };
@@ -20,6 +21,15 @@ async function fixture(id = "import.synthetic", name = "Local synthetic clinic",
   return { ...f, raw, storage, store, server, transport, source: inspected.sources[0]!, inspected };
 }
 describe("explicit local campaign enrollment", () => {
+  it("does not enroll an older legacy profile when inspection of its journal fails", async () => {
+    const f = await fixture(), journal = new MemoryJournalStorage();
+    vi.spyOn(journal, "keys").mockRejectedValue(new CloudSyncError("storage"));
+    const inspected = await inspectLocalCloudSources("account-a", { getItem: key => f.storage.get(key) ?? null }, f.store, false, journal);
+    expect(inspected.sources[0]!.error).toContain("Browser recovery storage is unavailable");
+    expect(inspected.journalUnavailable).toBe(true); expect(await f.store.read(AUTOMATIC_ENROLLMENT_KEY)).toBeNull();
+    expect(f.server.operationCount("account-a")).toBe(0);
+    expect(f.storage.get(accountStorageKey(PROTOTYPE_PROFILE_KEY, "account-a"))).toBe(f.raw);
+  });
   it("preserves an older profile's per-campaign guidance default without changing the original bytes", async () => {
     const f = await fixture(), profile = JSON.parse(f.raw); delete profile.tutorialGuidanceByCampaign; profile.tutorialsEnabled = false;
     const raw = JSON.stringify(profile);

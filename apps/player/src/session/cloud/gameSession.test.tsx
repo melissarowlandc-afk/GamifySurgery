@@ -234,7 +234,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     await act(async () => { expect(current.placeRoom(34, 27)).toBe(true); await f.session.durable(); await f.coordinator.checkpoint(); });
     expect(current.buildUndoCount).toBe(1); expect(current.buildUndoLabel).toBeTruthy();
     const revision = f.coordinator.confirmed!.revision;
-    await act(async () => { current.undoBuildAction(); await f.session.durable(); await f.coordinator.checkpoint(); });
+    await act(async () => { current.undoBuildAction(); await f.session.durable(); await f.coordinator.checkpoint("purchase"); });
     expect(current.buildUndoCount).toBe(0); expect(current.buildUndoLabel).toBeNull();
     expect(serializeGameState(current.state)).toBe(before);
     expect(BigInt(f.coordinator.confirmed!.revision)).toBeGreaterThan(BigInt(revision));
@@ -245,7 +245,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     await act(async () => { expect(current.mobileBuildActions.commitHallway([{ x: 34, y: 27 }, { x: 35, y: 27 }])).toBe(true); await f.session.durable(); });
     expect(current.buildUndoCount).toBe(1);
     expect(current.systemNotices.some(notice => notice.targetType === "save")).toBe(false);
-    await act(async () => { current.undoBuildAction(); await f.session.durable(); await f.coordinator.checkpoint(); });
+    await act(async () => { current.undoBuildAction(); await f.session.durable(); await f.coordinator.checkpoint("purchase"); });
     expect(serializeGameState(current.state)).toBe(before);
     expect(writes).not.toHaveBeenCalled();
   });

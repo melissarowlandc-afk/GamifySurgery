@@ -2,12 +2,35 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { CloudCodecWorker, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./codecWorker";
 import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
 import { syncFixture } from "./syncTestSupport";
-import { runCloudCodecTask } from "./codecTasks";
+import { dispatchCloudCodecMessage, runCloudCodecTask, type CloudCodecReply } from "./codecTasks";
+import * as journalCodec from "./journalCodec";
 import { sha256Utf8 } from "./codecJson";
 import { CloudCacheError } from "./cache";
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe("cloud codec module worker boundary", () => {
+  it("settles an unsupported worker task with a classified rejection", async () => {
+    const codec = new CloudCodecWorker(null);
+    await expect(codec.run({ kind: "unsupported" } as unknown as Parameters<typeof codec.run>[0])).rejects.toMatchObject({ code: "worker_payload" });
+  });
+  it.each([false, true])("classifies a non-cloneable result with a settled rejection (worker=%s)", async native => {
+    const broken = { through: 0, base: null, candidate: null, unexpectedCallback() {} };
+    vi.spyOn(journalCodec, "prepareJournalInWorker").mockResolvedValue(broken);
+    const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(native ? () => worker : null); worker.release();
+    try {
+      await expect(codec.run({ kind: "journalPrepare", input: {} })).rejects.toMatchObject({ code: "worker_data_clone" });
+      expect(codec.health.inFlight).toHaveLength(0);
+    } finally { codec.dispose(); }
+  });
+  it("replies with a classified error when the native result postMessage rejects", async () => {
+    const replies: CloudCodecReply[] = [];
+    await dispatchCloudCodecMessage({ id: 7, task: { kind: "hash", input: "checkpoint" } }, reply => {
+      if ("result" in reply) throw new DOMException("Cannot clone reply", "DataCloneError");
+      replies.push(structuredClone(reply));
+    });
+    expect(replies).toEqual([{ id: 7, error: { kind: "codec", code: "worker_data_clone",
+      message: "Save processing could not transfer the checkpoint. Retry the account save." } }]);
+  });
   it.each(["callback", "proxy"] as const)("rejects a non-cloneable %s even in the inline test executor", async kind => {
     const codec = new CloudCodecWorker(null);
     const task = { kind: "hash" as const, input: "checkpoint", accidentalRuntime: kind === "callback" ?

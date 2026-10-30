@@ -85,11 +85,13 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
   };
   const ready = async (account: CloudConfirmed, winner: VerifiedClinicCopy) => {
     const coordinator = await open(account.campaignId);
+    if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     // Resolve an uncertain acknowledgement using its original immutable request
     // before considering a rebase. A failed old lease cannot silently write.
     if (coordinator.view.pending) await coordinator.focus();
     if (coordinator.hasLocalCacheConflict) throw new CloudCacheError("conflict");
     const fresh = await load(account.campaignId);
+    if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     if (fresh.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256) {
       // Our own acknowledgement is harmless if it is exactly the chosen copy.
       const inspection = await codec.run({ kind: "inspectCopy", input: fresh });
@@ -106,7 +108,10 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     if (inspection.digest !== expected.digest) throw new CloudSyncError("revision");
     if (inspection.campaign.status === "archived" && inspection.campaign.name === plan.olderName) return account;
     const coordinator = await ready(account, { copy: account, inspection, source: "account", usageQuestions: [] });
-    const session = await CloudGameSession.create(coordinator);
+    // This metadata-only archival job deliberately handles the older account
+    // branch. Its newer local journal has already been protected and must not
+    // be rebound/replaced by the temporary projection.
+    const session = await CloudGameSession.create(coordinator, undefined, undefined, { journal: false });
     session.updateMetadata({ ...session.metadata, name: plan.olderName, status: "archived" });
     if (!await session.checkpointNow("campaign-switch")) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
     // Closing the lease does not add a gameplay command or change progress rank.
@@ -256,13 +261,13 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
               }
             }
             const coordinator = await ready(compatible, winner);
-            const session = await CloudGameSession.create(coordinator);
-            if (session.metadata.status !== "resumable" || session.metadata.name !== name) {
-              session.updateMetadata({ ...session.metadata, name, status: "resumable" }); await session.durable();
+            if (winner.inspection.campaign.status !== "resumable" || winner.inspection.campaign.name !== name) {
+              const session = await CloudGameSession.create(coordinator);
+              session.updateMetadata({ ...session.metadata, name, status: "resumable" });
+              if (!await session.prepareRecoveryCopy()) throw new CloudSyncError("storage");
+              // Detach the temporary observer; it shares the returned owner.
+              session.detach();
             }
-            // Dispose only the temporary observer; it shares the returned
-            // coordinator, so its normal dispose() must not be called here.
-            session.detach();
             return coordinator;
           }
           const previous = compatible ?? account.find(row => row.campaignId === active.campaignId)!;

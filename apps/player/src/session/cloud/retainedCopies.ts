@@ -4,7 +4,7 @@ import { prepareCloudEvidenceImport } from "./codecEvidence";
 import { isCloudCodecProcessingError, logicalJsonText, sha256Utf8 } from "./codecJson";
 import { cloudCopyFamily, compareVerifiedProgress, type VerifiedCopyInspection } from "./copySelection";
 import type { CloudEntryStore } from "./entryStorage";
-import { inspectLocalCloudSources, separateCloudCampaignId } from "./importCampaigns";
+import { inspectLocalCloudSources, prepareLocalCloudSource, separateCloudCampaignId } from "./importCampaigns";
 import { accountStorageKey } from "../accountStorageKey";
 import { LEGACY_PROTOTYPE_SAVE_KEY, PROTOTYPE_PROFILE_KEY } from "../prototypeStorage";
 import { CloudSyncError, type CloudCandidate, type CloudConfirmed, type CloudScope } from "./transport";
@@ -147,7 +147,7 @@ export async function discoverClinicCopies(options: {
         const sourceHash = await sha256Utf8(canonical({ state: source.serializedState, campaign: source.campaign }));
         if (rawSources.has(sourceHash)) continue;
         rawSources.add(sourceHash);
-        const prepared = await prepareCloudEvidenceImport({ serializedState: source.serializedState, campaign: source.campaign, operationId: "retained-source" });
+        const prepared = await prepareLocalCloudSource(source, source.campaign, "retained-source");
         await add({ campaignId: source.campaign.campaignId, revision: "1", acceptedAtMs: 0, baselineId: prepared.envelope.baselineId,
           snapshot: prepared.snapshot, evidence: prepared.packedEvidence }, key);
       } catch (error) {
