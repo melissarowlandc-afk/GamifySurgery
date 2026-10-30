@@ -16,7 +16,24 @@ export function evidenceJsonText(value: EvidenceJson): string {
   if (Array.isArray(value)) return `[${value.map(evidenceJsonText).join(",")}]`;
   return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${evidenceJsonText(value[key]!)}`).join(",")}}`;
 }
-export const jsonEqual = (a: EvidenceJson, b: EvidenceJson): boolean => evidenceJsonText(a) === evidenceJsonText(b);
+export function jsonEqual(a: EvidenceJson, b: EvidenceJson): boolean {
+  if (a === b) return true;
+  if (a === null || b === null || typeof a !== "object" || typeof b !== "object") {
+    // Canonical JSON maps nonfinite numbers to null. Compare primitives
+    // directly without invoking serialization on the worker-input boundary.
+    const left = typeof a === "number" && !Number.isFinite(a) ? null : a;
+    const right = typeof b === "number" && !Number.isFinite(b) ? null : b;
+    return left === right;
+  }
+  if (Array.isArray(a)) {
+    if (!Array.isArray(b) || a.length !== b.length) return false;
+    for (let index = 0; index < a.length; index++) if (!jsonEqual(a[index]!, b[index]!)) return false;
+    return true;
+  }
+  if (Array.isArray(b)) return false;
+  const keys = Object.keys(a);
+  return keys.length === Object.keys(b).length && keys.every(key => Object.hasOwn(b, key) && jsonEqual(a[key]!, b[key]!));
+}
 
 /** Arrays are replaced as ordered units; object properties are patched without JSON-pointer escaping ambiguities. */
 export function evidencePatches(base: EvidenceJson, current: EvidenceJson, path: string[] = []): EvidencePatch[] {

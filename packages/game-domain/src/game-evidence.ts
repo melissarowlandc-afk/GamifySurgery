@@ -5,6 +5,7 @@ import {
   jsonCopy, jsonEqual, jsonObject, type EvidenceJson, type EvidenceObject, type EvidencePatch,
 } from "./game-evidence-json";
 import type { DomainContext, GameCommand, GameState } from "./types";
+import { EvidenceIndex, normalizeEvidence } from "./game-evidence-index";
 
 export { GameEvidenceError } from "./game-evidence-json";
 export type { EvidenceJson, EvidenceObject, EvidencePatch } from "./game-evidence-json";
@@ -111,8 +112,8 @@ function kindAt(path: readonly string[]): GameEvidenceKind | undefined {
   return undefined;
 }
 
-const indexes = new WeakMap<GameEvidenceArchive, Map<string, string>>();
-function archiveIndex(archive: GameEvidenceArchive): Map<string, string> {
+const indexes = new WeakMap<GameEvidenceArchive, EvidenceIndex<string>>();
+function archiveIndex(archive: GameEvidenceArchive): EvidenceIndex<string> {
   const cached = Object.isFrozen(archive) ? indexes.get(archive) : undefined;
   if (cached) return cached;
   if (archive.version !== GAME_EVIDENCE_VERSION || typeof archive.campaignId !== "string" || !archive.campaignId ||
@@ -122,14 +123,14 @@ function archiveIndex(archive: GameEvidenceArchive): Map<string, string> {
   }
   exactFields(archive, ["version", "campaignId", "baseline", "records"]);
   exactFields(archive.baseline, ["source", "historicalCoverage", "historicalQuestionCountCredit", "legacyReviewProjection", "openingFinance", "openingLearning", "pins"]);
-  const result = new Map<string, string>();
+  let result = EvidenceIndex.empty<string>();
   for (const [index, fact] of archive.records.entries()) {
     exactFields(fact, ["id", "kind", "origin", "value"]);
     if (fact.id !== `e${(index + 1).toString(36)}` || !kinds.includes(fact.kind) ||
       !["import-baseline", "legacy-projection", "observed-transition"].includes(fact.origin) || !Object.hasOwn(fact, "value")) throw new GameEvidenceError("record-shape");
     const key = `${fact.kind}\0${evidenceJsonText(fact.value)}`;
     if (result.has(key)) throw new GameEvidenceError("duplicate-evidence");
-    result.set(key, fact.id);
+    result = result.with(key, fact.id);
   }
   if (Object.isFrozen(archive)) indexes.set(archive, result);
   return result;
@@ -142,28 +143,66 @@ function recordAt(archive: Pick<GameEvidenceArchive, "records">, id: string): Ga
   return record;
 }
 
+interface EvidenceLog {
+  readonly length: number;
+  readonly parent?: EvidenceLog;
+  readonly added: readonly GameEvidenceRecord[];
+}
+function materializeRecords(log: EvidenceLog): readonly GameEvidenceRecord[] {
+  const chunks: (readonly GameEvidenceRecord[])[] = [];
+  for (let node: EvidenceLog | undefined = log; node; node = node.parent) chunks.push(node.added);
+  const records: GameEvidenceRecord[] = [];
+  for (let i = chunks.length - 1; i >= 0; i--) for (const fact of chunks[i]!) records.push(fact);
+  return Object.freeze(records);
+}
+interface EvidenceRuntime {
+  readonly state: GameState;
+  readonly projected: EvidenceObject;
+  readonly learning: LearningProjection;
+  readonly log: EvidenceLog;
+  readonly content: EvidenceIndex<string>;
+  readonly operations: EvidenceIndex<GameEvidenceRecord>;
+  readonly byId: EvidenceIndex<GameEvidenceRecord>;
+  readonly receipts: EvidenceIndex<GameEvidenceRecord>;
+  readonly reverted: EvidenceIndex<true>;
+  readonly undoHead: UndoHead | undefined;
+  readonly regularChain: boolean;
+  readonly resolution: WeakMap<object, ResolvedProjection>;
+  readonly operationScanError?: unknown;
+}
+interface UndoHead { readonly sequence: number; readonly operationId: string; readonly previous?: UndoHead }
+const runtimes = new WeakMap<GameEvidenceCheckpoint, EvidenceRuntime>();
+
 class EvidenceBuilder {
-  readonly records: GameEvidenceRecord[];
-  readonly index: Map<string, string>;
+  readonly added: GameEvidenceRecord[] = [];
+  readonly prefix: EvidenceLog;
+  index: EvidenceIndex<string>;
+  byId: EvidenceIndex<GameEvidenceRecord>;
   origin: GameEvidenceRecord["origin"] = "import-baseline";
-  constructor(archive?: GameEvidenceArchive) {
-    this.records = archive ? [...archive.records] : [];
-    this.index = archive ? new Map(archiveIndex(archive)) : new Map();
+  constructor(runtime?: EvidenceRuntime) {
+    this.prefix = runtime?.log ?? { length: 0, added: [] };
+    this.index = runtime?.content ?? EvidenceIndex.empty();
+    this.byId = runtime?.byId ?? EvidenceIndex.empty();
   }
+  get records(): readonly GameEvidenceRecord[] { return materializeRecords(this.log); }
+  get log(): EvidenceLog { return { length: this.prefix.length + this.added.length, parent: this.prefix, added: Object.freeze(this.added.slice()) }; }
   put(kind: GameEvidenceKind, value: EvidenceJson): string {
     const key = `${kind}\0${evidenceJsonText(value)}`, previous = this.index.get(key);
     if (previous) return previous;
-    const id = `e${(this.records.length + 1).toString(36)}`;
-    this.records.push(freezeEvidence({ id, kind, origin: this.origin, value: jsonCopy(value) }));
-    this.index.set(key, id);
+    const id = `e${(this.prefix.length + this.added.length + 1).toString(36)}`;
+    const fact = freezeEvidence({ id, kind, origin: this.origin, value: jsonCopy(value) });
+    this.added.push(fact);
+    this.index = this.index.with(key, id);
+    this.byId = this.byId.with(id, fact);
     return id;
   }
-  project(value: EvidenceJson, path: string[] = []): EvidenceJson {
+  project(value: EvidenceJson, path: string[] = [], previous?: EvidenceJson, projection?: EvidenceJson): EvidenceJson {
+    if (value === previous && projection !== undefined) return projection;
     if (isReference(value)) throw new GameEvidenceError("reserved-reference-in-source");
     const kind = kindAt(path);
     if (kind && value !== null) return reference(this.put(kind, value));
-    if (Array.isArray(value)) return value.map((child, index) => this.project(child, [...path, String(index)]));
-    if (jsonObject(value)) return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, this.project(child, [...path, key])]));
+    if (Array.isArray(value)) return value.map((child, index) => this.project(child, [...path, String(index)], Array.isArray(previous) ? previous[index] : undefined, Array.isArray(projection) ? projection[index] : undefined));
+    if (jsonObject(value)) return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, this.project(child, [...path, key], jsonObject(previous) ? previous[key] : undefined, jsonObject(projection) ? projection[key] : undefined)]));
     return value;
   }
 }
@@ -196,6 +235,100 @@ function resolve(value: EvidenceJson, archive: GameEvidenceArchive, active = new
   return value;
 }
 
+// Patches preserve the import source's object-key order. Keep that same order
+// in the hydrated runtime too (JSON bytes, not just canonical equality).
+const rebased = new WeakMap<object, WeakMap<object, EvidenceJson>>();
+function rebaseProjection(base: EvidenceJson, current: EvidenceJson): EvidenceJson {
+  if (base === current || current === null || typeof current !== "object" || base === null || typeof base !== "object") return current;
+  const cached = rebased.get(current)?.get(base);
+  if (cached !== undefined) return cached;
+  let result: EvidenceJson;
+  if (jsonEqual(base, current)) result = base;
+  else if (!jsonObject(base) || !jsonObject(current)) result = current;
+  else result = Object.fromEntries([...new Set([...Object.keys(base), ...Object.keys(current)])]
+    .filter(key => Object.hasOwn(current, key)).map(key => [key, Object.hasOwn(base, key) ? rebaseProjection(base[key]!, current[key]!) : current[key]!]));
+  let entries = rebased.get(current);
+  if (!entries) { entries = new WeakMap(); rebased.set(current, entries); }
+  entries.set(base, result);
+  return result;
+}
+interface ResolvedProjection { value: EvidenceJson; nodes: number; textUnits: number; height: number }
+function resolveIncremental(value: EvidenceJson, byId: EvidenceIndex<GameEvidenceRecord>, resolved: WeakMap<object, ResolvedProjection>, active = new Set<string>()): ResolvedProjection {
+  if (value !== null && typeof value === "object") {
+    const cached = resolved.get(value);
+    if (cached) return cached;
+  }
+  let result: ResolvedProjection = { value, nodes: 1, textUnits: typeof value === "string" ? value.length : 0, height: 0 };
+  const add = (child: ResolvedProjection) => {
+    result.nodes += child.nodes; result.textUnits += child.textUnits; result.height = Math.max(result.height, child.height + 1);
+    return child.value;
+  };
+  if (isReference(value)) {
+    if (!/^e[1-9a-z][0-9a-z]*$/.test(value.$e)) throw new GameEvidenceError("reference-shape");
+    if (active.has(value.$e)) throw new GameEvidenceError("reference-cycle");
+    const record = byId.get(value.$e);
+    if (!record) throw new GameEvidenceError("missing-evidence");
+    result.textUnits += 2;
+    active.add(value.$e);
+    try { result.value = add(resolveIncremental(record.value, byId, resolved, active)); }
+    finally { active.delete(value.$e); }
+  } else if (Array.isArray(value)) result.value = Object.freeze(value.map(child => add(resolveIncremental(child, byId, resolved, active)))) as unknown as EvidenceJson[];
+  else if (jsonObject(value)) {
+    result.textUnits += Object.keys(value).reduce((sum, key) => sum + key.length, 0);
+    result.value = Object.freeze(Object.fromEntries(Object.entries(value).map(([key, child]) => [key, add(resolveIncremental(child, byId, resolved, active))])));
+  }
+  if (result.height > 128) throw new GameEvidenceError("reference-depth");
+  if (result.nodes > 300_000 || result.textUnits > 6_000_000) throw new GameEvidenceError("resolved-size");
+  if (value !== null && typeof value === "object") resolved.set(value, result);
+  return result;
+}
+
+function deeplyFrozen(value: unknown): boolean {
+  return value === null || typeof value !== "object" || Object.isFrozen(value) && Object.values(value).every(deeplyFrozen);
+}
+function runtimeFor(checkpoint: GameEvidenceCheckpoint): EvidenceRuntime {
+  const existing = runtimes.get(checkpoint);
+  if (existing) return existing;
+  // Untrusted load/import ALWAYS performs the complete contract/chain check.
+  const state = freezeEvidence(importGameEvidence(checkpoint.snapshot, checkpoint.evidence));
+  const projected = freezeEvidence(asObject(applyEvidencePatches(checkpoint.evidence.baseline.source, checkpoint.snapshot.patches)));
+  const records = freezeEvidence(checkpoint.evidence.records.slice());
+  let operations = EvidenceIndex.empty<GameEvidenceRecord>(), byId = EvidenceIndex.empty<GameEvidenceRecord>();
+  let receipts = EvidenceIndex.empty<GameEvidenceRecord>(), reverted = EvidenceIndex.empty<true>(), undoHead: UndoHead | undefined;
+  let transitionCount = 0, regularChain = true, operationScanError: unknown;
+  for (const record of records) {
+    byId = byId.with(record.id, record);
+    if (record.kind === "transition") {
+      transitionCount++;
+      if (!operationScanError) try {
+        const entry = asObject(record.value), operationId = asObject(entry.command).operationId;
+        // Preserve find/some short-circuit behavior for unusual imported
+        // archives: the first matching command precedes any malformed orphan.
+        if (typeof operationId === "string" && !operations.has(operationId)) operations = operations.with(operationId, record);
+        if (entry.sequence !== transitionCount) regularChain = false;
+        undoHead = { sequence: Number(entry.sequence), operationId: String(operationId), previous: undoHead };
+      } catch (error) { operationScanError = error; regularChain = false; }
+    } else if (record.kind === "operation" && record.origin === "observed-transition") {
+      if (!jsonObject(record.value)) regularChain = false;
+      else {
+        const operationId = String(record.value.operationId);
+        if (!receipts.has(operationId)) receipts = receipts.with(operationId, record);
+      }
+    } else if (record.kind === "build-reversion") {
+      if (!jsonObject(record.value)) regularChain = false;
+      else reverted = reverted.with(String(record.value.revertedOperationId), true);
+    }
+  }
+  if (transitionCount !== checkpoint.snapshot.head.sequence) regularChain = false;
+  const runtime: EvidenceRuntime = { state, projected, learning: learning(projected),
+    log: { length: records.length, added: records },
+    content: archiveIndex(checkpoint.evidence), operations, byId, receipts, reverted, undoHead, regularChain, resolution: new WeakMap(), operationScanError };
+  // Mutable caller-owned checkpoints are rechecked on every use. Newly emitted
+  // checkpoints are registered directly and need no deep-frozen scan.
+  if (deeplyFrozen(checkpoint)) runtimes.set(checkpoint, runtime);
+  return runtime;
+}
+
 function finance(state: GameState): FinanceWitness {
   const witness = { facilityTick: state.facilityTick, cashCents: state.cashCents,
     operatingAccrualSixtiethCents: state.operatingAccrualSixtiethCents, totalOperatingExpenses: state.totalOperatingExpenses,
@@ -208,9 +341,14 @@ function pins(state: GameState): EvidenceObject {
     randomGeneratorVersion: state.randomGeneratorVersion, clinicalReleaseId: state.clinicalReleaseId,
     balanceReleaseId: state.balanceReleaseId, salaryEconomyVersion: state.salaryEconomyVersion, schedulerPins: state.schedulerPins }));
 }
-function learning(projected: EvidenceObject): LearningProjection {
+function learning(projected: EvidenceObject, previous?: EvidenceRuntime): LearningProjection {
+  if (previous && projected.learningHistories === previous.projected.learningHistories) return previous.learning;
   const result: LearningProjection = {};
   for (const [id, value] of Object.entries(asObject(projected.learningHistories))) {
+    if (previous && value === asObject(previous.projected.learningHistories)[id]) {
+      Object.defineProperty(result, id, { value: previous.learning[id], enumerable: true, writable: true, configurable: true });
+      continue;
+    }
     const history = asObject(value);
     if (!isReference(history.card) || !Array.isArray(history.reviews) || history.reviews.some(review => !isReference(review))) throw new GameEvidenceError("learning-projection");
     Object.defineProperty(result, id, { value: { card: history.card.$e, reviews: history.reviews.map(review => (review as unknown as Reference).$e) }, enumerable: true, writable: true, configurable: true });
@@ -317,23 +455,25 @@ function retainRemoved(builder: EvidenceBuilder, before: EvidenceObject, after: 
 export function applyGameEvidenceCommand(checkpoint: GameEvidenceCheckpoint, command: GameCommand, context?: DomainContext): {
   checkpoint: GameEvidenceCheckpoint; state: GameState; appendedEvidence: readonly GameEvidenceRecord[]; replayed: boolean;
 } {
-  const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
-  const prior = checkpoint.evidence.records.find(fact => fact.kind === "transition" && asObject(asObject(fact.value).command).operationId === command.operationId);
+  const runtime = runtimeFor(checkpoint), state = runtime.state;
+  const prior = runtime.operations.get(command.operationId);
   if (prior) {
     if (!jsonEqual(asObject(prior.value).command!, asJson(command))) throw new GameEvidenceError("operation-id-reuse");
-    return { checkpoint, state, appendedEvidence: [], replayed: true };
+    return { checkpoint, state: jsonCopy(state), appendedEvidence: [], replayed: true };
   }
-  const builder = new EvidenceBuilder(checkpoint.evidence);
+  if (runtime.operationScanError) throw runtime.operationScanError;
+  const builder = new EvidenceBuilder(runtime);
   builder.origin = "observed-transition";
-  const before = asObject(builder.project(asJson(state))), oldLearning = learning(before);
+  const before = runtime.projected;
   let beforeRetirement: EvidenceObject | undefined;
   const next = withGameEvidenceObserver({
-    beforeRetirement: value => { beforeRetirement = asObject(builder.project(asJson(value))); },
+    beforeRetirement: value => { beforeRetirement = asObject(builder.project(freezeEvidence(normalizeEvidence(value, state)) as unknown as EvidenceObject, [], state as unknown as EvidenceObject, before)); },
     event: value => { builder.put("event", asJson(value)); },
     receipt: value => { builder.put("operation", asJson(value)); },
   }, () => gameReducer(state, command, context));
-  if (next === state) return { checkpoint, state, appendedEvidence: [], replayed: true };
-  const projected = asObject(builder.project(asJson(next))), newLearning = learning(projected);
+  if (next === state) return { checkpoint, state: jsonCopy(state), appendedEvidence: [], replayed: true };
+  const normalized = freezeEvidence(normalizeEvidence(next, state)) as unknown as EvidenceObject;
+  const projected = freezeEvidence(asObject(builder.project(normalized, [], state as unknown as EvidenceObject, before)));
   if (beforeRetirement) retainRemoved(builder, beforeRetirement, next);
   const oldRun = state.levelFive?.inspection.run, oldPreparation = state.levelFive?.inspection.preparation;
   if ((oldRun || oldPreparation) && !next.levelFive?.inspection.run && !next.levelFive?.inspection.preparation) {
@@ -341,32 +481,62 @@ export function applyGameEvidenceCommand(checkpoint: GameEvidenceCheckpoint, com
       priorPreparation: before.levelFive ? asObject(asObject(before.levelFive).inspection!).preparation ?? null : null,
       report: projected.levelFive ? asObject(asObject(projected.levelFive).inspection!).lastReport ?? null : null });
   }
-  return finishEvidenceTransition(checkpoint, builder, state, next, projected, oldLearning, newLearning, asJson(command));
+  return finishEvidenceTransition(checkpoint, runtime, builder, next, projected, asJson(command));
 }
 
-function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, builder: EvidenceBuilder, state: GameState, next: GameState,
-  projected: EvidenceObject, oldLearning: LearningProjection, newLearning: LearningProjection, command: EvidenceJson) {
+function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, runtime: EvidenceRuntime, builder: EvidenceBuilder, next: GameState,
+  projected: EvidenceObject, command: EvidenceJson) {
+  const state = runtime.state, oldLearning = runtime.learning, newLearning = learning(projected, runtime);
+  if (next.campaignId !== checkpoint.snapshot.campaignId || next.schemaVersion !== checkpoint.snapshot.gameSchemaVersion) throw new GameEvidenceError("campaign-identity");
+  if (!jsonEqual(pins(next), checkpoint.evidence.baseline.pins)) throw new GameEvidenceError("immutable-pins");
   if (Object.keys(oldLearning).length !== Object.keys(newLearning).length) throw new GameEvidenceError("concept-set-change");
   const learningChanges: EvidenceJson[] = [];
   for (const [conceptId, current] of Object.entries(newLearning)) {
     const previous = oldLearning[conceptId];
+    if (previous === current) continue;
     if (!previous || !jsonEqual(asJson(previous.reviews), asJson(current.reviews.slice(0, previous.reviews.length)))) throw new GameEvidenceError("review-removal-or-edit");
     const appendedReviews = current.reviews.slice(previous.reviews.length);
     if (previous.card !== current.card && appendedReviews.length === 0) throw new GameEvidenceError("card-change-without-review");
     if (previous.card !== current.card || appendedReviews.length) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews });
   }
   const sequence = checkpoint.snapshot.head.sequence + 1;
+  const beforeFinance = finance(state), afterFinance = finance(next);
   const transitionId = builder.put("transition", { sequence, previous: checkpoint.snapshot.head.transitionId, command,
-    before: asJson(finance(state)), after: asJson(finance(next)),
+    before: asJson(beforeFinance), after: asJson(afterFinance),
     cashDeltaCents: (BigInt(next.cashCents) - BigInt(state.cashCents)).toString(), learningChanges });
-  const evidence: GameEvidenceArchive = freezeEvidence({ ...checkpoint.evidence, records: builder.records });
+  const log = builder.log;
+  // Plain enumerable getters materialize ordinary frozen arrays only when a
+  // serialization/verification consumer requests them. Native structuredClone
+  // invokes them normally; no Proxy/custom wire type crosses that boundary.
+  let records: readonly GameEvidenceRecord[] | undefined, patches: readonly EvidencePatch[] | undefined;
+  const evidence: GameEvidenceArchive = Object.freeze({ version: checkpoint.evidence.version,
+    campaignId: checkpoint.evidence.campaignId, baseline: freezeEvidence(checkpoint.evidence.baseline),
+    get records() { return records ??= materializeRecords(log); } });
   indexes.set(evidence, builder.index);
-  const snapshot: GameEvidenceSnapshot = freezeEvidence({ version: GAME_EVIDENCE_VERSION, campaignId: next.campaignId,
-    gameSchemaVersion: next.schemaVersion, patches: evidencePatches(evidence.baseline.source, projected), head: { sequence, transitionId } });
-  const result = freezeEvidence({ snapshot, evidence });
-  // Always reconcile the complete cards/reviews/money chain before returning an uploadable checkpoint.
-  importGameEvidence(snapshot, evidence);
-  return { checkpoint: result, state: next, appendedEvidence: evidence.records.slice(checkpoint.evidence.records.length), replayed: false };
+  const snapshot: GameEvidenceSnapshot = Object.freeze({ version: GAME_EVIDENCE_VERSION, campaignId: next.campaignId,
+    gameSchemaVersion: next.schemaVersion,
+    get patches() { return patches ??= freezeEvidence(evidencePatches(evidence.baseline.source, projected)); },
+    head: Object.freeze({ sequence, transitionId }) });
+  const result = Object.freeze({ snapshot, evidence });
+  const hydratedProjection = freezeEvidence(asObject(rebaseProjection(evidence.baseline.source, projected)));
+  const hydrated = resolveIncremental(hydratedProjection, builder.byId, runtime.resolution).value as unknown as GameState;
+  // The trusted prefix was fully reconciled on adoption. This extension checks
+  // exact pins, concept membership, unchanged review prefixes, card/review
+  // coupling, finance range/delta, unique operation and the immediate chain tip.
+  // Full import/export verification still walks the entire untrusted chain.
+  const operationId = String(asObject(command).operationId);
+  if (runtime.operations.has(operationId)) throw new GameEvidenceError("operation-id-reuse");
+  let receipts = runtime.receipts, reverted = runtime.reverted;
+  for (const record of builder.added) {
+    if (record.kind === "operation" && record.origin === "observed-transition") {
+      const id = String(asObject(record.value).operationId);
+      if (!receipts.has(id)) receipts = receipts.with(id, record);
+    } else if (record.kind === "build-reversion") reverted = reverted.with(String(asObject(record.value).revertedOperationId), true);
+  }
+  runtimes.set(result, { state: hydrated, projected: hydratedProjection, learning: newLearning, log,
+    content: builder.index, byId: builder.byId, operations: runtime.operations.with(operationId, builder.byId.get(transitionId)!),
+    receipts, reverted, undoHead: { sequence, operationId, previous: runtime.undoHead }, regularChain: runtime.regularChain, resolution: runtime.resolution });
+  return { checkpoint: result, state: next, appendedEvidence: builder.added.slice(), replayed: false };
 }
 
 /**
@@ -377,15 +547,39 @@ function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, builder: E
 export function applyGameEvidenceBuildUndo(checkpoint: GameEvidenceCheckpoint, target: GameState, operationId: string): {
   checkpoint: GameEvidenceCheckpoint; state: GameState; appendedEvidence: readonly GameEvidenceRecord[]; replayed: boolean;
 } {
-  const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
-  if (!operationId || checkpoint.evidence.records.some(fact => fact.kind === "transition" && asObject(asObject(fact.value).command).operationId === operationId)) {
+  const runtime = runtimeFor(checkpoint), state = runtime.state;
+  if (!operationId || runtime.operations.has(operationId)) {
     throw new GameEvidenceError("operation-id-reuse");
   }
+  if (runtime.operationScanError) throw runtime.operationScanError;
   if (!state.paused || !target.paused || state.facilityTick !== target.facilityTick || !jsonEqual(pins(state), pins(target)) ||
     !jsonEqual(asJson(state.learningHistories), asJson(target.learningHistories))) throw new GameEvidenceError("unsafe-build-undo");
-  const builder = new EvidenceBuilder(checkpoint.evidence); builder.origin = "observed-transition";
-  const before = asObject(builder.project(asJson(state))), projected = asObject(builder.project(asJson(target)));
+  const builder = new EvidenceBuilder(runtime); builder.origin = "observed-transition";
+  const projected = freezeEvidence(asObject(builder.project(freezeEvidence(normalizeEvidence(target, state)) as unknown as EvidenceObject, [], state as unknown as EvidenceObject, runtime.projected)));
   const revertedReceipts: EvidenceJson[] = [];
+  if (runtime.regularChain) {
+    let targetSequence = 0;
+    for (const id of Object.keys(target.operationReceipts)) {
+      const record = runtime.operations.get(id);
+      if (record) targetSequence = Math.max(targetSequence, Number(asObject(record.value).sequence));
+    }
+    const candidates: GameEvidenceRecord[] = [];
+    for (let head = runtime.undoHead; head && head.sequence > targetSequence; head = head.previous) {
+      const receipt = runtime.receipts.get(head.operationId);
+      if (receipt && !Object.hasOwn(target.operationReceipts, head.operationId) && !runtime.reverted.has(head.operationId)) candidates.push(receipt);
+    }
+    // Preserve the old archive-order receipt traversal exactly, including an
+    // earlier receipt first captured inside a compound development command.
+    candidates.sort((a, b) => Number.parseInt(a.id.slice(1), 36) - Number.parseInt(b.id.slice(1), 36));
+    for (const receipt of candidates) {
+      const id = String(asObject(receipt.value).operationId);
+      builder.put("build-reversion", { undoOperationId: operationId, revertedOperationId: id, receiptEvidenceId: receipt.id, status: "reverted" });
+      revertedReceipts.push(id);
+    }
+    return finishEvidenceTransition(checkpoint, runtime, builder, target, projected, { type: "UNDO_BUILD", operationId, revertedReceipts });
+  }
+  // Preserve compatibility with unusual imported archives containing orphan
+  // transitions. Ordinary generated chains take the suffix-only path above.
   const commandSequences = new Map<string, number>(), alreadyReverted = new Set<string>();
   for (const fact of checkpoint.evidence.records) {
     if (fact.kind === "transition") { const value = asObject(fact.value); commandSequences.set(String(asObject(value.command).operationId), Number(value.sequence)); }
@@ -404,7 +598,7 @@ export function applyGameEvidenceBuildUndo(checkpoint: GameEvidenceCheckpoint, t
     alreadyReverted.add(id);
     revertedReceipts.push(id);
   }
-  return finishEvidenceTransition(checkpoint, builder, state, target, projected, learning(before), learning(projected),
+  return finishEvidenceTransition(checkpoint, runtime, builder, target, projected,
     { type: "UNDO_BUILD", operationId, revertedReceipts });
 }
 
