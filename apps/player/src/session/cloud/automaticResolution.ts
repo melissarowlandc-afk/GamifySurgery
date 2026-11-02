@@ -11,6 +11,9 @@ import { CloudGameSession } from "./gameSession";
 import { CLOUD_SYNC_PROTOCOL, CloudSyncError, type CloudConfirmed } from "./transport";
 import { CloudCacheError } from "./codecCache";
 import { cloudScopeData } from "./scopeData";
+// Opening runs under the loading screen; multi-second worker tasks on large
+// campaigns must finish inside the 180 s opening budget (App.tsx).
+const AUTOMATIC_RESOLUTION_TIMEOUT_MS = 150_000;
 
 interface Promotion {
   version: 1; family: string; originalId: string; targetId: string; name: string; olderName: string;
@@ -297,7 +300,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
         }
       }
       throw new CloudSyncError("revision");
-    })(), 30_000, () => { cancelled = true; for (const coordinator of coordinators) coordinator.dispose(); });
+    })(), AUTOMATIC_RESOLUTION_TIMEOUT_MS, () => { cancelled = true; for (const coordinator of coordinators) coordinator.dispose(); });
     if (!current()) throw new CloudSyncError("auth");
     return result;
   } catch (error) {

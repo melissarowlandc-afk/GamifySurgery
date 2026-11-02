@@ -1,6 +1,8 @@
 import { CloudSyncError } from "./transport";
 
 export const CLOUD_CHECK_TIMEOUT_MS = 30_000;
+/** Whole campaign opening, shown under the loading screen. */
+export const CLOUD_OPENING_TIMEOUT_MS = 180_000;
 export const CLOUD_READ_TIMEOUT_MS = 5_000;
 
 /** A missing browser/transport completion must reach recovery UI. Callers

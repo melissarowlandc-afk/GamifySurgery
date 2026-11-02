@@ -34,7 +34,7 @@ import { CloudCampaignEntry } from "./ui/CloudCampaignEntry";
 import { cloudEntryError } from "./ui/cloudEntryError";
 import { AccountMenu } from "./ui/AccountMenu";
 import { cloudCodec } from "./session/cloud/codecWorker";
-import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
+import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_OPENING_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
 import { rememberCampaignToReopen, selectCampaignToReopen, type CampaignReopenDecision } from "./session/cloud/reopenSelection";
 import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution";
 import { CloudSyncError } from "./session/cloud/transport";
@@ -584,7 +584,7 @@ function CloudCampaignRouter() {
         return created;
         }
         throw new CloudCacheError("conflict");
-      })(), CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
+      })(), CLOUD_OPENING_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
       openingStage = "selection";
       await rememberCampaignToReopen(runtime, session.coordinator.scope.campaignId);
