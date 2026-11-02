@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useId, useMemo, useRef, useState,
 import { createPortal } from "react-dom";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
 import { usePresentationLayout } from "../shellPresentation";
-import { loadingArtwork } from "./loadingArtwork";
+import { WelcomeArtwork, welcomeSurfaceStyle } from "./WelcomeArtwork";
+import { OpeningBrand } from "./OpeningBrand";
 import "./LoadingScreen.css";
 
 export const LOADING_DELAY_MS = 400;
@@ -77,9 +78,8 @@ export function LoadingScreen({ active = true, status, stage, failure, onRetry,
   if (!visible || !host) return null;
   const message = failure || (timedOut ? "This is taking longer than expected. Your saved copies are safe." : status);
   const error = failed || timedOut;
-  const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
   const progress = stage ? stages[stage] : null;
-  return createPortal(<section ref={surface} role="region" className={`loading-screen${error ? " has-error" : ""}`}
+  return createPortal(<section ref={surface} role="region" className={`welcome-surface loading-screen${error ? " has-error" : ""}`} style={welcomeSurfaceStyle}
     aria-label="Loading clinic" data-loading-state={error ? "failed" : "waiting"} tabIndex={-1}
     onKeyDown={event => {
       // The consent/report dialog is a separate top-layer portal. Its keyboard
@@ -93,13 +93,9 @@ export function LoadingScreen({ active = true, status, stage, failure, onRetry,
       if (event.shiftKey && (document.activeElement === first || document.activeElement === surface.current)) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }}>
+    <div className="loading-screen-scene"><WelcomeArtwork className="loading-screen-art" /></div>
     <div className="loading-screen-content">
-      <picture className="loading-screen-art">
-        {loadingArtwork.portrait ? <source media="(orientation: portrait)" srcSet={asset(loadingArtwork.portrait)} /> : null}
-        {loadingArtwork.landscape ? <source media="(orientation: landscape)" srcSet={asset(loadingArtwork.landscape)} /> : null}
-        <img src={asset(loadingArtwork.src)} alt={loadingArtwork.alt} width={512} height={512} />
-      </picture>
-      <h1>Stitchin’ Time</h1>
+      <OpeningBrand heading />
       <p id={`${id}-status`} role={error ? "alert" : "status"} aria-live="polite" aria-atomic="true">{message}</p>
       <div className={`loading-screen-bar${progress === null ? " is-indeterminate" : ""}`} role="progressbar"
         aria-label="Opening progress" aria-describedby={`${id}-status`} aria-valuemin={0} aria-valuemax={3}

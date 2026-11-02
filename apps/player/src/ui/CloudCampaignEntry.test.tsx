@@ -1,4 +1,5 @@
 import { act, type ReactNode, type ComponentProps } from "react";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AuthAccountActionsContext, AuthAccountContext } from "../auth/AuthAccountContext";
 import { allElements, cleanupPhoneTests, phoneFixture, phoneTestDom } from "../mobile/screenTestUtils";
@@ -16,6 +17,8 @@ import { CloudSyncError } from "../session/cloud/transport";
 import { AccountMenu } from "./AccountMenu";
 import { CloudCampaignEntry } from "./CloudCampaignEntry";
 import { AUTOMATIC_ENROLLMENT_KEY } from "../session/cloud/importCampaigns";
+import { campaignSavedTime } from "./campaignSavedTime";
+import { CLINICAL_CONTENT_NOTICE } from "./ClinicalContentNotice";
 
 vi.mock("../facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
 afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); });
@@ -64,6 +67,51 @@ async function accountCampaigns(f: ReturnType<typeof account>, count: number) {
   f.cloud.summaries = await f.cloud.runtime.transport.list(); refreshAccount(f);
 }
 describe("automatic account campaign entry shared by both layouts", () => {
+  it.each([0, 1, 2].flatMap(count => [[390, 844], [375, 667], [1440, 1000], [1280, 720]].map(([width, height]) => ({ count, width: width!, height: height! }))))(
+    "keeps a bounded, unclipped normal structure for $count campaigns at $width x $height", async ({ count, width, height }) => {
+      const env = phoneTestDom(), f = account(); Object.assign(env.browser, { innerWidth: width, innerHeight: height });
+      env.browser.location.search = `?layout=${width < 700 ? "phone" : "desktop"}`; await accountCampaigns(f, count);
+      await env.render(wrap(entry(), f));
+      await settle(() => expect(env.find(node => node.tagName === "MAIN").attributes["data-entry-state"]).toBe("ready"));
+      const panel = env.find(node => node.attributes.class?.includes("cloud-entry--compact") === true);
+      // The normal page consists only of brand/disclaimer, whole-row actions,
+      // and the compact Start/privacy footer. No routine explanatory blocks.
+      expect(panel.childNodes.map(node => node.tagName)).toEqual(["HEADER", "SECTION", "FOOTER"]);
+      const [header, choices, footer] = panel.childNodes;
+      expect(allElements(header!, node => node.attributes["data-testid"] === "intro-tagline")).toHaveLength(1);
+      expect(allElements(header!, node => node.attributes.role === "note")[0]!.textContent).toBe(CLINICAL_CONTENT_NOTICE);
+      expect(choices!.childNodes).toHaveLength(count);
+      for (const row of choices!.childNodes) {
+        expect(row.tagName).toBe("BUTTON"); expect(row.attributes["aria-label"]).toMatch(/^Resume Account /);
+        expect(row.attributes["aria-describedby"]).toBeTruthy();
+        expect(allElements(row, node => node.tagName === "STRONG")).toHaveLength(1);
+        expect(allElements(row, node => node.tagName === "TIME")).toHaveLength(1);
+      }
+      expect(footer!.childNodes.map(node => node.tagName)).toEqual(["DIV", "DETAILS"]);
+      expect(privacyDisclosure(env).attributes.open).toBeUndefined();
+      const art = env.find(node => node.tagName === "PICTURE"); expect(art.attributes["data-welcome-composition"]).toBe("entrance");
+      const css = readFileSync(new URL("./CloudCampaignEntry.css", import.meta.url), "utf8");
+      expect(css).toContain("height: 3.75rem"); expect(css).toContain("min-height: 44px");
+      expect(css).toContain("body:has(.cloud-campaign-screen) .auth-signout-button { display: none; }");
+      const entrance = readFileSync(new URL("./WelcomeArtwork.css", import.meta.url), "utf8");
+      expect(entrance).toContain("min(100%, 64rem, 130svh)");
+      const mainRule = entrance.match(/\.opening-screen\.welcome-entrance\s*\{([^}]+)\}/)![1]!;
+      expect(mainRule).not.toMatch(/overflow\s*:\s*(hidden|clip)/);
+      // Actual scroll/bounding-box assertions are in the cloud browser specs;
+      // this minimal DOM intentionally has no physical layout engine.
+    });
+  it.each(["phone", "desktop"])("adds the welcome entrance and preserves %s campaign controls and one privacy section", async layout => {
+    const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}), create = vi.fn();
+    env.browser.location.search = `?layout=${layout}`; await accountCampaigns(f, 1);
+    await env.render(wrap(entry({ onOpen: open, onCreate: create }), f));
+    await settle(() => expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined());
+    expect(allElements(env.element, node => node.tagName === "PICTURE" && node.attributes["data-welcome-art"] === "spring-morning-01b")).toHaveLength(1);
+    expect(allElements(env.element, node => node.tagName === "H1" && node.textContent === "Your campaigns")).toHaveLength(1);
+    expect(allElements(env.element, node => node.tagName === "SUMMARY" && node.textContent === "Account & privacy")).toHaveLength(1);
+    expect(env.element.textContent).toContain("Demonstration content");
+    await env.click("Resume Account 1"); expect(open).toHaveBeenCalledExactlyOnceWith(f.cloud.summaries[0]!.campaignId);
+    await env.click("Start a new campaign"); expect(create).toHaveBeenCalledOnce();
+  });
   it.each(["phone", "desktop"])("%s: a stalled post-import enrollment write times out, permits Retry and never imports twice", async layout => {
     const env = phoneTestDom(), f = account(); env.browser.location.search = `?layout=${layout}`;
     const { raw, key } = await localClinics(env, ["First"]); refreshAccount(f);
@@ -106,9 +154,9 @@ describe("automatic account campaign entry shared by both layouts", () => {
     const env = phoneTestDom(), f = account(), create = vi.fn(); env.browser.location.search = `?layout=${layout}`;
     await env.render(wrap(entry({ onCreate: create }), f));
     await settle(() => expect(env.button("Start a new campaign").attributes.disabled).toBeUndefined());
-    expect(env.find(node => node.tagName === "MAIN").attributes.class).toContain(`cloud-entry--${layout}`);
-    expect(env.element.textContent).toContain("Resume a previous campaign (0/2)");
-    expect(env.element.textContent).toContain("No campaigns saved to your account yet. Campaigns from before today stay on the device where you played them.");
+    expect(env.find(node => node.attributes.class?.includes("welcome-entrance-panel") === true).attributes.class).toContain(`cloud-entry--${layout}`);
+    expect(env.find(node => node.attributes["aria-label"] === "Resume a previous campaign").attributes["data-campaign-count"]).toBe("0");
+    expect(env.find(node => node.tagName === "HEADER").textContent).toContain("Your campaigns");
     expect(env.browser.localStorage.setItem).not.toHaveBeenCalled();
     for (const text of ["On this device", "Save to my account", "Play on this device only", "Refresh account campaigns"]) expect(env.element.textContent).not.toContain(text);
     await env.click("Start a new campaign"); expect(create).toHaveBeenCalledOnce(); expect(f.server.operationCount("account-a")).toBe(0);
@@ -117,9 +165,12 @@ describe("automatic account campaign entry shared by both layouts", () => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); await accountCampaigns(f, count);
     await env.render(wrap(entry({ onOpen: open }), f));
     await settle(() => { expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined(); expect(env.element.textContent).toContain("Level 0"); });
-    expect(env.element.textContent).toContain(`Resume a previous campaign (${count}/2)`);
-    expect(env.element.textContent).toContain(`Last saved: ${new Date(f.cloud.summaries[0]!.acceptedAtMs).toLocaleString()}`);
-    expect(env.button("Resume Account 1").textContent).toBe("Resume");
+    expect(allElements(env.element, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Resume ") === true)).toHaveLength(count);
+    const row = env.button("Resume Account 1"), saved = findTestElement(row, node => node.tagName === "TIME")!;
+    expect(saved.textContent).toBe(campaignSavedTime(f.cloud.summaries[0]!.acceptedAtMs));
+    expect(saved.attributes.dateTime ?? saved.attributes.datetime).toBe(new Date(f.cloud.summaries[0]!.acceptedAtMs).toISOString());
+    expect(row.textContent).toContain("Account 1"); expect(row.textContent).toContain("Level 0");
+    expect(allElements(row, node => node.tagName === "BUTTON")).toHaveLength(1);
     expect(f.server.calls.filter(call => ["acquire", "commit", "importCampaign", "deleteCampaign"].includes(call.method))).toHaveLength(0);
     await env.click("Resume Account 1"); expect(open).toHaveBeenCalledExactlyOnceWith("account.0");
     expect(env.button("Start a new campaign").attributes.disabled).toBeUndefined();
@@ -142,7 +193,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
     const env = phoneTestDom(), f = account(), { raw, key } = await localClinics(env, ["First", "Second"]); refreshAccount(f);
     await env.render(wrap(entry(), f));
     await settle(() => expect(env.button("Resume Second").attributes.disabled).toBeUndefined());
-    expect(env.element.textContent).toContain("Resume a previous campaign (2/2)"); expect(f.server.operationCount("account-a")).toBe(2);
+    expect(allElements(env.element, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Resume ") === true)).toHaveLength(2); expect(f.server.operationCount("account-a")).toBe(2);
     expect((env.browser.localStorage as unknown as Storage).getItem(key)).toBe(raw); expect(f.server.usageCount("account-a")).toBe(0);
     expect(allElements(env.element, node => node.attributes["aria-label"] === "Choose account campaigns")).toHaveLength(0);
     expect(f.server.calls.filter(call => call.method === "deleteCampaign")).toHaveLength(0);
@@ -156,8 +207,8 @@ describe("automatic account campaign entry shared by both layouts", () => {
       <CloudAccountProvider runtime={f.cloud.runtime}>{entry()}</CloudAccountProvider>
     </AuthAccountActionsContext.Provider></AuthAccountContext.Provider>);
     await settle(() => expect(env.button("Accept and continue").attributes.disabled).toBeUndefined());
-    const main = env.find(node => node.tagName === "MAIN"), card = env.find(node => node.attributes.class === "cloud-entry-notice");
-    expect(main.attributes.class).toContain(`cloud-entry--${layout}`); expect(main.childNodes[1]).toBe(card);
+    const panel = env.find(node => node.attributes.class?.includes("welcome-entrance-panel") === true), card = env.find(node => node.attributes.class === "cloud-entry-notice");
+    expect(panel.attributes.class).toContain(`cloud-entry--${layout}`); expect(panel.childNodes[1]).toBe(card);
     expect(env.button("Accept and continue").parentNode).toBe(card);
     expect(env.button("Accept and continue").attributes.class).toContain("button-primary");
     expect(card.textContent).toContain("Supabase will store your clinic, answers and learning history");
@@ -172,7 +223,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
     expect(env.element.textContent).not.toContain("No campaigns saved to your account yet.");
     await env.click("Accept and continue");
     await settle(() => expect(env.button("Resume First").attributes.disabled).toBeUndefined());
-    expect(env.element.textContent).toContain("Resume a previous campaign (1/2)");
+    expect(allElements(env.element, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Resume ") === true)).toHaveLength(1);
     expect(f.server.calls.filter(call => call.method === "acceptNotice")).toHaveLength(1);
     expect(f.server.calls.some(call => call.method === "list")).toBe(true); expect(f.server.operationCount("account-a")).toBe(1);
     expect(f.server.calls.filter(call => ["acquire", "commit", "deleteCampaign"].includes(call.method))).toHaveLength(0);
@@ -186,7 +237,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
     f.cloud.access!.noticeAccepted = false;
     await env.render(wrap(entry({ preparing: true }), f));
     expect(env.button("Resume Account 1").attributes.disabled).toBeDefined(); expect(env.button("Start a new campaign").attributes.disabled).toBeDefined();
-    expect(env.button("Resume Account 1").attributes["aria-describedby"]).toBe(env.button("Start a new campaign").attributes["aria-describedby"]);
+    expect(env.button("Resume Account 1").attributes["aria-describedby"]?.split(" ")).toContain(env.button("Start a new campaign").attributes["aria-describedby"]);
     expect(env.element.textContent).toContain("Accept the notice above to resume or start a campaign.");
     expect(env.button("Accept and continue").attributes.disabled).toBeUndefined(); expect(f.cloud.acceptNotice).not.toHaveBeenCalled();
     expect(f.server.operationCount("account-a")).toBe(0);
@@ -303,7 +354,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
   it("keeps account privacy collapsed at the bottom and requires a published region", async () => {
     const env = phoneTestDom(), f = account(); f.cloud.access!.noticeAccepted = false; f.cloud.runtime.region = "";
     await env.render(wrap(entry(), f));
-    const privacy = privacyDisclosure(env); expect(privacy.attributes.open).toBeUndefined(); expect(env.find(node => node.tagName === "MAIN").lastChild).toBe(privacy);
+    const privacy = privacyDisclosure(env); expect(privacy.attributes.open).toBeUndefined(); expect(env.find(node => node.tagName === "FOOTER").lastChild).toBe(privacy);
     expect(allElements(env.element, node => node.tagName === "SUMMARY" && node.textContent === "Account & privacy")).toHaveLength(1);
     expect(privacy.textContent).toContain(COMPETITION_PRIVACY_NOTICE);
     expect(privacy.textContent).toContain("Campaign storage"); expect(privacy.textContent).toContain("Clear this device when I sign out"); expect(privacy.textContent).toContain("Delete my data/account");

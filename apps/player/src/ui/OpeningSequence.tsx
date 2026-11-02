@@ -1,4 +1,5 @@
 import { LoadingScreen } from "./LoadingScreen";
+import { OpeningWordmark } from "./OpeningWordmark";
 import { AccountMenu } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -140,7 +141,7 @@ export function OpeningSequence({
       <main className="opening-screen prototype-main-screen">
         <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
         <header className="opening-title-lockup">
-          <span className="opening-wordmark">Stitchin&apos; Time</span>
+          <OpeningWordmark />
           <div className="opening-tagline-slot">
             <p className="opening-tagline" data-testid="intro-tagline">
               {introTagline}

@@ -13,8 +13,12 @@ import { cloudEntryError } from "./cloudEntryError";
 import { AccountMenu, CloudNoticeDetails } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { LoadingScreen } from "./LoadingScreen";
+import { OpeningBrand } from "./OpeningBrand";
+import { CampaignChoices } from "./CampaignChoices";
+import { WelcomeArtwork, welcomeSurfaceStyle } from "./WelcomeArtwork";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
 import "./cloudSaves.css";
+import "./CloudCampaignEntry.css";
 
 function ClinicTime({ value }: { value: number }) {
   const date = new Date(value);
@@ -168,8 +172,13 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     await latest.current.refresh();
     if (mounted.current) { setTarget(null); setReplace(false); onCreate(); }
   });
-  return <main className={`cloud-entry cloud-entry--${layout}`}>
-    <header><h1>Your campaigns</h1><ClinicalContentNotice /></header>
+  const exceptional = Boolean(needsNotice || notice || accountReason || enrollmentError || error || replace || preparationFailure ||
+    enrollment?.phase === "choose" || cloud.access?.quotaWarning || cloud.access?.enrollmentsEnabled === false);
+  return <main className="welcome-surface welcome-entrance cloud-campaign-screen" style={welcomeSurfaceStyle}
+    data-entry-state={!migrationReady || busy || preparing ? "preparing" : exceptional ? "notice" : "ready"}>
+    <WelcomeArtwork className="welcome-entrance-art" entrance />
+    <div className={`cloud-entry cloud-entry--${layout} cloud-entry--compact welcome-entrance-panel`}>
+    <header><OpeningBrand /><h1>Your campaigns</h1><ClinicalContentNotice /></header>
     {needsNotice && cloud.phase === "available" ? <section className="cloud-entry-notice" aria-labelledby={`${id}-notice-title`}>
       <h2 id={`${id}-notice-title`}>Before using account saves</h2>
       <p>Supabase will store your clinic, answers and learning history so you can continue on your phone or computer.</p>
@@ -201,29 +210,9 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
         {source.campaign.name} · Level {source.facilityLevel} · Last played: <ClinicTime value={source.campaign.updatedAtRealMs} /></label>)}
       <button type="button" className="button button-primary" disabled={busy || !canUseCloud} onClick={() => void runEnrollment(selected)}>Keep selected campaigns</button>
     </section> : null}
-    <section aria-label="Resume a previous campaign">
-      <h2>Resume a previous campaign ({cloud.summaries.length}/2)</h2>
-      {cloud.summaries.length === 0 && cloud.phase === "available" && migrationReady && !busy && !enrollmentError ? <p>No campaigns saved to your account yet. Campaigns from before today stay on the device where you played them.</p> : null}
-      {cloud.summaries.map(campaign => {
-        const level = levels[JSON.stringify([campaign.campaignId, campaign.revision])];
-        return <article className="cloud-clinic-row" key={campaign.campaignId} aria-label={campaign.name}>
-          <div className="cloud-clinic-info"><h3>{campaign.name}</h3>
-            <p>{level === undefined ? "Checking level…" : level === null ? "Level unavailable" : `Level ${level}`}{campaign.status === "archived" ? " · Archived — still counts toward your 2 campaigns" : ""}</p>
-            <p>Last saved: <ClinicTime value={campaign.acceptedAtMs} /></p>
-            {campaign.writerActive ? <p>Open on another device. You can choose to continue here.</p> : null}
-          </div>
-          <button type="button" className="button button-primary" aria-label={`Resume ${campaign.name}`} disabled={preparing || busy || !canUseCloud || !migrationReady && !enrollmentError}
-            aria-describedby={accountReason ? `${id}-account-reason` : undefined} onClick={() => void action(() => onOpen(campaign.campaignId))}>Resume</button>
-        </article>;
-      })}
-    </section>
-    <div className="cloud-entry-actions">
-      <button type="button" className="button button-primary" disabled={preparing || busy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
-        aria-describedby={accountReason ? `${id}-account-reason` : undefined}
-        onClick={() => { setError(""); if (full) { setTarget(null); setReplace(true); } else onCreate(); }}>Start a new campaign</button>
-      {full ? <p>Your account holds 2 campaigns. Starting a new one requires choosing one to replace.</p> : null}
-      {cloud.access?.enrollmentsEnabled === false ? <p>Starting a new campaign is currently unavailable. Try again later.</p> : null}
-    </div>
+    <CampaignChoices campaigns={cloud.summaries} levels={levels}
+      disabled={preparing || busy || !canUseCloud || !migrationReady && !enrollmentError}
+      reasonId={accountReason ? `${id}-account-reason` : undefined} onOpen={campaignId => void action(() => onOpen(campaignId))} />
     {replace ? <section className="cloud-entry-replace" aria-label="Replace an account campaign" tabIndex={-1} ref={replacement}>
       {target ? <><h2>Delete {target.name} permanently?</h2><p>The account campaign will be deleted before you start a new one. This cannot be undone.</p>
         <button type="button" className="button button-danger" aria-label={`Delete ${target.name} permanently`} disabled={busy || !canUseCloud} onClick={deleteAndCreate}>Delete permanently</button>
@@ -234,6 +223,13 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       </>}
     </section> : null}
     {error ? <p role="alert">{error}</p> : null}
+    {cloud.access?.enrollmentsEnabled === false ? <p role="status">Starting a new campaign is currently unavailable. Try again later.</p> : null}
+    <footer className="cloud-entry-footer">
+      <div className="cloud-entry-actions">
+        <button type="button" className="button button-primary" disabled={preparing || busy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
+          aria-describedby={accountReason ? `${id}-account-reason` : undefined}
+          onClick={() => { setError(""); if (full) { setTarget(null); setReplace(true); } else onCreate(); }}>Start a new campaign</button>
+      </div>
     <AccountMenu>
       <section aria-label="Account campaign storage"><h3>Campaign storage</h3>
         <p>You can have 2 campaigns in your account, including archived campaigns. Starting a new one when both places are in use requires choosing a campaign to delete and confirming its name.</p>
@@ -248,5 +244,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       {problems.map((problem, index) => <p key={index} role="alert">{problem}</p>)}
       <p className="cloud-origin">Retained device copies belong to {typeof location === "undefined" ? "this site" : location.origin} and this browser profile. They are kept separately from the account campaigns you can resume above.</p>
     </AccountMenu>
+    </footer>
+    </div>
   </main>;
 }

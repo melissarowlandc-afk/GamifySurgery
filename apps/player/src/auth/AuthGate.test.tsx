@@ -97,6 +97,19 @@ afterEach(async () => {
 });
 
 describe("invite-only shared auth gate", () => {
+  it.each(["phone", "desktop"])("adds the welcome entrance without hiding %s sign-in fields, notices or actions", async layout => {
+    const env = await setup("", layout);
+    expect(allElements(env.element, node => node.tagName === "PICTURE" && node.attributes["data-welcome-art"] === "spring-morning-01b")).toHaveLength(1);
+    expect(allElements(env.element, node => node.tagName === "MAIN" && node.attributes.class?.includes("welcome-entrance") === true)).toHaveLength(1);
+    expect(allElements(env.element, node => node.tagName === "FORM")).toHaveLength(1);
+    expect(allElements(env.element, node => node.attributes["data-testid"] === "intro-tagline")).toHaveLength(1);
+    expect(env.find(node => node.tagName === "PICTURE").attributes["data-welcome-composition"]).toBe("entrance-wide");
+    expect(allElements(env.element, node => node.tagName === "INPUT").map(node => testElementProps(node).autoComplete)).toEqual(["email", "current-password"]);
+    expect(env.element.textContent).toContain("Demonstration content");
+    expect(env.element.textContent).toContain("Email is used only for invitations");
+    expect(env.button("Sign in").attributes.disabled).toBeUndefined();
+    expect(env.button("Forgot password?").attributes.disabled).toBeUndefined();
+  });
   it.each([
     ["same email", "account-a@example.invalid", true],
     ["different email", "other@example.invalid", false],
@@ -191,12 +204,14 @@ describe("invite-only shared auth gate", () => {
   });
 
   it.each(["desktop", "phone"])("keeps the same %s sign-in copy when the cloud build flag is on", async layout => {
+    const signInCopy = (env: Harness) => env.element.textContent.replace(
+      env.find(node => node.attributes["data-testid"] === "intro-tagline").textContent, "");
     vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "false");
-    const baseline = await setup("", layout), copy = baseline.element.textContent;
+    const baseline = await setup("", layout), copy = signInCopy(baseline);
     await cleanupPhoneTests();
     vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "true");
     const enabledBuild = await setup("", layout);
-    expect(enabledBuild.element.textContent).toBe(copy);
+    expect(signInCopy(enabledBuild)).toBe(copy);
     expect(enabledBuild.element.textContent).not.toContain("accept the cloud notice");
     expect(mock.network).not.toHaveBeenCalled();
   });

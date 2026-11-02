@@ -40,7 +40,7 @@ describe("shared full-screen loading presentation", () => {
     await env.render(<LoadingScreen status="Opening your clinic…" stage="opening" />);
     expect(bar.attributes["aria-valuenow"]).toBe("3");
     const art = allElements(env.doc.body, node => node.tagName === "IMG")[0]!;
-    expect(art.attributes.src).toContain(loadingArtwork.src);
+    expect(art.attributes.src).toContain(loadingArtwork.variants.portrait.src);
     expect(art.attributes.alt).toBe(loadingArtwork.alt);
   });
   it("uses an indeterminate bar without invented progress", async () => {
@@ -50,7 +50,8 @@ describe("shared full-screen loading presentation", () => {
     expect(bar.attributes.class).toContain("is-indeterminate");
     const css = readFileSync(new URL("./LoadingScreen.css", import.meta.url), "utf8");
     expect(css).toContain("prefers-reduced-motion: reduce"); expect(css).toContain("animation: none");
-    expect(css).toContain("safe-area-inset-top"); expect(css).toContain("image-rendering: pixelated");
+    expect(css).toContain("safe-area-inset-top");
+    expect(readFileSync(new URL("./WelcomeArtwork.css", import.meta.url), "utf8")).toContain("image-rendering: pixelated");
   });
   it.each(["failure", "deadline"])("offers one recovery action only after %s", async kind => {
     const env = phoneTestDom(), retry = vi.fn();

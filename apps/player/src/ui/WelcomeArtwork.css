@@ -1,0 +1,73 @@
+.welcome-surface {
+  color-scheme: light;
+  background: var(--welcome-background, #e3dfcc);
+  color: var(--welcome-ink, #25291f);
+  font-family: var(--font-read, sans-serif);
+  isolation: isolate;
+}
+.welcome-art { display: block; min-width: 0; pointer-events: none; }
+.welcome-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  image-rendering: pixelated;
+}
+
+/* A full-width header within the entrance, with no image letterboxing. Only
+ * the calm bottom band is clipped; native pixels, people and doors are intact.
+ * The height-aware width cap keeps desktop controls within short viewports. */
+.welcome-entrance,
+.opening-screen.welcome-entrance {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(100%, 64rem, 130svh) minmax(0, 1fr);
+  align-items: start;
+  align-content: start;
+  gap: 0;
+  box-sizing: border-box;
+  min-height: 100svh;
+  padding: 0;
+  background: var(--welcome-background);
+  color: var(--welcome-ink);
+}
+body[data-phone-entry="true"] .opening-screen.auth-gate-screen.welcome-entrance { padding: 0; align-content: start; }
+.welcome-entrance-art {
+  grid-column: 2;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: var(--welcome-wide-ratio);
+  overflow: hidden;
+}
+.welcome-entrance-art img { width: 100%; height: auto; object-position: center top; }
+.welcome-entrance .welcome-entrance-panel {
+  --ink: var(--welcome-ink);
+  --ink-soft: #4c5449;
+  --paper: var(--welcome-background);
+  --panel: var(--welcome-panel);
+  --paper-raised: var(--welcome-panel);
+  --focus: var(--welcome-ink);
+  grid-column: 2;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0.75rem max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  border: 0;
+  border-radius: 0;
+  background: var(--welcome-background);
+  color: var(--welcome-ink);
+  box-shadow: none;
+  overflow-wrap: anywhere;
+}
+.welcome-entrance .auth-gate-card { gap: 0.65rem; }
+.welcome-entrance .auth-form { width: min(100%, 27rem); min-width: 0; }
+.welcome-entrance .auth-form input { width: 100%; min-width: 0; }
+.welcome-entrance .auth-gate-card h1,
+.welcome-entrance .auth-gate-card > .beta-clinical-notice { margin: 0; }
+@media (max-width: 600px) and (min-height: 840px) and (max-aspect-ratio: 47/100) {
+  .welcome-entrance-art:not([data-welcome-composition="entrance-wide"]) { aspect-ratio: var(--welcome-tall-ratio); }
+}

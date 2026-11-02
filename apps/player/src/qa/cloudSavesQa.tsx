@@ -163,10 +163,14 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
     createQaDeviceCampaign(cloud.runtime.accountId);
     onCreate();
   };
-  return <aside aria-label="Disposable cloud QA controls" style={{ padding: 8 }}>
+  // Disposable controls must not add height to the real entry viewport. Keep
+  // them available without making a compact production screen appear to scroll.
+  return <aside aria-label="Disposable cloud QA controls" style={{ position: "fixed", top: 0, left: 0, zIndex: 900, padding: "2px 8px", maxWidth: "100vw", fontSize: 11, background: "#f0eddd" }}>
+    <details><summary>Disposable QA only — no owner saves</summary>
     <strong>Disposable QA only — {location.origin}. No owner saves or live Supabase.</strong>
     <button type="button" disabled={Boolean(cloud.active)} onClick={create}>Create synthetic device campaign</button>
     <button type="button" onClick={onSwitch}>Switch synthetic account</button>
+    </details>
   </aside>;
 }
 if (import.meta.env.MODE !== "test") {

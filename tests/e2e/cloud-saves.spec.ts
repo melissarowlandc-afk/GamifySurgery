@@ -1,7 +1,7 @@
 import { test, expect, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import { FakeCloudServer } from "../../apps/player/src/session/cloud/fakeTransport";
 import { CloudSyncError, type CloudTransport } from "../../apps/player/src/session/cloud/transport";
-import { accountMenu, campaignScreen, expectPlaying, expectResumeReady, openAndContinue, retryAccountSave, snapshot, status, CLOUD_QA_WAIT_MS } from "./cloud-qa-helpers";
+import { accountMenu, campaignScreen, expectPlaying, expectResumeReady, openAndContinue, retryAccountSave, snapshot, status, CLOUD_QA_WAIT_MS, CLOUD_QA_STARTUP_WAIT_MS } from "./cloud-qa-helpers";
 
 // These contexts authenticate independently to one disposable in-process fake.
 // No Supabase credentials, real Auth, copied localStorage or copied latest saves.
@@ -67,6 +67,39 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
   // Several independent cold contexts share the disposable dev server. Each
   // preparation is bounded separately; this is not the writer-choice deadline.
   test.setTimeout(180_000);
+  for (const count of [0, 1, 2]) test(`${count} campaigns fit the compact entry at the requested phone and desktop viewports`, async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!);
+    try {
+      for (const layout of ["phone", "desktop"] as const) {
+        const page = await f.page(layout, "qa-account-a", undefined, layout === "phone" ? count : 0);
+        await expect(page.locator('main[data-entry-state="ready"]')).toBeVisible({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
+        await expect(page.getByRole("button", { name: /^Resume / })).toHaveCount(count);
+        const viewports = layout === "phone" ? [{ width: 390, height: 844 }, { width: 375, height: 667 }] : [{ width: 1440, height: 1000 }, { width: 1280, height: 720 }];
+        for (const viewport of viewports) {
+          await page.setViewportSize(viewport);
+          await expect.poll(() => page.evaluate(() => {
+            const scrolling = document.scrollingElement!, art = document.querySelector<HTMLImageElement>('.welcome-entrance-art img')!;
+            const frame = art.parentElement!.getBoundingClientRect(), pixels = art.getBoundingClientRect();
+            const expectedWidth = Math.min(innerWidth, 64 * parseFloat(getComputedStyle(document.documentElement).fontSize), innerHeight * 1.3);
+            const cropHeight = art.naturalWidth === 941 ? 1260 : 780;
+            const controls = [...document.querySelectorAll<HTMLElement>('.cloud-clinic-row, .cloud-entry-actions > button, .cloud-entry-footer > details > summary')];
+            return { ready: document.fonts.status === "loaded" && art.complete && art.naturalWidth > 0,
+              verticalOverflow: scrolling.scrollHeight > innerHeight, horizontalOverflow: scrolling.scrollWidth > innerWidth,
+              edgeToEdge: Math.abs(frame.top) < 1 && Math.abs(frame.width - expectedWidth) < 1 && Math.abs(pixels.width - frame.width) < 1 && Math.abs(pixels.left - frame.left) < 1,
+              bottomBandOnly: Math.abs(pixels.top - frame.top) < 1 && Math.abs(frame.height - frame.width * cropHeight / art.naturalWidth) < 1 && pixels.height > frame.height,
+              controlsVisible: controls.every(node => { const rect = node.getBoundingClientRect(); return rect.top >= 0 && rect.bottom <= innerHeight && rect.left >= 0 && rect.right <= innerWidth && rect.height >= 44; }) };
+          }), { timeout: CLOUD_QA_WAIT_MS }).toEqual({ ready: true, verticalOverflow: false, horizontalOverflow: false, edgeToEdge: true, bottomBandOnly: true, controlsVisible: true });
+          await expect(page.locator('.cloud-entry--compact .welcome-tagline')).toBeVisible();
+          await expect(page.locator('.cloud-entry--compact header > .beta-clinical-notice')).toBeVisible();
+          await expect(page.locator("details.cloud-account")).not.toHaveAttribute("open");
+          await expect(page.getByRole("button", { name: "Start a new campaign", exact: true })).toBeEnabled();
+        }
+      }
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(count);
+      expect(f.server.operationCount("qa-account-a")).toBe(count);
+      expect(f.server.calls.some(call => ["acquire", "commit", "deleteCampaign"].includes(call.method))).toBe(false);
+    } finally { await f.close(); }
+  });
   test("automatic enrollment retains raw bytes, then desktop → phone → desktop preserves the complete saved game", async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!);
     try {
@@ -101,7 +134,7 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       const original = await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       expect(f.server.operationCount("qa-account-a")).toBe(0);
       await acceptAccountNotice(phone); await expectAutomaticEnrollment(phone);
-      await expect(phone.getByRole("heading", { name: "Resume a previous campaign (1/2)", exact: true })).toBeVisible();
+      await expect(phone.getByRole("button", { name: /^Resume / })).toHaveCount(1);
       await expect(phone.getByRole("button", { name: "Accept and continue", exact: true })).toHaveCount(0);
       await expect(phone.locator("details.cloud-account")).not.toHaveAttribute("open");
       expect(await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
@@ -171,7 +204,8 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect((await snapshot(desktop)).phase).toBe("conflict");
       const other = await f.page("desktop", "qa-account-b", undefined, 1);
       await expectAutomaticEnrollment(other, "Synthetic clinic 1", "qa-account-b");
-      await expect(other.getByRole("heading", { name: "Resume a previous campaign (1/2)" })).toBeVisible();
+      await expect(other.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toBeEnabled();
+      await expect(other.getByRole("button", { name: /^Resume / })).toHaveCount(1);
       await (await accountMenu(tab)).getByRole("button", { name: "Delete my data/account", exact: true }).click();
       await tab.getByRole("button", { name: "Confirm delete all my account data", exact: true }).click();
       await expect(tab.getByText("Account data deletion is confirmed. Play and uploads have stopped.", { exact: true })).toBeVisible();
@@ -189,10 +223,11 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await desktop.getByRole("button", { name: "Restart Campaign", exact: true }).click();
       await desktop.getByRole("button", { name: "Archive and restart", exact: true }).click();
       await expect(desktop.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
-      await expect(desktop.getByText("Archived — still counts toward your 2 campaigns", { exact: false })).toBeVisible();
+      await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toContainText("Archived");
       await createAccountCampaign(desktop, "Synthetic clinic 2");
       await expect(desktop.getByRole("button", { name: "Start a new campaign", exact: true })).toBeEnabled();
-      await expect(desktop.getByText("Your account holds 2 campaigns.", { exact: false })).toBeVisible();
+      await expect(desktop.getByRole("button", { name: /^Resume / })).toHaveCount(2);
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(2);
       await desktop.getByRole("button", { name: "Start a new campaign", exact: true }).click();
       await expect(desktop.getByText("You can have two campaigns in your account. Starting a new one replaces one of them, and the replaced campaign is deleted.", { exact: true })).toBeVisible();
       await desktop.getByRole("button", { name: "Cancel starting a new campaign", exact: true }).click();

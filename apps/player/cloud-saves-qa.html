@@ -1,5 +1,9 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Cloud saves — disposable QA</title></head>
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Cloud saves — disposable QA</title>
+    <link rel="preload" as="image" type="image/png" href="%BASE_URL%art/welcome/spring-morning-portrait.png" media="(max-aspect-ratio: 1/1)" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/png" href="%BASE_URL%art/welcome/spring-morning-landscape.png" media="(aspect-ratio &gt; 1/1)" fetchpriority="high" />
+    <style>body:has(#root:empty) { background: #e3dfcc; }</style>
+  </head>
   <body><div id="root"></div><script type="module" src="/src/qa/cloudSavesQa.tsx"></script></body>
 </html>

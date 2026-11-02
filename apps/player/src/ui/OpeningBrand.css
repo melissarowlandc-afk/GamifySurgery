@@ -1,0 +1,12 @@
+.welcome-brand { display: grid; justify-items: center; gap: 0.125rem; width: 100%; text-align: center; }
+.welcome-brand .opening-wordmark { margin: 0; }
+.welcome-brand .welcome-tagline {
+  max-width: 100%;
+  margin: 0;
+  color: var(--welcome-ink, #25291f);
+  font-family: var(--font-read, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance;
+}

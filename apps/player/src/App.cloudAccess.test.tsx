@@ -141,7 +141,12 @@ describe.each(["desktop", "phone"] as const)("%s cohort gate against the Beta 1 
     const f = await mount(layout, "enabled", null, noticeAccepted), original = [...f.stored];
     expectPending(f);
     await f.settle();
-    await vi.waitFor(() => expect(f.env.element.textContent).toContain(noticeAccepted ? "Resume a previous campaign (0/2)" : "Before using account saves"));
+    await vi.waitFor(() => {
+      if (noticeAccepted) {
+        expect(f.env.find(node => node.attributes["aria-label"] === "Resume a previous campaign").attributes["data-campaign-count"]).toBe("0");
+        expect(f.env.button("Start a new campaign").attributes.disabled).toBeUndefined();
+      } else expect(f.env.element.textContent).toContain("Before using account saves");
+    });
     expect(f.stored.has(profileKey)).toBe(false); expect([...f.stored]).toEqual(original);
     expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();
     // Automatic selection reads its own fresh list after admission/enrollment;

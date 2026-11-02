@@ -7,6 +7,8 @@ import {
   type ReactNode,
 } from "react";
 import { LoadingScreen } from "../ui/LoadingScreen";
+import { OpeningBrand } from "../ui/OpeningBrand";
+import { WelcomeArtwork, welcomeSurfaceStyle } from "../ui/WelcomeArtwork";
 import type { Session } from "@supabase/supabase-js";
 import {
   createLocalPrototypeSession,
@@ -288,9 +290,10 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   }
 
   return (
-    <main className="opening-screen auth-gate-screen">
-      <section className="founder-creator auth-gate-card">
-        <span className="opening-wordmark">Stitchin&apos; Time</span>
+    <main className="opening-screen auth-gate-screen welcome-surface welcome-entrance" style={welcomeSurfaceStyle}>
+      <WelcomeArtwork className="welcome-entrance-art" entrance="wide" />
+      <section className="founder-creator auth-gate-card welcome-entrance-panel">
+        <OpeningBrand />
         <ClinicalContentNotice />
         <h1>{screen === "invite" ? "Set Your Password" : screen === "reset" ? "Choose New Password" : authClient ? "Sign In" : "Local Prototype"}</h1>
         {authClient ? (

@@ -1,0 +1,72 @@
+/* Normal entry uses natural content height, never clipped page overflow.
+ * Two 60px Resume rows, one compact header and one 44px footer fit even the
+ * small-phone viewport. Notices/choices retain their ordinary scroll flow. */
+/* Sign out remains in Account & privacy; the AuthGate fallback must not sit
+ * over this entry's art/footer. This changes presentation only. */
+body:has(.cloud-campaign-screen) .auth-signout-button { display: none; }
+.cloud-entry.cloud-entry--compact {
+  display: grid;
+  gap: 0.5rem;
+}
+.welcome-entrance .cloud-entry.cloud-entry--compact { padding-top: 0.5rem; }
+.cloud-entry.cloud-entry--compact header { display: grid; justify-items: center; gap: 0.25rem; margin: 0; text-align: center; }
+.cloud-entry.cloud-entry--compact h1 { margin: 0; font-size: 1rem; line-height: 1.25; }
+.cloud-entry.cloud-entry--compact .welcome-brand .opening-wordmark { font-size: 0.875rem; line-height: 1.3; padding-block: 0.25rem; }
+.cloud-entry.cloud-entry--compact .beta-clinical-notice { margin: 0; font-size: clamp(10px, 2.6vw, 0.66rem); line-height: 1.25; }
+.cloud-entry.cloud-entry--compact header > .beta-clinical-notice { white-space: nowrap; }
+.cloud-entry.cloud-entry--compact .cloud-campaign-choices { display: grid; gap: 0.375rem; min-width: 0; }
+.cloud-entry.cloud-entry--compact .cloud-clinic-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.75rem;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid var(--welcome-ink);
+  border-radius: 0.4rem;
+  background: var(--welcome-panel);
+  color: var(--welcome-ink);
+  box-shadow: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.cloud-entry.cloud-entry--compact .cloud-clinic-row:hover:not(:disabled) { background: #e8e7d6; }
+.cloud-entry.cloud-entry--compact .cloud-clinic-row:disabled { opacity: 0.55; cursor: not-allowed; }
+.cloud-entry.cloud-entry--compact .cloud-clinic-info { display: grid; gap: 0.125rem; min-width: 0; }
+.cloud-clinic-name { font-size: 1rem; line-height: 1.15; }
+.cloud-clinic-meta { font-size: 0.8rem; line-height: 1.25; }
+.cloud-clinic-name, .cloud-clinic-meta { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cloud-clinic-arrow { font-size: 1.6rem; line-height: 1; }
+.cloud-entry.cloud-entry--compact .cloud-entry-footer { display: grid; grid-template-columns: auto auto; justify-content: space-between; align-items: center; gap: 0.5rem; min-width: 0; }
+.cloud-entry.cloud-entry--compact .cloud-entry-actions { display: block; margin: 0; }
+.cloud-entry.cloud-entry--compact .cloud-entry-actions > button { width: 100%; min-height: 44px; margin: 0; padding: 0.4rem 0.55rem; font-size: 0.85rem; line-height: 1.2; }
+.cloud-entry-footer > .cloud-account { min-width: 0; font-size: 0.8rem; }
+.cloud-entry-footer > .cloud-account > summary { display: flex; align-items: center; min-height: 44px; padding: 0; cursor: pointer; text-decoration: underline; white-space: nowrap; }
+.cloud-entry-footer > .cloud-account[open] {
+  position: fixed;
+  z-index: 1500;
+  left: max(0.75rem, env(safe-area-inset-left));
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  width: min(38rem, calc(100% - 1.5rem));
+  max-height: calc(100svh - max(0.75rem, env(safe-area-inset-top)) - max(0.75rem, env(safe-area-inset-bottom)));
+  margin-inline: auto;
+  padding: 0.75rem;
+  overflow: auto;
+  border: 2px solid var(--welcome-ink);
+  border-radius: 0.4rem;
+  background: var(--welcome-panel);
+  color: var(--welcome-ink);
+  box-shadow: 0 4px 16px #0005;
+  font-size: 0.9rem;
+}
+@media (min-width: 44rem) {
+  .cloud-entry.cloud-entry--compact .cloud-campaign-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cloud-entry.cloud-entry--compact .cloud-campaign-choices[data-campaign-count="1"] { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,5 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
+import { OpeningBrand } from "../ui/OpeningBrand";
+import { WelcomeArtwork, welcomeSurfaceStyle } from "../ui/WelcomeArtwork";
 import { hostedAuthConfiguration } from "./prototypeAuth";
 import { saveAuthPasswordFlow } from "./authPasswordFlow";
 import { getSupabaseAuthClient, isInvitedVerifiedUser } from "./supabaseAuth";
@@ -52,9 +54,10 @@ export function SetupAccountForm({ link, onComplete, onReturn }: {
       setMessage("Your password was saved, but sign-in could not be completed. Try again, or return to sign in.");
     } finally { submitting.current = false; setPending(false); }
   };
-  return <main className="opening-screen auth-gate-screen">
-    <section className="founder-creator auth-gate-card">
-      <span className="opening-wordmark">Stitchin&apos; Time</span>
+  return <main className="opening-screen auth-gate-screen welcome-surface welcome-entrance" style={welcomeSurfaceStyle}>
+    <WelcomeArtwork className="welcome-entrance-art" entrance="wide" />
+    <section className="founder-creator auth-gate-card welcome-entrance-panel">
+      <OpeningBrand />
       <ClinicalContentNotice />
       <h1>Set up your account</h1>
       <form className="auth-form" onSubmit={submit}>
