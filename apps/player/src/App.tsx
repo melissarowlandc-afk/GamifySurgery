@@ -602,6 +602,8 @@ function CloudCampaignRouter() {
       if (live.current && epoch === generation.current) {
         try { runtime.onOpeningDiagnostic?.(cloudOpeningDiagnostic(openingStage, error)); }
         catch { /* Classification-only QA diagnostics cannot replace recovery UI. */ }
+        try { problemDiagnostics.error(`campaign-open:${openingStage}:${cloudOpeningDiagnostic(openingStage, error).code}`, error); }
+        catch { /* Problem reports are best effort and never block recovery UI. */ }
         failedOpening.current = campaignId;
         setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner.");
         setOpeningFailure("This clinic could not be opened. Your saved copies are safe.");
