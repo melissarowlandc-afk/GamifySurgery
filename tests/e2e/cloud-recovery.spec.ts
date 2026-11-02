@@ -30,7 +30,12 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
       } catch (error) { return { error: { code: error instanceof CloudSyncError ? error.code : "network" } }; }
     });
     await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=qa-account-a&device-campaigns=${deviceCampaigns}`);
-    await expect(tab.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible({ timeout: CLOUD_QA_WAIT_MS }); return tab;
+    // A restored document may already have automatically opened its last
+    // campaign. Entry is not a persistent screen; the following helpers still
+    // require a playable, fully acknowledged baseline before fault injection.
+    await expect.poll(async () => Boolean((await snapshot(tab)).state) ||
+      await tab.getByRole("heading", { name: "Your campaigns", exact: true }).isVisible(), { timeout: CLOUD_QA_WAIT_MS }).toBe(true);
+    return tab;
   };
   return { server, page, commitAttempts, fail: (code: CloudFailureCode | null) => { unavailable = code; },
     failPage: (page: Page, code: CloudFailureCode | null) => { if (code) unavailablePages.set(page, code); else unavailablePages.delete(page); },
@@ -42,6 +47,32 @@ async function importAndOpen(page: Page) {
 }
 
 for (const layout of ["desktop", "phone"] as const) {
+  test(`${layout}: a pending-copy reopen dismisses loading before its first account upload finishes`, async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!, layout);
+    let release!: () => void;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    try {
+      const page = await f.page(1); await importAndOpen(page);
+      expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
+      const expected = (await snapshot(page)).state!, operations = f.server.operationCount("qa-account-a"), attempts = f.commitAttempts.length;
+      // The departing document may already have a prepared hide candidate.
+      // Hold both that old request and the reopened owner's first backup. The
+      // old token is fenced on reopen; neither request may delay local play.
+      for (let i = 0; i < 3; i++) f.server.faults.push({ method: "commit", at: "before", wait: held });
+      await page.reload(); await expectPlaying(page);
+      await expect.poll(() => f.commitAttempts.length, { timeout: CLOUD_QA_WAIT_MS }).toBeGreaterThan(attempts);
+      expect((await snapshot(page)).state).toEqual(expected); expect((await snapshot(page)).pending).toBe(true);
+      expect(f.server.operationCount("qa-account-a")).toBe(operations);
+      release(); await expectAccountSaved(page);
+      expect((await snapshot(page)).state).toEqual(expected);
+      expect(f.server.operationCount("qa-account-a")).toBe(operations + 1);
+      const account = await f.server.transport("qa-account-a").load(expected.campaignId);
+      const verified = await loadCloudEvidenceCheckpoint({ ...account, expectedRevision: account.revision,
+        expectedCampaignId: account.campaignId, expectedBaselineId: account.baselineId });
+      expect(verified.state).toEqual(expected); expect(f.server.usageCount("qa-account-a")).toBe(0);
+    } finally { release(); await f.close(); }
+  });
+
   test(`${layout}: a slow opening has one full-screen loading bar, no healthy Retry, and dismisses automatically`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     let release!: () => void;

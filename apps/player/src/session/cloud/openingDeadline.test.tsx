@@ -148,7 +148,13 @@ describe("bounded coordinator checks", () => {
     const next = new CloudSyncCoordinator({ scope: h.scope, cache: h.cache, transport: h.server.transport(h.scope.accountId), enabled: true, clock: h.clock });
     expect(await next.open()).toBe(true);
     const reloaded = await CloudGameSession.create(next); expect(reloaded.state.simulationSpeed).toBe(4);
-    expect(next.view.pending).toBe(false); expect(h.server.operationCount(h.scope.accountId)).toBe(2);
+    expect(next.view.pending).toBe(false);
+    // The timed-out freeze is cancelled before it can persist/send an obsolete
+    // first candidate. Both accepted commands survive in the one latest save.
+    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    expect(h.server.calls.filter(row => row.method === "commit")).toHaveLength(1);
+    expect(reloaded.state.operationReceipts["queued.first"]?.status).toBe("applied");
+    expect(reloaded.state.operationReceipts["queued.second"]?.status).toBe("applied");
     reloaded.dispose();
   });
   it("resolves a timed-out explicit acquisition with its original proof, fencing the late response", async () => {

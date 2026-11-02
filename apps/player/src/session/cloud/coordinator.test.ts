@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { MemoryCloudCache } from "./cache";
-import { CloudSyncCoordinator } from "./coordinator";
+import { CLOUD_UPLOAD_TIMEOUT_MS, CloudSyncCoordinator } from "./coordinator";
 import { CLOUD_CHECKPOINT_MS, CLOUD_RENEW_MS, CloudSyncError, type CloudCommitRequest, type CloudFrozenOperation } from "./transport";
 import { deferred, syncHarness, type TestCloudClock } from "./syncTestSupport";
 import { sha256Utf8 } from "./codecJson";
@@ -19,6 +19,77 @@ async function pulseFor(h: Awaited<ReturnType<typeof playing>>, ms: number) {
   while (ms > 0) { const part = Math.min(ms, CLOUD_RENEW_MS); advance(h.clock, part); await h.coordinator.pulse(); ms -= part; }
 }
 describe("shared cloud coordinator durable and fenced protocol", () => {
+  it("can retry a timed-out preparation without losing the verified local durability it already had", async () => {
+    const h = await playing(), held = deferred(), started = deferred(), finished = deferred();
+    await h.coordinator.stage(await h.candidate(h.first));
+    const run = h.coordinator.codec.run.bind(h.coordinator.codec);
+    const codec = vi.spyOn(h.coordinator.codec, "run").mockImplementation(async task => {
+      if (task.kind === "freeze") { started.resolve(); await held.promise; finished.resolve(); }
+      return run(task);
+    });
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    try {
+      const checkpoint = h.coordinator.checkpoint(); await started.promise;
+      await vi.advanceTimersByTimeAsync(CLOUD_UPLOAD_TIMEOUT_MS + 1);
+      expect(await checkpoint).toBe(false);
+      expect(h.coordinator.view).toMatchObject({ failure: "processing", canExecute: false, pending: true, localDurable: true });
+      expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+      held.resolve(); await finished.promise; codec.mockRestore(); vi.useRealTimers();
+      expect(await h.coordinator.retry(true)).toBe(true);
+      expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: false, failure: null });
+      expect(h.server.calls.filter(row => row.method === "commit")).toHaveLength(1);
+    } finally { held.resolve(); codec.mockRestore(); vi.useRealTimers(); h.coordinator.dispose(); }
+  });
+  it("bounds a non-progressing close hook while retaining the pending copy and release fence", async () => {
+    const h = await playing(); await h.coordinator.stage(await h.candidate(h.first));
+    const retained = h.coordinator.exportRecovery(), checkpoint = vi.spyOn(h.coordinator, "checkpoint").mockResolvedValue(true);
+    try {
+      expect(await h.coordinator.saveAndClose()).toBe(false); expect(checkpoint).toHaveBeenCalledTimes(3);
+      expect(h.coordinator.view).toMatchObject({ failure: "processing", canExecute: false, pending: true, localDurable: true });
+      expect(h.coordinator.exportRecovery()).toBe(retained);
+      expect(h.server.calls.some(row => row.method === "release" || row.method === "commit")).toBe(false);
+    } finally { checkpoint.mockRestore(); h.coordinator.dispose(); }
+  });
+  it("keeps renewing its own token during slow post-upload verification without re-opening or fencing play", async () => {
+    const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
+    h.server.faults.push({ method: "commit", at: "after", wait: gate.promise });
+    const saving = h.coordinator.checkpoint();
+    try {
+      await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
+      // Deployed renew compares the transport's last-known revision. It may
+      // race the successful write before its receipt has been processed.
+      h.server.faults.push({ method: "renew", at: "before", error: new CloudSyncError("revision") });
+      advance(h.clock, 15_000); await h.coordinator.pulse();
+      expect(h.coordinator.view).toMatchObject({ canExecute: true, failure: null, phase: "saving", pending: true });
+      for (let i = 0; i < 5; i++) { advance(h.clock, 15_000); await h.coordinator.pulse(); }
+      expect(h.coordinator.view.canExecute).toBe(true); expect(h.server.calls.filter(row => row.method === "acquire")).toHaveLength(1);
+      gate.resolve(); expect(await saving).toBe(true); expect(h.coordinator.view.canExecute).toBe(true);
+      expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    } finally { gate.resolve(); h.coordinator.dispose(); }
+  });
+  it("bounds a hung bulk job, retains its immutable operation and reconciles it without replay", async () => {
+    const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
+    const run = h.coordinator.codec.run.bind(h.coordinator.codec);
+    let verifying = false; const finished = deferred();
+    const codec = vi.spyOn(h.coordinator.codec, "run").mockImplementation(async task => {
+      if (task.kind === "verify" && task.input.revision === "2") { verifying = true; await gate.promise; finished.resolve(); }
+      return run(task);
+    });
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    try {
+      const saving = h.coordinator.checkpoint();
+      await vi.waitFor(() => expect(verifying).toBe(true));
+      const frozen = JSON.parse(h.coordinator.exportRecovery()!).recovery.inFlight;
+      await vi.advanceTimersByTimeAsync(CLOUD_UPLOAD_TIMEOUT_MS + 1);
+      expect(await saving).toBe(false);
+      expect(h.coordinator.view).toMatchObject({ canExecute: false, failure: "processing", pending: true });
+      expect(JSON.parse(h.coordinator.exportRecovery()!).recovery.inFlight).toEqual(frozen);
+      gate.resolve(); await finished.promise; codec.mockRestore(); vi.useRealTimers();
+      expect(await h.coordinator.retry(true)).toBe(true); expect(h.coordinator.confirmedRevision).toBe("2");
+      expect(h.server.calls.filter(row => row.method === "commit")).toHaveLength(1);
+      expect(h.server.calls.some(row => row.method === "operation" && row.operationId === frozen.operationId)).toBe(true);
+    } finally { gate.resolve(); codec.mockRestore(); vi.useRealTimers(); h.coordinator.dispose(); }
+  });
   it("keeps pending visible until a server acknowledgment is durable on this device", async () => {
     const h = await playing(), gate = deferred(); await h.coordinator.stage(await h.candidate(h.first));
     const write = h.cache.write.bind(h.cache); let acknowledging = false;

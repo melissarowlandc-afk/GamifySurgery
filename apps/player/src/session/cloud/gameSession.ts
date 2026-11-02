@@ -63,6 +63,7 @@ export class CloudGameSession {
   private warmThrough = -1;
   private lastWarmFailure = -Infinity;
   private backgrounded = false;
+  private lifecycleVersion = 0;
   private readonly unsubscribeCheckpoint: () => void;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
     private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
@@ -228,18 +229,14 @@ export class CloudGameSession {
       while (this.dirty && !this.stopped) {
         this.dirty = false;
         const version = this.changeVersion, checkpoint = this.checkpoint, campaign = this.campaign, usageQuestions = [...this.questions.values()];
-        // An acknowledgment can land while compression is running. Re-encode
-        // its suffix against the NEW confirmed prefix; never upload it twice.
-        let encoded;
-        for (;;) {
-          const confirmed = this.coordinator.encodingBase;
-          if (!confirmed) return false;
-          encoded = await this.coordinator.codec.run({ kind: "encode", input: { checkpoint, campaign, source: this.source,
-            operationId: "local-candidate", expectedRevision: confirmed.revision,
-            acknowledgedEvidence: { headerSha256: confirmed.headerSha256, records: confirmed.records } } });
-          if (this.coordinator.confirmedRevision !== confirmed.revision) continue;
-          break;
-        }
+        // stage() checks and trims an exact newly acknowledged prefix if a
+        // receipt lands during compression. The snapshot is revision-neutral;
+        // do not restart a full encode whenever the account head advances.
+        const confirmed = this.coordinator.encodingBase;
+        if (!confirmed) return false;
+        const encoded = await this.coordinator.codec.run({ kind: "encode", input: { checkpoint, campaign, source: this.source,
+          operationId: "local-candidate", expectedRevision: confirmed.revision,
+          acknowledgedEvidence: { headerSha256: confirmed.headerSha256, records: confirmed.records } } });
         if (this.stopped) return false;
         success = await this.coordinator.stage({ campaign, snapshot: encoded.snapshot, evidence: encoded.evidence,
           usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) }, "ordinary", true);
@@ -284,9 +281,10 @@ export class CloudGameSession {
     if (this.foregrounding) return this.foregrounding;
     if (this.stopped || this.closing || this.coordinator.hasPriorRecovery) return Promise.resolve(false);
     const notify = !this.canExecute;
+    const version = this.lifecycleVersion;
     this.foregrounding = (async () => {
       const checked = await this.coordinator.foreground(online);
-      if (this.stopped) return false;
+      if (this.stopped || this.closing || version !== this.lifecycleVersion) return false;
       return checked === null || this.needsReload ? this.reconnect() : checked;
     })().finally(() => { this.foregrounding = null; if (notify || !this.canExecute) this.emit(); });
     if (notify) this.emit();
@@ -305,19 +303,22 @@ export class CloudGameSession {
     return this.reconnecting;
   }
   private async reconnectChecked(): Promise<boolean> {
+    const version = this.lifecycleVersion;
+    const current = () => !this.stopped && !this.closing && version === this.lifecycleVersion;
     // Finish persisting commands already accepted before changing lease/base.
     // A failed write remains in coordinator.attempted for its quota retry.
     try { if (!await cloudCheckDeadline(this.durable()) && (this.journalDrain || this.coordinator.view.failure === "processing")) return false; }
     catch {
-      if (!this.stopped) this.coordinator.reportLocalFailure(new CloudSyncError("processing"));
+      if (current()) this.coordinator.reportLocalFailure(new CloudSyncError("processing"));
       return false;
     }
-    if (this.stopped) return false;
+    if (!current()) return false;
     const checked = await this.coordinator.focus();
-    if (this.stopped) return false;
+    if (!current()) return false;
     if (checked && !this.needsReload && this.dirty) {
       if (!await this.prepareCheckpoint("ordinary") || !await this.coordinator.checkpoint("purchase")) return false;
     }
+    if (!current()) return false;
     return this.automaticReconnect ? this.automaticReconnect(checked && !this.needsReload) : checked;
   }
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
@@ -348,6 +349,9 @@ export class CloudGameSession {
     if (this.closing) return this.closing;
     // Stop live ticks before awaiting encoding; routine recovery work never pauses play.
     if (!this.current.paused && !this.execute({ type: "SET_PAUSED", paused: true, operationId: crypto.randomUUID() }, context)) return Promise.resolve(false);
+    // A completed close also cancels older foreground/router continuations;
+    // checking only `closing` misses them after the close promise settles.
+    this.lifecycleVersion++;
     this.closing = (async () => {
       if (!await this.durable()) return false;
       if (!await this.prepareCheckpoint("save-close")) return false;
@@ -378,6 +382,6 @@ export class CloudGameSession {
       checkpoint: this.checkpoint, campaign: this.campaign, usageQuestions: [...this.questions.values()], pendingRecovery,
       priorRecovery: this.coordinator.confirmed?.priorRecovery ?? null });
   }
-  detach(): void { this.stopped = true; if (this.journalDrain) this.coordinator.releaseJournalOwner(this.journalDrain.owner); this.journalDrain?.stop(); this.finishDurability(false); this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); this.unsubscribeCheckpoint(); }
+  detach(): void { this.stopped = true; this.lifecycleVersion++; if (this.journalDrain) this.coordinator.releaseJournalOwner(this.journalDrain.owner); this.journalDrain?.stop(); this.finishDurability(false); this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); this.unsubscribeCheckpoint(); }
   dispose(): void { this.detach(); this.coordinator.dispose(); }
 }

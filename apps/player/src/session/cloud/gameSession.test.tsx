@@ -37,6 +37,30 @@ async function fixture(state?: GameState) {
   return { session, coordinator, server, cache, clock, prepared, confirmed };
 }
 describe("cloud commands through the shared domain evidence boundary", () => {
+  it("trims a concurrently acknowledged prefix without restarting full encoding", async () => {
+    const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
+    f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "prefix.first" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await f.session.durable();
+    const acknowledgement = deferred(), encoding = deferred(), started = deferred();
+    f.server.faults.push({ method: "commit", at: "after", wait: acknowledgement.promise });
+    const upload = f.session.checkpointNow("purchase");
+    await vi.waitFor(() => expect(f.server.operationCount("account-a")).toBe(1));
+    const run = f.coordinator.codec.run.bind(f.coordinator.codec), calls = vi.spyOn(f.coordinator.codec, "run").mockImplementation(async task => {
+      if (task.kind === "encode") { started.resolve(); await encoding.promise; }
+      return run(task);
+    });
+    try {
+      f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "prefix.following" }, PROTOTYPE_DOMAIN_CONTEXT);
+      const durable = f.session.durable(); await started.promise;
+      acknowledgement.resolve(); expect(await upload).toBe(true); expect(f.coordinator.confirmedRevision).toBe("2");
+      encoding.resolve(); expect(await durable).toBe(true);
+      expect(calls.mock.calls.filter(([task]) => task.kind === "encode")).toHaveLength(1);
+      expect(f.coordinator.pendingCandidate!.evidence.fromRecord).toBe(f.coordinator.confirmed!.evidence.records.length);
+      expect(f.coordinator.pendingCandidate!.evidence.records).toHaveLength(2);
+      expect(await f.session.checkpointNow("purchase")).toBe(true); expect(f.server.operationCount("account-a")).toBe(2);
+      expect(f.session.canExecute).toBe(true); expect(f.session.needsReload).toBe(false);
+    } finally { acknowledgement.resolve(); encoding.resolve(); f.session.dispose(); calls.mockRestore(); }
+  });
   it("does not queue an unchanged canonical metadata projection after reopening", async () => {
     const f = await fixture(); await f.coordinator.startWriter(); f.coordinator.resume();
     const metadata = f.session.metadata;

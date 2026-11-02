@@ -19,6 +19,43 @@ vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 
 describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layout => {
+  it("dismisses opening and mounts play while its first durable account upload is still waiting", async () => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
+    const coordinator = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await coordinator.open(); await coordinator.startWriter(); coordinator.resume();
+    const seed = await CloudGameSession.create(coordinator);
+    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
+      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });
+    seed.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "open.pending.local" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await seed.prepareRecoveryCopy(); seed.dispose();
+    await entryStore.write("last-active-campaign", { campaignId: h.scope.campaignId });
+    const held = deferred(), started = deferred(), commit = transport.commit;
+    vi.spyOn(transport, "commit").mockImplementation(async operation => { started.resolve(); await held.promise; return commit(operation); });
+    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;
+    Object.assign(env.doc, { visibilityState: "visible" });
+    Object.assign(env.browser, { setInterval: () => 1, clearInterval: () => {} });
+    let active: CloudGameSession | null = null;
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),
+      summaries: await transport.list(), phase: "available", error: null, active: null, refresh: vi.fn(async () => {}),
+      acceptNotice: vi.fn(async () => {}), attach: session => { active = session; }, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),
+      exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
+    };
+    try {
+      await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+        <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+      </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+      await started.promise;
+      expect(active!.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true, phase: "saving" });
+      expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+      expect(env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map")).toBeDefined();
+      expect(active!.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "open.play.while-saving" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+      await act(async () => { held.resolve(); });
+      await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe("2"));
+      expect(active!.canExecute).toBe(true); expect(active!.needsReload).toBe(false);
+    } finally { held.resolve(); (active as CloudGameSession | null)?.dispose(); }
+  });
   it.each([false, true])("keeps the current clinic mounted under a full opening cover (check fails=%s)", async fails => {
     const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
     const prepared = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });

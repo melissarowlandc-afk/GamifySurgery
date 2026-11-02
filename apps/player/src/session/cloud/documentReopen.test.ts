@@ -62,8 +62,14 @@ describe("independent document lifetimes on one device", () => {
       if (!rejected && entry.confirmed.revision === "2" && !entry.recovery) { rejected = true; throw new CloudCacheError("conflict"); }
       return write(entry, revision);
     });
-    const reopened = await openAutomaticCloudCampaign({ runtime: second, campaignId }), session = await CloudGameSession.create(reopened);
-    expect(rejected).toBe(true); expect(frozen).not.toBeNull(); expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);
+    const reopened = await openAutomaticCloudCampaign({ runtime: second, campaignId }), playing = await CloudGameSession.create(reopened);
+    // Opening does not upload. Mirror App's separate background checkpoint,
+    // then a fresh document's receipt recovery after the local CAS failure.
+    expect(rejected).toBe(false); expect(playing.canExecute).toBe(true); expect(playing.state).toEqual(expected);
+    expect(await playing.checkpointNow("ordinary")).toBe(false);
+    expect(rejected).toBe(true); expect(frozen).not.toBeNull(); playing.dispose();
+    const recovered = await openAutomaticCloudCampaign({ runtime: nextDocument(), campaignId }), session = await CloudGameSession.create(recovered);
+    expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);
     const retained = await second.entryStore.entries();
     expect(retained.some(row => {
       const operation = (row.value as { device?: { recovery?: { inFlight?: CloudFrozenOperation } } })?.device?.recovery?.inFlight;

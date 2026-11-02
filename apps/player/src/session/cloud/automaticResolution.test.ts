@@ -49,6 +49,42 @@ async function divergent(h: Awaited<ReturnType<typeof rig>>, localTicks: number,
 }
 
 describe("automatic verified clinic progress selection", () => {
+  it("returns a locally durable playable descendant before its slow background upload", async () => {
+    const h = await rig(), local = await localBranch(h, 2), expected = local.session.state;
+    local.session.dispose();
+    const gate = deferred(), original = h.runtime.transport.commit, commit = vi.spyOn(h.runtime.transport, "commit");
+    commit.mockImplementation(async operation => { await gate.promise; return original(operation); });
+    const opening = h.resolve(); let session: CloudGameSession | null = null;
+    try {
+      const outcome = await Promise.race([opening.then(coordinator => ({ coordinator })),
+        new Promise<null>(resolve => setTimeout(() => resolve(null), 400))]);
+      expect(outcome, "opening must not wait for an account upload once local play is authorized").not.toBeNull();
+      session = await CloudGameSession.create(outcome!.coordinator);
+      expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);
+      expect(commit).not.toHaveBeenCalled();
+      const uploading = session.checkpointNow("ordinary");
+      await vi.waitFor(() => expect(commit).toHaveBeenCalledTimes(1));
+      expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "play.during.open-upload" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+      expect(session.state.simulationSpeed).toBe(4);
+      gate.resolve(); expect(await uploading).toBe(true);
+      expect(session.canExecute).toBe(true); expect(session.needsReload).toBe(false);
+    } finally { gate.resolve(); (await opening).dispose(); session?.dispose(); commit.mockRestore(); }
+  });
+  it("reconciles an already-committed first upload before open without replaying it", async () => {
+    const h = await rig(), local = await localBranch(h, 2), expected = local.session.state;
+    h.server.faults.push({ method: "commit", at: "after", error: new CloudSyncError("network") });
+    expect(await local.session.checkpointNow("purchase")).toBe(false);
+    const request = local.coordinator.recoveryEntry!.recovery!.inFlight!;
+    local.session.dispose();
+    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);
+    try {
+      expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);
+      expect(coordinator.view.pending).toBe(false); expect(coordinator.confirmedRevision).toBe("2");
+      expect(h.server.calls.filter(row => row.method === "commit")).toHaveLength(1);
+      expect(h.server.calls.some(row => row.method === "operation" && row.operationId === request.operationId)).toBe(true);
+      expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    } finally { session.dispose(); }
+  });
   describe.each([true, false])("durably paused winning branch (local newer=%s)", localNewer => {
     it.each([true, false])("keeps the exact paused projection with free slot=%s", async freeSlot => {
       const h = await rig(), local = await localBranch(h, localNewer ? 3 : 1);

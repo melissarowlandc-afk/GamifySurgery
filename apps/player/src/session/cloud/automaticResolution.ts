@@ -95,8 +95,14 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     // Resolve an uncertain acknowledgement using its original immutable request
     // before considering a rebase. A failed old lease cannot silently write.
-    if (coordinator.view.pending) await coordinator.focus();
+    if (coordinator.view.pending) await coordinator.resumePendingForOpen();
     if (coordinator.hasLocalCacheConflict) throw new CloudCacheError("conflict");
+    // The ranked bytes are verified, durably stored, and the old immutable
+    // operation has been reconciled. A valid lease grants play immediately;
+    // the mounted game session will upload the suffix in the background. Do
+    // not reload the head or wait for that optional backup before hydration.
+    const selected = coordinator.pendingCandidate?.snapshot ?? coordinator.confirmed?.snapshot;
+    if (coordinator.view.canExecute && selected?.uncompressedSha256 === winner.copy.snapshot.uncompressedSha256) return coordinator;
     const fresh = await load(account.campaignId);
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     if (fresh.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256) {

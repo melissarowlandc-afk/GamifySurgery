@@ -6,6 +6,7 @@ import { assertCloudRevision, CLOUD_CAPACITY_LIMITS, readCloudCampaignMetadata, 
 import { compressCloudText, decompressCloudText, type CloudCompressedText, type CloudCompression } from "./codecCompression";
 import { assertMappedGameFields } from "./codecOwnership";
 import { CloudCodecError, codecObject, logicalJsonText, parseCodecJson, sameLogicalJson, sha256Utf8, utf8Bytes, type CodecJson, type CodecObject } from "./codecJson";
+import { verifiedEvidenceText } from "./verifiedEvidenceText";
 
 /** New normalized layout. Format 1 remains an offline/backward-compatibility baseline reader. */
 export const CLOUD_EVIDENCE_FORMAT_VERSION = 2;
@@ -45,8 +46,8 @@ async function mapBounded<T, R>(values: readonly T[], operation: (value: T) => P
   for (let index = 0; index < values.length; index += 16) result.push(...await Promise.all(values.slice(index, index + 16).map(operation)));
   return result;
 }
-async function decodedJson(value: CloudCompressedText): Promise<CodecObject> {
-  const text = await decompressCloudText(value), parsed = codecObject(parseCodecJson(text), "Compressed canonical JSON");
+async function decodedJson(value: CloudCompressedText, immutable = false): Promise<CodecObject> {
+  const text = await (immutable ? verifiedEvidenceText.read(value) : decompressCloudText(value)), parsed = codecObject(parseCodecJson(text), "Compressed canonical JSON");
   if (logicalJsonText(parsed) !== text) throw new CloudCodecError("noncanonical_json", "Decoded storage bytes are not the agreed canonical JSON.");
   return parsed;
 }
@@ -72,7 +73,7 @@ export async function encodeCloudEvidenceCheckpoint(input: {
   const header: EvidenceHeader = { formatVersion: 1, version: archive.version, campaignId: archive.campaignId, source: input.source, baseline: archive.baseline };
   const headerText = canonical(header), recordTexts = archive.records.map(canonical);
   const reuse = async (text: string, previous?: CloudCompressedText) => {
-    if (previous?.encoding === encoding && await decompressCloudText(previous) === text) return previous;
+    if (previous?.encoding === encoding && await verifiedEvidenceText.read(previous) === text) return previous;
     return compressCloudText(text, encoding);
   };
   const records = await mapBounded(archive.records, async record => {
@@ -151,7 +152,7 @@ export async function loadCloudEvidenceCheckpoint(input: {
   exactFields(envelope, ["cloudFormatVersion", "evidenceContractVersion", "campaign", "baselineId", "evidenceHighWater", "evidenceManifestSha256", "operational"]);
   if (envelope.cloudFormatVersion !== CLOUD_EVIDENCE_FORMAT_VERSION || envelope.evidenceContractVersion !== 1) throw new CloudCodecError("unsupported_cloud_format", "Unsupported normalized cloud format.");
   const campaign = readCloudCampaignMetadata(envelope.campaign!);
-  const header = await decodedJson(input.evidence.header) as unknown as EvidenceHeader;
+  const header = await decodedJson(input.evidence.header, true) as unknown as EvidenceHeader;
   exactFields(header, ["formatVersion", "version", "campaignId", "source", "baseline"]);
   checkSource(header.source);
   if (header.formatVersion !== 1 || header.version !== 1 || header.campaignId !== input.expectedCampaignId ||
@@ -164,7 +165,7 @@ export async function loadCloudEvidenceCheckpoint(input: {
   const declaredDecodedBytes = input.evidence.header.uncompressedBytes + required.reduce((sum, row) => sum + row.content.uncompressedBytes, 0);
   if (!Number.isSafeInteger(declaredDecodedBytes) || declaredDecodedBytes > 6_000_000) throw new CloudCodecError("evidence_size", "Aggregate decoded evidence exceeds the processing bound.");
   const records = await mapBounded(required, async row => {
-    const record = await decodedJson(row.content) as unknown as GameEvidenceRecord;
+    const record = await decodedJson(row.content, true) as unknown as GameEvidenceRecord;
     if (row.id !== record.id) throw new CloudCodecError("evidence_identity", "The immutable row ID differs from its hashed contents.");
     return record;
   });

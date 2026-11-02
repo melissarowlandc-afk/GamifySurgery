@@ -375,7 +375,7 @@ describe("standalone hosted lifecycle", () => {
     const loaded = await CloudGameSession.create(h.coordinator); expect(loaded.state.simulationSpeed).toBe(2);
   });
 
-  it("resolves its own hide upload before deciding that a racing renewal is a revision conflict", async () => {
+  it("renews through its own hide upload without a checking fence or waiting for the receipt", async () => {
     const h = await device(), gate = deferred();
     h.session.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "renewal.race" }, PROTOTYPE_DOMAIN_CONTEXT);
     await h.session.durable();
@@ -383,10 +383,13 @@ describe("standalone hosted lifecycle", () => {
     const uploading = h.session.checkpointNow("hidden");
     await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
     h.server.faults.push({ method: "renew", at: "before", error: new CloudSyncError("revision") });
-    h.clock.advance(15_000); const renewing = h.coordinator.pulse();
-    await vi.waitFor(() => expect(h.coordinator.view.phase).toBe("checking"));
-    gate.resolve(); expect(await uploading).toBe(true); await renewing;
-    expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: false, failure: null });
+    try {
+      h.clock.advance(15_000); await h.coordinator.pulse();
+      expect(h.coordinator.view).toMatchObject({ phase: "saving", canExecute: true, pending: true, failure: null });
+      expect(h.server.calls.filter(row => row.method === "acquire")).toHaveLength(1);
+      gate.resolve(); expect(await uploading).toBe(true);
+      expect(h.coordinator.view).toMatchObject({ canExecute: true, pending: false, failure: null });
+    } finally { gate.resolve(); h.session.dispose(); }
   });
 
   it("lets an explicit keep-device choice upload a nondivergent branch only after verified copy retention", async () => {

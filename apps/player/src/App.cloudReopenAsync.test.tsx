@@ -61,6 +61,16 @@ async function fixture(layout: "phone" | "desktop", marker: boolean, partialSumm
 }
 
 describe.each(["phone", "desktop"] as const)("%s asynchronous automatic reopen", layout => {
+  it("can already be playable with no entry heading when a post-navigation observer starts", async () => {
+    const f = await fixture(layout, true, false);
+    // Like a development-server document reload, navigation can restore the
+    // last active clinic before an entry-only locator starts observing it.
+    await f.playing();
+    expect(allElements(f.env.doc.body, node => node.tagName === "H1" && node.textContent === "Your campaigns")).toHaveLength(0);
+    expect(f.active!.coordinator.scope.campaignId).toBe(f.scope.campaignId);
+    expect(f.active!.needsReload).toBe(false);
+    expect(f.server.calls.filter(row => row.method === "acquire")).toHaveLength(1);
+  });
   it.each([true, false])("reopens when access is available before campaign summaries (marker=%s)", async marker => {
     const f = await fixture(layout, marker, true);
     await f.readSelection.promise;
